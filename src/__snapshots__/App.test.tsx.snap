@@ -1,7 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Initially connecting to API 1`] = `
-<p>
-  Connecting API...
-</p>
+<div
+  className="contextMock"
+>
+  <p>
+    Connecting API...
+  </p>
+</div>
 `;
