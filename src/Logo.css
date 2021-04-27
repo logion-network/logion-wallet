@@ -1,0 +1,11 @@
+.logo {
+    height: 200px;
+    background-color: black;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.logo > img {
+    height: 180px;
+}

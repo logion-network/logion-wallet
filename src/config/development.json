@@ -1,0 +1,4 @@
+{
+    "APP_NAME": "Logion Wallet DEV",
+    "PROVIDER_SOCKET": "ws://127.0.0.1:9944"
+}
