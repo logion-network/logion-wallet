@@ -1,3 +1,5 @@
+[![Test](https://github.com/logion-network/logion-wallet/actions/workflows/test.yml/badge.svg)](https://github.com/logion-network/logion-wallet/actions/workflows/test.yml)
+
 # Logion wallet
 
 ## Installation
