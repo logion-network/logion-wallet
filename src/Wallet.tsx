@@ -1,5 +1,8 @@
 import React from 'react';
-import { Container, Grid, Button } from 'semantic-ui-react';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
 import { useLogionChain, ApiState } from './logion-chain';
 
 import Logo from './Logo';
@@ -23,20 +26,18 @@ export default function Wallet() {
 
     return (
         <Container>
-            <Grid>
-                <Grid.Row>
-                    <Grid.Column>
-                        <Logo />
-                        <p>You are ready to use the Logion wallet, congratulations!</p>
-                        <p>The following accounts were detected:</p>
-                        <ul>
-                            {injectedAccounts.map(injectedAccount => <li key={injectedAccount.address}>{injectedAccount.address} ({injectedAccount.meta.name || ""})</li>)}
-                        </ul>
-                        <p>You are currently {status(apiState)}</p>
-                        {connectButton}
-                    </Grid.Column>
-                </Grid.Row>
-            </Grid>
+            <Row>
+                <Col>
+                    <Logo />
+                    <p>You are ready to use the Logion wallet, congratulations!</p>
+                    <p>The following accounts were detected:</p>
+                    <ul>
+                        {injectedAccounts.map(injectedAccount => <li key={injectedAccount.address}>{injectedAccount.address} ({injectedAccount.meta.name || ""})</li>)}
+                    </ul>
+                    <p>You are currently {status(apiState)}</p>
+                    {connectButton}
+                </Col>
+            </Row>
         </Container>
     );
 }

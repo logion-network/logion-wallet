@@ -1,44 +1,48 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Given Chrome, when rendering, then show link 1`] = `
-<Container>
-  <Grid>
-    <GridRow>
-      <GridColumn>
-        <Logo />
-        <p>
-          Please install 
-          <a
-            href="chrome url"
-          >
-            this browser extension
-          </a>
-           in order to store your accounts in a secure way. Once done, authorize the Logion wallet to access it and create or import an account.
-        </p>
-      </GridColumn>
-    </GridRow>
-  </Grid>
+<Container
+  fluid={false}
+>
+  <Row
+    noGutters={false}
+  >
+    <Col>
+      <Logo />
+      <p>
+        Please install 
+        <a
+          href="chrome url"
+        >
+          this browser extension
+        </a>
+         in order to store your accounts in a secure way. Once done, authorize the Logion wallet to access it and create or import an account.
+      </p>
+    </Col>
+  </Row>
 </Container>
 `;
 
 exports[`Given Firefox, when rendering, then show link 1`] = `
-<Container>
-  <Grid>
-    <GridRow>
-      <GridColumn>
-        <Logo />
-        <p>
-          Please install 
-          <a
-            href="firefox url"
-          >
-            this browser extension
-          </a>
-           in order to store your accounts in a secure way. Once done, authorize the Logion wallet to access it and create or import an account.
-        </p>
-      </GridColumn>
-    </GridRow>
-  </Grid>
+<Container
+  fluid={false}
+>
+  <Row
+    noGutters={false}
+  >
+    <Col>
+      <Logo />
+      <p>
+        Please install 
+        <a
+          href="firefox url"
+        >
+          this browser extension
+        </a>
+         in order to store your accounts in a secure way. Once done, authorize the Logion wallet to access it and create or import an account.
+      </p>
+    </Col>
+  </Row>
 </Container>
 `;
 

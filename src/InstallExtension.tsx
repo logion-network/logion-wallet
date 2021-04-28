@@ -1,5 +1,7 @@
  import React from 'react';
-import { Container, Grid } from 'semantic-ui-react';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 import { recommendedExtension } from './logion-chain';
 import Logo from './Logo';
@@ -9,16 +11,14 @@ export default function InstallExtension() {
     if(extension !== null) {
         return (
             <Container>
-                <Grid>
-                    <Grid.Row>
-                        <Grid.Column>
-                            <Logo />
-                            <p>Please install <a href={extension.url}>this browser extension</a> in order to store
-                            your accounts in a secure way. Once done, authorize the Logion wallet to access it
-                            and create or import an account.</p>
-                        </Grid.Column>
-                    </Grid.Row>
-                </Grid>
+                <Row>
+                    <Col>
+                        <Logo />
+                        <p>Please install <a href={extension.url}>this browser extension</a> in order to store
+                        your accounts in a secure way. Once done, authorize the Logion wallet to access it
+                        and create or import an account.</p>
+                    </Col>
+                </Row>
             </Container>
         );
     } else {

@@ -1,16 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders 1`] = `
-<Container>
-  <Grid>
-    <GridRow>
-      <GridColumn>
-        <Logo />
-        <p>
-          Create an account with the extension in order to use the wallet
-        </p>
-      </GridColumn>
-    </GridRow>
-  </Grid>
+<Container
+  fluid={false}
+>
+  <Row
+    noGutters={false}
+  >
+    <Col>
+      <Logo />
+      <p>
+        Create an account with the extension in order to use the wallet
+      </p>
+    </Col>
+  </Row>
 </Container>
 `;
