@@ -3,7 +3,7 @@ import { Container, Grid } from 'semantic-ui-react';
 
 import Logo from './Logo';
 
-export default function Component() {
+export default function CreateAccount() {
     return (
         <Container>
             <Grid>

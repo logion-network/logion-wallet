@@ -4,7 +4,7 @@ import { Container, Grid } from 'semantic-ui-react';
 import { recommendedExtension } from './logion-chain';
 import Logo from './Logo';
 
-export default function Component() {
+export default function InstallExtension() {
     const extension = recommendedExtension();
     if(extension !== null) {
         return (

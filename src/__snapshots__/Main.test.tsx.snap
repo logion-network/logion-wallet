@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given connected and extension and no account, when rendering, then show create account 1`] = `<CreateAccount />`;
+
+exports[`Given connected and extension and one account, when rendering, then show wallet 1`] = `<Wallet />`;
+
+exports[`Given connected and no extension, when rendering, then show install 1`] = `<InstallExtension />`;
+
+exports[`Given connecting, when rendering, then show status 1`] = `
+<p>
+  Connecting API...
+</p>
+`;

@@ -13,3 +13,12 @@ export function shallowRender<E extends ReactElement>(element: ReactElement): E 
     renderer.render(element);
     return renderer.getRenderOutput();
 }
+
+export function mockAccount(address: string, name: string) {
+    return {
+        address,
+        meta: {
+            name
+        }
+    };
+}

@@ -4,7 +4,7 @@ import { useLogionChain } from './logion-chain';
 
 import Logo from './Logo';
 
-export default function Component() {
+export default function Wallet() {
     const { injectedAccounts } = useLogionChain();
 
     return (
@@ -16,7 +16,7 @@ export default function Component() {
                         <p>You are ready to use the Logion wallet, congratulations!</p>
                         <p>The following accounts were detected:</p>
                         <ul>
-                            {injectedAccounts.map(injectedAccount => <li>{injectedAccount.address} ({injectedAccount.meta.name || ""})</li>)}
+                            {injectedAccounts.map(injectedAccount => <li key={injectedAccount.address}>{injectedAccount.address} ({injectedAccount.meta.name || ""})</li>)}
                         </ul>
                     </Grid.Column>
                 </Grid.Row>

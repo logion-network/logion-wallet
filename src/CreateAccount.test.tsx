@@ -1,11 +1,8 @@
-jest.mock('./logion-chain');
-jest.mock('./config');
-
 import React from 'react';
-import App from './App';
+import CreateAccount from './CreateAccount';
 import { shallowRender } from './tests';
 
 test('renders', () => {
-    const tree = shallowRender(<App />);
+    const tree = shallowRender(<CreateAccount />);
     expect(tree).toMatchSnapshot();
 });
