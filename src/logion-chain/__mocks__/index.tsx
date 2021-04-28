@@ -1,4 +1,4 @@
-const LogionChainContextProvider = (props: any) => <div className="contextMock">{props.children}</div>;
+const LogionChainContextProvider = (props: any) => null;
 
 let context = {
     apiState: 'CONNECT_INIT',

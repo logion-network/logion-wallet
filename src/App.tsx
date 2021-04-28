@@ -26,9 +26,10 @@ function Main() {
 }
 
 export default function App() {
+    const main = Main();
     return (
         <LogionChainContextProvider config={config}>
-            <Main />
+            {main}
         </LogionChainContextProvider>
     );
 }

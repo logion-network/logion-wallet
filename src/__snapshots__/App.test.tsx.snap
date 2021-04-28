@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Initially connecting to API 1`] = `
-<div
-  className="contextMock"
+<LogionChainContextProvider
+  config={Object {}}
 >
   <p>
     Connecting API...
   </p>
-</div>
+</LogionChainContextProvider>
 `;
