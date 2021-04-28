@@ -14,7 +14,8 @@ import {
     LogionChainContextProvider,
     useLogionChain,
 
-    ExtrinsicFetchSpecification as ContextExtrinsicFetchSpecification
+    ExtrinsicFetchSpecification as ContextExtrinsicFetchSpecification,
+    ApiState as ContextApiState
 } from './LogionChainContext';
 
 import {
@@ -67,3 +68,4 @@ export type Block = PolkadotBlock;
 export type EventRecord = PolkadotEventRecord;
 export type Extrinsic = PolkadotExtrinsic;
 export type SignAndSendCallback = SignatureSignAndSendCallback;
+export type ApiState = ContextApiState;

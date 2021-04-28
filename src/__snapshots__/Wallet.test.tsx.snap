@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Given one injected account, when rendering, then show account 1`] = `
+exports[`Given connected, when rendering, then show account and no button 1`] = `
 <Container>
   <Grid>
     <GridRow>
@@ -20,6 +20,75 @@ exports[`Given one injected account, when rendering, then show account 1`] = `
             )
           </li>
         </ul>
+        <p>
+          You are currently 
+          connected
+        </p>
+      </GridColumn>
+    </GridRow>
+  </Grid>
+</Container>
+`;
+
+exports[`Given connected, when rendering, then show connected and no button 1`] = `
+<Container>
+  <Grid>
+    <GridRow>
+      <GridColumn>
+        <Logo />
+        <p>
+          You are ready to use the Logion wallet, congratulations!
+        </p>
+        <p>
+          The following accounts were detected:
+        </p>
+        <ul>
+          <li>
+            address
+             (
+            name
+            )
+          </li>
+        </ul>
+        <p>
+          You are currently 
+          connected
+        </p>
+      </GridColumn>
+    </GridRow>
+  </Grid>
+</Container>
+`;
+
+exports[`Given disconnected, when rendering, then show disconnected and button 1`] = `
+<Container>
+  <Grid>
+    <GridRow>
+      <GridColumn>
+        <Logo />
+        <p>
+          You are ready to use the Logion wallet, congratulations!
+        </p>
+        <p>
+          The following accounts were detected:
+        </p>
+        <ul>
+          <li>
+            address
+             (
+            name
+            )
+          </li>
+        </ul>
+        <p>
+          You are currently 
+          disconnected
+        </p>
+        <Button
+          as="button"
+        >
+          Connect
+        </Button>
       </GridColumn>
     </GridRow>
   </Grid>

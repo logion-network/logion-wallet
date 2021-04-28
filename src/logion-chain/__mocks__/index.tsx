@@ -4,7 +4,8 @@ const LogionChainContextProvider = (props: any) => null;
 
 let context = {
     apiState: 'CONNECT_INIT',
-    injectedAccounts: []
+    injectedAccounts: [],
+    connect: () => {}
 };
 
 export function setContextMock(value: any) {

@@ -24,6 +24,12 @@ export interface ExtrinsicFetchSpecification {
     since?: ExtrinsicsAndHead | null
 }
 
+export type ApiState= 'DISCONNECTED'
+    | 'CONNECT_INIT'
+    | 'CONNECTING'
+    | 'READY'
+    | 'ERROR';
+
 export interface LogionChainContextType {
     appName: string,
     socket: string,
@@ -31,7 +37,7 @@ export interface LogionChainContextType {
     types: any,
     api: ApiPromise | null,
     apiError: any,
-    apiState: string | null,
+    apiState: ApiState,
     eventsConsumption: ConsumptionStatus,
     events: EventRecord[],
     headerConsumption: ConsumptionStatus,
@@ -39,6 +45,7 @@ export interface LogionChainContextType {
     fetchExtrinsics: ((specification: ExtrinsicFetchSpecification) => Promise<ExtrinsicsAndHead>) | null,
     injectedAccountsConsumptionState: ConsumptionStatus
     injectedAccounts: InjectedAccountWithMeta[],
+    connect: () => void
 }
 
 const initState = (config: ConfigType): LogionChainContextType => ({
@@ -48,14 +55,15 @@ const initState = (config: ConfigType): LogionChainContextType => ({
     types: config.types,
     api: null,
     apiError: null,
-    apiState: null,
+    apiState: 'DISCONNECTED',
     eventsConsumption: 'PENDING',
     events: [],
     headerConsumption: 'PENDING',
     lastHeader: null,
     fetchExtrinsics: null,
     injectedAccountsConsumptionState: 'PENDING',
-    injectedAccounts: []
+    injectedAccounts: [],
+    connect: () => {},
 });
 
 type ActionType =
@@ -137,8 +145,9 @@ function pushAndLimit(previousEvents: EventRecord[], newEvents: EventRecord[]): 
 
 const connect = (state: LogionChainContextType, dispatch: React.Dispatch<Action>) => {
     const { apiState, socket, jsonrpc, types } = state;
-    // We only want this function to be performed once
-    if (apiState) return;
+    if (apiState !== 'DISCONNECTED') {
+        return;
+    }
 
     dispatch({ type: 'CONNECT_INIT' });
 
@@ -206,7 +215,8 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
     }
 
     const [state, dispatch] = useReducer(reducer, initState(props.config));
-    connect(state, dispatch);
+    state.connect = () => connect(state, dispatch);
+
     consumeEvents(state, dispatch);
     consumeHeaders(state, dispatch);
     consumeInjectedAccounts(state, dispatch);

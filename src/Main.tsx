@@ -6,13 +6,7 @@ import InstallExtension from './InstallExtension';
 import CreateAccount from './CreateAccount';
 
 export default function Main() {
-    const { apiState, injectedAccounts } = useLogionChain();
-
-    if (apiState === 'ERROR') {
-        return <p>Error connecting API</p>;
-    } else if (apiState !== 'READY') {
-        return <p>Connecting API...</p>;
-    }
+    const { injectedAccounts } = useLogionChain();
 
     if(isExtensionAvailable() && injectedAccounts.length > 0) {
         return <Wallet />;

@@ -5,7 +5,20 @@ import Wallet from './Wallet';
 import { setContextMock } from './logion-chain';
 import { shallowRender, mockAccount } from './tests';
 
-test('Given one injected account, when rendering, then show account', () => {
+test('Given disconnected, when rendering, then show disconnected and button', () => {
+    setContextMock({
+        apiState: 'DISCONNECTED',
+        injectedAccounts: [
+            mockAccount("address", "name")
+        ]
+    });
+
+    const tree = shallowRender(<Wallet />);
+
+    expect(tree).toMatchSnapshot();
+});
+
+test('Given connected, when rendering, then show account and no button', () => {
     setContextMock({
         apiState: 'READY',
         injectedAccounts: [
