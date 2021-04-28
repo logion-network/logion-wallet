@@ -1,72 +1,62 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Given connected, when rendering, then show account and no button 1`] = `
-<Container
-  fluid={false}
->
-  <Row
-    noGutters={false}
+<Shell>
+  <Jumbotron
+    fluid={false}
   >
-    <Col>
-      <Logo />
-      <p>
-        You are ready to use the Logion wallet, congratulations!
-      </p>
-      <p>
-        The following accounts were detected:
-      </p>
-      <ul>
-        <li>
-          address
-           (
-          name
-          )
-        </li>
-      </ul>
-      <p>
-        You are currently 
-        connected
-      </p>
-    </Col>
-  </Row>
-</Container>
+    <h1>
+      You are ready to use the Logion wallet, congratulations!
+    </h1>
+  </Jumbotron>
+  <p>
+    The following accounts were detected:
+  </p>
+  <ul>
+    <li>
+      address
+       (
+      name
+      )
+    </li>
+  </ul>
+  <p>
+    You are currently 
+    connected
+  </p>
+</Shell>
 `;
 
 exports[`Given disconnected, when rendering, then show disconnected and button 1`] = `
-<Container
-  fluid={false}
->
-  <Row
-    noGutters={false}
+<Shell>
+  <Jumbotron
+    fluid={false}
   >
-    <Col>
-      <Logo />
-      <p>
-        You are ready to use the Logion wallet, congratulations!
-      </p>
-      <p>
-        The following accounts were detected:
-      </p>
-      <ul>
-        <li>
-          address
-           (
-          name
-          )
-        </li>
-      </ul>
-      <p>
-        You are currently 
-        disconnected
-      </p>
-      <Button
-        active={false}
-        disabled={false}
-        variant="primary"
-      >
-        Connect
-      </Button>
-    </Col>
-  </Row>
-</Container>
+    <h1>
+      You are ready to use the Logion wallet, congratulations!
+    </h1>
+  </Jumbotron>
+  <p>
+    The following accounts were detected:
+  </p>
+  <ul>
+    <li>
+      address
+       (
+      name
+      )
+    </li>
+  </ul>
+  <p>
+    You are currently 
+    disconnected
+  </p>
+  <Button
+    active={false}
+    disabled={false}
+    variant="primary"
+  >
+    Connect
+  </Button>
+</Shell>
 `;

@@ -1,31 +1,29 @@
  import React from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+ import Jumbotron from 'react-bootstrap/Jumbotron';
 
 import { recommendedExtension } from './logion-chain';
-import Logo from './Logo';
+import Shell from './Shell';
 
 export default function InstallExtension() {
     const extension = recommendedExtension();
     if(extension !== null) {
         return (
-            <Container>
-                <Row>
-                    <Col>
-                        <Logo />
-                        <p>Please install <a href={extension.url}>this browser extension</a> in order to store
-                        your accounts in a secure way. Once done, authorize the Logion wallet to access it
-                        and create or import an account.</p>
-                    </Col>
-                </Row>
-            </Container>
+            <Shell>
+                <Jumbotron>
+                    <h1>Install the extension</h1>
+                </Jumbotron>
+                <p>Please install <a href={extension.url}>this browser extension</a> in order to store
+                your accounts in a secure way. Once done, authorize the Logion wallet to access it
+                and create or import an account.</p>
+            </Shell>
         );
     } else {
         return (
-            <p>Your browser is currently not supported, please try with
-            <a href="https://www.google.com/chrome/">Chrome</a> or
-            <a href="https://www.mozilla.org/firefox/">Firefox</a></p>
+            <Shell>
+                <p>Your browser is currently not supported, please try with
+                <a href="https://www.google.com/chrome/">Chrome</a> or
+                <a href="https://www.mozilla.org/firefox/">Firefox</a></p>
+            </Shell>
         );
     }
 }

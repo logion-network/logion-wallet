@@ -1,10 +1,13 @@
 import React from 'react';
-import './Logo.css';
 
-export default function Logo() {
+export interface Props {
+    size: number
+}
+
+export default function Logo(props: Props) {
     return (
         <div className="logo">
-            <img src={process.env.PUBLIC_URL + "/logo.png"} alt="logo" />
+            <img src={process.env.PUBLIC_URL + "/logo.png"} alt="logo" height={props.size} />
         </div>
     );
 }

@@ -1,18 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders 1`] = `
-<Container
-  fluid={false}
->
-  <Row
-    noGutters={false}
+<Shell>
+  <Jumbotron
+    fluid={false}
   >
-    <Col>
-      <Logo />
-      <p>
-        Create an account with the extension in order to use the wallet
-      </p>
-    </Col>
-  </Row>
-</Container>
+    <h1>
+      Create an account with the extension in order to use the wallet
+    </h1>
+  </Jumbotron>
+</Shell>
 `;

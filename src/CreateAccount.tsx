@@ -1,19 +1,14 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import Jumbotron from 'react-bootstrap/Jumbotron';
 
-import Logo from './Logo';
+import Shell from './Shell';
 
 export default function CreateAccount() {
     return (
-        <Container>
-            <Row>
-                <Col>
-                    <Logo />
-                    <p>Create an account with the extension in order to use the wallet</p>
-                </Col>
-            </Row>
-        </Container>
+        <Shell>
+            <Jumbotron>
+                <h1>Create an account with the extension in order to use the wallet</h1>
+            </Jumbotron>
+        </Shell>
     );
 }

@@ -1,11 +1,9 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import Jumbotron from 'react-bootstrap/Jumbotron';
 import { useLogionChain, ApiState } from './logion-chain';
 
-import Logo from './Logo';
+import Shell from './Shell';
 
 function status(apiState: ApiState): string {
     if(apiState === 'READY') {
@@ -25,19 +23,17 @@ export default function Wallet() {
     const connectButton = apiState === 'DISCONNECTED' ? <Button onClick={connect}>Connect</Button> : null;
 
     return (
-        <Container>
-            <Row>
-                <Col>
-                    <Logo />
-                    <p>You are ready to use the Logion wallet, congratulations!</p>
-                    <p>The following accounts were detected:</p>
-                    <ul>
-                        {injectedAccounts.map(injectedAccount => <li key={injectedAccount.address}>{injectedAccount.address} ({injectedAccount.meta.name || ""})</li>)}
-                    </ul>
-                    <p>You are currently {status(apiState)}</p>
-                    {connectButton}
-                </Col>
-            </Row>
-        </Container>
+        <Shell>
+            <Jumbotron>
+                <h1>You are ready to use the Logion wallet, congratulations!</h1>
+            </Jumbotron>
+
+            <p>The following accounts were detected:</p>
+            <ul>
+                {injectedAccounts.map(injectedAccount => <li key={injectedAccount.address}>{injectedAccount.address} ({injectedAccount.meta.name || ""})</li>)}
+            </ul>
+            <p>You are currently {status(apiState)}</p>
+            {connectButton}
+        </Shell>
     );
 }

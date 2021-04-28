@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;500&family=Source+Code+Pro&display=swap');
+
+$body-bg: #203acf;
+$body-color: white;
+$font-family-sans-serif: Mulish, sans-serif;
+$font-family-monospace: "Source Code Pro", monospace !default;
+$font-size-base: 1.5rem;
+
+@import "~bootstrap/scss/bootstrap";
+
+body, html {
+    background: linear-gradient(to right, #203acf, 90%, #a158ff);
+}
+
+.jumbotron {
+    background-color: #a158ff;
+}
