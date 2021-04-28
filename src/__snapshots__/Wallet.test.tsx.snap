@@ -16,13 +16,13 @@ exports[`Given connected, when rendering, then show account and no button 1`] = 
     <li>
       address
        (
-      name
+      Account name
       )
     </li>
   </ul>
   <p>
     You are currently 
-    connected
+    connected to node "Node name"
   </p>
 </Shell>
 `;

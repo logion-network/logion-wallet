@@ -22,8 +22,11 @@ test('Given connected, when rendering, then show account and no button', () => {
     setContextMock({
         apiState: 'READY',
         injectedAccounts: [
-            mockAccount("address", "name")
-        ]
+            mockAccount("address", "Account name")
+        ],
+        metadata: {
+            nodeName: "Node name"
+        }
     });
 
     const tree = shallowRender(<Wallet />);

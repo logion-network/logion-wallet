@@ -1,13 +1,15 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Jumbotron from 'react-bootstrap/Jumbotron';
-import { useLogionChain, ApiState } from './logion-chain';
+import { useLogionChain, ApiState, Metadata } from './logion-chain';
 
 import Shell from './Shell';
 
-function status(apiState: ApiState): string {
-    if(apiState === 'READY') {
+function status(apiState: ApiState, metadata: Metadata | null): string {
+    if(apiState === 'READY' && metadata === null) {
         return "connected";
+    } else if(apiState === 'READY' && metadata !== null) {
+        return "connected to node \"" + metadata.nodeName + "\"";
     } else if(apiState === 'DISCONNECTED') {
         return "disconnected";
     } else if(apiState === 'ERROR') {
@@ -18,7 +20,7 @@ function status(apiState: ApiState): string {
 }
 
 export default function Wallet() {
-    const { injectedAccounts, apiState, connect } = useLogionChain();
+    const { injectedAccounts, apiState, connect, metadata } = useLogionChain();
 
     const connectButton = apiState === 'DISCONNECTED' ? <Button onClick={connect}>Connect</Button> : null;
 
@@ -32,7 +34,7 @@ export default function Wallet() {
             <ul>
                 {injectedAccounts.map(injectedAccount => <li key={injectedAccount.address}>{injectedAccount.address} ({injectedAccount.meta.name || ""})</li>)}
             </ul>
-            <p>You are currently {status(apiState)}</p>
+            <p>You are currently {status(apiState, metadata)}</p>
             {connectButton}
         </Shell>
     );

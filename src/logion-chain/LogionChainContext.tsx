@@ -45,7 +45,8 @@ export interface LogionChainContextType {
     fetchExtrinsics: ((specification: ExtrinsicFetchSpecification) => Promise<ExtrinsicsAndHead>) | null,
     injectedAccountsConsumptionState: ConsumptionStatus
     injectedAccounts: InjectedAccountWithMeta[],
-    connect: () => void
+    connect: () => void,
+    metadata: Metadata | null,
 }
 
 const initState = (config: ConfigType): LogionChainContextType => ({
@@ -64,6 +65,7 @@ const initState = (config: ConfigType): LogionChainContextType => ({
     injectedAccountsConsumptionState: 'PENDING',
     injectedAccounts: [],
     connect: () => {},
+    metadata: null,
 });
 
 type ActionType =
@@ -78,7 +80,12 @@ type ActionType =
     | 'SET_LAST_HEADER'
     | 'HEADER_CONSUMPTION_STARTED'
     | 'INJECTED_ACCOUNTS_CONSUMPTION_STARTED'
-    | 'SET_INJECTED_ACCOUNTS';
+    | 'SET_INJECTED_ACCOUNTS'
+    | 'SET_METADATA';
+
+export interface Metadata {
+    nodeName: string
+}
 
 interface Action {
     type: ActionType,
@@ -86,7 +93,8 @@ interface Action {
     error?: string,
     newEvents?: EventRecord[],
     lastHeader?: Header,
-    injectedAccounts?: InjectedAccountWithMeta[]
+    injectedAccounts?: InjectedAccountWithMeta[],
+    metadata?: Metadata,
 }
 
 const reducer: Reducer<LogionChainContextType, Action> = (state: LogionChainContextType, action: Action): LogionChainContextType => {
@@ -127,6 +135,9 @@ const reducer: Reducer<LogionChainContextType, Action> = (state: LogionChainCont
         case 'SET_INJECTED_ACCOUNTS':
             return { ...state, injectedAccounts: action.injectedAccounts! };
 
+        case 'SET_METADATA':
+            return { ...state, metadata: action.metadata! };
+
         default:
             throw new Error(`Unknown type: ${action.type}`);
     }
@@ -154,14 +165,25 @@ const connect = (state: LogionChainContextType, dispatch: React.Dispatch<Action>
     const provider = new WsProvider(socket);
     const _api = new ApiPromise({ provider, types, rpc: jsonrpc });
 
-    // Set listeners for disconnection and reconnection event.
     _api.on('connected', () => {
         dispatch({ type: 'CONNECT', api: _api });
-        // `ready` event is not emitted upon reconnection and is checked explicitly here.
-        _api.isReady.then((_api) => dispatch({ type: 'CONNECT_SUCCESS' }));
+        _api.isReady.then((_api) => {
+            dispatch({ type: 'CONNECT_SUCCESS' });
+            fetchMetadata(_api, state, dispatch);
+        });
     });
-    _api.on('ready', () => dispatch({ type: 'CONNECT_SUCCESS' }));
+
+    _api.on('ready', () => {
+        dispatch({ type: 'CONNECT_SUCCESS' });
+        fetchMetadata(_api, state, dispatch);
+    });
+
     _api.on('error', err => dispatch({ type: 'CONNECT_ERROR', error: err }));
+};
+
+const fetchMetadata = async (api: ApiPromise, state: LogionChainContextType, dispatch: React.Dispatch<Action>) => {
+    const nodeName = await api.rpc.system.name();
+    dispatch({type: 'SET_METADATA', metadata: {nodeName: nodeName.toString()}});
 };
 
 const LogionChainContext: Context<LogionChainContextType> = React.createContext<LogionChainContextType>(initState(DEFAULT_CONFIG));
@@ -217,6 +239,7 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
     const [state, dispatch] = useReducer(reducer, initState(props.config));
     state.connect = () => connect(state, dispatch);
 
+    connect(state, dispatch);
     consumeEvents(state, dispatch);
     consumeHeaders(state, dispatch);
     consumeInjectedAccounts(state, dispatch);
