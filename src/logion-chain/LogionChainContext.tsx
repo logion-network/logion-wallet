@@ -1,6 +1,6 @@
 import React, { useReducer, useContext, Context, Reducer } from 'react';
 
-import { ConfigType, DEFAULT_CONFIG } from '../config';
+import { Node, ConfigType, DEFAULT_CONFIG } from '../config';
 
 import jsonrpc from '@polkadot/types/interfaces/jsonrpc';
 import { ApiPromise, WsProvider } from '@polkadot/api';
@@ -32,7 +32,6 @@ export type ApiState= 'DISCONNECTED'
 
 export interface LogionChainContextType {
     appName: string,
-    socket: string,
     jsonrpc: any,
     types: any,
     api: ApiPromise | null,
@@ -44,14 +43,15 @@ export interface LogionChainContextType {
     lastHeader: Header | null,
     fetchExtrinsics: ((specification: ExtrinsicFetchSpecification) => Promise<ExtrinsicsAndHead>) | null,
     injectedAccountsConsumptionState: ConsumptionStatus
-    injectedAccounts: InjectedAccountWithMeta[],
+    injectedAccounts: InjectedAccountWithMeta[] | null,
+    availableNodes: Node[],
+    selectedNode: Node | null,
     connect: () => void,
     connectedNodeMetadata: NodeMetadata | null,
 }
 
 const initState = (config: ConfigType): LogionChainContextType => ({
     appName: config.APP_NAME,
-    socket: config.PROVIDER_SOCKET,
     jsonrpc: { ...jsonrpc, ...config.RPC },
     types: config.types,
     api: null,
@@ -63,7 +63,9 @@ const initState = (config: ConfigType): LogionChainContextType => ({
     lastHeader: null,
     fetchExtrinsics: null,
     injectedAccountsConsumptionState: 'PENDING',
-    injectedAccounts: [],
+    injectedAccounts: null,
+    availableNodes: config.availableNodes,
+    selectedNode: null,
     connect: () => {},
     connectedNodeMetadata: null,
 });
@@ -156,14 +158,14 @@ function pushAndLimit(previousEvents: EventRecord[], newEvents: EventRecord[]): 
 // Connecting to the LogionChain node
 
 const connect = (state: LogionChainContextType, dispatch: React.Dispatch<Action>) => {
-    const { apiState, socket, jsonrpc, types } = state;
-    if (apiState !== 'DISCONNECTED') {
+    const { apiState, selectedNode, jsonrpc, types } = state;
+    if (apiState !== 'DISCONNECTED' || selectedNode === null) {
         return;
     }
 
     dispatch({ type: 'CONNECT_INIT' });
 
-    const provider = new WsProvider(socket);
+    const provider = new WsProvider(selectedNode.socket);
     const _api = new ApiPromise({ provider, types, rpc: jsonrpc });
 
     _api.on('connected', () => {
@@ -242,6 +244,7 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
     }
 
     const [state, dispatch] = useReducer(reducer, initState(props.config));
+    state.selectedNode = props.config.availableNodes[0];
     state.connect = () => connect(state, dispatch);
 
     connect(state, dispatch);

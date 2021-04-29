@@ -1,11 +1,11 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 import Jumbotron from 'react-bootstrap/Jumbotron';
-import { useLogionChain, ApiState, Metadata } from './logion-chain';
+import { useLogionChain, ApiState, NodeMetadata } from './logion-chain';
 
 import Shell from './Shell';
 
-function status(apiState: ApiState, metadata: Metadata | null): string {
+function status(apiState: ApiState, metadata: NodeMetadata | null): string {
     if(apiState === 'READY' && metadata === null) {
         return "connected";
     } else if(apiState === 'READY' && metadata !== null) {
@@ -21,6 +21,9 @@ function status(apiState: ApiState, metadata: Metadata | null): string {
 
 export default function Wallet() {
     const { injectedAccounts, apiState, connect, connectedNodeMetadata } = useLogionChain();
+    if(injectedAccounts === null) {
+        return null;
+    }
 
     const connectButton = apiState === 'DISCONNECTED' ? <Button onClick={connect}>Connect</Button> : null;
 

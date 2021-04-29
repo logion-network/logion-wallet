@@ -1,16 +1,21 @@
 import { RegistryTypes } from '@polkadot/types/types/registry';
 
+export interface Node {
+    name: string,
+    socket: string,
+    peerId: string,
+}
+
 export interface ConfigType {
     APP_NAME: string,
-    PROVIDER_SOCKET: string,
     DEVELOPMENT_KEYRING: boolean,
     RPC: object,
     types: RegistryTypes,
+    availableNodes: Node[],
 }
 
 export const DEFAULT_CONFIG: ConfigType = {
     APP_NAME: "Logion Wallet",
-    PROVIDER_SOCKET: "",
     DEVELOPMENT_KEYRING: true,
     RPC: {
         
@@ -19,7 +24,8 @@ export const DEFAULT_CONFIG: ConfigType = {
         Address: "MultiAddress",
         LookupSource: "MultiAddress",
         PeerId: "(Vec<u8>)"
-    }
+    },
+    availableNodes: []
 };
 
 export interface EnvConfigType extends Record<string, any> {

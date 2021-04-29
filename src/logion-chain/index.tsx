@@ -16,7 +16,7 @@ import {
 
     ExtrinsicFetchSpecification as ContextExtrinsicFetchSpecification,
     ApiState as ContextApiState,
-    Metadata as ContextMetadata,
+    NodeMetadata as ContextNodeMetadata,
 } from './LogionChainContext';
 
 import {
@@ -70,4 +70,4 @@ export type EventRecord = PolkadotEventRecord;
 export type Extrinsic = PolkadotExtrinsic;
 export type SignAndSendCallback = SignatureSignAndSendCallback;
 export type ApiState = ContextApiState;
-export type Metadata = ContextMetadata;
+export type NodeMetadata = ContextNodeMetadata;

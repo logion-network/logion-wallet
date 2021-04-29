@@ -1,5 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Given extension and loading accounts, when rendering, then show loader 1`] = `
+<Loader
+  text="Loading accounts from extension..."
+/>
+`;
+
 exports[`Given extension and no account, when rendering, then show create account 1`] = `<CreateAccount />`;
 
 exports[`Given extension and one account, when rendering, then show wallet 1`] = `<Wallet />`;
