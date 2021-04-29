@@ -24,8 +24,9 @@ test('Given connected, when rendering, then show account and no button', () => {
         injectedAccounts: [
             mockAccount("address", "Account name")
         ],
-        metadata: {
-            nodeName: "Node name"
+        connectedNodeMetadata: {
+            name: "Node name",
+            peerId: "Node peer ID"
         }
     });
 

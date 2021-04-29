@@ -9,7 +9,7 @@ function status(apiState: ApiState, metadata: Metadata | null): string {
     if(apiState === 'READY' && metadata === null) {
         return "connected";
     } else if(apiState === 'READY' && metadata !== null) {
-        return "connected to node \"" + metadata.nodeName + "\"";
+        return `connected to node "${metadata.name}" (Peer ID: ${metadata.peerId})`;
     } else if(apiState === 'DISCONNECTED') {
         return "disconnected";
     } else if(apiState === 'ERROR') {
@@ -20,7 +20,7 @@ function status(apiState: ApiState, metadata: Metadata | null): string {
 }
 
 export default function Wallet() {
-    const { injectedAccounts, apiState, connect, metadata } = useLogionChain();
+    const { injectedAccounts, apiState, connect, connectedNodeMetadata } = useLogionChain();
 
     const connectButton = apiState === 'DISCONNECTED' ? <Button onClick={connect}>Connect</Button> : null;
 
@@ -34,7 +34,7 @@ export default function Wallet() {
             <ul>
                 {injectedAccounts.map(injectedAccount => <li key={injectedAccount.address}>{injectedAccount.address} ({injectedAccount.meta.name || ""})</li>)}
             </ul>
-            <p>You are currently {status(apiState, metadata)}</p>
+            <p>You are currently {status(apiState, connectedNodeMetadata)}</p>
             {connectButton}
         </Shell>
     );

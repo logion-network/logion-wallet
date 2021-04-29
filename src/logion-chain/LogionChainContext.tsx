@@ -46,7 +46,7 @@ export interface LogionChainContextType {
     injectedAccountsConsumptionState: ConsumptionStatus
     injectedAccounts: InjectedAccountWithMeta[],
     connect: () => void,
-    metadata: Metadata | null,
+    connectedNodeMetadata: NodeMetadata | null,
 }
 
 const initState = (config: ConfigType): LogionChainContextType => ({
@@ -65,7 +65,7 @@ const initState = (config: ConfigType): LogionChainContextType => ({
     injectedAccountsConsumptionState: 'PENDING',
     injectedAccounts: [],
     connect: () => {},
-    metadata: null,
+    connectedNodeMetadata: null,
 });
 
 type ActionType =
@@ -81,10 +81,11 @@ type ActionType =
     | 'HEADER_CONSUMPTION_STARTED'
     | 'INJECTED_ACCOUNTS_CONSUMPTION_STARTED'
     | 'SET_INJECTED_ACCOUNTS'
-    | 'SET_METADATA';
+    | 'SET_NODE_METADATA';
 
-export interface Metadata {
-    nodeName: string
+export interface NodeMetadata {
+    name: string,
+    peerId: string
 }
 
 interface Action {
@@ -94,7 +95,7 @@ interface Action {
     newEvents?: EventRecord[],
     lastHeader?: Header,
     injectedAccounts?: InjectedAccountWithMeta[],
-    metadata?: Metadata,
+    connectedNodeMetadata?: NodeMetadata,
 }
 
 const reducer: Reducer<LogionChainContextType, Action> = (state: LogionChainContextType, action: Action): LogionChainContextType => {
@@ -135,8 +136,8 @@ const reducer: Reducer<LogionChainContextType, Action> = (state: LogionChainCont
         case 'SET_INJECTED_ACCOUNTS':
             return { ...state, injectedAccounts: action.injectedAccounts! };
 
-        case 'SET_METADATA':
-            return { ...state, metadata: action.metadata! };
+        case 'SET_NODE_METADATA':
+            return { ...state, connectedNodeMetadata: action.connectedNodeMetadata! };
 
         default:
             throw new Error(`Unknown type: ${action.type}`);
@@ -169,21 +170,25 @@ const connect = (state: LogionChainContextType, dispatch: React.Dispatch<Action>
         dispatch({ type: 'CONNECT', api: _api });
         _api.isReady.then((_api) => {
             dispatch({ type: 'CONNECT_SUCCESS' });
-            fetchMetadata(_api, state, dispatch);
+            fetchConnectedNodeMetadata(_api, dispatch);
         });
     });
 
     _api.on('ready', () => {
         dispatch({ type: 'CONNECT_SUCCESS' });
-        fetchMetadata(_api, state, dispatch);
+        fetchConnectedNodeMetadata(_api, dispatch);
     });
 
     _api.on('error', err => dispatch({ type: 'CONNECT_ERROR', error: err }));
 };
 
-const fetchMetadata = async (api: ApiPromise, state: LogionChainContextType, dispatch: React.Dispatch<Action>) => {
+const fetchConnectedNodeMetadata = async (api: ApiPromise, dispatch: React.Dispatch<Action>) => {
     const nodeName = await api.rpc.system.name();
-    dispatch({type: 'SET_METADATA', metadata: {nodeName: nodeName.toString()}});
+    const nodePeerId = await api.rpc.system.localPeerId();
+    dispatch({type: 'SET_NODE_METADATA', connectedNodeMetadata: {
+        name: nodeName.toString(),
+        peerId: nodePeerId.toString(),
+    }});
 };
 
 const LogionChainContext: Context<LogionChainContextType> = React.createContext<LogionChainContextType>(initState(DEFAULT_CONFIG));

@@ -22,7 +22,7 @@ exports[`Given connected, when rendering, then show account and no button 1`] = 
   </ul>
   <p>
     You are currently 
-    connected to node "Node name"
+    connected to node "Node name" (Peer ID: Node peer ID)
   </p>
 </Shell>
 `;
