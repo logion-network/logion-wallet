@@ -1,12 +1,15 @@
 import { ReactElement } from 'react';
 import { createRenderer } from 'react-test-renderer/shallow';
-import renderer, { ReactTestRendererJSON } from 'react-test-renderer';
+import reactRenderer, { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
 
 export function render(element: ReactElement): null | ReactTestRendererJSON | ReactTestRendererJSON[] {
-    const component = renderer.create(element);
+    const component = reactRenderer.create(element);
     return component.toJSON();
 }
 
+export function renderer(element: ReactElement): ReactTestRenderer {
+    return reactRenderer.create(element);
+}
 
 export function shallowRender<E extends ReactElement>(element: ReactElement): E {
     const renderer = createRenderer();
