@@ -45,15 +45,70 @@ export class ApiPromise {
                         toNumber: () => 42,
                     }
                 });
-            }
+            },
+            getBlock: (hash: any) => {return {block: chain[hash.value]};}
         },
         system: {
             name: () => Promise.resolve("Mock node"),
             localPeerId: () => Promise.resolve("Mock peer ID"),
         },
     }
+
+    mock = {
+        head: headHash
+    }
 }
 
 export function triggerEvent(eventName: string) {
     apiCallbacks[eventName]();
+}
+
+export const TOTAL_BLOCKS = 1000;
+
+export const headHash = hashMock(TOTAL_BLOCKS - 1);
+
+export const apiMock = new ApiPromise({provider: new WsProvider(""), types: null, rpc: null});
+
+export const chain = buildChain(TOTAL_BLOCKS);
+
+function buildChain(blocks: number): any[] {
+    const chain: any[] = [];
+    let blockTime = new Date().valueOf();
+    for(let blockNumber = blocks - 1; blockNumber >= 0; --blockNumber) {
+        chain[blockNumber] = {
+            header: {
+                number: {toNumber: () => blockNumber},
+                parentHash: hashMock(blockNumber - 1),
+            },
+            extrinsics: [
+                {
+                    method: {
+                        section: "timestamp",
+                        method: "set",
+                        args: String(blockTime)
+                    }
+                }
+            ],
+            hash: hashMock(blockNumber)
+        };
+        blockTime -= 6000;
+
+        if(blockNumber % 2 === 0) {
+            chain[blockNumber].extrinsics.push({
+                method: {
+                    section: "balances",
+                    method: "transfer",
+                    args: String(blockTime)
+                }
+            });
+        }
+    }
+    return chain;
+}
+
+export function hashMock(blockNumber: number): object {
+    return {
+        value: blockNumber,
+        toString: () => blockNumber.toString()
+    };
 }

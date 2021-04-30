@@ -1,4 +1,3 @@
-
 import { ApiPromise } from '@polkadot/api';
 import { Hash, Block, Extrinsic } from '@polkadot/types/interfaces';
 
@@ -67,7 +66,7 @@ export function isLimitReached(block: Block, limit: Limit): boolean {
         if(hasTimestamp(block)) {
             return getTimestamp(block) < limit;
         } else {
-            return false;
+            return true;
         }
     } else {
         return hashEquals(block.hash, limit);
