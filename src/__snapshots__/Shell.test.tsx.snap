@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<Container
+  fluid={false}
+>
+  <div
+    className="ShellHeader"
+  >
+    <Row
+      noGutters={false}
+    >
+      <Col>
+        <Navbar
+          collapseOnSelect={false}
+          expand={true}
+          variant="light"
+        >
+          <NavbarBrand>
+            <Logo
+              size={50}
+            />
+          </NavbarBrand>
+        </Navbar>
+      </Col>
+    </Row>
+  </div>
+  <div
+    className="ShellContent"
+  >
+    <Row
+      noGutters={false}
+    >
+      <Col>
+        <p>
+          Some text
+        </p>
+        <a
+          href="https://logion.network/"
+        >
+          A link
+        </a>
+      </Col>
+    </Row>
+  </div>
+</Container>
+`;
