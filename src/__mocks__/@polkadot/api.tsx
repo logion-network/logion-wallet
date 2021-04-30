@@ -112,3 +112,21 @@ export function hashMock(blockNumber: number): object {
         toString: () => blockNumber.toString()
     };
 }
+
+class SubmittableMock {
+    signatureType: 'KEYRING' | 'INJECTED' | null = null;
+    readonly unsubscriber: () => void = () => {};
+
+    signAndSend(arg1: any, arg2: any, arg3: any) {
+        if(arg3 !== undefined) {
+            this.signatureType = 'INJECTED';
+        } else {
+            this.signatureType = 'KEYRING';
+        }
+        return Promise.resolve(this.unsubscriber);
+    }
+}
+
+export function mockSubmittable(): any {
+    return new SubmittableMock();
+}

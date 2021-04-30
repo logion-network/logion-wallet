@@ -21,3 +21,13 @@ export function web3AccountsSubscribe(callback: () => void): Promise<void> {
 export function accountsCallback() {
     return _accountsCallback;
 }
+
+const extensions: Record<string, any> = {
+    lockedSigner: {
+        signer: "lockedSigner"
+    }
+};
+
+export function web3FromAddress(signerId: string): Promise<any> {
+    return Promise.resolve(extensions[signerId]);
+}
