@@ -7,8 +7,6 @@ export function isExtensionAvailable(): boolean {
 }
 
 type Browser = 'chrome' | 'firefox';
-const browserInfo = detect();
-const browserName: Browser | null = (browserInfo && (browserInfo.name as Browser)) || null;
 
 const availableExtensions: Record<Browser, string> = {
   chrome: 'https://chrome.google.com/webstore/detail/polkadot%7Bjs%7D-extension/mopnmbcafieddcagagdcbnhejhlodfdd',
@@ -21,6 +19,8 @@ export interface Extension {
 }
 
 export function recommendedExtension(): Extension | null {
+    const browserInfo = detect();
+    const browserName: Browser | null = (browserInfo && (browserInfo.name as Browser)) || null;
     if(browserName === null) {
         return null;
     } else {
