@@ -142,6 +142,7 @@ const reducer: Reducer<LogionChainContextType, Action> = (state: LogionChainCont
             return { ...state, connectedNodeMetadata: action.connectedNodeMetadata! };
 
         default:
+            /* istanbul ignore next */
             throw new Error(`Unknown type: ${action.type}`);
     }
 };
@@ -221,7 +222,6 @@ async function consumeInjectedAccounts(state: LogionChainContextType, dispatch: 
     if(state.injectedAccountsConsumptionState === 'PENDING') {
         dispatch({type: 'INJECTED_ACCOUNTS_CONSUMPTION_STARTED'});
         enableAndConsumeInjectedAccounts(state.appName, (accounts: InjectedAccountWithMeta[]) => {
-            console.log(`Injected accounts updated: got ${accounts.length} accounts`);
             dispatch({type: 'SET_INJECTED_ACCOUNTS', injectedAccounts: accounts});
         })
     }
@@ -233,6 +233,11 @@ interface LogionChainContextProviderProps {
 }
 
 let keyringLoaded = false;
+
+export function forceKeyringLoad() {
+    keyringLoaded = false;
+}
+
 const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX.Element => {
     if(!keyringLoaded) {
         keyringLoaded = true;

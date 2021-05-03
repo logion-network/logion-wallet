@@ -6,14 +6,20 @@ export class WsProvider {
 interface ApiPromiseArgs {
     provider: WsProvider,
     types: any,
-    rpc: any
+    rpc: any,
 }
 
 let apiCallbacks: Record<string, () => void> = {};
 
+export let isReadyResolve: (() => void) | null = null;
+
+export let eventsCallback: ((issuedEvents: any) => void) | null = null;
+
+export let newHeadsCallback: ((lastHeader: any) => void) | null = null;
+
 export class ApiPromise {
 
-    constructor(args: ApiPromiseArgs) {
+    constructor(_: ApiPromiseArgs) {
         
     }
 
@@ -21,32 +27,18 @@ export class ApiPromise {
         apiCallbacks[eventName] = callback;
     }
 
-    isReady = new Promise((_) => {});
+    isReady = new Promise<ApiPromise>((resolve: ((api: ApiPromise) => void)) => isReadyResolve = () => resolve(this));
 
     query = {
         system: {
-            events: (callback: ((issuedEvents: any) => void)) => {
-                callback({
-                    toArray: () => [
-                        {
-                            
-                        }
-                    ]
-                });
-            }
+            events: (callback: ((issuedEvents: any) => void)) => { eventsCallback = callback }
         }
     }
 
     rpc = {
         chain: {
-            subscribeNewHeads: (callback: ((lastHeader: any) => void)) => {
-                callback({
-                    number: {
-                        toNumber: () => 42,
-                    }
-                });
-            },
-            getBlock: (hash: any) => {return {block: chain[hash.value]};}
+            subscribeNewHeads: (callback: ((lastHeader: any) => void)) => newHeadsCallback = callback,
+            getBlock: (hash: any) => { return { block: chain[hash.value] } }
         },
         system: {
             name: () => Promise.resolve("Mock node"),
@@ -54,8 +46,9 @@ export class ApiPromise {
         },
     }
 
-    mock = {
-        head: headHash
+    chain = {
+        head: chain[TOTAL_BLOCKS - 1],
+        chain
     }
 }
 
@@ -65,45 +58,49 @@ export function triggerEvent(eventName: string) {
 
 export const TOTAL_BLOCKS = 1000;
 
-export const headHash = hashMock(TOTAL_BLOCKS - 1);
+export const chain = buildChain(TOTAL_BLOCKS);
 
 export const apiMock = new ApiPromise({provider: new WsProvider(""), types: null, rpc: null});
-
-export const chain = buildChain(TOTAL_BLOCKS);
 
 function buildChain(blocks: number): any[] {
     const chain: any[] = [];
     let blockTime = new Date().valueOf();
     for(let blockNumber = blocks - 1; blockNumber >= 0; --blockNumber) {
-        chain[blockNumber] = {
-            header: {
-                number: {toNumber: () => blockNumber},
-                parentHash: hashMock(blockNumber - 1),
-            },
-            extrinsics: [
-                {
-                    method: {
-                        section: "timestamp",
-                        method: "set",
-                        args: String(blockTime)
-                    }
-                }
-            ],
-            hash: hashMock(blockNumber)
-        };
+        chain[blockNumber] = buildBlockMock(blockNumber, blockTime);
         blockTime -= 6000;
-
-        if(blockNumber % 2 === 0) {
-            chain[blockNumber].extrinsics.push({
-                method: {
-                    section: "balances",
-                    method: "transfer",
-                    args: String(blockTime)
-                }
-            });
-        }
     }
     return chain;
+}
+
+function buildBlockMock(blockNumber: number, blockTime: number): object {
+    const block = {
+        header: {
+            number: mockCompact(blockNumber),
+            parentHash: blockNumber > 1 ? hashMock(blockNumber - 1) : hashMock(0),
+        },
+        extrinsics: [
+            {
+                method: {
+                    section: "timestamp",
+                    method: "set",
+                    args: String(blockTime)
+                }
+            }
+        ],
+        hash: hashMock(blockNumber)
+    };
+
+    if(blockNumber % 2 === 0) {
+        block.extrinsics.push({
+            method: {
+                section: "balances",
+                method: "transfer",
+                args: ""
+            }
+        });
+    }
+
+    return block;
 }
 
 export function hashMock(blockNumber: number): object {
@@ -129,4 +126,42 @@ class SubmittableMock {
 
 export function mockSubmittable(): any {
     return new SubmittableMock();
+}
+
+export function blockMock(body: object): object {
+    return {
+        ...body
+    };
+}
+
+export function extrinsicsMock(size: number): any[] {
+    const extrinsics = [];
+    for(let i = 0; i < size; ++i) {
+        extrinsics.push({});
+    }
+    return extrinsics;
+}
+
+export function teardown() {
+    apiCallbacks = {};
+    isReadyResolve = null;
+    eventsCallback = null;
+    newHeadsCallback = null;
+}
+
+export function mockVec(array: any[]): any {
+    return {
+        toArray: () => array
+    };
+}
+
+export function mockCompact(number: number): any {
+    return {
+        toNumber: () => number
+    };
+}
+
+export function connectedAndReady() {
+    triggerEvent("connected");
+    isReadyResolve!();
 }

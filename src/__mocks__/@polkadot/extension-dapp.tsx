@@ -9,17 +9,25 @@ export function enabledApp(): string | null {
     return _enabledApp;
 }
 
-export const isWeb3Injected = true;
+export let isWeb3Injected = true;
 
-let _accountsCallback: (() => void) | null = null;
+export function setWeb3Injected(value: boolean) {
+    isWeb3Injected = value;
+}
 
-export function web3AccountsSubscribe(callback: () => void): Promise<void> {
+let _accountsCallback: ((accounts: any[]) => void) | null = null;
+
+export function web3AccountsSubscribe(callback: (accounts: any[]) => void): Promise<void> {
     _accountsCallback = callback;
     return Promise.resolve();
 }
 
 export function accountsCallback() {
     return _accountsCallback;
+}
+
+export function updateInjectedAccounts(accounts: any[]) {
+    _accountsCallback!(accounts);
 }
 
 const extensions: Record<string, any> = {
@@ -30,4 +38,9 @@ const extensions: Record<string, any> = {
 
 export function web3FromAddress(signerId: string): Promise<any> {
     return Promise.resolve(extensions[signerId]);
+}
+
+export function teardown() {
+    _enabledApp = null;
+    _accountsCallback = null;
 }

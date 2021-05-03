@@ -7,9 +7,15 @@ let pairs: Record<string, any> = {
     },
 };
 
+let _loadAllFails = false;
+
 const keyring = {
 
-    loadAll: () => {},
+    loadAll: () => {
+        if(_loadAllFails) {
+            throw "error";
+        }
+    },
 
     getPair: (signerId: string): any => {
         return pairs[signerId];
@@ -17,3 +23,11 @@ const keyring = {
 };
 
 export default keyring;
+
+export function loadAllFails(value: boolean) {
+    _loadAllFails = value;
+}
+
+export function teardown() {
+    _loadAllFails = false;
+}

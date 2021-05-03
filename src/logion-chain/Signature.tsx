@@ -30,15 +30,13 @@ export function signAndSend(parameters: SignatureParameters): Unsubscriber {
     return unsubscriber;
 }
 
-export function replaceUnsubscriber(
+export async function replaceUnsubscriber(
     currentUnsubscriber: Unsubscriber | null,
     setUnsubscriber: (newUnsubscriber: Unsubscriber) => void,
-    newUnsubscriber: Unsubscriber) {
+    newUnsubscriber: Unsubscriber): Promise<void> {
     if(currentUnsubscriber !== null) {
-        currentUnsubscriber
-            .then(callable => callable())
-            .then(_ => setUnsubscriber(newUnsubscriber));
-    } else {
-        setUnsubscriber(newUnsubscriber);
+        const callable = await currentUnsubscriber;
+        callable();
     }
+    setUnsubscriber(newUnsubscriber);
 }

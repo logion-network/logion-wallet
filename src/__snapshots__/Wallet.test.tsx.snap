@@ -1,5 +1,32 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Given connected and no metadata, when rendering, then show account, no button, no node info 1`] = `
+<Shell>
+  <Jumbotron
+    fluid={false}
+  >
+    <h1>
+      You are ready to use the Logion wallet, congratulations!
+    </h1>
+  </Jumbotron>
+  <p>
+    The following accounts were detected:
+  </p>
+  <ul>
+    <li>
+      address
+       (
+      Account name
+      )
+    </li>
+  </ul>
+  <p>
+    You are currently 
+    connected
+  </p>
+</Shell>
+`;
+
 exports[`Given connected, when rendering, then show account and no button 1`] = `
 <Shell>
   <Jumbotron
@@ -23,6 +50,60 @@ exports[`Given connected, when rendering, then show account and no button 1`] = 
   <p>
     You are currently 
     connected to node "Node name" (Peer ID: Node peer ID)
+  </p>
+</Shell>
+`;
+
+exports[`Given connecting, when rendering, then show account, no button, no node info 1`] = `
+<Shell>
+  <Jumbotron
+    fluid={false}
+  >
+    <h1>
+      You are ready to use the Logion wallet, congratulations!
+    </h1>
+  </Jumbotron>
+  <p>
+    The following accounts were detected:
+  </p>
+  <ul>
+    <li>
+      address
+       (
+      Account name
+      )
+    </li>
+  </ul>
+  <p>
+    You are currently 
+    connecting
+  </p>
+</Shell>
+`;
+
+exports[`Given connection error, when rendering, then show account, no button, no node info 1`] = `
+<Shell>
+  <Jumbotron
+    fluid={false}
+  >
+    <h1>
+      You are ready to use the Logion wallet, congratulations!
+    </h1>
+  </Jumbotron>
+  <p>
+    The following accounts were detected:
+  </p>
+  <ul>
+    <li>
+      address
+       (
+      Account name
+      )
+    </li>
+  </ul>
+  <p>
+    You are currently 
+    disconnected (error)
   </p>
 </Shell>
 `;
@@ -60,3 +141,5 @@ exports[`Given disconnected, when rendering, then show disconnected and button 1
   </Button>
 </Shell>
 `;
+
+exports[`Given no injected account, when rendering, then nothing displayed 1`] = `null`;
