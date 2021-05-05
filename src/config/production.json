@@ -4,7 +4,7 @@
         {
             "name": "Logion Node",
             "peerId": "12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2",
-            "socket": "wss://dev.network.logion:9944"
+            "socket": "wss://dev.logion.network:9944"
         }
     ]
 }
