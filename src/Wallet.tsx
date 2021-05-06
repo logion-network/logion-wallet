@@ -1,6 +1,5 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
-import Jumbotron from 'react-bootstrap/Jumbotron';
 import { useLogionChain, ApiState, NodeMetadata } from './logion-chain';
 
 import Shell from './Shell';
@@ -29,9 +28,7 @@ export default function Wallet() {
 
     return (
         <Shell>
-            <Jumbotron>
-                <h1>You are ready to use the Logion wallet, congratulations!</h1>
-            </Jumbotron>
+            <h1>You are ready to use the Logion wallet, congratulations!</h1>
 
             <p>The following accounts were detected:</p>
             <ul>
