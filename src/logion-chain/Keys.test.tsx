@@ -2,7 +2,7 @@ jest.mock('@polkadot/extension-dapp');
 jest.mock('detect-browser');
 
 import { setBrowser } from 'detect-browser';
-import { recommendedExtension, enableAndConsumeInjectedAccounts, isExtensionAvailable } from './Keys';
+import { recommendedExtension, enableExtensions, isExtensionAvailable } from './Keys';
 import { enabledApp, accountsCallback, setWeb3Injected } from '@polkadot/extension-dapp';
 
 test("detects Firefox", () => {
@@ -22,7 +22,8 @@ test("detects Chrome", () => {
 test("enables and consumes injected accounts", async () => {
     const appName = "app";
     const callback = () => {};
-    await enableAndConsumeInjectedAccounts(appName, callback);
+    const register = await enableExtensions(appName);
+    register(callback);
     expect(enabledApp()).toBe(appName);
     expect(accountsCallback()).toBe(callback);
 });

@@ -4,31 +4,53 @@ jest.mock('./config');
 import React from 'react';
 import Main from './Main';
 import { setContextMock, setExtensionAvailable } from './logion-chain';
-import { shallowRender, mockAccount } from './tests';
+import { shallowRender, mockAccount, act } from './tests';
+
+test('Given no enabled extension, when rendering, then show loader', () => {
+    setContextMock({
+        extensionsEnabled: false,
+    });
+
+    let tree: any;
+    act(() => { tree = shallowRender(<Main />) });
+
+    expect(tree).toMatchSnapshot();
+});
 
 test('Given no extension, when rendering, then show install', () => {
     setExtensionAvailable(false);
+    setContextMock({
+        extensionsEnabled: true,
+    });
 
-    const tree = shallowRender(<Main />);
+    let tree: any;
+    act(() => { tree = shallowRender(<Main />) });
 
     expect(tree).toMatchSnapshot();
 });
 
 test('Given extension and loading accounts, when rendering, then show loader', () => {
     setExtensionAvailable(true);
+    setContextMock({
+        extensionsEnabled: true,
+        injectedAccounts: null,
+    });
 
-    const tree = shallowRender(<Main />);
+    let tree: any;
+    act(() => { tree = shallowRender(<Main />) });
 
     expect(tree).toMatchSnapshot();
 });
 
 test('Given extension and no account, when rendering, then show create account', () => {
     setContextMock({
-        injectedAccounts: []
+        extensionsEnabled: true,
+        injectedAccounts: [],
     });
     setExtensionAvailable(true);
 
-    const tree = shallowRender(<Main />);
+    let tree: any;
+    act(() => { tree = shallowRender(<Main />) });
 
     expect(tree).toMatchSnapshot();
 });
@@ -38,11 +60,13 @@ test('Given extension and one account, when rendering, then show wallet', () => 
         apiState: 'READY',
         injectedAccounts: [
             mockAccount("address", "Account name")
-        ]
+        ],
+        extensionsEnabled: true,
     });
     setExtensionAvailable(true);
 
-    const tree = shallowRender(<Main />);
+    let tree: any;
+    act(() => { tree = shallowRender(<Main />) });
 
     expect(tree).toMatchSnapshot();
 });

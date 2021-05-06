@@ -9,7 +9,7 @@ import { EventRecord, Header, Extrinsic, Hash, Block } from '@polkadot/types/int
 import type { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
 import { fetchExtrinsics, ExtrinsicsAndHead } from './Blocks';
-import { enableAndConsumeInjectedAccounts } from './Keys';
+import { enableExtensions } from './Keys';
 
 ///
 // Initial state for `useReducer`
@@ -48,6 +48,7 @@ export interface LogionChainContextType {
     selectedNode: Node | null,
     connect: () => void,
     connectedNodeMetadata: NodeMetadata | null,
+    extensionsEnabled: boolean,
 }
 
 const initState = (config: ConfigType): LogionChainContextType => ({
@@ -68,6 +69,7 @@ const initState = (config: ConfigType): LogionChainContextType => ({
     selectedNode: null,
     connect: () => {},
     connectedNodeMetadata: null,
+    extensionsEnabled: false,
 });
 
 type ActionType =
@@ -83,7 +85,8 @@ type ActionType =
     | 'HEADER_CONSUMPTION_STARTED'
     | 'INJECTED_ACCOUNTS_CONSUMPTION_STARTED'
     | 'SET_INJECTED_ACCOUNTS'
-    | 'SET_NODE_METADATA';
+    | 'SET_NODE_METADATA'
+    | 'EXTENSIONS_ENABLED';
 
 export interface NodeMetadata {
     name: string,
@@ -140,6 +143,9 @@ const reducer: Reducer<LogionChainContextType, Action> = (state: LogionChainCont
 
         case 'SET_NODE_METADATA':
             return { ...state, connectedNodeMetadata: action.connectedNodeMetadata! };
+
+        case 'EXTENSIONS_ENABLED':
+            return { ...state, extensionsEnabled: true };
 
         default:
             /* istanbul ignore next */
@@ -221,9 +227,11 @@ function consumeHeaders(state: LogionChainContextType, dispatch: React.Dispatch<
 async function consumeInjectedAccounts(state: LogionChainContextType, dispatch: React.Dispatch<Action>) {
     if(state.injectedAccountsConsumptionState === 'PENDING') {
         dispatch({type: 'INJECTED_ACCOUNTS_CONSUMPTION_STARTED'});
-        enableAndConsumeInjectedAccounts(state.appName, (accounts: InjectedAccountWithMeta[]) => {
+        const register = await enableExtensions(state.appName);
+        dispatch({type: 'EXTENSIONS_ENABLED'});
+        register((accounts: InjectedAccountWithMeta[]) => {
             dispatch({type: 'SET_INJECTED_ACCOUNTS', injectedAccounts: accounts});
-        })
+        });
     }
 }
 

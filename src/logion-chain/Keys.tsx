@@ -33,7 +33,9 @@ export function recommendedExtension(): Extension | null {
 
 type InjectedAccountsConsumer = (accounts: InjectedAccountWithMeta[]) => void;
 
-export async function enableAndConsumeInjectedAccounts(appName: string, callback: InjectedAccountsConsumer): Promise<void> {
+type InjectedAccountsConsumerRegister = (consumer: InjectedAccountsConsumer) => void;
+
+export async function enableExtensions(appName: string): Promise<InjectedAccountsConsumerRegister> {
     await web3Enable(appName);
-    await web3AccountsSubscribe(callback);
+    return consumer => web3AccountsSubscribe(consumer);
 }

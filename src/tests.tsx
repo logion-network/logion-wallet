@@ -1,6 +1,6 @@
 import { ReactElement } from 'react';
 import { createRenderer } from 'react-test-renderer/shallow';
-import reactRenderer, { ReactTestRenderer, ReactTestRendererJSON } from 'react-test-renderer';
+import reactRenderer, { ReactTestRenderer, ReactTestRendererJSON, act as reactAct } from 'react-test-renderer';
 
 export function render(element: ReactElement): null | ReactTestRendererJSON | ReactTestRendererJSON[] {
     const component = reactRenderer.create(element);
@@ -25,3 +25,5 @@ export function mockAccount(address: string, name: string) {
         }
     };
 }
+
+export { reactAct as act };

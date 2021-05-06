@@ -10,4 +10,10 @@ exports[`Given extension and no account, when rendering, then show create accoun
 
 exports[`Given extension and one account, when rendering, then show wallet 1`] = `<Wallet />`;
 
+exports[`Given no enabled extension, when rendering, then show loader 1`] = `
+<Loader
+  text="Enabling extensions..."
+/>
+`;
+
 exports[`Given no extension, when rendering, then show install 1`] = `<InstallExtension />`;
