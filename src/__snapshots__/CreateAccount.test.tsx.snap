@@ -2,12 +2,8 @@
 
 exports[`renders 1`] = `
 <Shell>
-  <Jumbotron
-    fluid={false}
-  >
-    <h1>
-      Create an account with the extension in order to use the wallet
-    </h1>
-  </Jumbotron>
+  <h1>
+    Create an account with the extension in order to use the wallet
+  </h1>
 </Shell>
 `;

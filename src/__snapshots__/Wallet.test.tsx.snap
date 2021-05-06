@@ -2,13 +2,9 @@
 
 exports[`Given connected and no metadata, when rendering, then show account, no button, no node info 1`] = `
 <Shell>
-  <Jumbotron
-    fluid={false}
-  >
-    <h1>
-      You are ready to use the Logion wallet, congratulations!
-    </h1>
-  </Jumbotron>
+  <h1>
+    You are ready to use the Logion wallet, congratulations!
+  </h1>
   <p>
     The following accounts were detected:
   </p>
@@ -29,13 +25,9 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
 
 exports[`Given connected, when rendering, then show account and no button 1`] = `
 <Shell>
-  <Jumbotron
-    fluid={false}
-  >
-    <h1>
-      You are ready to use the Logion wallet, congratulations!
-    </h1>
-  </Jumbotron>
+  <h1>
+    You are ready to use the Logion wallet, congratulations!
+  </h1>
   <p>
     The following accounts were detected:
   </p>
@@ -56,13 +48,9 @@ exports[`Given connected, when rendering, then show account and no button 1`] = 
 
 exports[`Given connecting, when rendering, then show account, no button, no node info 1`] = `
 <Shell>
-  <Jumbotron
-    fluid={false}
-  >
-    <h1>
-      You are ready to use the Logion wallet, congratulations!
-    </h1>
-  </Jumbotron>
+  <h1>
+    You are ready to use the Logion wallet, congratulations!
+  </h1>
   <p>
     The following accounts were detected:
   </p>
@@ -83,13 +71,9 @@ exports[`Given connecting, when rendering, then show account, no button, no node
 
 exports[`Given connection error, when rendering, then show account, no button, no node info 1`] = `
 <Shell>
-  <Jumbotron
-    fluid={false}
-  >
-    <h1>
-      You are ready to use the Logion wallet, congratulations!
-    </h1>
-  </Jumbotron>
+  <h1>
+    You are ready to use the Logion wallet, congratulations!
+  </h1>
   <p>
     The following accounts were detected:
   </p>
@@ -110,13 +94,9 @@ exports[`Given connection error, when rendering, then show account, no button, n
 
 exports[`Given disconnected, when rendering, then show disconnected and button 1`] = `
 <Shell>
-  <Jumbotron
-    fluid={false}
-  >
-    <h1>
-      You are ready to use the Logion wallet, congratulations!
-    </h1>
-  </Jumbotron>
+  <h1>
+    You are ready to use the Logion wallet, congratulations!
+  </h1>
   <p>
     The following accounts were detected:
   </p>
