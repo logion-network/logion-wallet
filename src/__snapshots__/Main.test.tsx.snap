@@ -1,5 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Given extension and legal officer account, when rendering, then show legal officer wallet 1`] = `<LegalOfficerWallet />`;
+
 exports[`Given extension and loading accounts, when rendering, then show loader 1`] = `
 <Loader
   text="Loading accounts from extension..."

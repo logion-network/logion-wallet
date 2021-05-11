@@ -2,6 +2,7 @@
 
 # Logion wallet
 
+
 ## Installation
 
 For the most recent version and how to install yarn, please refer to [yarn](https://yarnpkg.com/) documentation and installation guides. 
@@ -18,12 +19,18 @@ You can start the prototype in development mode to connect to a locally running 
 yarn start
 ```
 
-You can also build the app in production mode,
+### Test users
 
-```bash
-yarn build
-```
-and open `build/index.html` in your favorite browser.
+`Alice` is the single legal officer powering the Logion wallet. In order to access the legal officer UI,
+Alice's keypair must be loaded in the Polkadot extension. To do so:
+
+1. Use "Import account from pre-existing seed"
+2. Encode the following secret seed 
+`0xe5be9a5092b81bca64be81d212e7f2f9eba183bb7a90954f7b76361f6edb5c0a`
+3. Set a password
+
+The logion wallet should now show the legal officer interface instead of the regular wallet.
+
 
 ## Configuration
 

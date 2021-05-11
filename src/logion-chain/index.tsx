@@ -9,6 +9,7 @@ import {
     Extrinsic as PolkadotExtrinsic,
 } from '@polkadot/types/interfaces';
 import keyring from '@polkadot/ui-keyring';
+import { InjectedAccountWithMeta as PolkadotInjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
 import {
     LogionChainContextProvider,
@@ -71,3 +72,4 @@ export type Extrinsic = PolkadotExtrinsic;
 export type SignAndSendCallback = SignatureSignAndSendCallback;
 export type ApiState = ContextApiState;
 export type NodeMetadata = ContextNodeMetadata;
+export type InjectedAccountWithMeta = PolkadotInjectedAccountWithMeta;
