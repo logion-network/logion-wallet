@@ -70,3 +70,19 @@ test('Given extension and one account, when rendering, then show wallet', () => 
 
     expect(tree).toMatchSnapshot();
 });
+
+test('Given extension and legal officer account, when rendering, then show legal officer wallet', () => {
+    setContextMock({
+        apiState: 'READY',
+        injectedAccounts: [
+            mockAccount("5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY", "Alice")
+        ],
+        extensionsEnabled: true,
+    });
+    setExtensionAvailable(true);
+
+    let tree: any;
+    act(() => { tree = shallowRender(<Main />) });
+
+    expect(tree).toMatchSnapshot();
+});

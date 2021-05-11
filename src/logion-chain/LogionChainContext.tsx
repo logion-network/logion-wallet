@@ -6,7 +6,7 @@ import jsonrpc from '@polkadot/types/interfaces/jsonrpc';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import keyring from '@polkadot/ui-keyring';
 import { EventRecord, Header, Extrinsic, Hash, Block } from '@polkadot/types/interfaces';
-import type { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
+import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
 import { fetchExtrinsics, ExtrinsicsAndHead } from './Blocks';
 import { enableExtensions } from './Keys';
