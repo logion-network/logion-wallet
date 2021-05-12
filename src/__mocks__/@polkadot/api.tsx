@@ -165,3 +165,9 @@ export function connectedAndReady() {
     triggerEvent("connected");
     isReadyResolve!();
 }
+
+export function mockSigner(signRaw: (parameters: object) => Promise<string>) {
+    return {
+        signRaw
+    };
+}
