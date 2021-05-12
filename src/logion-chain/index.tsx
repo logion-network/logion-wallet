@@ -24,7 +24,7 @@ import {
     signAndSend,
     replaceUnsubscriber,
 
-    SignatureParameters as SignatureSignatureParameters,
+    ExtrinsicSignatureParameters as SignatureExtrinsicSignatureParameters,
     Unsubscriber as SignatureUnsubscriber,
     SignAndSendCallback as SignatureSignAndSendCallback,
 } from './Signature';
@@ -57,7 +57,7 @@ export {
 };
 
 export type Unsubscriber = SignatureUnsubscriber;
-export type SignatureParameters = SignatureSignatureParameters;
+export type ExtrinsicSignatureParameters = SignatureExtrinsicSignatureParameters;
 export type ExtrinsicFetchSpecification = ContextExtrinsicFetchSpecification;
 
 export type ExtrinsicsAndHead = BlocksExtrinsicsAndHead;
