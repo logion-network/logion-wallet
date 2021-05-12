@@ -5,7 +5,7 @@ import Wallet from './Wallet';
 import Loader from './Loader';
 import InstallExtension from './InstallExtension';
 import CreateAccount from './CreateAccount';
-import LegalOfficerWallet from './LegalOfficerWallet';
+import LegalOfficerWallet from './legal-officer/LegalOfficerWallet';
 
 const LEGAL_OFFICERS: string[] = [ "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY" ];
 

@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders null with no data 1`] = `null`;
+
+exports[`Renders pending requests 1`] = `
+<Shell>
+  <h1>
+    Pending Tokenization Requests
+  </h1>
+  <ForwardRef
+    bordered={true}
+    striped={true}
+  >
+    <thead>
+      <tr>
+        <th>
+          Requester
+        </th>
+        <th>
+          Token
+        </th>
+        <th>
+          bars
+        </th>
+        <th>
+          Actions
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW
+        </td>
+        <td>
+          TOKEN1
+        </td>
+        <td>
+          1
+        </td>
+        <td>
+          <ButtonGroup
+            aria-label="actions"
+            role="group"
+            toggle={false}
+            vertical={false}
+          >
+            <Button
+              active={false}
+              data-testid="reject-1"
+              disabled={false}
+              onClick={[Function]}
+              variant="danger"
+            >
+              X
+            </Button>
+          </ButtonGroup>
+        </td>
+      </tr>
+    </tbody>
+  </ForwardRef>
+</Shell>
+`;
