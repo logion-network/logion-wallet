@@ -5,6 +5,7 @@ import React from 'react';
 import Main from './Main';
 import { setContextMock, setExtensionAvailable } from './logion-chain';
 import { shallowRender, mockAccount, act } from './tests';
+import { DEFAULT_LEGAL_OFFICER } from './legal-officer/Model';
 
 test('Given no enabled extension, when rendering, then show loader', () => {
     setContextMock({
@@ -75,7 +76,7 @@ test('Given extension and legal officer account, when rendering, then show legal
     setContextMock({
         apiState: 'READY',
         injectedAccounts: [
-            mockAccount("5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY", "Alice")
+            mockAccount(DEFAULT_LEGAL_OFFICER, "Alice")
         ],
         extensionsEnabled: true,
     });

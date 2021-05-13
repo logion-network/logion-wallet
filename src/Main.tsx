@@ -6,8 +6,9 @@ import Loader from './Loader';
 import InstallExtension from './InstallExtension';
 import CreateAccount from './CreateAccount';
 import LegalOfficerWallet from './legal-officer/LegalOfficerWallet';
+import { DEFAULT_LEGAL_OFFICER } from './legal-officer/Model';
 
-const LEGAL_OFFICERS: string[] = [ "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY" ];
+const LEGAL_OFFICERS: string[] = [ DEFAULT_LEGAL_OFFICER ];
 
 function includesLegalOfficer(accounts: InjectedAccountWithMeta[]): boolean {
     return accounts

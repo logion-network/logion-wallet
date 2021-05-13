@@ -1,3 +1,7 @@
+export const DEFAULT_LEGAL_OFFICER = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"; // Alice
+
+export const ANOTHER_LEGAL_OFFICER = "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty"; // Bob
+
 export type TokenizationRequestStatus = "PENDING" | "REJECTED";
 
 export interface TokenizationRequest {
@@ -12,7 +16,7 @@ export interface TokenizationRequest {
 export const INITIAL_REQUESTS_MOCK: TokenizationRequest[] = [
     {
         id: "1",
-        legalOfficerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
         requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
         requestedTokenName: "TOKEN1",
         bars: 1,
@@ -20,7 +24,7 @@ export const INITIAL_REQUESTS_MOCK: TokenizationRequest[] = [
     },
     {
         id: "2",
-        legalOfficerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
         requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
         requestedTokenName: "TOKEN2",
         bars: 2,
@@ -28,7 +32,7 @@ export const INITIAL_REQUESTS_MOCK: TokenizationRequest[] = [
     },
     {
         id: "3",
-        legalOfficerAddress: "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+        legalOfficerAddress: ANOTHER_LEGAL_OFFICER,
         requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
         requestedTokenName: "TOKEN3",
         bars: 3,
