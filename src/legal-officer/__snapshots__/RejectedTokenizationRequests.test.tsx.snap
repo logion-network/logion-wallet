@@ -5,7 +5,7 @@ exports[`Renders null with no data 1`] = `null`;
 exports[`Renders pending requests 1`] = `
 <React.Fragment>
   <h1>
-    Pending Tokenization Requests
+    Rejected Tokenization Requests
   </h1>
   <ForwardRef
     bordered={true}
@@ -22,9 +22,6 @@ exports[`Renders pending requests 1`] = `
         <th>
           bars
         </th>
-        <th>
-          Actions
-        </th>
       </tr>
     </thead>
     <tbody>
@@ -37,24 +34,6 @@ exports[`Renders pending requests 1`] = `
         </td>
         <td>
           1
-        </td>
-        <td>
-          <ButtonGroup
-            aria-label="actions"
-            role="group"
-            toggle={false}
-            vertical={false}
-          >
-            <Button
-              active={false}
-              data-testid="reject-1"
-              disabled={false}
-              onClick={[Function]}
-              variant="danger"
-            >
-              X
-            </Button>
-          </ButtonGroup>
         </td>
       </tr>
     </tbody>

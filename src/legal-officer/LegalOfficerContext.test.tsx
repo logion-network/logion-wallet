@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react';
 import { LegalOfficerContextProvider, useLegalOfficerContext } from './LegalOfficerContext';
 import { render, waitFor } from '@testing-library/react';
-import { render as testsRender, act } from '../tests';
+import { DEFAULT_LEGAL_OFFICER } from './Model';
 
 test("Context initially fetches requests", async () => {
     let result = render(<TestProvider reject={false} />);
     await waitFor(() => { });
     expect(result.getByTestId("pendingTokenizationRequests.length")).toHaveTextContent("2");
+    expect(result.getByTestId("rejectedTokenizationRequests.length")).toHaveTextContent("0");
 });
 
 function TestProvider(props: TestConsumerProps) {
     return (
-        <LegalOfficerContextProvider legalOfficerAddress="5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY">
+        <LegalOfficerContextProvider legalOfficerAddress={ DEFAULT_LEGAL_OFFICER }>
             <TestConsumer {...props} />
         </LegalOfficerContextProvider>
     );
@@ -22,7 +23,7 @@ interface TestConsumerProps {
 }
 
 function TestConsumer(props: TestConsumerProps) {
-    const { pendingTokenizationRequests, rejectRequest } = useLegalOfficerContext();
+    const { pendingTokenizationRequests, rejectRequest, rejectedTokenizationRequests } = useLegalOfficerContext();
     const [rejected, setRejected] = useState<boolean>(false);
 
     useEffect(() => {
@@ -35,6 +36,7 @@ function TestConsumer(props: TestConsumerProps) {
     return (
         <div>
             <p data-testid="pendingTokenizationRequests.length">{lengthOrNull(pendingTokenizationRequests)}</p>
+            <p data-testid="rejectedTokenizationRequests.length">{lengthOrNull(rejectedTokenizationRequests)}</p>
         </div>
     );
 }
@@ -47,4 +49,5 @@ test("Context rejects properly", async () => {
     let result = render(<TestProvider reject={true} />);
     await waitFor(() => { });
     expect(result.getByTestId("pendingTokenizationRequests.length")).toHaveTextContent("1");
+    expect(result.getByTestId("rejectedTokenizationRequests.length")).toHaveTextContent("1");
 });
