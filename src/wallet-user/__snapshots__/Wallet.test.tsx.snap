@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Given connected and no metadata, when rendering, then show account, no button, no node info 1`] = `
+exports[`Given connected and no metadata, when rendering, then show account, no connect button, no node info, tokenization 1`] = `
 <Shell>
   <h1>
     You are ready to use the Logion wallet, congratulations!
@@ -20,10 +20,11 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
     You are currently 
     connected
   </p>
+  <Tokenization />
 </Shell>
 `;
 
-exports[`Given connected, when rendering, then show account and no button 1`] = `
+exports[`Given connected, when rendering, then show account, no connect button and tokenization 1`] = `
 <Shell>
   <h1>
     You are ready to use the Logion wallet, congratulations!
@@ -43,6 +44,7 @@ exports[`Given connected, when rendering, then show account and no button 1`] = 
     You are currently 
     connected to node "Node name" (Peer ID: Node peer ID)
   </p>
+  <Tokenization />
 </Shell>
 `;
 
@@ -92,7 +94,7 @@ exports[`Given connection error, when rendering, then show account, no button, n
 </Shell>
 `;
 
-exports[`Given disconnected, when rendering, then show disconnected and button 1`] = `
+exports[`Given disconnected, when rendering, then show disconnected and connect button 1`] = `
 <Shell>
   <h1>
     You are ready to use the Logion wallet, congratulations!

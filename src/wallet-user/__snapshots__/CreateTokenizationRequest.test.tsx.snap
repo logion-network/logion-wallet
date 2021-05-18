@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<form>
+  <input
+    placeholder="Token name"
+    type="text"
+  />
+  <input
+    placeholder="Number of Gold Bars"
+    type="text"
+  />
+  <Button
+    active={false}
+    data-testid="btnSubmit"
+    disabled={false}
+    onClick={[Function]}
+    variant="primary"
+  >
+    Submit
+  </Button>
+  <Button
+    active={false}
+    data-testid="btnCancel"
+    disabled={false}
+    onClick={[Function]}
+    variant="primary"
+  >
+    Cancel
+  </Button>
+</form>
+`;

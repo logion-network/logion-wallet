@@ -1,8 +1,9 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
-import { useLogionChain, ApiState, NodeMetadata } from './logion-chain';
+import { useLogionChain, ApiState, NodeMetadata } from '../logion-chain';
 
-import Shell from './Shell';
+import Shell from '../Shell';
+import Tokenization from "./Tokenization";
 
 function status(apiState: ApiState, metadata: NodeMetadata | null): string {
     if(apiState === 'READY' && metadata === null) {
@@ -25,6 +26,7 @@ export default function Wallet() {
     }
 
     const connectButton = apiState === 'DISCONNECTED' ? <Button onClick={connect}>Connect</Button> : null;
+    const tokenization = apiState === 'READY' ? <Tokenization/> : null;
 
     return (
         <Shell>
@@ -36,6 +38,7 @@ export default function Wallet() {
             </ul>
             <p>You are currently {status(apiState, connectedNodeMetadata)}</p>
             {connectButton}
+            {tokenization}
         </Shell>
     );
 }
