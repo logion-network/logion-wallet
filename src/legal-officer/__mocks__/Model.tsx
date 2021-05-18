@@ -56,7 +56,3 @@ export async function rejectRequest(requestId: string): Promise<void> {
     }
     return Promise.resolve();
 }
-
-export function resetMock() {
-    requestsMock = buildDeepCopy(INITIAL_REQUESTS_MOCK);
-}
