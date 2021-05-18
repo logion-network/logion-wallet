@@ -4,8 +4,6 @@ import Table from 'react-bootstrap/Table';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
 
-import Shell from '../Shell';
-
 import { useLegalOfficerContext } from './LegalOfficerContext';
 
 export default function PendingTokenizationRequests() {
@@ -16,7 +14,7 @@ export default function PendingTokenizationRequests() {
     }
 
     return (
-        <Shell>
+        <>
             <h1>Pending Tokenization Requests</h1>
             <Table striped bordered>
                 <thead>
@@ -50,6 +48,6 @@ export default function PendingTokenizationRequests() {
                     }
                 </tbody>
             </Table>
-        </Shell>
+        </>
     );
 }

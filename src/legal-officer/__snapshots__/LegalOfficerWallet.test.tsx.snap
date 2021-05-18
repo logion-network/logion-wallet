@@ -4,6 +4,9 @@ exports[`renders 1`] = `
 <LegalOfficerContextProvider
   legalOfficerAddress="5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
 >
-  <PendingTokenizationRequests />
+  <Shell>
+    <PendingTokenizationRequests />
+    <RejectedTokenizationRequests />
+  </Shell>
 </LegalOfficerContextProvider>
 `;

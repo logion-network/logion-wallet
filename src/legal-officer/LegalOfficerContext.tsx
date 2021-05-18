@@ -1,18 +1,20 @@
 import React, { useState, useContext, useEffect, useCallback } from 'react';
 
-import { TokenizationRequest, FetchRequestSpecification, fetchRequests, rejectRequest as modelRejectRequest } from './Model';
+import { TokenizationRequest, fetchRequests, rejectRequest as modelRejectRequest } from './Model';
 
 export interface LegalOfficerContext {
     legalOfficerAddress: string,
     pendingTokenizationRequests: TokenizationRequest[] | null,
     rejectRequest: ((requestId: string) => Promise<void>) | null,
+    rejectedTokenizationRequests: TokenizationRequest[] | null,
 }
 
 function initialContextValue(legalOfficerAddress: string): LegalOfficerContext {
     return {
         legalOfficerAddress,
         pendingTokenizationRequests: null,
-        rejectRequest: null
+        rejectRequest: null,
+        rejectedTokenizationRequests: null,
     };
 }
 
@@ -26,17 +28,41 @@ export interface Props {
 export function LegalOfficerContextProvider(props: Props) {
     const [contextValue, setContextValue] = useState<LegalOfficerContext>(initialContextValue(props.legalOfficerAddress));
 
-    const refreshRequests = useCallback(() => {
-        async function fetchAndSet(specification: FetchRequestSpecification) {
-            const pendingTokenizationRequests = await fetchRequests(specification);
+    const refreshPendingRequests = useCallback(() => {
+        async function fetchAndSetPendingRequests() {
+            const pendingTokenizationRequests = await fetchRequests({
+                legalOfficerAddress: contextValue.legalOfficerAddress,
+                status: "PENDING",
+            });
             setContextValue({ ...contextValue, pendingTokenizationRequests });
         };
+        fetchAndSetPendingRequests();
+    }, [contextValue, setContextValue]);
 
-        const specification: FetchRequestSpecification = {
-            legalOfficerAddress: contextValue.legalOfficerAddress,
-            status: "PENDING",
+    const refreshRejectedRequests = useCallback(() => {
+        async function fetchAndSetRejectedRequests() {
+            const rejectedTokenizationRequests = await fetchRequests({
+                legalOfficerAddress: contextValue.legalOfficerAddress,
+                status: "REJECTED",
+            });
+            setContextValue({ ...contextValue, rejectedTokenizationRequests });
         };
-        fetchAndSet(specification);
+        fetchAndSetRejectedRequests();
+    }, [contextValue, setContextValue]);
+
+    const refreshRequests = useCallback(() => {
+        async function fetchAndSetAll() {
+            const pendingTokenizationRequests = await fetchRequests({
+                legalOfficerAddress: contextValue.legalOfficerAddress,
+                status: "PENDING",
+            });
+            const rejectedTokenizationRequests = await fetchRequests({
+                legalOfficerAddress: contextValue.legalOfficerAddress,
+                status: "REJECTED",
+            });
+            setContextValue({ ...contextValue, pendingTokenizationRequests, rejectedTokenizationRequests });
+        };
+        fetchAndSetAll();
     }, [contextValue, setContextValue]);
 
     useEffect(() => {
@@ -51,9 +77,15 @@ export function LegalOfficerContextProvider(props: Props) {
 
     useEffect(() => {
         if(contextValue.pendingTokenizationRequests === null) {
-            refreshRequests();
+            refreshPendingRequests();
         }
-    }, [refreshRequests, contextValue, setContextValue]);
+    }, [refreshPendingRequests, contextValue, setContextValue]);
+
+    useEffect(() => {
+        if(contextValue.rejectedTokenizationRequests === null) {
+            refreshRejectedRequests();
+        }
+    }, [refreshRejectedRequests, contextValue, setContextValue]);
 
     return (
         <LegalOfficerContextObject.Provider value={contextValue}>
