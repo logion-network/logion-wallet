@@ -1,3 +1,5 @@
+jest.mock("./Model");
+
 import { useEffect, useState } from 'react';
 import { LegalOfficerContextProvider, useLegalOfficerContext } from './LegalOfficerContext';
 import { render, waitFor } from '@testing-library/react';

@@ -28,8 +28,6 @@ export interface Props {
 export function LegalOfficerContextProvider(props: Props) {
     const [contextValue, setContextValue] = useState<LegalOfficerContext>(initialContextValue(props.legalOfficerAddress));
 
-    console.log(contextValue);
-
     const refreshPendingRequests = useCallback(() => {
         async function fetchAndSetPendingRequests() {
             const pendingTokenizationRequests = await fetchRequests({
