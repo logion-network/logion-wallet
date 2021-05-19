@@ -20,7 +20,12 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
     You are currently 
     connected
   </p>
-  <Tokenization />
+  <UserContextProvider
+    legalOfficerAddress="5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
+    userAddress="address"
+  >
+    <Tokenization />
+  </UserContextProvider>
 </Shell>
 `;
 
@@ -44,7 +49,12 @@ exports[`Given connected, when rendering, then show account, no connect button a
     You are currently 
     connected to node "Node name" (Peer ID: Node peer ID)
   </p>
-  <Tokenization />
+  <UserContextProvider
+    legalOfficerAddress="5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
+    userAddress="address"
+  >
+    <Tokenization />
+  </UserContextProvider>
 </Shell>
 `;
 

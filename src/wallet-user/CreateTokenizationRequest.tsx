@@ -2,6 +2,7 @@ import React from 'react';
 import {useForm} from 'react-hook-form';
 import Button from "react-bootstrap/Button";
 import {CreateTokenRequest} from "./Model";
+import {useUserContext} from "./UserContext";
 
 export interface Props {
     onSubmit: () => void;
@@ -10,9 +11,22 @@ export interface Props {
 
 export default function CreateTokenizationRequest(props: Props) {
 
-    const { register, handleSubmit, formState: { errors } } = useForm<CreateTokenRequest>();
-    const validateAndSubmit = (formValues: CreateTokenRequest) => {
-        console.log(formValues);
+    interface FormValues {
+        requestedTokenName: string,
+        bars: number,
+    }
+
+    const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
+    const { legalOfficerAddress, userAddress, createTokenRequest } = useUserContext();
+
+    const validateAndSubmit = (formValues: FormValues) => {
+        const request: CreateTokenRequest = {
+            legalOfficerAddress: legalOfficerAddress,
+            requesterAddress: userAddress,
+            bars: formValues.bars,
+            requestedTokenName: formValues.requestedTokenName
+        }
+        createTokenRequest!(request);
         props.onSubmit();
     }
 

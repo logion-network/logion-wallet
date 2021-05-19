@@ -4,6 +4,8 @@ import { useLogionChain, ApiState, NodeMetadata } from '../logion-chain';
 
 import Shell from '../Shell';
 import Tokenization from "./Tokenization";
+import {UserContextProvider} from "./UserContext";
+import {DEFAULT_LEGAL_OFFICER} from "../legal-officer/Model";
 
 function status(apiState: ApiState, metadata: NodeMetadata | null): string {
     if(apiState === 'READY' && metadata === null) {
@@ -26,7 +28,10 @@ export default function Wallet() {
     }
 
     const connectButton = apiState === 'DISCONNECTED' ? <Button onClick={connect}>Connect</Button> : null;
-    const tokenization = apiState === 'READY' ? <Tokenization/> : null;
+    const userContext = apiState === 'READY' ?
+        <UserContextProvider legalOfficerAddress={DEFAULT_LEGAL_OFFICER} userAddress={injectedAccounts[0].address}>
+            <Tokenization/>
+        </UserContextProvider> : null;
 
     return (
         <Shell>
@@ -38,7 +43,7 @@ export default function Wallet() {
             </ul>
             <p>You are currently {status(apiState, connectedNodeMetadata)}</p>
             {connectButton}
-            {tokenization}
+            {userContext}
         </Shell>
     );
 }
