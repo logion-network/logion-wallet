@@ -1,7 +1,7 @@
 import React from 'react';
 import {useForm} from 'react-hook-form';
 import Button from "react-bootstrap/Button";
-import {TokenizationRequest} from "./Model";
+import {CreateTokenRequest} from "./Model";
 
 export interface Props {
     onSubmit: () => void;
@@ -10,8 +10,8 @@ export interface Props {
 
 export default function CreateTokenizationRequest(props: Props) {
 
-    const { register, handleSubmit, formState: { errors } } = useForm<TokenizationRequest>();
-    const validateAndSubmit = (formValues: TokenizationRequest) => {
+    const { register, handleSubmit, formState: { errors } } = useForm<CreateTokenRequest>();
+    const validateAndSubmit = (formValues: CreateTokenRequest) => {
         console.log(formValues);
         props.onSubmit();
     }
