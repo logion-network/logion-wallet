@@ -1,24 +1,59 @@
-import React, {EventHandler} from 'react';
+import React from 'react';
+import {useForm} from 'react-hook-form';
 import Button from "react-bootstrap/Button";
+import {TokenizationRequest} from "./Model";
 
 export interface Props {
-    onSubmit: EventHandler<any>;
-    onCancel: EventHandler<any>;
+    onSubmit: () => void;
+    onCancel: () => void;
 }
 
 export default function CreateTokenizationRequest(props: Props) {
 
+    const { register, handleSubmit, formState: { errors } } = useForm<TokenizationRequest>();
+    const validateAndSubmit = (formValues: TokenizationRequest) => {
+        console.log(formValues);
+        props.onSubmit();
+    }
+
     return (
-        <form>
+        <form onSubmit={handleSubmit(validateAndSubmit)}>
             <input
+                data-testid="tokenName"
                 type="text"
                 placeholder="Token name"
+                {...register("requestedTokenName", {
+                    required: 'The token name is required',
+                    minLength: {
+                        value: 4,
+                        message: 'The token name must contain at least 4 characters'
+                    },
+                    maxLength: {
+                        value: 40,
+                        message: 'The token name must contain at most 40 characters'
+                    }
+                })}
             />
+            <p>{errors.requestedTokenName?.message}</p>
             <input
-                type="text"
+                data-testid="bars"
+                type="number"
                 placeholder="Number of Gold Bars"
+                {...register("bars", {
+                    required: 'The # of bars is required',
+                    valueAsNumber: true,
+                    min: {
+                        value: 1,
+                        message: 'The # of bars must be greater or equal to 1'
+                    },
+                    max: {
+                        value: 100,
+                        message: 'The # of bars must not be greater than 100'
+                    }
+                })}
             />
-            <Button data-testid="btnSubmit" onClick={props.onSubmit}>Submit</Button>
+            <p>{errors.bars?.message}</p>
+            <Button type="submit" data-testid="btnSubmit">Submit</Button>
             <Button data-testid="btnCancel" onClick={props.onCancel}>Cancel</Button>
         </form>
     )
