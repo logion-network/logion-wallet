@@ -12,7 +12,9 @@ exports[`renders 1`] = `
     placeholder="Token name"
     type="text"
   />
-  <p />
+  <p
+    data-testid="tokenNameMessage"
+  />
   <input
     data-testid="bars"
     name="bars"
@@ -21,7 +23,9 @@ exports[`renders 1`] = `
     placeholder="Number of Gold Bars"
     type="number"
   />
-  <p />
+  <p
+    data-testid="barsMessage"
+  />
   <Button
     active={false}
     data-testid="btnSubmit"

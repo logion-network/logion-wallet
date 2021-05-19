@@ -1,55 +1,69 @@
+import {DEFAULT_LEGAL_OFFICER} from "../legal-officer/Model";
+
+jest.mock('./UserContext')
+
 import React from 'react';
+import {setCreateTokenRequest} from "./UserContext";
 import CreateTokenizationRequest from "./CreateTokenizationRequest";
 import {shallowRender} from "../tests";
-import {act, fireEvent, render} from '@testing-library/react';
+import {fireEvent, render, screen, waitFor} from '@testing-library/react';
+import {TEST_WALLET_USER} from "./Model.test";
 
 test("renders", () => {
     const tree = shallowRender(<CreateTokenizationRequest onCancel={() => null} onSubmit={() => null}/>)
     expect(tree).toMatchSnapshot();
 });
 
-test("submit an empty form", () => {
+describe("CreateTokenizationRequest", () => {
+
     const cancelCallback = jest.fn();
     const submitCallback = jest.fn();
-    const tree = render(<CreateTokenizationRequest onCancel={cancelCallback} onSubmit={submitCallback}/>)
-    const button = tree.getByTestId("btnSubmit");
-    act(() => { fireEvent.click(button) });
-    expect(cancelCallback).not.toBeCalled();
-    expect(submitCallback).not.toBeCalled();
-});
+    const createTokenRequest = jest.fn();
 
-/*
-test("submit a valid form", () => {
-    const cancelCallback = jest.fn();
-    const submitCallback = jest.fn();
-    const tree = render(<CreateTokenizationRequest onCancel={cancelCallback} onSubmit={submitCallback}/>)
-
-    const tokeName = tree.getByTestId("tokenName");
-    const bars = tree.getByTestId("bars");
-    const button = tree.getByTestId("btnSubmit");
-    act(() => {
-        fireEvent.input(tokeName, {target: {
-            value: 'DOT7'
-            }})
-        fireEvent.input(bars, {target: {
-            value: '7'
-            }})
-        fireEvent.click(button);
+    beforeEach(() => {
+        jest.resetAllMocks();
+        setCreateTokenRequest(createTokenRequest);
+        render(<CreateTokenizationRequest onCancel={cancelCallback} onSubmit={submitCallback}/>);
     });
-    expect(cancelCallback).not.toBeCalled();
-    expect(submitCallback).toBeCalled();
-    // TODO Fix this test - see https://www.react-hook-form.com/advanced-usage#TestingForm
-});
 
- */
+    it("should display messages when an empty form is submitted", async () => {
+        const button = screen.getByTestId("btnSubmit");
+        fireEvent.click(button)
 
-test("cancel", () => {
-    const cancelCallback = jest.fn();
-    const submitCallback = jest.fn();
-    const tree = render(<CreateTokenizationRequest onCancel={cancelCallback} onSubmit={submitCallback}/>)
-    const button = tree.getByTestId("btnCancel");
-    act(() => { fireEvent.click(button) });
-    expect(cancelCallback).toBeCalled();
-    expect(submitCallback).not.toBeCalled();
-});
+        await waitFor(() => expect(screen.getByTestId("tokenNameMessage").innerHTML)
+            .toBe("The token name is required"));
+        expect(screen.getByTestId("barsMessage").innerHTML)
+            .toBe("The # of bars is required");
+        expect(cancelCallback).not.toBeCalled();
+        expect(submitCallback).not.toBeCalled();
+    });
+
+    it("should call submitCallback when a valid form is submitted, and not display messages", async () => {
+        const tokeName = screen.getByTestId("tokenName");
+        fireEvent.input(tokeName, {target: {value: 'DOT7'}})
+        const bars = screen.getByTestId("bars");
+        fireEvent.input(bars, {target: {value: '7'}})
+        const button = screen.getByTestId("btnSubmit");
+        fireEvent.click(button);
+
+        await waitFor(() => expect(submitCallback).toBeCalled());
+        expect(cancelCallback).not.toBeCalled();
+        expect(screen.getByTestId("tokenNameMessage").innerHTML).toBe("");
+        expect(screen.getByTestId("barsMessage").innerHTML).toBe("");
+        expect(createTokenRequest).toBeCalledWith({
+            legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
+            requesterAddress: TEST_WALLET_USER,
+            requestedTokenName: 'DOT7',
+            bars: 7,
+        });
+    });
+
+    it("should call cancelCallback when cancel is pressed", async () => {
+        const button = screen.getByTestId("btnCancel");
+        fireEvent.click(button)
+        await waitFor(() => expect(cancelCallback).toBeCalled());
+        expect(submitCallback).not.toBeCalled();
+    });
+
+})
 

@@ -4,7 +4,7 @@ import {mockPost} from "axios";
 
 jest.mock("axios");
 
-const TEST_WALLET_USER = "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY";
+export const TEST_WALLET_USER = "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY";
 
 test("Create Tokenization request", async () => {
     const request: CreateTokenRequest = {

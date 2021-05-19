@@ -19,7 +19,7 @@ export default function CreateTokenizationRequest(props: Props) {
     const { register, handleSubmit, formState: { errors } } = useForm<FormValues>();
     const { legalOfficerAddress, userAddress, createTokenRequest } = useUserContext();
 
-    const validateAndSubmit = (formValues: FormValues) => {
+    const submit = (formValues: FormValues) => {
         const request: CreateTokenRequest = {
             legalOfficerAddress: legalOfficerAddress,
             requesterAddress: userAddress,
@@ -31,7 +31,7 @@ export default function CreateTokenizationRequest(props: Props) {
     }
 
     return (
-        <form onSubmit={handleSubmit(validateAndSubmit)}>
+        <form onSubmit={handleSubmit(submit)}>
             <input
                 data-testid="tokenName"
                 type="text"
@@ -48,7 +48,7 @@ export default function CreateTokenizationRequest(props: Props) {
                     }
                 })}
             />
-            <p>{errors.requestedTokenName?.message}</p>
+            <p data-testid="tokenNameMessage">{errors.requestedTokenName?.message}</p>
             <input
                 data-testid="bars"
                 type="number"
@@ -66,7 +66,7 @@ export default function CreateTokenizationRequest(props: Props) {
                     }
                 })}
             />
-            <p>{errors.bars?.message}</p>
+            <p data-testid="barsMessage">{errors.bars?.message}</p>
             <Button type="submit" data-testid="btnSubmit">Submit</Button>
             <Button data-testid="btnCancel" onClick={props.onCancel}>Cancel</Button>
         </form>
