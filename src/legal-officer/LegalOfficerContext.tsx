@@ -75,8 +75,9 @@ export function LegalOfficerContextProvider(props: Props) {
                     message
                 });
                 await modelRejectRequest({
+                    legalOfficerAddress: contextValue.legalOfficerAddress,
                     requestId,
-                    signature
+                    signature,
                 });
                 refreshRequests();
             };

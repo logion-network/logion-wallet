@@ -49,7 +49,10 @@ export async function fetchRequests(specification: FetchRequestSpecification): P
 export async function rejectRequest(parameters: any): Promise<void> {
     for(let requestIndex = 0; requestIndex < requestsMock.length; ++requestIndex) {
         const request = requestsMock[requestIndex];
-        if(request.id === parameters.requestId && request.status === "PENDING") {
+        if(request.id === parameters.requestId
+            && request.status === "PENDING"
+            && request.legalOfficerAddress === parameters.legalOfficerAddress) {
+
             request.status = "REJECTED";
             return Promise.resolve();
         }
