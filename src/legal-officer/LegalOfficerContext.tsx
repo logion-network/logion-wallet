@@ -8,6 +8,7 @@ export interface LegalOfficerContext {
     pendingTokenizationRequests: TokenizationRequest[] | null,
     rejectRequest: ((requestId: string) => Promise<void>) | null,
     rejectedTokenizationRequests: TokenizationRequest[] | null,
+    refreshRequests: (() => void) | null,
 }
 
 function initialContextValue(legalOfficerAddress: string): LegalOfficerContext {
@@ -16,6 +17,7 @@ function initialContextValue(legalOfficerAddress: string): LegalOfficerContext {
         pendingTokenizationRequests: null,
         rejectRequest: null,
         rejectedTokenizationRequests: null,
+        refreshRequests: null,
     };
 }
 
@@ -82,6 +84,12 @@ export function LegalOfficerContextProvider(props: Props) {
                 refreshRequests();
             };
             setContextValue({...contextValue, rejectRequest});
+        }
+    }, [refreshRequests, contextValue, setContextValue]);
+
+    useEffect(() => {
+        if(contextValue.refreshRequests === null) {
+            setContextValue({...contextValue, refreshRequests});
         }
     }, [refreshRequests, contextValue, setContextValue]);
 
