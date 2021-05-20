@@ -44,3 +44,9 @@ export function teardown() {
     _enabledApp = null;
     _accountsCallback = null;
 }
+
+export function setSigner(signerId: string, signer: any) {
+    extensions[signerId] = {
+        signer
+    };
+}

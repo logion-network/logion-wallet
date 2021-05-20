@@ -1,6 +1,7 @@
 jest.mock('@polkadot/extension-dapp');
 jest.mock('@polkadot/ui-keyring');
 jest.mock('@polkadot/api');
+jest.mock('./Codec');
 
 import keyring from '@polkadot/ui-keyring';
 import {
@@ -14,6 +15,7 @@ import {
     signString
 } from './Signature';
 import { mockSubmittable, mockSigner } from '@polkadot/api';
+import { setSigner } from '@polkadot/extension-dapp';
 
 test("Injected account signs and sends successfully", async () => {
     const callback: SignAndSendCallback = () => {};
@@ -71,18 +73,18 @@ test("String signature", async () => {
     const signerId = "signerId";
     const message = "message";
     const expectedSignature: string = "signature";
-    const signer = mockSigner((parameters: any) => {
+    const signer = mockSigner(async (parameters: any): Promise<any> => {
         if(parameters.address === signerId && parameters.type === "bytes" && parameters.data === message) {
-            return Promise.resolve({
+            return {
                 id: "request ID",
                 signature: expectedSignature,
-            });
+            };
         } else {
-            return Promise.reject();
+            throw new Error("Unexpected call");
         }
     });
+    setSigner(signerId, signer);
     const parameters: StringSignatureParameters = {
-        signer,
         signerId,
         message
     };

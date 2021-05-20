@@ -1,4 +1,5 @@
 jest.mock("./Model");
+jest.mock('../logion-chain');
 
 import { useEffect, useState } from 'react';
 import { LegalOfficerContextProvider, useLegalOfficerContext } from './LegalOfficerContext';

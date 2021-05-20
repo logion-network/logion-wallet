@@ -23,6 +23,13 @@ export async function fetchRequests(specification: FetchRequestSpecification): P
     return response.data.requests;
 }
 
-export async function rejectRequest(requestId: string): Promise<void> {
-    await axios.post(`/api/token-request/${requestId}/reject`);
+export interface RejectRequestParameters {
+    requestId: string,
+    signature: string
+}
+
+export async function rejectRequest(parameters: RejectRequestParameters): Promise<void> {
+    await axios.post(`/api/token-request/${parameters.requestId}/reject`, {
+        signature: parameters.signature
+    });
 }

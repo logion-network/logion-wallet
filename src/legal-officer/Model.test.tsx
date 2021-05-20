@@ -19,7 +19,11 @@ test("Fetches pending requests", async () => {
 
 test("Rejects one as expected", async () => {
     const rejectCallback = jest.fn();
-    mockPost("/api/token-request/1/reject", {}, rejectCallback);
-    await rejectRequest("1");
+    const signature = "signature";
+    mockPost("/api/token-request/1/reject", { signature }, rejectCallback);
+    await rejectRequest({
+        requestId: "1",
+        signature,
+    });
     expect(rejectCallback).toBeCalled();
 });

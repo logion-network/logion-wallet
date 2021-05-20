@@ -38,3 +38,7 @@ export function recommendedExtension(): Extension | null {
 export {
     LogionChainContextProvider,
 };
+
+export function signString(parameters: any) {
+    return Promise.resolve(parameters.message);
+}
