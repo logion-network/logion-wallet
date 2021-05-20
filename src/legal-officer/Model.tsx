@@ -25,11 +25,13 @@ export async function fetchRequests(specification: FetchRequestSpecification): P
 
 export interface RejectRequestParameters {
     requestId: string,
-    signature: string
+    signature: string,
+    legalOfficerAddress: string,
 }
 
 export async function rejectRequest(parameters: RejectRequestParameters): Promise<void> {
     await axios.post(`/api/token-request/${parameters.requestId}/reject`, {
-        signature: parameters.signature
+        legalOfficerAddress: parameters.legalOfficerAddress,
+        signature: parameters.signature,
     });
 }

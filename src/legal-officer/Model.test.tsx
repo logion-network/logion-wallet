@@ -20,10 +20,12 @@ test("Fetches pending requests", async () => {
 test("Rejects one as expected", async () => {
     const rejectCallback = jest.fn();
     const signature = "signature";
-    mockPost("/api/token-request/1/reject", { signature }, rejectCallback);
+    const legalOfficerAddress = "legalOfficerAddress";
+    mockPost("/api/token-request/1/reject", { signature, legalOfficerAddress }, rejectCallback);
     await rejectRequest({
         requestId: "1",
         signature,
+        legalOfficerAddress,
     });
     expect(rejectCallback).toBeCalled();
 });
