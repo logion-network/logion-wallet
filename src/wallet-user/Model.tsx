@@ -9,6 +9,6 @@ export interface CreateTokenRequest {
 }
 
 export async function createTokenRequest(request: CreateTokenRequest): Promise<TokenizationRequest> {
-    const response = await axios.post("/token-request", request);
+    const response = await axios.post("/api/token-request", request);
     return response.data;
 }

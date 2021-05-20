@@ -14,7 +14,7 @@ test("Create Tokenization request", async () => {
         bars: 10
     }
 
-    mockPost("/token-request", {
+    mockPost("/api/token-request", {
         id: 123,
         legalOfficerAddress: request.legalOfficerAddress,
         requestedTokenName: request.requestedTokenName,

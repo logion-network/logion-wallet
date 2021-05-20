@@ -8,7 +8,7 @@ test("Fetches pending requests", async () => {
         legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
         status: "PENDING",
     };
-    mockPut("/token-request", {
+    mockPut("/api/token-request", {
         requests: [{}, {}]
     });
 
@@ -19,7 +19,7 @@ test("Fetches pending requests", async () => {
 
 test("Rejects one as expected", async () => {
     const rejectCallback = jest.fn();
-    mockPost("/token-request/1/reject", {}, rejectCallback);
+    mockPost("/api/token-request/1/reject", {}, rejectCallback);
     await rejectRequest("1");
     expect(rejectCallback).toBeCalled();
 });

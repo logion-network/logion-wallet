@@ -19,10 +19,10 @@ export interface FetchRequestSpecification {
 }
 
 export async function fetchRequests(specification: FetchRequestSpecification): Promise<TokenizationRequest[]> {
-    const response = await axios.put("/token-request", specification);
+    const response = await axios.put("/api/token-request", specification);
     return response.data.requests;
 }
 
 export async function rejectRequest(requestId: string): Promise<void> {
-    await axios.post(`/token-request/${requestId}/reject`);
+    await axios.post(`/api/token-request/${requestId}/reject`);
 }
