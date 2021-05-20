@@ -40,5 +40,5 @@ export {
 };
 
 export function signString(parameters: any) {
-    return parameters.message;
+    return Promise.resolve(parameters.message);
 }
