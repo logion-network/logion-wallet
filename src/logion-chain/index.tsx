@@ -23,10 +23,12 @@ import {
 import {
     signAndSend,
     replaceUnsubscriber,
+    signString,
 
     ExtrinsicSignatureParameters as SignatureExtrinsicSignatureParameters,
     Unsubscriber as SignatureUnsubscriber,
     SignAndSendCallback as SignatureSignAndSendCallback,
+    StringSignatureParameters as SignatureStringSignatureParameters,
 } from './Signature';
 
 import {
@@ -54,6 +56,7 @@ export {
     isExtensionAvailable,
     recommendedExtension,
     keyring,
+    signString,
 };
 
 export type Unsubscriber = SignatureUnsubscriber;
@@ -73,3 +76,4 @@ export type SignAndSendCallback = SignatureSignAndSendCallback;
 export type ApiState = ContextApiState;
 export type NodeMetadata = ContextNodeMetadata;
 export type InjectedAccountWithMeta = PolkadotInjectedAccountWithMeta;
+export type StringSignatureParameters = SignatureStringSignatureParameters;

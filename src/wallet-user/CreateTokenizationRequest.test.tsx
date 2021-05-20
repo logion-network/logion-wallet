@@ -1,8 +1,8 @@
-import {DEFAULT_LEGAL_OFFICER} from "../legal-officer/Model";
-
-jest.mock('./UserContext')
+jest.mock('./UserContext');
+jest.mock('../logion-chain');
 
 import React from 'react';
+import {DEFAULT_LEGAL_OFFICER} from "../legal-officer/Model";
 import {setCreateTokenRequest} from "./UserContext";
 import CreateTokenizationRequest from "./CreateTokenizationRequest";
 import {shallowRender} from "../tests";
@@ -43,10 +43,12 @@ describe("CreateTokenizationRequest", () => {
         fireEvent.input(tokeName, {target: {value: 'DOT7'}})
         const bars = screen.getByTestId("bars");
         fireEvent.input(bars, {target: {value: '7'}})
+
         const button = screen.getByTestId("btnSubmit");
         fireEvent.click(button);
+        await waitFor(() => {});
 
-        await waitFor(() => expect(submitCallback).toBeCalled());
+        expect(submitCallback).toBeCalled();
         expect(cancelCallback).not.toBeCalled();
         expect(screen.getByTestId("tokenNameMessage").innerHTML).toBe("");
         expect(screen.getByTestId("barsMessage").innerHTML).toBe("");
@@ -55,6 +57,7 @@ describe("CreateTokenizationRequest", () => {
             requesterAddress: TEST_WALLET_USER,
             requestedTokenName: 'DOT7',
             bars: 7,
+            signature: `${DEFAULT_LEGAL_OFFICER}-${TEST_WALLET_USER}-DOT7-7`,
         });
     });
 

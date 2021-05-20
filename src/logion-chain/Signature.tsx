@@ -1,8 +1,8 @@
 import { web3FromAddress } from '@polkadot/extension-dapp';
 import { Keyring } from '@polkadot/ui-keyring';
 import { ISubmittableResult } from '@polkadot/types/types';
-import { Signer } from '@polkadot/api/types';
 import { SubmittableExtrinsic } from '@polkadot/api/submittable/types';
+import { toHex } from './Codec';
 
 export type SignAndSendCallback = (result: ISubmittableResult) => void;
 
@@ -43,16 +43,16 @@ export async function replaceUnsubscriber(
 }
 
 export interface StringSignatureParameters {
-    signer: Signer,
     signerId: string,
-    message: string
+    message: string,
 }
 
 export async function signString(parameters: StringSignatureParameters): Promise<string> {
-    const result = await parameters.signer.signRaw!({
+    const extension = await web3FromAddress(parameters.signerId);
+    const result = await extension.signer.signRaw!({
         address: parameters.signerId,
         type: "bytes",
-        data: parameters.message
+        data: toHex(parameters.message)
     });
     return result.signature;
 }
