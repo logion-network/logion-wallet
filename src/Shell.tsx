@@ -10,29 +10,38 @@ import './Shell.css';
 
 export interface Props {
     children: JSX.Element | (JSX.Element | null)[] | null,
+    backgroundCss?: string
 }
 
 export default function Shell(props: Props) {
+    let customStyle = undefined;
+    if(props.backgroundCss !== undefined) {
+        customStyle = {
+            background: props.backgroundCss
+        };
+    }
     return (
-        <Container>
-            <div className="ShellHeader">
-                <Row>
-                    <Col>
-                        <Navbar>
-                            <Navbar.Brand>
-                                <Logo size={50} />
-                            </Navbar.Brand>
-                        </Navbar>
-                    </Col>
-                </Row>
-            </div>
-            <div className="ShellContent">
-                <Row>
-                    <Col>
-                        {props.children}
-                    </Col>
-                </Row>
-            </div>
-        </Container>
+        <div className="Shell" style={customStyle}>
+            <Container>
+                <div className="ShellHeader">
+                    <Row>
+                        <Col>
+                            <Navbar>
+                                <Navbar.Brand>
+                                    <Logo size={50} />
+                                </Navbar.Brand>
+                            </Navbar>
+                        </Col>
+                    </Row>
+                </div>
+                <div className="ShellContent">
+                    <Row>
+                        <Col>
+                            {props.children}
+                        </Col>
+                    </Row>
+                </div>
+            </Container>
+        </div>
     );
 }

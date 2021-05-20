@@ -10,7 +10,7 @@ import RejectedTokenizationRequests from './RejectedTokenizationRequests';
 export default function LegalOfficerWallet() {
     return (
         <LegalOfficerContextProvider legalOfficerAddress={DEFAULT_LEGAL_OFFICER}>
-            <Shell>
+            <Shell backgroundCss="linear-gradient(to right, #a158ff, 90%, #203acf)">
                 <PendingTokenizationRequests />
                 <RejectedTokenizationRequests />
             </Shell>

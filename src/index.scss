@@ -9,7 +9,13 @@ $font-size-base: 1.5rem;
 @import "~bootstrap/scss/bootstrap";
 
 body, html {
-    background: linear-gradient(to right, #203acf, 90%, #a158ff);
+    height: 100%;
+    width: 100%;
+}
+
+#root {
+    height: 100%;
+    width: 100%;
 }
 
 .jumbotron {
