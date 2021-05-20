@@ -7,6 +7,7 @@ exports[`renders 1`] = `
   <Shell
     backgroundCss="linear-gradient(to right, #a158ff, 90%, #203acf)"
   >
+    <RefreshRequestsButton />
     <PendingTokenizationRequests />
     <RejectedTokenizationRequests />
   </Shell>

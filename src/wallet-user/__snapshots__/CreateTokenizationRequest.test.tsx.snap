@@ -1,48 +1,257 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders 1`] = `
-<form
+<Form
+  inline={false}
   onSubmit={[Function]}
 >
-  <input
-    data-testid="tokenName"
-    name="requestedTokenName"
-    onBlur={[Function]}
-    onChange={[Function]}
-    placeholder="Token name"
-    type="text"
-  />
-  <p
-    data-testid="tokenNameMessage"
-  />
-  <input
-    data-testid="bars"
-    name="bars"
-    onBlur={[Function]}
-    onChange={[Function]}
-    placeholder="Number of Gold Bars"
-    type="number"
-  />
-  <p
-    data-testid="barsMessage"
-  />
-  <Button
-    active={false}
-    data-testid="btnSubmit"
-    disabled={false}
-    type="submit"
-    variant="primary"
+  <FormGroup
+    controlId="requestedTokenName"
   >
-    Submit
-  </Button>
-  <Button
-    active={false}
-    data-testid="btnCancel"
-    disabled={false}
-    onClick={[Function]}
-    variant="primary"
+    <FormLabel
+      column={false}
+      srOnly={false}
+    >
+      Token Name
+    </FormLabel>
+    <Unknown
+      control={
+        Object {
+          "controllerSubjectRef": Object {
+            "current": Re {
+              "observers": Array [],
+            },
+          },
+          "defaultValuesRef": Object {
+            "current": Object {},
+          },
+          "fieldArrayDefaultValuesRef": Object {
+            "current": Object {},
+          },
+          "fieldArrayNamesRef": Object {
+            "current": Set {},
+          },
+          "fieldArraySubjectRef": Object {
+            "current": Re {
+              "observers": Array [],
+            },
+          },
+          "fieldsRef": Object {
+            "current": Object {},
+          },
+          "fieldsWithValidationRef": Object {
+            "current": Object {},
+          },
+          "formStateRef": Object {
+            "current": Object {
+              "dirtyFields": Object {},
+              "errors": Object {},
+              "isDirty": false,
+              "isSubmitSuccessful": false,
+              "isSubmitted": false,
+              "isSubmitting": false,
+              "isValid": false,
+              "isValidating": false,
+              "submitCount": 0,
+              "touchedFields": Object {},
+            },
+          },
+          "formStateSubjectRef": Object {
+            "current": Re {
+              "observers": Array [],
+            },
+          },
+          "getIsDirty": [Function],
+          "inFieldArrayActionRef": Object {
+            "current": false,
+          },
+          "isWatchAllRef": Object {
+            "current": false,
+          },
+          "readFormStateRef": Object {
+            "current": Object {
+              "dirtyFields": false,
+              "errors": "all",
+              "isDirty": false,
+              "isValid": false,
+              "isValidating": false,
+              "touchedFields": false,
+            },
+          },
+          "register": [Function],
+          "shouldUnmount": undefined,
+          "unregister": [Function],
+          "validFieldsRef": Object {
+            "current": Object {},
+          },
+          "watchFieldsRef": Object {
+            "current": Set {},
+          },
+          "watchInternal": [Function],
+          "watchSubjectRef": Object {
+            "current": Re {
+              "observers": Array [],
+            },
+          },
+        }
+      }
+      defaultValue=""
+      name="requestedTokenName"
+      render={[Function]}
+      rules={
+        Object {
+          "maxLength": Object {
+            "message": "The token name must contain at most 40 characters",
+            "value": 40,
+          },
+          "minLength": Object {
+            "message": "The token name must contain at least 3 characters",
+            "value": 3,
+          },
+          "required": "The token name is required",
+        }
+      }
+    />
+    <Feedback
+      data-testid="tokenNameMessage"
+      type="invalid"
+    />
+  </FormGroup>
+  <FormGroup
+    controlId="bars"
   >
-    Cancel
-  </Button>
-</form>
+    <FormLabel
+      column={false}
+      srOnly={false}
+    >
+      Number of Gold Bars
+    </FormLabel>
+    <Unknown
+      control={
+        Object {
+          "controllerSubjectRef": Object {
+            "current": Re {
+              "observers": Array [],
+            },
+          },
+          "defaultValuesRef": Object {
+            "current": Object {},
+          },
+          "fieldArrayDefaultValuesRef": Object {
+            "current": Object {},
+          },
+          "fieldArrayNamesRef": Object {
+            "current": Set {},
+          },
+          "fieldArraySubjectRef": Object {
+            "current": Re {
+              "observers": Array [],
+            },
+          },
+          "fieldsRef": Object {
+            "current": Object {},
+          },
+          "fieldsWithValidationRef": Object {
+            "current": Object {},
+          },
+          "formStateRef": Object {
+            "current": Object {
+              "dirtyFields": Object {},
+              "errors": Object {},
+              "isDirty": false,
+              "isSubmitSuccessful": false,
+              "isSubmitted": false,
+              "isSubmitting": false,
+              "isValid": false,
+              "isValidating": false,
+              "submitCount": 0,
+              "touchedFields": Object {},
+            },
+          },
+          "formStateSubjectRef": Object {
+            "current": Re {
+              "observers": Array [],
+            },
+          },
+          "getIsDirty": [Function],
+          "inFieldArrayActionRef": Object {
+            "current": false,
+          },
+          "isWatchAllRef": Object {
+            "current": false,
+          },
+          "readFormStateRef": Object {
+            "current": Object {
+              "dirtyFields": false,
+              "errors": "all",
+              "isDirty": false,
+              "isValid": false,
+              "isValidating": false,
+              "touchedFields": false,
+            },
+          },
+          "register": [Function],
+          "shouldUnmount": undefined,
+          "unregister": [Function],
+          "validFieldsRef": Object {
+            "current": Object {},
+          },
+          "watchFieldsRef": Object {
+            "current": Set {},
+          },
+          "watchInternal": [Function],
+          "watchSubjectRef": Object {
+            "current": Re {
+              "observers": Array [],
+            },
+          },
+        }
+      }
+      defaultValue=""
+      name="bars"
+      render={[Function]}
+      rules={
+        Object {
+          "max": Object {
+            "message": "The # of bars must not be greater than 100",
+            "value": 100,
+          },
+          "min": Object {
+            "message": "The # of bars must be greater or equal to 1",
+            "value": 1,
+          },
+          "required": "The # of bars is required",
+        }
+      }
+    />
+    <Feedback
+      data-testid="barsMessage"
+      type="invalid"
+    />
+  </FormGroup>
+  <ButtonGroup
+    role="group"
+    toggle={false}
+    vertical={false}
+  >
+    <Button
+      active={false}
+      data-testid="btnSubmit"
+      disabled={false}
+      type="submit"
+      variant="primary"
+    >
+      Submit
+    </Button>
+    <Button
+      active={false}
+      data-testid="btnCancel"
+      disabled={false}
+      onClick={[Function]}
+      variant="secondary"
+    >
+      Cancel
+    </Button>
+  </ButtonGroup>
+</Form>
 `;
