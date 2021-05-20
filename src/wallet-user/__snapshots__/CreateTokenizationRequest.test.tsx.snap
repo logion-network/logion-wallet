@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<form
+  onSubmit={[Function]}
+>
+  <input
+    data-testid="tokenName"
+    name="requestedTokenName"
+    onBlur={[Function]}
+    onChange={[Function]}
+    placeholder="Token name"
+    type="text"
+  />
+  <p
+    data-testid="tokenNameMessage"
+  />
+  <input
+    data-testid="bars"
+    name="bars"
+    onBlur={[Function]}
+    onChange={[Function]}
+    placeholder="Number of Gold Bars"
+    type="number"
+  />
+  <p
+    data-testid="barsMessage"
+  />
+  <Button
+    active={false}
+    data-testid="btnSubmit"
+    disabled={false}
+    type="submit"
+    variant="primary"
+  >
+    Submit
+  </Button>
+  <Button
+    active={false}
+    data-testid="btnCancel"
+    disabled={false}
+    onClick={[Function]}
+    variant="primary"
+  >
+    Cancel
+  </Button>
+</form>
+`;

@@ -1,0 +1,45 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`REQUEST_TOKENIZATION: Disable button, Show form 1`] = `
+<div>
+  <Button
+    active={false}
+    disabled={true}
+    onClick={[Function]}
+    variant="primary"
+  >
+    Create token
+  </Button>
+  <CreateTokenizationRequest
+    onCancel={[Function]}
+    onSubmit={[Function]}
+  />
+</div>
+`;
+
+exports[`REQUEST_TOKENIZATION_DONE: Enable button, Show message 1`] = `
+<div>
+  <Button
+    active={false}
+    disabled={false}
+    onClick={[Function]}
+    variant="primary"
+  >
+    Create token
+  </Button>
+  <ConfirmTokenization />
+</div>
+`;
+
+exports[`START: Enable button 1`] = `
+<div>
+  <Button
+    active={false}
+    disabled={false}
+    onClick={[Function]}
+    variant="primary"
+  >
+    Create token
+  </Button>
+</div>
+`;

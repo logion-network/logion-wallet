@@ -1,11 +1,11 @@
-jest.mock('./logion-chain');
+jest.mock('../logion-chain');
 
 import React from 'react';
 import Wallet from './Wallet';
-import { setContextMock } from './logion-chain';
-import { shallowRender, mockAccount } from './tests';
+import { setContextMock } from '../logion-chain';
+import { shallowRender, mockAccount } from '../tests';
 
-test('Given disconnected, when rendering, then show disconnected and button', () => {
+test('Given disconnected, when rendering, then show disconnected and connect button', () => {
     setContextMock({
         apiState: 'DISCONNECTED',
         injectedAccounts: [
@@ -18,7 +18,7 @@ test('Given disconnected, when rendering, then show disconnected and button', ()
     expect(tree).toMatchSnapshot();
 });
 
-test('Given connected, when rendering, then show account and no button', () => {
+test('Given connected, when rendering, then show account, no connect button and tokenization', () => {
     setContextMock({
         apiState: 'READY',
         injectedAccounts: [
@@ -35,7 +35,7 @@ test('Given connected, when rendering, then show account and no button', () => {
     expect(tree).toMatchSnapshot();
 });
 
-test('Given connected and no metadata, when rendering, then show account, no button, no node info', () => {
+test('Given connected and no metadata, when rendering, then show account, no connect button, no node info, tokenization', () => {
     setContextMock({
         apiState: 'READY',
         injectedAccounts: [

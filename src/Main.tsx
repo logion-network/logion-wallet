@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLogionChain, isExtensionAvailable, InjectedAccountWithMeta } from './logion-chain';
 
-import Wallet from './Wallet';
+import Wallet from './wallet-user/Wallet';
 import Loader from './Loader';
 import InstallExtension from './InstallExtension';
 import CreateAccount from './CreateAccount';
