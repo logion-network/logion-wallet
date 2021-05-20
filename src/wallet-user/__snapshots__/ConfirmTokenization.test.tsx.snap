@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders confirmation 1`] = `
+<p>
+  Your request (
+  123456
+  ) has been sent to your legal officer.
+</p>
+`;
+
+exports[`renders empty 1`] = `null`;

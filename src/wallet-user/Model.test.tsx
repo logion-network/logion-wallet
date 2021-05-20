@@ -11,11 +11,12 @@ test("Create Tokenization request", async () => {
         legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
         requestedTokenName: 'TestToken',
         requesterAddress: TEST_WALLET_USER,
-        bars: 10
+        bars: 10,
+        signature: 'signature'
     }
 
     mockPost("/api/token-request", {
-        id: 123,
+        id: '123',
         legalOfficerAddress: request.legalOfficerAddress,
         requestedTokenName: request.requestedTokenName,
         requesterAddress: request.requesterAddress,
@@ -24,7 +25,7 @@ test("Create Tokenization request", async () => {
 
     const result = await createTokenRequest(request);
 
-    expect(result.id).toBe(123);
+    expect(result.id).toBe("123");
     expect(result.legalOfficerAddress).toBe(request.legalOfficerAddress);
     expect(result.requestedTokenName).toBe(request.requestedTokenName);
     expect(result.requesterAddress).toBe(request.requesterAddress);
