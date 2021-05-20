@@ -32,7 +32,7 @@ export function UserContextProvider(props: Props) {
     useEffect(() => {
         if (contextValue.createTokenRequest === null) {
             const createTokenRequest = async (request: CreateTokenRequest): Promise<TokenizationRequest> => {
-                let createdTokenRequest = await modelCreateTokenRequest(request);
+                const createdTokenRequest = await modelCreateTokenRequest(request);
                 setContextValue({...contextValue, createdTokenRequest})
                 return createdTokenRequest;
             }
