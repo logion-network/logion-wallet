@@ -7,6 +7,13 @@ exports[`Renders pending requests 1`] = `
   <h1>
     Rejected Tokenization Requests
   </h1>
+  <Button
+    active={false}
+    disabled={false}
+    variant="primary"
+  >
+    Refresh
+  </Button>
   <ForwardRef
     bordered={true}
     striped={true}
@@ -14,7 +21,7 @@ exports[`Renders pending requests 1`] = `
     <thead>
       <tr>
         <th>
-          Requester
+          Legal Officer
         </th>
         <th>
           Token
@@ -33,7 +40,28 @@ exports[`Renders pending requests 1`] = `
     <tbody>
       <tr>
         <td>
-          5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW
+          <OverlayTrigger
+            defaultShow={false}
+            overlay={
+              <Tooltip
+                id="tooltip-1"
+                placement="right"
+              >
+                5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+              </Tooltip>
+            }
+            placement="top"
+            trigger={
+              Array [
+                "hover",
+                "focus",
+              ]
+            }
+          >
+            <span>
+              Signed by Your Legal Officer
+            </span>
+          </OverlayTrigger>
         </td>
         <td>
           TOKEN1

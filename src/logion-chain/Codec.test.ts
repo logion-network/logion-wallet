@@ -17,3 +17,8 @@ test("fromHex and toHex are compatible", () => {
     const newData = fromHex(toHex(data));
     expect(newData).toBe(data);
 });
+
+test("fromHex without prefix fails", () => {
+    const hex = "74657374";
+    expect(() => fromHex(hex)).toThrow();
+});

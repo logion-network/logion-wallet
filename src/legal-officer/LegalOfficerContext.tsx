@@ -6,7 +6,7 @@ import { signString } from '../logion-chain';
 export interface LegalOfficerContext {
     legalOfficerAddress: string,
     pendingTokenizationRequests: TokenizationRequest[] | null,
-    rejectRequest: ((requestId: string) => Promise<void>) | null,
+    rejectRequest: ((requestId: string, reason: string) => Promise<void>) | null,
     rejectedTokenizationRequests: TokenizationRequest[] | null,
     refreshRequests: (() => void) | null,
 }
@@ -70,8 +70,8 @@ export function LegalOfficerContextProvider(props: Props) {
 
     useEffect(() => {
         if(contextValue.rejectRequest === null) {
-            const rejectRequest = async (requestId: string): Promise<void> => {
-                const message = `${contextValue.legalOfficerAddress}-${requestId}`;
+            const rejectRequest = async (requestId: string, rejectReason: string): Promise<void> => {
+                const message = `${contextValue.legalOfficerAddress}-${requestId}-${rejectReason}`;
                 const signature = await signString({
                     signerId: contextValue.legalOfficerAddress,
                     message
@@ -80,6 +80,7 @@ export function LegalOfficerContextProvider(props: Props) {
                     legalOfficerAddress: contextValue.legalOfficerAddress,
                     requestId,
                     signature,
+                    rejectReason,
                 });
                 refreshRequests();
             };

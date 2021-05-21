@@ -19,7 +19,9 @@ export default function RejectedTokenizationRequests() {
                     <tr>
                         <th>Requester</th>
                         <th>Token</th>
-                        <th>bars</th>
+                        <th>Bars</th>
+                        <th>Reason</th>
+                        <th>Timestamp</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,6 +31,8 @@ export default function RejectedTokenizationRequests() {
                                 <td>{request.requesterAddress}</td>
                                 <td>{request.requestedTokenName}</td>
                                 <td>{request.bars}</td>
+                                <td>{request.rejectReason || ""}</td>
+                                <td>{request.decisionOn || ""}</td>
                             </tr>
                         ))
                     }

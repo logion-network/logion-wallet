@@ -6,11 +6,16 @@ export let rejectRequest = () => {
 
 export let rejectedTokenizationRequests: any[] | null = null;
 
+export let refreshRequests: () => {
+    
+};
+
 export function useLegalOfficerContext() {
     return {
         pendingTokenizationRequests,
         rejectRequest,
         rejectedTokenizationRequests,
+        refreshRequests,
     };
 }
 
@@ -24,4 +29,8 @@ export function setRejectRequest(callback: any) {
 
 export function setRejectedRequests(requests: any[]) {
     rejectedTokenizationRequests = requests;
+}
+
+export function setRefreshRequests(callback: any) {
+    refreshRequests = callback;
 }
