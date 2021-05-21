@@ -5,12 +5,15 @@ export let createTokenRequest = () => null;
 
 export let createdTokenRequest: TokenizationRequest | null = null;
 
+export let rejectedTokenizationRequests: TokenizationRequest[] | null = null;
+
 export function useUserContext() {
     return {
         legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
         userAddress: TEST_WALLET_USER,
         createTokenRequest,
-        createdTokenRequest
+        createdTokenRequest,
+        rejectedTokenizationRequests,
     };
 }
 
@@ -20,4 +23,8 @@ export function setCreateTokenRequest(callback: any) {
 
 export function setCreatedTokenRequest(request: TokenizationRequest) {
     createdTokenRequest = request;
+}
+
+export function setRejectedRequests(requests: TokenizationRequest[]) {
+    rejectedTokenizationRequests = requests;
 }

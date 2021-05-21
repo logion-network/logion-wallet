@@ -11,10 +11,14 @@ export interface TokenizationRequest {
     requestedTokenName: string,
     bars: number,
     status: TokenizationRequestStatus,
+    rejectReason?: string | null,
+    createdOn?: string,
+    decisionOn?: string,
 }
 
 export interface FetchRequestSpecification {
-    legalOfficerAddress: string,
+    legalOfficerAddress?: string,
+    requesterAddress?: string,
     status: TokenizationRequestStatus
 }
 
@@ -27,11 +31,13 @@ export interface RejectRequestParameters {
     requestId: string,
     signature: string,
     legalOfficerAddress: string,
+    rejectReason: string,
 }
 
 export async function rejectRequest(parameters: RejectRequestParameters): Promise<void> {
     await axios.post(`/api/token-request/${parameters.requestId}/reject`, {
         legalOfficerAddress: parameters.legalOfficerAddress,
         signature: parameters.signature,
+        rejectReason: parameters.rejectReason,
     });
 }

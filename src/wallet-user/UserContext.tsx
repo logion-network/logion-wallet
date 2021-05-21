@@ -1,12 +1,14 @@
-import React, {useContext, useEffect, useState} from "react";
-import {CreateTokenRequest, createTokenRequest as modelCreateTokenRequest} from "./Model";
-import {TokenizationRequest} from "../legal-officer/Model";
+import React, { useContext, useEffect, useState, useCallback } from "react";
+import { CreateTokenRequest, createTokenRequest as modelCreateTokenRequest } from "./Model";
+import { TokenizationRequest, fetchRequests } from "../legal-officer/Model";
 
 export interface UserContext {
     legalOfficerAddress: string,
     userAddress: string,
     createTokenRequest: ((request: CreateTokenRequest) => Promise<TokenizationRequest>) | null,
-    createdTokenRequest: TokenizationRequest | null
+    createdTokenRequest: TokenizationRequest | null,
+    rejectedTokenizationRequests: TokenizationRequest[] | null,
+    refreshRejectedRequests: (() => void) | null,
 }
 
 function initialContextValue(legalOfficerAddress: string, userAddress: string): UserContext {
@@ -14,7 +16,9 @@ function initialContextValue(legalOfficerAddress: string, userAddress: string): 
         legalOfficerAddress,
         userAddress,
         createTokenRequest: null,
-        createdTokenRequest: null
+        createdTokenRequest: null,
+        rejectedTokenizationRequests: null,
+        refreshRejectedRequests: null,
     }
 }
 
@@ -38,7 +42,31 @@ export function UserContextProvider(props: Props) {
             }
             setContextValue({...contextValue, createTokenRequest});
         }
-    }, [contextValue, setContextValue])
+    }, [contextValue, setContextValue]);
+
+    const refreshRejectedRequests = useCallback(() => {
+        async function fetchAndSetRejectedRequests() {
+            const rejectedTokenizationRequests = await fetchRequests({
+                requesterAddress: contextValue.userAddress,
+                status: "REJECTED",
+            });
+            setContextValue({ ...contextValue, rejectedTokenizationRequests });
+        };
+        fetchAndSetRejectedRequests();
+    }, [contextValue, setContextValue]);
+
+    useEffect(() => {
+        if(contextValue.rejectedTokenizationRequests === null) {
+            refreshRejectedRequests();
+        }
+    }, [refreshRejectedRequests, contextValue, setContextValue]);
+
+    useEffect(() => {
+        if(contextValue.refreshRejectedRequests === null) {
+            setContextValue({...contextValue, refreshRejectedRequests});
+        }
+    }, [refreshRejectedRequests, contextValue, setContextValue]);
+
     return (
         <UserContextObject.Provider value={contextValue}>
             {props.children}

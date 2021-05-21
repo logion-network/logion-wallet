@@ -25,7 +25,7 @@ test("Renders pending requests", () => {
     expect(tree).toMatchSnapshot();
 });
 
-test("Click on button rejects request", () => {
+test("Click on reject and confirm rejects request", () => {
     setPendingRequests([
         {
             id: "1",
@@ -40,8 +40,15 @@ test("Click on button rejects request", () => {
     setRejectRequest(rejectCallback);
 
     const tree = render(<PendingTokenizationRequests />);
-    const button = tree.getByTestId("reject-1");
-    act(() => { fireEvent.click(button) });
+    const rejectButton = tree.getByTestId("reject-1");
+    act(() => { fireEvent.click(rejectButton) });
 
-    expect(rejectCallback).toBeCalled();
+    const reasonText = "Because";
+    const reasonTextArea = tree.getByTestId("reason");
+    act(() => { fireEvent.change(reasonTextArea, {target: {value: reasonText}}) });
+
+    const confirmButton = tree.getByTestId("confirm-reject-1");
+    act(() => { fireEvent.click(confirmButton) });
+
+    expect(rejectCallback).toBeCalledWith("1", reasonText);
 });
