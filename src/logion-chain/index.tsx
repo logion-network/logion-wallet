@@ -24,12 +24,12 @@ import {
 import {
     signAndSend,
     replaceUnsubscriber,
-    signString,
+    sign,
 
     ExtrinsicSignatureParameters as SignatureExtrinsicSignatureParameters,
     Unsubscriber as SignatureUnsubscriber,
     SignAndSendCallback as SignatureSignAndSendCallback,
-    StringSignatureParameters as SignatureStringSignatureParameters,
+    AttributesSignatureParameters as SignatureStringSignatureParameters,
 } from './Signature';
 
 import {
@@ -57,7 +57,7 @@ export {
     isExtensionAvailable,
     recommendedExtension,
     keyring,
-    signString,
+    sign,
 };
 
 export type Unsubscriber = SignatureUnsubscriber;

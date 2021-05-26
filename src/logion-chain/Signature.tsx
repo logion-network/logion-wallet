@@ -2,6 +2,9 @@ import { web3FromAddress } from '@polkadot/extension-dapp';
 import { ISubmittableResult } from '@polkadot/types/types';
 import { SubmittableExtrinsic } from '@polkadot/api/submittable/types';
 import { toHex } from './Codec';
+import {Hash} from 'fast-sha256';
+import {base64Encode} from '@polkadot/util-crypto';
+import {TextEncoder} from "util";
 
 export type SignAndSendCallback = (result: ISubmittableResult) => void;
 
@@ -36,17 +39,26 @@ export async function replaceUnsubscriber(
     setUnsubscriber(newUnsubscriber);
 }
 
-export interface StringSignatureParameters {
+export interface AttributesSignatureParameters {
     signerId: string,
-    message: string,
+    attributes: any[]
 }
 
-export async function signString(parameters: StringSignatureParameters): Promise<string> {
+export async function sign(parameters: AttributesSignatureParameters): Promise<string> {
     const extension = await web3FromAddress(parameters.signerId);
     const result = await extension.signer.signRaw!({
         address: parameters.signerId,
         type: "bytes",
-        data: toHex(parameters.message)
+        data: toHex(createHash(parameters.attributes))
     });
     return result.signature;
+}
+
+export function createHash(attributes: any[]): string {
+    let digest = new Hash();
+    for (let i = 0; i < attributes.length; i++) {
+        const bytes = new TextEncoder().encode(attributes[i]);
+        digest.update(bytes);
+    }
+    return base64Encode(digest.digest());
 }
