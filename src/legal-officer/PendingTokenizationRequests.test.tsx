@@ -52,3 +52,42 @@ test("Click on reject and confirm rejects request", () => {
 
     expect(rejectCallback).toBeCalledWith("1", reasonText);
 });
+
+test("Click on accept and proceed accepts request", () => {
+    setPendingRequests([
+        {
+            id: "1",
+            legalOfficerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+            requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+            requestedTokenName: "TOKEN1",
+            bars: 1,
+            status: "PENDING"
+        }
+    ]);
+
+    const tree = render(<PendingTokenizationRequests />);
+    const acceptButton = tree.getByTestId("accept-1");
+    act(() => { fireEvent.click(acceptButton) });
+
+    const proceedButton = tree.getByTestId("proceed-accept-1");
+    act(() => { fireEvent.click(proceedButton) });
+
+    const acceptingModal = tree.queryByTestId("modal-accepting-1");
+    expect(acceptingModal).not.toBeInTheDocument();
+
+    // TODO check expected requests to backend
+
+    const issueButton = tree.getByTestId("proceed-issue-1");
+    act(() => { fireEvent.click(issueButton) });
+    
+    const acceptedModal = tree.queryByTestId("modal-accepted-1");
+    expect(acceptedModal).not.toBeInTheDocument();
+
+    const closeButton = tree.getByTestId("close-accept-1");
+    act(() => { fireEvent.click(closeButton) });
+
+    const issuedModal = tree.queryByTestId("modal-issued-1");
+    expect(issuedModal).not.toBeInTheDocument();
+
+    // TODO check expected requests to node
+});

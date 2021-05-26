@@ -47,6 +47,15 @@ exports[`Renders pending requests 1`] = `
           >
             <Button
               active={false}
+              data-testid="accept-1"
+              disabled={false}
+              onClick={[Function]}
+              variant="success"
+            >
+              V
+            </Button>
+            <Button
+              active={false}
               data-testid="reject-1"
               disabled={false}
               onClick={[Function]}
@@ -74,6 +83,7 @@ exports[`Renders pending requests 1`] = `
     onHide={[Function]}
     restoreFocus={true}
     show={false}
+    size="lg"
   >
     <ModalHeader
       closeButton={true}
@@ -119,6 +129,252 @@ exports[`Renders pending requests 1`] = `
         variant="primary"
       >
         Reject
+      </Button>
+    </ModalFooter>
+  </Modal>
+  <Modal
+    animation={true}
+    autoFocus={true}
+    backdrop="static"
+    data-testid="modal-accepting-\${requestToAccept?.id}"
+    dialogAs={
+      Object {
+        "$$typeof": Symbol(react.forward_ref),
+        "render": [Function],
+      }
+    }
+    enforceFocus={true}
+    keyboard={false}
+    onHide={[Function]}
+    restoreFocus={true}
+    show={false}
+    size="lg"
+  >
+    <ModalHeader
+      closeButton={true}
+      closeLabel="Close"
+    >
+      <ModalTitle>
+        Accept request 
+        
+      </ModalTitle>
+    </ModalHeader>
+    <ModalBody>
+      <Alert
+        closeLabel="Close alert"
+        show={true}
+        transition={
+          Object {
+            "$$typeof": Symbol(react.forward_ref),
+            "defaultProps": Object {
+              "appear": false,
+              "in": false,
+              "mountOnEnter": false,
+              "timeout": 300,
+              "unmountOnExit": false,
+            },
+            "render": [Function],
+          }
+        }
+        variant="info"
+      >
+        <p>
+          You are about to
+        </p>
+        <ol>
+          <li>
+            accept the request,
+          </li>
+          <li>
+            create an asset and
+          </li>
+          <li>
+            issue 
+            
+             tokens on account 
+            
+            .
+          </li>
+        </ol>
+      </Alert>
+      <Alert
+        closeLabel="Close alert"
+        show={true}
+        transition={
+          Object {
+            "$$typeof": Symbol(react.forward_ref),
+            "defaultProps": Object {
+              "appear": false,
+              "in": false,
+              "mountOnEnter": false,
+              "timeout": 300,
+              "unmountOnExit": false,
+            },
+            "render": [Function],
+          }
+        }
+        variant="warning"
+      >
+        <p>
+          Once started, the process has to be completed with no interruption.
+        </p>
+      </Alert>
+    </ModalBody>
+    <ModalFooter>
+      <Button
+        active={false}
+        disabled={false}
+        onClick={[Function]}
+        variant="secondary"
+      >
+        Cancel
+      </Button>
+      <Button
+        active={false}
+        data-testid="proceed-accept-undefined"
+        disabled={false}
+        onClick={[Function]}
+        variant="primary"
+      >
+        Proceed
+      </Button>
+    </ModalFooter>
+  </Modal>
+  <Modal
+    animation={true}
+    autoFocus={true}
+    backdrop="static"
+    data-testid="modal-accepted-\${requestToAccept?.id}"
+    dialogAs={
+      Object {
+        "$$typeof": Symbol(react.forward_ref),
+        "render": [Function],
+      }
+    }
+    enforceFocus={true}
+    keyboard={false}
+    restoreFocus={true}
+    show={false}
+    size="lg"
+  >
+    <ModalHeader
+      closeButton={false}
+      closeLabel="Close"
+    >
+      <ModalTitle>
+        Issuing tokens for request 
+        
+      </ModalTitle>
+    </ModalHeader>
+    <ModalBody>
+      <Alert
+        closeLabel="Close alert"
+        show={true}
+        transition={
+          Object {
+            "$$typeof": Symbol(react.forward_ref),
+            "defaultProps": Object {
+              "appear": false,
+              "in": false,
+              "mountOnEnter": false,
+              "timeout": 300,
+              "unmountOnExit": false,
+            },
+            "render": [Function],
+          }
+        }
+        variant="info"
+      >
+        <p>
+          You are about to
+        </p>
+        <ol>
+          <li>
+            create an asset and
+          </li>
+          <li>
+            issue 
+            
+             tokens on account 
+            
+            .
+          </li>
+        </ol>
+      </Alert>
+    </ModalBody>
+    <ModalFooter>
+      <Button
+        active={false}
+        data-testid="proceed-issue-undefined"
+        disabled={false}
+        onClick={[Function]}
+        variant="primary"
+      >
+        Proceed
+      </Button>
+    </ModalFooter>
+  </Modal>
+  <Modal
+    animation={true}
+    autoFocus={true}
+    backdrop="static"
+    data-testid="modal-issued-\${requestToAccept?.id}"
+    dialogAs={
+      Object {
+        "$$typeof": Symbol(react.forward_ref),
+        "render": [Function],
+      }
+    }
+    enforceFocus={true}
+    keyboard={false}
+    onHide={[Function]}
+    restoreFocus={true}
+    show={false}
+    size="lg"
+  >
+    <ModalHeader
+      closeButton={true}
+      closeLabel="Close"
+    >
+      <ModalTitle>
+        Tokens issued for request 
+        
+      </ModalTitle>
+    </ModalHeader>
+    <ModalBody>
+      <Alert
+        closeLabel="Close alert"
+        show={true}
+        transition={
+          Object {
+            "$$typeof": Symbol(react.forward_ref),
+            "defaultProps": Object {
+              "appear": false,
+              "in": false,
+              "mountOnEnter": false,
+              "timeout": 300,
+              "unmountOnExit": false,
+            },
+            "render": [Function],
+          }
+        }
+        variant="success"
+      >
+        
+         tokens were successfully issued on account 
+        
+        .
+      </Alert>
+    </ModalBody>
+    <ModalFooter>
+      <Button
+        active={false}
+        data-testid="close-accept-undefined"
+        disabled={false}
+        onClick={[Function]}
+        variant="primary"
+      >
+        Close
       </Button>
     </ModalFooter>
   </Modal>
