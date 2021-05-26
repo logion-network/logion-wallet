@@ -2,9 +2,28 @@ import { Extension } from '../Keys';
 
 const LogionChainContextProvider = (props: any) => null;
 
+const api = {
+    tx: {
+        assets: {
+            create: () => {}
+        }
+    }
+};
+
+export let signAndSendCallback = null;
+
+export function signAndSend(parameters: any) {
+    signAndSendCallback = parameters.callback;
+}
+
+export function replaceUnsubscriber() {
+    
+}
+
 let context = {
     apiState: 'CONNECT_INIT',
     injectedAccounts: null,
+    api,
 };
 
 export function setContextMock(value: any) {

@@ -3,7 +3,6 @@ jest.mock('@polkadot/ui-keyring');
 jest.mock('@polkadot/api');
 jest.mock('./Codec');
 
-import keyring from '@polkadot/ui-keyring';
 import {
     SignAndSendCallback,
     ErrorCallback,
@@ -22,7 +21,6 @@ test("Injected account signs and sends successfully", async () => {
     const errorCallback: ErrorCallback = () => {};
     const submittable = mockSubmittable();
     const parameters: ExtrinsicSignatureParameters = {
-        keyring,
         signerId: "lockedSigner",
         submittable,
         callback,
@@ -31,22 +29,6 @@ test("Injected account signs and sends successfully", async () => {
     const unsubscriber = await signAndSend(parameters);
     expect(unsubscriber).toBe(submittable.unsubscriber);
     expect(submittable.signatureType).toBe('INJECTED');
-});
-
-test("Keyring account signs and sends successfully", async () => {
-    const callback: SignAndSendCallback = () => {};
-    const errorCallback: ErrorCallback = () => {};
-    const submittable = mockSubmittable();
-    const parameters: ExtrinsicSignatureParameters = {
-        keyring,
-        signerId: "regularSigner",
-        submittable,
-        callback,
-        errorCallback
-    };
-    const unsubscriber = await signAndSend(parameters);
-    expect(unsubscriber).toBe(submittable.unsubscriber);
-    expect(submittable.signatureType).toBe('KEYRING');
 });
 
 test("Setting new unsubscriber", () => {

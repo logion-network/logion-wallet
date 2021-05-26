@@ -23,7 +23,9 @@ export const DEFAULT_CONFIG: ConfigType = {
     types: {
         Address: "MultiAddress",
         LookupSource: "MultiAddress",
-        PeerId: "(Vec<u8>)"
+        PeerId: "(Vec<u8>)",
+        AccountInfo: "AccountInfoWithDualRefCount",
+        TAssetBalance: "u128",
     },
     availableNodes: []
 };
