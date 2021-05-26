@@ -10,6 +10,7 @@ import {
 } from '@polkadot/types/interfaces';
 import keyring from '@polkadot/ui-keyring';
 import { InjectedAccountWithMeta as PolkadotInjectedAccountWithMeta } from '@polkadot/extension-inject/types';
+import { ISubmittableResult as PolkadotISubmittableResult } from '@polkadot/types/types';
 
 import {
     LogionChainContextProvider,
@@ -77,3 +78,4 @@ export type ApiState = ContextApiState;
 export type NodeMetadata = ContextNodeMetadata;
 export type InjectedAccountWithMeta = PolkadotInjectedAccountWithMeta;
 export type StringSignatureParameters = SignatureStringSignatureParameters;
+export type ISubmittableResult = PolkadotISubmittableResult;

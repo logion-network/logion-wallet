@@ -1,5 +1,4 @@
 import { web3FromAddress } from '@polkadot/extension-dapp';
-import { Keyring } from '@polkadot/ui-keyring';
 import { ISubmittableResult } from '@polkadot/types/types';
 import { SubmittableExtrinsic } from '@polkadot/api/submittable/types';
 import { toHex } from './Codec';
@@ -11,7 +10,6 @@ export type Unsubscriber = Promise<() => void>;
 export type ErrorCallback = (error: any) => void;
 
 export interface ExtrinsicSignatureParameters {
-    keyring: Keyring,
     signerId: string,
     submittable: SubmittableExtrinsic<'promise'>,
     callback: SignAndSendCallback,
@@ -19,14 +17,10 @@ export interface ExtrinsicSignatureParameters {
 }
 
 export function signAndSend(parameters: ExtrinsicSignatureParameters): Unsubscriber {
-    const signer = parameters.keyring.getPair(parameters.signerId);
-    let unsubscriber: Unsubscriber;
-    if(signer.isLocked) {
-        unsubscriber = web3FromAddress(parameters.signerId)
-            .then(extension => parameters.submittable.signAndSend(parameters.signerId, {signer: extension.signer}, parameters.callback));
-    } else {
-        unsubscriber = parameters.submittable.signAndSend(signer, parameters.callback);
-    }
+    const unsubscriber = web3FromAddress(parameters.signerId)
+        .then(extension => parameters.submittable.signAndSend(parameters.signerId, {
+            signer: extension.signer
+        }, parameters.callback));
     unsubscriber.catch(parameters.errorCallback);
     return unsubscriber;
 }

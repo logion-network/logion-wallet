@@ -1,9 +1,11 @@
 jest.mock('./LegalOfficerContext');
+jest.mock('../logion-chain');
 
 import { shallowRender } from '../tests';
 import PendingTokenizationRequests from './PendingTokenizationRequests';
 import { setPendingRequests, setRejectRequest } from './LegalOfficerContext';
-import { render, act, fireEvent } from '@testing-library/react';
+import { render, act, fireEvent, waitFor } from '@testing-library/react';
+import { signAndSendCallback } from '../logion-chain';
 
 test("Renders null with no data", () => {
     const tree = shallowRender(<PendingTokenizationRequests />);
@@ -66,6 +68,7 @@ test("Click on accept and proceed accepts request", () => {
     ]);
 
     const tree = render(<PendingTokenizationRequests />);
+
     const acceptButton = tree.getByTestId("accept-1");
     act(() => { fireEvent.click(acceptButton) });
 
@@ -79,15 +82,28 @@ test("Click on accept and proceed accepts request", () => {
 
     const issueButton = tree.getByTestId("proceed-issue-1");
     act(() => { fireEvent.click(issueButton) });
-    
+
     const acceptedModal = tree.queryByTestId("modal-accepted-1");
     expect(acceptedModal).not.toBeInTheDocument();
+
+    act(() => {
+        signAndSendCallback({
+            isFinalized: true,
+            status: {
+                type: "finalized",
+                asFinalized: "finalized",
+            }
+        });
+    });
+
+    const issuingModal = tree.queryByTestId("modal-issuing-1");
+    expect(issuingModal).not.toBeInTheDocument();
+
+    // TODO check expected requests to node
 
     const closeButton = tree.getByTestId("close-accept-1");
     act(() => { fireEvent.click(closeButton) });
 
     const issuedModal = tree.queryByTestId("modal-issued-1");
     expect(issuedModal).not.toBeInTheDocument();
-
-    // TODO check expected requests to node
 });
