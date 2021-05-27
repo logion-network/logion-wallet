@@ -5,7 +5,7 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
 import {CreateTokenRequest} from "./Model";
 import {useUserContext} from "./UserContext";
-import { signString } from '../logion-chain';
+import { sign } from '../logion-chain';
 
 export interface Props {
     onSubmit: () => void;
@@ -23,10 +23,15 @@ export default function CreateTokenizationRequest(props: Props) {
     const { legalOfficerAddress, userAddress, createTokenRequest } = useUserContext();
 
     const submit = async (formValues: FormValues) => {
-        const message = `${legalOfficerAddress}-${userAddress}-${formValues.requestedTokenName}-${formValues.bars}`;
-        const signature = await signString({
+        const attributes = [
+            `${legalOfficerAddress}`,
+            `${userAddress}`,
+            `${formValues.requestedTokenName}`,
+            `${formValues.bars}`
+        ];
+        const signature = await sign({
             signerId: userAddress,
-            message
+            attributes
         });
         const request: CreateTokenRequest = {
             legalOfficerAddress: legalOfficerAddress,

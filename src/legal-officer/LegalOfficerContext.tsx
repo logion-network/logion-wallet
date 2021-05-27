@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useCallback } from 'react';
 
 import { TokenizationRequest, fetchRequests, rejectRequest as modelRejectRequest } from './Model';
-import { signString } from '../logion-chain';
+import { sign } from '../logion-chain';
 
 export interface LegalOfficerContext {
     legalOfficerAddress: string,
@@ -71,10 +71,14 @@ export function LegalOfficerContextProvider(props: Props) {
     useEffect(() => {
         if(contextValue.rejectRequest === null) {
             const rejectRequest = async (requestId: string, rejectReason: string): Promise<void> => {
-                const message = `${contextValue.legalOfficerAddress}-${requestId}-${rejectReason}`;
-                const signature = await signString({
+                const attributes = [
+                    `${contextValue.legalOfficerAddress}`,
+                    `${requestId}`,
+                    `${rejectReason}`
+                ];
+                const signature = await sign({
                     signerId: contextValue.legalOfficerAddress,
-                    message
+                    attributes
                 });
                 await modelRejectRequest({
                     legalOfficerAddress: contextValue.legalOfficerAddress,

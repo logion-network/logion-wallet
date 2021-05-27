@@ -4,14 +4,15 @@ jest.mock('@polkadot/api');
 jest.mock('./Codec');
 
 import {
+    createHash,
     SignAndSendCallback,
     ErrorCallback,
     ExtrinsicSignatureParameters,
     signAndSend,
     Unsubscriber,
     replaceUnsubscriber,
-    StringSignatureParameters,
-    signString
+    AttributesSignatureParameters,
+    sign
 } from './Signature';
 import { mockSubmittable, mockSigner } from '@polkadot/api';
 import { setSigner } from '@polkadot/extension-dapp';
@@ -53,10 +54,10 @@ test("Replacing existing unsubscriber", async () => {
 
 test("String signature", async () => {
     const signerId = "signerId";
-    const message = "message";
+    const attributes = ["message", 132, true];
     const expectedSignature: string = "signature";
     const signer = mockSigner(async (parameters: any): Promise<any> => {
-        if(parameters.address === signerId && parameters.type === "bytes" && parameters.data === message) {
+        if(parameters.address === signerId && parameters.type === "bytes" && parameters.data === createHash(attributes)) {
             return {
                 id: "request ID",
                 signature: expectedSignature,
@@ -66,10 +67,24 @@ test("String signature", async () => {
         }
     });
     setSigner(signerId, signer);
-    const parameters: StringSignatureParameters = {
+    const parameters: AttributesSignatureParameters = {
         signerId,
-        message
+        attributes
     };
-    const result = await signString(parameters);
+    const result = await sign(parameters);
     expect(result).toBe(expectedSignature);
 });
+
+test.each(
+    [
+        ["iNQmb9TmM40TuEX88olXnSCciXgjuSF9o+Fhk28DFYk=", ["abcd"]],
+        ["d6wxm/4ZeeLXmdnmmH5l/rVPYVEcA1UuuumQgmwghZA=", [1.2]],
+        ["s6jg4fmrG/46NvIx9nb3i7MKUZ0rIebFMMDu6Ou0pdA=", [456]],
+        ["L1IAt8dg2CXiUjCoVZ3wf4uIJWocNgsmhmswXmH0oAU=", ["ABC", 123, true]],
+    ])(
+    'createHash() %p is the hash of %p',
+    (expectedMessage, attributes) => {
+        const result = createHash(attributes);
+        expect(result).toBe(expectedMessage);
+    }
+);

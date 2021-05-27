@@ -17,7 +17,7 @@ export function signAndSend(parameters: any) {
 }
 
 export function replaceUnsubscriber() {
-    
+
 }
 
 let context = {
@@ -58,6 +58,6 @@ export {
     LogionChainContextProvider,
 };
 
-export function signString(parameters: any) {
-    return Promise.resolve(parameters.message);
+export function sign(parameters: any) {
+    return Promise.resolve(parameters.attributes.toString());
 }
