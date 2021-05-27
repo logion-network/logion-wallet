@@ -4,7 +4,6 @@ import { SubmittableExtrinsic } from '@polkadot/api/submittable/types';
 import { toHex } from './Codec';
 import {Hash} from 'fast-sha256';
 import {base64Encode} from '@polkadot/util-crypto';
-import {TextEncoder} from "util";
 
 export type SignAndSendCallback = (result: ISubmittableResult) => void;
 
