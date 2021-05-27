@@ -57,7 +57,7 @@ describe("CreateTokenizationRequest", () => {
             requesterAddress: TEST_WALLET_USER,
             requestedTokenName: 'DOT7',
             bars: 7,
-            signature: `${DEFAULT_LEGAL_OFFICER}-${TEST_WALLET_USER}-DOT7-7`,
+            signature: `${DEFAULT_LEGAL_OFFICER},${TEST_WALLET_USER},DOT7,7`,
         });
     });
 
