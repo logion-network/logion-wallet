@@ -24,12 +24,14 @@ import {
 import {
     signAndSend,
     replaceUnsubscriber,
+    unsubscribe,
     sign,
+    isFinalized,
 
     ExtrinsicSignatureParameters as SignatureExtrinsicSignatureParameters,
     Unsubscriber as SignatureUnsubscriber,
     SignAndSendCallback as SignatureSignAndSendCallback,
-    AttributesSignatureParameters as SignatureStringSignatureParameters,
+    AttributesSignatureParameters as SignatureAttributesSignatureParameters,
 } from './Signature';
 
 import {
@@ -45,6 +47,18 @@ import {
     recommendedExtension
 } from './Keys';
 
+import {
+    createAsset,
+    setAssetMetadata,
+    mintAmount,
+    mintTokens,
+    DEFAULT_ASSETS_DECIMALS,
+
+    AssetCreationParameters as AssetsAssetCreationParameters,
+    AssetId as AssetsAssetId,
+    AssetBalance as AssetsAssetBalance,
+} from './Assets';
+
 // Re-exports
 export {
     useLogionChain,
@@ -54,10 +68,17 @@ export {
     hashEquals,
     signAndSend,
     replaceUnsubscriber,
+    unsubscribe,
     isExtensionAvailable,
     recommendedExtension,
     keyring,
     sign,
+    createAsset,
+    isFinalized,
+    setAssetMetadata,
+    mintAmount,
+    mintTokens,
+    DEFAULT_ASSETS_DECIMALS,
 };
 
 export type Unsubscriber = SignatureUnsubscriber;
@@ -77,5 +98,8 @@ export type SignAndSendCallback = SignatureSignAndSendCallback;
 export type ApiState = ContextApiState;
 export type NodeMetadata = ContextNodeMetadata;
 export type InjectedAccountWithMeta = PolkadotInjectedAccountWithMeta;
-export type StringSignatureParameters = SignatureStringSignatureParameters;
+export type AttributesSignatureParameters = SignatureAttributesSignatureParameters;
 export type ISubmittableResult = PolkadotISubmittableResult;
+export type AssetCreationParameters = AssetsAssetCreationParameters;
+export type AssetId = AssetsAssetId;
+export type AssetBalance = AssetsAssetBalance;

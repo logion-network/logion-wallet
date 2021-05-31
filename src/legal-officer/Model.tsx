@@ -1,8 +1,10 @@
 import axios from 'axios';
+import { Moment } from 'moment';
+import { toIsoString } from '../logion-chain/datetime';
 
 export const DEFAULT_LEGAL_OFFICER = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"; // Alice
 
-export type TokenizationRequestStatus = "PENDING" | "REJECTED";
+export type TokenizationRequestStatus = "PENDING" | "REJECTED" | "ACCEPTED";
 
 export interface TokenizationRequest {
     id: string,
@@ -30,14 +32,52 @@ export async function fetchRequests(specification: FetchRequestSpecification): P
 export interface RejectRequestParameters {
     requestId: string,
     signature: string,
-    legalOfficerAddress: string,
     rejectReason: string,
+    signedOn: Moment,
 }
 
 export async function rejectRequest(parameters: RejectRequestParameters): Promise<void> {
     await axios.post(`/api/token-request/${parameters.requestId}/reject`, {
-        legalOfficerAddress: parameters.legalOfficerAddress,
         signature: parameters.signature,
         rejectReason: parameters.rejectReason,
+        signedOn: toIsoString(parameters.signedOn),
+    });
+}
+
+export interface AcceptRequestParameters {
+    requestId: string,
+    signature: string,
+    signedOn: Moment,
+}
+
+export interface AcceptResult {
+    sessionToken: string,
+}
+
+export async function acceptRequest(parameters: AcceptRequestParameters): Promise<AcceptResult> {
+    const response = await axios.post(`/api/token-request/${parameters.requestId}/accept`, {
+        signature: parameters.signature,
+        signedOn: toIsoString(parameters.signedOn),
+    });
+    return {
+        sessionToken: response.data.sessionToken
+    };
+}
+
+export interface AssetDescription {
+    assetId: string,
+    decimals: number,
+}
+
+export interface SetAssetDescriptionRequestParameters {
+    requestId: string,
+    description: AssetDescription,
+    sessionToken: string,
+}
+
+export async function setAssetDescription(parameters: SetAssetDescriptionRequestParameters): Promise<void> {
+    await axios.post(`/api/token-request/${parameters.requestId}/asset`, {
+        description: parameters.description,
+        sessionToken: parameters.sessionToken,
     });
 }

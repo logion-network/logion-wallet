@@ -8,6 +8,7 @@ import CreateTokenizationRequest from "./CreateTokenizationRequest";
 import {shallowRender} from "../tests";
 import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import {TEST_WALLET_USER} from "./Model.test";
+import { ISO_DATETIME_PATTERN } from '../logion-chain/datetime';
 
 test("renders", () => {
     const tree = shallowRender(<CreateTokenizationRequest onCancel={() => null} onSubmit={() => null}/>)
@@ -46,19 +47,20 @@ describe("CreateTokenizationRequest", () => {
 
         const button = screen.getByTestId("btnSubmit");
         fireEvent.click(button);
-        await waitFor(() => {});
 
-        expect(submitCallback).toBeCalled();
+        await waitFor(() => expect(submitCallback).toBeCalled());
         expect(cancelCallback).not.toBeCalled();
         expect(screen.getByTestId("tokenNameMessage").innerHTML).toBe("");
         expect(screen.getByTestId("barsMessage").innerHTML).toBe("");
-        expect(createTokenRequest).toBeCalledWith({
-            legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
-            requesterAddress: TEST_WALLET_USER,
-            requestedTokenName: 'DOT7',
-            bars: 7,
-            signature: `${DEFAULT_LEGAL_OFFICER},${TEST_WALLET_USER},DOT7,7`,
-        });
+        expect(createTokenRequest).toBeCalledWith(
+            expect.objectContaining({
+                legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
+                requesterAddress: TEST_WALLET_USER,
+                requestedTokenName: 'DOT7',
+                bars: 7,
+                signature: expect.stringMatching(new RegExp("token-request,create," + ISO_DATETIME_PATTERN.source + "," + DEFAULT_LEGAL_OFFICER + ",DOT7,7")),
+            })
+        );
     });
 
     it("should call cancelCallback when cancel is pressed", async () => {

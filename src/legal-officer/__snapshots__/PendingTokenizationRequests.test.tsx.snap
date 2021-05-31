@@ -68,5 +68,9 @@ exports[`Renders pending requests 1`] = `
       </tr>
     </tbody>
   </ForwardRef>
+  <TokenizationRequestAcceptance
+    clearRequestToAccept={[Function]}
+    requestToAccept={null}
+  />
 </React.Fragment>
 `;

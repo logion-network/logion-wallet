@@ -2,8 +2,11 @@ import { web3FromAddress } from '@polkadot/extension-dapp';
 import { ISubmittableResult } from '@polkadot/types/types';
 import { SubmittableExtrinsic } from '@polkadot/api/submittable/types';
 import { toHex } from './Codec';
-import {Hash} from 'fast-sha256';
-import {base64Encode} from '@polkadot/util-crypto';
+import { Hash } from 'fast-sha256';
+import { base64Encode } from '@polkadot/util-crypto';
+import { Moment } from 'moment';
+
+import { toIsoString } from './datetime';
 
 export type SignAndSendCallback = (result: ISubmittableResult) => void;
 
@@ -28,27 +31,37 @@ export function signAndSend(parameters: ExtrinsicSignatureParameters): Unsubscri
 }
 
 export async function replaceUnsubscriber(
-    currentUnsubscriber: Unsubscriber | null,
-    setUnsubscriber: (newUnsubscriber: Unsubscriber) => void,
-    newUnsubscriber: Unsubscriber): Promise<void> {
-    if(currentUnsubscriber !== null) {
-        const callable = await currentUnsubscriber;
+        currentUnsubscriber: Unsubscriber | null,
+        setUnsubscriber: (newUnsubscriber: Unsubscriber | null) => void,
+        newUnsubscriber: Unsubscriber | null): Promise<void> {
+    await unsubscribe(currentUnsubscriber);
+    setUnsubscriber(newUnsubscriber);
+}
+
+export async function unsubscribe(unsubscriber: Unsubscriber | null): Promise<void> {
+    if(unsubscriber !== null) {
+        const callable = await unsubscriber;
         callable();
     }
-    setUnsubscriber(newUnsubscriber);
 }
 
 export interface AttributesSignatureParameters {
     signerId: string,
-    attributes: any[]
+    resource: string,
+    operation: string,
+    signedOn: Moment,
+    attributes: any[],
 }
 
 export async function sign(parameters: AttributesSignatureParameters): Promise<string> {
     const extension = await web3FromAddress(parameters.signerId);
+    let signedOn = toIsoString(parameters.signedOn);
+    const attributes = [parameters.resource, parameters.operation, signedOn];
+    const allAttributes = attributes.concat(parameters.attributes);
     const result = await extension.signer.signRaw!({
         address: parameters.signerId,
         type: "bytes",
-        data: toHex(createHash(parameters.attributes))
+        data: toHex(createHash(allAttributes))
     });
     return result.signature;
 }
@@ -60,4 +73,8 @@ export function createHash(attributes: any[]): string {
         digest.update(bytes);
     }
     return base64Encode(digest.digest());
+}
+
+export function isFinalized(status: ISubmittableResult | null) {
+    return status !== null && status.isFinalized;
 }

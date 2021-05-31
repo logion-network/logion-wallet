@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Rendering inactive step 1`] = `null`;
+
+exports[`Rendering non-closable active step, may not proceed 1`] = `
+<Modal
+  animation={true}
+  autoFocus={true}
+  backdrop="static"
+  dialogAs={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "render": [Function],
+    }
+  }
+  enforceFocus={true}
+  keyboard={false}
+  restoreFocus={true}
+  show={true}
+  size="lg"
+>
+  <ModalHeader
+    closeButton={false}
+    closeLabel="Close"
+  >
+    <ModalTitle>
+      Title
+    </ModalTitle>
+  </ModalHeader>
+  <ModalBody>
+    <p>
+      Content
+    </p>
+  </ModalBody>
+  <ModalFooter>
+    <Button
+      active={false}
+      disabled={true}
+      onClick={[MockFunction]}
+      variant="primary"
+    >
+      Proceed
+    </Button>
+  </ModalFooter>
+</Modal>
+`;
+
+exports[`Rendering non-closable active step, may proceed 1`] = `
+<Modal
+  animation={true}
+  autoFocus={true}
+  backdrop="static"
+  dialogAs={
+    Object {
+      "$$typeof": Symbol(react.forward_ref),
+      "render": [Function],
+    }
+  }
+  enforceFocus={true}
+  keyboard={false}
+  restoreFocus={true}
+  show={true}
+  size="lg"
+>
+  <ModalHeader
+    closeButton={false}
+    closeLabel="Close"
+  >
+    <ModalTitle>
+      Title
+    </ModalTitle>
+  </ModalHeader>
+  <ModalBody>
+    <p>
+      Content
+    </p>
+  </ModalBody>
+  <ModalFooter>
+    <Button
+      active={false}
+      disabled={false}
+      onClick={[MockFunction]}
+      variant="primary"
+    >
+      Proceed
+    </Button>
+  </ModalFooter>
+</Modal>
+`;

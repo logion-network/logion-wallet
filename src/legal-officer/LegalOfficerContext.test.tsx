@@ -4,13 +4,43 @@ jest.mock('../logion-chain');
 import { useEffect, useState } from 'react';
 import { LegalOfficerContextProvider, useLegalOfficerContext } from './LegalOfficerContext';
 import { render, waitFor } from '@testing-library/react';
-import { DEFAULT_LEGAL_OFFICER } from './Model';
+import { DEFAULT_LEGAL_OFFICER, rejectRequest, setFetchRequests } from './Model';
+import { ISO_DATETIME_PATTERN } from '../logion-chain/datetime';
+
+beforeEach(() => {
+    setFetchRequests(jest.fn().mockImplementation(spec => {
+        if(spec.status === "PENDING") {
+            return Promise.resolve([
+                {
+                    id: "1",
+                    legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
+                    requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+                    requestedTokenName: "TOKEN1",
+                    bars: 1,
+                    status: "PENDING"
+                }
+            ]);
+        } else if(spec.status === "REJECTED") {
+            return Promise.resolve([
+                {
+                    id: "2",
+                    legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
+                    requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+                    requestedTokenName: "TOKEN2",
+                    bars: 1,
+                    status: "REJECTED"
+                }
+            ]);
+        } else {
+            return Promise.resolve([]);
+        }
+    }));
+});
 
 test("Context initially fetches requests", async () => {
     let result = render(<TestProvider reject={false} />);
-    await waitFor(() => { });
-    expect(result.getByTestId("pendingTokenizationRequests.length")).toHaveTextContent("2");
-    expect(result.getByTestId("rejectedTokenizationRequests.length")).toHaveTextContent("0");
+    await waitFor(() => expect(result.getByTestId("pendingTokenizationRequests.length")).toHaveTextContent("1"));
+    await waitFor(() => expect(result.getByTestId("rejectedTokenizationRequests.length")).toHaveTextContent("1"));
 });
 
 function TestProvider(props: TestConsumerProps) {
@@ -31,7 +61,7 @@ function TestConsumer(props: TestConsumerProps) {
 
     useEffect(() => {
         if (props.reject && rejectRequest && !rejected) {
-            rejectRequest("1");
+            rejectRequest("1", "because");
             setRejected(true);
         }
     });
@@ -49,8 +79,13 @@ function lengthOrNull<T>(array: Array<T> | null) {
 }
 
 test("Context rejects properly", async () => {
-    let result = render(<TestProvider reject={true} />);
-    await waitFor(() => { });
-    expect(result.getByTestId("pendingTokenizationRequests.length")).toHaveTextContent("1");
-    expect(result.getByTestId("rejectedTokenizationRequests.length")).toHaveTextContent("1");
+    render(<TestProvider reject={true} />);
+    await waitFor(() => expect(rejectRequest).toBeCalledWith(
+        expect.objectContaining({
+            requestId: "1",
+            rejectReason: "because",
+            signedOn: expect.anything(),
+            signature: expect.stringMatching(new RegExp("token-request,reject," + ISO_DATETIME_PATTERN.source + ",1,because")),
+        })
+    ));
 });

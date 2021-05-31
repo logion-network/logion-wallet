@@ -1,4 +1,5 @@
 import { Extension } from '../Keys';
+import { toIsoString } from '../datetime';
 
 const LogionChainContextProvider = (props: any) => null;
 
@@ -14,6 +15,28 @@ export let signAndSendCallback = null;
 
 export function signAndSend(parameters: any) {
     signAndSendCallback = parameters.callback;
+}
+
+export function createAsset(parameters: any) {
+    signAndSendCallback = parameters.callback;
+    return Promise.resolve({
+        assetId: "assetId",
+        unsubscriber: Promise.resolve(() => {})
+    });
+}
+
+export function setAssetMetadata(parameters: any) {
+    signAndSendCallback = parameters.callback;
+    return Promise.resolve(() => {});
+}
+
+export function mintAmount(tokens: any) {
+    return tokens;
+}
+
+export function mintTokens(parameters: any) {
+    signAndSendCallback = parameters.callback;
+    return Promise.resolve(() => {});
 }
 
 export function replaceUnsubscriber() {
@@ -59,5 +82,18 @@ export {
 };
 
 export function sign(parameters: any) {
-    return Promise.resolve(parameters.attributes.toString());
+    let signedOn = toIsoString(parameters.signedOn);
+    const requiredAttributes = [parameters.resource, parameters.operation, signedOn];
+    const attributes = requiredAttributes.concat(parameters.attributes);
+    return Promise.resolve(attributes.toString());
 }
+
+export function isFinalized(result: any) {
+    return true;
+}
+
+export function unsubscribe() {
+    return Promise.resolve();
+}
+
+export const DEFAULT_ASSETS_DECIMALS = 18;

@@ -12,10 +12,12 @@ import {
     Unsubscriber,
     replaceUnsubscriber,
     AttributesSignatureParameters,
-    sign
+    sign,
+    isFinalized
 } from './Signature';
 import { mockSubmittable, mockSigner } from '@polkadot/api';
 import { setSigner } from '@polkadot/extension-dapp';
+import moment from 'moment';
 
 test("Injected account signs and sends successfully", async () => {
     const callback: SignAndSendCallback = () => {};
@@ -32,12 +34,12 @@ test("Injected account signs and sends successfully", async () => {
     expect(submittable.signatureType).toBe('INJECTED');
 });
 
-test("Setting new unsubscriber", () => {
+test("Setting new unsubscriber", async () => {
     const currentUnsubscriber: Unsubscriber | null = null;
     let newUnsubscriber: Unsubscriber | null = Promise.resolve(() => {});
     let setValue: Unsubscriber | null = null;
-    const setUnsubscriber = (value: Unsubscriber) => {setValue = value};
-    replaceUnsubscriber(currentUnsubscriber, setUnsubscriber, newUnsubscriber);
+    const setUnsubscriber = (value: Unsubscriber | null) => {setValue = value};
+    await replaceUnsubscriber(currentUnsubscriber, setUnsubscriber, newUnsubscriber);
     expect(setValue).toBe(newUnsubscriber);
 });
 
@@ -46,7 +48,7 @@ test("Replacing existing unsubscriber", async () => {
     const currentUnsubscriber: Unsubscriber | null = Promise.resolve(() => {currentUnsubscriberCalled = true});
     let newUnsubscriber: Unsubscriber | null = Promise.resolve(() => {});
     let setValue: Unsubscriber | null = null;
-    const setUnsubscriber = (value: Unsubscriber) => {setValue = value};
+    const setUnsubscriber = (value: Unsubscriber | null) => {setValue = value};
     await replaceUnsubscriber(currentUnsubscriber, setUnsubscriber, newUnsubscriber);
     expect(currentUnsubscriberCalled).toBe(true);
     expect(setValue).toBe(newUnsubscriber);
@@ -54,20 +56,37 @@ test("Replacing existing unsubscriber", async () => {
 
 test("String signature", async () => {
     const signerId = "signerId";
-    const attributes = ["message", 132, true];
+    const attributes: any[] = ["message", 132, true];
     const expectedSignature: string = "signature";
+    const resource = "resource";
+    const operation = "op";
+    const signedOnString = '2021-06-01T08:24:30.573';
+    const signedOn = moment(signedOnString + 'Z');
+    const allAttributes = [resource, operation, signedOnString].concat(attributes);
+    const expectedData = createHash(allAttributes);
     const signer = mockSigner(async (parameters: any): Promise<any> => {
-        if(parameters.address === signerId && parameters.type === "bytes" && parameters.data === createHash(attributes)) {
+        if(parameters.address === signerId
+                && parameters.type === "bytes"
+                && parameters.data === expectedData) {
             return {
                 id: "request ID",
                 signature: expectedSignature,
             };
         } else {
-            throw new Error("Unexpected call");
+            const parametersJson = JSON.stringify(parameters);
+            const expectedJson = JSON.stringify({
+                address: signerId,
+                type: "bytes",
+                data: expectedData
+            });
+            throw new Error(`expected ${expectedJson} but got ${parametersJson}`);
         }
     });
     setSigner(signerId, signer);
     const parameters: AttributesSignatureParameters = {
+        resource: "resource",
+        operation: "op",
+        signedOn,
         signerId,
         attributes
     };
@@ -88,3 +107,18 @@ test.each(
         expect(result).toBe(expectedMessage);
     }
 );
+
+test("isFinalized with null", () => {
+    const result = isFinalized(null);
+    expect(result).toBe(false);
+});
+
+test("isFinalized with non-finalized result", () => {
+    const result = isFinalized({isFinalized: false});
+    expect(result).toBe(false);
+});
+
+test("isFinalized with finalized result", () => {
+    const result = isFinalized({isFinalized: true});
+    expect(result).toBe(true);
+});

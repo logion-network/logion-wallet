@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Finalized result, no error 1`] = `
+<div
+  className="fade alert alert-success show"
+  role="alert"
+>
+  <p>
+    Submission successful.
+  </p>
+</div>
+`;
+
+exports[`Finalized result, no error, custom message 1`] = `
+<div
+  className="fade alert alert-success show"
+  role="alert"
+>
+  Success
+</div>
+`;
+
+exports[`No result, error 1`] = `
+<div
+  className="fade alert alert-danger show"
+  role="alert"
+>
+  <p>
+    Submission failed: error
+  </p>
+</div>
+`;
+
+exports[`No result, error, custom message 1`] = `
+<div
+  className="fade alert alert-danger show"
+  role="alert"
+>
+  Error
+</div>
+`;
+
+exports[`No result, no error 1`] = `
+<div
+  className="fade alert alert-info show"
+  role="alert"
+>
+  <p>
+    Submitting...
+  </p>
+</div>
+`;
+
+exports[`Non-finalized result, error 1`] = `
+<div
+  className="fade alert alert-danger show"
+  role="alert"
+>
+  <p>
+    Submission failed: error
+  </p>
+</div>
+`;
+
+exports[`Non-finalized result, no error 1`] = `
+<div
+  className="fade alert alert-info show"
+  role="alert"
+>
+  <p>
+    Current status: type
+  </p>
+</div>
+`;

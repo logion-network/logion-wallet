@@ -1,5 +1,6 @@
 import axios from "axios";
-import {TokenizationRequest} from "../legal-officer/Model";
+import { Moment } from 'moment';
+import { TokenizationRequest } from "../legal-officer/Model";
 
 export interface CreateTokenRequest {
     legalOfficerAddress: string,
@@ -7,6 +8,7 @@ export interface CreateTokenRequest {
     requestedTokenName: string,
     bars: number,
     signature: string,
+    signedOn: Moment,
 }
 
 export async function createTokenRequest(request: CreateTokenRequest): Promise<TokenizationRequest> {
