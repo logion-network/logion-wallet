@@ -1,5 +1,6 @@
 import {DEFAULT_LEGAL_OFFICER, TokenizationRequest} from "../../legal-officer/Model";
 import {TEST_WALLET_USER} from "../Model.test";
+import {ApiPromise} from '@polkadot/api';
 
 export let createTokenRequest = () => null;
 
@@ -13,6 +14,8 @@ export let rejectedTokenizationRequests: TokenizationRequest[] | null = null;
 
 export let refreshRequests = jest.fn();
 
+export let api = new ApiPromise();
+
 export function useUserContext() {
     return {
         legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
@@ -23,6 +26,7 @@ export function useUserContext() {
         acceptedTokenizationRequests,
         rejectedTokenizationRequests,
         refreshRequests,
+        api
     };
 }
 

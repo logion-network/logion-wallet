@@ -142,3 +142,10 @@ export function mintTokens(parameters: MintParameters): Unsubscriber {
         errorCallback,
     });
 }
+
+export function tokensFromBalance(balance: AssetBalance, decimals: number): string {
+    let balanceBN = new BN(balance);
+    let exponent = new BN(decimals);
+    let ten = new BN(10);
+    return balanceBN.div(ten.pow(exponent)).toString();
+}

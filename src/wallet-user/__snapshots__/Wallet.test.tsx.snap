@@ -10,10 +10,14 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
   </p>
   <ul>
     <li>
-      address
-       (
-      Account name
-      )
+      <Link
+        to="/user/tokens/address"
+      >
+        address
+         (
+        Account name
+        )
+      </Link>
     </li>
   </ul>
   <p>
@@ -24,7 +28,7 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
     legalOfficerAddress="5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
     userAddress="address"
   >
-    <ConnectedDashboard />
+    <UserRouter />
   </UserContextProvider>
 </Shell>
 `;
@@ -39,10 +43,14 @@ exports[`Given connected, when rendering, then show account, no connect button a
   </p>
   <ul>
     <li>
-      address
-       (
-      Account name
-      )
+      <Link
+        to="/user/tokens/address"
+      >
+        address
+         (
+        Account name
+        )
+      </Link>
     </li>
   </ul>
   <p>
@@ -53,7 +61,7 @@ exports[`Given connected, when rendering, then show account, no connect button a
     legalOfficerAddress="5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
     userAddress="address"
   >
-    <ConnectedDashboard />
+    <UserRouter />
   </UserContextProvider>
 </Shell>
 `;
@@ -68,10 +76,14 @@ exports[`Given connecting, when rendering, then show account, no button, no node
   </p>
   <ul>
     <li>
-      address
-       (
-      Account name
-      )
+      <Link
+        to="/user/tokens/address"
+      >
+        address
+         (
+        Account name
+        )
+      </Link>
     </li>
   </ul>
   <p>
@@ -91,10 +103,14 @@ exports[`Given connection error, when rendering, then show account, no button, n
   </p>
   <ul>
     <li>
-      address
-       (
-      Account name
-      )
+      <Link
+        to="/user/tokens/address"
+      >
+        address
+         (
+        Account name
+        )
+      </Link>
     </li>
   </ul>
   <p>
@@ -114,10 +130,14 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
   </p>
   <ul>
     <li>
-      address
-       (
-      name
-      )
+      <Link
+        to="/user/tokens/address"
+      >
+        address
+         (
+        name
+        )
+      </Link>
     </li>
   </ul>
   <p>

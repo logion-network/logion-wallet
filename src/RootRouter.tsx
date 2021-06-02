@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 
 import { useLogionChain, InjectedAccountWithMeta } from './logion-chain';
-
+import { LEGAL_OFFICER_PATH, USER_PATH } from './RootPaths';
 import { DEFAULT_LEGAL_OFFICER } from './legal-officer/Model';
 import LegalOfficerWallet from './legal-officer/LegalOfficerWallet';
 import Wallet from './wallet-user/Wallet';
@@ -19,9 +19,6 @@ function includesLegalOfficer(accounts: InjectedAccountWithMeta[]): boolean {
         .map(account => account.address)
         .filter(address => LEGAL_OFFICERS.includes(address)).length > 0;
 }
-
-const LEGAL_OFFICER_PATH = "/legal-officer";
-const WALLET_USER_PATH = "/wallet-user";
 
 export default function RootRouter() {
     const { injectedAccounts } = useLogionChain();
@@ -35,16 +32,16 @@ export default function RootRouter() {
     if(isLegalOfficer) {
         redirectTo = LEGAL_OFFICER_PATH;
     } else {
-        redirectTo = WALLET_USER_PATH;
+        redirectTo = USER_PATH;
     }
 
     return (
         <Router>
             <Switch>
                 <Route path={ LEGAL_OFFICER_PATH }>
-                    { isLegalOfficer ? <LegalOfficerWallet /> : <Redirect to={ WALLET_USER_PATH } /> }
+                    { isLegalOfficer ? <LegalOfficerWallet /> : <Redirect to={ USER_PATH } /> }
                 </Route>
-                <Route path={ WALLET_USER_PATH }>
+                <Route path={ USER_PATH }>
                     { !isLegalOfficer ? <Wallet /> : <Redirect to={ LEGAL_OFFICER_PATH } /> }
                 </Route>
                 <Route path="/">

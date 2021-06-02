@@ -1,11 +1,14 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
+import { Link } from 'react-router-dom';
+
 import { useLogionChain, ApiState, NodeMetadata } from '../logion-chain';
 
 import Shell from '../Shell';
-import ConnectedDashboard from "./ConnectedDashboard";
-import {UserContextProvider} from "./UserContext";
-import {DEFAULT_LEGAL_OFFICER} from "../legal-officer/Model";
+import UserRouter from "./UserRouter";
+import { UserContextProvider } from "./UserContext";
+import { DEFAULT_LEGAL_OFFICER } from "../legal-officer/Model";
+import { MY_TOKENS_PATH } from './UserRouter';
 
 function status(apiState: ApiState, metadata: NodeMetadata | null): string {
     if(apiState === 'READY' && metadata === null) {
@@ -30,7 +33,7 @@ export default function Wallet() {
     const connectButton = apiState === 'DISCONNECTED' ? <Button onClick={connect}>Connect</Button> : null;
     const userContext = apiState === 'READY' ?
         <UserContextProvider legalOfficerAddress={DEFAULT_LEGAL_OFFICER} userAddress={injectedAccounts[0].address}>
-            <ConnectedDashboard />
+            <UserRouter />
         </UserContextProvider> : null;
 
     return (
@@ -39,7 +42,11 @@ export default function Wallet() {
 
             <p>The following accounts were detected:</p>
             <ul>
-                {injectedAccounts.map(injectedAccount => <li key={injectedAccount.address}>{injectedAccount.address} ({injectedAccount.meta.name || ""})</li>)}
+                {injectedAccounts.map(injectedAccount =>
+                    <li key={injectedAccount.address}>
+                        <Link to={ MY_TOKENS_PATH.replace(":address", injectedAccount.address) }>{injectedAccount.address} ({injectedAccount.meta.name || ""})</Link>
+                    </li>
+                )}
             </ul>
             <p>You are currently {status(apiState, connectedNodeMetadata)}</p>
             {connectButton}

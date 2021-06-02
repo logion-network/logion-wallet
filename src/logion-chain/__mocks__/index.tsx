@@ -1,12 +1,25 @@
+import BN from 'bn.js'
+
 import { Extension } from '../Keys';
 import { toIsoString } from '../datetime';
 
 const LogionChainContextProvider = (props: any) => null;
 
+const DEFAULT_BALANCE = new BN("42000000000000000000");
+
 const api = {
     tx: {
         assets: {
             create: () => {}
+        }
+    },
+    query: {
+        assets: {
+            account: (assetId: any, account: any) => {
+                return Promise.resolve({
+                    balance: DEFAULT_BALANCE
+                });
+            }
         }
     }
 };
@@ -97,3 +110,5 @@ export function unsubscribe() {
 }
 
 export const DEFAULT_ASSETS_DECIMALS = 18;
+
+export const tokensFromBalance = jest.requireActual("../Assets").tokensFromBalance;
