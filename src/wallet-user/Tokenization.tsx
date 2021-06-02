@@ -3,6 +3,8 @@ import ConfirmTokenization from "./ConfirmTokenization";
 import React, {useState} from "react";
 import Button from "react-bootstrap/Button";
 
+import './Tokenization.css';
+
 export enum State {
     START,
     REQUEST_TOKENIZATION,
@@ -18,7 +20,7 @@ export default function Tokenization(props: Props) {
     const [state, setState] = useState(props.initialState !== null ? props.initialState : State.START)
 
     return (
-        <div>
+        <div className="Tokenization">
             <Button disabled={state === State.REQUEST_TOKENIZATION} onClick={() => setState(State.REQUEST_TOKENIZATION)}>
                 Create token
             </Button>

@@ -6,29 +6,28 @@ import Tooltip from 'react-bootstrap/Tooltip';
 
 import { useUserContext } from './UserContext';
 
-export default function RejectedTokenizationRequests() {
-    const { rejectedTokenizationRequests } = useUserContext();
+export default function AcceptedTokenizationRequests() {
+    const { acceptedTokenizationRequests } = useUserContext();
 
-    if(rejectedTokenizationRequests === null) {
+    if(acceptedTokenizationRequests === null) {
         return null;
     }
 
     return (
         <>
-            <h1>Rejected Tokenization Requests</h1>
+            <h1>Accepted Tokenization Requests</h1>
             <Table striped bordered>
                 <thead>
                     <tr>
                         <th>Legal Officer</th>
                         <th>Token</th>
                         <th>Bars</th>
-                        <th>Reason</th>
                         <th>Timestamp</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        rejectedTokenizationRequests.map(request => (
+                        acceptedTokenizationRequests.map(request => (
                             <tr key={request.id}>
                                 <td>
                                     <OverlayTrigger
@@ -45,7 +44,6 @@ export default function RejectedTokenizationRequests() {
                                 </td>
                                 <td>{request.requestedTokenName}</td>
                                 <td>{request.bars}</td>
-                                <td>{request.rejectReason || ""}</td>
                                 <td>{request.decisionOn || ""}</td>
                             </tr>
                         ))

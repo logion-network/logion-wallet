@@ -6,6 +6,9 @@ import Shell from '../Shell';
 import Tokenization from "./Tokenization";
 import {UserContextProvider} from "./UserContext";
 import {DEFAULT_LEGAL_OFFICER} from "../legal-officer/Model";
+import RefreshRequestsButton from './RefreshRequestsButton';
+import PendingTokenizationRequests from './PendingTokenizationRequests';
+import AcceptedTokenizationRequests from './AcceptedTokenizationRequests';
 import RejectedTokenizationRequests from './RejectedTokenizationRequests';
 
 function status(apiState: ApiState, metadata: NodeMetadata | null): string {
@@ -32,6 +35,9 @@ export default function Wallet() {
     const userContext = apiState === 'READY' ?
         <UserContextProvider legalOfficerAddress={DEFAULT_LEGAL_OFFICER} userAddress={injectedAccounts[0].address}>
             <Tokenization/>
+            <RefreshRequestsButton/>
+            <PendingTokenizationRequests />
+            <AcceptedTokenizationRequests />
             <RejectedTokenizationRequests />
         </UserContextProvider> : null;
 

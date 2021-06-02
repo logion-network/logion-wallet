@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`REQUEST_TOKENIZATION: Disable button, Show form 1`] = `
-<div>
+<div
+  className="Tokenization"
+>
   <Button
     active={false}
     disabled={true}
@@ -18,7 +20,9 @@ exports[`REQUEST_TOKENIZATION: Disable button, Show form 1`] = `
 `;
 
 exports[`REQUEST_TOKENIZATION_DONE: Enable button, Show message 1`] = `
-<div>
+<div
+  className="Tokenization"
+>
   <Button
     active={false}
     disabled={false}
@@ -32,7 +36,9 @@ exports[`REQUEST_TOKENIZATION_DONE: Enable button, Show message 1`] = `
 `;
 
 exports[`START: Enable button 1`] = `
-<div>
+<div
+  className="Tokenization"
+>
   <Button
     active={false}
     disabled={false}

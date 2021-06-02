@@ -6,8 +6,9 @@ import { sign } from '../logion-chain';
 
 export interface LegalOfficerContext {
     legalOfficerAddress: string,
-    pendingTokenizationRequests: TokenizationRequest[] | null,
     rejectRequest: ((requestId: string, reason: string) => Promise<void>) | null,
+    pendingTokenizationRequests: TokenizationRequest[] | null,
+    acceptedTokenizationRequests: TokenizationRequest[] | null,
     rejectedTokenizationRequests: TokenizationRequest[] | null,
     refreshRequests: (() => void) | null,
 }
@@ -15,8 +16,9 @@ export interface LegalOfficerContext {
 function initialContextValue(legalOfficerAddress: string): LegalOfficerContext {
     return {
         legalOfficerAddress,
-        pendingTokenizationRequests: null,
         rejectRequest: null,
+        pendingTokenizationRequests: null,
+        acceptedTokenizationRequests: null,
         rejectedTokenizationRequests: null,
         refreshRequests: null,
     };
@@ -31,28 +33,7 @@ export interface Props {
 
 export function LegalOfficerContextProvider(props: Props) {
     const [contextValue, setContextValue] = useState<LegalOfficerContext>(initialContextValue(props.legalOfficerAddress));
-
-    const refreshPendingRequests = useCallback(() => {
-        async function fetchAndSetPendingRequests() {
-            const pendingTokenizationRequests = await fetchRequests({
-                legalOfficerAddress: contextValue.legalOfficerAddress,
-                status: "PENDING",
-            });
-            setContextValue({ ...contextValue, pendingTokenizationRequests });
-        };
-        fetchAndSetPendingRequests();
-    }, [contextValue, setContextValue]);
-
-    const refreshRejectedRequests = useCallback(() => {
-        async function fetchAndSetRejectedRequests() {
-            const rejectedTokenizationRequests = await fetchRequests({
-                legalOfficerAddress: contextValue.legalOfficerAddress,
-                status: "REJECTED",
-            });
-            setContextValue({ ...contextValue, rejectedTokenizationRequests });
-        };
-        fetchAndSetRejectedRequests();
-    }, [contextValue, setContextValue]);
+    const [fetchedInitially, setFetchedInitially] = useState<boolean>(false);
 
     const refreshRequests = useCallback(() => {
         async function fetchAndSetAll() {
@@ -60,11 +41,20 @@ export function LegalOfficerContextProvider(props: Props) {
                 legalOfficerAddress: contextValue.legalOfficerAddress,
                 status: "PENDING",
             });
+            const acceptedTokenizationRequests = await fetchRequests({
+                legalOfficerAddress: contextValue.legalOfficerAddress,
+                status: "ACCEPTED",
+            });
             const rejectedTokenizationRequests = await fetchRequests({
                 legalOfficerAddress: contextValue.legalOfficerAddress,
                 status: "REJECTED",
             });
-            setContextValue({ ...contextValue, pendingTokenizationRequests, rejectedTokenizationRequests });
+            setContextValue({
+                ...contextValue,
+                pendingTokenizationRequests,
+                acceptedTokenizationRequests,
+                rejectedTokenizationRequests
+            });
         };
         fetchAndSetAll();
     }, [contextValue, setContextValue]);
@@ -103,16 +93,11 @@ export function LegalOfficerContextProvider(props: Props) {
     }, [refreshRequests, contextValue, setContextValue]);
 
     useEffect(() => {
-        if(contextValue.pendingTokenizationRequests === null) {
-            refreshPendingRequests();
+        if(!fetchedInitially) {
+            setFetchedInitially(true);
+            refreshRequests();
         }
-    }, [refreshPendingRequests, contextValue, setContextValue]);
-
-    useEffect(() => {
-        if(contextValue.rejectedTokenizationRequests === null) {
-            refreshRejectedRequests();
-        }
-    }, [refreshRejectedRequests, contextValue, setContextValue]);
+    }, [fetchedInitially, refreshRequests]);
 
     return (
         <LegalOfficerContextObject.Provider value={contextValue}>

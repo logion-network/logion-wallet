@@ -1,25 +1,25 @@
 jest.mock('./UserContext');
 
 import { shallowRender } from '../tests';
-import RejectedTokenizationRequests from './RejectedTokenizationRequests';
-import { setRejectedRequests } from './UserContext';
+import AcceptedTokenizationRequests from './AcceptedTokenizationRequests';
+import { setAcceptedRequests } from './UserContext';
 
 test("Renders null with no data", () => {
-    const tree = shallowRender(<RejectedTokenizationRequests />);
+    const tree = shallowRender(<AcceptedTokenizationRequests />);
     expect(tree).toMatchSnapshot();
 });
 
-test("Renders rejected requests", () => {
-    setRejectedRequests([
+test("Renders accepted requests", () => {
+    setAcceptedRequests([
         {
             id: "1",
             legalOfficerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
             requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
             requestedTokenName: "TOKEN1",
             bars: 1,
-            status: "REJECTED"
+            status: "ACCEPTED"
         }
     ]);
-    const tree = shallowRender(<RejectedTokenizationRequests />);
+    const tree = shallowRender(<AcceptedTokenizationRequests />);
     expect(tree).toMatchSnapshot();
 });

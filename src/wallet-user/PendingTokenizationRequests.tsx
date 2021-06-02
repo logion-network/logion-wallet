@@ -6,29 +6,27 @@ import Tooltip from 'react-bootstrap/Tooltip';
 
 import { useUserContext } from './UserContext';
 
-export default function RejectedTokenizationRequests() {
-    const { rejectedTokenizationRequests } = useUserContext();
+export default function PendingTokenizationRequests() {
+    const { pendingTokenizationRequests } = useUserContext();
 
-    if(rejectedTokenizationRequests === null) {
+    if(pendingTokenizationRequests === null) {
         return null;
     }
 
     return (
         <>
-            <h1>Rejected Tokenization Requests</h1>
+            <h1>Pending Tokenization Requests</h1>
             <Table striped bordered>
                 <thead>
                     <tr>
                         <th>Legal Officer</th>
                         <th>Token</th>
                         <th>Bars</th>
-                        <th>Reason</th>
-                        <th>Timestamp</th>
                     </tr>
                 </thead>
                 <tbody>
                     {
-                        rejectedTokenizationRequests.map(request => (
+                        pendingTokenizationRequests.map(request => (
                             <tr key={request.id}>
                                 <td>
                                     <OverlayTrigger
@@ -40,13 +38,11 @@ export default function RejectedTokenizationRequests() {
                                         </Tooltip>
                                       }
                                     >
-                                      <span>Signed by Your Legal Officer</span>
+                                      <span>Your Legal Officer</span>
                                     </OverlayTrigger>
                                 </td>
                                 <td>{request.requestedTokenName}</td>
                                 <td>{request.bars}</td>
-                                <td>{request.rejectReason || ""}</td>
-                                <td>{request.decisionOn || ""}</td>
                             </tr>
                         ))
                     }

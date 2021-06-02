@@ -1,16 +1,16 @@
-jest.mock('./UserContext');
+jest.mock('./LegalOfficerContext');
 
 import { shallowRender } from '../tests';
-import RejectedTokenizationRequests from './RejectedTokenizationRequests';
-import { setRejectedRequests } from './UserContext';
+import AcceptedTokenizationRequests from './AcceptedTokenizationRequests';
+import { setAcceptedRequests } from './LegalOfficerContext';
 
 test("Renders null with no data", () => {
-    const tree = shallowRender(<RejectedTokenizationRequests />);
+    const tree = shallowRender(<AcceptedTokenizationRequests />);
     expect(tree).toMatchSnapshot();
 });
 
-test("Renders rejected requests", () => {
-    setRejectedRequests([
+test("Renders accepted requests", () => {
+    setAcceptedRequests([
         {
             id: "1",
             legalOfficerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
@@ -20,6 +20,6 @@ test("Renders rejected requests", () => {
             status: "REJECTED"
         }
     ]);
-    const tree = shallowRender(<RejectedTokenizationRequests />);
+    const tree = shallowRender(<AcceptedTokenizationRequests />);
     expect(tree).toMatchSnapshot();
 });

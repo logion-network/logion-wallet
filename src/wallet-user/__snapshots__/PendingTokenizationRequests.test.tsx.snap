@@ -2,10 +2,10 @@
 
 exports[`Renders null with no data 1`] = `null`;
 
-exports[`Renders rejected requests 1`] = `
+exports[`Renders pending requests 1`] = `
 <React.Fragment>
   <h1>
-    Rejected Tokenization Requests
+    Pending Tokenization Requests
   </h1>
   <ForwardRef
     bordered={true}
@@ -21,12 +21,6 @@ exports[`Renders rejected requests 1`] = `
         </th>
         <th>
           Bars
-        </th>
-        <th>
-          Reason
-        </th>
-        <th>
-          Timestamp
         </th>
       </tr>
     </thead>
@@ -52,7 +46,7 @@ exports[`Renders rejected requests 1`] = `
             }
           >
             <span>
-              Signed by Your Legal Officer
+              Your Legal Officer
             </span>
           </OverlayTrigger>
         </td>
@@ -61,12 +55,6 @@ exports[`Renders rejected requests 1`] = `
         </td>
         <td>
           1
-        </td>
-        <td>
-          
-        </td>
-        <td>
-          
         </td>
       </tr>
     </tbody>
