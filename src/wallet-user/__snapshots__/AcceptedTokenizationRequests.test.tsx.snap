@@ -1,11 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Renders null with no data 1`] = `null`;
-
-exports[`Renders rejected requests 1`] = `
+exports[`Renders accepted requests 1`] = `
 <React.Fragment>
   <h1>
-    Rejected Tokenization Requests
+    Accepted Tokenization Requests
   </h1>
   <ForwardRef
     bordered={true}
@@ -21,9 +19,6 @@ exports[`Renders rejected requests 1`] = `
         </th>
         <th>
           Bars
-        </th>
-        <th>
-          Reason
         </th>
         <th>
           Timestamp
@@ -65,11 +60,10 @@ exports[`Renders rejected requests 1`] = `
         <td>
           
         </td>
-        <td>
-          
-        </td>
       </tr>
     </tbody>
   </ForwardRef>
 </React.Fragment>
 `;
+
+exports[`Renders null with no data 1`] = `null`;

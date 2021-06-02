@@ -25,6 +25,9 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
     userAddress="address"
   >
     <Tokenization />
+    <RefreshRequestsButton />
+    <PendingTokenizationRequests />
+    <AcceptedTokenizationRequests />
     <RejectedTokenizationRequests />
   </UserContextProvider>
 </Shell>
@@ -55,6 +58,9 @@ exports[`Given connected, when rendering, then show account, no connect button a
     userAddress="address"
   >
     <Tokenization />
+    <RefreshRequestsButton />
+    <PendingTokenizationRequests />
+    <AcceptedTokenizationRequests />
     <RejectedTokenizationRequests />
   </UserContextProvider>
 </Shell>

@@ -5,7 +5,13 @@ export let createTokenRequest = () => null;
 
 export let createdTokenRequest: TokenizationRequest | null = null;
 
+export let pendingTokenizationRequests: TokenizationRequest[] | null = null;
+
+export let acceptedTokenizationRequests: TokenizationRequest[] | null = null;
+
 export let rejectedTokenizationRequests: TokenizationRequest[] | null = null;
+
+export let refreshRequests = jest.fn();
 
 export function useUserContext() {
     return {
@@ -13,7 +19,10 @@ export function useUserContext() {
         userAddress: TEST_WALLET_USER,
         createTokenRequest,
         createdTokenRequest,
+        pendingTokenizationRequests,
+        acceptedTokenizationRequests,
         rejectedTokenizationRequests,
+        refreshRequests,
     };
 }
 
@@ -25,6 +34,18 @@ export function setCreatedTokenRequest(request: TokenizationRequest) {
     createdTokenRequest = request;
 }
 
+export function setPendingRequests(requests: TokenizationRequest[]) {
+    pendingTokenizationRequests = requests;
+}
+
 export function setRejectedRequests(requests: TokenizationRequest[]) {
     rejectedTokenizationRequests = requests;
+}
+
+export function setAcceptedRequests(requests: TokenizationRequest[]) {
+    acceptedTokenizationRequests = requests;
+}
+
+export function setRefreshRequests(func: any) {
+    refreshRequests = func;
 }

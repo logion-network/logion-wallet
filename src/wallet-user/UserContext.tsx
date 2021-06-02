@@ -7,8 +7,10 @@ export interface UserContext {
     userAddress: string,
     createTokenRequest: ((request: CreateTokenRequest) => Promise<TokenizationRequest>) | null,
     createdTokenRequest: TokenizationRequest | null,
+    pendingTokenizationRequests: TokenizationRequest[] | null,
+    acceptedTokenizationRequests: TokenizationRequest[] | null,
     rejectedTokenizationRequests: TokenizationRequest[] | null,
-    refreshRejectedRequests: (() => void) | null,
+    refreshRequests: (() => void) | null,
 }
 
 function initialContextValue(legalOfficerAddress: string, userAddress: string): UserContext {
@@ -17,8 +19,10 @@ function initialContextValue(legalOfficerAddress: string, userAddress: string): 
         userAddress,
         createTokenRequest: null,
         createdTokenRequest: null,
+        pendingTokenizationRequests: null,
+        acceptedTokenizationRequests: null,
         rejectedTokenizationRequests: null,
-        refreshRejectedRequests: null,
+        refreshRequests: null,
     }
 }
 
@@ -32,6 +36,7 @@ export interface Props {
 
 export function UserContextProvider(props: Props) {
     const [contextValue, setContextValue] = useState<UserContext>(initialContextValue(props.legalOfficerAddress, props.userAddress));
+    const [fetchedInitially, setFetchedInitially] = useState<boolean>(false);
 
     useEffect(() => {
         if (contextValue.createTokenRequest === null) {
@@ -44,28 +49,42 @@ export function UserContextProvider(props: Props) {
         }
     }, [contextValue, setContextValue]);
 
-    const refreshRejectedRequests = useCallback(() => {
-        async function fetchAndSetRejectedRequests() {
+    const refreshRequests = useCallback(() => {
+        async function fetchAndSetAcceptedRequests() {
+            const pendingTokenizationRequests = await fetchRequests({
+                requesterAddress: contextValue.userAddress,
+                status: "PENDING",
+            });
+            const acceptedTokenizationRequests = await fetchRequests({
+                requesterAddress: contextValue.userAddress,
+                status: "ACCEPTED",
+            });
             const rejectedTokenizationRequests = await fetchRequests({
                 requesterAddress: contextValue.userAddress,
                 status: "REJECTED",
             });
-            setContextValue({ ...contextValue, rejectedTokenizationRequests });
+            setContextValue({
+                ...contextValue,
+                pendingTokenizationRequests,
+                acceptedTokenizationRequests,
+                rejectedTokenizationRequests,
+            });
         };
-        fetchAndSetRejectedRequests();
+        fetchAndSetAcceptedRequests();
     }, [contextValue, setContextValue]);
 
     useEffect(() => {
-        if(contextValue.rejectedTokenizationRequests === null) {
-            refreshRejectedRequests();
+        if(!fetchedInitially) {
+            setFetchedInitially(true);
+            refreshRequests();
         }
-    }, [refreshRejectedRequests, contextValue, setContextValue]);
+    }, [fetchedInitially, refreshRequests]);
 
     useEffect(() => {
-        if(contextValue.refreshRejectedRequests === null) {
-            setContextValue({...contextValue, refreshRejectedRequests});
+        if(contextValue.refreshRequests === null) {
+            setContextValue({...contextValue, refreshRequests});
         }
-    }, [refreshRejectedRequests, contextValue, setContextValue]);
+    }, [refreshRequests, contextValue, setContextValue]);
 
     return (
         <UserContextObject.Provider value={contextValue}>
