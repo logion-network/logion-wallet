@@ -18,6 +18,7 @@ export let eventsCallback: ((issuedEvents: any) => void) | null = null;
 export let newHeadsCallback: ((lastHeader: any) => void) | null = null;
 
 export class ApiPromise {
+    assetQueriesBeforeNone: number = 1;
 
     constructor(_: ApiPromiseArgs) {
         
@@ -32,6 +33,16 @@ export class ApiPromise {
     query = {
         system: {
             events: (callback: ((issuedEvents: any) => void)) => { eventsCallback = callback }
+        },
+        assets: {
+            asset: (id: any) => {
+                --this.assetQueriesBeforeNone;
+                if(this.assetQueriesBeforeNone <= 0) {
+                    return {isSome: false}
+                } else {
+                    return {isSome: true}
+                }
+            }
         }
     }
 
@@ -49,6 +60,14 @@ export class ApiPromise {
     chain = {
         head: chain[TOTAL_BLOCKS - 1],
         chain
+    }
+
+    tx = {
+        assets: {
+            create: () => {},
+            setMetadata: () => {},
+            mint: () => {},
+        }
     }
 }
 

@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect, useCallback } from 'react';
+import moment from 'moment';
 
 import { TokenizationRequest, fetchRequests, rejectRequest as modelRejectRequest } from './Model';
 import { sign } from '../logion-chain';
@@ -72,19 +73,22 @@ export function LegalOfficerContextProvider(props: Props) {
         if(contextValue.rejectRequest === null) {
             const rejectRequest = async (requestId: string, rejectReason: string): Promise<void> => {
                 const attributes = [
-                    `${contextValue.legalOfficerAddress}`,
                     `${requestId}`,
                     `${rejectReason}`
                 ];
+                const signedOn = moment();
                 const signature = await sign({
                     signerId: contextValue.legalOfficerAddress,
+                    resource: 'token-request',
+                    operation: 'reject',
+                    signedOn,
                     attributes
                 });
                 await modelRejectRequest({
-                    legalOfficerAddress: contextValue.legalOfficerAddress,
                     requestId,
                     signature,
                     rejectReason,
+                    signedOn,
                 });
                 refreshRequests();
             };

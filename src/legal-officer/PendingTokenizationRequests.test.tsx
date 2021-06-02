@@ -1,11 +1,12 @@
 jest.mock('./LegalOfficerContext');
 jest.mock('../logion-chain');
+jest.mock('./Model');
 
 import { shallowRender } from '../tests';
 import PendingTokenizationRequests from './PendingTokenizationRequests';
 import { setPendingRequests, setRejectRequest } from './LegalOfficerContext';
-import { render, act, fireEvent, waitFor } from '@testing-library/react';
-import { signAndSendCallback } from '../logion-chain';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 test("Renders null with no data", () => {
     const tree = shallowRender(<PendingTokenizationRequests />);
@@ -27,7 +28,7 @@ test("Renders pending requests", () => {
     expect(tree).toMatchSnapshot();
 });
 
-test("Click on reject and confirm rejects request", () => {
+test("Click on reject and confirm rejects request", async () => {
     setPendingRequests([
         {
             id: "1",
@@ -41,21 +42,22 @@ test("Click on reject and confirm rejects request", () => {
     const rejectCallback = jest.fn();
     setRejectRequest(rejectCallback);
 
-    const tree = render(<PendingTokenizationRequests />);
-    const rejectButton = tree.getByTestId("reject-1");
-    act(() => { fireEvent.click(rejectButton) });
+    render(<PendingTokenizationRequests />);
+    const rejectButton = screen.getByTestId("reject-1");
+    userEvent.click(rejectButton);
 
     const reasonText = "Because";
-    const reasonTextArea = tree.getByTestId("reason");
-    act(() => { fireEvent.change(reasonTextArea, {target: {value: reasonText}}) });
+    const reasonTextArea = screen.getByTestId("reason");
+    userEvent.type(reasonTextArea, reasonText);
 
-    const confirmButton = tree.getByTestId("confirm-reject-1");
-    act(() => { fireEvent.click(confirmButton) });
+    const confirmButton = screen.getByTestId("confirm-reject-1");
+    userEvent.click(confirmButton);
 
     expect(rejectCallback).toBeCalledWith("1", reasonText);
+    await waitFor(() => expect(screen.queryByTestId("modal-reject-1")).not.toBeInTheDocument());
 });
 
-test("Click on accept and proceed accepts request", () => {
+test("Click on accept opens acceptance process", () => {
     setPendingRequests([
         {
             id: "1",
@@ -70,40 +72,8 @@ test("Click on accept and proceed accepts request", () => {
     const tree = render(<PendingTokenizationRequests />);
 
     const acceptButton = tree.getByTestId("accept-1");
-    act(() => { fireEvent.click(acceptButton) });
-
-    const proceedButton = tree.getByTestId("proceed-accept-1");
-    act(() => { fireEvent.click(proceedButton) });
+    userEvent.click(acceptButton);
 
     const acceptingModal = tree.queryByTestId("modal-accepting-1");
-    expect(acceptingModal).not.toBeInTheDocument();
-
-    // TODO check expected requests to backend
-
-    const issueButton = tree.getByTestId("proceed-issue-1");
-    act(() => { fireEvent.click(issueButton) });
-
-    const acceptedModal = tree.queryByTestId("modal-accepted-1");
-    expect(acceptedModal).not.toBeInTheDocument();
-
-    act(() => {
-        signAndSendCallback({
-            isFinalized: true,
-            status: {
-                type: "finalized",
-                asFinalized: "finalized",
-            }
-        });
-    });
-
-    const issuingModal = tree.queryByTestId("modal-issuing-1");
-    expect(issuingModal).not.toBeInTheDocument();
-
-    // TODO check expected requests to node
-
-    const closeButton = tree.getByTestId("close-accept-1");
-    act(() => { fireEvent.click(closeButton) });
-
-    const issuedModal = tree.queryByTestId("modal-issued-1");
-    expect(issuedModal).not.toBeInTheDocument();
+    expect(acceptingModal).toBeInTheDocument();
 });

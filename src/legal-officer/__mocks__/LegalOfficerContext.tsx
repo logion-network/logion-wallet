@@ -6,7 +6,7 @@ export let rejectRequest = () => {
 
 export let rejectedTokenizationRequests: any[] | null = null;
 
-export let refreshRequests: () => {
+export let refreshRequests = () => {
     
 };
 

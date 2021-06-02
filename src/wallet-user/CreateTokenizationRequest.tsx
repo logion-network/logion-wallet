@@ -3,6 +3,8 @@ import { useForm, Controller } from 'react-hook-form';
 import Form from "react-bootstrap/Form";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
+import moment from 'moment';
+
 import {CreateTokenRequest} from "./Model";
 import {useUserContext} from "./UserContext";
 import { sign } from '../logion-chain';
@@ -25,20 +27,24 @@ export default function CreateTokenizationRequest(props: Props) {
     const submit = async (formValues: FormValues) => {
         const attributes = [
             `${legalOfficerAddress}`,
-            `${userAddress}`,
             `${formValues.requestedTokenName}`,
             `${formValues.bars}`
         ];
+        const signedOn = moment();
         const signature = await sign({
             signerId: userAddress,
-            attributes
+            resource: 'token-request',
+            operation: 'create',
+            signedOn,
+            attributes,
         });
         const request: CreateTokenRequest = {
             legalOfficerAddress: legalOfficerAddress,
             requesterAddress: userAddress,
             bars: Number(formValues.bars),
             requestedTokenName: formValues.requestedTokenName,
-            signature
+            signature,
+            signedOn,
         }
         createTokenRequest!(request);
         props.onSubmit();
