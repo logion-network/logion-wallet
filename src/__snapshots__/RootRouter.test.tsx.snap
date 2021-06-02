@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given legal officer, when rendering, then route to wallet or redirect 1`] = `
+<BrowserRouter>
+  <Switch>
+    <Route
+      path="/legal-officer"
+    >
+      <LegalOfficerWallet />
+    </Route>
+    <Route
+      path="/wallet-user"
+    >
+      <Redirect
+        to="/legal-officer"
+      />
+    </Route>
+    <Route
+      path="/"
+    >
+      <Redirect
+        to="/legal-officer"
+      />
+    </Route>
+  </Switch>
+</BrowserRouter>
+`;
+
+exports[`Given no injected accounts, when rendering, then null 1`] = `null`;
+
+exports[`Given null injected accounts, when rendering, then null 1`] = `null`;
+
+exports[`Given wallet user, when rendering, then route to wallet or redirect 1`] = `
+<BrowserRouter>
+  <Switch>
+    <Route
+      path="/legal-officer"
+    >
+      <Redirect
+        to="/wallet-user"
+      />
+    </Route>
+    <Route
+      path="/wallet-user"
+    >
+      <Wallet />
+    </Route>
+    <Route
+      path="/"
+    >
+      <Redirect
+        to="/wallet-user"
+      />
+    </Route>
+  </Switch>
+</BrowserRouter>
+`;

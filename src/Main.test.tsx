@@ -5,7 +5,6 @@ import React from 'react';
 import Main from './Main';
 import { setContextMock, setExtensionAvailable } from './logion-chain';
 import { shallowRender, mockAccount, act } from './tests';
-import { DEFAULT_LEGAL_OFFICER } from './legal-officer/Model';
 
 test('Given no enabled extension, when rendering, then show loader', () => {
     setContextMock({
@@ -56,27 +55,11 @@ test('Given extension and no account, when rendering, then show create account',
     expect(tree).toMatchSnapshot();
 });
 
-test('Given extension and one account, when rendering, then show wallet', () => {
+test('Given extension and one account, when rendering, then show root router', () => {
     setContextMock({
         apiState: 'READY',
         injectedAccounts: [
             mockAccount("address", "Account name")
-        ],
-        extensionsEnabled: true,
-    });
-    setExtensionAvailable(true);
-
-    let tree: any;
-    act(() => { tree = shallowRender(<Main />) });
-
-    expect(tree).toMatchSnapshot();
-});
-
-test('Given extension and legal officer account, when rendering, then show legal officer wallet', () => {
-    setContextMock({
-        apiState: 'READY',
-        injectedAccounts: [
-            mockAccount(DEFAULT_LEGAL_OFFICER, "Alice")
         ],
         extensionsEnabled: true,
     });

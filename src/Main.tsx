@@ -1,20 +1,10 @@
 import React from 'react';
-import { useLogionChain, isExtensionAvailable, InjectedAccountWithMeta } from './logion-chain';
+import { useLogionChain, isExtensionAvailable } from './logion-chain';
 
-import Wallet from './wallet-user/Wallet';
+import RootRouter from './RootRouter';
 import Loader from './Loader';
 import InstallExtension from './InstallExtension';
 import CreateAccount from './CreateAccount';
-import LegalOfficerWallet from './legal-officer/LegalOfficerWallet';
-import { DEFAULT_LEGAL_OFFICER } from './legal-officer/Model';
-
-const LEGAL_OFFICERS: string[] = [ DEFAULT_LEGAL_OFFICER ];
-
-function includesLegalOfficer(accounts: InjectedAccountWithMeta[]): boolean {
-    return accounts
-        .map(account => account.address)
-        .filter(address => LEGAL_OFFICERS.includes(address)).length > 0;
-}
 
 export default function Main() {
     const { injectedAccounts, extensionsEnabled } = useLogionChain();
@@ -27,11 +17,7 @@ export default function Main() {
                 return <Loader text="Loading accounts from extension..." />;
             } else {
                 if(injectedAccounts.length > 0) {
-                    if(includesLegalOfficer(injectedAccounts)) {
-                        return <LegalOfficerWallet />;
-                    } else {
-                        return <Wallet />;
-                    }
+                    return <RootRouter />
                 } else {
                     return <CreateAccount />;
                 }

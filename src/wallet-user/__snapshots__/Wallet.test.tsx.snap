@@ -24,11 +24,7 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
     legalOfficerAddress="5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
     userAddress="address"
   >
-    <Tokenization />
-    <RefreshRequestsButton />
-    <PendingTokenizationRequests />
-    <AcceptedTokenizationRequests />
-    <RejectedTokenizationRequests />
+    <ConnectedDashboard />
   </UserContextProvider>
 </Shell>
 `;
@@ -57,11 +53,7 @@ exports[`Given connected, when rendering, then show account, no connect button a
     legalOfficerAddress="5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
     userAddress="address"
   >
-    <Tokenization />
-    <RefreshRequestsButton />
-    <PendingTokenizationRequests />
-    <AcceptedTokenizationRequests />
-    <RejectedTokenizationRequests />
+    <ConnectedDashboard />
   </UserContextProvider>
 </Shell>
 `;

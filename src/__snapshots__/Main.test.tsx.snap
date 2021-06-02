@@ -1,7 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Given extension and legal officer account, when rendering, then show legal officer wallet 1`] = `<LegalOfficerWallet />`;
-
 exports[`Given extension and loading accounts, when rendering, then show loader 1`] = `
 <Loader
   text="Loading accounts from extension..."
@@ -10,7 +8,7 @@ exports[`Given extension and loading accounts, when rendering, then show loader 
 
 exports[`Given extension and no account, when rendering, then show create account 1`] = `<CreateAccount />`;
 
-exports[`Given extension and one account, when rendering, then show wallet 1`] = `<Wallet />`;
+exports[`Given extension and one account, when rendering, then show root router 1`] = `<RootRouter />`;
 
 exports[`Given no enabled extension, when rendering, then show loader 1`] = `
 <Loader
