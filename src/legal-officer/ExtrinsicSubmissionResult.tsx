@@ -1,5 +1,6 @@
 import React from 'react';
 import Alert from 'react-bootstrap/Alert';
+import Spinner from 'react-bootstrap/Spinner';
 
 import { ISubmittableResult, isFinalized } from '../logion-chain';
 
@@ -24,6 +25,7 @@ export default function ExtrinsicSubmissionResult(props: Props) {
         } else if(!isFinalized(result)) {
             return (
                 <Alert variant="info">
+                    <Spinner animation="border"/>
                     <p>{`Current status: ${result?.status.type}`}</p>
                 </Alert>
             );

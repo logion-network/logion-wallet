@@ -67,6 +67,9 @@ exports[`Non-finalized result, no error 1`] = `
   className="fade alert alert-info show"
   role="alert"
 >
+  <div
+    className="spinner-border"
+  />
   <p>
     Current status: type
   </p>
