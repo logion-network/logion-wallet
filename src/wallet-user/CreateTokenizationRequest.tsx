@@ -46,7 +46,7 @@ export default function CreateTokenizationRequest(props: Props) {
             signature,
             signedOn,
         }
-        createTokenRequest!(request);
+        await createTokenRequest!(request);
         props.onSubmit();
     }
 

@@ -242,6 +242,11 @@ export default function TokenizationRequestAcceptance(props: Props) {
         props.clearRequestToAccept();
     }, [ refreshRequests, props ]);
 
+    const cancel = useCallback(() => {
+        setStatus(AcceptStatus.NONE);
+        props.clearRequestToAccept();
+    }, [ setStatus, props ]);
+
     if(props.requestToAccept === null) {
         return null;
     }
@@ -249,10 +254,12 @@ export default function TokenizationRequestAcceptance(props: Props) {
     return (
         <div>
             <ProcessStep
-                active={ acceptState.status === AcceptStatus.NONE }
-                closeCallback={ props.clearRequestToAccept }
+                active={ acceptState.status === AcceptStatus.NONE
+                            || acceptState.status === AcceptStatus.ACCEPTANCE_PENDING
+                            || acceptState.status === AcceptStatus.ACCEPTING }
+                closeCallback={ cancel }
                 title={ `Accept request ${props.requestToAccept.id}` }
-                mayProceed={ true }
+                mayProceed={ acceptState.status === AcceptStatus.NONE }
                 proceedCallback={ () => setStatus(AcceptStatus.ACCEPTANCE_PENDING) }
                 stepTestId={ `modal-accepting-${props.requestToAccept.id}` }
                 proceedButtonTestId={ `proceed-accept-${props.requestToAccept.id}` }

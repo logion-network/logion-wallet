@@ -1,14 +1,14 @@
-import CreateTokenizationRequest from "./CreateTokenizationRequest";
-import ConfirmTokenization from "./ConfirmTokenization";
-import React, {useState} from "react";
+import React, { useState, useCallback } from "react";
 import Button from "react-bootstrap/Button";
 
+import { useUserContext } from './UserContext';
+
+import CreateTokenizationRequest from "./CreateTokenizationRequest";
 import './Tokenization.css';
 
 export enum State {
     START,
-    REQUEST_TOKENIZATION,
-    REQUEST_TOKENIZATION_DONE
+    REQUEST_TOKENIZATION
 }
 
 export interface Props {
@@ -16,8 +16,13 @@ export interface Props {
 }
 
 export default function Tokenization(props: Props) {
-
+    const { refreshRequests } = useUserContext();
     const [state, setState] = useState(props.initialState !== null ? props.initialState : State.START)
+
+    const completeTokenization = useCallback(() => {
+        setState(State.START);
+        refreshRequests!();
+    }, [ setState, refreshRequests ]);
 
     return (
         <div className="Tokenization">
@@ -26,11 +31,8 @@ export default function Tokenization(props: Props) {
             </Button>
             {state === State.REQUEST_TOKENIZATION && (
                 <CreateTokenizationRequest
-                    onSubmit={() => setState(State.REQUEST_TOKENIZATION_DONE)}
+                    onSubmit={ completeTokenization }
                     onCancel={() => setState(State.START)}/>
-            )}
-            {state === State.REQUEST_TOKENIZATION_DONE && (
-                <ConfirmTokenization/>
             )}
         </div>
     );

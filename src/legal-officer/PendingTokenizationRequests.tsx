@@ -46,6 +46,7 @@ export default function PendingTokenizationRequests() {
                         <th>Requester</th>
                         <th>Token</th>
                         <th>Bars</th>
+                        <th>Created</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -56,6 +57,7 @@ export default function PendingTokenizationRequests() {
                                 <td>{request.requesterAddress}</td>
                                 <td>{request.requestedTokenName}</td>
                                 <td>{request.bars}</td>
+                                <td>{request.createdOn}</td>
                                 <td>
                                     <ButtonGroup aria-label="actions">
                                         <Button

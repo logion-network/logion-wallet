@@ -31,7 +31,6 @@ exports[`REQUEST_TOKENIZATION_DONE: Enable button, Show message 1`] = `
   >
     Create token
   </Button>
-  <ConfirmTokenization />
 </div>
 `;
 

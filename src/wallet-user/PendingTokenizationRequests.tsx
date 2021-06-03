@@ -22,6 +22,7 @@ export default function PendingTokenizationRequests() {
                         <th>Legal Officer</th>
                         <th>Token</th>
                         <th>Bars</th>
+                        <th>Created</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,6 +44,7 @@ export default function PendingTokenizationRequests() {
                                 </td>
                                 <td>{request.requestedTokenName}</td>
                                 <td>{request.bars}</td>
+                                <td>{request.createdOn}</td>
                             </tr>
                         ))
                     }
