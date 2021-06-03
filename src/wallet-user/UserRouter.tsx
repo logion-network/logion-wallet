@@ -7,11 +7,15 @@ import MyTokens from './MyTokens';
 import TokenizationRequests from "./TokenizationRequests";
 import TrustProtection from "./trust-protection/TrustProtection";
 import LegalOfficerSelection from "./trust-protection/LegalOfficerSelection";
+import {useUserContext} from "./UserContext";
 
 export const MY_TOKENS_PATH = USER_PATH + '/tokens/:address';
 export const TRUST_PROTECTION_PATH = USER_PATH + '/trust-protection';
 
 export default function UserRouter() {
+
+    const {createdProtectionRequest} = useUserContext();
+
     return (
         <>
             <Switch>
@@ -22,8 +26,10 @@ export default function UserRouter() {
                     <LegalOfficerSelection />
                 </Route>
                 <Route path="">
-                    <TrustProtection />
-                    <TokenizationRequests />
+                    {createdProtectionRequest === null && (
+                        <TrustProtection/>
+                    )}
+                    <TokenizationRequests/>
                 </Route>
             </Switch>
         </>

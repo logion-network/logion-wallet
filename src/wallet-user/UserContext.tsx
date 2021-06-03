@@ -74,7 +74,7 @@ export function UserContextProvider(props: Props) {
                 acceptedTokenizationRequests,
                 rejectedTokenizationRequests,
             });
-        };
+        }
         fetchAndSetAcceptedRequests();
     }, [contextValue, setContextValue]);
 
@@ -95,7 +95,6 @@ export function UserContextProvider(props: Props) {
         if (contextValue.createProtectionRequest === null) {
             const createProtectionRequest = async (request: CreateProtectionRequest): Promise<ProtectionRequest> => {
                 const createdProtectionRequest = await modelCreateProtectionRequest(request);
-                console.log(createdProtectionRequest);
                 setContextValue({...contextValue, createdProtectionRequest})
                 return createdProtectionRequest;
             }

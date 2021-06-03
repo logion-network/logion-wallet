@@ -1,7 +1,7 @@
 import axios from "axios";
 import {Moment} from "moment";
+import {DEFAULT_LEGAL_OFFICER} from "../../legal-officer/Model";
 
-export const DEFAULT_LEGAL_OFFICER = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"; // Alice
 export const ANOTHER_LEGAL_OFFICER = "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty"; // Bob
 
 export interface UserIdentity {
@@ -50,10 +50,8 @@ function fakeAddress(i: number) {
 }
 
 export const legalOfficers = [
-    {name: "Alice", address: DEFAULT_LEGAL_OFFICER},
-    {name: "Bob", address: ANOTHER_LEGAL_OFFICER},
-    {name: "Patrick", address: fakeAddress(3)},
-    {name: "Guillaume", address: fakeAddress(4)},
+    {name: "Patrick", address: DEFAULT_LEGAL_OFFICER},
+    {name: "Guillaume", address: ANOTHER_LEGAL_OFFICER},
     {name: "Alain", address: fakeAddress(5)},
     {name: "Ronald", address: fakeAddress(6)},
     {name: "Thibaut", address: fakeAddress(7)},

@@ -3,7 +3,7 @@ import {useForm, Controller} from 'react-hook-form';
 import Form from "react-bootstrap/Form";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
-import {CreateProtectionRequest, legalOfficers, DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER} from "./Model";
+import {CreateProtectionRequest, legalOfficers} from "./Model";
 import {useUserContext} from "../UserContext";
 import moment from "moment";
 import {sign} from "../../logion-chain";
@@ -35,8 +35,7 @@ export default function CreateProtectionRequestForm(props: Props) {
 
     const submit = async (formValues: FormValues) => {
 
-        // TODO Change this !! Must be populated by controller
-        formValues.legalOfficers = [DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER];
+        formValues.legalOfficers = [legalOfficers[0].address, legalOfficers[1].address];
 
         const attributes = [
             `${formValues.firstName}`,
