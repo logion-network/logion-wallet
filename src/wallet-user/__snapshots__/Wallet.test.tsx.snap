@@ -6,7 +6,7 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
     You are ready to use the Logion wallet, congratulations!
   </h1>
   <p>
-    The following accounts were detected:
+    The following account(s) were detected:
   </p>
   <ul>
     <li>
@@ -39,7 +39,7 @@ exports[`Given connected, when rendering, then show account, no connect button a
     You are ready to use the Logion wallet, congratulations!
   </h1>
   <p>
-    The following accounts were detected:
+    The following account(s) were detected:
   </p>
   <ul>
     <li>
@@ -72,7 +72,7 @@ exports[`Given connecting, when rendering, then show account, no button, no node
     You are ready to use the Logion wallet, congratulations!
   </h1>
   <p>
-    The following accounts were detected:
+    The following account(s) were detected:
   </p>
   <ul>
     <li>
@@ -99,7 +99,7 @@ exports[`Given connection error, when rendering, then show account, no button, n
     You are ready to use the Logion wallet, congratulations!
   </h1>
   <p>
-    The following accounts were detected:
+    The following account(s) were detected:
   </p>
   <ul>
     <li>
@@ -126,7 +126,7 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
     You are ready to use the Logion wallet, congratulations!
   </h1>
   <p>
-    The following accounts were detected:
+    The following account(s) were detected:
   </p>
   <ul>
     <li>

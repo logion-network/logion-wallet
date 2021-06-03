@@ -23,6 +23,9 @@ exports[`Renders pending requests 1`] = `
           Bars
         </th>
         <th>
+          Created
+        </th>
+        <th>
           Actions
         </th>
       </tr>
@@ -38,6 +41,7 @@ exports[`Renders pending requests 1`] = `
         <td>
           1
         </td>
+        <td />
         <td>
           <ButtonGroup
             aria-label="actions"

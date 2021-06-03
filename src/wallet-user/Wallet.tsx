@@ -40,7 +40,7 @@ export default function Wallet() {
         <Shell>
             <h1>You are ready to use the Logion wallet, congratulations!</h1>
 
-            <p>The following accounts were detected:</p>
+            <p>The following account(s) were detected:</p>
             <ul>
                 {injectedAccounts.map(injectedAccount =>
                     <li key={injectedAccount.address}>

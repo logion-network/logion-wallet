@@ -22,6 +22,9 @@ exports[`Renders pending requests 1`] = `
         <th>
           Bars
         </th>
+        <th>
+          Created
+        </th>
       </tr>
     </thead>
     <tbody>
@@ -56,6 +59,7 @@ exports[`Renders pending requests 1`] = `
         <td>
           1
         </td>
+        <td />
       </tr>
     </tbody>
   </ForwardRef>
