@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`REQUEST_PROTECTION_DONE: Show message 1`] = `
+<div
+  className="TrustProtection"
+>
+  <p>
+    LegalOfficerSelection
+  </p>
+  <ConfirmProtectionRequest />
+</div>
+`;
+
+exports[`START: Show form 1`] = `
+<div
+  className="TrustProtection"
+>
+  <p>
+    LegalOfficerSelection
+  </p>
+  <CreateProtectionRequest
+    onCancel={[Function]}
+    onSubmit={[Function]}
+  />
+</div>
+`;
