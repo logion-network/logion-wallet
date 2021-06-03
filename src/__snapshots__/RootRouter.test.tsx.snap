@@ -9,7 +9,7 @@ exports[`Given legal officer, when rendering, then route to wallet or redirect 1
       <LegalOfficerWallet />
     </Route>
     <Route
-      path="/wallet-user"
+      path="/user"
     >
       <Redirect
         to="/legal-officer"
@@ -37,11 +37,11 @@ exports[`Given wallet user, when rendering, then route to wallet or redirect 1`]
       path="/legal-officer"
     >
       <Redirect
-        to="/wallet-user"
+        to="/user"
       />
     </Route>
     <Route
-      path="/wallet-user"
+      path="/user"
     >
       <Wallet />
     </Route>
@@ -49,7 +49,7 @@ exports[`Given wallet user, when rendering, then route to wallet or redirect 1`]
       path="/"
     >
       <Redirect
-        to="/wallet-user"
+        to="/user"
       />
     </Route>
   </Switch>

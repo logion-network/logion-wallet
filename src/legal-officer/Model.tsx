@@ -16,6 +16,7 @@ export interface TokenizationRequest {
     rejectReason?: string | null,
     createdOn?: string,
     decisionOn?: string,
+    assetDescription?: AssetDescription,
 }
 
 export interface FetchRequestSpecification {

@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<React.Fragment>
+  <Switch>
+    <Route
+      path="/user/tokens/:address"
+    >
+      <MyTokens />
+    </Route>
+    <Route
+      path=""
+    >
+      <TokenizationRequests />
+    </Route>
+  </Switch>
+</React.Fragment>
+`;

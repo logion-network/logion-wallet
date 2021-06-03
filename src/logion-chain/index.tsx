@@ -53,6 +53,7 @@ import {
     mintAmount,
     mintTokens,
     DEFAULT_ASSETS_DECIMALS,
+    tokensFromBalance,
 
     AssetCreationParameters as AssetsAssetCreationParameters,
     AssetId as AssetsAssetId,
@@ -77,6 +78,7 @@ export {
     isFinalized,
     setAssetMetadata,
     mintAmount,
+    tokensFromBalance,
     mintTokens,
     DEFAULT_ASSETS_DECIMALS,
 };
