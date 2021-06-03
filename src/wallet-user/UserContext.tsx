@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState, useCallback } from "react";
 import { CreateTokenRequest, createTokenRequest as modelCreateTokenRequest } from "./Model";
 import { TokenizationRequest, fetchRequests } from "../legal-officer/Model";
+import { CreateProtectionRequest, createProtectionRequest as modelCreateProtectionRequest, ProtectionRequest } from "./trust-protection/Model";
 
 export interface UserContext {
     legalOfficerAddress: string,
@@ -11,6 +12,8 @@ export interface UserContext {
     acceptedTokenizationRequests: TokenizationRequest[] | null,
     rejectedTokenizationRequests: TokenizationRequest[] | null,
     refreshRequests: (() => void) | null,
+    createProtectionRequest: ((request: CreateProtectionRequest) => Promise<ProtectionRequest>) | null,
+    createdProtectionRequest: ProtectionRequest | null,
 }
 
 function initialContextValue(legalOfficerAddress: string, userAddress: string): UserContext {
@@ -23,6 +26,8 @@ function initialContextValue(legalOfficerAddress: string, userAddress: string): 
         acceptedTokenizationRequests: null,
         rejectedTokenizationRequests: null,
         refreshRequests: null,
+        createProtectionRequest: null,
+        createdProtectionRequest: null,
     }
 }
 
@@ -69,7 +74,7 @@ export function UserContextProvider(props: Props) {
                 acceptedTokenizationRequests,
                 rejectedTokenizationRequests,
             });
-        };
+        }
         fetchAndSetAcceptedRequests();
     }, [contextValue, setContextValue]);
 
@@ -85,6 +90,17 @@ export function UserContextProvider(props: Props) {
             setContextValue({...contextValue, refreshRequests});
         }
     }, [refreshRequests, contextValue, setContextValue]);
+
+    useEffect(() => {
+        if (contextValue.createProtectionRequest === null) {
+            const createProtectionRequest = async (request: CreateProtectionRequest): Promise<ProtectionRequest> => {
+                const createdProtectionRequest = await modelCreateProtectionRequest(request);
+                setContextValue({...contextValue, createdProtectionRequest})
+                return createdProtectionRequest;
+            }
+            setContextValue({...contextValue, createProtectionRequest});
+        }
+    }, [contextValue, setContextValue]);
 
     return (
         <UserContextObject.Provider value={contextValue}>

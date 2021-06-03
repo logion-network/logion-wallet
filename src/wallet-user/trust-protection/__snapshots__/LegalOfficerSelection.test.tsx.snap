@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`REQUEST_PROTECTION_DONE: Show message 1`] = `
+<div
+  className="TrustProtection"
+>
+  <ConfirmProtectionRequest />
+</div>
+`;
+
+exports[`START: Show form 1`] = `
+<div
+  className="TrustProtection"
+>
+  <CreateProtectionRequestForm
+    onSubmit={[Function]}
+  />
+</div>
+`;

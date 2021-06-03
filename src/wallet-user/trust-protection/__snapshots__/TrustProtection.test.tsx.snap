@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<React.Fragment>
+  <h1>
+    My Trust Protection
+  </h1>
+  <Link
+    to="/user/trust-protection"
+  >
+    <Button
+      active={false}
+      disabled={false}
+      variant="primary"
+    >
+      Activate my Logion Trust Protection
+    </Button>
+  </Link>
+</React.Fragment>
+`;
