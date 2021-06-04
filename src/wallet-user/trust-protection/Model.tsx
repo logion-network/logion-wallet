@@ -45,6 +45,11 @@ export async function createProtectionRequest(request: CreateProtectionRequest):
     return response.data;
 }
 
+export async function fetchProtectionRequest(requesterAddress: string): Promise<ProtectionRequest> {
+    const response = await axios.get("/api/protection-request?requesterAddress=" + requesterAddress);
+    return response.data;
+}
+
 function fakeAddress(i: number) {
     return "1234567890-abcd-" + i;
 }
