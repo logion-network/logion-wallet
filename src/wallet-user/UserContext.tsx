@@ -60,7 +60,7 @@ export function UserContextProvider(props: Props) {
     }, [contextValue, setContextValue]);
 
     const refreshRequests = useCallback(() => {
-        async function fetchAndSetAcceptedRequests() {
+        async function fetchAndSetRequests() {
             const pendingTokenizationRequests = await fetchRequests({
                 requesterAddress: contextValue.userAddress,
                 status: "PENDING",
@@ -73,29 +73,23 @@ export function UserContextProvider(props: Props) {
                 requesterAddress: contextValue.userAddress,
                 status: "REJECTED",
             });
+            const createdProtectionRequest = await fetchProtectionRequest(contextValue.userAddress);
+
             setContextValue({
                 ...contextValue,
                 pendingTokenizationRequests,
                 acceptedTokenizationRequests,
                 rejectedTokenizationRequests,
+                createdProtectionRequest
             });
         }
-        fetchAndSetAcceptedRequests();
-    }, [contextValue, setContextValue]);
-
-    const refreshProtectionRequest = useCallback(() => {
-        async function fetchAndSetProtectionRequest() {
-            const createdProtectionRequest = await fetchProtectionRequest(contextValue.userAddress);
-            setContextValue({...contextValue, createdProtectionRequest});
-        }
-        fetchAndSetProtectionRequest();
+        fetchAndSetRequests();
     }, [contextValue, setContextValue]);
 
     useEffect(() => {
         if(!fetchedInitially) {
             setFetchedInitially(true);
             refreshRequests();
-            refreshProtectionRequest();
         }
     }, [fetchedInitially, refreshRequests]);
 
