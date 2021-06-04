@@ -1,7 +1,12 @@
 import React, { useContext, useEffect, useState, useCallback } from "react";
 import { CreateTokenRequest, createTokenRequest as modelCreateTokenRequest } from "./Model";
 import { TokenizationRequest, fetchRequests } from "../legal-officer/Model";
-import { CreateProtectionRequest, createProtectionRequest as modelCreateProtectionRequest, ProtectionRequest } from "./trust-protection/Model";
+import {
+    CreateProtectionRequest,
+    createProtectionRequest as modelCreateProtectionRequest,
+    ProtectionRequest,
+    fetchProtectionRequest
+} from "./trust-protection/Model";
 
 export interface UserContext {
     legalOfficerAddress: string,
@@ -78,10 +83,19 @@ export function UserContextProvider(props: Props) {
         fetchAndSetAcceptedRequests();
     }, [contextValue, setContextValue]);
 
+    const refreshProtectionRequest = useCallback(() => {
+        async function fetchAndSetProtectionRequest() {
+            const createdProtectionRequest = await fetchProtectionRequest(contextValue.userAddress);
+            setContextValue({...contextValue, createdProtectionRequest});
+        }
+        fetchAndSetProtectionRequest();
+    }, [contextValue, setContextValue]);
+
     useEffect(() => {
         if(!fetchedInitially) {
             setFetchedInitially(true);
             refreshRequests();
+            refreshProtectionRequest();
         }
     }, [fetchedInitially, refreshRequests]);
 

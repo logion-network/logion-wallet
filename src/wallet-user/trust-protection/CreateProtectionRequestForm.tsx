@@ -99,6 +99,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                     <Controller name="firstName"
                                 control={control}
                                 defaultValue=""
+                                rules={{required: 'The first name is required'}}
                                 render={({field}) => <Form.Control isInvalid={!!errors.firstName?.message}
                                                                    type="text" placeholder="e.g. XYZ"
                                                                    data-testid="firstName" {...field} />}
@@ -113,6 +114,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                     <Controller name="lastName"
                                 control={control}
                                 defaultValue=""
+                                rules={{required: 'The last name is required'}}
                                 render={({field}) => <Form.Control isInvalid={!!errors.lastName?.message}
                                                                    type="text" placeholder="e.g. XYZ"
                                                                    data-testid="lastName" {...field} />}
@@ -127,6 +129,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                     <Controller name="email"
                                 control={control}
                                 defaultValue=""
+                                rules={{required: 'The email is required'}}
                                 render={({field}) => <Form.Control isInvalid={!!errors.email?.message}
                                                                    type="text" placeholder="e.g. XYZ"
                                                                    data-testid="email" {...field} />}
@@ -141,6 +144,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                     <Controller name="phoneNumber"
                                 control={control}
                                 defaultValue=""
+                                rules={{required: 'The phone number is required'}}
                                 render={({field}) => <Form.Control isInvalid={!!errors.phoneNumber?.message}
                                                                    type="text" placeholder="e.g. XYZ"
                                                                    data-testid="phoneNumber" {...field} />}
@@ -156,6 +160,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                     <Controller name="line1"
                                 control={control}
                                 defaultValue=""
+                                rules={{required: 'The line1 is required'}}
                                 render={({field}) => <Form.Control isInvalid={!!errors.line1?.message}
                                                                    type="text" placeholder="e.g. XYZ"
                                                                    data-testid="line1" {...field} />}
@@ -185,6 +190,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                     <Controller name="postalCode"
                                 control={control}
                                 defaultValue=""
+                                rules={{required: 'The postal code is required'}}
                                 render={({field}) => <Form.Control isInvalid={!!errors.postalCode?.message}
                                                                    type="text" placeholder="e.g. XYZ"
                                                                    data-testid="postalCode" {...field} />}
@@ -199,6 +205,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                     <Controller name="city"
                                 control={control}
                                 defaultValue=""
+                                rules={{required: 'The city is required'}}
                                 render={({field}) => <Form.Control isInvalid={!!errors.city?.message}
                                                                    type="text" placeholder="e.g. XYZ"
                                                                    data-testid="city" {...field} />}
@@ -213,6 +220,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                     <Controller name="country"
                                 control={control}
                                 defaultValue=""
+                                rules={{required: 'The country is required'}}
                                 render={({field}) => <Form.Control isInvalid={!!errors.country?.message}
                                                                    type="text" placeholder="e.g. XYZ"
                                                                    data-testid="country" {...field} />}
