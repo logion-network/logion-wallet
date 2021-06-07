@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<React.Fragment>
+  <Switch>
+    <Route
+      path="/legal-officer/tokenization"
+    >
+      <TokenizationRequests />
+    </Route>
+    <Route
+      path=""
+    >
+      <Redirect
+        to="/legal-officer/tokenization"
+      />
+    </Route>
+  </Switch>
+</React.Fragment>
+`;

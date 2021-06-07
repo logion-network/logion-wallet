@@ -13,7 +13,7 @@ export default function RejectedTokenizationRequests() {
 
     return (
         <>
-            <h1>Rejected Tokenization Requests</h1>
+            <h2>Rejected</h2>
             <Table striped bordered>
                 <thead>
                     <tr>
