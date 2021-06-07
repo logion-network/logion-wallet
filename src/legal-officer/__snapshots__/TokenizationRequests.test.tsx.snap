@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<React.Fragment>
+  <h1>
+    Tokenization Requests
+  </h1>
+  <RefreshRequestsButton />
+  <PendingTokenizationRequests />
+  <AcceptedTokenizationRequests />
+  <RejectedTokenizationRequests />
+</React.Fragment>
+`;

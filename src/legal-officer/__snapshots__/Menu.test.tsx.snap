@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<ul>
+  <li>
+    <Link
+      to="/legal-officer/tokenization"
+    >
+      Tokenization Requests
+    </Link>
+  </li>
+</ul>
+`;
