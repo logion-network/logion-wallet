@@ -5,7 +5,7 @@ exports[`renders 1`] = `
   <h1>
     Tokenization Requests
   </h1>
-  <RefreshRequestsButton />
+  <RefreshTokenizationRequestsButton />
   <PendingTokenizationRequests />
   <AcceptedTokenizationRequests />
   <RejectedTokenizationRequests />
