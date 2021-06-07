@@ -1,8 +1,8 @@
+jest.mock("axios");
+
 import {CreateProtectionRequest, createProtectionRequest} from "./Model";
 import {mockPost} from "axios";
 import moment from "moment";
-
-jest.mock("axios");
 
 export const TEST_WALLET_USER = "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY";
 export const DEFAULT_LEGAL_OFFICER = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"; // Alice
