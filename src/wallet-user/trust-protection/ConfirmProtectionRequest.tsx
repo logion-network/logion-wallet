@@ -19,7 +19,7 @@ export default function ConfirmProtectionRequest() {
                 provided by your logion account dashboard.
             </p>
             {createdProtectionRequest.decisions.map(decision => (
-                <p>{legalOfficerName(decision.legalOfficerAddress)} ({decision.legalOfficerAddress})
+                <p key={decision.legalOfficerAddress}>{legalOfficerName(decision.legalOfficerAddress)} ({decision.legalOfficerAddress})
                     : {decision.status}</p>
             ))}
         </>

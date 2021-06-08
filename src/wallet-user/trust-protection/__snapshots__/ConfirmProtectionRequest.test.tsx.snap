@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders created protection request 1`] = `
+<React.Fragment>
+  <h1>
+    Protection request status
+  </h1>
+  <p>
+    Your Logion Trust Protection request (
+    2eb5f71c-7f31-44b5-9390-c3bf56501880
+    ) has been submitted. A Legal Officer will contact you as soon as possible to finalize the KYC process. Please note that, after the successful completion of one of your Legal Officer approval processes, you will be able to use all features provided by your logion account dashboard.
+  </p>
+  <p>
+    Guillaume
+     (
+    5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty
+    ) : 
+    PENDING
+  </p>
+  <p>
+    Patrick
+     (
+    5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+    ) : 
+    PENDING
+  </p>
+</React.Fragment>
+`;
+
+exports[`renders empty 1`] = `null`;

@@ -86,7 +86,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                 Officer already in charge of the account to be recovered</p>
             <ButtonGroup toggle vertical={true}>
                 {legalOfficers.map((legalOfficer, index) => (
-                    <Form.Group as={Row} controlId={'legalOfficer' + index}>
+                    <Form.Group as={Row} key={'legalOfficer' + index} controlId={'legalOfficer' + index}>
                         <Form.Check type="checkbox" value={legalOfficer.address}/>
                         <Form.Label>{legalOfficer.name} ({legalOfficer.address})</Form.Label>
                     </Form.Group>

@@ -1,0 +1,1374 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<Form
+  inline={false}
+  onSubmit={[Function]}
+>
+  <p>
+    If you aim to start a Recovery process to that account, you have to select at least one of the Legal Officer already in charge of the account to be recovered
+  </p>
+  <ButtonGroup
+    role="group"
+    toggle={true}
+    vertical={true}
+  >
+    <FormGroup
+      as={
+        Object {
+          "$$typeof": Symbol(react.forward_ref),
+          "defaultProps": Object {
+            "noGutters": false,
+          },
+          "render": [Function],
+        }
+      }
+      controlId="legalOfficer0"
+    >
+      <FormCheck
+        type="checkbox"
+        value="5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
+      />
+      <FormLabel
+        column={false}
+        srOnly={false}
+      >
+        Patrick
+         (
+        5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+        )
+      </FormLabel>
+    </FormGroup>
+    <FormGroup
+      as={
+        Object {
+          "$$typeof": Symbol(react.forward_ref),
+          "defaultProps": Object {
+            "noGutters": false,
+          },
+          "render": [Function],
+        }
+      }
+      controlId="legalOfficer1"
+    >
+      <FormCheck
+        type="checkbox"
+        value="5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty"
+      />
+      <FormLabel
+        column={false}
+        srOnly={false}
+      >
+        Guillaume
+         (
+        5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty
+        )
+      </FormLabel>
+    </FormGroup>
+    <FormGroup
+      as={
+        Object {
+          "$$typeof": Symbol(react.forward_ref),
+          "defaultProps": Object {
+            "noGutters": false,
+          },
+          "render": [Function],
+        }
+      }
+      controlId="legalOfficer2"
+    >
+      <FormCheck
+        type="checkbox"
+        value="1234567890-abcd-5"
+      />
+      <FormLabel
+        column={false}
+        srOnly={false}
+      >
+        Alain
+         (
+        1234567890-abcd-5
+        )
+      </FormLabel>
+    </FormGroup>
+    <FormGroup
+      as={
+        Object {
+          "$$typeof": Symbol(react.forward_ref),
+          "defaultProps": Object {
+            "noGutters": false,
+          },
+          "render": [Function],
+        }
+      }
+      controlId="legalOfficer3"
+    >
+      <FormCheck
+        type="checkbox"
+        value="1234567890-abcd-6"
+      />
+      <FormLabel
+        column={false}
+        srOnly={false}
+      >
+        Ronald
+         (
+        1234567890-abcd-6
+        )
+      </FormLabel>
+    </FormGroup>
+    <FormGroup
+      as={
+        Object {
+          "$$typeof": Symbol(react.forward_ref),
+          "defaultProps": Object {
+            "noGutters": false,
+          },
+          "render": [Function],
+        }
+      }
+      controlId="legalOfficer4"
+    >
+      <FormCheck
+        type="checkbox"
+        value="1234567890-abcd-7"
+      />
+      <FormLabel
+        column={false}
+        srOnly={false}
+      >
+        Thibaut
+         (
+        1234567890-abcd-7
+        )
+      </FormLabel>
+    </FormGroup>
+    <FormGroup
+      as={
+        Object {
+          "$$typeof": Symbol(react.forward_ref),
+          "defaultProps": Object {
+            "noGutters": false,
+          },
+          "render": [Function],
+        }
+      }
+      controlId="legalOfficer5"
+    >
+      <FormCheck
+        type="checkbox"
+        value="1234567890-abcd-8"
+      />
+      <FormLabel
+        column={false}
+        srOnly={false}
+      >
+        Jona
+         (
+        1234567890-abcd-8
+        )
+      </FormLabel>
+    </FormGroup>
+    <FormGroup
+      as={
+        Object {
+          "$$typeof": Symbol(react.forward_ref),
+          "defaultProps": Object {
+            "noGutters": false,
+          },
+          "render": [Function],
+        }
+      }
+      controlId="legalOfficer6"
+    >
+      <FormCheck
+        type="checkbox"
+        value="1234567890-abcd-9"
+      />
+      <FormLabel
+        column={false}
+        srOnly={false}
+      >
+        Carlos
+         (
+        1234567890-abcd-9
+        )
+      </FormLabel>
+    </FormGroup>
+    <FormGroup
+      as={
+        Object {
+          "$$typeof": Symbol(react.forward_ref),
+          "defaultProps": Object {
+            "noGutters": false,
+          },
+          "render": [Function],
+        }
+      }
+      controlId="legalOfficer7"
+    >
+      <FormCheck
+        type="checkbox"
+        value="1234567890-abcd-10"
+      />
+      <FormLabel
+        column={false}
+        srOnly={false}
+      >
+        Ilias
+         (
+        1234567890-abcd-10
+        )
+      </FormLabel>
+    </FormGroup>
+    <FormGroup
+      as={
+        Object {
+          "$$typeof": Symbol(react.forward_ref),
+          "defaultProps": Object {
+            "noGutters": false,
+          },
+          "render": [Function],
+        }
+      }
+      controlId="legalOfficer8"
+    >
+      <FormCheck
+        type="checkbox"
+        value="1234567890-abcd-11"
+      />
+      <FormLabel
+        column={false}
+        srOnly={false}
+      >
+        Pedroso
+         (
+        1234567890-abcd-11
+        )
+      </FormLabel>
+    </FormGroup>
+    <FormGroup
+      as={
+        Object {
+          "$$typeof": Symbol(react.forward_ref),
+          "defaultProps": Object {
+            "noGutters": false,
+          },
+          "render": [Function],
+        }
+      }
+      controlId="legalOfficer9"
+    >
+      <FormCheck
+        type="checkbox"
+        value="1234567890-abcd-12"
+      />
+      <FormLabel
+        column={false}
+        srOnly={false}
+      >
+        Marc
+         (
+        1234567890-abcd-12
+        )
+      </FormLabel>
+    </FormGroup>
+  </ButtonGroup>
+  <h3>
+    Identity
+  </h3>
+  <FormGroup
+    as={
+      Object {
+        "$$typeof": Symbol(react.forward_ref),
+        "defaultProps": Object {
+          "noGutters": false,
+        },
+        "render": [Function],
+      }
+    }
+    controlId="firstName"
+  >
+    <FormLabel
+      column={true}
+      sm={3}
+      srOnly={false}
+    >
+      First Name
+    </FormLabel>
+    <Col
+      sm={9}
+    >
+      <Unknown
+        control={
+          Object {
+            "controllerSubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+            "defaultValuesRef": Object {
+              "current": Object {},
+            },
+            "fieldArrayDefaultValuesRef": Object {
+              "current": Object {},
+            },
+            "fieldArrayNamesRef": Object {
+              "current": Set {},
+            },
+            "fieldArraySubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+            "fieldsRef": Object {
+              "current": Object {},
+            },
+            "fieldsWithValidationRef": Object {
+              "current": Object {},
+            },
+            "formStateRef": Object {
+              "current": Object {
+                "dirtyFields": Object {},
+                "errors": Object {},
+                "isDirty": false,
+                "isSubmitSuccessful": false,
+                "isSubmitted": false,
+                "isSubmitting": false,
+                "isValid": false,
+                "isValidating": false,
+                "submitCount": 0,
+                "touchedFields": Object {},
+              },
+            },
+            "formStateSubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+            "getIsDirty": [Function],
+            "inFieldArrayActionRef": Object {
+              "current": false,
+            },
+            "isWatchAllRef": Object {
+              "current": false,
+            },
+            "readFormStateRef": Object {
+              "current": Object {
+                "dirtyFields": false,
+                "errors": "all",
+                "isDirty": false,
+                "isValid": false,
+                "isValidating": false,
+                "touchedFields": false,
+              },
+            },
+            "register": [Function],
+            "shouldUnmount": undefined,
+            "unregister": [Function],
+            "validFieldsRef": Object {
+              "current": Object {},
+            },
+            "watchFieldsRef": Object {
+              "current": Set {},
+            },
+            "watchInternal": [Function],
+            "watchSubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+          }
+        }
+        defaultValue=""
+        name="firstName"
+        render={[Function]}
+        rules={
+          Object {
+            "required": "The first name is required",
+          }
+        }
+      />
+      <Feedback
+        data-testid="firstNameMessage"
+        type="invalid"
+      />
+    </Col>
+  </FormGroup>
+  <FormGroup
+    as={
+      Object {
+        "$$typeof": Symbol(react.forward_ref),
+        "defaultProps": Object {
+          "noGutters": false,
+        },
+        "render": [Function],
+      }
+    }
+    controlId="lastName"
+  >
+    <FormLabel
+      column={true}
+      sm={3}
+      srOnly={false}
+    >
+      Last Name
+    </FormLabel>
+    <Col
+      sm={9}
+    >
+      <Unknown
+        control={
+          Object {
+            "controllerSubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+            "defaultValuesRef": Object {
+              "current": Object {},
+            },
+            "fieldArrayDefaultValuesRef": Object {
+              "current": Object {},
+            },
+            "fieldArrayNamesRef": Object {
+              "current": Set {},
+            },
+            "fieldArraySubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+            "fieldsRef": Object {
+              "current": Object {},
+            },
+            "fieldsWithValidationRef": Object {
+              "current": Object {},
+            },
+            "formStateRef": Object {
+              "current": Object {
+                "dirtyFields": Object {},
+                "errors": Object {},
+                "isDirty": false,
+                "isSubmitSuccessful": false,
+                "isSubmitted": false,
+                "isSubmitting": false,
+                "isValid": false,
+                "isValidating": false,
+                "submitCount": 0,
+                "touchedFields": Object {},
+              },
+            },
+            "formStateSubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+            "getIsDirty": [Function],
+            "inFieldArrayActionRef": Object {
+              "current": false,
+            },
+            "isWatchAllRef": Object {
+              "current": false,
+            },
+            "readFormStateRef": Object {
+              "current": Object {
+                "dirtyFields": false,
+                "errors": "all",
+                "isDirty": false,
+                "isValid": false,
+                "isValidating": false,
+                "touchedFields": false,
+              },
+            },
+            "register": [Function],
+            "shouldUnmount": undefined,
+            "unregister": [Function],
+            "validFieldsRef": Object {
+              "current": Object {},
+            },
+            "watchFieldsRef": Object {
+              "current": Set {},
+            },
+            "watchInternal": [Function],
+            "watchSubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+          }
+        }
+        defaultValue=""
+        name="lastName"
+        render={[Function]}
+        rules={
+          Object {
+            "required": "The last name is required",
+          }
+        }
+      />
+      <Feedback
+        data-testid="lastNameMessage"
+        type="invalid"
+      />
+    </Col>
+  </FormGroup>
+  <FormGroup
+    as={
+      Object {
+        "$$typeof": Symbol(react.forward_ref),
+        "defaultProps": Object {
+          "noGutters": false,
+        },
+        "render": [Function],
+      }
+    }
+    controlId="email"
+  >
+    <FormLabel
+      column={true}
+      sm={3}
+      srOnly={false}
+    >
+      Email
+    </FormLabel>
+    <Col
+      sm={9}
+    >
+      <Unknown
+        control={
+          Object {
+            "controllerSubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+            "defaultValuesRef": Object {
+              "current": Object {},
+            },
+            "fieldArrayDefaultValuesRef": Object {
+              "current": Object {},
+            },
+            "fieldArrayNamesRef": Object {
+              "current": Set {},
+            },
+            "fieldArraySubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+            "fieldsRef": Object {
+              "current": Object {},
+            },
+            "fieldsWithValidationRef": Object {
+              "current": Object {},
+            },
+            "formStateRef": Object {
+              "current": Object {
+                "dirtyFields": Object {},
+                "errors": Object {},
+                "isDirty": false,
+                "isSubmitSuccessful": false,
+                "isSubmitted": false,
+                "isSubmitting": false,
+                "isValid": false,
+                "isValidating": false,
+                "submitCount": 0,
+                "touchedFields": Object {},
+              },
+            },
+            "formStateSubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+            "getIsDirty": [Function],
+            "inFieldArrayActionRef": Object {
+              "current": false,
+            },
+            "isWatchAllRef": Object {
+              "current": false,
+            },
+            "readFormStateRef": Object {
+              "current": Object {
+                "dirtyFields": false,
+                "errors": "all",
+                "isDirty": false,
+                "isValid": false,
+                "isValidating": false,
+                "touchedFields": false,
+              },
+            },
+            "register": [Function],
+            "shouldUnmount": undefined,
+            "unregister": [Function],
+            "validFieldsRef": Object {
+              "current": Object {},
+            },
+            "watchFieldsRef": Object {
+              "current": Set {},
+            },
+            "watchInternal": [Function],
+            "watchSubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+          }
+        }
+        defaultValue=""
+        name="email"
+        render={[Function]}
+        rules={
+          Object {
+            "required": "The email is required",
+          }
+        }
+      />
+      <Feedback
+        data-testid="emailMessage"
+        type="invalid"
+      />
+    </Col>
+  </FormGroup>
+  <FormGroup
+    as={
+      Object {
+        "$$typeof": Symbol(react.forward_ref),
+        "defaultProps": Object {
+          "noGutters": false,
+        },
+        "render": [Function],
+      }
+    }
+    controlId="phoneNumber"
+  >
+    <FormLabel
+      column={true}
+      sm={3}
+      srOnly={false}
+    >
+      Phone Number
+    </FormLabel>
+    <Col
+      sm={9}
+    >
+      <Unknown
+        control={
+          Object {
+            "controllerSubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+            "defaultValuesRef": Object {
+              "current": Object {},
+            },
+            "fieldArrayDefaultValuesRef": Object {
+              "current": Object {},
+            },
+            "fieldArrayNamesRef": Object {
+              "current": Set {},
+            },
+            "fieldArraySubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+            "fieldsRef": Object {
+              "current": Object {},
+            },
+            "fieldsWithValidationRef": Object {
+              "current": Object {},
+            },
+            "formStateRef": Object {
+              "current": Object {
+                "dirtyFields": Object {},
+                "errors": Object {},
+                "isDirty": false,
+                "isSubmitSuccessful": false,
+                "isSubmitted": false,
+                "isSubmitting": false,
+                "isValid": false,
+                "isValidating": false,
+                "submitCount": 0,
+                "touchedFields": Object {},
+              },
+            },
+            "formStateSubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+            "getIsDirty": [Function],
+            "inFieldArrayActionRef": Object {
+              "current": false,
+            },
+            "isWatchAllRef": Object {
+              "current": false,
+            },
+            "readFormStateRef": Object {
+              "current": Object {
+                "dirtyFields": false,
+                "errors": "all",
+                "isDirty": false,
+                "isValid": false,
+                "isValidating": false,
+                "touchedFields": false,
+              },
+            },
+            "register": [Function],
+            "shouldUnmount": undefined,
+            "unregister": [Function],
+            "validFieldsRef": Object {
+              "current": Object {},
+            },
+            "watchFieldsRef": Object {
+              "current": Set {},
+            },
+            "watchInternal": [Function],
+            "watchSubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+          }
+        }
+        defaultValue=""
+        name="phoneNumber"
+        render={[Function]}
+        rules={
+          Object {
+            "required": "The phone number is required",
+          }
+        }
+      />
+      <Feedback
+        data-testid="phoneNumberMessage"
+        type="invalid"
+      />
+    </Col>
+  </FormGroup>
+  <h3>
+    Address
+  </h3>
+  <FormGroup
+    as={
+      Object {
+        "$$typeof": Symbol(react.forward_ref),
+        "defaultProps": Object {
+          "noGutters": false,
+        },
+        "render": [Function],
+      }
+    }
+    controlId="line1"
+  >
+    <FormLabel
+      column={true}
+      sm={3}
+      srOnly={false}
+    >
+      Line1
+    </FormLabel>
+    <Col
+      sm={9}
+    >
+      <Unknown
+        control={
+          Object {
+            "controllerSubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+            "defaultValuesRef": Object {
+              "current": Object {},
+            },
+            "fieldArrayDefaultValuesRef": Object {
+              "current": Object {},
+            },
+            "fieldArrayNamesRef": Object {
+              "current": Set {},
+            },
+            "fieldArraySubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+            "fieldsRef": Object {
+              "current": Object {},
+            },
+            "fieldsWithValidationRef": Object {
+              "current": Object {},
+            },
+            "formStateRef": Object {
+              "current": Object {
+                "dirtyFields": Object {},
+                "errors": Object {},
+                "isDirty": false,
+                "isSubmitSuccessful": false,
+                "isSubmitted": false,
+                "isSubmitting": false,
+                "isValid": false,
+                "isValidating": false,
+                "submitCount": 0,
+                "touchedFields": Object {},
+              },
+            },
+            "formStateSubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+            "getIsDirty": [Function],
+            "inFieldArrayActionRef": Object {
+              "current": false,
+            },
+            "isWatchAllRef": Object {
+              "current": false,
+            },
+            "readFormStateRef": Object {
+              "current": Object {
+                "dirtyFields": false,
+                "errors": "all",
+                "isDirty": false,
+                "isValid": false,
+                "isValidating": false,
+                "touchedFields": false,
+              },
+            },
+            "register": [Function],
+            "shouldUnmount": undefined,
+            "unregister": [Function],
+            "validFieldsRef": Object {
+              "current": Object {},
+            },
+            "watchFieldsRef": Object {
+              "current": Set {},
+            },
+            "watchInternal": [Function],
+            "watchSubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+          }
+        }
+        defaultValue=""
+        name="line1"
+        render={[Function]}
+        rules={
+          Object {
+            "required": "The line1 is required",
+          }
+        }
+      />
+      <Feedback
+        data-testid="line1Message"
+        type="invalid"
+      />
+    </Col>
+  </FormGroup>
+  <FormGroup
+    as={
+      Object {
+        "$$typeof": Symbol(react.forward_ref),
+        "defaultProps": Object {
+          "noGutters": false,
+        },
+        "render": [Function],
+      }
+    }
+    controlId="line2"
+  >
+    <FormLabel
+      column={true}
+      sm={3}
+      srOnly={false}
+    >
+      Line2
+    </FormLabel>
+    <Col
+      sm={9}
+    >
+      <Unknown
+        control={
+          Object {
+            "controllerSubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+            "defaultValuesRef": Object {
+              "current": Object {},
+            },
+            "fieldArrayDefaultValuesRef": Object {
+              "current": Object {},
+            },
+            "fieldArrayNamesRef": Object {
+              "current": Set {},
+            },
+            "fieldArraySubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+            "fieldsRef": Object {
+              "current": Object {},
+            },
+            "fieldsWithValidationRef": Object {
+              "current": Object {},
+            },
+            "formStateRef": Object {
+              "current": Object {
+                "dirtyFields": Object {},
+                "errors": Object {},
+                "isDirty": false,
+                "isSubmitSuccessful": false,
+                "isSubmitted": false,
+                "isSubmitting": false,
+                "isValid": false,
+                "isValidating": false,
+                "submitCount": 0,
+                "touchedFields": Object {},
+              },
+            },
+            "formStateSubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+            "getIsDirty": [Function],
+            "inFieldArrayActionRef": Object {
+              "current": false,
+            },
+            "isWatchAllRef": Object {
+              "current": false,
+            },
+            "readFormStateRef": Object {
+              "current": Object {
+                "dirtyFields": false,
+                "errors": "all",
+                "isDirty": false,
+                "isValid": false,
+                "isValidating": false,
+                "touchedFields": false,
+              },
+            },
+            "register": [Function],
+            "shouldUnmount": undefined,
+            "unregister": [Function],
+            "validFieldsRef": Object {
+              "current": Object {},
+            },
+            "watchFieldsRef": Object {
+              "current": Set {},
+            },
+            "watchInternal": [Function],
+            "watchSubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+          }
+        }
+        defaultValue=""
+        name="line2"
+        render={[Function]}
+      />
+      <Feedback
+        data-testid="line2Message"
+        type="invalid"
+      />
+    </Col>
+  </FormGroup>
+  <FormGroup
+    as={
+      Object {
+        "$$typeof": Symbol(react.forward_ref),
+        "defaultProps": Object {
+          "noGutters": false,
+        },
+        "render": [Function],
+      }
+    }
+    controlId="postalCode"
+  >
+    <FormLabel
+      column={true}
+      sm={3}
+      srOnly={false}
+    >
+      Postal Code
+    </FormLabel>
+    <Col
+      sm={9}
+    >
+      <Unknown
+        control={
+          Object {
+            "controllerSubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+            "defaultValuesRef": Object {
+              "current": Object {},
+            },
+            "fieldArrayDefaultValuesRef": Object {
+              "current": Object {},
+            },
+            "fieldArrayNamesRef": Object {
+              "current": Set {},
+            },
+            "fieldArraySubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+            "fieldsRef": Object {
+              "current": Object {},
+            },
+            "fieldsWithValidationRef": Object {
+              "current": Object {},
+            },
+            "formStateRef": Object {
+              "current": Object {
+                "dirtyFields": Object {},
+                "errors": Object {},
+                "isDirty": false,
+                "isSubmitSuccessful": false,
+                "isSubmitted": false,
+                "isSubmitting": false,
+                "isValid": false,
+                "isValidating": false,
+                "submitCount": 0,
+                "touchedFields": Object {},
+              },
+            },
+            "formStateSubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+            "getIsDirty": [Function],
+            "inFieldArrayActionRef": Object {
+              "current": false,
+            },
+            "isWatchAllRef": Object {
+              "current": false,
+            },
+            "readFormStateRef": Object {
+              "current": Object {
+                "dirtyFields": false,
+                "errors": "all",
+                "isDirty": false,
+                "isValid": false,
+                "isValidating": false,
+                "touchedFields": false,
+              },
+            },
+            "register": [Function],
+            "shouldUnmount": undefined,
+            "unregister": [Function],
+            "validFieldsRef": Object {
+              "current": Object {},
+            },
+            "watchFieldsRef": Object {
+              "current": Set {},
+            },
+            "watchInternal": [Function],
+            "watchSubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+          }
+        }
+        defaultValue=""
+        name="postalCode"
+        render={[Function]}
+        rules={
+          Object {
+            "required": "The postal code is required",
+          }
+        }
+      />
+      <Feedback
+        data-testid="postalCodeMessage"
+        type="invalid"
+      />
+    </Col>
+  </FormGroup>
+  <FormGroup
+    as={
+      Object {
+        "$$typeof": Symbol(react.forward_ref),
+        "defaultProps": Object {
+          "noGutters": false,
+        },
+        "render": [Function],
+      }
+    }
+    controlId="city"
+  >
+    <FormLabel
+      column={true}
+      sm={3}
+      srOnly={false}
+    >
+      City
+    </FormLabel>
+    <Col
+      sm={9}
+    >
+      <Unknown
+        control={
+          Object {
+            "controllerSubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+            "defaultValuesRef": Object {
+              "current": Object {},
+            },
+            "fieldArrayDefaultValuesRef": Object {
+              "current": Object {},
+            },
+            "fieldArrayNamesRef": Object {
+              "current": Set {},
+            },
+            "fieldArraySubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+            "fieldsRef": Object {
+              "current": Object {},
+            },
+            "fieldsWithValidationRef": Object {
+              "current": Object {},
+            },
+            "formStateRef": Object {
+              "current": Object {
+                "dirtyFields": Object {},
+                "errors": Object {},
+                "isDirty": false,
+                "isSubmitSuccessful": false,
+                "isSubmitted": false,
+                "isSubmitting": false,
+                "isValid": false,
+                "isValidating": false,
+                "submitCount": 0,
+                "touchedFields": Object {},
+              },
+            },
+            "formStateSubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+            "getIsDirty": [Function],
+            "inFieldArrayActionRef": Object {
+              "current": false,
+            },
+            "isWatchAllRef": Object {
+              "current": false,
+            },
+            "readFormStateRef": Object {
+              "current": Object {
+                "dirtyFields": false,
+                "errors": "all",
+                "isDirty": false,
+                "isValid": false,
+                "isValidating": false,
+                "touchedFields": false,
+              },
+            },
+            "register": [Function],
+            "shouldUnmount": undefined,
+            "unregister": [Function],
+            "validFieldsRef": Object {
+              "current": Object {},
+            },
+            "watchFieldsRef": Object {
+              "current": Set {},
+            },
+            "watchInternal": [Function],
+            "watchSubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+          }
+        }
+        defaultValue=""
+        name="city"
+        render={[Function]}
+        rules={
+          Object {
+            "required": "The city is required",
+          }
+        }
+      />
+      <Feedback
+        data-testid="cityMessage"
+        type="invalid"
+      />
+    </Col>
+  </FormGroup>
+  <FormGroup
+    as={
+      Object {
+        "$$typeof": Symbol(react.forward_ref),
+        "defaultProps": Object {
+          "noGutters": false,
+        },
+        "render": [Function],
+      }
+    }
+    controlId="country"
+  >
+    <FormLabel
+      column={true}
+      sm={3}
+      srOnly={false}
+    >
+      Country
+    </FormLabel>
+    <Col
+      sm={9}
+    >
+      <Unknown
+        control={
+          Object {
+            "controllerSubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+            "defaultValuesRef": Object {
+              "current": Object {},
+            },
+            "fieldArrayDefaultValuesRef": Object {
+              "current": Object {},
+            },
+            "fieldArrayNamesRef": Object {
+              "current": Set {},
+            },
+            "fieldArraySubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+            "fieldsRef": Object {
+              "current": Object {},
+            },
+            "fieldsWithValidationRef": Object {
+              "current": Object {},
+            },
+            "formStateRef": Object {
+              "current": Object {
+                "dirtyFields": Object {},
+                "errors": Object {},
+                "isDirty": false,
+                "isSubmitSuccessful": false,
+                "isSubmitted": false,
+                "isSubmitting": false,
+                "isValid": false,
+                "isValidating": false,
+                "submitCount": 0,
+                "touchedFields": Object {},
+              },
+            },
+            "formStateSubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+            "getIsDirty": [Function],
+            "inFieldArrayActionRef": Object {
+              "current": false,
+            },
+            "isWatchAllRef": Object {
+              "current": false,
+            },
+            "readFormStateRef": Object {
+              "current": Object {
+                "dirtyFields": false,
+                "errors": "all",
+                "isDirty": false,
+                "isValid": false,
+                "isValidating": false,
+                "touchedFields": false,
+              },
+            },
+            "register": [Function],
+            "shouldUnmount": undefined,
+            "unregister": [Function],
+            "validFieldsRef": Object {
+              "current": Object {},
+            },
+            "watchFieldsRef": Object {
+              "current": Set {},
+            },
+            "watchInternal": [Function],
+            "watchSubjectRef": Object {
+              "current": Re {
+                "observers": Array [],
+              },
+            },
+          }
+        }
+        defaultValue=""
+        name="country"
+        render={[Function]}
+        rules={
+          Object {
+            "required": "The country is required",
+          }
+        }
+      />
+      <Feedback
+        data-testid="countryMessage"
+        type="invalid"
+      />
+    </Col>
+  </FormGroup>
+  <p>
+    Do you agree to send your first name, last name, email, phone number and address to the following Legal Officers ?
+  </p>
+  <p>
+    This initial personal information sharing will start KYC process and will also be used in this context of a potential future Account recovery process
+  </p>
+  <ButtonGroup
+    role="group"
+    toggle={false}
+    vertical={false}
+  >
+    <Button
+      active={false}
+      data-testid="btnSubmit"
+      disabled={false}
+      type="submit"
+      variant="primary"
+    >
+      I agree and submit my request
+    </Button>
+    <Link
+      to="/user"
+    >
+      <Button
+        active={false}
+        data-testid="btnCancel"
+        disabled={false}
+        variant="secondary"
+      >
+        Cancel
+      </Button>
+    </Link>
+  </ButtonGroup>
+</Form>
+`;
