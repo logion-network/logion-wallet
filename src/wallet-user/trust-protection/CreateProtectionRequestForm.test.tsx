@@ -71,9 +71,7 @@ describe("CreateProtectionRequestForm", () => {
         const button = screen.getByTestId("btnSubmit");
         fireEvent.click(button);
 
-        await waitFor(() => {});
-
-        expect(submitCallback).toBeCalled();
+        await waitFor(() => expect(submitCallback).toBeCalled());
 
         expect(createProtectionRequest).toBeCalledWith(
             expect.objectContaining({
