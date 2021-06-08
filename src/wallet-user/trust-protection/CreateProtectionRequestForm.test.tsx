@@ -31,10 +31,11 @@ describe("CreateProtectionRequestForm", () => {
         const button = screen.getByTestId("btnSubmit");
         fireEvent.click(button)
 
-        await waitFor(() => expect(submitCallback).not.toBeCalled());
+        await waitFor(() => {
+            expect(screen.getByTestId("firstNameMessage").innerHTML)
+                .toBe("The first name is required")
+        })
 
-        expect(screen.getByTestId("firstNameMessage").innerHTML)
-            .toBe("The first name is required");
         expect(screen.getByTestId("lastNameMessage").innerHTML)
             .toBe("The last name is required");
         expect(screen.getByTestId("emailMessage").innerHTML)
@@ -52,6 +53,8 @@ describe("CreateProtectionRequestForm", () => {
             .toBe("The city is required");
         expect(screen.getByTestId("countryMessage").innerHTML)
             .toBe("The country is required");
+
+        expect(submitCallback).not.toBeCalled()
     });
 
     it("should call submit when form is correctly filled", async  () => {
