@@ -90,8 +90,7 @@ describe("CreateProtectionRequestForm", () => {
                     country: "Belgium"
                 },
                 legalOfficerAddresses: [DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER],
-                // TODO Fix failing signature check
-                // signature: expect.stringMatching(new RegExp("protection-request,create," + ISO_DATETIME_PATTERN.source + ",John,Doe,john.doe@logion.network,+1234,Place de le République Française, 10,boite 15,4000,Liège,Belgium," + DEFAULT_LEGAL_OFFICER + "," + ANOTHER_LEGAL_OFFICER)),
+                signature: expect.stringMatching(new RegExp("protection-request,create," + ISO_DATETIME_PATTERN.source + ",John,Doe,john.doe@logion.network,[+]1234,Place de le République Française, 10,boite 15,4000,Liège,Belgium," + DEFAULT_LEGAL_OFFICER + "," + ANOTHER_LEGAL_OFFICER)),
             })
         )
     })
