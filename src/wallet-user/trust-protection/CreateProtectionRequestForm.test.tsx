@@ -31,7 +31,7 @@ describe("CreateProtectionRequestForm", () => {
         const button = screen.getByTestId("btnSubmit");
         fireEvent.click(button)
 
-        await waitFor(() => { });
+        await waitFor(() => expect(submitCallback).not.toBeCalled());
 
         expect(screen.getByTestId("firstNameMessage").innerHTML)
             .toBe("The first name is required");
@@ -52,8 +52,6 @@ describe("CreateProtectionRequestForm", () => {
             .toBe("The city is required");
         expect(screen.getByTestId("countryMessage").innerHTML)
             .toBe("The country is required");
-
-        expect(submitCallback).not.toBeCalled();
     });
 
     it("should call submit when form is correctly filled", async  () => {
