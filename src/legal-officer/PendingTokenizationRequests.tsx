@@ -93,7 +93,7 @@ export default function PendingTokenizationRequests() {
                     stepTestId={`modal-reject-${requestToReject}`}
                     proceedButtonTestId={`confirm-reject-${requestToReject}`}
                 >
-                    <Form.Group controlId="exampleForm.ControlTextarea1">
+                    <Form.Group>
                         <Form.Label>Reason</Form.Label>
                         <Form.Control
                             as="textarea"

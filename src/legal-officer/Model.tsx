@@ -82,3 +82,57 @@ export async function setAssetDescription(parameters: SetAssetDescriptionRequest
         sessionToken: parameters.sessionToken,
     });
 }
+
+export type LegalOfficerDecisionStatus = "PENDING" | "REJECTED" | "ACCEPTED";
+
+export interface LegalOfficerDecision {
+    legalOfficerAddress: string,
+    status: LegalOfficerDecisionStatus,
+}
+
+export interface ProtectionRequest {
+    id: string,
+    decisions: LegalOfficerDecision[],
+}
+
+export type ProtectionRequestStatus = "PENDING" | "REJECTED" | "ACCEPTED";
+
+export interface FetchProtectionRequestSpecification {
+    legalOfficerAddress?: string,
+    requesterAddress?: string,
+    statuses: ProtectionRequestStatus[],
+}
+
+export async function fetchProtectionRequests(
+        specification: FetchProtectionRequestSpecification): Promise<ProtectionRequest[]> {
+    const response = await axios.put("/api/protection-request", specification);
+    return response.data.requests;
+}
+
+export interface RejectProtectionRequestParameters {
+    requestId: string,
+    signature: string,
+    rejectReason: string,
+    signedOn: Moment,
+}
+
+export async function rejectProtectionRequest(parameters: RejectProtectionRequestParameters): Promise<void> {
+    await axios.post(`/api/protection-request/${parameters.requestId}/reject`, {
+        signature: parameters.signature,
+        rejectReason: parameters.rejectReason,
+        signedOn: toIsoString(parameters.signedOn),
+    });
+}
+
+export interface AcceptProtectionRequestParameters {
+    requestId: string,
+    signature: string,
+    signedOn: Moment,
+}
+
+export async function acceptProtectionRequest(parameters: AcceptProtectionRequestParameters): Promise<void> {
+    await axios.post(`/api/protection-request/${parameters.requestId}/accept`, {
+        signature: parameters.signature,
+        signedOn: toIsoString(parameters.signedOn),
+    });
+}

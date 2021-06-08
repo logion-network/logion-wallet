@@ -9,6 +9,11 @@ exports[`renders 1`] = `
       <TokenizationRequests />
     </Route>
     <Route
+      path="/legal-officer/protection"
+    >
+      <ProtectionRequests />
+    </Route>
+    <Route
       path=""
     >
       <Redirect

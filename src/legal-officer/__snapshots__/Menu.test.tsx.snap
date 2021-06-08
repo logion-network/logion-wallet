@@ -9,5 +9,12 @@ exports[`renders 1`] = `
       Tokenization Requests
     </Link>
   </li>
+  <li>
+    <Link
+      to="/legal-officer/protection"
+    >
+      Protection Requests
+    </Link>
+  </li>
 </ul>
 `;
