@@ -3,7 +3,7 @@ jest.mock('@polkadot/ui-keyring');
 jest.mock('@polkadot/extension-dapp');
 
 import { useLogionChain, LogionChainContextProvider, forceKeyringLoad } from './LogionChainContext';
-import { act, render, waitFor, RenderResult } from '@testing-library/react';
+import { render, waitFor, RenderResult } from '@testing-library/react';
 import { ConfigType, DEFAULT_CONFIG } from '../config';
 
 import {
@@ -30,11 +30,8 @@ afterEach(() => {
 test('Context automatically connects to first available node', async () => {
     const result = render(<InspectorInContext/>);
     expect(result.getByTestId("apiState")).toHaveTextContent("CONNECT_INIT");
-
-    act(() => connectedAndReady());
-    await waitFor(() => {}); // Solves act(...) warning
-
-    expectConnectedAndReadyState(result);
+    connectedAndReady();
+    await waitFor(() => expectConnectedAndReadyState(result));
 });
 
 function InspectorInContext() {
@@ -95,12 +92,9 @@ function expectConnectedAndReadyState(result: RenderResult) {
 
 test('Context automatically connects to first available node with ready event', async () => {
     const result = render(<InspectorInContext/>);
-
-    act(() => triggerEvent("connected"));
-    act(() => triggerEvent("ready"));
-    await waitFor(() => {}); // Solves act(...) warning
-
-    expectConnectedAndReadyState(result);
+    triggerEvent("connected");
+    triggerEvent("ready");
+    await waitFor(() => expectConnectedAndReadyState(result));
 });
 
 test("Context does not fail with throwing keyring.loadAll", async () => {
@@ -111,42 +105,34 @@ test("Context does not fail with throwing keyring.loadAll", async () => {
 
 test('Context detects connection errors', async () => {
     const result = render(<InspectorInContext/>);
-    act(() => triggerEvent("error"));
-    await waitFor(() => {}); // Solves act(...) warning
-
-    expect(result.getByTestId("apiState")).toHaveTextContent("ERROR");
+    triggerEvent("error");
+    await waitFor(() => expect(result.getByTestId("apiState")).toHaveTextContent("ERROR"));
 });
 
 test("Context automatically listens to injected accounts", async () => {
     let result = render(<InspectorInContext/>);
-    await waitFor(() => {});
-    expect(result.getByTestId("injectedAccountsConsumptionState")).toHaveTextContent("STARTED");
+    await waitFor(() => expect(result.getByTestId("injectedAccountsConsumptionState")).toHaveTextContent("STARTED"));
 });
-
 
 test("Context detects injected accounts update", async () => {
     let result = render(<InspectorInContext/>);
-    await waitFor(() => {});
     const accounts = [{}, {}, {}];
-    act(() => updateInjectedAccounts(accounts));
-    await waitFor(() => {});
-    expect(result.getByTestId("injectedAccounts.length")).toHaveTextContent(accounts.length.toString());
+    await waitFor(() => updateInjectedAccounts(accounts));
+    await waitFor(() => expect(result.getByTestId("injectedAccounts.length")).toHaveTextContent(accounts.length.toString()));
 });
 
 test("Context stores at most 1024 events", async () => {
     const result = render(<InspectorInContext/>);
-    act(() => connectedAndReady());
-    await waitFor(() => {});
-    act(() => eventsCallback(mockVec(new Array(2000))));
-    await waitFor(() => {});
-    expect(result.getByTestId("events.length")).toHaveTextContent('1024');
+    connectedAndReady();
+    await waitFor(() => expect(result.getByTestId("apiState")).toHaveTextContent("READY"));
+    eventsCallback(mockVec(new Array(2000)));
+    await waitFor(() => expect(result.getByTestId("events.length")).toHaveTextContent('1024'));
 });
 
 test("Context listens to new heads", async () => {
     const result = render(<InspectorInContext/>);
-    act(() => connectedAndReady());
-    await waitFor(() => {});
-    act(() => newHeadsCallback({number: mockCompact(42)}));
-    await waitFor(() => {});
-    expect(result.getByTestId("lastHeader.number")).toHaveTextContent('42');
+    connectedAndReady();
+    await waitFor(() => expect(result.getByTestId("apiState")).toHaveTextContent("READY"));
+    newHeadsCallback({number: mockCompact(42)});
+    await waitFor(() => expect(result.getByTestId("lastHeader.number")).toHaveTextContent('42'));
 });
