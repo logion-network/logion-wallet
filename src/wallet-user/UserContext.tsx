@@ -1,4 +1,9 @@
 import React, { useContext, useEffect, useState, useCallback } from "react";
+import { Option } from '@polkadot/types';
+
+import { useLogionChain } from '../logion-chain';
+import { RecoveryConfig, getRecoveryConfig } from '../logion-chain/Recovery';
+
 import { CreateTokenRequest, createTokenRequest as modelCreateTokenRequest } from "./Model";
 import { TokenizationRequest, fetchRequests } from "../legal-officer/Model";
 import {
@@ -19,6 +24,7 @@ export interface UserContext {
     refreshRequests: (() => void) | null,
     createProtectionRequest: ((request: CreateProtectionRequest) => Promise<ProtectionRequest>) | null,
     createdProtectionRequest: ProtectionRequest | null,
+    recoveryConfig: Option<RecoveryConfig> | null,
 }
 
 function initialContextValue(legalOfficerAddress: string, userAddress: string): UserContext {
@@ -33,6 +39,7 @@ function initialContextValue(legalOfficerAddress: string, userAddress: string): 
         refreshRequests: null,
         createProtectionRequest: null,
         createdProtectionRequest: null,
+        recoveryConfig: null,
     }
 }
 
@@ -45,6 +52,7 @@ export interface Props {
 }
 
 export function UserContextProvider(props: Props) {
+    const { api } = useLogionChain();
     const [contextValue, setContextValue] = useState<UserContext>(initialContextValue(props.legalOfficerAddress, props.userAddress));
     const [fetchedInitially, setFetchedInitially] = useState<boolean>(false);
 
@@ -74,17 +82,22 @@ export function UserContextProvider(props: Props) {
                 status: "REJECTED",
             });
             const createdProtectionRequest = await fetchProtectionRequest(contextValue.userAddress);
+            const recoveryConfig = await getRecoveryConfig({
+                api: api!,
+                accountId: contextValue.userAddress
+            });
 
             setContextValue({
                 ...contextValue,
                 pendingTokenizationRequests,
                 acceptedTokenizationRequests,
                 rejectedTokenizationRequests,
-                createdProtectionRequest
+                createdProtectionRequest,
+                recoveryConfig,
             });
         }
         fetchAndSetRequests();
-    }, [contextValue, setContextValue]);
+    }, [ api, contextValue, setContextValue ]);
 
     useEffect(() => {
         if(!fetchedInitially) {
