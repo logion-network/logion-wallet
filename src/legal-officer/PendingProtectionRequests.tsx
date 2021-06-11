@@ -6,10 +6,13 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
+import Identity from '../component/Identity';
+import PostalAddress from '../component/PostalAddress';
 import { sign } from '../logion-chain';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
-import { ProtectionRequest, acceptProtectionRequest, rejectProtectionRequest } from './Model';
+import { acceptProtectionRequest, rejectProtectionRequest } from './Model';
+import { ProtectionRequest } from './Types';
 import ProcessStep from './ProcessStep';
 
 enum ReviewStatus {
@@ -26,7 +29,7 @@ interface ReviewState {
 const NO_REVIEW_STATE = { status: ReviewStatus.NONE };
 
 export default function PendingProtectionRequests() {
-    const { pendingProtectionRequests, legalOfficerAddress } = useLegalOfficerContext();
+    const { pendingProtectionRequests, legalOfficerAddress, refreshRequests } = useLegalOfficerContext();
     const [ rejectReason, setRejectReason ] = useState<string>("");
     const [ reviewState, setReviewState ] = useState<ReviewState>(NO_REVIEW_STATE);
 
@@ -47,14 +50,16 @@ export default function PendingProtectionRequests() {
                 attributes
             });
             await rejectProtectionRequest({
+                legalOfficerAddress,
                 requestId,
                 signature,
                 rejectReason,
                 signedOn,
             });
             setReviewState(NO_REVIEW_STATE);
+            refreshRequests!();
         })();
-    }, [ reviewState, legalOfficerAddress, rejectReason, setReviewState ]);
+    }, [ reviewState, legalOfficerAddress, rejectReason, setReviewState, refreshRequests ]);
 
     const acceptAndCloseModal = useCallback(() => {
         (async function() {
@@ -69,13 +74,15 @@ export default function PendingProtectionRequests() {
                 attributes
             });
             await acceptProtectionRequest({
+                legalOfficerAddress,
                 requestId,
                 signature,
                 signedOn,
             });
             setReviewState(NO_REVIEW_STATE);
+            refreshRequests!();
         })();
-    }, [ reviewState, legalOfficerAddress, setReviewState ]);
+    }, [ reviewState, legalOfficerAddress, setReviewState, refreshRequests ]);
 
     if (pendingProtectionRequests === null) {
         return null;
@@ -98,14 +105,14 @@ export default function PendingProtectionRequests() {
                     {
                         pendingProtectionRequests.map(request => (
                             <tr key={request.id}>
-                                <td>TODO</td>
-                                <td>TODO</td>
-                                <td>TODO</td>
-                                <td>TODO</td>
+                                <td>{ request.requesterAddress }</td>
+                                <td>{ request.userIdentity.firstName }</td>
+                                <td>{ request.userIdentity.lastName }</td>
+                                <td>{ request.createdOn }</td>
                                 <td>
                                     <ButtonGroup aria-label="actions">
                                         <Button
-                                            variant="success"
+                                            variant="primary"
                                             onClick={() => setReviewState({status: ReviewStatus.PENDING, request: request}) }
                                             data-testid={`review-${request.id}`}
                                         >
@@ -154,7 +161,12 @@ export default function PendingProtectionRequests() {
                         }
                     ] }
                 >
-                    <p>TODO fields</p>
+                    <Identity
+                        identity={ reviewState.request!.userIdentity }
+                    />
+                    <PostalAddress
+                        address={ reviewState.request!.userPostalAddress }
+                    />
                     <p>I executed my due diligence and accept to be the Legal Officer of this user</p>
                 </ProcessStep>
             }

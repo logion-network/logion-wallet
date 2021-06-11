@@ -37,7 +37,11 @@ export async function replaceUnsubscriber(
         currentUnsubscriber: Unsubscriber | null,
         setUnsubscriber: (newUnsubscriber: Unsubscriber | null) => void,
         newUnsubscriber: Unsubscriber | null): Promise<void> {
-    await unsubscribe(currentUnsubscriber);
+    try {
+        await unsubscribe(currentUnsubscriber);
+    } catch(e) {
+        // Should have been already handled by callback
+    }
     setUnsubscriber(newUnsubscriber);
 }
 

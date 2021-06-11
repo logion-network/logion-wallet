@@ -2,7 +2,6 @@ jest.mock('../logion-chain');
 jest.mock('./UserContext');
 jest.mock('react-router-dom');
 
-import { setUseParams } from 'react-router-dom';
 import { shallowRender } from '../tests';
 import MyTokens from './MyTokens';
 import { setAcceptedRequests } from './UserContext';
@@ -10,17 +9,11 @@ import { render, screen, act, waitFor } from '@testing-library/react';
 import { DEFAULT_ASSETS_DECIMALS } from '../logion-chain';
 
 test("renders with no requests", () => {
-    setUseParams(jest.fn().mockReturnValue({
-        address: "address"
-    }));
     const tree = shallowRender(<MyTokens />);
     expect(tree).toMatchSnapshot();
 });
 
 test("renders with requests", async () => {
-    setUseParams(jest.fn().mockReturnValue({
-        address: "address"
-    }));
     setAcceptedRequests([
         {
             id: "1",

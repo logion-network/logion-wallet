@@ -5,6 +5,7 @@ jest.mock('./Model');
 import { shallowRender } from '../tests';
 import ProtectionRequestsHistory from './ProtectionRequestsHistory';
 import { setProtectionRequestsHistory } from './LegalOfficerContext';
+import { PROTECTION_REQUESTS_HISTORY } from './TestData';
 
 test("Renders null with no data", () => {
     const tree = shallowRender(<ProtectionRequestsHistory />);
@@ -12,11 +13,7 @@ test("Renders null with no data", () => {
 });
 
 test("Renders requests history", () => {
-    setProtectionRequestsHistory([
-        {
-            id: "1"
-        }
-    ]);
+    setProtectionRequestsHistory(PROTECTION_REQUESTS_HISTORY);
     const tree = shallowRender(<ProtectionRequestsHistory />);
     expect(tree).toMatchSnapshot();
 });

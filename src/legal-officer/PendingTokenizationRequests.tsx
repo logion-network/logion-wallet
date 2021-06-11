@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
-import { TokenizationRequest } from './Model';
+import { TokenizationRequest } from './Types';
 import ProcessStep from './ProcessStep';
 import TokenizationRequestAcceptance from './TokenizationRequestAcceptance';
 

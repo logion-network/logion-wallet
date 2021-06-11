@@ -1,27 +1,12 @@
 import axios from "axios";
 import {Moment} from "moment";
-import {DEFAULT_LEGAL_OFFICER} from "../../legal-officer/Model";
-
-export const ANOTHER_LEGAL_OFFICER = "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty"; // Bob
-
-export interface UserIdentity {
-    firstName: string,
-    lastName: string,
-    email: string,
-    phoneNumber: string
-}
-
-export interface PostalAddress {
-    line1: string,
-    line2: string,
-    postalCode: string,
-    city: string,
-    country: string
-}
+import {DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER, ProtectionRequest} from "../../legal-officer/Types";
+import Identity from '../../component/types/Identity';
+import PostalAddress from '../../component/types/PostalAddress';
 
 export interface CreateProtectionRequest {
     requesterAddress: string,
-    userIdentity: UserIdentity,
+    userIdentity: Identity,
     userPostalAddress: PostalAddress,
     legalOfficerAddresses: string[],
     signature: string,
@@ -35,18 +20,8 @@ export interface LegalOfficerDecision {
     status: LegalOfficerDecisionStatus
 }
 
-export interface ProtectionRequest {
-    id: string,
-    decisions: LegalOfficerDecision[]
-}
-
 export async function createProtectionRequest(request: CreateProtectionRequest): Promise<ProtectionRequest> {
     const response = await axios.post("/api/protection-request", request);
-    return response.data;
-}
-
-export async function fetchProtectionRequest(requesterAddress: string): Promise<ProtectionRequest> {
-    const response = await axios.get("/api/protection-request?requesterAddress=" + requesterAddress);
     return response.data;
 }
 

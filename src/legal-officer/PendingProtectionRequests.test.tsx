@@ -6,9 +6,11 @@ import { shallowRender } from '../tests';
 import PendingProtectionRequests from './PendingProtectionRequests';
 import { setPendingProtectionRequests } from './LegalOfficerContext';
 import { setAcceptProtectionRequest, setRejectProtectionRequest } from './Model';
+import { ProtectionRequest, DEFAULT_LEGAL_OFFICER } from './Types';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ISO_DATETIME_PATTERN } from '../logion-chain/datetime';
+import { PENDING_PROTECTION_REQUESTS } from './TestData';
 
 test("Renders null with no data", () => {
     const tree = shallowRender(<PendingProtectionRequests />);
@@ -16,21 +18,13 @@ test("Renders null with no data", () => {
 });
 
 test("Renders pending requests", () => {
-    setPendingProtectionRequests([
-        {
-            id: "1",
-        }
-    ]);
+    setPendingProtectionRequests(PENDING_PROTECTION_REQUESTS);
     const tree = shallowRender(<PendingProtectionRequests />);
     expect(tree).toMatchSnapshot();
 });
 
 test("Click on later closes dialog", async () => {
-    setPendingProtectionRequests([
-        {
-            id: "1",
-        }
-    ]);
+    setPendingProtectionRequests(PENDING_PROTECTION_REQUESTS);
     const rejectCallback = jest.fn();
     setRejectProtectionRequest(rejectCallback);
     const acceptCallback = jest.fn();
@@ -51,11 +45,7 @@ test("Click on later closes dialog", async () => {
 });
 
 test("Review and reject request", async () => {
-    setPendingProtectionRequests([
-        {
-            id: "1",
-        }
-    ]);
+    setPendingProtectionRequests(PENDING_PROTECTION_REQUESTS);
     const rejectCallback = jest.fn();
     setRejectProtectionRequest(rejectCallback);
     const acceptCallback = jest.fn();
@@ -93,16 +83,7 @@ test("Review and reject request", async () => {
 });
 
 test("Review and accept request", async () => {
-    setPendingProtectionRequests([
-        {
-            id: "1",
-            legalOfficerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-            requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-            requestedTokenName: "TOKEN1",
-            bars: 1,
-            status: "PENDING"
-        }
-    ]);
+    setPendingProtectionRequests(PENDING_PROTECTION_REQUESTS);
 
     const rejectCallback = jest.fn();
     setRejectProtectionRequest(rejectCallback);

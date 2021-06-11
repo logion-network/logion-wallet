@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Table from 'react-bootstrap/Table';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
+import { decision } from './Model';
 
 export default function ProtectionRequestsHistory() {
-    const { protectionRequestsHistory } = useLegalOfficerContext();
+    const { legalOfficerAddress, protectionRequestsHistory } = useLegalOfficerContext();
 
     if (protectionRequestsHistory === null) {
         return null;
@@ -28,11 +29,11 @@ export default function ProtectionRequestsHistory() {
                     {
                         protectionRequestsHistory.map(request => (
                             <tr key={request.id}>
-                                <td>TODO</td>
-                                <td>TODO</td>
-                                <td>TODO</td>
-                                <td>TODO</td>
-                                <td>TODO</td>
+                                <td>{ request.requesterAddress }</td>
+                                <td>{ request.userIdentity.firstName }</td>
+                                <td>{ request.userIdentity.lastName }</td>
+                                <td>{ decision(legalOfficerAddress, request.decisions)!.status }</td>
+                                <td>{ decision(legalOfficerAddress, request.decisions)!.decisionOn }</td>
                             </tr>
                         ))
                     }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { ButtonVariant } from 'react-bootstrap/types';
 
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 
@@ -87,6 +88,7 @@ export default function ProcessStep(props: Props) {
                 { props.children }
             </Modal.Body>
             <Modal.Footer>
+                <ButtonGroup>
                 {
                     nextSteps.map(nextStep => (
                         <Button
@@ -100,6 +102,7 @@ export default function ProcessStep(props: Props) {
                         </Button>
                     ))
                 }
+                </ButtonGroup>
             </Modal.Footer>
         </Modal>
     );

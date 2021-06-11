@@ -8,11 +8,11 @@ import {
 
 import { useLogionChain, InjectedAccountWithMeta } from './logion-chain';
 import { LEGAL_OFFICER_PATH, USER_PATH } from './RootPaths';
-import { DEFAULT_LEGAL_OFFICER } from './legal-officer/Model';
+import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from './legal-officer/Types';
 import LegalOfficerWallet from './legal-officer/LegalOfficerWallet';
 import Wallet from './wallet-user/Wallet';
 
-const LEGAL_OFFICERS: string[] = [ DEFAULT_LEGAL_OFFICER ];
+const LEGAL_OFFICERS: string[] = [ DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER ];
 
 function includesLegalOfficer(accounts: InjectedAccountWithMeta[]): boolean {
     return accounts

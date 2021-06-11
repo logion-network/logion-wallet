@@ -2,9 +2,9 @@
 
 exports[`Renders accepted requests 1`] = `
 <React.Fragment>
-  <h1>
-    Accepted Tokenization Requests
-  </h1>
+  <h2>
+    Accepted
+  </h2>
   <ForwardRef
     bordered={true}
     striped={true}

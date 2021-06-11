@@ -2,29 +2,28 @@ jest.mock('../UserContext');
 jest.mock('../../logion-chain');
 
 import {TEST_WALLET_USER} from "../Model.test";
-import {DEFAULT_LEGAL_OFFICER} from "../../legal-officer/Model";
+import {DEFAULT_LEGAL_OFFICER} from "../../legal-officer/Types";
 import {ANOTHER_LEGAL_OFFICER} from "./Model.test";
 import {ISO_DATETIME_PATTERN} from "../../logion-chain/datetime";
-import {setCreateProtectionRequest} from "../UserContext";
+import { setCreateProtectionRequest } from "../UserContext";
 import {shallowRender} from "../../tests";
 import React from "react";
 import CreateProtectionRequestForm from "./CreateProtectionRequestForm";
 import {render, screen, fireEvent, waitFor} from "@testing-library/react";
 
 test("renders", () => {
-    const tree = shallowRender(<CreateProtectionRequestForm onSubmit={() => null}/>)
+    const tree = shallowRender(<CreateProtectionRequestForm />)
     expect(tree).toMatchSnapshot();
 });
 
 describe("CreateProtectionRequestForm", () => {
 
-    const submitCallback = jest.fn();
     const createProtectionRequest = jest.fn();
 
     beforeEach(() => {
         jest.resetAllMocks();
-        setCreateProtectionRequest(createProtectionRequest)
-        render(<CreateProtectionRequestForm onSubmit={submitCallback}/>);
+        setCreateProtectionRequest(createProtectionRequest);
+        render(<CreateProtectionRequestForm />);
     });
 
     it("should display messages when an empty form is submitted", async () => {
@@ -53,8 +52,6 @@ describe("CreateProtectionRequestForm", () => {
             .toBe("The city is required");
         expect(screen.getByTestId("countryMessage").innerHTML)
             .toBe("The country is required");
-
-        expect(submitCallback).not.toBeCalled()
     });
 
     it("should call submit when form is correctly filled", async  () => {
@@ -72,9 +69,7 @@ describe("CreateProtectionRequestForm", () => {
         const button = screen.getByTestId("btnSubmit");
         fireEvent.click(button);
 
-        await waitFor(() => expect(submitCallback).toBeCalled());
-
-        expect(createProtectionRequest).toBeCalledWith(
+        await waitFor(() => expect(createProtectionRequest).toBeCalledWith(
             expect.objectContaining({
                 requesterAddress: TEST_WALLET_USER,
                 userIdentity: {
@@ -93,6 +88,6 @@ describe("CreateProtectionRequestForm", () => {
                 legalOfficerAddresses: [DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER],
                 signature: expect.stringMatching(new RegExp("protection-request,create," + ISO_DATETIME_PATTERN.source + ",John,Doe,john.doe@logion.network,[+]1234,Place de le République Française, 10,boite 15,4000,Liège,Belgium," + DEFAULT_LEGAL_OFFICER + "," + ANOTHER_LEGAL_OFFICER)),
             })
-        )
+        ));
     })
 });

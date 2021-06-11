@@ -5,6 +5,7 @@ exports[`renders 1`] = `
   <h1>
     Protection Requests
   </h1>
+  <RefreshTokenizationRequestsButton />
   <PendingProtectionRequests />
   <ProtectionRequestsHistory />
 </React.Fragment>

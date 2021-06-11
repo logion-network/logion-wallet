@@ -1,16 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 
-import { USER_PATH } from '../RootPaths';
-import { TokenizationRequest } from '../legal-officer/Model';
+import { TokenizationRequest } from '../legal-officer/Types';
 import { useLogionChain, AssetBalance, tokensFromBalance } from '../logion-chain';
 
 import { useUserContext } from './UserContext';
-
-interface MyTokensParams {
-    address: string
-}
 
 interface EnrichedRequests {
     requests: TokenizationRequest[],
@@ -19,8 +13,7 @@ interface EnrichedRequests {
 }
 
 export default function MyTokens() {
-    const { acceptedTokenizationRequests } = useUserContext();
-    const { address } = useParams<MyTokensParams>();
+    const { userAddress, acceptedTokenizationRequests } = useUserContext();
     const { api } = useLogionChain();
 
     const [ requests, setRequests ] = useState<EnrichedRequests | null>(null);
@@ -43,7 +36,7 @@ export default function MyTokens() {
             });
             (async function() {
                 const balances = await Promise.all(requests.requests.map(
-                    request => api.query.assets.account(request.assetDescription!.assetId, address)));
+                    request => api.query.assets.account(request.assetDescription!.assetId, userAddress)));
                 setRequests({
                     requests: requests.requests,
                     querying: false,
@@ -51,7 +44,7 @@ export default function MyTokens() {
                 });
             })();
         }
-    }, [ api, requests, setRequests, address ]);
+    }, [ api, requests, setRequests, userAddress ]);
 
     return (
         <>
@@ -77,7 +70,6 @@ export default function MyTokens() {
                     </tbody>
                 </Table>
             }
-            <Link to={ USER_PATH }>Back to dashboard</Link>
         </>
     );
 }

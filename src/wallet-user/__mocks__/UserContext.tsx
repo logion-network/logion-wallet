@@ -1,7 +1,7 @@
-import {DEFAULT_LEGAL_OFFICER, TokenizationRequest} from "../../legal-officer/Model";
+import {DEFAULT_LEGAL_OFFICER, TokenizationRequest} from "../../legal-officer/Types";
 import {TEST_WALLET_USER} from "../Model.test";
 import {ApiPromise} from '@polkadot/api';
-import {ProtectionRequest} from "../trust-protection/Model";
+import {ProtectionRequest} from "../../legal-officer/Types";
 
 export let createTokenRequest = () => null;
 
@@ -17,9 +17,15 @@ export let refreshRequests = jest.fn();
 
 export let createProtectionRequest = () => null;
 
-export let createdProtectionRequest: ProtectionRequest | null = null;
+export let pendingProtectionRequests: ProtectionRequest[] | null = null;
+
+export let acceptedProtectionRequests: ProtectionRequest[] | null = null;
 
 export let api = new ApiPromise();
+
+export let recoveryConfig = null;
+
+export let setUserAddress = jest.fn();
 
 export function useUserContext() {
     return {
@@ -32,8 +38,11 @@ export function useUserContext() {
         rejectedTokenizationRequests,
         refreshRequests,
         createProtectionRequest,
-        createdProtectionRequest,
-        api
+        pendingProtectionRequests,
+        acceptedProtectionRequests,
+        recoveryConfig,
+        api,
+        setUserAddress
     };
 }
 
@@ -61,10 +70,24 @@ export function setRefreshRequests(func: any) {
     refreshRequests = func;
 }
 
-export function setCreatedProtectionRequest(request: ProtectionRequest) {
-    createdProtectionRequest = request;
+export function setPendingProtectionRequests(requests: ProtectionRequest[] | null) {
+    pendingProtectionRequests = requests;
+}
+
+export function setAcceptedProtectionRequests(requests: ProtectionRequest[] | null) {
+    acceptedProtectionRequests = requests;
 }
 
 export function setCreateProtectionRequest(callback: any) {
     createProtectionRequest = callback;
+}
+
+export function setRecoveryConfig(config: any) {
+    recoveryConfig = config;
+}
+
+export function UserContextProvider() {
+    return (
+        <div></div>
+    );
 }

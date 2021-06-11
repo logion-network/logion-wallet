@@ -34,3 +34,7 @@ export let acceptProtectionRequest = jest.fn();
 export function setAcceptProtectionRequest(mockFn: any) {
     acceptProtectionRequest = mockFn;
 }
+
+export function decision(legalOfficerAddress: string, decisions: any[]) {
+    return decisions[0];
+}

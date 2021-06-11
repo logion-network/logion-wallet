@@ -1,4 +1,5 @@
 jest.mock('../logion-chain');
+jest.mock('./UserContext');
 
 import React from 'react';
 import Wallet from './Wallet';

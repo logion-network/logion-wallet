@@ -20,6 +20,8 @@ import {
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import {
     TokenizationRequest,
+} from './Types';
+import {
     acceptRequest,
     setAssetDescription,
 } from './Model';

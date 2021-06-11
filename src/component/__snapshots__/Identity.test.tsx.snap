@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Context initially fetches requests 1`] = `
+exports[`renders 1`] = `
 Array [
   <div
     className="form-group"
@@ -8,13 +8,13 @@ Array [
     <label
       className="form-label"
     >
-      Line 1
+      First name
     </label>
     <input
       className="form-control"
       readOnly={true}
       type="text"
-      value="Place de le République Française, 10"
+      value="John"
     />
   </div>,
   <div
@@ -23,13 +23,13 @@ Array [
     <label
       className="form-label"
     >
-      Line 2
+      Last name
     </label>
     <input
       className="form-control"
       readOnly={true}
       type="text"
-      value="boite 15"
+      value="Doe"
     />
   </div>,
   <div
@@ -38,13 +38,13 @@ Array [
     <label
       className="form-label"
     >
-      Postal code
+      E-mail
     </label>
     <input
       className="form-control"
       readOnly={true}
       type="text"
-      value="4000"
+      value="john.doe@logion.network"
     />
   </div>,
   <div
@@ -53,28 +53,13 @@ Array [
     <label
       className="form-label"
     >
-      City
+      Phone number
     </label>
     <input
       className="form-control"
       readOnly={true}
       type="text"
-      value="Liège"
-    />
-  </div>,
-  <div
-    className="form-group"
-  >
-    <label
-      className="form-label"
-    >
-      Country
-    </label>
-    <input
-      className="form-control"
-      readOnly={true}
-      type="text"
-      value="Belgium"
+      value="+1234"
     />
   </div>,
 ]

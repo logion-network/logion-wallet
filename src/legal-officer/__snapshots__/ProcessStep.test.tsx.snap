@@ -33,14 +33,20 @@ exports[`Rendering non-closable active step, may not proceed 1`] = `
     </p>
   </ModalBody>
   <ModalFooter>
-    <Button
-      active={false}
-      disabled={true}
-      onClick={[MockFunction]}
-      variant="primary"
+    <ButtonGroup
+      role="group"
+      toggle={false}
+      vertical={false}
     >
-      Proceed
-    </Button>
+      <Button
+        active={false}
+        disabled={true}
+        onClick={[MockFunction]}
+        variant="primary"
+      >
+        Proceed
+      </Button>
+    </ButtonGroup>
   </ModalFooter>
 </Modal>
 `;
@@ -76,14 +82,20 @@ exports[`Rendering non-closable active step, may proceed 1`] = `
     </p>
   </ModalBody>
   <ModalFooter>
-    <Button
-      active={false}
-      disabled={false}
-      onClick={[MockFunction]}
-      variant="primary"
+    <ButtonGroup
+      role="group"
+      toggle={false}
+      vertical={false}
     >
-      Proceed
-    </Button>
+      <Button
+        active={false}
+        disabled={false}
+        onClick={[MockFunction]}
+        variant="primary"
+      >
+        Proceed
+      </Button>
+    </ButtonGroup>
   </ModalFooter>
 </Modal>
 `;
