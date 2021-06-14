@@ -85,14 +85,30 @@ explore and interact with a Logion node. The procedure is as follows:
 
 ```
 {
-    "Address": "MultiAddress",
-    "LookupSource": "MultiAddress",
-    "AssetOf": {
-        "name": "Vec<u8>"
-    },
-    "NewAsset": {
-        "name": "Vec<u8>"
-    },
-    "PeerId": "(Vec<u8>)"
+  "Address": "MultiAddress",
+  "LookupSource": "MultiAddress",
+  "AccountInfo": "AccountInfoWithDualRefCount",
+  "PeerId": "(Vec<u8>)",
+  "TAssetBalance": "u128",
+  "AssetId": "u64",
+  "AssetDetails": {
+    "owner": "AccountId",
+    "issuer": "AccountId",
+    "admin": "AccountId",
+    "freezer": "AccountId",
+    "supply": "Balance",
+    "deposit": "DepositBalance",
+    "max_zombies": "u32",
+    "min_balance": "Balance",
+    "zombies": "u32",
+    "accounts": "u32",
+    "is_frozen": "bool"
+  },
+  "AssetMetadata": {
+    "deposit": "DepositBalance",
+    "name": "Vec<u8>",
+    "symbol": "Vec<u8>",
+    "decimals": "u8"
+  }
 }
 ```
