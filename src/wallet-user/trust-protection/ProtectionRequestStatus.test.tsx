@@ -47,7 +47,11 @@ test("renders pending protection request", () => {
         }
     ];
     setPendingProtectionRequests(requests);
+    setAcceptedProtectionRequests([]);
+    setRecoveryConfig({ isEmpty: true });
+
     const tree = shallowRender(<ProtectionRequestStatus/>)
+
     expect(tree).toMatchSnapshot();
 });
 
@@ -77,10 +81,10 @@ test("renders accepted protection request", () => {
         }
     ];
     setAcceptedProtectionRequests(requests);
-    setRecoveryConfig({
-        isEmpty: true
-    })
+    setRecoveryConfig({ isEmpty: true });
+
     const tree = shallowRender(<ProtectionRequestStatus/>)
+
     expect(tree).toMatchSnapshot();
 });
 
@@ -112,9 +116,7 @@ test("Activation of accepted protection request", async () => {
         }
     ];
     setAcceptedProtectionRequests(requests);
-    setRecoveryConfig({
-        isEmpty: true
-    })
+    setRecoveryConfig({ isEmpty: true });
 
     render(<ProtectionRequestStatus/>);
     const activateButton = screen.getByRole('button');
@@ -155,9 +157,9 @@ test("renders protected", () => {
         }
     ];
     setAcceptedProtectionRequests(requests);
-    setRecoveryConfig({
-        isEmpty: false
-    })
+    setRecoveryConfig({ isEmpty: false });
+
     const tree = shallowRender(<ProtectionRequestStatus/>)
+
     expect(tree).toMatchSnapshot();
 });

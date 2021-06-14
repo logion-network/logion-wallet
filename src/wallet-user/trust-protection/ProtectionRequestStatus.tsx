@@ -56,8 +56,7 @@ export default function ProtectionRequestStatus() {
                 {
                     createdProtectionRequest.decisions.map(decision => (
                         <li key={decision.legalOfficerAddress}>
-                            {legalOfficerName(decision.legalOfficerAddress)} ({decision.legalOfficerAddress}):
-                            &bnsp;{decision.status}
+                            {legalOfficerName(decision.legalOfficerAddress)} ({decision.legalOfficerAddress}): {decision.status}
                         </li>
                     ))
                 }

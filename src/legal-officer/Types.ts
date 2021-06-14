@@ -41,5 +41,3 @@ export interface ProtectionRequest {
     userPostalAddress: PostalAddress,
     createdOn: string
 }
-
-export type ProtectionRequestStatus = "PENDING" | "REJECTED" | "ACCEPTED";

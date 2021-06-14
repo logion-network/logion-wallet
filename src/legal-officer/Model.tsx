@@ -6,7 +6,7 @@ import {
     TokenizationRequestStatus,
     TokenizationRequest,
     AssetDescription,
-    ProtectionRequestStatus,
+    LegalOfficerDecisionStatus,
     ProtectionRequest,
     LegalOfficerDecision,
 } from './Types';
@@ -73,7 +73,7 @@ export async function setAssetDescription(parameters: SetAssetDescriptionRequest
 export interface FetchProtectionRequestSpecification {
     legalOfficerAddress?: string,
     requesterAddress?: string,
-    statuses: ProtectionRequestStatus[],
+    statuses: LegalOfficerDecisionStatus[],
 }
 
 export async function fetchProtectionRequests(
