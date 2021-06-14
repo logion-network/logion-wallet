@@ -1,0 +1,240 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Context initially fetches requests 1`] = `
+Array [
+  <div
+    className="form-group"
+  >
+    <label
+      className="form-label"
+    >
+      Line 1
+    </label>
+    <input
+      className="form-control"
+      readOnly={true}
+      type="text"
+      value="Place de le République Française, 10"
+    />
+  </div>,
+  <div
+    className="form-group"
+  >
+    <label
+      className="form-label"
+    >
+      Line 2
+    </label>
+    <input
+      className="form-control"
+      readOnly={true}
+      type="text"
+      value="boite 15"
+    />
+  </div>,
+  <div
+    className="form-group"
+  >
+    <label
+      className="form-label"
+    >
+      Postal code
+    </label>
+    <input
+      className="form-control"
+      readOnly={true}
+      type="text"
+      value="4000"
+    />
+  </div>,
+  <div
+    className="form-group"
+  >
+    <label
+      className="form-label"
+    >
+      City
+    </label>
+    <input
+      className="form-control"
+      readOnly={true}
+      type="text"
+      value="Liège"
+    />
+  </div>,
+  <div
+    className="form-group"
+  >
+    <label
+      className="form-label"
+    >
+      Country
+    </label>
+    <input
+      className="form-control"
+      readOnly={true}
+      type="text"
+      value="Belgium"
+    />
+  </div>,
+]
+`;
+
+exports[`renders 1`] = `
+Array [
+  <div
+    className="form-group"
+  >
+    <label
+      className="form-label"
+    >
+      First name
+    </label>
+    <input
+      className="form-control"
+      readOnly={true}
+      type="text"
+      value="John"
+    />
+  </div>,
+  <div
+    className="form-group"
+  >
+    <label
+      className="form-label"
+    >
+      Last name
+    </label>
+    <input
+      className="form-control"
+      readOnly={true}
+      type="text"
+      value="Doe"
+    />
+  </div>,
+  <div
+    className="form-group"
+  >
+    <label
+      className="form-label"
+    >
+      E-mail
+    </label>
+    <input
+      className="form-control"
+      readOnly={true}
+      type="text"
+      value="john.doe@logion.network"
+    />
+  </div>,
+  <div
+    className="form-group"
+  >
+    <label
+      className="form-label"
+    >
+      Phone number
+    </label>
+    <input
+      className="form-control"
+      readOnly={true}
+      type="text"
+      value="+1234"
+    />
+  </div>,
+]
+`;
+
+exports[`renders accepted protection request 1`] = `
+<React.Fragment>
+  <h1>
+    Protection request status
+  </h1>
+  <p>
+    Your Logion Trust Protection request (
+    2eb5f71c-7f31-44b5-9390-c3bf56501880
+    ) has been accepted by your Legal Officers. You can now activate your protection.
+  </p>
+  <p>
+    <Button
+      active={false}
+      disabled={false}
+      onClick={[Function]}
+      variant="primary"
+    >
+      Activate
+    </Button>
+  </p>
+  <Link
+    to="/user/account"
+  >
+    Back to account
+  </Link>
+</React.Fragment>
+`;
+
+exports[`renders empty 1`] = `null`;
+
+exports[`renders pending protection request 1`] = `
+<React.Fragment>
+  <h1>
+    Protection request status
+  </h1>
+  <p>
+    Your Logion Trust Protection request (
+    2eb5f71c-7f31-44b5-9390-c3bf56501880
+    ) has been submitted. A Legal Officer will contact you as soon as possible to finalize the KYC process. Please note that, after the successful completion of one of your Legal Officer approval processes, you will be able to use all features provided by your logion account dashboard.
+  </p>
+  <ul>
+    <li>
+      Guillaume
+       (
+      5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty
+      ): 
+      PENDING
+    </li>
+    <li>
+      Patrick
+       (
+      5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+      ): 
+      PENDING
+    </li>
+  </ul>
+  <Link
+    to="/user/account"
+  >
+    Back to account
+  </Link>
+</React.Fragment>
+`;
+
+exports[`renders protected 1`] = `
+<React.Fragment>
+  <h1>
+    Protection request status
+  </h1>
+  <p>
+    Your Logion Trust Protection is active. You are now protected by
+  </p>
+  <ul>
+    <li>
+      Guillaume
+       (
+      5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty
+      )
+    </li>
+    <li>
+      Patrick
+       (
+      5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+      )
+    </li>
+  </ul>
+  <Link
+    to="/user/account"
+  >
+    Back to account
+  </Link>
+</React.Fragment>
+`;

@@ -1,20 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders 1`] = `
-<React.Fragment>
+<div
+  className="TrustProtection"
+>
   <h1>
     My Trust Protection
   </h1>
-  <Link
-    to="/user/trust-protection"
+  <Alert
+    closeLabel="Close alert"
+    show={true}
+    transition={
+      Object {
+        "$$typeof": Symbol(react.forward_ref),
+        "defaultProps": Object {
+          "appear": false,
+          "in": false,
+          "mountOnEnter": false,
+          "timeout": 300,
+          "unmountOnExit": false,
+        },
+        "render": [Function],
+      }
+    }
+    variant="info"
   >
-    <Button
-      active={false}
-      disabled={false}
-      variant="primary"
-    >
-      Activate my Logion Trust Protection
-    </Button>
-  </Link>
-</React.Fragment>
+    <p>
+      Checking your trust protection...
+    </p>
+  </Alert>
+</div>
 `;

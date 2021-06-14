@@ -1,0 +1,162 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Given connected and no metadata, when rendering, then show account, no connect button, no node info, tokenization 1`] = `
+<Shell>
+  <h1>
+    You are ready to use the Logion wallet, congratulations!
+  </h1>
+  <p>
+    The following account(s) were detected:
+  </p>
+  <ul>
+    <li>
+      <Button
+        active={false}
+        disabled={false}
+        onClick={[Function]}
+        variant="link"
+      >
+        address
+         (
+        Account name
+        )
+      </Button>
+    </li>
+  </ul>
+  <p>
+    You are currently 
+    connected
+  </p>
+  <UserRouter />
+</Shell>
+`;
+
+exports[`Given connected, when rendering, then show account, no connect button and tokenization 1`] = `
+<Shell>
+  <h1>
+    You are ready to use the Logion wallet, congratulations!
+  </h1>
+  <p>
+    The following account(s) were detected:
+  </p>
+  <ul>
+    <li>
+      <Button
+        active={false}
+        disabled={false}
+        onClick={[Function]}
+        variant="link"
+      >
+        address
+         (
+        Account name
+        )
+      </Button>
+    </li>
+  </ul>
+  <p>
+    You are currently 
+    connected to node "Node name" (Peer ID: Node peer ID)
+  </p>
+  <UserRouter />
+</Shell>
+`;
+
+exports[`Given connecting, when rendering, then show account, no button, no node info 1`] = `
+<Shell>
+  <h1>
+    You are ready to use the Logion wallet, congratulations!
+  </h1>
+  <p>
+    The following account(s) were detected:
+  </p>
+  <ul>
+    <li>
+      <Button
+        active={false}
+        disabled={false}
+        onClick={[Function]}
+        variant="link"
+      >
+        address
+         (
+        Account name
+        )
+      </Button>
+    </li>
+  </ul>
+  <p>
+    You are currently 
+    connecting
+  </p>
+</Shell>
+`;
+
+exports[`Given connection error, when rendering, then show account, no button, no node info 1`] = `
+<Shell>
+  <h1>
+    You are ready to use the Logion wallet, congratulations!
+  </h1>
+  <p>
+    The following account(s) were detected:
+  </p>
+  <ul>
+    <li>
+      <Button
+        active={false}
+        disabled={false}
+        onClick={[Function]}
+        variant="link"
+      >
+        address
+         (
+        Account name
+        )
+      </Button>
+    </li>
+  </ul>
+  <p>
+    You are currently 
+    disconnected (error)
+  </p>
+</Shell>
+`;
+
+exports[`Given disconnected, when rendering, then show disconnected and connect button 1`] = `
+<Shell>
+  <h1>
+    You are ready to use the Logion wallet, congratulations!
+  </h1>
+  <p>
+    The following account(s) were detected:
+  </p>
+  <ul>
+    <li>
+      <Button
+        active={false}
+        disabled={false}
+        onClick={[Function]}
+        variant="link"
+      >
+        address
+         (
+        name
+        )
+      </Button>
+    </li>
+  </ul>
+  <p>
+    You are currently 
+    disconnected
+  </p>
+  <Button
+    active={false}
+    disabled={false}
+    variant="primary"
+  >
+    Connect
+  </Button>
+</Shell>
+`;
+
+exports[`Given no injected account, when rendering, then nothing displayed 1`] = `null`;

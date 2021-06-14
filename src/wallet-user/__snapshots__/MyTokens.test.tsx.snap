@@ -5,10 +5,5 @@ exports[`renders with no requests 1`] = `
   <h1>
     My Tokens
   </h1>
-  <Link
-    to="/user"
-  >
-    Back to dashboard
-  </Link>
 </React.Fragment>
 `;

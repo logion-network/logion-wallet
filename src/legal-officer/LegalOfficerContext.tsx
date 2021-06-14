@@ -1,7 +1,15 @@
 import React, { useState, useContext, useEffect, useCallback } from 'react';
 import moment from 'moment';
 
-import { TokenizationRequest, fetchRequests, rejectRequest as modelRejectRequest } from './Model';
+import {
+    TokenizationRequest,
+    ProtectionRequest,
+} from './Types';
+import {
+    fetchRequests,
+    rejectRequest as modelRejectRequest,
+    fetchProtectionRequests,
+} from './Model';
 import { sign } from '../logion-chain';
 
 export interface LegalOfficerContext {
@@ -11,6 +19,8 @@ export interface LegalOfficerContext {
     acceptedTokenizationRequests: TokenizationRequest[] | null,
     rejectedTokenizationRequests: TokenizationRequest[] | null,
     refreshRequests: (() => void) | null,
+    pendingProtectionRequests: ProtectionRequest[] | null,
+    protectionRequestsHistory: ProtectionRequest[] | null,
 }
 
 function initialContextValue(legalOfficerAddress: string): LegalOfficerContext {
@@ -21,6 +31,8 @@ function initialContextValue(legalOfficerAddress: string): LegalOfficerContext {
         acceptedTokenizationRequests: null,
         rejectedTokenizationRequests: null,
         refreshRequests: null,
+        pendingProtectionRequests: null,
+        protectionRequestsHistory: null,
     };
 }
 
@@ -49,11 +61,21 @@ export function LegalOfficerContextProvider(props: Props) {
                 legalOfficerAddress: contextValue.legalOfficerAddress,
                 status: "REJECTED",
             });
+            const pendingProtectionRequests = await fetchProtectionRequests({
+                legalOfficerAddress: contextValue.legalOfficerAddress,
+                statuses: ["PENDING"],
+            });
+            const protectionRequestsHistory = await fetchProtectionRequests({
+                legalOfficerAddress: contextValue.legalOfficerAddress,
+                statuses: ["ACCEPTED", "REJECTED"],
+            });
             setContextValue({
                 ...contextValue,
                 pendingTokenizationRequests,
                 acceptedTokenizationRequests,
-                rejectedTokenizationRequests
+                rejectedTokenizationRequests,
+                pendingProtectionRequests,
+                protectionRequestsHistory,
             });
         };
         fetchAndSetAll();

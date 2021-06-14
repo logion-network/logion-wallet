@@ -1,7 +1,81 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Context initially fetches requests 1`] = `
-<div>
-  Monsieur
-</div>
+Array [
+  <div
+    className="form-group"
+  >
+    <label
+      className="form-label"
+    >
+      Line 1
+    </label>
+    <input
+      className="form-control"
+      readOnly={true}
+      type="text"
+      value="Place de le République Française, 10"
+    />
+  </div>,
+  <div
+    className="form-group"
+  >
+    <label
+      className="form-label"
+    >
+      Line 2
+    </label>
+    <input
+      className="form-control"
+      readOnly={true}
+      type="text"
+      value="boite 15"
+    />
+  </div>,
+  <div
+    className="form-group"
+  >
+    <label
+      className="form-label"
+    >
+      Postal code
+    </label>
+    <input
+      className="form-control"
+      readOnly={true}
+      type="text"
+      value="4000"
+    />
+  </div>,
+  <div
+    className="form-group"
+  >
+    <label
+      className="form-label"
+    >
+      City
+    </label>
+    <input
+      className="form-control"
+      readOnly={true}
+      type="text"
+      value="Liège"
+    />
+  </div>,
+  <div
+    className="form-group"
+  >
+    <label
+      className="form-label"
+    >
+      Country
+    </label>
+    <input
+      className="form-control"
+      readOnly={true}
+      type="text"
+      value="Belgium"
+    />
+  </div>,
+]
 `;

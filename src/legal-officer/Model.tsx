@@ -2,22 +2,14 @@ import axios from 'axios';
 import { Moment } from 'moment';
 import { toIsoString } from '../logion-chain/datetime';
 
-export const DEFAULT_LEGAL_OFFICER = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"; // Alice
-
-export type TokenizationRequestStatus = "PENDING" | "REJECTED" | "ACCEPTED";
-
-export interface TokenizationRequest {
-    id: string,
-    legalOfficerAddress: string,
-    requesterAddress: string,
-    requestedTokenName: string,
-    bars: number,
-    status: TokenizationRequestStatus,
-    rejectReason?: string | null,
-    createdOn?: string,
-    decisionOn?: string,
-    assetDescription?: AssetDescription,
-}
+import {
+    TokenizationRequestStatus,
+    TokenizationRequest,
+    AssetDescription,
+    LegalOfficerDecisionStatus,
+    ProtectionRequest,
+    LegalOfficerDecision,
+} from './Types';
 
 export interface FetchRequestSpecification {
     legalOfficerAddress?: string,
@@ -65,11 +57,6 @@ export async function acceptRequest(parameters: AcceptRequestParameters): Promis
     };
 }
 
-export interface AssetDescription {
-    assetId: string,
-    decimals: number,
-}
-
 export interface SetAssetDescriptionRequestParameters {
     requestId: string,
     description: AssetDescription,
@@ -81,4 +68,58 @@ export async function setAssetDescription(parameters: SetAssetDescriptionRequest
         description: parameters.description,
         sessionToken: parameters.sessionToken,
     });
+}
+
+export interface FetchProtectionRequestSpecification {
+    legalOfficerAddress?: string,
+    requesterAddress?: string,
+    statuses: LegalOfficerDecisionStatus[],
+}
+
+export async function fetchProtectionRequests(
+        specification: FetchProtectionRequestSpecification): Promise<ProtectionRequest[]> {
+    const response = await axios.put("/api/protection-request", specification);
+    return response.data.requests;
+}
+
+export interface RejectProtectionRequestParameters {
+    requestId: string,
+    signature: string,
+    rejectReason: string,
+    signedOn: Moment,
+    legalOfficerAddress: string,
+}
+
+export async function rejectProtectionRequest(parameters: RejectProtectionRequestParameters): Promise<void> {
+    await axios.post(`/api/protection-request/${parameters.requestId}/reject`, {
+        signature: parameters.signature,
+        legalOfficerAddress: parameters.legalOfficerAddress,
+        rejectReason: parameters.rejectReason,
+        signedOn: toIsoString(parameters.signedOn),
+    });
+}
+
+export interface AcceptProtectionRequestParameters {
+    requestId: string,
+    signature: string,
+    signedOn: Moment,
+    legalOfficerAddress: string,
+}
+
+export async function acceptProtectionRequest(parameters: AcceptProtectionRequestParameters): Promise<void> {
+    await axios.post(`/api/protection-request/${parameters.requestId}/accept`, {
+        signature: parameters.signature,
+        legalOfficerAddress: parameters.legalOfficerAddress,
+        signedOn: toIsoString(parameters.signedOn),
+    });
+}
+
+export function decision(legalOfficerAddress: string, decisions: LegalOfficerDecision[]): (LegalOfficerDecision | null) {
+    for(let i = 0; i < decisions.length; ++i) {
+        const decision = decisions[i];
+        if(decision.legalOfficerAddress === legalOfficerAddress) {
+            return decision;
+        }
+    }
+    return null;
 }

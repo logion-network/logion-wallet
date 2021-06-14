@@ -14,11 +14,14 @@ export type Unsubscriber = Promise<() => void>;
 
 export type ErrorCallback = (error: any) => void;
 
-export interface ExtrinsicSignatureParameters {
+export interface ExtrinsicSubmissionParameters {
     signerId: string,
-    submittable: SubmittableExtrinsic<'promise'>,
     callback: SignAndSendCallback,
     errorCallback: ErrorCallback
+}
+
+export interface ExtrinsicSignatureParameters extends ExtrinsicSubmissionParameters {
+    submittable: SubmittableExtrinsic<'promise'>,
 }
 
 export function signAndSend(parameters: ExtrinsicSignatureParameters): Unsubscriber {
@@ -34,7 +37,11 @@ export async function replaceUnsubscriber(
         currentUnsubscriber: Unsubscriber | null,
         setUnsubscriber: (newUnsubscriber: Unsubscriber | null) => void,
         newUnsubscriber: Unsubscriber | null): Promise<void> {
-    await unsubscribe(currentUnsubscriber);
+    try {
+        await unsubscribe(currentUnsubscriber);
+    } catch(e) {
+        // Should have been already handled by callback
+    }
     setUnsubscriber(newUnsubscriber);
 }
 

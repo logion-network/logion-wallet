@@ -4,9 +4,9 @@ exports[`Renders null with no data 1`] = `null`;
 
 exports[`Renders pending requests 1`] = `
 <React.Fragment>
-  <h1>
-    Pending Tokenization Requests
-  </h1>
+  <h2>
+    Pending
+  </h2>
   <ForwardRef
     bordered={true}
     striped={true}

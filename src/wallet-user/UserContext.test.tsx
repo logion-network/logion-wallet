@@ -1,10 +1,12 @@
+jest.mock("./Model");
+jest.mock("../logion-chain");
+
+import moment from 'moment';
 import {render, waitFor} from "@testing-library/react";
 
 import {DEFAULT_LEGAL_OFFICER} from "../legal-officer/Model";
 import {useEffect, useState} from "react";
 import {UserContextProvider, useUserContext} from "./UserContext";
-
-jest.mock("./Model");
 
 function TestProvider() {
     return (
@@ -32,6 +34,7 @@ function TestConsumer() {
                 requestedTokenName: "TOKEN1",
                 bars: 1,
                 signature: "signature",
+                signedOn: moment(),
             });
             setCreated(true);
         }

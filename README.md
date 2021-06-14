@@ -21,15 +21,30 @@ yarn start
 
 ### Test users
 
-`Alice` is the single legal officer powering the Logion wallet. In order to access the legal officer UI,
-Alice's keypair must be loaded in the Polkadot extension. To do so:
+Alice and Bob are the accounts associated with the legal officers currently powering the Logion wallet.
+In order to access the legal officer UI,
+Alice's keypair must be loaded in the Polkadot extension. The first step is to produce the secred seed of Alice and Bob.
+This is achieved with the following command:
+
+    subkey inspect SECRET_URI
+
+where `SECRET_URI` is `//Alice` for Alice and `//Bob` for Bob.
+
+The secret seeds are provided as a convenience:
+- Alice: `0xe5be9a5092b81bca64be81d212e7f2f9eba183bb7a90954f7b76361f6edb5c0a`
+- Bob: `0x398f0c28f98885e046333d4a41c19cee4c37368a9832c6502f6cfd182e2aef89`
+
+Then:
 
 1. Use "Import account from pre-existing seed"
-2. Encode the following secret seed 
-`0xe5be9a5092b81bca64be81d212e7f2f9eba183bb7a90954f7b76361f6edb5c0a`
+2. Encode the secret seed
 3. Set a password
 
-The logion wallet should now show the legal officer interface instead of the regular wallet.
+The logion wallet should now show the legal officer interface instead of the regular wallet is Bob or Alice is loaded
+and visible.
+
+Note that the Alice account is linked to Patrick and Bob account is linked to Guillaume, it is probably a good idea
+to name them accordingly in the extension (i.e., use 'Patrick' instead of 'Alice' and 'Guillaume' instead of 'Bob').
 
 
 ## Configuration

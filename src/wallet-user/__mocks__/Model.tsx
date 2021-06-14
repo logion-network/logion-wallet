@@ -1,4 +1,4 @@
-import {TokenizationRequest} from "../../legal-officer/Model";
+import {TokenizationRequest} from "../../legal-officer/Types";
 import {CreateTokenRequest} from "../Model";
 
 export async function createTokenRequest(request: CreateTokenRequest): Promise<TokenizationRequest> {

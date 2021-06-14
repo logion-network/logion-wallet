@@ -17,6 +17,12 @@ export let eventsCallback: ((issuedEvents: any) => void) | null = null;
 
 export let newHeadsCallback: ((lastHeader: any) => void) | null = null;
 
+export let queryRecoveryRecoverable = jest.fn();
+
+export function setQueryRecoveryRecoverable(mockFn: any) {
+    queryRecoveryRecoverable = mockFn;
+}
+
 export class ApiPromise {
     assetQueriesBeforeNone: number = 1;
 
@@ -43,6 +49,9 @@ export class ApiPromise {
                     return {isSome: true}
                 }
             }
+        },
+        recovery: {
+            recoverable: queryRecoveryRecoverable
         }
     }
 
@@ -67,6 +76,9 @@ export class ApiPromise {
             create: () => {},
             setMetadata: () => {},
             mint: () => {},
+        },
+        recovery: {
+            createRecovery: jest.fn().mockResolvedValue(() => {})
         }
     }
 }
