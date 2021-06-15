@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;500&family=Source+Code+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap');
 
 $body-bg: #203acf;
 $body-color: white;
-$font-family-sans-serif: Mulish, sans-serif;
+$font-family-sans-serif: 'Montserrat', sans-serif;
 $font-family-monospace: "Source Code Pro", monospace !default;
 $font-size-base: 1.5rem;
 $modal-content-color: #203acf;
@@ -18,8 +18,4 @@ body, html {
 #root {
     height: 100%;
     width: 100%;
-}
-
-.jumbotron {
-    background-color: #a158ff;
 }

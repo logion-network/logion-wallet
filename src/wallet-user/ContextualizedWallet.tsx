@@ -3,7 +3,8 @@ import Button from 'react-bootstrap/Button';
 
 import { useLogionChain, ApiState, NodeMetadata } from '../logion-chain';
 
-import Shell from '../Shell';
+import Dashboard, { ColorTheme } from '../component/Dashboard';
+import Addresses from '../component/types/Addresses';
 import UserRouter from "./UserRouter";
 import { useUserContext } from "./UserContext";
 
@@ -21,9 +22,30 @@ function status(apiState: ApiState, metadata: NodeMetadata | null): string {
     }
 }
 
+const USER_LIGHT_MODE: ColorTheme = {
+    menuArea: {
+        background: '#152665',
+        foreground: '#ffffff',
+    },
+    primaryArea: {
+        background: '#ffffff',
+        foreground: '#000000',
+        link: '#3b6cf466',
+    },
+    secondaryArea: {
+        background: '#ffffff',
+        foreground: '#000000',
+    },
+    accountColors: {
+        iconBackground: '#3b6cf4',
+        hintColor: '#00000066',
+        textColor: '#000000',
+    }
+};
+
 export default function ContextualizedWallet() {
     const { injectedAccounts, apiState, connect, connectedNodeMetadata } = useLogionChain();
-    const { setUserAddress } = useUserContext();
+    const { userAddress, setUserAddress } = useUserContext();
 
     if(injectedAccounts === null || setUserAddress === null) {
         return null;
@@ -31,22 +53,28 @@ export default function ContextualizedWallet() {
 
     const connectButton = apiState === 'DISCONNECTED' ? <Button onClick={connect}>Connect</Button> : null;
     const userContext = apiState === 'READY' ? <UserRouter /> : null;
+    const addresses: Addresses = {
+        currentAddress: {
+            name: injectedAccounts.filter(injectedAccount => injectedAccount.address === userAddress)[0].meta.name!,
+            address: userAddress,
+        },
+        addresses: injectedAccounts.map(injectedAccount => { return {
+            name: injectedAccount.meta.name!,
+            address: injectedAccount.address,
+        };})
+    };
 
     return (
-        <Shell>
-            <h1>You are ready to use the Logion wallet, congratulations!</h1>
-
-            <p>The following account(s) were detected:</p>
-            <ul>
-                {injectedAccounts.map(injectedAccount =>
-                    <li key={injectedAccount.address}>
-                        <Button variant="link" onClick={ () => setUserAddress(injectedAccount.address) }>{injectedAccount.address} ({injectedAccount.meta.name || ""})</Button>
-                    </li>
-                )}
-            </ul>
+        <Dashboard
+            title="User Wallet"
+            colors={USER_LIGHT_MODE}
+            addresses={ addresses }
+            selectAddress={ setUserAddress }
+        >
+            <h2>You are ready to use the Logion wallet, congratulations!</h2>
             <p>You are currently {status(apiState, connectedNodeMetadata)}</p>
             {connectButton}
             {userContext}
-        </Shell>
+        </Dashboard>
     );
 }
