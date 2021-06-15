@@ -38,21 +38,24 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
       },
     }
   }
-  menu={
+  menuBottom={Array []}
+  menuTop={
     Array [
       Object {
         "exact": true,
         "text": "My Account",
         "to": "/user/account",
       },
-      Object {
-        "exact": true,
-        "text": "My Logion Trust Protection",
-        "to": "/user/protection",
-      },
     ]
   }
   selectAddress={[MockFunction]}
+  shieldItem={
+    Object {
+      "exact": true,
+      "text": "My Logion Trust Protection",
+      "to": "/user/protection",
+    }
+  }
   title="User Wallet"
 >
   <h2>
@@ -104,21 +107,24 @@ exports[`Given connected, when rendering, then show account, no connect button a
       },
     }
   }
-  menu={
+  menuBottom={Array []}
+  menuTop={
     Array [
       Object {
         "exact": true,
         "text": "My Account",
         "to": "/user/account",
       },
-      Object {
-        "exact": true,
-        "text": "My Logion Trust Protection",
-        "to": "/user/protection",
-      },
     ]
   }
   selectAddress={[MockFunction]}
+  shieldItem={
+    Object {
+      "exact": true,
+      "text": "My Logion Trust Protection",
+      "to": "/user/protection",
+    }
+  }
   title="User Wallet"
 >
   <h2>
@@ -170,21 +176,24 @@ exports[`Given connecting, when rendering, then show account, no button, no node
       },
     }
   }
-  menu={
+  menuBottom={Array []}
+  menuTop={
     Array [
       Object {
         "exact": true,
         "text": "My Account",
         "to": "/user/account",
       },
-      Object {
-        "exact": true,
-        "text": "My Logion Trust Protection",
-        "to": "/user/protection",
-      },
     ]
   }
   selectAddress={[MockFunction]}
+  shieldItem={
+    Object {
+      "exact": true,
+      "text": "My Logion Trust Protection",
+      "to": "/user/protection",
+    }
+  }
   title="User Wallet"
 >
   <h2>
@@ -235,21 +244,24 @@ exports[`Given connection error, when rendering, then show account, no button, n
       },
     }
   }
-  menu={
+  menuBottom={Array []}
+  menuTop={
     Array [
       Object {
         "exact": true,
         "text": "My Account",
         "to": "/user/account",
       },
-      Object {
-        "exact": true,
-        "text": "My Logion Trust Protection",
-        "to": "/user/protection",
-      },
     ]
   }
   selectAddress={[MockFunction]}
+  shieldItem={
+    Object {
+      "exact": true,
+      "text": "My Logion Trust Protection",
+      "to": "/user/protection",
+    }
+  }
   title="User Wallet"
 >
   <h2>
@@ -300,21 +312,24 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
       },
     }
   }
-  menu={
+  menuBottom={Array []}
+  menuTop={
     Array [
       Object {
         "exact": true,
         "text": "My Account",
         "to": "/user/account",
       },
-      Object {
-        "exact": true,
-        "text": "My Logion Trust Protection",
-        "to": "/user/protection",
-      },
     ]
   }
   selectAddress={[MockFunction]}
+  shieldItem={
+    Object {
+      "exact": true,
+      "text": "My Logion Trust Protection",
+      "to": "/user/protection",
+    }
+  }
   title="User Wallet"
 >
   <h2>

@@ -70,20 +70,21 @@ export default function ContextualizedWallet() {
             colors={USER_LIGHT_MODE}
             addresses={ addresses }
             selectAddress={ setUserAddress }
-            menu={
+            menuTop={
                 [
                     {
                         text: "My Account",
                         to: ACCOUNT_PATH,
                         exact: true
-                    },
-                    {
-                        text: "My Logion Trust Protection",
-                        to: TRUST_PROTECTION_PATH,
-                        exact: true
                     }
                 ]
             }
+            menuBottom={[]}
+            shieldItem={{
+                text: "My Logion Trust Protection",
+                to: TRUST_PROTECTION_PATH,
+                exact: true
+            }}
         >
             <h2>You are ready to use the Logion wallet, congratulations!</h2>
             <p>You are currently {status(apiState, connectedNodeMetadata)}</p>

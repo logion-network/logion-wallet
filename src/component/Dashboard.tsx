@@ -10,6 +10,7 @@ import AddressSwitcher from './AddressSwitcher';
 import { AccountAddressColors } from './AccountAddress';
 import Menu from './Menu';
 import { MenuItemData } from './MenuItem';
+import Shield from './Shield';
 
 import './Dashboard.css';
 
@@ -35,7 +36,9 @@ export interface Props {
     colors: ColorTheme,
     addresses: Addresses,
     selectAddress: (userAddress: string) => void,
-    menu: MenuItemData[],
+    menuTop: MenuItemData[],
+    menuBottom: MenuItemData[],
+    shieldItem: MenuItemData,
 }
 
 export default function Dashboard(props: Props) {
@@ -64,9 +67,15 @@ export default function Dashboard(props: Props) {
                 >
                     <div className="Sidebar">
                         <Logo />
-                        <Menu
-                            items={ props.menu }
-                        />
+                        <div className="MenuArea">
+                            <Menu
+                                items={ props.menuTop }
+                            />
+                            <Shield item={ props.shieldItem } />
+                            <Menu
+                                items={ props.menuBottom }
+                            />
+                        </div>
                     </div>
                 </Col>
                 <Col
