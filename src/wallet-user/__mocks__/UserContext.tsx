@@ -27,10 +27,12 @@ export let recoveryConfig = null;
 
 export let setUserAddress = jest.fn();
 
+export let userAddress = TEST_WALLET_USER;
+
 export function useUserContext() {
     return {
         legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
-        userAddress: TEST_WALLET_USER,
+        userAddress,
         createTokenRequest,
         createdTokenRequest,
         pendingTokenizationRequests,
@@ -42,7 +44,7 @@ export function useUserContext() {
         acceptedProtectionRequests,
         recoveryConfig,
         api,
-        setUserAddress
+        setUserAddress,
     };
 }
 
@@ -90,4 +92,8 @@ export function UserContextProvider() {
     return (
         <div></div>
     );
+}
+
+export function setContextUserAddress(address: string) {
+    userAddress = address;
 }

@@ -5,6 +5,7 @@ import React from 'react';
 import ContextualizedWallet from './ContextualizedWallet';
 import { setContextMock } from '../logion-chain';
 import { shallowRender, mockAccount } from '../tests';
+import { setContextUserAddress } from './UserContext';
 
 test('Given disconnected, when rendering, then show disconnected and connect button', () => {
     setContextMock({
@@ -13,6 +14,7 @@ test('Given disconnected, when rendering, then show disconnected and connect but
             mockAccount("address", "name")
         ]
     });
+    setContextUserAddress("address");
 
     const tree = shallowRender(<ContextualizedWallet />);
 
@@ -30,6 +32,7 @@ test('Given connected, when rendering, then show account, no connect button and 
             peerId: "Node peer ID"
         }
     });
+    setContextUserAddress("address");
 
     const tree = shallowRender(<ContextualizedWallet />);
 
@@ -44,6 +47,7 @@ test('Given connected and no metadata, when rendering, then show account, no con
         ],
         connectedNodeMetadata: null
     });
+    setContextUserAddress("address");
 
     const tree = shallowRender(<ContextualizedWallet />);
 
@@ -58,6 +62,7 @@ test('Given connection error, when rendering, then show account, no button, no n
         ],
         connectedNodeMetadata: null
     });
+    setContextUserAddress("address");
 
     const tree = shallowRender(<ContextualizedWallet />);
 
@@ -72,6 +77,7 @@ test('Given connecting, when rendering, then show account, no button, no node in
         ],
         connectedNodeMetadata: null
     });
+    setContextUserAddress("address");
 
     const tree = shallowRender(<ContextualizedWallet />);
 

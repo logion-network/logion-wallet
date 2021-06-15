@@ -1,0 +1,30 @@
+.Dashboard {
+    min-height: 100%;
+}
+
+.Dashboard > .row {
+    min-height: 100%;
+    height: auto;
+}
+
+.Dashboard .Sidebar {
+    min-height: 100%;
+}
+
+.Dashboard .PrimaryArea {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+.Dashboard .PrimaryArea h1 {
+    font-size: 36px;
+    font-weight: bold;
+    padding-top: 30px;
+    padding-bottom: 60px;
+}
+
+.Dashboard .SecondaryArea .AddressSwitcherArea {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-right: 20px;
+}

@@ -1,0 +1,48 @@
+.AccountAddress {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.AccountAddress .icon {
+    height: 75px;
+    width: 75px;
+    border-radius: 36px;
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size: 50px;
+    font-weight: bold;
+    color: white;
+    padding-left: 18px;
+}
+
+.AccountAddress .text {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 75px;
+    width: calc(100% - 120px);
+}
+
+.AccountAddress .text .hint {
+    font-size: 9px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+}
+
+.AccountAddress .text .name {
+    font-size: 18px;
+    font-weight: bold;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.AccountAddress .text .address {
+    font-size: 14px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

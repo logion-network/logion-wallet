@@ -1,0 +1,48 @@
+.AddressSwitcher {
+    height: 75px;
+    width: 100%;
+    display: flex;
+}
+
+.AddressSwitcher .dropdown {
+    width: 100%;
+}
+
+#address-switcher-toggle {
+    width: 100%;
+    height: 75px;
+    background-color: transparent;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    border: none;
+    border-radius: 0;
+    text-align: left;
+}
+
+#address-switcher-toggle:focus {
+    box-shadow: none;
+}
+
+#address-switcher-toggle .address-data {
+    display: inline-block;
+    width: calc(100% - 20px);
+}
+
+.AddressSwitcher .dropdown-menu {
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.AddressSwitcher .dropdown-menu .dropdown-item {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 0;
+    padding-right: 0;
+    margin: 0;
+}
+
+.AddressSwitcher .dropdown-menu .dropdown-item:focus {
+    background-color: transparent;
+}
