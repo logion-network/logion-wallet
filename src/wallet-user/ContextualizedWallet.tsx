@@ -66,7 +66,6 @@ export default function ContextualizedWallet() {
 
     return (
         <Dashboard
-            title="User Wallet"
             colors={USER_LIGHT_MODE}
             addresses={ addresses }
             selectAddress={ setUserAddress }

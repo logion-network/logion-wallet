@@ -16,14 +16,11 @@
     padding-right: 40px;
 }
 
-.Dashboard .PrimaryArea .TitleArea {
-    padding-top: 30px;
-    padding-bottom: 60px;
-}
-
-.Dashboard .PrimaryArea .TitleArea h1 {
+.Dashboard .PrimaryArea h1 {
     font-size: 36px;
     font-weight: bold;
+    padding-top: 30px;
+    padding-bottom: 60px;
 }
 
 .Dashboard .SecondaryArea .AddressSwitcherArea {

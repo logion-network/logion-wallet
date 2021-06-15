@@ -56,7 +56,6 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
       "to": "/user/protection",
     }
   }
-  title="User Wallet"
 >
   <h2>
     You are ready to use the Logion wallet, congratulations!
@@ -125,7 +124,6 @@ exports[`Given connected, when rendering, then show account, no connect button a
       "to": "/user/protection",
     }
   }
-  title="User Wallet"
 >
   <h2>
     You are ready to use the Logion wallet, congratulations!
@@ -194,7 +192,6 @@ exports[`Given connecting, when rendering, then show account, no button, no node
       "to": "/user/protection",
     }
   }
-  title="User Wallet"
 >
   <h2>
     You are ready to use the Logion wallet, congratulations!
@@ -262,7 +259,6 @@ exports[`Given connection error, when rendering, then show account, no button, n
       "to": "/user/protection",
     }
   }
-  title="User Wallet"
 >
   <h2>
     You are ready to use the Logion wallet, congratulations!
@@ -330,7 +326,6 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
       "to": "/user/protection",
     }
   }
-  title="User Wallet"
 >
   <h2>
     You are ready to use the Logion wallet, congratulations!

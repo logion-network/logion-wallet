@@ -32,7 +32,6 @@ export interface ColorTheme {
 
 export interface Props {
     children: Children,
-    title: string,
     colors: ColorTheme,
     addresses: Addresses,
     selectAddress: (userAddress: string) => void,
@@ -86,9 +85,6 @@ export default function Dashboard(props: Props) {
                     }}
                 >
                     <div className="PrimaryArea">
-                        <div className="TitleArea">
-                            <h1>{ props.title }</h1>
-                        </div>
                         { props.children }
                     </div>
                 </Col>
