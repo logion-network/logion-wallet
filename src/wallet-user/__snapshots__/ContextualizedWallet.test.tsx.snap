@@ -1,150 +1,325 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Given connected and no metadata, when rendering, then show account, no connect button, no node info, tokenization 1`] = `
-<Shell>
-  <h1>
+<Dashboard
+  addresses={
+    Object {
+      "addresses": Array [
+        Object {
+          "address": "address",
+          "name": "Account name",
+        },
+      ],
+      "currentAddress": Object {
+        "address": "address",
+        "name": "Account name",
+      },
+    }
+  }
+  colors={
+    Object {
+      "accountColors": Object {
+        "hintColor": "#00000066",
+        "iconBackground": "#3b6cf4",
+        "textColor": "#000000",
+      },
+      "primaryArea": Object {
+        "background": "#ffffff",
+        "foreground": "#000000",
+        "link": "#3b6cf466",
+      },
+      "secondaryArea": Object {
+        "background": "#ffffff",
+        "foreground": "#000000",
+      },
+      "sidebar": Object {
+        "background": "#152665",
+        "foreground": "#ffffff",
+      },
+    }
+  }
+  menu={
+    Array [
+      Object {
+        "exact": true,
+        "text": "My Account",
+        "to": "/user/account",
+      },
+      Object {
+        "exact": true,
+        "text": "My Logion Trust Protection",
+        "to": "/user/protection",
+      },
+    ]
+  }
+  selectAddress={[MockFunction]}
+  title="User Wallet"
+>
+  <h2>
     You are ready to use the Logion wallet, congratulations!
-  </h1>
-  <p>
-    The following account(s) were detected:
-  </p>
-  <ul>
-    <li>
-      <Button
-        active={false}
-        disabled={false}
-        onClick={[Function]}
-        variant="link"
-      >
-        address
-         (
-        Account name
-        )
-      </Button>
-    </li>
-  </ul>
+  </h2>
   <p>
     You are currently 
     connected
   </p>
   <UserRouter />
-</Shell>
+</Dashboard>
 `;
 
 exports[`Given connected, when rendering, then show account, no connect button and tokenization 1`] = `
-<Shell>
-  <h1>
+<Dashboard
+  addresses={
+    Object {
+      "addresses": Array [
+        Object {
+          "address": "address",
+          "name": "Account name",
+        },
+      ],
+      "currentAddress": Object {
+        "address": "address",
+        "name": "Account name",
+      },
+    }
+  }
+  colors={
+    Object {
+      "accountColors": Object {
+        "hintColor": "#00000066",
+        "iconBackground": "#3b6cf4",
+        "textColor": "#000000",
+      },
+      "primaryArea": Object {
+        "background": "#ffffff",
+        "foreground": "#000000",
+        "link": "#3b6cf466",
+      },
+      "secondaryArea": Object {
+        "background": "#ffffff",
+        "foreground": "#000000",
+      },
+      "sidebar": Object {
+        "background": "#152665",
+        "foreground": "#ffffff",
+      },
+    }
+  }
+  menu={
+    Array [
+      Object {
+        "exact": true,
+        "text": "My Account",
+        "to": "/user/account",
+      },
+      Object {
+        "exact": true,
+        "text": "My Logion Trust Protection",
+        "to": "/user/protection",
+      },
+    ]
+  }
+  selectAddress={[MockFunction]}
+  title="User Wallet"
+>
+  <h2>
     You are ready to use the Logion wallet, congratulations!
-  </h1>
-  <p>
-    The following account(s) were detected:
-  </p>
-  <ul>
-    <li>
-      <Button
-        active={false}
-        disabled={false}
-        onClick={[Function]}
-        variant="link"
-      >
-        address
-         (
-        Account name
-        )
-      </Button>
-    </li>
-  </ul>
+  </h2>
   <p>
     You are currently 
     connected to node "Node name" (Peer ID: Node peer ID)
   </p>
   <UserRouter />
-</Shell>
+</Dashboard>
 `;
 
 exports[`Given connecting, when rendering, then show account, no button, no node info 1`] = `
-<Shell>
-  <h1>
+<Dashboard
+  addresses={
+    Object {
+      "addresses": Array [
+        Object {
+          "address": "address",
+          "name": "Account name",
+        },
+      ],
+      "currentAddress": Object {
+        "address": "address",
+        "name": "Account name",
+      },
+    }
+  }
+  colors={
+    Object {
+      "accountColors": Object {
+        "hintColor": "#00000066",
+        "iconBackground": "#3b6cf4",
+        "textColor": "#000000",
+      },
+      "primaryArea": Object {
+        "background": "#ffffff",
+        "foreground": "#000000",
+        "link": "#3b6cf466",
+      },
+      "secondaryArea": Object {
+        "background": "#ffffff",
+        "foreground": "#000000",
+      },
+      "sidebar": Object {
+        "background": "#152665",
+        "foreground": "#ffffff",
+      },
+    }
+  }
+  menu={
+    Array [
+      Object {
+        "exact": true,
+        "text": "My Account",
+        "to": "/user/account",
+      },
+      Object {
+        "exact": true,
+        "text": "My Logion Trust Protection",
+        "to": "/user/protection",
+      },
+    ]
+  }
+  selectAddress={[MockFunction]}
+  title="User Wallet"
+>
+  <h2>
     You are ready to use the Logion wallet, congratulations!
-  </h1>
-  <p>
-    The following account(s) were detected:
-  </p>
-  <ul>
-    <li>
-      <Button
-        active={false}
-        disabled={false}
-        onClick={[Function]}
-        variant="link"
-      >
-        address
-         (
-        Account name
-        )
-      </Button>
-    </li>
-  </ul>
+  </h2>
   <p>
     You are currently 
     connecting
   </p>
-</Shell>
+</Dashboard>
 `;
 
 exports[`Given connection error, when rendering, then show account, no button, no node info 1`] = `
-<Shell>
-  <h1>
+<Dashboard
+  addresses={
+    Object {
+      "addresses": Array [
+        Object {
+          "address": "address",
+          "name": "Account name",
+        },
+      ],
+      "currentAddress": Object {
+        "address": "address",
+        "name": "Account name",
+      },
+    }
+  }
+  colors={
+    Object {
+      "accountColors": Object {
+        "hintColor": "#00000066",
+        "iconBackground": "#3b6cf4",
+        "textColor": "#000000",
+      },
+      "primaryArea": Object {
+        "background": "#ffffff",
+        "foreground": "#000000",
+        "link": "#3b6cf466",
+      },
+      "secondaryArea": Object {
+        "background": "#ffffff",
+        "foreground": "#000000",
+      },
+      "sidebar": Object {
+        "background": "#152665",
+        "foreground": "#ffffff",
+      },
+    }
+  }
+  menu={
+    Array [
+      Object {
+        "exact": true,
+        "text": "My Account",
+        "to": "/user/account",
+      },
+      Object {
+        "exact": true,
+        "text": "My Logion Trust Protection",
+        "to": "/user/protection",
+      },
+    ]
+  }
+  selectAddress={[MockFunction]}
+  title="User Wallet"
+>
+  <h2>
     You are ready to use the Logion wallet, congratulations!
-  </h1>
-  <p>
-    The following account(s) were detected:
-  </p>
-  <ul>
-    <li>
-      <Button
-        active={false}
-        disabled={false}
-        onClick={[Function]}
-        variant="link"
-      >
-        address
-         (
-        Account name
-        )
-      </Button>
-    </li>
-  </ul>
+  </h2>
   <p>
     You are currently 
     disconnected (error)
   </p>
-</Shell>
+</Dashboard>
 `;
 
 exports[`Given disconnected, when rendering, then show disconnected and connect button 1`] = `
-<Shell>
-  <h1>
+<Dashboard
+  addresses={
+    Object {
+      "addresses": Array [
+        Object {
+          "address": "address",
+          "name": "name",
+        },
+      ],
+      "currentAddress": Object {
+        "address": "address",
+        "name": "name",
+      },
+    }
+  }
+  colors={
+    Object {
+      "accountColors": Object {
+        "hintColor": "#00000066",
+        "iconBackground": "#3b6cf4",
+        "textColor": "#000000",
+      },
+      "primaryArea": Object {
+        "background": "#ffffff",
+        "foreground": "#000000",
+        "link": "#3b6cf466",
+      },
+      "secondaryArea": Object {
+        "background": "#ffffff",
+        "foreground": "#000000",
+      },
+      "sidebar": Object {
+        "background": "#152665",
+        "foreground": "#ffffff",
+      },
+    }
+  }
+  menu={
+    Array [
+      Object {
+        "exact": true,
+        "text": "My Account",
+        "to": "/user/account",
+      },
+      Object {
+        "exact": true,
+        "text": "My Logion Trust Protection",
+        "to": "/user/protection",
+      },
+    ]
+  }
+  selectAddress={[MockFunction]}
+  title="User Wallet"
+>
+  <h2>
     You are ready to use the Logion wallet, congratulations!
-  </h1>
-  <p>
-    The following account(s) were detected:
-  </p>
-  <ul>
-    <li>
-      <Button
-        active={false}
-        disabled={false}
-        onClick={[Function]}
-        variant="link"
-      >
-        address
-         (
-        name
-        )
-      </Button>
-    </li>
-  </ul>
+  </h2>
   <p>
     You are currently 
     disconnected
@@ -156,7 +331,7 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
   >
     Connect
   </Button>
-</Shell>
+</Dashboard>
 `;
 
 exports[`Given no injected account, when rendering, then nothing displayed 1`] = `null`;

@@ -8,6 +8,8 @@ import Addresses from './types/Addresses';
 import Logo from './Logo';
 import AddressSwitcher from './AddressSwitcher';
 import { AccountAddressColors } from './AccountAddress';
+import Menu from './Menu';
+import { MenuItemData } from './MenuItem';
 
 import './Dashboard.css';
 
@@ -21,7 +23,7 @@ export interface PrimaryAreaColors extends BackgroundAndForegroundColors {
 }
 
 export interface ColorTheme {
-    menuArea: BackgroundAndForegroundColors,
+    sidebar: BackgroundAndForegroundColors,
     primaryArea: PrimaryAreaColors,
     secondaryArea: BackgroundAndForegroundColors,
     accountColors: AccountAddressColors,
@@ -33,6 +35,7 @@ export interface Props {
     colors: ColorTheme,
     addresses: Addresses,
     selectAddress: (userAddress: string) => void,
+    menu: MenuItemData[],
 }
 
 export default function Dashboard(props: Props) {
@@ -55,12 +58,15 @@ export default function Dashboard(props: Props) {
                 <Col
                     md={2}
                     style={{
-                        backgroundColor: props.colors.menuArea.background,
-                        color: props.colors.menuArea.foreground,
+                        backgroundColor: props.colors.sidebar.background,
+                        color: props.colors.sidebar.foreground,
                     }}
                 >
-                    <div className="MenuArea">
+                    <div className="Sidebar">
                         <Logo />
+                        <Menu
+                            items={ props.menu }
+                        />
                     </div>
                 </Col>
                 <Col

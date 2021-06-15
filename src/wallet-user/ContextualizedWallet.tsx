@@ -5,7 +5,7 @@ import { useLogionChain, ApiState, NodeMetadata } from '../logion-chain';
 
 import Dashboard, { ColorTheme } from '../component/Dashboard';
 import Addresses from '../component/types/Addresses';
-import UserRouter from "./UserRouter";
+import UserRouter, { ACCOUNT_PATH, TRUST_PROTECTION_PATH } from "./UserRouter";
 import { useUserContext } from "./UserContext";
 
 function status(apiState: ApiState, metadata: NodeMetadata | null): string {
@@ -23,7 +23,7 @@ function status(apiState: ApiState, metadata: NodeMetadata | null): string {
 }
 
 const USER_LIGHT_MODE: ColorTheme = {
-    menuArea: {
+    sidebar: {
         background: '#152665',
         foreground: '#ffffff',
     },
@@ -70,6 +70,20 @@ export default function ContextualizedWallet() {
             colors={USER_LIGHT_MODE}
             addresses={ addresses }
             selectAddress={ setUserAddress }
+            menu={
+                [
+                    {
+                        text: "My Account",
+                        to: ACCOUNT_PATH,
+                        exact: true
+                    },
+                    {
+                        text: "My Logion Trust Protection",
+                        to: TRUST_PROTECTION_PATH,
+                        exact: true
+                    }
+                ]
+            }
         >
             <h2>You are ready to use the Logion wallet, congratulations!</h2>
             <p>You are currently {status(apiState, connectedNodeMetadata)}</p>
