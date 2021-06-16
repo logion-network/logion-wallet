@@ -12,7 +12,10 @@ export default function Shield(props: Props) {
 
     return (
         <div className="Shield">
-            <MenuItem item={props.item} />
+            <MenuItem
+                item={props.item}
+                height={65}
+            />
         </div>
     );
 }

@@ -1,9 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders with no requests 1`] = `
-<React.Fragment>
-  <h1>
-    My Tokens
-  </h1>
-</React.Fragment>
-`;
+exports[`renders with no requests 1`] = `<React.Fragment />`;
