@@ -4,11 +4,12 @@ exports[`Renders null with no data 1`] = `null`;
 
 exports[`Renders rejected requests 1`] = `
 <React.Fragment>
-  <h2>
+  <h3>
     Rejected
-  </h2>
+  </h3>
   <ForwardRef
     bordered={true}
+    responsive={true}
     striped={true}
   >
     <thead>

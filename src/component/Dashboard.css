@@ -2,29 +2,59 @@
     min-height: 100%;
 }
 
-.Dashboard > .row {
-    min-height: 100%;
-    height: auto;
+.Dashboard .Sidebar {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
 }
 
-.Dashboard .Sidebar {
-    min-height: 100%;
+.Dashboard .Sidebar .MenuArea {
+    height: calc(100vh - 200px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .Dashboard .PrimaryArea {
     padding-left: 40px;
     padding-right: 40px;
+    font-size: 14px;
+    overflow-x: hidden;
 }
 
-.Dashboard .PrimaryArea h1 {
-    font-size: 36px;
-    font-weight: bold;
-    padding-top: 30px;
-    padding-bottom: 60px;
+.Dashboard .SecondaryArea {
+    font-size: 14px;
+    overflow-x: hidden;
 }
 
 .Dashboard .SecondaryArea .AddressSwitcherArea {
     padding-top: 30px;
     padding-bottom: 30px;
     padding-right: 20px;
+}
+
+.Dashboard .PrimaryArea h1,
+.Dashboard .SecondaryArea h1 {
+    font-size: 36px;
+    font-weight: bold;
+    padding-top: 30px;
+    padding-bottom: 60px;
+}
+
+.Dashboard .PrimaryArea h2,
+.Dashboard .SecondaryArea h2 {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.Dashboard .PrimaryArea h3,
+.Dashboard .SecondaryArea h3 {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.Dashboard .PrimaryArea p,
+.Dashboard .SecondaryArea p {
+    font-size: 14px;
+    font-weight: normal;
 }

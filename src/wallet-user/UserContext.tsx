@@ -14,6 +14,9 @@ import {
     CreateProtectionRequest,
     createProtectionRequest as modelCreateProtectionRequest,
 } from "./trust-protection/Model";
+import { ColorTheme } from '../component/Dashboard';
+import Addresses, { buildAddresses } from '../component/types/Addresses';
+import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
 export interface UserContext {
     legalOfficerAddress: string,
@@ -30,6 +33,9 @@ export interface UserContext {
     rejectedProtectionRequests: ProtectionRequest[] | null,
     recoveryConfig: Option<RecoveryConfig> | null,
     setUserAddress: ((userAddress: string) => void) | null,
+    colorTheme: ColorTheme,
+    addresses: Addresses | null,
+    injectedAccounts: InjectedAccountWithMeta[] | null,
 }
 
 function initialContextValue(legalOfficerAddress: string, userAddress: string): UserContext {
@@ -48,6 +54,32 @@ function initialContextValue(legalOfficerAddress: string, userAddress: string): 
         rejectedProtectionRequests: null,
         recoveryConfig: null,
         setUserAddress: null,
+        colorTheme: {
+            sidebar: {
+                background: '#152665',
+                foreground: '#ffffff',
+            },
+            primaryArea: {
+                background: '#ffffff',
+                foreground: '#000000',
+                link: '#3b6cf466',
+            },
+            secondaryArea: {
+                background: '#ffffff',
+                foreground: '#000000',
+            },
+            accounts: {
+                iconBackground: '#3b6cf4',
+                hintColor: '#00000066',
+                textColor: '#000000',
+            },
+            frame: {
+                background: '#3b6cf40f',
+                foreground: '',
+            }
+        },
+        addresses: null,
+        injectedAccounts: null,
     }
 }
 
@@ -60,7 +92,7 @@ export interface Props {
 }
 
 export function UserContextProvider(props: Props) {
-    const { api, apiState } = useLogionChain();
+    const { api, apiState, injectedAccounts } = useLogionChain();
     const [contextValue, setContextValue] = useState<UserContext>(initialContextValue(props.legalOfficerAddress, props.userAddress));
     const [fetchedInitially, setFetchedInitially] = useState<boolean>(false);
 
@@ -155,6 +187,17 @@ export function UserContextProvider(props: Props) {
             setContextValue({...contextValue, setUserAddress});
         }
     }, [ contextValue, setContextValue, refreshRequests ]);
+
+    useEffect(() => {
+        if(contextValue.injectedAccounts !== injectedAccounts
+            && injectedAccounts !== null) {
+            setContextValue({
+                ...contextValue,
+                injectedAccounts,
+                addresses: buildAddresses(injectedAccounts, contextValue.userAddress)
+            });
+        }
+    }, [ injectedAccounts, contextValue ]);
 
     return (
         <UserContextObject.Provider value={contextValue}>

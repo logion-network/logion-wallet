@@ -7,20 +7,33 @@
     margin-right: -15px;
     padding-left: 40px;
     padding-right: 40px;
+    border-left-style: solid;
+    border-left-width: 3px;
+    border-left-color: transparent;
 }
 
 .MenuItem.active {
     font-weight: bolder;
-    border-left-style: solid;
-    border-left-width: 3px;
     border-left-color: #e6007a;
     background-color: #ffffff0f;
 }
 
 .MenuItem .text-wrapper {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-direction: row;
     height: 100%;
     overflow: hidden;
+    align-items: center;
+}
+
+.MenuItem .text-wrapper .icon-wrapper .icon {
+    display: block;
+    height: 32px;
+    width: 32px;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+.MenuItem .text-wrapper .text {
+    display: block;
 }

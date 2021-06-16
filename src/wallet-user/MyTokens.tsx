@@ -48,7 +48,6 @@ export default function MyTokens() {
 
     return (
         <>
-            <h1>My Tokens</h1>
             {
                 requests !== null && requests.balances !== undefined &&
                 <Table striped bordered>

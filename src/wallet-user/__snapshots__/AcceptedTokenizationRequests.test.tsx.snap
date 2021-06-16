@@ -2,11 +2,12 @@
 
 exports[`Renders accepted requests 1`] = `
 <React.Fragment>
-  <h2>
+  <h3>
     Accepted
-  </h2>
+  </h3>
   <ForwardRef
     bordered={true}
+    responsive={true}
     striped={true}
   >
     <thead>

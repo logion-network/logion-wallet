@@ -16,34 +16,28 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
       },
     }
   }
-  colors={
-    Object {
-      "accountColors": Object {
-        "hintColor": "#00000066",
-        "iconBackground": "#3b6cf4",
-        "textColor": "#000000",
+  menuBottom={
+    Array [
+      Object {
+        "exact": true,
+        "iconGradient": Object {
+          "from": "#7a90cb",
+          "to": "#3b6cf4",
+        },
+        "text": "Settings",
+        "to": "/user/settings",
       },
-      "primaryArea": Object {
-        "background": "#ffffff",
-        "foreground": "#000000",
-        "link": "#3b6cf466",
-      },
-      "secondaryArea": Object {
-        "background": "#ffffff",
-        "foreground": "#000000",
-      },
-      "sidebar": Object {
-        "background": "#152665",
-        "foreground": "#ffffff",
-      },
-    }
+    ]
   }
-  menuBottom={Array []}
   menuTop={
     Array [
       Object {
         "exact": true,
-        "text": "My Account",
+        "iconGradient": Object {
+          "from": "#3b6cf4",
+          "to": "#6050dc",
+        },
+        "text": "Tokens",
         "to": "/user/account",
       },
     ]
@@ -57,13 +51,6 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
     }
   }
 >
-  <h2>
-    You are ready to use the Logion wallet, congratulations!
-  </h2>
-  <p>
-    You are currently 
-    connected
-  </p>
   <UserRouter />
 </Dashboard>
 `;
@@ -84,34 +71,28 @@ exports[`Given connected, when rendering, then show account, no connect button a
       },
     }
   }
-  colors={
-    Object {
-      "accountColors": Object {
-        "hintColor": "#00000066",
-        "iconBackground": "#3b6cf4",
-        "textColor": "#000000",
+  menuBottom={
+    Array [
+      Object {
+        "exact": true,
+        "iconGradient": Object {
+          "from": "#7a90cb",
+          "to": "#3b6cf4",
+        },
+        "text": "Settings",
+        "to": "/user/settings",
       },
-      "primaryArea": Object {
-        "background": "#ffffff",
-        "foreground": "#000000",
-        "link": "#3b6cf466",
-      },
-      "secondaryArea": Object {
-        "background": "#ffffff",
-        "foreground": "#000000",
-      },
-      "sidebar": Object {
-        "background": "#152665",
-        "foreground": "#ffffff",
-      },
-    }
+    ]
   }
-  menuBottom={Array []}
   menuTop={
     Array [
       Object {
         "exact": true,
-        "text": "My Account",
+        "iconGradient": Object {
+          "from": "#3b6cf4",
+          "to": "#6050dc",
+        },
+        "text": "Tokens",
         "to": "/user/account",
       },
     ]
@@ -125,13 +106,6 @@ exports[`Given connected, when rendering, then show account, no connect button a
     }
   }
 >
-  <h2>
-    You are ready to use the Logion wallet, congratulations!
-  </h2>
-  <p>
-    You are currently 
-    connected to node "Node name" (Peer ID: Node peer ID)
-  </p>
   <UserRouter />
 </Dashboard>
 `;
@@ -152,34 +126,28 @@ exports[`Given connecting, when rendering, then show account, no button, no node
       },
     }
   }
-  colors={
-    Object {
-      "accountColors": Object {
-        "hintColor": "#00000066",
-        "iconBackground": "#3b6cf4",
-        "textColor": "#000000",
+  menuBottom={
+    Array [
+      Object {
+        "exact": true,
+        "iconGradient": Object {
+          "from": "#7a90cb",
+          "to": "#3b6cf4",
+        },
+        "text": "Settings",
+        "to": "/user/settings",
       },
-      "primaryArea": Object {
-        "background": "#ffffff",
-        "foreground": "#000000",
-        "link": "#3b6cf466",
-      },
-      "secondaryArea": Object {
-        "background": "#ffffff",
-        "foreground": "#000000",
-      },
-      "sidebar": Object {
-        "background": "#152665",
-        "foreground": "#ffffff",
-      },
-    }
+    ]
   }
-  menuBottom={Array []}
   menuTop={
     Array [
       Object {
         "exact": true,
-        "text": "My Account",
+        "iconGradient": Object {
+          "from": "#3b6cf4",
+          "to": "#6050dc",
+        },
+        "text": "Tokens",
         "to": "/user/account",
       },
     ]
@@ -192,15 +160,7 @@ exports[`Given connecting, when rendering, then show account, no button, no node
       "to": "/user/protection",
     }
   }
->
-  <h2>
-    You are ready to use the Logion wallet, congratulations!
-  </h2>
-  <p>
-    You are currently 
-    connecting
-  </p>
-</Dashboard>
+/>
 `;
 
 exports[`Given connection error, when rendering, then show account, no button, no node info 1`] = `
@@ -219,34 +179,28 @@ exports[`Given connection error, when rendering, then show account, no button, n
       },
     }
   }
-  colors={
-    Object {
-      "accountColors": Object {
-        "hintColor": "#00000066",
-        "iconBackground": "#3b6cf4",
-        "textColor": "#000000",
+  menuBottom={
+    Array [
+      Object {
+        "exact": true,
+        "iconGradient": Object {
+          "from": "#7a90cb",
+          "to": "#3b6cf4",
+        },
+        "text": "Settings",
+        "to": "/user/settings",
       },
-      "primaryArea": Object {
-        "background": "#ffffff",
-        "foreground": "#000000",
-        "link": "#3b6cf466",
-      },
-      "secondaryArea": Object {
-        "background": "#ffffff",
-        "foreground": "#000000",
-      },
-      "sidebar": Object {
-        "background": "#152665",
-        "foreground": "#ffffff",
-      },
-    }
+    ]
   }
-  menuBottom={Array []}
   menuTop={
     Array [
       Object {
         "exact": true,
-        "text": "My Account",
+        "iconGradient": Object {
+          "from": "#3b6cf4",
+          "to": "#6050dc",
+        },
+        "text": "Tokens",
         "to": "/user/account",
       },
     ]
@@ -259,15 +213,7 @@ exports[`Given connection error, when rendering, then show account, no button, n
       "to": "/user/protection",
     }
   }
->
-  <h2>
-    You are ready to use the Logion wallet, congratulations!
-  </h2>
-  <p>
-    You are currently 
-    disconnected (error)
-  </p>
-</Dashboard>
+/>
 `;
 
 exports[`Given disconnected, when rendering, then show disconnected and connect button 1`] = `
@@ -286,34 +232,28 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
       },
     }
   }
-  colors={
-    Object {
-      "accountColors": Object {
-        "hintColor": "#00000066",
-        "iconBackground": "#3b6cf4",
-        "textColor": "#000000",
+  menuBottom={
+    Array [
+      Object {
+        "exact": true,
+        "iconGradient": Object {
+          "from": "#7a90cb",
+          "to": "#3b6cf4",
+        },
+        "text": "Settings",
+        "to": "/user/settings",
       },
-      "primaryArea": Object {
-        "background": "#ffffff",
-        "foreground": "#000000",
-        "link": "#3b6cf466",
-      },
-      "secondaryArea": Object {
-        "background": "#ffffff",
-        "foreground": "#000000",
-      },
-      "sidebar": Object {
-        "background": "#152665",
-        "foreground": "#ffffff",
-      },
-    }
+    ]
   }
-  menuBottom={Array []}
   menuTop={
     Array [
       Object {
         "exact": true,
-        "text": "My Account",
+        "iconGradient": Object {
+          "from": "#3b6cf4",
+          "to": "#6050dc",
+        },
+        "text": "Tokens",
         "to": "/user/account",
       },
     ]
@@ -326,22 +266,7 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
       "to": "/user/protection",
     }
   }
->
-  <h2>
-    You are ready to use the Logion wallet, congratulations!
-  </h2>
-  <p>
-    You are currently 
-    disconnected
-  </p>
-  <Button
-    active={false}
-    disabled={false}
-    variant="primary"
-  >
-    Connect
-  </Button>
-</Dashboard>
+/>
 `;
 
 exports[`Given no injected account, when rendering, then nothing displayed 1`] = `null`;
