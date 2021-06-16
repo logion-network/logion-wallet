@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useLogionChain, Unsubscriber, ISubmittableResult, replaceUnsubscriber } from '../../logion-chain';
 import { createRecovery } from '../../logion-chain/Recovery';
 import ExtrinsicSubmissionResult from '../../legal-officer/ExtrinsicSubmissionResult';
+import { useRootContext } from '../../RootContext';
 
 import {useUserContext} from "../UserContext";
 import {legalOfficerName} from "./Model";
@@ -15,7 +16,8 @@ import CreateProtectionRequestForm from "./CreateProtectionRequestForm";
 
 export default function ProtectionRequestStatus() {
     const { api } = useLogionChain();
-    const { userAddress, pendingProtectionRequests, acceptedProtectionRequests, recoveryConfig, refreshRequests } = useUserContext();
+    const { currentAddress } = useRootContext();
+    const { pendingProtectionRequests, acceptedProtectionRequests, recoveryConfig, refreshRequests } = useUserContext();
     const [ activationResult, setActivationResult ] = useState<ISubmittableResult | null>(null);
     const [ activationError, setActivationError ] = useState<any>(null);
     const [ activationUnsubscriber, setActivationUnsubscriber ] = useState<Unsubscriber | null>(null);
@@ -26,7 +28,7 @@ export default function ProtectionRequestStatus() {
         (async function() {
             const unsubscriber = createRecovery({
                 api: api!,
-                signerId: userAddress,
+                signerId: currentAddress,
                 callback: setActivationResult,
                 errorCallback: setActivationError,
                 legalOfficers: request.decisions.map(decision => decision.legalOfficerAddress),
@@ -34,7 +36,7 @@ export default function ProtectionRequestStatus() {
             await replaceUnsubscriber(activationUnsubscriber, setActivationUnsubscriber, unsubscriber);
             refreshRequests!();
         })();
-    }, [ api, userAddress, refreshRequests, activationUnsubscriber, setActivationUnsubscriber ]);
+    }, [ api, currentAddress, refreshRequests, activationUnsubscriber, setActivationUnsubscriber ]);
 
     if (pendingProtectionRequests === null || acceptedProtectionRequests === null || recoveryConfig === null) {
         return null;

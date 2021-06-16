@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Table from 'react-bootstrap/Table';
 
+import { useRootContext } from '../RootContext';
+
 import { TokenizationRequest } from '../legal-officer/Types';
 import { useLogionChain, AssetBalance, tokensFromBalance } from '../logion-chain';
 
@@ -13,7 +15,8 @@ interface EnrichedRequests {
 }
 
 export default function MyTokens() {
-    const { userAddress, acceptedTokenizationRequests } = useUserContext();
+    const { currentAddress } = useRootContext();
+    const { acceptedTokenizationRequests } = useUserContext();
     const { api } = useLogionChain();
 
     const [ requests, setRequests ] = useState<EnrichedRequests | null>(null);
@@ -36,7 +39,7 @@ export default function MyTokens() {
             });
             (async function() {
                 const balances = await Promise.all(requests.requests.map(
-                    request => api.query.assets.account(request.assetDescription!.assetId, userAddress)));
+                    request => api.query.assets.account(request.assetDescription!.assetId, currentAddress)));
                 setRequests({
                     requests: requests.requests,
                     querying: false,
@@ -44,7 +47,7 @@ export default function MyTokens() {
                 });
             })();
         }
-    }, [ api, requests, setRequests, userAddress ]);
+    }, [ api, requests, setRequests, currentAddress ]);
 
     return (
         <>

@@ -4,11 +4,6 @@ exports[`renders 1`] = `
 <LegalOfficerContextProvider
   legalOfficerAddress="5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
 >
-  <Shell
-    backgroundCss="linear-gradient(to right, #a158ff, 90%, #203acf)"
-  >
-    <Menu />
-    <LegalOfficerRouter />
-  </Shell>
+  <ContextualizedWallet />
 </LegalOfficerContextProvider>
 `;

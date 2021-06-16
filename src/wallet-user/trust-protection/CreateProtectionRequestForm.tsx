@@ -10,6 +10,7 @@ import {sign} from "../../logion-chain";
 import {Row, Col} from "react-bootstrap";
 import {Link} from "react-router-dom";
 import {USER_PATH} from "../../RootPaths";
+import {useRootContext} from "../../RootContext";
 
 export default function CreateProtectionRequestForm() {
 
@@ -27,7 +28,8 @@ export default function CreateProtectionRequestForm() {
     }
 
     const {control, handleSubmit, formState: {errors}} = useForm<FormValues>();
-    const {userAddress, createProtectionRequest} = useUserContext();
+    const {currentAddress} = useRootContext();
+    const {createProtectionRequest} = useUserContext();
 
     const submit = async (formValues: FormValues) => {
 
@@ -48,14 +50,14 @@ export default function CreateProtectionRequestForm() {
 
         const signedOn = moment();
         const signature = await sign({
-            signerId: userAddress,
+            signerId: currentAddress,
             resource: 'protection-request',
             operation: 'create',
             signedOn,
             attributes,
         });
         const request: CreateProtectionRequest = {
-            requesterAddress: userAddress,
+            requesterAddress: currentAddress,
             userIdentity: {
                 firstName: formValues.firstName,
                 lastName: formValues.lastName,

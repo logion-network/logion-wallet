@@ -1,5 +1,6 @@
 jest.mock('./UserContext');
 jest.mock('../logion-chain');
+jest.mock('../RootContext');
 
 import React from 'react';
 import {DEFAULT_LEGAL_OFFICER} from "../legal-officer/Types";

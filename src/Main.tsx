@@ -5,6 +5,7 @@ import RootRouter from './RootRouter';
 import Loader from './Loader';
 import InstallExtension from './InstallExtension';
 import CreateAccount from './CreateAccount';
+import { RootContextProvider } from './RootContext';
 
 export default function Main() {
     const { injectedAccounts, extensionsEnabled } = useLogionChain();
@@ -17,7 +18,11 @@ export default function Main() {
                 return <Loader text="Loading accounts from extension..." />;
             } else {
                 if(injectedAccounts.length > 0) {
-                    return <RootRouter />
+                    return (
+                        <RootContextProvider>
+                            <RootRouter />
+                        </RootContextProvider>
+                    );
                 } else {
                     return <CreateAccount />;
                 }

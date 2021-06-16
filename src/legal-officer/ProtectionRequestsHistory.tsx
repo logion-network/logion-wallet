@@ -2,11 +2,14 @@ import React from 'react';
 
 import Table from 'react-bootstrap/Table';
 
+import { useRootContext } from '../RootContext';
+
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import { decision } from './Model';
 
 export default function ProtectionRequestsHistory() {
-    const { legalOfficerAddress, protectionRequestsHistory } = useLegalOfficerContext();
+    const { currentAddress } = useRootContext();
+    const { protectionRequestsHistory } = useLegalOfficerContext();
 
     if (protectionRequestsHistory === null) {
         return null;
@@ -15,7 +18,7 @@ export default function ProtectionRequestsHistory() {
     return (
         <>
             <h2>History</h2>
-            <Table striped bordered>
+            <Table striped bordered responsive>
                 <thead>
                     <tr>
                         <th>Requester</th>
@@ -32,8 +35,8 @@ export default function ProtectionRequestsHistory() {
                                 <td>{ request.requesterAddress }</td>
                                 <td>{ request.userIdentity.firstName }</td>
                                 <td>{ request.userIdentity.lastName }</td>
-                                <td>{ decision(legalOfficerAddress, request.decisions)!.status }</td>
-                                <td>{ decision(legalOfficerAddress, request.decisions)!.decisionOn }</td>
+                                <td>{ decision(currentAddress, request.decisions)!.status }</td>
+                                <td>{ decision(currentAddress, request.decisions)!.decisionOn }</td>
                             </tr>
                         ))
                     }

@@ -3,7 +3,6 @@ import React from 'react';
 import { useLogionChain } from '../logion-chain';
 
 import { UserContextProvider } from "./UserContext";
-import { DEFAULT_LEGAL_OFFICER } from "../legal-officer/Types";
 import ContextualizedWallet from './ContextualizedWallet';
 
 export default function Wallet() {
@@ -14,7 +13,7 @@ export default function Wallet() {
     }
 
     return (
-        <UserContextProvider legalOfficerAddress={DEFAULT_LEGAL_OFFICER} userAddress={injectedAccounts[0].address}>
+        <UserContextProvider>
             <ContextualizedWallet />
         </UserContextProvider>
     );

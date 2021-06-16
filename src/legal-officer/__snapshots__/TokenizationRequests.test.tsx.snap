@@ -1,13 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders 1`] = `
-<React.Fragment>
-  <h1>
-    Tokenization Requests
-  </h1>
-  <RefreshTokenizationRequestsButton />
-  <PendingTokenizationRequests />
-  <AcceptedTokenizationRequests />
-  <RejectedTokenizationRequests />
-</React.Fragment>
-`;
+exports[`renders 1`] = `null`;

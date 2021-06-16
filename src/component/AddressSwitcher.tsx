@@ -14,11 +14,13 @@ export interface Props {
 
 export default function AddressSwitcher(props: Props) {
 
+    console.log(props.addresses.currentAddress);
+
     return (
         <div
             className="AddressSwitcher"
             style={{
-                color: props.colors.textColor
+                color: props.colors.foreground
             }}
         >
             <Dropdown>
@@ -37,6 +39,10 @@ export default function AddressSwitcher(props: Props) {
                             <Dropdown.Item
                                 key={ address.address }
                                 onClick={ () => props.selectAddress(address.address) }
+                                style={{
+                                    color: props.colors.foreground,
+                                    backgroundColor: props.colors.background,
+                                }}
                             >
                                 <AccountAddress
                                     address={ address }

@@ -2,10 +2,10 @@ import React from 'react';
 
 import CommonSettings from '../Settings';
 
-import { useUserContext } from './UserContext';
+import { useLegalOfficerContext } from './LegalOfficerContext';
 
 export default function Settings() {
-    const { colorTheme } = useUserContext();
+    const { colorTheme } = useLegalOfficerContext();
 
     return (
         <CommonSettings colors={ colorTheme }/>

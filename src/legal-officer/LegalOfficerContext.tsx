@@ -11,9 +11,10 @@ import {
     fetchProtectionRequests,
 } from './Model';
 import { sign } from '../logion-chain';
+import { ColorTheme } from '../component/Dashboard';
+import { useRootContext } from '../RootContext';
 
 export interface LegalOfficerContext {
-    legalOfficerAddress: string,
     rejectRequest: ((requestId: string, reason: string) => Promise<void>) | null,
     pendingTokenizationRequests: TokenizationRequest[] | null,
     acceptedTokenizationRequests: TokenizationRequest[] | null,
@@ -21,11 +22,11 @@ export interface LegalOfficerContext {
     refreshRequests: (() => void) | null,
     pendingProtectionRequests: ProtectionRequest[] | null,
     protectionRequestsHistory: ProtectionRequest[] | null,
+    colorTheme: ColorTheme,
 }
 
 function initialContextValue(legalOfficerAddress: string): LegalOfficerContext {
     return {
-        legalOfficerAddress,
         rejectRequest: null,
         pendingTokenizationRequests: null,
         acceptedTokenizationRequests: null,
@@ -33,6 +34,48 @@ function initialContextValue(legalOfficerAddress: string): LegalOfficerContext {
         refreshRequests: null,
         pendingProtectionRequests: null,
         protectionRequestsHistory: null,
+        colorTheme: {
+            dashboard: {
+                background: '#141b2d',
+                foreground: '#ffffff',
+            },
+            menuArea: {
+                background: '#3b6cf40f',
+                foreground: '#ffffff',
+                logoShadow: '#3b6cf419',
+            },
+            primaryArea: {
+                background: '#141b2d',
+                foreground: '#ffffff',
+                link: '#ffffff',
+            },
+            secondaryArea: {
+                background: '#141b2d',
+                foreground: '#ffffff',
+            },
+            accounts: {
+                iconBackground: '#3b6cf4',
+                hintColor: '#ffffff66',
+                foreground: '#ffffff',
+                background: '#141b2d',
+            },
+            frame: {
+                background: '#1f2a40',
+                foreground: '#ffffff',
+            },
+            topMenu: {
+                iconGradient: {
+                    from: '#3b6cf4',
+                    to: '#6050dc',
+                }
+            },
+            bottomMenu: {
+                iconGradient: {
+                    from: '#7a90cb',
+                    to: '#3b6cf4',
+                }
+            }
+        },
     };
 }
 
@@ -44,29 +87,30 @@ export interface Props {
 }
 
 export function LegalOfficerContextProvider(props: Props) {
+    const { currentAddress } = useRootContext();
     const [contextValue, setContextValue] = useState<LegalOfficerContext>(initialContextValue(props.legalOfficerAddress));
     const [fetchedInitially, setFetchedInitially] = useState<boolean>(false);
 
     const refreshRequests = useCallback(() => {
         async function fetchAndSetAll() {
             const pendingTokenizationRequests = await fetchRequests({
-                legalOfficerAddress: contextValue.legalOfficerAddress,
+                legalOfficerAddress: currentAddress,
                 status: "PENDING",
             });
             const acceptedTokenizationRequests = await fetchRequests({
-                legalOfficerAddress: contextValue.legalOfficerAddress,
+                legalOfficerAddress: currentAddress,
                 status: "ACCEPTED",
             });
             const rejectedTokenizationRequests = await fetchRequests({
-                legalOfficerAddress: contextValue.legalOfficerAddress,
+                legalOfficerAddress: currentAddress,
                 status: "REJECTED",
             });
             const pendingProtectionRequests = await fetchProtectionRequests({
-                legalOfficerAddress: contextValue.legalOfficerAddress,
+                legalOfficerAddress: currentAddress,
                 statuses: ["PENDING"],
             });
             const protectionRequestsHistory = await fetchProtectionRequests({
-                legalOfficerAddress: contextValue.legalOfficerAddress,
+                legalOfficerAddress: currentAddress,
                 statuses: ["ACCEPTED", "REJECTED"],
             });
             setContextValue({
@@ -79,7 +123,7 @@ export function LegalOfficerContextProvider(props: Props) {
             });
         };
         fetchAndSetAll();
-    }, [contextValue, setContextValue]);
+    }, [currentAddress, contextValue, setContextValue]);
 
     useEffect(() => {
         if(contextValue.rejectRequest === null) {
@@ -90,7 +134,7 @@ export function LegalOfficerContextProvider(props: Props) {
                 ];
                 const signedOn = moment();
                 const signature = await sign({
-                    signerId: contextValue.legalOfficerAddress,
+                    signerId: currentAddress,
                     resource: 'token-request',
                     operation: 'reject',
                     signedOn,
@@ -106,7 +150,7 @@ export function LegalOfficerContextProvider(props: Props) {
             };
             setContextValue({...contextValue, rejectRequest});
         }
-    }, [refreshRequests, contextValue, setContextValue]);
+    }, [currentAddress, refreshRequests, contextValue, setContextValue]);
 
     useEffect(() => {
         if(contextValue.refreshRequests === null) {

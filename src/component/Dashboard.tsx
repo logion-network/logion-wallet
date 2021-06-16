@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import { Children, BackgroundAndForegroundColors } from './types/Helpers';
+import { Children, BackgroundAndForegroundColors, GradientData } from './types/Helpers';
 import Addresses from './types/Addresses';
 import Logo from './Logo';
 import AddressSwitcher from './AddressSwitcher';
@@ -18,12 +18,23 @@ export interface PrimaryAreaColors extends BackgroundAndForegroundColors {
     link: string,
 }
 
+export interface MenuAreaColors extends BackgroundAndForegroundColors {
+    logoShadow: string,
+}
+
+export interface MenuItemColors {
+    iconGradient: GradientData,
+}
+
 export interface ColorTheme {
-    sidebar: BackgroundAndForegroundColors,
+    dashboard: BackgroundAndForegroundColors,
+    menuArea: MenuAreaColors,
     primaryArea: PrimaryAreaColors,
     secondaryArea: BackgroundAndForegroundColors,
     accounts: AccountAddressColors,
     frame: BackgroundAndForegroundColors,
+    topMenu: MenuItemColors,
+    bottomMenu: MenuItemColors,
 }
 
 export interface PrimaryAreaProps {
@@ -129,28 +140,39 @@ export default function Dashboard(props: Props) {
         color: ${props.colors.primaryArea.link}
     }
 
-    .Dashboard .PrimaryArea .table,
+    .Dashboard .PrimaryArea .table {
+        color: ${props.colors.primaryArea.foreground}
+    }
+
     .Dashboard .SecondaryArea .table {
         color: ${props.colors.secondaryArea.foreground}
     }
     `;
 
     return (
-        <Container className="Dashboard" fluid>
+        <Container
+            className="Dashboard"
+            fluid
+            style={ props.colors.dashboard }
+        >
             <style>
             { inlineCss }
             </style>
             <Row>
-                <Col
-                    md={2}
-                    style={{
-                        backgroundColor: props.colors.sidebar.background,
-                        color: props.colors.sidebar.foreground,
-                    }}
-                >
+                <Col md={2}>
                     <div className="Sidebar">
-                        <Logo />
-                        <div className="MenuArea">
+                        <Logo
+                            foreground={ props.colors.menuArea.foreground }
+                            background={ props.colors.menuArea.background }
+                            logoShadow={ props.colors.menuArea.logoShadow }
+                        />
+                        <div
+                            className="MenuArea"
+                            style={{
+                                backgroundColor: props.colors.menuArea.background,
+                                color: props.colors.menuArea.foreground,
+                            }}
+                        >
                             <Menu
                                 items={ props.menuTop }
                             />
