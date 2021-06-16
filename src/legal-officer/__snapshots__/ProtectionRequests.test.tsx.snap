@@ -1,3 +1,81 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders 1`] = `null`;
+exports[`renders 1`] = `
+<ContentPane
+  colors={
+    Object {
+      "accounts": Object {
+        "background": "#141b2d",
+        "foreground": "#ffffff",
+        "hintColor": "#ffffff66",
+        "iconBackground": "#3b6cf4",
+      },
+      "bottomMenu": Object {
+        "iconGradient": Object {
+          "from": "#7a90cb",
+          "to": "#3b6cf4",
+        },
+      },
+      "dashboard": Object {
+        "background": "#141b2d",
+        "foreground": "#ffffff",
+      },
+      "frame": Object {
+        "background": "#1f2a40",
+        "foreground": "#ffffff",
+      },
+      "menuArea": Object {
+        "background": "#3b6cf40f",
+        "foreground": "#ffffff",
+        "logoShadow": "#3b6cf419",
+      },
+      "primaryArea": Object {
+        "background": "#141b2d",
+        "foreground": "#ffffff",
+        "link": "#ffffff",
+      },
+      "secondaryArea": Object {
+        "background": "#141b2d",
+        "foreground": "#ffffff",
+      },
+      "topMenu": Object {
+        "iconGradient": Object {
+          "from": "#3b6cf4",
+          "to": "#6050dc",
+        },
+      },
+    }
+  }
+  primaryAreaChildren={
+    <React.Fragment>
+      <h1>
+        Protection Requests
+      </h1>
+      <Frame
+        colors={
+          Object {
+            "background": "#1f2a40",
+            "foreground": "#ffffff",
+          }
+        }
+      >
+        <RefreshTokenizationRequestsButton />
+        <PendingProtectionRequests />
+      </Frame>
+    </React.Fragment>
+  }
+  secondaryAreaChildren={
+    <Frame
+      colors={
+        Object {
+          "background": "#1f2a40",
+          "foreground": "#ffffff",
+        }
+      }
+    >
+      <ProtectionRequestsHistory />
+    </Frame>
+  }
+  selectAddress={[MockFunction]}
+/>
+`;

@@ -18,8 +18,6 @@ export default function TokenizationRequests() {
         return null;
     }
 
-    console.log(addresses.currentAddress);
-
     return (
         <ContentPane
             addresses={ addresses }

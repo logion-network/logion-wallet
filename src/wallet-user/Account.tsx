@@ -20,8 +20,6 @@ export default function Account() {
         return null;
     }
 
-    console.log(addresses.currentAddress);
-
     return (
         <ContentPane
             addresses={ addresses }

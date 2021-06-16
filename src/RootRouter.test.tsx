@@ -1,4 +1,6 @@
 jest.mock('./logion-chain');
+jest.mock('./RootContext');
+
 import { setContextMock } from './logion-chain';
 import { shallowRender, mockAccount, act } from './tests';
 

@@ -1,3 +1,5 @@
+jest.mock('../RootContext');
+
 import React from 'react';
 import TokenizationRequests from './TokenizationRequests';
 import { shallowRender } from '../tests';

@@ -1,4 +1,5 @@
 jest.mock("../logion-chain");
+jest.mock("../RootContext");
 
 import React from 'react';
 import ContextualizedWallet from './ContextualizedWallet';
