@@ -9,6 +9,7 @@ exports[`Renders requests history 1`] = `
   </h2>
   <ForwardRef
     bordered={true}
+    responsive={true}
     striped={true}
   >
     <thead>

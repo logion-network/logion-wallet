@@ -1,8 +1,8 @@
 import React from 'react';
 
-import { useLogionChain } from '../logion-chain';
 import { ContentPane } from '../component/Dashboard';
 import Frame from '../component/Frame';
+import { useRootContext } from '../RootContext';
 
 import { useUserContext } from "./UserContext";
 import MyTokens from './MyTokens';
@@ -13,17 +13,17 @@ import AcceptedTokenizationRequests from './AcceptedTokenizationRequests';
 import RejectedTokenizationRequests from './RejectedTokenizationRequests';
 
 export default function Account() {
-    const { injectedAccounts } = useLogionChain();
-    const { setUserAddress, colorTheme, addresses } = useUserContext();
+    const { addresses, selectAddress } = useRootContext();
+    const { colorTheme } = useUserContext();
 
-    if(injectedAccounts === null || setUserAddress === null || addresses === null) {
+    if(selectAddress === null || addresses === null) {
         return null;
     }
 
     return (
         <ContentPane
             addresses={ addresses }
-            selectAddress={ setUserAddress }
+            selectAddress={ selectAddress }
             colors={ colorTheme }
             primaryAreaChildren={
                 <>

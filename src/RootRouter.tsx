@@ -6,28 +6,22 @@ import {
     Route
 } from 'react-router-dom';
 
-import { useLogionChain, InjectedAccountWithMeta } from './logion-chain';
 import { LEGAL_OFFICER_PATH, USER_PATH } from './RootPaths';
 import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from './legal-officer/Types';
 import LegalOfficerWallet from './legal-officer/LegalOfficerWallet';
 import Wallet from './wallet-user/Wallet';
+import { useRootContext } from './RootContext';
 
 const LEGAL_OFFICERS: string[] = [ DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER ];
 
-function includesLegalOfficer(accounts: InjectedAccountWithMeta[]): boolean {
-    return accounts
-        .map(account => account.address)
-        .filter(address => LEGAL_OFFICERS.includes(address)).length > 0;
-}
-
 export default function RootRouter() {
-    const { injectedAccounts } = useLogionChain();
+    const { currentAddress } = useRootContext();
 
-    if(injectedAccounts === null || injectedAccounts.length <= 0) {
+    if(currentAddress === "") {
         return null;
     }
 
-    const isLegalOfficer = includesLegalOfficer(injectedAccounts);
+    const isLegalOfficer = LEGAL_OFFICERS.includes(currentAddress);
     let redirectTo;
     if(isLegalOfficer) {
         redirectTo = LEGAL_OFFICER_PATH;

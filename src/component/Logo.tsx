@@ -1,11 +1,24 @@
 import React from 'react';
 
+import { BackgroundAndForegroundColors } from './types/Helpers';
+
 import './Logo.css';
 
-export default function Logo() {
+export interface Props extends BackgroundAndForegroundColors {
+    logoShadow: string,
+}
+
+export default function Logo(props: Props) {
 
     return (
-        <div className="Logo">
+        <div
+            className="Logo"
+            style={{
+                backgroundColor: props.background,
+                color: props.foreground,
+                boxShadow: `0 5px 25px ${props.logoShadow}`,
+            }}
+        >
             <div className="image-and-slogan">
                 <div className="image">
                     <img src={process.env.PUBLIC_URL + "/logo.png"} alt="logo" />

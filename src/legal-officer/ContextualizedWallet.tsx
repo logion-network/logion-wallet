@@ -1,22 +1,24 @@
 import React from 'react';
 
-import { useLogionChain } from '../logion-chain';
-
 import Dashboard from '../component/Dashboard';
-import UserRouter, { ACCOUNT_PATH, TRUST_PROTECTION_PATH, SETTINGS_PATH } from "./UserRouter";
-import { useUserContext } from "./UserContext";
+
+import LegalOfficerRouter from './LegalOfficerRouter';
+import { useLegalOfficerContext } from './LegalOfficerContext';
 import { useRootContext } from '../RootContext';
 
-export default function ContextualizedWallet() {
-    const { apiState } = useLogionChain();
-    const { selectAddress, addresses } = useRootContext();
-    const { colorTheme } = useUserContext();
+import {
+    TOKENIZATION_REQUESTS_PATH,
+    PROTECTION_REQUESTS_PATH,
+    SETTINGS_PATH,
+} from './LegalOfficerPaths';
 
-    if(selectAddress === null || addresses === null) {
+export default function ContextualizedWallet() {
+    const { selectAddress, addresses } = useRootContext();
+    const { colorTheme } = useLegalOfficerContext();
+
+    if(addresses === null || selectAddress === null) {
         return null;
     }
-
-    const userContext = apiState === 'READY' ? <UserRouter /> : null;
 
     return (
         <Dashboard
@@ -26,14 +28,14 @@ export default function ContextualizedWallet() {
             menuTop={[
                 {
                     text: "Tokens",
-                    to: ACCOUNT_PATH,
+                    to: TOKENIZATION_REQUESTS_PATH,
                     exact: true,
                     iconGradient: colorTheme.topMenu.iconGradient,
                 }
             ]}
             shieldItem={{
-                text: "My Logion Trust Protection",
-                to: TRUST_PROTECTION_PATH,
+                text: "Protection Requests",
+                to: PROTECTION_REQUESTS_PATH,
                 exact: true
             }}
             menuBottom={[
@@ -45,7 +47,7 @@ export default function ContextualizedWallet() {
                 }
             ]}
         >
-            {userContext}
+            <LegalOfficerRouter />
         </Dashboard>
     );
 }

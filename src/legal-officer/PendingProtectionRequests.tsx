@@ -9,6 +9,7 @@ import Form from 'react-bootstrap/Form';
 import Identity from '../component/Identity';
 import PostalAddress from '../component/PostalAddress';
 import { sign } from '../logion-chain';
+import { useRootContext } from '../RootContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import { acceptProtectionRequest, rejectProtectionRequest } from './Model';
@@ -29,7 +30,8 @@ interface ReviewState {
 const NO_REVIEW_STATE = { status: ReviewStatus.NONE };
 
 export default function PendingProtectionRequests() {
-    const { pendingProtectionRequests, legalOfficerAddress, refreshRequests } = useLegalOfficerContext();
+    const { currentAddress } = useRootContext();
+    const { pendingProtectionRequests, refreshRequests } = useLegalOfficerContext();
     const [ rejectReason, setRejectReason ] = useState<string>("");
     const [ reviewState, setReviewState ] = useState<ReviewState>(NO_REVIEW_STATE);
 
@@ -43,14 +45,14 @@ export default function PendingProtectionRequests() {
             const signedOn = moment();
             const attributes = [ requestId, rejectReason ];
             const signature = await sign({
-                signerId: legalOfficerAddress,
+                signerId: currentAddress,
                 resource: 'protection-request',
                 operation: 'reject',
                 signedOn,
                 attributes
             });
             await rejectProtectionRequest({
-                legalOfficerAddress,
+                legalOfficerAddress: currentAddress,
                 requestId,
                 signature,
                 rejectReason,
@@ -59,7 +61,7 @@ export default function PendingProtectionRequests() {
             setReviewState(NO_REVIEW_STATE);
             refreshRequests!();
         })();
-    }, [ reviewState, legalOfficerAddress, rejectReason, setReviewState, refreshRequests ]);
+    }, [ reviewState, currentAddress, rejectReason, setReviewState, refreshRequests ]);
 
     const acceptAndCloseModal = useCallback(() => {
         (async function() {
@@ -67,14 +69,14 @@ export default function PendingProtectionRequests() {
             const signedOn = moment();
             const attributes = [ requestId ];
             const signature = await sign({
-                signerId: legalOfficerAddress,
+                signerId: currentAddress,
                 resource: 'protection-request',
                 operation: 'accept',
                 signedOn,
                 attributes
             });
             await acceptProtectionRequest({
-                legalOfficerAddress,
+                legalOfficerAddress: currentAddress,
                 requestId,
                 signature,
                 signedOn,
@@ -82,7 +84,7 @@ export default function PendingProtectionRequests() {
             setReviewState(NO_REVIEW_STATE);
             refreshRequests!();
         })();
-    }, [ reviewState, legalOfficerAddress, setReviewState, refreshRequests ]);
+    }, [ reviewState, currentAddress, setReviewState, refreshRequests ]);
 
     if (pendingProtectionRequests === null) {
         return null;

@@ -5,6 +5,9 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
 import moment from 'moment';
 
+import { useRootContext } from "../RootContext";
+import { DEFAULT_LEGAL_OFFICER } from '../legal-officer/Types';
+
 import {CreateTokenRequest} from "./Model";
 import {useUserContext} from "./UserContext";
 import { sign } from '../logion-chain';
@@ -22,25 +25,26 @@ export default function CreateTokenizationRequest(props: Props) {
     }
 
     const { control, handleSubmit, formState: { errors } } = useForm<FormValues>();
-    const { legalOfficerAddress, userAddress, createTokenRequest } = useUserContext();
+    const { createTokenRequest } = useUserContext();
+    const { currentAddress } = useRootContext();
 
     const submit = async (formValues: FormValues) => {
         const attributes = [
-            `${legalOfficerAddress}`,
+            `${DEFAULT_LEGAL_OFFICER}`,
             `${formValues.requestedTokenName}`,
             `${formValues.bars}`
         ];
         const signedOn = moment();
         const signature = await sign({
-            signerId: userAddress,
+            signerId: currentAddress,
             resource: 'token-request',
             operation: 'create',
             signedOn,
             attributes,
         });
         const request: CreateTokenRequest = {
-            legalOfficerAddress: legalOfficerAddress,
-            requesterAddress: userAddress,
+            legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
+            requesterAddress: currentAddress,
             bars: Number(formValues.bars),
             requestedTokenName: formValues.requestedTokenName,
             signature,

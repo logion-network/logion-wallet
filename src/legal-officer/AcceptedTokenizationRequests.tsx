@@ -13,7 +13,7 @@ export default function AcceptedTokenizationRequests() {
 
     return (
         <>
-            <h2>Accepted</h2>
+            <h3>Accepted</h3>
             <Table striped bordered>
                 <thead>
                     <tr>

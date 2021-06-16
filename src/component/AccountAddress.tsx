@@ -2,14 +2,14 @@ import React from 'react';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
+import { BackgroundAndForegroundColors } from './types/Helpers';
 import { AccountAddress as AddressType } from './types/Addresses';
 
 import './AccountAddress.css';
 
-export interface AccountAddressColors {
+export interface AccountAddressColors extends BackgroundAndForegroundColors {
     iconBackground: string,
     hintColor: string,
-    textColor: string,
 }
 
 export interface Props {
@@ -49,7 +49,7 @@ export default function AccountAddress(props: Props) {
                 <div
                     className="name"
                     style={{
-                        color: props.colors.textColor,
+                        color: props.colors.foreground,
                     }}
                 >
                     { props.address.name }
@@ -57,7 +57,8 @@ export default function AccountAddress(props: Props) {
                 <div
                     className="address"
                     style={{
-                        color: props.colors.textColor,
+                        color: props.colors.foreground,
+                        backgroundColor: props.colors.background,
                     }}
                 >
                     <OverlayTrigger

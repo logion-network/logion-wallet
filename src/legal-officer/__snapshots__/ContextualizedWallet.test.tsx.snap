@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders 1`] = `
-<ContentPane
+<Dashboard
   colors={
     Object {
       "accounts": Object {
@@ -46,36 +46,41 @@ exports[`renders 1`] = `
       },
     }
   }
-  primaryAreaChildren={
-    <React.Fragment>
-      <h1>
-        Protection Requests
-      </h1>
-      <Frame
-        colors={
-          Object {
-            "background": "#1f2a40",
-            "foreground": "#ffffff",
-          }
-        }
-      >
-        <RefreshTokenizationRequestsButton />
-        <PendingProtectionRequests />
-      </Frame>
-    </React.Fragment>
+  menuBottom={
+    Array [
+      Object {
+        "exact": true,
+        "iconGradient": Object {
+          "from": "#7a90cb",
+          "to": "#3b6cf4",
+        },
+        "text": "Settings",
+        "to": "/legal-officer/settings",
+      },
+    ]
   }
-  secondaryAreaChildren={
-    <Frame
-      colors={
-        Object {
-          "background": "#1f2a40",
-          "foreground": "#ffffff",
-        }
-      }
-    >
-      <ProtectionRequestsHistory />
-    </Frame>
+  menuTop={
+    Array [
+      Object {
+        "exact": true,
+        "iconGradient": Object {
+          "from": "#3b6cf4",
+          "to": "#6050dc",
+        },
+        "text": "Tokens",
+        "to": "/legal-officer/tokenization",
+      },
+    ]
   }
   selectAddress={[MockFunction]}
-/>
+  shieldItem={
+    Object {
+      "exact": true,
+      "text": "Protection Requests",
+      "to": "/legal-officer/protection",
+    }
+  }
+>
+  <LegalOfficerRouter />
+</Dashboard>
 `;

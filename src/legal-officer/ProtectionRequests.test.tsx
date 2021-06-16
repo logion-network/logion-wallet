@@ -1,3 +1,5 @@
+jest.mock("../RootContext");
+
 import React from 'react';
 import ProtectionRequests from './ProtectionRequests';
 import { shallowRender } from '../tests';

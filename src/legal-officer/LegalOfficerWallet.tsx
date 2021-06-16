@@ -1,12 +1,10 @@
 import React from 'react';
 
-import Shell from '../Shell';
 import { useLogionChain } from '../logion-chain';
 
 import { LegalOfficerContextProvider } from './LegalOfficerContext';
 import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from './Types';
-import Menu from './Menu';
-import LegalOfficerRouter from './LegalOfficerRouter';
+import ContextualizedWallet from './ContextualizedWallet';
 
 export default function LegalOfficerWallet() {
     const { injectedAccounts } = useLogionChain();
@@ -24,10 +22,7 @@ export default function LegalOfficerWallet() {
 
     return (
         <LegalOfficerContextProvider legalOfficerAddress={ legalOfficer }>
-            <Shell backgroundCss="linear-gradient(to right, #a158ff, 90%, #203acf)">
-                <Menu />
-                <LegalOfficerRouter />
-            </Shell>
+            <ContextualizedWallet />
         </LegalOfficerContextProvider>
     );
 }

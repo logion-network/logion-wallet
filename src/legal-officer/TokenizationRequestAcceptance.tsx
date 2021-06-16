@@ -16,6 +16,7 @@ import {
     sign,
     unsubscribe
 } from '../logion-chain';
+import { useRootContext } from '../RootContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import {
@@ -58,7 +59,8 @@ export interface Props {
 
 export default function TokenizationRequestAcceptance(props: Props) {
     const { api } = useLogionChain();
-    const { legalOfficerAddress, refreshRequests } = useLegalOfficerContext();
+    const { currentAddress } = useRootContext();
+    const { refreshRequests } = useLegalOfficerContext();
 
     const [ acceptState, setAcceptState ] = useState<AcceptState>({status: AcceptStatus.NONE});
 
@@ -116,7 +118,7 @@ export default function TokenizationRequestAcceptance(props: Props) {
             const proceed = async () => {
                 const { assetId, unsubscriber } = await createAsset({
                     api: api!,
-                    signerId: legalOfficerAddress,
+                    signerId: currentAddress,
                     callback: setAssetCreationResult,
                     errorCallback: setAssetCreationError,
                 });
@@ -146,7 +148,7 @@ export default function TokenizationRequestAcceptance(props: Props) {
         setAcceptState,
         api,
         props.requestToAccept,
-        legalOfficerAddress,
+        currentAddress,
         setAssetCreationResult,
         setAssetCreationError,
     ]);
@@ -159,7 +161,7 @@ export default function TokenizationRequestAcceptance(props: Props) {
                 await unsubscribe(acceptState.unsubscriber!);
                 const unsubscriber = setAssetMetadata({
                     api: api!,
-                    signerId: legalOfficerAddress,
+                    signerId: currentAddress,
                     callback: setSetMetadataResult,
                     errorCallback: setSetMetadataError,
                     assetId: acceptState.assetId!,
@@ -182,7 +184,7 @@ export default function TokenizationRequestAcceptance(props: Props) {
         setStatus,
         setAcceptState,
         api,
-        legalOfficerAddress,
+        currentAddress,
         setSetMetadataResult,
         setSetMetadataError,
         props.requestToAccept,
@@ -196,7 +198,7 @@ export default function TokenizationRequestAcceptance(props: Props) {
                 await unsubscribe(acceptState.unsubscriber!);
                 const unsubscriber = mintTokens({
                     api: api!,
-                    signerId: legalOfficerAddress,
+                    signerId: currentAddress,
                     beneficiary: props.requestToAccept!.requesterAddress,
                     callback: setMintingResult,
                     errorCallback: setMintingError,
@@ -216,7 +218,7 @@ export default function TokenizationRequestAcceptance(props: Props) {
         setStatus,
         setAcceptState,
         api,
-        legalOfficerAddress,
+        currentAddress,
         props.requestToAccept,
         setMintingResult,
         setMintingError,

@@ -6,29 +6,77 @@ exports[`Given legal officer, when rendering, then route to wallet or redirect 1
     <Route
       path="/legal-officer"
     >
-      <LegalOfficerWallet />
+      <Redirect
+        to="/user"
+      />
     </Route>
     <Route
       path="/user"
     >
-      <Redirect
-        to="/legal-officer"
-      />
+      <Wallet />
     </Route>
     <Route
       path="/"
     >
       <Redirect
-        to="/legal-officer"
+        to="/user"
       />
     </Route>
   </Switch>
 </BrowserRouter>
 `;
 
-exports[`Given no injected accounts, when rendering, then null 1`] = `null`;
+exports[`Given no injected accounts, when rendering, then null 1`] = `
+<BrowserRouter>
+  <Switch>
+    <Route
+      path="/legal-officer"
+    >
+      <Redirect
+        to="/user"
+      />
+    </Route>
+    <Route
+      path="/user"
+    >
+      <Wallet />
+    </Route>
+    <Route
+      path="/"
+    >
+      <Redirect
+        to="/user"
+      />
+    </Route>
+  </Switch>
+</BrowserRouter>
+`;
 
-exports[`Given null injected accounts, when rendering, then null 1`] = `null`;
+exports[`Given null injected accounts, when rendering, then null 1`] = `
+<BrowserRouter>
+  <Switch>
+    <Route
+      path="/legal-officer"
+    >
+      <Redirect
+        to="/user"
+      />
+    </Route>
+    <Route
+      path="/user"
+    >
+      <Wallet />
+    </Route>
+    <Route
+      path="/"
+    >
+      <Redirect
+        to="/user"
+      />
+    </Route>
+  </Switch>
+</BrowserRouter>
+`;
 
 exports[`Given wallet user, when rendering, then route to wallet or redirect 1`] = `
 <BrowserRouter>

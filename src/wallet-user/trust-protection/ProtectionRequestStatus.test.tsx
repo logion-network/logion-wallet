@@ -1,5 +1,6 @@
 jest.mock('../UserContext');
 jest.mock('../../logion-chain');
+jest.mock('../../RootContext');
 jest.mock('../../logion-chain/Recovery');
 
 import moment from 'moment';

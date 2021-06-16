@@ -3,6 +3,7 @@ import { Option } from '@polkadot/types';
 
 import { useLogionChain } from '../logion-chain';
 import { RecoveryConfig, getRecoveryConfig } from '../logion-chain/Recovery';
+import { Children } from '../component/types/Helpers';
 
 import { CreateTokenRequest, createTokenRequest as modelCreateTokenRequest } from "./Model";
 import { TokenizationRequest } from "../legal-officer/Types";
@@ -15,12 +16,10 @@ import {
     createProtectionRequest as modelCreateProtectionRequest,
 } from "./trust-protection/Model";
 import { ColorTheme } from '../component/Dashboard';
-import Addresses, { buildAddresses } from '../component/types/Addresses';
-import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
+import { useRootContext } from '../RootContext';
+import { LIGHT_MODE } from './Types';
 
 export interface UserContext {
-    legalOfficerAddress: string,
-    userAddress: string,
     createTokenRequest: ((request: CreateTokenRequest) => Promise<TokenizationRequest>) | null,
     createdTokenRequest: TokenizationRequest | null,
     pendingTokenizationRequests: TokenizationRequest[] | null,
@@ -32,16 +31,11 @@ export interface UserContext {
     acceptedProtectionRequests: ProtectionRequest[] | null,
     rejectedProtectionRequests: ProtectionRequest[] | null,
     recoveryConfig: Option<RecoveryConfig> | null,
-    setUserAddress: ((userAddress: string) => void) | null,
     colorTheme: ColorTheme,
-    addresses: Addresses | null,
-    injectedAccounts: InjectedAccountWithMeta[] | null,
 }
 
-function initialContextValue(legalOfficerAddress: string, userAddress: string): UserContext {
+function initialContextValue(): UserContext {
     return {
-        legalOfficerAddress,
-        userAddress,
         createTokenRequest: null,
         createdTokenRequest: null,
         pendingTokenizationRequests: null,
@@ -53,47 +47,20 @@ function initialContextValue(legalOfficerAddress: string, userAddress: string): 
         acceptedProtectionRequests: null,
         rejectedProtectionRequests: null,
         recoveryConfig: null,
-        setUserAddress: null,
-        colorTheme: {
-            sidebar: {
-                background: '#152665',
-                foreground: '#ffffff',
-            },
-            primaryArea: {
-                background: '#ffffff',
-                foreground: '#000000',
-                link: '#3b6cf466',
-            },
-            secondaryArea: {
-                background: '#ffffff',
-                foreground: '#000000',
-            },
-            accounts: {
-                iconBackground: '#3b6cf4',
-                hintColor: '#00000066',
-                textColor: '#000000',
-            },
-            frame: {
-                background: '#3b6cf40f',
-                foreground: '',
-            }
-        },
-        addresses: null,
-        injectedAccounts: null,
+        colorTheme: LIGHT_MODE,
     }
 }
 
-const UserContextObject: React.Context<UserContext> = React.createContext(initialContextValue("", ""));
+const UserContextObject: React.Context<UserContext> = React.createContext(initialContextValue());
 
 export interface Props {
-    legalOfficerAddress: string,
-    userAddress: string,
-    children: JSX.Element | JSX.Element[] | null
+    children: Children
 }
 
 export function UserContextProvider(props: Props) {
-    const { api, apiState, injectedAccounts } = useLogionChain();
-    const [contextValue, setContextValue] = useState<UserContext>(initialContextValue(props.legalOfficerAddress, props.userAddress));
+    const { currentAddress } = useRootContext();
+    const { api, apiState } = useLogionChain();
+    const [contextValue, setContextValue] = useState<UserContext>(initialContextValue());
     const [fetchedInitially, setFetchedInitially] = useState<boolean>(false);
 
     useEffect(() => {
@@ -110,32 +77,33 @@ export function UserContextProvider(props: Props) {
     const refreshRequests = useCallback(() => {
         async function fetchAndSetRequests() {
             const pendingTokenizationRequests = await fetchRequests({
-                requesterAddress: contextValue.userAddress,
+                requesterAddress: currentAddress,
                 status: "PENDING",
             });
             const acceptedTokenizationRequests = await fetchRequests({
-                requesterAddress: contextValue.userAddress,
+                requesterAddress: currentAddress,
                 status: "ACCEPTED",
             });
             const rejectedTokenizationRequests = await fetchRequests({
-                requesterAddress: contextValue.userAddress,
+                requesterAddress: currentAddress,
                 status: "REJECTED",
             });
             const pendingProtectionRequests = await fetchProtectionRequests({
-                requesterAddress: contextValue.userAddress,
+                requesterAddress: currentAddress,
                 statuses: [ "PENDING" ],
             });
             const acceptedProtectionRequests = await fetchProtectionRequests({
-                requesterAddress: contextValue.userAddress,
+                requesterAddress: currentAddress,
                 statuses: [ "ACCEPTED" ],
             });
             const rejectedProtectionRequests = await fetchProtectionRequests({
-                requesterAddress: contextValue.userAddress,
+                requesterAddress: currentAddress,
                 statuses: [ "REJECTED" ],
             });
+            console.log(currentAddress);
             const recoveryConfig = await getRecoveryConfig({
                 api: api!,
-                accountId: contextValue.userAddress
+                accountId: currentAddress
             });
 
             setContextValue({
@@ -152,14 +120,14 @@ export function UserContextProvider(props: Props) {
         if(api !== null) {
             fetchAndSetRequests();
         }
-    }, [ api, contextValue, setContextValue ]);
+    }, [ api, contextValue, setContextValue, currentAddress ]);
 
     useEffect(() => {
-        if(apiState === "READY" && !fetchedInitially) {
+        if(apiState === "READY" && !fetchedInitially && currentAddress !== '') {
             setFetchedInitially(true);
             refreshRequests();
         }
-    }, [apiState, fetchedInitially, refreshRequests]);
+    }, [ apiState, fetchedInitially, refreshRequests, currentAddress ]);
 
     useEffect(() => {
         if(contextValue.refreshRequests === null) {
@@ -177,27 +145,6 @@ export function UserContextProvider(props: Props) {
             setContextValue({...contextValue, createProtectionRequest});
         }
     }, [contextValue, refreshRequests, setContextValue]);
-
-    useEffect(() => {
-        if(contextValue.setUserAddress === null) {
-            const setUserAddress = (userAddress: string) => {
-                setContextValue({...contextValue, userAddress});
-                refreshRequests();
-            }
-            setContextValue({...contextValue, setUserAddress});
-        }
-    }, [ contextValue, setContextValue, refreshRequests ]);
-
-    useEffect(() => {
-        if(contextValue.injectedAccounts !== injectedAccounts
-            && injectedAccounts !== null) {
-            setContextValue({
-                ...contextValue,
-                injectedAccounts,
-                addresses: buildAddresses(injectedAccounts, contextValue.userAddress)
-            });
-        }
-    }, [ injectedAccounts, contextValue ]);
 
     return (
         <UserContextObject.Provider value={contextValue}>
