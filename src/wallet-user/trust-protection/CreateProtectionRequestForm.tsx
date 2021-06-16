@@ -79,7 +79,7 @@ export default function CreateProtectionRequestForm() {
     }
     return (
         <>
-            <h1>No protection detected</h1>
+            <h2>No protection detected</h2>
             <Form onSubmit={handleSubmit(submit)}>
                 <p>If you aim to start a Recovery process to that account, you have to select at least one of the Legal
                     Officer already in charge of the account to be recovered</p>
@@ -182,7 +182,7 @@ export default function CreateProtectionRequestForm() {
                                                data-testid="line2Message">{errors.line2?.message}</Form.Control.Feedback>
                     </Col>
                 </Form.Group>
-    
+
                 <Form.Group as={Row} controlId="postalCode">
                     <Form.Label column sm={3}>Postal Code</Form.Label>
                     <Col sm={9}>
@@ -228,7 +228,7 @@ export default function CreateProtectionRequestForm() {
                                                data-testid="countryMessage">{errors.country?.message}</Form.Control.Feedback>
                     </Col>
                 </Form.Group>
-    
+
                 <p>Do you agree to send your first name, last name, email, phone number and address to the following Legal
                     Officers ?</p>
                 <p>This initial personal information sharing will start KYC process and will also be used in this context of

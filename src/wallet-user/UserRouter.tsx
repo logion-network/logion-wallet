@@ -4,8 +4,8 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import { USER_PATH } from '../RootPaths';
 
 import Account from "./Account";
-import ProtectionRequestStatus from "./trust-protection/ProtectionRequestStatus";
 import Settings from "./Settings";
+import TrustProtection from "./trust-protection/TrustProtection";
 
 export const ACCOUNT_PATH = USER_PATH + '/account';
 export const TRUST_PROTECTION_PATH = USER_PATH + '/protection';
@@ -19,7 +19,7 @@ export default function UserRouter() {
                     <Account />
                 </Route>
                 <Route path={ TRUST_PROTECTION_PATH }>
-                    <ProtectionRequestStatus />
+                    <TrustProtection />
                 </Route>
                 <Route path={ SETTINGS_PATH }>
                     <Settings />

@@ -120,7 +120,7 @@ test("Activation of accepted protection request", async () => {
     setRecoveryConfig({ isEmpty: true });
 
     render(<ProtectionRequestStatus/>);
-    const activateButton = screen.getByRole('button');
+    const activateButton = screen.getByTestId('btnActivate');
     userEvent.click(activateButton);
 
     await waitFor(() => expect(createRecovery).toBeCalledWith(expect.objectContaining({

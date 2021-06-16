@@ -147,17 +147,48 @@ Array [
 
 exports[`renders accepted protection request 1`] = `
 <React.Fragment>
-  <h1>
-    Protection request status
-  </h1>
+  <h2>
+    My Legal Officers
+  </h2>
   <p>
     Your Logion Trust Protection request (
     2eb5f71c-7f31-44b5-9390-c3bf56501880
     ) has been accepted by your Legal Officers. You can now activate your protection.
   </p>
+  <ul>
+    <li>
+      <LegalOfficerInfo
+        legalOfficer={
+          Object {
+            "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+            "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON",
+            "name": "Guillaume",
+          }
+        }
+      />
+    </li>
+    <li>
+      <LegalOfficerInfo
+        legalOfficer={
+          Object {
+            "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+            "details": "Modero Bruxelles
+Central administration 
+Nijverheidslaan 1
+B - 1853 Grimbergen (Strombeek-Bever)",
+            "name": "Patrick",
+          }
+        }
+      />
+    </li>
+  </ul>
   <p>
     <Button
       active={false}
+      data-testid="btnActivate"
       disabled={false}
       onClick={[Function]}
       variant="primary"
@@ -165,11 +196,6 @@ exports[`renders accepted protection request 1`] = `
       Activate
     </Button>
   </p>
-  <Link
-    to="/user/account"
-  >
-    Back to account
-  </Link>
 </React.Fragment>
 `;
 
@@ -177,9 +203,9 @@ exports[`renders empty 1`] = `null`;
 
 exports[`renders pending protection request 1`] = `
 <React.Fragment>
-  <h1>
+  <h2>
     Protection request status
-  </h1>
+  </h2>
   <p>
     Your Logion Trust Protection request (
     2eb5f71c-7f31-44b5-9390-c3bf56501880
@@ -201,40 +227,46 @@ exports[`renders pending protection request 1`] = `
       PENDING
     </li>
   </ul>
-  <Link
-    to="/user/account"
-  >
-    Back to account
-  </Link>
 </React.Fragment>
 `;
 
 exports[`renders protected 1`] = `
 <React.Fragment>
-  <h1>
-    Protection request status
-  </h1>
+  <h2>
+    My Legal Officers
+  </h2>
   <p>
     Your Logion Trust Protection is active. You are now protected by
   </p>
   <ul>
     <li>
-      Guillaume
-       (
-      5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty
-      )
+      <LegalOfficerInfo
+        legalOfficer={
+          Object {
+            "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+            "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON",
+            "name": "Guillaume",
+          }
+        }
+      />
     </li>
     <li>
-      Patrick
-       (
-      5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
-      )
+      <LegalOfficerInfo
+        legalOfficer={
+          Object {
+            "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+            "details": "Modero Bruxelles
+Central administration 
+Nijverheidslaan 1
+B - 1853 Grimbergen (Strombeek-Bever)",
+            "name": "Patrick",
+          }
+        }
+      />
     </li>
   </ul>
-  <Link
-    to="/user/account"
-  >
-    Back to account
-  </Link>
 </React.Fragment>
 `;
