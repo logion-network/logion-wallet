@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import { NavLink } from 'react-router-dom';
-import { CSSProperties } from 'react';
 
-import { GradientData } from './types/Helpers';
+import { ColorThemeType, MenuIcon as ColorThemeMenuIcon } from './ColorTheme';
+import MenuIcon from './MenuIcon';
 
 import './MenuItem.css';
 
@@ -10,12 +10,13 @@ export interface MenuItemData {
     text: string,
     to: string,
     exact: boolean,
-    iconGradient?: GradientData,
+    icon?: ColorThemeMenuIcon,
 }
 
 export interface Props {
     item: MenuItemData,
     height?: number,
+    colorThemeType: ColorThemeType,
 }
 
 export default function MenuItem(props: Props) {
@@ -34,16 +35,11 @@ export default function MenuItem(props: Props) {
         >
             <span className="text-wrapper">
                 {
-                    props.item.iconGradient !== undefined &&
-                    <span className="icon-wrapper">
-                        <div
-                            className="icon"
-                            style={{
-                                background: `linear-gradient(180deg, ${props.item.iconGradient.from} 0%, ${props.item.iconGradient.to} 100%)`
-                            }}
-                        >
-                        </div>
-                    </span>
+                    props.item.icon !== undefined &&
+                    <MenuIcon
+                        { ...props.item.icon }
+                        colorThemeType={ props.colorThemeType }
+                    />
                 }
                 <span className="text">{ props.item.text }</span>
             </span>

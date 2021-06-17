@@ -11,7 +11,7 @@ import {
     fetchProtectionRequests,
 } from './Model';
 import { sign } from '../logion-chain';
-import { ColorTheme } from '../component/Dashboard';
+import { ColorTheme } from '../component/ColorTheme';
 import { useRootContext } from '../RootContext';
 
 export interface LegalOfficerContext {
@@ -35,6 +35,7 @@ function initialContextValue(legalOfficerAddress: string): LegalOfficerContext {
         pendingProtectionRequests: null,
         protectionRequestsHistory: null,
         colorTheme: {
+            type: 'dark',
             dashboard: {
                 background: '#141b2d',
                 foreground: '#ffffff',

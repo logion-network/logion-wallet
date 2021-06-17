@@ -30,20 +30,38 @@ export default function ContextualizedWallet() {
                     text: "Tokens",
                     to: TOKENIZATION_REQUESTS_PATH,
                     exact: true,
-                    iconGradient: colorTheme.topMenu.iconGradient,
+                    icon: {
+                        icon: {
+                            category: 'legal-officer',
+                            id: 'tokens'
+                        },
+                    },
                 }
             ]}
             shieldItem={{
                 text: "Protection Requests",
                 to: PROTECTION_REQUESTS_PATH,
-                exact: true
+                exact: true,
+                icon: {
+                    icon: {
+                        category: 'legal-officer',
+                        id: 'shield'
+                    },
+                    height: 'auto',
+                    width: 'auto',
+                }
             }}
             menuBottom={[
                 {
                     text: "Settings",
                     to: SETTINGS_PATH,
                     exact: true,
-                    iconGradient: colorTheme.bottomMenu.iconGradient,
+                    icon: {
+                        icon: {
+                            category: 'legal-officer',
+                            id: 'settings'
+                        },
+                    },
                 }
             ]}
         >

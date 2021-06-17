@@ -3,39 +3,16 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import { Children, BackgroundAndForegroundColors, GradientData } from './types/Helpers';
+import { Children } from './types/Helpers';
 import Addresses from './types/Addresses';
 import Logo from './Logo';
 import AddressSwitcher from './AddressSwitcher';
-import { AccountAddressColors } from './AccountAddress';
+import { ColorTheme, PrimaryAreaColors, AccountAddressColors, BackgroundAndForegroundColors } from './ColorTheme';
 import Menu from './Menu';
 import { MenuItemData } from './MenuItem';
 import Shield from './Shield';
 
 import './Dashboard.css';
-
-export interface PrimaryAreaColors extends BackgroundAndForegroundColors {
-    link: string,
-}
-
-export interface MenuAreaColors extends BackgroundAndForegroundColors {
-    logoShadow: string,
-}
-
-export interface MenuItemColors {
-    iconGradient: GradientData,
-}
-
-export interface ColorTheme {
-    dashboard: BackgroundAndForegroundColors,
-    menuArea: MenuAreaColors,
-    primaryArea: PrimaryAreaColors,
-    secondaryArea: BackgroundAndForegroundColors,
-    accounts: AccountAddressColors,
-    frame: BackgroundAndForegroundColors,
-    topMenu: MenuItemColors,
-    bottomMenu: MenuItemColors,
-}
 
 export interface PrimaryAreaProps {
     children: Children,
@@ -175,10 +152,15 @@ export default function Dashboard(props: Props) {
                         >
                             <Menu
                                 items={ props.menuTop }
+                                colorThemeType={ props.colors.type }
                             />
-                            <Shield item={ props.shieldItem } />
+                            <Shield
+                                item={ props.shieldItem }
+                                colorThemeType={ props.colors.type }
+                            />
                             <Menu
                                 items={ props.menuBottom }
+                                colorThemeType={ props.colors.type }
                             />
                         </div>
                     </div>

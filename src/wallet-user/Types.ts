@@ -1,6 +1,7 @@
-import { ColorTheme } from '../component/Dashboard';
+import { ColorTheme } from '../component/ColorTheme';
 
 export const LIGHT_MODE: ColorTheme = {
+    type: 'light',
     dashboard: {
         background: '#152665',
         foreground: '#000000',

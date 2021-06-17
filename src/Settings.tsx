@@ -1,7 +1,8 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 
-import { ContentPane, ColorTheme } from './component/Dashboard';
+import { ContentPane } from './component/Dashboard';
+import { ColorTheme } from './component/ColorTheme';
 import Frame from './component/Frame';
 import { useRootContext } from './RootContext';
 

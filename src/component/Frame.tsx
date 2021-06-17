@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Children, BackgroundAndForegroundColors } from './types/Helpers';
+import { Children } from './types/Helpers';
+import { BackgroundAndForegroundColors } from './ColorTheme';
 
 import './Frame.css';
 
