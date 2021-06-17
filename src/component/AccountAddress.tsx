@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
-import { AccountAddressColors } from './ColorTheme';
+import { AccountAddressColors, ColorThemeType } from './ColorTheme';
 import { AccountAddress as AddressType } from './types/Addresses';
 
 import './AccountAddress.css';
@@ -10,17 +10,28 @@ import './AccountAddress.css';
 export interface Props {
     hint?: string,
     address: AddressType,
-    colors: AccountAddressColors
+    colors: AccountAddressColors,
+    colorThemeType: ColorThemeType,
 }
 
 export default function AccountAddress(props: Props) {
+
+    let style: CSSProperties = {};
+    const icon = props.colors.legalOfficerIcon;
+    if(props.address.isLegalOfficer) {
+        style['backgroundImage'] = `url("${process.env.PUBLIC_URL}/assets/${icon.category}/${props.colorThemeType}/${icon.id}.svg")`;
+        style['backgroundRepeat'] = 'no-repeat';
+        style['backgroundPositionX'] = '6px';
+        style['backgroundPositionY'] = 'center';
+    } else {
+        style['backgroundColor'] = props.colors.iconBackground;
+    }
+
     return (
         <div className="AccountAddress">
             <div
                 className="icon"
-                style={{
-                    backgroundColor: props.colors.iconBackground,
-                }}
+                style={ style }
             >
                 { props.address.name.substring(0, 1).toUpperCase() }
             </div>

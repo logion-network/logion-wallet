@@ -5,12 +5,13 @@ import Addresses from './types/Addresses';
 
 import './AddressSwitcher.css';
 import AccountAddress from './AccountAddress';
-import { AccountAddressColors } from './ColorTheme';
+import { AccountAddressColors, ColorThemeType } from './ColorTheme';
 
 export interface Props {
     addresses: Addresses,
     colors: AccountAddressColors,
     selectAddress: (userAddress: string) => void,
+    colorThemeType: ColorThemeType,
 }
 
 export default function AddressSwitcher(props: Props) {
@@ -29,6 +30,7 @@ export default function AddressSwitcher(props: Props) {
                             hint="Click to select another address"
                             address={ props.addresses.currentAddress }
                             colors={ props.colors }
+                            colorThemeType={ props.colorThemeType }
                         />
                     </div>
                 </Dropdown.Toggle>
@@ -46,6 +48,7 @@ export default function AddressSwitcher(props: Props) {
                                 <AccountAddress
                                     address={ address }
                                     colors={ props.colors }
+                                    colorThemeType={ props.colorThemeType }
                                 />
                             </Dropdown.Item>
                         ))

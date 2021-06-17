@@ -5,7 +5,7 @@ import { BackgroundAndForegroundColors } from './ColorTheme';
 import './Logo.css';
 
 export interface Props extends BackgroundAndForegroundColors {
-    logoShadow: string,
+    shadowColor: string,
 }
 
 export default function Logo(props: Props) {
@@ -16,7 +16,7 @@ export default function Logo(props: Props) {
             style={{
                 backgroundColor: props.background,
                 color: props.foreground,
-                boxShadow: `0 5px 25px ${props.logoShadow}`,
+                boxShadow: `0 5px 25px ${props.shadowColor}`,
             }}
         >
             <div className="image-and-slogan">

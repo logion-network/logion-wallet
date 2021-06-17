@@ -27,7 +27,7 @@ export default function TokenizationRequests() {
                 <>
                     <h1>Tokens</h1>
                     <Frame
-                        colors={ colorTheme.frame }
+                        colors={ colorTheme }
                     >
                         <RefreshTokenizationRequestsButton/>
                         <PendingTokenizationRequests />
@@ -36,7 +36,7 @@ export default function TokenizationRequests() {
             }
             secondaryAreaChildren={
                 <Frame
-                    colors={ colorTheme.frame }
+                    colors={ colorTheme }
                 >
                     <h2>History</h2>
                     <AcceptedTokenizationRequests />

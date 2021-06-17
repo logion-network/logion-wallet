@@ -2,6 +2,7 @@ import { ColorTheme } from '../component/ColorTheme';
 
 export const LIGHT_MODE: ColorTheme = {
     type: 'light',
+    shadowColor: '#3b6cf433',
     dashboard: {
         background: '#152665',
         foreground: '#000000',
@@ -9,7 +10,6 @@ export const LIGHT_MODE: ColorTheme = {
     menuArea: {
         background: '#152665',
         foreground: '#ffffff',
-        logoShadow: '#3b6cf433',
     },
     primaryArea: {
         background: '#ffffff',
@@ -25,6 +25,10 @@ export const LIGHT_MODE: ColorTheme = {
         hintColor: '#00000066',
         foreground: '#000000',
         background: '#ffffff',
+        legalOfficerIcon: {
+            category: 'legal-officer',
+            id: 'account-shield'
+        }
     },
     frame: {
         background: '#3b6cf40f',

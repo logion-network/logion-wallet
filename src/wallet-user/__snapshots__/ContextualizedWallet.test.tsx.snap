@@ -9,6 +9,10 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
         "foreground": "#000000",
         "hintColor": "#00000066",
         "iconBackground": "#3b6cf4",
+        "legalOfficerIcon": Object {
+          "category": "legal-officer",
+          "id": "account-shield",
+        },
       },
       "bottomMenu": Object {
         "iconGradient": Object {
@@ -27,7 +31,6 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
       "menuArea": Object {
         "background": "#152665",
         "foreground": "#ffffff",
-        "logoShadow": "#3b6cf433",
       },
       "primaryArea": Object {
         "background": "#ffffff",
@@ -38,6 +41,7 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
         "background": "#ffffff",
         "foreground": "#000000",
       },
+      "shadowColor": "#3b6cf433",
       "topMenu": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
@@ -107,6 +111,10 @@ exports[`Given connected, when rendering, then show account, no connect button a
         "foreground": "#000000",
         "hintColor": "#00000066",
         "iconBackground": "#3b6cf4",
+        "legalOfficerIcon": Object {
+          "category": "legal-officer",
+          "id": "account-shield",
+        },
       },
       "bottomMenu": Object {
         "iconGradient": Object {
@@ -125,7 +133,6 @@ exports[`Given connected, when rendering, then show account, no connect button a
       "menuArea": Object {
         "background": "#152665",
         "foreground": "#ffffff",
-        "logoShadow": "#3b6cf433",
       },
       "primaryArea": Object {
         "background": "#ffffff",
@@ -136,6 +143,7 @@ exports[`Given connected, when rendering, then show account, no connect button a
         "background": "#ffffff",
         "foreground": "#000000",
       },
+      "shadowColor": "#3b6cf433",
       "topMenu": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
@@ -205,6 +213,10 @@ exports[`Given connecting, when rendering, then show account, no button, no node
         "foreground": "#000000",
         "hintColor": "#00000066",
         "iconBackground": "#3b6cf4",
+        "legalOfficerIcon": Object {
+          "category": "legal-officer",
+          "id": "account-shield",
+        },
       },
       "bottomMenu": Object {
         "iconGradient": Object {
@@ -223,7 +235,6 @@ exports[`Given connecting, when rendering, then show account, no button, no node
       "menuArea": Object {
         "background": "#152665",
         "foreground": "#ffffff",
-        "logoShadow": "#3b6cf433",
       },
       "primaryArea": Object {
         "background": "#ffffff",
@@ -234,6 +245,7 @@ exports[`Given connecting, when rendering, then show account, no button, no node
         "background": "#ffffff",
         "foreground": "#000000",
       },
+      "shadowColor": "#3b6cf433",
       "topMenu": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
@@ -301,6 +313,10 @@ exports[`Given connection error, when rendering, then show account, no button, n
         "foreground": "#000000",
         "hintColor": "#00000066",
         "iconBackground": "#3b6cf4",
+        "legalOfficerIcon": Object {
+          "category": "legal-officer",
+          "id": "account-shield",
+        },
       },
       "bottomMenu": Object {
         "iconGradient": Object {
@@ -319,7 +335,6 @@ exports[`Given connection error, when rendering, then show account, no button, n
       "menuArea": Object {
         "background": "#152665",
         "foreground": "#ffffff",
-        "logoShadow": "#3b6cf433",
       },
       "primaryArea": Object {
         "background": "#ffffff",
@@ -330,6 +345,7 @@ exports[`Given connection error, when rendering, then show account, no button, n
         "background": "#ffffff",
         "foreground": "#000000",
       },
+      "shadowColor": "#3b6cf433",
       "topMenu": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
@@ -397,6 +413,10 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
         "foreground": "#000000",
         "hintColor": "#00000066",
         "iconBackground": "#3b6cf4",
+        "legalOfficerIcon": Object {
+          "category": "legal-officer",
+          "id": "account-shield",
+        },
       },
       "bottomMenu": Object {
         "iconGradient": Object {
@@ -415,7 +435,6 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
       "menuArea": Object {
         "background": "#152665",
         "foreground": "#ffffff",
-        "logoShadow": "#3b6cf433",
       },
       "primaryArea": Object {
         "background": "#ffffff",
@@ -426,6 +445,7 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
         "background": "#ffffff",
         "foreground": "#000000",
       },
+      "shadowColor": "#3b6cf433",
       "topMenu": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
@@ -493,6 +513,10 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
         "foreground": "#000000",
         "hintColor": "#00000066",
         "iconBackground": "#3b6cf4",
+        "legalOfficerIcon": Object {
+          "category": "legal-officer",
+          "id": "account-shield",
+        },
       },
       "bottomMenu": Object {
         "iconGradient": Object {
@@ -511,7 +535,6 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
       "menuArea": Object {
         "background": "#152665",
         "foreground": "#ffffff",
-        "logoShadow": "#3b6cf433",
       },
       "primaryArea": Object {
         "background": "#ffffff",
@@ -522,6 +545,7 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
         "background": "#ffffff",
         "foreground": "#000000",
       },
+      "shadowColor": "#3b6cf433",
       "topMenu": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",

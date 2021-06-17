@@ -9,6 +9,10 @@ exports[`renders 1`] = `
         "foreground": "#ffffff",
         "hintColor": "#ffffff66",
         "iconBackground": "#3b6cf4",
+        "legalOfficerIcon": Object {
+          "category": "legal-officer",
+          "id": "account-shield",
+        },
       },
       "bottomMenu": Object {
         "iconGradient": Object {
@@ -27,7 +31,6 @@ exports[`renders 1`] = `
       "menuArea": Object {
         "background": "#3b6cf40f",
         "foreground": "#ffffff",
-        "logoShadow": "#3b6cf419",
       },
       "primaryArea": Object {
         "background": "#141b2d",
@@ -38,6 +41,7 @@ exports[`renders 1`] = `
         "background": "#141b2d",
         "foreground": "#ffffff",
       },
+      "shadowColor": "#3b6cf419",
       "topMenu": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",

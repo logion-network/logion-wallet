@@ -7,7 +7,13 @@ import { Children } from './types/Helpers';
 import Addresses from './types/Addresses';
 import Logo from './Logo';
 import AddressSwitcher from './AddressSwitcher';
-import { ColorTheme, PrimaryAreaColors, AccountAddressColors, BackgroundAndForegroundColors } from './ColorTheme';
+import {
+    ColorTheme,
+    PrimaryAreaColors,
+    AccountAddressColors,
+    BackgroundAndForegroundColors,
+    ColorThemeType
+} from './ColorTheme';
 import Menu from './Menu';
 import { MenuItemData } from './MenuItem';
 import Shield from './Shield';
@@ -17,6 +23,7 @@ import './Dashboard.css';
 export interface PrimaryAreaProps {
     children: Children,
     colors: PrimaryAreaColors,
+    width: number,
 }
 
 export function PrimaryArea(props: PrimaryAreaProps) {
@@ -24,7 +31,7 @@ export function PrimaryArea(props: PrimaryAreaProps) {
     return (
         <Col
             key="primary-area"
-            md={7}
+            md={ props.width }
             style={{
                 backgroundColor: props.colors.background,
                 color: props.colors.foreground,
@@ -43,6 +50,8 @@ export interface SecondaryAreaProps {
     addresses: Addresses,
     accountColors: AccountAddressColors,
     selectAddress: (userAddress: string) => void,
+    colorThemeType: ColorThemeType,
+    width: number,
 }
 
 export function SecondaryArea(props: SecondaryAreaProps) {
@@ -50,20 +59,13 @@ export function SecondaryArea(props: SecondaryAreaProps) {
     return (
         <Col
             key="secondary-area"
-            md={3}
+            md={ props.width }
             style={{
                 backgroundColor: props.colors.background,
                 color: props.colors.foreground,
             }}
         >
             <div className="SecondaryArea">
-                <div className="AddressSwitcherArea">
-                    <AddressSwitcher
-                        addresses={ props.addresses }
-                        colors={ props.accountColors }
-                        selectAddress={ props.selectAddress }
-                    />
-                </div>
                 { props.children }
             </div>
         </Col>
@@ -76,14 +78,23 @@ export interface ContentPaneProps {
     primaryAreaChildren: Children,
     secondaryAreaChildren?: Children,
     colors: ColorTheme,
+    primaryPaneWidth?: number,
 }
 
+const SIDEBAR_WIDTH = 2;
+
 export function ContentPane(props: ContentPaneProps) {
+
+    let primaryPaneWidth: number = 6;
+    if(props.primaryPaneWidth !== undefined) {
+        primaryPaneWidth = props.primaryPaneWidth;
+    }
 
     return (
         <>
             <PrimaryArea
                 colors={ props.colors.primaryArea }
+                width={ primaryPaneWidth }
             >
                 { props.primaryAreaChildren }
             </PrimaryArea>
@@ -92,9 +103,32 @@ export function ContentPane(props: ContentPaneProps) {
                 addresses={ props.addresses }
                 accountColors={ props.colors.accounts }
                 selectAddress={ props.selectAddress }
+                colorThemeType={ props.colors.type }
+                width={ 12 - SIDEBAR_WIDTH - primaryPaneWidth }
             >
                 { props.secondaryAreaChildren }
             </SecondaryArea>
+        </>
+    );
+}
+
+export interface FullWidthPaneProps {
+    addresses: Addresses,
+    selectAddress: (userAddress: string) => void,
+    children: Children,
+    colors: ColorTheme,
+}
+
+export function FullWidthPane(props: FullWidthPaneProps) {
+
+    return (
+        <>
+            <PrimaryArea
+                colors={ props.colors.primaryArea }
+                width={ 12 - SIDEBAR_WIDTH }
+            >
+                { props.children }
+            </PrimaryArea>
         </>
     );
 }
@@ -136,12 +170,12 @@ export default function Dashboard(props: Props) {
             { inlineCss }
             </style>
             <Row>
-                <Col md={2}>
+                <Col md={ SIDEBAR_WIDTH }>
                     <div className="Sidebar">
                         <Logo
                             foreground={ props.colors.menuArea.foreground }
                             background={ props.colors.menuArea.background }
-                            logoShadow={ props.colors.menuArea.logoShadow }
+                            shadowColor={ props.colors.shadowColor }
                         />
                         <div
                             className="MenuArea"
@@ -166,6 +200,14 @@ export default function Dashboard(props: Props) {
                     </div>
                 </Col>
                 { props.children }
+                <div className="AddressSwitcherArea">
+                    <AddressSwitcher
+                        addresses={ props.addresses }
+                        colors={ props.colors.accounts }
+                        selectAddress={ props.selectAddress }
+                        colorThemeType={ props.colors.type }
+                    />
+                </div>
             </Row>
         </Container>
     );
