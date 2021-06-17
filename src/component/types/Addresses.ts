@@ -1,8 +1,10 @@
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
+import { isLegalOfficer } from '../../legal-officer/Types';
 
 export interface AccountAddress {
     name: string,
     address: string,
+    isLegalOfficer: boolean,
 }
 
 export default interface Addresses {
@@ -17,11 +19,13 @@ export function buildAddresses(injectedAccounts: InjectedAccountWithMeta[], user
         currentAddress = {
             name: matchingAddress.meta.name!,
             address: userAddress,
+            isLegalOfficer: isLegalOfficer(userAddress)
         }
     } else {
         currentAddress = {
             name: "",
             address: userAddress,
+            isLegalOfficer: isLegalOfficer(userAddress),
         }
     }
     return {
@@ -29,6 +33,7 @@ export function buildAddresses(injectedAccounts: InjectedAccountWithMeta[], user
         addresses: injectedAccounts.map(injectedAccount => { return {
             name: injectedAccount.meta.name!,
             address: injectedAccount.address,
+            isLegalOfficer: isLegalOfficer(injectedAccount.address),
         };})
     }
 }

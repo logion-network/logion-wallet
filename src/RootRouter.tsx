@@ -7,12 +7,10 @@ import {
 } from 'react-router-dom';
 
 import { LEGAL_OFFICER_PATH, USER_PATH } from './RootPaths';
-import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from './legal-officer/Types';
+import { isLegalOfficer as isLegalOfficerFunction } from './legal-officer/Types';
 import LegalOfficerWallet from './legal-officer/LegalOfficerWallet';
 import Wallet from './wallet-user/Wallet';
 import { useRootContext } from './RootContext';
-
-const LEGAL_OFFICERS: string[] = [ DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER ];
 
 export default function RootRouter() {
     const { currentAddress } = useRootContext();
@@ -21,7 +19,7 @@ export default function RootRouter() {
         return null;
     }
 
-    const isLegalOfficer = LEGAL_OFFICERS.includes(currentAddress);
+    const isLegalOfficer = isLegalOfficerFunction(currentAddress);
     let redirectTo;
     if(isLegalOfficer) {
         redirectTo = LEGAL_OFFICER_PATH;

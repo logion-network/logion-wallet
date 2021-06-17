@@ -20,6 +20,7 @@ export interface ColorTheme {
     frame: BackgroundAndForegroundColors,
     topMenu: MenuItemColors,
     bottomMenu: MenuItemColors,
+    shadowColor: string,
 }
 
 export interface PrimaryAreaColors extends BackgroundAndForegroundColors {
@@ -27,7 +28,7 @@ export interface PrimaryAreaColors extends BackgroundAndForegroundColors {
 }
 
 export interface MenuAreaColors extends BackgroundAndForegroundColors {
-    logoShadow: string,
+    
 }
 
 export interface MenuItemColors {
@@ -37,6 +38,7 @@ export interface MenuItemColors {
 export interface AccountAddressColors extends BackgroundAndForegroundColors {
     iconBackground: string,
     hintColor: string,
+    legalOfficerIcon: Icon,
 }
 
 export interface Icon {

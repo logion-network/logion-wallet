@@ -29,7 +29,7 @@ export default function Account() {
                 <>
                     <h1>Tokens</h1>
                     <Frame
-                        colors={ colorTheme.frame }
+                        colors={ colorTheme }
                     >
                         <MyTokens />
                         <Tokenization/>
@@ -41,7 +41,7 @@ export default function Account() {
             secondaryAreaChildren={
                 <>
                     <Frame
-                        colors={ colorTheme.frame }
+                        colors={ colorTheme }
                     >
                         <h2>History</h2>
                         <AcceptedTokenizationRequests />

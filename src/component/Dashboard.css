@@ -1,5 +1,6 @@
 .Dashboard {
     min-height: 100%;
+    position: relative;
 }
 
 .Dashboard .Sidebar {
@@ -30,12 +31,18 @@
     font-size: 14px;
     overflow-x: hidden;
     min-height: 100vh;
+    padding-top: 132px;
 }
 
-.Dashboard .SecondaryArea .AddressSwitcherArea {
+.Dashboard .AddressSwitcherArea {
+    position: absolute;
+    right: 0;
+    display: flex;
+    justify-content: flex-end;
     padding-top: 30px;
     padding-bottom: 30px;
     padding-right: 20px;
+    padding-left: 20px;
 }
 
 .Dashboard .PrimaryArea h1,

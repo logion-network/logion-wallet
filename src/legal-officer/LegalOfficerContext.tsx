@@ -38,6 +38,7 @@ function initialContextValue(legalOfficerAddress: string): LegalOfficerContext {
         protectionRequestsHistory: null,
         colorTheme: {
             type: 'dark',
+            shadowColor: '#3b6cf419',
             dashboard: {
                 background: '#141b2d',
                 foreground: '#ffffff',
@@ -45,7 +46,6 @@ function initialContextValue(legalOfficerAddress: string): LegalOfficerContext {
             menuArea: {
                 background: '#3b6cf40f',
                 foreground: '#ffffff',
-                logoShadow: '#3b6cf419',
             },
             primaryArea: {
                 background: '#141b2d',
@@ -61,6 +61,10 @@ function initialContextValue(legalOfficerAddress: string): LegalOfficerContext {
                 hintColor: '#ffffff66',
                 foreground: '#ffffff',
                 background: '#141b2d',
+                legalOfficerIcon: {
+                    category: 'legal-officer',
+                    id: 'account-shield'
+                }
             },
             frame: {
                 background: '#1f2a40',

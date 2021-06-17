@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 
-import { ContentPane } from './component/Dashboard';
+import { FullWidthPane } from './component/Dashboard';
 import { ColorTheme } from './component/ColorTheme';
 import Frame from './component/Frame';
 import { useRootContext } from './RootContext';
@@ -37,22 +37,19 @@ export default function Settings(props: Props) {
     const connectButton = apiState === 'DISCONNECTED' ? <Button onClick={connect}>Connect</Button> : null;
 
     return (
-        <ContentPane
+        <FullWidthPane
             addresses={ addresses }
             selectAddress={ selectAddress }
             colors={ props.colors }
-            primaryAreaChildren={
-                <>
-                    <h1>Settings</h1>
-                    <Frame
-                        colors={ props.colors.frame }
-                    >
-                        <h2>You are ready to use the Logion wallet, congratulations!</h2>
-                        <p>You are currently {status(apiState, connectedNodeMetadata)}</p>
-                        {connectButton}
-                    </Frame>
-                </>
-            }
-        />
+        >
+            <h1>Settings</h1>
+            <Frame
+                colors={ props.colors }
+            >
+                <h2>You are ready to use the Logion wallet, congratulations!</h2>
+                <p>You are currently {status(apiState, connectedNodeMetadata)}</p>
+                {connectButton}
+            </Frame>
+        </FullWidthPane>
     );
 }

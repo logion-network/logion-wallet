@@ -26,7 +26,7 @@ export default function ProtectionRequests() {
                 <>
                     <h1>Protection Requests</h1>
                     <Frame
-                        colors={ colorTheme.frame }
+                        colors={ colorTheme }
                     >
                         <RefreshTokenizationRequestsButton/>
                         <PendingProtectionRequests />
@@ -35,7 +35,7 @@ export default function ProtectionRequests() {
             }
             secondaryAreaChildren={
                 <Frame
-                    colors={ colorTheme.frame }
+                    colors={ colorTheme }
                 >
                     <ProtectionRequestsHistory />
                 </Frame>
