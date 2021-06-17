@@ -13,6 +13,7 @@ import {
 import { sign } from '../logion-chain';
 import { ColorTheme } from '../component/ColorTheme';
 import { useRootContext } from '../RootContext';
+import { LIGHT_MODE } from './Types';
 
 export interface LegalOfficerContext {
     dataAddress: string | null,
@@ -36,45 +37,7 @@ function initialContextValue(legalOfficerAddress: string): LegalOfficerContext {
         refreshRequests: null,
         pendingProtectionRequests: null,
         protectionRequestsHistory: null,
-        colorTheme: {
-            type: 'dark',
-            shadowColor: '#3b6cf419',
-            dashboard: {
-                background: '#141b2d',
-                foreground: '#ffffff',
-            },
-            menuArea: {
-                background: '#3b6cf40f',
-                foreground: '#ffffff',
-            },
-            accounts: {
-                iconBackground: '#3b6cf4',
-                hintColor: '#ffffff66',
-                foreground: '#ffffff',
-                background: '#141b2d',
-                legalOfficerIcon: {
-                    category: 'legal-officer',
-                    id: 'account-shield'
-                }
-            },
-            frame: {
-                background: '#1f2a40',
-                foreground: '#ffffff',
-                link: '#ffffff',
-            },
-            topMenuItems: {
-                iconGradient: {
-                    from: '#3b6cf4',
-                    to: '#6050dc',
-                }
-            },
-            bottomMenuItems: {
-                iconGradient: {
-                    from: '#7a90cb',
-                    to: '#3b6cf4',
-                }
-            }
-        },
+        colorTheme: LIGHT_MODE,
     };
 }
 

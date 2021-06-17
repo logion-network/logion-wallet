@@ -1,3 +1,4 @@
+import { ColorTheme, rgbaToHex } from '../component/ColorTheme';
 import Identity from '../component/types/Identity';
 import PostalAddress from '../component/types/PostalAddress';
 
@@ -47,3 +48,44 @@ export interface ProtectionRequest {
     userPostalAddress: PostalAddress,
     createdOn: string
 }
+
+export const LIGHT_MODE: ColorTheme = {
+    type: 'light',
+    shadowColor: rgbaToHex('#3b6cf4', 0.1),
+    dashboard: {
+        background: rgbaToHex('#3b6cf4', 0.05),
+        foreground: '#000000',
+    },
+    sidebar: {
+        background: '#ffffff',
+        foreground: '#000000',
+        activeItemBackground: rgbaToHex('#3b6cf4', 0.15),
+    },
+    accounts: {
+        iconBackground: '#3b6cf4',
+        hintColor: rgbaToHex('#000000', 0.6),
+        foreground: '#000000',
+        background: rgbaToHex('#3b6cf4', 0.05),
+        legalOfficerIcon: {
+            category: 'legal-officer',
+            id: 'account-shield'
+        }
+    },
+    frame: {
+        background: '#ffffff',
+        foreground: '#000000',
+        link: rgbaToHex('#3b6cf4', 0.15),
+    },
+    topMenuItems: {
+        iconGradient: {
+            from: '#3b6cf4',
+            to: '#6050dc',
+        }
+    },
+    bottomMenuItems: {
+        iconGradient: {
+            from: '#7a90cb',
+            to: '#3b6cf4',
+        }
+    }
+};

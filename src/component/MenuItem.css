@@ -13,7 +13,6 @@
 .MenuItem.active {
     font-weight: bolder;
     border-left-color: #e6007a;
-    background-color: #ffffff0f;
 }
 
 .MenuItem .text-wrapper {
