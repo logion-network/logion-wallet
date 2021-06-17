@@ -1,3 +1,68 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders 1`] = `null`;
+exports[`renders 1`] = `
+<ContentPane
+  colors={
+    Object {
+      "accounts": Object {
+        "background": "#ffffff",
+        "foreground": "#000000",
+        "hintColor": "#00000066",
+        "iconBackground": "#3b6cf4",
+      },
+      "bottomMenu": Object {
+        "iconGradient": Object {
+          "from": "#7a90cb",
+          "to": "#3b6cf4",
+        },
+      },
+      "dashboard": Object {
+        "background": "#152665",
+        "foreground": "#000000",
+      },
+      "frame": Object {
+        "background": "#3b6cf40f",
+        "foreground": "#000000",
+      },
+      "menuArea": Object {
+        "background": "#152665",
+        "foreground": "#ffffff",
+        "logoShadow": "#3b6cf433",
+      },
+      "primaryArea": Object {
+        "background": "#ffffff",
+        "foreground": "#000000",
+        "link": "#3b6cf466",
+      },
+      "secondaryArea": Object {
+        "background": "#ffffff",
+        "foreground": "#000000",
+      },
+      "topMenu": Object {
+        "iconGradient": Object {
+          "from": "#3b6cf4",
+          "to": "#6050dc",
+        },
+      },
+    }
+  }
+  primaryAreaChildren={
+    <React.Fragment>
+      <h1>
+        My Logion Trust Protection
+      </h1>
+      <Frame
+        colors={
+          Object {
+            "background": "#3b6cf40f",
+            "foreground": "#000000",
+          }
+        }
+      >
+        <ProtectionRequestStatus />
+      </Frame>
+    </React.Fragment>
+  }
+  selectAddress={[MockFunction]}
+/>
+`;
