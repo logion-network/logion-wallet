@@ -1,0 +1,164 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 2 rows 1`] = `
+<React.Fragment>
+  <ForwardRef
+    bordered={true}
+    responsive={true}
+    striped={true}
+  >
+    <thead>
+      <tr>
+        <th>
+          User
+        </th>
+        <th>
+          Other Legal Officer
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <UserInfo
+            address="5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"
+            postalAddress={
+              Object {
+                "city": "Liège",
+                "country": "Belgium",
+                "line1": "Place de le République Française, 10",
+                "line2": "boite 15",
+                "postalCode": "4000",
+              }
+            }
+            userIdentity={
+              Object {
+                "email": "john.doe@logion.network",
+                "firstName": "John",
+                "lastName": "Doe",
+                "phoneNumber": "+1234",
+              }
+            }
+          />
+        </td>
+        <td>
+          <LegalOfficerInfo
+            legalOfficer={
+              Object {
+                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France",
+                "name": "Guillaume",
+              }
+            }
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <UserInfo
+            address="5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"
+            postalAddress={
+              Object {
+                "city": "Liège",
+                "country": "Belgium",
+                "line1": "Place de le République Française, 10",
+                "line2": "boite 15",
+                "postalCode": "4000",
+              }
+            }
+            userIdentity={
+              Object {
+                "email": "john.doe@logion.network",
+                "firstName": "John",
+                "lastName": "Doe",
+                "phoneNumber": "+1234",
+              }
+            }
+          />
+        </td>
+        <td>
+          <LegalOfficerInfo
+            legalOfficer={
+              Object {
+                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France",
+                "name": "Guillaume",
+              }
+            }
+          />
+        </td>
+      </tr>
+    </tbody>
+  </ForwardRef>
+</React.Fragment>
+`;
+
+exports[`renders one row 1`] = `
+<React.Fragment>
+  <ForwardRef
+    bordered={true}
+    responsive={true}
+    striped={true}
+  >
+    <thead>
+      <tr>
+        <th>
+          User
+        </th>
+        <th>
+          Other Legal Officer
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <UserInfo
+            address="5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"
+            postalAddress={
+              Object {
+                "city": "Liège",
+                "country": "Belgium",
+                "line1": "Place de le République Française, 10",
+                "line2": "boite 15",
+                "postalCode": "4000",
+              }
+            }
+            userIdentity={
+              Object {
+                "email": "john.doe@logion.network",
+                "firstName": "John",
+                "lastName": "Doe",
+                "phoneNumber": "+1234",
+              }
+            }
+          />
+        </td>
+        <td>
+          <LegalOfficerInfo
+            legalOfficer={
+              Object {
+                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France",
+                "name": "Guillaume",
+              }
+            }
+          />
+        </td>
+      </tr>
+    </tbody>
+  </ForwardRef>
+</React.Fragment>
+`;

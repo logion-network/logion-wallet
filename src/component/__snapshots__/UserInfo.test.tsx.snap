@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+Array [
+  "John",
+  " ",
+  "Doe",
+  <div
+    className="Collapsible"
+  >
+    <span
+      className="Collapsible__trigger is-closed"
+      onClick={[Function]}
+      onKeyPress={[Function]}
+      style={null}
+      tabIndex={null}
+    >
+      <button
+        className="btn btn-primary"
+        disabled={false}
+        type="button"
+      >
+        More
+      </button>
+    </span>
+    <div
+      className="Collapsible__contentOuter"
+      hidden={false}
+      onTransitionEnd={[Function]}
+      style={
+        Object {
+          "WebkitTransition": "height 400ms linear",
+          "height": 0,
+          "msTransition": "height 400ms linear",
+          "overflow": "hidden",
+          "transition": "height 400ms linear",
+        }
+      }
+    >
+      <div
+        className="Collapsible__contentInner"
+      >
+        <p>
+          Polkadot address: 
+          ABC123
+        </p>
+        <p>
+          Email: 
+          john.doe@logion.network
+        </p>
+        <p>
+          Phone Number: 
+          +1234
+        </p>
+        <p>
+          Place de le République Française, 10
+           
+          <br />
+          boite 15
+          <br />
+          4000
+           
+          Liège
+           
+          <br />
+          Belgium
+        </p>
+      </div>
+    </div>
+  </div>,
+]
+`;

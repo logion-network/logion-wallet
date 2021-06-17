@@ -8,6 +8,7 @@ import { useLegalOfficerContext } from './LegalOfficerContext';
 import PendingProtectionRequests from './PendingProtectionRequests';
 import ProtectionRequestsHistory from './ProtectionRequestsHistory';
 import RefreshTokenizationRequestsButton from './RefreshTokenizationRequestsButton';
+import ProtectedUsers from "./ProtectedUsers";
 
 export default function ProtectionRequests() {
     const { addresses, selectAddress } = useRootContext();
@@ -26,10 +27,16 @@ export default function ProtectionRequests() {
                 <>
                     <h1>Protection Requests</h1>
                     <Frame
-                        colors={ colorTheme }
+                            colors={colorTheme}
                     >
                         <RefreshTokenizationRequestsButton/>
-                        <PendingProtectionRequests />
+                        <PendingProtectionRequests/>
+                    </Frame>
+                    <h1>Activated User Account Protection under my watch</h1>
+                    <Frame
+                            colors={colorTheme}
+                    >
+                        <ProtectedUsers/>
                     </Frame>
                 </>
             }
