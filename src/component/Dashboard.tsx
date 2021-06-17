@@ -138,6 +138,10 @@ export default function Dashboard(props: Props) {
         color: ${props.colors.dashboard.foreground};
     }
 
+    .modal-dialog {
+        background-color: white;
+    }
+
     .modal-content {
         color: ${props.colors.dashboard.foreground};
         background-color: ${props.colors.dashboard.background};
@@ -147,6 +151,14 @@ export default function Dashboard(props: Props) {
     .form-control[readonly] {
         background-color: ${props.colors.dashboard.background};
         color: ${props.colors.dashboard.foreground};
+    }
+
+    .Dashboard a {
+        color: ${props.colors.dashboard.foreground};
+    }
+
+    .Dashboard .Sidebar .MenuItem.active {
+        background-color: ${props.colors.sidebar.activeItemBackground};
     }
     `;
 
@@ -166,12 +178,14 @@ export default function Dashboard(props: Props) {
                 <Col md={ SIDEBAR_WIDTH }>
                     <div className="Sidebar"
                         style={{
-                            backgroundColor: props.colors.menuArea.background,
-                            color: props.colors.menuArea.foreground,
+                            backgroundColor: props.colors.sidebar.background,
+                            color: props.colors.sidebar.foreground,
+                            boxShadow: `5px 0 25px ${props.colors.shadowColor}`,
                         }}
                     >
                         <Logo
                             shadowColor={ props.colors.shadowColor }
+                            colorThemeType={ props.colors.type }
                         />
                         <div
                             className="MenuArea"

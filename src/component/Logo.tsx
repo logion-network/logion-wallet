@@ -1,12 +1,22 @@
 import React from 'react';
 
+import { ColorThemeType } from './ColorTheme';
+
 import './Logo.css';
 
 export interface Props {
     shadowColor: string,
+    colorThemeType: ColorThemeType
 }
 
 export default function Logo(props: Props) {
+
+    let fileName;
+    if(props.colorThemeType === 'dark') {
+        fileName = 'logo.png';
+    } else {
+        fileName = 'logo_black.png';
+    }
 
     return (
         <div
@@ -17,7 +27,7 @@ export default function Logo(props: Props) {
         >
             <div className="image-and-slogan">
                 <div className="image">
-                    <img src={process.env.PUBLIC_URL + "/logo.png"} alt="logo" />
+                    <img src={process.env.PUBLIC_URL + "/" + fileName} alt="logo" />
                 </div>
                 <div className="slogan">
                     <div className="text">

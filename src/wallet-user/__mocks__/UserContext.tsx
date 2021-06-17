@@ -2,7 +2,7 @@ import {DEFAULT_LEGAL_OFFICER, TokenizationRequest} from "../../legal-officer/Ty
 import {TEST_WALLET_USER} from "../Model.test";
 import {ApiPromise} from '@polkadot/api';
 import {ProtectionRequest} from "../../legal-officer/Types";
-import { LIGHT_MODE } from '../Types';
+import { DARK_MODE } from '../Types';
 
 export let createTokenRequest = () => null;
 
@@ -46,7 +46,7 @@ export function useUserContext() {
         recoveryConfig,
         api,
         setUserAddress,
-        colorTheme: LIGHT_MODE,
+        colorTheme: DARK_MODE,
     };
 }
 

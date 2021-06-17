@@ -11,9 +11,9 @@ exports[`renders 1`] = `
     colors={
       Object {
         "accounts": Object {
-          "background": "#ffffff",
-          "foreground": "#000000",
-          "hintColor": "#00000066",
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+          "hintColor": "#ffffff99",
           "iconBackground": "#3b6cf4",
           "legalOfficerIcon": Object {
             "category": "legal-officer",
@@ -27,26 +27,27 @@ exports[`renders 1`] = `
           },
         },
         "dashboard": Object {
-          "background": "#ffffff",
-          "foreground": "#000000",
+          "background": "#0c163d",
+          "foreground": "#ffffff",
         },
         "frame": Object {
-          "background": "#3b6cf40f",
-          "foreground": "#000000",
-          "link": "#3b6cf466",
+          "background": "#152665",
+          "foreground": "#ffffff",
+          "link": "#ffffff",
         },
-        "menuArea": Object {
+        "shadowColor": "#3b6cf433",
+        "sidebar": Object {
+          "activeItemBackground": "#ffffff0f",
           "background": "#152665",
           "foreground": "#ffffff",
         },
-        "shadowColor": "#3b6cf433",
         "topMenuItems": Object {
           "iconGradient": Object {
             "from": "#3b6cf4",
             "to": "#6050dc",
           },
         },
-        "type": "light",
+        "type": "dark",
       }
     }
   >

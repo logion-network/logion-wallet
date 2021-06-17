@@ -17,7 +17,7 @@ import {
 } from "./trust-protection/Model";
 import { ColorTheme } from '../component/ColorTheme';
 import { useRootContext } from '../RootContext';
-import { LIGHT_MODE } from './Types';
+import { DARK_MODE } from './Types';
 
 export interface UserContext {
     dataAddress: string | null,
@@ -49,7 +49,7 @@ function initialContextValue(): UserContext {
         acceptedProtectionRequests: null,
         rejectedProtectionRequests: null,
         recoveryConfig: null,
-        colorTheme: LIGHT_MODE,
+        colorTheme: DARK_MODE,
     }
 }
 

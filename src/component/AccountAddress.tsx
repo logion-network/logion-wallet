@@ -64,7 +64,6 @@ export default function AccountAddress(props: Props) {
                     className="address"
                     style={{
                         color: props.colors.foreground,
-                        backgroundColor: props.colors.background,
                     }}
                 >
                     <OverlayTrigger

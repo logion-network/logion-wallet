@@ -13,7 +13,7 @@ export type ColorThemeType = 'light' | 'dark';
 export interface ColorTheme {
     type: ColorThemeType,
     dashboard: BackgroundAndForegroundColors,
-    menuArea: BackgroundAndForegroundColors,
+    sidebar: SidebarColors,
     accounts: AccountAddressColors,
     frame: FrameColors,
     topMenuItems: MenuItemColors,
@@ -27,6 +27,10 @@ export interface FrameColors extends BackgroundAndForegroundColors {
 
 export interface MenuItemColors {
     iconGradient: GradientData,
+}
+
+export interface SidebarColors extends BackgroundAndForegroundColors {
+    activeItemBackground: string,
 }
 
 export interface AccountAddressColors extends BackgroundAndForegroundColors {
@@ -45,4 +49,17 @@ export interface MenuIcon {
     icon?: Icon,
     height?: string,
     width?: string,
+}
+
+export function rgbaToHex(color: string, alpha: number): string {
+    if(alpha < 0 || alpha > 1) {
+        throw new Error("alpha must be a number between 0 and 1 inclusive");
+    }
+    let alphaByte = Math.round(alpha * 255);
+    let alphaHex = alphaByte.toString(16);
+    if(alphaHex.length === 1) {
+        return color + '0' + alphaHex;
+    } else {
+        return color + alphaHex;
+    }
 }
