@@ -1,10 +1,8 @@
 import React from 'react';
 
-import { BackgroundAndForegroundColors } from './ColorTheme';
-
 import './Logo.css';
 
-export interface Props extends BackgroundAndForegroundColors {
+export interface Props {
     shadowColor: string,
 }
 
@@ -14,8 +12,6 @@ export default function Logo(props: Props) {
         <div
             className="Logo"
             style={{
-                backgroundColor: props.background,
-                color: props.foreground,
                 boxShadow: `0 5px 25px ${props.shadowColor}`,
             }}
         >

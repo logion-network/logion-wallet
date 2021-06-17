@@ -18,7 +18,6 @@ export default function TrustProtection() {
         <FullWidthPane
             addresses={addresses}
             selectAddress={selectAddress}
-            colors={ colorTheme }
         >
             <h1>My Logion Trust Protection</h1>
             <Frame

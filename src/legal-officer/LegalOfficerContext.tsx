@@ -47,15 +47,6 @@ function initialContextValue(legalOfficerAddress: string): LegalOfficerContext {
                 background: '#3b6cf40f',
                 foreground: '#ffffff',
             },
-            primaryArea: {
-                background: '#141b2d',
-                foreground: '#ffffff',
-                link: '#ffffff',
-            },
-            secondaryArea: {
-                background: '#141b2d',
-                foreground: '#ffffff',
-            },
             accounts: {
                 iconBackground: '#3b6cf4',
                 hintColor: '#ffffff66',
@@ -69,14 +60,15 @@ function initialContextValue(legalOfficerAddress: string): LegalOfficerContext {
             frame: {
                 background: '#1f2a40',
                 foreground: '#ffffff',
+                link: '#ffffff',
             },
-            topMenu: {
+            topMenuItems: {
                 iconGradient: {
                     from: '#3b6cf4',
                     to: '#6050dc',
                 }
             },
-            bottomMenu: {
+            bottomMenuItems: {
                 iconGradient: {
                     from: '#7a90cb',
                     to: '#3b6cf4',

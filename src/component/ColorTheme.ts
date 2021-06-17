@@ -13,22 +13,16 @@ export type ColorThemeType = 'light' | 'dark';
 export interface ColorTheme {
     type: ColorThemeType,
     dashboard: BackgroundAndForegroundColors,
-    menuArea: MenuAreaColors,
-    primaryArea: PrimaryAreaColors,
-    secondaryArea: BackgroundAndForegroundColors,
+    menuArea: BackgroundAndForegroundColors,
     accounts: AccountAddressColors,
-    frame: BackgroundAndForegroundColors,
-    topMenu: MenuItemColors,
-    bottomMenu: MenuItemColors,
+    frame: FrameColors,
+    topMenuItems: MenuItemColors,
+    bottomMenuItems: MenuItemColors,
     shadowColor: string,
 }
 
-export interface PrimaryAreaColors extends BackgroundAndForegroundColors {
+export interface FrameColors extends BackgroundAndForegroundColors {
     link: string,
-}
-
-export interface MenuAreaColors extends BackgroundAndForegroundColors {
-    
 }
 
 export interface MenuItemColors {
