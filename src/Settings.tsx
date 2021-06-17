@@ -40,7 +40,6 @@ export default function Settings(props: Props) {
         <FullWidthPane
             addresses={ addresses }
             selectAddress={ selectAddress }
-            colors={ props.colors }
         >
             <h1>Settings</h1>
             <Frame

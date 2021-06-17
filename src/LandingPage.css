@@ -1,0 +1,28 @@
+.LandingPage {
+    text-align: center;
+}
+
+.LandingPage .logo-slogan {
+    margin-top: 30px;
+    margin-left: 30px;
+    display: flex;
+    align-items: flex-end;
+}
+
+.LandingPage .logo-slogan p {
+    margin: 0;
+    margin-left: 25px;
+}
+
+.LandingPage .messages {
+    margin-bottom: 50px;
+}
+
+.LandingPage .primary-message {
+    font-family: 'Lexend Deca', sans-serif;
+    font-size: 50px;
+}
+
+.LandingPage .secondary-message {
+    font-size: 38px;
+}

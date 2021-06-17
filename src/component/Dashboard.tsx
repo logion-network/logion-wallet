@@ -9,9 +9,7 @@ import Logo from './Logo';
 import AddressSwitcher from './AddressSwitcher';
 import {
     ColorTheme,
-    PrimaryAreaColors,
     AccountAddressColors,
-    BackgroundAndForegroundColors,
     ColorThemeType
 } from './ColorTheme';
 import Menu from './Menu';
@@ -22,7 +20,6 @@ import './Dashboard.css';
 
 export interface PrimaryAreaProps {
     children: Children,
-    colors: PrimaryAreaColors,
     width: number,
 }
 
@@ -32,10 +29,6 @@ export function PrimaryArea(props: PrimaryAreaProps) {
         <Col
             key="primary-area"
             md={ props.width }
-            style={{
-                backgroundColor: props.colors.background,
-                color: props.colors.foreground,
-            }}
         >
             <div className="PrimaryArea">
                 { props.children }
@@ -46,7 +39,6 @@ export function PrimaryArea(props: PrimaryAreaProps) {
 
 export interface SecondaryAreaProps {
     children?: Children,
-    colors: BackgroundAndForegroundColors,
     addresses: Addresses,
     accountColors: AccountAddressColors,
     selectAddress: (userAddress: string) => void,
@@ -60,10 +52,6 @@ export function SecondaryArea(props: SecondaryAreaProps) {
         <Col
             key="secondary-area"
             md={ props.width }
-            style={{
-                backgroundColor: props.colors.background,
-                color: props.colors.foreground,
-            }}
         >
             <div className="SecondaryArea">
                 { props.children }
@@ -93,13 +81,11 @@ export function ContentPane(props: ContentPaneProps) {
     return (
         <>
             <PrimaryArea
-                colors={ props.colors.primaryArea }
                 width={ primaryPaneWidth }
             >
                 { props.primaryAreaChildren }
             </PrimaryArea>
             <SecondaryArea
-                colors={ props.colors.secondaryArea }
                 addresses={ props.addresses }
                 accountColors={ props.colors.accounts }
                 selectAddress={ props.selectAddress }
@@ -116,7 +102,6 @@ export interface FullWidthPaneProps {
     addresses: Addresses,
     selectAddress: (userAddress: string) => void,
     children: Children,
-    colors: ColorTheme,
 }
 
 export function FullWidthPane(props: FullWidthPaneProps) {
@@ -124,7 +109,6 @@ export function FullWidthPane(props: FullWidthPaneProps) {
     return (
         <>
             <PrimaryArea
-                colors={ props.colors.primaryArea }
                 width={ 12 - SIDEBAR_WIDTH }
             >
                 { props.children }
@@ -146,17 +130,23 @@ export interface Props {
 export default function Dashboard(props: Props) {
 
     const inlineCss = `
-    .Dashboard .PrimaryArea a,
-    .Dashboard .PrimaryArea .btn-link {
-        color: ${props.colors.primaryArea.link}
-    }
-
     .Dashboard .PrimaryArea .table {
-        color: ${props.colors.primaryArea.foreground}
+        color: ${props.colors.dashboard.foreground};
     }
 
     .Dashboard .SecondaryArea .table {
-        color: ${props.colors.secondaryArea.foreground}
+        color: ${props.colors.dashboard.foreground};
+    }
+
+    .modal-content {
+        color: ${props.colors.dashboard.foreground};
+        background-color: ${props.colors.dashboard.background};
+    }
+
+    .form-control,
+    .form-control[readonly] {
+        background-color: ${props.colors.dashboard.background};
+        color: ${props.colors.dashboard.foreground};
     }
     `;
 
@@ -164,25 +154,27 @@ export default function Dashboard(props: Props) {
         <Container
             className="Dashboard"
             fluid
-            style={ props.colors.dashboard }
+            style={{
+                backgroundColor: props.colors.dashboard.background,
+                color: props.colors.dashboard.foreground,
+            }}
         >
             <style>
             { inlineCss }
             </style>
             <Row>
                 <Col md={ SIDEBAR_WIDTH }>
-                    <div className="Sidebar">
+                    <div className="Sidebar"
+                        style={{
+                            backgroundColor: props.colors.menuArea.background,
+                            color: props.colors.menuArea.foreground,
+                        }}
+                    >
                         <Logo
-                            foreground={ props.colors.menuArea.foreground }
-                            background={ props.colors.menuArea.background }
                             shadowColor={ props.colors.shadowColor }
                         />
                         <div
                             className="MenuArea"
-                            style={{
-                                backgroundColor: props.colors.menuArea.background,
-                                color: props.colors.menuArea.foreground,
-                            }}
                         >
                             <Menu
                                 items={ props.menuTop }

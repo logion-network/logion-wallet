@@ -14,35 +14,27 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
           "id": "account-shield",
         },
       },
-      "bottomMenu": Object {
+      "bottomMenuItems": Object {
         "iconGradient": Object {
           "from": "#7a90cb",
           "to": "#3b6cf4",
         },
       },
       "dashboard": Object {
-        "background": "#152665",
+        "background": "#ffffff",
         "foreground": "#000000",
       },
       "frame": Object {
         "background": "#3b6cf40f",
         "foreground": "#000000",
+        "link": "#3b6cf466",
       },
       "menuArea": Object {
         "background": "#152665",
         "foreground": "#ffffff",
       },
-      "primaryArea": Object {
-        "background": "#ffffff",
-        "foreground": "#000000",
-        "link": "#3b6cf466",
-      },
-      "secondaryArea": Object {
-        "background": "#ffffff",
-        "foreground": "#000000",
-      },
       "shadowColor": "#3b6cf433",
-      "topMenu": Object {
+      "topMenuItems": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
           "to": "#6050dc",
@@ -116,35 +108,27 @@ exports[`Given connected, when rendering, then show account, no connect button a
           "id": "account-shield",
         },
       },
-      "bottomMenu": Object {
+      "bottomMenuItems": Object {
         "iconGradient": Object {
           "from": "#7a90cb",
           "to": "#3b6cf4",
         },
       },
       "dashboard": Object {
-        "background": "#152665",
+        "background": "#ffffff",
         "foreground": "#000000",
       },
       "frame": Object {
         "background": "#3b6cf40f",
         "foreground": "#000000",
+        "link": "#3b6cf466",
       },
       "menuArea": Object {
         "background": "#152665",
         "foreground": "#ffffff",
       },
-      "primaryArea": Object {
-        "background": "#ffffff",
-        "foreground": "#000000",
-        "link": "#3b6cf466",
-      },
-      "secondaryArea": Object {
-        "background": "#ffffff",
-        "foreground": "#000000",
-      },
       "shadowColor": "#3b6cf433",
-      "topMenu": Object {
+      "topMenuItems": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
           "to": "#6050dc",
@@ -218,35 +202,27 @@ exports[`Given connecting, when rendering, then show account, no button, no node
           "id": "account-shield",
         },
       },
-      "bottomMenu": Object {
+      "bottomMenuItems": Object {
         "iconGradient": Object {
           "from": "#7a90cb",
           "to": "#3b6cf4",
         },
       },
       "dashboard": Object {
-        "background": "#152665",
+        "background": "#ffffff",
         "foreground": "#000000",
       },
       "frame": Object {
         "background": "#3b6cf40f",
         "foreground": "#000000",
+        "link": "#3b6cf466",
       },
       "menuArea": Object {
         "background": "#152665",
         "foreground": "#ffffff",
       },
-      "primaryArea": Object {
-        "background": "#ffffff",
-        "foreground": "#000000",
-        "link": "#3b6cf466",
-      },
-      "secondaryArea": Object {
-        "background": "#ffffff",
-        "foreground": "#000000",
-      },
       "shadowColor": "#3b6cf433",
-      "topMenu": Object {
+      "topMenuItems": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
           "to": "#6050dc",
@@ -318,35 +294,27 @@ exports[`Given connection error, when rendering, then show account, no button, n
           "id": "account-shield",
         },
       },
-      "bottomMenu": Object {
+      "bottomMenuItems": Object {
         "iconGradient": Object {
           "from": "#7a90cb",
           "to": "#3b6cf4",
         },
       },
       "dashboard": Object {
-        "background": "#152665",
+        "background": "#ffffff",
         "foreground": "#000000",
       },
       "frame": Object {
         "background": "#3b6cf40f",
         "foreground": "#000000",
+        "link": "#3b6cf466",
       },
       "menuArea": Object {
         "background": "#152665",
         "foreground": "#ffffff",
       },
-      "primaryArea": Object {
-        "background": "#ffffff",
-        "foreground": "#000000",
-        "link": "#3b6cf466",
-      },
-      "secondaryArea": Object {
-        "background": "#ffffff",
-        "foreground": "#000000",
-      },
       "shadowColor": "#3b6cf433",
-      "topMenu": Object {
+      "topMenuItems": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
           "to": "#6050dc",
@@ -418,35 +386,27 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
           "id": "account-shield",
         },
       },
-      "bottomMenu": Object {
+      "bottomMenuItems": Object {
         "iconGradient": Object {
           "from": "#7a90cb",
           "to": "#3b6cf4",
         },
       },
       "dashboard": Object {
-        "background": "#152665",
+        "background": "#ffffff",
         "foreground": "#000000",
       },
       "frame": Object {
         "background": "#3b6cf40f",
         "foreground": "#000000",
+        "link": "#3b6cf466",
       },
       "menuArea": Object {
         "background": "#152665",
         "foreground": "#ffffff",
       },
-      "primaryArea": Object {
-        "background": "#ffffff",
-        "foreground": "#000000",
-        "link": "#3b6cf466",
-      },
-      "secondaryArea": Object {
-        "background": "#ffffff",
-        "foreground": "#000000",
-      },
       "shadowColor": "#3b6cf433",
-      "topMenu": Object {
+      "topMenuItems": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
           "to": "#6050dc",
@@ -518,35 +478,27 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
           "id": "account-shield",
         },
       },
-      "bottomMenu": Object {
+      "bottomMenuItems": Object {
         "iconGradient": Object {
           "from": "#7a90cb",
           "to": "#3b6cf4",
         },
       },
       "dashboard": Object {
-        "background": "#152665",
+        "background": "#ffffff",
         "foreground": "#000000",
       },
       "frame": Object {
         "background": "#3b6cf40f",
         "foreground": "#000000",
+        "link": "#3b6cf466",
       },
       "menuArea": Object {
         "background": "#152665",
         "foreground": "#ffffff",
       },
-      "primaryArea": Object {
-        "background": "#ffffff",
-        "foreground": "#000000",
-        "link": "#3b6cf466",
-      },
-      "secondaryArea": Object {
-        "background": "#ffffff",
-        "foreground": "#000000",
-      },
       "shadowColor": "#3b6cf433",
-      "topMenu": Object {
+      "topMenuItems": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
           "to": "#6050dc",

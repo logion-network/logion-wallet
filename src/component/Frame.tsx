@@ -11,6 +11,14 @@ export interface Props {
 }
 
 export default function Frame(props: Props) {
+
+    const inlineCss = `
+    .Frame a,
+    .Frame .btn-link {
+        color: ${props.colors.frame.link}
+    }
+    `;
+
     return (
         <div
             className="Frame"
@@ -20,6 +28,9 @@ export default function Frame(props: Props) {
                 boxShadow: `0 0 25px ${props.colors.shadowColor}`,
             }}
         >
+            <style>
+            { inlineCss }
+            </style>
             { props.children }
         </div>
     );

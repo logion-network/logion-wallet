@@ -7,6 +7,8 @@
     display: flex;
     flex-direction: column;
     height: 100vh;
+    margin-left: -15px;
+    margin-right: -15px;
 }
 
 .Dashboard .Sidebar .MenuArea {
@@ -14,8 +16,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin-left: -15px;
-    margin-right: -15px;
     padding-top: 30px;
     padding-bottom: 40px;
 }

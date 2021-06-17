@@ -4,21 +4,12 @@ export const LIGHT_MODE: ColorTheme = {
     type: 'light',
     shadowColor: '#3b6cf433',
     dashboard: {
-        background: '#152665',
+        background: '#ffffff',
         foreground: '#000000',
     },
     menuArea: {
         background: '#152665',
         foreground: '#ffffff',
-    },
-    primaryArea: {
-        background: '#ffffff',
-        foreground: '#000000',
-        link: '#3b6cf466',
-    },
-    secondaryArea: {
-        background: '#ffffff',
-        foreground: '#000000',
     },
     accounts: {
         iconBackground: '#3b6cf4',
@@ -33,14 +24,15 @@ export const LIGHT_MODE: ColorTheme = {
     frame: {
         background: '#3b6cf40f',
         foreground: '#000000',
+        link: '#3b6cf466',
     },
-    topMenu: {
+    topMenuItems: {
         iconGradient: {
             from: '#3b6cf4',
             to: '#6050dc',
         }
     },
-    bottomMenu: {
+    bottomMenuItems: {
         iconGradient: {
             from: '#7a90cb',
             to: '#3b6cf4',
