@@ -16,7 +16,7 @@ export default function PendingTokenizationRequests() {
     return (
         <>
             <h2>Pending</h2>
-            <Table striped bordered>
+            <Table striped bordered responsive>
                 <thead>
                     <tr>
                         <th>Legal Officer</th>

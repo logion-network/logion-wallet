@@ -15,6 +15,7 @@ import { ColorTheme } from '../component/ColorTheme';
 import { useRootContext } from '../RootContext';
 
 export interface LegalOfficerContext {
+    dataAddress: string | null,
     rejectRequest: ((requestId: string, reason: string) => Promise<void>) | null,
     pendingTokenizationRequests: TokenizationRequest[] | null,
     acceptedTokenizationRequests: TokenizationRequest[] | null,
@@ -27,6 +28,7 @@ export interface LegalOfficerContext {
 
 function initialContextValue(legalOfficerAddress: string): LegalOfficerContext {
     return {
+        dataAddress: null,
         rejectRequest: null,
         pendingTokenizationRequests: null,
         acceptedTokenizationRequests: null,
@@ -89,8 +91,9 @@ export interface Props {
 
 export function LegalOfficerContextProvider(props: Props) {
     const { currentAddress } = useRootContext();
-    const [contextValue, setContextValue] = useState<LegalOfficerContext>(initialContextValue(props.legalOfficerAddress));
-    const [fetchedInitially, setFetchedInitially] = useState<boolean>(false);
+    const [ contextValue, setContextValue ] = useState<LegalOfficerContext>(initialContextValue(props.legalOfficerAddress));
+    const [ fetchedInitially, setFetchedInitially ] = useState<boolean>(false);
+    const [ refreshing, setRefreshing ] = useState<boolean>(false);
 
     const refreshRequests = useCallback(() => {
         async function fetchAndSetAll() {
@@ -114,6 +117,8 @@ export function LegalOfficerContextProvider(props: Props) {
                 legalOfficerAddress: currentAddress,
                 statuses: ["ACCEPTED", "REJECTED"],
             });
+
+            setRefreshing(false);
             setContextValue({
                 ...contextValue,
                 pendingTokenizationRequests,
@@ -121,6 +126,7 @@ export function LegalOfficerContextProvider(props: Props) {
                 rejectedTokenizationRequests,
                 pendingProtectionRequests,
                 protectionRequestsHistory,
+                dataAddress: currentAddress,
             });
         };
         fetchAndSetAll();
@@ -165,6 +171,13 @@ export function LegalOfficerContextProvider(props: Props) {
             refreshRequests();
         }
     }, [fetchedInitially, refreshRequests]);
+
+    useEffect(() => {
+        if(contextValue.dataAddress !== null && contextValue.dataAddress !== currentAddress && !refreshing) {
+            setRefreshing(true);
+            refreshRequests();
+        }
+    }, [ contextValue, currentAddress, refreshRequests, setRefreshing, refreshing ]);
 
     return (
         <LegalOfficerContextObject.Provider value={contextValue}>

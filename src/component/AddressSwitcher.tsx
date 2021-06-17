@@ -15,8 +15,6 @@ export interface Props {
 
 export default function AddressSwitcher(props: Props) {
 
-    console.log(props.addresses.currentAddress);
-
     return (
         <div
             className="AddressSwitcher"

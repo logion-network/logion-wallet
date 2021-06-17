@@ -20,6 +20,7 @@ import { useRootContext } from '../RootContext';
 import { LIGHT_MODE } from './Types';
 
 export interface UserContext {
+    dataAddress: string | null,
     createTokenRequest: ((request: CreateTokenRequest) => Promise<TokenizationRequest>) | null,
     createdTokenRequest: TokenizationRequest | null,
     pendingTokenizationRequests: TokenizationRequest[] | null,
@@ -36,6 +37,7 @@ export interface UserContext {
 
 function initialContextValue(): UserContext {
     return {
+        dataAddress: null,
         createTokenRequest: null,
         createdTokenRequest: null,
         pendingTokenizationRequests: null,
@@ -60,8 +62,9 @@ export interface Props {
 export function UserContextProvider(props: Props) {
     const { currentAddress } = useRootContext();
     const { api, apiState } = useLogionChain();
-    const [contextValue, setContextValue] = useState<UserContext>(initialContextValue());
-    const [fetchedInitially, setFetchedInitially] = useState<boolean>(false);
+    const [ contextValue, setContextValue ] = useState<UserContext>(initialContextValue());
+    const [ fetchedInitially, setFetchedInitially ] = useState<boolean>(false);
+    const [ refreshing, setRefreshing ] = useState<boolean>(false);
 
     useEffect(() => {
         if (contextValue.createTokenRequest === null) {
@@ -100,12 +103,12 @@ export function UserContextProvider(props: Props) {
                 requesterAddress: currentAddress,
                 statuses: [ "REJECTED" ],
             });
-            console.log(currentAddress);
             const recoveryConfig = await getRecoveryConfig({
                 api: api!,
                 accountId: currentAddress
             });
 
+            setRefreshing(false);
             setContextValue({
                 ...contextValue,
                 pendingTokenizationRequests,
@@ -115,12 +118,13 @@ export function UserContextProvider(props: Props) {
                 acceptedProtectionRequests,
                 rejectedProtectionRequests,
                 recoveryConfig,
+                dataAddress: currentAddress,
             });
         }
         if(api !== null) {
             fetchAndSetRequests();
         }
-    }, [ api, contextValue, setContextValue, currentAddress ]);
+    }, [ api, contextValue, setContextValue, currentAddress, setRefreshing ]);
 
     useEffect(() => {
         if(apiState === "READY" && !fetchedInitially && currentAddress !== '') {
@@ -128,6 +132,13 @@ export function UserContextProvider(props: Props) {
             refreshRequests();
         }
     }, [ apiState, fetchedInitially, refreshRequests, currentAddress ]);
+
+    useEffect(() => {
+        if(contextValue.dataAddress !== null && contextValue.dataAddress !== currentAddress && !refreshing) {
+            setRefreshing(true);
+            refreshRequests();
+        }
+    }, [ contextValue, currentAddress, refreshRequests, setRefreshing, refreshing ]);
 
     useEffect(() => {
         if(contextValue.refreshRequests === null) {
