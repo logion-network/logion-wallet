@@ -1,6 +1,5 @@
-import React, { useCallback, useState } from 'react';
+import React, {useCallback, useState} from 'react';
 import Button from 'react-bootstrap/Button';
-import { Link } from 'react-router-dom';
 
 import { useLogionChain, Unsubscriber, ISubmittableResult, replaceUnsubscriber } from '../../logion-chain';
 import { createRecovery } from '../../logion-chain/Recovery';
@@ -8,11 +7,11 @@ import ExtrinsicSubmissionResult from '../../legal-officer/ExtrinsicSubmissionRe
 import { useRootContext } from '../../RootContext';
 
 import {useUserContext} from "../UserContext";
-import {legalOfficerName} from "./Model";
+import {legalOfficerByAddress} from "./Model";
 import {ProtectionRequest} from "../../legal-officer/Types";
-import { ACCOUNT_PATH } from '../UserRouter';
 
 import CreateProtectionRequestForm from "./CreateProtectionRequestForm";
+import LegalOfficerInfo from "../../component/LegalOfficerInfo";
 
 export default function ProtectionRequestStatus() {
     const { api } = useLogionChain();
@@ -38,7 +37,7 @@ export default function ProtectionRequestStatus() {
         })();
     }, [ api, currentAddress, refreshRequests, activationUnsubscriber, setActivationUnsubscriber ]);
 
-    if (pendingProtectionRequests === null || acceptedProtectionRequests === null || recoveryConfig === null) {
+    if (pendingProtectionRequests === null || acceptedProtectionRequests === null) {
         return null;
     }
 
@@ -47,7 +46,7 @@ export default function ProtectionRequestStatus() {
 
         return (
             <>
-                <h1>Protection request status</h1>
+                <h2>Protection request status</h2>
                 <p>
                     Your Logion Trust Protection request ({createdProtectionRequest.id}) has been submitted. A Legal Officer
                     will contact you as soon as possible to finalize the KYC process. Please note that, after the successful
@@ -58,12 +57,11 @@ export default function ProtectionRequestStatus() {
                 {
                     createdProtectionRequest.decisions.map(decision => (
                         <li key={decision.legalOfficerAddress}>
-                            {legalOfficerName(decision.legalOfficerAddress)} ({decision.legalOfficerAddress}): {decision.status}
+                            {legalOfficerByAddress(decision.legalOfficerAddress).name} ({decision.legalOfficerAddress}): {decision.status}
                         </li>
                     ))
                 }
                 </ul>
-                <Link to={ ACCOUNT_PATH }>Back to account</Link>
             </>
         );
     } else if(acceptedProtectionRequests.length > 0) {
@@ -72,15 +70,28 @@ export default function ProtectionRequestStatus() {
         if(recoveryConfig!.isEmpty) {
             return (
                 <>
-                    <h1>Protection request status</h1>
+                    <h2>My Legal Officers</h2>
                     <p>
                         Your Logion Trust Protection request ({createdProtectionRequest.id}) has been accepted by your
                         Legal Officers. You can now activate your protection.
                     </p>
+                    <ul>
+                        {
+                            createdProtectionRequest.decisions
+                                .map(decision => {
+                                    const legalOfficer = legalOfficerByAddress(decision.legalOfficerAddress);
+                                    return (
+                                        <li key={legalOfficer.address}>
+                                            <LegalOfficerInfo legalOfficer={legalOfficer}/>
+                                        </li>
+                                    );
+                                })
+                        }
+                    </ul>
                     {
                         activationResult === null &&
                         <p>
-                            <Button onClick={() => activateProtection(createdProtectionRequest)}>Activate</Button>
+                            <Button data-testid="btnActivate" onClick={() => activateProtection(createdProtectionRequest)}>Activate</Button>
                         </p>
                     }
                     {
@@ -91,26 +102,28 @@ export default function ProtectionRequestStatus() {
                             successMessage="Protection successfully activated."
                         />
                     }
-                    <Link to={ ACCOUNT_PATH }>Back to account</Link>
                 </>
             );
         } else {
             return (
                 <>
-                    <h1>Protection request status</h1>
+                    <h2>My Legal Officers</h2>
                     <p>
                         Your Logion Trust Protection is active. You are now protected by
                     </p>
                     <ul>
-                    {
-                        createdProtectionRequest.decisions.map(decision => (
-                            <li key={decision.legalOfficerAddress}>
-                                {legalOfficerName(decision.legalOfficerAddress)} ({decision.legalOfficerAddress})
-                            </li>
-                        ))
-                    }
+                        {
+                            createdProtectionRequest.decisions
+                                .map(decision => {
+                                    const legalOfficer = legalOfficerByAddress(decision.legalOfficerAddress);
+                                    return (
+                                        <li key={legalOfficer.address}>
+                                            <LegalOfficerInfo legalOfficer={legalOfficer}/>
+                                        </li>
+                                    );
+                                })
+                        }
                     </ul>
-                    <Link to={ ACCOUNT_PATH }>Back to account</Link>
                 </>
             );
         }
