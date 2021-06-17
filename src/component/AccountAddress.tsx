@@ -2,15 +2,10 @@ import React from 'react';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
-import { BackgroundAndForegroundColors } from './types/Helpers';
+import { AccountAddressColors } from './ColorTheme';
 import { AccountAddress as AddressType } from './types/Addresses';
 
 import './AccountAddress.css';
-
-export interface AccountAddressColors extends BackgroundAndForegroundColors {
-    iconBackground: string,
-    hintColor: string,
-}
 
 export interface Props {
     hint?: string,

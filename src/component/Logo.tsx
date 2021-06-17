@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { BackgroundAndForegroundColors } from './types/Helpers';
+import { BackgroundAndForegroundColors } from './ColorTheme';
 
 import './Logo.css';
 

@@ -44,15 +44,18 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
           "to": "#6050dc",
         },
       },
+      "type": "light",
     }
   }
   menuBottom={
     Array [
       Object {
         "exact": true,
-        "iconGradient": Object {
-          "from": "#7a90cb",
-          "to": "#3b6cf4",
+        "icon": Object {
+          "icon": Object {
+            "category": "user",
+            "id": "settings",
+          },
         },
         "text": "Settings",
         "to": "/user/settings",
@@ -63,9 +66,11 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
     Array [
       Object {
         "exact": true,
-        "iconGradient": Object {
-          "from": "#3b6cf4",
-          "to": "#6050dc",
+        "icon": Object {
+          "icon": Object {
+            "category": "user",
+            "id": "tokens",
+          },
         },
         "text": "Tokens",
         "to": "/user/account",
@@ -76,6 +81,14 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
   shieldItem={
     Object {
       "exact": true,
+      "icon": Object {
+        "height": "auto",
+        "icon": Object {
+          "category": "user",
+          "id": "shield",
+        },
+        "width": "auto",
+      },
       "text": "My Logion Trust Protection",
       "to": "/user/protection",
     }
@@ -129,15 +142,18 @@ exports[`Given connected, when rendering, then show account, no connect button a
           "to": "#6050dc",
         },
       },
+      "type": "light",
     }
   }
   menuBottom={
     Array [
       Object {
         "exact": true,
-        "iconGradient": Object {
-          "from": "#7a90cb",
-          "to": "#3b6cf4",
+        "icon": Object {
+          "icon": Object {
+            "category": "user",
+            "id": "settings",
+          },
         },
         "text": "Settings",
         "to": "/user/settings",
@@ -148,9 +164,11 @@ exports[`Given connected, when rendering, then show account, no connect button a
     Array [
       Object {
         "exact": true,
-        "iconGradient": Object {
-          "from": "#3b6cf4",
-          "to": "#6050dc",
+        "icon": Object {
+          "icon": Object {
+            "category": "user",
+            "id": "tokens",
+          },
         },
         "text": "Tokens",
         "to": "/user/account",
@@ -161,6 +179,14 @@ exports[`Given connected, when rendering, then show account, no connect button a
   shieldItem={
     Object {
       "exact": true,
+      "icon": Object {
+        "height": "auto",
+        "icon": Object {
+          "category": "user",
+          "id": "shield",
+        },
+        "width": "auto",
+      },
       "text": "My Logion Trust Protection",
       "to": "/user/protection",
     }
@@ -214,15 +240,18 @@ exports[`Given connecting, when rendering, then show account, no button, no node
           "to": "#6050dc",
         },
       },
+      "type": "light",
     }
   }
   menuBottom={
     Array [
       Object {
         "exact": true,
-        "iconGradient": Object {
-          "from": "#7a90cb",
-          "to": "#3b6cf4",
+        "icon": Object {
+          "icon": Object {
+            "category": "user",
+            "id": "settings",
+          },
         },
         "text": "Settings",
         "to": "/user/settings",
@@ -233,9 +262,11 @@ exports[`Given connecting, when rendering, then show account, no button, no node
     Array [
       Object {
         "exact": true,
-        "iconGradient": Object {
-          "from": "#3b6cf4",
-          "to": "#6050dc",
+        "icon": Object {
+          "icon": Object {
+            "category": "user",
+            "id": "tokens",
+          },
         },
         "text": "Tokens",
         "to": "/user/account",
@@ -246,6 +277,14 @@ exports[`Given connecting, when rendering, then show account, no button, no node
   shieldItem={
     Object {
       "exact": true,
+      "icon": Object {
+        "height": "auto",
+        "icon": Object {
+          "category": "user",
+          "id": "shield",
+        },
+        "width": "auto",
+      },
       "text": "My Logion Trust Protection",
       "to": "/user/protection",
     }
@@ -297,15 +336,18 @@ exports[`Given connection error, when rendering, then show account, no button, n
           "to": "#6050dc",
         },
       },
+      "type": "light",
     }
   }
   menuBottom={
     Array [
       Object {
         "exact": true,
-        "iconGradient": Object {
-          "from": "#7a90cb",
-          "to": "#3b6cf4",
+        "icon": Object {
+          "icon": Object {
+            "category": "user",
+            "id": "settings",
+          },
         },
         "text": "Settings",
         "to": "/user/settings",
@@ -316,9 +358,11 @@ exports[`Given connection error, when rendering, then show account, no button, n
     Array [
       Object {
         "exact": true,
-        "iconGradient": Object {
-          "from": "#3b6cf4",
-          "to": "#6050dc",
+        "icon": Object {
+          "icon": Object {
+            "category": "user",
+            "id": "tokens",
+          },
         },
         "text": "Tokens",
         "to": "/user/account",
@@ -329,6 +373,14 @@ exports[`Given connection error, when rendering, then show account, no button, n
   shieldItem={
     Object {
       "exact": true,
+      "icon": Object {
+        "height": "auto",
+        "icon": Object {
+          "category": "user",
+          "id": "shield",
+        },
+        "width": "auto",
+      },
       "text": "My Logion Trust Protection",
       "to": "/user/protection",
     }
@@ -380,15 +432,18 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
           "to": "#6050dc",
         },
       },
+      "type": "light",
     }
   }
   menuBottom={
     Array [
       Object {
         "exact": true,
-        "iconGradient": Object {
-          "from": "#7a90cb",
-          "to": "#3b6cf4",
+        "icon": Object {
+          "icon": Object {
+            "category": "user",
+            "id": "settings",
+          },
         },
         "text": "Settings",
         "to": "/user/settings",
@@ -399,9 +454,11 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
     Array [
       Object {
         "exact": true,
-        "iconGradient": Object {
-          "from": "#3b6cf4",
-          "to": "#6050dc",
+        "icon": Object {
+          "icon": Object {
+            "category": "user",
+            "id": "tokens",
+          },
         },
         "text": "Tokens",
         "to": "/user/account",
@@ -412,6 +469,14 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
   shieldItem={
     Object {
       "exact": true,
+      "icon": Object {
+        "height": "auto",
+        "icon": Object {
+          "category": "user",
+          "id": "shield",
+        },
+        "width": "auto",
+      },
       "text": "My Logion Trust Protection",
       "to": "/user/protection",
     }
@@ -463,15 +528,18 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
           "to": "#6050dc",
         },
       },
+      "type": "light",
     }
   }
   menuBottom={
     Array [
       Object {
         "exact": true,
-        "iconGradient": Object {
-          "from": "#7a90cb",
-          "to": "#3b6cf4",
+        "icon": Object {
+          "icon": Object {
+            "category": "user",
+            "id": "settings",
+          },
         },
         "text": "Settings",
         "to": "/user/settings",
@@ -482,9 +550,11 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
     Array [
       Object {
         "exact": true,
-        "iconGradient": Object {
-          "from": "#3b6cf4",
-          "to": "#6050dc",
+        "icon": Object {
+          "icon": Object {
+            "category": "user",
+            "id": "tokens",
+          },
         },
         "text": "Tokens",
         "to": "/user/account",
@@ -495,6 +565,14 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
   shieldItem={
     Object {
       "exact": true,
+      "icon": Object {
+        "height": "auto",
+        "icon": Object {
+          "category": "user",
+          "id": "shield",
+        },
+        "width": "auto",
+      },
       "text": "My Logion Trust Protection",
       "to": "/user/protection",
     }

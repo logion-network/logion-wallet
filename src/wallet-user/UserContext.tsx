@@ -15,7 +15,7 @@ import {
     CreateProtectionRequest,
     createProtectionRequest as modelCreateProtectionRequest,
 } from "./trust-protection/Model";
-import { ColorTheme } from '../component/Dashboard';
+import { ColorTheme } from '../component/ColorTheme';
 import { useRootContext } from '../RootContext';
 import { LIGHT_MODE } from './Types';
 

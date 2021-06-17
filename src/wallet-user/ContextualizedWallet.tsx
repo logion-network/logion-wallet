@@ -28,20 +28,38 @@ export default function ContextualizedWallet() {
                     text: "Tokens",
                     to: ACCOUNT_PATH,
                     exact: true,
-                    iconGradient: colorTheme.topMenu.iconGradient,
+                    icon: {
+                        icon: {
+                            category: 'user',
+                            id: 'tokens'
+                        },
+                    },
                 }
             ]}
             shieldItem={{
                 text: "My Logion Trust Protection",
                 to: TRUST_PROTECTION_PATH,
-                exact: true
+                exact: true,
+                icon: {
+                    icon: {
+                        category: 'user',
+                        id: 'shield'
+                    },
+                    height: 'auto',
+                    width: 'auto',
+                }
             }}
             menuBottom={[
                 {
                     text: "Settings",
                     to: SETTINGS_PATH,
                     exact: true,
-                    iconGradient: colorTheme.bottomMenu.iconGradient,
+                    icon: {
+                        icon: {
+                            category: 'user',
+                            id: 'settings'
+                        },
+                    },
                 }
             ]}
         >

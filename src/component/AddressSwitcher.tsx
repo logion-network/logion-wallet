@@ -4,7 +4,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Addresses from './types/Addresses';
 
 import './AddressSwitcher.css';
-import AccountAddress, { AccountAddressColors } from './AccountAddress';
+import AccountAddress from './AccountAddress';
+import { AccountAddressColors } from './ColorTheme';
 
 export interface Props {
     addresses: Addresses,

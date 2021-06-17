@@ -44,15 +44,18 @@ exports[`renders 1`] = `
           "to": "#6050dc",
         },
       },
+      "type": "dark",
     }
   }
   menuBottom={
     Array [
       Object {
         "exact": true,
-        "iconGradient": Object {
-          "from": "#7a90cb",
-          "to": "#3b6cf4",
+        "icon": Object {
+          "icon": Object {
+            "category": "legal-officer",
+            "id": "settings",
+          },
         },
         "text": "Settings",
         "to": "/legal-officer/settings",
@@ -63,9 +66,11 @@ exports[`renders 1`] = `
     Array [
       Object {
         "exact": true,
-        "iconGradient": Object {
-          "from": "#3b6cf4",
-          "to": "#6050dc",
+        "icon": Object {
+          "icon": Object {
+            "category": "legal-officer",
+            "id": "tokens",
+          },
         },
         "text": "Tokens",
         "to": "/legal-officer/tokenization",
@@ -76,6 +81,14 @@ exports[`renders 1`] = `
   shieldItem={
     Object {
       "exact": true,
+      "icon": Object {
+        "height": "auto",
+        "icon": Object {
+          "category": "legal-officer",
+          "id": "shield",
+        },
+        "width": "auto",
+      },
       "text": "Protection Requests",
       "to": "/legal-officer/protection",
     }
