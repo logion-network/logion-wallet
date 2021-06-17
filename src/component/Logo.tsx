@@ -22,7 +22,7 @@ export default function Logo(props: Props) {
         <div
             className="Logo"
             style={{
-                boxShadow: `0 5px 25px ${props.shadowColor}`,
+                boxShadow: `-25px 5px 25px ${props.shadowColor}`,
             }}
         >
             <div className="image-and-slogan">

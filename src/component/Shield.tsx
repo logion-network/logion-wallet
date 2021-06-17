@@ -16,7 +16,7 @@ export default function Shield(props: Props) {
         <div className="Shield">
             <MenuItem
                 item={props.item}
-                height={65}
+                height={90}
                 colorThemeType={ props.colorThemeType }
             />
         </div>

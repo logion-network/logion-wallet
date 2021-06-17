@@ -174,13 +174,13 @@ export default function Dashboard(props: Props) {
             <style>
             { inlineCss }
             </style>
-            <Row>
+            <Row noGutters>
                 <Col md={ SIDEBAR_WIDTH }>
                     <div className="Sidebar"
                         style={{
                             backgroundColor: props.colors.sidebar.background,
                             color: props.colors.sidebar.foreground,
-                            boxShadow: `5px 0 25px ${props.colors.shadowColor}`,
+                            boxShadow: `0 0 25px ${props.colors.shadowColor}`,
                         }}
                     >
                         <Logo
