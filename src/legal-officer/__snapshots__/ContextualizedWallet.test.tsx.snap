@@ -57,6 +57,7 @@ exports[`renders 1`] = `
             "id": "settings",
           },
         },
+        "id": "settings",
         "text": "Settings",
         "to": "/legal-officer/settings",
       },
@@ -75,6 +76,7 @@ exports[`renders 1`] = `
             "id": "tokens",
           },
         },
+        "id": "tokens",
         "text": "Tokens",
         "to": "/legal-officer/tokenization",
       },
@@ -92,6 +94,7 @@ exports[`renders 1`] = `
         },
         "width": "auto",
       },
+      "id": "protection",
       "text": "Protection Management",
       "to": "/legal-officer/protection",
     }

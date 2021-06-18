@@ -1,10 +1,9 @@
+jest.mock("axios");
+
 import {CreateTokenRequest, createTokenRequest} from "./Model";
 import {DEFAULT_LEGAL_OFFICER} from "../legal-officer/Model";
 import {mockPost} from "axios";
-
-jest.mock("axios");
-
-export const TEST_WALLET_USER = "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY";
+import { TEST_WALLET_USER } from './TestData';
 
 test("Create Tokenization request", async () => {
     const request: CreateTokenRequest = {

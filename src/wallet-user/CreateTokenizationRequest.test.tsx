@@ -8,7 +8,7 @@ import {setCreateTokenRequest} from "./UserContext";
 import CreateTokenizationRequest from "./CreateTokenizationRequest";
 import {shallowRender} from "../tests";
 import {fireEvent, render, screen, waitFor} from '@testing-library/react';
-import {TEST_WALLET_USER} from "./Model.test";
+import { TEST_WALLET_USER } from "./TestData";
 import { ISO_DATETIME_PATTERN } from '../logion-chain/datetime';
 
 test("renders", () => {

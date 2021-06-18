@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<div
+  className="Frame"
+  style={
+    Object {
+      "backgroundColor": "#ffffff",
+      "boxShadow": "0 0 25px #3b6cf41a",
+      "color": "#000000",
+    }
+  }
+>
+  <style>
+    
+    .Frame a,
+    .Frame .btn-link {
+        color: #3b6cf426
+    }
+    
+  </style>
+</div>
+`;

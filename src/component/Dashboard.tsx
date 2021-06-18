@@ -7,23 +7,19 @@ import { Children } from './types/Helpers';
 import Addresses from './types/Addresses';
 import Logo from './Logo';
 import AddressSwitcher from './AddressSwitcher';
-import {
-    ColorTheme,
-    AccountAddressColors,
-    ColorThemeType
-} from './ColorTheme';
+import { ColorTheme } from './ColorTheme';
 import Menu from './Menu';
 import { MenuItemData } from './MenuItem';
 import Shield from './Shield';
 
 import './Dashboard.css';
 
-export interface PrimaryAreaProps {
+interface PrimaryAreaProps {
     children: Children,
     width: number,
 }
 
-export function PrimaryArea(props: PrimaryAreaProps) {
+function PrimaryArea(props: PrimaryAreaProps) {
 
     return (
         <Col
@@ -37,16 +33,12 @@ export function PrimaryArea(props: PrimaryAreaProps) {
     );
 }
 
-export interface SecondaryAreaProps {
+interface SecondaryAreaProps {
     children?: Children,
-    addresses: Addresses,
-    accountColors: AccountAddressColors,
-    selectAddress: (userAddress: string) => void,
-    colorThemeType: ColorThemeType,
     width: number,
 }
 
-export function SecondaryArea(props: SecondaryAreaProps) {
+function SecondaryArea(props: SecondaryAreaProps) {
 
     return (
         <Col
@@ -61,11 +53,8 @@ export function SecondaryArea(props: SecondaryAreaProps) {
 }
 
 export interface ContentPaneProps {
-    addresses: Addresses,
-    selectAddress: (userAddress: string) => void,
     primaryAreaChildren: Children,
-    secondaryAreaChildren?: Children,
-    colors: ColorTheme,
+    secondaryAreaChildren: Children,
     primaryPaneWidth?: number,
 }
 
@@ -86,10 +75,6 @@ export function ContentPane(props: ContentPaneProps) {
                 { props.primaryAreaChildren }
             </PrimaryArea>
             <SecondaryArea
-                addresses={ props.addresses }
-                accountColors={ props.colors.accounts }
-                selectAddress={ props.selectAddress }
-                colorThemeType={ props.colors.type }
                 width={ 12 - SIDEBAR_WIDTH - primaryPaneWidth }
             >
                 { props.secondaryAreaChildren }
@@ -99,8 +84,6 @@ export function ContentPane(props: ContentPaneProps) {
 }
 
 export interface FullWidthPaneProps {
-    addresses: Addresses,
-    selectAddress: (userAddress: string) => void,
     children: Children,
 }
 

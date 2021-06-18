@@ -15,7 +15,7 @@ import ProtectionRequestActivating from "./ProtectionRequestActivating";
 import { ProtectionRequest } from '../../legal-officer/Types';
 import { DEFAULT_IDENTITY } from '../../component/Identity.test';
 import { DEFAULT_ADDRESS } from '../../component/PostalAddress.test';
-import {TEST_WALLET_USER} from "../Model.test";
+import { TEST_WALLET_USER } from "../TestData";
 
 test("Activation of accepted protection request", async () => {
     setPendingProtectionRequests([]);

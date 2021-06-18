@@ -1,0 +1,79 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<div
+  className="AccountAddress"
+>
+  <div
+    className="icon"
+    style={
+      Object {
+        "backgroundColor": "#3b6cf4",
+      }
+    }
+  >
+    N
+  </div>
+  <div
+    className="text"
+    style={
+      Object {
+        "justifyContent": "space-between",
+      }
+    }
+  >
+    <div
+      className="hint"
+      style={
+        Object {
+          "color": "#00000099",
+        }
+      }
+    >
+      My hint
+    </div>
+    <div
+      className="name"
+      style={
+        Object {
+          "color": "#000000",
+        }
+      }
+    >
+      Name 1
+    </div>
+    <div
+      className="address"
+      style={
+        Object {
+          "color": "#000000",
+        }
+      }
+    >
+      <OverlayTrigger
+        defaultShow={false}
+        delay={500}
+        overlay={
+          <Tooltip
+            id="tooltip-address1"
+            placement="right"
+          >
+            address1
+          </Tooltip>
+        }
+        placement="bottom"
+        trigger={
+          Array [
+            "hover",
+            "focus",
+          ]
+        }
+      >
+        <span>
+          address1
+        </span>
+      </OverlayTrigger>
+    </div>
+  </div>
+</div>
+`;

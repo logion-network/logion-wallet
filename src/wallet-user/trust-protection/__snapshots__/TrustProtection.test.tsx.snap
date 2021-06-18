@@ -1,9 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders 1`] = `
-<FullWidthPane
-  selectAddress={[MockFunction]}
->
+<FullWidthPane>
   <h1>
     My Logion Trust Protection
   </h1>

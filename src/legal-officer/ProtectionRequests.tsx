@@ -2,7 +2,6 @@ import React from 'react';
 
 import { ContentPane } from '../component/Dashboard';
 import Frame from '../component/Frame';
-import { useRootContext } from '../RootContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import PendingProtectionRequests from './PendingProtectionRequests';
@@ -11,18 +10,10 @@ import RefreshTokenizationRequestsButton from './RefreshTokenizationRequestsButt
 import ProtectedUsers from "./ProtectedUsers";
 
 export default function ProtectionRequests() {
-    const { addresses, selectAddress } = useRootContext();
     const { colorTheme } = useLegalOfficerContext();
-
-    if(addresses === null || selectAddress === null) {
-        return null;
-    }
 
     return (
         <ContentPane
-            addresses={ addresses }
-            selectAddress={ selectAddress }
-            colors={ colorTheme }
             primaryAreaChildren={
                 <>
                     <h1>Protection Requests</h1>

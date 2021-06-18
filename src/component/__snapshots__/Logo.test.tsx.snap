@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders in dark mode 1`] = `
+<div
+  className="Logo"
+  style={
+    Object {
+      "boxShadow": "-25px 5px 25px #ffffff",
+    }
+  }
+>
+  <div
+    className="image-and-slogan"
+  >
+    <div
+      className="image"
+    >
+      <img
+        alt="logo"
+        src="/logo.png"
+      />
+    </div>
+    <div
+      className="slogan"
+    >
+      <div
+        className="text"
+      >
+        One blockchain
+        <br />
+        to trust them all
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders in light mode 1`] = `
+<div
+  className="Logo"
+  style={
+    Object {
+      "boxShadow": "-25px 5px 25px #000000",
+    }
+  }
+>
+  <div
+    className="image-and-slogan"
+  >
+    <div
+      className="image"
+    >
+      <img
+        alt="logo"
+        src="/logo_black.png"
+      />
+    </div>
+    <div
+      className="slogan"
+    >
+      <div
+        className="text"
+      >
+        One blockchain
+        <br />
+        to trust them all
+      </div>
+    </div>
+  </div>
+</div>
+`;
