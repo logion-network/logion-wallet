@@ -32,9 +32,9 @@ export default function ContextualizedWallet() {
                     exact: true,
                     icon: {
                         icon: {
-                            category: 'legal-officer',
                             id: 'tokens'
                         },
+                        background: colorTheme.topMenuItems.iconGradient,
                     },
                 }
             ]}
@@ -44,8 +44,8 @@ export default function ContextualizedWallet() {
                 exact: true,
                 icon: {
                     icon: {
-                        category: 'legal-officer',
-                        id: 'shield'
+                        id: 'shield',
+                        hasVariants: true,
                     },
                     height: 'auto',
                     width: 'auto',
@@ -58,9 +58,9 @@ export default function ContextualizedWallet() {
                     exact: true,
                     icon: {
                         icon: {
-                            category: 'legal-officer',
                             id: 'settings'
                         },
+                        background: colorTheme.bottomMenuItems.iconGradient,
                     },
                 }
             ]}

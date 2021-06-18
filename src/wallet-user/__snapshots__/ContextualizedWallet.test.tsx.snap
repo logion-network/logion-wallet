@@ -49,8 +49,11 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
       Object {
         "exact": true,
         "icon": Object {
+          "background": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
           "icon": Object {
-            "category": "user",
             "id": "settings",
           },
         },
@@ -64,8 +67,11 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
       Object {
         "exact": true,
         "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
           "icon": Object {
-            "category": "user",
             "id": "tokens",
           },
         },
@@ -81,7 +87,7 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
       "icon": Object {
         "height": "auto",
         "icon": Object {
-          "category": "user",
+          "hasVariants": true,
           "id": "shield",
         },
         "width": "auto",
@@ -144,8 +150,11 @@ exports[`Given connected, when rendering, then show account, no connect button a
       Object {
         "exact": true,
         "icon": Object {
+          "background": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
           "icon": Object {
-            "category": "user",
             "id": "settings",
           },
         },
@@ -159,8 +168,11 @@ exports[`Given connected, when rendering, then show account, no connect button a
       Object {
         "exact": true,
         "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
           "icon": Object {
-            "category": "user",
             "id": "tokens",
           },
         },
@@ -176,7 +188,7 @@ exports[`Given connected, when rendering, then show account, no connect button a
       "icon": Object {
         "height": "auto",
         "icon": Object {
-          "category": "user",
+          "hasVariants": true,
           "id": "shield",
         },
         "width": "auto",
@@ -239,8 +251,11 @@ exports[`Given connecting, when rendering, then show account, no button, no node
       Object {
         "exact": true,
         "icon": Object {
+          "background": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
           "icon": Object {
-            "category": "user",
             "id": "settings",
           },
         },
@@ -254,8 +269,11 @@ exports[`Given connecting, when rendering, then show account, no button, no node
       Object {
         "exact": true,
         "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
           "icon": Object {
-            "category": "user",
             "id": "tokens",
           },
         },
@@ -271,7 +289,7 @@ exports[`Given connecting, when rendering, then show account, no button, no node
       "icon": Object {
         "height": "auto",
         "icon": Object {
-          "category": "user",
+          "hasVariants": true,
           "id": "shield",
         },
         "width": "auto",
@@ -332,8 +350,11 @@ exports[`Given connection error, when rendering, then show account, no button, n
       Object {
         "exact": true,
         "icon": Object {
+          "background": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
           "icon": Object {
-            "category": "user",
             "id": "settings",
           },
         },
@@ -347,8 +368,11 @@ exports[`Given connection error, when rendering, then show account, no button, n
       Object {
         "exact": true,
         "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
           "icon": Object {
-            "category": "user",
             "id": "tokens",
           },
         },
@@ -364,7 +388,7 @@ exports[`Given connection error, when rendering, then show account, no button, n
       "icon": Object {
         "height": "auto",
         "icon": Object {
-          "category": "user",
+          "hasVariants": true,
           "id": "shield",
         },
         "width": "auto",
@@ -425,8 +449,11 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
       Object {
         "exact": true,
         "icon": Object {
+          "background": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
           "icon": Object {
-            "category": "user",
             "id": "settings",
           },
         },
@@ -440,8 +467,11 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
       Object {
         "exact": true,
         "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
           "icon": Object {
-            "category": "user",
             "id": "tokens",
           },
         },
@@ -457,7 +487,7 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
       "icon": Object {
         "height": "auto",
         "icon": Object {
-          "category": "user",
+          "hasVariants": true,
           "id": "shield",
         },
         "width": "auto",
@@ -518,8 +548,11 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
       Object {
         "exact": true,
         "icon": Object {
+          "background": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
           "icon": Object {
-            "category": "user",
             "id": "settings",
           },
         },
@@ -533,8 +566,11 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
       Object {
         "exact": true,
         "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
           "icon": Object {
-            "category": "user",
             "id": "tokens",
           },
         },
@@ -550,7 +586,7 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
       "icon": Object {
         "height": "auto",
         "icon": Object {
-          "category": "user",
+          "hasVariants": true,
           "id": "shield",
         },
         "width": "auto",

@@ -30,9 +30,9 @@ export default function ContextualizedWallet() {
                     exact: true,
                     icon: {
                         icon: {
-                            category: 'user',
                             id: 'tokens'
                         },
+                        background: colorTheme.topMenuItems.iconGradient,
                     },
                 }
             ]}
@@ -42,8 +42,8 @@ export default function ContextualizedWallet() {
                 exact: true,
                 icon: {
                     icon: {
-                        category: 'user',
-                        id: 'shield'
+                        id: 'shield',
+                        hasVariants: true,
                     },
                     height: 'auto',
                     width: 'auto',
@@ -56,9 +56,9 @@ export default function ContextualizedWallet() {
                     exact: true,
                     icon: {
                         icon: {
-                            category: 'user',
                             id: 'settings'
                         },
+                        background: colorTheme.bottomMenuItems.iconGradient,
                     },
                 }
             ]}
