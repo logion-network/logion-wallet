@@ -7,7 +7,7 @@ exports[`renders 1`] = `
   <img
     alt="logo"
     height={100}
-    src="/logo.png"
+    src="/logo_black.png"
   />
 </div>
 `;
