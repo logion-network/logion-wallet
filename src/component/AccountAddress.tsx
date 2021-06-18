@@ -19,7 +19,7 @@ export default function AccountAddress(props: Props) {
     let style: CSSProperties = {};
     const icon = props.colors.legalOfficerIcon;
     if(props.address.isLegalOfficer) {
-        style['backgroundImage'] = `url("${process.env.PUBLIC_URL}/assets/${icon.category}/${props.colorThemeType}/${icon.id}.svg")`;
+        style['backgroundImage'] = `url("${process.env.PUBLIC_URL}/assets/${icon.id}.svg")`;
         style['backgroundRepeat'] = 'no-repeat';
         style['backgroundPositionX'] = '6px';
         style['backgroundPositionY'] = 'center';
