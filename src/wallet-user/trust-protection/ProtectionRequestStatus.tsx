@@ -1,10 +1,4 @@
-import React, {useCallback, useState} from 'react';
-import Button from 'react-bootstrap/Button';
-
-import { useLogionChain, Unsubscriber, ISubmittableResult, replaceUnsubscriber } from '../../logion-chain';
-import { createRecovery } from '../../logion-chain/Recovery';
-import ExtrinsicSubmissionResult from '../../legal-officer/ExtrinsicSubmissionResult';
-import { useRootContext } from '../../RootContext';
+import React from 'react';
 
 import {useUserContext} from "../UserContext";
 import {legalOfficerByAddress} from "./Model";
@@ -12,30 +6,10 @@ import {ProtectionRequest} from "../../legal-officer/Types";
 
 import CreateProtectionRequestForm from "./CreateProtectionRequestForm";
 import LegalOfficerInfo from "../../component/LegalOfficerInfo";
+import ProtectionRequestActivating from './ProtectionRequestActivating';
 
 export default function ProtectionRequestStatus() {
-    const { api } = useLogionChain();
-    const { currentAddress } = useRootContext();
-    const { pendingProtectionRequests, acceptedProtectionRequests, recoveryConfig, refreshRequests } = useUserContext();
-    const [ activationResult, setActivationResult ] = useState<ISubmittableResult | null>(null);
-    const [ activationError, setActivationError ] = useState<any>(null);
-    const [ activationUnsubscriber, setActivationUnsubscriber ] = useState<Unsubscriber | null>(null);
-
-    const activateProtection = useCallback((request: ProtectionRequest) => {
-        setActivationResult(null);
-        setActivationError(null);
-        (async function() {
-            const unsubscriber = createRecovery({
-                api: api!,
-                signerId: currentAddress,
-                callback: setActivationResult,
-                errorCallback: setActivationError,
-                legalOfficers: request.decisions.map(decision => decision.legalOfficerAddress),
-            });
-            await replaceUnsubscriber(activationUnsubscriber, setActivationUnsubscriber, unsubscriber);
-            refreshRequests!();
-        })();
-    }, [ api, currentAddress, refreshRequests, activationUnsubscriber, setActivationUnsubscriber ]);
+    const { pendingProtectionRequests, acceptedProtectionRequests, recoveryConfig } = useUserContext();
 
     if (pendingProtectionRequests === null || acceptedProtectionRequests === null) {
         return null;
@@ -68,42 +42,7 @@ export default function ProtectionRequestStatus() {
         const createdProtectionRequest: ProtectionRequest = acceptedProtectionRequests[0];
 
         if(recoveryConfig!.isEmpty) {
-            return (
-                <>
-                    <h2>My Legal Officers</h2>
-                    <p>
-                        Your Logion Trust Protection request ({createdProtectionRequest.id}) has been accepted by your
-                        Legal Officers. You can now activate your protection.
-                    </p>
-                    <ul>
-                        {
-                            createdProtectionRequest.decisions
-                                .map(decision => {
-                                    const legalOfficer = legalOfficerByAddress(decision.legalOfficerAddress);
-                                    return (
-                                        <li key={legalOfficer.address}>
-                                            <LegalOfficerInfo legalOfficer={legalOfficer}/>
-                                        </li>
-                                    );
-                                })
-                        }
-                    </ul>
-                    {
-                        activationResult === null &&
-                        <p>
-                            <Button data-testid="btnActivate" onClick={() => activateProtection(createdProtectionRequest)}>Activate</Button>
-                        </p>
-                    }
-                    {
-                        (activationResult !== null || activationError !== null) &&
-                        <ExtrinsicSubmissionResult
-                            result={activationResult}
-                            error={activationError}
-                            successMessage="Protection successfully activated."
-                        />
-                    }
-                </>
-            );
+            return <ProtectionRequestActivating />;
         } else {
             return (
                 <>

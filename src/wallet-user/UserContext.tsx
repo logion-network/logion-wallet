@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useCallback } from "react";
+import React, { useContext, useEffect, useCallback, useReducer, Reducer } from "react";
 import { Option } from '@polkadot/types';
 
 import { useLogionChain } from '../logion-chain';
@@ -23,11 +23,12 @@ export interface UserContext {
     dataAddress: string | null,
     createTokenRequest: ((request: CreateTokenRequest) => Promise<TokenizationRequest>) | null,
     createdTokenRequest: TokenizationRequest | null,
+    fetchForAddress: string | null,
     pendingTokenizationRequests: TokenizationRequest[] | null,
     acceptedTokenizationRequests: TokenizationRequest[] | null,
     rejectedTokenizationRequests: TokenizationRequest[] | null,
     refreshRequests: (() => void) | null,
-    createProtectionRequest: ((request: CreateProtectionRequest) => Promise<ProtectionRequest>) | null,
+    createProtectionRequest: ((request: CreateProtectionRequest) => Promise<void>) | null,
     pendingProtectionRequests: ProtectionRequest[] | null,
     acceptedProtectionRequests: ProtectionRequest[] | null,
     rejectedProtectionRequests: ProtectionRequest[] | null,
@@ -40,6 +41,7 @@ function initialContextValue(): UserContext {
         dataAddress: null,
         createTokenRequest: null,
         createdTokenRequest: null,
+        fetchForAddress: null,
         pendingTokenizationRequests: null,
         acceptedTokenizationRequests: null,
         rejectedTokenizationRequests: null,
@@ -55,6 +57,83 @@ function initialContextValue(): UserContext {
 
 const UserContextObject: React.Context<UserContext> = React.createContext(initialContextValue());
 
+type ActionType = 'FETCH_IN_PROGRESS'
+    | 'SET_DATA'
+    | 'SET_CREATE_TOKEN_REQUEST_FUNCTION'
+    | 'SET_CREATED_TOKEN_REQUEST'
+    | 'SET_REFRESH_REQUESTS_FUNCTION'
+    | 'SET_CREATE_PROTECTION_REQUEST_FUNCTION'
+;
+
+interface Action {
+    type: ActionType,
+    createTokenRequest?: (request: CreateTokenRequest) => Promise<TokenizationRequest>,
+    createdTokenRequest?: TokenizationRequest,
+    dataAddress?: string,
+    pendingTokenizationRequests?: TokenizationRequest[],
+    acceptedTokenizationRequests?: TokenizationRequest[],
+    rejectedTokenizationRequests?: TokenizationRequest[],
+    pendingProtectionRequests?: ProtectionRequest[],
+    acceptedProtectionRequests?: ProtectionRequest[],
+    rejectedProtectionRequests?: ProtectionRequest[],
+    recoveryConfig?: Option<RecoveryConfig>,
+    refreshRequests?: () => void,
+    createProtectionRequest?: (request: CreateProtectionRequest) => Promise<void>,
+}
+
+const reducer: Reducer<UserContext, Action> = (state: UserContext, action: Action): UserContext => {
+    switch (action.type) {
+        case 'FETCH_IN_PROGRESS':
+            console.log("fetch in progress for " + action.dataAddress!);
+            return {
+                ...state,
+                fetchForAddress: action.dataAddress!,
+            };
+        case 'SET_DATA':
+            if(action.dataAddress === state.fetchForAddress) {
+                console.log("setting data for " + state.fetchForAddress);
+                return {
+                    ...state,
+                    dataAddress: action.dataAddress!,
+                    pendingTokenizationRequests: action.pendingTokenizationRequests!,
+                    acceptedTokenizationRequests: action.acceptedTokenizationRequests!,
+                    rejectedTokenizationRequests: action.rejectedTokenizationRequests!,
+                    pendingProtectionRequests: action.pendingProtectionRequests!,
+                    acceptedProtectionRequests: action.acceptedProtectionRequests!,
+                    rejectedProtectionRequests: action.rejectedProtectionRequests!,
+                    recoveryConfig: action.recoveryConfig!,
+                    fetchForAddress: null,
+                };
+            } else {
+                console.log(`Skipping data because ${action.dataAddress} <> ${state.fetchForAddress}`);
+                return state;
+            }
+        case 'SET_CREATE_TOKEN_REQUEST_FUNCTION':
+            return {
+                ...state,
+                createTokenRequest: action.createTokenRequest!
+            };
+        case 'SET_CREATED_TOKEN_REQUEST':
+            return {
+                ...state,
+                createdTokenRequest: action.createdTokenRequest!
+            };
+        case "SET_REFRESH_REQUESTS_FUNCTION":
+            return {
+                ...state,
+                refreshRequests: action.refreshRequests!,
+            };
+        case "SET_CREATE_PROTECTION_REQUEST_FUNCTION":
+            return {
+                ...state,
+                createProtectionRequest: action.createProtectionRequest!,
+            };
+        default:
+            /* istanbul ignore next */
+            throw new Error(`Unknown type: ${action.type}`);
+    }
+}
+
 export interface Props {
     children: Children
 }
@@ -62,100 +141,109 @@ export interface Props {
 export function UserContextProvider(props: Props) {
     const { currentAddress } = useRootContext();
     const { api, apiState } = useLogionChain();
-    const [ contextValue, setContextValue ] = useState<UserContext>(initialContextValue());
-    const [ fetchedInitially, setFetchedInitially ] = useState<boolean>(false);
-    const [ refreshing, setRefreshing ] = useState<boolean>(false);
+    const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
     useEffect(() => {
         if (contextValue.createTokenRequest === null) {
             const createTokenRequest = async (request: CreateTokenRequest): Promise<TokenizationRequest> => {
                 const createdTokenRequest = await modelCreateTokenRequest(request);
-                setContextValue({...contextValue, createdTokenRequest})
+                dispatch({
+                    type: "SET_CREATED_TOKEN_REQUEST",
+                    createdTokenRequest
+                });
                 return createdTokenRequest;
             }
-            setContextValue({...contextValue, createTokenRequest});
+            dispatch({
+                type: 'SET_CREATE_TOKEN_REQUEST_FUNCTION',
+                createTokenRequest
+            });
         }
-    }, [contextValue, setContextValue]);
+    }, [contextValue, dispatch]);
 
     const refreshRequests = useCallback(() => {
-        async function fetchAndSetRequests() {
-            const pendingTokenizationRequests = await fetchRequests({
-                requesterAddress: currentAddress,
-                status: "PENDING",
-            });
-            const acceptedTokenizationRequests = await fetchRequests({
-                requesterAddress: currentAddress,
-                status: "ACCEPTED",
-            });
-            const rejectedTokenizationRequests = await fetchRequests({
-                requesterAddress: currentAddress,
-                status: "REJECTED",
-            });
-            const pendingProtectionRequests = await fetchProtectionRequests({
-                requesterAddress: currentAddress,
-                statuses: [ "PENDING" ],
-            });
-            const acceptedProtectionRequests = await fetchProtectionRequests({
-                requesterAddress: currentAddress,
-                statuses: [ "ACCEPTED" ],
-            });
-            const rejectedProtectionRequests = await fetchProtectionRequests({
-                requesterAddress: currentAddress,
-                statuses: [ "REJECTED" ],
-            });
-            const recoveryConfig = await getRecoveryConfig({
-                api: api!,
-                accountId: currentAddress
-            });
-
-            setRefreshing(false);
-            setContextValue({
-                ...contextValue,
-                pendingTokenizationRequests,
-                acceptedTokenizationRequests,
-                rejectedTokenizationRequests,
-                pendingProtectionRequests,
-                acceptedProtectionRequests,
-                rejectedProtectionRequests,
-                recoveryConfig,
+        if(api !== null) {
+            dispatch({
+                type: "FETCH_IN_PROGRESS",
                 dataAddress: currentAddress,
             });
+
+            (async function () {
+                const pendingTokenizationRequests = await fetchRequests({
+                    requesterAddress: currentAddress,
+                    status: "PENDING",
+                });
+                const acceptedTokenizationRequests = await fetchRequests({
+                    requesterAddress: currentAddress,
+                    status: "ACCEPTED",
+                });
+                const rejectedTokenizationRequests = await fetchRequests({
+                    requesterAddress: currentAddress,
+                    status: "REJECTED",
+                });
+                const pendingProtectionRequests = await fetchProtectionRequests({
+                    requesterAddress: currentAddress,
+                    statuses: [ "PENDING" ],
+                });
+                const acceptedProtectionRequests = await fetchProtectionRequests({
+                    requesterAddress: currentAddress,
+                    statuses: [ "ACCEPTED" ],
+                });
+                const rejectedProtectionRequests = await fetchProtectionRequests({
+                    requesterAddress: currentAddress,
+                    statuses: [ "REJECTED" ],
+                });
+                const recoveryConfig = await getRecoveryConfig({
+                    api: api!,
+                    accountId: currentAddress
+                });
+
+                dispatch({
+                    type: "SET_DATA",
+                    dataAddress: currentAddress,
+                    pendingTokenizationRequests,
+                    acceptedTokenizationRequests,
+                    rejectedTokenizationRequests,
+                    pendingProtectionRequests,
+                    acceptedProtectionRequests,
+                    rejectedProtectionRequests,
+                    recoveryConfig,
+                });
+            })();
         }
-        if(api !== null) {
-            fetchAndSetRequests();
-        }
-    }, [ api, contextValue, setContextValue, currentAddress, setRefreshing ]);
+    }, [ api, dispatch, currentAddress ]);
 
     useEffect(() => {
-        if(apiState === "READY" && !fetchedInitially && currentAddress !== '') {
-            setFetchedInitially(true);
+        if(apiState === "READY"
+                && currentAddress !== ''
+                && contextValue.dataAddress !== currentAddress
+                && contextValue.fetchForAddress !== currentAddress) {
             refreshRequests();
         }
-    }, [ apiState, fetchedInitially, refreshRequests, currentAddress ]);
-
-    useEffect(() => {
-        if(contextValue.dataAddress !== null && contextValue.dataAddress !== currentAddress && !refreshing) {
-            setRefreshing(true);
-            refreshRequests();
-        }
-    }, [ contextValue, currentAddress, refreshRequests, setRefreshing, refreshing ]);
+    }, [ apiState, contextValue, currentAddress, refreshRequests, dispatch ]);
 
     useEffect(() => {
         if(contextValue.refreshRequests === null) {
-            setContextValue({...contextValue, refreshRequests});
+            dispatch({
+                type: "SET_REFRESH_REQUESTS_FUNCTION",
+                refreshRequests,
+            });
         }
-    }, [refreshRequests, contextValue, setContextValue]);
+    }, [ refreshRequests, contextValue, dispatch ]);
 
     useEffect(() => {
         if (contextValue.createProtectionRequest === null) {
-            const createProtectionRequest = async (request: CreateProtectionRequest): Promise<ProtectionRequest> => {
-                const createdProtectionRequest = await modelCreateProtectionRequest(request);
+            const createProtectionRequest = async (request: CreateProtectionRequest): Promise<void> => {
+                console.log("creating");
+                await modelCreateProtectionRequest(request);
+                console.log("refreshing");
                 refreshRequests();
-                return createdProtectionRequest;
             }
-            setContextValue({...contextValue, createProtectionRequest});
+            dispatch({
+                type: "SET_CREATE_PROTECTION_REQUEST_FUNCTION",
+                createProtectionRequest,
+            });
         }
-    }, [contextValue, refreshRequests, setContextValue]);
+    }, [ contextValue, refreshRequests, dispatch ]);
 
     return (
         <UserContextObject.Provider value={contextValue}>
@@ -165,5 +253,5 @@ export function UserContextProvider(props: Props) {
 }
 
 export function useUserContext(): UserContext {
-    return {...useContext(UserContextObject)};
+    return useContext(UserContextObject);
 }
