@@ -39,7 +39,7 @@ export default function ContextualizedWallet() {
                 }
             ]}
             shieldItem={{
-                text: "Protection Requests",
+                text: "Protection Management",
                 to: PROTECTION_REQUESTS_PATH,
                 exact: true,
                 icon: {

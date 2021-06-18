@@ -1,7 +1,7 @@
 export let pendingTokenizationRequests: any[] | null = null;
 
 export let rejectRequest = () => {
-    
+
 };
 
 export let acceptedTokenizationRequests: any[] | null = null;
@@ -9,10 +9,12 @@ export let acceptedTokenizationRequests: any[] | null = null;
 export let rejectedTokenizationRequests: any[] | null = null;
 
 export let refreshRequests = () => {
-    
+
 };
 
 export let pendingProtectionRequests: any[] | null = null;
+
+export let acceptedProtectionRequests: any[] | null = null;
 
 export let protectionRequestsHistory: any[] | null = null;
 
@@ -24,6 +26,7 @@ export function useLegalOfficerContext() {
         acceptedTokenizationRequests,
         refreshRequests,
         pendingProtectionRequests,
+        acceptedProtectionRequests,
         protectionRequestsHistory,
     };
 }
@@ -50,6 +53,10 @@ export function setRefreshRequests(callback: any) {
 
 export function setPendingProtectionRequests(requests: any[]) {
     pendingProtectionRequests = requests;
+}
+
+export function setAcceptedProtectionRequests(requests: any[]) {
+    acceptedProtectionRequests = requests;
 }
 
 export function setProtectionRequestsHistory(requests: any[]) {

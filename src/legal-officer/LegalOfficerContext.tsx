@@ -23,11 +23,12 @@ export interface LegalOfficerContext {
     rejectedTokenizationRequests: TokenizationRequest[] | null,
     refreshRequests: (() => void) | null,
     pendingProtectionRequests: ProtectionRequest[] | null,
+    acceptedProtectionRequests: ProtectionRequest[] | null,
     protectionRequestsHistory: ProtectionRequest[] | null,
     colorTheme: ColorTheme,
 }
 
-function initialContextValue(legalOfficerAddress: string): LegalOfficerContext {
+function initialContextValue(): LegalOfficerContext {
     return {
         dataAddress: null,
         rejectRequest: null,
@@ -36,21 +37,21 @@ function initialContextValue(legalOfficerAddress: string): LegalOfficerContext {
         rejectedTokenizationRequests: null,
         refreshRequests: null,
         pendingProtectionRequests: null,
+        acceptedProtectionRequests: null,
         protectionRequestsHistory: null,
         colorTheme: LIGHT_MODE,
     };
 }
 
-const LegalOfficerContextObject: React.Context<LegalOfficerContext> = React.createContext(initialContextValue(""));
+const LegalOfficerContextObject: React.Context<LegalOfficerContext> = React.createContext(initialContextValue());
 
 export interface Props {
-    legalOfficerAddress: string,
     children: JSX.Element | JSX.Element[] | null
 }
 
 export function LegalOfficerContextProvider(props: Props) {
     const { currentAddress } = useRootContext();
-    const [ contextValue, setContextValue ] = useState<LegalOfficerContext>(initialContextValue(props.legalOfficerAddress));
+    const [ contextValue, setContextValue ] = useState<LegalOfficerContext>(initialContextValue());
     const [ fetchedInitially, setFetchedInitially ] = useState<boolean>(false);
     const [ refreshing, setRefreshing ] = useState<boolean>(false);
 
@@ -72,6 +73,10 @@ export function LegalOfficerContextProvider(props: Props) {
                 legalOfficerAddress: currentAddress,
                 statuses: ["PENDING"],
             });
+            const acceptedProtectionRequests = await fetchProtectionRequests({
+                legalOfficerAddress: currentAddress,
+                statuses: ["ACCEPTED"],
+            });
             const protectionRequestsHistory = await fetchProtectionRequests({
                 legalOfficerAddress: currentAddress,
                 statuses: ["ACCEPTED", "REJECTED"],
@@ -84,6 +89,7 @@ export function LegalOfficerContextProvider(props: Props) {
                 acceptedTokenizationRequests,
                 rejectedTokenizationRequests,
                 pendingProtectionRequests,
+                acceptedProtectionRequests,
                 protectionRequestsHistory,
                 dataAddress: currentAddress,
             });
