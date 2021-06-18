@@ -7,6 +7,7 @@ exports[`Renders accepted requests 1`] = `
   </h3>
   <ForwardRef
     bordered={true}
+    responsive={true}
     striped={true}
   >
     <thead>

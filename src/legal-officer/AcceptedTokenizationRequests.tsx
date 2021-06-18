@@ -14,7 +14,7 @@ export default function AcceptedTokenizationRequests() {
     return (
         <>
             <h3>Accepted</h3>
-            <Table striped bordered>
+            <Table striped bordered responsive>
                 <thead>
                     <tr>
                         <th>Requester</th>

@@ -14,7 +14,7 @@ export default function RejectedTokenizationRequests() {
     return (
         <>
             <h3>Rejected</h3>
-            <Table striped bordered>
+            <Table striped bordered responsive>
                 <thead>
                     <tr>
                         <th>Requester</th>
