@@ -4,7 +4,6 @@ import Button from 'react-bootstrap/Button';
 import { FullWidthPane } from './component/Dashboard';
 import { ColorTheme } from './component/ColorTheme';
 import Frame from './component/Frame';
-import { useRootContext } from './RootContext';
 
 import { useLogionChain, ApiState, NodeMetadata } from './logion-chain';
 
@@ -28,19 +27,11 @@ export interface Props {
 
 export default function Settings(props: Props) {
     const { apiState, connect, connectedNodeMetadata } = useLogionChain();
-    const { addresses, selectAddress } = useRootContext();
-
-    if(addresses === null || selectAddress === null) {
-        return null;
-    }
 
     const connectButton = apiState === 'DISCONNECTED' ? <Button onClick={connect}>Connect</Button> : null;
 
     return (
-        <FullWidthPane
-            addresses={ addresses }
-            selectAddress={ selectAddress }
-        >
+        <FullWidthPane>
             <h1>Settings</h1>
             <Frame
                 colors={ props.colors }

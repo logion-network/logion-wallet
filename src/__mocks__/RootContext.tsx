@@ -1,4 +1,4 @@
-import {TEST_WALLET_USER} from "../wallet-user/Model.test";
+import { TEST_WALLET_USER } from '../wallet-user/TestData';
 
 export let selectAddress = jest.fn();
 

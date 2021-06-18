@@ -25,6 +25,7 @@ export default function ContextualizedWallet() {
             selectAddress={ selectAddress }
             menuTop={[
                 {
+                    id: "tokens",
                     text: "Tokens",
                     to: ACCOUNT_PATH,
                     exact: true,
@@ -37,6 +38,7 @@ export default function ContextualizedWallet() {
                 }
             ]}
             shieldItem={{
+                id: "protection",
                 text: "My Logion Trust Protection",
                 to: TRUST_PROTECTION_PATH,
                 exact: true,
@@ -51,6 +53,7 @@ export default function ContextualizedWallet() {
             }}
             menuBottom={[
                 {
+                    id: "settings",
                     text: "Settings",
                     to: SETTINGS_PATH,
                     exact: true,

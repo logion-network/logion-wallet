@@ -1,0 +1,154 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders ContentPane 1`] = `
+<React.Fragment>
+  <PrimaryArea
+    width={6}
+  />
+  <SecondaryArea
+    width={4}
+  />
+</React.Fragment>
+`;
+
+exports[`renders Dashboard 1`] = `
+<Container
+  className="Dashboard"
+  fluid={true}
+  style={
+    Object {
+      "backgroundColor": "#3b6cf40d",
+      "color": "#000000",
+    }
+  }
+>
+  <style>
+    
+    .Dashboard .PrimaryArea .table {
+        color: #000000;
+    }
+
+    .Dashboard .SecondaryArea .table {
+        color: #000000;
+    }
+
+    .modal-dialog {
+        background-color: white;
+    }
+
+    .modal-content {
+        color: #000000;
+        background-color: #3b6cf40d;
+    }
+
+    .form-control,
+    .form-control[readonly] {
+        background-color: #3b6cf40d;
+        color: #000000;
+    }
+
+    .Dashboard a {
+        color: #000000;
+    }
+
+    .Dashboard .Sidebar .MenuItem.active {
+        background-color: #3b6cf426;
+    }
+    
+  </style>
+  <Row
+    noGutters={true}
+  >
+    <Col
+      md={2}
+    >
+      <div
+        className="Sidebar"
+        style={
+          Object {
+            "backgroundColor": "#ffffff",
+            "boxShadow": "0 0 25px #3b6cf41a",
+            "color": "#000000",
+          }
+        }
+      >
+        <Logo
+          colorThemeType="light"
+          shadowColor="#3b6cf41a"
+        />
+        <div
+          className="MenuArea"
+        >
+          <Menu
+            colorThemeType="light"
+            items={Array []}
+          />
+          <Shield
+            colorThemeType="light"
+            item={
+              Object {
+                "exact": true,
+                "text": "Protection",
+                "to": "/",
+              }
+            }
+          />
+          <Menu
+            colorThemeType="light"
+            items={Array []}
+          />
+        </div>
+      </div>
+    </Col>
+    <div
+      className="AddressSwitcherArea"
+    >
+      <AddressSwitcher
+        addresses={
+          Object {
+            "addresses": Array [
+              Object {
+                "address": "address1",
+                "isLegalOfficer": false,
+                "name": "Name 1",
+              },
+              Object {
+                "address": "address2",
+                "isLegalOfficer": false,
+                "name": "Name 2",
+              },
+            ],
+            "currentAddress": Object {
+              "address": "address1",
+              "isLegalOfficer": false,
+              "name": "Name 1",
+            },
+          }
+        }
+        colorThemeType="light"
+        colors={
+          Object {
+            "background": "#3b6cf40d",
+            "foreground": "#000000",
+            "hintColor": "#00000099",
+            "iconBackground": "#3b6cf4",
+            "legalOfficerIcon": Object {
+              "category": "legal-officer",
+              "id": "account-shield",
+            },
+          }
+        }
+        selectAddress={[MockFunction]}
+      />
+    </div>
+  </Row>
+</Container>
+`;
+
+exports[`renders FullWidthPane 1`] = `
+<React.Fragment>
+  <PrimaryArea
+    width={10}
+  />
+</React.Fragment>
+`;

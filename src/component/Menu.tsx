@@ -16,7 +16,7 @@ export default function Menu(props: Props) {
         <div className="Menu">
             {
                 props.items.map(item => (
-                    <MenuItemComponent item={ item } colorThemeType={ props.colorThemeType } />
+                    <MenuItemComponent key={ item.id } item={ item } colorThemeType={ props.colorThemeType } />
                 ))
             }
         </div>

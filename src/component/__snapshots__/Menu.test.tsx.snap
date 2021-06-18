@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<div
+  className="Menu"
+>
+  <MenuItem
+    colorThemeType="dark"
+    item={
+      Object {
+        "exact": true,
+        "id": "item1",
+        "text": "Item1",
+        "to": "url1",
+      }
+    }
+  />
+  <MenuItem
+    colorThemeType="dark"
+    item={
+      Object {
+        "exact": true,
+        "icon": Object {
+          "icon": Object {
+            "id": "iconId",
+          },
+        },
+        "id": "item2",
+        "text": "Item2",
+        "to": "url2",
+      }
+    }
+  />
+</div>
+`;

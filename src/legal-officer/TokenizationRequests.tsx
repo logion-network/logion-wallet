@@ -2,7 +2,6 @@ import React from 'react';
 
 import { ContentPane } from '../component/Dashboard';
 import Frame from '../component/Frame';
-import { useRootContext } from '../RootContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import PendingTokenizationRequests from './PendingTokenizationRequests';
@@ -11,18 +10,10 @@ import RejectedTokenizationRequests from './RejectedTokenizationRequests';
 import RefreshTokenizationRequestsButton from './RefreshTokenizationRequestsButton';
 
 export default function TokenizationRequests() {
-    const { addresses, selectAddress } = useRootContext();
     const { colorTheme } = useLegalOfficerContext();
-
-    if(addresses === null || selectAddress === null) {
-        return null;
-    }
 
     return (
         <ContentPane
-            addresses={ addresses }
-            selectAddress={ selectAddress }
-            colors={ colorTheme }
             primaryAreaChildren={
                 <>
                     <h1>Tokens</h1>

@@ -2,15 +2,14 @@ jest.mock('../UserContext');
 jest.mock('../../logion-chain');
 jest.mock('../../RootContext');
 
-import {TEST_WALLET_USER} from "../Model.test";
-import {DEFAULT_LEGAL_OFFICER} from "../../legal-officer/Types";
-import {ANOTHER_LEGAL_OFFICER} from "./Model.test";
-import {ISO_DATETIME_PATTERN} from "../../logion-chain/datetime";
+import { TEST_WALLET_USER } from '../TestData';
+import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from "../../legal-officer/Types";
+import { ISO_DATETIME_PATTERN } from "../../logion-chain/datetime";
 import { setCreateProtectionRequest } from "../UserContext";
-import {shallowRender} from "../../tests";
+import { shallowRender } from "../../tests";
 import React from "react";
 import CreateProtectionRequestForm from "./CreateProtectionRequestForm";
-import {render, screen, fireEvent, waitFor} from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 
 test("renders", () => {
     const tree = shallowRender(<CreateProtectionRequestForm />)

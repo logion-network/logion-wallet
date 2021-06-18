@@ -1,5 +1,5 @@
 import {DEFAULT_LEGAL_OFFICER, TokenizationRequest} from "../../legal-officer/Types";
-import {TEST_WALLET_USER} from "../Model.test";
+import { TEST_WALLET_USER } from '../TestData';
 import {ApiPromise} from '@polkadot/api';
 import {ProtectionRequest} from "../../legal-officer/Types";
 import { DARK_MODE } from '../Types';

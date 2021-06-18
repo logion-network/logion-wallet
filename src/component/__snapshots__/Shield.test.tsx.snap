@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<div
+  className="Shield"
+>
+  <MenuItem
+    colorThemeType="light"
+    height={90}
+    item={
+      Object {
+        "exact": true,
+        "id": "item1",
+        "text": "Item1",
+        "to": "url1",
+      }
+    }
+  />
+</div>
+`;

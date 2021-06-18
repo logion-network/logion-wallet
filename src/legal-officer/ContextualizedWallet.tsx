@@ -27,6 +27,7 @@ export default function ContextualizedWallet() {
             selectAddress={ selectAddress }
             menuTop={[
                 {
+                    id: "tokens",
                     text: "Tokens",
                     to: TOKENIZATION_REQUESTS_PATH,
                     exact: true,
@@ -39,6 +40,7 @@ export default function ContextualizedWallet() {
                 }
             ]}
             shieldItem={{
+                id: "protection",
                 text: "Protection Management",
                 to: PROTECTION_REQUESTS_PATH,
                 exact: true,
@@ -53,6 +55,7 @@ export default function ContextualizedWallet() {
             }}
             menuBottom={[
                 {
+                    id: "settings",
                     text: "Settings",
                     to: SETTINGS_PATH,
                     exact: true,

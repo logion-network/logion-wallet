@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<NavLink
+  className="MenuItem"
+  exact={true}
+  style={Object {}}
+  to="url1"
+>
+  <span
+    className="text-wrapper"
+  >
+    <span
+      className="text"
+    >
+      Item1
+    </span>
+  </span>
+</NavLink>
+`;

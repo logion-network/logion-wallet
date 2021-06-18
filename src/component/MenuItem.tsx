@@ -7,6 +7,7 @@ import MenuIcon from './MenuIcon';
 import './MenuItem.css';
 
 export interface MenuItemData {
+    id: string,
     text: string,
     to: string,
     exact: boolean,

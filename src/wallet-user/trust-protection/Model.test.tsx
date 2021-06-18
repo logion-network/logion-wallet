@@ -1,12 +1,10 @@
 jest.mock("axios");
 
+import { TEST_WALLET_USER } from '../TestData';
+import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from "../../legal-officer/Types";
 import {CreateProtectionRequest, createProtectionRequest} from "./Model";
 import {mockPost} from "axios";
 import moment from "moment";
-
-export const TEST_WALLET_USER = "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY";
-export const DEFAULT_LEGAL_OFFICER = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"; // Alice
-export const ANOTHER_LEGAL_OFFICER = "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty"; // Bob
 
 test("Create Protection request", async () => {
     const request: CreateProtectionRequest = {
