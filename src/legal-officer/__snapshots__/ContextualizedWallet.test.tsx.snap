@@ -49,8 +49,11 @@ exports[`renders 1`] = `
       Object {
         "exact": true,
         "icon": Object {
+          "background": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
           "icon": Object {
-            "category": "legal-officer",
             "id": "settings",
           },
         },
@@ -64,8 +67,11 @@ exports[`renders 1`] = `
       Object {
         "exact": true,
         "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
           "icon": Object {
-            "category": "legal-officer",
             "id": "tokens",
           },
         },
@@ -81,7 +87,7 @@ exports[`renders 1`] = `
       "icon": Object {
         "height": "auto",
         "icon": Object {
-          "category": "legal-officer",
+          "hasVariants": true,
           "id": "shield",
         },
         "width": "auto",

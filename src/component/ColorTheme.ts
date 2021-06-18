@@ -40,8 +40,9 @@ export interface AccountAddressColors extends BackgroundAndForegroundColors {
 }
 
 export interface Icon {
-    category: string,
+    category?: string,
     id: string,
+    hasVariants?: boolean,
 }
 
 export interface MenuIcon {
