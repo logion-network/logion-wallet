@@ -16,9 +16,7 @@ export default function RequestPending(props: Props) {
                 <p>
                     Your Logion Recovery request ({ props.request.id })
                     { forAccount } has been submitted. A Legal Officer
-                    will contact you as soon as possible to finalize the KYC process. Please note that, after the
-                    successful completion of one of your Legal Officer approval processes, you will be able to use all
-                    features provided by your logion account dashboard.
+                    will contact you as soon as possible to finalize the KYC process.
                 </p>
                 <ul>
                 {

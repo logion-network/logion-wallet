@@ -100,8 +100,10 @@ export default function CreateProtectionRequestForm(props: Props) {
                 {
                     props.isRecovery &&
                     <Alert variant="warning">
-                        You have to select the Legal
-                        Officers already in charge of the account to be recovered
+                        Please select the 2 legal officers you’ve selected at the creation of the account to be
+                        recovered. Please note that those Legal Officers will execute their due diligence to authorize
+                        the recovery and will be, then, the two Legal Officers in charge of protecting this current
+                        account you are using to get your assets back.
                     </Alert>
                 }
                 {
