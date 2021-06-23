@@ -45,16 +45,26 @@ Array [
         <p>
           Details: 
           <br />
-          Modero Bruxelles
-          <br />
-          Central administration 
-          <br />
-          Nijverheidslaan 1
-          <br />
-          B - 1853 Grimbergen (Strombeek-Bever)
-          <br />
-          Belgium
-          <br />
+          <span>
+            Modero Bruxelles
+            <br />
+          </span>
+          <span>
+            Central administration 
+            <br />
+          </span>
+          <span>
+            Nijverheidslaan 1
+            <br />
+          </span>
+          <span>
+            B - 1853 Grimbergen (Strombeek-Bever)
+            <br />
+          </span>
+          <span>
+            Belgium
+            <br />
+          </span>
         </p>
       </div>
     </div>

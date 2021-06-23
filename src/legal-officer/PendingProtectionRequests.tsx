@@ -29,9 +29,13 @@ interface ReviewState {
 
 const NO_REVIEW_STATE = { status: ReviewStatus.NONE };
 
-export default function PendingProtectionRequests() {
+export interface Props {
+    recovery: boolean,
+}
+
+export default function PendingProtectionRequests(props: Props) {
     const { currentAddress } = useRootContext();
-    const { pendingProtectionRequests, refreshRequests } = useLegalOfficerContext();
+    const { pendingProtectionRequests, refreshRequests, pendingRecoveryRequests } = useLegalOfficerContext();
     const [ rejectReason, setRejectReason ] = useState<string>("");
     const [ reviewState, setReviewState ] = useState<ReviewState>(NO_REVIEW_STATE);
 
@@ -86,8 +90,15 @@ export default function PendingProtectionRequests() {
         })();
     }, [ reviewState, currentAddress, setReviewState, refreshRequests ]);
 
-    if (pendingProtectionRequests === null) {
+    if (pendingProtectionRequests === null || pendingRecoveryRequests === null) {
         return null;
+    }
+
+    let requests;
+    if(props.recovery) {
+        requests = pendingRecoveryRequests;
+    } else {
+        requests = pendingProtectionRequests;
     }
 
     return (
@@ -105,7 +116,7 @@ export default function PendingProtectionRequests() {
                 </thead>
                 <tbody>
                     {
-                        pendingProtectionRequests.map(request => (
+                        requests.map(request => (
                             <tr key={request.id}>
                                 <td>{ request.requesterAddress }</td>
                                 <td>{ request.userIdentity.firstName }</td>

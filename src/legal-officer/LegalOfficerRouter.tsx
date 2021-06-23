@@ -4,11 +4,13 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import {
     TOKENIZATION_REQUESTS_PATH,
     PROTECTION_REQUESTS_PATH,
+    RECOVERY_REQUESTS_PATH,
     SETTINGS_PATH
 } from './LegalOfficerPaths';
 
 import TokenizationRequests from './TokenizationRequests';
 import ProtectionRequests from './ProtectionRequests';
+import RecoveryRequests from './RecoveryRequests';
 import Settings from './Settings';
 
 export default function LegalOfficerRouter() {
@@ -21,6 +23,9 @@ export default function LegalOfficerRouter() {
                 </Route>
                 <Route path={ PROTECTION_REQUESTS_PATH }>
                     <ProtectionRequests />
+                </Route>
+                <Route path={ RECOVERY_REQUESTS_PATH }>
+                    <RecoveryRequests />
                 </Route>
                 <Route path={ SETTINGS_PATH }>
                     <Settings />

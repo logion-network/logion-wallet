@@ -11,10 +11,9 @@ import { createRecovery } from '../../logion-chain/Recovery';
 
 import { setPendingProtectionRequests, setAcceptedProtectionRequests, setRecoveryConfig } from "../UserContext";
 import React from "react";
-import ProtectionRequestActivating from "./ProtectionRequestActivating";
+import RequestActivating from "./RequestActivating";
 import { ProtectionRequest } from '../../legal-officer/Types';
-import { DEFAULT_IDENTITY } from '../../component/Identity.test';
-import { DEFAULT_ADDRESS } from '../../component/PostalAddress.test';
+import { DEFAULT_IDENTITY, DEFAULT_ADDRESS } from '../../component/TestData';
 import { TEST_WALLET_USER } from "../TestData";
 
 test("Activation of accepted protection request", async () => {
@@ -42,12 +41,14 @@ test("Activation of accepted protection request", async () => {
             userIdentity: DEFAULT_IDENTITY,
             userPostalAddress: DEFAULT_ADDRESS,
             createdOn: moment('2021-06-10T13:48:00.000Z').toISOString(),
+            isRecovery: false,
+            addressToRecover: null,
         }
     ];
     setAcceptedProtectionRequests(requests);
     setRecoveryConfig({ isEmpty: true });
 
-    render(<ProtectionRequestActivating/>);
+    render(<RequestActivating/>);
     const activateButton = screen.getByTestId('btnActivate');
     userEvent.click(activateButton);
 

@@ -7,27 +7,20 @@ import { useLegalOfficerContext } from './LegalOfficerContext';
 import PendingProtectionRequests from './PendingProtectionRequests';
 import ProtectionRequestsHistory from './ProtectionRequestsHistory';
 import RefreshTokenizationRequestsButton from './RefreshTokenizationRequestsButton';
-import ProtectedUsers from "./ProtectedUsers";
 
-export default function ProtectionRequests() {
+export default function RecoveryRequests() {
     const { colorTheme } = useLegalOfficerContext();
 
     return (
         <ContentPane
             primaryAreaChildren={
                 <>
-                    <h1>Protection Requests</h1>
+                    <h1>Recovery Requests</h1>
                     <Frame
                             colors={colorTheme}
                     >
                         <RefreshTokenizationRequestsButton/>
-                        <PendingProtectionRequests recovery={ false } />
-                    </Frame>
-                    <h1>Activated User Account Protection under my watch</h1>
-                    <Frame
-                            colors={colorTheme}
-                    >
-                        <ProtectedUsers/>
+                        <PendingProtectionRequests recovery={ true } />
                     </Frame>
                 </>
             }
@@ -35,7 +28,7 @@ export default function ProtectionRequests() {
                 <Frame
                     colors={ colorTheme }
                 >
-                    <ProtectionRequestsHistory recovery={ false } />
+                    <ProtectionRequestsHistory recovery={ true } />
                 </Frame>
             }
         />

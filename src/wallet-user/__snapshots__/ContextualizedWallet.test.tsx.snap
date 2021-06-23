@@ -61,6 +61,21 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
         "text": "Settings",
         "to": "/user/settings",
       },
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+          "icon": Object {
+            "id": "recovery",
+          },
+        },
+        "id": "recovery",
+        "text": "Recovery",
+        "to": "/user/recovery",
+      },
     ]
   }
   menuTop={
@@ -164,6 +179,21 @@ exports[`Given connected, when rendering, then show account, no connect button a
         "id": "settings",
         "text": "Settings",
         "to": "/user/settings",
+      },
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+          "icon": Object {
+            "id": "recovery",
+          },
+        },
+        "id": "recovery",
+        "text": "Recovery",
+        "to": "/user/recovery",
       },
     ]
   }
@@ -269,6 +299,21 @@ exports[`Given connecting, when rendering, then show account, no button, no node
         "text": "Settings",
         "to": "/user/settings",
       },
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+          "icon": Object {
+            "id": "recovery",
+          },
+        },
+        "id": "recovery",
+        "text": "Recovery",
+        "to": "/user/recovery",
+      },
     ]
   }
   menuTop={
@@ -370,6 +415,21 @@ exports[`Given connection error, when rendering, then show account, no button, n
         "id": "settings",
         "text": "Settings",
         "to": "/user/settings",
+      },
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+          "icon": Object {
+            "id": "recovery",
+          },
+        },
+        "id": "recovery",
+        "text": "Recovery",
+        "to": "/user/recovery",
       },
     ]
   }
@@ -473,6 +533,21 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
         "text": "Settings",
         "to": "/user/settings",
       },
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+          "icon": Object {
+            "id": "recovery",
+          },
+        },
+        "id": "recovery",
+        "text": "Recovery",
+        "to": "/user/recovery",
+      },
     ]
   }
   menuTop={
@@ -574,6 +649,21 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
         "id": "settings",
         "text": "Settings",
         "to": "/user/settings",
+      },
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+          "icon": Object {
+            "id": "recovery",
+          },
+        },
+        "id": "recovery",
+        "text": "Recovery",
+        "to": "/user/recovery",
       },
     ]
   }

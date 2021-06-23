@@ -70,10 +70,13 @@ export async function setAssetDescription(parameters: SetAssetDescriptionRequest
     });
 }
 
+export type ProtectionRequestKind = 'RECOVERY' | 'PROTECTION_ONLY' | 'ANY';
+
 export interface FetchProtectionRequestSpecification {
     legalOfficerAddress?: string,
     requesterAddress?: string,
-    statuses: LegalOfficerDecisionStatus[],
+    decisionStatuses: LegalOfficerDecisionStatus[],
+    kind: ProtectionRequestKind,
 }
 
 export async function fetchProtectionRequests(

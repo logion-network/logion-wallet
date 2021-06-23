@@ -13,8 +13,8 @@ export default function LegalOfficerInfo(props: Props) {
             {props.legalOfficer.name}
             <Collapsible trigger={button}>
                 <p>Polkadot address: {props.legalOfficer.address}</p>
-                <p>Details: <br/>{props.legalOfficer.details.split(/\n/).map(line => (
-                    <>{line}<br/></>
+                <p>Details: <br/>{props.legalOfficer.details.split(/\n/).map((line, index) => (
+                    <span key={ index } >{line}<br/></span>
                 ))
                 }</p>
             </Collapsible>

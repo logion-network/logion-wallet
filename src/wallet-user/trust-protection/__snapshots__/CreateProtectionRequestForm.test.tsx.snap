@@ -9,275 +9,86 @@ exports[`renders 1`] = `
     inline={false}
     onSubmit={[Function]}
   >
-    <p>
-      If you aim to start a Recovery process to that account, you have to select at least one of the Legal Officer already in charge of the account to be recovered
-    </p>
-    <ButtonGroup
-      role="group"
-      toggle={true}
-      vertical={true}
+    <FormGroup
+      controlId="legalOfficer0"
     >
-      <FormGroup
-        as={
-          Object {
-            "$$typeof": Symbol(react.forward_ref),
-            "defaultProps": Object {
-              "noGutters": false,
-            },
-            "render": [Function],
-          }
-        }
-        controlId="legalOfficer0"
-      >
-        <FormCheck
-          type="checkbox"
-          value="5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
-        />
-        <FormLabel
-          column={false}
-          srOnly={false}
-        >
-          Patrick
-           (
-          5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
-          )
-        </FormLabel>
-      </FormGroup>
-      <FormGroup
-        as={
-          Object {
-            "$$typeof": Symbol(react.forward_ref),
-            "defaultProps": Object {
-              "noGutters": false,
-            },
-            "render": [Function],
-          }
-        }
-        controlId="legalOfficer1"
-      >
-        <FormCheck
-          type="checkbox"
-          value="5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty"
-        />
-        <FormLabel
-          column={false}
-          srOnly={false}
-        >
-          Guillaume
-           (
-          5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty
-          )
-        </FormLabel>
-      </FormGroup>
-      <FormGroup
-        as={
-          Object {
-            "$$typeof": Symbol(react.forward_ref),
-            "defaultProps": Object {
-              "noGutters": false,
-            },
-            "render": [Function],
-          }
-        }
-        controlId="legalOfficer2"
-      >
-        <FormCheck
-          type="checkbox"
-          value="1234567890-abcd-5"
-        />
-        <FormLabel
-          column={false}
-          srOnly={false}
-        >
-          Alain
-           (
-          1234567890-abcd-5
-          )
-        </FormLabel>
-      </FormGroup>
-      <FormGroup
-        as={
-          Object {
-            "$$typeof": Symbol(react.forward_ref),
-            "defaultProps": Object {
-              "noGutters": false,
-            },
-            "render": [Function],
-          }
-        }
-        controlId="legalOfficer3"
-      >
-        <FormCheck
-          type="checkbox"
-          value="1234567890-abcd-6"
-        />
-        <FormLabel
-          column={false}
-          srOnly={false}
-        >
-          Ronald
-           (
-          1234567890-abcd-6
-          )
-        </FormLabel>
-      </FormGroup>
-      <FormGroup
-        as={
-          Object {
-            "$$typeof": Symbol(react.forward_ref),
-            "defaultProps": Object {
-              "noGutters": false,
-            },
-            "render": [Function],
-          }
-        }
-        controlId="legalOfficer4"
-      >
-        <FormCheck
-          type="checkbox"
-          value="1234567890-abcd-7"
-        />
-        <FormLabel
-          column={false}
-          srOnly={false}
-        >
-          Thibaut
-           (
-          1234567890-abcd-7
-          )
-        </FormLabel>
-      </FormGroup>
-      <FormGroup
-        as={
-          Object {
-            "$$typeof": Symbol(react.forward_ref),
-            "defaultProps": Object {
-              "noGutters": false,
-            },
-            "render": [Function],
-          }
-        }
-        controlId="legalOfficer5"
-      >
-        <FormCheck
-          type="checkbox"
-          value="1234567890-abcd-8"
-        />
-        <FormLabel
-          column={false}
-          srOnly={false}
-        >
-          Jona
-           (
-          1234567890-abcd-8
-          )
-        </FormLabel>
-      </FormGroup>
-      <FormGroup
-        as={
-          Object {
-            "$$typeof": Symbol(react.forward_ref),
-            "defaultProps": Object {
-              "noGutters": false,
-            },
-            "render": [Function],
-          }
-        }
-        controlId="legalOfficer6"
-      >
-        <FormCheck
-          type="checkbox"
-          value="1234567890-abcd-9"
-        />
-        <FormLabel
-          column={false}
-          srOnly={false}
-        >
-          Carlos
-           (
-          1234567890-abcd-9
-          )
-        </FormLabel>
-      </FormGroup>
-      <FormGroup
-        as={
-          Object {
-            "$$typeof": Symbol(react.forward_ref),
-            "defaultProps": Object {
-              "noGutters": false,
-            },
-            "render": [Function],
-          }
-        }
-        controlId="legalOfficer7"
-      >
-        <FormCheck
-          type="checkbox"
-          value="1234567890-abcd-10"
-        />
-        <FormLabel
-          column={false}
-          srOnly={false}
-        >
-          Ilias
-           (
-          1234567890-abcd-10
-          )
-        </FormLabel>
-      </FormGroup>
-      <FormGroup
-        as={
-          Object {
-            "$$typeof": Symbol(react.forward_ref),
-            "defaultProps": Object {
-              "noGutters": false,
-            },
-            "render": [Function],
-          }
-        }
-        controlId="legalOfficer8"
-      >
-        <FormCheck
-          type="checkbox"
-          value="1234567890-abcd-11"
-        />
-        <FormLabel
-          column={false}
-          srOnly={false}
-        >
-          Pedroso
-           (
-          1234567890-abcd-11
-          )
-        </FormLabel>
-      </FormGroup>
-      <FormGroup
-        as={
-          Object {
-            "$$typeof": Symbol(react.forward_ref),
-            "defaultProps": Object {
-              "noGutters": false,
-            },
-            "render": [Function],
-          }
-        }
-        controlId="legalOfficer9"
-      >
-        <FormCheck
-          type="checkbox"
-          value="1234567890-abcd-12"
-        />
-        <FormLabel
-          column={false}
-          srOnly={false}
-        >
-          Marc
-           (
-          1234567890-abcd-12
-          )
-        </FormLabel>
-      </FormGroup>
-    </ButtonGroup>
+      <FormCheck
+        label="Patrick (5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY)"
+        type="checkbox"
+      />
+    </FormGroup>
+    <FormGroup
+      controlId="legalOfficer1"
+    >
+      <FormCheck
+        label="Guillaume (5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty)"
+        type="checkbox"
+      />
+    </FormGroup>
+    <FormGroup
+      controlId="legalOfficer2"
+    >
+      <FormCheck
+        label="Alain (1234567890-abcd-5)"
+        type="checkbox"
+      />
+    </FormGroup>
+    <FormGroup
+      controlId="legalOfficer3"
+    >
+      <FormCheck
+        label="Ronald (1234567890-abcd-6)"
+        type="checkbox"
+      />
+    </FormGroup>
+    <FormGroup
+      controlId="legalOfficer4"
+    >
+      <FormCheck
+        label="Thibaut (1234567890-abcd-7)"
+        type="checkbox"
+      />
+    </FormGroup>
+    <FormGroup
+      controlId="legalOfficer5"
+    >
+      <FormCheck
+        label="Jona (1234567890-abcd-8)"
+        type="checkbox"
+      />
+    </FormGroup>
+    <FormGroup
+      controlId="legalOfficer6"
+    >
+      <FormCheck
+        label="Carlos (1234567890-abcd-9)"
+        type="checkbox"
+      />
+    </FormGroup>
+    <FormGroup
+      controlId="legalOfficer7"
+    >
+      <FormCheck
+        label="Ilias (1234567890-abcd-10)"
+        type="checkbox"
+      />
+    </FormGroup>
+    <FormGroup
+      controlId="legalOfficer8"
+    >
+      <FormCheck
+        label="Pedroso (1234567890-abcd-11)"
+        type="checkbox"
+      />
+    </FormGroup>
+    <FormGroup
+      controlId="legalOfficer9"
+    >
+      <FormCheck
+        label="Marc (1234567890-abcd-12)"
+        type="checkbox"
+      />
+    </FormGroup>
     <h3>
       Identity
     </h3>
@@ -1341,12 +1152,14 @@ exports[`renders 1`] = `
         />
       </Col>
     </FormGroup>
-    <p>
-      Do you agree to send your first name, last name, email, phone number and address to the following Legal Officers ?
-    </p>
-    <p>
-      This initial personal information sharing will start KYC process and will also be used in this context of a potential future Account recovery process
-    </p>
+    <React.Fragment>
+      <p>
+        Do you agree to send your first name, last name, email, phone number and address to the following Legal Officers?
+      </p>
+      <p>
+        This initial personal information sharing will start KYC process and will also be used in this context of a potential future Account recovery process
+      </p>
+    </React.Fragment>
     <ButtonGroup
       role="group"
       toggle={false}

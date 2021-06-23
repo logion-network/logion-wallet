@@ -7,12 +7,23 @@ import { useRootContext } from '../RootContext';
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import { decision } from './Model';
 
-export default function ProtectionRequestsHistory() {
-    const { currentAddress } = useRootContext();
-    const { protectionRequestsHistory } = useLegalOfficerContext();
+export interface Props {
+    recovery: boolean,
+}
 
-    if (protectionRequestsHistory === null) {
+export default function ProtectionRequestsHistory(props: Props) {
+    const { currentAddress } = useRootContext();
+    const { protectionRequestsHistory, recoveryRequestsHistory } = useLegalOfficerContext();
+
+    if (protectionRequestsHistory === null || recoveryRequestsHistory === null) {
         return null;
+    }
+
+    let requests;
+    if(props.recovery) {
+        requests = recoveryRequestsHistory;
+    } else {
+        requests = protectionRequestsHistory;
     }
 
     return (
@@ -30,7 +41,7 @@ export default function ProtectionRequestsHistory() {
                 </thead>
                 <tbody>
                     {
-                        protectionRequestsHistory.map(request => (
+                        requests.map(request => (
                             <tr key={request.id}>
                                 <td>{ request.requesterAddress }</td>
                                 <td>{ request.userIdentity.firstName }</td>
