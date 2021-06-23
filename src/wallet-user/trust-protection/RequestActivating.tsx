@@ -12,7 +12,7 @@ import {ProtectionRequest} from "../../legal-officer/Types";
 
 import LegalOfficerInfo from "../../component/LegalOfficerInfo";
 
-export default function ProtectionRequestActivating() {
+export default function RequestActivating() {
     const { api } = useLogionChain();
     const { currentAddress } = useRootContext();
     const { acceptedProtectionRequests, refreshRequests } = useUserContext();

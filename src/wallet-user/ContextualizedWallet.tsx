@@ -3,7 +3,7 @@ import React from 'react';
 import { useLogionChain } from '../logion-chain';
 
 import Dashboard from '../component/Dashboard';
-import UserRouter, { ACCOUNT_PATH, TRUST_PROTECTION_PATH, SETTINGS_PATH } from "./UserRouter";
+import UserRouter, { ACCOUNT_PATH, TRUST_PROTECTION_PATH, SETTINGS_PATH, RECOVERY_PATH } from "./UserRouter";
 import { useUserContext } from "./UserContext";
 import { useRootContext } from '../RootContext';
 
@@ -60,6 +60,18 @@ export default function ContextualizedWallet() {
                     icon: {
                         icon: {
                             id: 'settings'
+                        },
+                        background: colorTheme.bottomMenuItems.iconGradient,
+                    },
+                },
+                {
+                    id: "recovery",
+                    text: "Recovery",
+                    to: RECOVERY_PATH,
+                    exact: true,
+                    icon: {
+                        icon: {
+                            id: 'recovery'
                         },
                         background: colorTheme.bottomMenuItems.iconGradient,
                     },

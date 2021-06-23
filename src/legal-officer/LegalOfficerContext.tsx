@@ -25,6 +25,8 @@ export interface LegalOfficerContext {
     pendingProtectionRequests: ProtectionRequest[] | null,
     acceptedProtectionRequests: ProtectionRequest[] | null,
     protectionRequestsHistory: ProtectionRequest[] | null,
+    pendingRecoveryRequests: ProtectionRequest[] | null,
+    recoveryRequestsHistory: ProtectionRequest[] | null,
     colorTheme: ColorTheme,
 }
 
@@ -39,6 +41,8 @@ function initialContextValue(): LegalOfficerContext {
         pendingProtectionRequests: null,
         acceptedProtectionRequests: null,
         protectionRequestsHistory: null,
+        pendingRecoveryRequests: null,
+        recoveryRequestsHistory: null,
         colorTheme: LIGHT_MODE,
     };
 }
@@ -69,17 +73,32 @@ export function LegalOfficerContextProvider(props: Props) {
                 legalOfficerAddress: currentAddress,
                 status: "REJECTED",
             });
+
             const pendingProtectionRequests = await fetchProtectionRequests({
                 legalOfficerAddress: currentAddress,
-                statuses: ["PENDING"],
+                decisionStatuses: ["PENDING"],
+                kind: 'PROTECTION_ONLY',
             });
             const acceptedProtectionRequests = await fetchProtectionRequests({
                 legalOfficerAddress: currentAddress,
-                statuses: ["ACCEPTED"],
+                decisionStatuses: ["ACCEPTED"],
+                kind: 'PROTECTION_ONLY',
             });
             const protectionRequestsHistory = await fetchProtectionRequests({
                 legalOfficerAddress: currentAddress,
-                statuses: ["ACCEPTED", "REJECTED"],
+                decisionStatuses: ["ACCEPTED", "REJECTED"],
+                kind: 'PROTECTION_ONLY',
+            });
+
+            const pendingRecoveryRequests = await fetchProtectionRequests({
+                legalOfficerAddress: currentAddress,
+                decisionStatuses: ["PENDING"],
+                kind: 'RECOVERY',
+            });
+            const recoveryRequestsHistory = await fetchProtectionRequests({
+                legalOfficerAddress: currentAddress,
+                decisionStatuses: ["ACCEPTED", "REJECTED"],
+                kind: 'RECOVERY',
             });
 
             setRefreshing(false);
@@ -91,6 +110,8 @@ export function LegalOfficerContextProvider(props: Props) {
                 pendingProtectionRequests,
                 acceptedProtectionRequests,
                 protectionRequestsHistory,
+                pendingRecoveryRequests,
+                recoveryRequestsHistory,
                 dataAddress: currentAddress,
             });
         };

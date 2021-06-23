@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`protection request 1`] = `
+<React.Fragment>
+  <h2>
+    Protection request status
+  </h2>
+  <p>
+    Your Logion Trust Protection request (
+    2eb5f71c-7f31-44b5-9390-c3bf56501880
+    ) has been submitted. A Legal Officer will contact you as soon as possible to finalize the KYC process. Please note that, after the successful completion of one of your Legal Officer approval processes, you will be able to use all features provided by your logion account dashboard.
+  </p>
+  <ul>
+    <li>
+      Guillaume
+       (
+      5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty
+      ): 
+      PENDING
+    </li>
+    <li>
+      Patrick
+       (
+      5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+      ): 
+      PENDING
+    </li>
+  </ul>
+</React.Fragment>
+`;
+
+exports[`recovery request 1`] = `
+<React.Fragment>
+  <h2>
+    Recovery Process Status
+  </h2>
+  <p>
+    Your Logion Recovery request (
+    2eb5f71c-7f31-44b5-9390-c3bf56501880
+    )
+     for account toRecover
+     has been submitted. A Legal Officer will contact you as soon as possible to finalize the KYC process. Please note that, after the successful completion of one of your Legal Officer approval processes, you will be able to use all features provided by your logion account dashboard.
+  </p>
+  <ul>
+    <li>
+      Guillaume
+       (
+      5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty
+      ): 
+      PENDING
+    </li>
+    <li>
+      Patrick
+       (
+      5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+      ): 
+      PENDING
+    </li>
+  </ul>
+</React.Fragment>
+`;

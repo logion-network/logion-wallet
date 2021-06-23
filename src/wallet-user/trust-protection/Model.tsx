@@ -11,7 +11,9 @@ export interface CreateProtectionRequest {
     userPostalAddress: PostalAddress,
     legalOfficerAddresses: string[],
     signature: string,
-    signedOn: Moment
+    signedOn: Moment,
+    isRecovery: boolean,
+    addressToRecover: string,
 }
 
 export type LegalOfficerDecisionStatus = "PENDING" | "REJECTED" | "ACCEPTED";
@@ -52,3 +54,22 @@ export function legalOfficerByAddress(address: string): LegalOfficer {
     return legalOfficer === undefined ? unknownLegalOfficer : legalOfficer;
 }
 
+export interface FindRequestParameters {
+    address: string,
+    requests: ProtectionRequest[],
+}
+
+export function findRequest(parameters: FindRequestParameters): ProtectionRequest | null {
+    const { address, requests } = parameters;
+    for(let i = 0; i < requests.length; ++i) {
+        const request = requests[i];
+        if(request.requesterAddress === address) {
+            return request;
+        }
+    }
+    return null;
+}
+
+export function isRecovery(request: ProtectionRequest | null) {
+    return request !== null && request.isRecovery;
+}

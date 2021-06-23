@@ -8,7 +8,7 @@ exports[`renders pending protection request 1`] = `
 <RequestPending
   request={
     Object {
-      "addressToRecover": null,
+      "addressToRecover": "toRecover",
       "createdOn": "2021-06-10T13:48:00.000Z",
       "decisions": Array [
         Object {
@@ -25,7 +25,7 @@ exports[`renders pending protection request 1`] = `
         },
       ],
       "id": "2eb5f71c-7f31-44b5-9390-c3bf56501880",
-      "isRecovery": false,
+      "isRecovery": true,
       "requesterAddress": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
       "userIdentity": Object {
         "email": "john.doe@logion.network",
@@ -49,7 +49,7 @@ exports[`renders protected 1`] = `
 <RequestActivated
   request={
     Object {
-      "addressToRecover": null,
+      "addressToRecover": "toRecover",
       "createdOn": "2021-06-10T13:48:00.000Z",
       "decisions": Array [
         Object {
@@ -66,7 +66,7 @@ exports[`renders protected 1`] = `
         },
       ],
       "id": "2eb5f71c-7f31-44b5-9390-c3bf56501880",
-      "isRecovery": false,
+      "isRecovery": true,
       "requesterAddress": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
       "userIdentity": Object {
         "email": "john.doe@logion.network",

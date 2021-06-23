@@ -9,6 +9,7 @@ import { useRootContext } from '../RootContext';
 import {
     TOKENIZATION_REQUESTS_PATH,
     PROTECTION_REQUESTS_PATH,
+    RECOVERY_REQUESTS_PATH,
     SETTINGS_PATH,
 } from './LegalOfficerPaths';
 
@@ -34,6 +35,18 @@ export default function ContextualizedWallet() {
                     icon: {
                         icon: {
                             id: 'tokens'
+                        },
+                        background: colorTheme.topMenuItems.iconGradient,
+                    },
+                },
+                {
+                    id: "recovery",
+                    text: "Recovery Requests",
+                    to: RECOVERY_REQUESTS_PATH,
+                    exact: true,
+                    icon: {
+                        icon: {
+                            id: 'recovery'
                         },
                         background: colorTheme.topMenuItems.iconGradient,
                     },

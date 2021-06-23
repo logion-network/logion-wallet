@@ -182,15 +182,18 @@ export function UserContextProvider(props: Props) {
                 });
                 const pendingProtectionRequests = await fetchProtectionRequests({
                     requesterAddress: currentAddress,
-                    statuses: [ "PENDING" ],
+                    decisionStatuses: [ "PENDING" ],
+                    kind: "ANY",
                 });
                 const acceptedProtectionRequests = await fetchProtectionRequests({
                     requesterAddress: currentAddress,
-                    statuses: [ "ACCEPTED" ],
+                    decisionStatuses: [ "ACCEPTED" ],
+                    kind: "ANY",
                 });
                 const rejectedProtectionRequests = await fetchProtectionRequests({
                     requesterAddress: currentAddress,
-                    statuses: [ "REJECTED" ],
+                    decisionStatuses: [ "REJECTED" ],
+                    kind: "ANY",
                 });
                 const recoveryConfig = await getRecoveryConfig({
                     api: api!,

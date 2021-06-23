@@ -46,7 +46,9 @@ export interface ProtectionRequest {
     decisions: LegalOfficerDecision[],
     userIdentity: Identity,
     userPostalAddress: PostalAddress,
-    createdOn: string
+    createdOn: string,
+    isRecovery: boolean,
+    addressToRecover: string | null,
 }
 
 export const LIGHT_MODE: ColorTheme = {

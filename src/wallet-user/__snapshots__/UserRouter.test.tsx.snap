@@ -19,6 +19,11 @@ exports[`renders 1`] = `
       <Settings />
     </Route>
     <Route
+      path="/user/recovery"
+    >
+      <Recovery />
+    </Route>
+    <Route
       path=""
     >
       <Redirect

@@ -3,6 +3,8 @@ import {useForm, Controller} from 'react-hook-form';
 import Form from "react-bootstrap/Form";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
+import Alert from "react-bootstrap/Alert";
+
 import {CreateProtectionRequest, legalOfficers} from "./Model";
 import {useUserContext} from "../UserContext";
 import moment from "moment";
@@ -12,7 +14,11 @@ import {Link} from "react-router-dom";
 import {USER_PATH} from "../../RootPaths";
 import {useRootContext} from "../../RootContext";
 
-export default function CreateProtectionRequestForm() {
+export interface Props {
+    isRecovery: boolean,
+}
+
+export default function CreateProtectionRequestForm(props: Props) {
 
     interface FormValues {
         firstName: string,
@@ -24,7 +30,8 @@ export default function CreateProtectionRequestForm() {
         postalCode: string,
         city: string,
         country: string,
-        legalOfficers: string[]
+        legalOfficers: string[],
+        addressToRecover?: string,
     }
 
     const {control, handleSubmit, formState: {errors}} = useForm<FormValues>();
@@ -35,6 +42,7 @@ export default function CreateProtectionRequestForm() {
 
         formValues.legalOfficers = [legalOfficers[0].address, legalOfficers[1].address];
 
+        const addressToRecover = formValues.addressToRecover !== undefined ? formValues.addressToRecover : "";
         const attributes = [
             `${formValues.firstName}`,
             `${formValues.lastName}`,
@@ -46,6 +54,8 @@ export default function CreateProtectionRequestForm() {
             `${formValues.postalCode}`,
             `${formValues.city}`,
             `${formValues.country}`,
+            `${props.isRecovery}`,
+            `${addressToRecover}`,
         ].concat(formValues.legalOfficers);
 
         const signedOn = moment();
@@ -74,23 +84,54 @@ export default function CreateProtectionRequestForm() {
             legalOfficerAddresses: formValues.legalOfficers,
             signature,
             signedOn,
+            isRecovery: props.isRecovery,
+            addressToRecover: formValues.addressToRecover !== undefined ? formValues.addressToRecover : "",
         }
         await createProtectionRequest!(request);
     }
+
     return (
         <>
-            <h2>No protection detected</h2>
+            {
+                !props.isRecovery &&
+                <h2>No protection detected</h2>
+            }
             <Form onSubmit={handleSubmit(submit)}>
-                <p>If you aim to start a Recovery process to that account, you have to select at least one of the Legal
-                    Officer already in charge of the account to be recovered</p>
-                <ButtonGroup toggle vertical={true}>
-                    {legalOfficers.map((legalOfficer, index) => (
-                        <Form.Group as={Row} key={'legalOfficer' + index} controlId={'legalOfficer' + index}>
-                            <Form.Check type="checkbox" value={legalOfficer.address}/>
-                            <Form.Label>{legalOfficer.name} ({legalOfficer.address})</Form.Label>
+                {
+                    props.isRecovery &&
+                    <Alert variant="warning">
+                        You have to select the Legal
+                        Officers already in charge of the account to be recovered
+                    </Alert>
+                }
+                {
+                    legalOfficers.map((legalOfficer, index) => (
+                    <Form.Group key={'legalOfficer' + index} controlId={'legalOfficer' + index}>
+                        <Form.Check type="checkbox" label={`${legalOfficer.name} (${legalOfficer.address})`}/>
+                    </Form.Group>
+                    ))
+                }
+                {
+                    props.isRecovery &&
+                    <>
+                        <h3>Recovery</h3>
+                        <Form.Group as={Row} controlId="accountToRecover">
+                            <Form.Label column sm={3}>Address to Recover</Form.Label>
+                            <Col sm={9}>
+                                <Controller name="addressToRecover"
+                                            control={control}
+                                            defaultValue=""
+                                            rules={{required: 'The address to recover is required'}}
+                                            render={({field}) => <Form.Control isInvalid={!!errors.addressToRecover?.message}
+                                                                               type="text"
+                                                                               data-testid="addressToRecover" {...field} />}
+                                />
+                                <Form.Control.Feedback type="invalid"
+                                                       data-testid="accountToRecoverMessage">{errors.addressToRecover?.message}</Form.Control.Feedback>
+                            </Col>
                         </Form.Group>
-                    ))}
-                </ButtonGroup>
+                    </>
+                }
                 <h3>Identity</h3>
                 <Form.Group as={Row} controlId="firstName">
                     <Form.Label column sm={3}>First Name</Form.Label>
@@ -229,10 +270,24 @@ export default function CreateProtectionRequestForm() {
                     </Col>
                 </Form.Group>
 
-                <p>Do you agree to send your first name, last name, email, phone number and address to the following Legal
-                    Officers ?</p>
-                <p>This initial personal information sharing will start KYC process and will also be used in this context of
-                    a potential future Account recovery process</p>
+                {
+                    props.isRecovery &&
+                    <p>
+                        By selecting your Legal Officers and clicking on the submission button, you will start
+                        a KYC process required in this context of recovery of one account under your legal
+                        officers' protection to this account.
+                    </p>
+                }
+                {
+                    !props.isRecovery &&
+                    <>
+                        <p>Do you agree to send your first name, last name, email, phone number and address to the following Legal
+                        Officers?</p>
+                        <p>This initial personal information sharing will start KYC process and will also be used in this context of
+                        a potential future Account recovery process</p>
+                    </>
+                }
+
                 <ButtonGroup>
                     <Button type="submit" variant="primary" data-testid="btnSubmit">I agree and submit my request</Button>
                     <Link to={USER_PATH}>

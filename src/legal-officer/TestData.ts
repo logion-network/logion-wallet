@@ -11,7 +11,7 @@ export const PENDING_PROTECTION_REQUESTS: ProtectionRequest[] = [
                 legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
                 status: 'PENDING',
                 rejectReason: null,
-                decisionOn: null
+                decisionOn: null,
             }
         ],
         userIdentity: {
@@ -27,7 +27,9 @@ export const PENDING_PROTECTION_REQUESTS: ProtectionRequest[] = [
             city: "Liège",
             country: "Belgium",
         },
-        createdOn: toIsoString(moment('2021-06-10T11:40:00.000Z'))
+        createdOn: toIsoString(moment('2021-06-10T11:40:00.000Z')),
+        isRecovery: false,
+        addressToRecover: null,
     }
 ];
 
@@ -56,6 +58,8 @@ export const PROTECTION_REQUESTS_HISTORY: ProtectionRequest[] = [
             city: "Liège",
             country: "Belgium",
         },
-        createdOn: toIsoString(moment('2021-06-10T11:40:00.000Z'))
+        createdOn: toIsoString(moment('2021-06-10T11:40:00.000Z')),
+        isRecovery: false,
+        addressToRecover: null,
     }
 ];
