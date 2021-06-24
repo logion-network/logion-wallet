@@ -33,6 +33,8 @@ export interface TokenizationRequest {
 
 export type LegalOfficerDecisionStatus = "PENDING" | "REJECTED" | "ACCEPTED";
 
+export type ProtectionRequestStatus = "PENDING" | "ACTIVATED";
+
 export interface LegalOfficerDecision {
     legalOfficerAddress: string,
     status: LegalOfficerDecisionStatus,
@@ -49,6 +51,7 @@ export interface ProtectionRequest {
     createdOn: string,
     isRecovery: boolean,
     addressToRecover: string | null,
+    status: ProtectionRequestStatus,
 }
 
 export const LIGHT_MODE: ColorTheme = {

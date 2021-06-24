@@ -43,6 +43,7 @@ test("Activation of accepted protection request", async () => {
             createdOn: moment('2021-06-10T13:48:00.000Z').toISOString(),
             isRecovery: false,
             addressToRecover: null,
+            status: "PENDING",
         }
     ];
     setAcceptedProtectionRequests(requests);

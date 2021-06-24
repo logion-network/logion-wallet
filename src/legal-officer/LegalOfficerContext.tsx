@@ -23,7 +23,7 @@ export interface LegalOfficerContext {
     rejectedTokenizationRequests: TokenizationRequest[] | null,
     refreshRequests: (() => void) | null,
     pendingProtectionRequests: ProtectionRequest[] | null,
-    acceptedProtectionRequests: ProtectionRequest[] | null,
+    activatedProtectionRequests: ProtectionRequest[] | null,
     protectionRequestsHistory: ProtectionRequest[] | null,
     pendingRecoveryRequests: ProtectionRequest[] | null,
     recoveryRequestsHistory: ProtectionRequest[] | null,
@@ -39,7 +39,7 @@ function initialContextValue(): LegalOfficerContext {
         rejectedTokenizationRequests: null,
         refreshRequests: null,
         pendingProtectionRequests: null,
-        acceptedProtectionRequests: null,
+        activatedProtectionRequests: null,
         protectionRequestsHistory: null,
         pendingRecoveryRequests: null,
         recoveryRequestsHistory: null,
@@ -79,10 +79,11 @@ export function LegalOfficerContextProvider(props: Props) {
                 decisionStatuses: ["PENDING"],
                 kind: 'PROTECTION_ONLY',
             });
-            const acceptedProtectionRequests = await fetchProtectionRequests({
+            const activatedProtectionRequests = await fetchProtectionRequests({
                 legalOfficerAddress: currentAddress,
                 decisionStatuses: ["ACCEPTED"],
                 kind: 'PROTECTION_ONLY',
+                protectionRequestStatus: "ACTIVATED"
             });
             const protectionRequestsHistory = await fetchProtectionRequests({
                 legalOfficerAddress: currentAddress,
@@ -108,7 +109,7 @@ export function LegalOfficerContextProvider(props: Props) {
                 acceptedTokenizationRequests,
                 rejectedTokenizationRequests,
                 pendingProtectionRequests,
-                acceptedProtectionRequests,
+                activatedProtectionRequests,
                 protectionRequestsHistory,
                 pendingRecoveryRequests,
                 recoveryRequestsHistory,

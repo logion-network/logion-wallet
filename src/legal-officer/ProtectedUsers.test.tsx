@@ -6,10 +6,10 @@ import React from 'react';
 import ProtectedUsers from "./ProtectedUsers";
 import { shallowRender } from '../tests';
 import moment from "moment";
-import { setAcceptedProtectionRequests } from "./LegalOfficerContext";
+import { setActivatedProtectionRequests } from "./LegalOfficerContext";
 
 test('renders one row', () => {
-    setAcceptedProtectionRequests([
+    setActivatedProtectionRequests([
         request('2eb5f71c-7f31-44b5-9390-c3bf56501880')
     ]);
     const tree = shallowRender(<ProtectedUsers />);
@@ -17,7 +17,7 @@ test('renders one row', () => {
 });
 
 test('renders 2 rows', () => {
-    setAcceptedProtectionRequests([
+    setActivatedProtectionRequests([
         request('2eb5f71c-7f31-44b5-9390-c3bf56501880'),
         request('9296d068-613f-4b53-9d45-d9cd494d2a45')
     ]);
@@ -56,6 +56,9 @@ function request(id: string): ProtectionRequest {
             city: "Liège",
             country: "Belgium",
         },
+        isRecovery: false,
+        addressToRecover: "",
+        status: "PENDING",
         createdOn: moment('2021-06-10T13:48:00.000Z').toISOString(),
     };
 }

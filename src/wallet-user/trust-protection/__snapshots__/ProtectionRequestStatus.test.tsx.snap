@@ -27,6 +27,7 @@ exports[`renders pending protection request 1`] = `
       "id": "2eb5f71c-7f31-44b5-9390-c3bf56501880",
       "isRecovery": false,
       "requesterAddress": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+      "status": "ACTIVATED",
       "userIdentity": Object {
         "email": "john.doe@logion.network",
         "firstName": "John",
@@ -68,6 +69,7 @@ exports[`renders protected 1`] = `
       "id": "2eb5f71c-7f31-44b5-9390-c3bf56501880",
       "isRecovery": false,
       "requesterAddress": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+      "status": "ACTIVATED",
       "userIdentity": Object {
         "email": "john.doe@logion.network",
         "firstName": "John",

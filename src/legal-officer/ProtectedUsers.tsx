@@ -7,7 +7,7 @@ import { useRootContext } from "../RootContext";
 import { legalOfficerByAddress } from "../wallet-user/trust-protection/Model";
 
 export default function ProtectedUsers() {
-    const { acceptedProtectionRequests } = useLegalOfficerContext();
+    const { activatedProtectionRequests } = useLegalOfficerContext();
     const { currentAddress } = useRootContext();
 
     return (
@@ -21,7 +21,7 @@ export default function ProtectedUsers() {
                     </thead>
                     <tbody>
                     {
-                        acceptedProtectionRequests?.map(request => {
+                        activatedProtectionRequests?.map(request => {
                             const otherLegalOfficerAddress = request.decisions
                                     .map(decision => decision.legalOfficerAddress)
                                     .find(legalOfficerAddress => legalOfficerAddress !== currentAddress);
