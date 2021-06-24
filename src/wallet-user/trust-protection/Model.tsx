@@ -4,6 +4,7 @@ import {DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER, ProtectionRequest} from ".
 import Identity from '../../component/types/Identity';
 import PostalAddress from '../../component/types/PostalAddress';
 import LegalOfficer from "../../component/types/LegalOfficer";
+import { toIsoString } from "../../logion-chain/datetime";
 
 export interface CreateProtectionRequest {
     requesterAddress: string,
@@ -16,6 +17,13 @@ export interface CreateProtectionRequest {
     addressToRecover: string,
 }
 
+export interface CheckProtectionActivationParameters {
+    requestId: string,
+    userAddress: string,
+    signature: string,
+    signedOn: Moment,
+}
+
 export type LegalOfficerDecisionStatus = "PENDING" | "REJECTED" | "ACCEPTED";
 
 export interface LegalOfficerDecision {
@@ -26,6 +34,14 @@ export interface LegalOfficerDecision {
 export async function createProtectionRequest(request: CreateProtectionRequest): Promise<ProtectionRequest> {
     const response = await axios.post("/api/protection-request", request);
     return response.data;
+}
+
+export async function checkActivation(parameters: CheckProtectionActivationParameters): Promise<void> {
+    await axios.post(`/api/protection-request/${parameters.requestId}/check-activation`, {
+        signature: parameters.signature,
+        userAddress: parameters.userAddress,
+        signedOn: toIsoString(parameters.signedOn),
+    });
 }
 
 function fakeAddress(i: number) {
