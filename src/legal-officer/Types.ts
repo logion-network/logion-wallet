@@ -55,19 +55,19 @@ export const LIGHT_MODE: ColorTheme = {
     type: 'light',
     shadowColor: rgbaToHex('#3b6cf4', 0.1),
     dashboard: {
-        background: rgbaToHex('#3b6cf4', 0.05),
+        background: '#eff3fe',
         foreground: '#000000',
     },
     sidebar: {
         background: '#ffffff',
         foreground: '#000000',
-        activeItemBackground: rgbaToHex('#3b6cf4', 0.15),
+        activeItemBackground: '#d8e2fd',
     },
     accounts: {
         iconBackground: '#3b6cf4',
         hintColor: rgbaToHex('#000000', 0.6),
         foreground: '#000000',
-        background: rgbaToHex('#3b6cf4', 0.05),
+        background: 'eff3fe',
         legalOfficerIcon: {
             category: 'legal-officer',
             id: 'account-shield'
