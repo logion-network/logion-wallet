@@ -26,6 +26,7 @@ export const PROTECTION_REQUEST: ProtectionRequest = {
     createdOn: moment('2021-06-10T13:48:00.000Z').toISOString(),
     isRecovery: false,
     addressToRecover: null,
+    status: "ACTIVATED",
 };
 
 
@@ -51,4 +52,5 @@ export const RECOVERY_REQUEST: ProtectionRequest = {
     createdOn: moment('2021-06-10T13:48:00.000Z').toISOString(),
     isRecovery: true,
     addressToRecover: "toRecover",
+    status: "ACTIVATED",
 };

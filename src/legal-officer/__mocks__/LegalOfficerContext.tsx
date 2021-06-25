@@ -14,7 +14,7 @@ export let refreshRequests = () => {
 
 export let pendingProtectionRequests: any[] | null = null;
 
-export let acceptedProtectionRequests: any[] | null = null;
+export let activatedProtectionRequests: any[] | null = null;
 
 export let protectionRequestsHistory: any[] | null = null;
 
@@ -26,7 +26,7 @@ export function useLegalOfficerContext() {
         acceptedTokenizationRequests,
         refreshRequests,
         pendingProtectionRequests,
-        acceptedProtectionRequests,
+        activatedProtectionRequests,
         protectionRequestsHistory,
     };
 }
@@ -55,8 +55,8 @@ export function setPendingProtectionRequests(requests: any[]) {
     pendingProtectionRequests = requests;
 }
 
-export function setAcceptedProtectionRequests(requests: any[]) {
-    acceptedProtectionRequests = requests;
+export function setActivatedProtectionRequests(requests: any[]) {
+    activatedProtectionRequests = requests;
 }
 
 export function setProtectionRequestsHistory(requests: any[]) {

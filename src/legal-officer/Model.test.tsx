@@ -1,10 +1,10 @@
 jest.mock("axios");
 
+import { DEFAULT_LEGAL_OFFICER } from "./Types";
 import {
     FetchRequestSpecification,
     fetchRequests,
     rejectRequest,
-    DEFAULT_LEGAL_OFFICER,
     acceptRequest,
     setAssetDescription
 } from './Model';

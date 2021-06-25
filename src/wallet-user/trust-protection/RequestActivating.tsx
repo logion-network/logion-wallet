@@ -1,16 +1,24 @@
 import React, { useCallback, useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 
-import { useLogionChain, Unsubscriber, ISubmittableResult, replaceUnsubscriber, isFinalized } from '../../logion-chain';
+import {
+    useLogionChain,
+    Unsubscriber,
+    ISubmittableResult,
+    replaceUnsubscriber,
+    isFinalized,
+    sign
+} from '../../logion-chain';
 import { createRecovery } from '../../logion-chain/Recovery';
 import ExtrinsicSubmissionResult from '../../legal-officer/ExtrinsicSubmissionResult';
 import { useRootContext } from '../../RootContext';
 
 import {useUserContext} from "../UserContext";
-import {legalOfficerByAddress} from "./Model";
+import { legalOfficerByAddress, checkActivation as modelCheckActivation } from "./Model";
 import {ProtectionRequest} from "../../legal-officer/Types";
 
 import LegalOfficerInfo from "../../component/LegalOfficerInfo";
+import moment from "moment";
 
 export default function RequestActivating() {
     const { api } = useLogionChain();
@@ -38,11 +46,33 @@ export default function RequestActivating() {
     }, [ api, currentAddress, refreshRequests, activationUnsubscriber, setActivationUnsubscriber ]);
 
     useEffect(() => {
-        if(isFinalized(activationResult) && !refreshedAfterActivation) {
-            setRefreshedAfterActivation(true);
-            refreshRequests!();
+
+        async function checkActivation(protectionRequest: ProtectionRequest) {
+            const attributes = [
+                `${protectionRequest.id}`,
+            ];
+            const signedOn = moment();
+            const signature = await sign({
+                signerId: protectionRequest.requesterAddress,
+                resource: 'protection-request',
+                operation: 'check-activation',
+                signedOn,
+                attributes
+            });
+            await modelCheckActivation({
+                requestId: protectionRequest.id,
+                userAddress: protectionRequest.requesterAddress,
+                signedOn,
+                signature
+            });
         }
-    }, [ activationResult, refreshedAfterActivation, setRefreshedAfterActivation, refreshRequests ]);
+
+        if (acceptedProtectionRequests !== null && isFinalized(activationResult) && !refreshedAfterActivation) {
+            setRefreshedAfterActivation(true);
+            checkActivation(acceptedProtectionRequests![0])
+                .finally(() => refreshRequests!())
+        }
+    }, [ activationResult, refreshedAfterActivation, setRefreshedAfterActivation, refreshRequests, acceptedProtectionRequests ]);
 
     const createdProtectionRequest: ProtectionRequest = acceptedProtectionRequests![0];
 

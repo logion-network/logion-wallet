@@ -9,6 +9,7 @@ import {
     LegalOfficerDecisionStatus,
     ProtectionRequest,
     LegalOfficerDecision,
+    ProtectionRequestStatus,
 } from './Types';
 
 export interface FetchRequestSpecification {
@@ -77,6 +78,7 @@ export interface FetchProtectionRequestSpecification {
     requesterAddress?: string,
     decisionStatuses: LegalOfficerDecisionStatus[],
     kind: ProtectionRequestKind,
+    protectionRequestStatus?: ProtectionRequestStatus,
 }
 
 export async function fetchProtectionRequests(

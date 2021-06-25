@@ -30,6 +30,7 @@ export const PENDING_PROTECTION_REQUESTS: ProtectionRequest[] = [
         createdOn: toIsoString(moment('2021-06-10T11:40:00.000Z')),
         isRecovery: false,
         addressToRecover: null,
+        status: "PENDING"
     }
 ];
 
@@ -61,5 +62,6 @@ export const PROTECTION_REQUESTS_HISTORY: ProtectionRequest[] = [
         createdOn: toIsoString(moment('2021-06-10T11:40:00.000Z')),
         isRecovery: false,
         addressToRecover: null,
+        status: "ACTIVATED"
     }
 ];
