@@ -1,0 +1,45 @@
+.modal-content {
+    z-index: 1060;
+}
+
+.Button.btn.btn-secondary {
+    position: relative;
+    background: black;
+    background-clip: padding-box;
+    border: solid 1px transparent;
+    border-radius: 10px;
+}
+
+.Button.btn.btn-secondary:before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0; left: 0;
+    margin: -1px;
+    border-radius: inherit;
+    z-index: -1;
+    background: linear-gradient(to bottom, #3b6cf4, #6050dc);
+}
+
+.Button.btn.btn-secondary:hover:before {
+    background: linear-gradient(to top, #3b6cf4, #6050dc);
+}
+
+.Button.btn.btn-primary {
+    background: linear-gradient(to bottom, #3b6cf4, #6050dc);
+    border-radius: 10px;
+    border: none;
+}
+
+.Button.btn.btn-primary:hover {
+    background: linear-gradient(to top, #3b6cf4, #6050dc);
+}
+
+.Button.btn.btn-secondary a,
+.Button.btn.btn-primary a {
+    color: white;
+}
+
+.Button.btn.btn-secondary a:hover,
+.Button.btn.btn-primary a:hover {
+    text-decoration: none;
+}

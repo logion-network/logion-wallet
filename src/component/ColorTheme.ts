@@ -10,6 +10,10 @@ export interface GradientData {
 
 export type ColorThemeType = 'light' | 'dark';
 
+export interface ButtonsColors {
+    secondaryBackgroundColor: string,
+}
+
 export interface ColorTheme {
     type: ColorThemeType,
     dashboard: BackgroundAndForegroundColors,
@@ -19,6 +23,7 @@ export interface ColorTheme {
     topMenuItems: MenuItemColors,
     bottomMenuItems: MenuItemColors,
     shadowColor: string,
+    buttons: ButtonsColors,
 }
 
 export interface FrameColors extends BackgroundAndForegroundColors {

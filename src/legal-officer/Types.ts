@@ -89,5 +89,8 @@ export const LIGHT_MODE: ColorTheme = {
             from: '#7a90cb',
             to: '#3b6cf4',
         }
+    },
+    buttons: {
+        secondaryBackgroundColor: '#eff3fe',
     }
 };

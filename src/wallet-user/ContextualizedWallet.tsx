@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { useLogionChain } from '../logion-chain';
 
 import Dashboard from '../component/Dashboard';
+import WarningDialog from '../component/WarningDialog';
+
 import UserRouter, { ACCOUNT_PATH, TRUST_PROTECTION_PATH, SETTINGS_PATH, RECOVERY_PATH } from "./UserRouter";
 import { useUserContext } from "./UserContext";
 import { useRootContext } from '../RootContext';
@@ -10,13 +13,15 @@ import { useRootContext } from '../RootContext';
 export default function ContextualizedWallet() {
     const { apiState } = useLogionChain();
     const { selectAddress, addresses } = useRootContext();
-    const { colorTheme } = useUserContext();
+    const { colorTheme, pendingProtectionRequests, acceptedProtectionRequests } = useUserContext();
+    const [ discardProtection, setDiscardProtection ] = useState<boolean>(false);
 
-    if(selectAddress === null || addresses === null) {
+    if(selectAddress === null || addresses === null || pendingProtectionRequests === null || acceptedProtectionRequests === null) {
         return null;
     }
 
     const userContext = apiState === 'READY' ? <UserRouter /> : null;
+    const noProtection = pendingProtectionRequests.length === 0 && acceptedProtectionRequests.length === 0;
 
     return (
         <Dashboard
@@ -79,6 +84,32 @@ export default function ContextualizedWallet() {
             ]}
         >
             {userContext}
+            <WarningDialog
+                show={noProtection && !discardProtection}
+                size='lg'
+                actions={[
+                    {
+                        buttonText: "I will do it later",
+                        callback: () => setDiscardProtection(true),
+                        id: "discard",
+                        buttonVariant: 'secondary'
+                    },
+                    {
+                        buttonText: <Link to={ TRUST_PROTECTION_PATH }>Let's go</Link>,
+                        callback: () => setDiscardProtection(true),
+                        id: "discard",
+                        buttonVariant: 'primary'
+                    }
+                ]}
+                colors={ colorTheme }
+                spaceAbove="25vh"
+            >
+                <>
+                    Dear user,<br/>
+                    we recommend that you activate your trust protection right now in order to
+                    enjoy all the features of Logion.
+                </>
+            </WarningDialog>
         </Dashboard>
     );
 }

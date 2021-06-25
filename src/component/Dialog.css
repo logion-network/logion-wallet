@@ -1,0 +1,27 @@
+.Dialog {
+    backdrop-filter: blur(2px);
+}
+
+.Dialog .modal-dialog {
+    border-radius: 10px;
+    border: none;
+}
+
+.Dialog .modal-content {
+    border: none;
+    border-radius: 10px;
+    border-style: solid;
+    text-align: center;
+}
+
+.Dialog .modal-footer {
+    border: none;
+    justify-content: center;
+    padding-top: 0;
+    padding-bottom: 20px;
+}
+
+.Dialog .modal-footer > * {
+    margin-left: 10px;
+    margin-right: 10px;
+}

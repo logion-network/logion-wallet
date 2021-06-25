@@ -5,7 +5,7 @@ exports[`renders 1`] = `
   colors={
     Object {
       "accounts": Object {
-        "background": "#3b6cf40d",
+        "background": "eff3fe",
         "foreground": "#000000",
         "hintColor": "#00000099",
         "iconBackground": "#3b6cf4",
@@ -20,8 +20,11 @@ exports[`renders 1`] = `
           "to": "#3b6cf4",
         },
       },
+      "buttons": Object {
+        "secondaryBackgroundColor": "#eff3fe",
+      },
       "dashboard": Object {
-        "background": "#3b6cf40d",
+        "background": "#eff3fe",
         "foreground": "#000000",
       },
       "frame": Object {
@@ -31,7 +34,7 @@ exports[`renders 1`] = `
       },
       "shadowColor": "#3b6cf41a",
       "sidebar": Object {
-        "activeItemBackground": "#3b6cf426",
+        "activeItemBackground": "#d8e2fd",
         "background": "#ffffff",
         "foreground": "#000000",
       },
