@@ -17,7 +17,7 @@ exports[`renders Dashboard 1`] = `
   fluid={true}
   style={
     Object {
-      "backgroundColor": "#3b6cf40d",
+      "backgroundColor": "#eff3fe",
       "color": "#000000",
     }
   }
@@ -38,12 +38,12 @@ exports[`renders Dashboard 1`] = `
 
     .modal-content {
         color: #000000;
-        background-color: #3b6cf40d;
+        background-color: #eff3fe;
     }
 
     .form-control,
     .form-control[readonly] {
-        background-color: #3b6cf40d;
+        background-color: #eff3fe;
         color: #000000;
     }
 
@@ -52,7 +52,7 @@ exports[`renders Dashboard 1`] = `
     }
 
     .Dashboard .Sidebar .MenuItem.active {
-        background-color: #3b6cf426;
+        background-color: #d8e2fd;
     }
     
   </style>
@@ -128,7 +128,7 @@ exports[`renders Dashboard 1`] = `
         colorThemeType="light"
         colors={
           Object {
-            "background": "#3b6cf40d",
+            "background": "eff3fe",
             "foreground": "#000000",
             "hintColor": "#00000099",
             "iconBackground": "#3b6cf4",

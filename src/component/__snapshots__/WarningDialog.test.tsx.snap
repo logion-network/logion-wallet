@@ -1,0 +1,156 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders with custom space above 1`] = `
+<Dialog
+  actions={
+    Array [
+      Object {
+        "buttonText": "Text",
+        "buttonVariant": "primary",
+        "callback": [MockFunction],
+        "id": "button",
+      },
+    ]
+  }
+  borderColor="#e6007a"
+  colors={
+    Object {
+      "accounts": Object {
+        "background": "eff3fe",
+        "foreground": "#000000",
+        "hintColor": "#00000099",
+        "iconBackground": "#3b6cf4",
+        "legalOfficerIcon": Object {
+          "category": "legal-officer",
+          "id": "account-shield",
+        },
+      },
+      "bottomMenuItems": Object {
+        "iconGradient": Object {
+          "from": "#7a90cb",
+          "to": "#3b6cf4",
+        },
+      },
+      "buttons": Object {
+        "secondaryBackgroundColor": "#eff3fe",
+      },
+      "dashboard": Object {
+        "background": "#eff3fe",
+        "foreground": "#000000",
+      },
+      "frame": Object {
+        "background": "#ffffff",
+        "foreground": "#000000",
+        "link": "#3b6cf426",
+      },
+      "shadowColor": "#3b6cf41a",
+      "sidebar": Object {
+        "activeItemBackground": "#d8e2fd",
+        "background": "#ffffff",
+        "foreground": "#000000",
+      },
+      "topMenuItems": Object {
+        "iconGradient": Object {
+          "from": "#3b6cf4",
+          "to": "#6050dc",
+        },
+      },
+      "type": "light",
+    }
+  }
+  show={true}
+  size="lg"
+  spaceAbove="200px"
+>
+  <Icon
+    colorThemeType="light"
+    icon={
+      Object {
+        "id": "warning",
+      }
+    }
+  />
+  <p
+    className="dialog-text"
+  >
+    Content
+  </p>
+</Dialog>
+`;
+
+exports[`renders with default space above 1`] = `
+<Dialog
+  actions={
+    Array [
+      Object {
+        "buttonText": "Text",
+        "buttonVariant": "primary",
+        "callback": [MockFunction],
+        "id": "button",
+      },
+    ]
+  }
+  borderColor="#e6007a"
+  colors={
+    Object {
+      "accounts": Object {
+        "background": "eff3fe",
+        "foreground": "#000000",
+        "hintColor": "#00000099",
+        "iconBackground": "#3b6cf4",
+        "legalOfficerIcon": Object {
+          "category": "legal-officer",
+          "id": "account-shield",
+        },
+      },
+      "bottomMenuItems": Object {
+        "iconGradient": Object {
+          "from": "#7a90cb",
+          "to": "#3b6cf4",
+        },
+      },
+      "buttons": Object {
+        "secondaryBackgroundColor": "#eff3fe",
+      },
+      "dashboard": Object {
+        "background": "#eff3fe",
+        "foreground": "#000000",
+      },
+      "frame": Object {
+        "background": "#ffffff",
+        "foreground": "#000000",
+        "link": "#3b6cf426",
+      },
+      "shadowColor": "#3b6cf41a",
+      "sidebar": Object {
+        "activeItemBackground": "#d8e2fd",
+        "background": "#ffffff",
+        "foreground": "#000000",
+      },
+      "topMenuItems": Object {
+        "iconGradient": Object {
+          "from": "#3b6cf4",
+          "to": "#6050dc",
+        },
+      },
+      "type": "light",
+    }
+  }
+  show={true}
+  size="lg"
+>
+  <Icon
+    colorThemeType="light"
+    icon={
+      Object {
+        "id": "warning",
+      }
+    }
+  />
+  <p
+    className="dialog-text"
+  >
+    Content
+  </p>
+</Dialog>
+`;

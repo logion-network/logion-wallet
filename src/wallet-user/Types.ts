@@ -38,5 +38,8 @@ export const DARK_MODE: ColorTheme = {
             from: '#7a90cb',
             to: '#3b6cf4',
         }
+    },
+    buttons: {
+        secondaryBackgroundColor: '#0c163d',
     }
 };

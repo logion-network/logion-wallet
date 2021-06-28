@@ -26,6 +26,9 @@ exports[`renders 1`] = `
                 "to": "#3b6cf4",
               },
             },
+            "buttons": Object {
+              "secondaryBackgroundColor": "#0c163d",
+            },
             "dashboard": Object {
               "background": "#0c163d",
               "foreground": "#ffffff",
@@ -78,6 +81,9 @@ exports[`renders 1`] = `
                 "from": "#7a90cb",
                 "to": "#3b6cf4",
               },
+            },
+            "buttons": Object {
+              "secondaryBackgroundColor": "#0c163d",
             },
             "dashboard": Object {
               "background": "#0c163d",
