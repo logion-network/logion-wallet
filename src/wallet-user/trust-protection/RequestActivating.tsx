@@ -6,19 +6,17 @@ import {
     Unsubscriber,
     ISubmittableResult,
     replaceUnsubscriber,
-    isFinalized,
-    sign
+    isFinalized
 } from '../../logion-chain';
 import { createRecovery } from '../../logion-chain/Recovery';
 import ExtrinsicSubmissionResult from '../../legal-officer/ExtrinsicSubmissionResult';
 import { useRootContext } from '../../RootContext';
 
 import {useUserContext} from "../UserContext";
-import { legalOfficerByAddress, checkActivation as modelCheckActivation } from "./Model";
+import { legalOfficerByAddress, checkActivation } from "./Model";
 import {ProtectionRequest} from "../../legal-officer/Types";
 
 import LegalOfficerInfo from "../../component/LegalOfficerInfo";
-import moment from "moment";
 
 export default function RequestActivating() {
     const { api } = useLogionChain();
@@ -46,27 +44,6 @@ export default function RequestActivating() {
     }, [ api, currentAddress, refreshRequests, activationUnsubscriber, setActivationUnsubscriber ]);
 
     useEffect(() => {
-
-        async function checkActivation(protectionRequest: ProtectionRequest) {
-            const attributes = [
-                `${protectionRequest.id}`,
-            ];
-            const signedOn = moment();
-            const signature = await sign({
-                signerId: protectionRequest.requesterAddress,
-                resource: 'protection-request',
-                operation: 'check-activation',
-                signedOn,
-                attributes
-            });
-            await modelCheckActivation({
-                requestId: protectionRequest.id,
-                userAddress: protectionRequest.requesterAddress,
-                signedOn,
-                signature
-            });
-        }
-
         if (acceptedProtectionRequests !== null && isFinalized(activationResult) && !refreshedAfterActivation) {
             setRefreshedAfterActivation(true);
             checkActivation(acceptedProtectionRequests![0])
