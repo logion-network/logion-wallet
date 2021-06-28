@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { ProtectionRequest } from "../../legal-officer/Types";
 import LegalOfficerInfo from "../../component/LegalOfficerInfo";
@@ -12,7 +12,7 @@ export interface Props {
 
 export default function RequestActivated(props: Props) {
 
-    const [confirmButtonEnabled, setConfirmButtonEnabled] = React.useState(props.request.status === "PENDING");
+    const [confirmButtonEnabled, setConfirmButtonEnabled] = useState(props.request.status === "PENDING");
 
     return (
         <>
