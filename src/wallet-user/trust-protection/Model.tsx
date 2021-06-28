@@ -1,10 +1,11 @@
 import axios from "axios";
-import {Moment} from "moment";
+import moment, {Moment} from "moment";
 import {DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER, ProtectionRequest} from "../../legal-officer/Types";
 import Identity from '../../component/types/Identity';
 import PostalAddress from '../../component/types/PostalAddress';
 import LegalOfficer from "../../component/types/LegalOfficer";
 import { toIsoString } from "../../logion-chain/datetime";
+import { sign } from "../../logion-chain";
 
 export interface CreateProtectionRequest {
     requesterAddress: string,
@@ -36,11 +37,31 @@ export async function createProtectionRequest(request: CreateProtectionRequest):
     return response.data;
 }
 
-export async function checkActivation(parameters: CheckProtectionActivationParameters): Promise<void> {
+async function _checkActivation(parameters: CheckProtectionActivationParameters): Promise<void> {
     await axios.post(`/api/protection-request/${parameters.requestId}/check-activation`, {
         signature: parameters.signature,
         userAddress: parameters.userAddress,
         signedOn: toIsoString(parameters.signedOn),
+    });
+}
+
+export async function checkActivation(protectionRequest: ProtectionRequest): Promise<void> {
+    const attributes = [
+        `${protectionRequest.id}`,
+    ];
+    const signedOn = moment();
+    const signature = await sign({
+        signerId: protectionRequest.requesterAddress,
+        resource: 'protection-request',
+        operation: 'check-activation',
+        signedOn,
+        attributes
+    });
+    await _checkActivation({
+        requestId: protectionRequest.id,
+        userAddress: protectionRequest.requesterAddress,
+        signedOn,
+        signature
     });
 }
 

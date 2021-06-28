@@ -1,5 +1,7 @@
 jest.mock("axios");
+jest.mock('../../logion-chain');
 
+import { PROTECTION_REQUEST } from "./TestData";
 import { TEST_WALLET_USER } from '../TestData';
 import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from "../../legal-officer/Types";
 import { CreateProtectionRequest, createProtectionRequest, checkActivation } from "./Model";
@@ -54,13 +56,7 @@ test("Create Protection request", async () => {
 
 test("Check Activation of Protection Request", async () => {
     const callback = jest.fn();
-    const signature = "signature";
-    mockPost("/api/protection-request/1234/check-activation", {request}, callback)
-    await checkActivation({
-        requestId: "1234",
-        userAddress: TEST_WALLET_USER,
-        signature: signature,
-        signedOn: moment()
-    })
+    mockPost("/api/protection-request/2eb5f71c-7f31-44b5-9390-c3bf56501880/check-activation", {request}, callback)
+    await checkActivation(PROTECTION_REQUEST);
     expect(callback).toBeCalled();
 })
