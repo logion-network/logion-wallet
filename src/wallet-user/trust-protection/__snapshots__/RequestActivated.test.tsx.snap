@@ -133,7 +133,7 @@ Belgium",
   </ul>
   <React.Fragment>
     <p>
-      Your protection does not seem to be confirmed yet.
+      Mandatory: we detect that the Logion Application needs to be re-synchronized with the Logion Blockchain. To proceed, please click on the button and sign to confirm this operation:
     </p>
     <Button
       active={false}
@@ -142,7 +142,7 @@ Belgium",
       onClick={[Function]}
       variant="primary"
     >
-      Confirm protection
+      Re-Sync Confirmation
     </Button>
   </React.Fragment>
 </React.Fragment>
@@ -195,7 +195,7 @@ Belgium",
   </p>
   <React.Fragment>
     <p>
-      Your protection does not seem to be confirmed yet.
+      Mandatory: we detect that the Logion Application needs to be re-synchronized with the Logion Blockchain. To proceed, please click on the button and sign to confirm this operation:
     </p>
     <Button
       active={false}
@@ -204,7 +204,7 @@ Belgium",
       onClick={[Function]}
       variant="primary"
     >
-      Confirm protection
+      Re-Sync Confirmation
     </Button>
   </React.Fragment>
 </React.Fragment>

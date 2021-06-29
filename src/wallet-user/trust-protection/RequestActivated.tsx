@@ -44,12 +44,13 @@ export default function RequestActivated(props: Props) {
                 // In most cases, it will not show
                 confirmButtonEnabled &&
                 <>
-                    <p>Your protection does not seem to be confirmed yet.</p>
+                    <p>Mandatory: we detect that the Logion Application needs to be re-synchronized with the Logion
+                        Blockchain. To proceed, please click on the button and sign to confirm this operation:</p>
                     <Button id="btnConfirmProtection" onClick={() => {
                         checkActivation(props.request)
                             .then(() => setConfirmButtonEnabled(false))
                     }}>
-                        Confirm protection
+                        Re-Sync Confirmation
                     </Button>
                 </>
             }
