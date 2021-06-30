@@ -6,11 +6,8 @@ import { RecoveryConfig, getRecoveryConfig } from '../logion-chain/Recovery';
 import { Children } from '../component/types/Helpers';
 
 import { CreateTokenRequest, createTokenRequest as modelCreateTokenRequest } from "./Model";
-import { TokenizationRequest } from "../legal-officer/Types";
+import { TokenizationRequest, ProtectionRequest } from "../legal-officer/Types";
 import { fetchRequests, fetchProtectionRequests } from "../legal-officer/Model";
-import {
-    ProtectionRequest,
-} from "../legal-officer/Types";
 import {
     CreateProtectionRequest,
     createProtectionRequest as modelCreateProtectionRequest,
@@ -225,20 +222,18 @@ export function UserContextProvider(props: Props) {
     }, [ apiState, contextValue, currentAddress, refreshRequests, dispatch ]);
 
     useEffect(() => {
-        if(contextValue.refreshRequests === null) {
+        if(contextValue.refreshRequests === null && apiState === "READY") {
             dispatch({
                 type: "SET_REFRESH_REQUESTS_FUNCTION",
                 refreshRequests,
             });
         }
-    }, [ refreshRequests, contextValue, dispatch ]);
+    }, [ apiState, refreshRequests, contextValue, dispatch ]);
 
     useEffect(() => {
-        if (contextValue.createProtectionRequest === null) {
+        if (contextValue.createProtectionRequest === null && apiState === "READY") {
             const createProtectionRequest = async (request: CreateProtectionRequest): Promise<void> => {
-                console.log("creating");
                 await modelCreateProtectionRequest(request);
-                console.log("refreshing");
                 refreshRequests();
             }
             dispatch({
@@ -246,7 +241,7 @@ export function UserContextProvider(props: Props) {
                 createProtectionRequest,
             });
         }
-    }, [ contextValue, refreshRequests, dispatch ]);
+    }, [ apiState, contextValue, refreshRequests, dispatch ]);
 
     return (
         <UserContextObject.Provider value={contextValue}>
