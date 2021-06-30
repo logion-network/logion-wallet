@@ -7,6 +7,8 @@ import Frame from './component/Frame';
 
 import { useLogionChain, ApiState, NodeMetadata } from './logion-chain';
 
+import { useRootContext } from './RootContext';
+
 function status(apiState: ApiState, metadata: NodeMetadata | null): string {
     if(apiState === 'READY' && metadata === null) {
         return "connected";
@@ -26,13 +28,22 @@ export interface Props {
 }
 
 export default function Settings(props: Props) {
+    const { selectAddress, addresses } = useRootContext();
     const { apiState, connect, connectedNodeMetadata } = useLogionChain();
+
+    if(addresses === null || selectAddress === null) {
+        return null;
+    }
 
     const connectButton = apiState === 'DISCONNECTED' ? <Button onClick={connect}>Connect</Button> : null;
 
     return (
-        <FullWidthPane>
-            <h1>Settings</h1>
+        <FullWidthPane
+            mainTitle="Settings"
+            colors={ props.colors }
+            addresses={ addresses }
+            selectAddress={ selectAddress }
+        >
             <Frame
                 colors={ props.colors }
             >

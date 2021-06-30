@@ -2,6 +2,7 @@ import React from 'react';
 
 import { ContentPane } from '../component/Dashboard';
 import Frame from '../component/Frame';
+import { useRootContext } from '../RootContext';
 
 import { useUserContext } from "./UserContext";
 import MyTokens from './MyTokens';
@@ -12,13 +13,21 @@ import AcceptedTokenizationRequests from './AcceptedTokenizationRequests';
 import RejectedTokenizationRequests from './RejectedTokenizationRequests';
 
 export default function Account() {
+    const { selectAddress, addresses } = useRootContext();
     const { colorTheme } = useUserContext();
+
+    if(addresses === null || selectAddress === null) {
+        return null;
+    }
 
     return (
         <ContentPane
+            mainTitle="Tokens"
+            colors={ colorTheme }
+            addresses={ addresses }
+            selectAddress={ selectAddress }
             primaryAreaChildren={
                 <>
-                    <h1>Tokens</h1>
                     <Frame
                         colors={ colorTheme }
                     >

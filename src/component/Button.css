@@ -2,12 +2,16 @@
     z-index: 1060;
 }
 
+.Button.btn {
+    padding: 9px 20px;
+    border-radius: 6px;
+}
+
 .Button.btn.btn-secondary {
     position: relative;
     background: black;
     background-clip: padding-box;
     border: solid 1px transparent;
-    border-radius: 10px;
 }
 
 .Button.btn.btn-secondary:before {
@@ -26,7 +30,6 @@
 
 .Button.btn.btn-primary {
     background: linear-gradient(to bottom, #3b6cf4, #6050dc);
-    border-radius: 10px;
     border: none;
 }
 
@@ -34,12 +37,19 @@
     background: linear-gradient(to top, #3b6cf4, #6050dc);
 }
 
+.Button.btn.btn-primary a,
 .Button.btn.btn-secondary a,
-.Button.btn.btn-primary a {
+.Button.btn.btn-warning a {
     color: white;
 }
 
+.Button.btn.btn-primary a:hover,
 .Button.btn.btn-secondary a:hover,
-.Button.btn.btn-primary a:hover {
+.Button.btn.btn-warning a:hover {
     text-decoration: none;
+}
+
+.Button.btn.btn-warning {
+    background-color: #ff8a5c !important;
+    border: none;
 }

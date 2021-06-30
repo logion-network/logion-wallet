@@ -1,58 +1,89 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders 1`] = `
-<FullWidthPane>
-  <h1>
-    Recovery Process
-  </h1>
-  <Frame
-    colors={
-      Object {
-        "accounts": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-          "hintColor": "#ffffff99",
-          "iconBackground": "#3b6cf4",
-          "legalOfficerIcon": Object {
-            "category": "legal-officer",
-            "id": "account-shield",
-          },
+exports[`renders 1`] = `null`;
+
+exports[`renders accepted protection request 1`] = `<RequestActivating />`;
+
+exports[`renders pending protection request 1`] = `
+<RequestPending
+  request={
+    Object {
+      "addressToRecover": "toRecover",
+      "createdOn": "2021-06-10T13:48:00.000Z",
+      "decisions": Array [
+        Object {
+          "decisionOn": null,
+          "legalOfficerAddress": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+          "rejectReason": null,
+          "status": "PENDING",
         },
-        "bottomMenuItems": Object {
-          "iconGradient": Object {
-            "from": "#7a90cb",
-            "to": "#3b6cf4",
-          },
+        Object {
+          "decisionOn": null,
+          "legalOfficerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+          "rejectReason": null,
+          "status": "PENDING",
         },
-        "buttons": Object {
-          "secondaryBackgroundColor": "#0c163d",
-        },
-        "dashboard": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-        },
-        "frame": Object {
-          "background": "#152665",
-          "foreground": "#ffffff",
-          "link": "#ffffff",
-        },
-        "shadowColor": "#3b6cf433",
-        "sidebar": Object {
-          "activeItemBackground": "#ffffff0f",
-          "background": "#152665",
-          "foreground": "#ffffff",
-        },
-        "topMenuItems": Object {
-          "iconGradient": Object {
-            "from": "#3b6cf4",
-            "to": "#6050dc",
-          },
-        },
-        "type": "dark",
-      }
+      ],
+      "id": "2eb5f71c-7f31-44b5-9390-c3bf56501880",
+      "isRecovery": true,
+      "requesterAddress": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+      "status": "ACTIVATED",
+      "userIdentity": Object {
+        "email": "john.doe@logion.network",
+        "firstName": "John",
+        "lastName": "Doe",
+        "phoneNumber": "+1234",
+      },
+      "userPostalAddress": Object {
+        "city": "Liège",
+        "country": "Belgium",
+        "line1": "Place de le République Française, 10",
+        "line2": "boite 15",
+        "postalCode": "4000",
+      },
     }
-  >
-    <RecoveryStatus />
-  </Frame>
-</FullWidthPane>
+  }
+/>
+`;
+
+exports[`renders protected 1`] = `
+<RequestActivated
+  request={
+    Object {
+      "addressToRecover": "toRecover",
+      "createdOn": "2021-06-10T13:48:00.000Z",
+      "decisions": Array [
+        Object {
+          "decisionOn": null,
+          "legalOfficerAddress": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+          "rejectReason": null,
+          "status": "PENDING",
+        },
+        Object {
+          "decisionOn": null,
+          "legalOfficerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+          "rejectReason": null,
+          "status": "PENDING",
+        },
+      ],
+      "id": "2eb5f71c-7f31-44b5-9390-c3bf56501880",
+      "isRecovery": true,
+      "requesterAddress": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+      "status": "ACTIVATED",
+      "userIdentity": Object {
+        "email": "john.doe@logion.network",
+        "firstName": "John",
+        "lastName": "Doe",
+        "phoneNumber": "+1234",
+      },
+      "userPostalAddress": Object {
+        "city": "Liège",
+        "country": "Belgium",
+        "line1": "Place de le République Française, 10",
+        "line2": "boite 15",
+        "postalCode": "4000",
+      },
+    }
+  }
+/>
 `;

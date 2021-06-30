@@ -95,5 +95,11 @@ export const LIGHT_MODE: ColorTheme = {
     },
     buttons: {
         secondaryBackgroundColor: '#eff3fe',
-    }
+    },
+    select: {
+        background: '#d8e2fd',
+        foreground: '#000000',
+        menuBackgroundColor: '#d8e2fd',
+        selectedOptionBackgroundColor: rgbaToHex('#ffffff', 0.20),
+    },
 };

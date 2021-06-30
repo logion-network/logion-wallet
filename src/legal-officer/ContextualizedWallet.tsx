@@ -24,8 +24,6 @@ export default function ContextualizedWallet() {
     return (
         <Dashboard
             colors={ colorTheme }
-            addresses={ addresses }
-            selectAddress={ selectAddress }
             menuTop={[
                 {
                     id: "tokens",

@@ -27,7 +27,6 @@ export default function WarningDialog(props: Props) {
             size={ props.size }
             actions={ props.actions }
             colors={ props.colors }
-            borderColor="#e6007a"
             modalTestId={ props.modalTestId }
             spaceAbove={ props.spaceAbove }
         >

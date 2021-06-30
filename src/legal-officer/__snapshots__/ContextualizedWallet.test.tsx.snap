@@ -32,6 +32,12 @@ exports[`renders 1`] = `
         "foreground": "#000000",
         "link": "#3b6cf426",
       },
+      "select": Object {
+        "background": "#d8e2fd",
+        "foreground": "#000000",
+        "menuBackgroundColor": "#d8e2fd",
+        "selectedOptionBackgroundColor": "#ffffff33",
+      },
       "shadowColor": "#3b6cf41a",
       "sidebar": Object {
         "activeItemBackground": "#d8e2fd",
@@ -100,7 +106,6 @@ exports[`renders 1`] = `
       },
     ]
   }
-  selectAddress={[MockFunction]}
   shieldItem={
     Object {
       "exact": true,

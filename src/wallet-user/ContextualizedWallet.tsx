@@ -26,8 +26,6 @@ export default function ContextualizedWallet() {
     return (
         <Dashboard
             colors={ colorTheme }
-            addresses={ addresses }
-            selectAddress={ selectAddress }
             menuTop={[
                 {
                     id: "tokens",
@@ -95,10 +93,16 @@ export default function ContextualizedWallet() {
                         buttonVariant: 'secondary'
                     },
                     {
-                        buttonText: <Link to={ TRUST_PROTECTION_PATH }>Let's go</Link>,
+                        buttonText: <Link to={ TRUST_PROTECTION_PATH }>Activate the logion protection</Link>,
                         callback: () => setDiscardProtection(true),
-                        id: "discard",
+                        id: "protection",
                         buttonVariant: 'primary'
+                    },
+                    {
+                        buttonText: <Link to={ RECOVERY_PATH }>Start a recovery process</Link>,
+                        callback: () => setDiscardProtection(true),
+                        id: "recovery",
+                        buttonVariant: 'warning'
                     }
                 ]}
                 colors={ colorTheme }
@@ -106,8 +110,9 @@ export default function ContextualizedWallet() {
             >
                 <>
                     Dear user,<br/>
-                    we recommend that you activate your trust protection right now in order to
-                    enjoy all the features of Logion.
+                    We strongly recommend that you activate your logion trust protection right now in order to enjoy
+                    all logion's features and benefits. You can also immediately start a recovery process if you need
+                    to recover your assets locked in another account by clicking on the related button below.
                 </>
             </WarningDialog>
         </Dashboard>

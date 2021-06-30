@@ -16,7 +16,7 @@ export interface Props {
     actions: Action[],
     size: ModalSize,
     colors: ColorTheme,
-    borderColor: string,
+    borderColor?: string,
     spaceAbove?: string,
 }
 
@@ -29,6 +29,11 @@ export default function Dialog(props: Props) {
     let customStyle: CSSProperties = {};
     if(props.spaceAbove !== undefined) {
         customStyle['paddingTop'] = props.spaceAbove;
+    }
+
+    let borderColor = '#e6007a';
+    if(props.borderColor !== undefined) {
+        borderColor = props.borderColor;
     }
 
     return (
@@ -46,7 +51,7 @@ export default function Dialog(props: Props) {
                 `
                 .Dialog .modal-dialog .modal-content {
                     box-shadow: 0 0 25px ${props.colors.shadowColor};
-                    border-color: ${props.borderColor}
+                    border-color: ${borderColor}
                 }
                 `
                 }
