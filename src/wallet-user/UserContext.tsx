@@ -82,6 +82,7 @@ interface Action {
 }
 
 const reducer: Reducer<UserContext, Action> = (state: UserContext, action: Action): UserContext => {
+    console.log(`UserContext: action=${action.type}`);
     switch (action.type) {
         case 'FETCH_IN_PROGRESS':
             console.log("fetch in progress for " + action.dataAddress!);
@@ -225,20 +226,18 @@ export function UserContextProvider(props: Props) {
     }, [ apiState, contextValue, currentAddress, refreshRequests, dispatch ]);
 
     useEffect(() => {
-        if(contextValue.refreshRequests === null) {
+        if(contextValue.refreshRequests === null && apiState === "READY") {
             dispatch({
                 type: "SET_REFRESH_REQUESTS_FUNCTION",
                 refreshRequests,
             });
         }
-    }, [ refreshRequests, contextValue, dispatch ]);
+    }, [ apiState, refreshRequests, contextValue, dispatch ]);
 
     useEffect(() => {
-        if (contextValue.createProtectionRequest === null) {
+        if (contextValue.createProtectionRequest === null && apiState === "READY") {
             const createProtectionRequest = async (request: CreateProtectionRequest): Promise<void> => {
-                console.log("creating");
                 await modelCreateProtectionRequest(request);
-                console.log("refreshing");
                 refreshRequests();
             }
             dispatch({
@@ -246,7 +245,7 @@ export function UserContextProvider(props: Props) {
                 createProtectionRequest,
             });
         }
-    }, [ contextValue, refreshRequests, dispatch ]);
+    }, [ apiState, contextValue, refreshRequests, dispatch ]);
 
     return (
         <UserContextObject.Provider value={contextValue}>
