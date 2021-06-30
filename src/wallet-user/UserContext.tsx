@@ -6,11 +6,8 @@ import { RecoveryConfig, getRecoveryConfig } from '../logion-chain/Recovery';
 import { Children } from '../component/types/Helpers';
 
 import { CreateTokenRequest, createTokenRequest as modelCreateTokenRequest } from "./Model";
-import { TokenizationRequest } from "../legal-officer/Types";
+import { TokenizationRequest, ProtectionRequest } from "../legal-officer/Types";
 import { fetchRequests, fetchProtectionRequests } from "../legal-officer/Model";
-import {
-    ProtectionRequest,
-} from "../legal-officer/Types";
 import {
     CreateProtectionRequest,
     createProtectionRequest as modelCreateProtectionRequest,
@@ -82,7 +79,6 @@ interface Action {
 }
 
 const reducer: Reducer<UserContext, Action> = (state: UserContext, action: Action): UserContext => {
-    console.log(`UserContext: action=${action.type}`);
     switch (action.type) {
         case 'FETCH_IN_PROGRESS':
             console.log("fetch in progress for " + action.dataAddress!);
