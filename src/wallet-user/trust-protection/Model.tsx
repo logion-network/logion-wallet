@@ -82,7 +82,21 @@ export const legalOfficers: LegalOfficer[] = [
     {name: "Ilias", address: fakeAddress(10), details: defaultDetails},
     {name: "Pedroso", address: fakeAddress(11), details: defaultDetails},
     {name: "Marc", address: fakeAddress(12), details: defaultDetails},
-]
+];
+
+export function getOfficer(address: string | undefined): LegalOfficer | null {
+    if(address === null) {
+        return null;
+    }
+
+    for(let i = 0; i < legalOfficers.length; ++i) {
+        const legalOfficer = legalOfficers[i];
+        if(legalOfficer.address === address) {
+            return legalOfficer;
+        }
+    }
+    return null;
+}
 
 const unknownLegalOfficer = legalOfficers[2];
 

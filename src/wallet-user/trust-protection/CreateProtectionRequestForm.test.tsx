@@ -9,7 +9,8 @@ import { setCreateProtectionRequest } from "../UserContext";
 import { shallowRender } from "../../tests";
 import React from "react";
 import CreateProtectionRequestForm from "./CreateProtectionRequestForm";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor, getByText } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 test("renders", () => {
     const tree = shallowRender(<CreateProtectionRequestForm isRecovery={ false } />)
@@ -56,6 +57,15 @@ describe("CreateProtectionRequestForm", () => {
 
     it("should call submit when form is correctly filled", async  () => {
         render(<CreateProtectionRequestForm isRecovery={ false } />);
+
+        const legalOfficer1Select = screen.getByTestId('legalOfficer1');
+        userEvent.click(getByText(legalOfficer1Select, "Select..."));
+        await waitFor(() => userEvent.click(getByText(legalOfficer1Select, "Patrick")));
+
+        const legalOfficer2Select = screen.getByTestId('legalOfficer2');
+        userEvent.click(getByText(legalOfficer2Select, "Select..."));
+        await waitFor(() => userEvent.click(getByText(legalOfficer2Select, "Guillaume")));
+
         fireEvent.input(screen.getByTestId("firstName"), {target: {value: 'John'}})
         fireEvent.input(screen.getByTestId("lastName"), {target: {value: 'Doe'}})
         fireEvent.input(screen.getByTestId("email"), {target: {value: 'john.doe@logion.network'}})
@@ -66,6 +76,8 @@ describe("CreateProtectionRequestForm", () => {
         fireEvent.input(screen.getByTestId("postalCode"), {target: {value: '4000'}})
         fireEvent.input(screen.getByTestId("city"), {target: {value: 'Liège'}})
         fireEvent.input(screen.getByTestId("country"), {target: {value: 'Belgium'}})
+
+        userEvent.click(screen.getByRole('checkbox'));
 
         const button = screen.getByTestId("btnSubmit");
         fireEvent.click(button);
@@ -94,6 +106,15 @@ describe("CreateProtectionRequestForm", () => {
 
     it("should call submit when form is correctly filled for recovery", async  () => {
         render(<CreateProtectionRequestForm isRecovery={ true } />);
+
+        const legalOfficer1Select = screen.getByTestId('legalOfficer1');
+        userEvent.click(getByText(legalOfficer1Select, "Select..."));
+        await waitFor(() => userEvent.click(getByText(legalOfficer1Select, "Patrick")));
+
+        const legalOfficer2Select = screen.getByTestId('legalOfficer2');
+        userEvent.click(getByText(legalOfficer2Select, "Select..."));
+        await waitFor(() => userEvent.click(getByText(legalOfficer2Select, "Guillaume")));
+
         fireEvent.input(screen.getByTestId("addressToRecover"), {target: {value: 'toRecover'}})
         fireEvent.input(screen.getByTestId("firstName"), {target: {value: 'John'}})
         fireEvent.input(screen.getByTestId("lastName"), {target: {value: 'Doe'}})
@@ -105,6 +126,8 @@ describe("CreateProtectionRequestForm", () => {
         fireEvent.input(screen.getByTestId("postalCode"), {target: {value: '4000'}})
         fireEvent.input(screen.getByTestId("city"), {target: {value: 'Liège'}})
         fireEvent.input(screen.getByTestId("country"), {target: {value: 'Belgium'}})
+
+        userEvent.click(screen.getByRole('checkbox'));
 
         const button = screen.getByTestId("btnSubmit");
         fireEvent.click(button);

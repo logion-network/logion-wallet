@@ -1,0 +1,7 @@
+.Officer {
+    border: 1px solid #3b6cf4;
+    padding: 20px;
+    border-radius: 6px;
+    height: 105px;
+    overflow: hidden;
+}

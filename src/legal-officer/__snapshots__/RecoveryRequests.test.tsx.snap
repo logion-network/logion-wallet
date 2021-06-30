@@ -2,64 +2,133 @@
 
 exports[`renders 1`] = `
 <ContentPane
+  addresses={
+    Object {
+      "addresses": Array [
+        Object {
+          "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+          "isLegalOfficer": false,
+          "name": "name",
+        },
+      ],
+      "currentAddress": Object {
+        "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+        "isLegalOfficer": false,
+        "name": "name",
+      },
+    }
+  }
+  colors={
+    Object {
+      "accounts": Object {
+        "background": "eff3fe",
+        "foreground": "#000000",
+        "hintColor": "#00000099",
+        "iconBackground": "#3b6cf4",
+        "legalOfficerIcon": Object {
+          "category": "legal-officer",
+          "id": "account-shield",
+        },
+      },
+      "bottomMenuItems": Object {
+        "iconGradient": Object {
+          "from": "#7a90cb",
+          "to": "#3b6cf4",
+        },
+      },
+      "buttons": Object {
+        "secondaryBackgroundColor": "#eff3fe",
+      },
+      "dashboard": Object {
+        "background": "#eff3fe",
+        "foreground": "#000000",
+      },
+      "frame": Object {
+        "background": "#ffffff",
+        "foreground": "#000000",
+        "link": "#3b6cf426",
+      },
+      "select": Object {
+        "background": "#d8e2fd",
+        "foreground": "#000000",
+        "menuBackgroundColor": "#d8e2fd",
+        "selectedOptionBackgroundColor": "#ffffff33",
+      },
+      "shadowColor": "#3b6cf41a",
+      "sidebar": Object {
+        "activeItemBackground": "#d8e2fd",
+        "background": "#ffffff",
+        "foreground": "#000000",
+      },
+      "topMenuItems": Object {
+        "iconGradient": Object {
+          "from": "#3b6cf4",
+          "to": "#6050dc",
+        },
+      },
+      "type": "light",
+    }
+  }
+  mainTitle="Recovery requests"
   primaryAreaChildren={
-    <React.Fragment>
-      <h1>
-        Recovery Requests
-      </h1>
-      <Frame
-        colors={
-          Object {
-            "accounts": Object {
-              "background": "eff3fe",
-              "foreground": "#000000",
-              "hintColor": "#00000099",
-              "iconBackground": "#3b6cf4",
-              "legalOfficerIcon": Object {
-                "category": "legal-officer",
-                "id": "account-shield",
-              },
+    <Frame
+      colors={
+        Object {
+          "accounts": Object {
+            "background": "eff3fe",
+            "foreground": "#000000",
+            "hintColor": "#00000099",
+            "iconBackground": "#3b6cf4",
+            "legalOfficerIcon": Object {
+              "category": "legal-officer",
+              "id": "account-shield",
             },
-            "bottomMenuItems": Object {
-              "iconGradient": Object {
-                "from": "#7a90cb",
-                "to": "#3b6cf4",
-              },
+          },
+          "bottomMenuItems": Object {
+            "iconGradient": Object {
+              "from": "#7a90cb",
+              "to": "#3b6cf4",
             },
-            "buttons": Object {
-              "secondaryBackgroundColor": "#eff3fe",
+          },
+          "buttons": Object {
+            "secondaryBackgroundColor": "#eff3fe",
+          },
+          "dashboard": Object {
+            "background": "#eff3fe",
+            "foreground": "#000000",
+          },
+          "frame": Object {
+            "background": "#ffffff",
+            "foreground": "#000000",
+            "link": "#3b6cf426",
+          },
+          "select": Object {
+            "background": "#d8e2fd",
+            "foreground": "#000000",
+            "menuBackgroundColor": "#d8e2fd",
+            "selectedOptionBackgroundColor": "#ffffff33",
+          },
+          "shadowColor": "#3b6cf41a",
+          "sidebar": Object {
+            "activeItemBackground": "#d8e2fd",
+            "background": "#ffffff",
+            "foreground": "#000000",
+          },
+          "topMenuItems": Object {
+            "iconGradient": Object {
+              "from": "#3b6cf4",
+              "to": "#6050dc",
             },
-            "dashboard": Object {
-              "background": "#eff3fe",
-              "foreground": "#000000",
-            },
-            "frame": Object {
-              "background": "#ffffff",
-              "foreground": "#000000",
-              "link": "#3b6cf426",
-            },
-            "shadowColor": "#3b6cf41a",
-            "sidebar": Object {
-              "activeItemBackground": "#d8e2fd",
-              "background": "#ffffff",
-              "foreground": "#000000",
-            },
-            "topMenuItems": Object {
-              "iconGradient": Object {
-                "from": "#3b6cf4",
-                "to": "#6050dc",
-              },
-            },
-            "type": "light",
-          }
+          },
+          "type": "light",
         }
-      >
-        <RefreshTokenizationRequestsButton />
-        <PendingProtectionRequests
-          recovery={true}
-        />
-      </Frame>
-    </React.Fragment>
+      }
+    >
+      <RefreshTokenizationRequestsButton />
+      <PendingProtectionRequests
+        recovery={true}
+      />
+    </Frame>
   }
   secondaryAreaChildren={
     <Frame
@@ -93,6 +162,12 @@ exports[`renders 1`] = `
             "foreground": "#000000",
             "link": "#3b6cf426",
           },
+          "select": Object {
+            "background": "#d8e2fd",
+            "foreground": "#000000",
+            "menuBackgroundColor": "#d8e2fd",
+            "selectedOptionBackgroundColor": "#ffffff33",
+          },
           "shadowColor": "#3b6cf41a",
           "sidebar": Object {
             "activeItemBackground": "#d8e2fd",
@@ -114,5 +189,6 @@ exports[`renders 1`] = `
       />
     </Frame>
   }
+  selectAddress={[MockFunction]}
 />
 `;

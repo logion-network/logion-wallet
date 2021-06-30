@@ -1,4 +1,15 @@
 .Frame {
+    position: relative;
     padding: 30px;
+    border-radius: 10px;
+}
+
+.Frame.disabled:before {
+    position: absolute;
+    content: '';
+    top: 0; right: 0; bottom: 0; left: 0;
+    z-index: 1;
+    background-color: black;
+    opacity: 0.3;
     border-radius: 10px;
 }

@@ -58,5 +58,11 @@ export const COLOR_THEME: ColorTheme = {
     },
     buttons: {
         secondaryBackgroundColor: '#eff3fe',
-    }
+    },
+    select: {
+        background: '#ffffff',
+        foreground: '#000000',
+        menuBackgroundColor: '#ffffff',
+        selectedOptionBackgroundColor: '#ffffff',
+    },
 };

@@ -1,46 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {useForm, Controller} from 'react-hook-form';
 import Form from "react-bootstrap/Form";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
-import Button from "react-bootstrap/Button";
-import Alert from "react-bootstrap/Alert";
 
-import {CreateProtectionRequest, legalOfficers} from "./Model";
+import Button from "../../component/Button";
+import Select, { OptionType } from '../../component/Select';
+import { ContentPane } from "../../component/Dashboard";
+import Frame from "../../component/Frame";
+import Alert from "../../component/Alert";
+
+import {CreateProtectionRequest, legalOfficers, getOfficer} from "./Model";
 import {useUserContext} from "../UserContext";
 import moment from "moment";
 import {sign} from "../../logion-chain";
 import {Row, Col} from "react-bootstrap";
-import {Link} from "react-router-dom";
-import {USER_PATH} from "../../RootPaths";
 import {useRootContext} from "../../RootContext";
+import Officer from './Officer';
+
+import './CreateProtectionRequestForm.css';
 
 export interface Props {
     isRecovery: boolean,
 }
 
+interface FormValues {
+    firstName: string,
+    lastName: string,
+    email: string,
+    phoneNumber: string,
+    line1: string,
+    line2: string,
+    postalCode: string,
+    city: string,
+    country: string,
+    addressToRecover?: string,
+    agree: string,
+}
+
 export default function CreateProtectionRequestForm(props: Props) {
-
-    interface FormValues {
-        firstName: string,
-        lastName: string,
-        email: string,
-        phoneNumber: string,
-        line1: string,
-        line2: string,
-        postalCode: string,
-        city: string,
-        country: string,
-        legalOfficers: string[],
-        addressToRecover?: string,
-    }
-
-    const {control, handleSubmit, formState: {errors}} = useForm<FormValues>();
-    const {currentAddress} = useRootContext();
-    const {createProtectionRequest} = useUserContext();
+    const { control, handleSubmit, formState: {errors} } = useForm<FormValues>();
+    const { selectAddress, addresses, currentAddress } = useRootContext();
+    const { createProtectionRequest, colorTheme } = useUserContext();
+    const [ legalOfficer1, setLegalOfficer1 ] = useState<OptionType | null>(null);
+    const [ legalOfficer2, setLegalOfficer2 ] = useState<OptionType | null>(null);
 
     const submit = async (formValues: FormValues) => {
-
-        formValues.legalOfficers = [legalOfficers[0].address, legalOfficers[1].address];
+        if(legalOfficer1 === null || legalOfficer2 === null || !formValues.agree) {
+            return;
+        }
 
         const addressToRecover = formValues.addressToRecover !== undefined ? formValues.addressToRecover : "";
         const attributes = [
@@ -56,7 +62,9 @@ export default function CreateProtectionRequestForm(props: Props) {
             `${formValues.country}`,
             `${props.isRecovery}`,
             `${addressToRecover}`,
-        ].concat(formValues.legalOfficers);
+            `${legalOfficer1.value}`,
+            `${legalOfficer2.value}`,
+        ];
 
         const signedOn = moment();
         const signature = await sign({
@@ -81,7 +89,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                 city: formValues.city,
                 country: formValues.country,
             },
-            legalOfficerAddresses: formValues.legalOfficers,
+            legalOfficerAddresses: [ legalOfficer1.value, legalOfficer2.value ],
             signature,
             signedOn,
             isRecovery: props.isRecovery,
@@ -90,213 +98,348 @@ export default function CreateProtectionRequestForm(props: Props) {
         await createProtectionRequest!(request);
     }
 
+    const legalOfficersOptions = legalOfficers.map(legalOfficer => {
+        return {
+            label: `${legalOfficer.name}`,
+            value: legalOfficer.address
+        }
+    });
+
+    let mainTitle;
+    if(props.isRecovery) {
+        mainTitle = "Recovery";
+    } else {
+        mainTitle = "My Logion Trust Protection";
+    }
+
+    let subTitle;
+    if(props.isRecovery) {
+        subTitle = "Start recovery process";
+    } else {
+        subTitle = "Activate my Logion Trust Protection";
+    }
+
+    if(addresses === null || selectAddress === null) {
+        return null;
+    }
+
     return (
-        <>
-            {
-                !props.isRecovery &&
-                <h2>No protection detected</h2>
-            }
-            <Form onSubmit={handleSubmit(submit)}>
-                {
-                    props.isRecovery &&
-                    <Alert variant="warning">
-                        Please select the 2 legal officers you’ve selected at the creation of the account to be
-                        recovered. Please note that those Legal Officers will execute their due diligence to authorize
-                        the recovery and will be, then, the two Legal Officers in charge of protecting this current
-                        account you are using to get your assets back.
-                    </Alert>
-                }
-                {
-                    legalOfficers.map((legalOfficer, index) => (
-                    <Form.Group key={'legalOfficer' + index} controlId={'legalOfficer' + index}>
-                        <Form.Check type="checkbox" label={`${legalOfficer.name} (${legalOfficer.address})`}/>
+        <ContentPane
+            mainTitle={ mainTitle }
+            subTitle={ subTitle }
+            colors={ colorTheme }
+            addresses={ addresses }
+            selectAddress={ selectAddress }
+            primaryPaneWidth={ 6 }
+            primaryAreaChildren={
+                <Frame
+                    className="CreateProtectionRequestFormLegalOfficers"
+                    colors={ colorTheme }
+                >
+                    <h3>Choose your Legal Officers</h3>
+                    {
+                        props.isRecovery &&
+                        <Alert variant="warning">
+                            Please select the 2 legal officers you’ve selected at the creation of the account to be
+                            recovered. Please note that those Legal Officers will execute their due diligence to authorize
+                            the recovery and will be, then, the two Legal Officers in charge of protecting this current
+                            account you are using to get your assets back.
+                        </Alert>
+                    }
+                    <Form.Group controlId="legalOfficer1" data-testid="legalOfficer1">
+                        <Form.Label>Choose Legal Officer N°1</Form.Label>
+                        <Select
+                            isInvalid={ legalOfficer1 === null || (legalOfficer2 !== null && legalOfficer1.value === legalOfficer2.value) }
+                            data-testid="legalOfficer1"
+                            options={ legalOfficersOptions }
+                            value={ legalOfficer1 }
+                            onChange={ value => setLegalOfficer1(value) }
+                            colors={ colorTheme.select }
+                        />
+                        <Form.Control.Feedback type="invalid"
+                                               data-testid="legalOfficer1Message">Legal officer 1 is required and must be different from legal officer 2</Form.Control.Feedback>
                     </Form.Group>
-                    ))
-                }
-                {
-                    props.isRecovery &&
-                    <>
-                        <h3>Recovery</h3>
-                        <Form.Group as={Row} controlId="accountToRecover">
-                            <Form.Label column sm={3}>Address to Recover</Form.Label>
-                            <Col sm={9}>
-                                <Controller name="addressToRecover"
+                    <Officer
+                        officer={ getOfficer(legalOfficer1?.value) }
+                        colors={ colorTheme.frame }
+                    />
+
+                    <Form.Group controlId="legalOfficer2" data-testid="legalOfficer2">
+                        <Form.Label>Choose Legal Officer N°2</Form.Label>
+                        <Select
+                            isInvalid={ legalOfficer2 === null || (legalOfficer1 !== null && legalOfficer1.value === legalOfficer2.value) }
+                            data-testid="legalOfficer2"
+                            options={ legalOfficersOptions }
+                            value={ legalOfficer2 }
+                            onChange={ value => setLegalOfficer2(value) }
+                            colors={ colorTheme.select }
+                        />
+                        <Form.Control.Feedback type="invalid"
+                                               data-testid="legalOfficer2Message">Legal officer 2 is required and must be different from legal officer 1</Form.Control.Feedback>
+                    </Form.Group>
+                    <Officer
+                        officer={ getOfficer(legalOfficer2?.value) }
+                        colors={ colorTheme.frame }
+                    />
+                </Frame>
+            }
+            secondaryAreaChildren={
+                <Frame
+                    className="CreateProtectionRequestFormOther"
+                    colors={ colorTheme }
+                    disabled={ legalOfficer1 === null || legalOfficer2 === null || legalOfficer1.value === legalOfficer2.value }
+                >
+                    <h3>Fill in your personal information</h3>
+
+                    {
+                        !props.isRecovery &&
+                        <Alert variant="info">
+                            This initial personal information sharing will start KYC process and will also be used
+                            in the context of a potential future recovery process.
+                        </Alert>
+                    }
+                    {
+                        props.isRecovery &&
+                        <Alert variant="info">
+                            This personal information sharing will start KYC process part of the recovery process.
+                        </Alert>
+                    }
+
+                    <Form onSubmit={handleSubmit(submit)}>
+                        {
+                            props.isRecovery &&
+                            <>
+                                <Form.Group controlId="accountToRecover">
+                                    <Form.Label>Address to Recover</Form.Label>
+                                    <Controller
+                                        name="addressToRecover"
+                                        control={control}
+                                        defaultValue=""
+                                        rules={{required: 'The address to recover is required'}}
+                                        render={({field}) => (
+                                            <Form.Control
+                                                isInvalid={!!errors.addressToRecover?.message}
+                                                type="text"
+                                                data-testid="addressToRecover" {...field}
+                                            />
+                                        )}
+                                    />
+                                    <Form.Control.Feedback
+                                        type="invalid"
+                                        data-testid="accountToRecoverMessage"
+                                    >
+                                        {errors.addressToRecover?.message}
+                                   </Form.Control.Feedback>
+                                </Form.Group>
+                            </>
+                        }
+
+                        <Row>
+                            <Col md={6}>
+                                <Form.Group controlId="firstName">
+                                    <Form.Label>First Name</Form.Label>
+                                    <Controller
+                                        name="firstName"
+                                        control={control}
+                                        defaultValue=""
+                                        rules={{required: 'The first name is required'}}
+                                        render={({field}) => (
+                                            <Form.Control
+                                                isInvalid={!!errors.firstName?.message}
+                                                type="text" placeholder="e.g. XYZ"
+                                                data-testid="firstName" {...field}
+                                            />
+                                       )}
+                                    />
+                                    <Form.Control.Feedback
+                                        type="invalid"
+                                        data-testid="firstNameMessage"
+                                    >
+                                        {errors.firstName?.message}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+                            </Col>
+                            <Col md={6}>
+                                <Form.Group controlId="lastName">
+                                    <Form.Label>Last Name</Form.Label>
+                                    <Controller
+                                        name="lastName"
+                                        control={control}
+                                        defaultValue=""
+                                        rules={{required: 'The last name is required'}}
+                                        render={({field}) => (
+                                            <Form.Control
+                                                isInvalid={!!errors.lastName?.message}
+                                                type="text"
+                                                placeholder="e.g. XYZ"
+                                                data-testid="lastName" {...field}
+                                            />
+                                       )}
+                                    />
+                                    <Form.Control.Feedback
+                                        type="invalid"
+                                        data-testid="lastNameMessage"
+                                    >
+                                        {errors.lastName?.message}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+
+                        <Row>
+                            <Col md={6}>
+                                <Form.Group controlId="email">
+                                    <Form.Label>Email</Form.Label>
+                                    <Controller
+                                        name="email"
+                                        control={control}
+                                        defaultValue=""
+                                        rules={{required: 'The email is required'}}
+                                        render={({field}) => (
+                                            <Form.Control
+                                                isInvalid={!!errors.email?.message}
+                                                type="text" placeholder="e.g. XYZ"
+                                                data-testid="email" {...field}
+                                            />
+                                        )}
+                                    />
+                                    <Form.Control.Feedback type="invalid"
+                                                           data-testid="emailMessage">{errors.email?.message}</Form.Control.Feedback>
+                                </Form.Group>
+                            </Col>
+                            <Col md={6}>
+                                <Form.Group controlId="phoneNumber">
+                                    <Form.Label>Phone Number</Form.Label>
+                                    <Controller
+                                        name="phoneNumber"
+                                        control={control}
+                                        defaultValue=""
+                                        rules={{required: 'The phone number is required'}}
+                                        render={({field}) => (
+                                            <Form.Control
+                                                isInvalid={!!errors.phoneNumber?.message}
+                                                type="text"
+                                                placeholder="e.g. XYZ"
+                                                data-testid="phoneNumber" {...field}
+                                            />
+                                        )}
+                                    />
+                                    <Form.Control.Feedback
+                                        type="invalid"
+                                        data-testid="phoneNumberMessage"
+                                    >
+                                        {errors.phoneNumber?.message}
+                                    </Form.Control.Feedback>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+
+                        <h3>Address</h3>
+                        <Form.Group controlId="line1">
+                            <Form.Label>Line1</Form.Label>
+                            <Controller name="line1"
+                                        control={control}
+                                        defaultValue=""
+                                        rules={{required: 'The line1 is required'}}
+                                        render={({field}) => <Form.Control isInvalid={!!errors.line1?.message}
+                                                                           type="text" placeholder="e.g. XYZ"
+                                                                           data-testid="line1" {...field} />}
+                            />
+                            <Form.Control.Feedback type="invalid"
+                                                   data-testid="line1Message">{errors.line1?.message}</Form.Control.Feedback>
+                        </Form.Group>
+                        <Form.Group controlId="line2">
+                            <Form.Label>Line2</Form.Label>
+                            <Controller name="line2"
+                                        control={control}
+                                        defaultValue=""
+                                        render={({field}) => <Form.Control isInvalid={!!errors.line2?.message}
+                                                                           type="text" placeholder="e.g. XYZ"
+                                                                           data-testid="line2" {...field} />}
+                            />
+                            <Form.Control.Feedback type="invalid"
+                                                   data-testid="line2Message">{errors.line2?.message}</Form.Control.Feedback>
+                        </Form.Group>
+
+                        <Row>
+                        <Col md={4}>
+                        <Form.Group controlId="postalCode">
+                            <Form.Label>Postal Code</Form.Label>
+                            <Controller name="postalCode"
+                                        control={control}
+                                        defaultValue=""
+                                        rules={{required: 'The postal code is required'}}
+                                        render={({field}) => <Form.Control isInvalid={!!errors.postalCode?.message}
+                                                                           type="text" placeholder="e.g. XYZ"
+                                                                           data-testid="postalCode" {...field} />}
+                            />
+                            <Form.Control.Feedback type="invalid"
+                                                   data-testid="postalCodeMessage">{errors.postalCode?.message}</Form.Control.Feedback>
+                        </Form.Group>
+                        </Col>
+                        <Col md={8}>
+                            <Form.Group controlId="city">
+                                <Form.Label>City</Form.Label>
+                                <Controller name="city"
                                             control={control}
                                             defaultValue=""
-                                            rules={{required: 'The address to recover is required'}}
-                                            render={({field}) => <Form.Control isInvalid={!!errors.addressToRecover?.message}
-                                                                               type="text"
-                                                                               data-testid="addressToRecover" {...field} />}
+                                            rules={{required: 'The city is required'}}
+                                            render={({field}) => <Form.Control isInvalid={!!errors.city?.message}
+                                                                               type="text" placeholder="e.g. XYZ"
+                                                                               data-testid="city" {...field} />}
                                 />
                                 <Form.Control.Feedback type="invalid"
-                                                       data-testid="accountToRecoverMessage">{errors.addressToRecover?.message}</Form.Control.Feedback>
-                            </Col>
+                                                       data-testid="cityMessage">{errors.city?.message}</Form.Control.Feedback>
+                            </Form.Group>
+                        </Col>
+                        </Row>
+                        <Form.Group controlId="country">
+                            <Form.Label>Country</Form.Label>
+                            <Controller name="country"
+                                        control={control}
+                                        defaultValue=""
+                                        rules={{required: 'The country is required'}}
+                                        render={({field}) => <Form.Control isInvalid={!!errors.country?.message}
+                                                                           type="text" placeholder="e.g. XYZ"
+                                                                           data-testid="country" {...field} />}
+                            />
+                            <Form.Control.Feedback type="invalid"
+                                                   data-testid="countryMessage">{errors.country?.message}</Form.Control.Feedback>
                         </Form.Group>
-                    </>
-                }
-                <h3>Identity</h3>
-                <Form.Group as={Row} controlId="firstName">
-                    <Form.Label column sm={3}>First Name</Form.Label>
-                    <Col sm={9}>
-                        <Controller name="firstName"
-                                    control={control}
-                                    defaultValue=""
-                                    rules={{required: 'The first name is required'}}
-                                    render={({field}) => <Form.Control isInvalid={!!errors.firstName?.message}
-                                                                       type="text" placeholder="e.g. XYZ"
-                                                                       data-testid="firstName" {...field} />}
-                        />
-                        <Form.Control.Feedback type="invalid"
-                                               data-testid="firstNameMessage">{errors.firstName?.message}</Form.Control.Feedback>
-                    </Col>
-                </Form.Group>
-                <Form.Group as={Row} controlId="lastName">
-                    <Form.Label column sm={3}>Last Name</Form.Label>
-                    <Col sm={9}>
-                        <Controller name="lastName"
-                                    control={control}
-                                    defaultValue=""
-                                    rules={{required: 'The last name is required'}}
-                                    render={({field}) => <Form.Control isInvalid={!!errors.lastName?.message}
-                                                                       type="text" placeholder="e.g. XYZ"
-                                                                       data-testid="lastName" {...field} />}
-                        />
-                        <Form.Control.Feedback type="invalid"
-                                               data-testid="lastNameMessage">{errors.lastName?.message}</Form.Control.Feedback>
-                    </Col>
-                </Form.Group>
-                <Form.Group as={Row} controlId="email">
-                    <Form.Label column sm={3}>Email</Form.Label>
-                    <Col sm={9}>
-                        <Controller name="email"
-                                    control={control}
-                                    defaultValue=""
-                                    rules={{required: 'The email is required'}}
-                                    render={({field}) => <Form.Control isInvalid={!!errors.email?.message}
-                                                                       type="text" placeholder="e.g. XYZ"
-                                                                       data-testid="email" {...field} />}
-                        />
-                        <Form.Control.Feedback type="invalid"
-                                               data-testid="emailMessage">{errors.email?.message}</Form.Control.Feedback>
-                    </Col>
-                </Form.Group>
-                <Form.Group as={Row} controlId="phoneNumber">
-                    <Form.Label column sm={3}>Phone Number</Form.Label>
-                    <Col sm={9}>
-                        <Controller name="phoneNumber"
-                                    control={control}
-                                    defaultValue=""
-                                    rules={{required: 'The phone number is required'}}
-                                    render={({field}) => <Form.Control isInvalid={!!errors.phoneNumber?.message}
-                                                                       type="text" placeholder="e.g. XYZ"
-                                                                       data-testid="phoneNumber" {...field} />}
-                        />
-                        <Form.Control.Feedback type="invalid"
-                                               data-testid="phoneNumberMessage">{errors.phoneNumber?.message}</Form.Control.Feedback>
-                    </Col>
-                </Form.Group>
-                <h3>Address</h3>
-                <Form.Group as={Row} controlId="line1">
-                    <Form.Label column sm={3}>Line1</Form.Label>
-                    <Col sm={9}>
-                        <Controller name="line1"
-                                    control={control}
-                                    defaultValue=""
-                                    rules={{required: 'The line1 is required'}}
-                                    render={({field}) => <Form.Control isInvalid={!!errors.line1?.message}
-                                                                       type="text" placeholder="e.g. XYZ"
-                                                                       data-testid="line1" {...field} />}
-                        />
-                        <Form.Control.Feedback type="invalid"
-                                               data-testid="line1Message">{errors.line1?.message}</Form.Control.Feedback>
-                    </Col>
-                </Form.Group>
-                <Form.Group as={Row} controlId="line2">
-                    <Form.Label column sm={3}>Line2</Form.Label>
-                    <Col sm={9}>
-                        <Controller name="line2"
-                                    control={control}
-                                    defaultValue=""
-                                    render={({field}) => <Form.Control isInvalid={!!errors.line2?.message}
-                                                                       type="text" placeholder="e.g. XYZ"
-                                                                       data-testid="line2" {...field} />}
-                        />
-                        <Form.Control.Feedback type="invalid"
-                                               data-testid="line2Message">{errors.line2?.message}</Form.Control.Feedback>
-                    </Col>
-                </Form.Group>
 
-                <Form.Group as={Row} controlId="postalCode">
-                    <Form.Label column sm={3}>Postal Code</Form.Label>
-                    <Col sm={9}>
-                        <Controller name="postalCode"
+                        <div className="agree-submit">
+                            <Form.Group controlId="agree">
+                                <Controller
+                                    name="agree"
                                     control={control}
                                     defaultValue=""
-                                    rules={{required: 'The postal code is required'}}
-                                    render={({field}) => <Form.Control isInvalid={!!errors.postalCode?.message}
-                                                                       type="text" placeholder="e.g. XYZ"
-                                                                       data-testid="postalCode" {...field} />}
-                        />
-                        <Form.Control.Feedback type="invalid"
-                                               data-testid="postalCodeMessage">{errors.postalCode?.message}</Form.Control.Feedback>
-                    </Col>
-                </Form.Group>
-                <Form.Group as={Row} controlId="city">
-                    <Form.Label column sm={3}>City</Form.Label>
-                    <Col sm={9}>
-                        <Controller name="city"
-                                    control={control}
-                                    defaultValue=""
-                                    rules={{required: 'The city is required'}}
-                                    render={({field}) => <Form.Control isInvalid={!!errors.city?.message}
-                                                                       type="text" placeholder="e.g. XYZ"
-                                                                       data-testid="city" {...field} />}
-                        />
-                        <Form.Control.Feedback type="invalid"
-                                               data-testid="cityMessage">{errors.city?.message}</Form.Control.Feedback>
-                    </Col>
-                </Form.Group>
-                <Form.Group as={Row} controlId="country">
-                    <Form.Label column sm={3}>Country</Form.Label>
-                    <Col sm={9}>
-                        <Controller name="country"
-                                    control={control}
-                                    defaultValue=""
-                                    rules={{required: 'The country is required'}}
-                                    render={({field}) => <Form.Control isInvalid={!!errors.country?.message}
-                                                                       type="text" placeholder="e.g. XYZ"
-                                                                       data-testid="country" {...field} />}
-                        />
-                        <Form.Control.Feedback type="invalid"
-                                               data-testid="countryMessage">{errors.country?.message}</Form.Control.Feedback>
-                    </Col>
-                </Form.Group>
-
-                {
-                    props.isRecovery &&
-                    <p>
-                        By selecting your Legal Officers and clicking on the submission button, you will start
-                        a KYC process required in this context of recovery of one account under your legal
-                        officers' protection to this account.
-                    </p>
-                }
-                {
-                    !props.isRecovery &&
-                    <>
-                        <p>Do you agree to send your first name, last name, email, phone number and address to the following Legal
-                        Officers?</p>
-                        <p>This initial personal information sharing will start KYC process and will also be used in this context of
-                        a potential future Account recovery process</p>
-                    </>
-                }
-
-                <ButtonGroup>
-                    <Button type="submit" variant="primary" data-testid="btnSubmit">I agree and submit my request</Button>
-                    <Link to={USER_PATH}>
-                        <Button variant="secondary" data-testid="btnCancel">Cancel</Button>
-                    </Link>
-                </ButtonGroup>
-            </Form>
-        </>
+                                    rules={{required: "You must agree in order to proceed"}}
+                                    render={({field}) => (
+                                        <Form.Check
+                                            isInvalid={!!errors.agree?.message}
+                                            type="checkbox"
+                                            id="agree"
+                                            label="I agree to send my personal information to the chosen Legal Officers"
+                                            feedback={errors.agree?.message}
+                                            { ...field }
+                                        />
+                                      )}
+                                />
+                            </Form.Group>
+    
+                            <Button
+                                backgroundColor={ colorTheme.buttons.secondaryBackgroundColor }
+                                action={{
+                                    id: "submit",
+                                    buttonVariant: "primary",
+                                    buttonText: "Next",
+                                    buttonTestId: "btnSubmit"
+                                }}
+                            />
+                        </div>
+                    </Form>
+                </Frame>
+            }
+        />
     );
 }

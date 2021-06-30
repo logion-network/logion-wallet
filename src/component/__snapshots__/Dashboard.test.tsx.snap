@@ -1,14 +1,14 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders ContentPane 1`] = `
-<React.Fragment>
+<BasePane>
   <PrimaryArea
     width={6}
   />
   <SecondaryArea
-    width={4}
+    width={6}
   />
-</React.Fragment>
+</BasePane>
 `;
 
 exports[`renders Dashboard 1`] = `
@@ -41,8 +41,8 @@ exports[`renders Dashboard 1`] = `
         background-color: #eff3fe;
     }
 
-    .form-control,
-    .form-control[readonly] {
+    .Dashboard .form-control,
+    .Dashboard .form-control[readonly] {
         background-color: #eff3fe;
         color: #000000;
     }
@@ -100,55 +100,14 @@ exports[`renders Dashboard 1`] = `
         </div>
       </div>
     </Col>
-    <div
-      className="AddressSwitcherArea"
-    >
-      <AddressSwitcher
-        addresses={
-          Object {
-            "addresses": Array [
-              Object {
-                "address": "address1",
-                "isLegalOfficer": false,
-                "name": "Name 1",
-              },
-              Object {
-                "address": "address2",
-                "isLegalOfficer": false,
-                "name": "Name 2",
-              },
-            ],
-            "currentAddress": Object {
-              "address": "address1",
-              "isLegalOfficer": false,
-              "name": "Name 1",
-            },
-          }
-        }
-        colorThemeType="light"
-        colors={
-          Object {
-            "background": "eff3fe",
-            "foreground": "#000000",
-            "hintColor": "#00000099",
-            "iconBackground": "#3b6cf4",
-            "legalOfficerIcon": Object {
-              "category": "legal-officer",
-              "id": "account-shield",
-            },
-          }
-        }
-        selectAddress={[MockFunction]}
-      />
-    </div>
   </Row>
 </Container>
 `;
 
 exports[`renders FullWidthPane 1`] = `
-<React.Fragment>
+<BasePane>
   <PrimaryArea
-    width={10}
+    width={12}
   />
-</React.Fragment>
+</BasePane>
 `;

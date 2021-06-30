@@ -52,13 +52,71 @@ function SecondaryArea(props: SecondaryAreaProps) {
     );
 }
 
-export interface ContentPaneProps {
+export interface ContentPaneProps extends TitlesProps, AddressSwitcherProps {
     primaryAreaChildren: Children,
     secondaryAreaChildren: Children,
     primaryPaneWidth?: number,
 }
 
+const FULL_WIDTH = 12;
 const SIDEBAR_WIDTH = 2;
+
+interface TitlesProps {
+    mainTitle?: string,
+    subTitle?: string,
+}
+
+function Titles(props: TitlesProps) {
+
+    return (
+        <div className="TitlesArea">
+            {
+                props.mainTitle !== undefined &&
+                <h1>{ props.mainTitle }</h1>
+            }
+            {
+                props.subTitle !== undefined &&
+                <h2>{ props.subTitle }</h2>
+            }
+        </div>
+    );
+}
+
+interface AddressSwitcherProps {
+    colors: ColorTheme,
+    addresses: Addresses,
+    selectAddress: (userAddress: string) => void,
+}
+
+export interface BasePaneProps extends TitlesProps, AddressSwitcherProps {
+    children: Children,
+}
+
+function BasePane(props: BasePaneProps) {
+
+    return (
+        <Col md={ FULL_WIDTH - SIDEBAR_WIDTH }>
+            <Row noGutters>
+                <Col md={ 8 }>
+                    <Titles {...props} />
+                </Col>
+                <Col md={ 4 }>
+                    <div className="AddressSwitcherArea">
+                        <AddressSwitcher
+                            addresses={ props.addresses }
+                            colors={ props.colors.accounts }
+                            selectAddress={ props.selectAddress }
+                            colorThemeType={ props.colors.type }
+                        />
+                    </div>
+                </Col>
+            </Row>
+            <Row noGutters>
+                { props.children }
+            </Row>
+        </Col>
+    );
+}
 
 export function ContentPane(props: ContentPaneProps) {
 
@@ -68,46 +126,54 @@ export function ContentPane(props: ContentPaneProps) {
     }
 
     return (
-        <>
-            <PrimaryArea
-                width={ primaryPaneWidth }
-            >
-                { props.primaryAreaChildren }
-            </PrimaryArea>
-            <SecondaryArea
-                width={ 12 - SIDEBAR_WIDTH - primaryPaneWidth }
-            >
-                { props.secondaryAreaChildren }
-            </SecondaryArea>
-        </>
+        <BasePane
+            mainTitle={ props.mainTitle }
+            subTitle={ props.subTitle }
+            colors={ props.colors }
+            selectAddress={ props.selectAddress }
+            addresses={ props.addresses }
+        >
+                <PrimaryArea
+                    width={ primaryPaneWidth }
+                >
+                    { props.primaryAreaChildren }
+                </PrimaryArea>
+                <SecondaryArea
+                    width={ FULL_WIDTH - primaryPaneWidth }
+                >
+                    { props.secondaryAreaChildren }
+                </SecondaryArea>
+        </BasePane>
     );
 }
 
-export interface FullWidthPaneProps {
+export interface FullWidthPaneProps extends TitlesProps, AddressSwitcherProps {
     children: Children,
 }
 
 export function FullWidthPane(props: FullWidthPaneProps) {
 
     return (
-        <>
-            <PrimaryArea
-                width={ 12 - SIDEBAR_WIDTH }
-            >
+        <BasePane
+            mainTitle={ props.mainTitle }
+            subTitle={ props.subTitle }
+            colors={ props.colors }
+            selectAddress={ props.selectAddress }
+            addresses={ props.addresses }
+        >
+            <PrimaryArea width={ FULL_WIDTH }>
                 { props.children }
             </PrimaryArea>
-        </>
+        </BasePane>
     );
 }
 
 export interface Props {
     children: Children,
-    colors: ColorTheme,
-    addresses: Addresses,
-    selectAddress: (userAddress: string) => void,
     menuTop: MenuItemData[],
     menuBottom: MenuItemData[],
     shieldItem: MenuItemData,
+    colors: ColorTheme,
 }
 
 export default function Dashboard(props: Props) {
@@ -130,8 +196,8 @@ export default function Dashboard(props: Props) {
         background-color: ${props.colors.dashboard.background};
     }
 
-    .form-control,
-    .form-control[readonly] {
+    .Dashboard .form-control,
+    .Dashboard .form-control[readonly] {
         background-color: ${props.colors.dashboard.background};
         color: ${props.colors.dashboard.foreground};
     }
@@ -189,14 +255,6 @@ export default function Dashboard(props: Props) {
                     </div>
                 </Col>
                 { props.children }
-                <div className="AddressSwitcherArea">
-                    <AddressSwitcher
-                        addresses={ props.addresses }
-                        colors={ props.colors.accounts }
-                        selectAddress={ props.selectAddress }
-                        colorThemeType={ props.colors.type }
-                    />
-                </div>
             </Row>
         </Container>
     );

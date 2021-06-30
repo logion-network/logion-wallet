@@ -23,24 +23,25 @@
 .Dashboard .PrimaryArea {
     font-size: 14px;
     overflow-x: hidden;
+    padding-top: 23px;
     padding-left: 40px;
     padding-right: 20px;
     padding-bottom: 30px;
+    min-height: 100%;
 }
 
 .Dashboard .SecondaryArea {
     font-size: 14px;
     overflow-x: hidden;
     min-height: 100vh;
-    padding-top: 139px;
+    padding-top: 23px;
     padding-left: 20px;
     padding-right: 25px;
     padding-bottom: 30px;
+    min-height: 100%;
 }
 
 .Dashboard .AddressSwitcherArea {
-    position: absolute;
-    right: 0;
     display: flex;
     justify-content: flex-end;
     padding-top: 30px;
@@ -65,12 +66,60 @@
 
 .Dashboard .PrimaryArea h3,
 .Dashboard .SecondaryArea h3 {
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 18px;
+    padding-bottom: 20px;
 }
 
 .Dashboard .PrimaryArea p,
 .Dashboard .SecondaryArea p {
     font-size: 14px;
     font-weight: normal;
+}
+
+.Dashboard .TitlesArea {
+    padding-left: 40px;
+}
+
+.Dashboard .TitlesArea h1 {
+    font-size: 36px;
+    font-weight: bold;
+    padding-top: 30px;
+}
+
+.Dashboard .TitlesArea h2 {
+    font-size: 22px;
+    padding-top: 20px;
+}
+
+.Dashboard .form-control {
+    border: none;
+    border-bottom: 1px solid #3b6cf4;
+    font-weight: bold;
+    border-radius: 0;
+}
+
+.Dashboard .form-control:focus {
+    border-bottom: 2px solid #3b6cf4;
+    box-shadow: none;
+}
+
+.Dashboard .form-control.is-invalid:focus {
+    box-shadow: none;
+}
+
+.Dashboard .invalid-feedback {
+    display: block;
+    visibility: hidden;
+}
+
+.Dashboard .invalid-feedback:after {
+    content: '\00a0';
+}
+
+.Dashboard .is-invalid ~ .invalid-feedback {
+    visibility: visible;
+}
+
+.Dashboard .form-check-input:not(.is-invalid) ~ .form-check-label {
+    padding-bottom: 20px;
 }

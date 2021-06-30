@@ -10,7 +10,7 @@ export const DARK_MODE: ColorTheme = {
     sidebar: {
         background: '#152665',
         foreground: '#ffffff',
-        activeItemBackground: '#ffffff0f',
+        activeItemBackground: rgbaToHex('#ffffff', 0.20),
     },
     accounts: {
         iconBackground: '#3b6cf4',
@@ -41,5 +41,11 @@ export const DARK_MODE: ColorTheme = {
     },
     buttons: {
         secondaryBackgroundColor: '#0c163d',
-    }
+    },
+    select: {
+        background: rgbaToHex('#ffffff', 0.20),
+        foreground: '#ffffff',
+        menuBackgroundColor: '#152665',
+        selectedOptionBackgroundColor: rgbaToHex('#ffffff', 0.20),
+    },
 };

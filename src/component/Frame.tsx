@@ -8,6 +8,8 @@ import './Frame.css';
 export interface Props {
     colors: ColorTheme,
     children: Children,
+    disabled?: boolean,
+    className?: string,
 }
 
 export default function Frame(props: Props) {
@@ -17,11 +19,23 @@ export default function Frame(props: Props) {
     .Frame .btn-link {
         color: ${props.colors.frame.link}
     }
+    .Dashboard .Frame .form-control,
+    .Dashboard .Frame .form-control[readonly] {
+        background-color: ${props.colors.frame.background};
+    }
     `;
+
+    let className = "Frame";
+    if(props.className !== undefined) {
+        className = className + " " + props.className;
+    }
+    if(props.disabled !== undefined && props.disabled) {
+        className = className + " disabled";
+    }
 
     return (
         <div
-            className="Frame"
+            className={ className }
             style={{
                 backgroundColor: props.colors.frame.background,
                 color: props.colors.frame.foreground,

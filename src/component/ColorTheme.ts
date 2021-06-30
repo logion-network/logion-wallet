@@ -14,6 +14,11 @@ export interface ButtonsColors {
     secondaryBackgroundColor: string,
 }
 
+export interface SelectColors extends BackgroundAndForegroundColors {
+    menuBackgroundColor: string,
+    selectedOptionBackgroundColor: string,
+}
+
 export interface ColorTheme {
     type: ColorThemeType,
     dashboard: BackgroundAndForegroundColors,
@@ -24,6 +29,7 @@ export interface ColorTheme {
     bottomMenuItems: MenuItemColors,
     shadowColor: string,
     buttons: ButtonsColors,
+    select: SelectColors,
 }
 
 export interface FrameColors extends BackgroundAndForegroundColors {

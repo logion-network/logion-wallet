@@ -8,7 +8,7 @@ import './Button.css';
 
 export interface Action {
     id: string,
-    callback: () => void,
+    callback?: () => void,
     disabled?: boolean,
     buttonVariant: ButtonVariant,
     buttonText: Children,
@@ -22,6 +22,11 @@ export interface Props {
 
 export default function Button(props: Props) {
 
+    let type = undefined;
+    if(props.action.callback === undefined) {
+        type = "submit";
+    }
+
     return (
         <BootstrapButton
             key={ props.action.id }
@@ -33,6 +38,7 @@ export default function Button(props: Props) {
             style={{
                 backgroundColor: props.backgroundColor
             }}
+            type={ type }
         >
             { props.action.buttonText }
         </BootstrapButton>

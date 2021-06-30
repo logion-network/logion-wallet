@@ -3,25 +3,29 @@
 }
 
 .Dialog .modal-dialog {
-    border-radius: 10px;
+    border-radius: 5px;
     border: none;
 }
 
 .Dialog .modal-content {
     border: none;
-    border-radius: 10px;
+    border-radius: 5px;
     border-style: solid;
     text-align: center;
+}
+
+.Dialog .modal-body {
+    padding: 20px;
 }
 
 .Dialog .modal-footer {
     border: none;
     justify-content: center;
     padding-top: 0;
-    padding-bottom: 20px;
+    padding-bottom: 30px;
 }
 
 .Dialog .modal-footer > * {
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 12px;
+    margin-right: 12px;
 }

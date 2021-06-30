@@ -12,7 +12,6 @@ exports[`renders with custom space above 1`] = `
       },
     ]
   }
-  borderColor="#e6007a"
   colors={
     Object {
       "accounts": Object {
@@ -42,6 +41,12 @@ exports[`renders with custom space above 1`] = `
         "background": "#ffffff",
         "foreground": "#000000",
         "link": "#3b6cf426",
+      },
+      "select": Object {
+        "background": "#ffffff",
+        "foreground": "#000000",
+        "menuBackgroundColor": "#ffffff",
+        "selectedOptionBackgroundColor": "#ffffff",
       },
       "shadowColor": "#3b6cf41a",
       "sidebar": Object {
@@ -90,7 +95,6 @@ exports[`renders with default space above 1`] = `
       },
     ]
   }
-  borderColor="#e6007a"
   colors={
     Object {
       "accounts": Object {
@@ -120,6 +124,12 @@ exports[`renders with default space above 1`] = `
         "background": "#ffffff",
         "foreground": "#000000",
         "link": "#3b6cf426",
+      },
+      "select": Object {
+        "background": "#ffffff",
+        "foreground": "#000000",
+        "menuBackgroundColor": "#ffffff",
+        "selectedOptionBackgroundColor": "#ffffff",
       },
       "shadowColor": "#3b6cf41a",
       "sidebar": Object {
