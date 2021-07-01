@@ -13,6 +13,7 @@ export interface Props {
     onChange: (value: OptionType | null) => void,
     isInvalid?: boolean,
     colors: SelectColors,
+    disabled?: boolean,
 }
 
 function buildStyles(colors: SelectColors): StylesConfig<OptionType, false, GroupTypeBase<OptionType>> {
@@ -66,6 +67,7 @@ export default function Select(props: Props) {
             onChange={ onChange }
             value={ props.value }
             styles={ buildStyles(props.colors) }
+            isDisabled={ props.disabled }
         />
     );
 }

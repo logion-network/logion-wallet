@@ -9,6 +9,7 @@ import './Officer.css';
 export interface Props {
     officer: LegalOfficer | null,
     colors: BackgroundAndForegroundColors,
+    borderColor?: string,
 }
 
 export default function Officer(props: Props) {
@@ -19,6 +20,10 @@ export default function Officer(props: Props) {
     } else {
         visibility = 'hidden';
     }
+    let border = undefined;
+    if(props.borderColor !== undefined) {
+        border = `1px solid ${props.borderColor}`;
+    }
 
     return (
         <div className="Officer"
@@ -26,6 +31,7 @@ export default function Officer(props: Props) {
                 visibility,
                 color: props.colors.foreground,
                 backgroundColor: props.colors.background,
+                border,
             }}
         >
             <div className="address">{ props.officer?.address }</div>

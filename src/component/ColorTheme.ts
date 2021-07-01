@@ -75,3 +75,8 @@ export function rgbaToHex(color: string, alpha: number): string {
         return color + alphaHex;
     }
 }
+
+export const ORANGE: string = "#ff9b3f";
+export const RED: string = "#e11a25";
+export const GREEN: string = "#37ad4b";
+export const BLUE: string = "#3b6cf4";

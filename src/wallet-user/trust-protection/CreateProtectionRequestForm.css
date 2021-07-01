@@ -1,16 +1,3 @@
-.CreateProtectionRequestFormLegalOfficers {
-    padding-bottom: 150px;
-}
-
-.CreateProtectionRequestFormLegalOfficers .form-group {
-    margin-bottom: 5px;
-}
-
-.CreateProtectionRequestFormLegalOfficers label[for="legalOfficer1"],
-.CreateProtectionRequestFormLegalOfficers label[for="legalOfficer2"] {
-    margin-top: 70px;
-}
-
 .CreateProtectionRequestFormOther form {
     margin-top: 50px;
 }

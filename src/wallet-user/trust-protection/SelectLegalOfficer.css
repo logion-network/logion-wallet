@@ -1,0 +1,11 @@
+.SelectLegalOfficer {
+    width: 500px;
+}
+
+.SelectLegalOfficer .form-group {
+    margin-bottom: 5px;
+}
+
+.SelectLegalOfficer .icon-status {
+    margin-top: 40px;
+}

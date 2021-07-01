@@ -5,9 +5,7 @@ import { useUserContext } from "../UserContext";
 import { findRequest, isRecovery } from "./Model";
 
 import CreateProtectionRequestForm from "./CreateProtectionRequestForm";
-import RequestActivating from './RequestActivating';
-import RequestPending from './RequestPending';
-import RequestActivated from './RequestActivated';
+import ProtectionRecoveryRequest from './ProtectionRecoveryRequest';
 
 export default function Recovery() {
     const { currentAddress } = useRootContext();
@@ -39,12 +37,12 @@ export default function Recovery() {
             </>
         );
     } else if(pendingProtectionRequest !== null) {
-        return <RequestPending request={ pendingProtectionRequest } />;
+        return <ProtectionRecoveryRequest request={ pendingProtectionRequest } type='pending' />;
     } else if(acceptedProtectionRequest !== null) {
         if(recoveryConfig.isEmpty) {
-            return <RequestActivating />;
+            return <ProtectionRecoveryRequest request={ acceptedProtectionRequest } type='accepted' />;
         } else {
-            return <RequestActivated request={ acceptedProtectionRequest } />;
+            return <ProtectionRecoveryRequest request={ acceptedProtectionRequest } type='activated' />;
         }
     } else {
         return <CreateProtectionRequestForm isRecovery={ true } />;

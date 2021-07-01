@@ -5,9 +5,7 @@ import {useUserContext} from "../UserContext";
 import { findRequest } from "./Model";
 
 import CreateProtectionRequestForm from "./CreateProtectionRequestForm";
-import RequestActivating from './RequestActivating';
-import RequestPending from './RequestPending';
-import RequestActivated from './RequestActivated';
+import ProtectionRecoveryRequest from './ProtectionRecoveryRequest';
 
 export default function TrustProtection() {
     const { currentAddress } = useRootContext();
@@ -27,12 +25,12 @@ export default function TrustProtection() {
     });
 
     if(pendingProtectionRequest !== null) {
-        return <RequestPending request={ pendingProtectionRequest } />;
+        return <ProtectionRecoveryRequest request={ pendingProtectionRequest } type='pending' />;
     } else if(acceptedProtectionRequest !== null) {
         if(recoveryConfig.isEmpty) {
-            return <RequestActivating />;
+            return <ProtectionRecoveryRequest request={ acceptedProtectionRequest } type='accepted' />;
         } else {
-            return <RequestActivated request={ acceptedProtectionRequest } />;
+            return <ProtectionRecoveryRequest request={ acceptedProtectionRequest } type='activated' />;
         }
     } else {
         return <CreateProtectionRequestForm isRecovery={ false } />;

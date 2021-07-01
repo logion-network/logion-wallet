@@ -1,6 +1,6 @@
 import React from 'react';
 import { ButtonVariant } from 'react-bootstrap/types';
-import BootstrapButton from 'react-bootstrap/Button';
+import BootstrapButton, { ButtonType } from 'react-bootstrap/Button';
 
 import { Children } from './types/Helpers';
 
@@ -16,31 +16,59 @@ export interface Action {
 }
 
 export interface Props {
-    action: Action,
+    action?: Action,
     backgroundColor: string,
+    type?: ButtonType,
+    key?: string,
+    variant?: ButtonVariant,
+    disabled?: boolean,
+    dataTestid?: string,
+    children?: Children,
+    onClick?: () => void,
+    id?: string,
 }
 
 export default function Button(props: Props) {
 
-    let type = undefined;
-    if(props.action.callback === undefined) {
-        type = "submit";
+    let key;
+    let variant;
+    let disabled;
+    let onClick;
+    let testId;
+    let children;
+    let id;
+    if(props.action !== undefined) {
+        key = props.action.id;
+        variant = props.action.buttonVariant;
+        disabled = props.action.disabled;
+        onClick = props.action.callback;
+        testId = props.action.buttonTestId;
+        children = props.action.buttonText;
+    } else {
+        key = props.key;
+        variant = props.variant;
+        disabled = props.disabled;
+        onClick = props.onClick;
+        testId = props.dataTestid;
+        children = props.children;
+        id = props.id;
     }
 
     return (
         <BootstrapButton
-            key={ props.action.id }
-            variant={ props.action.buttonVariant }
-            disabled={ props.action.disabled }
-            onClick={ props.action.callback }
-            data-testid={ props.action.buttonTestId }
+            id={ id }
+            key={ key }
+            variant={ variant }
+            disabled={ disabled }
+            onClick={ onClick }
+            data-testid={ testId }
             className="Button"
             style={{
                 backgroundColor: props.backgroundColor
             }}
-            type={ type }
+            type={ props.type }
         >
-            { props.action.buttonText }
+            { children }
         </BootstrapButton>
     );
 }

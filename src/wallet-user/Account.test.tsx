@@ -1,3 +1,5 @@
+jest.mock('../RootContext');
+
 import React from "react";
 import {shallowRender} from "../tests";
 import Account from "./Account";

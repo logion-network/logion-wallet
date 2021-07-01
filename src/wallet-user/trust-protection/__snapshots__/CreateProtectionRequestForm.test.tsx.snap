@@ -128,175 +128,125 @@ exports[`renders 1`] = `
       <h3>
         Choose your Legal Officers
       </h3>
-      <FormGroup
-        controlId="legalOfficer1"
-        data-testid="legalOfficer1"
-      >
-        <FormLabel
-          column={false}
-          srOnly={false}
-        >
-          Choose Legal Officer N°1
-        </FormLabel>
-        <Select
-          colors={
-            Object {
+      <LegalOfficers
+        colorTheme={
+          Object {
+            "accounts": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+              "hintColor": "#ffffff99",
+              "iconBackground": "#3b6cf4",
+              "legalOfficerIcon": Object {
+                "category": "legal-officer",
+                "id": "account-shield",
+              },
+            },
+            "bottomMenuItems": Object {
+              "iconGradient": Object {
+                "from": "#7a90cb",
+                "to": "#3b6cf4",
+              },
+            },
+            "buttons": Object {
+              "secondaryBackgroundColor": "#0c163d",
+            },
+            "dashboard": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
+            "frame": Object {
+              "background": "#152665",
+              "foreground": "#ffffff",
+              "link": "#ffffff",
+            },
+            "select": Object {
               "background": "#ffffff33",
               "foreground": "#ffffff",
               "menuBackgroundColor": "#152665",
               "selectedOptionBackgroundColor": "#ffffff33",
-            }
-          }
-          data-testid="legalOfficer1"
-          isInvalid={true}
-          onChange={[Function]}
-          options={
-            Array [
-              Object {
-                "label": "Patrick",
-                "value": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-              },
-              Object {
-                "label": "Guillaume",
-                "value": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-              },
-              Object {
-                "label": "Alain",
-                "value": "1234567890-abcd-5",
-              },
-              Object {
-                "label": "Ronald",
-                "value": "1234567890-abcd-6",
-              },
-              Object {
-                "label": "Thibaut",
-                "value": "1234567890-abcd-7",
-              },
-              Object {
-                "label": "Jona",
-                "value": "1234567890-abcd-8",
-              },
-              Object {
-                "label": "Carlos",
-                "value": "1234567890-abcd-9",
-              },
-              Object {
-                "label": "Ilias",
-                "value": "1234567890-abcd-10",
-              },
-              Object {
-                "label": "Pedroso",
-                "value": "1234567890-abcd-11",
-              },
-              Object {
-                "label": "Marc",
-                "value": "1234567890-abcd-12",
-              },
-            ]
-          }
-          value={null}
-        />
-        <Feedback
-          data-testid="legalOfficer1Message"
-          type="invalid"
-        >
-          Legal officer 1 is required and must be different from legal officer 2
-        </Feedback>
-      </FormGroup>
-      <Officer
-        colors={
-          Object {
-            "background": "#152665",
-            "foreground": "#ffffff",
-            "link": "#ffffff",
-          }
-        }
-        officer={null}
-      />
-      <FormGroup
-        controlId="legalOfficer2"
-        data-testid="legalOfficer2"
-      >
-        <FormLabel
-          column={false}
-          srOnly={false}
-        >
-          Choose Legal Officer N°2
-        </FormLabel>
-        <Select
-          colors={
-            Object {
-              "background": "#ffffff33",
+            },
+            "shadowColor": "#3b6cf433",
+            "sidebar": Object {
+              "activeItemBackground": "#ffffff33",
+              "background": "#152665",
               "foreground": "#ffffff",
-              "menuBackgroundColor": "#152665",
-              "selectedOptionBackgroundColor": "#ffffff33",
-            }
-          }
-          data-testid="legalOfficer2"
-          isInvalid={true}
-          onChange={[Function]}
-          options={
-            Array [
-              Object {
-                "label": "Patrick",
-                "value": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+            },
+            "topMenuItems": Object {
+              "iconGradient": Object {
+                "from": "#3b6cf4",
+                "to": "#6050dc",
               },
-              Object {
-                "label": "Guillaume",
-                "value": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-              },
-              Object {
-                "label": "Alain",
-                "value": "1234567890-abcd-5",
-              },
-              Object {
-                "label": "Ronald",
-                "value": "1234567890-abcd-6",
-              },
-              Object {
-                "label": "Thibaut",
-                "value": "1234567890-abcd-7",
-              },
-              Object {
-                "label": "Jona",
-                "value": "1234567890-abcd-8",
-              },
-              Object {
-                "label": "Carlos",
-                "value": "1234567890-abcd-9",
-              },
-              Object {
-                "label": "Ilias",
-                "value": "1234567890-abcd-10",
-              },
-              Object {
-                "label": "Pedroso",
-                "value": "1234567890-abcd-11",
-              },
-              Object {
-                "label": "Marc",
-                "value": "1234567890-abcd-12",
-              },
-            ]
-          }
-          value={null}
-        />
-        <Feedback
-          data-testid="legalOfficer2Message"
-          type="invalid"
-        >
-          Legal officer 2 is required and must be different from legal officer 1
-        </Feedback>
-      </FormGroup>
-      <Officer
-        colors={
-          Object {
-            "background": "#152665",
-            "foreground": "#ffffff",
-            "link": "#ffffff",
+            },
+            "type": "dark",
           }
         }
-        officer={null}
+        legalOfficer1={null}
+        legalOfficer2={null}
+        legalOfficers={
+          Array [
+            Object {
+              "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "details": "Modero Bruxelles
+Central administration 
+Nijverheidslaan 1
+B - 1853 Grimbergen (Strombeek-Bever)
+Belgium",
+              "name": "Patrick",
+            },
+            Object {
+              "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+              "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France",
+              "name": "Guillaume",
+            },
+            Object {
+              "address": "1234567890-abcd-5",
+              "details": "Place de le République Française, 10",
+              "name": "Alain",
+            },
+            Object {
+              "address": "1234567890-abcd-6",
+              "details": "Place de le République Française, 10",
+              "name": "Ronald",
+            },
+            Object {
+              "address": "1234567890-abcd-7",
+              "details": "Place de le République Française, 10",
+              "name": "Thibaut",
+            },
+            Object {
+              "address": "1234567890-abcd-8",
+              "details": "Place de le République Française, 10",
+              "name": "Jona",
+            },
+            Object {
+              "address": "1234567890-abcd-9",
+              "details": "Place de le République Française, 10",
+              "name": "Carlos",
+            },
+            Object {
+              "address": "1234567890-abcd-10",
+              "details": "Place de le République Française, 10",
+              "name": "Ilias",
+            },
+            Object {
+              "address": "1234567890-abcd-11",
+              "details": "Place de le République Française, 10",
+              "name": "Pedroso",
+            },
+            Object {
+              "address": "1234567890-abcd-12",
+              "details": "Place de le République Française, 10",
+              "name": "Marc",
+            },
+          ]
+        }
+        mode="choose"
+        setLegalOfficer1={[Function]}
+        setLegalOfficer2={[Function]}
       />
     </Frame>
   }
@@ -1446,6 +1396,7 @@ exports[`renders 1`] = `
               }
             }
             backgroundColor="#0c163d"
+            type="submit"
           />
         </div>
       </Form>

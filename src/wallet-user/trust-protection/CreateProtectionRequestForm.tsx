@@ -3,20 +3,20 @@ import {useForm, Controller} from 'react-hook-form';
 import Form from "react-bootstrap/Form";
 
 import Button from "../../component/Button";
-import Select, { OptionType } from '../../component/Select';
 import { ContentPane } from "../../component/Dashboard";
 import Frame from "../../component/Frame";
 import Alert from "../../component/Alert";
 
-import {CreateProtectionRequest, legalOfficers, getOfficer} from "./Model";
+import { CreateProtectionRequest, legalOfficers } from "./Model";
 import {useUserContext} from "../UserContext";
 import moment from "moment";
 import {sign} from "../../logion-chain";
 import {Row, Col} from "react-bootstrap";
 import {useRootContext} from "../../RootContext";
-import Officer from './Officer';
+import LegalOfficers from './LegalOfficers';
 
 import './CreateProtectionRequestForm.css';
+import LegalOfficer from '../../component/types/LegalOfficer';
 
 export interface Props {
     isRecovery: boolean,
@@ -40,8 +40,8 @@ export default function CreateProtectionRequestForm(props: Props) {
     const { control, handleSubmit, formState: {errors} } = useForm<FormValues>();
     const { selectAddress, addresses, currentAddress } = useRootContext();
     const { createProtectionRequest, colorTheme } = useUserContext();
-    const [ legalOfficer1, setLegalOfficer1 ] = useState<OptionType | null>(null);
-    const [ legalOfficer2, setLegalOfficer2 ] = useState<OptionType | null>(null);
+    const [ legalOfficer1, setLegalOfficer1 ] = useState<LegalOfficer | null>(null);
+    const [ legalOfficer2, setLegalOfficer2 ] = useState<LegalOfficer | null>(null);
 
     const submit = async (formValues: FormValues) => {
         if(legalOfficer1 === null || legalOfficer2 === null || !formValues.agree) {
@@ -62,8 +62,8 @@ export default function CreateProtectionRequestForm(props: Props) {
             `${formValues.country}`,
             `${props.isRecovery}`,
             `${addressToRecover}`,
-            `${legalOfficer1.value}`,
-            `${legalOfficer2.value}`,
+            `${legalOfficer1.address}`,
+            `${legalOfficer2.address}`,
         ];
 
         const signedOn = moment();
@@ -89,7 +89,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                 city: formValues.city,
                 country: formValues.country,
             },
-            legalOfficerAddresses: [ legalOfficer1.value, legalOfficer2.value ],
+            legalOfficerAddresses: [ legalOfficer1.address, legalOfficer2.address ],
             signature,
             signedOn,
             isRecovery: props.isRecovery,
@@ -97,13 +97,6 @@ export default function CreateProtectionRequestForm(props: Props) {
         }
         await createProtectionRequest!(request);
     }
-
-    const legalOfficersOptions = legalOfficers.map(legalOfficer => {
-        return {
-            label: `${legalOfficer.name}`,
-            value: legalOfficer.address
-        }
-    });
 
     let mainTitle;
     if(props.isRecovery) {
@@ -146,40 +139,15 @@ export default function CreateProtectionRequestForm(props: Props) {
                             account you are using to get your assets back.
                         </Alert>
                     }
-                    <Form.Group controlId="legalOfficer1" data-testid="legalOfficer1">
-                        <Form.Label>Choose Legal Officer N°1</Form.Label>
-                        <Select
-                            isInvalid={ legalOfficer1 === null || (legalOfficer2 !== null && legalOfficer1.value === legalOfficer2.value) }
-                            data-testid="legalOfficer1"
-                            options={ legalOfficersOptions }
-                            value={ legalOfficer1 }
-                            onChange={ value => setLegalOfficer1(value) }
-                            colors={ colorTheme.select }
-                        />
-                        <Form.Control.Feedback type="invalid"
-                                               data-testid="legalOfficer1Message">Legal officer 1 is required and must be different from legal officer 2</Form.Control.Feedback>
-                    </Form.Group>
-                    <Officer
-                        officer={ getOfficer(legalOfficer1?.value) }
-                        colors={ colorTheme.frame }
-                    />
 
-                    <Form.Group controlId="legalOfficer2" data-testid="legalOfficer2">
-                        <Form.Label>Choose Legal Officer N°2</Form.Label>
-                        <Select
-                            isInvalid={ legalOfficer2 === null || (legalOfficer1 !== null && legalOfficer1.value === legalOfficer2.value) }
-                            data-testid="legalOfficer2"
-                            options={ legalOfficersOptions }
-                            value={ legalOfficer2 }
-                            onChange={ value => setLegalOfficer2(value) }
-                            colors={ colorTheme.select }
-                        />
-                        <Form.Control.Feedback type="invalid"
-                                               data-testid="legalOfficer2Message">Legal officer 2 is required and must be different from legal officer 1</Form.Control.Feedback>
-                    </Form.Group>
-                    <Officer
-                        officer={ getOfficer(legalOfficer2?.value) }
-                        colors={ colorTheme.frame }
+                    <LegalOfficers
+                        legalOfficers={ legalOfficers }
+                        legalOfficer1={ legalOfficer1 }
+                        setLegalOfficer1={ setLegalOfficer1 }
+                        legalOfficer2={ legalOfficer2 }
+                        setLegalOfficer2={ setLegalOfficer2 }
+                        colorTheme={ colorTheme }
+                        mode="choose"
                     />
                 </Frame>
             }
@@ -187,7 +155,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                 <Frame
                     className="CreateProtectionRequestFormOther"
                     colors={ colorTheme }
-                    disabled={ legalOfficer1 === null || legalOfficer2 === null || legalOfficer1.value === legalOfficer2.value }
+                    disabled={ legalOfficer1 === null || legalOfficer2 === null || legalOfficer1.address === legalOfficer2.address }
                 >
                     <h3>Fill in your personal information</h3>
 
@@ -435,6 +403,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                                     buttonText: "Next",
                                     buttonTestId: "btnSubmit"
                                 }}
+                                type='submit'
                             />
                         </div>
                     </Form>
