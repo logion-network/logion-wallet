@@ -16,6 +16,7 @@ import { ContentPane } from "../../component/Dashboard";
 import Frame from "../../component/Frame";
 import Alert from '../../component/Alert';
 import Button from '../../component/Button';
+import Icon from '../../component/Icon';
 import { useRootContext } from '../../RootContext';
 
 import { useUserContext } from '../UserContext';
@@ -134,8 +135,8 @@ export default function ProtectionRecoveryRequest(props: Props) {
             );
         } else {
             alert = (
-                <Alert variant="info">
-                    Your Logion Trust Protection is active.
+                <Alert variant="success">
+                    <Icon colorThemeType={ colorTheme.type } icon={{id: 'accepted'}} /> Your Logion Trust Protection is active.
                 </Alert>
             );
         }
