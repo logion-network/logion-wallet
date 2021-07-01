@@ -60,11 +60,11 @@ describe("CreateProtectionRequestForm", () => {
 
         const legalOfficer1Select = screen.getByTestId('legalOfficer1');
         userEvent.click(getByText(legalOfficer1Select, "Select..."));
-        await waitFor(() => userEvent.click(getByText(legalOfficer1Select, "Patrick")));
+        await waitFor(() => userEvent.click(getByText(legalOfficer1Select, "Patrick Gielen")));
 
         const legalOfficer2Select = screen.getByTestId('legalOfficer2');
         userEvent.click(getByText(legalOfficer2Select, "Select..."));
-        await waitFor(() => userEvent.click(getByText(legalOfficer2Select, "Guillaume")));
+        await waitFor(() => userEvent.click(getByText(legalOfficer2Select, "Guillaume Grain")));
 
         fireEvent.input(screen.getByTestId("firstName"), {target: {value: 'John'}})
         fireEvent.input(screen.getByTestId("lastName"), {target: {value: 'Doe'}})
@@ -109,11 +109,11 @@ describe("CreateProtectionRequestForm", () => {
 
         const legalOfficer1Select = screen.getByTestId('legalOfficer1');
         userEvent.click(getByText(legalOfficer1Select, "Select..."));
-        await waitFor(() => userEvent.click(getByText(legalOfficer1Select, "Patrick")));
+        await waitFor(() => userEvent.click(getByText(legalOfficer1Select, "Patrick Gielen")));
 
         const legalOfficer2Select = screen.getByTestId('legalOfficer2');
         userEvent.click(getByText(legalOfficer2Select, "Select..."));
-        await waitFor(() => userEvent.click(getByText(legalOfficer2Select, "Guillaume")));
+        await waitFor(() => userEvent.click(getByText(legalOfficer2Select, "Guillaume Grain")));
 
         fireEvent.input(screen.getByTestId("addressToRecover"), {target: {value: 'toRecover'}})
         fireEvent.input(screen.getByTestId("firstName"), {target: {value: 'John'}})
