@@ -1404,7 +1404,7 @@ France",
         actions={
           Array [
             Object {
-              "buttonText": "Nice!",
+              "buttonText": "OK",
               "buttonVariant": "primary",
               "callback": [Function],
               "id": "discard",
