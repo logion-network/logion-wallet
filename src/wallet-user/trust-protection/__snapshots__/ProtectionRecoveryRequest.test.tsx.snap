@@ -345,7 +345,9 @@ exports[`activated recovery request 1`] = `
       <Alert
         variant="info"
       >
-        You are now ready to initiate the actual recovery.
+        You are now ready to initiate the actual recovery of address 
+        toRecover
+        .
       </Alert>
       <LegalOfficers
         colorTheme={
@@ -428,11 +430,6 @@ Belgium",
         setLegalOfficer1={[Function]}
         setLegalOfficer2={[Function]}
       />
-      <p>
-        You may initiate the actual recovery of account 
-        toRecover
-        .
-      </p>
     </Frame>
   }
   primaryPaneWidth={8}
@@ -566,10 +563,17 @@ exports[`pending protection request 1`] = `
       }
     >
       <Alert
-        variant="info"
+        variant="warning"
       >
-        Your Logion Trust Protection is active.
+        Mandatory: we detect that the Logion Application needs to be re-synchronized with the Logion Blockchain. To proceed, please click on the button and sign to confirm this operation.
       </Alert>
+      <Button
+        backgroundColor="#0c163d"
+        id="btnConfirmProtection"
+        onClick={[Function]}
+      >
+        Re-Sync Confirmation
+      </Button>
       <LegalOfficers
         colorTheme={
           Object {
@@ -651,18 +655,6 @@ Belgium",
         setLegalOfficer1={[Function]}
         setLegalOfficer2={[Function]}
       />
-      <React.Fragment>
-        <p>
-          Mandatory: we detect that the Logion Application needs to be re-synchronized with the Logion Blockchain. To proceed, please click on the button and sign to confirm this operation:
-        </p>
-        <Button
-          backgroundColor="#0c163d"
-          id="btnConfirmProtection"
-          onClick={[Function]}
-        >
-          Re-Sync Confirmation
-        </Button>
-      </React.Fragment>
     </Frame>
   }
   primaryPaneWidth={8}
@@ -796,10 +788,17 @@ exports[`pending recovery request 1`] = `
       }
     >
       <Alert
-        variant="info"
+        variant="warning"
       >
-        You are now ready to initiate the actual recovery.
+        Mandatory: we detect that the Logion Application needs to be re-synchronized with the Logion Blockchain. To proceed, please click on the button and sign to confirm this operation.
       </Alert>
+      <Button
+        backgroundColor="#0c163d"
+        id="btnConfirmProtection"
+        onClick={[Function]}
+      >
+        Re-Sync Confirmation
+      </Button>
       <LegalOfficers
         colorTheme={
           Object {
@@ -881,23 +880,6 @@ Belgium",
         setLegalOfficer1={[Function]}
         setLegalOfficer2={[Function]}
       />
-      <p>
-        You may initiate the actual recovery of account 
-        toRecover
-        .
-      </p>
-      <React.Fragment>
-        <p>
-          Mandatory: we detect that the Logion Application needs to be re-synchronized with the Logion Blockchain. To proceed, please click on the button and sign to confirm this operation:
-        </p>
-        <Button
-          backgroundColor="#0c163d"
-          id="btnConfirmProtection"
-          onClick={[Function]}
-        >
-          Re-Sync Confirmation
-        </Button>
-      </React.Fragment>
     </Frame>
   }
   primaryPaneWidth={8}

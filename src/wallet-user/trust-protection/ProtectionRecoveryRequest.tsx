@@ -105,8 +105,8 @@ export default function ProtectionRecoveryRequest(props: Props) {
             alert = (
                 <Alert variant="info">
                     Your recovery request has been accepted by your Legal Officers.
-                    You may now activate your protection. After that, you'll be able to initiate the actual
-                    recovery.
+                    You may now activate your protection. This will require 2 signatures.
+                    After that, you'll be able to initiate the actual recovery.
                 </Alert>
             );
         } else {
@@ -114,15 +114,22 @@ export default function ProtectionRecoveryRequest(props: Props) {
             alert = (
                 <Alert variant="info">
                     Your Logion Trust Protection request has been accepted by your
-                    Legal Officers. You may now activate your protection.
+                    Legal Officers. You may now activate your protection. This will require 2 signatures.
                 </Alert>
             );
         }
     } else if(props.type === 'activated') {
-        if(props.request.isRecovery) {
+        if(confirmButtonEnabled) {
+            alert = (
+                <Alert variant="warning">
+                    Mandatory: we detect that the Logion Application needs to be re-synchronized with the Logion
+                    Blockchain. To proceed, please click on the button and sign to confirm this operation.
+                </Alert>
+            );
+        } else if(props.request.isRecovery) {
             alert = (
                 <Alert variant="info">
-                    You are now ready to initiate the actual recovery.
+                    You are now ready to initiate the actual recovery of address { props.request.addressToRecover }.
                 </Alert>
             );
         } else {
@@ -161,6 +168,21 @@ export default function ProtectionRecoveryRequest(props: Props) {
                         </Button>
                     }
                     {
+                        // This button is a safety net in case the same call at the previous step failed.
+                        // In most cases, it will not show
+                        props.type === 'activated' && confirmButtonEnabled &&
+                        <Button
+                            id="btnConfirmProtection"
+                            onClick={() => {
+                            checkActivation(props.request)
+                                .then(() => setConfirmButtonEnabled(false))
+                            }}
+                            backgroundColor={ colorTheme.buttons.secondaryBackgroundColor }
+                        >
+                            Re-Sync Confirmation
+                        </Button>
+                    }
+                    {
                         (activationResult !== null || activationError !== null) &&
                         <ExtrinsicSubmissionResult
                             result={activationResult}
@@ -180,32 +202,6 @@ export default function ProtectionRecoveryRequest(props: Props) {
                         colorTheme={ colorTheme }
                         mode="view"
                     />
-    
-                    {
-                        props.type === 'activated' && props.request.isRecovery &&
-                        <p>
-                            You may initiate the actual recovery of account {props.request.addressToRecover}.
-                        </p>
-                    }
-                    {
-                        // This button is a safety net in case the same call at the previous step failed.
-                        // In most cases, it will not show
-                        props.type === 'activated' && confirmButtonEnabled &&
-                        <>
-                            <p>Mandatory: we detect that the Logion Application needs to be re-synchronized with the Logion
-                                Blockchain. To proceed, please click on the button and sign to confirm this operation:</p>
-                            <Button
-                                id="btnConfirmProtection"
-                                onClick={() => {
-                                checkActivation(props.request)
-                                    .then(() => setConfirmButtonEnabled(false))
-                                }}
-                                backgroundColor={ colorTheme.buttons.secondaryBackgroundColor }
-                            >
-                                Re-Sync Confirmation
-                            </Button>
-                        </>
-                    }
                 </Frame>
             }
             secondaryAreaChildren={ null }
