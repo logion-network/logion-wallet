@@ -21,7 +21,7 @@ export default function Tokenization(props: Props) {
 
     const completeTokenization = useCallback(() => {
         setState(State.START);
-        refreshRequests!();
+        refreshRequests!(true);
     }, [ setState, refreshRequests ]);
 
     return (

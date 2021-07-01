@@ -1,13 +1,1312 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Given connected and no metadata, when rendering, then show account, no connect button, no node info, tokenization 1`] = `null`;
+exports[`Given connected and no metadata, when rendering, then show account, no connect button, no node info, tokenization 1`] = `
+<Dashboard
+  colors={
+    Object {
+      "accounts": Object {
+        "background": "#0c163d",
+        "foreground": "#ffffff",
+        "hintColor": "#ffffff99",
+        "iconBackground": "#3b6cf4",
+        "legalOfficerIcon": Object {
+          "category": "legal-officer",
+          "id": "account-shield",
+        },
+      },
+      "bottomMenuItems": Object {
+        "iconGradient": Object {
+          "from": "#7a90cb",
+          "to": "#3b6cf4",
+        },
+      },
+      "buttons": Object {
+        "secondaryBackgroundColor": "#0c163d",
+      },
+      "dashboard": Object {
+        "background": "#0c163d",
+        "foreground": "#ffffff",
+      },
+      "frame": Object {
+        "background": "#152665",
+        "foreground": "#ffffff",
+        "link": "#ffffff",
+      },
+      "select": Object {
+        "background": "#ffffff33",
+        "foreground": "#ffffff",
+        "menuBackgroundColor": "#152665",
+        "selectedOptionBackgroundColor": "#ffffff33",
+      },
+      "shadowColor": "#3b6cf433",
+      "sidebar": Object {
+        "activeItemBackground": "#ffffff33",
+        "background": "#152665",
+        "foreground": "#ffffff",
+      },
+      "topMenuItems": Object {
+        "iconGradient": Object {
+          "from": "#3b6cf4",
+          "to": "#6050dc",
+        },
+      },
+      "type": "dark",
+    }
+  }
+  menuBottom={
+    Array [
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+          "icon": Object {
+            "id": "settings",
+          },
+        },
+        "id": "settings",
+        "text": "Settings",
+        "to": "/user/settings",
+      },
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+          "icon": Object {
+            "id": "recovery",
+          },
+        },
+        "id": "recovery",
+        "text": "Recovery",
+        "to": "/user/recovery",
+      },
+    ]
+  }
+  menuTop={
+    Array [
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
+            "id": "tokens",
+          },
+        },
+        "id": "tokens",
+        "text": "Tokens",
+        "to": "/user/account",
+      },
+    ]
+  }
+  shieldItem={
+    Object {
+      "exact": true,
+      "icon": Object {
+        "height": "auto",
+        "icon": Object {
+          "hasVariants": true,
+          "id": "shield",
+        },
+        "width": "auto",
+      },
+      "id": "protection",
+      "text": "My Logion Trust Protection",
+      "to": "/user/protection",
+    }
+  }
+>
+  <UserRouter />
+  <WarningDialog
+    actions={
+      Array [
+        Object {
+          "buttonText": "I will do it later",
+          "buttonVariant": "secondary",
+          "callback": [Function],
+          "id": "discard",
+        },
+        Object {
+          "buttonText": <Link
+            to="/user/protection"
+          >
+            Activate the logion protection
+          </Link>,
+          "buttonVariant": "primary",
+          "callback": [Function],
+          "id": "protection",
+        },
+        Object {
+          "buttonText": <Link
+            to="/user/recovery"
+          >
+            Start a recovery process
+          </Link>,
+          "buttonVariant": "warning",
+          "callback": [Function],
+          "id": "recovery",
+        },
+      ]
+    }
+    colors={
+      Object {
+        "accounts": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+          "hintColor": "#ffffff99",
+          "iconBackground": "#3b6cf4",
+          "legalOfficerIcon": Object {
+            "category": "legal-officer",
+            "id": "account-shield",
+          },
+        },
+        "bottomMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+        },
+        "buttons": Object {
+          "secondaryBackgroundColor": "#0c163d",
+        },
+        "dashboard": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "frame": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+          "link": "#ffffff",
+        },
+        "select": Object {
+          "background": "#ffffff33",
+          "foreground": "#ffffff",
+          "menuBackgroundColor": "#152665",
+          "selectedOptionBackgroundColor": "#ffffff33",
+        },
+        "shadowColor": "#3b6cf433",
+        "sidebar": Object {
+          "activeItemBackground": "#ffffff33",
+          "background": "#152665",
+          "foreground": "#ffffff",
+        },
+        "topMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+        },
+        "type": "dark",
+      }
+    }
+    show={false}
+    size="lg"
+    spaceAbove="25vh"
+  >
+    <React.Fragment>
+      Dear user,
+      <br />
+      We strongly recommend that you activate your logion trust protection right now in order to enjoy all logion's features and benefits. You can also immediately start a recovery process if you need to recover your assets locked in another account by clicking on the related button below.
+    </React.Fragment>
+  </WarningDialog>
+</Dashboard>
+`;
 
-exports[`Given connected, when rendering, then show account, no connect button and tokenization 1`] = `null`;
+exports[`Given connected, when rendering, then show account, no connect button and tokenization 1`] = `
+<Dashboard
+  colors={
+    Object {
+      "accounts": Object {
+        "background": "#0c163d",
+        "foreground": "#ffffff",
+        "hintColor": "#ffffff99",
+        "iconBackground": "#3b6cf4",
+        "legalOfficerIcon": Object {
+          "category": "legal-officer",
+          "id": "account-shield",
+        },
+      },
+      "bottomMenuItems": Object {
+        "iconGradient": Object {
+          "from": "#7a90cb",
+          "to": "#3b6cf4",
+        },
+      },
+      "buttons": Object {
+        "secondaryBackgroundColor": "#0c163d",
+      },
+      "dashboard": Object {
+        "background": "#0c163d",
+        "foreground": "#ffffff",
+      },
+      "frame": Object {
+        "background": "#152665",
+        "foreground": "#ffffff",
+        "link": "#ffffff",
+      },
+      "select": Object {
+        "background": "#ffffff33",
+        "foreground": "#ffffff",
+        "menuBackgroundColor": "#152665",
+        "selectedOptionBackgroundColor": "#ffffff33",
+      },
+      "shadowColor": "#3b6cf433",
+      "sidebar": Object {
+        "activeItemBackground": "#ffffff33",
+        "background": "#152665",
+        "foreground": "#ffffff",
+      },
+      "topMenuItems": Object {
+        "iconGradient": Object {
+          "from": "#3b6cf4",
+          "to": "#6050dc",
+        },
+      },
+      "type": "dark",
+    }
+  }
+  menuBottom={
+    Array [
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+          "icon": Object {
+            "id": "settings",
+          },
+        },
+        "id": "settings",
+        "text": "Settings",
+        "to": "/user/settings",
+      },
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+          "icon": Object {
+            "id": "recovery",
+          },
+        },
+        "id": "recovery",
+        "text": "Recovery",
+        "to": "/user/recovery",
+      },
+    ]
+  }
+  menuTop={
+    Array [
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
+            "id": "tokens",
+          },
+        },
+        "id": "tokens",
+        "text": "Tokens",
+        "to": "/user/account",
+      },
+    ]
+  }
+  shieldItem={
+    Object {
+      "exact": true,
+      "icon": Object {
+        "height": "auto",
+        "icon": Object {
+          "hasVariants": true,
+          "id": "shield",
+        },
+        "width": "auto",
+      },
+      "id": "protection",
+      "text": "My Logion Trust Protection",
+      "to": "/user/protection",
+    }
+  }
+>
+  <UserRouter />
+  <WarningDialog
+    actions={
+      Array [
+        Object {
+          "buttonText": "I will do it later",
+          "buttonVariant": "secondary",
+          "callback": [Function],
+          "id": "discard",
+        },
+        Object {
+          "buttonText": <Link
+            to="/user/protection"
+          >
+            Activate the logion protection
+          </Link>,
+          "buttonVariant": "primary",
+          "callback": [Function],
+          "id": "protection",
+        },
+        Object {
+          "buttonText": <Link
+            to="/user/recovery"
+          >
+            Start a recovery process
+          </Link>,
+          "buttonVariant": "warning",
+          "callback": [Function],
+          "id": "recovery",
+        },
+      ]
+    }
+    colors={
+      Object {
+        "accounts": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+          "hintColor": "#ffffff99",
+          "iconBackground": "#3b6cf4",
+          "legalOfficerIcon": Object {
+            "category": "legal-officer",
+            "id": "account-shield",
+          },
+        },
+        "bottomMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+        },
+        "buttons": Object {
+          "secondaryBackgroundColor": "#0c163d",
+        },
+        "dashboard": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "frame": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+          "link": "#ffffff",
+        },
+        "select": Object {
+          "background": "#ffffff33",
+          "foreground": "#ffffff",
+          "menuBackgroundColor": "#152665",
+          "selectedOptionBackgroundColor": "#ffffff33",
+        },
+        "shadowColor": "#3b6cf433",
+        "sidebar": Object {
+          "activeItemBackground": "#ffffff33",
+          "background": "#152665",
+          "foreground": "#ffffff",
+        },
+        "topMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+        },
+        "type": "dark",
+      }
+    }
+    show={false}
+    size="lg"
+    spaceAbove="25vh"
+  >
+    <React.Fragment>
+      Dear user,
+      <br />
+      We strongly recommend that you activate your logion trust protection right now in order to enjoy all logion's features and benefits. You can also immediately start a recovery process if you need to recover your assets locked in another account by clicking on the related button below.
+    </React.Fragment>
+  </WarningDialog>
+</Dashboard>
+`;
 
-exports[`Given connecting, when rendering, then show account, no button, no node info 1`] = `null`;
+exports[`Given connecting, when rendering, then show account, no button, no node info 1`] = `
+<Dashboard
+  colors={
+    Object {
+      "accounts": Object {
+        "background": "#0c163d",
+        "foreground": "#ffffff",
+        "hintColor": "#ffffff99",
+        "iconBackground": "#3b6cf4",
+        "legalOfficerIcon": Object {
+          "category": "legal-officer",
+          "id": "account-shield",
+        },
+      },
+      "bottomMenuItems": Object {
+        "iconGradient": Object {
+          "from": "#7a90cb",
+          "to": "#3b6cf4",
+        },
+      },
+      "buttons": Object {
+        "secondaryBackgroundColor": "#0c163d",
+      },
+      "dashboard": Object {
+        "background": "#0c163d",
+        "foreground": "#ffffff",
+      },
+      "frame": Object {
+        "background": "#152665",
+        "foreground": "#ffffff",
+        "link": "#ffffff",
+      },
+      "select": Object {
+        "background": "#ffffff33",
+        "foreground": "#ffffff",
+        "menuBackgroundColor": "#152665",
+        "selectedOptionBackgroundColor": "#ffffff33",
+      },
+      "shadowColor": "#3b6cf433",
+      "sidebar": Object {
+        "activeItemBackground": "#ffffff33",
+        "background": "#152665",
+        "foreground": "#ffffff",
+      },
+      "topMenuItems": Object {
+        "iconGradient": Object {
+          "from": "#3b6cf4",
+          "to": "#6050dc",
+        },
+      },
+      "type": "dark",
+    }
+  }
+  menuBottom={
+    Array [
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+          "icon": Object {
+            "id": "settings",
+          },
+        },
+        "id": "settings",
+        "text": "Settings",
+        "to": "/user/settings",
+      },
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+          "icon": Object {
+            "id": "recovery",
+          },
+        },
+        "id": "recovery",
+        "text": "Recovery",
+        "to": "/user/recovery",
+      },
+    ]
+  }
+  menuTop={
+    Array [
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
+            "id": "tokens",
+          },
+        },
+        "id": "tokens",
+        "text": "Tokens",
+        "to": "/user/account",
+      },
+    ]
+  }
+  shieldItem={
+    Object {
+      "exact": true,
+      "icon": Object {
+        "height": "auto",
+        "icon": Object {
+          "hasVariants": true,
+          "id": "shield",
+        },
+        "width": "auto",
+      },
+      "id": "protection",
+      "text": "My Logion Trust Protection",
+      "to": "/user/protection",
+    }
+  }
+>
+  <WarningDialog
+    actions={
+      Array [
+        Object {
+          "buttonText": "I will do it later",
+          "buttonVariant": "secondary",
+          "callback": [Function],
+          "id": "discard",
+        },
+        Object {
+          "buttonText": <Link
+            to="/user/protection"
+          >
+            Activate the logion protection
+          </Link>,
+          "buttonVariant": "primary",
+          "callback": [Function],
+          "id": "protection",
+        },
+        Object {
+          "buttonText": <Link
+            to="/user/recovery"
+          >
+            Start a recovery process
+          </Link>,
+          "buttonVariant": "warning",
+          "callback": [Function],
+          "id": "recovery",
+        },
+      ]
+    }
+    colors={
+      Object {
+        "accounts": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+          "hintColor": "#ffffff99",
+          "iconBackground": "#3b6cf4",
+          "legalOfficerIcon": Object {
+            "category": "legal-officer",
+            "id": "account-shield",
+          },
+        },
+        "bottomMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+        },
+        "buttons": Object {
+          "secondaryBackgroundColor": "#0c163d",
+        },
+        "dashboard": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "frame": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+          "link": "#ffffff",
+        },
+        "select": Object {
+          "background": "#ffffff33",
+          "foreground": "#ffffff",
+          "menuBackgroundColor": "#152665",
+          "selectedOptionBackgroundColor": "#ffffff33",
+        },
+        "shadowColor": "#3b6cf433",
+        "sidebar": Object {
+          "activeItemBackground": "#ffffff33",
+          "background": "#152665",
+          "foreground": "#ffffff",
+        },
+        "topMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+        },
+        "type": "dark",
+      }
+    }
+    show={false}
+    size="lg"
+    spaceAbove="25vh"
+  >
+    <React.Fragment>
+      Dear user,
+      <br />
+      We strongly recommend that you activate your logion trust protection right now in order to enjoy all logion's features and benefits. You can also immediately start a recovery process if you need to recover your assets locked in another account by clicking on the related button below.
+    </React.Fragment>
+  </WarningDialog>
+</Dashboard>
+`;
 
-exports[`Given connection error, when rendering, then show account, no button, no node info 1`] = `null`;
+exports[`Given connection error, when rendering, then show account, no button, no node info 1`] = `
+<Dashboard
+  colors={
+    Object {
+      "accounts": Object {
+        "background": "#0c163d",
+        "foreground": "#ffffff",
+        "hintColor": "#ffffff99",
+        "iconBackground": "#3b6cf4",
+        "legalOfficerIcon": Object {
+          "category": "legal-officer",
+          "id": "account-shield",
+        },
+      },
+      "bottomMenuItems": Object {
+        "iconGradient": Object {
+          "from": "#7a90cb",
+          "to": "#3b6cf4",
+        },
+      },
+      "buttons": Object {
+        "secondaryBackgroundColor": "#0c163d",
+      },
+      "dashboard": Object {
+        "background": "#0c163d",
+        "foreground": "#ffffff",
+      },
+      "frame": Object {
+        "background": "#152665",
+        "foreground": "#ffffff",
+        "link": "#ffffff",
+      },
+      "select": Object {
+        "background": "#ffffff33",
+        "foreground": "#ffffff",
+        "menuBackgroundColor": "#152665",
+        "selectedOptionBackgroundColor": "#ffffff33",
+      },
+      "shadowColor": "#3b6cf433",
+      "sidebar": Object {
+        "activeItemBackground": "#ffffff33",
+        "background": "#152665",
+        "foreground": "#ffffff",
+      },
+      "topMenuItems": Object {
+        "iconGradient": Object {
+          "from": "#3b6cf4",
+          "to": "#6050dc",
+        },
+      },
+      "type": "dark",
+    }
+  }
+  menuBottom={
+    Array [
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+          "icon": Object {
+            "id": "settings",
+          },
+        },
+        "id": "settings",
+        "text": "Settings",
+        "to": "/user/settings",
+      },
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+          "icon": Object {
+            "id": "recovery",
+          },
+        },
+        "id": "recovery",
+        "text": "Recovery",
+        "to": "/user/recovery",
+      },
+    ]
+  }
+  menuTop={
+    Array [
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
+            "id": "tokens",
+          },
+        },
+        "id": "tokens",
+        "text": "Tokens",
+        "to": "/user/account",
+      },
+    ]
+  }
+  shieldItem={
+    Object {
+      "exact": true,
+      "icon": Object {
+        "height": "auto",
+        "icon": Object {
+          "hasVariants": true,
+          "id": "shield",
+        },
+        "width": "auto",
+      },
+      "id": "protection",
+      "text": "My Logion Trust Protection",
+      "to": "/user/protection",
+    }
+  }
+>
+  <WarningDialog
+    actions={
+      Array [
+        Object {
+          "buttonText": "I will do it later",
+          "buttonVariant": "secondary",
+          "callback": [Function],
+          "id": "discard",
+        },
+        Object {
+          "buttonText": <Link
+            to="/user/protection"
+          >
+            Activate the logion protection
+          </Link>,
+          "buttonVariant": "primary",
+          "callback": [Function],
+          "id": "protection",
+        },
+        Object {
+          "buttonText": <Link
+            to="/user/recovery"
+          >
+            Start a recovery process
+          </Link>,
+          "buttonVariant": "warning",
+          "callback": [Function],
+          "id": "recovery",
+        },
+      ]
+    }
+    colors={
+      Object {
+        "accounts": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+          "hintColor": "#ffffff99",
+          "iconBackground": "#3b6cf4",
+          "legalOfficerIcon": Object {
+            "category": "legal-officer",
+            "id": "account-shield",
+          },
+        },
+        "bottomMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+        },
+        "buttons": Object {
+          "secondaryBackgroundColor": "#0c163d",
+        },
+        "dashboard": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "frame": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+          "link": "#ffffff",
+        },
+        "select": Object {
+          "background": "#ffffff33",
+          "foreground": "#ffffff",
+          "menuBackgroundColor": "#152665",
+          "selectedOptionBackgroundColor": "#ffffff33",
+        },
+        "shadowColor": "#3b6cf433",
+        "sidebar": Object {
+          "activeItemBackground": "#ffffff33",
+          "background": "#152665",
+          "foreground": "#ffffff",
+        },
+        "topMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+        },
+        "type": "dark",
+      }
+    }
+    show={false}
+    size="lg"
+    spaceAbove="25vh"
+  >
+    <React.Fragment>
+      Dear user,
+      <br />
+      We strongly recommend that you activate your logion trust protection right now in order to enjoy all logion's features and benefits. You can also immediately start a recovery process if you need to recover your assets locked in another account by clicking on the related button below.
+    </React.Fragment>
+  </WarningDialog>
+</Dashboard>
+`;
 
-exports[`Given disconnected, when rendering, then show disconnected and connect button 1`] = `null`;
+exports[`Given disconnected, when rendering, then show disconnected and connect button 1`] = `
+<Dashboard
+  colors={
+    Object {
+      "accounts": Object {
+        "background": "#0c163d",
+        "foreground": "#ffffff",
+        "hintColor": "#ffffff99",
+        "iconBackground": "#3b6cf4",
+        "legalOfficerIcon": Object {
+          "category": "legal-officer",
+          "id": "account-shield",
+        },
+      },
+      "bottomMenuItems": Object {
+        "iconGradient": Object {
+          "from": "#7a90cb",
+          "to": "#3b6cf4",
+        },
+      },
+      "buttons": Object {
+        "secondaryBackgroundColor": "#0c163d",
+      },
+      "dashboard": Object {
+        "background": "#0c163d",
+        "foreground": "#ffffff",
+      },
+      "frame": Object {
+        "background": "#152665",
+        "foreground": "#ffffff",
+        "link": "#ffffff",
+      },
+      "select": Object {
+        "background": "#ffffff33",
+        "foreground": "#ffffff",
+        "menuBackgroundColor": "#152665",
+        "selectedOptionBackgroundColor": "#ffffff33",
+      },
+      "shadowColor": "#3b6cf433",
+      "sidebar": Object {
+        "activeItemBackground": "#ffffff33",
+        "background": "#152665",
+        "foreground": "#ffffff",
+      },
+      "topMenuItems": Object {
+        "iconGradient": Object {
+          "from": "#3b6cf4",
+          "to": "#6050dc",
+        },
+      },
+      "type": "dark",
+    }
+  }
+  menuBottom={
+    Array [
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+          "icon": Object {
+            "id": "settings",
+          },
+        },
+        "id": "settings",
+        "text": "Settings",
+        "to": "/user/settings",
+      },
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+          "icon": Object {
+            "id": "recovery",
+          },
+        },
+        "id": "recovery",
+        "text": "Recovery",
+        "to": "/user/recovery",
+      },
+    ]
+  }
+  menuTop={
+    Array [
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
+            "id": "tokens",
+          },
+        },
+        "id": "tokens",
+        "text": "Tokens",
+        "to": "/user/account",
+      },
+    ]
+  }
+  shieldItem={
+    Object {
+      "exact": true,
+      "icon": Object {
+        "height": "auto",
+        "icon": Object {
+          "hasVariants": true,
+          "id": "shield",
+        },
+        "width": "auto",
+      },
+      "id": "protection",
+      "text": "My Logion Trust Protection",
+      "to": "/user/protection",
+    }
+  }
+>
+  <WarningDialog
+    actions={
+      Array [
+        Object {
+          "buttonText": "I will do it later",
+          "buttonVariant": "secondary",
+          "callback": [Function],
+          "id": "discard",
+        },
+        Object {
+          "buttonText": <Link
+            to="/user/protection"
+          >
+            Activate the logion protection
+          </Link>,
+          "buttonVariant": "primary",
+          "callback": [Function],
+          "id": "protection",
+        },
+        Object {
+          "buttonText": <Link
+            to="/user/recovery"
+          >
+            Start a recovery process
+          </Link>,
+          "buttonVariant": "warning",
+          "callback": [Function],
+          "id": "recovery",
+        },
+      ]
+    }
+    colors={
+      Object {
+        "accounts": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+          "hintColor": "#ffffff99",
+          "iconBackground": "#3b6cf4",
+          "legalOfficerIcon": Object {
+            "category": "legal-officer",
+            "id": "account-shield",
+          },
+        },
+        "bottomMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+        },
+        "buttons": Object {
+          "secondaryBackgroundColor": "#0c163d",
+        },
+        "dashboard": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "frame": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+          "link": "#ffffff",
+        },
+        "select": Object {
+          "background": "#ffffff33",
+          "foreground": "#ffffff",
+          "menuBackgroundColor": "#152665",
+          "selectedOptionBackgroundColor": "#ffffff33",
+        },
+        "shadowColor": "#3b6cf433",
+        "sidebar": Object {
+          "activeItemBackground": "#ffffff33",
+          "background": "#152665",
+          "foreground": "#ffffff",
+        },
+        "topMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+        },
+        "type": "dark",
+      }
+    }
+    show={false}
+    size="lg"
+    spaceAbove="25vh"
+  >
+    <React.Fragment>
+      Dear user,
+      <br />
+      We strongly recommend that you activate your logion trust protection right now in order to enjoy all logion's features and benefits. You can also immediately start a recovery process if you need to recover your assets locked in another account by clicking on the related button below.
+    </React.Fragment>
+  </WarningDialog>
+</Dashboard>
+`;
 
-exports[`Given no injected account, when rendering, then nothing displayed 1`] = `null`;
+exports[`Given no injected account, when rendering, then nothing displayed 1`] = `
+<Dashboard
+  colors={
+    Object {
+      "accounts": Object {
+        "background": "#0c163d",
+        "foreground": "#ffffff",
+        "hintColor": "#ffffff99",
+        "iconBackground": "#3b6cf4",
+        "legalOfficerIcon": Object {
+          "category": "legal-officer",
+          "id": "account-shield",
+        },
+      },
+      "bottomMenuItems": Object {
+        "iconGradient": Object {
+          "from": "#7a90cb",
+          "to": "#3b6cf4",
+        },
+      },
+      "buttons": Object {
+        "secondaryBackgroundColor": "#0c163d",
+      },
+      "dashboard": Object {
+        "background": "#0c163d",
+        "foreground": "#ffffff",
+      },
+      "frame": Object {
+        "background": "#152665",
+        "foreground": "#ffffff",
+        "link": "#ffffff",
+      },
+      "select": Object {
+        "background": "#ffffff33",
+        "foreground": "#ffffff",
+        "menuBackgroundColor": "#152665",
+        "selectedOptionBackgroundColor": "#ffffff33",
+      },
+      "shadowColor": "#3b6cf433",
+      "sidebar": Object {
+        "activeItemBackground": "#ffffff33",
+        "background": "#152665",
+        "foreground": "#ffffff",
+      },
+      "topMenuItems": Object {
+        "iconGradient": Object {
+          "from": "#3b6cf4",
+          "to": "#6050dc",
+        },
+      },
+      "type": "dark",
+    }
+  }
+  menuBottom={
+    Array [
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+          "icon": Object {
+            "id": "settings",
+          },
+        },
+        "id": "settings",
+        "text": "Settings",
+        "to": "/user/settings",
+      },
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+          "icon": Object {
+            "id": "recovery",
+          },
+        },
+        "id": "recovery",
+        "text": "Recovery",
+        "to": "/user/recovery",
+      },
+    ]
+  }
+  menuTop={
+    Array [
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
+            "id": "tokens",
+          },
+        },
+        "id": "tokens",
+        "text": "Tokens",
+        "to": "/user/account",
+      },
+    ]
+  }
+  shieldItem={
+    Object {
+      "exact": true,
+      "icon": Object {
+        "height": "auto",
+        "icon": Object {
+          "hasVariants": true,
+          "id": "shield",
+        },
+        "width": "auto",
+      },
+      "id": "protection",
+      "text": "My Logion Trust Protection",
+      "to": "/user/protection",
+    }
+  }
+>
+  <UserRouter />
+  <WarningDialog
+    actions={
+      Array [
+        Object {
+          "buttonText": "I will do it later",
+          "buttonVariant": "secondary",
+          "callback": [Function],
+          "id": "discard",
+        },
+        Object {
+          "buttonText": <Link
+            to="/user/protection"
+          >
+            Activate the logion protection
+          </Link>,
+          "buttonVariant": "primary",
+          "callback": [Function],
+          "id": "protection",
+        },
+        Object {
+          "buttonText": <Link
+            to="/user/recovery"
+          >
+            Start a recovery process
+          </Link>,
+          "buttonVariant": "warning",
+          "callback": [Function],
+          "id": "recovery",
+        },
+      ]
+    }
+    colors={
+      Object {
+        "accounts": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+          "hintColor": "#ffffff99",
+          "iconBackground": "#3b6cf4",
+          "legalOfficerIcon": Object {
+            "category": "legal-officer",
+            "id": "account-shield",
+          },
+        },
+        "bottomMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+        },
+        "buttons": Object {
+          "secondaryBackgroundColor": "#0c163d",
+        },
+        "dashboard": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "frame": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+          "link": "#ffffff",
+        },
+        "select": Object {
+          "background": "#ffffff33",
+          "foreground": "#ffffff",
+          "menuBackgroundColor": "#152665",
+          "selectedOptionBackgroundColor": "#ffffff33",
+        },
+        "shadowColor": "#3b6cf433",
+        "sidebar": Object {
+          "activeItemBackground": "#ffffff33",
+          "background": "#152665",
+          "foreground": "#ffffff",
+        },
+        "topMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+        },
+        "type": "dark",
+      }
+    }
+    show={false}
+    size="lg"
+    spaceAbove="25vh"
+  >
+    <React.Fragment>
+      Dear user,
+      <br />
+      We strongly recommend that you activate your logion trust protection right now in order to enjoy all logion's features and benefits. You can also immediately start a recovery process if you need to recover your assets locked in another account by clicking on the related button below.
+    </React.Fragment>
+  </WarningDialog>
+</Dashboard>
+`;

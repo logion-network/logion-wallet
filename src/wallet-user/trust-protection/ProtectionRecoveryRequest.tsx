@@ -4,7 +4,7 @@ import {
     useLogionChain,
     Unsubscriber,
     ISubmittableResult,
-    replaceUnsubscriber,
+    unsubscribe,
     isFinalized
 } from '../../logion-chain';
 import { createRecovery } from '../../logion-chain/Recovery';
@@ -41,9 +41,10 @@ export default function ProtectionRecoveryRequest(props: Props) {
     const [ confirmButtonEnabled, setConfirmButtonEnabled ] = useState(props.request.status === "PENDING");
 
     const activateProtection = useCallback((request: ProtectionRequest) => {
-        setActivationResult(null);
-        setActivationError(null);
         (async function() {
+            await unsubscribe(activationUnsubscriber);
+            setActivationResult(null);
+            setActivationError(null);
             const unsubscriber = createRecovery({
                 api: api!,
                 signerId: currentAddress,
@@ -51,16 +52,15 @@ export default function ProtectionRecoveryRequest(props: Props) {
                 errorCallback: setActivationError,
                 legalOfficers: request.decisions.map(decision => decision.legalOfficerAddress),
             });
-            await replaceUnsubscriber(activationUnsubscriber, setActivationUnsubscriber, unsubscriber);
-            refreshRequests!();
+            setActivationUnsubscriber(unsubscriber);
         })();
-    }, [ api, currentAddress, refreshRequests, activationUnsubscriber, setActivationUnsubscriber ]);
+    }, [ api, currentAddress, activationUnsubscriber, setActivationUnsubscriber ]);
 
     useEffect(() => {
         if (isFinalized(activationResult) && !refreshedAfterActivation) {
             setRefreshedAfterActivation(true);
             checkActivation(props.request)
-                .finally(() => refreshRequests!())
+                .finally(() => refreshRequests!(true))
         }
     }, [ activationResult, refreshedAfterActivation, setRefreshedAfterActivation, refreshRequests, props ]);
 

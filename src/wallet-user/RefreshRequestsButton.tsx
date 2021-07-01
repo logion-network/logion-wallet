@@ -8,6 +8,6 @@ export default function RefreshRequestsButton() {
     if(refreshRequests === null) {
         return null;
     } else {
-        return <Button onClick={refreshRequests}>Refresh requests</Button>;
+        return <Button onClick={() => refreshRequests(false) }>Refresh requests</Button>;
     }
 }

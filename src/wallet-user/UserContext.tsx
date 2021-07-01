@@ -24,7 +24,7 @@ export interface UserContext {
     pendingTokenizationRequests: TokenizationRequest[] | null,
     acceptedTokenizationRequests: TokenizationRequest[] | null,
     rejectedTokenizationRequests: TokenizationRequest[] | null,
-    refreshRequests: (() => void) | null,
+    refreshRequests: ((clearBeforeRefresh: boolean) => void) | null,
     createProtectionRequest: ((request: CreateProtectionRequest) => Promise<void>) | null,
     pendingProtectionRequests: ProtectionRequest[] | null,
     acceptedProtectionRequests: ProtectionRequest[] | null,
@@ -74,18 +74,33 @@ interface Action {
     acceptedProtectionRequests?: ProtectionRequest[],
     rejectedProtectionRequests?: ProtectionRequest[],
     recoveryConfig?: Option<RecoveryConfig>,
-    refreshRequests?: () => void,
+    refreshRequests?: (clearBeforeRefresh: boolean) => void,
     createProtectionRequest?: (request: CreateProtectionRequest) => Promise<void>,
+    clearBeforeRefresh?: boolean,
 }
 
 const reducer: Reducer<UserContext, Action> = (state: UserContext, action: Action): UserContext => {
     switch (action.type) {
         case 'FETCH_IN_PROGRESS':
             console.log("fetch in progress for " + action.dataAddress!);
-            return {
-                ...state,
-                fetchForAddress: action.dataAddress!,
-            };
+            if(action.clearBeforeRefresh!) {
+                return {
+                    ...state,
+                    fetchForAddress: action.dataAddress!,
+                    pendingTokenizationRequests: null,
+                    acceptedTokenizationRequests: null,
+                    rejectedTokenizationRequests: null,
+                    pendingProtectionRequests: null,
+                    acceptedProtectionRequests: null,
+                    rejectedProtectionRequests: null,
+                    recoveryConfig: null,
+                };
+            } else {
+                return {
+                    ...state,
+                    fetchForAddress: action.dataAddress!,
+                };
+            }
         case 'SET_DATA':
             if(action.dataAddress === state.fetchForAddress) {
                 console.log("setting data for " + state.fetchForAddress);
@@ -157,11 +172,12 @@ export function UserContextProvider(props: Props) {
         }
     }, [contextValue, dispatch]);
 
-    const refreshRequests = useCallback(() => {
+    const refreshRequests = useCallback((clearBeforeRefresh: boolean) => {
         if(api !== null) {
             dispatch({
                 type: "FETCH_IN_PROGRESS",
                 dataAddress: currentAddress,
+                clearBeforeRefresh
             });
 
             (async function () {
@@ -217,7 +233,7 @@ export function UserContextProvider(props: Props) {
                 && currentAddress !== ''
                 && contextValue.dataAddress !== currentAddress
                 && contextValue.fetchForAddress !== currentAddress) {
-            refreshRequests();
+            refreshRequests(true);
         }
     }, [ apiState, contextValue, currentAddress, refreshRequests, dispatch ]);
 

@@ -6,7 +6,7 @@ exports[`Renders with refreshRequests 1`] = `
 <Button
   active={false}
   disabled={false}
-  onClick={[MockFunction]}
+  onClick={[Function]}
   variant="primary"
 >
   Refresh requests

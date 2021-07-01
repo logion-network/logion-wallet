@@ -16,12 +16,13 @@ export default function ContextualizedWallet() {
     const { colorTheme, pendingProtectionRequests, acceptedProtectionRequests } = useUserContext();
     const [ discardProtection, setDiscardProtection ] = useState<boolean>(false);
 
-    if(selectAddress === null || addresses === null || pendingProtectionRequests === null || acceptedProtectionRequests === null) {
+    if(selectAddress === null || addresses === null) {
         return null;
     }
 
     const userContext = apiState === 'READY' ? <UserRouter /> : null;
-    const noProtection = pendingProtectionRequests.length === 0 && acceptedProtectionRequests.length === 0;
+    const noProtection = (pendingProtectionRequests !== null && pendingProtectionRequests.length === 0)
+        && (acceptedProtectionRequests !== null && acceptedProtectionRequests.length === 0);
 
     return (
         <Dashboard

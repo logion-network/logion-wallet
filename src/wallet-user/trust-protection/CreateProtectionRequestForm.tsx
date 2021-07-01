@@ -416,7 +416,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                         actions={[
                             {
                                 buttonText: "Nice!",
-                                callback: () => { refreshRequests!(); setRequestCreated(false); },
+                                callback: () => { refreshRequests!(true); setRequestCreated(false); },
                                 id: "discard",
                                 buttonVariant: 'primary'
                             }
