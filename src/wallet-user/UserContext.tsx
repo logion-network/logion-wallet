@@ -234,7 +234,6 @@ export function UserContextProvider(props: Props) {
         if (contextValue.createProtectionRequest === null && apiState === "READY") {
             const createProtectionRequest = async (request: CreateProtectionRequest): Promise<void> => {
                 await modelCreateProtectionRequest(request);
-                refreshRequests();
             }
             dispatch({
                 type: "SET_CREATE_PROTECTION_REQUEST_FUNCTION",

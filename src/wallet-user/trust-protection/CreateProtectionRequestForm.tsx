@@ -6,6 +6,7 @@ import Button from "../../component/Button";
 import { ContentPane } from "../../component/Dashboard";
 import Frame from "../../component/Frame";
 import Alert from "../../component/Alert";
+import Dialog from '../../component/Dialog';
 
 import { CreateProtectionRequest, legalOfficers } from "./Model";
 import {useUserContext} from "../UserContext";
@@ -39,9 +40,10 @@ interface FormValues {
 export default function CreateProtectionRequestForm(props: Props) {
     const { control, handleSubmit, formState: {errors} } = useForm<FormValues>();
     const { selectAddress, addresses, currentAddress } = useRootContext();
-    const { createProtectionRequest, colorTheme } = useUserContext();
+    const { createProtectionRequest, colorTheme, refreshRequests } = useUserContext();
     const [ legalOfficer1, setLegalOfficer1 ] = useState<LegalOfficer | null>(null);
     const [ legalOfficer2, setLegalOfficer2 ] = useState<LegalOfficer | null>(null);
+    const [ requestCreated, setRequestCreated ] = useState<boolean>(false);
 
     const submit = async (formValues: FormValues) => {
         if(legalOfficer1 === null || legalOfficer2 === null || !formValues.agree) {
@@ -96,6 +98,7 @@ export default function CreateProtectionRequestForm(props: Props) {
             addressToRecover: formValues.addressToRecover !== undefined ? formValues.addressToRecover : "",
         }
         await createProtectionRequest!(request);
+        setRequestCreated(true);
     }
 
     let mainTitle;
@@ -407,6 +410,24 @@ export default function CreateProtectionRequestForm(props: Props) {
                             />
                         </div>
                     </Form>
+                    <Dialog
+                        show={ requestCreated }
+                        size='lg'
+                        actions={[
+                            {
+                                buttonText: "Nice!",
+                                callback: () => { refreshRequests!(); setRequestCreated(false); },
+                                id: "discard",
+                                buttonVariant: 'primary'
+                            }
+                        ]}
+                        colors={ colorTheme }
+                        spaceAbove="25vh"
+                    >
+                        <>
+                            The legal officers have been informed of your request.
+                        </>
+                    </Dialog>
                 </Frame>
             }
         />

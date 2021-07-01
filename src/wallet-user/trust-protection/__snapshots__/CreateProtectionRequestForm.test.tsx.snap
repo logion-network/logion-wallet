@@ -1400,6 +1400,76 @@ France",
           />
         </div>
       </Form>
+      <Dialog
+        actions={
+          Array [
+            Object {
+              "buttonText": "Nice!",
+              "buttonVariant": "primary",
+              "callback": [Function],
+              "id": "discard",
+            },
+          ]
+        }
+        colors={
+          Object {
+            "accounts": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+              "hintColor": "#ffffff99",
+              "iconBackground": "#3b6cf4",
+              "legalOfficerIcon": Object {
+                "category": "legal-officer",
+                "id": "account-shield",
+              },
+            },
+            "bottomMenuItems": Object {
+              "iconGradient": Object {
+                "from": "#7a90cb",
+                "to": "#3b6cf4",
+              },
+            },
+            "buttons": Object {
+              "secondaryBackgroundColor": "#0c163d",
+            },
+            "dashboard": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
+            "frame": Object {
+              "background": "#152665",
+              "foreground": "#ffffff",
+              "link": "#ffffff",
+            },
+            "select": Object {
+              "background": "#ffffff33",
+              "foreground": "#ffffff",
+              "menuBackgroundColor": "#152665",
+              "selectedOptionBackgroundColor": "#ffffff33",
+            },
+            "shadowColor": "#3b6cf433",
+            "sidebar": Object {
+              "activeItemBackground": "#ffffff33",
+              "background": "#152665",
+              "foreground": "#ffffff",
+            },
+            "topMenuItems": Object {
+              "iconGradient": Object {
+                "from": "#3b6cf4",
+                "to": "#6050dc",
+              },
+            },
+            "type": "dark",
+          }
+        }
+        show={false}
+        size="lg"
+        spaceAbove="25vh"
+      >
+        <React.Fragment>
+          The legal officers have been informed of your request.
+        </React.Fragment>
+      </Dialog>
     </Frame>
   }
   selectAddress={[MockFunction]}
