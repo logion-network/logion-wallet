@@ -45,29 +45,29 @@ export default function SelectLegalOfficer(props: Props) {
     const label = props.mode === 'choose' ? `Choose Legal Officer N°${props.legalOfficerNumber}`: `Legal Officer N°${props.legalOfficerNumber}`;
     let icon;
     let status;
-    let borderColor;
+    let statusColor: string | undefined = undefined;
     if(props.decision !== undefined) {
         if(props.decision === "PENDING") {
+            statusColor = ORANGE;
             icon = (<Icon
                 colorThemeType={ props.colorTheme.type }
                 icon={{ id: "pending" }}
             />);
-            status = <span style={{color: ORANGE}}>Pending</span>;
-            borderColor = ORANGE;
+            status = <span style={{color: statusColor}}>Pending</span>;
         } else if(props.decision === "ACCEPTED") {
+            statusColor = GREEN;
             icon = (<Icon
                 colorThemeType={ props.colorTheme.type }
                 icon={{ id: "accepted" }}
             />);
-            status = <span style={{color: GREEN}}>Accepted</span>;
-            borderColor = GREEN;
+            status = <span style={{color: statusColor}}>Accepted</span>;
         } else if(props.decision === "REJECTED") {
+            statusColor = RED;
             icon = (<Icon
                 colorThemeType={ props.colorTheme.type }
                 icon={{ id: "rejected" }}
             />);
-            status = <span style={{color: RED}}>Rejected</span>;
-            borderColor = RED;
+            status = <span style={{color: statusColor}}>Rejected</span>;
         } else {
             icon = null;
             status = null;
@@ -87,6 +87,7 @@ export default function SelectLegalOfficer(props: Props) {
                             onChange={ value => props.setLegalOfficer(legalOfficersByAddress[value!.value] || null) }
                             colors={ props.colorTheme.select }
                             disabled={ props.mode === "view" }
+                            statusColor={ statusColor }
                         />
                         <Form.Control.Feedback
                             type="invalid"
@@ -105,7 +106,7 @@ export default function SelectLegalOfficer(props: Props) {
             <Officer
                 officer={ props.legalOfficer }
                 colors={ props.colorTheme.frame }
-                borderColor={ borderColor }
+                borderColor={ statusColor }
             />
         </div>
     );

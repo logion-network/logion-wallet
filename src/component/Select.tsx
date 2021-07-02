@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactSelect, { ValueType, ActionMeta, StylesConfig, GroupTypeBase } from 'react-select';
-import { SelectColors } from './ColorTheme';
+import { SelectColors, BLUE } from './ColorTheme';
 
 import './Select.css';
 
@@ -14,9 +14,10 @@ export interface Props {
     isInvalid?: boolean,
     colors: SelectColors,
     disabled?: boolean,
+    statusColor?: string,
 }
 
-function buildStyles(colors: SelectColors): StylesConfig<OptionType, false, GroupTypeBase<OptionType>> {
+function buildStyles(colors: SelectColors, statusColor?: string): StylesConfig<OptionType, false, GroupTypeBase<OptionType>> {
     return {
         option: (provided, state) => {
             let backgroundColor = undefined;
@@ -34,8 +35,9 @@ function buildStyles(colors: SelectColors): StylesConfig<OptionType, false, Grou
         control: (provided) => ({
             ...provided,
             boxShadow: undefined,
-            backgroundColor: colors.background,
+            backgroundColor: statusColor !== undefined ? statusColor + "33" : colors.background,
             color: colors.foreground,
+            borderColor: statusColor !== undefined ? statusColor : "#3b6cf4",
         }),
         menu: (provided) => ({
             ...provided,
@@ -43,7 +45,7 @@ function buildStyles(colors: SelectColors): StylesConfig<OptionType, false, Grou
         }),
         singleValue: (provided) => ({
             ...provided,
-            color: colors.foreground,
+            color: statusColor === undefined ? colors.foreground : statusColor,
             fontWeight: 700,
         }),
         placeholder: (provided) => ({
@@ -59,15 +61,28 @@ export default function Select(props: Props) {
         props.onChange(value);
     };
 
+    const color = props.statusColor === undefined ? BLUE : props.statusColor;
+    const customCss = `
+    .Select .Select__indicator,
+    .Select .Select__indicator:hover {
+        color: ${color};
+    }
+    `;
+
     return (
-        <ReactSelect
-            className={ props.isInvalid ? "Select is-invalid" : "Select" }
-            classNamePrefix="Select"
-            options={ props.options }
-            onChange={ onChange }
-            value={ props.value }
-            styles={ buildStyles(props.colors) }
-            isDisabled={ props.disabled }
-        />
+        <>
+            <style>
+            { customCss }
+            </style>
+            <ReactSelect
+                className={ props.isInvalid ? "Select is-invalid" : "Select" }
+                classNamePrefix="Select"
+                options={ props.options }
+                onChange={ onChange }
+                value={ props.value }
+                styles={ buildStyles(props.colors, props.statusColor) }
+                isDisabled={ props.disabled }
+            />
+        </>
     );
 }

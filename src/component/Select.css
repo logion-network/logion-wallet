@@ -1,15 +1,9 @@
-.Select .Select__indicator,
-.Select .Select__indicator:hover {
-    color: #3b6cf4;
-}
-
 .Select.is-invalid .Select__indicator,
 .Select.is-invalid .Select__indicator:hover {
     color: #e11a25;
 }
 
 .Select .Select__control {
-    border-color: #3b6cf4;
     border-width: 1px;
 }
 
@@ -32,8 +26,4 @@
 
 .Select .Select__indicator-separator {
     visibility: hidden;
-}
-
-.Select .Select__dropdown-indicator {
-    color: #3b6cf4;
 }
