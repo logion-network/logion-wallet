@@ -36,6 +36,22 @@ export default function ContextualizedWallet() {
                         },
                         background: colorTheme.topMenuItems.iconGradient,
                     },
+                }
+            ]}
+            menuMiddle={[
+                {
+                    id: "protection",
+                    text: "Protection Management",
+                    to: PROTECTION_REQUESTS_PATH,
+                    exact: true,
+                    icon: {
+                        icon: {
+                            id: 'shield',
+                            hasVariants: true,
+                        },
+                        height: 'auto',
+                        width: '60px',
+                    }
                 },
                 {
                     id: "recovery",
@@ -44,26 +60,13 @@ export default function ContextualizedWallet() {
                     exact: true,
                     icon: {
                         icon: {
-                            id: 'recovery'
+                            id: 'recovery_request'
                         },
-                        background: colorTheme.topMenuItems.iconGradient,
-                    },
+                        height: 'auto',
+                        width: '60px',
+                    }
                 }
             ]}
-            shieldItem={{
-                id: "protection",
-                text: "Protection Management",
-                to: PROTECTION_REQUESTS_PATH,
-                exact: true,
-                icon: {
-                    icon: {
-                        id: 'shield',
-                        hasVariants: true,
-                    },
-                    height: 'auto',
-                    width: 'auto',
-                }
-            }}
             menuBottom={[
                 {
                     id: "settings",

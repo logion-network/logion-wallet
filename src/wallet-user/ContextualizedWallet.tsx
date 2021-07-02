@@ -41,20 +41,22 @@ export default function ContextualizedWallet() {
                     },
                 }
             ]}
-            shieldItem={{
-                id: "protection",
-                text: "My Logion Trust Protection",
-                to: TRUST_PROTECTION_PATH,
-                exact: true,
-                icon: {
+            menuMiddle={[
+                {
+                    id: "protection",
+                    text: "My Logion Trust Protection",
+                    to: TRUST_PROTECTION_PATH,
+                    exact: true,
                     icon: {
-                        id: 'shield',
-                        hasVariants: true,
-                    },
-                    height: 'auto',
-                    width: 'auto',
+                        icon: {
+                            id: 'shield',
+                            hasVariants: true,
+                        },
+                        height: 'auto',
+                        width: 'auto',
+                    }
                 }
-            }}
+            ]}
             menuBottom={[
                 {
                     id: "settings",

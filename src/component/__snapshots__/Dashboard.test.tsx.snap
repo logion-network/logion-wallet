@@ -83,15 +83,8 @@ exports[`renders Dashboard 1`] = `
             colorThemeType="light"
             items={Array []}
           />
-          <Shield
+          <MainMenu
             colorThemeType="light"
-            item={
-              Object {
-                "exact": true,
-                "text": "Protection",
-                "to": "/",
-              }
-            }
           />
           <Menu
             colorThemeType="light"

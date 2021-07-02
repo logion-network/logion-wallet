@@ -106,21 +106,23 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
       },
     ]
   }
-  shieldItem={
-    Object {
-      "exact": true,
-      "icon": Object {
-        "height": "auto",
+  shieldItems={
+    Array [
+      Object {
+        "exact": true,
         "icon": Object {
-          "hasVariants": true,
-          "id": "shield",
+          "height": "auto",
+          "icon": Object {
+            "hasVariants": true,
+            "id": "shield",
+          },
+          "width": "auto",
         },
-        "width": "auto",
+        "id": "protection",
+        "text": "My Logion Trust Protection",
+        "to": "/user/protection",
       },
-      "id": "protection",
-      "text": "My Logion Trust Protection",
-      "to": "/user/protection",
-    }
+    ]
   }
 >
   <UserRouter />
@@ -325,21 +327,23 @@ exports[`Given connected, when rendering, then show account, no connect button a
       },
     ]
   }
-  shieldItem={
-    Object {
-      "exact": true,
-      "icon": Object {
-        "height": "auto",
+  shieldItems={
+    Array [
+      Object {
+        "exact": true,
         "icon": Object {
-          "hasVariants": true,
-          "id": "shield",
+          "height": "auto",
+          "icon": Object {
+            "hasVariants": true,
+            "id": "shield",
+          },
+          "width": "auto",
         },
-        "width": "auto",
+        "id": "protection",
+        "text": "My Logion Trust Protection",
+        "to": "/user/protection",
       },
-      "id": "protection",
-      "text": "My Logion Trust Protection",
-      "to": "/user/protection",
-    }
+    ]
   }
 >
   <UserRouter />
@@ -544,21 +548,23 @@ exports[`Given connecting, when rendering, then show account, no button, no node
       },
     ]
   }
-  shieldItem={
-    Object {
-      "exact": true,
-      "icon": Object {
-        "height": "auto",
+  shieldItems={
+    Array [
+      Object {
+        "exact": true,
         "icon": Object {
-          "hasVariants": true,
-          "id": "shield",
+          "height": "auto",
+          "icon": Object {
+            "hasVariants": true,
+            "id": "shield",
+          },
+          "width": "auto",
         },
-        "width": "auto",
+        "id": "protection",
+        "text": "My Logion Trust Protection",
+        "to": "/user/protection",
       },
-      "id": "protection",
-      "text": "My Logion Trust Protection",
-      "to": "/user/protection",
-    }
+    ]
   }
 >
   <WarningDialog
@@ -762,21 +768,23 @@ exports[`Given connection error, when rendering, then show account, no button, n
       },
     ]
   }
-  shieldItem={
-    Object {
-      "exact": true,
-      "icon": Object {
-        "height": "auto",
+  shieldItems={
+    Array [
+      Object {
+        "exact": true,
         "icon": Object {
-          "hasVariants": true,
-          "id": "shield",
+          "height": "auto",
+          "icon": Object {
+            "hasVariants": true,
+            "id": "shield",
+          },
+          "width": "auto",
         },
-        "width": "auto",
+        "id": "protection",
+        "text": "My Logion Trust Protection",
+        "to": "/user/protection",
       },
-      "id": "protection",
-      "text": "My Logion Trust Protection",
-      "to": "/user/protection",
-    }
+    ]
   }
 >
   <WarningDialog
@@ -980,21 +988,23 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
       },
     ]
   }
-  shieldItem={
-    Object {
-      "exact": true,
-      "icon": Object {
-        "height": "auto",
+  shieldItems={
+    Array [
+      Object {
+        "exact": true,
         "icon": Object {
-          "hasVariants": true,
-          "id": "shield",
+          "height": "auto",
+          "icon": Object {
+            "hasVariants": true,
+            "id": "shield",
+          },
+          "width": "auto",
         },
-        "width": "auto",
+        "id": "protection",
+        "text": "My Logion Trust Protection",
+        "to": "/user/protection",
       },
-      "id": "protection",
-      "text": "My Logion Trust Protection",
-      "to": "/user/protection",
-    }
+    ]
   }
 >
   <WarningDialog
@@ -1198,21 +1208,23 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
       },
     ]
   }
-  shieldItem={
-    Object {
-      "exact": true,
-      "icon": Object {
-        "height": "auto",
+  shieldItems={
+    Array [
+      Object {
+        "exact": true,
         "icon": Object {
-          "hasVariants": true,
-          "id": "shield",
+          "height": "auto",
+          "icon": Object {
+            "hasVariants": true,
+            "id": "shield",
+          },
+          "width": "auto",
         },
-        "width": "auto",
+        "id": "protection",
+        "text": "My Logion Trust Protection",
+        "to": "/user/protection",
       },
-      "id": "protection",
-      "text": "My Logion Trust Protection",
-      "to": "/user/protection",
-    }
+    ]
   }
 >
   <UserRouter />

@@ -89,38 +89,38 @@ exports[`renders 1`] = `
         "text": "Tokens",
         "to": "/legal-officer/tokenization",
       },
+    ]
+  }
+  shieldItems={
+    Array [
       Object {
         "exact": true,
         "icon": Object {
-          "background": Object {
-            "from": "#3b6cf4",
-            "to": "#6050dc",
-          },
+          "height": "auto",
           "icon": Object {
-            "id": "recovery",
+            "hasVariants": true,
+            "id": "shield",
           },
+          "width": "60px",
+        },
+        "id": "protection",
+        "text": "Protection Management",
+        "to": "/legal-officer/protection",
+      },
+      Object {
+        "exact": true,
+        "icon": Object {
+          "height": "auto",
+          "icon": Object {
+            "id": "recovery_request",
+          },
+          "width": "60px",
         },
         "id": "recovery",
         "text": "Recovery Requests",
         "to": "/legal-officer/recovery",
       },
     ]
-  }
-  shieldItem={
-    Object {
-      "exact": true,
-      "icon": Object {
-        "height": "auto",
-        "icon": Object {
-          "hasVariants": true,
-          "id": "shield",
-        },
-        "width": "auto",
-      },
-      "id": "protection",
-      "text": "Protection Management",
-      "to": "/legal-officer/protection",
-    }
   }
 >
   <LegalOfficerRouter />

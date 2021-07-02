@@ -63,6 +63,7 @@ export default function Dialog(props: Props) {
                 {
                     props.actions.map(action => (
                         <Button
+                            key={ action.id }
                             action={ action }
                             backgroundColor={ props.colors.buttons.secondaryBackgroundColor }
                         />

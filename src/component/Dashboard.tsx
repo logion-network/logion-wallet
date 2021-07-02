@@ -10,7 +10,7 @@ import AddressSwitcher from './AddressSwitcher';
 import { ColorTheme } from './ColorTheme';
 import Menu from './Menu';
 import { MenuItemData } from './MenuItem';
-import Shield from './Shield';
+import MainMenu from './MainMenu';
 
 import './Dashboard.css';
 
@@ -171,8 +171,8 @@ export function FullWidthPane(props: FullWidthPaneProps) {
 export interface Props {
     children: Children,
     menuTop: MenuItemData[],
+    menuMiddle: MenuItemData[],
     menuBottom: MenuItemData[],
-    shieldItem: MenuItemData,
     colors: ColorTheme,
 }
 
@@ -243,8 +243,8 @@ export default function Dashboard(props: Props) {
                                 items={ props.menuTop }
                                 colorThemeType={ props.colors.type }
                             />
-                            <Shield
-                                item={ props.shieldItem }
+                            <MainMenu
+                                items={ props.menuMiddle }
                                 colorThemeType={ props.colors.type }
                             />
                             <Menu
