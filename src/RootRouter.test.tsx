@@ -1,11 +1,12 @@
 jest.mock('./logion-chain');
 jest.mock('./RootContext');
 
-import { setContextMock } from './logion-chain';
+import { setContextMock } from './logion-chain/__mocks__/LogionChainMock';
 import { shallowRender, mockAccount, act } from './tests';
 
 import RootRouter from './RootRouter';
 import { DEFAULT_LEGAL_OFFICER } from './legal-officer/Types';
+import { setCurrentAddress } from './__mocks__/RootContextMock';
 
 test('Given null injected accounts, when rendering, then null', () => {
     setContextMock({
@@ -48,5 +49,17 @@ test('Given wallet user, when rendering, then route to wallet or redirect', () =
     let tree: any;
     act(() => { tree = shallowRender(<RootRouter />) });
 
+    expect(tree).toMatchSnapshot();
+});
+
+test('Given empty current address, when rendering, then null', () => {
+    setCurrentAddress("");
+    const tree = shallowRender(<RootRouter />);
+    expect(tree).toMatchSnapshot();
+});
+
+test('Given LO address, when rendering, then route to wallet or redirect', () => {
+    setCurrentAddress(DEFAULT_LEGAL_OFFICER);
+    const tree = shallowRender(<RootRouter />);
     expect(tree).toMatchSnapshot();
 });

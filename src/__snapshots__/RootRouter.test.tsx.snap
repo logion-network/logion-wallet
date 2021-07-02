@@ -1,5 +1,33 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Given LO address, when rendering, then route to wallet or redirect 1`] = `
+<BrowserRouter>
+  <Switch>
+    <Route
+      path="/legal-officer"
+    >
+      <LegalOfficerWallet />
+    </Route>
+    <Route
+      path="/user"
+    >
+      <Redirect
+        to="/legal-officer"
+      />
+    </Route>
+    <Route
+      path="/"
+    >
+      <Redirect
+        to="/legal-officer"
+      />
+    </Route>
+  </Switch>
+</BrowserRouter>
+`;
+
+exports[`Given empty current address, when rendering, then null 1`] = `null`;
+
 exports[`Given legal officer, when rendering, then route to wallet or redirect 1`] = `
 <BrowserRouter>
   <Switch>

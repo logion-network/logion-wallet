@@ -4,7 +4,7 @@ jest.mock('./UserContext');
 
 import React from 'react';
 import ContextualizedWallet from './ContextualizedWallet';
-import { setContextMock } from '../logion-chain';
+import { setContextMock } from '../logion-chain/__mocks__/LogionChainMock';
 import { shallowRender, mockAccount } from '../tests';
 import { setContextUserAddress } from './UserContext';
 

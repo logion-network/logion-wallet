@@ -5,7 +5,7 @@ import React from 'react';
 import ContextualizedWallet from './ContextualizedWallet';
 import { DEFAULT_LEGAL_OFFICER } from './Types';
 import { shallowRender, mockAccount } from '../tests';
-import { setContextMock } from '../logion-chain';
+import { setContextMock } from '../logion-chain/__mocks__/LogionChainMock';
 
 test('renders', () => {
     setContextMock({

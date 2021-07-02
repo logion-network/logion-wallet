@@ -1,0 +1,51 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<div
+  className="LandingPage"
+>
+  <Container
+    fluid={true}
+  >
+    <Row
+      noGutters={false}
+    >
+      <Col>
+        <div
+          className="logo-slogan"
+        >
+          <Logo
+            size={100}
+          />
+          <p>
+            One blockchain 
+            <br />
+            to trust them all
+          </p>
+        </div>
+      </Col>
+    </Row>
+    <Row
+      noGutters={false}
+    >
+      <Col>
+        <div
+          className="messages"
+        >
+          <p
+            className="primary-message"
+          >
+            The secure blockchain
+          </p>
+          <p
+            className="secondary-message"
+          >
+            accessible in two steps
+          </p>
+        </div>
+      </Col>
+    </Row>
+    Test
+  </Container>
+</div>
+`;

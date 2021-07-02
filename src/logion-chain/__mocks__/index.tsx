@@ -1,124 +1,33 @@
-import BN from 'bn.js'
+import {
+    signAndSend as signAndSendMock,
+    createAsset as createAssetMock,
+    setAssetMetadata as setAssetMetadataMock,
+    mintAmount as mintAmountMock,
+    mintTokens as mintTokensMock,
+    replaceUnsubscriber as replaceUnsubscriberMock,
+    useLogionChain as useLogionChainMock,
+    isExtensionAvailable as isExtensionAvailableMock,
+    setRecommendedExtension as setRecommendedExtensionMock,
+    recommendedExtension as recommendedExtensionMock,
+    LogionChainContextProvider as LogionChainContextProviderMock,
+    sign as signMock,
+    isFinalized as isFinalizedMock,
+    unsubscribe as unsubscribeMock,
+} from './LogionChainMock';
 
-import { Extension } from '../Keys';
-import { toIsoString } from '../datetime';
-
-const LogionChainContextProvider = (props: any) => null;
-
-const DEFAULT_BALANCE = new BN("42000000000000000000");
-
-const DEFAULT_RECOVERY_CONFIG = {
-    isSome: true,
-    unwrap: () => {}
-}
-
-const api = {
-    tx: {
-        assets: {
-            create: () => {}
-        }
-    },
-    query: {
-        assets: {
-            account: (assetId: any, account: any) => {
-                return Promise.resolve({
-                    balance: DEFAULT_BALANCE
-                });
-            }
-        },
-        recovery: {
-            recoverable: (accountId: any) => {
-                return Promise.resolve(DEFAULT_RECOVERY_CONFIG);
-            }
-        }
-    }
-};
-
-export let signAndSendCallback = null;
-
-export function signAndSend(parameters: any) {
-    signAndSendCallback = parameters.callback;
-}
-
-export function createAsset(parameters: any) {
-    signAndSendCallback = parameters.callback;
-    return Promise.resolve({
-        assetId: "assetId",
-        unsubscriber: Promise.resolve(() => {})
-    });
-}
-
-export function setAssetMetadata(parameters: any) {
-    signAndSendCallback = parameters.callback;
-    return Promise.resolve(() => {});
-}
-
-export function mintAmount(tokens: any) {
-    return tokens;
-}
-
-export function mintTokens(parameters: any) {
-    signAndSendCallback = parameters.callback;
-    return Promise.resolve(() => {});
-}
-
-export function replaceUnsubscriber() {
-
-}
-
-let context = {
-    apiState: 'CONNECT_INIT',
-    injectedAccounts: null,
-    api,
-};
-
-export function setContextMock(value: any) {
-    context = value;
-}
-
-export function useLogionChain() {
-    return context;
-}
-
-let extensionAvailable = false;
-
-export function setExtensionAvailable(value: boolean) {
-    extensionAvailable = value;
-}
-
-export function isExtensionAvailable() {
-    return extensionAvailable;
-}
-
-let recommendedExtensionValue: Extension | null = null;
-
-export function setRecommendedExtension(value: Extension | null) {
-    recommendedExtensionValue = value;
-}
-
-export function recommendedExtension(): Extension | null {
-    return recommendedExtensionValue;
-}
-
-export {
-    LogionChainContextProvider,
-};
-
-export function sign(parameters: any) {
-    let signedOn = toIsoString(parameters.signedOn);
-    const requiredAttributes = [parameters.resource, parameters.operation, signedOn];
-    const attributes = requiredAttributes.concat(parameters.attributes);
-    return Promise.resolve(attributes.toString());
-}
-
-export function isFinalized(result: any) {
-    return true;
-}
-
-export function unsubscribe() {
-    return Promise.resolve();
-}
-
-export const DEFAULT_ASSETS_DECIMALS = 18;
-
+export const signAndSend = signAndSendMock;
+export const createAsset = createAssetMock;
+export const setAssetMetadata = setAssetMetadataMock;
+export const mintAmount = mintAmountMock;
+export const mintTokens = mintTokensMock;
+export const replaceUnsubscriber = replaceUnsubscriberMock;
+export const useLogionChain = useLogionChainMock;
+export const isExtensionAvailable = isExtensionAvailableMock;
+export const setRecommendedExtension = setRecommendedExtensionMock;
+export const recommendedExtension = recommendedExtensionMock;
+export const LogionChainContextProvider = LogionChainContextProviderMock;
+export const sign = signMock;
+export const isFinalized = isFinalizedMock;
+export const unsubscribe = unsubscribeMock;
+export const DEFAULT_ASSETS_DECIMALS = jest.requireActual("../Assets").DEFAULT_ASSETS_DECIMALS;
 export const tokensFromBalance = jest.requireActual("../Assets").tokensFromBalance;
