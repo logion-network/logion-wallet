@@ -17,29 +17,13 @@ exports[`renders 1`] = `
     <Unknown
       control={
         Object {
-          "controllerSubjectRef": Object {
-            "current": Re {
-              "observers": Array [],
-            },
-          },
           "defaultValuesRef": Object {
             "current": Object {},
           },
           "fieldArrayDefaultValuesRef": Object {
             "current": Object {},
           },
-          "fieldArrayNamesRef": Object {
-            "current": Set {},
-          },
-          "fieldArraySubjectRef": Object {
-            "current": Re {
-              "observers": Array [],
-            },
-          },
           "fieldsRef": Object {
-            "current": Object {},
-          },
-          "fieldsWithValidationRef": Object {
             "current": Object {},
           },
           "formStateRef": Object {
@@ -56,17 +40,18 @@ exports[`renders 1`] = `
               "touchedFields": Object {},
             },
           },
-          "formStateSubjectRef": Object {
-            "current": Re {
-              "observers": Array [],
-            },
-          },
           "getIsDirty": [Function],
           "inFieldArrayActionRef": Object {
             "current": false,
           },
-          "isWatchAllRef": Object {
-            "current": false,
+          "namesRef": Object {
+            "current": Object {
+              "array": Set {},
+              "mount": Set {},
+              "unMount": Set {},
+              "watch": Set {},
+              "watchAll": false,
+            },
           },
           "readFormStateRef": Object {
             "current": Object {
@@ -80,19 +65,25 @@ exports[`renders 1`] = `
           },
           "register": [Function],
           "shouldUnmount": undefined,
-          "unregister": [Function],
-          "validFieldsRef": Object {
-            "current": Object {},
-          },
-          "watchFieldsRef": Object {
-            "current": Set {},
-          },
-          "watchInternal": [Function],
-          "watchSubjectRef": Object {
-            "current": Re {
-              "observers": Array [],
+          "subjectsRef": Object {
+            "current": Object {
+              "array": ke {
+                "observers": Array [],
+              },
+              "control": ke {
+                "observers": Array [],
+              },
+              "state": ke {
+                "observers": Array [],
+              },
+              "watch": ke {
+                "observers": Array [],
+              },
             },
           },
+          "unregister": [Function],
+          "updateIsValid": [Function],
+          "watchInternal": [Function],
         }
       }
       defaultValue=""
@@ -129,29 +120,13 @@ exports[`renders 1`] = `
     <Unknown
       control={
         Object {
-          "controllerSubjectRef": Object {
-            "current": Re {
-              "observers": Array [],
-            },
-          },
           "defaultValuesRef": Object {
             "current": Object {},
           },
           "fieldArrayDefaultValuesRef": Object {
             "current": Object {},
           },
-          "fieldArrayNamesRef": Object {
-            "current": Set {},
-          },
-          "fieldArraySubjectRef": Object {
-            "current": Re {
-              "observers": Array [],
-            },
-          },
           "fieldsRef": Object {
-            "current": Object {},
-          },
-          "fieldsWithValidationRef": Object {
             "current": Object {},
           },
           "formStateRef": Object {
@@ -168,17 +143,18 @@ exports[`renders 1`] = `
               "touchedFields": Object {},
             },
           },
-          "formStateSubjectRef": Object {
-            "current": Re {
-              "observers": Array [],
-            },
-          },
           "getIsDirty": [Function],
           "inFieldArrayActionRef": Object {
             "current": false,
           },
-          "isWatchAllRef": Object {
-            "current": false,
+          "namesRef": Object {
+            "current": Object {
+              "array": Set {},
+              "mount": Set {},
+              "unMount": Set {},
+              "watch": Set {},
+              "watchAll": false,
+            },
           },
           "readFormStateRef": Object {
             "current": Object {
@@ -192,22 +168,27 @@ exports[`renders 1`] = `
           },
           "register": [Function],
           "shouldUnmount": undefined,
-          "unregister": [Function],
-          "validFieldsRef": Object {
-            "current": Object {},
-          },
-          "watchFieldsRef": Object {
-            "current": Set {},
-          },
-          "watchInternal": [Function],
-          "watchSubjectRef": Object {
-            "current": Re {
-              "observers": Array [],
+          "subjectsRef": Object {
+            "current": Object {
+              "array": ke {
+                "observers": Array [],
+              },
+              "control": ke {
+                "observers": Array [],
+              },
+              "state": ke {
+                "observers": Array [],
+              },
+              "watch": ke {
+                "observers": Array [],
+              },
             },
           },
+          "unregister": [Function],
+          "updateIsValid": [Function],
+          "watchInternal": [Function],
         }
       }
-      defaultValue=""
       name="bars"
       render={[Function]}
       rules={

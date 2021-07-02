@@ -83,7 +83,6 @@ export default function CreateTokenizationRequest(props: Props) {
                 <Controller
                     name="bars"
                     control={control}
-                    defaultValue=""
                     rules={{
                         required: 'The # of bars is required',
                         min: {

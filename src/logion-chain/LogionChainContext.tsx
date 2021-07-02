@@ -83,6 +83,7 @@ type ActionType =
     | 'START_HEADER_CONSUMPTION'
     | 'SET_LAST_HEADER'
     | 'HEADER_CONSUMPTION_STARTED'
+    | 'START_INJECTED_ACCOUNTS_CONSUMPTION'
     | 'INJECTED_ACCOUNTS_CONSUMPTION_STARTED'
     | 'SET_INJECTED_ACCOUNTS'
     | 'SET_NODE_METADATA'
@@ -128,12 +129,15 @@ const reducer: Reducer<LogionChainContextType, Action> = (state: LogionChainCont
 
         case 'START_HEADER_CONSUMPTION':
             return { ...state, headerConsumption: 'STARTING' };
-            
+
         case 'HEADER_CONSUMPTION_STARTED':
             return { ...state, headerConsumption: 'STARTED' };
 
         case 'SET_LAST_HEADER':
             return { ...state, lastHeader: action.lastHeader!, fetchExtrinsics: spec => fetchExtrinsics({...spec, api: state.api! }) };
+
+        case 'START_INJECTED_ACCOUNTS_CONSUMPTION':
+            return { ...state, injectedAccountsConsumptionState: 'STARTING' };
 
         case 'INJECTED_ACCOUNTS_CONSUMPTION_STARTED':
             return { ...state, injectedAccountsConsumptionState: 'STARTED' };
@@ -226,6 +230,8 @@ function consumeHeaders(state: LogionChainContextType, dispatch: React.Dispatch<
 
 async function consumeInjectedAccounts(state: LogionChainContextType, dispatch: React.Dispatch<Action>) {
     if(state.injectedAccountsConsumptionState === 'PENDING') {
+        dispatch({type: 'START_INJECTED_ACCOUNTS_CONSUMPTION'});
+    } else if(state.injectedAccountsConsumptionState === 'STARTING') {
         dispatch({type: 'INJECTED_ACCOUNTS_CONSUMPTION_STARTED'});
         const register = await enableExtensions(state.appName);
         dispatch({type: 'EXTENSIONS_ENABLED'});
@@ -246,6 +252,8 @@ export function forceKeyringLoad() {
     keyringLoaded = false;
 }
 
+let timeout: NodeJS.Timeout | null = null;
+
 const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX.Element => {
     if(!keyringLoaded) {
         keyringLoaded = true;
@@ -263,13 +271,17 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
     connect(state, dispatch);
     consumeEvents(state, dispatch);
     consumeHeaders(state, dispatch);
-    consumeInjectedAccounts(state, dispatch);
+
+    if(timeout !== null) {
+        clearTimeout(timeout);
+    }
+    timeout = setTimeout(() => consumeInjectedAccounts(state, dispatch), 100);
 
     return <LogionChainContext.Provider value={state}>
         {props.children}
     </LogionChainContext.Provider>;
 };
 
-const useLogionChain = () => ({ ...useContext(LogionChainContext) });
+const useLogionChain = () => useContext(LogionChainContext);
 
 export { LogionChainContextProvider, useLogionChain };
