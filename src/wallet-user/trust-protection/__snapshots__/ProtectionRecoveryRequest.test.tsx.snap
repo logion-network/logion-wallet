@@ -72,6 +72,7 @@ exports[`activated protection request 1`] = `
   mainTitle="My Logion Trust Protection"
   primaryAreaChildren={
     <Frame
+      className="ProtectionRecoveryRequest"
       colors={
         Object {
           "accounts": Object {
@@ -124,8 +125,14 @@ exports[`activated protection request 1`] = `
         }
       }
     >
-      <Alert
-        variant="success"
+      <div
+        className="alert-activated"
+        style={
+          Object {
+            "borderColor": "#37ad4b",
+            "color": "#37ad4b",
+          }
+        }
       >
         <Icon
           colorThemeType="dark"
@@ -135,8 +142,8 @@ exports[`activated protection request 1`] = `
             }
           }
         />
-         Your Logion Trust Protection is active.
-      </Alert>
+         Your Logion Trust Protection is active
+      </div>
       <LegalOfficers
         colorTheme={
           Object {
@@ -298,6 +305,7 @@ exports[`activated recovery request 1`] = `
   mainTitle="Recovery"
   primaryAreaChildren={
     <Frame
+      className="ProtectionRecoveryRequest"
       colors={
         Object {
           "accounts": Object {
@@ -518,6 +526,7 @@ exports[`pending protection request 1`] = `
   mainTitle="My Logion Trust Protection"
   primaryAreaChildren={
     <Frame
+      className="ProtectionRecoveryRequest"
       colors={
         Object {
           "accounts": Object {
@@ -743,6 +752,7 @@ exports[`pending recovery request 1`] = `
   mainTitle="Recovery"
   primaryAreaChildren={
     <Frame
+      className="ProtectionRecoveryRequest"
       colors={
         Object {
           "accounts": Object {
@@ -968,6 +978,7 @@ exports[`protection request 1`] = `
   mainTitle="My Logion Trust Protection"
   primaryAreaChildren={
     <Frame
+      className="ProtectionRecoveryRequest"
       colors={
         Object {
           "accounts": Object {
@@ -1186,6 +1197,7 @@ exports[`recovery request 1`] = `
   mainTitle="Recovery"
   primaryAreaChildren={
     <Frame
+      className="ProtectionRecoveryRequest"
       colors={
         Object {
           "accounts": Object {

@@ -62,10 +62,12 @@ export default function Select(props: Props) {
     };
 
     const color = props.statusColor === undefined ? BLUE : props.statusColor;
+    const caretVisibility = props.disabled !== undefined && props.disabled ? "hidden" : "visible";
     const customCss = `
     .Select .Select__indicator,
     .Select .Select__indicator:hover {
         color: ${color};
+        visibility: ${caretVisibility};
     }
     `;
 

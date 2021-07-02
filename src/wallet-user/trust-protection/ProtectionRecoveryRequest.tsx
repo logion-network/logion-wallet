@@ -17,12 +17,14 @@ import Frame from "../../component/Frame";
 import Alert from '../../component/Alert';
 import Button from '../../component/Button';
 import Icon from '../../component/Icon';
+import { GREEN } from '../../component/ColorTheme';
 import { useRootContext } from '../../RootContext';
 
 import { useUserContext } from '../UserContext';
 
 import { legalOfficerByAddress, checkActivation } from "./Model";
 import LegalOfficers from './LegalOfficers';
+import './ProtectionRecoveryRequest.css';
 
 export type ProtectionRecoveryRequestStatus = 'pending' | 'accepted' | 'activated';
 
@@ -134,11 +136,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
                 </Alert>
             );
         } else {
-            alert = (
-                <Alert variant="success">
-                    <Icon colorThemeType={ colorTheme.type } icon={{id: 'accepted'}} /> Your Logion Trust Protection is active.
-                </Alert>
-            );
+            alert = null;
         }
     } else {
         alert = null;
@@ -154,9 +152,23 @@ export default function ProtectionRecoveryRequest(props: Props) {
             primaryPaneWidth={ 8 }
             primaryAreaChildren={
                 <Frame
+                    className="ProtectionRecoveryRequest"
                     colors={ colorTheme }
                 >
                     { alert }
+
+                    {
+                        props.type === 'activated' && !confirmButtonEnabled && !props.request.isRecovery &&
+                        <div
+                            className="alert-activated"
+                            style={{
+                                color: GREEN,
+                                borderColor: GREEN,
+                            }}
+                        >
+                            <Icon colorThemeType={ colorTheme.type } icon={{id: 'accepted'}} /> Your Logion Trust Protection is active
+                        </div>
+                    }
 
                     {
                         props.type === 'accepted' && activationResult === null &&

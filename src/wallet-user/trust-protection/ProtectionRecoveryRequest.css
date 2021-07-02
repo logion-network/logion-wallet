@@ -1,0 +1,8 @@
+.ProtectionRecoveryRequest .alert-activated {
+    font-weight: bold;
+    padding: 20px;
+    border: 1px solid green;
+    border-radius: 6px;
+    text-align: center;
+    width: 500px;
+}
