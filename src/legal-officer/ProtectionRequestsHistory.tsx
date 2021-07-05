@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Table from 'react-bootstrap/Table';
+import Table from '../component/Table';
 
 import { useRootContext } from '../RootContext';
 
@@ -29,30 +29,31 @@ export default function ProtectionRequestsHistory(props: Props) {
     return (
         <>
             <h2>History</h2>
-            <Table striped bordered responsive>
-                <thead>
-                    <tr>
-                        <th>Requester</th>
-                        <th>Firstname</th>
-                        <th>Lastname</th>
-                        <th>Decision</th>
-                        <th>Timestamp</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <Table
+                columns={[
                     {
-                        requests.map(request => (
-                            <tr key={request.id}>
-                                <td>{ request.requesterAddress }</td>
-                                <td>{ request.userIdentity.firstName }</td>
-                                <td>{ request.userIdentity.lastName }</td>
-                                <td>{ decision(currentAddress, request.decisions)!.status }</td>
-                                <td>{ decision(currentAddress, request.decisions)!.decisionOn }</td>
-                            </tr>
-                        ))
+                        header: "Requester",
+                        render: request => request.requesterAddress,
+                    },
+                    {
+                        header: "Firstname",
+                        render: request => request.userIdentity.firstName,
+                    },
+                    {
+                        header: "Lastname",
+                        render: request => request.userIdentity.lastName,
+                    },
+                    {
+                        header: "Decision",
+                        render: request => decision(currentAddress, request.decisions)!.status,
+                    },
+                    {
+                        header: "Timestamp",
+                        render: request => decision(currentAddress, request.decisions)!.decisionOn,
                     }
-                </tbody>
-            </Table>
+                ]}
+                data={ requests }
+            />
         </>
     );
 }

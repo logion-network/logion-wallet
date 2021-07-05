@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders 1`] = `
-<ContentPane
+<FullWidthPane
   addresses={
     Object {
       "addresses": Array [
@@ -70,125 +70,79 @@ exports[`renders 1`] = `
     }
   }
   mainTitle="Recovery requests"
-  primaryAreaChildren={
-    <Frame
-      colors={
-        Object {
-          "accounts": Object {
-            "background": "eff3fe",
-            "foreground": "#000000",
-            "hintColor": "#00000099",
-            "iconBackground": "#3b6cf4",
-            "legalOfficerIcon": Object {
-              "category": "legal-officer",
-              "id": "account-shield",
-            },
-          },
-          "bottomMenuItems": Object {
-            "iconGradient": Object {
-              "from": "#7a90cb",
-              "to": "#3b6cf4",
-            },
-          },
-          "buttons": Object {
-            "secondaryBackgroundColor": "#eff3fe",
-          },
-          "dashboard": Object {
-            "background": "#eff3fe",
-            "foreground": "#000000",
-          },
-          "frame": Object {
-            "background": "#ffffff",
-            "foreground": "#000000",
-            "link": "#3b6cf426",
-          },
-          "select": Object {
-            "background": "#d8e2fd",
-            "foreground": "#000000",
-            "menuBackgroundColor": "#d8e2fd",
-            "selectedOptionBackgroundColor": "#ffffff33",
-          },
-          "shadowColor": "#3b6cf41a",
-          "sidebar": Object {
-            "activeItemBackground": "#d8e2fd",
-            "background": "#ffffff",
-            "foreground": "#000000",
-          },
-          "topMenuItems": Object {
-            "iconGradient": Object {
-              "from": "#3b6cf4",
-              "to": "#6050dc",
-            },
-          },
-          "type": "light",
-        }
-      }
-    >
-      <RefreshTokenizationRequestsButton />
-      <PendingProtectionRequests
-        recovery={true}
-      />
-    </Frame>
-  }
-  secondaryAreaChildren={
-    <Frame
-      colors={
-        Object {
-          "accounts": Object {
-            "background": "eff3fe",
-            "foreground": "#000000",
-            "hintColor": "#00000099",
-            "iconBackground": "#3b6cf4",
-            "legalOfficerIcon": Object {
-              "category": "legal-officer",
-              "id": "account-shield",
-            },
-          },
-          "bottomMenuItems": Object {
-            "iconGradient": Object {
-              "from": "#7a90cb",
-              "to": "#3b6cf4",
-            },
-          },
-          "buttons": Object {
-            "secondaryBackgroundColor": "#eff3fe",
-          },
-          "dashboard": Object {
-            "background": "#eff3fe",
-            "foreground": "#000000",
-          },
-          "frame": Object {
-            "background": "#ffffff",
-            "foreground": "#000000",
-            "link": "#3b6cf426",
-          },
-          "select": Object {
-            "background": "#d8e2fd",
-            "foreground": "#000000",
-            "menuBackgroundColor": "#d8e2fd",
-            "selectedOptionBackgroundColor": "#ffffff33",
-          },
-          "shadowColor": "#3b6cf41a",
-          "sidebar": Object {
-            "activeItemBackground": "#d8e2fd",
-            "background": "#ffffff",
-            "foreground": "#000000",
-          },
-          "topMenuItems": Object {
-            "iconGradient": Object {
-              "from": "#3b6cf4",
-              "to": "#6050dc",
-            },
-          },
-          "type": "light",
-        }
-      }
-    >
-      <ProtectionRequestsHistory
-        recovery={true}
-      />
-    </Frame>
-  }
   selectAddress={[MockFunction]}
-/>
+>
+  <Frame
+    colors={
+      Object {
+        "accounts": Object {
+          "background": "eff3fe",
+          "foreground": "#000000",
+          "hintColor": "#00000099",
+          "iconBackground": "#3b6cf4",
+          "legalOfficerIcon": Object {
+            "category": "legal-officer",
+            "id": "account-shield",
+          },
+        },
+        "bottomMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+        },
+        "buttons": Object {
+          "secondaryBackgroundColor": "#eff3fe",
+        },
+        "dashboard": Object {
+          "background": "#eff3fe",
+          "foreground": "#000000",
+        },
+        "frame": Object {
+          "background": "#ffffff",
+          "foreground": "#000000",
+          "link": "#3b6cf426",
+        },
+        "select": Object {
+          "background": "#d8e2fd",
+          "foreground": "#000000",
+          "menuBackgroundColor": "#d8e2fd",
+          "selectedOptionBackgroundColor": "#ffffff33",
+        },
+        "shadowColor": "#3b6cf41a",
+        "sidebar": Object {
+          "activeItemBackground": "#d8e2fd",
+          "background": "#ffffff",
+          "foreground": "#000000",
+        },
+        "topMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+        },
+        "type": "light",
+      }
+    }
+  >
+    <Tabs
+      activeKey="pending"
+      onSelect={[Function]}
+      tabs={
+        Array [
+          Object {
+            "key": "pending",
+            "render": [Function],
+            "title": "Pending",
+          },
+          Object {
+            "key": "executed",
+            "render": [Function],
+            "title": "Executed",
+          },
+        ]
+      }
+    />
+  </Frame>
+</FullWidthPane>
 `;

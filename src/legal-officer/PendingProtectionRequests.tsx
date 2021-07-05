@@ -1,11 +1,11 @@
 import React, { useState, useCallback } from 'react';
 import moment from 'moment';
 
-import Table from 'react-bootstrap/Table';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
+import Table from '../component/Table';
 import Identity from '../component/Identity';
 import PostalAddress from '../component/PostalAddress';
 import { sign } from '../logion-chain';
@@ -104,40 +104,41 @@ export default function PendingProtectionRequests(props: Props) {
     return (
         <>
             <h2>Pending</h2>
-            <Table striped bordered responsive>
-                <thead>
-                    <tr>
-                        <th>Requester</th>
-                        <th>Firstname</th>
-                        <th>Lastname</th>
-                        <th>Created</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <Table
+                columns={[
                     {
-                        requests.map(request => (
-                            <tr key={request.id}>
-                                <td>{ request.requesterAddress }</td>
-                                <td>{ request.userIdentity.firstName }</td>
-                                <td>{ request.userIdentity.lastName }</td>
-                                <td>{ request.createdOn }</td>
-                                <td>
-                                    <ButtonGroup aria-label="actions">
-                                        <Button
-                                            variant="primary"
-                                            onClick={() => setReviewState({status: ReviewStatus.PENDING, request: request}) }
-                                            data-testid={`review-${request.id}`}
-                                        >
-                                            Review and proceed
-                                        </Button>
-                                    </ButtonGroup>
-                                </td>
-                            </tr>
-                        ))
+                        header: "Requester",
+                        render: request => request.requesterAddress,
+                    },
+                    {
+                        header: "Firstname",
+                        render: request => request.userIdentity.firstName,
+                    },
+                    {
+                        header: "Lastname",
+                        render: request => request.userIdentity.lastName,
+                    },
+                    {
+                        header: "Created",
+                        render: request => request.createdOn,
+                    },
+                    {
+                        header: "Action",
+                        render: request => (
+                            <ButtonGroup aria-label="actions">
+                                <Button
+                                    variant="primary"
+                                    onClick={() => setReviewState({status: ReviewStatus.PENDING, request: request}) }
+                                    data-testid={`review-${request.id}`}
+                                >
+                                    Review and proceed
+                                </Button>
+                            </ButtonGroup>
+                        ),
                     }
-                </tbody>
-            </Table>
+                ]}
+                data={ requests }
+            />
 
             {
                 reviewState.status === ReviewStatus.PENDING &&

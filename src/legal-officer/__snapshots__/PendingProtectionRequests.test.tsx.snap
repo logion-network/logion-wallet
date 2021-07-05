@@ -7,64 +7,64 @@ exports[`Renders pending requests 1`] = `
   <h2>
     Pending
   </h2>
-  <ForwardRef
-    bordered={true}
-    responsive={true}
-    striped={true}
-  >
-    <thead>
-      <tr>
-        <th>
-          Requester
-        </th>
-        <th>
-          Firstname
-        </th>
-        <th>
-          Lastname
-        </th>
-        <th>
-          Created
-        </th>
-        <th>
-          Action
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW
-        </td>
-        <td>
-          John
-        </td>
-        <td>
-          Doe
-        </td>
-        <td>
-          2021-06-10T11:40:00.000
-        </td>
-        <td>
-          <ButtonGroup
-            aria-label="actions"
-            role="group"
-            toggle={false}
-            vertical={false}
-          >
-            <Button
-              active={false}
-              data-testid="review-1"
-              disabled={false}
-              onClick={[Function]}
-              variant="primary"
-            >
-              Review and proceed
-            </Button>
-          </ButtonGroup>
-        </td>
-      </tr>
-    </tbody>
-  </ForwardRef>
+  <Table
+    columns={
+      Array [
+        Object {
+          "header": "Requester",
+          "render": [Function],
+        },
+        Object {
+          "header": "Firstname",
+          "render": [Function],
+        },
+        Object {
+          "header": "Lastname",
+          "render": [Function],
+        },
+        Object {
+          "header": "Created",
+          "render": [Function],
+        },
+        Object {
+          "header": "Action",
+          "render": [Function],
+        },
+      ]
+    }
+    data={
+      Array [
+        Object {
+          "addressToRecover": null,
+          "createdOn": "2021-06-10T11:40:00.000",
+          "decisions": Array [
+            Object {
+              "decisionOn": null,
+              "legalOfficerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "rejectReason": null,
+              "status": "PENDING",
+            },
+          ],
+          "id": "1",
+          "isRecovery": false,
+          "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+          "status": "PENDING",
+          "userIdentity": Object {
+            "email": "john.doe@logion.network",
+            "firstName": "John",
+            "lastName": "Doe",
+            "phoneNumber": "+1234",
+          },
+          "userPostalAddress": Object {
+            "city": "Liège",
+            "country": "Belgium",
+            "line1": "Place de le République Française, 10",
+            "line2": "boite 15",
+            "postalCode": "4000",
+          },
+        },
+      ]
+    }
+  />
 </React.Fragment>
 `;
