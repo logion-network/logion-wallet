@@ -1,38 +1,106 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders 1`] = `
-<ForwardRef
-  bordered={true}
-  responsive={true}
-  striped={true}
+<div
+  className="Table"
 >
-  <thead>
-    <tr>
-      <th>
+  <div
+    className="header"
+    style={
+      Object {
+        "backgroundColor": "#0c163d",
+        "color": "#ffffff",
+      }
+    }
+  >
+    <Row
+      noGutters={true}
+    >
+      <Col
+        md={6}
+      >
         Column 1
-      </th>
-      <th>
+      </Col>
+      <Col
+        md={6}
+      >
         Column 2
-      </th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        id1
-      </td>
-      <td>
-        Value 1
-      </td>
-    </tr>
-    <tr>
-      <td>
-        id2
-      </td>
-      <td>
-        Value 2
-      </td>
-    </tr>
-  </tbody>
-</ForwardRef>
+      </Col>
+    </Row>
+  </div>
+  <div
+    className="body"
+  >
+    <Row
+      noGutters={true}
+      style={
+        Object {
+          "backgroundColor": "#152665",
+          "color": "#ffffff",
+        }
+      }
+    >
+      <Col
+        md={6}
+        style={
+          Object {
+            "fontSize": undefined,
+          }
+        }
+      >
+        <Cell
+          content="id1"
+        />
+      </Col>
+      <Col
+        md={6}
+        style={
+          Object {
+            "fontSize": undefined,
+          }
+        }
+      >
+        <Cell
+          content="id1"
+          smallText={true}
+        />
+      </Col>
+    </Row>
+    <Row
+      noGutters={true}
+      style={
+        Object {
+          "backgroundColor": "#152665",
+          "color": "#ffffff",
+        }
+      }
+    >
+      <Col
+        md={6}
+        style={
+          Object {
+            "fontSize": undefined,
+          }
+        }
+      >
+        <Cell
+          content="id2"
+        />
+      </Col>
+      <Col
+        md={6}
+        style={
+          Object {
+            "fontSize": undefined,
+          }
+        }
+      >
+        <Cell
+          content="id2"
+          smallText={true}
+        />
+      </Col>
+    </Row>
+  </div>
+</div>
 `;

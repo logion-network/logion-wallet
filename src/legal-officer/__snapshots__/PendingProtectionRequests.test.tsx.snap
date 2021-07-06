@@ -8,27 +8,96 @@ exports[`Renders pending requests 1`] = `
     Pending
   </h2>
   <Table
+    colorTheme={
+      Object {
+        "accounts": Object {
+          "background": "eff3fe",
+          "foreground": "#000000",
+          "hintColor": "#00000099",
+          "iconBackground": "#3b6cf4",
+          "legalOfficerIcon": Object {
+            "category": "legal-officer",
+            "id": "account-shield",
+          },
+        },
+        "bottomMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+        },
+        "buttons": Object {
+          "secondaryBackgroundColor": "#eff3fe",
+        },
+        "dashboard": Object {
+          "background": "#eff3fe",
+          "foreground": "#000000",
+        },
+        "frame": Object {
+          "background": "#ffffff",
+          "foreground": "#000000",
+          "link": "#3b6cf426",
+        },
+        "select": Object {
+          "background": "#ffffff",
+          "foreground": "#000000",
+          "menuBackgroundColor": "#ffffff",
+          "selectedOptionBackgroundColor": "#ffffff",
+        },
+        "shadowColor": "#3b6cf41a",
+        "sidebar": Object {
+          "activeItemBackground": "#d8e2fd",
+          "background": "#ffffff",
+          "foreground": "#000000",
+        },
+        "table": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+          "header": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+          "row": Object {
+            "background": "#152665",
+            "foreground": "#ffffff",
+          },
+        },
+        "topMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+        },
+        "type": "light",
+      }
+    }
     columns={
       Array [
         Object {
           "header": "Requester",
           "render": [Function],
+          "width": 4,
         },
         Object {
           "header": "Firstname",
           "render": [Function],
+          "width": 2,
         },
         Object {
           "header": "Lastname",
           "render": [Function],
+          "width": 2,
         },
         Object {
           "header": "Created",
           "render": [Function],
+          "smallerText": true,
+          "width": 2,
         },
         Object {
           "header": "Action",
           "render": [Function],
+          "width": 2,
         },
       ]
     }

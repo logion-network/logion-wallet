@@ -60,6 +60,18 @@ exports[`renders 1`] = `
         "background": "#ffffff",
         "foreground": "#000000",
       },
+      "table": Object {
+        "background": "#ffffff",
+        "foreground": "#000000",
+        "header": Object {
+          "background": "#ffffff",
+          "foreground": "#000000b3",
+        },
+        "row": Object {
+          "background": "#eff3fe",
+          "foreground": "#000000",
+        },
+      },
       "topMenuItems": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
@@ -113,6 +125,18 @@ exports[`renders 1`] = `
             "activeItemBackground": "#d8e2fd",
             "background": "#ffffff",
             "foreground": "#000000",
+          },
+          "table": Object {
+            "background": "#ffffff",
+            "foreground": "#000000",
+            "header": Object {
+              "background": "#ffffff",
+              "foreground": "#000000b3",
+            },
+            "row": Object {
+              "background": "#eff3fe",
+              "foreground": "#000000",
+            },
           },
           "topMenuItems": Object {
             "iconGradient": Object {
@@ -171,6 +195,18 @@ exports[`renders 1`] = `
             "activeItemBackground": "#d8e2fd",
             "background": "#ffffff",
             "foreground": "#000000",
+          },
+          "table": Object {
+            "background": "#ffffff",
+            "foreground": "#000000",
+            "header": Object {
+              "background": "#ffffff",
+              "foreground": "#000000b3",
+            },
+            "row": Object {
+              "background": "#eff3fe",
+              "foreground": "#000000",
+            },
           },
           "topMenuItems": Object {
             "iconGradient": Object {

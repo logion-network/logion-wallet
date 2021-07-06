@@ -65,4 +65,16 @@ export const COLOR_THEME: ColorTheme = {
         menuBackgroundColor: '#ffffff',
         selectedOptionBackgroundColor: '#ffffff',
     },
+    table: {
+        background: '#0c163d',
+        foreground: '#ffffff',
+        header: {
+            background: '#0c163d',
+            foreground: '#ffffff',
+        },
+        row: {
+            background: '#152665',
+            foreground: '#ffffff',
+        }
+    }
 };

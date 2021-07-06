@@ -3,7 +3,7 @@ import { Icon as IconType, ColorThemeType } from './ColorTheme';
 
 export interface Props {
     icon: IconType,
-    colorThemeType: ColorThemeType,
+    colorThemeType?: ColorThemeType,
 }
 
 export default function Icon(props: Props) {

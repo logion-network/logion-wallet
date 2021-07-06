@@ -60,6 +60,18 @@ exports[`renders 1`] = `
         "background": "#152665",
         "foreground": "#ffffff",
       },
+      "table": Object {
+        "background": "#0c163d",
+        "foreground": "#ffffff",
+        "header": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "row": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+        },
+      },
       "topMenuItems": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
@@ -114,6 +126,18 @@ exports[`renders 1`] = `
             "activeItemBackground": "#ffffff33",
             "background": "#152665",
             "foreground": "#ffffff",
+          },
+          "table": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+            "header": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
+            "row": Object {
+              "background": "#152665",
+              "foreground": "#ffffff",
+            },
           },
           "topMenuItems": Object {
             "iconGradient": Object {
@@ -170,6 +194,18 @@ exports[`renders 1`] = `
               "activeItemBackground": "#ffffff33",
               "background": "#152665",
               "foreground": "#ffffff",
+            },
+            "table": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+              "header": Object {
+                "background": "#0c163d",
+                "foreground": "#ffffff",
+              },
+              "row": Object {
+                "background": "#152665",
+                "foreground": "#ffffff",
+              },
             },
             "topMenuItems": Object {
               "iconGradient": Object {
@@ -295,6 +331,18 @@ France",
             "activeItemBackground": "#ffffff33",
             "background": "#152665",
             "foreground": "#ffffff",
+          },
+          "table": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+            "header": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
+            "row": Object {
+              "background": "#152665",
+              "foreground": "#ffffff",
+            },
           },
           "topMenuItems": Object {
             "iconGradient": Object {
@@ -1362,6 +1410,18 @@ France",
               "activeItemBackground": "#ffffff33",
               "background": "#152665",
               "foreground": "#ffffff",
+            },
+            "table": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+              "header": Object {
+                "background": "#0c163d",
+                "foreground": "#ffffff",
+              },
+              "row": Object {
+                "background": "#152665",
+                "foreground": "#ffffff",
+              },
             },
             "topMenuItems": Object {
               "iconGradient": Object {

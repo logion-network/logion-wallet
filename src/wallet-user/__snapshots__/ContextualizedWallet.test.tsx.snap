@@ -44,6 +44,18 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
         "background": "#152665",
         "foreground": "#ffffff",
       },
+      "table": Object {
+        "background": "#0c163d",
+        "foreground": "#ffffff",
+        "header": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "row": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+        },
+      },
       "topMenuItems": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
@@ -198,6 +210,18 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
           "activeItemBackground": "#ffffff33",
           "background": "#152665",
           "foreground": "#ffffff",
+        },
+        "table": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+          "header": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+          "row": Object {
+            "background": "#152665",
+            "foreground": "#ffffff",
+          },
         },
         "topMenuItems": Object {
           "iconGradient": Object {
@@ -265,6 +289,18 @@ exports[`Given connected, when rendering, then show account, no connect button a
         "background": "#152665",
         "foreground": "#ffffff",
       },
+      "table": Object {
+        "background": "#0c163d",
+        "foreground": "#ffffff",
+        "header": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "row": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+        },
+      },
       "topMenuItems": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
@@ -419,6 +455,18 @@ exports[`Given connected, when rendering, then show account, no connect button a
           "activeItemBackground": "#ffffff33",
           "background": "#152665",
           "foreground": "#ffffff",
+        },
+        "table": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+          "header": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+          "row": Object {
+            "background": "#152665",
+            "foreground": "#ffffff",
+          },
         },
         "topMenuItems": Object {
           "iconGradient": Object {
@@ -486,6 +534,18 @@ exports[`Given connecting, when rendering, then show account, no button, no node
         "background": "#152665",
         "foreground": "#ffffff",
       },
+      "table": Object {
+        "background": "#0c163d",
+        "foreground": "#ffffff",
+        "header": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "row": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+        },
+      },
       "topMenuItems": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
@@ -639,6 +699,18 @@ exports[`Given connecting, when rendering, then show account, no button, no node
           "activeItemBackground": "#ffffff33",
           "background": "#152665",
           "foreground": "#ffffff",
+        },
+        "table": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+          "header": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+          "row": Object {
+            "background": "#152665",
+            "foreground": "#ffffff",
+          },
         },
         "topMenuItems": Object {
           "iconGradient": Object {
@@ -706,6 +778,18 @@ exports[`Given connection error, when rendering, then show account, no button, n
         "background": "#152665",
         "foreground": "#ffffff",
       },
+      "table": Object {
+        "background": "#0c163d",
+        "foreground": "#ffffff",
+        "header": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "row": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+        },
+      },
       "topMenuItems": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
@@ -859,6 +943,18 @@ exports[`Given connection error, when rendering, then show account, no button, n
           "activeItemBackground": "#ffffff33",
           "background": "#152665",
           "foreground": "#ffffff",
+        },
+        "table": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+          "header": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+          "row": Object {
+            "background": "#152665",
+            "foreground": "#ffffff",
+          },
         },
         "topMenuItems": Object {
           "iconGradient": Object {
@@ -926,6 +1022,18 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
         "background": "#152665",
         "foreground": "#ffffff",
       },
+      "table": Object {
+        "background": "#0c163d",
+        "foreground": "#ffffff",
+        "header": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "row": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+        },
+      },
       "topMenuItems": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
@@ -1080,6 +1188,18 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
           "background": "#152665",
           "foreground": "#ffffff",
         },
+        "table": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+          "header": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+          "row": Object {
+            "background": "#152665",
+            "foreground": "#ffffff",
+          },
+        },
         "topMenuItems": Object {
           "iconGradient": Object {
             "from": "#3b6cf4",
@@ -1145,6 +1265,18 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
         "activeItemBackground": "#ffffff33",
         "background": "#152665",
         "foreground": "#ffffff",
+      },
+      "table": Object {
+        "background": "#0c163d",
+        "foreground": "#ffffff",
+        "header": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "row": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+        },
       },
       "topMenuItems": Object {
         "iconGradient": Object {
@@ -1300,6 +1432,18 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
           "activeItemBackground": "#ffffff33",
           "background": "#152665",
           "foreground": "#ffffff",
+        },
+        "table": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+          "header": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+          "row": Object {
+            "background": "#152665",
+            "foreground": "#ffffff",
+          },
         },
         "topMenuItems": Object {
           "iconGradient": Object {

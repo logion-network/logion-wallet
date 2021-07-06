@@ -102,4 +102,16 @@ export const LIGHT_MODE: ColorTheme = {
         menuBackgroundColor: '#d8e2fd',
         selectedOptionBackgroundColor: rgbaToHex('#ffffff', 0.20),
     },
+    table: {
+        background: '#ffffff',
+        foreground: '#000000',
+        header: {
+            background: '#ffffff',
+            foreground: rgbaToHex('#000000', 0.70),
+        },
+        row: {
+            background: '#eff3fe',
+            foreground: '#000000',
+        }
+    }
 };

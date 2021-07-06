@@ -54,6 +54,18 @@ exports[`renders with custom space above 1`] = `
         "background": "#ffffff",
         "foreground": "#000000",
       },
+      "table": Object {
+        "background": "#0c163d",
+        "foreground": "#ffffff",
+        "header": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "row": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+        },
+      },
       "topMenuItems": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
@@ -136,6 +148,18 @@ exports[`renders with default space above 1`] = `
         "activeItemBackground": "#d8e2fd",
         "background": "#ffffff",
         "foreground": "#000000",
+      },
+      "table": Object {
+        "background": "#0c163d",
+        "foreground": "#ffffff",
+        "header": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "row": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+        },
       },
       "topMenuItems": Object {
         "iconGradient": Object {

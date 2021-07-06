@@ -6,7 +6,7 @@ import React from 'react';
 import ProtectedUsers from "./ProtectedUsers";
 import { shallowRender } from '../tests';
 import moment from "moment";
-import { setActivatedProtectionRequests } from "./LegalOfficerContext";
+import { setActivatedProtectionRequests } from "./__mocks__/LegalOfficerContextMock";
 
 test('renders one row', () => {
     setActivatedProtectionRequests([

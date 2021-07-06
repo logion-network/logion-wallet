@@ -4,7 +4,7 @@ jest.mock('./Model');
 
 import { shallowRender } from '../tests';
 import PendingTokenizationRequests from './PendingTokenizationRequests';
-import { setPendingRequests, setRejectRequest } from './LegalOfficerContext';
+import { setPendingRequests, setRejectRequest } from './__mocks__/LegalOfficerContextMock';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 

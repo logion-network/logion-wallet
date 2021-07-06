@@ -4,7 +4,7 @@ jest.mock('./Model');
 
 import { shallowRender } from '../tests';
 import PendingProtectionRequests from './PendingProtectionRequests';
-import { setPendingProtectionRequests } from './LegalOfficerContext';
+import { setPendingProtectionRequests } from './__mocks__/LegalOfficerContextMock';
 import { setAcceptProtectionRequest, setRejectProtectionRequest } from './Model';
 import { ProtectionRequest, DEFAULT_LEGAL_OFFICER } from './Types';
 import { render, screen, waitFor } from '@testing-library/react';
@@ -13,13 +13,13 @@ import { ISO_DATETIME_PATTERN } from '../logion-chain/datetime';
 import { PENDING_PROTECTION_REQUESTS } from './TestData';
 
 test("Renders null with no data", () => {
-    const tree = shallowRender(<PendingProtectionRequests />);
+    const tree = shallowRender(<PendingProtectionRequests recovery={ false } />);
     expect(tree).toMatchSnapshot();
 });
 
 test("Renders pending requests", () => {
     setPendingProtectionRequests(PENDING_PROTECTION_REQUESTS);
-    const tree = shallowRender(<PendingProtectionRequests />);
+    const tree = shallowRender(<PendingProtectionRequests recovery={ false } />);
     expect(tree).toMatchSnapshot();
 });
 
@@ -30,7 +30,7 @@ test("Click on later closes dialog", async () => {
     const acceptCallback = jest.fn();
     setAcceptProtectionRequest(acceptCallback);
 
-    render(<PendingProtectionRequests />);
+    render(<PendingProtectionRequests recovery={ false } />);
     const reviewButton = screen.getByTestId("review-1");
     userEvent.click(reviewButton);
 
@@ -51,7 +51,7 @@ test("Review and reject request", async () => {
     const acceptCallback = jest.fn();
     setAcceptProtectionRequest(acceptCallback);
 
-    render(<PendingProtectionRequests />);
+    render(<PendingProtectionRequests recovery={ false } />);
     const reviewButton = screen.getByTestId("review-1");
     userEvent.click(reviewButton);
 
@@ -90,7 +90,7 @@ test("Review and accept request", async () => {
     const acceptCallback = jest.fn();
     setAcceptProtectionRequest(acceptCallback);
 
-    render(<PendingProtectionRequests />);
+    render(<PendingProtectionRequests recovery={ false } />);
     const reviewButton = screen.getByTestId("review-1");
     userEvent.click(reviewButton);
 

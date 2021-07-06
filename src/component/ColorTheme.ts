@@ -19,6 +19,11 @@ export interface SelectColors extends BackgroundAndForegroundColors {
     selectedOptionBackgroundColor: string,
 }
 
+export interface TableColors extends BackgroundAndForegroundColors {
+    header: BackgroundAndForegroundColors,
+    row: BackgroundAndForegroundColors,
+}
+
 export interface ColorTheme {
     type: ColorThemeType,
     dashboard: BackgroundAndForegroundColors,
@@ -30,6 +35,7 @@ export interface ColorTheme {
     shadowColor: string,
     buttons: ButtonsColors,
     select: SelectColors,
+    table: TableColors,
 }
 
 export interface FrameColors extends BackgroundAndForegroundColors {

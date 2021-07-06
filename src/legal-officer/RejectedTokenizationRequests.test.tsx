@@ -2,7 +2,7 @@ jest.mock('./LegalOfficerContext');
 
 import { shallowRender } from '../tests';
 import RejectedTokenizationRequests from './RejectedTokenizationRequests';
-import { setRejectedRequests } from './LegalOfficerContext';
+import { setRejectedRequests } from './__mocks__/LegalOfficerContextMock';
 
 test("Renders null with no data", () => {
     const tree = shallowRender(<RejectedTokenizationRequests />);

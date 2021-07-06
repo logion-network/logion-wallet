@@ -48,4 +48,16 @@ export const DARK_MODE: ColorTheme = {
         menuBackgroundColor: '#152665',
         selectedOptionBackgroundColor: rgbaToHex('#ffffff', 0.20),
     },
+    table: {
+        background: '#0c163d',
+        foreground: '#ffffff',
+        header: {
+            background: '#0c163d',
+            foreground: '#ffffff',
+        },
+        row: {
+            background: '#152665',
+            foreground: '#ffffff',
+        }
+    }
 };

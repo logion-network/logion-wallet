@@ -5,7 +5,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-import Table from '../component/Table';
+import Table, { Cell } from '../component/Table';
 import Identity from '../component/Identity';
 import PostalAddress from '../component/PostalAddress';
 import { sign } from '../logion-chain';
@@ -35,7 +35,7 @@ export interface Props {
 
 export default function PendingProtectionRequests(props: Props) {
     const { currentAddress } = useRootContext();
-    const { pendingProtectionRequests, refreshRequests, pendingRecoveryRequests } = useLegalOfficerContext();
+    const { pendingProtectionRequests, refreshRequests, pendingRecoveryRequests, colorTheme } = useLegalOfficerContext();
     const [ rejectReason, setRejectReason ] = useState<string>("");
     const [ reviewState, setReviewState ] = useState<ReviewState>(NO_REVIEW_STATE);
 
@@ -108,22 +108,28 @@ export default function PendingProtectionRequests(props: Props) {
                 columns={[
                     {
                         header: "Requester",
-                        render: request => request.requesterAddress,
+                        render: request => <Cell content={ request.requesterAddress }/>,
+                        width: 4,
                     },
                     {
                         header: "Firstname",
-                        render: request => request.userIdentity.firstName,
+                        render: request => <Cell content={ request.userIdentity.firstName }/>,
+                        width: 2,
                     },
                     {
                         header: "Lastname",
-                        render: request => request.userIdentity.lastName,
+                        render: request => <Cell content={ request.userIdentity.lastName }/>,
+                        width: 2,
                     },
                     {
                         header: "Created",
-                        render: request => request.createdOn,
+                        render: request => <Cell content={ request.createdOn } smallText/>,
+                        width: 2,
+                        smallerText: true,
                     },
                     {
                         header: "Action",
+                        width: 2,
                         render: request => (
                             <ButtonGroup aria-label="actions">
                                 <Button
@@ -138,6 +144,7 @@ export default function PendingProtectionRequests(props: Props) {
                     }
                 ]}
                 data={ requests }
+                colorTheme={ colorTheme }
             />
 
             {
