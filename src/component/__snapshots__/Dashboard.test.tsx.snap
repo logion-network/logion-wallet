@@ -41,12 +41,6 @@ exports[`renders Dashboard 1`] = `
         background-color: #eff3fe;
     }
 
-    .Dashboard .form-control,
-    .Dashboard .form-control[readonly] {
-        background-color: #eff3fe;
-        color: #000000;
-    }
-
     .Dashboard a {
         color: #000000;
     }

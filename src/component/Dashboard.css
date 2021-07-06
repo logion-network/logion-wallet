@@ -90,36 +90,3 @@
     font-size: 22px;
     padding-top: 20px;
 }
-
-.Dashboard .form-control {
-    border: none;
-    border-bottom: 1px solid #3b6cf4;
-    font-weight: bold;
-    border-radius: 0;
-}
-
-.Dashboard .form-control:focus {
-    border-bottom: 2px solid #3b6cf4;
-    box-shadow: none;
-}
-
-.Dashboard .form-control.is-invalid:focus {
-    box-shadow: none;
-}
-
-.Dashboard .invalid-feedback {
-    display: block;
-    visibility: hidden;
-}
-
-.Dashboard .invalid-feedback:after {
-    content: '\00a0';
-}
-
-.Dashboard .is-invalid ~ .invalid-feedback {
-    visibility: visible;
-}
-
-.Dashboard .form-check-input:not(.is-invalid) ~ .form-check-label {
-    padding-bottom: 20px;
-}

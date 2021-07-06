@@ -196,12 +196,6 @@ export default function Dashboard(props: Props) {
         background-color: ${props.colors.dashboard.background};
     }
 
-    .Dashboard .form-control,
-    .Dashboard .form-control[readonly] {
-        background-color: ${props.colors.dashboard.background};
-        color: ${props.colors.dashboard.foreground};
-    }
-
     .Dashboard a {
         color: ${props.colors.dashboard.foreground};
     }

@@ -58,11 +58,11 @@ describe("CreateProtectionRequestForm", () => {
     it("should call submit when form is correctly filled", async  () => {
         render(<CreateProtectionRequestForm isRecovery={ false } />);
 
-        const legalOfficer1Select = screen.getByTestId('legalOfficer1');
+        const legalOfficer1Select = screen.getByTestId('legalOfficer1Group');
         userEvent.click(getByText(legalOfficer1Select, "Select..."));
         await waitFor(() => userEvent.click(getByText(legalOfficer1Select, "Patrick Gielen")));
 
-        const legalOfficer2Select = screen.getByTestId('legalOfficer2');
+        const legalOfficer2Select = screen.getByTestId('legalOfficer2Group');
         userEvent.click(getByText(legalOfficer2Select, "Select..."));
         await waitFor(() => userEvent.click(getByText(legalOfficer2Select, "Guillaume Grain")));
 
@@ -107,11 +107,11 @@ describe("CreateProtectionRequestForm", () => {
     it("should call submit when form is correctly filled for recovery", async  () => {
         render(<CreateProtectionRequestForm isRecovery={ true } />);
 
-        const legalOfficer1Select = screen.getByTestId('legalOfficer1');
+        const legalOfficer1Select = screen.getByTestId('legalOfficer1Group');
         userEvent.click(getByText(legalOfficer1Select, "Select..."));
         await waitFor(() => userEvent.click(getByText(legalOfficer1Select, "Patrick Gielen")));
 
-        const legalOfficer2Select = screen.getByTestId('legalOfficer2');
+        const legalOfficer2Select = screen.getByTestId('legalOfficer2Group');
         userEvent.click(getByText(legalOfficer2Select, "Select..."));
         await waitFor(() => userEvent.click(getByText(legalOfficer2Select, "Guillaume Grain")));
 

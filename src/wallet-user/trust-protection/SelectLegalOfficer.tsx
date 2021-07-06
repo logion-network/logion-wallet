@@ -1,12 +1,12 @@
 import React from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
 
 import { ColorTheme, ORANGE, GREEN, RED } from "../../component/ColorTheme";
 import Select, { OptionType } from '../../component/Select';
 import LegalOfficer from "../../component/types/LegalOfficer";
 import Icon from "../../component/Icon";
+import FormGroup from '../../component/FormGroup';
 
 import { LegalOfficerDecisionStatus } from "../../legal-officer/Types";
 
@@ -78,24 +78,23 @@ export default function SelectLegalOfficer(props: Props) {
         <div className="SelectLegalOfficer">
             <Row>
                 <Col md={ 8 }>
-                    <Form.Group controlId={ `legalOfficer${props.legalOfficerNumber}` } data-testid={ `legalOfficer${props.legalOfficerNumber}` }>
-                        <Form.Label>{ label }</Form.Label>
-                        <Select
-                            isInvalid={ props.legalOfficer === null || (props.otherLegalOfficer !== null && props.legalOfficer.address === props.otherLegalOfficer.address) }
-                            options={ legalOfficersOptions }
-                            value={ props.legalOfficer !== null ? buildOption(props.legalOfficer) : null}
-                            onChange={ value => props.setLegalOfficer(legalOfficersByAddress[value!.value] || null) }
-                            colors={ props.colorTheme.select }
-                            disabled={ props.mode === "view" }
-                            statusColor={ statusColor }
-                        />
-                        <Form.Control.Feedback
-                            type="invalid"
-                            data-testid={ `legalOfficer${props.legalOfficerNumber}Message` }
-                        >
-                            Required and different from other legal officer
-                        </Form.Control.Feedback>
-                    </Form.Group>
+                    <FormGroup
+                        id={ `legalOfficer${props.legalOfficerNumber}` }
+                        label={ label }
+                        control={
+                            <Select
+                                isInvalid={ props.legalOfficer === null || (props.otherLegalOfficer !== null && props.legalOfficer.address === props.otherLegalOfficer.address) }
+                                options={ legalOfficersOptions }
+                                value={ props.legalOfficer !== null ? buildOption(props.legalOfficer) : null}
+                                onChange={ value => props.setLegalOfficer(legalOfficersByAddress[value!.value] || null) }
+                                colors={ props.colorTheme.select }
+                                disabled={ props.mode === "view" }
+                                statusColor={ statusColor }
+                            />
+                        }
+                        feedback="Required and different from other legal officer"
+                        colors={ props.colorTheme.dashboard }
+                    />
                 </Col>
                 <Col md={ 4 }>
                     <div className="icon-status">

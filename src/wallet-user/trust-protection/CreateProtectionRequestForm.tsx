@@ -7,6 +7,7 @@ import { ContentPane } from "../../component/Dashboard";
 import Frame from "../../component/Frame";
 import Alert from "../../component/Alert";
 import Dialog from '../../component/Dialog';
+import FormGroup from '../../component/FormGroup';
 
 import { CreateProtectionRequest, legalOfficers } from "./Model";
 import {useUserContext} from "../UserContext";
@@ -179,9 +180,10 @@ export default function CreateProtectionRequestForm(props: Props) {
                     <Form onSubmit={handleSubmit(submit)}>
                         {
                             props.isRecovery &&
-                            <>
-                                <Form.Group controlId="accountToRecover">
-                                    <Form.Label>Address to Recover</Form.Label>
+                            <FormGroup
+                                id="accountToRecover"
+                                label="Address to Recover"
+                                control={
                                     <Controller
                                         name="addressToRecover"
                                         control={control}
@@ -195,208 +197,247 @@ export default function CreateProtectionRequestForm(props: Props) {
                                             />
                                         )}
                                     />
-                                    <Form.Control.Feedback
-                                        type="invalid"
-                                        data-testid="accountToRecoverMessage"
-                                    >
-                                        {errors.addressToRecover?.message}
-                                   </Form.Control.Feedback>
-                                </Form.Group>
-                            </>
+                                }
+                                feedback={ errors.addressToRecover?.message }
+                                colors={ colorTheme.dashboard }
+                            />
                         }
 
                         <Row>
                             <Col md={6}>
-                                <Form.Group controlId="firstName">
-                                    <Form.Label>First Name</Form.Label>
-                                    <Controller
-                                        name="firstName"
-                                        control={control}
-                                        defaultValue=""
-                                        rules={{required: 'The first name is required'}}
-                                        render={({field}) => (
-                                            <Form.Control
-                                                isInvalid={!!errors.firstName?.message}
-                                                type="text" placeholder="e.g. XYZ"
-                                                data-testid="firstName" {...field}
-                                            />
-                                       )}
-                                    />
-                                    <Form.Control.Feedback
-                                        type="invalid"
-                                        data-testid="firstNameMessage"
-                                    >
-                                        {errors.firstName?.message}
-                                    </Form.Control.Feedback>
-                                </Form.Group>
+                                <FormGroup
+                                    id="firstName"
+                                    label="First Name"
+                                    control={
+                                        <Controller
+                                            name="firstName"
+                                            control={control}
+                                            defaultValue=""
+                                            rules={{required: 'The first name is required'}}
+                                            render={({field}) => (
+                                                <Form.Control
+                                                    isInvalid={!!errors.firstName?.message}
+                                                    type="text" placeholder="e.g. XYZ"
+                                                    data-testid="firstName" {...field}
+                                                />
+                                           )}
+                                        />
+                                    }
+                                    feedback={ errors.firstName?.message }
+                                    colors={ colorTheme.dashboard }
+                                />
                             </Col>
                             <Col md={6}>
-                                <Form.Group controlId="lastName">
-                                    <Form.Label>Last Name</Form.Label>
-                                    <Controller
-                                        name="lastName"
-                                        control={control}
-                                        defaultValue=""
-                                        rules={{required: 'The last name is required'}}
-                                        render={({field}) => (
-                                            <Form.Control
-                                                isInvalid={!!errors.lastName?.message}
-                                                type="text"
-                                                placeholder="e.g. XYZ"
-                                                data-testid="lastName" {...field}
-                                            />
-                                       )}
-                                    />
-                                    <Form.Control.Feedback
-                                        type="invalid"
-                                        data-testid="lastNameMessage"
-                                    >
-                                        {errors.lastName?.message}
-                                    </Form.Control.Feedback>
-                                </Form.Group>
+                                <FormGroup
+                                    id="lastName"
+                                    label="Last Name"
+                                    control={
+                                        <Controller
+                                            name="lastName"
+                                            control={control}
+                                            defaultValue=""
+                                            rules={{required: 'The last name is required'}}
+                                            render={({field}) => (
+                                                <Form.Control
+                                                    isInvalid={!!errors.lastName?.message}
+                                                    type="text" placeholder="e.g. XYZ"
+                                                    data-testid="lastName" {...field}
+                                                />
+                                           )}
+                                        />
+                                    }
+                                    feedback={ errors.lastName?.message }
+                                    colors={ colorTheme.dashboard }
+                                />
                             </Col>
                         </Row>
 
                         <Row>
                             <Col md={6}>
-                                <Form.Group controlId="email">
-                                    <Form.Label>Email</Form.Label>
-                                    <Controller
-                                        name="email"
-                                        control={control}
-                                        defaultValue=""
-                                        rules={{required: 'The email is required'}}
-                                        render={({field}) => (
-                                            <Form.Control
-                                                isInvalid={!!errors.email?.message}
-                                                type="text" placeholder="e.g. XYZ"
-                                                data-testid="email" {...field}
-                                            />
-                                        )}
-                                    />
-                                    <Form.Control.Feedback type="invalid"
-                                                           data-testid="emailMessage">{errors.email?.message}</Form.Control.Feedback>
-                                </Form.Group>
+                                <FormGroup
+                                    id="email"
+                                    label="Email"
+                                    control={
+                                        <Controller
+                                            name="email"
+                                            control={control}
+                                            defaultValue=""
+                                            rules={{required: 'The email is required'}}
+                                            render={({field}) => (
+                                                <Form.Control
+                                                    isInvalid={!!errors.email?.message}
+                                                    type="text" placeholder="e.g. XYZ"
+                                                    data-testid="email" {...field}
+                                                />
+                                           )}
+                                        />
+                                    }
+                                    feedback={ errors.email?.message }
+                                    colors={ colorTheme.dashboard }
+                                />
                             </Col>
                             <Col md={6}>
-                                <Form.Group controlId="phoneNumber">
-                                    <Form.Label>Phone Number</Form.Label>
-                                    <Controller
-                                        name="phoneNumber"
-                                        control={control}
-                                        defaultValue=""
-                                        rules={{required: 'The phone number is required'}}
-                                        render={({field}) => (
-                                            <Form.Control
-                                                isInvalid={!!errors.phoneNumber?.message}
-                                                type="text"
-                                                placeholder="e.g. XYZ"
-                                                data-testid="phoneNumber" {...field}
-                                            />
-                                        )}
-                                    />
-                                    <Form.Control.Feedback
-                                        type="invalid"
-                                        data-testid="phoneNumberMessage"
-                                    >
-                                        {errors.phoneNumber?.message}
-                                    </Form.Control.Feedback>
-                                </Form.Group>
+                                <FormGroup
+                                    id="phoneNumber"
+                                    label="Phone Number"
+                                    control={
+                                        <Controller
+                                            name="phoneNumber"
+                                            control={control}
+                                            defaultValue=""
+                                            rules={{required: 'The phone number is required'}}
+                                            render={({field}) => (
+                                                <Form.Control
+                                                    isInvalid={!!errors.phoneNumber?.message}
+                                                    type="text" placeholder="e.g. XYZ"
+                                                    data-testid="phoneNumber" {...field}
+                                                />
+                                           )}
+                                        />
+                                    }
+                                    feedback={ errors.phoneNumber?.message }
+                                    colors={ colorTheme.dashboard }
+                                />
                             </Col>
                         </Row>
 
                         <h3>Address</h3>
-                        <Form.Group controlId="line1">
-                            <Form.Label>Line1</Form.Label>
-                            <Controller name="line1"
-                                        control={control}
-                                        defaultValue=""
-                                        rules={{required: 'The line1 is required'}}
-                                        render={({field}) => <Form.Control isInvalid={!!errors.line1?.message}
-                                                                           type="text" placeholder="e.g. XYZ"
-                                                                           data-testid="line1" {...field} />}
-                            />
-                            <Form.Control.Feedback type="invalid"
-                                                   data-testid="line1Message">{errors.line1?.message}</Form.Control.Feedback>
-                        </Form.Group>
-                        <Form.Group controlId="line2">
-                            <Form.Label>Line2</Form.Label>
-                            <Controller name="line2"
-                                        control={control}
-                                        defaultValue=""
-                                        render={({field}) => <Form.Control isInvalid={!!errors.line2?.message}
-                                                                           type="text" placeholder="e.g. XYZ"
-                                                                           data-testid="line2" {...field} />}
-                            />
-                            <Form.Control.Feedback type="invalid"
-                                                   data-testid="line2Message">{errors.line2?.message}</Form.Control.Feedback>
-                        </Form.Group>
+                        <FormGroup
+                            id="line1"
+                            label="Line1"
+                            control={
+                                <Controller
+                                    name="line1"
+                                    control={control}
+                                    defaultValue=""
+                                    rules={{required: 'The line1 is required'}}
+                                    render={({field}) => (
+                                        <Form.Control
+                                            isInvalid={!!errors.line1?.message}
+                                            type="text" placeholder="e.g. XYZ"
+                                            data-testid="line1" {...field}
+                                        />
+                                   )}
+                                />
+                            }
+                            feedback={ errors.line1?.message }
+                            colors={ colorTheme.dashboard }
+                        />
+                        <FormGroup
+                            id="line2"
+                            label="Line2"
+                            control={
+                                <Controller
+                                    name="line2"
+                                    control={control}
+                                    defaultValue=""
+                                    render={({field}) => (
+                                        <Form.Control
+                                            isInvalid={!!errors.line2?.message}
+                                            type="text" placeholder="e.g. XYZ"
+                                            data-testid="line2" {...field}
+                                        />
+                                   )}
+                                />
+                            }
+                            feedback={ errors.line2?.message }
+                            colors={ colorTheme.dashboard }
+                        />
 
                         <Row>
                         <Col md={4}>
-                        <Form.Group controlId="postalCode">
-                            <Form.Label>Postal Code</Form.Label>
-                            <Controller name="postalCode"
+                            <FormGroup
+                                id="postalCode"
+                                label="Postal Code"
+                                control={
+                                    <Controller
+                                        name="postalCode"
                                         control={control}
                                         defaultValue=""
                                         rules={{required: 'The postal code is required'}}
-                                        render={({field}) => <Form.Control isInvalid={!!errors.postalCode?.message}
-                                                                           type="text" placeholder="e.g. XYZ"
-                                                                           data-testid="postalCode" {...field} />}
+                                        render={({field}) => (
+                                            <Form.Control
+                                                isInvalid={!!errors.postalCode?.message}
+                                                type="text" placeholder="e.g. XYZ"
+                                                data-testid="postalCode" {...field}
+                                            />
+                                       )}
+                                    />
+                                }
+                                feedback={ errors.postalCode?.message }
+                                colors={ colorTheme.dashboard }
                             />
-                            <Form.Control.Feedback type="invalid"
-                                                   data-testid="postalCodeMessage">{errors.postalCode?.message}</Form.Control.Feedback>
-                        </Form.Group>
                         </Col>
                         <Col md={8}>
-                            <Form.Group controlId="city">
-                                <Form.Label>City</Form.Label>
-                                <Controller name="city"
-                                            control={control}
-                                            defaultValue=""
-                                            rules={{required: 'The city is required'}}
-                                            render={({field}) => <Form.Control isInvalid={!!errors.city?.message}
-                                                                               type="text" placeholder="e.g. XYZ"
-                                                                               data-testid="city" {...field} />}
-                                />
-                                <Form.Control.Feedback type="invalid"
-                                                       data-testid="cityMessage">{errors.city?.message}</Form.Control.Feedback>
-                            </Form.Group>
-                        </Col>
-                        </Row>
-                        <Form.Group controlId="country">
-                            <Form.Label>Country</Form.Label>
-                            <Controller name="country"
+                            <FormGroup
+                                id="city"
+                                label="City"
+                                control={
+                                    <Controller
+                                        name="city"
                                         control={control}
                                         defaultValue=""
-                                        rules={{required: 'The country is required'}}
-                                        render={({field}) => <Form.Control isInvalid={!!errors.country?.message}
-                                                                           type="text" placeholder="e.g. XYZ"
-                                                                           data-testid="country" {...field} />}
+                                        rules={{required: 'The city is required'}}
+                                        render={({field}) => (
+                                            <Form.Control
+                                                isInvalid={!!errors.city?.message}
+                                                type="text" placeholder="e.g. XYZ"
+                                                data-testid="city" {...field}
+                                            />
+                                       )}
+                                    />
+                                }
+                                feedback={ errors.city?.message }
+                                colors={ colorTheme.dashboard }
                             />
-                            <Form.Control.Feedback type="invalid"
-                                                   data-testid="countryMessage">{errors.country?.message}</Form.Control.Feedback>
-                        </Form.Group>
-
-                        <div className="agree-submit">
-                            <Form.Group controlId="agree">
+                        </Col>
+                        </Row>
+                        <FormGroup
+                            id="country"
+                            label="Country"
+                            control={
                                 <Controller
-                                    name="agree"
+                                    name="country"
                                     control={control}
                                     defaultValue=""
-                                    rules={{required: "You must agree in order to proceed"}}
+                                    rules={{required: 'The country is required'}}
                                     render={({field}) => (
-                                        <Form.Check
-                                            isInvalid={!!errors.agree?.message}
-                                            type="checkbox"
-                                            id="agree"
-                                            label="I agree to send my personal information to the chosen Legal Officers"
-                                            feedback={errors.agree?.message}
-                                            { ...field }
+                                        <Form.Control
+                                            isInvalid={!!errors.city?.message}
+                                            type="text" placeholder="e.g. XYZ"
+                                            data-testid="country" {...field}
                                         />
-                                      )}
+                                   )}
                                 />
-                            </Form.Group>
+                            }
+                            feedback={ errors.country?.message }
+                            colors={ colorTheme.dashboard }
+                        />
+
+                        <div className="agree-submit">
+                            <FormGroup
+                                id="agree"
+                                control={
+                                    <Controller
+                                        name="agree"
+                                        control={control}
+                                        defaultValue=""
+                                        rules={{required: "You must agree in order to proceed"}}
+                                        render={({field}) => (
+                                            <Form.Check
+                                                isInvalid={!!errors.agree?.message}
+                                                type="checkbox"
+                                                id="agree"
+                                                label="I agree to send my personal information to the chosen Legal Officers"
+                                                feedback={errors.agree?.message}
+                                                { ...field }
+                                            />
+                                          )}
+                                    />
+                                }
+                                colors={ colorTheme.dashboard }
+                                noFeedback
+                            />
     
                             <Button
                                 backgroundColor={ colorTheme.buttons.secondaryBackgroundColor }
