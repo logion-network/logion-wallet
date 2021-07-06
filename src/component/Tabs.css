@@ -1,0 +1,41 @@
+.Tabs .nav-tabs {
+    border-bottom: none;
+}
+
+.Tabs .nav-tabs .nav-link {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 0;
+    padding: 10px;
+    padding-right: 20px;
+    width: 140px;
+    text-align: center;
+}
+
+.Tabs .nav-tabs .nav-link:nth-child(n+2) {
+    border-top-left-radius: 0;
+    margin-left: -10px;
+}
+
+.Tabs .nav-tabs .nav-link:last-child {
+    border-top-right-radius: 10px;
+    padding-right: 10px;
+}
+
+.Tabs .nav-tabs .nav-link.active {
+    font-weight: bold;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding-right: 10px;
+    z-index: 1;
+}
+
+.Tabs .nav-tabs .nav-link.active + .nav-link {
+    padding-left: 20px;
+}
+
+.Tabs .tab-content {
+    padding: 20px;
+    padding-bottom: 30px;
+    border-radius: 10px;
+    border-top-left-radius: 0;
+}

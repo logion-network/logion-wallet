@@ -113,5 +113,14 @@ export const LIGHT_MODE: ColorTheme = {
             background: '#eff3fe',
             foreground: '#000000',
         }
+    },
+    tabs: {
+        background: '#ffffff',
+        foreground: '#000000',
+        inactiveTab: {
+            background: '#eff3fe',
+            foreground: rgbaToHex('#000000', 0.70),
+        },
+        borderColor: '#3b6cf4',
     }
 };

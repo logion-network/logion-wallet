@@ -62,6 +62,15 @@ exports[`Renders requests history 1`] = `
             "foreground": "#ffffff",
           },
         },
+        "tabs": Object {
+          "background": "#0c163d",
+          "borderColor": "#3b6cf4",
+          "foreground": "#ffffff",
+          "inactiveTab": Object {
+            "background": "#d8e2fd",
+            "foreground": "#ffffff",
+          },
+        },
         "topMenuItems": Object {
           "iconGradient": Object {
             "from": "#3b6cf4",

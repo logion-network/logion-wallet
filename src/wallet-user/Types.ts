@@ -59,5 +59,14 @@ export const DARK_MODE: ColorTheme = {
             background: '#152665',
             foreground: '#ffffff',
         }
+    },
+    tabs: {
+        background: '#0c163d',
+        foreground: '#ffffff',
+        inactiveTab: {
+            background: rgbaToHex('#ffffff', 0.20),
+            foreground: '#ffffff',
+        },
+        borderColor: '#3b6cf4',
     }
 };

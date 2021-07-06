@@ -72,6 +72,15 @@ exports[`activated protection request 1`] = `
           "foreground": "#ffffff",
         },
       },
+      "tabs": Object {
+        "background": "#0c163d",
+        "borderColor": "#3b6cf4",
+        "foreground": "#ffffff",
+        "inactiveTab": Object {
+          "background": "#ffffff33",
+          "foreground": "#ffffff",
+        },
+      },
       "topMenuItems": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
@@ -136,6 +145,15 @@ exports[`activated protection request 1`] = `
             },
             "row": Object {
               "background": "#152665",
+              "foreground": "#ffffff",
+            },
+          },
+          "tabs": Object {
+            "background": "#0c163d",
+            "borderColor": "#3b6cf4",
+            "foreground": "#ffffff",
+            "inactiveTab": Object {
+              "background": "#ffffff33",
               "foreground": "#ffffff",
             },
           },
@@ -220,6 +238,15 @@ exports[`activated protection request 1`] = `
               },
               "row": Object {
                 "background": "#152665",
+                "foreground": "#ffffff",
+              },
+            },
+            "tabs": Object {
+              "background": "#0c163d",
+              "borderColor": "#3b6cf4",
+              "foreground": "#ffffff",
+              "inactiveTab": Object {
+                "background": "#ffffff33",
                 "foreground": "#ffffff",
               },
             },
@@ -341,6 +368,15 @@ exports[`activated recovery request 1`] = `
           "foreground": "#ffffff",
         },
       },
+      "tabs": Object {
+        "background": "#0c163d",
+        "borderColor": "#3b6cf4",
+        "foreground": "#ffffff",
+        "inactiveTab": Object {
+          "background": "#ffffff33",
+          "foreground": "#ffffff",
+        },
+      },
       "topMenuItems": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
@@ -405,6 +441,15 @@ exports[`activated recovery request 1`] = `
             },
             "row": Object {
               "background": "#152665",
+              "foreground": "#ffffff",
+            },
+          },
+          "tabs": Object {
+            "background": "#0c163d",
+            "borderColor": "#3b6cf4",
+            "foreground": "#ffffff",
+            "inactiveTab": Object {
+              "background": "#ffffff33",
               "foreground": "#ffffff",
             },
           },
@@ -477,6 +522,15 @@ exports[`activated recovery request 1`] = `
               },
               "row": Object {
                 "background": "#152665",
+                "foreground": "#ffffff",
+              },
+            },
+            "tabs": Object {
+              "background": "#0c163d",
+              "borderColor": "#3b6cf4",
+              "foreground": "#ffffff",
+              "inactiveTab": Object {
+                "background": "#ffffff33",
                 "foreground": "#ffffff",
               },
             },
@@ -598,6 +652,15 @@ exports[`pending protection request 1`] = `
           "foreground": "#ffffff",
         },
       },
+      "tabs": Object {
+        "background": "#0c163d",
+        "borderColor": "#3b6cf4",
+        "foreground": "#ffffff",
+        "inactiveTab": Object {
+          "background": "#ffffff33",
+          "foreground": "#ffffff",
+        },
+      },
       "topMenuItems": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
@@ -662,6 +725,15 @@ exports[`pending protection request 1`] = `
             },
             "row": Object {
               "background": "#152665",
+              "foreground": "#ffffff",
+            },
+          },
+          "tabs": Object {
+            "background": "#0c163d",
+            "borderColor": "#3b6cf4",
+            "foreground": "#ffffff",
+            "inactiveTab": Object {
+              "background": "#ffffff33",
               "foreground": "#ffffff",
             },
           },
@@ -739,6 +811,15 @@ exports[`pending protection request 1`] = `
               },
               "row": Object {
                 "background": "#152665",
+                "foreground": "#ffffff",
+              },
+            },
+            "tabs": Object {
+              "background": "#0c163d",
+              "borderColor": "#3b6cf4",
+              "foreground": "#ffffff",
+              "inactiveTab": Object {
+                "background": "#ffffff33",
                 "foreground": "#ffffff",
               },
             },
@@ -860,6 +941,15 @@ exports[`pending recovery request 1`] = `
           "foreground": "#ffffff",
         },
       },
+      "tabs": Object {
+        "background": "#0c163d",
+        "borderColor": "#3b6cf4",
+        "foreground": "#ffffff",
+        "inactiveTab": Object {
+          "background": "#ffffff33",
+          "foreground": "#ffffff",
+        },
+      },
       "topMenuItems": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
@@ -924,6 +1014,15 @@ exports[`pending recovery request 1`] = `
             },
             "row": Object {
               "background": "#152665",
+              "foreground": "#ffffff",
+            },
+          },
+          "tabs": Object {
+            "background": "#0c163d",
+            "borderColor": "#3b6cf4",
+            "foreground": "#ffffff",
+            "inactiveTab": Object {
+              "background": "#ffffff33",
               "foreground": "#ffffff",
             },
           },
@@ -1001,6 +1100,15 @@ exports[`pending recovery request 1`] = `
               },
               "row": Object {
                 "background": "#152665",
+                "foreground": "#ffffff",
+              },
+            },
+            "tabs": Object {
+              "background": "#0c163d",
+              "borderColor": "#3b6cf4",
+              "foreground": "#ffffff",
+              "inactiveTab": Object {
+                "background": "#ffffff33",
                 "foreground": "#ffffff",
               },
             },
@@ -1122,6 +1230,15 @@ exports[`protection request 1`] = `
           "foreground": "#ffffff",
         },
       },
+      "tabs": Object {
+        "background": "#0c163d",
+        "borderColor": "#3b6cf4",
+        "foreground": "#ffffff",
+        "inactiveTab": Object {
+          "background": "#ffffff33",
+          "foreground": "#ffffff",
+        },
+      },
       "topMenuItems": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
@@ -1186,6 +1303,15 @@ exports[`protection request 1`] = `
             },
             "row": Object {
               "background": "#152665",
+              "foreground": "#ffffff",
+            },
+          },
+          "tabs": Object {
+            "background": "#0c163d",
+            "borderColor": "#3b6cf4",
+            "foreground": "#ffffff",
+            "inactiveTab": Object {
+              "background": "#ffffff33",
               "foreground": "#ffffff",
             },
           },
@@ -1256,6 +1382,15 @@ exports[`protection request 1`] = `
               },
               "row": Object {
                 "background": "#152665",
+                "foreground": "#ffffff",
+              },
+            },
+            "tabs": Object {
+              "background": "#0c163d",
+              "borderColor": "#3b6cf4",
+              "foreground": "#ffffff",
+              "inactiveTab": Object {
+                "background": "#ffffff33",
                 "foreground": "#ffffff",
               },
             },
@@ -1377,6 +1512,15 @@ exports[`recovery request 1`] = `
           "foreground": "#ffffff",
         },
       },
+      "tabs": Object {
+        "background": "#0c163d",
+        "borderColor": "#3b6cf4",
+        "foreground": "#ffffff",
+        "inactiveTab": Object {
+          "background": "#ffffff33",
+          "foreground": "#ffffff",
+        },
+      },
       "topMenuItems": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
@@ -1441,6 +1585,15 @@ exports[`recovery request 1`] = `
             },
             "row": Object {
               "background": "#152665",
+              "foreground": "#ffffff",
+            },
+          },
+          "tabs": Object {
+            "background": "#0c163d",
+            "borderColor": "#3b6cf4",
+            "foreground": "#ffffff",
+            "inactiveTab": Object {
+              "background": "#ffffff33",
               "foreground": "#ffffff",
             },
           },
@@ -1513,6 +1666,15 @@ exports[`recovery request 1`] = `
               },
               "row": Object {
                 "background": "#152665",
+                "foreground": "#ffffff",
+              },
+            },
+            "tabs": Object {
+              "background": "#0c163d",
+              "borderColor": "#3b6cf4",
+              "foreground": "#ffffff",
+              "inactiveTab": Object {
+                "background": "#ffffff33",
                 "foreground": "#ffffff",
               },
             },

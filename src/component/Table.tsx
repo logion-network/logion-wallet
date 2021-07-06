@@ -20,7 +20,7 @@ export function Cell(props: CellProps) {
     }
 
     return (
-        <span className={ className }>{ props.content }</span>
+        <div className={ className }>{ props.content }</div>
     );
 }
 

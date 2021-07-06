@@ -20,6 +20,7 @@
 .Table .regular-cell {
     font-size: 14px;
     line-height: 40px;
+    overflow: scroll;
 }
 
 .Table .regular-cell.small-text {

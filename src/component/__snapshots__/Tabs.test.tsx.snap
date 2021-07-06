@@ -1,24 +1,47 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders 1`] = `
-<Tabs
-  activeKey="key1"
-  mountOnEnter={false}
-  onSelect={[Function]}
-  unmountOnExit={false}
-  variant="tabs"
+<div
+  className="Tabs"
 >
-  <Tab
-    eventKey="key1"
-    title="Tab 1"
+  <style>
+    
+    .Tabs .nav-tabs .nav-link {
+        border-color: #3b6cf4;
+        color: #ffffff;
+        background-color: #d8e2fd;
+    }
+    .Tabs .nav-tabs .nav-link.active {
+        color: #ffffff;
+        background-color: #0c163d;
+        border-bottom-color: #0c163d;
+    }
+    .Tabs .tab-content {
+        color: #ffffff;
+        background-color: #0c163d;
+        border: 1px solid #3b6cf4;
+    }
+    
+  </style>
+  <Tabs
+    activeKey="key1"
+    mountOnEnter={false}
+    onSelect={[Function]}
+    unmountOnExit={false}
+    variant="tabs"
   >
-    Content 1
-  </Tab>
-  <Tab
-    eventKey="key2"
-    title="Tab 2"
-  >
-    Content 2
-  </Tab>
-</Tabs>
+    <Tab
+      eventKey="key1"
+      title="Tab 1"
+    >
+      Content 1
+    </Tab>
+    <Tab
+      eventKey="key2"
+      title="Tab 2"
+    >
+      Content 2
+    </Tab>
+  </Tabs>
+</div>
 `;

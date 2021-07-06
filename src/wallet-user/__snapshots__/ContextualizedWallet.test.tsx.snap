@@ -56,6 +56,15 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
           "foreground": "#ffffff",
         },
       },
+      "tabs": Object {
+        "background": "#0c163d",
+        "borderColor": "#3b6cf4",
+        "foreground": "#ffffff",
+        "inactiveTab": Object {
+          "background": "#ffffff33",
+          "foreground": "#ffffff",
+        },
+      },
       "topMenuItems": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
@@ -220,6 +229,15 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
           },
           "row": Object {
             "background": "#152665",
+            "foreground": "#ffffff",
+          },
+        },
+        "tabs": Object {
+          "background": "#0c163d",
+          "borderColor": "#3b6cf4",
+          "foreground": "#ffffff",
+          "inactiveTab": Object {
+            "background": "#ffffff33",
             "foreground": "#ffffff",
           },
         },
@@ -301,6 +319,15 @@ exports[`Given connected, when rendering, then show account, no connect button a
           "foreground": "#ffffff",
         },
       },
+      "tabs": Object {
+        "background": "#0c163d",
+        "borderColor": "#3b6cf4",
+        "foreground": "#ffffff",
+        "inactiveTab": Object {
+          "background": "#ffffff33",
+          "foreground": "#ffffff",
+        },
+      },
       "topMenuItems": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
@@ -465,6 +492,15 @@ exports[`Given connected, when rendering, then show account, no connect button a
           },
           "row": Object {
             "background": "#152665",
+            "foreground": "#ffffff",
+          },
+        },
+        "tabs": Object {
+          "background": "#0c163d",
+          "borderColor": "#3b6cf4",
+          "foreground": "#ffffff",
+          "inactiveTab": Object {
+            "background": "#ffffff33",
             "foreground": "#ffffff",
           },
         },
@@ -546,6 +582,15 @@ exports[`Given connecting, when rendering, then show account, no button, no node
           "foreground": "#ffffff",
         },
       },
+      "tabs": Object {
+        "background": "#0c163d",
+        "borderColor": "#3b6cf4",
+        "foreground": "#ffffff",
+        "inactiveTab": Object {
+          "background": "#ffffff33",
+          "foreground": "#ffffff",
+        },
+      },
       "topMenuItems": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
@@ -709,6 +754,15 @@ exports[`Given connecting, when rendering, then show account, no button, no node
           },
           "row": Object {
             "background": "#152665",
+            "foreground": "#ffffff",
+          },
+        },
+        "tabs": Object {
+          "background": "#0c163d",
+          "borderColor": "#3b6cf4",
+          "foreground": "#ffffff",
+          "inactiveTab": Object {
+            "background": "#ffffff33",
             "foreground": "#ffffff",
           },
         },
@@ -790,6 +844,15 @@ exports[`Given connection error, when rendering, then show account, no button, n
           "foreground": "#ffffff",
         },
       },
+      "tabs": Object {
+        "background": "#0c163d",
+        "borderColor": "#3b6cf4",
+        "foreground": "#ffffff",
+        "inactiveTab": Object {
+          "background": "#ffffff33",
+          "foreground": "#ffffff",
+        },
+      },
       "topMenuItems": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
@@ -953,6 +1016,15 @@ exports[`Given connection error, when rendering, then show account, no button, n
           },
           "row": Object {
             "background": "#152665",
+            "foreground": "#ffffff",
+          },
+        },
+        "tabs": Object {
+          "background": "#0c163d",
+          "borderColor": "#3b6cf4",
+          "foreground": "#ffffff",
+          "inactiveTab": Object {
+            "background": "#ffffff33",
             "foreground": "#ffffff",
           },
         },
@@ -1034,6 +1106,15 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
           "foreground": "#ffffff",
         },
       },
+      "tabs": Object {
+        "background": "#0c163d",
+        "borderColor": "#3b6cf4",
+        "foreground": "#ffffff",
+        "inactiveTab": Object {
+          "background": "#ffffff33",
+          "foreground": "#ffffff",
+        },
+      },
       "topMenuItems": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
@@ -1200,6 +1281,15 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
             "foreground": "#ffffff",
           },
         },
+        "tabs": Object {
+          "background": "#0c163d",
+          "borderColor": "#3b6cf4",
+          "foreground": "#ffffff",
+          "inactiveTab": Object {
+            "background": "#ffffff33",
+            "foreground": "#ffffff",
+          },
+        },
         "topMenuItems": Object {
           "iconGradient": Object {
             "from": "#3b6cf4",
@@ -1275,6 +1365,15 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
         },
         "row": Object {
           "background": "#152665",
+          "foreground": "#ffffff",
+        },
+      },
+      "tabs": Object {
+        "background": "#0c163d",
+        "borderColor": "#3b6cf4",
+        "foreground": "#ffffff",
+        "inactiveTab": Object {
+          "background": "#ffffff33",
           "foreground": "#ffffff",
         },
       },
@@ -1442,6 +1541,15 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
           },
           "row": Object {
             "background": "#152665",
+            "foreground": "#ffffff",
+          },
+        },
+        "tabs": Object {
+          "background": "#0c163d",
+          "borderColor": "#3b6cf4",
+          "foreground": "#ffffff",
+          "inactiveTab": Object {
+            "background": "#ffffff33",
             "foreground": "#ffffff",
           },
         },

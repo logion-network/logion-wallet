@@ -76,5 +76,14 @@ export const COLOR_THEME: ColorTheme = {
             background: '#152665',
             foreground: '#ffffff',
         }
+    },
+    tabs: {
+        background: '#0c163d',
+        foreground: '#ffffff',
+        inactiveTab: {
+            background: '#d8e2fd',
+            foreground: '#ffffff',
+        },
+        borderColor: '#3b6cf4',
     }
 };

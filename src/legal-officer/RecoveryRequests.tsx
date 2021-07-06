@@ -26,7 +26,7 @@ export default function RecoveryRequests() {
             selectAddress={ selectAddress }
         >
                 <Frame
-                        colors={colorTheme}
+                    colors={colorTheme}
                 >
                     <Tabs
                         activeKey={ tabKey }
@@ -43,6 +43,7 @@ export default function RecoveryRequests() {
                                 render: () => <ProtectionRequestsHistory recovery={ true } />
                             }
                         ]}
+                        colors={ colorTheme.tabs }
                     />
                 </Frame>
         </FullWidthPane>

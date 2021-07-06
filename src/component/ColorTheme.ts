@@ -24,6 +24,11 @@ export interface TableColors extends BackgroundAndForegroundColors {
     row: BackgroundAndForegroundColors,
 }
 
+export interface TabsColors extends BackgroundAndForegroundColors {
+    inactiveTab: BackgroundAndForegroundColors,
+    borderColor: string,
+}
+
 export interface ColorTheme {
     type: ColorThemeType,
     dashboard: BackgroundAndForegroundColors,
@@ -36,6 +41,7 @@ export interface ColorTheme {
     buttons: ButtonsColors,
     select: SelectColors,
     table: TableColors,
+    tabs: TabsColors,
 }
 
 export interface FrameColors extends BackgroundAndForegroundColors {

@@ -66,6 +66,15 @@ exports[`renders with custom space above 1`] = `
           "foreground": "#ffffff",
         },
       },
+      "tabs": Object {
+        "background": "#0c163d",
+        "borderColor": "#3b6cf4",
+        "foreground": "#ffffff",
+        "inactiveTab": Object {
+          "background": "#d8e2fd",
+          "foreground": "#ffffff",
+        },
+      },
       "topMenuItems": Object {
         "iconGradient": Object {
           "from": "#3b6cf4",
@@ -158,6 +167,15 @@ exports[`renders with default space above 1`] = `
         },
         "row": Object {
           "background": "#152665",
+          "foreground": "#ffffff",
+        },
+      },
+      "tabs": Object {
+        "background": "#0c163d",
+        "borderColor": "#3b6cf4",
+        "foreground": "#ffffff",
+        "inactiveTab": Object {
+          "background": "#d8e2fd",
           "foreground": "#ffffff",
         },
       },
