@@ -2,7 +2,7 @@ import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import { Child } from './types/Helpers';
+import { Children } from './types/Helpers';
 import { ColorTheme } from './ColorTheme';
 import './Table.css';
 
@@ -24,9 +24,20 @@ export function Cell(props: CellProps) {
     );
 }
 
+export interface EmptyTableMessageProps {
+    children: Children,
+}
+
+export function EmptyTableMessage(props: EmptyTableMessageProps) {
+
+    return (
+        <div className="empty-message">{ props.children }</div>
+    );
+}
+
 export interface Column<T> {
-    header: Child,
-    render: (element: T) => Child,
+    header: Children,
+    render: (element: T) => Children,
     width: number,
     smallerText?: boolean,
 }
@@ -43,6 +54,7 @@ export interface Props<T> {
     data: T[],
     columns: Column<T>[],
     colorTheme: ColorTheme,
+    renderEmpty: () => Children,
 }
 
 export default function Table<T>(props: Props<T>) {
@@ -66,6 +78,7 @@ export default function Table<T>(props: Props<T>) {
             </div>
             <div className="body">
                 {
+                    props.data.length > 0 &&
                     props.data.map((item, itemIndex) => (
                         <Row
                             key={ itemIndex }
@@ -90,6 +103,19 @@ export default function Table<T>(props: Props<T>) {
                             }
                         </Row>
                     ))
+                }
+                {
+                    props.data.length === 0 &&
+                    <Row
+                        className="empty-data"
+                        style={{
+                            color: props.colorTheme.table.row.foreground,
+                            backgroundColor: props.colorTheme.table.row.background,
+                        }}
+                        noGutters
+                    >
+                        { props.renderEmpty() }
+                    </Row>
                 }
             </div>
         </div>

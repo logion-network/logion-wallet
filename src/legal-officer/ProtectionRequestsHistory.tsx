@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Table, { Cell } from '../component/Table';
+import Table, { Cell, EmptyTableMessage } from '../component/Table';
 
 import { useRootContext } from '../RootContext';
 
@@ -61,6 +61,7 @@ export default function ProtectionRequestsHistory(props: Props) {
                 ]}
                 data={ requests }
                 colorTheme={ colorTheme }
+                renderEmpty={ () => <EmptyTableMessage>No processed request</EmptyTableMessage>}
             />
         </>
     );

@@ -5,7 +5,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-import Table, { Cell } from '../component/Table';
+import Table, { Cell, EmptyTableMessage } from '../component/Table';
 import Identity from '../component/Identity';
 import PostalAddress from '../component/PostalAddress';
 import { sign } from '../logion-chain';
@@ -145,6 +145,7 @@ export default function PendingProtectionRequests(props: Props) {
                 ]}
                 data={ requests }
                 colorTheme={ colorTheme }
+                renderEmpty={ () => <EmptyTableMessage>No request to display</EmptyTableMessage>}
             />
 
             {

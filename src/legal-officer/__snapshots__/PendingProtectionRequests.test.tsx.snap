@@ -143,6 +143,7 @@ exports[`Renders pending requests 1`] = `
         },
       ]
     }
+    renderEmpty={[Function]}
   />
 </React.Fragment>
 `;

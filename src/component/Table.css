@@ -11,6 +11,7 @@
     font-weight: bold;
     border-radius: 6px;
     margin-bottom: 10px;
+    overflow: hidden;
 }
 
 .Table .body .row .cell {
@@ -26,4 +27,12 @@
 .Table .regular-cell.small-text {
     font-size: 10px;
     line-height: 40px;
+}
+
+.Table .empty-message {
+    flex-grow: 1;
+    text-align: center;
+    line-height: 40px;
+    font-weight: normal;
+    font-style: italic;
 }
