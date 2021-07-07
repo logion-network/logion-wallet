@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 
 import Tabs from '../component/Tabs';
 import { FullWidthPane } from '../component/Dashboard';
-import Frame from '../component/Frame';
 import { useRootContext } from '../RootContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import PendingProtectionRequests from './PendingProtectionRequests';
 import ProtectionRequestsHistory from './ProtectionRequestsHistory';
+import './RecoveryRequests.css';
 
 export default function RecoveryRequests() {
     const { selectAddress, addresses } = useRootContext();
@@ -20,32 +20,29 @@ export default function RecoveryRequests() {
 
     return (
         <FullWidthPane
+            className="RecoveryRequests"
             mainTitle="Recovery requests"
             colors={ colorTheme }
             addresses={ addresses }
             selectAddress={ selectAddress }
         >
-                <Frame
-                    colors={colorTheme}
-                >
-                    <Tabs
-                        activeKey={ tabKey }
-                        onSelect={ key => setTabKey(key || 'pending') }
-                        tabs={[
-                            {
-                                key: "pending",
-                                title: "Pending",
-                                render: () => <PendingProtectionRequests recovery={ true } />
-                            },
-                            {
-                                key: "executed",
-                                title: "Executed",
-                                render: () => <ProtectionRequestsHistory recovery={ true } />
-                            }
-                        ]}
-                        colors={ colorTheme.tabs }
-                    />
-                </Frame>
+            <Tabs
+                activeKey={ tabKey }
+                onSelect={ key => setTabKey(key || 'pending') }
+                tabs={[
+                    {
+                        key: "pending",
+                        title: "Pending",
+                        render: () => <PendingProtectionRequests recovery={ true } />
+                    },
+                    {
+                        key: "history",
+                        title: "History",
+                        render: () => <ProtectionRequestsHistory recovery={ true } />
+                    }
+                ]}
+                colors={ colorTheme.tabs }
+            />
         </FullWidthPane>
     );
 }

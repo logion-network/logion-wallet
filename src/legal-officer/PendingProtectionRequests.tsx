@@ -2,9 +2,9 @@ import React, { useState, useCallback } from 'react';
 import moment from 'moment';
 
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
+import Button from '../component/Button';
 import Table, { Cell, EmptyTableMessage } from '../component/Table';
 import Identity from '../component/Identity';
 import PostalAddress from '../component/PostalAddress';
@@ -12,9 +12,10 @@ import { sign } from '../logion-chain';
 import { useRootContext } from '../RootContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
-import { acceptProtectionRequest, rejectProtectionRequest } from './Model';
+import { acceptProtectionRequest, rejectProtectionRequest, decision } from './Model';
 import { ProtectionRequest } from './Types';
 import ProcessStep from './ProcessStep';
+import Decision from './Decision';
 
 enum ReviewStatus {
     NONE,
@@ -103,29 +104,38 @@ export default function PendingProtectionRequests(props: Props) {
 
     return (
         <>
-            <h2>Pending</h2>
             <Table
                 columns={[
                     {
-                        header: "Requester",
-                        render: request => <Cell content={ request.requesterAddress }/>,
-                        width: 4,
-                    },
-                    {
-                        header: "Firstname",
+                        header: "First name",
                         render: request => <Cell content={ request.userIdentity.firstName }/>,
                         width: 2,
                     },
                     {
-                        header: "Lastname",
+                        header: "Last name",
                         render: request => <Cell content={ request.userIdentity.lastName }/>,
                         width: 2,
                     },
                     {
-                        header: "Created",
-                        render: request => <Cell content={ request.createdOn } smallText/>,
-                        width: 2,
+                        header: "Status",
+                        render: request => <Decision decision={ decision(currentAddress, request.decisions)!.status} />,
+                        width: 1,
+                    },
+                    {
+                        header: "Submission date",
+                        render: request => <Cell content={ request.createdOn } smallText wordBreak="break-all" />,
+                        width: 1,
                         smallerText: true,
+                    },
+                    {
+                        header: "Account number",
+                        render: request => <Cell content={ request.requesterAddress } smallText wordBreak="break-all" />,
+                        width: 2,
+                    },
+                    {
+                        header: "Account to recover",
+                        render: request => <Cell content={ request.addressToRecover } smallText wordBreak="break-all" />,
+                        width: 2,
                     },
                     {
                         header: "Action",
@@ -136,8 +146,9 @@ export default function PendingProtectionRequests(props: Props) {
                                     variant="primary"
                                     onClick={() => setReviewState({status: ReviewStatus.PENDING, request: request}) }
                                     data-testid={`review-${request.id}`}
+                                    backgroundColor={ colorTheme.buttons.secondaryBackgroundColor }
                                 >
-                                    Review and proceed
+                                    <span style={{fontWeight: "bold"}}>Review and proceed</span>
                                 </Button>
                             </ButtonGroup>
                         ),

@@ -10,6 +10,7 @@ export interface Props {
     children: Children,
     disabled?: boolean,
     className?: string,
+    fullHeight?: boolean,
 }
 
 export default function Frame(props: Props) {
@@ -31,6 +32,9 @@ export default function Frame(props: Props) {
     }
     if(props.disabled !== undefined && props.disabled) {
         className = className + " disabled";
+    }
+    if(props.fullHeight !== undefined && props.fullHeight) {
+        className = className + " full-height";
     }
 
     return (

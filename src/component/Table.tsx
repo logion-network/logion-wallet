@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
+import * as Css from 'csstype';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
@@ -10,6 +11,7 @@ import './Table.css';
 export interface CellProps {
     content: string | number | null,
     smallText?: boolean,
+    wordBreak?: Css.Property.WordBreak,
 }
 
 export function Cell(props: CellProps) {
@@ -19,8 +21,14 @@ export function Cell(props: CellProps) {
         className = className + " small-text";
     }
 
+    let style: CSSProperties = {};
+    if(props.wordBreak !== undefined) {
+        style.wordBreak = props.wordBreak;
+        className = className + " two-lines";
+    }
+
     return (
-        <div className={ className }>{ props.content }</div>
+        <div className={ className } style={ style }>{ props.content }</div>
     );
 }
 

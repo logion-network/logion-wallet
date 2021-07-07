@@ -23,11 +23,11 @@ export default function Decision(props: Props) {
         } else if(props.decision === "ACCEPTED") {
             statusColor = GREEN;
             icon = (<Icon icon={{ id: "accepted" }} />);
-            status = <span style={{color: statusColor}}>Accepted</span>;
+            status = <span style={{color: statusColor, textTransform: "uppercase"}}>Accepted</span>;
         } else if(props.decision === "REJECTED") {
             statusColor = RED;
             icon = (<Icon icon={{ id: "rejected" }} />);
-            status = <span style={{color: statusColor}}>Rejected</span>;
+            status = <span style={{color: statusColor, textTransform: "uppercase"}}>Rejected</span>;
         } else {
             icon = null;
             status = null;
