@@ -3,6 +3,7 @@
 }
 
 .Tabs .nav-tabs .nav-link {
+    position: relative;
     border-top-left-radius: 10px;
     border-top-right-radius: 0;
     padding: 10px;
@@ -23,8 +24,7 @@
 
 .Tabs .nav-tabs .nav-link.active {
     font-weight: bold;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border: none;
     padding-right: 10px;
     z-index: 1;
 }
@@ -38,4 +38,15 @@
     padding-bottom: 30px;
     border-radius: 10px;
     border-top-left-radius: 0;
+}
+
+.Tabs .nav-tabs .nav-link canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+}
+
+.Tabs .nav-tabs .nav-link.active canvas {
+    visibility: visible;
 }
