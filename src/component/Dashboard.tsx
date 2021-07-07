@@ -90,9 +90,15 @@ interface AddressSwitcherProps {
 
 export interface BasePaneProps extends TitlesProps, AddressSwitcherProps {
     children: Children,
+    className?: string,
 }
 
 function BasePane(props: BasePaneProps) {
+
+    let contentAreaClass = "ContentArea";
+    if(props.className !== undefined) {
+        contentAreaClass = contentAreaClass + " " + props.className;
+    }
 
     return (
         <Col md={ FULL_WIDTH - SIDEBAR_WIDTH }>
@@ -111,7 +117,7 @@ function BasePane(props: BasePaneProps) {
                     </div>
                 </Col>
             </Row>
-            <Row noGutters>
+            <Row noGutters className={ contentAreaClass }>
                 { props.children }
             </Row>
         </Col>
@@ -149,12 +155,14 @@ export function ContentPane(props: ContentPaneProps) {
 
 export interface FullWidthPaneProps extends TitlesProps, AddressSwitcherProps {
     children: Children,
+    className?: string,
 }
 
 export function FullWidthPane(props: FullWidthPaneProps) {
 
     return (
         <BasePane
+            className={ props.className }
             mainTitle={ props.mainTitle }
             subTitle={ props.subTitle }
             colors={ props.colors }

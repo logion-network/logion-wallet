@@ -29,6 +29,10 @@
     line-height: 40px;
 }
 
+.Table .regular-cell.two-lines {
+    line-height: 20px;
+}
+
 .Table .empty-message {
     flex-grow: 1;
     text-align: center;

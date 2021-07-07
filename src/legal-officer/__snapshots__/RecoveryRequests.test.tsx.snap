@@ -18,6 +18,7 @@ exports[`renders 1`] = `
       },
     }
   }
+  className="RecoveryRequests"
   colors={
     Object {
       "accounts": Object {
@@ -93,109 +94,34 @@ exports[`renders 1`] = `
   mainTitle="Recovery requests"
   selectAddress={[MockFunction]}
 >
-  <Frame
+  <Tabs
+    activeKey="pending"
     colors={
       Object {
-        "accounts": Object {
-          "background": "eff3fe",
-          "foreground": "#000000",
-          "hintColor": "#00000099",
-          "iconBackground": "#3b6cf4",
-          "legalOfficerIcon": Object {
-            "category": "legal-officer",
-            "id": "account-shield",
-          },
-        },
-        "bottomMenuItems": Object {
-          "iconGradient": Object {
-            "from": "#7a90cb",
-            "to": "#3b6cf4",
-          },
-        },
-        "buttons": Object {
-          "secondaryBackgroundColor": "#eff3fe",
-        },
-        "dashboard": Object {
+        "background": "#ffffff",
+        "borderColor": "#3b6cf4",
+        "foreground": "#000000",
+        "inactiveTab": Object {
           "background": "#eff3fe",
-          "foreground": "#000000",
+          "foreground": "#000000b3",
         },
-        "frame": Object {
-          "background": "#ffffff",
-          "foreground": "#000000",
-          "link": "#3b6cf426",
-        },
-        "select": Object {
-          "background": "#d8e2fd",
-          "foreground": "#000000",
-          "menuBackgroundColor": "#d8e2fd",
-          "selectedOptionBackgroundColor": "#ffffff33",
-        },
-        "shadowColor": "#3b6cf41a",
-        "sidebar": Object {
-          "activeItemBackground": "#d8e2fd",
-          "background": "#ffffff",
-          "foreground": "#000000",
-        },
-        "table": Object {
-          "background": "#ffffff",
-          "foreground": "#000000",
-          "header": Object {
-            "background": "#ffffff",
-            "foreground": "#000000b3",
-          },
-          "row": Object {
-            "background": "#eff3fe",
-            "foreground": "#000000",
-          },
-        },
-        "tabs": Object {
-          "background": "#ffffff",
-          "borderColor": "#3b6cf4",
-          "foreground": "#000000",
-          "inactiveTab": Object {
-            "background": "#eff3fe",
-            "foreground": "#000000b3",
-          },
-        },
-        "topMenuItems": Object {
-          "iconGradient": Object {
-            "from": "#3b6cf4",
-            "to": "#6050dc",
-          },
-        },
-        "type": "light",
       }
     }
-  >
-    <Tabs
-      activeKey="pending"
-      colors={
+    onSelect={[Function]}
+    tabs={
+      Array [
         Object {
-          "background": "#ffffff",
-          "borderColor": "#3b6cf4",
-          "foreground": "#000000",
-          "inactiveTab": Object {
-            "background": "#eff3fe",
-            "foreground": "#000000b3",
-          },
-        }
-      }
-      onSelect={[Function]}
-      tabs={
-        Array [
-          Object {
-            "key": "pending",
-            "render": [Function],
-            "title": "Pending",
-          },
-          Object {
-            "key": "executed",
-            "render": [Function],
-            "title": "Executed",
-          },
-        ]
-      }
-    />
-  </Frame>
+          "key": "pending",
+          "render": [Function],
+          "title": "Pending",
+        },
+        Object {
+          "key": "history",
+          "render": [Function],
+          "title": "History",
+        },
+      ]
+    }
+  />
 </FullWidthPane>
 `;

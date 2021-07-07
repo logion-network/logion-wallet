@@ -4,9 +4,6 @@ exports[`Renders null with no data 1`] = `null`;
 
 exports[`Renders pending requests 1`] = `
 <React.Fragment>
-  <h2>
-    Pending
-  </h2>
   <Table
     colorTheme={
       Object {
@@ -83,24 +80,34 @@ exports[`Renders pending requests 1`] = `
     columns={
       Array [
         Object {
-          "header": "Requester",
-          "render": [Function],
-          "width": 4,
-        },
-        Object {
-          "header": "Firstname",
+          "header": "First name",
           "render": [Function],
           "width": 2,
         },
         Object {
-          "header": "Lastname",
+          "header": "Last name",
           "render": [Function],
           "width": 2,
         },
         Object {
-          "header": "Created",
+          "header": "Status",
+          "render": [Function],
+          "width": 1,
+        },
+        Object {
+          "header": "Submission date",
           "render": [Function],
           "smallerText": true,
+          "width": 1,
+        },
+        Object {
+          "header": "Account number",
+          "render": [Function],
+          "width": 2,
+        },
+        Object {
+          "header": "Account to recover",
+          "render": [Function],
           "width": 2,
         },
         Object {

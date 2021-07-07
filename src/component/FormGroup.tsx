@@ -17,8 +17,8 @@ export interface Props {
 export default function FormGroup(props: Props) {
 
     const inlineCss = `
-    .Dashboard .form-control,
-    .Dashboard .form-control[readonly] {
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
         background-color: ${props.colors.background};
         color: ${props.colors.foreground};
     }

@@ -22,10 +22,10 @@ export interface Props {
     key?: string,
     variant?: ButtonVariant,
     disabled?: boolean,
-    dataTestid?: string,
     children?: Children,
     onClick?: () => void,
     id?: string,
+    "data-testid"?: string,
 }
 
 export default function Button(props: Props) {
@@ -49,7 +49,7 @@ export default function Button(props: Props) {
         variant = props.variant;
         disabled = props.disabled;
         onClick = props.onClick;
-        testId = props.dataTestid;
+        testId = props['data-testid'];
         children = props.children;
         id = props.id;
     }

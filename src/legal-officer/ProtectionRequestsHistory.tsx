@@ -29,34 +29,38 @@ export default function ProtectionRequestsHistory(props: Props) {
 
     return (
         <>
-            <h2>History</h2>
             <Table
                 columns={[
                     {
-                        header: "Requester",
-                        render: request => <Cell content={ request.requesterAddress }/>,
-                        width: 4,
-                    },
-                    {
-                        header: "Firstname",
+                        header: "First name",
                         render: request => <Cell content={ request.userIdentity.firstName }/>,
                         width: 2,
                     },
                     {
-                        header: "Lastname",
+                        header: "Last name",
                         render: request => <Cell content={ request.userIdentity.lastName }/>,
                         width: 2,
                     },
                     {
-                        header: "Decision",
+                        header: "Status",
                         render: request => <Decision decision={ decision(currentAddress, request.decisions)!.status} />,
                         width: 2,
                     },
                     {
-                        header: "Timestamp",
-                        render: request => <Cell content={ decision(currentAddress, request.decisions)!.decisionOn } smallText/>,
+                        header: "Submission date",
+                        render: request => <Cell content={ request.createdOn } smallText />,
                         width: 2,
                         smallerText: true,
+                    },
+                    {
+                        header: "Account number",
+                        render: request => <Cell content={ request.requesterAddress } smallText wordBreak="break-all" />,
+                        width: 2,
+                    },
+                    {
+                        header: "Account to recover",
+                        render: request => <Cell content={ request.addressToRecover } smallText wordBreak="break-all" />,
+                        width: 2,
                     }
                 ]}
                 data={ requests }

@@ -20,6 +20,10 @@
     padding-bottom: 40px;
 }
 
+.Dashboard .ContentArea {
+    min-height: calc(100% - 135px);
+}
+
 .Dashboard .PrimaryArea {
     font-size: 14px;
     overflow-x: hidden;
@@ -27,7 +31,6 @@
     padding-left: 40px;
     padding-right: 20px;
     padding-bottom: 30px;
-    min-height: 100%;
 }
 
 .Dashboard .SecondaryArea {
@@ -38,7 +41,6 @@
     padding-left: 20px;
     padding-right: 25px;
     padding-bottom: 30px;
-    min-height: 100%;
 }
 
 .Dashboard .AddressSwitcherArea {
