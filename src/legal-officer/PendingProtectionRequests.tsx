@@ -16,6 +16,7 @@ import { acceptProtectionRequest, rejectProtectionRequest, decision } from './Mo
 import { ProtectionRequest } from './Types';
 import ProcessStep from './ProcessStep';
 import Decision from './Decision';
+import ProtectionRequestDetails from './ProtectionRequestDetails';
 
 enum ReviewStatus {
     NONE,
@@ -115,6 +116,7 @@ export default function PendingProtectionRequests(props: Props) {
                         header: "Last name",
                         render: request => <Cell content={ request.userIdentity.lastName }/>,
                         width: 2,
+                        renderDetails: request => <ProtectionRequestDetails request={ request } />,
                     },
                     {
                         header: "Status",

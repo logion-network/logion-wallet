@@ -38,78 +38,84 @@ exports[`renders 1`] = `
   <div
     className="body"
   >
-    <Row
-      noGutters={true}
-      style={
-        Object {
-          "color": "#ffffff",
-        }
-      }
-    >
-      <Col
-        md={6}
+    <React.Fragment>
+      <Row
+        className=""
+        noGutters={true}
         style={
           Object {
-            "backgroundColor": "#152665",
-            "fontSize": undefined,
+            "color": "#ffffff",
           }
         }
       >
-        <Cell
-          content="id1"
-        />
-      </Col>
-      <Col
-        md={6}
+        <Col
+          md={6}
+          style={
+            Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+            }
+          }
+        >
+          <Cell
+            content="id1"
+          />
+        </Col>
+        <Col
+          md={6}
+          style={
+            Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+            }
+          }
+        >
+          <Cell
+            content="id1"
+            smallText={true}
+          />
+        </Col>
+      </Row>
+    </React.Fragment>
+    <React.Fragment>
+      <Row
+        className=""
+        noGutters={true}
         style={
           Object {
-            "backgroundColor": "#152665",
-            "fontSize": undefined,
+            "color": "#ffffff",
           }
         }
       >
-        <Cell
-          content="id1"
-          smallText={true}
-        />
-      </Col>
-    </Row>
-    <Row
-      noGutters={true}
-      style={
-        Object {
-          "color": "#ffffff",
-        }
-      }
-    >
-      <Col
-        md={6}
-        style={
-          Object {
-            "backgroundColor": "#152665",
-            "fontSize": undefined,
+        <Col
+          md={6}
+          style={
+            Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+            }
           }
-        }
-      >
-        <Cell
-          content="id2"
-        />
-      </Col>
-      <Col
-        md={6}
-        style={
-          Object {
-            "backgroundColor": "#152665",
-            "fontSize": undefined,
+        >
+          <Cell
+            content="id2"
+          />
+        </Col>
+        <Col
+          md={6}
+          style={
+            Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+            }
           }
-        }
-      >
-        <Cell
-          content="id2"
-          smallText={true}
-        />
-      </Col>
-    </Row>
+        >
+          <Cell
+            content="id2"
+            smallText={true}
+          />
+        </Col>
+      </Row>
+    </React.Fragment>
   </div>
 </div>
 `;

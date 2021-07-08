@@ -1,0 +1,18 @@
+.Detail {
+    padding: 18px 10px;
+}
+
+.Detail .label {
+    font-weight: normal;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    font-size: 11px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.Detail .value {
+    font-size: 14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
