@@ -1,0 +1,7 @@
+.Row {
+    display: flex;
+}
+
+.Row > .Col {
+    overflow: hidden;
+}

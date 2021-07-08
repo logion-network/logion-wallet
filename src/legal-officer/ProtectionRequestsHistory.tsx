@@ -35,35 +35,33 @@ export default function ProtectionRequestsHistory(props: Props) {
                     {
                         header: "First name",
                         render: request => <Cell content={ request.userIdentity.firstName }/>,
-                        width: 2,
+                        width: "200px",
                     },
                     {
                         header: "Last name",
                         render: request => <Cell content={ request.userIdentity.lastName }/>,
-                        width: 2,
+                        width: "200px",
                         renderDetails: request => <ProtectionRequestDetails request={ request } />,
                     },
                     {
                         header: "Status",
                         render: request => <Decision decision={ decision(currentAddress, request.decisions)!.status} />,
-                        width: 2,
+                        width: "140px",
                         splitAfter: true,
                     },
                     {
                         header: "Submission date",
                         render: request => <Cell content={ request.createdOn } smallText />,
-                        width: 2,
+                        width: "120px",
                         smallerText: true,
                     },
                     {
                         header: "Account number",
                         render: request => <Cell content={ request.requesterAddress } smallText wordBreak="break-all" />,
-                        width: 2,
                     },
                     {
                         header: "Account to recover",
                         render: request => <Cell content={ request.addressToRecover } smallText wordBreak="break-all" />,
-                        width: 2,
                     }
                 ]}
                 data={ requests }
