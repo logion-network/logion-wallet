@@ -45,6 +45,7 @@ export default function ProtectionRequestsHistory(props: Props) {
                         header: "Status",
                         render: request => <Decision decision={ decision(currentAddress, request.decisions)!.status} />,
                         width: 2,
+                        splitAfter: true,
                     },
                     {
                         header: "Submission date",

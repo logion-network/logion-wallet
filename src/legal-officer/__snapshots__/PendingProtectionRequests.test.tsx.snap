@@ -92,6 +92,7 @@ exports[`Renders pending requests 1`] = `
         Object {
           "header": "Status",
           "render": [Function],
+          "splitAfter": true,
           "width": 1,
         },
         Object {

@@ -120,6 +120,7 @@ export default function PendingProtectionRequests(props: Props) {
                         header: "Status",
                         render: request => <Decision decision={ decision(currentAddress, request.decisions)!.status} />,
                         width: 1,
+                        splitAfter: true,
                     },
                     {
                         header: "Submission date",

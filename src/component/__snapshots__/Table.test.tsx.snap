@@ -4,6 +4,13 @@ exports[`renders 1`] = `
 <div
   className="Table"
 >
+  <style>
+    
+            .Table .body .row [class*="col-"].split-after::before {
+                background-color: #152665;
+            }
+            
+  </style>
   <div
     className="header"
     style={
@@ -35,7 +42,6 @@ exports[`renders 1`] = `
       noGutters={true}
       style={
         Object {
-          "backgroundColor": "#152665",
           "color": "#ffffff",
         }
       }
@@ -44,6 +50,7 @@ exports[`renders 1`] = `
         md={6}
         style={
           Object {
+            "backgroundColor": "#152665",
             "fontSize": undefined,
           }
         }
@@ -56,6 +63,7 @@ exports[`renders 1`] = `
         md={6}
         style={
           Object {
+            "backgroundColor": "#152665",
             "fontSize": undefined,
           }
         }
@@ -70,7 +78,6 @@ exports[`renders 1`] = `
       noGutters={true}
       style={
         Object {
-          "backgroundColor": "#152665",
           "color": "#ffffff",
         }
       }
@@ -79,6 +86,7 @@ exports[`renders 1`] = `
         md={6}
         style={
           Object {
+            "backgroundColor": "#152665",
             "fontSize": undefined,
           }
         }
@@ -91,6 +99,7 @@ exports[`renders 1`] = `
         md={6}
         style={
           Object {
+            "backgroundColor": "#152665",
             "fontSize": undefined,
           }
         }
