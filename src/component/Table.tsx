@@ -48,6 +48,7 @@ export interface Column<T> {
     render: (element: T) => Children,
     width: number,
     smallerText?: boolean,
+    splitAfter?: boolean,
 }
 
 function fontSize<T>(column: Column<T>): (string | undefined) {
@@ -65,10 +66,27 @@ export interface Props<T> {
     renderEmpty: () => Children,
 }
 
+function columnClassName<T>(column: Column<T>): (string | undefined) {
+    if(column.splitAfter !== undefined && column.splitAfter) {
+        return "split-after";
+    } else {
+        return undefined;
+    }
+}
+
 export default function Table<T>(props: Props<T>) {
 
     return (
         <div className="Table">
+            <style>
+            {
+            `
+            .Table .body .row [class*="col-"].split-after::before {
+                background-color: ${props.colorTheme.table.row.background};
+            }
+            `
+            }
+            </style>
             <div
                 className="header"
                 style={{
@@ -92,22 +110,26 @@ export default function Table<T>(props: Props<T>) {
                             key={ itemIndex }
                             style={{
                                 color: props.colorTheme.table.row.foreground,
-                                backgroundColor: props.colorTheme.table.row.background,
                             }}
                             noGutters
                         >
                             {
-                                props.columns.map((col, colIndex) => (
-                                    <Col
-                                        key={ colIndex }
-                                        md={ col.width }
-                                        style={{
-                                            fontSize: fontSize(col)
-                                        }}
-                                    >
-                                        { col.render(item) }
-                                    </Col>
-                                ))
+                                props.columns.map((col, colIndex) => {
+                                    const className = colIndex < props.columns.length -1 ? columnClassName(col) : undefined;
+                                    return(
+                                        <Col
+                                            className={ className }
+                                            key={ colIndex }
+                                            md={ col.width }
+                                            style={{
+                                                fontSize: fontSize(col),
+                                                backgroundColor: className === undefined ? props.colorTheme.table.row.background : undefined,
+                                            }}
+                                        >
+                                            { col.render(item) }
+                                        </Col>
+                                    );
+                                })
                             }
                         </Row>
                     ))
