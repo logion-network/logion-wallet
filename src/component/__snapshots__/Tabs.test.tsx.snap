@@ -32,13 +32,55 @@ exports[`renders 1`] = `
   >
     <Tab
       eventKey="key1"
-      title="Tab 1"
+      title={
+        <span>
+          Tab 1
+          <TabCanvas
+            active="key1"
+            colors={
+              Object {
+                "background": "#0c163d",
+                "borderColor": "#3b6cf4",
+                "foreground": "#ffffff",
+                "inactiveTab": Object {
+                  "background": "#d8e2fd",
+                  "foreground": "#ffffff",
+                },
+              }
+            }
+            first={true}
+            last={false}
+            trigger="key1"
+          />
+        </span>
+      }
     >
       Content 1
     </Tab>
     <Tab
       eventKey="key2"
-      title="Tab 2"
+      title={
+        <span>
+          Tab 2
+          <TabCanvas
+            active="key1"
+            colors={
+              Object {
+                "background": "#0c163d",
+                "borderColor": "#3b6cf4",
+                "foreground": "#ffffff",
+                "inactiveTab": Object {
+                  "background": "#d8e2fd",
+                  "foreground": "#ffffff",
+                },
+              }
+            }
+            first={false}
+            last={true}
+            trigger="key2"
+          />
+        </span>
+      }
     >
       Content 2
     </Tab>
