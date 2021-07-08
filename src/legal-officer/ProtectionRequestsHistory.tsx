@@ -7,6 +7,7 @@ import { useRootContext } from '../RootContext';
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import { decision } from './Model';
 import Decision from './Decision';
+import ProtectionRequestDetails from './ProtectionRequestDetails';
 
 export interface Props {
     recovery: boolean,
@@ -40,6 +41,7 @@ export default function ProtectionRequestsHistory(props: Props) {
                         header: "Last name",
                         render: request => <Cell content={ request.userIdentity.lastName }/>,
                         width: 2,
+                        renderDetails: request => <ProtectionRequestDetails request={ request } />,
                     },
                     {
                         header: "Status",

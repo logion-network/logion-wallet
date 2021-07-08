@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, useState, useCallback } from 'react';
 import * as Css from 'csstype';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import { Children } from './types/Helpers';
 import { ColorTheme } from './ColorTheme';
 import './Table.css';
+import Icon from './Icon';
 
 
 export interface CellProps {
@@ -49,6 +50,7 @@ export interface Column<T> {
     width: number,
     smallerText?: boolean,
     splitAfter?: boolean,
+    renderDetails?: (element: T) => Children,
 }
 
 function fontSize<T>(column: Column<T>): (string | undefined) {
@@ -74,7 +76,31 @@ function columnClassName<T>(column: Column<T>): (string | undefined) {
     }
 }
 
+function initialDetailsExpanded<T>(data: T[]): boolean[] {
+    const detailsExpanded = new Array<boolean>(data.length);
+    for(let i = 0; i < detailsExpanded.length; ++i) {
+        detailsExpanded[i] = false;
+    }
+    return detailsExpanded;
+}
+
 export default function Table<T>(props: Props<T>) {
+    const [ detailsExpanded, setDetailsExpanded ] = useState<boolean[]>(initialDetailsExpanded(props.data));
+
+    let renderDetails: ((element: T) => Children) | undefined = undefined;
+    for(let i = 0; i < props.columns.length; ++i) {
+        const column = props.columns[i];
+        if(column.renderDetails !== undefined) {
+            renderDetails = column.renderDetails;
+            break;
+        }
+    }
+
+    const toggle = useCallback((itemIndex: number) => {
+        const newDetailsExpanded = [ ...detailsExpanded ];
+        newDetailsExpanded[itemIndex] = !newDetailsExpanded[itemIndex];
+        setDetailsExpanded(newDetailsExpanded);
+    }, [ detailsExpanded, setDetailsExpanded ]);
 
     return (
         <div className="Table">
@@ -106,7 +132,9 @@ export default function Table<T>(props: Props<T>) {
                 {
                     props.data.length > 0 &&
                     props.data.map((item, itemIndex) => (
+                        <>
                         <Row
+                            className={ renderDetails !== undefined ? "has-details" : "" }
                             key={ itemIndex }
                             style={{
                                 color: props.colorTheme.table.row.foreground,
@@ -127,11 +155,33 @@ export default function Table<T>(props: Props<T>) {
                                             }}
                                         >
                                             { col.render(item) }
+                                            {
+                                                col.renderDetails !== undefined &&
+                                                <ShowDetailsButton
+                                                    expanded={ detailsExpanded[itemIndex] }
+                                                    onClick={ () => toggle(itemIndex) }
+                                                />
+                                            }
                                         </Col>
                                     );
                                 })
                             }
                         </Row>
+                        {
+                            renderDetails !== undefined &&
+                            <Row
+                                className={ "details" + (detailsExpanded[itemIndex] ? " expanded" : "") }
+                                key={ itemIndex + "-details" }
+                                style={{
+                                    color: props.colorTheme.table.row.foreground,
+                                    backgroundColor: props.colorTheme.table.row.background,
+                                }}
+                                noGutters
+                            >
+                                { renderDetails(item) }
+                            </Row>
+                        }
+                        </>
                     ))
                 }
                 {
@@ -148,6 +198,20 @@ export default function Table<T>(props: Props<T>) {
                     </Row>
                 }
             </div>
+        </div>
+    );
+}
+
+interface ShowDetailsButtonProps {
+    expanded: boolean,
+    onClick: () => void,
+}
+
+function ShowDetailsButton(props: ShowDetailsButtonProps) {
+
+    return (
+        <div className={"ShowDetailsButton" + (props.expanded ? " expanded" : "")} onClick={ props.onClick }>
+            <Icon icon={{id: "arrow-down"}} />
         </div>
     );
 }

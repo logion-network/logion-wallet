@@ -87,6 +87,7 @@ exports[`Renders requests history 1`] = `
         Object {
           "header": "Last name",
           "render": [Function],
+          "renderDetails": [Function],
           "width": 2,
         },
         Object {
