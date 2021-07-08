@@ -13,12 +13,16 @@ test("renders", () => {
         {
             header: "Column 1",
             render: (value: Record) => <Cell content={ value.id }/>,
-            width: 6,
+            width: "50%",
         },
         {
             header: "Column 2",
             render: (value: Record) => <Cell content={ value.id } smallText/>,
-            width: 6,
+            width: "100px",
+        },
+        {
+            header: "Column 3",
+            render: (value: Record) => <Cell content={ value.id } />,
         }
     ];
     const data: Record[] = [

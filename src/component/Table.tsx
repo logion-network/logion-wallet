@@ -1,9 +1,8 @@
 import React, { CSSProperties, useState, useCallback } from 'react';
 import * as Css from 'csstype';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
 
-import { Children } from './types/Helpers';
+import { Row, Col } from './Grid';
+import { Child, Children } from './types/Helpers';
 import { ColorTheme } from './ColorTheme';
 import './Table.css';
 import Icon from './Icon';
@@ -46,11 +45,11 @@ export function EmptyTableMessage(props: EmptyTableMessageProps) {
 
 export interface Column<T> {
     header: Children,
-    render: (element: T) => Children,
-    width: number,
+    render: (element: T) => Child,
+    width?: string,
     smallerText?: boolean,
     splitAfter?: boolean,
-    renderDetails?: (element: T) => Children,
+    renderDetails?: (element: T) => Child,
 }
 
 function fontSize<T>(column: Column<T>): (string | undefined) {
@@ -84,6 +83,41 @@ function initialDetailsExpanded<T>(data: T[]): boolean[] {
     return detailsExpanded;
 }
 
+function computeColumnWidths<T>(columns: Column<T>[]): string[] {
+    let reservedPixelWidth = 0;
+    let reservedPercentageWidth = 0;
+    let undefinedWidths = 0;
+    columns.forEach(column => {
+        const width = column.width;
+        if(width !== undefined) {
+            if(width.endsWith("px")) {
+                reservedPixelWidth += Number(width.substring(0, width.length - 2));
+            } else if(width.endsWith("%")) {
+                reservedPercentageWidth += Number(width.substring(0, width.length - 1));
+            } else {
+                reservedPixelWidth += Number(width);
+            }
+        } else {
+            ++undefinedWidths;
+        }
+    });
+    const remainingPercentageWidth = 100 - reservedPercentageWidth;
+    if(remainingPercentageWidth < 0) {
+        throw new Error("No more space left");
+    }
+    const computedWidthForUndefined = `calc(( ${remainingPercentageWidth}% - ${reservedPixelWidth}px ) / ${undefinedWidths})`;
+    const computedWidths = new Array<string>(columns.length);
+    for(let i = 0; i < columns.length; ++i) {
+        const column = columns[i];
+        if(column.width === undefined) {
+            computedWidths[i] = computedWidthForUndefined;
+        } else {
+            computedWidths[i] = column.width;
+        }
+    }
+    return computedWidths;
+}
+
 export default function Table<T>(props: Props<T>) {
     const [ detailsExpanded, setDetailsExpanded ] = useState<boolean[]>(initialDetailsExpanded(props.data));
 
@@ -96,6 +130,8 @@ export default function Table<T>(props: Props<T>) {
         }
     }
 
+    const computedWidths: string[] = computeColumnWidths(props.columns);
+
     const toggle = useCallback((itemIndex: number) => {
         const newDetailsExpanded = [ ...detailsExpanded ];
         newDetailsExpanded[itemIndex] = !newDetailsExpanded[itemIndex];
@@ -107,7 +143,7 @@ export default function Table<T>(props: Props<T>) {
             <style>
             {
             `
-            .Table .body .row [class*="col-"].split-after::before {
+            .Table .body .Row .Col.split-after::before {
                 background-color: ${props.colorTheme.table.row.background};
             }
             `
@@ -120,10 +156,10 @@ export default function Table<T>(props: Props<T>) {
                     backgroundColor: props.colorTheme.table.header.background,
                 }}
             >
-                <Row noGutters>
+                <Row>
                     {
                         props.columns.map((column, index) => (
-                            <Col key={ index } md={ column.width }>{ column.header }</Col>
+                            <Col key={ index } style={{width: computedWidths[index]}}>{ column.header }</Col>
                         ))
                     }
                 </Row>
@@ -139,7 +175,6 @@ export default function Table<T>(props: Props<T>) {
                             style={{
                                 color: props.colorTheme.table.row.foreground,
                             }}
-                            noGutters
                         >
                             {
                                 props.columns.map((col, colIndex) => {
@@ -148,8 +183,8 @@ export default function Table<T>(props: Props<T>) {
                                         <Col
                                             className={ className }
                                             key={ colIndex }
-                                            md={ col.width }
                                             style={{
+                                                width: computedWidths[colIndex],
                                                 fontSize: fontSize(col),
                                                 backgroundColor: className === undefined ? props.colorTheme.table.row.background : undefined,
                                             }}
@@ -176,7 +211,6 @@ export default function Table<T>(props: Props<T>) {
                                     color: props.colorTheme.table.row.foreground,
                                     backgroundColor: props.colorTheme.table.row.background,
                                 }}
-                                noGutters
                             >
                                 { renderDetails(item) }
                             </Row>
@@ -192,7 +226,6 @@ export default function Table<T>(props: Props<T>) {
                             color: props.colorTheme.table.row.foreground,
                             backgroundColor: props.colorTheme.table.row.background,
                         }}
-                        noGutters
                     >
                         { props.renderEmpty() }
                     </Row>

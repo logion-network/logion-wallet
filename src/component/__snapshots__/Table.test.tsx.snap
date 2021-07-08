@@ -6,7 +6,7 @@ exports[`renders 1`] = `
 >
   <style>
     
-            .Table .body .row [class*="col-"].split-after::before {
+            .Table .body .Row .Col.split-after::before {
                 background-color: #152665;
             }
             
@@ -20,18 +20,33 @@ exports[`renders 1`] = `
       }
     }
   >
-    <Row
-      noGutters={true}
-    >
+    <Row>
       <Col
-        md={6}
+        style={
+          Object {
+            "width": "50%",
+          }
+        }
       >
         Column 1
       </Col>
       <Col
-        md={6}
+        style={
+          Object {
+            "width": "100px",
+          }
+        }
       >
         Column 2
+      </Col>
+      <Col
+        style={
+          Object {
+            "width": "calc(( 50% - 100px ) / 1)",
+          }
+        }
+      >
+        Column 3
       </Col>
     </Row>
   </div>
@@ -41,7 +56,6 @@ exports[`renders 1`] = `
     <React.Fragment>
       <Row
         className=""
-        noGutters={true}
         style={
           Object {
             "color": "#ffffff",
@@ -49,11 +63,11 @@ exports[`renders 1`] = `
         }
       >
         <Col
-          md={6}
           style={
             Object {
               "backgroundColor": "#152665",
               "fontSize": undefined,
+              "width": "50%",
             }
           }
         >
@@ -62,17 +76,30 @@ exports[`renders 1`] = `
           />
         </Col>
         <Col
-          md={6}
           style={
             Object {
               "backgroundColor": "#152665",
               "fontSize": undefined,
+              "width": "100px",
             }
           }
         >
           <Cell
             content="id1"
             smallText={true}
+          />
+        </Col>
+        <Col
+          style={
+            Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+              "width": "calc(( 50% - 100px ) / 1)",
+            }
+          }
+        >
+          <Cell
+            content="id1"
           />
         </Col>
       </Row>
@@ -80,7 +107,6 @@ exports[`renders 1`] = `
     <React.Fragment>
       <Row
         className=""
-        noGutters={true}
         style={
           Object {
             "color": "#ffffff",
@@ -88,11 +114,11 @@ exports[`renders 1`] = `
         }
       >
         <Col
-          md={6}
           style={
             Object {
               "backgroundColor": "#152665",
               "fontSize": undefined,
+              "width": "50%",
             }
           }
         >
@@ -101,17 +127,30 @@ exports[`renders 1`] = `
           />
         </Col>
         <Col
-          md={6}
           style={
             Object {
               "backgroundColor": "#152665",
               "fontSize": undefined,
+              "width": "100px",
             }
           }
         >
           <Cell
             content="id2"
             smallText={true}
+          />
+        </Col>
+        <Col
+          style={
+            Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+              "width": "calc(( 50% - 100px ) / 1)",
+            }
+          }
+        >
+          <Cell
+            content="id2"
           />
         </Col>
       </Row>
