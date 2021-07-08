@@ -1,0 +1,1378 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders and compares with different data 1`] = `
+<div
+  className="AccountInfo"
+>
+  <div
+    className="Frame"
+    style={
+      Object {
+        "backgroundColor": "#ffffff",
+        "boxShadow": "0 0 25px #3b6cf41a",
+        "color": "#000000",
+      }
+    }
+  >
+    <style>
+      
+    .Frame a,
+    .Frame .btn-link {
+        color: #3b6cf426
+    }
+    .Dashboard .Frame .form-control,
+    .Dashboard .Frame .form-control[readonly] {
+        background-color: #ffffff;
+    }
+    
+    </style>
+    <div
+      className="FormGroup"
+    >
+      <style>
+        
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+      </style>
+      <div
+        className="form-group"
+        data-testid="accountAddressGroup"
+      >
+        <label
+          className="form-label"
+          htmlFor="accountAddress"
+        >
+          some label
+        </label>
+        <input
+          className="form-control"
+          data-testid="accountAddress"
+          id="accountAddress"
+          name="accountAddress"
+          onBlur={[Function]}
+          onChange={[Function]}
+          readOnly={true}
+          type="text"
+          value="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
+        />
+        <div
+          className="invalid-feedback"
+          data-testid="accountAddressMessage"
+        />
+      </div>
+    </div>
+    <div
+      className="row"
+    >
+      <div
+        className="col-md-6"
+      >
+        <div
+          className="FormGroup"
+        >
+          <style>
+            
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+          </style>
+          <div
+            className="form-group"
+            data-testid="firstNameGroup"
+          >
+            <label
+              className="form-label"
+              htmlFor="firstName"
+            >
+              First Name
+            </label>
+            <input
+              className="form-control is-invalid"
+              data-testid="firstName"
+              id="firstName"
+              name="firstName"
+              onBlur={[Function]}
+              onChange={[Function]}
+              readOnly={true}
+              type="text"
+              value="John"
+            />
+            <div
+              className="invalid-feedback"
+              data-testid="firstNameMessage"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        className="col-md-6"
+      >
+        <div
+          className="FormGroup"
+        >
+          <style>
+            
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+          </style>
+          <div
+            className="form-group"
+            data-testid="lastNameGroup"
+          >
+            <label
+              className="form-label"
+              htmlFor="lastName"
+            >
+              Last Name
+            </label>
+            <input
+              className="form-control is-invalid"
+              data-testid="lastName"
+              id="lastName"
+              name="lastName"
+              onBlur={[Function]}
+              onChange={[Function]}
+              readOnly={true}
+              type="text"
+              value="Doe"
+            />
+            <div
+              className="invalid-feedback"
+              data-testid="lastNameMessage"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="row"
+    >
+      <div
+        className="col-md-6"
+      >
+        <div
+          className="FormGroup"
+        >
+          <style>
+            
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+          </style>
+          <div
+            className="form-group"
+            data-testid="emailGroup"
+          >
+            <label
+              className="form-label"
+              htmlFor="email"
+            >
+              Email
+            </label>
+            <input
+              className="form-control"
+              data-testid="email"
+              id="email"
+              name="email"
+              onBlur={[Function]}
+              onChange={[Function]}
+              readOnly={true}
+              type="text"
+              value="john.doe@logion.network"
+            />
+            <div
+              className="invalid-feedback"
+              data-testid="emailMessage"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        className="col-md-6"
+      >
+        <div
+          className="FormGroup"
+        >
+          <style>
+            
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+          </style>
+          <div
+            className="form-group"
+            data-testid="phoneNumberGroup"
+          >
+            <label
+              className="form-label"
+              htmlFor="phoneNumber"
+            >
+              Phone Number
+            </label>
+            <input
+              className="form-control"
+              data-testid="phoneNumber"
+              id="phoneNumber"
+              name="phoneNumber"
+              onBlur={[Function]}
+              onChange={[Function]}
+              readOnly={true}
+              type="text"
+              value="+1234"
+            />
+            <div
+              className="invalid-feedback"
+              data-testid="phoneNumberMessage"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <h3>
+      Address
+    </h3>
+    <div
+      className="FormGroup"
+    >
+      <style>
+        
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+      </style>
+      <div
+        className="form-group"
+        data-testid="line1Group"
+      >
+        <label
+          className="form-label"
+          htmlFor="line1"
+        >
+          Line1
+        </label>
+        <input
+          className="form-control is-invalid"
+          data-testid="line1"
+          id="line1"
+          name="line1"
+          onBlur={[Function]}
+          onChange={[Function]}
+          readOnly={true}
+          type="text"
+          value="Place de le République Française, 10"
+        />
+        <div
+          className="invalid-feedback"
+          data-testid="line1Message"
+        />
+      </div>
+    </div>
+    <div
+      className="FormGroup"
+    >
+      <style>
+        
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+      </style>
+      <div
+        className="form-group"
+        data-testid="line2Group"
+      >
+        <label
+          className="form-label"
+          htmlFor="line2"
+        >
+          Line2
+        </label>
+        <input
+          className="form-control is-invalid"
+          data-testid="line2"
+          id="line2"
+          name="line2"
+          onBlur={[Function]}
+          onChange={[Function]}
+          readOnly={true}
+          type="text"
+          value="boite 15"
+        />
+        <div
+          className="invalid-feedback"
+          data-testid="line2Message"
+        />
+      </div>
+    </div>
+    <div
+      className="row"
+    >
+      <div
+        className="col-md-4"
+      >
+        <div
+          className="FormGroup"
+        >
+          <style>
+            
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+          </style>
+          <div
+            className="form-group"
+            data-testid="postalCodeGroup"
+          >
+            <label
+              className="form-label"
+              htmlFor="postalCode"
+            >
+              Postal Code
+            </label>
+            <input
+              className="form-control"
+              data-testid="postalCode"
+              id="postalCode"
+              name="postalCode"
+              onBlur={[Function]}
+              onChange={[Function]}
+              readOnly={true}
+              type="text"
+              value="4000"
+            />
+            <div
+              className="invalid-feedback"
+              data-testid="postalCodeMessage"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        className="col-md-8"
+      >
+        <div
+          className="FormGroup"
+        >
+          <style>
+            
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+          </style>
+          <div
+            className="form-group"
+            data-testid="cityGroup"
+          >
+            <label
+              className="form-label"
+              htmlFor="city"
+            >
+              City
+            </label>
+            <input
+              className="form-control"
+              data-testid="city"
+              id="city"
+              name="city"
+              onBlur={[Function]}
+              onChange={[Function]}
+              readOnly={true}
+              type="text"
+              value="Liège"
+            />
+            <div
+              className="invalid-feedback"
+              data-testid="cityMessage"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="FormGroup"
+    >
+      <style>
+        
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+      </style>
+      <div
+        className="form-group"
+        data-testid="countryGroup"
+      >
+        <label
+          className="form-label"
+          htmlFor="country"
+        >
+          Country
+        </label>
+        <input
+          className="form-control"
+          data-testid="country"
+          id="country"
+          name="country"
+          onBlur={[Function]}
+          onChange={[Function]}
+          readOnly={true}
+          type="text"
+          value="Belgium"
+        />
+        <div
+          className="invalid-feedback"
+          data-testid="countryMessage"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders and compares with same data 1`] = `
+<div
+  className="AccountInfo"
+>
+  <div
+    className="Frame"
+    style={
+      Object {
+        "backgroundColor": "#ffffff",
+        "boxShadow": "0 0 25px #3b6cf41a",
+        "color": "#000000",
+      }
+    }
+  >
+    <style>
+      
+    .Frame a,
+    .Frame .btn-link {
+        color: #3b6cf426
+    }
+    .Dashboard .Frame .form-control,
+    .Dashboard .Frame .form-control[readonly] {
+        background-color: #ffffff;
+    }
+    
+    </style>
+    <div
+      className="FormGroup"
+    >
+      <style>
+        
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+      </style>
+      <div
+        className="form-group"
+        data-testid="accountAddressGroup"
+      >
+        <label
+          className="form-label"
+          htmlFor="accountAddress"
+        >
+          some label
+        </label>
+        <input
+          className="form-control"
+          data-testid="accountAddress"
+          id="accountAddress"
+          name="accountAddress"
+          onBlur={[Function]}
+          onChange={[Function]}
+          readOnly={true}
+          type="text"
+          value="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
+        />
+        <div
+          className="invalid-feedback"
+          data-testid="accountAddressMessage"
+        />
+      </div>
+    </div>
+    <div
+      className="row"
+    >
+      <div
+        className="col-md-6"
+      >
+        <div
+          className="FormGroup"
+        >
+          <style>
+            
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+          </style>
+          <div
+            className="form-group"
+            data-testid="firstNameGroup"
+          >
+            <label
+              className="form-label"
+              htmlFor="firstName"
+            >
+              First Name
+            </label>
+            <input
+              className="form-control"
+              data-testid="firstName"
+              id="firstName"
+              name="firstName"
+              onBlur={[Function]}
+              onChange={[Function]}
+              readOnly={true}
+              type="text"
+              value="John"
+            />
+            <div
+              className="invalid-feedback"
+              data-testid="firstNameMessage"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        className="col-md-6"
+      >
+        <div
+          className="FormGroup"
+        >
+          <style>
+            
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+          </style>
+          <div
+            className="form-group"
+            data-testid="lastNameGroup"
+          >
+            <label
+              className="form-label"
+              htmlFor="lastName"
+            >
+              Last Name
+            </label>
+            <input
+              className="form-control"
+              data-testid="lastName"
+              id="lastName"
+              name="lastName"
+              onBlur={[Function]}
+              onChange={[Function]}
+              readOnly={true}
+              type="text"
+              value="Doe"
+            />
+            <div
+              className="invalid-feedback"
+              data-testid="lastNameMessage"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="row"
+    >
+      <div
+        className="col-md-6"
+      >
+        <div
+          className="FormGroup"
+        >
+          <style>
+            
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+          </style>
+          <div
+            className="form-group"
+            data-testid="emailGroup"
+          >
+            <label
+              className="form-label"
+              htmlFor="email"
+            >
+              Email
+            </label>
+            <input
+              className="form-control"
+              data-testid="email"
+              id="email"
+              name="email"
+              onBlur={[Function]}
+              onChange={[Function]}
+              readOnly={true}
+              type="text"
+              value="john.doe@logion.network"
+            />
+            <div
+              className="invalid-feedback"
+              data-testid="emailMessage"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        className="col-md-6"
+      >
+        <div
+          className="FormGroup"
+        >
+          <style>
+            
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+          </style>
+          <div
+            className="form-group"
+            data-testid="phoneNumberGroup"
+          >
+            <label
+              className="form-label"
+              htmlFor="phoneNumber"
+            >
+              Phone Number
+            </label>
+            <input
+              className="form-control"
+              data-testid="phoneNumber"
+              id="phoneNumber"
+              name="phoneNumber"
+              onBlur={[Function]}
+              onChange={[Function]}
+              readOnly={true}
+              type="text"
+              value="+1234"
+            />
+            <div
+              className="invalid-feedback"
+              data-testid="phoneNumberMessage"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <h3>
+      Address
+    </h3>
+    <div
+      className="FormGroup"
+    >
+      <style>
+        
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+      </style>
+      <div
+        className="form-group"
+        data-testid="line1Group"
+      >
+        <label
+          className="form-label"
+          htmlFor="line1"
+        >
+          Line1
+        </label>
+        <input
+          className="form-control"
+          data-testid="line1"
+          id="line1"
+          name="line1"
+          onBlur={[Function]}
+          onChange={[Function]}
+          readOnly={true}
+          type="text"
+          value="Place de le République Française, 10"
+        />
+        <div
+          className="invalid-feedback"
+          data-testid="line1Message"
+        />
+      </div>
+    </div>
+    <div
+      className="FormGroup"
+    >
+      <style>
+        
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+      </style>
+      <div
+        className="form-group"
+        data-testid="line2Group"
+      >
+        <label
+          className="form-label"
+          htmlFor="line2"
+        >
+          Line2
+        </label>
+        <input
+          className="form-control"
+          data-testid="line2"
+          id="line2"
+          name="line2"
+          onBlur={[Function]}
+          onChange={[Function]}
+          readOnly={true}
+          type="text"
+          value="boite 15"
+        />
+        <div
+          className="invalid-feedback"
+          data-testid="line2Message"
+        />
+      </div>
+    </div>
+    <div
+      className="row"
+    >
+      <div
+        className="col-md-4"
+      >
+        <div
+          className="FormGroup"
+        >
+          <style>
+            
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+          </style>
+          <div
+            className="form-group"
+            data-testid="postalCodeGroup"
+          >
+            <label
+              className="form-label"
+              htmlFor="postalCode"
+            >
+              Postal Code
+            </label>
+            <input
+              className="form-control"
+              data-testid="postalCode"
+              id="postalCode"
+              name="postalCode"
+              onBlur={[Function]}
+              onChange={[Function]}
+              readOnly={true}
+              type="text"
+              value="4000"
+            />
+            <div
+              className="invalid-feedback"
+              data-testid="postalCodeMessage"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        className="col-md-8"
+      >
+        <div
+          className="FormGroup"
+        >
+          <style>
+            
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+          </style>
+          <div
+            className="form-group"
+            data-testid="cityGroup"
+          >
+            <label
+              className="form-label"
+              htmlFor="city"
+            >
+              City
+            </label>
+            <input
+              className="form-control"
+              data-testid="city"
+              id="city"
+              name="city"
+              onBlur={[Function]}
+              onChange={[Function]}
+              readOnly={true}
+              type="text"
+              value="Liège"
+            />
+            <div
+              className="invalid-feedback"
+              data-testid="cityMessage"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="FormGroup"
+    >
+      <style>
+        
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+      </style>
+      <div
+        className="form-group"
+        data-testid="countryGroup"
+      >
+        <label
+          className="form-label"
+          htmlFor="country"
+        >
+          Country
+        </label>
+        <input
+          className="form-control"
+          data-testid="country"
+          id="country"
+          name="country"
+          onBlur={[Function]}
+          onChange={[Function]}
+          readOnly={true}
+          type="text"
+          value="Belgium"
+        />
+        <div
+          className="invalid-feedback"
+          data-testid="countryMessage"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders without comparison 1`] = `
+<div
+  className="AccountInfo"
+>
+  <div
+    className="Frame"
+    style={
+      Object {
+        "backgroundColor": "#ffffff",
+        "boxShadow": "0 0 25px #3b6cf41a",
+        "color": "#000000",
+      }
+    }
+  >
+    <style>
+      
+    .Frame a,
+    .Frame .btn-link {
+        color: #3b6cf426
+    }
+    .Dashboard .Frame .form-control,
+    .Dashboard .Frame .form-control[readonly] {
+        background-color: #ffffff;
+    }
+    
+    </style>
+    <div
+      className="FormGroup"
+    >
+      <style>
+        
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+      </style>
+      <div
+        className="form-group"
+        data-testid="accountAddressGroup"
+      >
+        <label
+          className="form-label"
+          htmlFor="accountAddress"
+        >
+          some label
+        </label>
+        <input
+          className="form-control"
+          data-testid="accountAddress"
+          id="accountAddress"
+          name="accountAddress"
+          onBlur={[Function]}
+          onChange={[Function]}
+          readOnly={true}
+          type="text"
+          value="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
+        />
+        <div
+          className="invalid-feedback"
+          data-testid="accountAddressMessage"
+        />
+      </div>
+    </div>
+    <div
+      className="row"
+    >
+      <div
+        className="col-md-6"
+      >
+        <div
+          className="FormGroup"
+        >
+          <style>
+            
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+          </style>
+          <div
+            className="form-group"
+            data-testid="firstNameGroup"
+          >
+            <label
+              className="form-label"
+              htmlFor="firstName"
+            >
+              First Name
+            </label>
+            <input
+              className="form-control"
+              data-testid="firstName"
+              id="firstName"
+              name="firstName"
+              onBlur={[Function]}
+              onChange={[Function]}
+              readOnly={true}
+              type="text"
+              value="John"
+            />
+            <div
+              className="invalid-feedback"
+              data-testid="firstNameMessage"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        className="col-md-6"
+      >
+        <div
+          className="FormGroup"
+        >
+          <style>
+            
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+          </style>
+          <div
+            className="form-group"
+            data-testid="lastNameGroup"
+          >
+            <label
+              className="form-label"
+              htmlFor="lastName"
+            >
+              Last Name
+            </label>
+            <input
+              className="form-control"
+              data-testid="lastName"
+              id="lastName"
+              name="lastName"
+              onBlur={[Function]}
+              onChange={[Function]}
+              readOnly={true}
+              type="text"
+              value="Doe"
+            />
+            <div
+              className="invalid-feedback"
+              data-testid="lastNameMessage"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="row"
+    >
+      <div
+        className="col-md-6"
+      >
+        <div
+          className="FormGroup"
+        >
+          <style>
+            
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+          </style>
+          <div
+            className="form-group"
+            data-testid="emailGroup"
+          >
+            <label
+              className="form-label"
+              htmlFor="email"
+            >
+              Email
+            </label>
+            <input
+              className="form-control"
+              data-testid="email"
+              id="email"
+              name="email"
+              onBlur={[Function]}
+              onChange={[Function]}
+              readOnly={true}
+              type="text"
+              value="john.doe@logion.network"
+            />
+            <div
+              className="invalid-feedback"
+              data-testid="emailMessage"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        className="col-md-6"
+      >
+        <div
+          className="FormGroup"
+        >
+          <style>
+            
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+          </style>
+          <div
+            className="form-group"
+            data-testid="phoneNumberGroup"
+          >
+            <label
+              className="form-label"
+              htmlFor="phoneNumber"
+            >
+              Phone Number
+            </label>
+            <input
+              className="form-control"
+              data-testid="phoneNumber"
+              id="phoneNumber"
+              name="phoneNumber"
+              onBlur={[Function]}
+              onChange={[Function]}
+              readOnly={true}
+              type="text"
+              value="+1234"
+            />
+            <div
+              className="invalid-feedback"
+              data-testid="phoneNumberMessage"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <h3>
+      Address
+    </h3>
+    <div
+      className="FormGroup"
+    >
+      <style>
+        
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+      </style>
+      <div
+        className="form-group"
+        data-testid="line1Group"
+      >
+        <label
+          className="form-label"
+          htmlFor="line1"
+        >
+          Line1
+        </label>
+        <input
+          className="form-control"
+          data-testid="line1"
+          id="line1"
+          name="line1"
+          onBlur={[Function]}
+          onChange={[Function]}
+          readOnly={true}
+          type="text"
+          value="Place de le République Française, 10"
+        />
+        <div
+          className="invalid-feedback"
+          data-testid="line1Message"
+        />
+      </div>
+    </div>
+    <div
+      className="FormGroup"
+    >
+      <style>
+        
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+      </style>
+      <div
+        className="form-group"
+        data-testid="line2Group"
+      >
+        <label
+          className="form-label"
+          htmlFor="line2"
+        >
+          Line2
+        </label>
+        <input
+          className="form-control"
+          data-testid="line2"
+          id="line2"
+          name="line2"
+          onBlur={[Function]}
+          onChange={[Function]}
+          readOnly={true}
+          type="text"
+          value="boite 15"
+        />
+        <div
+          className="invalid-feedback"
+          data-testid="line2Message"
+        />
+      </div>
+    </div>
+    <div
+      className="row"
+    >
+      <div
+        className="col-md-4"
+      >
+        <div
+          className="FormGroup"
+        >
+          <style>
+            
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+          </style>
+          <div
+            className="form-group"
+            data-testid="postalCodeGroup"
+          >
+            <label
+              className="form-label"
+              htmlFor="postalCode"
+            >
+              Postal Code
+            </label>
+            <input
+              className="form-control"
+              data-testid="postalCode"
+              id="postalCode"
+              name="postalCode"
+              onBlur={[Function]}
+              onChange={[Function]}
+              readOnly={true}
+              type="text"
+              value="4000"
+            />
+            <div
+              className="invalid-feedback"
+              data-testid="postalCodeMessage"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        className="col-md-8"
+      >
+        <div
+          className="FormGroup"
+        >
+          <style>
+            
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+          </style>
+          <div
+            className="form-group"
+            data-testid="cityGroup"
+          >
+            <label
+              className="form-label"
+              htmlFor="city"
+            >
+              City
+            </label>
+            <input
+              className="form-control"
+              data-testid="city"
+              id="city"
+              name="city"
+              onBlur={[Function]}
+              onChange={[Function]}
+              readOnly={true}
+              type="text"
+              value="Liège"
+            />
+            <div
+              className="invalid-feedback"
+              data-testid="cityMessage"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="FormGroup"
+    >
+      <style>
+        
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+      </style>
+      <div
+        className="form-group"
+        data-testid="countryGroup"
+      >
+        <label
+          className="form-label"
+          htmlFor="country"
+        >
+          Country
+        </label>
+        <input
+          className="form-control"
+          data-testid="country"
+          id="country"
+          name="country"
+          onBlur={[Function]}
+          onChange={[Function]}
+          readOnly={true}
+          type="text"
+          value="Belgium"
+        />
+        <div
+          className="invalid-feedback"
+          data-testid="countryMessage"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;

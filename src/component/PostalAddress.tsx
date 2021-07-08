@@ -1,36 +1,70 @@
 import React from 'react';
-import Form from 'react-bootstrap/Form';
-import FormGroup from 'react-bootstrap/FormGroup';
-
 import PostalAddressType from './types/PostalAddress';
+import { Row, Col } from "react-bootstrap";
+import { BackgroundAndForegroundColors } from "./ColorTheme";
+import ComparableField from "./ComparableField";
 
 export interface Props {
-    address: PostalAddressType
+    postalAddress: PostalAddressType
+    otherPostalAddress?: PostalAddressType
+    colors: BackgroundAndForegroundColors
 }
 
 export default function PostalAddress(props: Props) {
+
+    interface FieldProps {
+        id: string
+        label: string
+        field: (postalAddress: PostalAddressType) => string
+    }
+
+    function ComparablePostalAddressField(fieldProps: FieldProps) {
+
+        return (
+            <ComparableField
+                id={ fieldProps.id }
+                label={ fieldProps.label }
+                data={ props.postalAddress }
+                otherData={ props.otherPostalAddress }
+                field={ fieldProps.field }
+                colors={ props.colors } />
+        );
+    }
+
     return (
         <>
-            <FormGroup>
-                <Form.Label>Line 1</Form.Label>
-                <Form.Control type="text" value={ props.address.line1 } readOnly />
-            </FormGroup>
-            <FormGroup>
-                <Form.Label>Line 2</Form.Label>
-                <Form.Control type="text" value={ props.address.line2 } readOnly />
-            </FormGroup>
-            <FormGroup>
-                <Form.Label>Postal code</Form.Label>
-                <Form.Control type="text" value={ props.address.postalCode } readOnly />
-            </FormGroup>
-            <FormGroup>
-                <Form.Label>City</Form.Label>
-                <Form.Control type="text" value={ props.address.city } readOnly />
-            </FormGroup>
-            <FormGroup>
-                <Form.Label>Country</Form.Label>
-                <Form.Control type="text" value={ props.address.country } readOnly />
-            </FormGroup>
+            <h3>Address</h3>
+            <ComparablePostalAddressField
+                id="line1"
+                label="Line1"
+                field={ address => address.line1 }
+            />
+            <ComparablePostalAddressField
+                id="line2"
+                label="Line2"
+                field={ address => address.line2 }
+            />
+            <Row>
+                <Col md={ 4 }>
+                    <ComparablePostalAddressField
+                        id="postalCode"
+                        label="Postal Code"
+                        field={ address => address.postalCode }
+                    />
+                </Col>
+                <Col md={ 8 }>
+                    <ComparablePostalAddressField
+                        id="city"
+                        label="City"
+                        field={ address => address.city }
+                    />
+                </Col>
+            </Row>
+            <ComparablePostalAddressField
+                id="country"
+                label="Country"
+                field={ address => address.country }
+            />
         </>
     )
 }

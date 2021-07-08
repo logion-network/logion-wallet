@@ -1,0 +1,412 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders with different data 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="FormGroup"
+      >
+        <style>
+          
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+        </style>
+        <div
+          class="form-group"
+          data-testid="testId3Group"
+        >
+          <label
+            class="form-label"
+            for="testId3"
+          >
+            attribute
+          </label>
+          <input
+            class="form-control is-invalid"
+            data-testid="testId3"
+            id="testId3"
+            name="testId3"
+            readonly=""
+            type="text"
+            value="attribute"
+          />
+          <div
+            class="invalid-feedback"
+            data-testid="testId3Message"
+          />
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="FormGroup"
+    >
+      <style>
+        
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+      </style>
+      <div
+        class="form-group"
+        data-testid="testId3Group"
+      >
+        <label
+          class="form-label"
+          for="testId3"
+        >
+          attribute
+        </label>
+        <input
+          class="form-control is-invalid"
+          data-testid="testId3"
+          id="testId3"
+          name="testId3"
+          readonly=""
+          type="text"
+          value="attribute"
+        />
+        <div
+          class="invalid-feedback"
+          data-testid="testId3Message"
+        />
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`renders with same data 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="FormGroup"
+      >
+        <style>
+          
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+        </style>
+        <div
+          class="form-group"
+          data-testid="testId2Group"
+        >
+          <label
+            class="form-label"
+            for="testId2"
+          >
+            attribute
+          </label>
+          <input
+            class="form-control"
+            data-testid="testId2"
+            id="testId2"
+            name="testId2"
+            readonly=""
+            type="text"
+            value="attribute"
+          />
+          <div
+            class="invalid-feedback"
+            data-testid="testId2Message"
+          />
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="FormGroup"
+    >
+      <style>
+        
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+      </style>
+      <div
+        class="form-group"
+        data-testid="testId2Group"
+      >
+        <label
+          class="form-label"
+          for="testId2"
+        >
+          attribute
+        </label>
+        <input
+          class="form-control"
+          data-testid="testId2"
+          id="testId2"
+          name="testId2"
+          readonly=""
+          type="text"
+          value="attribute"
+        />
+        <div
+          class="invalid-feedback"
+          data-testid="testId2Message"
+        />
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`renders without comparison 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="FormGroup"
+      >
+        <style>
+          
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+        </style>
+        <div
+          class="form-group"
+          data-testid="testId1Group"
+        >
+          <label
+            class="form-label"
+            for="testId1"
+          >
+            attribute
+          </label>
+          <input
+            class="form-control"
+            data-testid="testId1"
+            id="testId1"
+            name="testId1"
+            readonly=""
+            type="text"
+            value="attribute"
+          />
+          <div
+            class="invalid-feedback"
+            data-testid="testId1Message"
+          />
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="FormGroup"
+    >
+      <style>
+        
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+      </style>
+      <div
+        class="form-group"
+        data-testid="testId1Group"
+      >
+        <label
+          class="form-label"
+          for="testId1"
+        >
+          attribute
+        </label>
+        <input
+          class="form-control"
+          data-testid="testId1"
+          id="testId1"
+          name="testId1"
+          readonly=""
+          type="text"
+          value="attribute"
+        />
+        <div
+          class="invalid-feedback"
+          data-testid="testId1Message"
+        />
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

@@ -6,8 +6,6 @@ import Form from 'react-bootstrap/Form';
 
 import Button from '../component/Button';
 import Table, { Cell, EmptyTableMessage, DateCell } from '../component/Table';
-import Identity from '../component/Identity';
-import PostalAddress from '../component/PostalAddress';
 import { sign } from '../logion-chain';
 import { useRootContext } from '../RootContext';
 
@@ -17,6 +15,9 @@ import { ProtectionRequest } from './Types';
 import ProcessStep from './ProcessStep';
 import Decision from './Decision';
 import ProtectionRequestDetails from './ProtectionRequestDetails';
+import { Link } from "react-router-dom";
+import { recoveryDetailsPath } from "./LegalOfficerPaths";
+import AccountInfo from "../component/AccountInfo";
 
 enum ReviewStatus {
     NONE,
@@ -141,6 +142,7 @@ export default function PendingProtectionRequests(props: Props) {
                         header: "Action",
                         render: request => (
                             <ButtonGroup aria-label="actions">
+                                {!props.recovery &&
                                 <Button
                                     variant="primary"
                                     onClick={() => setReviewState({status: ReviewStatus.PENDING, request: request}) }
@@ -149,6 +151,15 @@ export default function PendingProtectionRequests(props: Props) {
                                 >
                                     <span style={{fontWeight: "bold"}}>Review and proceed</span>
                                 </Button>
+                                }
+                                {props.recovery &&
+                                <Button
+                                    variant="primary"
+                                    backgroundColor={ colorTheme.buttons.secondaryBackgroundColor }
+                                >
+                                    <Link to={ recoveryDetailsPath(request.id) }>Start recovery process</Link>
+                                </Button>
+                                }
                             </ButtonGroup>
                         ),
                     }
@@ -193,11 +204,12 @@ export default function PendingProtectionRequests(props: Props) {
                         }
                     ] }
                 >
-                    <Identity
+                    <AccountInfo
+                        label="Account address"
+                        address={ reviewState.request!.requesterAddress }
                         identity={ reviewState.request!.userIdentity }
-                    />
-                    <PostalAddress
-                        address={ reviewState.request!.userPostalAddress }
+                        postalAddress={ reviewState.request!.userPostalAddress }
+                        colorTheme={ colorTheme }
                     />
                     <p>I executed my due diligence and accept to be the Legal Officer of this user</p>
                 </ProcessStep>
