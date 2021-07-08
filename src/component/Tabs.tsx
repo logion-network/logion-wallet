@@ -103,8 +103,6 @@ function TabCanvas(props: TabCanvasProps) {
             const canvas = canvasRef.current;
             const context = canvas.getContext('2d');
             if(context !== null) {
-                console.log("Redrawing canvas " + props.trigger);
-
                 context.clearRect(0, 0, canvas.width, canvas.height);
                 context.strokeStyle = props.colors.borderColor;
 
@@ -146,7 +144,7 @@ function TabCanvas(props: TabCanvasProps) {
 
                 // Bottom-right corner
                 context.beginPath();
-                context.arc(152, 37, 5, 0 * Math.PI, 0.85 * Math.PI);
+                context.arc(152, 37, 5, 0, 0.85 * Math.PI);
                 context.stroke();
 
                 context.strokeStyle = props.colors.background;
@@ -177,5 +175,5 @@ function TabCanvas(props: TabCanvasProps) {
         }
     }, [ canvasRef, props, translated ]);
 
-    return <canvas ref={ canvasRef } width="150" height="44"></canvas>;
+    return <canvas ref={ canvasRef } width="150" height="44" />;
 }
