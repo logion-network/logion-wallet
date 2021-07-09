@@ -1,6 +1,6 @@
 jest.mock('@polkadot/api');
 
-import { apiMock, hashMock, TOTAL_BLOCKS, blockMock, extrinsicsMock } from '@polkadot/api';
+import { apiMock, hashMock, TOTAL_BLOCKS, blockMock, extrinsicsMock } from '../__mocks__/PolkadotApiMock';
 import {
     fetchExtrinsics,
     BlockAggregatingVisitor,

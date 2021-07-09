@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import {useForm, Controller} from 'react-hook-form';
 import Form from "react-bootstrap/Form";
 
@@ -12,13 +12,19 @@ import FormGroup from '../../component/FormGroup';
 import { CreateProtectionRequest, legalOfficers } from "./Model";
 import {useUserContext} from "../UserContext";
 import moment from "moment";
-import {sign} from "../../logion-chain";
+import {
+    sign,
+    useLogionChain,
+} from '../../logion-chain';
+import { ActiveRecovery, getActiveRecovery, initiateRecovery } from '../../logion-chain/Recovery';
+import { Option } from '@polkadot/types';
 import {Row, Col} from "react-bootstrap";
 import {useRootContext} from "../../RootContext";
 import LegalOfficers from './LegalOfficers';
 
 import './CreateProtectionRequestForm.css';
 import LegalOfficer from '../../component/types/LegalOfficer';
+import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
 
 export interface Props {
     isRecovery: boolean,
@@ -34,24 +40,28 @@ interface FormValues {
     postalCode: string,
     city: string,
     country: string,
-    addressToRecover?: string,
     agree: string,
 }
 
 export default function CreateProtectionRequestForm(props: Props) {
+    const { api } = useLogionChain();
     const { control, handleSubmit, formState: {errors} } = useForm<FormValues>();
     const { selectAddress, addresses, currentAddress } = useRootContext();
     const { createProtectionRequest, colorTheme, refreshRequests } = useUserContext();
     const [ legalOfficer1, setLegalOfficer1 ] = useState<LegalOfficer | null>(null);
     const [ legalOfficer2, setLegalOfficer2 ] = useState<LegalOfficer | null>(null);
+    const [ addressToRecover, setAddressToRecover ] = useState<string>("");
     const [ requestCreated, setRequestCreated ] = useState<boolean>(false);
+    const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
+    const [ activeRecovery, setActiveRecovery ] = useState<Option<ActiveRecovery> | null>(null);
 
     const submit = async (formValues: FormValues) => {
-        if(legalOfficer1 === null || legalOfficer2 === null || !formValues.agree) {
+        if(legalOfficer1 === null || legalOfficer2 === null
+            || !formValues.agree
+            || (props.isRecovery && (activeRecovery === null || activeRecovery.isEmpty))) {
             return;
         }
 
-        const addressToRecover = formValues.addressToRecover !== undefined ? formValues.addressToRecover : "";
         const attributes = [
             `${formValues.firstName}`,
             `${formValues.lastName}`,
@@ -96,7 +106,7 @@ export default function CreateProtectionRequestForm(props: Props) {
             signature,
             signedOn,
             isRecovery: props.isRecovery,
-            addressToRecover: formValues.addressToRecover !== undefined ? formValues.addressToRecover : "",
+            addressToRecover: addressToRecover,
         }
         await createProtectionRequest!(request);
         setRequestCreated(true);
@@ -116,6 +126,27 @@ export default function CreateProtectionRequestForm(props: Props) {
         subTitle = "Activate my Logion Trust Protection";
     }
 
+    const initiateRecoveryOnClick = useCallback(() => {
+        (async function() {
+            const activeRecovery = await getActiveRecovery({
+                api: api!,
+                sourceAccount: addressToRecover,
+                destinationAccount: currentAddress,
+            });
+            setActiveRecovery(activeRecovery);
+            if(activeRecovery.isEmpty) {
+                const signAndSubmit: SignAndSubmit = (setResult, setError) => initiateRecovery({
+                    api: api!,
+                    signerId: currentAddress,
+                    callback: setResult,
+                    errorCallback: setError,
+                    addressToRecover,
+                });
+                setSignAndSubmit(() => signAndSubmit);
+            }
+        })();
+    }, [ api, currentAddress, addressToRecover, setSignAndSubmit ]);
+
     if(addresses === null || selectAddress === null) {
         return null;
     }
@@ -129,9 +160,60 @@ export default function CreateProtectionRequestForm(props: Props) {
             selectAddress={ selectAddress }
             primaryPaneWidth={ 6 }
             primaryAreaChildren={
+                <>
+                {
+                    props.isRecovery &&
+                    <Frame
+                        className="CreateProtectionRequestFormInitiateRecovery"
+                        colors={ colorTheme }
+                    >
+                        <h3>Initiate recovery</h3>
+                        {
+                            (activeRecovery === null || activeRecovery.isEmpty) &&
+                            <>
+                                <FormGroup
+                                    id="accountToRecover"
+                                    label="Address to Recover"
+                                    control={
+                                        <Form.Control
+                                            isInvalid={ addressToRecover === null || addressToRecover === "" }
+                                            type="text"
+                                            data-testid="addressToRecover"
+                                            value={ addressToRecover }
+                                            onChange={ event => setAddressToRecover(event.target.value) }
+                                        />
+                                    }
+                                    feedback={ "Address to recover is required" }
+                                    colors={ colorTheme.dashboard }
+                                />
+                                <Button
+                                    backgroundColor={ colorTheme.buttons.secondaryBackgroundColor }
+                                    onClick={ initiateRecoveryOnClick }
+                                >
+                                    Initiate recovery
+                                </Button>
+                                <ExtrinsicSubmitter
+                                    id="initiateRecovery"
+                                    successMessage="Recovery successfully initiated."
+                                    signAndSubmit={ signAndSubmit }
+                                    onSuccess={ () => { setSignAndSubmit(null); refreshRequests!(true); } }
+                                    onError={ () => setSignAndSubmit(null) }
+                                />
+                            </>
+                        }
+                        {
+                            (activeRecovery !== null && !activeRecovery.isEmpty) &&
+                            <Alert variant="success">
+                                The recovery has been successfully initiated, you may now contact your legal officers.
+                            </Alert>
+                        }
+                    </Frame>
+                }
+
                 <Frame
                     className="CreateProtectionRequestFormLegalOfficers"
                     colors={ colorTheme }
+                    disabled={ props.isRecovery && (activeRecovery === null || activeRecovery.isEmpty) }
                 >
                     <h3>Choose your Legal Officers</h3>
                     {
@@ -154,6 +236,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                         mode="choose"
                     />
                 </Frame>
+                </>
             }
             secondaryAreaChildren={
                 <Frame
@@ -178,31 +261,6 @@ export default function CreateProtectionRequestForm(props: Props) {
                     }
 
                     <Form onSubmit={handleSubmit(submit)}>
-                        {
-                            props.isRecovery &&
-                            <FormGroup
-                                id="accountToRecover"
-                                label="Address to Recover"
-                                control={
-                                    <Controller
-                                        name="addressToRecover"
-                                        control={control}
-                                        defaultValue=""
-                                        rules={{required: 'The address to recover is required'}}
-                                        render={({field}) => (
-                                            <Form.Control
-                                                isInvalid={!!errors.addressToRecover?.message}
-                                                type="text"
-                                                data-testid="addressToRecover" {...field}
-                                            />
-                                        )}
-                                    />
-                                }
-                                feedback={ errors.addressToRecover?.message }
-                                colors={ colorTheme.dashboard }
-                            />
-                        }
-
                         <Row>
                             <Col md={6}>
                                 <FormGroup

@@ -1,0 +1,73 @@
+import React, { useEffect, useState } from 'react';
+
+import { ISubmittableResult, isFinalized } from './logion-chain';
+import { unsubscribe, Unsubscriber } from './logion-chain/Signature';
+
+import ExtrinsicSubmissionResult from './ExtrinsicSubmissionResult';
+
+export type SignAndSubmit = ((setResult: React.Dispatch<React.SetStateAction<ISubmittableResult | null>>, setError: React.Dispatch<React.SetStateAction<any>>) => Unsubscriber) | null;
+
+export interface Props {
+    id: string,
+    successMessage?: string | JSX.Element,
+    signAndSubmit: SignAndSubmit,
+    onSuccess: (id: string) => void,
+    onError: (id: string) => void,
+}
+
+export default function ExtrinsicSubmitter(props: Props) {
+    const [ result, setResult ] = useState<ISubmittableResult | null>(null);
+    const [ error, setError ] = useState<any>(null);
+    const [ unsubscriber, setUnsubscriber ] = useState<Unsubscriber | null>(null);
+    const [ submitted, setSubmitted ] = useState<boolean>(false);
+    const [ notified, setNotified ] = useState<boolean>(false);
+
+    useEffect(() => {
+        if(!submitted && props.signAndSubmit !== null) {
+            setSubmitted(true);
+            const signAndSubmit = props.signAndSubmit;
+            (async function() {
+                await unsubscribe(unsubscriber);
+                setResult(null);
+                setError(null);
+                const newSubscriber = signAndSubmit(setResult, setError);
+                setUnsubscriber(newSubscriber);
+            })();
+        }
+    }, [ unsubscriber, setUnsubscriber, setResult, setError, props, submitted ]);
+
+    useEffect(() => {
+        if (isFinalized(result) && !notified) {
+            setNotified(true);
+            props.onSuccess(props.id);
+        }
+    }, [ result, notified, setNotified, props ]);
+
+    useEffect(() => {
+        if (error !== null && !notified) {
+            setNotified(true);
+            props.onError(props.id);
+        }
+    }, [ result, notified, setNotified, props, error ]);
+
+    useEffect(() => {
+        if(submitted && props.signAndSubmit === null) {
+            setSubmitted(false);
+            setNotified(false);
+            setResult(null);
+            setError(null);
+        }
+    }, [ unsubscriber, setUnsubscriber, setResult, setError, props, submitted ]);
+
+    if(props.signAndSubmit === null) {
+        return null;
+    }
+
+    return (
+        <ExtrinsicSubmissionResult
+            result={result}
+            error={error}
+            successMessage={ props.successMessage }
+        />
+    );
+}

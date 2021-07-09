@@ -107,6 +107,9 @@ describe("CreateProtectionRequestForm", () => {
     it("should call submit when form is correctly filled for recovery", async  () => {
         render(<CreateProtectionRequestForm isRecovery={ true } />);
 
+        userEvent.type(screen.getByTestId("addressToRecover"), 'toRecover');
+        userEvent.click(screen.getByRole('button', {name: "Initiate recovery"}));
+
         const legalOfficer1Select = screen.getByTestId('legalOfficer1Group');
         userEvent.click(getByText(legalOfficer1Select, "Select..."));
         await waitFor(() => userEvent.click(getByText(legalOfficer1Select, "Patrick Gielen")));
@@ -115,7 +118,6 @@ describe("CreateProtectionRequestForm", () => {
         userEvent.click(getByText(legalOfficer2Select, "Select..."));
         await waitFor(() => userEvent.click(getByText(legalOfficer2Select, "Guillaume Grain")));
 
-        fireEvent.input(screen.getByTestId("addressToRecover"), {target: {value: 'toRecover'}})
         fireEvent.input(screen.getByTestId("firstName"), {target: {value: 'John'}})
         fireEvent.input(screen.getByTestId("lastName"), {target: {value: 'Doe'}})
         fireEvent.input(screen.getByTestId("email"), {target: {value: 'john.doe@logion.network'}})

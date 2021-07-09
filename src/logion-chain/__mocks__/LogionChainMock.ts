@@ -12,6 +12,11 @@ const DEFAULT_RECOVERY_CONFIG = {
     unwrap: () => {}
 }
 
+const DEFAULT_ACTIVE_RECOVERY = {
+    isSome: true,
+    unwrap: () => {}
+}
+
 const api = {
     tx: {
         assets: {
@@ -29,8 +34,11 @@ const api = {
         recovery: {
             recoverable: (accountId: any) => {
                 return Promise.resolve(DEFAULT_RECOVERY_CONFIG);
+            },
+            activeRecoveries: (source: string, dest: string) => {
+                return Promise.resolve(DEFAULT_ACTIVE_RECOVERY);
             }
-        }
+        },
     }
 };
 
@@ -111,8 +119,14 @@ export function sign(parameters: any) {
     return Promise.resolve(attributes.toString());
 }
 
+export let _isFinalized = true;
+
 export function isFinalized(result: any) {
-    return true;
+    return _isFinalized;
+}
+
+export function setIsFinalized(value: boolean) {
+    _isFinalized = value;
 }
 
 export function unsubscribe() {

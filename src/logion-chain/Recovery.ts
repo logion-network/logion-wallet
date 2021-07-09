@@ -1,6 +1,9 @@
 import { ApiPromise } from '@polkadot/api';
 import { Option } from '@polkadot/types';
-import { RecoveryConfig as PolkadotRecoveryConfig } from '@polkadot/types/interfaces/recovery';
+import {
+    RecoveryConfig as PolkadotRecoveryConfig,
+    ActiveRecovery as PolkadotActiveRecovery
+} from '@polkadot/types/interfaces/recovery';
 
 import {
     ExtrinsicSubmissionParameters,
@@ -45,3 +48,43 @@ export async function getRecoveryConfig(parameters: GetRecoveryConfigParameters)
 }
 
 export type RecoveryConfig = PolkadotRecoveryConfig;
+
+export interface GetActiveRecoveryParameters {
+    api: ApiPromise,
+    sourceAccount: string,
+    destinationAccount: string,
+}
+
+export async function getActiveRecovery(parameters: GetActiveRecoveryParameters): Promise<Option<PolkadotActiveRecovery>> {
+    const {
+        api,
+        sourceAccount,
+        destinationAccount,
+    } = parameters;
+
+    return await api.query.recovery.activeRecoveries(sourceAccount, destinationAccount);
+}
+
+export type ActiveRecovery = PolkadotActiveRecovery;
+
+export interface InitiateRecoveryParameters extends ExtrinsicSubmissionParameters {
+    api: ApiPromise,
+    addressToRecover: string,
+}
+
+export function initiateRecovery(parameters: InitiateRecoveryParameters): Unsubscriber {
+    const {
+        api,
+        signerId,
+        callback,
+        errorCallback,
+        addressToRecover,
+    } = parameters;
+
+    return signAndSend({
+        signerId,
+        submittable: api.tx.recovery.initiateRecovery(addressToRecover),
+        callback,
+        errorCallback,
+    });
+}
