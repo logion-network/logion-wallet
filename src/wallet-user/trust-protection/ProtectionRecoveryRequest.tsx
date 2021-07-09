@@ -8,7 +8,7 @@ import {
     isFinalized
 } from '../../logion-chain';
 import { createRecovery } from '../../logion-chain/Recovery';
-import ExtrinsicSubmissionResult from '../../legal-officer/ExtrinsicSubmissionResult';
+import ExtrinsicSubmissionResult from '../../ExtrinsicSubmissionResult';
 
 import { ProtectionRequest } from "../../legal-officer/Types";
 import LegalOfficer from '../../component/types/LegalOfficer';

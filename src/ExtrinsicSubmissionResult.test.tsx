@@ -1,4 +1,4 @@
-import { render } from '../tests';
+import { render } from './tests';
 
 import ExtrinsicSubmissionResult from './ExtrinsicSubmissionResult';
 

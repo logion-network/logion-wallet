@@ -2,7 +2,7 @@ import React from 'react';
 import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
 
-import { ISubmittableResult, isFinalized } from '../logion-chain';
+import { ISubmittableResult, isFinalized } from './logion-chain';
 
 export interface Props {
     result: ISubmittableResult | null,

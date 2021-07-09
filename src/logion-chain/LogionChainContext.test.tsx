@@ -9,16 +9,15 @@ import { ConfigType, DEFAULT_CONFIG } from '../config';
 import {
     connectedAndReady,
     triggerEvent,
-    isReadyResolve,
     eventsCallback,
     newHeadsCallback,
     teardown as teardownApi,
     mockVec,
     mockCompact,
-} from '@polkadot/api';
-import { updateInjectedAccounts, teardown as teardownExtensionDapp } from '@polkadot/extension-dapp';
+} from '../__mocks__/PolkadotApiMock';
+import { updateInjectedAccounts, teardown as teardownExtensionDapp } from '../__mocks__/PolkadotExtensionDappMock';
 
-import { loadAllFails, teardown as teardownKeyring } from '@polkadot/ui-keyring';
+import { loadAllFails, teardown as teardownKeyring } from '../__mocks__/PolkadotUiKeyringMock';
 
 afterEach(() => {
     teardownApi();

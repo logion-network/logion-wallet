@@ -27,7 +27,7 @@ import {
     setAssetDescription,
 } from './Model';
 import ProcessStep from './ProcessStep';
-import ExtrinsicSubmissionResult from './ExtrinsicSubmissionResult';
+import ExtrinsicSubmissionResult from '../ExtrinsicSubmissionResult';
 
 enum AcceptStatus {
     NONE,

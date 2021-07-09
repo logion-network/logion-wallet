@@ -1,9 +1,9 @@
 jest.mock('@polkadot/extension-dapp');
 jest.mock('detect-browser');
 
-import { setBrowser } from 'detect-browser';
+import { setBrowser } from '../__mocks__/DetectBrowserMock';
+import { enabledApp, accountsCallback, setWeb3Injected } from '../__mocks__/PolkadotExtensionDappMock';
 import { recommendedExtension, enableExtensions, isExtensionAvailable } from './Keys';
-import { enabledApp, accountsCallback, setWeb3Injected } from '@polkadot/extension-dapp';
 
 test("detects Firefox", () => {
     setBrowser('firefox');

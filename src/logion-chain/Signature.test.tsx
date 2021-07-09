@@ -15,8 +15,9 @@ import {
     sign,
     isFinalized
 } from './Signature';
-import { mockSubmittable, mockSigner } from '@polkadot/api';
-import { setSigner } from '@polkadot/extension-dapp';
+import { mockSubmittableResult } from './__mocks__/SignatureMock';
+import { mockSubmittable, mockSigner } from '../__mocks__/PolkadotApiMock';
+import { setSigner } from '../__mocks__/PolkadotExtensionDappMock';
 import moment from 'moment';
 
 test("Injected account signs and sends successfully", async () => {
@@ -114,11 +115,11 @@ test("isFinalized with null", () => {
 });
 
 test("isFinalized with non-finalized result", () => {
-    const result = isFinalized({isFinalized: false});
+    const result = isFinalized(mockSubmittableResult(false));
     expect(result).toBe(false);
 });
 
 test("isFinalized with finalized result", () => {
-    const result = isFinalized({isFinalized: true});
+    const result = isFinalized(mockSubmittableResult(true));
     expect(result).toBe(true);
 });
