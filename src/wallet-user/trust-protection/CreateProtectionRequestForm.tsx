@@ -155,6 +155,10 @@ export default function CreateProtectionRequestForm(props: Props) {
         <ContentPane
             mainTitle={ mainTitle }
             subTitle={ subTitle }
+            titleIcon={{
+                id: 'shield',
+                hasVariants: true,
+            }}
             colors={ colorTheme }
             addresses={ addresses }
             selectAddress={ selectAddress }

@@ -1,5 +1,8 @@
 import React, { CSSProperties, useState, useCallback } from 'react';
 import * as Css from 'csstype';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
+import moment from 'moment';
 
 import { Row, Col } from './Grid';
 import { Child, Children } from './types/Helpers';
@@ -12,6 +15,8 @@ export interface CellProps {
     content: string | number | null,
     smallText?: boolean,
     wordBreak?: Css.Property.WordBreak,
+    overflowing?: boolean,
+    tooltipId?: string,
 }
 
 export function Cell(props: CellProps) {
@@ -27,9 +32,34 @@ export function Cell(props: CellProps) {
         className = className + " two-lines";
     }
 
-    return (
-        <div className={ className } style={ style }>{ props.content }</div>
-    );
+    if(props.overflowing !== undefined && props.overflowing) {
+        className = className + " overflowing";
+    }
+
+    if(props.tooltipId !== undefined) {
+        return (
+            <div
+                className={ className }
+                style={ style }
+            >
+                <OverlayTrigger
+                      placement="bottom"
+                      delay={ 500 }
+                      overlay={
+                        <Tooltip id={ props.tooltipId }>
+                          { props.content }
+                        </Tooltip>
+                      }
+                    >
+                      <span>{ props.content }</span>
+                </OverlayTrigger>
+            </div>
+        );
+    } else {
+        return (
+            <div className={ className } style={ style }>{ props.content }</div>
+        );
+    }
 }
 
 export interface EmptyTableMessageProps {
@@ -245,6 +275,24 @@ function ShowDetailsButton(props: ShowDetailsButtonProps) {
     return (
         <div className={"ShowDetailsButton" + (props.expanded ? " expanded" : "")} onClick={ props.onClick }>
             <Icon icon={{id: "arrow-down"}} />
+        </div>
+    );
+}
+
+export interface DateCellProps {
+    dateTime: string,
+}
+
+export function DateCell(props: DateCellProps) {
+
+    const momentObject = moment(props.dateTime);
+    const date = momentObject.format('L');
+    const time = momentObject.format('LT');
+
+    return (
+        <div className="date-cell">
+            { date }<br/>
+            { time }
         </div>
     );
 }

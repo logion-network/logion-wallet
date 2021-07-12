@@ -93,6 +93,12 @@ exports[`renders 1`] = `
   }
   mainTitle="Recovery requests"
   selectAddress={[MockFunction]}
+  titleIcon={
+    Object {
+      "hasVariants": true,
+      "id": "recovery_request",
+    }
+  }
 >
   <Tabs
     activeKey="pending"

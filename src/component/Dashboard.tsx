@@ -7,10 +7,11 @@ import { Children } from './types/Helpers';
 import Addresses from './types/Addresses';
 import Logo from './Logo';
 import AddressSwitcher from './AddressSwitcher';
-import { ColorTheme } from './ColorTheme';
+import { ColorTheme, Icon } from './ColorTheme';
 import Menu from './Menu';
 import { MenuItemData } from './MenuItem';
 import MainMenu from './MainMenu';
+import IconComponent from './Icon';
 
 import './Dashboard.css';
 
@@ -62,18 +63,23 @@ const FULL_WIDTH = 12;
 const SIDEBAR_WIDTH = 2;
 
 interface TitlesProps {
-    mainTitle?: string,
+    mainTitle: string,
     subTitle?: string,
+    titleIcon: Icon,
+    colors: ColorTheme,
 }
 
 function Titles(props: TitlesProps) {
 
     return (
         <div className="TitlesArea">
-            {
-                props.mainTitle !== undefined &&
-                <h1>{ props.mainTitle }</h1>
-            }
+            <h1>
+                <IconComponent
+                    icon={ props.titleIcon }
+                    colorThemeType={ props.colors.type }
+                />
+                { props.mainTitle }
+            </h1>
             {
                 props.subTitle !== undefined &&
                 <h2>{ props.subTitle }</h2>
@@ -135,6 +141,7 @@ export function ContentPane(props: ContentPaneProps) {
         <BasePane
             mainTitle={ props.mainTitle }
             subTitle={ props.subTitle }
+            titleIcon={ props.titleIcon }
             colors={ props.colors }
             selectAddress={ props.selectAddress }
             addresses={ props.addresses }
@@ -165,6 +172,7 @@ export function FullWidthPane(props: FullWidthPaneProps) {
             className={ props.className }
             mainTitle={ props.mainTitle }
             subTitle={ props.subTitle }
+            titleIcon={ props.titleIcon }
             colors={ props.colors }
             selectAddress={ props.selectAddress }
             addresses={ props.addresses }

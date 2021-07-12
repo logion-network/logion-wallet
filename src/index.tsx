@@ -2,8 +2,12 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import moment from 'moment';
+import 'moment/locale/en-gb';
 
 import './index.scss';
+
+moment.locale('en-gb');
 
 ReactDOM.render(
     <React.StrictMode>

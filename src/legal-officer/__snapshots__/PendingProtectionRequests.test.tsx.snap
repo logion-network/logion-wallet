@@ -99,7 +99,6 @@ exports[`Renders pending requests 1`] = `
         Object {
           "header": "Submission date",
           "render": [Function],
-          "smallerText": true,
           "width": "120px",
         },
         Object {
