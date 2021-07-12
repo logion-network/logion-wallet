@@ -156,8 +156,10 @@ export default function CreateProtectionRequestForm(props: Props) {
             mainTitle={ mainTitle }
             subTitle={ subTitle }
             titleIcon={{
-                id: 'shield',
-                hasVariants: true,
+                icon: {
+                    id: 'shield',
+                    hasVariants: true,
+                },
             }}
             colors={ colorTheme }
             addresses={ addresses }

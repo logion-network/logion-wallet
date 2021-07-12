@@ -23,8 +23,10 @@ export default function RecoveryRequests() {
             className="RecoveryRequests"
             mainTitle="Recovery requests"
             titleIcon={{
-                id: 'recovery_request',
-                hasVariants: true,
+                icon: {
+                    id: 'recovery_request',
+                    hasVariants: true,
+                },
             }}
             colors={ colorTheme }
             addresses={ addresses }

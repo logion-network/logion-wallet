@@ -7,11 +7,11 @@ import { Children } from './types/Helpers';
 import Addresses from './types/Addresses';
 import Logo from './Logo';
 import AddressSwitcher from './AddressSwitcher';
-import { ColorTheme, Icon } from './ColorTheme';
+import { ColorTheme, MenuIcon as MenuIconType } from './ColorTheme';
 import Menu from './Menu';
 import { MenuItemData } from './MenuItem';
 import MainMenu from './MainMenu';
-import IconComponent from './Icon';
+import MenuIcon from './MenuIcon';
 
 import './Dashboard.css';
 
@@ -65,7 +65,7 @@ const SIDEBAR_WIDTH = 2;
 interface TitlesProps {
     mainTitle: string,
     subTitle?: string,
-    titleIcon: Icon,
+    titleIcon: MenuIconType,
     colors: ColorTheme,
 }
 
@@ -74,8 +74,8 @@ function Titles(props: TitlesProps) {
     return (
         <div className="TitlesArea">
             <h1>
-                <IconComponent
-                    icon={ props.titleIcon }
+                <MenuIcon
+                    { ...props.titleIcon }
                     colorThemeType={ props.colors.type }
                 />
                 { props.mainTitle }

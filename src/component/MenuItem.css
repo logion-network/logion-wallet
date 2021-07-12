@@ -23,16 +23,6 @@
     align-items: center;
 }
 
-.MenuItem .text-wrapper .icon {
-    display: block;
-    height: 32px;
-    width: 32px;
-    border-radius: 5px;
-    margin-right: 15px;
-    flex-shrink: 0;
-    flex-grow: 0;
-}
-
 .MenuItem .text-wrapper .text {
     display: block;
 }

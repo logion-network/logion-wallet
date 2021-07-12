@@ -22,8 +22,10 @@ export default function GoToTrustProtection() {
             mainTitle="My Logion Trust Protection"
             subTitle="Recovery in progress"
             titleIcon={{
-                id: 'shield',
-                hasVariants: true,
+                icon: {
+                    id: 'shield',
+                    hasVariants: true,
+                },
             }}
             colors={ colorTheme }
             addresses={ addresses }

@@ -26,8 +26,10 @@ export default function ProtectionRequests() {
             className="ProtectionRequests"
             mainTitle="Protection requests"
             titleIcon={{
-                id: 'shield',
-                hasVariants: true,
+                icon: {
+                    id: 'shield',
+                    hasVariants: true,
+                },
             }}
             colors={ colorTheme }
             addresses={ addresses }

@@ -261,7 +261,13 @@ exports[`renders 1`] = `
   selectAddress={[MockFunction]}
   titleIcon={
     Object {
-      "id": "tokens",
+      "background": Object {
+        "from": "#3b6cf4",
+        "to": "#6050dc",
+      },
+      "icon": Object {
+        "id": "tokens",
+      },
     }
   }
 />

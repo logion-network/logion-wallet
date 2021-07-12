@@ -22,7 +22,9 @@ export default function GoToTrustProtection() {
             mainTitle="Recovery"
             subTitle="No recovery possible"
             titleIcon={{
-                id: 'recovery',
+                icon: {
+                    id: 'recovery',
+                },
             }}
             colors={ colorTheme }
             addresses={ addresses }
