@@ -1484,8 +1484,10 @@ France",
   subTitle="Activate my Logion Trust Protection"
   titleIcon={
     Object {
-      "hasVariants": true,
-      "id": "shield",
+      "icon": Object {
+        "hasVariants": true,
+        "id": "shield",
+      },
     }
   }
 />

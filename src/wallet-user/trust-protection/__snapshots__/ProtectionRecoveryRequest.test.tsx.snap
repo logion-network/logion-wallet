@@ -295,8 +295,10 @@ Belgium",
   selectAddress={[MockFunction]}
   titleIcon={
     Object {
-      "hasVariants": true,
-      "id": "shield",
+      "icon": Object {
+        "hasVariants": true,
+        "id": "shield",
+      },
     }
   }
 />
@@ -585,8 +587,10 @@ Belgium",
   selectAddress={[MockFunction]}
   titleIcon={
     Object {
-      "hasVariants": false,
-      "id": "recovery",
+      "icon": Object {
+        "hasVariants": false,
+        "id": "recovery",
+      },
     }
   }
 />
@@ -880,8 +884,10 @@ Belgium",
   selectAddress={[MockFunction]}
   titleIcon={
     Object {
-      "hasVariants": true,
-      "id": "shield",
+      "icon": Object {
+        "hasVariants": true,
+        "id": "shield",
+      },
     }
   }
 />
@@ -1175,8 +1181,10 @@ Belgium",
   selectAddress={[MockFunction]}
   titleIcon={
     Object {
-      "hasVariants": false,
-      "id": "recovery",
+      "icon": Object {
+        "hasVariants": false,
+        "id": "recovery",
+      },
     }
   }
 />
@@ -1463,8 +1471,10 @@ Belgium",
   selectAddress={[MockFunction]}
   titleIcon={
     Object {
-      "hasVariants": true,
-      "id": "shield",
+      "icon": Object {
+        "hasVariants": true,
+        "id": "shield",
+      },
     }
   }
 />
@@ -1754,8 +1764,10 @@ Belgium",
   subTitle="Recovery process status"
   titleIcon={
     Object {
-      "hasVariants": false,
-      "id": "recovery",
+      "icon": Object {
+        "hasVariants": false,
+        "id": "recovery",
+      },
     }
   }
 />

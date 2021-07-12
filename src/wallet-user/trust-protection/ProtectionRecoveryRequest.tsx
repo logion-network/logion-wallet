@@ -147,8 +147,10 @@ export default function ProtectionRecoveryRequest(props: Props) {
             mainTitle={ mainTitle }
             subTitle={ subTitle }
             titleIcon={{
-                id: props.request.isRecovery ? 'recovery' : 'shield',
-                hasVariants: props.request.isRecovery ? false : true,
+                icon: {
+                    id: props.request.isRecovery ? 'recovery' : 'shield',
+                    hasVariants: props.request.isRecovery ? false : true,
+                }
             }}
             colors={ colorTheme }
             addresses={ addresses }

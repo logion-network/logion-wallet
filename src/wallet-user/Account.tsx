@@ -24,7 +24,10 @@ export default function Account() {
         <ContentPane
             mainTitle="Tokens"
             titleIcon={{
-                id: 'tokens',
+                icon: {
+                    id: 'tokens'
+                },
+                background: colorTheme.topMenuItems.iconGradient,
             }}
             colors={ colorTheme }
             addresses={ addresses }

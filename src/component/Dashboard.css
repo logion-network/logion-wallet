@@ -88,9 +88,13 @@
     padding-top: 30px;
 }
 
-.Dashboard .TitlesArea h1 img {
-    height: 40px;
-    margin-right: 20px;
+.Dashboard .TitlesArea h1 .MenuIcon {
+    display: inline-block;
+}
+
+.Dashboard .TitlesArea h1 .MenuIcon img {
+    vertical-align: top;
+    max-height: 36px;
 }
 
 .Dashboard .TitlesArea h2 {
