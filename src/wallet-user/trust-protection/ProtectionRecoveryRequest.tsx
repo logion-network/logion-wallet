@@ -1,14 +1,8 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState } from 'react';
 
-import {
-    useLogionChain,
-    Unsubscriber,
-    ISubmittableResult,
-    unsubscribe,
-    isFinalized
-} from '../../logion-chain';
+import { useLogionChain } from '../../logion-chain';
 import { createRecovery } from '../../logion-chain/Recovery';
-import ExtrinsicSubmissionResult from '../../ExtrinsicSubmissionResult';
+import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
 
 import { ProtectionRequest } from "../../legal-officer/Types";
 import LegalOfficer from '../../component/types/LegalOfficer';
@@ -36,38 +30,22 @@ export interface Props {
 export default function ProtectionRecoveryRequest(props: Props) {
     const { api } = useLogionChain();
     const { selectAddress, addresses, currentAddress } = useRootContext();
-    const { refreshRequests, colorTheme } = useUserContext();
-    const [ activationResult, setActivationResult ] = useState<ISubmittableResult | null>(null);
-    const [ activationError, setActivationError ] = useState<any>(null);
-    const [ activationUnsubscriber, setActivationUnsubscriber ] = useState<Unsubscriber | null>(null);
-    const [ refreshedAfterActivation, setRefreshedAfterActivation ] = useState<boolean>(false);
+    const { refreshRequests, colorTheme, recoveryConfig } = useUserContext();
     const [ confirmButtonEnabled, setConfirmButtonEnabled ] = useState(props.request.status === "PENDING");
+    const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
 
-    const activateProtection = useCallback((request: ProtectionRequest) => {
-        (async function() {
-            await unsubscribe(activationUnsubscriber);
-            setActivationResult(null);
-            setActivationError(null);
-            const unsubscriber = createRecovery({
-                api: api!,
-                signerId: currentAddress,
-                callback: setActivationResult,
-                errorCallback: setActivationError,
-                legalOfficers: request.decisions.map(decision => decision.legalOfficerAddress),
-            });
-            setActivationUnsubscriber(unsubscriber);
-        })();
-    }, [ api, currentAddress, activationUnsubscriber, setActivationUnsubscriber ]);
+    const activateProtection = useCallback(() => {
+        const signAndSubmit: SignAndSubmit = (setResult, setError) => createRecovery({
+            api: api!,
+            signerId: currentAddress,
+            legalOfficers: props.request.decisions.map(decision => decision.legalOfficerAddress),
+            callback: setResult,
+            errorCallback: setError
+        });
+        setSignAndSubmit(() => signAndSubmit);
+    }, [ api, currentAddress, props ]);
 
-    useEffect(() => {
-        if (isFinalized(activationResult) && !refreshedAfterActivation) {
-            setRefreshedAfterActivation(true);
-            checkActivation(props.request)
-                .finally(() => refreshRequests!(true))
-        }
-    }, [ activationResult, refreshedAfterActivation, setRefreshedAfterActivation, refreshRequests, props ]);
-
-    if(addresses === null || selectAddress === null) {
+    if(addresses === null || selectAddress === null || recoveryConfig === null) {
         return null;
     }
 
@@ -177,10 +155,10 @@ export default function ProtectionRecoveryRequest(props: Props) {
                     }
 
                     {
-                        props.type === 'accepted' && activationResult === null &&
+                        props.type === 'accepted' && recoveryConfig?.isEmpty && signAndSubmit === null &&
                         <Button
                             data-testid="btnActivate"
-                            onClick={() => activateProtection(props.request)}
+                            onClick={ activateProtection }
                             backgroundColor={ colorTheme.buttons.secondaryBackgroundColor }
                         >
                             Activate
@@ -201,14 +179,13 @@ export default function ProtectionRecoveryRequest(props: Props) {
                             Re-Sync Confirmation
                         </Button>
                     }
-                    {
-                        (activationResult !== null || activationError !== null) &&
-                        <ExtrinsicSubmissionResult
-                            result={activationResult}
-                            error={activationError}
-                            successMessage="Protection successfully activated."
-                        />
-                    }
+                    <ExtrinsicSubmitter
+                        id="activatedProtection"
+                        successMessage="Protection successfully activated."
+                        signAndSubmit={ signAndSubmit }
+                        onSuccess={ () => { setSignAndSubmit(null); checkActivation(props.request).finally(() => refreshRequests!(true)); } }
+                        onError={ () => setSignAndSubmit(null) }
+                    />
 
                     <LegalOfficers
                         legalOfficers={ [] }

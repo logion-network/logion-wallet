@@ -39,16 +39,22 @@ export default function ExtrinsicSubmitter(props: Props) {
     useEffect(() => {
         if (isFinalized(result) && !notified) {
             setNotified(true);
-            props.onSuccess(props.id);
+            (async function() {
+                await unsubscribe(unsubscriber);
+                props.onSuccess(props.id);
+            })();
         }
-    }, [ result, notified, setNotified, props ]);
+    }, [ result, notified, setNotified, props, unsubscriber ]);
 
     useEffect(() => {
         if (error !== null && !notified) {
             setNotified(true);
-            props.onError(props.id);
+            (async function() {
+                await unsubscribe(unsubscriber);
+                props.onError(props.id);
+            })();
         }
-    }, [ result, notified, setNotified, props, error ]);
+    }, [ result, notified, setNotified, props, error, unsubscriber ]);
 
     useEffect(() => {
         if(submitted && props.signAndSubmit === null) {

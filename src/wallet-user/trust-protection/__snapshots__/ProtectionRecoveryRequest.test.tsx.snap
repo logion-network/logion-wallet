@@ -186,6 +186,13 @@ exports[`activated protection request 1`] = `
         />
          Your Logion Trust Protection is active
       </div>
+      <ExtrinsicSubmitter
+        id="activatedProtection"
+        onError={[Function]}
+        onSuccess={[Function]}
+        signAndSubmit={null}
+        successMessage="Protection successfully activated."
+      />
       <LegalOfficers
         colorTheme={
           Object {
@@ -478,6 +485,13 @@ exports[`activated recovery request 1`] = `
         toRecover
         .
       </Alert>
+      <ExtrinsicSubmitter
+        id="activatedProtection"
+        onError={[Function]}
+        onSuccess={[Function]}
+        signAndSubmit={null}
+        successMessage="Protection successfully activated."
+      />
       <LegalOfficers
         colorTheme={
           Object {
@@ -775,6 +789,13 @@ exports[`pending protection request 1`] = `
       >
         Re-Sync Confirmation
       </Button>
+      <ExtrinsicSubmitter
+        id="activatedProtection"
+        onError={[Function]}
+        onSuccess={[Function]}
+        signAndSubmit={null}
+        successMessage="Protection successfully activated."
+      />
       <LegalOfficers
         colorTheme={
           Object {
@@ -1072,6 +1093,13 @@ exports[`pending recovery request 1`] = `
       >
         Re-Sync Confirmation
       </Button>
+      <ExtrinsicSubmitter
+        id="activatedProtection"
+        onError={[Function]}
+        onSuccess={[Function]}
+        signAndSubmit={null}
+        successMessage="Protection successfully activated."
+      />
       <LegalOfficers
         colorTheme={
           Object {
@@ -1362,6 +1390,13 @@ exports[`protection request 1`] = `
       >
         Your Logion Trust Protection request has been submitted. Your Legal Officers will contact you as soon as possible to finalize the KYC process. Please note that, after the successful completion of one of your Legal Officer approval processes, you will be able to use all features provided by your logion account dashboard.
       </Alert>
+      <ExtrinsicSubmitter
+        id="activatedProtection"
+        onError={[Function]}
+        onSuccess={[Function]}
+        signAndSubmit={null}
+        successMessage="Protection successfully activated."
+      />
       <LegalOfficers
         colorTheme={
           Object {
@@ -1654,6 +1689,13 @@ exports[`recovery request 1`] = `
          for account toRecover
          has been submitted. Your Legal Officers will contact you as soon as possible to finalize the KYC process.
       </Alert>
+      <ExtrinsicSubmitter
+        id="activatedProtection"
+        onError={[Function]}
+        onSuccess={[Function]}
+        signAndSubmit={null}
+        successMessage="Protection successfully activated."
+      />
       <LegalOfficers
         colorTheme={
           Object {

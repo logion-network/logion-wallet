@@ -1,7 +1,7 @@
 jest.mock('../UserContext');
 jest.mock('../../RootContext');
 
-import { setPendingProtectionRequests, setAcceptedProtectionRequests, setRecoveryConfig } from "../UserContext";
+import { setPendingProtectionRequests, setAcceptedProtectionRequests, setRecoveryConfig } from "../__mocks__/UserContextMock";
 import { shallowRender } from "../../tests";
 import React from "react";
 import TrustProtection from "./TrustProtection";

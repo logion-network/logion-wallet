@@ -1,6 +1,7 @@
 jest.mock('../UserContext');
 jest.mock('../../logion-chain');
 jest.mock('../../RootContext');
+jest.mock('../../logion-chain/Signature');
 jest.mock('../../logion-chain/Recovery');
 
 import React from 'react';
@@ -23,6 +24,7 @@ import {
     PROTECTION_REQUEST,
     RECOVERY_REQUEST,
 } from './TestData';
+import { setRecoveryConfig } from '../__mocks__/UserContextMock';
 
 test("activated protection request", () => {
     const tree = shallowRender(<ProtectionRecoveryRequest request={ ACTIVATED_PROTECTION_REQUEST } type='activated'/>)
