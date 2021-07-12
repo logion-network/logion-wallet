@@ -1,1 +1,1 @@
-export let createRecovery = jest.fn();
+export let createRecovery = jest.fn().mockResolvedValue(() => {});

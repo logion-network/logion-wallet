@@ -2,7 +2,7 @@ jest.mock('./UserContext');
 
 import { shallowRender } from '../tests';
 import PendingTokenizationRequests from './PendingTokenizationRequests';
-import { setPendingRequests } from './UserContext';
+import { setPendingRequests } from './__mocks__/UserContextMock';
 
 test("Renders null with no data", () => {
     const tree = shallowRender(<PendingTokenizationRequests />);

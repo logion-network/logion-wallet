@@ -2,7 +2,7 @@ jest.mock('./UserContext');
 
 import RefreshRequestsButton from './RefreshRequestsButton';
 import { shallowRender } from '../tests';
-import { setRefreshRequests } from './UserContext';
+import { setRefreshRequests } from './__mocks__/UserContextMock';
 
 test("Renders null with no data", () => {
     setRefreshRequests(null);

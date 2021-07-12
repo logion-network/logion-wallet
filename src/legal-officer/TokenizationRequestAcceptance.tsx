@@ -28,6 +28,7 @@ import {
 } from './Model';
 import ProcessStep from './ProcessStep';
 import ExtrinsicSubmissionResult from '../ExtrinsicSubmissionResult';
+import ExtrinsicSubmitter, { SignAndSubmit } from '../ExtrinsicSubmitter';
 
 enum AcceptStatus {
     NONE,
@@ -40,8 +41,6 @@ enum AcceptStatus {
     SETTING_METADATA,
     MINTING_PENDING,
     MINTING,
-    CLEAN_UP_PENDING,
-    CLEANING_UP,
     DONE
 }
 
@@ -49,7 +48,8 @@ interface AcceptState {
     status: AcceptStatus,
     assetId?: AssetId,
     sessionToken?: string,
-    unsubscriber?: Unsubscriber | null,
+    metadataSet?: boolean,
+    doneMinting?: boolean,
 }
 
 export interface Props {
@@ -66,12 +66,10 @@ export default function TokenizationRequestAcceptance(props: Props) {
 
     const [ assetCreationResult, setAssetCreationResult ] = useState<ISubmittableResult | null>(null);
     const [ assetCreationError, setAssetCreationError ] = useState<any>(null);
-    
-    const [ setMetadataResult, setSetMetadataResult ] = useState<ISubmittableResult | null>(null);
-    const [ setMetadataError, setSetMetadataError ] = useState<any>(null);
+    const [ assetCreationUnsubscriber, setAssetCreationUnsubscriber ] = useState<Unsubscriber | null>(null);
 
-    const [ mintingResult, setMintingResult ] = useState<ISubmittableResult | null>(null);
-    const [ mintingError, setMintingError ] = useState<any>(null);
+    const [ signAndSubmitMetadata, setSignAndSubmitMetadata ] = useState<SignAndSubmit>(null);
+    const [ signAndSubmitMint, setSignAndSubmitMint ] = useState<SignAndSubmit>(null);
 
     // Request acceptance (off-chain)
     useEffect(() => {
@@ -122,6 +120,7 @@ export default function TokenizationRequestAcceptance(props: Props) {
                     callback: setAssetCreationResult,
                     errorCallback: setAssetCreationError,
                 });
+                setAssetCreationUnsubscriber(unsubscriber);
 
                 const request = props.requestToAccept!;
                 await setAssetDescription({
@@ -136,7 +135,6 @@ export default function TokenizationRequestAcceptance(props: Props) {
                 setAcceptState({
                     status: AcceptStatus.CREATING_ASSET,
                     assetId,
-                    unsubscriber,
                     sessionToken: undefined,
                 });
             };
@@ -157,13 +155,13 @@ export default function TokenizationRequestAcceptance(props: Props) {
     useEffect(() => {
         if(acceptState.status === AcceptStatus.SET_METADATA_PENDING) {
             setStatus(AcceptStatus.SETTING_METADATA);
-            const proceed = async () => {
-                await unsubscribe(acceptState.unsubscriber!);
-                const unsubscriber = setAssetMetadata({
+            (async function () {
+                await unsubscribe(assetCreationUnsubscriber!);
+                const signAndSubmit: SignAndSubmit = (setResult, setError) => setAssetMetadata({
                     api: api!,
                     signerId: currentAddress,
-                    callback: setSetMetadataResult,
-                    errorCallback: setSetMetadataError,
+                    callback: setResult,
+                    errorCallback: setError,
                     assetId: acceptState.assetId!,
                     metadata: {
                         name: props.requestToAccept!.requestedTokenName,
@@ -171,13 +169,8 @@ export default function TokenizationRequestAcceptance(props: Props) {
                         decimals: DEFAULT_ASSETS_DECIMALS,
                     }
                 });
-                setAcceptState({
-                    ...acceptState,
-                    status: AcceptStatus.SETTING_METADATA,
-                    unsubscriber
-                });
-            };
-            proceed();
+                setSignAndSubmitMetadata(() => signAndSubmit);
+            })();
         }
     }, [
         acceptState,
@@ -185,33 +178,24 @@ export default function TokenizationRequestAcceptance(props: Props) {
         setAcceptState,
         api,
         currentAddress,
-        setSetMetadataResult,
-        setSetMetadataError,
         props.requestToAccept,
+        assetCreationUnsubscriber,
     ]);
 
     // Minting
     useEffect(() => {
         if(acceptState.status === AcceptStatus.MINTING_PENDING) {
             setStatus(AcceptStatus.MINTING);
-            const proceed = async () => {
-                await unsubscribe(acceptState.unsubscriber!);
-                const unsubscriber = mintTokens({
-                    api: api!,
-                    signerId: currentAddress,
-                    beneficiary: props.requestToAccept!.requesterAddress,
-                    callback: setMintingResult,
-                    errorCallback: setMintingError,
-                    assetId: acceptState.assetId!,
-                    amount: mintAmount(props.requestToAccept!.bars, DEFAULT_ASSETS_DECIMALS)
-                });
-                setAcceptState({
-                    ...acceptState,
-                    status: AcceptStatus.MINTING,
-                    unsubscriber
-                });
-            };
-            proceed();
+            const signAndSubmit: SignAndSubmit = (setResult, setError) => mintTokens({
+                api: api!,
+                signerId: currentAddress,
+                beneficiary: props.requestToAccept!.requesterAddress,
+                callback: setResult,
+                errorCallback: setError,
+                assetId: acceptState.assetId!,
+                amount: mintAmount(props.requestToAccept!.bars, DEFAULT_ASSETS_DECIMALS)
+            });
+            setSignAndSubmitMint(() => signAndSubmit);
         }
     }, [
         acceptState,
@@ -220,26 +204,7 @@ export default function TokenizationRequestAcceptance(props: Props) {
         api,
         currentAddress,
         props.requestToAccept,
-        setMintingResult,
-        setMintingError,
     ]);
-
-    // Clean-up
-    useEffect(() => {
-        if(acceptState.status === AcceptStatus.CLEAN_UP_PENDING) {
-            setStatus(AcceptStatus.CLEANING_UP);
-
-            const proceed = async () => {
-                await unsubscribe(acceptState.unsubscriber!);
-                setAcceptState({
-                    ...acceptState,
-                    status: AcceptStatus.DONE,
-                    unsubscriber: null
-                });
-            };
-            proceed();
-        }
-    }, [ acceptState, setStatus, setAcceptState ]);
 
     const closeAndRefresh = useCallback(() => {
         refreshRequests!();
@@ -312,29 +277,41 @@ export default function TokenizationRequestAcceptance(props: Props) {
             <ProcessStep
                 active={ acceptState.status === AcceptStatus.SETTING_METADATA }
                 title={ `Setting metadata for request ${props.requestToAccept.id}` }
-                mayProceed={ isFinalized(setMetadataResult) }
+                mayProceed={ acceptState.metadataSet }
                 proceedCallback={ () => setStatus(AcceptStatus.MINTING_PENDING) }
                 stepTestId={ `modal-setting-${props.requestToAccept.id}` }
                 proceedButtonTestId={ `proceed-minting-${props.requestToAccept.id}` }
             >
-                <ExtrinsicSubmissionResult
-                    result={setMetadataResult}
-                    error={setMetadataError}
+                <ExtrinsicSubmitter
+                    id="metadata"
+                    signAndSubmit={ signAndSubmitMetadata }
                     successMessage="Metadata successfully set, you may now proceed by minting tokens."
+                    onSuccess={ () => setAcceptState({
+                        ...acceptState,
+                        status: AcceptStatus.SETTING_METADATA,
+                        metadataSet: true,
+                    })}
+                    onError={ () => {} }
                 />
             </ProcessStep>
             <ProcessStep
                 active={ acceptState.status === AcceptStatus.MINTING }
                 title={ `Minting tokens for request ${props.requestToAccept.id}` }
-                mayProceed={ isFinalized(mintingResult) }
-                proceedCallback={ () => setStatus(AcceptStatus.CLEAN_UP_PENDING) }
+                mayProceed={ acceptState.doneMinting }
+                proceedCallback={ () => setStatus(AcceptStatus.DONE) }
                 stepTestId={`modal-minting-${props.requestToAccept.id}`}
                 proceedButtonTestId={`proceed-review-${props.requestToAccept.id}`}
             >
-                <ExtrinsicSubmissionResult
-                    result={mintingResult}
-                    error={mintingError}
+                <ExtrinsicSubmitter
+                    id="metadata"
+                    signAndSubmit={ signAndSubmitMint }
                     successMessage="Tokens successfully minted, you may now review the report."
+                    onSuccess={ () => setAcceptState({
+                        ...acceptState,
+                        status: AcceptStatus.MINTING,
+                        doneMinting: true,
+                    })}
+                    onError={ () => {} }
                 />
             </ProcessStep>
             <ProcessStep

@@ -5,7 +5,7 @@ import React from "react";
 import {shallowRender} from "../../tests";
 import Recovery from "./Recovery";
 import { ProtectionRequest } from "../../legal-officer/Types";
-import { setPendingProtectionRequests, setAcceptedProtectionRequests, setRecoveryConfig } from '../UserContext';
+import { setPendingProtectionRequests, setAcceptedProtectionRequests, setRecoveryConfig } from '../__mocks__/UserContextMock';
 import { RECOVERY_REQUEST } from "./TestData";
 
 test("renders", () => {

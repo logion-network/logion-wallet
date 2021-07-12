@@ -25,6 +25,7 @@ export default function GoToTrustProtection() {
                 icon: {
                     id: 'recovery',
                 },
+                background: colorTheme.bottomMenuItems.iconGradient,
             }}
             colors={ colorTheme }
             addresses={ addresses }

@@ -2,7 +2,7 @@ jest.mock('./UserContext');
 
 import { shallowRender } from '../tests';
 import AcceptedTokenizationRequests from './AcceptedTokenizationRequests';
-import { setAcceptedRequests } from './UserContext';
+import { setAcceptedRequests } from './__mocks__/UserContextMock';
 
 test("Renders null with no data", () => {
     const tree = shallowRender(<AcceptedTokenizationRequests />);

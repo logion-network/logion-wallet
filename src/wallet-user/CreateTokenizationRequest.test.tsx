@@ -4,7 +4,7 @@ jest.mock('../RootContext');
 
 import React from 'react';
 import {DEFAULT_LEGAL_OFFICER} from "../legal-officer/Types";
-import {setCreateTokenRequest} from "./UserContext";
+import {setCreateTokenRequest} from "./__mocks__/UserContextMock";
 import CreateTokenizationRequest from "./CreateTokenizationRequest";
 import {shallowRender} from "../tests";
 import {fireEvent, render, screen, waitFor} from '@testing-library/react';

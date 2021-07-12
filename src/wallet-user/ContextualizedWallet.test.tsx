@@ -6,7 +6,7 @@ import React from 'react';
 import ContextualizedWallet from './ContextualizedWallet';
 import { setContextMock } from '../logion-chain/__mocks__/LogionChainMock';
 import { shallowRender, mockAccount } from '../tests';
-import { setContextUserAddress } from './UserContext';
+import { setContextUserAddress } from './__mocks__/UserContextMock';
 
 test('Given disconnected, when rendering, then show disconnected and connect button', () => {
     setContextMock({

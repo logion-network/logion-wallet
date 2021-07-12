@@ -4,7 +4,7 @@ jest.mock('react-router-dom');
 
 import { shallowRender } from '../tests';
 import MyTokens from './MyTokens';
-import { setAcceptedRequests } from './UserContext';
+import { setAcceptedRequests } from './__mocks__/UserContextMock';
 import { render, screen, act, waitFor } from '@testing-library/react';
 import { DEFAULT_ASSETS_DECIMALS } from '../logion-chain';
 
