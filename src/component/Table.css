@@ -75,6 +75,18 @@
     line-height: 20px;
 }
 
+.Table .regular-cell.overflowing {
+    text-overflow: ellipsis;
+}
+
+.Table .date-cell {
+    font-size: 14px;
+    line-height: 20px;
+    overflow: hidden;
+    padding-left: 10px;
+    text-align: center;
+}
+
 .Table .empty-message {
     flex-grow: 1;
     text-align: center;

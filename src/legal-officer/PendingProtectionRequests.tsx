@@ -5,7 +5,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Form from 'react-bootstrap/Form';
 
 import Button from '../component/Button';
-import Table, { Cell, EmptyTableMessage } from '../component/Table';
+import Table, { Cell, EmptyTableMessage, DateCell } from '../component/Table';
 import Identity from '../component/Identity';
 import PostalAddress from '../component/PostalAddress';
 import { sign } from '../logion-chain';
@@ -126,17 +126,16 @@ export default function PendingProtectionRequests(props: Props) {
                     },
                     {
                         header: "Submission date",
-                        render: request => <Cell content={ request.createdOn } smallText wordBreak="break-all" />,
+                        render: request => <DateCell dateTime={ request.createdOn } />,
                         width: "120px",
-                        smallerText: true,
                     },
                     {
                         header: "Account number",
-                        render: request => <Cell content={ request.requesterAddress } smallText wordBreak="break-all" />,
+                        render: request => <Cell content={ request.requesterAddress } overflowing tooltipId={ `dest-${request.id}` } />,
                     },
                     {
                         header: "Account to recover",
-                        render: request => <Cell content={ request.addressToRecover } smallText wordBreak="break-all" />,
+                        render: request => <Cell content={ request.addressToRecover } overflowing tooltipId={ `src-${request.id}` } />,
                     },
                     {
                         header: "Action",

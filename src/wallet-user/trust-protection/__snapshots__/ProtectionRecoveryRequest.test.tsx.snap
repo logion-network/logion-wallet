@@ -293,6 +293,12 @@ Belgium",
   primaryPaneWidth={8}
   secondaryAreaChildren={null}
   selectAddress={[MockFunction]}
+  titleIcon={
+    Object {
+      "hasVariants": true,
+      "id": "shield",
+    }
+  }
 />
 `;
 
@@ -577,6 +583,12 @@ Belgium",
   primaryPaneWidth={8}
   secondaryAreaChildren={null}
   selectAddress={[MockFunction]}
+  titleIcon={
+    Object {
+      "hasVariants": false,
+      "id": "recovery",
+    }
+  }
 />
 `;
 
@@ -866,6 +878,12 @@ Belgium",
   primaryPaneWidth={8}
   secondaryAreaChildren={null}
   selectAddress={[MockFunction]}
+  titleIcon={
+    Object {
+      "hasVariants": true,
+      "id": "shield",
+    }
+  }
 />
 `;
 
@@ -1155,6 +1173,12 @@ Belgium",
   primaryPaneWidth={8}
   secondaryAreaChildren={null}
   selectAddress={[MockFunction]}
+  titleIcon={
+    Object {
+      "hasVariants": false,
+      "id": "recovery",
+    }
+  }
 />
 `;
 
@@ -1437,6 +1461,12 @@ Belgium",
   primaryPaneWidth={8}
   secondaryAreaChildren={null}
   selectAddress={[MockFunction]}
+  titleIcon={
+    Object {
+      "hasVariants": true,
+      "id": "shield",
+    }
+  }
 />
 `;
 
@@ -1722,5 +1752,11 @@ Belgium",
   secondaryAreaChildren={null}
   selectAddress={[MockFunction]}
   subTitle="Recovery process status"
+  titleIcon={
+    Object {
+      "hasVariants": false,
+      "id": "recovery",
+    }
+  }
 />
 `;

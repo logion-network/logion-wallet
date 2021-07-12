@@ -21,6 +21,9 @@ export default function GoToTrustProtection() {
         <FullWidthPane
             mainTitle="Recovery"
             subTitle="No recovery possible"
+            titleIcon={{
+                id: 'recovery',
+            }}
             colors={ colorTheme }
             addresses={ addresses }
             selectAddress={ selectAddress }

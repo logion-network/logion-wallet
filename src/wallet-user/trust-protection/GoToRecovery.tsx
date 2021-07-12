@@ -21,6 +21,10 @@ export default function GoToTrustProtection() {
         <FullWidthPane
             mainTitle="My Logion Trust Protection"
             subTitle="Recovery in progress"
+            titleIcon={{
+                id: 'shield',
+                hasVariants: true,
+            }}
             colors={ colorTheme }
             addresses={ addresses }
             selectAddress={ selectAddress }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Table, { Cell, EmptyTableMessage } from '../component/Table';
+import Table, { Cell, EmptyTableMessage, DateCell } from '../component/Table';
 
 import { useRootContext } from '../RootContext';
 
@@ -51,17 +51,17 @@ export default function ProtectionRequestsHistory(props: Props) {
                     },
                     {
                         header: "Submission date",
-                        render: request => <Cell content={ request.createdOn } smallText />,
+                        render: request => <DateCell dateTime={ request.createdOn } />,
                         width: "120px",
                         smallerText: true,
                     },
                     {
                         header: "Account number",
-                        render: request => <Cell content={ request.requesterAddress } smallText wordBreak="break-all" />,
+                        render: request => <Cell content={ request.requesterAddress } overflowing tooltipId={ `dest-${request.id}` } />,
                     },
                     {
                         header: "Account to recover",
-                        render: request => <Cell content={ request.addressToRecover } smallText wordBreak="break-all" />,
+                        render: request => <Cell content={ request.addressToRecover } overflowing tooltipId={ `src-${request.id}` } />,
                     }
                 ]}
                 data={ requests }

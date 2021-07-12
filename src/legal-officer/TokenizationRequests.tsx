@@ -21,6 +21,9 @@ export default function TokenizationRequests() {
     return (
         <ContentPane
             mainTitle="Tokens"
+            titleIcon={{
+                id: 'tokens'
+            }}
             colors={ colorTheme }
             addresses={ addresses }
             selectAddress={ selectAddress }

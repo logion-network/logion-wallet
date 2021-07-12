@@ -60,7 +60,8 @@ export default function ContextualizedWallet() {
                     exact: true,
                     icon: {
                         icon: {
-                            id: 'recovery_request'
+                            id: 'recovery_request',
+                            hasVariants: true,
                         },
                         height: 'auto',
                         width: '60px',

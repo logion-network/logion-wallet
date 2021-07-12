@@ -22,6 +22,10 @@ export default function RecoveryRequests() {
         <FullWidthPane
             className="RecoveryRequests"
             mainTitle="Recovery requests"
+            titleIcon={{
+                id: 'recovery_request',
+                hasVariants: true,
+            }}
             colors={ colorTheme }
             addresses={ addresses }
             selectAddress={ selectAddress }

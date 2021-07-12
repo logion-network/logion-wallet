@@ -40,6 +40,9 @@ export default function Settings(props: Props) {
     return (
         <FullWidthPane
             mainTitle="Settings"
+            titleIcon={{
+                id: 'settings',
+            }}
             colors={ props.colors }
             addresses={ addresses }
             selectAddress={ selectAddress }

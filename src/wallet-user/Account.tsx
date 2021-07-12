@@ -23,6 +23,9 @@ export default function Account() {
     return (
         <ContentPane
             mainTitle="Tokens"
+            titleIcon={{
+                id: 'tokens',
+            }}
             colors={ colorTheme }
             addresses={ addresses }
             selectAddress={ selectAddress }
