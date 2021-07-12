@@ -128,7 +128,8 @@ export default function ProtectionRecoveryRequest(props: Props) {
                 icon: {
                     id: props.request.isRecovery ? 'recovery' : 'shield',
                     hasVariants: props.request.isRecovery ? false : true,
-                }
+                },
+                background: props.request.isRecovery ? colorTheme.bottomMenuItems.iconGradient : undefined,
             }}
             colors={ colorTheme }
             addresses={ addresses }

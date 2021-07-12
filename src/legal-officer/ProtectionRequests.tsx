@@ -24,7 +24,7 @@ export default function ProtectionRequests() {
     return (
         <FullWidthPane
             className="ProtectionRequests"
-            mainTitle="Protection requests"
+            mainTitle="Protection management"
             titleIcon={{
                 icon: {
                     id: 'shield',

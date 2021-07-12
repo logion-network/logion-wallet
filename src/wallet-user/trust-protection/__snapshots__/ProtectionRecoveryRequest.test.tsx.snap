@@ -302,6 +302,7 @@ Belgium",
   selectAddress={[MockFunction]}
   titleIcon={
     Object {
+      "background": undefined,
       "icon": Object {
         "hasVariants": true,
         "id": "shield",
@@ -601,6 +602,10 @@ Belgium",
   selectAddress={[MockFunction]}
   titleIcon={
     Object {
+      "background": Object {
+        "from": "#7a90cb",
+        "to": "#3b6cf4",
+      },
       "icon": Object {
         "hasVariants": false,
         "id": "recovery",
@@ -905,6 +910,7 @@ Belgium",
   selectAddress={[MockFunction]}
   titleIcon={
     Object {
+      "background": undefined,
       "icon": Object {
         "hasVariants": true,
         "id": "shield",
@@ -1209,6 +1215,10 @@ Belgium",
   selectAddress={[MockFunction]}
   titleIcon={
     Object {
+      "background": Object {
+        "from": "#7a90cb",
+        "to": "#3b6cf4",
+      },
       "icon": Object {
         "hasVariants": false,
         "id": "recovery",
@@ -1506,6 +1516,7 @@ Belgium",
   selectAddress={[MockFunction]}
   titleIcon={
     Object {
+      "background": undefined,
       "icon": Object {
         "hasVariants": true,
         "id": "shield",
@@ -1806,6 +1817,10 @@ Belgium",
   subTitle="Recovery process status"
   titleIcon={
     Object {
+      "background": Object {
+        "from": "#7a90cb",
+        "to": "#3b6cf4",
+      },
       "icon": Object {
         "hasVariants": false,
         "id": "recovery",
