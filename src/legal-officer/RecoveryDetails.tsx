@@ -14,7 +14,9 @@ import { RecoveryInfo } from "./Types";
 import AccountInfo from "../component/AccountInfo";
 import Alert from "../component/Alert";
 import Frame from "../component/Frame";
-import '../component/Position.css';
+import "./RecoveryDetails.css"
+import Spacer from "../component/Spacer";
+import Icon from "../component/Icon";
 import Dialog from "../component/Dialog";
 import { useLogionChain, sign } from '../logion-chain';
 import { vouchRecovery } from '../logion-chain/Recovery';
@@ -119,7 +121,10 @@ export default function RecoveryDetails() {
                     </Alert>
                 </Row>
                 <Row>
-                    <Col md={ 5 }>
+                    <Spacer>
+                        <Icon icon={ { id: 'arrow-recovery' } } />
+                    </Spacer>
+                    <Col className="AccountInfoFrom">
                         <h3>From</h3>
                         <AccountInfo
                             label="Account address, subject of the recovery"
@@ -131,10 +136,7 @@ export default function RecoveryDetails() {
                             colorTheme={ colorTheme }
                         />
                     </Col>
-                    <Col md={ 1 }>
-                        <p className="vertical-center">== RED ARROW ==&gt;</p>
-                    </Col>
-                    <Col md={ 5 }>
+                    <Col className="AccountInfoTo">
                         <h3>To</h3>
                         <AccountInfo
                             label="Account address where all assets will be transferred"

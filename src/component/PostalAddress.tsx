@@ -3,6 +3,7 @@ import PostalAddressType from './types/PostalAddress';
 import { Row, Col } from "react-bootstrap";
 import { BackgroundAndForegroundColors } from "./ColorTheme";
 import ComparableField from "./ComparableField";
+import "./PostalAddress.css";
 
 export interface Props {
     postalAddress: PostalAddressType
@@ -32,27 +33,35 @@ export default function PostalAddress(props: Props) {
     }
 
     return (
-        <>
+        <div className="PostalAddress">
             <h3>Address</h3>
-            <ComparablePostalAddressField
-                id="line1"
-                label="Line1"
-                field={ address => address.line1 }
-            />
-            <ComparablePostalAddressField
-                id="line2"
-                label="Line2"
-                field={ address => address.line2 }
-            />
             <Row>
-                <Col md={ 4 }>
+                <Col className="PostalAddressCol" md={ 12 }>
+                    <ComparablePostalAddressField
+                        id="line1"
+                        label="Line1"
+                        field={ address => address.line1 }
+                    />
+                </Col>
+            </Row>
+            <Row>
+                <Col className="PostalAddressCol" md={ 12 }>
+                    <ComparablePostalAddressField
+                        id="line2"
+                        label="Line2"
+                        field={ address => address.line2 }
+                    />
+                </Col>
+            </Row>
+            <Row>
+                <Col className="PostalAddressCol" md={ 4 }>
                     <ComparablePostalAddressField
                         id="postalCode"
                         label="Postal Code"
                         field={ address => address.postalCode }
                     />
                 </Col>
-                <Col md={ 8 }>
+                <Col className="PostalAddressCol" md={ 8 }>
                     <ComparablePostalAddressField
                         id="city"
                         label="City"
@@ -60,11 +69,15 @@ export default function PostalAddress(props: Props) {
                     />
                 </Col>
             </Row>
-            <ComparablePostalAddressField
-                id="country"
-                label="Country"
-                field={ address => address.country }
-            />
-        </>
+            <Row>
+                <Col className="PostalAddressCol" md={ 12 }>
+                    <ComparablePostalAddressField
+                        id="country"
+                        label="Country"
+                        field={ address => address.country }
+                    />
+                </Col>
+            </Row>
+        </div>
     )
 }

@@ -3,6 +3,7 @@ import { Controller, useForm } from "react-hook-form";
 import Form from "react-bootstrap/Form";
 import React from "react";
 import { BackgroundAndForegroundColors } from "./ColorTheme";
+import "./ComparableField.css";
 
 export interface ComparableFieldProps<T> {
     id: string
@@ -27,24 +28,27 @@ export default function ComparableField<T>(props: ComparableFieldProps<T>) {
     }
 
     return (
-        <FormGroup
-            id={ props.id }
-            label={ props.label }
-            control={
-                <Controller
-                    name={ props.id }
-                    control={ control }
-                    defaultValue={ props.field(props.data) }
-                    render={ ({ field }) => (
-                        <Form.Control
-                            isInvalid={ isInvalid() }
-                            readOnly
-                            type="text"
-                            data-testid={ props.id } { ...field }
-                        />
-                    ) }
-                />
-            }
-            colors={ props.colors }
-        />)
+        <div className="ComparableField">
+            <FormGroup
+                id={ props.id }
+                label={ props.label }
+                control={
+                    <Controller
+                        name={ props.id }
+                        control={ control }
+                        defaultValue={ props.field(props.data) }
+                        render={ ({ field }) => (
+                            <Form.Control
+                                isInvalid={ isInvalid() }
+                                readOnly
+                                type="text"
+                                data-testid={ props.id } { ...field }
+                            />
+                        ) }
+                    />
+                }
+                noFeedback
+                colors={ props.colors }
+            />
+        </div>)
 }

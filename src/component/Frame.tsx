@@ -11,10 +11,15 @@ export interface Props {
     disabled?: boolean,
     className?: string,
     fullHeight?: boolean,
+    altColors?: boolean,
 }
 
 export default function Frame(props: Props) {
 
+    const backgroundColor =
+        (props.altColors !== undefined && props.altColors) ?
+            props.colors.frame.altBackground :
+            props.colors.frame.background;
     const inlineCss = `
     .Frame a,
     .Frame .btn-link {
@@ -22,7 +27,7 @@ export default function Frame(props: Props) {
     }
     .Dashboard .Frame .form-control,
     .Dashboard .Frame .form-control[readonly] {
-        background-color: ${props.colors.frame.background};
+        background-color: ${ backgroundColor };
     }
     `;
 
@@ -41,7 +46,7 @@ export default function Frame(props: Props) {
         <div
             className={ className }
             style={{
-                backgroundColor: props.colors.frame.background,
+                backgroundColor,
                 color: props.colors.frame.foreground,
                 boxShadow: `0 0 25px ${props.colors.shadowColor}`,
             }}

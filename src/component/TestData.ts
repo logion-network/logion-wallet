@@ -43,6 +43,7 @@ export const COLOR_THEME: ColorTheme = {
         background: '#ffffff',
         foreground: '#000000',
         link: rgbaToHex('#3b6cf4', 0.15),
+        altBackground: '#eff3fe',
     },
     topMenuItems: {
         iconGradient: {

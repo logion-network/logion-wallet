@@ -36,6 +36,7 @@ exports[`renders 1`] = `
         "foreground": "#000000",
       },
       "frame": Object {
+        "altBackground": "#eff3fe",
         "background": "#ffffff",
         "foreground": "#000000",
         "link": "#3b6cf426",

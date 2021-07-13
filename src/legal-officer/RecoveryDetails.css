@@ -1,0 +1,21 @@
+.RecoveryDetails .Frame{
+    padding-top: 20px;
+    padding-bottom: 5px;
+}
+
+.RecoveryDetails h3 {
+    text-align: center;
+    font-weight: bold;
+    padding-bottom: 0 !important;
+}
+
+.RecoveryDetails .Alert {
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.RecoveryDetails .AccountInfoFrom {
+    margin-right: 10px;
+}
