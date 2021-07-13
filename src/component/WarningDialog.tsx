@@ -16,7 +16,6 @@ export interface Props {
     size: ModalSize,
     colors: ColorTheme,
     children: Children,
-    spaceAbove?: string,
 }
 
 export default function WarningDialog(props: Props) {
@@ -28,7 +27,6 @@ export default function WarningDialog(props: Props) {
             actions={ props.actions }
             colors={ props.colors }
             modalTestId={ props.modalTestId }
-            spaceAbove={ props.spaceAbove }
         >
             <Icon
                 colorThemeType={ props.colors.type }

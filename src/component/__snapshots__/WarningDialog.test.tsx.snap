@@ -94,7 +94,6 @@ exports[`renders with custom space above 1`] = `
   }
   show={true}
   size="lg"
-  spaceAbove="200px"
 >
   <Icon
     colorThemeType="light"

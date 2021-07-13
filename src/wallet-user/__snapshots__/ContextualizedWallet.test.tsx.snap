@@ -268,7 +268,6 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
     }
     show={false}
     size="lg"
-    spaceAbove="25vh"
   >
     <React.Fragment>
       Dear user,
@@ -547,7 +546,6 @@ exports[`Given connected, when rendering, then show account, no connect button a
     }
     show={false}
     size="lg"
-    spaceAbove="25vh"
   >
     <React.Fragment>
       Dear user,
@@ -825,7 +823,6 @@ exports[`Given connecting, when rendering, then show account, no button, no node
     }
     show={false}
     size="lg"
-    spaceAbove="25vh"
   >
     <React.Fragment>
       Dear user,
@@ -1103,7 +1100,6 @@ exports[`Given connection error, when rendering, then show account, no button, n
     }
     show={false}
     size="lg"
-    spaceAbove="25vh"
   >
     <React.Fragment>
       Dear user,
@@ -1381,7 +1377,6 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
     }
     show={false}
     size="lg"
-    spaceAbove="25vh"
   >
     <React.Fragment>
       Dear user,
@@ -1660,7 +1655,6 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
     }
     show={false}
     size="lg"
-    spaceAbove="25vh"
   >
     <React.Fragment>
       Dear user,

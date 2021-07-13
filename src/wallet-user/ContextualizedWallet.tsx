@@ -109,7 +109,6 @@ export default function ContextualizedWallet() {
                     }
                 ]}
                 colors={ colorTheme }
-                spaceAbove="25vh"
             >
                 <>
                     Dear user,<br/>

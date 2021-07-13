@@ -17,11 +17,6 @@ exports[`renders with custom space above 1`] = `
   restoreFocus={true}
   show={true}
   size="lg"
-  style={
-    Object {
-      "paddingTop": "200px",
-    }
-  }
 >
   <style>
     
@@ -79,7 +74,6 @@ exports[`renders with default space above 1`] = `
   restoreFocus={true}
   show={true}
   size="lg"
-  style={Object {}}
 >
   <style>
     
