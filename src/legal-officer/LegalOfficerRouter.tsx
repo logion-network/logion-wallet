@@ -29,7 +29,7 @@ export default function LegalOfficerRouter() {
                 <Route path={ RECOVERY_REQUESTS_PATH }>
                     <RecoveryRequests />
                 </Route>
-                <Route path={ RECOVERY_DETAILS_PATH + ":requestId" }>
+                <Route path={ RECOVERY_DETAILS_PATH }>
                     <RecoveryDetails />
                 </Route>
                 <Route path={ SETTINGS_PATH }>
