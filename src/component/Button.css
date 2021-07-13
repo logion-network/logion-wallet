@@ -5,6 +5,7 @@
 .Button.btn {
     padding: 9px 20px;
     border-radius: 6px;
+    font-weight: bold;
 }
 
 .Button.btn.btn-secondary {

@@ -21,7 +21,7 @@ exports[`renders 1`] = `
         },
       },
       "buttons": Object {
-        "secondaryBackgroundColor": "#eff3fe",
+        "secondaryBackgroundColor": "#ffffff",
       },
       "dashboard": Object {
         "background": "#eff3fe",

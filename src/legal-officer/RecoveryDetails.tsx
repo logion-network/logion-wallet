@@ -1,31 +1,86 @@
+import moment from 'moment';
+import Form from 'react-bootstrap/Form';
+
 import { useRootContext } from "../RootContext";
 import { useLegalOfficerContext } from "./LegalOfficerContext";
 import { FullWidthPane } from "../component/Dashboard";
-import { useParams } from 'react-router';
-import { Link } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router';
 import { RECOVERY_REQUESTS_PATH } from "./LegalOfficerPaths";
 import Button from "../component/Button";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { ButtonGroup, Col, Row } from "react-bootstrap";
-import { fetchRecoveryInfo } from "./Model";
+import { acceptProtectionRequest, fetchRecoveryInfo, rejectProtectionRequest } from "./Model";
 import { RecoveryInfo } from "./Types";
 import AccountInfo from "../component/AccountInfo";
 import Alert from "../component/Alert";
 import Frame from "../component/Frame";
 import '../component/Position.css';
+import Dialog from "../component/Dialog";
+import { sign } from '../logion-chain';
 
 export default function RecoveryDetails() {
     const { selectAddress, addresses } = useRootContext();
-    const { colorTheme } = useLegalOfficerContext();
+    const { colorTheme, refreshRequests } = useLegalOfficerContext();
     const { requestId } = useParams<{ requestId: string }>();
     const [ recoveryInfo, setRecoveryInfo ] = useState<RecoveryInfo | null>(null);
+    const [ approve, setApprove ] = useState(false);
+    const history = useHistory();
+    const [ reject, setReject ] = useState(false);
+    const [ rejectReason, setRejectReason ] = useState<string>("");
 
     useEffect(() => {
         if (recoveryInfo === null) {
             fetchRecoveryInfo(requestId)
                 .then(recoveryInfo => setRecoveryInfo(recoveryInfo));
         }
-    }, [ setRecoveryInfo, requestId ])
+    }, [ recoveryInfo, setRecoveryInfo, requestId ]);
+
+    const accept = useCallback(() => {
+        (async function() {
+            const signedOn = moment();
+            const attributes = [ requestId ];
+            const currentAddress = addresses!.currentAddress.address;
+            const signature = await sign({
+                signerId: currentAddress,
+                resource: 'protection-request',
+                operation: 'accept',
+                signedOn,
+                attributes
+            });
+            await acceptProtectionRequest({
+                legalOfficerAddress: currentAddress,
+                requestId,
+                signature,
+                signedOn,
+            });
+            refreshRequests!();
+            history.push(RECOVERY_REQUESTS_PATH);
+        })();
+    }, [ requestId, addresses, refreshRequests, history ]);
+
+    const doReject = useCallback(() => {
+        (async function() {
+            const signedOn = moment();
+            const attributes = [ requestId ];
+            const currentAddress = addresses!.currentAddress.address;
+            const signature = await sign({
+                signerId: currentAddress,
+                resource: 'protection-request',
+                operation: 'reject',
+                signedOn,
+                attributes
+            });
+            await rejectProtectionRequest({
+                legalOfficerAddress: currentAddress,
+                requestId,
+                signature,
+                rejectReason,
+                signedOn,
+            });
+            refreshRequests!();
+            history.push(RECOVERY_REQUESTS_PATH);
+        })();
+    }, [ requestId, addresses, rejectReason, refreshRequests, history ]);
 
     if (addresses === null || selectAddress === null || recoveryInfo === null) {
         return null;
@@ -84,16 +139,72 @@ export default function RecoveryDetails() {
                 <Row>
                     <ButtonGroup aria-label="actions">
                         <Button backgroundColor={ colorTheme.buttons.secondaryBackgroundColor }
-                                variant="outline-primary">
-                            <Link to={ RECOVERY_REQUESTS_PATH }>Back to requests list</Link>
+                                variant="outline-primary" onClick={ () => history.push(RECOVERY_REQUESTS_PATH) }>
+                            Back to requests list
                         </Button>
                         <Button backgroundColor={ colorTheme.buttons.secondaryBackgroundColor }
-                                variant="outline-danger">Refusal</Button>
+                                variant="outline-danger" onClick={ () => setReject(true) }>Refusal</Button>
                         <Button backgroundColor={ colorTheme.buttons.secondaryBackgroundColor }
-                                variant="primary">Process</Button>
+                                variant="primary" onClick={ () => setApprove(true) }>Process</Button>
                     </ButtonGroup>
                 </Row>
             </Frame>
+            <Dialog
+                actions={[
+                    {
+                        id: 'back',
+                        buttonText: 'Back to requests list',
+                        buttonVariant: 'secondary',
+                        callback: () => history.push(RECOVERY_REQUESTS_PATH)
+                    },
+                    {
+                        id: 'confirm',
+                        buttonText: 'Confirm and sign',
+                        buttonVariant: 'primary',
+                        callback: accept
+                    }
+                ]}
+                show={ approve }
+                size="lg"
+                colors={ colorTheme }
+            >
+                I did my due diligence and accept to grant the
+                account { recoveryInfo.accountToRecover.requesterAddress } the right to transfer all assets
+                to the account { recoveryInfo.recoveryAccount.requesterAddress }.
+            </Dialog>
+            <Dialog
+                actions={[
+                    {
+                        id: 'back',
+                        buttonText: 'Back to requests list',
+                        buttonVariant: 'secondary',
+                        callback: () => history.push(RECOVERY_REQUESTS_PATH)
+                    },
+                    {
+                        id: 'reject',
+                        buttonText: 'Refuse',
+                        buttonVariant: 'primary',
+                        callback: doReject
+                    }
+                ]}
+                show={ reject }
+                size="lg"
+                colors={ colorTheme }
+            >
+                I did my due diligence and refuse to grant the
+                account { recoveryInfo.accountToRecover.requesterAddress } the right to transfer all assets
+                to the account { recoveryInfo.recoveryAccount.requesterAddress }.
+                <Form.Group>
+                    <Form.Label>Reason</Form.Label>
+                    <Form.Control
+                        as="textarea"
+                        rows={3}
+                        onChange={ e => setRejectReason(e.target.value) }
+                        value={ rejectReason }
+                        data-testid="reason"
+                    />
+                </Form.Group>
+            </Dialog>
         </FullWidthPane>
     );
 }

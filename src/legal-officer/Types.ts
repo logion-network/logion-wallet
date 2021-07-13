@@ -99,7 +99,7 @@ export const LIGHT_MODE: ColorTheme = {
         }
     },
     buttons: {
-        secondaryBackgroundColor: '#eff3fe',
+        secondaryBackgroundColor: '#ffffff',
     },
     select: {
         background: '#d8e2fd',
