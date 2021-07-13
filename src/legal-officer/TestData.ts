@@ -1,6 +1,13 @@
 import moment from 'moment';
 import { toIsoString } from '../logion-chain/datetime';
 import { ProtectionRequest, DEFAULT_LEGAL_OFFICER } from './Types';
+import { AccountAddress } from '../component/types/Addresses';
+
+export const DEFAULT_LEGAL_OFFICER_ADDRESS: AccountAddress = {
+    address: DEFAULT_LEGAL_OFFICER,
+    name: "Alice",
+    isLegalOfficer: true
+};
 
 export const PENDING_PROTECTION_REQUESTS: ProtectionRequest[] = [
     {

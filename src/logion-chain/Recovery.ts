@@ -88,3 +88,27 @@ export function initiateRecovery(parameters: InitiateRecoveryParameters): Unsubs
         errorCallback,
     });
 }
+
+export interface VouchRecoveryParameters extends ExtrinsicSubmissionParameters {
+    api: ApiPromise,
+    lost: string,
+    rescuer: string,
+}
+
+export function vouchRecovery(parameters: VouchRecoveryParameters): Unsubscriber {
+    const {
+        api,
+        signerId,
+        callback,
+        errorCallback,
+        lost,
+        rescuer,
+    } = parameters;
+
+    return signAndSend({
+        signerId,
+        submittable: api.tx.recovery.vouchRecovery(lost, rescuer),
+        callback,
+        errorCallback,
+    });
+}

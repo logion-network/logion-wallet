@@ -7,7 +7,7 @@ import TokenizationRequestAcceptance from './TokenizationRequestAcceptance';
 import { render, screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { signAndSendCallback } from '../logion-chain/__mocks__/LogionChainMock';
-import { setAcceptRequest, acceptRequest, setAssetDescription } from './Model';
+import { setAcceptRequest, acceptRequest, setAssetDescription } from './__mocks__/ModelMock';
 import { ISO_DATETIME_PATTERN } from '../logion-chain/datetime';
 
 test("Renders null with no data", () => {

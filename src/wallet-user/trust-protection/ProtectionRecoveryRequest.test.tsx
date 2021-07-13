@@ -24,7 +24,6 @@ import {
     PROTECTION_REQUEST,
     RECOVERY_REQUEST,
 } from './TestData';
-import { setRecoveryConfig } from '../__mocks__/UserContextMock';
 
 test("activated protection request", () => {
     const tree = shallowRender(<ProtectionRecoveryRequest request={ ACTIVATED_PROTECTION_REQUEST } type='activated'/>)
