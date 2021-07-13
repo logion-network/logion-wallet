@@ -40,7 +40,10 @@ export const DARK_MODE: ColorTheme = {
         }
     },
     buttons: {
-        secondaryBackgroundColor: '#0c163d',
+        secondary: {
+            background: '#0c163d',
+            foreground: '#ffffff',
+        }
     },
     select: {
         background: rgbaToHex('#ffffff', 0.20),
@@ -68,5 +71,10 @@ export const DARK_MODE: ColorTheme = {
             foreground: '#ffffff',
         },
         borderColor: '#3b6cf4',
-    }
+    },
+    dialog: {
+        background: '#0c163d',
+        foreground: '#ffffff',
+        borderColor: '#e6007a',
+    },
 };

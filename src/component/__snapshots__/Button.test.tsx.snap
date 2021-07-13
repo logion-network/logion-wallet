@@ -6,11 +6,7 @@ exports[`renders 1`] = `
   className="Button"
   disabled={false}
   onClick={[MockFunction]}
-  style={
-    Object {
-      "backgroundColor": "white",
-    }
-  }
+  style={Object {}}
   variant="primary"
 >
   Text

@@ -37,10 +37,18 @@ exports[`renders 1`] = `
         },
       },
       "buttons": Object {
-        "secondaryBackgroundColor": "#0c163d",
+        "secondary": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
       },
       "dashboard": Object {
         "background": "#0c163d",
+        "foreground": "#ffffff",
+      },
+      "dialog": Object {
+        "background": "#0c163d",
+        "borderColor": "#e6007a",
         "foreground": "#ffffff",
       },
       "frame": Object {
@@ -113,10 +121,18 @@ exports[`renders 1`] = `
               },
             },
             "buttons": Object {
-              "secondaryBackgroundColor": "#0c163d",
+              "secondary": Object {
+                "background": "#0c163d",
+                "foreground": "#ffffff",
+              },
             },
             "dashboard": Object {
               "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
+            "dialog": Object {
+              "background": "#0c163d",
+              "borderColor": "#e6007a",
               "foreground": "#ffffff",
             },
             "frame": Object {
@@ -196,10 +212,18 @@ exports[`renders 1`] = `
               },
             },
             "buttons": Object {
-              "secondaryBackgroundColor": "#0c163d",
+              "secondary": Object {
+                "background": "#0c163d",
+                "foreground": "#ffffff",
+              },
             },
             "dashboard": Object {
               "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
+            "dialog": Object {
+              "background": "#0c163d",
+              "borderColor": "#e6007a",
               "foreground": "#ffffff",
             },
             "frame": Object {

@@ -37,10 +37,18 @@ exports[`activated protection request 1`] = `
         },
       },
       "buttons": Object {
-        "secondaryBackgroundColor": "#0c163d",
+        "secondary": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
       },
       "dashboard": Object {
         "background": "#0c163d",
+        "foreground": "#ffffff",
+      },
+      "dialog": Object {
+        "background": "#0c163d",
+        "borderColor": "#e6007a",
         "foreground": "#ffffff",
       },
       "frame": Object {
@@ -113,10 +121,18 @@ exports[`activated protection request 1`] = `
             },
           },
           "buttons": Object {
-            "secondaryBackgroundColor": "#0c163d",
+            "secondary": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
           },
           "dashboard": Object {
             "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+          "dialog": Object {
+            "background": "#0c163d",
+            "borderColor": "#e6007a",
             "foreground": "#ffffff",
           },
           "frame": Object {
@@ -213,10 +229,18 @@ exports[`activated protection request 1`] = `
               },
             },
             "buttons": Object {
-              "secondaryBackgroundColor": "#0c163d",
+              "secondary": Object {
+                "background": "#0c163d",
+                "foreground": "#ffffff",
+              },
             },
             "dashboard": Object {
               "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
+            "dialog": Object {
+              "background": "#0c163d",
+              "borderColor": "#e6007a",
               "foreground": "#ffffff",
             },
             "frame": Object {
@@ -349,10 +373,18 @@ exports[`activated recovery request 1`] = `
         },
       },
       "buttons": Object {
-        "secondaryBackgroundColor": "#0c163d",
+        "secondary": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
       },
       "dashboard": Object {
         "background": "#0c163d",
+        "foreground": "#ffffff",
+      },
+      "dialog": Object {
+        "background": "#0c163d",
+        "borderColor": "#e6007a",
         "foreground": "#ffffff",
       },
       "frame": Object {
@@ -425,10 +457,18 @@ exports[`activated recovery request 1`] = `
             },
           },
           "buttons": Object {
-            "secondaryBackgroundColor": "#0c163d",
+            "secondary": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
           },
           "dashboard": Object {
             "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+          "dialog": Object {
+            "background": "#0c163d",
+            "borderColor": "#e6007a",
             "foreground": "#ffffff",
           },
           "frame": Object {
@@ -513,10 +553,18 @@ exports[`activated recovery request 1`] = `
               },
             },
             "buttons": Object {
-              "secondaryBackgroundColor": "#0c163d",
+              "secondary": Object {
+                "background": "#0c163d",
+                "foreground": "#ffffff",
+              },
             },
             "dashboard": Object {
               "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
+            "dialog": Object {
+              "background": "#0c163d",
+              "borderColor": "#e6007a",
               "foreground": "#ffffff",
             },
             "frame": Object {
@@ -652,10 +700,18 @@ exports[`pending protection request 1`] = `
         },
       },
       "buttons": Object {
-        "secondaryBackgroundColor": "#0c163d",
+        "secondary": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
       },
       "dashboard": Object {
         "background": "#0c163d",
+        "foreground": "#ffffff",
+      },
+      "dialog": Object {
+        "background": "#0c163d",
+        "borderColor": "#e6007a",
         "foreground": "#ffffff",
       },
       "frame": Object {
@@ -728,10 +784,18 @@ exports[`pending protection request 1`] = `
             },
           },
           "buttons": Object {
-            "secondaryBackgroundColor": "#0c163d",
+            "secondary": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
           },
           "dashboard": Object {
             "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+          "dialog": Object {
+            "background": "#0c163d",
+            "borderColor": "#e6007a",
             "foreground": "#ffffff",
           },
           "frame": Object {
@@ -788,7 +852,14 @@ exports[`pending protection request 1`] = `
         Mandatory: we detect that the Logion Application needs to be re-synchronized with the Logion Blockchain. To proceed, please click on the button and sign to confirm this operation.
       </Alert>
       <Button
-        backgroundColor="#0c163d"
+        colors={
+          Object {
+            "secondary": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
+          }
+        }
         id="btnConfirmProtection"
         onClick={[Function]}
       >
@@ -821,10 +892,18 @@ exports[`pending protection request 1`] = `
               },
             },
             "buttons": Object {
-              "secondaryBackgroundColor": "#0c163d",
+              "secondary": Object {
+                "background": "#0c163d",
+                "foreground": "#ffffff",
+              },
             },
             "dashboard": Object {
               "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
+            "dialog": Object {
+              "background": "#0c163d",
+              "borderColor": "#e6007a",
               "foreground": "#ffffff",
             },
             "frame": Object {
@@ -957,10 +1036,18 @@ exports[`pending recovery request 1`] = `
         },
       },
       "buttons": Object {
-        "secondaryBackgroundColor": "#0c163d",
+        "secondary": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
       },
       "dashboard": Object {
         "background": "#0c163d",
+        "foreground": "#ffffff",
+      },
+      "dialog": Object {
+        "background": "#0c163d",
+        "borderColor": "#e6007a",
         "foreground": "#ffffff",
       },
       "frame": Object {
@@ -1033,10 +1120,18 @@ exports[`pending recovery request 1`] = `
             },
           },
           "buttons": Object {
-            "secondaryBackgroundColor": "#0c163d",
+            "secondary": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
           },
           "dashboard": Object {
             "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+          "dialog": Object {
+            "background": "#0c163d",
+            "borderColor": "#e6007a",
             "foreground": "#ffffff",
           },
           "frame": Object {
@@ -1093,7 +1188,14 @@ exports[`pending recovery request 1`] = `
         Mandatory: we detect that the Logion Application needs to be re-synchronized with the Logion Blockchain. To proceed, please click on the button and sign to confirm this operation.
       </Alert>
       <Button
-        backgroundColor="#0c163d"
+        colors={
+          Object {
+            "secondary": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
+          }
+        }
         id="btnConfirmProtection"
         onClick={[Function]}
       >
@@ -1126,10 +1228,18 @@ exports[`pending recovery request 1`] = `
               },
             },
             "buttons": Object {
-              "secondaryBackgroundColor": "#0c163d",
+              "secondary": Object {
+                "background": "#0c163d",
+                "foreground": "#ffffff",
+              },
             },
             "dashboard": Object {
               "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
+            "dialog": Object {
+              "background": "#0c163d",
+              "borderColor": "#e6007a",
               "foreground": "#ffffff",
             },
             "frame": Object {
@@ -1265,10 +1375,18 @@ exports[`protection request 1`] = `
         },
       },
       "buttons": Object {
-        "secondaryBackgroundColor": "#0c163d",
+        "secondary": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
       },
       "dashboard": Object {
         "background": "#0c163d",
+        "foreground": "#ffffff",
+      },
+      "dialog": Object {
+        "background": "#0c163d",
+        "borderColor": "#e6007a",
         "foreground": "#ffffff",
       },
       "frame": Object {
@@ -1341,10 +1459,18 @@ exports[`protection request 1`] = `
             },
           },
           "buttons": Object {
-            "secondaryBackgroundColor": "#0c163d",
+            "secondary": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
           },
           "dashboard": Object {
             "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+          "dialog": Object {
+            "background": "#0c163d",
+            "borderColor": "#e6007a",
             "foreground": "#ffffff",
           },
           "frame": Object {
@@ -1427,10 +1553,18 @@ exports[`protection request 1`] = `
               },
             },
             "buttons": Object {
-              "secondaryBackgroundColor": "#0c163d",
+              "secondary": Object {
+                "background": "#0c163d",
+                "foreground": "#ffffff",
+              },
             },
             "dashboard": Object {
               "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
+            "dialog": Object {
+              "background": "#0c163d",
+              "borderColor": "#e6007a",
               "foreground": "#ffffff",
             },
             "frame": Object {
@@ -1563,10 +1697,18 @@ exports[`recovery request 1`] = `
         },
       },
       "buttons": Object {
-        "secondaryBackgroundColor": "#0c163d",
+        "secondary": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
       },
       "dashboard": Object {
         "background": "#0c163d",
+        "foreground": "#ffffff",
+      },
+      "dialog": Object {
+        "background": "#0c163d",
+        "borderColor": "#e6007a",
         "foreground": "#ffffff",
       },
       "frame": Object {
@@ -1639,10 +1781,18 @@ exports[`recovery request 1`] = `
             },
           },
           "buttons": Object {
-            "secondaryBackgroundColor": "#0c163d",
+            "secondary": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
           },
           "dashboard": Object {
             "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+          "dialog": Object {
+            "background": "#0c163d",
+            "borderColor": "#e6007a",
             "foreground": "#ffffff",
           },
           "frame": Object {
@@ -1727,10 +1877,18 @@ exports[`recovery request 1`] = `
               },
             },
             "buttons": Object {
-              "secondaryBackgroundColor": "#0c163d",
+              "secondary": Object {
+                "background": "#0c163d",
+                "foreground": "#ffffff",
+              },
             },
             "dashboard": Object {
               "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
+            "dialog": Object {
+              "background": "#0c163d",
+              "borderColor": "#e6007a",
               "foreground": "#ffffff",
             },
             "frame": Object {

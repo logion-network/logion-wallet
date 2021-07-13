@@ -138,13 +138,13 @@ export default function RecoveryDetails() {
                 </Row>
                 <Row>
                     <ButtonGroup aria-label="actions">
-                        <Button backgroundColor={ colorTheme.buttons.secondaryBackgroundColor }
+                        <Button colors={ colorTheme.buttons }
                                 variant="outline-primary" onClick={ () => history.push(RECOVERY_REQUESTS_PATH) }>
                             Back to requests list
                         </Button>
-                        <Button backgroundColor={ colorTheme.buttons.secondaryBackgroundColor }
+                        <Button colors={ colorTheme.buttons }
                                 variant="outline-danger" onClick={ () => setReject(true) }>Refusal</Button>
-                        <Button backgroundColor={ colorTheme.buttons.secondaryBackgroundColor }
+                        <Button colors={ colorTheme.buttons }
                                 variant="primary" onClick={ () => setApprove(true) }>Process</Button>
                     </ButtonGroup>
                 </Row>

@@ -32,15 +32,6 @@ exports[`renders Dashboard 1`] = `
         color: #000000;
     }
 
-    .modal-dialog {
-        background-color: white;
-    }
-
-    .modal-content {
-        color: #000000;
-        background-color: #eff3fe;
-    }
-
     .Dashboard a {
         color: #000000;
     }

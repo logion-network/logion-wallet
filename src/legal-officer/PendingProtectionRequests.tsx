@@ -147,7 +147,7 @@ export default function PendingProtectionRequests(props: Props) {
                                     variant="primary"
                                     onClick={() => setReviewState({status: ReviewStatus.PENDING, request: request}) }
                                     data-testid={`review-${request.id}`}
-                                    backgroundColor={ colorTheme.buttons.secondaryBackgroundColor }
+                                    colors={ colorTheme.buttons }
                                 >
                                     <span style={{fontWeight: "bold"}}>Review and proceed</span>
                                 </Button>
@@ -155,7 +155,7 @@ export default function PendingProtectionRequests(props: Props) {
                                 {props.recovery &&
                                 <Button
                                     variant="primary"
-                                    backgroundColor={ colorTheme.buttons.secondaryBackgroundColor }
+                                    colors={ colorTheme.buttons }
                                 >
                                     <Link to={ recoveryDetailsPath(request.id) }>Start recovery process</Link>
                                 </Button>

@@ -57,7 +57,10 @@ export const COLOR_THEME: ColorTheme = {
         }
     },
     buttons: {
-        secondaryBackgroundColor: '#eff3fe',
+        secondary: {
+            background: '#eff3fe',
+            foreground: '#000000',
+        }
     },
     select: {
         background: '#ffffff',
@@ -85,5 +88,10 @@ export const COLOR_THEME: ColorTheme = {
             foreground: '#ffffff',
         },
         borderColor: '#3b6cf4',
-    }
+    },
+    dialog: {
+        background: '#eff3fe',
+        foreground: '#000000',
+        borderColor: '#e6007a',
+    },
 };

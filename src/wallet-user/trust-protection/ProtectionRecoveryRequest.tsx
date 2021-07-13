@@ -160,7 +160,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
                         <Button
                             data-testid="btnActivate"
                             onClick={ activateProtection }
-                            backgroundColor={ colorTheme.buttons.secondaryBackgroundColor }
+                            colors={ colorTheme.buttons }
                         >
                             Activate
                         </Button>
@@ -175,7 +175,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
                             checkActivation(props.request)
                                 .then(() => setConfirmButtonEnabled(false))
                             }}
-                            backgroundColor={ colorTheme.buttons.secondaryBackgroundColor }
+                            colors={ colorTheme.buttons }
                         >
                             Re-Sync Confirmation
                         </Button>

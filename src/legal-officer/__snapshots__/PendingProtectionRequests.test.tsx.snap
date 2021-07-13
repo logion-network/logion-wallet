@@ -24,10 +24,18 @@ exports[`Renders pending requests 1`] = `
           },
         },
         "buttons": Object {
-          "secondaryBackgroundColor": "#eff3fe",
+          "secondary": Object {
+            "background": "#eff3fe",
+            "foreground": "#000000",
+          },
         },
         "dashboard": Object {
           "background": "#eff3fe",
+          "foreground": "#000000",
+        },
+        "dialog": Object {
+          "background": "#eff3fe",
+          "borderColor": "#e6007a",
           "foreground": "#000000",
         },
         "frame": Object {

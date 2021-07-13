@@ -193,7 +193,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                                     colors={ colorTheme.dashboard }
                                 />
                                 <Button
-                                    backgroundColor={ colorTheme.buttons.secondaryBackgroundColor }
+                                    colors={ colorTheme.buttons }
                                     onClick={ initiateRecoveryOnClick }
                                 >
                                     Initiate recovery
@@ -504,7 +504,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                             />
     
                             <Button
-                                backgroundColor={ colorTheme.buttons.secondaryBackgroundColor }
+                                colors={ colorTheme.buttons }
                                 action={{
                                     id: "submit",
                                     buttonVariant: "primary",
