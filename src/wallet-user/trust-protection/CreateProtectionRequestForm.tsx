@@ -527,7 +527,6 @@ export default function CreateProtectionRequestForm(props: Props) {
                             }
                         ]}
                         colors={ colorTheme }
-                        spaceAbove="25vh"
                     >
                         <>
                             The legal officers have been informed of your request.
