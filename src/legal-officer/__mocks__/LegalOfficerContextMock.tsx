@@ -8,9 +8,7 @@ export let acceptedTokenizationRequests: any[] | null = null;
 
 export let rejectedTokenizationRequests: any[] | null = null;
 
-export let refreshRequests = () => {
-
-};
+export let refreshRequests = jest.fn();
 
 export let pendingProtectionRequests: any[] | null = null;
 

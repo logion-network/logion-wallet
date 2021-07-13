@@ -4,7 +4,7 @@ jest.mock('../logion-chain');
 import { useEffect, useState } from 'react';
 import { LegalOfficerContextProvider, useLegalOfficerContext } from './LegalOfficerContext';
 import { render, waitFor } from '@testing-library/react';
-import { DEFAULT_LEGAL_OFFICER, rejectRequest, setFetchRequests } from './Model';
+import { DEFAULT_LEGAL_OFFICER, rejectRequest, setFetchRequests } from './__mocks__/ModelMock';
 import { ISO_DATETIME_PATTERN } from '../logion-chain/datetime';
 
 beforeEach(() => {

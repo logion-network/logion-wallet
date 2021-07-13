@@ -27,3 +27,7 @@ export function useRootContext() {
         addresses,
     };
 }
+
+export function setAddresses(value: Addresses) {
+    addresses = value;
+}

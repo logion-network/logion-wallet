@@ -5,7 +5,7 @@ jest.mock('./Model');
 import { shallowRender } from '../tests';
 import PendingProtectionRequests from './PendingProtectionRequests';
 import { setPendingProtectionRequests } from './__mocks__/LegalOfficerContextMock';
-import { setAcceptProtectionRequest, setRejectProtectionRequest } from './Model';
+import { setAcceptProtectionRequest, setRejectProtectionRequest } from './__mocks__/ModelMock';
 import { ProtectionRequest, DEFAULT_LEGAL_OFFICER } from './Types';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';

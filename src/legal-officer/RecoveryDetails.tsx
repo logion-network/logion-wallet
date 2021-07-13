@@ -16,10 +16,13 @@ import Alert from "../component/Alert";
 import Frame from "../component/Frame";
 import '../component/Position.css';
 import Dialog from "../component/Dialog";
-import { sign } from '../logion-chain';
+import { useLogionChain, sign } from '../logion-chain';
+import { vouchRecovery } from '../logion-chain/Recovery';
+import ExtrinsicSubmitter, { SignAndSubmit } from '../ExtrinsicSubmitter';
 
 export default function RecoveryDetails() {
     const { selectAddress, addresses } = useRootContext();
+    const { api } = useLogionChain();
     const { colorTheme, refreshRequests } = useLegalOfficerContext();
     const { requestId } = useParams<{ requestId: string }>();
     const [ recoveryInfo, setRecoveryInfo ] = useState<RecoveryInfo | null>(null);
@@ -27,6 +30,7 @@ export default function RecoveryDetails() {
     const history = useHistory();
     const [ reject, setReject ] = useState(false);
     const [ rejectReason, setRejectReason ] = useState<string>("");
+    const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
 
     useEffect(() => {
         if (recoveryInfo === null) {
@@ -53,10 +57,17 @@ export default function RecoveryDetails() {
                 signature,
                 signedOn,
             });
-            refreshRequests!();
-            history.push(RECOVERY_REQUESTS_PATH);
+            const signAndSubmit: SignAndSubmit = (callback, errorCallback) => vouchRecovery({
+                api: api!,
+                callback,
+                errorCallback,
+                signerId: currentAddress,
+                lost: recoveryInfo!.accountToRecover.requesterAddress,
+                rescuer: recoveryInfo!.recoveryAccount.requesterAddress,
+            });
+            setSignAndSubmit(() => signAndSubmit);
         })();
-    }, [ requestId, addresses, refreshRequests, history ]);
+    }, [ requestId, addresses, api, recoveryInfo ]);
 
     const doReject = useCallback(() => {
         (async function() {
@@ -168,9 +179,17 @@ export default function RecoveryDetails() {
                 size="lg"
                 colors={ colorTheme }
             >
-                I did my due diligence and accept to grant the
-                account { recoveryInfo.accountToRecover.requesterAddress } the right to transfer all assets
-                to the account { recoveryInfo.recoveryAccount.requesterAddress }.
+                <p>
+                    I did my due diligence and accept to grant the
+                    account { recoveryInfo.accountToRecover.requesterAddress } the right to transfer all assets
+                    to the account { recoveryInfo.recoveryAccount.requesterAddress }.
+                </p>
+                <ExtrinsicSubmitter
+                    id="vouch"
+                    signAndSubmit={ signAndSubmit }
+                    onSuccess={ () => { setSignAndSubmit(null); refreshRequests!(); history.push(RECOVERY_REQUESTS_PATH); } }
+                    onError={ () => {} }
+                />
             </Dialog>
             <Dialog
                 actions={[
