@@ -25,7 +25,7 @@ export default function RecoveryDetails() {
             fetchRecoveryInfo(requestId)
                 .then(recoveryInfo => setRecoveryInfo(recoveryInfo));
         }
-    })
+    }, [ setRecoveryInfo, requestId ])
 
     if (addresses === null || selectAddress === null || recoveryInfo === null) {
         return null;
@@ -35,12 +35,12 @@ export default function RecoveryDetails() {
         <FullWidthPane
             className="RecoveryDetails"
             mainTitle="Account Recovery Execution"
-            titleIcon={{
+            titleIcon={ {
                 icon: {
                     id: 'recovery_request',
                     hasVariants: true,
                 },
-            }}
+            } }
             colors={ colorTheme }
             addresses={ addresses }
             selectAddress={ selectAddress }

@@ -6,7 +6,7 @@ import {
     PROTECTION_REQUESTS_PATH,
     RECOVERY_REQUESTS_PATH,
     SETTINGS_PATH,
-    recoveryDetailsPath
+    RECOVERY_DETAILS_PATH
 } from './LegalOfficerPaths';
 
 import TokenizationRequests from './TokenizationRequests';
@@ -29,7 +29,7 @@ export default function LegalOfficerRouter() {
                 <Route path={ RECOVERY_REQUESTS_PATH }>
                     <RecoveryRequests />
                 </Route>
-                <Route path={ recoveryDetailsPath(":requestId") }>
+                <Route path={ RECOVERY_DETAILS_PATH + ":requestId" }>
                     <RecoveryDetails />
                 </Route>
                 <Route path={ SETTINGS_PATH }>
