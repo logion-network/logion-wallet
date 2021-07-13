@@ -10,6 +10,7 @@ import {
     ProtectionRequest,
     LegalOfficerDecision,
     ProtectionRequestStatus,
+    RecoveryInfo,
 } from './Types';
 
 export interface FetchRequestSpecification {
@@ -127,4 +128,9 @@ export function decision(legalOfficerAddress: string, decisions: LegalOfficerDec
         }
     }
     return null;
+}
+
+export async function fetchRecoveryInfo(requestId: string): Promise<RecoveryInfo> {
+    const response = await axios.put(`/api/protection-request/${requestId}/recovery-info`, {})
+    return response.data;
 }

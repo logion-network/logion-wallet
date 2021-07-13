@@ -54,6 +54,11 @@ export interface ProtectionRequest {
     status: ProtectionRequestStatus,
 }
 
+export interface RecoveryInfo {
+    recoveryAccount: ProtectionRequest,
+    accountToRecover: ProtectionRequest,
+}
+
 export const LIGHT_MODE: ColorTheme = {
     type: 'light',
     shadowColor: rgbaToHex('#3b6cf4', 0.1),
