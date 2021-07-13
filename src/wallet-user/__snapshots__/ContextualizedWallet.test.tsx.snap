@@ -21,10 +21,18 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
         },
       },
       "buttons": Object {
-        "secondaryBackgroundColor": "#0c163d",
+        "secondary": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
       },
       "dashboard": Object {
         "background": "#0c163d",
+        "foreground": "#ffffff",
+      },
+      "dialog": Object {
+        "background": "#0c163d",
+        "borderColor": "#e6007a",
         "foreground": "#ffffff",
       },
       "frame": Object {
@@ -197,10 +205,18 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
           },
         },
         "buttons": Object {
-          "secondaryBackgroundColor": "#0c163d",
+          "secondary": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
         },
         "dashboard": Object {
           "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "dialog": Object {
+          "background": "#0c163d",
+          "borderColor": "#e6007a",
           "foreground": "#ffffff",
         },
         "frame": Object {
@@ -284,10 +300,18 @@ exports[`Given connected, when rendering, then show account, no connect button a
         },
       },
       "buttons": Object {
-        "secondaryBackgroundColor": "#0c163d",
+        "secondary": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
       },
       "dashboard": Object {
         "background": "#0c163d",
+        "foreground": "#ffffff",
+      },
+      "dialog": Object {
+        "background": "#0c163d",
+        "borderColor": "#e6007a",
         "foreground": "#ffffff",
       },
       "frame": Object {
@@ -460,10 +484,18 @@ exports[`Given connected, when rendering, then show account, no connect button a
           },
         },
         "buttons": Object {
-          "secondaryBackgroundColor": "#0c163d",
+          "secondary": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
         },
         "dashboard": Object {
           "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "dialog": Object {
+          "background": "#0c163d",
+          "borderColor": "#e6007a",
           "foreground": "#ffffff",
         },
         "frame": Object {
@@ -547,10 +579,18 @@ exports[`Given connecting, when rendering, then show account, no button, no node
         },
       },
       "buttons": Object {
-        "secondaryBackgroundColor": "#0c163d",
+        "secondary": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
       },
       "dashboard": Object {
         "background": "#0c163d",
+        "foreground": "#ffffff",
+      },
+      "dialog": Object {
+        "background": "#0c163d",
+        "borderColor": "#e6007a",
         "foreground": "#ffffff",
       },
       "frame": Object {
@@ -722,10 +762,18 @@ exports[`Given connecting, when rendering, then show account, no button, no node
           },
         },
         "buttons": Object {
-          "secondaryBackgroundColor": "#0c163d",
+          "secondary": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
         },
         "dashboard": Object {
           "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "dialog": Object {
+          "background": "#0c163d",
+          "borderColor": "#e6007a",
           "foreground": "#ffffff",
         },
         "frame": Object {
@@ -809,10 +857,18 @@ exports[`Given connection error, when rendering, then show account, no button, n
         },
       },
       "buttons": Object {
-        "secondaryBackgroundColor": "#0c163d",
+        "secondary": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
       },
       "dashboard": Object {
         "background": "#0c163d",
+        "foreground": "#ffffff",
+      },
+      "dialog": Object {
+        "background": "#0c163d",
+        "borderColor": "#e6007a",
         "foreground": "#ffffff",
       },
       "frame": Object {
@@ -984,10 +1040,18 @@ exports[`Given connection error, when rendering, then show account, no button, n
           },
         },
         "buttons": Object {
-          "secondaryBackgroundColor": "#0c163d",
+          "secondary": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
         },
         "dashboard": Object {
           "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "dialog": Object {
+          "background": "#0c163d",
+          "borderColor": "#e6007a",
           "foreground": "#ffffff",
         },
         "frame": Object {
@@ -1071,10 +1135,18 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
         },
       },
       "buttons": Object {
-        "secondaryBackgroundColor": "#0c163d",
+        "secondary": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
       },
       "dashboard": Object {
         "background": "#0c163d",
+        "foreground": "#ffffff",
+      },
+      "dialog": Object {
+        "background": "#0c163d",
+        "borderColor": "#e6007a",
         "foreground": "#ffffff",
       },
       "frame": Object {
@@ -1246,10 +1318,18 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
           },
         },
         "buttons": Object {
-          "secondaryBackgroundColor": "#0c163d",
+          "secondary": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
         },
         "dashboard": Object {
           "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "dialog": Object {
+          "background": "#0c163d",
+          "borderColor": "#e6007a",
           "foreground": "#ffffff",
         },
         "frame": Object {
@@ -1333,10 +1413,18 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
         },
       },
       "buttons": Object {
-        "secondaryBackgroundColor": "#0c163d",
+        "secondary": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
       },
       "dashboard": Object {
         "background": "#0c163d",
+        "foreground": "#ffffff",
+      },
+      "dialog": Object {
+        "background": "#0c163d",
+        "borderColor": "#e6007a",
         "foreground": "#ffffff",
       },
       "frame": Object {
@@ -1509,10 +1597,18 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
           },
         },
         "buttons": Object {
-          "secondaryBackgroundColor": "#0c163d",
+          "secondary": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
         },
         "dashboard": Object {
           "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "dialog": Object {
+          "background": "#0c163d",
+          "borderColor": "#e6007a",
           "foreground": "#ffffff",
         },
         "frame": Object {

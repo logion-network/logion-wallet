@@ -11,7 +11,7 @@ export interface GradientData {
 export type ColorThemeType = 'light' | 'dark';
 
 export interface ButtonsColors {
-    secondaryBackgroundColor: string,
+    secondary: BackgroundAndForegroundColors,
 }
 
 export interface SelectColors extends BackgroundAndForegroundColors {
@@ -29,6 +29,10 @@ export interface TabsColors extends BackgroundAndForegroundColors {
     borderColor: string,
 }
 
+export interface DialogColors extends BackgroundAndForegroundColors {
+    borderColor: string,
+}
+
 export interface ColorTheme {
     type: ColorThemeType,
     dashboard: BackgroundAndForegroundColors,
@@ -42,6 +46,7 @@ export interface ColorTheme {
     select: SelectColors,
     table: TableColors,
     tabs: TabsColors,
+    dialog: DialogColors,
 }
 
 export interface FrameColors extends BackgroundAndForegroundColors {

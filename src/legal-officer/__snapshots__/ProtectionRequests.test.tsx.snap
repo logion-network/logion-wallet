@@ -38,10 +38,18 @@ exports[`renders 1`] = `
         },
       },
       "buttons": Object {
-        "secondaryBackgroundColor": "#ffffff",
+        "secondary": Object {
+          "background": "#ffffff",
+          "foreground": "#000000",
+        },
       },
       "dashboard": Object {
         "background": "#eff3fe",
+        "foreground": "#000000",
+      },
+      "dialog": Object {
+        "background": "#ffffff",
+        "borderColor": "#e6007a",
         "foreground": "#000000",
       },
       "frame": Object {
@@ -154,10 +162,18 @@ exports[`renders 1`] = `
           },
         },
         "buttons": Object {
-          "secondaryBackgroundColor": "#ffffff",
+          "secondary": Object {
+            "background": "#ffffff",
+            "foreground": "#000000",
+          },
         },
         "dashboard": Object {
           "background": "#eff3fe",
+          "foreground": "#000000",
+        },
+        "dialog": Object {
+          "background": "#ffffff",
+          "borderColor": "#e6007a",
           "foreground": "#000000",
         },
         "frame": Object {

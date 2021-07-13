@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { CSSProperties } from 'react';
 import { ButtonVariant } from 'react-bootstrap/types';
 import BootstrapButton, { ButtonType } from 'react-bootstrap/Button';
 
 import { Children } from './types/Helpers';
+import { ButtonsColors } from './ColorTheme';
 
 import './Button.css';
 
@@ -17,7 +18,7 @@ export interface Action {
 
 export interface Props {
     action?: Action,
-    backgroundColor: string,
+    colors: ButtonsColors,
     type?: ButtonType,
     key?: string,
     variant?: ButtonVariant,
@@ -54,6 +55,12 @@ export default function Button(props: Props) {
         id = props.id;
     }
 
+    let style: CSSProperties = {};
+    if(variant === 'secondary') {
+        style.backgroundColor = props.colors.secondary.background;
+        style.color = props.colors.secondary.foreground;
+    }
+
     return (
         <BootstrapButton
             id={ id }
@@ -63,9 +70,7 @@ export default function Button(props: Props) {
             onClick={ onClick }
             data-testid={ testId }
             className="Button"
-            style={{
-                backgroundColor: props.backgroundColor
-            }}
+            style={ style }
             type={ props.type }
         >
             { children }

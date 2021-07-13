@@ -99,7 +99,10 @@ export const LIGHT_MODE: ColorTheme = {
         }
     },
     buttons: {
-        secondaryBackgroundColor: '#ffffff',
+        secondary: {
+            background: '#ffffff',
+            foreground: '#000000',
+        }
     },
     select: {
         background: '#d8e2fd',
@@ -127,5 +130,10 @@ export const LIGHT_MODE: ColorTheme = {
             foreground: rgbaToHex('#000000', 0.70),
         },
         borderColor: '#3b6cf4',
-    }
+    },
+    dialog: {
+        background: '#ffffff',
+        foreground: '#000000',
+        borderColor: '#e6007a',
+    },
 };

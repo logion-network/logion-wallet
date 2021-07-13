@@ -37,7 +37,7 @@ export default function GoToTrustProtection() {
 
             <Button
                 variant="primary"
-                backgroundColor={ colorTheme.buttons.secondaryBackgroundColor }
+                colors={ colorTheme.buttons }
             >
                 <Link to={ RECOVERY_PATH }>Go to Recovery</Link>
             </Button>

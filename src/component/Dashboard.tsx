@@ -203,15 +203,6 @@ export default function Dashboard(props: Props) {
         color: ${props.colors.dashboard.foreground};
     }
 
-    .modal-dialog {
-        background-color: white;
-    }
-
-    .modal-content {
-        color: ${props.colors.dashboard.foreground};
-        background-color: ${props.colors.dashboard.background};
-    }
-
     .Dashboard a {
         color: ${props.colors.dashboard.foreground};
     }
