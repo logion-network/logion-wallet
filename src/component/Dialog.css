@@ -12,6 +12,7 @@
     border-radius: 5px;
     border-style: solid;
     text-align: center;
+    font-weight: bold;
 }
 
 .Dialog .modal-body {
