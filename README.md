@@ -13,11 +13,29 @@ yarn install
 
 ## Usage
 
-You can start the prototype in development mode to connect to a locally running node
+You can start the wallet in development mode with the following command:
 
 ```bash
 yarn start
 ```
+
+The UI is configured by default to interact with Logion's DEV infrastructure (server `dev.logion.network`).
+
+### Fully local setup
+
+Use below command in order to connect to a locally running node
+(see [here](https://github.com/logion-network/logion-node-prototype) for instructions about doing so).
+
+```bash
+export REACT_APP_PROVIDER_SOCKET=ws://localhost:9944 ; yarn start
+```
+
+In order to
+interact with a locally running off-chain service
+(see [here](https://github.com/logion-network/logion-backend) for instructions about running the service),
+you also have to change the `proxy` field of the `package.json`
+file to `http://localhost:8080` (you may have to change the port if you are not using the default configuration).
+
 
 ### Test users
 
@@ -47,31 +65,6 @@ Note that the Alice account is linked to Patrick and Bob account is linked to Gu
 to name them accordingly in the extension (i.e., use 'Patrick' instead of 'Alice' and 'Guillaume' instead of 'Bob').
 
 
-## Configuration
-
-The prototype's configuration is stored in the `src/config` directory, with
-`common.json` being loaded first, then the environment-specific json file,
-and finally environment variables, with precedence.
-
-* `development.json` affects the development environment
-* `test.json` affects the test environment, triggered in `yarn test` command.
-* `production.json` affects the production environment, triggered in
-`yarn build` command.
-
-Some environment variables are read and integrated in the template `config` object,
-including:
-
-* `REACT_APP_PROVIDER_SOCKET` overriding `config[PROVIDER_SOCKET]`
-* `REACT_APP_DEVELOPMENT_KEYRING` overriding `config[DEVELOPMENT_KEYRING]`
-
-More on [React environment variables](https://create-react-app.dev/docs/adding-custom-environment-variables).
-
-### Specifying Connecting Node
-
-There are two ways to specify it:
-
-* With `PROVIDER_SOCKET` in `{common, development, production}.json`.
-
 ## Using Polkadot{.js}
 
 [Polkadot{.js}](https://polkadot.js.org/apps/) can be used to
@@ -80,7 +73,7 @@ explore and interact with a Logion node. The procedure is as follows:
 1. Launch the node locally (see above)
 2. Launch the web app with [this link](https://polkadot.js.org/apps)
 3. Select the local node by clicking on the top-left icon and selecting "Development > Local node"
-4. Configure below custom data in "Settings > Developer" screen and click "Save"
+4. Configure below custom data (see `src/config/index.tsx`) in "Settings > Developer" screen and click "Save"
 5. You should now be able to interact with the locally running node
 
 ```

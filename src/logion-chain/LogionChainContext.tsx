@@ -34,6 +34,7 @@ export interface LogionChainContextType {
     appName: string,
     jsonrpc: any,
     types: any,
+    providerSocket?: string,
     api: ApiPromise | null,
     apiError: any,
     apiState: ApiState,
@@ -55,6 +56,7 @@ const initState = (config: ConfigType): LogionChainContextType => ({
     appName: config.APP_NAME,
     jsonrpc: { ...jsonrpc, ...config.RPC },
     types: config.types,
+    providerSocket: config.PROVIDER_SOCKET,
     api: null,
     apiError: null,
     apiState: 'DISCONNECTED',
@@ -169,14 +171,14 @@ function pushAndLimit(previousEvents: EventRecord[], newEvents: EventRecord[]): 
 // Connecting to the LogionChain node
 
 const connect = (state: LogionChainContextType, dispatch: React.Dispatch<Action>) => {
-    const { apiState, selectedNode, jsonrpc, types } = state;
+    const { apiState, selectedNode, jsonrpc, types, providerSocket } = state;
     if (apiState !== 'DISCONNECTED' || selectedNode === null) {
         return;
     }
 
     dispatch({ type: 'CONNECT_INIT' });
 
-    const provider = new WsProvider(selectedNode.socket);
+    const provider = buildProvider(selectedNode, providerSocket);
     const _api = new ApiPromise({ provider, types, rpc: jsonrpc });
 
     _api.on('connected', () => {
@@ -194,6 +196,16 @@ const connect = (state: LogionChainContextType, dispatch: React.Dispatch<Action>
 
     _api.on('error', err => dispatch({ type: 'CONNECT_ERROR', error: err }));
 };
+
+function buildProvider(selectedNode: Node | null, providerSocket?: string): WsProvider {
+    if(providerSocket !== undefined) {
+        return new WsProvider(providerSocket);
+    } else if(selectedNode !== null) {
+        return new WsProvider(selectedNode.socket);
+    } else {
+        throw new Error("No provider socket nor selected node");
+    }
+}
 
 const fetchConnectedNodeMetadata = async (api: ApiPromise, dispatch: React.Dispatch<Action>) => {
     const nodeName = await api.rpc.system.name();
