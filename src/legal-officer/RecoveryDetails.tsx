@@ -8,7 +8,7 @@ import { useParams, useHistory } from 'react-router';
 import { RECOVERY_REQUESTS_PATH } from "./LegalOfficerPaths";
 import Button from "../component/Button";
 import React, { useEffect, useState, useCallback } from "react";
-import { ButtonGroup, Col, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { acceptProtectionRequest, fetchRecoveryInfo, rejectProtectionRequest } from "./Model";
 import { RecoveryInfo } from "./Types";
 import AccountInfo from "../component/AccountInfo";
@@ -21,6 +21,7 @@ import Dialog from "../component/Dialog";
 import { useLogionChain, sign } from '../logion-chain';
 import { vouchRecovery } from '../logion-chain/Recovery';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../ExtrinsicSubmitter';
+import ButtonGroup from "../component/ButtonGroup";
 
 export default function RecoveryDetails() {
     const { selectAddress, addresses } = useRootContext();
@@ -113,7 +114,10 @@ export default function RecoveryDetails() {
             addresses={ addresses }
             selectAddress={ selectAddress }
         >
-            <Frame colors={ colorTheme }>
+            <Frame
+                className="main-frame"
+                colors={ colorTheme }
+            >
                 <Row>
                     <Alert variant="info">
                         I did my due diligence and authorize the transfer of all assets<br />
@@ -156,7 +160,7 @@ export default function RecoveryDetails() {
                             Back to requests list
                         </Button>
                         <Button colors={ colorTheme.buttons }
-                                variant="outline-danger" onClick={ () => setReject(true) }>Refusal</Button>
+                                variant="danger" onClick={ () => setReject(true) }>Refusal</Button>
                         <Button colors={ colorTheme.buttons }
                                 variant="primary" onClick={ () => setApprove(true) }>Process</Button>
                     </ButtonGroup>
@@ -168,13 +172,15 @@ export default function RecoveryDetails() {
                         id: 'back',
                         buttonText: 'Back to requests list',
                         buttonVariant: 'secondary',
-                        callback: () => history.push(RECOVERY_REQUESTS_PATH)
+                        callback: () => history.push(RECOVERY_REQUESTS_PATH),
+                        disabled: signAndSubmit !== null
                     },
                     {
                         id: 'confirm',
                         buttonText: 'Confirm and sign',
                         buttonVariant: 'primary',
-                        callback: accept
+                        callback: accept,
+                        disabled: signAndSubmit !== null
                     }
                 ]}
                 show={ approve }

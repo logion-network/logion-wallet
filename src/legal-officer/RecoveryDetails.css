@@ -1,6 +1,7 @@
-.RecoveryDetails .Frame{
+.RecoveryDetails .main-frame {
     padding-top: 20px;
     padding-bottom: 5px;
+    margin-bottom: 50px;
 }
 
 .RecoveryDetails h3 {
@@ -18,4 +19,8 @@
 
 .RecoveryDetails .AccountInfoFrom {
     margin-right: 10px;
+}
+
+.RecoveryDetails .ButtonGroup {
+    margin-top: 40px;
 }
