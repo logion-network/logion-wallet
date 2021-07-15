@@ -1,5 +1,6 @@
 import { ApiPromise } from '@polkadot/api';
 import { Option } from '@polkadot/types';
+import { AccountId } from '@polkadot/types/interfaces';
 import {
     RecoveryConfig as PolkadotRecoveryConfig,
     ActiveRecovery as PolkadotActiveRecovery
@@ -108,6 +109,42 @@ export function vouchRecovery(parameters: VouchRecoveryParameters): Unsubscriber
     return signAndSend({
         signerId,
         submittable: api.tx.recovery.vouchRecovery(lost, rescuer),
+        callback,
+        errorCallback,
+    });
+}
+
+export interface GetProxyParameters {
+    api: ApiPromise,
+    currentAddress: string,
+}
+
+export async function getProxy(parameters: GetProxyParameters): Promise<Option<AccountId>> {
+    const {
+        api,
+        currentAddress,
+    } = parameters;
+
+    return await api.query.recovery.proxy(currentAddress);
+}
+
+export interface ClaimRecoveryParameters extends ExtrinsicSubmissionParameters {
+    api: ApiPromise,
+    addressToRecover: string,
+}
+
+export function claimRecovery(parameters: ClaimRecoveryParameters): Unsubscriber {
+    const {
+        api,
+        signerId,
+        callback,
+        errorCallback,
+        addressToRecover,
+    } = parameters;
+
+    return signAndSend({
+        signerId,
+        submittable: api.tx.recovery.claimRecovery(addressToRecover),
         callback,
         errorCallback,
     });

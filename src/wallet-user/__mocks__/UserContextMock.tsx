@@ -30,6 +30,8 @@ export let setUserAddress = jest.fn();
 
 export let userAddress = TEST_WALLET_USER;
 
+export let recoveredAddress = null;
+
 export function useUserContext() {
     return {
         legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
@@ -47,6 +49,7 @@ export function useUserContext() {
         api,
         setUserAddress,
         colorTheme: DARK_MODE,
+        recoveredAddress,
     };
 }
 

@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 
 import { useLogionChain } from '../../logion-chain';
-import { createRecovery } from '../../logion-chain/Recovery';
+import { createRecovery, claimRecovery } from '../../logion-chain/Recovery';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
 
 import { ProtectionRequest } from "../../legal-officer/Types";
@@ -30,9 +30,10 @@ export interface Props {
 export default function ProtectionRecoveryRequest(props: Props) {
     const { api } = useLogionChain();
     const { selectAddress, addresses, currentAddress } = useRootContext();
-    const { refreshRequests, colorTheme, recoveryConfig } = useUserContext();
+    const { refreshRequests, colorTheme, recoveryConfig, recoveredAddress } = useUserContext();
     const [ confirmButtonEnabled, setConfirmButtonEnabled ] = useState(props.request.status === "PENDING");
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
+    const [ signAndSubmitClaim, setSignAndSubmitClaim ] = useState<SignAndSubmit>(null);
 
     const activateProtection = useCallback(() => {
         const signAndSubmit: SignAndSubmit = (setResult, setError) => createRecovery({
@@ -43,9 +44,20 @@ export default function ProtectionRecoveryRequest(props: Props) {
             errorCallback: setError
         });
         setSignAndSubmit(() => signAndSubmit);
-    }, [ api, currentAddress, props ]);
+    }, [ api, currentAddress, props, setSignAndSubmit ]);
 
-    if(addresses === null || selectAddress === null || recoveryConfig === null) {
+    const doClaimRecovery = useCallback(() => {
+        const signAndSubmit: SignAndSubmit = (setResult, setError) => claimRecovery({
+            api: api!,
+            signerId: currentAddress,
+            callback: setResult,
+            errorCallback: setError,
+            addressToRecover: props.request.addressToRecover!,
+        });
+        setSignAndSubmitClaim(() => signAndSubmit);
+    }, [ api, currentAddress, props, setSignAndSubmitClaim ]);
+
+    if(addresses === null || selectAddress === null || recoveryConfig === null || recoveredAddress === undefined) {
         return null;
     }
 
@@ -58,7 +70,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
 
     const mainTitle = props.request.isRecovery ? "Recovery" : "My Logion Trust Protection";
     let subTitle;
-    let alert;
+    let alert = null;
     if(props.type === 'pending') {
         subTitle = props.request.isRecovery ? "Recovery process status" : undefined;
         if(props.request.isRecovery) {
@@ -108,16 +120,14 @@ export default function ProtectionRecoveryRequest(props: Props) {
                 </Alert>
             );
         } else if(props.request.isRecovery) {
-            alert = (
-                <Alert variant="info">
-                    You are now ready to initiate the actual recovery of address { props.request.addressToRecover }.
-                </Alert>
-            );
-        } else {
-            alert = null;
+            if(recoveredAddress === null) {
+                alert = (
+                    <Alert variant="info">
+                        You are now ready to claim the access to address { props.request.addressToRecover }.
+                    </Alert>
+                );
+            }
         }
-    } else {
-        alert = null;
     }
 
     return (
@@ -154,6 +164,22 @@ export default function ProtectionRecoveryRequest(props: Props) {
                             <Icon colorThemeType={ colorTheme.type } icon={{id: 'accepted'}} /> Your Logion Trust Protection is active
                         </div>
                     }
+                    {
+                        props.type === 'activated' && props.request.isRecovery && recoveredAddress !== null &&
+                        <div
+                            className="alert-activated"
+                            style={{
+                                color: GREEN,
+                                borderColor: GREEN,
+                            }}
+                        >
+                            <Icon
+                                colorThemeType={ colorTheme.type }
+                                icon={{id: 'accepted'}}
+                            /> Your Logion Trust Protection is active and you are now ready to transfer assets
+                            from recovered address { recoveredAddress }.
+                        </div>
+                    }
 
                     {
                         props.type === 'accepted' && recoveryConfig?.isEmpty && signAndSubmit === null &&
@@ -165,6 +191,13 @@ export default function ProtectionRecoveryRequest(props: Props) {
                             Activate
                         </Button>
                     }
+                    <ExtrinsicSubmitter
+                        id="activatedProtection"
+                        successMessage="Protection successfully activated."
+                        signAndSubmit={ signAndSubmit }
+                        onSuccess={ () => { setSignAndSubmit(null); checkActivation(props.request).finally(() => refreshRequests!(true)); } }
+                        onError={ () => {} }
+                    />
                     {
                         // This button is a safety net in case the same call at the previous step failed.
                         // In most cases, it will not show
@@ -180,13 +213,26 @@ export default function ProtectionRecoveryRequest(props: Props) {
                             Re-Sync Confirmation
                         </Button>
                     }
-                    <ExtrinsicSubmitter
-                        id="activatedProtection"
-                        successMessage="Protection successfully activated."
-                        signAndSubmit={ signAndSubmit }
-                        onSuccess={ () => { setSignAndSubmit(null); checkActivation(props.request).finally(() => refreshRequests!(true)); } }
-                        onError={ () => setSignAndSubmit(null) }
-                    />
+                    {
+                        props.type === 'activated' && props.request.isRecovery && recoveredAddress === null && signAndSubmitClaim === null &&
+                        <Button
+                            data-testid="btnClaim"
+                            onClick={ doClaimRecovery }
+                            colors={ colorTheme.buttons }
+                        >
+                            Claim
+                        </Button>
+                    }
+                    {
+                        props.type === 'activated' && props.request.isRecovery && recoveredAddress === null &&
+                        <ExtrinsicSubmitter
+                            id="initiateRecovery"
+                            successMessage="Recovery successfully initiated."
+                            signAndSubmit={ signAndSubmitClaim }
+                            onSuccess={ () => { setSignAndSubmitClaim(null); refreshRequests!(true); } }
+                            onError={ () => {} }
+                        />
+                    }
 
                     <LegalOfficers
                         legalOfficers={ [] }

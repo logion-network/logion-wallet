@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useCallback, useReducer, Reducer } from "
 import { Option } from '@polkadot/types';
 
 import { useLogionChain } from '../logion-chain';
-import { RecoveryConfig, getRecoveryConfig } from '../logion-chain/Recovery';
+import { RecoveryConfig, getRecoveryConfig, getProxy } from '../logion-chain/Recovery';
 import { Children } from '../component/types/Helpers';
 
 import { CreateTokenRequest, createTokenRequest as modelCreateTokenRequest } from "./Model";
@@ -31,6 +31,7 @@ export interface UserContext {
     rejectedProtectionRequests: ProtectionRequest[] | null,
     recoveryConfig: Option<RecoveryConfig> | null,
     colorTheme: ColorTheme,
+    recoveredAddress?: string | null,
 }
 
 function initialContextValue(): UserContext {
@@ -77,6 +78,7 @@ interface Action {
     refreshRequests?: (clearBeforeRefresh: boolean) => void,
     createProtectionRequest?: (request: CreateProtectionRequest) => Promise<void>,
     clearBeforeRefresh?: boolean,
+    recoveredAddress?: string | null,
 }
 
 const reducer: Reducer<UserContext, Action> = (state: UserContext, action: Action): UserContext => {
@@ -114,6 +116,7 @@ const reducer: Reducer<UserContext, Action> = (state: UserContext, action: Actio
                     acceptedProtectionRequests: action.acceptedProtectionRequests!,
                     rejectedProtectionRequests: action.rejectedProtectionRequests!,
                     recoveryConfig: action.recoveryConfig!,
+                    recoveredAddress: action.recoveredAddress!,
                     fetchForAddress: null,
                 };
             } else {
@@ -213,6 +216,19 @@ export function UserContextProvider(props: Props) {
                     accountId: currentAddress
                 });
 
+                let recoveredAddress: string | null = null;
+                if(acceptedProtectionRequests.length === 1
+                    && acceptedProtectionRequests[0].isRecovery
+                    && acceptedProtectionRequests[0].status === "ACTIVATED") {
+                    const proxy = await getProxy({
+                        api: api!,
+                        currentAddress
+                    });
+                    if(proxy.isSome) {
+                        recoveredAddress = proxy.unwrap().toString();
+                    }
+                }
+
                 dispatch({
                     type: "SET_DATA",
                     dataAddress: currentAddress,
@@ -223,6 +239,7 @@ export function UserContextProvider(props: Props) {
                     acceptedProtectionRequests,
                     rejectedProtectionRequests,
                     recoveryConfig,
+                    recoveredAddress,
                 });
             })();
         }
