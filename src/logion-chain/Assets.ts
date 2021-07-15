@@ -149,3 +149,21 @@ export function tokensFromBalance(balance: AssetBalance, decimals: number): stri
     let ten = new BN(10);
     return balanceBN.div(ten.pow(exponent)).toString();
 }
+
+export interface AssetBalanceParameters {
+    api: ApiPromise,
+    assetId: AssetId,
+    decimals: number,
+    address: string,
+}
+
+export async function assetBalance(parameters: AssetBalanceParameters): Promise<string> {
+    const {
+        api,
+        assetId,
+        decimals,
+        address,
+    } = parameters;
+    const balance = await api.query.assets.account(assetId, address);
+    return tokensFromBalance(balance.balance, decimals);
+}

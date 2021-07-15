@@ -58,19 +58,19 @@ export const DARK_MODE: ColorTheme = {
         selectedOptionBackgroundColor: rgbaToHex('#ffffff', 0.20),
     },
     table: {
-        background: '#0c163d',
+        background: '#152665',
         foreground: '#ffffff',
         header: {
-            background: '#0c163d',
+            background: '#152665',
             foreground: '#ffffff',
         },
         row: {
-            background: '#152665',
+            background: '#0c163d',
             foreground: '#ffffff',
         }
     },
     tabs: {
-        background: '#0c163d',
+        background: '#152665',
         foreground: '#ffffff',
         inactiveTab: {
             background: rgbaToHex('#ffffff', 0.20),

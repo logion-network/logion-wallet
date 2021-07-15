@@ -32,6 +32,7 @@ export interface UserContext {
     recoveryConfig: Option<RecoveryConfig> | null,
     colorTheme: ColorTheme,
     recoveredAddress?: string | null,
+    recoveredTokenizationRequests: TokenizationRequest[] | null,
 }
 
 function initialContextValue(): UserContext {
@@ -50,6 +51,7 @@ function initialContextValue(): UserContext {
         rejectedProtectionRequests: null,
         recoveryConfig: null,
         colorTheme: DARK_MODE,
+        recoveredTokenizationRequests: null,
     }
 }
 
@@ -79,6 +81,7 @@ interface Action {
     createProtectionRequest?: (request: CreateProtectionRequest) => Promise<void>,
     clearBeforeRefresh?: boolean,
     recoveredAddress?: string | null,
+    recoveredTokenizationRequests?: TokenizationRequest[],
 }
 
 const reducer: Reducer<UserContext, Action> = (state: UserContext, action: Action): UserContext => {
@@ -96,6 +99,7 @@ const reducer: Reducer<UserContext, Action> = (state: UserContext, action: Actio
                     acceptedProtectionRequests: null,
                     rejectedProtectionRequests: null,
                     recoveryConfig: null,
+                    recoveredTokenizationRequests: null,
                 };
             } else {
                 return {
@@ -118,6 +122,7 @@ const reducer: Reducer<UserContext, Action> = (state: UserContext, action: Actio
                     recoveryConfig: action.recoveryConfig!,
                     recoveredAddress: action.recoveredAddress!,
                     fetchForAddress: null,
+                    recoveredTokenizationRequests: action.recoveredTokenizationRequests!,
                 };
             } else {
                 console.log(`Skipping data because ${action.dataAddress} <> ${state.fetchForAddress}`);
@@ -229,6 +234,14 @@ export function UserContextProvider(props: Props) {
                     }
                 }
 
+                let recoveredTokenizationRequests: TokenizationRequest[] = [];
+                if(recoveredAddress !== null) {
+                    recoveredTokenizationRequests = await fetchRequests({
+                        requesterAddress: recoveredAddress,
+                        status: "ACCEPTED",
+                    });
+                }
+
                 dispatch({
                     type: "SET_DATA",
                     dataAddress: currentAddress,
@@ -240,6 +253,7 @@ export function UserContextProvider(props: Props) {
                     rejectedProtectionRequests,
                     recoveryConfig,
                     recoveredAddress,
+                    recoveredTokenizationRequests,
                 });
             })();
         }

@@ -8,8 +8,8 @@ import './Tabs.css';
 
 export interface Tab {
     key: string,
-    title: string,
-    render: () => Children
+    title: Children,
+    render: () => Children,
 }
 
 export interface Props {

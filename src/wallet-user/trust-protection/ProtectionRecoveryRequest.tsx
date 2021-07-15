@@ -130,6 +130,10 @@ export default function ProtectionRecoveryRequest(props: Props) {
         }
     }
 
+console.log(props.type);
+console.log(recoveredAddress);
+console.log(props.request.isRecovery);
+console.log(signAndSubmitClaim);
     return (
         <ContentPane
             mainTitle={ mainTitle }

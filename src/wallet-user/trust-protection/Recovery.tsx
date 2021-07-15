@@ -7,12 +7,14 @@ import { findRequest, isRecovery } from "./Model";
 import GoToTrustProtection from './GoToTrustProtection';
 import CreateProtectionRequestForm from "./CreateProtectionRequestForm";
 import ProtectionRecoveryRequest from './ProtectionRecoveryRequest';
+import RecoveryProcess from './RecoveryProcess';
 
 export default function Recovery() {
     const { currentAddress } = useRootContext();
-    const { pendingProtectionRequests, acceptedProtectionRequests, recoveryConfig } = useUserContext();
+    const { pendingProtectionRequests, acceptedProtectionRequests, recoveryConfig, recoveredAddress } = useUserContext();
 
-    if (pendingProtectionRequests === null || acceptedProtectionRequests === null || recoveryConfig === null) {
+    if (pendingProtectionRequests === null || acceptedProtectionRequests === null || recoveryConfig === null
+            || recoveredAddress === undefined) {
         return null;
     }
 
@@ -34,8 +36,10 @@ export default function Recovery() {
     } else if(acceptedProtectionRequest !== null) {
         if(recoveryConfig.isEmpty) {
             return <ProtectionRecoveryRequest request={ acceptedProtectionRequest } type='accepted' />;
-        } else {
+        } else if(recoveryConfig.isSome && recoveredAddress === null) {
             return <ProtectionRecoveryRequest request={ acceptedProtectionRequest } type='activated' />;
+        } else {
+            return <RecoveryProcess />;
         }
     } else {
         return <CreateProtectionRequestForm isRecovery={ true } />;

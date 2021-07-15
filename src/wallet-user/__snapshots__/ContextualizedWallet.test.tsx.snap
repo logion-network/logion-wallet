@@ -59,19 +59,19 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
         "foreground": "#ffffff",
       },
       "table": Object {
-        "background": "#0c163d",
+        "background": "#152665",
         "foreground": "#ffffff",
         "header": Object {
-          "background": "#0c163d",
+          "background": "#152665",
           "foreground": "#ffffff",
         },
         "row": Object {
-          "background": "#152665",
+          "background": "#0c163d",
           "foreground": "#ffffff",
         },
       },
       "tabs": Object {
-        "background": "#0c163d",
+        "background": "#152665",
         "borderColor": "#3b6cf4",
         "foreground": "#ffffff",
         "inactiveTab": Object {
@@ -249,19 +249,19 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
           "foreground": "#ffffff",
         },
         "table": Object {
-          "background": "#0c163d",
+          "background": "#152665",
           "foreground": "#ffffff",
           "header": Object {
-            "background": "#0c163d",
+            "background": "#152665",
             "foreground": "#ffffff",
           },
           "row": Object {
-            "background": "#152665",
+            "background": "#0c163d",
             "foreground": "#ffffff",
           },
         },
         "tabs": Object {
-          "background": "#0c163d",
+          "background": "#152665",
           "borderColor": "#3b6cf4",
           "foreground": "#ffffff",
           "inactiveTab": Object {
@@ -349,19 +349,19 @@ exports[`Given connected, when rendering, then show account, no connect button a
         "foreground": "#ffffff",
       },
       "table": Object {
-        "background": "#0c163d",
+        "background": "#152665",
         "foreground": "#ffffff",
         "header": Object {
-          "background": "#0c163d",
+          "background": "#152665",
           "foreground": "#ffffff",
         },
         "row": Object {
-          "background": "#152665",
+          "background": "#0c163d",
           "foreground": "#ffffff",
         },
       },
       "tabs": Object {
-        "background": "#0c163d",
+        "background": "#152665",
         "borderColor": "#3b6cf4",
         "foreground": "#ffffff",
         "inactiveTab": Object {
@@ -539,19 +539,19 @@ exports[`Given connected, when rendering, then show account, no connect button a
           "foreground": "#ffffff",
         },
         "table": Object {
-          "background": "#0c163d",
+          "background": "#152665",
           "foreground": "#ffffff",
           "header": Object {
-            "background": "#0c163d",
+            "background": "#152665",
             "foreground": "#ffffff",
           },
           "row": Object {
-            "background": "#152665",
+            "background": "#0c163d",
             "foreground": "#ffffff",
           },
         },
         "tabs": Object {
-          "background": "#0c163d",
+          "background": "#152665",
           "borderColor": "#3b6cf4",
           "foreground": "#ffffff",
           "inactiveTab": Object {
@@ -639,19 +639,19 @@ exports[`Given connecting, when rendering, then show account, no button, no node
         "foreground": "#ffffff",
       },
       "table": Object {
-        "background": "#0c163d",
+        "background": "#152665",
         "foreground": "#ffffff",
         "header": Object {
-          "background": "#0c163d",
+          "background": "#152665",
           "foreground": "#ffffff",
         },
         "row": Object {
-          "background": "#152665",
+          "background": "#0c163d",
           "foreground": "#ffffff",
         },
       },
       "tabs": Object {
-        "background": "#0c163d",
+        "background": "#152665",
         "borderColor": "#3b6cf4",
         "foreground": "#ffffff",
         "inactiveTab": Object {
@@ -828,19 +828,19 @@ exports[`Given connecting, when rendering, then show account, no button, no node
           "foreground": "#ffffff",
         },
         "table": Object {
-          "background": "#0c163d",
+          "background": "#152665",
           "foreground": "#ffffff",
           "header": Object {
-            "background": "#0c163d",
+            "background": "#152665",
             "foreground": "#ffffff",
           },
           "row": Object {
-            "background": "#152665",
+            "background": "#0c163d",
             "foreground": "#ffffff",
           },
         },
         "tabs": Object {
-          "background": "#0c163d",
+          "background": "#152665",
           "borderColor": "#3b6cf4",
           "foreground": "#ffffff",
           "inactiveTab": Object {
@@ -928,19 +928,19 @@ exports[`Given connection error, when rendering, then show account, no button, n
         "foreground": "#ffffff",
       },
       "table": Object {
-        "background": "#0c163d",
+        "background": "#152665",
         "foreground": "#ffffff",
         "header": Object {
-          "background": "#0c163d",
+          "background": "#152665",
           "foreground": "#ffffff",
         },
         "row": Object {
-          "background": "#152665",
+          "background": "#0c163d",
           "foreground": "#ffffff",
         },
       },
       "tabs": Object {
-        "background": "#0c163d",
+        "background": "#152665",
         "borderColor": "#3b6cf4",
         "foreground": "#ffffff",
         "inactiveTab": Object {
@@ -1117,19 +1117,19 @@ exports[`Given connection error, when rendering, then show account, no button, n
           "foreground": "#ffffff",
         },
         "table": Object {
-          "background": "#0c163d",
+          "background": "#152665",
           "foreground": "#ffffff",
           "header": Object {
-            "background": "#0c163d",
+            "background": "#152665",
             "foreground": "#ffffff",
           },
           "row": Object {
-            "background": "#152665",
+            "background": "#0c163d",
             "foreground": "#ffffff",
           },
         },
         "tabs": Object {
-          "background": "#0c163d",
+          "background": "#152665",
           "borderColor": "#3b6cf4",
           "foreground": "#ffffff",
           "inactiveTab": Object {
@@ -1217,19 +1217,19 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
         "foreground": "#ffffff",
       },
       "table": Object {
-        "background": "#0c163d",
+        "background": "#152665",
         "foreground": "#ffffff",
         "header": Object {
-          "background": "#0c163d",
+          "background": "#152665",
           "foreground": "#ffffff",
         },
         "row": Object {
-          "background": "#152665",
+          "background": "#0c163d",
           "foreground": "#ffffff",
         },
       },
       "tabs": Object {
-        "background": "#0c163d",
+        "background": "#152665",
         "borderColor": "#3b6cf4",
         "foreground": "#ffffff",
         "inactiveTab": Object {
@@ -1406,19 +1406,19 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
           "foreground": "#ffffff",
         },
         "table": Object {
-          "background": "#0c163d",
+          "background": "#152665",
           "foreground": "#ffffff",
           "header": Object {
-            "background": "#0c163d",
+            "background": "#152665",
             "foreground": "#ffffff",
           },
           "row": Object {
-            "background": "#152665",
+            "background": "#0c163d",
             "foreground": "#ffffff",
           },
         },
         "tabs": Object {
-          "background": "#0c163d",
+          "background": "#152665",
           "borderColor": "#3b6cf4",
           "foreground": "#ffffff",
           "inactiveTab": Object {
@@ -1506,19 +1506,19 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
         "foreground": "#ffffff",
       },
       "table": Object {
-        "background": "#0c163d",
+        "background": "#152665",
         "foreground": "#ffffff",
         "header": Object {
-          "background": "#0c163d",
+          "background": "#152665",
           "foreground": "#ffffff",
         },
         "row": Object {
-          "background": "#152665",
+          "background": "#0c163d",
           "foreground": "#ffffff",
         },
       },
       "tabs": Object {
-        "background": "#0c163d",
+        "background": "#152665",
         "borderColor": "#3b6cf4",
         "foreground": "#ffffff",
         "inactiveTab": Object {
@@ -1696,19 +1696,19 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
           "foreground": "#ffffff",
         },
         "table": Object {
-          "background": "#0c163d",
+          "background": "#152665",
           "foreground": "#ffffff",
           "header": Object {
-            "background": "#0c163d",
+            "background": "#152665",
             "foreground": "#ffffff",
           },
           "row": Object {
-            "background": "#152665",
+            "background": "#0c163d",
             "foreground": "#ffffff",
           },
         },
         "tabs": Object {
-          "background": "#0c163d",
+          "background": "#152665",
           "borderColor": "#3b6cf4",
           "foreground": "#ffffff",
           "inactiveTab": Object {

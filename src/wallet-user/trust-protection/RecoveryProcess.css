@@ -1,0 +1,29 @@
+.RecoveryProcess .alert-activated {
+    font-weight: bold;
+    padding: 20px;
+    border: 1px solid green;
+    border-radius: 6px;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.RecoveryProcess .recovery-tab-title {
+    display: flex;
+    width: 200px;
+    text-align: left;
+    align-items: center;
+}
+
+.RecoveryProcess .recovery-tab-title .title {
+    flex-grow: 1;
+    margin-left: 5px;
+}
+
+.RecoveryProcess .recovery-tab-title .size {
+    background-color: #e95b5b;
+    height: 20px;
+    min-width: 20px;
+    border-radius: 36px;
+    text-align: center;
+    line-height: 20px;
+}

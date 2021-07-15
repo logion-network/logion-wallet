@@ -75,19 +75,19 @@ exports[`renders 1`] = `
         "foreground": "#ffffff",
       },
       "table": Object {
-        "background": "#0c163d",
+        "background": "#152665",
         "foreground": "#ffffff",
         "header": Object {
-          "background": "#0c163d",
+          "background": "#152665",
           "foreground": "#ffffff",
         },
         "row": Object {
-          "background": "#152665",
+          "background": "#0c163d",
           "foreground": "#ffffff",
         },
       },
       "tabs": Object {
-        "background": "#0c163d",
+        "background": "#152665",
         "borderColor": "#3b6cf4",
         "foreground": "#ffffff",
         "inactiveTab": Object {
@@ -165,19 +165,19 @@ exports[`renders 1`] = `
               "foreground": "#ffffff",
             },
             "table": Object {
-              "background": "#0c163d",
+              "background": "#152665",
               "foreground": "#ffffff",
               "header": Object {
-                "background": "#0c163d",
+                "background": "#152665",
                 "foreground": "#ffffff",
               },
               "row": Object {
-                "background": "#152665",
+                "background": "#0c163d",
                 "foreground": "#ffffff",
               },
             },
             "tabs": Object {
-              "background": "#0c163d",
+              "background": "#152665",
               "borderColor": "#3b6cf4",
               "foreground": "#ffffff",
               "inactiveTab": Object {
@@ -262,19 +262,19 @@ exports[`renders 1`] = `
               "foreground": "#ffffff",
             },
             "table": Object {
-              "background": "#0c163d",
+              "background": "#152665",
               "foreground": "#ffffff",
               "header": Object {
-                "background": "#0c163d",
+                "background": "#152665",
                 "foreground": "#ffffff",
               },
               "row": Object {
-                "background": "#152665",
+                "background": "#0c163d",
                 "foreground": "#ffffff",
               },
             },
             "tabs": Object {
-              "background": "#0c163d",
+              "background": "#152665",
               "borderColor": "#3b6cf4",
               "foreground": "#ffffff",
               "inactiveTab": Object {
