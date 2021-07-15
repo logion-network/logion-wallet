@@ -57,6 +57,12 @@ export const COLOR_THEME: ColorTheme = {
             to: '#3b6cf4',
         }
     },
+    recoveryItems: {
+        iconGradient: {
+            from: '#7a90cb',
+            to: '#3b6cf4',
+        }
+    },
     buttons: {
         secondary: {
             background: '#eff3fe',

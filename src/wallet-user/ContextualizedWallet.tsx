@@ -79,7 +79,7 @@ export default function ContextualizedWallet() {
                         icon: {
                             id: 'recovery'
                         },
-                        background: colorTheme.bottomMenuItems.iconGradient,
+                        background: colorTheme.recoveryItems.iconGradient,
                     },
                 }
             ]}

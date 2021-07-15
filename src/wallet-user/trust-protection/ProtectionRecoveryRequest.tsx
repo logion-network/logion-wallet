@@ -139,7 +139,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
                     id: props.request.isRecovery ? 'recovery' : 'shield',
                     hasVariants: props.request.isRecovery ? false : true,
                 },
-                background: props.request.isRecovery ? colorTheme.bottomMenuItems.iconGradient : undefined,
+                background: props.request.isRecovery ? colorTheme.recoveryItems.iconGradient : undefined,
             }}
             colors={ colorTheme }
             addresses={ addresses }

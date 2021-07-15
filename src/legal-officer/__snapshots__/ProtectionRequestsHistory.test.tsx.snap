@@ -44,6 +44,12 @@ exports[`Renders requests history 1`] = `
           "foreground": "#000000",
           "link": "#3b6cf426",
         },
+        "recoveryItems": Object {
+          "iconGradient": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+        },
         "select": Object {
           "background": "#ffffff",
           "foreground": "#000000",

@@ -56,6 +56,12 @@ exports[`renders 1`] = `
         "foreground": "#ffffff",
         "link": "#ffffff",
       },
+      "recoveryItems": Object {
+        "iconGradient": Object {
+          "from": "#e95b5b",
+          "to": "#6050dc",
+        },
+      },
       "select": Object {
         "background": "#ffffff33",
         "foreground": "#ffffff",
@@ -139,6 +145,12 @@ exports[`renders 1`] = `
               "background": "#152665",
               "foreground": "#ffffff",
               "link": "#ffffff",
+            },
+            "recoveryItems": Object {
+              "iconGradient": Object {
+                "from": "#e95b5b",
+                "to": "#6050dc",
+              },
             },
             "select": Object {
               "background": "#ffffff33",
@@ -230,6 +242,12 @@ exports[`renders 1`] = `
               "background": "#152665",
               "foreground": "#ffffff",
               "link": "#ffffff",
+            },
+            "recoveryItems": Object {
+              "iconGradient": Object {
+                "from": "#e95b5b",
+                "to": "#6050dc",
+              },
             },
             "select": Object {
               "background": "#ffffff33",

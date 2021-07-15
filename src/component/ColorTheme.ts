@@ -41,6 +41,7 @@ export interface ColorTheme {
     frame: FrameColors,
     topMenuItems: MenuItemColors,
     bottomMenuItems: MenuItemColors,
+    recoveryItems: MenuItemColors,
     shadowColor: string,
     buttons: ButtonsColors,
     select: SelectColors,
@@ -98,3 +99,4 @@ export const ORANGE: string = "#ff9b3f";
 export const RED: string = "#e11a25";
 export const GREEN: string = "#37ad4b";
 export const BLUE: string = "#3b6cf4";
+export const YELLOW: string = "#f0c300";

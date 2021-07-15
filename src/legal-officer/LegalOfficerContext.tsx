@@ -82,7 +82,7 @@ export function LegalOfficerContextProvider(props: Props) {
             const activatedProtectionRequests = await fetchProtectionRequests({
                 legalOfficerAddress: currentAddress,
                 decisionStatuses: ["ACCEPTED"],
-                kind: 'PROTECTION_ONLY',
+                kind: 'ANY',
                 protectionRequestStatus: "ACTIVATED"
             });
             const protectionRequestsHistory = await fetchProtectionRequests({

@@ -56,6 +56,12 @@ exports[`activated protection request 1`] = `
         "foreground": "#ffffff",
         "link": "#ffffff",
       },
+      "recoveryItems": Object {
+        "iconGradient": Object {
+          "from": "#e95b5b",
+          "to": "#6050dc",
+        },
+      },
       "select": Object {
         "background": "#ffffff33",
         "foreground": "#ffffff",
@@ -139,6 +145,12 @@ exports[`activated protection request 1`] = `
             "background": "#152665",
             "foreground": "#ffffff",
             "link": "#ffffff",
+          },
+          "recoveryItems": Object {
+            "iconGradient": Object {
+              "from": "#e95b5b",
+              "to": "#6050dc",
+            },
           },
           "select": Object {
             "background": "#ffffff33",
@@ -247,6 +259,12 @@ exports[`activated protection request 1`] = `
               "background": "#152665",
               "foreground": "#ffffff",
               "link": "#ffffff",
+            },
+            "recoveryItems": Object {
+              "iconGradient": Object {
+                "from": "#e95b5b",
+                "to": "#6050dc",
+              },
             },
             "select": Object {
               "background": "#ffffff33",
@@ -392,6 +410,12 @@ exports[`activated recovery request 1`] = `
         "foreground": "#ffffff",
         "link": "#ffffff",
       },
+      "recoveryItems": Object {
+        "iconGradient": Object {
+          "from": "#e95b5b",
+          "to": "#6050dc",
+        },
+      },
       "select": Object {
         "background": "#ffffff33",
         "foreground": "#ffffff",
@@ -475,6 +499,12 @@ exports[`activated recovery request 1`] = `
             "background": "#152665",
             "foreground": "#ffffff",
             "link": "#ffffff",
+          },
+          "recoveryItems": Object {
+            "iconGradient": Object {
+              "from": "#e95b5b",
+              "to": "#6050dc",
+            },
           },
           "select": Object {
             "background": "#ffffff33",
@@ -593,6 +623,12 @@ exports[`activated recovery request 1`] = `
               "foreground": "#ffffff",
               "link": "#ffffff",
             },
+            "recoveryItems": Object {
+              "iconGradient": Object {
+                "from": "#e95b5b",
+                "to": "#6050dc",
+              },
+            },
             "select": Object {
               "background": "#ffffff33",
               "foreground": "#ffffff",
@@ -672,8 +708,8 @@ Belgium",
   titleIcon={
     Object {
       "background": Object {
-        "from": "#7a90cb",
-        "to": "#3b6cf4",
+        "from": "#e95b5b",
+        "to": "#6050dc",
       },
       "icon": Object {
         "hasVariants": false,
@@ -739,6 +775,12 @@ exports[`pending protection request 1`] = `
         "background": "#152665",
         "foreground": "#ffffff",
         "link": "#ffffff",
+      },
+      "recoveryItems": Object {
+        "iconGradient": Object {
+          "from": "#e95b5b",
+          "to": "#6050dc",
+        },
       },
       "select": Object {
         "background": "#ffffff33",
@@ -823,6 +865,12 @@ exports[`pending protection request 1`] = `
             "background": "#152665",
             "foreground": "#ffffff",
             "link": "#ffffff",
+          },
+          "recoveryItems": Object {
+            "iconGradient": Object {
+              "from": "#e95b5b",
+              "to": "#6050dc",
+            },
           },
           "select": Object {
             "background": "#ffffff33",
@@ -931,6 +979,12 @@ exports[`pending protection request 1`] = `
               "background": "#152665",
               "foreground": "#ffffff",
               "link": "#ffffff",
+            },
+            "recoveryItems": Object {
+              "iconGradient": Object {
+                "from": "#e95b5b",
+                "to": "#6050dc",
+              },
             },
             "select": Object {
               "background": "#ffffff33",
@@ -1076,6 +1130,12 @@ exports[`pending recovery request 1`] = `
         "foreground": "#ffffff",
         "link": "#ffffff",
       },
+      "recoveryItems": Object {
+        "iconGradient": Object {
+          "from": "#e95b5b",
+          "to": "#6050dc",
+        },
+      },
       "select": Object {
         "background": "#ffffff33",
         "foreground": "#ffffff",
@@ -1159,6 +1219,12 @@ exports[`pending recovery request 1`] = `
             "background": "#152665",
             "foreground": "#ffffff",
             "link": "#ffffff",
+          },
+          "recoveryItems": Object {
+            "iconGradient": Object {
+              "from": "#e95b5b",
+              "to": "#6050dc",
+            },
           },
           "select": Object {
             "background": "#ffffff33",
@@ -1289,6 +1355,12 @@ exports[`pending recovery request 1`] = `
               "foreground": "#ffffff",
               "link": "#ffffff",
             },
+            "recoveryItems": Object {
+              "iconGradient": Object {
+                "from": "#e95b5b",
+                "to": "#6050dc",
+              },
+            },
             "select": Object {
               "background": "#ffffff33",
               "foreground": "#ffffff",
@@ -1368,8 +1440,8 @@ Belgium",
   titleIcon={
     Object {
       "background": Object {
-        "from": "#7a90cb",
-        "to": "#3b6cf4",
+        "from": "#e95b5b",
+        "to": "#6050dc",
       },
       "icon": Object {
         "hasVariants": false,
@@ -1435,6 +1507,12 @@ exports[`protection request 1`] = `
         "background": "#152665",
         "foreground": "#ffffff",
         "link": "#ffffff",
+      },
+      "recoveryItems": Object {
+        "iconGradient": Object {
+          "from": "#e95b5b",
+          "to": "#6050dc",
+        },
       },
       "select": Object {
         "background": "#ffffff33",
@@ -1519,6 +1597,12 @@ exports[`protection request 1`] = `
             "background": "#152665",
             "foreground": "#ffffff",
             "link": "#ffffff",
+          },
+          "recoveryItems": Object {
+            "iconGradient": Object {
+              "from": "#e95b5b",
+              "to": "#6050dc",
+            },
           },
           "select": Object {
             "background": "#ffffff33",
@@ -1613,6 +1697,12 @@ exports[`protection request 1`] = `
               "background": "#152665",
               "foreground": "#ffffff",
               "link": "#ffffff",
+            },
+            "recoveryItems": Object {
+              "iconGradient": Object {
+                "from": "#e95b5b",
+                "to": "#6050dc",
+              },
             },
             "select": Object {
               "background": "#ffffff33",
@@ -1758,6 +1848,12 @@ exports[`recovery request 1`] = `
         "foreground": "#ffffff",
         "link": "#ffffff",
       },
+      "recoveryItems": Object {
+        "iconGradient": Object {
+          "from": "#e95b5b",
+          "to": "#6050dc",
+        },
+      },
       "select": Object {
         "background": "#ffffff33",
         "foreground": "#ffffff",
@@ -1841,6 +1937,12 @@ exports[`recovery request 1`] = `
             "background": "#152665",
             "foreground": "#ffffff",
             "link": "#ffffff",
+          },
+          "recoveryItems": Object {
+            "iconGradient": Object {
+              "from": "#e95b5b",
+              "to": "#6050dc",
+            },
           },
           "select": Object {
             "background": "#ffffff33",
@@ -1938,6 +2040,12 @@ exports[`recovery request 1`] = `
               "foreground": "#ffffff",
               "link": "#ffffff",
             },
+            "recoveryItems": Object {
+              "iconGradient": Object {
+                "from": "#e95b5b",
+                "to": "#6050dc",
+              },
+            },
             "select": Object {
               "background": "#ffffff33",
               "foreground": "#ffffff",
@@ -2018,8 +2126,8 @@ Belgium",
   titleIcon={
     Object {
       "background": Object {
-        "from": "#7a90cb",
-        "to": "#3b6cf4",
+        "from": "#e95b5b",
+        "to": "#6050dc",
       },
       "icon": Object {
         "hasVariants": false,

@@ -6,7 +6,7 @@ import { useRootContext } from '../RootContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import { decision } from './Model';
-import Decision from './Decision';
+import ProtectionRequestStatus from './ProtectionRequestStatus';
 import ProtectionRequestDetails from './ProtectionRequestDetails';
 
 export interface Props {
@@ -45,7 +45,10 @@ export default function ProtectionRequestsHistory(props: Props) {
                     },
                     {
                         header: "Status",
-                        render: request => <Decision decision={ decision(currentAddress, request.decisions)!.status} />,
+                        render: request => <ProtectionRequestStatus
+                            decision={ decision(currentAddress, request.decisions)!.status}
+                            status={ request.status }
+                        />,
                         width: "140px",
                         splitAfter: true,
                     },

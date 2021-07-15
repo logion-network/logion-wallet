@@ -170,9 +170,10 @@ export default function CreateProtectionRequestForm(props: Props) {
             subTitle={ subTitle }
             titleIcon={{
                 icon: {
-                    id: 'shield',
-                    hasVariants: true,
+                    id: props.isRecovery ? 'recovery' : 'shield',
+                    hasVariants: props.isRecovery ? false : true,
                 },
+                background: props.isRecovery ? colorTheme.recoveryItems.iconGradient : undefined,
             }}
             colors={ colorTheme }
             addresses={ addresses }

@@ -39,6 +39,12 @@ export const DARK_MODE: ColorTheme = {
             to: '#3b6cf4',
         }
     },
+    recoveryItems: {
+        iconGradient: {
+            from: '#e95b5b',
+            to: '#6050dc',
+        }
+    },
     buttons: {
         secondary: {
             background: '#0c163d',

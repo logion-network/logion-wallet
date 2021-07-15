@@ -41,6 +41,12 @@ exports[`renders 1`] = `
         "foreground": "#000000",
         "link": "#3b6cf426",
       },
+      "recoveryItems": Object {
+        "iconGradient": Object {
+          "from": "#e95b5b",
+          "to": "#650àdc",
+        },
+      },
       "select": Object {
         "background": "#d8e2fd",
         "foreground": "#000000",

@@ -40,6 +40,12 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
         "foreground": "#ffffff",
         "link": "#ffffff",
       },
+      "recoveryItems": Object {
+        "iconGradient": Object {
+          "from": "#e95b5b",
+          "to": "#6050dc",
+        },
+      },
       "select": Object {
         "background": "#ffffff33",
         "foreground": "#ffffff",
@@ -103,8 +109,8 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
         "exact": true,
         "icon": Object {
           "background": Object {
-            "from": "#7a90cb",
-            "to": "#3b6cf4",
+            "from": "#e95b5b",
+            "to": "#6050dc",
           },
           "icon": Object {
             "id": "recovery",
@@ -223,6 +229,12 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
           "background": "#152665",
           "foreground": "#ffffff",
           "link": "#ffffff",
+        },
+        "recoveryItems": Object {
+          "iconGradient": Object {
+            "from": "#e95b5b",
+            "to": "#6050dc",
+          },
         },
         "select": Object {
           "background": "#ffffff33",
@@ -318,6 +330,12 @@ exports[`Given connected, when rendering, then show account, no connect button a
         "foreground": "#ffffff",
         "link": "#ffffff",
       },
+      "recoveryItems": Object {
+        "iconGradient": Object {
+          "from": "#e95b5b",
+          "to": "#6050dc",
+        },
+      },
       "select": Object {
         "background": "#ffffff33",
         "foreground": "#ffffff",
@@ -381,8 +399,8 @@ exports[`Given connected, when rendering, then show account, no connect button a
         "exact": true,
         "icon": Object {
           "background": Object {
-            "from": "#7a90cb",
-            "to": "#3b6cf4",
+            "from": "#e95b5b",
+            "to": "#6050dc",
           },
           "icon": Object {
             "id": "recovery",
@@ -501,6 +519,12 @@ exports[`Given connected, when rendering, then show account, no connect button a
           "background": "#152665",
           "foreground": "#ffffff",
           "link": "#ffffff",
+        },
+        "recoveryItems": Object {
+          "iconGradient": Object {
+            "from": "#e95b5b",
+            "to": "#6050dc",
+          },
         },
         "select": Object {
           "background": "#ffffff33",
@@ -596,6 +620,12 @@ exports[`Given connecting, when rendering, then show account, no button, no node
         "foreground": "#ffffff",
         "link": "#ffffff",
       },
+      "recoveryItems": Object {
+        "iconGradient": Object {
+          "from": "#e95b5b",
+          "to": "#6050dc",
+        },
+      },
       "select": Object {
         "background": "#ffffff33",
         "foreground": "#ffffff",
@@ -659,8 +689,8 @@ exports[`Given connecting, when rendering, then show account, no button, no node
         "exact": true,
         "icon": Object {
           "background": Object {
-            "from": "#7a90cb",
-            "to": "#3b6cf4",
+            "from": "#e95b5b",
+            "to": "#6050dc",
           },
           "icon": Object {
             "id": "recovery",
@@ -778,6 +808,12 @@ exports[`Given connecting, when rendering, then show account, no button, no node
           "background": "#152665",
           "foreground": "#ffffff",
           "link": "#ffffff",
+        },
+        "recoveryItems": Object {
+          "iconGradient": Object {
+            "from": "#e95b5b",
+            "to": "#6050dc",
+          },
         },
         "select": Object {
           "background": "#ffffff33",
@@ -873,6 +909,12 @@ exports[`Given connection error, when rendering, then show account, no button, n
         "foreground": "#ffffff",
         "link": "#ffffff",
       },
+      "recoveryItems": Object {
+        "iconGradient": Object {
+          "from": "#e95b5b",
+          "to": "#6050dc",
+        },
+      },
       "select": Object {
         "background": "#ffffff33",
         "foreground": "#ffffff",
@@ -936,8 +978,8 @@ exports[`Given connection error, when rendering, then show account, no button, n
         "exact": true,
         "icon": Object {
           "background": Object {
-            "from": "#7a90cb",
-            "to": "#3b6cf4",
+            "from": "#e95b5b",
+            "to": "#6050dc",
           },
           "icon": Object {
             "id": "recovery",
@@ -1055,6 +1097,12 @@ exports[`Given connection error, when rendering, then show account, no button, n
           "background": "#152665",
           "foreground": "#ffffff",
           "link": "#ffffff",
+        },
+        "recoveryItems": Object {
+          "iconGradient": Object {
+            "from": "#e95b5b",
+            "to": "#6050dc",
+          },
         },
         "select": Object {
           "background": "#ffffff33",
@@ -1150,6 +1198,12 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
         "foreground": "#ffffff",
         "link": "#ffffff",
       },
+      "recoveryItems": Object {
+        "iconGradient": Object {
+          "from": "#e95b5b",
+          "to": "#6050dc",
+        },
+      },
       "select": Object {
         "background": "#ffffff33",
         "foreground": "#ffffff",
@@ -1213,8 +1267,8 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
         "exact": true,
         "icon": Object {
           "background": Object {
-            "from": "#7a90cb",
-            "to": "#3b6cf4",
+            "from": "#e95b5b",
+            "to": "#6050dc",
           },
           "icon": Object {
             "id": "recovery",
@@ -1333,6 +1387,12 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
           "foreground": "#ffffff",
           "link": "#ffffff",
         },
+        "recoveryItems": Object {
+          "iconGradient": Object {
+            "from": "#e95b5b",
+            "to": "#6050dc",
+          },
+        },
         "select": Object {
           "background": "#ffffff33",
           "foreground": "#ffffff",
@@ -1427,6 +1487,12 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
         "foreground": "#ffffff",
         "link": "#ffffff",
       },
+      "recoveryItems": Object {
+        "iconGradient": Object {
+          "from": "#e95b5b",
+          "to": "#6050dc",
+        },
+      },
       "select": Object {
         "background": "#ffffff33",
         "foreground": "#ffffff",
@@ -1490,8 +1556,8 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
         "exact": true,
         "icon": Object {
           "background": Object {
-            "from": "#7a90cb",
-            "to": "#3b6cf4",
+            "from": "#e95b5b",
+            "to": "#6050dc",
           },
           "icon": Object {
             "id": "recovery",
@@ -1610,6 +1676,12 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
           "background": "#152665",
           "foreground": "#ffffff",
           "link": "#ffffff",
+        },
+        "recoveryItems": Object {
+          "iconGradient": Object {
+            "from": "#e95b5b",
+            "to": "#6050dc",
+          },
         },
         "select": Object {
           "background": "#ffffff33",

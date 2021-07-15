@@ -13,7 +13,7 @@ import { useLegalOfficerContext } from './LegalOfficerContext';
 import { acceptProtectionRequest, rejectProtectionRequest, decision } from './Model';
 import { ProtectionRequest } from './Types';
 import ProcessStep from './ProcessStep';
-import Decision from './Decision';
+import ProtectionRequestStatus from './ProtectionRequestStatus';
 import ProtectionRequestDetails from './ProtectionRequestDetails';
 import { useHistory } from "react-router-dom";
 import { recoveryDetailsPath } from "./LegalOfficerPaths";
@@ -122,7 +122,10 @@ export default function PendingProtectionRequests(props: Props) {
                     },
                     {
                         header: "Status",
-                        render: request => <Decision decision={ decision(currentAddress, request.decisions)!.status} />,
+                        render: request => <ProtectionRequestStatus
+                            decision={ decision(currentAddress, request.decisions)!.status}
+                            status={ request.status }
+                        />,
                         width: "140px",
                         splitAfter: true,
                     },

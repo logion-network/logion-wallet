@@ -99,6 +99,12 @@ export const LIGHT_MODE: ColorTheme = {
             to: '#3b6cf4',
         }
     },
+    recoveryItems: {
+        iconGradient: {
+            from: '#e95b5b',
+            to: '#650àdc',
+        }
+    },
     buttons: {
         secondary: {
             background: '#ffffff',

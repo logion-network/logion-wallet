@@ -1,16 +1,17 @@
 import React from 'react';
 
 import Icon from "../component/Icon";
-import { ORANGE, GREEN, RED } from "../component/ColorTheme";
+import { ORANGE, GREEN, RED, YELLOW } from "../component/ColorTheme";
 
-import { LegalOfficerDecisionStatus } from './Types';
-import './Decision.css';
+import { LegalOfficerDecisionStatus, ProtectionRequestStatus as ProtectionRequestStatusType } from './Types';
+import './ProtectionRequestStatus.css';
 
 export interface Props {
     decision: LegalOfficerDecisionStatus | null,
+    status: ProtectionRequestStatusType,
 }
 
-export default function Decision(props: Props) {
+export default function ProtectionRequestStatus(props: Props) {
 
     let icon;
     let status;
@@ -20,7 +21,11 @@ export default function Decision(props: Props) {
             statusColor = ORANGE;
             icon = (<Icon icon={{ id: "pending" }} />);
             status = <span style={{color: statusColor}}>Pending</span>;
-        } else if(props.decision === "ACCEPTED") {
+        } else if(props.decision === "ACCEPTED" && props.status === "PENDING") {
+            statusColor = YELLOW;
+            icon = (<Icon icon={{ id: "accepted" }} />);
+            status = <span style={{color: statusColor, textTransform: "uppercase"}}>Accepted</span>;
+        } else if(props.decision === "ACCEPTED" && props.status === "ACTIVATED") {
             statusColor = GREEN;
             icon = (<Icon icon={{ id: "accepted" }} />);
             status = <span style={{color: statusColor, textTransform: "uppercase"}}>Accepted</span>;
@@ -36,7 +41,7 @@ export default function Decision(props: Props) {
 
     return (
         <span
-            className="Decision"
+            className="ProtectionRequestStatus"
             style={{
                 borderColor: statusColor
             }}
