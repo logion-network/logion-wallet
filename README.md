@@ -24,17 +24,15 @@ The UI is configured by default to interact with Logion's DEV infrastructure (se
 ### Fully local setup
 
 Use below command in order to connect to a locally running node
-(see [here](https://github.com/logion-network/logion-node-prototype) for instructions about doing so).
+(see [here](https://github.com/logion-network/logion-node-prototype) for instructions about doing so)
+and service (see [here](https://github.com/logion-network/logion-backend))
+.
 
 ```bash
-export REACT_APP_PROVIDER_SOCKET=ws://localhost:9944 ; yarn start
+export REACT_APP_PROVIDER_SOCKET=ws://localhost:9944 ; export REACT_APP_SERVICE_URL=http://localhost:8080 ; yarn start
 ```
 
-In order to
-interact with a locally running off-chain service
-(see [here](https://github.com/logion-network/logion-backend) for instructions about running the service),
-you also have to change the `proxy` field of the `package.json`
-file to `http://localhost:8080` (you may have to change the port if you are not using the default configuration).
+You may have to change port numbers if you are not using the default configuration.
 
 
 ### Test users
