@@ -113,7 +113,8 @@ function initialDetailsExpanded<T>(data: T[]): boolean[] {
     return detailsExpanded;
 }
 
-function computeColumnWidths<T>(columns: Column<T>[]): string[] {
+function computeColumnWidths<T>(columns: Column<T>[], header: boolean): string[] {
+    //let reservedPixelWidth = header ? 0 : 20;
     let reservedPixelWidth = 0;
     let reservedPercentageWidth = 0;
     let undefinedWidths = 0;
@@ -160,7 +161,8 @@ export default function Table<T>(props: Props<T>) {
         }
     }
 
-    const computedWidths: string[] = computeColumnWidths(props.columns);
+    const headerComputedWidths: string[] = computeColumnWidths(props.columns, true);
+    const rowComputedWidths: string[] = computeColumnWidths(props.columns, false);
 
     const toggle = useCallback((itemIndex: number) => {
         const newDetailsExpanded = [ ...detailsExpanded ];
@@ -189,7 +191,7 @@ export default function Table<T>(props: Props<T>) {
                 <Row>
                     {
                         props.columns.map((column, index) => (
-                            <Col key={ index } style={{width: computedWidths[index]}}>{ column.header }</Col>
+                            <Col key={ index } style={{width: headerComputedWidths[index]}}>{ column.header }</Col>
                         ))
                     }
                 </Row>
@@ -214,7 +216,7 @@ export default function Table<T>(props: Props<T>) {
                                             className={ className }
                                             key={ colIndex }
                                             style={{
-                                                width: computedWidths[colIndex],
+                                                width: rowComputedWidths[colIndex],
                                                 fontSize: fontSize(col),
                                                 backgroundColor: className === undefined ? props.colorTheme.table.row.background : undefined,
                                             }}

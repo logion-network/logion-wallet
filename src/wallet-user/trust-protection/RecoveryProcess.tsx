@@ -76,7 +76,6 @@ export default function GoToTrustProtection() {
                 const balances: Record<string, string> = {};
                 for(let i = 0; i < balancesArray.length; ++i) {
                     balances[requests.requests[i].assetDescription!.assetId] = balancesArray[i];
-                    console.log(`${requests.requests[i].assetDescription!.assetId} = ${balancesArray[i]}`);
                 }
                 setRequests({
                     requests: requests.requests,
@@ -138,6 +137,7 @@ export default function GoToTrustProtection() {
                                             {
                                                 header: "Name",
                                                 render: request => <Cell content={ request.requestedTokenName } />,
+                                                width: "150px",
                                             },
                                             {
                                                 header: "Description",
@@ -146,10 +146,12 @@ export default function GoToTrustProtection() {
                                             {
                                                 header: "Balance",
                                                 render: request => <Cell content={ requests !== null && requests.balances !== undefined ? requests.balances[request.assetDescription!.assetId] : "/" } />,
+                                                width: "200px",
                                             },
                                             {
                                                 header: "Legal officer",
                                                 render: request => <Cell content={ getOfficer(request.legalOfficerAddress)!.name } />,
+                                                width: "150px",
                                             }
                                         ]}
                                         data={ recoveredTokenizationRequests }
