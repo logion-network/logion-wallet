@@ -522,7 +522,7 @@ exports[`activated recovery request 1`] = `
       <Alert
         variant="info"
       >
-        You are now ready to initiate the actual recovery of address 
+        You are now ready to claim the access to address 
         toRecover
         .
       </Alert>
@@ -532,6 +532,27 @@ exports[`activated recovery request 1`] = `
         onSuccess={[Function]}
         signAndSubmit={null}
         successMessage="Protection successfully activated."
+      />
+      <Button
+        colors={
+          Object {
+            "secondary": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
+          }
+        }
+        data-testid="btnClaim"
+        onClick={[Function]}
+      >
+        Claim
+      </Button>
+      <ExtrinsicSubmitter
+        id="initiateRecovery"
+        onError={[Function]}
+        onSuccess={[Function]}
+        signAndSubmit={null}
+        successMessage="Recovery successfully initiated."
       />
       <LegalOfficers
         colorTheme={
@@ -851,6 +872,13 @@ exports[`pending protection request 1`] = `
       >
         Mandatory: we detect that the Logion Application needs to be re-synchronized with the Logion Blockchain. To proceed, please click on the button and sign to confirm this operation.
       </Alert>
+      <ExtrinsicSubmitter
+        id="activatedProtection"
+        onError={[Function]}
+        onSuccess={[Function]}
+        signAndSubmit={null}
+        successMessage="Protection successfully activated."
+      />
       <Button
         colors={
           Object {
@@ -865,13 +893,6 @@ exports[`pending protection request 1`] = `
       >
         Re-Sync Confirmation
       </Button>
-      <ExtrinsicSubmitter
-        id="activatedProtection"
-        onError={[Function]}
-        onSuccess={[Function]}
-        signAndSubmit={null}
-        successMessage="Protection successfully activated."
-      />
       <LegalOfficers
         colorTheme={
           Object {
@@ -1187,6 +1208,13 @@ exports[`pending recovery request 1`] = `
       >
         Mandatory: we detect that the Logion Application needs to be re-synchronized with the Logion Blockchain. To proceed, please click on the button and sign to confirm this operation.
       </Alert>
+      <ExtrinsicSubmitter
+        id="activatedProtection"
+        onError={[Function]}
+        onSuccess={[Function]}
+        signAndSubmit={null}
+        successMessage="Protection successfully activated."
+      />
       <Button
         colors={
           Object {
@@ -1201,12 +1229,26 @@ exports[`pending recovery request 1`] = `
       >
         Re-Sync Confirmation
       </Button>
+      <Button
+        colors={
+          Object {
+            "secondary": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
+          }
+        }
+        data-testid="btnClaim"
+        onClick={[Function]}
+      >
+        Claim
+      </Button>
       <ExtrinsicSubmitter
-        id="activatedProtection"
+        id="initiateRecovery"
         onError={[Function]}
         onSuccess={[Function]}
         signAndSubmit={null}
-        successMessage="Protection successfully activated."
+        successMessage="Recovery successfully initiated."
       />
       <LegalOfficers
         colorTheme={
