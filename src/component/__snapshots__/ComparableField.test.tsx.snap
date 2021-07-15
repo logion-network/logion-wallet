@@ -6,6 +6,49 @@ Object {
   "baseElement": <body>
     <div>
       <div
+        class="ComparableField"
+      >
+        <div
+          class="FormGroup"
+        >
+          <style>
+            
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+          </style>
+          <div
+            class="form-group"
+            data-testid="testId3Group"
+          >
+            <label
+              class="form-label"
+              for="testId3"
+            >
+              attribute
+            </label>
+            <input
+              class="form-control is-invalid"
+              data-testid="testId3"
+              id="testId3"
+              name="testId3"
+              readonly=""
+              type="text"
+              value="attribute"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="ComparableField"
+    >
+      <div
         class="FormGroup"
       >
         <style>
@@ -36,50 +79,7 @@ Object {
             type="text"
             value="attribute"
           />
-          <div
-            class="invalid-feedback"
-            data-testid="testId3Message"
-          />
         </div>
-      </div>
-    </div>
-  </body>,
-  "container": <div>
-    <div
-      class="FormGroup"
-    >
-      <style>
-        
-    .FormGroup .form-control,
-    .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
-        color: #000000;
-    }
-    
-      </style>
-      <div
-        class="form-group"
-        data-testid="testId3Group"
-      >
-        <label
-          class="form-label"
-          for="testId3"
-        >
-          attribute
-        </label>
-        <input
-          class="form-control is-invalid"
-          data-testid="testId3"
-          id="testId3"
-          name="testId3"
-          readonly=""
-          type="text"
-          value="attribute"
-        />
-        <div
-          class="invalid-feedback"
-          data-testid="testId3Message"
-        />
       </div>
     </div>
   </div>,
@@ -143,6 +143,49 @@ Object {
   "baseElement": <body>
     <div>
       <div
+        class="ComparableField"
+      >
+        <div
+          class="FormGroup"
+        >
+          <style>
+            
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+          </style>
+          <div
+            class="form-group"
+            data-testid="testId2Group"
+          >
+            <label
+              class="form-label"
+              for="testId2"
+            >
+              attribute
+            </label>
+            <input
+              class="form-control"
+              data-testid="testId2"
+              id="testId2"
+              name="testId2"
+              readonly=""
+              type="text"
+              value="attribute"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="ComparableField"
+    >
+      <div
         class="FormGroup"
       >
         <style>
@@ -173,50 +216,7 @@ Object {
             type="text"
             value="attribute"
           />
-          <div
-            class="invalid-feedback"
-            data-testid="testId2Message"
-          />
         </div>
-      </div>
-    </div>
-  </body>,
-  "container": <div>
-    <div
-      class="FormGroup"
-    >
-      <style>
-        
-    .FormGroup .form-control,
-    .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
-        color: #000000;
-    }
-    
-      </style>
-      <div
-        class="form-group"
-        data-testid="testId2Group"
-      >
-        <label
-          class="form-label"
-          for="testId2"
-        >
-          attribute
-        </label>
-        <input
-          class="form-control"
-          data-testid="testId2"
-          id="testId2"
-          name="testId2"
-          readonly=""
-          type="text"
-          value="attribute"
-        />
-        <div
-          class="invalid-feedback"
-          data-testid="testId2Message"
-        />
       </div>
     </div>
   </div>,
@@ -280,6 +280,49 @@ Object {
   "baseElement": <body>
     <div>
       <div
+        class="ComparableField"
+      >
+        <div
+          class="FormGroup"
+        >
+          <style>
+            
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly] {
+        background-color: #eff3fe;
+        color: #000000;
+    }
+    
+          </style>
+          <div
+            class="form-group"
+            data-testid="testId1Group"
+          >
+            <label
+              class="form-label"
+              for="testId1"
+            >
+              attribute
+            </label>
+            <input
+              class="form-control"
+              data-testid="testId1"
+              id="testId1"
+              name="testId1"
+              readonly=""
+              type="text"
+              value="attribute"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="ComparableField"
+    >
+      <div
         class="FormGroup"
       >
         <style>
@@ -310,50 +353,7 @@ Object {
             type="text"
             value="attribute"
           />
-          <div
-            class="invalid-feedback"
-            data-testid="testId1Message"
-          />
         </div>
-      </div>
-    </div>
-  </body>,
-  "container": <div>
-    <div
-      class="FormGroup"
-    >
-      <style>
-        
-    .FormGroup .form-control,
-    .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
-        color: #000000;
-    }
-    
-      </style>
-      <div
-        class="form-group"
-        data-testid="testId1Group"
-      >
-        <label
-          class="form-label"
-          for="testId1"
-        >
-          attribute
-        </label>
-        <input
-          class="form-control"
-          data-testid="testId1"
-          id="testId1"
-          name="testId1"
-          readonly=""
-          type="text"
-          value="attribute"
-        />
-        <div
-          class="invalid-feedback"
-          data-testid="testId1Message"
-        />
       </div>
     </div>
   </div>,

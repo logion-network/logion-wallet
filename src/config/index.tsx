@@ -9,6 +9,7 @@ export interface Node {
 export interface ConfigType {
     APP_NAME: string,
     DEVELOPMENT_KEYRING: boolean,
+    PROVIDER_SOCKET?: string,
     RPC: object,
     types: RegistryTypes,
     availableNodes: Node[],
@@ -54,16 +55,19 @@ export interface EnvConfigType extends Record<string, any> {
 
 }
 
+const configFile = `./${process.env.NODE_ENV}.json`;
+console.log(`Loading config from ${configFile}`);
 const configEnv: EnvConfigType = require(`./${process.env.NODE_ENV}.json`);
 
-// Accepting React env vars and aggregating them into `config` object.
 const envVarNames: string[] = [
   'REACT_APP_PROVIDER_SOCKET',
   'REACT_APP_DEVELOPMENT_KEYRING'
 ];
 const envVars: EnvConfigType = envVarNames.reduce<EnvConfigType>((mem, n) => {
     if (process.env[n] !== undefined) {
-        mem[n.slice(10)] = process.env[n];
+        const configFieldName = n.slice(10);
+        console.log(`Loading ${configFieldName} value from environment`);
+        mem[configFieldName] = process.env[n];
     }
     return mem;
 }, {});

@@ -54,3 +54,12 @@
     background-color: #ff8a5c !important;
     border: none;
 }
+
+.Button.btn.btn-danger {
+    background-color: #e95b5b;
+    border: none;
+}
+
+.Button.btn.btn-danger:hover {
+    opacity: 0.9;
+}

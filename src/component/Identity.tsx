@@ -3,6 +3,7 @@ import IdentityType from './types/Identity';
 import { Row, Col } from "react-bootstrap";
 import { BackgroundAndForegroundColors } from "./ColorTheme";
 import ComparableField from "./ComparableField";
+import "./Identity.css";
 
 export interface Props {
     identity: IdentityType
@@ -31,16 +32,16 @@ export default function Identity(props: Props) {
     }
 
     return (
-        <>
+        <div className="Identity">
             <Row>
-                <Col md={ 6 }>
+                <Col className="IdentityCol" md={ 6 }>
                     <ComparableIdentityField
                         id="firstName"
                         label="First Name"
                         field={ identity => identity.firstName }
                     />
                 </Col>
-                <Col md={ 6 }>
+                <Col className="IdentityCol" md={ 6 }>
                     <ComparableIdentityField
                         id="lastName"
                         label="Last Name"
@@ -49,14 +50,14 @@ export default function Identity(props: Props) {
                 </Col>
             </Row>
             <Row>
-                <Col md={ 6 }>
+                <Col className="IdentityCol" md={ 6 }>
                     <ComparableIdentityField
                         id="email"
                         label="Email"
                         field={ identity => identity.email }
                     />
                 </Col>
-                <Col md={ 6 }>
+                <Col className="IdentityCol" md={ 6 }>
                     <ComparableIdentityField
                         id="phoneNumber"
                         label="Phone Number"
@@ -64,6 +65,6 @@ export default function Identity(props: Props) {
                     />
                 </Col>
             </Row>
-        </>
+        </div>
     );
 }

@@ -16,8 +16,7 @@ import {
     sign,
     useLogionChain,
 } from '../../logion-chain';
-import { ActiveRecovery, getActiveRecovery, initiateRecovery } from '../../logion-chain/Recovery';
-import { Option } from '@polkadot/types';
+import { getActiveRecovery, initiateRecovery } from '../../logion-chain/Recovery';
 import {Row, Col} from "react-bootstrap";
 import {useRootContext} from "../../RootContext";
 import LegalOfficers from './LegalOfficers';
@@ -25,6 +24,20 @@ import LegalOfficers from './LegalOfficers';
 import './CreateProtectionRequestForm.css';
 import LegalOfficer from '../../component/types/LegalOfficer';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
+import { ApiPromise } from '@polkadot/api';
+
+function isValidAccountId(api: ApiPromise, accountId?: string | null): boolean {
+    if(accountId === null || accountId === undefined || accountId === '') {
+        return false;
+    }
+
+    try {
+        api.createType('AccountId', accountId);
+        return true;
+    } catch(e) {
+        return false;
+    }
+}
 
 export interface Props {
     isRecovery: boolean,
@@ -53,12 +66,12 @@ export default function CreateProtectionRequestForm(props: Props) {
     const [ addressToRecover, setAddressToRecover ] = useState<string>("");
     const [ requestCreated, setRequestCreated ] = useState<boolean>(false);
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
-    const [ activeRecovery, setActiveRecovery ] = useState<Option<ActiveRecovery> | null>(null);
+    const [ activeRecovery, setActiveRecovery ] = useState<boolean>(false);
 
     const submit = async (formValues: FormValues) => {
         if(legalOfficer1 === null || legalOfficer2 === null
             || !formValues.agree
-            || (props.isRecovery && (activeRecovery === null || activeRecovery.isEmpty))) {
+            || (props.isRecovery && !activeRecovery)) {
             return;
         }
 
@@ -133,7 +146,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                 sourceAccount: addressToRecover,
                 destinationAccount: currentAddress,
             });
-            setActiveRecovery(activeRecovery);
+            setActiveRecovery(activeRecovery.isSome);
             if(activeRecovery.isEmpty) {
                 const signAndSubmit: SignAndSubmit = (setResult, setError) => initiateRecovery({
                     api: api!,
@@ -175,40 +188,43 @@ export default function CreateProtectionRequestForm(props: Props) {
                     >
                         <h3>Initiate recovery</h3>
                         {
-                            (activeRecovery === null || activeRecovery.isEmpty) &&
+                            !activeRecovery &&
                             <>
                                 <FormGroup
                                     id="accountToRecover"
                                     label="Address to Recover"
                                     control={
                                         <Form.Control
-                                            isInvalid={ addressToRecover === null || addressToRecover === "" }
+                                            isInvalid={ !isValidAccountId(api!, addressToRecover) }
                                             type="text"
                                             data-testid="addressToRecover"
                                             value={ addressToRecover }
                                             onChange={ event => setAddressToRecover(event.target.value) }
                                         />
                                     }
-                                    feedback={ "Address to recover is required" }
+                                    feedback={ "A valid SS58 address is required" }
                                     colors={ colorTheme.dashboard }
                                 />
-                                <Button
-                                    colors={ colorTheme.buttons }
-                                    onClick={ initiateRecoveryOnClick }
-                                >
-                                    Initiate recovery
-                                </Button>
+                                {
+                                    signAndSubmit === null &&
+                                    <Button
+                                        colors={ colorTheme.buttons }
+                                        onClick={ initiateRecoveryOnClick }
+                                    >
+                                        Initiate recovery
+                                    </Button>
+                                }
                                 <ExtrinsicSubmitter
                                     id="initiateRecovery"
                                     successMessage="Recovery successfully initiated."
                                     signAndSubmit={ signAndSubmit }
-                                    onSuccess={ () => { setSignAndSubmit(null); refreshRequests!(true); } }
+                                    onSuccess={ () => { setSignAndSubmit(null); setActiveRecovery(true); } }
                                     onError={ () => setSignAndSubmit(null) }
                                 />
                             </>
                         }
                         {
-                            (activeRecovery !== null && !activeRecovery.isEmpty) &&
+                            activeRecovery &&
                             <Alert variant="success">
                                 The recovery has been successfully initiated, you may now contact your legal officers.
                             </Alert>
@@ -219,7 +235,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                 <Frame
                     className="CreateProtectionRequestFormLegalOfficers"
                     colors={ colorTheme }
-                    disabled={ props.isRecovery && (activeRecovery === null || activeRecovery.isEmpty) }
+                    disabled={ props.isRecovery && !activeRecovery }
                 >
                     <h3>Choose your Legal Officers</h3>
                     {

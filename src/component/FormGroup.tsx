@@ -36,7 +36,7 @@ export default function FormGroup(props: Props) {
                 }
                 { props.control }
                 {
-                    (props.noFeedback === undefined || props.noFeedback) &&
+                    (props.noFeedback === undefined || !props.noFeedback) &&
                     <Form.Control.Feedback
                         type="invalid"
                         data-testid={ props.id + "Message" }

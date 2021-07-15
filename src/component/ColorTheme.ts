@@ -51,6 +51,7 @@ export interface ColorTheme {
 
 export interface FrameColors extends BackgroundAndForegroundColors {
     link: string,
+    altBackground?: string,
 }
 
 export interface MenuItemColors {

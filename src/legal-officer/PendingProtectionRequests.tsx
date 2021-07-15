@@ -15,7 +15,7 @@ import { ProtectionRequest } from './Types';
 import ProcessStep from './ProcessStep';
 import Decision from './Decision';
 import ProtectionRequestDetails from './ProtectionRequestDetails';
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { recoveryDetailsPath } from "./LegalOfficerPaths";
 import AccountInfo from "../component/AccountInfo";
 
@@ -41,6 +41,7 @@ export default function PendingProtectionRequests(props: Props) {
     const { pendingProtectionRequests, refreshRequests, pendingRecoveryRequests, colorTheme } = useLegalOfficerContext();
     const [ rejectReason, setRejectReason ] = useState<string>("");
     const [ reviewState, setReviewState ] = useState<ReviewState>(NO_REVIEW_STATE);
+    const history = useHistory();
 
     const handleClose = useCallback(() => {
         setReviewState(NO_REVIEW_STATE);
@@ -156,8 +157,9 @@ export default function PendingProtectionRequests(props: Props) {
                                 <Button
                                     variant="primary"
                                     colors={ colorTheme.buttons }
+                                    onClick={ () => history.push(recoveryDetailsPath(request.id)) }
                                 >
-                                    <Link to={ recoveryDetailsPath(request.id) }>Start recovery process</Link>
+                                    Start recovery process
                                 </Button>
                                 }
                             </ButtonGroup>

@@ -1,0 +1,9 @@
+.Identity {
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.Identity .IdentityCol {
+    padding-left: 10px;
+    padding-right: 10px;
+}
