@@ -9,6 +9,7 @@ import { FullWidthPane } from '../../component/Dashboard';
 import Tabs from '../../component/Tabs';
 import Table, { Cell, EmptyTableMessage } from '../../component/Table';
 import { ColorThemeType, GREEN } from '../../component/ColorTheme';
+import Button from '../../component/Button';
 
 import { useUserContext } from '../UserContext';
 import { getOfficer } from "./Model";
@@ -114,8 +115,8 @@ export default function GoToTrustProtection() {
                 >
                     <Icon
                         colorThemeType={ colorTheme.type }
-                        icon={{id: 'accepted'}}
-                    /> Your Logion Trust Protection is active and you are now ready to transfer assets
+                        icon={{id: 'activated'}}
+                    /> You are now ready to transfer assets
                     from recovered address { recoveredAddress }.
                 </div>
                 <Tabs
@@ -151,6 +152,17 @@ export default function GoToTrustProtection() {
                                             {
                                                 header: "Legal officer",
                                                 render: request => <Cell content={ getOfficer(request.legalOfficerAddress)!.name } />,
+                                                width: "150px",
+                                            },
+                                            {
+                                                header: "Action",
+                                                render: request => <Button
+                                                    variant="recovery"
+                                                    onClick={ () => {} }
+                                                    colors={ colorTheme.buttons }
+                                                >
+                                                    Transfer
+                                                </Button>,
                                                 width: "150px",
                                             }
                                         ]}

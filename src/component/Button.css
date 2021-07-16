@@ -40,13 +40,15 @@
 
 .Button.btn.btn-primary a,
 .Button.btn.btn-secondary a,
-.Button.btn.btn-warning a {
+.Button.btn.btn-warning a,
+.Button.btn.btn-recovery a {
     color: white;
 }
 
 .Button.btn.btn-primary a:hover,
 .Button.btn.btn-secondary a:hover,
-.Button.btn.btn-warning a:hover {
+.Button.btn.btn-warning a:hover,
+.Button.btn.btn-recovery a:hover {
     text-decoration: none;
 }
 
@@ -56,10 +58,20 @@
 }
 
 .Button.btn.btn-danger {
-    background-color: #e95b5b;
+    background-color: #e11a25;
     border: none;
 }
 
 .Button.btn.btn-danger:hover {
     opacity: 0.9;
+}
+
+.Button.btn.btn-recovery {
+    background: linear-gradient(to bottom, #e95b5b, #6050dc);
+    border: none;
+    color: white;
+}
+
+.Button.btn.btn-recovery:hover {
+    background: linear-gradient(to top, #e95b5b, #6050dc);
 }

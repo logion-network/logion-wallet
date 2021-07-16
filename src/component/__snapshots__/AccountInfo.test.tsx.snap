@@ -17,10 +17,6 @@ exports[`renders and compares with different data 1`] = `
     .Frame .btn-link {
         color: #3b6cf426
     }
-    .Dashboard .Frame .form-control,
-    .Dashboard .Frame .form-control[readonly] {
-        background-color: #eff3fe;
-    }
     
   </style>
   <div
@@ -28,12 +24,16 @@ exports[`renders and compares with different data 1`] = `
   >
     <div
       className="FormGroup"
+      style={
+        Object {
+          "backgroundColor": "#eff3fe",
+        }
+      }
     >
       <style>
         
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -76,12 +76,16 @@ exports[`renders and compares with different data 1`] = `
         >
           <div
             className="FormGroup"
+            style={
+              Object {
+                "backgroundColor": "#eff3fe",
+              }
+            }
           >
             <style>
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -119,12 +123,16 @@ exports[`renders and compares with different data 1`] = `
         >
           <div
             className="FormGroup"
+            style={
+              Object {
+                "backgroundColor": "#eff3fe",
+              }
+            }
           >
             <style>
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -166,12 +174,16 @@ exports[`renders and compares with different data 1`] = `
         >
           <div
             className="FormGroup"
+            style={
+              Object {
+                "backgroundColor": "#eff3fe",
+              }
+            }
           >
             <style>
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -209,12 +221,16 @@ exports[`renders and compares with different data 1`] = `
         >
           <div
             className="FormGroup"
+            style={
+              Object {
+                "backgroundColor": "#eff3fe",
+              }
+            }
           >
             <style>
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -263,12 +279,16 @@ exports[`renders and compares with different data 1`] = `
         >
           <div
             className="FormGroup"
+            style={
+              Object {
+                "backgroundColor": "#eff3fe",
+              }
+            }
           >
             <style>
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -310,12 +330,16 @@ exports[`renders and compares with different data 1`] = `
         >
           <div
             className="FormGroup"
+            style={
+              Object {
+                "backgroundColor": "#eff3fe",
+              }
+            }
           >
             <style>
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -357,12 +381,16 @@ exports[`renders and compares with different data 1`] = `
         >
           <div
             className="FormGroup"
+            style={
+              Object {
+                "backgroundColor": "#eff3fe",
+              }
+            }
           >
             <style>
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -400,12 +428,16 @@ exports[`renders and compares with different data 1`] = `
         >
           <div
             className="FormGroup"
+            style={
+              Object {
+                "backgroundColor": "#eff3fe",
+              }
+            }
           >
             <style>
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -447,12 +479,16 @@ exports[`renders and compares with different data 1`] = `
         >
           <div
             className="FormGroup"
+            style={
+              Object {
+                "backgroundColor": "#eff3fe",
+              }
+            }
           >
             <style>
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -504,10 +540,6 @@ exports[`renders and compares with same data 1`] = `
     .Frame .btn-link {
         color: #3b6cf426
     }
-    .Dashboard .Frame .form-control,
-    .Dashboard .Frame .form-control[readonly] {
-        background-color: #eff3fe;
-    }
     
   </style>
   <div
@@ -515,12 +547,16 @@ exports[`renders and compares with same data 1`] = `
   >
     <div
       className="FormGroup"
+      style={
+        Object {
+          "backgroundColor": "#eff3fe",
+        }
+      }
     >
       <style>
         
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -563,12 +599,16 @@ exports[`renders and compares with same data 1`] = `
         >
           <div
             className="FormGroup"
+            style={
+              Object {
+                "backgroundColor": "#eff3fe",
+              }
+            }
           >
             <style>
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -606,12 +646,16 @@ exports[`renders and compares with same data 1`] = `
         >
           <div
             className="FormGroup"
+            style={
+              Object {
+                "backgroundColor": "#eff3fe",
+              }
+            }
           >
             <style>
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -653,12 +697,16 @@ exports[`renders and compares with same data 1`] = `
         >
           <div
             className="FormGroup"
+            style={
+              Object {
+                "backgroundColor": "#eff3fe",
+              }
+            }
           >
             <style>
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -696,12 +744,16 @@ exports[`renders and compares with same data 1`] = `
         >
           <div
             className="FormGroup"
+            style={
+              Object {
+                "backgroundColor": "#eff3fe",
+              }
+            }
           >
             <style>
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -750,12 +802,16 @@ exports[`renders and compares with same data 1`] = `
         >
           <div
             className="FormGroup"
+            style={
+              Object {
+                "backgroundColor": "#eff3fe",
+              }
+            }
           >
             <style>
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -797,12 +853,16 @@ exports[`renders and compares with same data 1`] = `
         >
           <div
             className="FormGroup"
+            style={
+              Object {
+                "backgroundColor": "#eff3fe",
+              }
+            }
           >
             <style>
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -844,12 +904,16 @@ exports[`renders and compares with same data 1`] = `
         >
           <div
             className="FormGroup"
+            style={
+              Object {
+                "backgroundColor": "#eff3fe",
+              }
+            }
           >
             <style>
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -887,12 +951,16 @@ exports[`renders and compares with same data 1`] = `
         >
           <div
             className="FormGroup"
+            style={
+              Object {
+                "backgroundColor": "#eff3fe",
+              }
+            }
           >
             <style>
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -934,12 +1002,16 @@ exports[`renders and compares with same data 1`] = `
         >
           <div
             className="FormGroup"
+            style={
+              Object {
+                "backgroundColor": "#eff3fe",
+              }
+            }
           >
             <style>
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -991,10 +1063,6 @@ exports[`renders without comparison 1`] = `
     .Frame .btn-link {
         color: #3b6cf426
     }
-    .Dashboard .Frame .form-control,
-    .Dashboard .Frame .form-control[readonly] {
-        background-color: #eff3fe;
-    }
     
   </style>
   <div
@@ -1002,12 +1070,16 @@ exports[`renders without comparison 1`] = `
   >
     <div
       className="FormGroup"
+      style={
+        Object {
+          "backgroundColor": "#eff3fe",
+        }
+      }
     >
       <style>
         
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -1050,12 +1122,16 @@ exports[`renders without comparison 1`] = `
         >
           <div
             className="FormGroup"
+            style={
+              Object {
+                "backgroundColor": "#eff3fe",
+              }
+            }
           >
             <style>
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -1093,12 +1169,16 @@ exports[`renders without comparison 1`] = `
         >
           <div
             className="FormGroup"
+            style={
+              Object {
+                "backgroundColor": "#eff3fe",
+              }
+            }
           >
             <style>
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -1140,12 +1220,16 @@ exports[`renders without comparison 1`] = `
         >
           <div
             className="FormGroup"
+            style={
+              Object {
+                "backgroundColor": "#eff3fe",
+              }
+            }
           >
             <style>
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -1183,12 +1267,16 @@ exports[`renders without comparison 1`] = `
         >
           <div
             className="FormGroup"
+            style={
+              Object {
+                "backgroundColor": "#eff3fe",
+              }
+            }
           >
             <style>
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -1237,12 +1325,16 @@ exports[`renders without comparison 1`] = `
         >
           <div
             className="FormGroup"
+            style={
+              Object {
+                "backgroundColor": "#eff3fe",
+              }
+            }
           >
             <style>
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -1284,12 +1376,16 @@ exports[`renders without comparison 1`] = `
         >
           <div
             className="FormGroup"
+            style={
+              Object {
+                "backgroundColor": "#eff3fe",
+              }
+            }
           >
             <style>
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -1331,12 +1427,16 @@ exports[`renders without comparison 1`] = `
         >
           <div
             className="FormGroup"
+            style={
+              Object {
+                "backgroundColor": "#eff3fe",
+              }
+            }
           >
             <style>
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -1374,12 +1474,16 @@ exports[`renders without comparison 1`] = `
         >
           <div
             className="FormGroup"
+            style={
+              Object {
+                "backgroundColor": "#eff3fe",
+              }
+            }
           >
             <style>
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -1421,12 +1525,16 @@ exports[`renders without comparison 1`] = `
         >
           <div
             className="FormGroup"
+            style={
+              Object {
+                "backgroundColor": "#eff3fe",
+              }
+            }
           >
             <style>
               
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     

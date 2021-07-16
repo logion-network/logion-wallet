@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`activated protection request 1`] = `
-<ContentPane
+<FullWidthPane
   addresses={
     Object {
       "addresses": Array [
@@ -105,10 +105,134 @@ exports[`activated protection request 1`] = `
     }
   }
   mainTitle="My Logion Trust Protection"
-  primaryAreaChildren={
-    <Frame
-      className="ProtectionRecoveryRequest"
-      colors={
+  selectAddress={[MockFunction]}
+  titleIcon={
+    Object {
+      "background": undefined,
+      "icon": Object {
+        "hasVariants": true,
+        "id": "shield",
+      },
+    }
+  }
+>
+  <Frame
+    className="ProtectionRecoveryRequest"
+    colors={
+      Object {
+        "accounts": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+          "hintColor": "#ffffff99",
+          "iconBackground": "#3b6cf4",
+          "legalOfficerIcon": Object {
+            "category": "legal-officer",
+            "id": "account-shield",
+          },
+        },
+        "bottomMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+        },
+        "buttons": Object {
+          "secondary": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+        },
+        "dashboard": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "dialog": Object {
+          "background": "#0c163d",
+          "borderColor": "#e6007a",
+          "foreground": "#ffffff",
+        },
+        "frame": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+          "link": "#ffffff",
+        },
+        "recoveryItems": Object {
+          "iconGradient": Object {
+            "from": "#e95b5b",
+            "to": "#6050dc",
+          },
+        },
+        "select": Object {
+          "background": "#ffffff33",
+          "foreground": "#ffffff",
+          "menuBackgroundColor": "#152665",
+          "selectedOptionBackgroundColor": "#ffffff33",
+        },
+        "shadowColor": "#3b6cf433",
+        "sidebar": Object {
+          "activeItemBackground": "#ffffff33",
+          "background": "#152665",
+          "foreground": "#ffffff",
+        },
+        "table": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+          "header": Object {
+            "background": "#152665",
+            "foreground": "#ffffff",
+          },
+          "row": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+        },
+        "tabs": Object {
+          "background": "#152665",
+          "borderColor": "#3b6cf4",
+          "foreground": "#ffffff",
+          "inactiveTab": Object {
+            "background": "#ffffff33",
+            "foreground": "#ffffff",
+          },
+        },
+        "topMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+        },
+        "type": "dark",
+      }
+    }
+  >
+    <div
+      className="alert-activated"
+      style={
+        Object {
+          "borderColor": "#37ad4b",
+          "color": "#37ad4b",
+        }
+      }
+    >
+      <Icon
+        colorThemeType="dark"
+        icon={
+          Object {
+            "id": "activated",
+          }
+        }
+      />
+       Your Logion Trust Protection is active
+    </div>
+    <ExtrinsicSubmitter
+      id="activatedProtection"
+      onError={[Function]}
+      onSuccess={[Function]}
+      signAndSubmit={null}
+      successMessage="Protection successfully activated."
+    />
+    <LegalOfficers
+      colorTheme={
         Object {
           "accounts": Object {
             "background": "#0c163d",
@@ -194,168 +318,42 @@ exports[`activated protection request 1`] = `
           "type": "dark",
         }
       }
-    >
-      <div
-        className="alert-activated"
-        style={
-          Object {
-            "borderColor": "#37ad4b",
-            "color": "#37ad4b",
-          }
-        }
-      >
-        <Icon
-          colorThemeType="dark"
-          icon={
-            Object {
-              "id": "accepted",
-            }
-          }
-        />
-         Your Logion Trust Protection is active
-      </div>
-      <ExtrinsicSubmitter
-        id="activatedProtection"
-        onError={[Function]}
-        onSuccess={[Function]}
-        signAndSubmit={null}
-        successMessage="Protection successfully activated."
-      />
-      <LegalOfficers
-        colorTheme={
-          Object {
-            "accounts": Object {
-              "background": "#0c163d",
-              "foreground": "#ffffff",
-              "hintColor": "#ffffff99",
-              "iconBackground": "#3b6cf4",
-              "legalOfficerIcon": Object {
-                "category": "legal-officer",
-                "id": "account-shield",
-              },
-            },
-            "bottomMenuItems": Object {
-              "iconGradient": Object {
-                "from": "#7a90cb",
-                "to": "#3b6cf4",
-              },
-            },
-            "buttons": Object {
-              "secondary": Object {
-                "background": "#0c163d",
-                "foreground": "#ffffff",
-              },
-            },
-            "dashboard": Object {
-              "background": "#0c163d",
-              "foreground": "#ffffff",
-            },
-            "dialog": Object {
-              "background": "#0c163d",
-              "borderColor": "#e6007a",
-              "foreground": "#ffffff",
-            },
-            "frame": Object {
-              "background": "#152665",
-              "foreground": "#ffffff",
-              "link": "#ffffff",
-            },
-            "recoveryItems": Object {
-              "iconGradient": Object {
-                "from": "#e95b5b",
-                "to": "#6050dc",
-              },
-            },
-            "select": Object {
-              "background": "#ffffff33",
-              "foreground": "#ffffff",
-              "menuBackgroundColor": "#152665",
-              "selectedOptionBackgroundColor": "#ffffff33",
-            },
-            "shadowColor": "#3b6cf433",
-            "sidebar": Object {
-              "activeItemBackground": "#ffffff33",
-              "background": "#152665",
-              "foreground": "#ffffff",
-            },
-            "table": Object {
-              "background": "#152665",
-              "foreground": "#ffffff",
-              "header": Object {
-                "background": "#152665",
-                "foreground": "#ffffff",
-              },
-              "row": Object {
-                "background": "#0c163d",
-                "foreground": "#ffffff",
-              },
-            },
-            "tabs": Object {
-              "background": "#152665",
-              "borderColor": "#3b6cf4",
-              "foreground": "#ffffff",
-              "inactiveTab": Object {
-                "background": "#ffffff33",
-                "foreground": "#ffffff",
-              },
-            },
-            "topMenuItems": Object {
-              "iconGradient": Object {
-                "from": "#3b6cf4",
-                "to": "#6050dc",
-              },
-            },
-            "type": "dark",
-          }
-        }
-        legalOfficer1={
-          Object {
-            "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-            "details": "SELARL ADRASTEE
+      legalOfficer1={
+        Object {
+          "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+          "details": "SELARL ADRASTEE
 Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
 France",
-            "name": "Guillaume Grain",
-          }
+          "name": "Guillaume Grain",
         }
-        legalOfficer1Decision="PENDING"
-        legalOfficer2={
-          Object {
-            "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-            "details": "Modero Bruxelles
+      }
+      legalOfficer1Decision="PENDING"
+      legalOfficer2={
+        Object {
+          "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+          "details": "Modero Bruxelles
 Central administration 
 Nijverheidslaan 1
 B - 1853 Grimbergen (Strombeek-Bever)
 Belgium",
-            "name": "Patrick Gielen",
-          }
+          "name": "Patrick Gielen",
         }
-        legalOfficer2Decision="PENDING"
-        legalOfficers={Array []}
-        mode="view"
-        setLegalOfficer1={[Function]}
-        setLegalOfficer2={[Function]}
-      />
-    </Frame>
-  }
-  primaryPaneWidth={8}
-  secondaryAreaChildren={null}
-  selectAddress={[MockFunction]}
-  titleIcon={
-    Object {
-      "background": undefined,
-      "icon": Object {
-        "hasVariants": true,
-        "id": "shield",
-      },
-    }
-  }
-/>
+      }
+      legalOfficer2Decision="PENDING"
+      legalOfficers={Array []}
+      mode="view"
+      setLegalOfficer1={[Function]}
+      setLegalOfficer2={[Function]}
+      status="ACTIVATED"
+    />
+  </Frame>
+</FullWidthPane>
 `;
 
 exports[`activated recovery request 1`] = `
-<ContentPane
+<FullWidthPane
   addresses={
     Object {
       "addresses": Array [
@@ -458,11 +456,144 @@ exports[`activated recovery request 1`] = `
       "type": "dark",
     }
   }
-  mainTitle="Recovery"
-  primaryAreaChildren={
-    <Frame
-      className="ProtectionRecoveryRequest"
+  mainTitle="My Logion Trust Protection"
+  selectAddress={[MockFunction]}
+  titleIcon={
+    Object {
+      "background": undefined,
+      "icon": Object {
+        "hasVariants": true,
+        "id": "shield",
+      },
+    }
+  }
+>
+  <Frame
+    className="ProtectionRecoveryRequest"
+    colors={
+      Object {
+        "accounts": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+          "hintColor": "#ffffff99",
+          "iconBackground": "#3b6cf4",
+          "legalOfficerIcon": Object {
+            "category": "legal-officer",
+            "id": "account-shield",
+          },
+        },
+        "bottomMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+        },
+        "buttons": Object {
+          "secondary": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+        },
+        "dashboard": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "dialog": Object {
+          "background": "#0c163d",
+          "borderColor": "#e6007a",
+          "foreground": "#ffffff",
+        },
+        "frame": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+          "link": "#ffffff",
+        },
+        "recoveryItems": Object {
+          "iconGradient": Object {
+            "from": "#e95b5b",
+            "to": "#6050dc",
+          },
+        },
+        "select": Object {
+          "background": "#ffffff33",
+          "foreground": "#ffffff",
+          "menuBackgroundColor": "#152665",
+          "selectedOptionBackgroundColor": "#ffffff33",
+        },
+        "shadowColor": "#3b6cf433",
+        "sidebar": Object {
+          "activeItemBackground": "#ffffff33",
+          "background": "#152665",
+          "foreground": "#ffffff",
+        },
+        "table": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+          "header": Object {
+            "background": "#152665",
+            "foreground": "#ffffff",
+          },
+          "row": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+        },
+        "tabs": Object {
+          "background": "#152665",
+          "borderColor": "#3b6cf4",
+          "foreground": "#ffffff",
+          "inactiveTab": Object {
+            "background": "#ffffff33",
+            "foreground": "#ffffff",
+          },
+        },
+        "topMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+        },
+        "type": "dark",
+      }
+    }
+  >
+    <Alert
+      variant="info"
+    >
+      You are now ready to claim the access to address 
+      toRecover
+      .
+    </Alert>
+    <ExtrinsicSubmitter
+      id="activatedProtection"
+      onError={[Function]}
+      onSuccess={[Function]}
+      signAndSubmit={null}
+      successMessage="Protection successfully activated."
+    />
+    <Button
       colors={
+        Object {
+          "secondary": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+        }
+      }
+      data-testid="btnClaim"
+      onClick={[Function]}
+    >
+      Claim
+    </Button>
+    <ExtrinsicSubmitter
+      id="initiateRecovery"
+      onError={[Function]}
+      onSuccess={[Function]}
+      signAndSubmit={null}
+      successMessage="Recovery successfully initiated."
+    />
+    <LegalOfficers
+      colorTheme={
         Object {
           "accounts": Object {
             "background": "#0c163d",
@@ -548,180 +679,42 @@ exports[`activated recovery request 1`] = `
           "type": "dark",
         }
       }
-    >
-      <Alert
-        variant="info"
-      >
-        You are now ready to claim the access to address 
-        toRecover
-        .
-      </Alert>
-      <ExtrinsicSubmitter
-        id="activatedProtection"
-        onError={[Function]}
-        onSuccess={[Function]}
-        signAndSubmit={null}
-        successMessage="Protection successfully activated."
-      />
-      <Button
-        colors={
-          Object {
-            "secondary": Object {
-              "background": "#0c163d",
-              "foreground": "#ffffff",
-            },
-          }
-        }
-        data-testid="btnClaim"
-        onClick={[Function]}
-      >
-        Claim
-      </Button>
-      <ExtrinsicSubmitter
-        id="initiateRecovery"
-        onError={[Function]}
-        onSuccess={[Function]}
-        signAndSubmit={null}
-        successMessage="Recovery successfully initiated."
-      />
-      <LegalOfficers
-        colorTheme={
-          Object {
-            "accounts": Object {
-              "background": "#0c163d",
-              "foreground": "#ffffff",
-              "hintColor": "#ffffff99",
-              "iconBackground": "#3b6cf4",
-              "legalOfficerIcon": Object {
-                "category": "legal-officer",
-                "id": "account-shield",
-              },
-            },
-            "bottomMenuItems": Object {
-              "iconGradient": Object {
-                "from": "#7a90cb",
-                "to": "#3b6cf4",
-              },
-            },
-            "buttons": Object {
-              "secondary": Object {
-                "background": "#0c163d",
-                "foreground": "#ffffff",
-              },
-            },
-            "dashboard": Object {
-              "background": "#0c163d",
-              "foreground": "#ffffff",
-            },
-            "dialog": Object {
-              "background": "#0c163d",
-              "borderColor": "#e6007a",
-              "foreground": "#ffffff",
-            },
-            "frame": Object {
-              "background": "#152665",
-              "foreground": "#ffffff",
-              "link": "#ffffff",
-            },
-            "recoveryItems": Object {
-              "iconGradient": Object {
-                "from": "#e95b5b",
-                "to": "#6050dc",
-              },
-            },
-            "select": Object {
-              "background": "#ffffff33",
-              "foreground": "#ffffff",
-              "menuBackgroundColor": "#152665",
-              "selectedOptionBackgroundColor": "#ffffff33",
-            },
-            "shadowColor": "#3b6cf433",
-            "sidebar": Object {
-              "activeItemBackground": "#ffffff33",
-              "background": "#152665",
-              "foreground": "#ffffff",
-            },
-            "table": Object {
-              "background": "#152665",
-              "foreground": "#ffffff",
-              "header": Object {
-                "background": "#152665",
-                "foreground": "#ffffff",
-              },
-              "row": Object {
-                "background": "#0c163d",
-                "foreground": "#ffffff",
-              },
-            },
-            "tabs": Object {
-              "background": "#152665",
-              "borderColor": "#3b6cf4",
-              "foreground": "#ffffff",
-              "inactiveTab": Object {
-                "background": "#ffffff33",
-                "foreground": "#ffffff",
-              },
-            },
-            "topMenuItems": Object {
-              "iconGradient": Object {
-                "from": "#3b6cf4",
-                "to": "#6050dc",
-              },
-            },
-            "type": "dark",
-          }
-        }
-        legalOfficer1={
-          Object {
-            "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-            "details": "SELARL ADRASTEE
+      legalOfficer1={
+        Object {
+          "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+          "details": "SELARL ADRASTEE
 Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
 France",
-            "name": "Guillaume Grain",
-          }
+          "name": "Guillaume Grain",
         }
-        legalOfficer1Decision="PENDING"
-        legalOfficer2={
-          Object {
-            "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-            "details": "Modero Bruxelles
+      }
+      legalOfficer1Decision="PENDING"
+      legalOfficer2={
+        Object {
+          "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+          "details": "Modero Bruxelles
 Central administration 
 Nijverheidslaan 1
 B - 1853 Grimbergen (Strombeek-Bever)
 Belgium",
-            "name": "Patrick Gielen",
-          }
+          "name": "Patrick Gielen",
         }
-        legalOfficer2Decision="PENDING"
-        legalOfficers={Array []}
-        mode="view"
-        setLegalOfficer1={[Function]}
-        setLegalOfficer2={[Function]}
-      />
-    </Frame>
-  }
-  primaryPaneWidth={8}
-  secondaryAreaChildren={null}
-  selectAddress={[MockFunction]}
-  titleIcon={
-    Object {
-      "background": Object {
-        "from": "#e95b5b",
-        "to": "#6050dc",
-      },
-      "icon": Object {
-        "hasVariants": false,
-        "id": "recovery",
-      },
-    }
-  }
-/>
+      }
+      legalOfficer2Decision="PENDING"
+      legalOfficers={Array []}
+      mode="view"
+      setLegalOfficer1={[Function]}
+      setLegalOfficer2={[Function]}
+      status="ACTIVATED"
+    />
+  </Frame>
+</FullWidthPane>
 `;
 
 exports[`pending protection request 1`] = `
-<ContentPane
+<FullWidthPane
   addresses={
     Object {
       "addresses": Array [
@@ -825,10 +818,134 @@ exports[`pending protection request 1`] = `
     }
   }
   mainTitle="My Logion Trust Protection"
-  primaryAreaChildren={
-    <Frame
-      className="ProtectionRecoveryRequest"
+  selectAddress={[MockFunction]}
+  titleIcon={
+    Object {
+      "background": undefined,
+      "icon": Object {
+        "hasVariants": true,
+        "id": "shield",
+      },
+    }
+  }
+>
+  <Frame
+    className="ProtectionRecoveryRequest"
+    colors={
+      Object {
+        "accounts": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+          "hintColor": "#ffffff99",
+          "iconBackground": "#3b6cf4",
+          "legalOfficerIcon": Object {
+            "category": "legal-officer",
+            "id": "account-shield",
+          },
+        },
+        "bottomMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+        },
+        "buttons": Object {
+          "secondary": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+        },
+        "dashboard": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "dialog": Object {
+          "background": "#0c163d",
+          "borderColor": "#e6007a",
+          "foreground": "#ffffff",
+        },
+        "frame": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+          "link": "#ffffff",
+        },
+        "recoveryItems": Object {
+          "iconGradient": Object {
+            "from": "#e95b5b",
+            "to": "#6050dc",
+          },
+        },
+        "select": Object {
+          "background": "#ffffff33",
+          "foreground": "#ffffff",
+          "menuBackgroundColor": "#152665",
+          "selectedOptionBackgroundColor": "#ffffff33",
+        },
+        "shadowColor": "#3b6cf433",
+        "sidebar": Object {
+          "activeItemBackground": "#ffffff33",
+          "background": "#152665",
+          "foreground": "#ffffff",
+        },
+        "table": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+          "header": Object {
+            "background": "#152665",
+            "foreground": "#ffffff",
+          },
+          "row": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+        },
+        "tabs": Object {
+          "background": "#152665",
+          "borderColor": "#3b6cf4",
+          "foreground": "#ffffff",
+          "inactiveTab": Object {
+            "background": "#ffffff33",
+            "foreground": "#ffffff",
+          },
+        },
+        "topMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+        },
+        "type": "dark",
+      }
+    }
+  >
+    <Alert
+      variant="warning"
+    >
+      Mandatory: we detect that the Logion Application needs to be re-synchronized with the Logion Blockchain. To proceed, please click on the button and sign to confirm this operation.
+    </Alert>
+    <ExtrinsicSubmitter
+      id="activatedProtection"
+      onError={[Function]}
+      onSuccess={[Function]}
+      signAndSubmit={null}
+      successMessage="Protection successfully activated."
+    />
+    <Button
       colors={
+        Object {
+          "secondary": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+        }
+      }
+      id="btnConfirmProtection"
+      onClick={[Function]}
+    >
+      Re-Sync Confirmation
+    </Button>
+    <LegalOfficers
+      colorTheme={
         Object {
           "accounts": Object {
             "background": "#0c163d",
@@ -914,168 +1031,42 @@ exports[`pending protection request 1`] = `
           "type": "dark",
         }
       }
-    >
-      <Alert
-        variant="warning"
-      >
-        Mandatory: we detect that the Logion Application needs to be re-synchronized with the Logion Blockchain. To proceed, please click on the button and sign to confirm this operation.
-      </Alert>
-      <ExtrinsicSubmitter
-        id="activatedProtection"
-        onError={[Function]}
-        onSuccess={[Function]}
-        signAndSubmit={null}
-        successMessage="Protection successfully activated."
-      />
-      <Button
-        colors={
-          Object {
-            "secondary": Object {
-              "background": "#0c163d",
-              "foreground": "#ffffff",
-            },
-          }
-        }
-        id="btnConfirmProtection"
-        onClick={[Function]}
-      >
-        Re-Sync Confirmation
-      </Button>
-      <LegalOfficers
-        colorTheme={
-          Object {
-            "accounts": Object {
-              "background": "#0c163d",
-              "foreground": "#ffffff",
-              "hintColor": "#ffffff99",
-              "iconBackground": "#3b6cf4",
-              "legalOfficerIcon": Object {
-                "category": "legal-officer",
-                "id": "account-shield",
-              },
-            },
-            "bottomMenuItems": Object {
-              "iconGradient": Object {
-                "from": "#7a90cb",
-                "to": "#3b6cf4",
-              },
-            },
-            "buttons": Object {
-              "secondary": Object {
-                "background": "#0c163d",
-                "foreground": "#ffffff",
-              },
-            },
-            "dashboard": Object {
-              "background": "#0c163d",
-              "foreground": "#ffffff",
-            },
-            "dialog": Object {
-              "background": "#0c163d",
-              "borderColor": "#e6007a",
-              "foreground": "#ffffff",
-            },
-            "frame": Object {
-              "background": "#152665",
-              "foreground": "#ffffff",
-              "link": "#ffffff",
-            },
-            "recoveryItems": Object {
-              "iconGradient": Object {
-                "from": "#e95b5b",
-                "to": "#6050dc",
-              },
-            },
-            "select": Object {
-              "background": "#ffffff33",
-              "foreground": "#ffffff",
-              "menuBackgroundColor": "#152665",
-              "selectedOptionBackgroundColor": "#ffffff33",
-            },
-            "shadowColor": "#3b6cf433",
-            "sidebar": Object {
-              "activeItemBackground": "#ffffff33",
-              "background": "#152665",
-              "foreground": "#ffffff",
-            },
-            "table": Object {
-              "background": "#152665",
-              "foreground": "#ffffff",
-              "header": Object {
-                "background": "#152665",
-                "foreground": "#ffffff",
-              },
-              "row": Object {
-                "background": "#0c163d",
-                "foreground": "#ffffff",
-              },
-            },
-            "tabs": Object {
-              "background": "#152665",
-              "borderColor": "#3b6cf4",
-              "foreground": "#ffffff",
-              "inactiveTab": Object {
-                "background": "#ffffff33",
-                "foreground": "#ffffff",
-              },
-            },
-            "topMenuItems": Object {
-              "iconGradient": Object {
-                "from": "#3b6cf4",
-                "to": "#6050dc",
-              },
-            },
-            "type": "dark",
-          }
-        }
-        legalOfficer1={
-          Object {
-            "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-            "details": "SELARL ADRASTEE
+      legalOfficer1={
+        Object {
+          "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+          "details": "SELARL ADRASTEE
 Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
 France",
-            "name": "Guillaume Grain",
-          }
+          "name": "Guillaume Grain",
         }
-        legalOfficer1Decision="PENDING"
-        legalOfficer2={
-          Object {
-            "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-            "details": "Modero Bruxelles
+      }
+      legalOfficer1Decision="PENDING"
+      legalOfficer2={
+        Object {
+          "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+          "details": "Modero Bruxelles
 Central administration 
 Nijverheidslaan 1
 B - 1853 Grimbergen (Strombeek-Bever)
 Belgium",
-            "name": "Patrick Gielen",
-          }
+          "name": "Patrick Gielen",
         }
-        legalOfficer2Decision="PENDING"
-        legalOfficers={Array []}
-        mode="view"
-        setLegalOfficer1={[Function]}
-        setLegalOfficer2={[Function]}
-      />
-    </Frame>
-  }
-  primaryPaneWidth={8}
-  secondaryAreaChildren={null}
-  selectAddress={[MockFunction]}
-  titleIcon={
-    Object {
-      "background": undefined,
-      "icon": Object {
-        "hasVariants": true,
-        "id": "shield",
-      },
-    }
-  }
-/>
+      }
+      legalOfficer2Decision="PENDING"
+      legalOfficers={Array []}
+      mode="view"
+      setLegalOfficer1={[Function]}
+      setLegalOfficer2={[Function]}
+      status="PENDING"
+    />
+  </Frame>
+</FullWidthPane>
 `;
 
 exports[`pending recovery request 1`] = `
-<ContentPane
+<FullWidthPane
   addresses={
     Object {
       "addresses": Array [
@@ -1179,263 +1170,6 @@ exports[`pending recovery request 1`] = `
     }
   }
   mainTitle="Recovery"
-  primaryAreaChildren={
-    <Frame
-      className="ProtectionRecoveryRequest"
-      colors={
-        Object {
-          "accounts": Object {
-            "background": "#0c163d",
-            "foreground": "#ffffff",
-            "hintColor": "#ffffff99",
-            "iconBackground": "#3b6cf4",
-            "legalOfficerIcon": Object {
-              "category": "legal-officer",
-              "id": "account-shield",
-            },
-          },
-          "bottomMenuItems": Object {
-            "iconGradient": Object {
-              "from": "#7a90cb",
-              "to": "#3b6cf4",
-            },
-          },
-          "buttons": Object {
-            "secondary": Object {
-              "background": "#0c163d",
-              "foreground": "#ffffff",
-            },
-          },
-          "dashboard": Object {
-            "background": "#0c163d",
-            "foreground": "#ffffff",
-          },
-          "dialog": Object {
-            "background": "#0c163d",
-            "borderColor": "#e6007a",
-            "foreground": "#ffffff",
-          },
-          "frame": Object {
-            "background": "#152665",
-            "foreground": "#ffffff",
-            "link": "#ffffff",
-          },
-          "recoveryItems": Object {
-            "iconGradient": Object {
-              "from": "#e95b5b",
-              "to": "#6050dc",
-            },
-          },
-          "select": Object {
-            "background": "#ffffff33",
-            "foreground": "#ffffff",
-            "menuBackgroundColor": "#152665",
-            "selectedOptionBackgroundColor": "#ffffff33",
-          },
-          "shadowColor": "#3b6cf433",
-          "sidebar": Object {
-            "activeItemBackground": "#ffffff33",
-            "background": "#152665",
-            "foreground": "#ffffff",
-          },
-          "table": Object {
-            "background": "#152665",
-            "foreground": "#ffffff",
-            "header": Object {
-              "background": "#152665",
-              "foreground": "#ffffff",
-            },
-            "row": Object {
-              "background": "#0c163d",
-              "foreground": "#ffffff",
-            },
-          },
-          "tabs": Object {
-            "background": "#152665",
-            "borderColor": "#3b6cf4",
-            "foreground": "#ffffff",
-            "inactiveTab": Object {
-              "background": "#ffffff33",
-              "foreground": "#ffffff",
-            },
-          },
-          "topMenuItems": Object {
-            "iconGradient": Object {
-              "from": "#3b6cf4",
-              "to": "#6050dc",
-            },
-          },
-          "type": "dark",
-        }
-      }
-    >
-      <Alert
-        variant="warning"
-      >
-        Mandatory: we detect that the Logion Application needs to be re-synchronized with the Logion Blockchain. To proceed, please click on the button and sign to confirm this operation.
-      </Alert>
-      <ExtrinsicSubmitter
-        id="activatedProtection"
-        onError={[Function]}
-        onSuccess={[Function]}
-        signAndSubmit={null}
-        successMessage="Protection successfully activated."
-      />
-      <Button
-        colors={
-          Object {
-            "secondary": Object {
-              "background": "#0c163d",
-              "foreground": "#ffffff",
-            },
-          }
-        }
-        id="btnConfirmProtection"
-        onClick={[Function]}
-      >
-        Re-Sync Confirmation
-      </Button>
-      <Button
-        colors={
-          Object {
-            "secondary": Object {
-              "background": "#0c163d",
-              "foreground": "#ffffff",
-            },
-          }
-        }
-        data-testid="btnClaim"
-        onClick={[Function]}
-      >
-        Claim
-      </Button>
-      <ExtrinsicSubmitter
-        id="initiateRecovery"
-        onError={[Function]}
-        onSuccess={[Function]}
-        signAndSubmit={null}
-        successMessage="Recovery successfully initiated."
-      />
-      <LegalOfficers
-        colorTheme={
-          Object {
-            "accounts": Object {
-              "background": "#0c163d",
-              "foreground": "#ffffff",
-              "hintColor": "#ffffff99",
-              "iconBackground": "#3b6cf4",
-              "legalOfficerIcon": Object {
-                "category": "legal-officer",
-                "id": "account-shield",
-              },
-            },
-            "bottomMenuItems": Object {
-              "iconGradient": Object {
-                "from": "#7a90cb",
-                "to": "#3b6cf4",
-              },
-            },
-            "buttons": Object {
-              "secondary": Object {
-                "background": "#0c163d",
-                "foreground": "#ffffff",
-              },
-            },
-            "dashboard": Object {
-              "background": "#0c163d",
-              "foreground": "#ffffff",
-            },
-            "dialog": Object {
-              "background": "#0c163d",
-              "borderColor": "#e6007a",
-              "foreground": "#ffffff",
-            },
-            "frame": Object {
-              "background": "#152665",
-              "foreground": "#ffffff",
-              "link": "#ffffff",
-            },
-            "recoveryItems": Object {
-              "iconGradient": Object {
-                "from": "#e95b5b",
-                "to": "#6050dc",
-              },
-            },
-            "select": Object {
-              "background": "#ffffff33",
-              "foreground": "#ffffff",
-              "menuBackgroundColor": "#152665",
-              "selectedOptionBackgroundColor": "#ffffff33",
-            },
-            "shadowColor": "#3b6cf433",
-            "sidebar": Object {
-              "activeItemBackground": "#ffffff33",
-              "background": "#152665",
-              "foreground": "#ffffff",
-            },
-            "table": Object {
-              "background": "#152665",
-              "foreground": "#ffffff",
-              "header": Object {
-                "background": "#152665",
-                "foreground": "#ffffff",
-              },
-              "row": Object {
-                "background": "#0c163d",
-                "foreground": "#ffffff",
-              },
-            },
-            "tabs": Object {
-              "background": "#152665",
-              "borderColor": "#3b6cf4",
-              "foreground": "#ffffff",
-              "inactiveTab": Object {
-                "background": "#ffffff33",
-                "foreground": "#ffffff",
-              },
-            },
-            "topMenuItems": Object {
-              "iconGradient": Object {
-                "from": "#3b6cf4",
-                "to": "#6050dc",
-              },
-            },
-            "type": "dark",
-          }
-        }
-        legalOfficer1={
-          Object {
-            "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-            "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France",
-            "name": "Guillaume Grain",
-          }
-        }
-        legalOfficer1Decision="PENDING"
-        legalOfficer2={
-          Object {
-            "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-            "details": "Modero Bruxelles
-Central administration 
-Nijverheidslaan 1
-B - 1853 Grimbergen (Strombeek-Bever)
-Belgium",
-            "name": "Patrick Gielen",
-          }
-        }
-        legalOfficer2Decision="PENDING"
-        legalOfficers={Array []}
-        mode="view"
-        setLegalOfficer1={[Function]}
-        setLegalOfficer2={[Function]}
-      />
-    </Frame>
-  }
-  primaryPaneWidth={8}
-  secondaryAreaChildren={null}
   selectAddress={[MockFunction]}
   titleIcon={
     Object {
@@ -1449,11 +1183,266 @@ Belgium",
       },
     }
   }
-/>
+>
+  <Frame
+    className="ProtectionRecoveryRequest"
+    colors={
+      Object {
+        "accounts": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+          "hintColor": "#ffffff99",
+          "iconBackground": "#3b6cf4",
+          "legalOfficerIcon": Object {
+            "category": "legal-officer",
+            "id": "account-shield",
+          },
+        },
+        "bottomMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+        },
+        "buttons": Object {
+          "secondary": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+        },
+        "dashboard": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "dialog": Object {
+          "background": "#0c163d",
+          "borderColor": "#e6007a",
+          "foreground": "#ffffff",
+        },
+        "frame": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+          "link": "#ffffff",
+        },
+        "recoveryItems": Object {
+          "iconGradient": Object {
+            "from": "#e95b5b",
+            "to": "#6050dc",
+          },
+        },
+        "select": Object {
+          "background": "#ffffff33",
+          "foreground": "#ffffff",
+          "menuBackgroundColor": "#152665",
+          "selectedOptionBackgroundColor": "#ffffff33",
+        },
+        "shadowColor": "#3b6cf433",
+        "sidebar": Object {
+          "activeItemBackground": "#ffffff33",
+          "background": "#152665",
+          "foreground": "#ffffff",
+        },
+        "table": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+          "header": Object {
+            "background": "#152665",
+            "foreground": "#ffffff",
+          },
+          "row": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+        },
+        "tabs": Object {
+          "background": "#152665",
+          "borderColor": "#3b6cf4",
+          "foreground": "#ffffff",
+          "inactiveTab": Object {
+            "background": "#ffffff33",
+            "foreground": "#ffffff",
+          },
+        },
+        "topMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+        },
+        "type": "dark",
+      }
+    }
+  >
+    <Alert
+      variant="warning"
+    >
+      Mandatory: we detect that the Logion Application needs to be re-synchronized with the Logion Blockchain. To proceed, please click on the button and sign to confirm this operation.
+    </Alert>
+    <ExtrinsicSubmitter
+      id="activatedProtection"
+      onError={[Function]}
+      onSuccess={[Function]}
+      signAndSubmit={null}
+      successMessage="Protection successfully activated."
+    />
+    <Button
+      colors={
+        Object {
+          "secondary": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+        }
+      }
+      id="btnConfirmProtection"
+      onClick={[Function]}
+    >
+      Re-Sync Confirmation
+    </Button>
+    <Button
+      colors={
+        Object {
+          "secondary": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+        }
+      }
+      data-testid="btnClaim"
+      onClick={[Function]}
+    >
+      Claim
+    </Button>
+    <ExtrinsicSubmitter
+      id="initiateRecovery"
+      onError={[Function]}
+      onSuccess={[Function]}
+      signAndSubmit={null}
+      successMessage="Recovery successfully initiated."
+    />
+    <LegalOfficers
+      colorTheme={
+        Object {
+          "accounts": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+            "hintColor": "#ffffff99",
+            "iconBackground": "#3b6cf4",
+            "legalOfficerIcon": Object {
+              "category": "legal-officer",
+              "id": "account-shield",
+            },
+          },
+          "bottomMenuItems": Object {
+            "iconGradient": Object {
+              "from": "#7a90cb",
+              "to": "#3b6cf4",
+            },
+          },
+          "buttons": Object {
+            "secondary": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
+          },
+          "dashboard": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+          "dialog": Object {
+            "background": "#0c163d",
+            "borderColor": "#e6007a",
+            "foreground": "#ffffff",
+          },
+          "frame": Object {
+            "background": "#152665",
+            "foreground": "#ffffff",
+            "link": "#ffffff",
+          },
+          "recoveryItems": Object {
+            "iconGradient": Object {
+              "from": "#e95b5b",
+              "to": "#6050dc",
+            },
+          },
+          "select": Object {
+            "background": "#ffffff33",
+            "foreground": "#ffffff",
+            "menuBackgroundColor": "#152665",
+            "selectedOptionBackgroundColor": "#ffffff33",
+          },
+          "shadowColor": "#3b6cf433",
+          "sidebar": Object {
+            "activeItemBackground": "#ffffff33",
+            "background": "#152665",
+            "foreground": "#ffffff",
+          },
+          "table": Object {
+            "background": "#152665",
+            "foreground": "#ffffff",
+            "header": Object {
+              "background": "#152665",
+              "foreground": "#ffffff",
+            },
+            "row": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
+          },
+          "tabs": Object {
+            "background": "#152665",
+            "borderColor": "#3b6cf4",
+            "foreground": "#ffffff",
+            "inactiveTab": Object {
+              "background": "#ffffff33",
+              "foreground": "#ffffff",
+            },
+          },
+          "topMenuItems": Object {
+            "iconGradient": Object {
+              "from": "#3b6cf4",
+              "to": "#6050dc",
+            },
+          },
+          "type": "dark",
+        }
+      }
+      legalOfficer1={
+        Object {
+          "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+          "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France",
+          "name": "Guillaume Grain",
+        }
+      }
+      legalOfficer1Decision="PENDING"
+      legalOfficer2={
+        Object {
+          "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+          "details": "Modero Bruxelles
+Central administration 
+Nijverheidslaan 1
+B - 1853 Grimbergen (Strombeek-Bever)
+Belgium",
+          "name": "Patrick Gielen",
+        }
+      }
+      legalOfficer2Decision="PENDING"
+      legalOfficers={Array []}
+      mode="view"
+      setLegalOfficer1={[Function]}
+      setLegalOfficer2={[Function]}
+      status="PENDING"
+    />
+  </Frame>
+</FullWidthPane>
 `;
 
 exports[`protection request 1`] = `
-<ContentPane
+<FullWidthPane
   addresses={
     Object {
       "addresses": Array [
@@ -1557,10 +1546,120 @@ exports[`protection request 1`] = `
     }
   }
   mainTitle="My Logion Trust Protection"
-  primaryAreaChildren={
-    <Frame
-      className="ProtectionRecoveryRequest"
-      colors={
+  selectAddress={[MockFunction]}
+  titleIcon={
+    Object {
+      "background": undefined,
+      "icon": Object {
+        "hasVariants": true,
+        "id": "shield",
+      },
+    }
+  }
+>
+  <Frame
+    className="ProtectionRecoveryRequest"
+    colors={
+      Object {
+        "accounts": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+          "hintColor": "#ffffff99",
+          "iconBackground": "#3b6cf4",
+          "legalOfficerIcon": Object {
+            "category": "legal-officer",
+            "id": "account-shield",
+          },
+        },
+        "bottomMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+        },
+        "buttons": Object {
+          "secondary": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+        },
+        "dashboard": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "dialog": Object {
+          "background": "#0c163d",
+          "borderColor": "#e6007a",
+          "foreground": "#ffffff",
+        },
+        "frame": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+          "link": "#ffffff",
+        },
+        "recoveryItems": Object {
+          "iconGradient": Object {
+            "from": "#e95b5b",
+            "to": "#6050dc",
+          },
+        },
+        "select": Object {
+          "background": "#ffffff33",
+          "foreground": "#ffffff",
+          "menuBackgroundColor": "#152665",
+          "selectedOptionBackgroundColor": "#ffffff33",
+        },
+        "shadowColor": "#3b6cf433",
+        "sidebar": Object {
+          "activeItemBackground": "#ffffff33",
+          "background": "#152665",
+          "foreground": "#ffffff",
+        },
+        "table": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+          "header": Object {
+            "background": "#152665",
+            "foreground": "#ffffff",
+          },
+          "row": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+        },
+        "tabs": Object {
+          "background": "#152665",
+          "borderColor": "#3b6cf4",
+          "foreground": "#ffffff",
+          "inactiveTab": Object {
+            "background": "#ffffff33",
+            "foreground": "#ffffff",
+          },
+        },
+        "topMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+        },
+        "type": "dark",
+      }
+    }
+  >
+    <Alert
+      variant="info"
+    >
+      Your Logion Trust Protection request has been submitted. Your Legal Officers will contact you as soon as possible to finalize the KYC process. Please note that, after the successful completion of one of your Legal Officer approval processes, you will be able to use all features provided by your logion account dashboard.
+    </Alert>
+    <ExtrinsicSubmitter
+      id="activatedProtection"
+      onError={[Function]}
+      onSuccess={[Function]}
+      signAndSubmit={null}
+      successMessage="Protection successfully activated."
+    />
+    <LegalOfficers
+      colorTheme={
         Object {
           "accounts": Object {
             "background": "#0c163d",
@@ -1646,154 +1745,42 @@ exports[`protection request 1`] = `
           "type": "dark",
         }
       }
-    >
-      <Alert
-        variant="info"
-      >
-        Your Logion Trust Protection request has been submitted. Your Legal Officers will contact you as soon as possible to finalize the KYC process. Please note that, after the successful completion of one of your Legal Officer approval processes, you will be able to use all features provided by your logion account dashboard.
-      </Alert>
-      <ExtrinsicSubmitter
-        id="activatedProtection"
-        onError={[Function]}
-        onSuccess={[Function]}
-        signAndSubmit={null}
-        successMessage="Protection successfully activated."
-      />
-      <LegalOfficers
-        colorTheme={
-          Object {
-            "accounts": Object {
-              "background": "#0c163d",
-              "foreground": "#ffffff",
-              "hintColor": "#ffffff99",
-              "iconBackground": "#3b6cf4",
-              "legalOfficerIcon": Object {
-                "category": "legal-officer",
-                "id": "account-shield",
-              },
-            },
-            "bottomMenuItems": Object {
-              "iconGradient": Object {
-                "from": "#7a90cb",
-                "to": "#3b6cf4",
-              },
-            },
-            "buttons": Object {
-              "secondary": Object {
-                "background": "#0c163d",
-                "foreground": "#ffffff",
-              },
-            },
-            "dashboard": Object {
-              "background": "#0c163d",
-              "foreground": "#ffffff",
-            },
-            "dialog": Object {
-              "background": "#0c163d",
-              "borderColor": "#e6007a",
-              "foreground": "#ffffff",
-            },
-            "frame": Object {
-              "background": "#152665",
-              "foreground": "#ffffff",
-              "link": "#ffffff",
-            },
-            "recoveryItems": Object {
-              "iconGradient": Object {
-                "from": "#e95b5b",
-                "to": "#6050dc",
-              },
-            },
-            "select": Object {
-              "background": "#ffffff33",
-              "foreground": "#ffffff",
-              "menuBackgroundColor": "#152665",
-              "selectedOptionBackgroundColor": "#ffffff33",
-            },
-            "shadowColor": "#3b6cf433",
-            "sidebar": Object {
-              "activeItemBackground": "#ffffff33",
-              "background": "#152665",
-              "foreground": "#ffffff",
-            },
-            "table": Object {
-              "background": "#152665",
-              "foreground": "#ffffff",
-              "header": Object {
-                "background": "#152665",
-                "foreground": "#ffffff",
-              },
-              "row": Object {
-                "background": "#0c163d",
-                "foreground": "#ffffff",
-              },
-            },
-            "tabs": Object {
-              "background": "#152665",
-              "borderColor": "#3b6cf4",
-              "foreground": "#ffffff",
-              "inactiveTab": Object {
-                "background": "#ffffff33",
-                "foreground": "#ffffff",
-              },
-            },
-            "topMenuItems": Object {
-              "iconGradient": Object {
-                "from": "#3b6cf4",
-                "to": "#6050dc",
-              },
-            },
-            "type": "dark",
-          }
-        }
-        legalOfficer1={
-          Object {
-            "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-            "details": "SELARL ADRASTEE
+      legalOfficer1={
+        Object {
+          "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+          "details": "SELARL ADRASTEE
 Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
 France",
-            "name": "Guillaume Grain",
-          }
+          "name": "Guillaume Grain",
         }
-        legalOfficer1Decision="PENDING"
-        legalOfficer2={
-          Object {
-            "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-            "details": "Modero Bruxelles
+      }
+      legalOfficer1Decision="PENDING"
+      legalOfficer2={
+        Object {
+          "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+          "details": "Modero Bruxelles
 Central administration 
 Nijverheidslaan 1
 B - 1853 Grimbergen (Strombeek-Bever)
 Belgium",
-            "name": "Patrick Gielen",
-          }
+          "name": "Patrick Gielen",
         }
-        legalOfficer2Decision="PENDING"
-        legalOfficers={Array []}
-        mode="view"
-        setLegalOfficer1={[Function]}
-        setLegalOfficer2={[Function]}
-      />
-    </Frame>
-  }
-  primaryPaneWidth={8}
-  secondaryAreaChildren={null}
-  selectAddress={[MockFunction]}
-  titleIcon={
-    Object {
-      "background": undefined,
-      "icon": Object {
-        "hasVariants": true,
-        "id": "shield",
-      },
-    }
-  }
-/>
+      }
+      legalOfficer2Decision="PENDING"
+      legalOfficers={Array []}
+      mode="view"
+      setLegalOfficer1={[Function]}
+      setLegalOfficer2={[Function]}
+      status="ACTIVATED"
+    />
+  </Frame>
+</FullWidthPane>
 `;
 
 exports[`recovery request 1`] = `
-<ContentPane
+<FullWidthPane
   addresses={
     Object {
       "addresses": Array [
@@ -1896,244 +1883,239 @@ exports[`recovery request 1`] = `
       "type": "dark",
     }
   }
-  mainTitle="Recovery"
-  primaryAreaChildren={
-    <Frame
-      className="ProtectionRecoveryRequest"
-      colors={
-        Object {
-          "accounts": Object {
-            "background": "#0c163d",
-            "foreground": "#ffffff",
-            "hintColor": "#ffffff99",
-            "iconBackground": "#3b6cf4",
-            "legalOfficerIcon": Object {
-              "category": "legal-officer",
-              "id": "account-shield",
-            },
-          },
-          "bottomMenuItems": Object {
-            "iconGradient": Object {
-              "from": "#7a90cb",
-              "to": "#3b6cf4",
-            },
-          },
-          "buttons": Object {
-            "secondary": Object {
-              "background": "#0c163d",
-              "foreground": "#ffffff",
-            },
-          },
-          "dashboard": Object {
-            "background": "#0c163d",
-            "foreground": "#ffffff",
-          },
-          "dialog": Object {
-            "background": "#0c163d",
-            "borderColor": "#e6007a",
-            "foreground": "#ffffff",
-          },
-          "frame": Object {
-            "background": "#152665",
-            "foreground": "#ffffff",
-            "link": "#ffffff",
-          },
-          "recoveryItems": Object {
-            "iconGradient": Object {
-              "from": "#e95b5b",
-              "to": "#6050dc",
-            },
-          },
-          "select": Object {
-            "background": "#ffffff33",
-            "foreground": "#ffffff",
-            "menuBackgroundColor": "#152665",
-            "selectedOptionBackgroundColor": "#ffffff33",
-          },
-          "shadowColor": "#3b6cf433",
-          "sidebar": Object {
-            "activeItemBackground": "#ffffff33",
-            "background": "#152665",
-            "foreground": "#ffffff",
-          },
-          "table": Object {
-            "background": "#152665",
-            "foreground": "#ffffff",
-            "header": Object {
-              "background": "#152665",
-              "foreground": "#ffffff",
-            },
-            "row": Object {
-              "background": "#0c163d",
-              "foreground": "#ffffff",
-            },
-          },
-          "tabs": Object {
-            "background": "#152665",
-            "borderColor": "#3b6cf4",
-            "foreground": "#ffffff",
-            "inactiveTab": Object {
-              "background": "#ffffff33",
-              "foreground": "#ffffff",
-            },
-          },
-          "topMenuItems": Object {
-            "iconGradient": Object {
-              "from": "#3b6cf4",
-              "to": "#6050dc",
-            },
-          },
-          "type": "dark",
-        }
-      }
-    >
-      <Alert
-        variant="info"
-      >
-        Your Logion Recovery request
-         for account toRecover
-         has been submitted. Your Legal Officers will contact you as soon as possible to finalize the KYC process.
-      </Alert>
-      <ExtrinsicSubmitter
-        id="activatedProtection"
-        onError={[Function]}
-        onSuccess={[Function]}
-        signAndSubmit={null}
-        successMessage="Protection successfully activated."
-      />
-      <LegalOfficers
-        colorTheme={
-          Object {
-            "accounts": Object {
-              "background": "#0c163d",
-              "foreground": "#ffffff",
-              "hintColor": "#ffffff99",
-              "iconBackground": "#3b6cf4",
-              "legalOfficerIcon": Object {
-                "category": "legal-officer",
-                "id": "account-shield",
-              },
-            },
-            "bottomMenuItems": Object {
-              "iconGradient": Object {
-                "from": "#7a90cb",
-                "to": "#3b6cf4",
-              },
-            },
-            "buttons": Object {
-              "secondary": Object {
-                "background": "#0c163d",
-                "foreground": "#ffffff",
-              },
-            },
-            "dashboard": Object {
-              "background": "#0c163d",
-              "foreground": "#ffffff",
-            },
-            "dialog": Object {
-              "background": "#0c163d",
-              "borderColor": "#e6007a",
-              "foreground": "#ffffff",
-            },
-            "frame": Object {
-              "background": "#152665",
-              "foreground": "#ffffff",
-              "link": "#ffffff",
-            },
-            "recoveryItems": Object {
-              "iconGradient": Object {
-                "from": "#e95b5b",
-                "to": "#6050dc",
-              },
-            },
-            "select": Object {
-              "background": "#ffffff33",
-              "foreground": "#ffffff",
-              "menuBackgroundColor": "#152665",
-              "selectedOptionBackgroundColor": "#ffffff33",
-            },
-            "shadowColor": "#3b6cf433",
-            "sidebar": Object {
-              "activeItemBackground": "#ffffff33",
-              "background": "#152665",
-              "foreground": "#ffffff",
-            },
-            "table": Object {
-              "background": "#152665",
-              "foreground": "#ffffff",
-              "header": Object {
-                "background": "#152665",
-                "foreground": "#ffffff",
-              },
-              "row": Object {
-                "background": "#0c163d",
-                "foreground": "#ffffff",
-              },
-            },
-            "tabs": Object {
-              "background": "#152665",
-              "borderColor": "#3b6cf4",
-              "foreground": "#ffffff",
-              "inactiveTab": Object {
-                "background": "#ffffff33",
-                "foreground": "#ffffff",
-              },
-            },
-            "topMenuItems": Object {
-              "iconGradient": Object {
-                "from": "#3b6cf4",
-                "to": "#6050dc",
-              },
-            },
-            "type": "dark",
-          }
-        }
-        legalOfficer1={
-          Object {
-            "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-            "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France",
-            "name": "Guillaume Grain",
-          }
-        }
-        legalOfficer1Decision="PENDING"
-        legalOfficer2={
-          Object {
-            "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-            "details": "Modero Bruxelles
-Central administration 
-Nijverheidslaan 1
-B - 1853 Grimbergen (Strombeek-Bever)
-Belgium",
-            "name": "Patrick Gielen",
-          }
-        }
-        legalOfficer2Decision="PENDING"
-        legalOfficers={Array []}
-        mode="view"
-        setLegalOfficer1={[Function]}
-        setLegalOfficer2={[Function]}
-      />
-    </Frame>
-  }
-  primaryPaneWidth={8}
-  secondaryAreaChildren={null}
+  mainTitle="My Logion Trust Protection"
   selectAddress={[MockFunction]}
   subTitle="Recovery process status"
   titleIcon={
     Object {
-      "background": Object {
-        "from": "#e95b5b",
-        "to": "#6050dc",
-      },
+      "background": undefined,
       "icon": Object {
-        "hasVariants": false,
-        "id": "recovery",
+        "hasVariants": true,
+        "id": "shield",
       },
     }
   }
-/>
+>
+  <Frame
+    className="ProtectionRecoveryRequest"
+    colors={
+      Object {
+        "accounts": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+          "hintColor": "#ffffff99",
+          "iconBackground": "#3b6cf4",
+          "legalOfficerIcon": Object {
+            "category": "legal-officer",
+            "id": "account-shield",
+          },
+        },
+        "bottomMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+        },
+        "buttons": Object {
+          "secondary": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+        },
+        "dashboard": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "dialog": Object {
+          "background": "#0c163d",
+          "borderColor": "#e6007a",
+          "foreground": "#ffffff",
+        },
+        "frame": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+          "link": "#ffffff",
+        },
+        "recoveryItems": Object {
+          "iconGradient": Object {
+            "from": "#e95b5b",
+            "to": "#6050dc",
+          },
+        },
+        "select": Object {
+          "background": "#ffffff33",
+          "foreground": "#ffffff",
+          "menuBackgroundColor": "#152665",
+          "selectedOptionBackgroundColor": "#ffffff33",
+        },
+        "shadowColor": "#3b6cf433",
+        "sidebar": Object {
+          "activeItemBackground": "#ffffff33",
+          "background": "#152665",
+          "foreground": "#ffffff",
+        },
+        "table": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+          "header": Object {
+            "background": "#152665",
+            "foreground": "#ffffff",
+          },
+          "row": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+        },
+        "tabs": Object {
+          "background": "#152665",
+          "borderColor": "#3b6cf4",
+          "foreground": "#ffffff",
+          "inactiveTab": Object {
+            "background": "#ffffff33",
+            "foreground": "#ffffff",
+          },
+        },
+        "topMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+        },
+        "type": "dark",
+      }
+    }
+  >
+    <Alert
+      variant="info"
+    >
+      Your Logion Recovery request
+       for account toRecover
+       has been submitted. Your Legal Officers will contact you as soon as possible to finalize the KYC process.
+    </Alert>
+    <ExtrinsicSubmitter
+      id="activatedProtection"
+      onError={[Function]}
+      onSuccess={[Function]}
+      signAndSubmit={null}
+      successMessage="Protection successfully activated."
+    />
+    <LegalOfficers
+      colorTheme={
+        Object {
+          "accounts": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+            "hintColor": "#ffffff99",
+            "iconBackground": "#3b6cf4",
+            "legalOfficerIcon": Object {
+              "category": "legal-officer",
+              "id": "account-shield",
+            },
+          },
+          "bottomMenuItems": Object {
+            "iconGradient": Object {
+              "from": "#7a90cb",
+              "to": "#3b6cf4",
+            },
+          },
+          "buttons": Object {
+            "secondary": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
+          },
+          "dashboard": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+          "dialog": Object {
+            "background": "#0c163d",
+            "borderColor": "#e6007a",
+            "foreground": "#ffffff",
+          },
+          "frame": Object {
+            "background": "#152665",
+            "foreground": "#ffffff",
+            "link": "#ffffff",
+          },
+          "recoveryItems": Object {
+            "iconGradient": Object {
+              "from": "#e95b5b",
+              "to": "#6050dc",
+            },
+          },
+          "select": Object {
+            "background": "#ffffff33",
+            "foreground": "#ffffff",
+            "menuBackgroundColor": "#152665",
+            "selectedOptionBackgroundColor": "#ffffff33",
+          },
+          "shadowColor": "#3b6cf433",
+          "sidebar": Object {
+            "activeItemBackground": "#ffffff33",
+            "background": "#152665",
+            "foreground": "#ffffff",
+          },
+          "table": Object {
+            "background": "#152665",
+            "foreground": "#ffffff",
+            "header": Object {
+              "background": "#152665",
+              "foreground": "#ffffff",
+            },
+            "row": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
+          },
+          "tabs": Object {
+            "background": "#152665",
+            "borderColor": "#3b6cf4",
+            "foreground": "#ffffff",
+            "inactiveTab": Object {
+              "background": "#ffffff33",
+              "foreground": "#ffffff",
+            },
+          },
+          "topMenuItems": Object {
+            "iconGradient": Object {
+              "from": "#3b6cf4",
+              "to": "#6050dc",
+            },
+          },
+          "type": "dark",
+        }
+      }
+      legalOfficer1={
+        Object {
+          "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+          "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France",
+          "name": "Guillaume Grain",
+        }
+      }
+      legalOfficer1Decision="PENDING"
+      legalOfficer2={
+        Object {
+          "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+          "details": "Modero Bruxelles
+Central administration 
+Nijverheidslaan 1
+B - 1853 Grimbergen (Strombeek-Bever)
+Belgium",
+          "name": "Patrick Gielen",
+        }
+      }
+      legalOfficer2Decision="PENDING"
+      legalOfficers={Array []}
+      mode="view"
+      setLegalOfficer1={[Function]}
+      setLegalOfficer2={[Function]}
+      status="ACTIVATED"
+    />
+  </Frame>
+</FullWidthPane>
 `;

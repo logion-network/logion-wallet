@@ -3,11 +3,26 @@
     border-bottom: 1px solid #3b6cf4;
     font-weight: bold;
     border-radius: 0;
+    background-color: transparent;
+}
+
+.FormGroup .form-control[readonly] {
+    background-color: transparent;
 }
 
 .FormGroup .form-control:focus {
     border-bottom: 2px solid #3b6cf4;
     box-shadow: none;
+    background-color: transparent;
+}
+
+.FormGroup .form-control.is-invalid,
+.FormGroup .form-control[readonly].is-invalid {
+    background-color: rgba(225, 26, 37, 0.2);
+    border: solid 1px #e11a25;
+    border-radius: 4px;
+    background-image: url("../img/error.svg");
+    padding-left: 5px;
 }
 
 .FormGroup .form-control.is-invalid:focus {

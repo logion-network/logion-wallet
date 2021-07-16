@@ -153,7 +153,7 @@ export default function PendingProtectionRequests(props: Props) {
                                     data-testid={`review-${request.id}`}
                                     colors={ colorTheme.buttons }
                                 >
-                                    <span style={{fontWeight: "bold"}}>Review and proceed</span>
+                                    Review and proceed
                                 </Button>
                                 }
                                 {props.recovery &&
@@ -162,7 +162,7 @@ export default function PendingProtectionRequests(props: Props) {
                                     colors={ colorTheme.buttons }
                                     onClick={ () => history.push(recoveryDetailsPath(request.id)) }
                                 >
-                                    Start recovery process
+                                    Review and proceed
                                 </Button>
                                 }
                             </ButtonGroup>

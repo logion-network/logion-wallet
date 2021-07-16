@@ -2,7 +2,7 @@ import React from 'react';
 import { Variant } from 'react-bootstrap/types';
 
 import { Children } from './types/Helpers';
-import { GREEN } from './ColorTheme';
+import { GREEN, YELLOW } from './ColorTheme';
 
 import './Alert.css';
 
@@ -16,6 +16,8 @@ export default function Alert(props: Props) {
     let color = undefined;
     if(props.variant === 'success') {
         color = GREEN;
+    } else if(props.variant === 'accepted') {
+        color = YELLOW;
     }
 
     return (

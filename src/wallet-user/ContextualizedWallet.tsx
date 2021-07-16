@@ -105,7 +105,7 @@ export default function ContextualizedWallet() {
                         buttonText: <Link to={ RECOVERY_PATH }>Start a recovery process</Link>,
                         callback: () => setDiscardProtection(true),
                         id: "recovery",
-                        buttonVariant: 'warning'
+                        buttonVariant: 'recovery'
                     }
                 ]}
                 colors={ colorTheme }

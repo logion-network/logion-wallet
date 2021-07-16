@@ -60,7 +60,7 @@ exports[`renders 1`] = `
       "recoveryItems": Object {
         "iconGradient": Object {
           "from": "#e95b5b",
-          "to": "#650àdc",
+          "to": "#6050dc",
         },
       },
       "select": Object {
@@ -150,7 +150,7 @@ exports[`renders 1`] = `
           "recoveryItems": Object {
             "iconGradient": Object {
               "from": "#e95b5b",
-              "to": "#650àdc",
+              "to": "#6050dc",
             },
           },
           "select": Object {
@@ -244,7 +244,7 @@ exports[`renders 1`] = `
           "recoveryItems": Object {
             "iconGradient": Object {
               "from": "#e95b5b",
-              "to": "#650àdc",
+              "to": "#6050dc",
             },
           },
           "select": Object {

@@ -27,7 +27,7 @@ export default function ProtectionRequestStatus(props: Props) {
             status = <span style={{color: statusColor, textTransform: "uppercase"}}>Accepted</span>;
         } else if(props.decision === "ACCEPTED" && props.status === "ACTIVATED") {
             statusColor = GREEN;
-            icon = (<Icon icon={{ id: "accepted" }} />);
+            icon = (<Icon icon={{ id: "activated" }} />);
             status = <span style={{color: statusColor, textTransform: "uppercase"}}>Accepted</span>;
         } else if(props.decision === "REJECTED") {
             statusColor = RED;

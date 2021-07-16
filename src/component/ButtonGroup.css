@@ -17,6 +17,12 @@
     border-radius: 6px;
 }
 
-.ButtonGroup .btn-group > .btn:not(:first-child), .btn-group > .btn-group:not(:first-child) {
+.ButtonGroup .btn-group > .btn:not(:last-child):not(.dropdown-toggle),
+.ButtonGroup .btn-group > .btn-group:not(:last-child) > .btn {
+    border-radius: 6px;
+}
+
+.ButtonGroup .btn-group > .btn:not(:first-child),
+.btn-group > .btn-group:not(:first-child) {
     margin-left: 25px;
 }

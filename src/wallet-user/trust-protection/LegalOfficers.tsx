@@ -2,7 +2,7 @@ import React from "react";
 import { ColorTheme } from "../../component/ColorTheme";
 import LegalOfficer from "../../component/types/LegalOfficer";
 
-import { LegalOfficerDecisionStatus } from "../../legal-officer/Types";
+import { LegalOfficerDecisionStatus, ProtectionRequestStatus } from "../../legal-officer/Types";
 
 import SelectLegalOfficer, { Mode } from './SelectLegalOfficer';
 import './LegalOfficers.css';
@@ -17,6 +17,7 @@ export interface Props {
     mode: Mode,
     legalOfficer1Decision?: LegalOfficerDecisionStatus,
     legalOfficer2Decision?: LegalOfficerDecisionStatus,
+    status: ProtectionRequestStatus | null,
 }
 
 export default function LegalOfficers(props: Props) {
@@ -33,6 +34,7 @@ export default function LegalOfficers(props: Props) {
                     legalOfficers={ props.legalOfficers }
                     mode={ props.mode }
                     decision={ props.legalOfficer1Decision }
+                    status={ props.status }
                 />
             </div>
 
@@ -46,6 +48,7 @@ export default function LegalOfficers(props: Props) {
                     legalOfficers={ props.legalOfficers }
                     mode={ props.mode }
                     decision={ props.legalOfficer2Decision }
+                    status={ props.status }
                 />
             </div>
         </div>

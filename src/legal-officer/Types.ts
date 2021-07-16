@@ -102,7 +102,7 @@ export const LIGHT_MODE: ColorTheme = {
     recoveryItems: {
         iconGradient: {
             from: '#e95b5b',
-            to: '#650àdc',
+            to: '#6050dc',
         }
     },
     buttons: {

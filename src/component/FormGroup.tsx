@@ -19,13 +19,16 @@ export default function FormGroup(props: Props) {
     const inlineCss = `
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: ${props.colors.background};
         color: ${props.colors.foreground};
     }
     `;
 
     return (
-        <div className="FormGroup">
+        <div className="FormGroup"
+            style={{
+                backgroundColor: props.colors.background
+            }}
+        >
             <style>
             { inlineCss }
             </style>

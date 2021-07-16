@@ -170,9 +170,9 @@ export default function RecoveryDetails() {
                 actions={[
                     {
                         id: 'back',
-                        buttonText: 'Back to requests list',
+                        buttonText: 'Back',
                         buttonVariant: 'secondary',
-                        callback: () => history.push(RECOVERY_REQUESTS_PATH),
+                        callback: () => setApprove(false),
                         disabled: signAndSubmit !== null
                     },
                     {
@@ -203,9 +203,9 @@ export default function RecoveryDetails() {
                 actions={[
                     {
                         id: 'back',
-                        buttonText: 'Back to requests list',
+                        buttonText: 'Back',
                         buttonVariant: 'secondary',
-                        callback: () => history.push(RECOVERY_REQUESTS_PATH)
+                        callback: () => setReject(false)
                     },
                     {
                         id: 'reject',

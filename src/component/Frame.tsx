@@ -25,10 +25,6 @@ export default function Frame(props: Props) {
     .Frame .btn-link {
         color: ${props.colors.frame.link}
     }
-    .Dashboard .Frame .form-control,
-    .Dashboard .Frame .form-control[readonly] {
-        background-color: ${ backgroundColor };
-    }
     `;
 
     let className = "Frame";

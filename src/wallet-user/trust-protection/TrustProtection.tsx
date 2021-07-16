@@ -25,7 +25,7 @@ export default function TrustProtection() {
         requests: acceptedProtectionRequests
     });
     const goToRecovery = (pendingProtectionRequest !== null && isRecovery(pendingProtectionRequest))
-        || (acceptedProtectionRequest !== null && isRecovery(acceptedProtectionRequest));
+        || (acceptedProtectionRequest !== null && isRecovery(acceptedProtectionRequest) && acceptedProtectionRequest.status !== 'ACTIVATED');
 
     if(goToRecovery) {
         return <GoToRecovery />;

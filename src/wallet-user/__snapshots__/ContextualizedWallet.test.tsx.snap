@@ -186,7 +186,7 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
           >
             Start a recovery process
           </Link>,
-          "buttonVariant": "warning",
+          "buttonVariant": "recovery",
           "callback": [Function],
           "id": "recovery",
         },
@@ -476,7 +476,7 @@ exports[`Given connected, when rendering, then show account, no connect button a
           >
             Start a recovery process
           </Link>,
-          "buttonVariant": "warning",
+          "buttonVariant": "recovery",
           "callback": [Function],
           "id": "recovery",
         },
@@ -765,7 +765,7 @@ exports[`Given connecting, when rendering, then show account, no button, no node
           >
             Start a recovery process
           </Link>,
-          "buttonVariant": "warning",
+          "buttonVariant": "recovery",
           "callback": [Function],
           "id": "recovery",
         },
@@ -1054,7 +1054,7 @@ exports[`Given connection error, when rendering, then show account, no button, n
           >
             Start a recovery process
           </Link>,
-          "buttonVariant": "warning",
+          "buttonVariant": "recovery",
           "callback": [Function],
           "id": "recovery",
         },
@@ -1343,7 +1343,7 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
           >
             Start a recovery process
           </Link>,
-          "buttonVariant": "warning",
+          "buttonVariant": "recovery",
           "callback": [Function],
           "id": "recovery",
         },
@@ -1633,7 +1633,7 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
           >
             Start a recovery process
           </Link>,
-          "buttonVariant": "warning",
+          "buttonVariant": "recovery",
           "callback": [Function],
           "id": "recovery",
         },

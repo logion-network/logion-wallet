@@ -6,7 +6,7 @@ import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
 
 import { ProtectionRequest } from "../../legal-officer/Types";
 import LegalOfficer from '../../component/types/LegalOfficer';
-import { ContentPane } from "../../component/Dashboard";
+import { FullWidthPane } from "../../component/Dashboard";
 import Frame from "../../component/Frame";
 import Alert from '../../component/Alert';
 import Button from '../../component/Button';
@@ -68,7 +68,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
 
     const forAccount = props.request.addressToRecover !== null ? ` for account ${props.request.addressToRecover}` : "";
 
-    const mainTitle = props.request.isRecovery ? "Recovery" : "My Logion Trust Protection";
+    const mainTitle = props.request.isRecovery && props.request.status !== 'ACTIVATED' ? "Recovery" : "My Logion Trust Protection";
     let subTitle;
     let alert = null;
     if(props.type === 'pending') {
@@ -131,21 +131,20 @@ export default function ProtectionRecoveryRequest(props: Props) {
     }
 
     return (
-        <ContentPane
+        <FullWidthPane
             mainTitle={ mainTitle }
             subTitle={ subTitle }
             titleIcon={{
                 icon: {
-                    id: props.request.isRecovery ? 'recovery' : 'shield',
-                    hasVariants: props.request.isRecovery ? false : true,
+                    id: props.request.isRecovery && props.request.status !== 'ACTIVATED' ? 'recovery' : 'shield',
+                    hasVariants: props.request.isRecovery && props.request.status !== 'ACTIVATED' ? false : true,
                 },
-                background: props.request.isRecovery ? colorTheme.recoveryItems.iconGradient : undefined,
+                background: props.request.isRecovery && props.request.status !== 'ACTIVATED' ? colorTheme.recoveryItems.iconGradient : undefined,
             }}
             colors={ colorTheme }
             addresses={ addresses }
             selectAddress={ selectAddress }
-            primaryPaneWidth={ 8 }
-            primaryAreaChildren={
+        >
                 <Frame
                     className="ProtectionRecoveryRequest"
                     colors={ colorTheme }
@@ -153,19 +152,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
                     { alert }
 
                     {
-                        props.type === 'activated' && !confirmButtonEnabled && !props.request.isRecovery &&
-                        <div
-                            className="alert-activated"
-                            style={{
-                                color: GREEN,
-                                borderColor: GREEN,
-                            }}
-                        >
-                            <Icon colorThemeType={ colorTheme.type } icon={{id: 'accepted'}} /> Your Logion Trust Protection is active
-                        </div>
-                    }
-                    {
-                        props.type === 'activated' && props.request.isRecovery && recoveredAddress !== null &&
+                        props.type === 'activated' && !confirmButtonEnabled && (!props.request.isRecovery || recoveredAddress !== null) && 
                         <div
                             className="alert-activated"
                             style={{
@@ -175,9 +162,8 @@ export default function ProtectionRecoveryRequest(props: Props) {
                         >
                             <Icon
                                 colorThemeType={ colorTheme.type }
-                                icon={{id: 'accepted'}}
-                            /> Your Logion Trust Protection is active and you are now ready to transfer assets
-                            from recovered address { recoveredAddress }.
+                                icon={{id: 'activated'}}
+                            /> Your Logion Trust Protection is active
                         </div>
                     }
 
@@ -244,10 +230,9 @@ export default function ProtectionRecoveryRequest(props: Props) {
                         legalOfficer2Decision={ legalOfficer2Decision }
                         colorTheme={ colorTheme }
                         mode="view"
+                        status={ props.request.status }
                     />
                 </Frame>
-            }
-            secondaryAreaChildren={ null }
-        />
+        </FullWidthPane>
     );
 }

@@ -354,6 +354,7 @@ France",
           mode="choose"
           setLegalOfficer1={[Function]}
           setLegalOfficer2={[Function]}
+          status={null}
         />
       </Frame>
     </React.Fragment>
@@ -471,8 +472,9 @@ France",
             <FormGroup
               colors={
                 Object {
-                  "background": "#0c163d",
+                  "background": "#152665",
                   "foreground": "#ffffff",
+                  "link": "#ffffff",
                 }
               }
               control={
@@ -568,8 +570,9 @@ France",
             <FormGroup
               colors={
                 Object {
-                  "background": "#0c163d",
+                  "background": "#152665",
                   "foreground": "#ffffff",
+                  "link": "#ffffff",
                 }
               }
               control={
@@ -669,8 +672,9 @@ France",
             <FormGroup
               colors={
                 Object {
-                  "background": "#0c163d",
+                  "background": "#152665",
                   "foreground": "#ffffff",
+                  "link": "#ffffff",
                 }
               }
               control={
@@ -766,8 +770,9 @@ France",
             <FormGroup
               colors={
                 Object {
-                  "background": "#0c163d",
+                  "background": "#152665",
                   "foreground": "#ffffff",
+                  "link": "#ffffff",
                 }
               }
               control={
@@ -864,8 +869,9 @@ France",
         <FormGroup
           colors={
             Object {
-              "background": "#0c163d",
+              "background": "#152665",
               "foreground": "#ffffff",
+              "link": "#ffffff",
             }
           }
           control={
@@ -957,8 +963,9 @@ France",
         <FormGroup
           colors={
             Object {
-              "background": "#0c163d",
+              "background": "#152665",
               "foreground": "#ffffff",
+              "link": "#ffffff",
             }
           }
           control={
@@ -1051,8 +1058,9 @@ France",
             <FormGroup
               colors={
                 Object {
-                  "background": "#0c163d",
+                  "background": "#152665",
                   "foreground": "#ffffff",
+                  "link": "#ffffff",
                 }
               }
               control={
@@ -1148,8 +1156,9 @@ France",
             <FormGroup
               colors={
                 Object {
-                  "background": "#0c163d",
+                  "background": "#152665",
                   "foreground": "#ffffff",
+                  "link": "#ffffff",
                 }
               }
               control={
@@ -1243,8 +1252,9 @@ France",
         <FormGroup
           colors={
             Object {
-              "background": "#0c163d",
+              "background": "#152665",
               "foreground": "#ffffff",
+              "link": "#ffffff",
             }
           }
           control={
@@ -1339,8 +1349,9 @@ France",
           <FormGroup
             colors={
               Object {
-                "background": "#0c163d",
+                "background": "#152665",
                 "foreground": "#ffffff",
+                "link": "#ffffff",
               }
             }
             control={

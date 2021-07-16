@@ -10,12 +10,12 @@ Object {
       >
         <div
           class="FormGroup"
+          style="background-color: rgb(239, 243, 254);"
         >
           <style>
             
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -50,12 +50,12 @@ Object {
     >
       <div
         class="FormGroup"
+        style="background-color: rgb(239, 243, 254);"
       >
         <style>
           
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -147,12 +147,12 @@ Object {
       >
         <div
           class="FormGroup"
+          style="background-color: rgb(239, 243, 254);"
         >
           <style>
             
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -187,12 +187,12 @@ Object {
     >
       <div
         class="FormGroup"
+        style="background-color: rgb(239, 243, 254);"
       >
         <style>
           
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -284,12 +284,12 @@ Object {
       >
         <div
           class="FormGroup"
+          style="background-color: rgb(239, 243, 254);"
         >
           <style>
             
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     
@@ -324,12 +324,12 @@ Object {
     >
       <div
         class="FormGroup"
+        style="background-color: rgb(239, 243, 254);"
       >
         <style>
           
     .FormGroup .form-control,
     .FormGroup .form-control[readonly] {
-        background-color: #eff3fe;
         color: #000000;
     }
     

@@ -164,6 +164,13 @@ export default function CreateProtectionRequestForm(props: Props) {
         return null;
     }
 
+    let legalOfficersTitle;
+    if(props.isRecovery) {
+        legalOfficersTitle = "Select your Legal Officers";
+    } else {
+        legalOfficersTitle = "Choose your Legal Officers";
+    }
+
     return (
         <ContentPane
             mainTitle={ mainTitle }
@@ -204,7 +211,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                                         />
                                     }
                                     feedback={ "A valid SS58 address is required" }
-                                    colors={ colorTheme.dashboard }
+                                    colors={ colorTheme.frame }
                                 />
                                 {
                                     signAndSubmit === null &&
@@ -226,7 +233,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                         }
                         {
                             activeRecovery &&
-                            <Alert variant="success">
+                            <Alert variant="accepted">
                                 The recovery has been successfully initiated, you may now contact your legal officers.
                             </Alert>
                         }
@@ -238,7 +245,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                     colors={ colorTheme }
                     disabled={ props.isRecovery && !activeRecovery }
                 >
-                    <h3>Choose your Legal Officers</h3>
+                    <h3>{ legalOfficersTitle }</h3>
                     {
                         props.isRecovery &&
                         <Alert variant="warning">
@@ -256,7 +263,8 @@ export default function CreateProtectionRequestForm(props: Props) {
                         legalOfficer2={ legalOfficer2 }
                         setLegalOfficer2={ setLegalOfficer2 }
                         colorTheme={ colorTheme }
-                        mode="choose"
+                        mode={ props.isRecovery ? 'select' : 'choose' }
+                        status={ null }
                     />
                 </Frame>
                 </>
@@ -305,7 +313,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                                         />
                                     }
                                     feedback={ errors.firstName?.message }
-                                    colors={ colorTheme.dashboard }
+                                    colors={ colorTheme.frame }
                                 />
                             </Col>
                             <Col md={6}>
@@ -328,7 +336,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                                         />
                                     }
                                     feedback={ errors.lastName?.message }
-                                    colors={ colorTheme.dashboard }
+                                    colors={ colorTheme.frame }
                                 />
                             </Col>
                         </Row>
@@ -354,7 +362,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                                         />
                                     }
                                     feedback={ errors.email?.message }
-                                    colors={ colorTheme.dashboard }
+                                    colors={ colorTheme.frame }
                                 />
                             </Col>
                             <Col md={6}>
@@ -377,7 +385,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                                         />
                                     }
                                     feedback={ errors.phoneNumber?.message }
-                                    colors={ colorTheme.dashboard }
+                                    colors={ colorTheme.frame }
                                 />
                             </Col>
                         </Row>
@@ -402,7 +410,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                                 />
                             }
                             feedback={ errors.line1?.message }
-                            colors={ colorTheme.dashboard }
+                            colors={ colorTheme.frame }
                         />
                         <FormGroup
                             id="line2"
@@ -422,7 +430,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                                 />
                             }
                             feedback={ errors.line2?.message }
-                            colors={ colorTheme.dashboard }
+                            colors={ colorTheme.frame }
                         />
 
                         <Row>
@@ -446,7 +454,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                                     />
                                 }
                                 feedback={ errors.postalCode?.message }
-                                colors={ colorTheme.dashboard }
+                                colors={ colorTheme.frame }
                             />
                         </Col>
                         <Col md={8}>
@@ -469,7 +477,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                                     />
                                 }
                                 feedback={ errors.city?.message }
-                                colors={ colorTheme.dashboard }
+                                colors={ colorTheme.frame }
                             />
                         </Col>
                         </Row>
@@ -492,7 +500,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                                 />
                             }
                             feedback={ errors.country?.message }
-                            colors={ colorTheme.dashboard }
+                            colors={ colorTheme.frame }
                         />
 
                         <div className="agree-submit">
@@ -516,7 +524,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                                           )}
                                     />
                                 }
-                                colors={ colorTheme.dashboard }
+                                colors={ colorTheme.frame }
                                 noFeedback
                             />
     
