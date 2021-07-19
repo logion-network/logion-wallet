@@ -34,7 +34,7 @@ test("Recovery requires acceptance and vouching", async () => {
     render(<RecoveryDetails />);
 
     let processButton: HTMLElement;
-    await waitFor(() => processButton = screen.getByRole("button", {name: "Process"}));
+    await waitFor(() => processButton = screen.getByRole("button", {name: "Proceed"}));
     userEvent.click(processButton!);
 
     let confirmButton: HTMLElement;
@@ -51,7 +51,7 @@ test("Recovery requires acceptance and vouching", async () => {
     await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent("Submitting..."));
 });
 
-test("Recovery can be rejected", async () => {
+test("Recovery can be refused", async () => {
     setAddresses({
         currentAddress: DEFAULT_LEGAL_OFFICER_ADDRESS,
         addresses: [ DEFAULT_LEGAL_OFFICER_ADDRESS],
@@ -68,7 +68,7 @@ test("Recovery can be rejected", async () => {
     render(<RecoveryDetails />);
 
     let processButton: HTMLElement;
-    await waitFor(() => processButton = screen.getByRole("button", {name: "Refusal"}));
+    await waitFor(() => processButton = screen.getByRole("button", {name: "Refuse"}));
     userEvent.click(processButton!);
 
     let confirmButton: HTMLElement;

@@ -218,6 +218,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                                     <Button
                                         colors={ colorTheme.buttons }
                                         onClick={ initiateRecoveryOnClick }
+                                        disabled={ !isValidAccountId(api!, addressToRecover) }
                                     >
                                         Initiate recovery
                                     </Button>

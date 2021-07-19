@@ -160,9 +160,9 @@ export default function RecoveryDetails() {
                             Back to requests list
                         </Button>
                         <Button colors={ colorTheme.buttons }
-                                variant="danger" onClick={ () => setReject(true) }>Refusal</Button>
+                                variant="danger" onClick={ () => setReject(true) }>Refuse</Button>
                         <Button colors={ colorTheme.buttons }
-                                variant="primary" onClick={ () => setApprove(true) }>Process</Button>
+                                variant="primary" onClick={ () => setApprove(true) }>Proceed</Button>
                     </ButtonGroup>
                 </Row>
             </Frame>
