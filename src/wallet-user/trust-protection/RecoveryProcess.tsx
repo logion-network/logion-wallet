@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import BN from 'bn.js';
 
 import { useLogionChain } from '../../logion-chain';
-import { assetBalance } from '../../logion-chain/Assets';
+import { accountBalance, AssetWithBalance } from '../../logion-chain/Assets';
 
 import { useRootContext } from '../../RootContext';
 import { FullWidthPane } from '../../component/Dashboard';
@@ -16,12 +15,10 @@ import { getOfficer } from "./Model";
 import Icon from '../../component/Icon';
 
 import './RecoveryProcess.css';
-import { TokenizationRequest } from '../../legal-officer/Types';
 
-interface EnrichedRequests {
-    requests: TokenizationRequest[],
-    querying: boolean,
-    balances?: Record<string, string>,
+interface Balances {
+    accountId: string,
+    balances?: AssetWithBalance[],
 }
 
 interface TabTitleProps {
@@ -42,55 +39,42 @@ function TabTitle(props: TabTitleProps) {
     );
 }
 
-export default function GoToTrustProtection() {
+export default function RecoveryProcess() {
     const { api } = useLogionChain();
     const { selectAddress, addresses } = useRootContext();
-    const { colorTheme, recoveredAddress, recoveredTokenizationRequests } = useUserContext();
+    const { colorTheme, recoveredAddress } = useUserContext();
     const [ tabKey, setTabKey ] = useState<string>('tokens');
-    const [ requests, setRequests ] = useState<EnrichedRequests | null>(null);
+    const [ balances, setBalances ] = useState<Balances | null>(null);
 
     useEffect(() => {
-        if(recoveredTokenizationRequests !== null
-                && (requests === null || recoveredTokenizationRequests !== requests!.requests)) {
-            setRequests({
-                requests: recoveredTokenizationRequests,
-                querying: false
-            });
-        }
-    }, [ recoveredTokenizationRequests, requests, setRequests ]);
+        if(recoveredAddress !== null &&
+                (balances === null || balances.accountId !== recoveredAddress)) {
 
-    useEffect(() => {
-        if(api !== null && requests !== null && !requests.querying && requests.balances === undefined) {
-            setRequests({
-                requests: requests.requests,
-                querying: true
+            const accountId = recoveredAddress!;
+            setBalances({
+                accountId,
             });
             (async function() {
-                const balancesArray = await Promise.all(requests.requests.map(
-                    request => assetBalance({
-                        api,
-                        assetId: new BN(request.assetDescription!.assetId),
-                        decimals: request.assetDescription!.decimals,
-                        address: recoveredAddress!,
-                    })
-                ));
-                const balances: Record<string, string> = {};
-                for(let i = 0; i < balancesArray.length; ++i) {
-                    balances[requests.requests[i].assetDescription!.assetId] = balancesArray[i];
-                }
-                setRequests({
-                    requests: requests.requests,
-                    querying: false,
+                const balances = await accountBalance({
+                    api: api!,
+                    accountId,
+                });
+                console.log(`${balances.length} entries`);
+                setBalances({
+                    accountId,
                     balances,
                 });
             })();
         }
-    }, [ api, requests, setRequests, recoveredAddress ]);
+    }, [ api, balances, recoveredAddress, setBalances ]);
 
-    if(addresses === null || selectAddress === null || recoveredAddress === null || recoveredTokenizationRequests === null) {
+    if(addresses === null || selectAddress === null || recoveredAddress === null) {
         return null;
     }
 
+    const tokens: AssetWithBalance[] = (balances !== null && balances.balances !== undefined) ? balances.balances.filter(token => Number(token.balance) > 0) : [];
+    console.log("render");
+    console.log(balances);
     return (
         <FullWidthPane
             className="RecoveryProcess"
@@ -129,7 +113,7 @@ export default function GoToTrustProtection() {
                                     iconId="tokens"
                                     colorThemeType={ colorTheme.type }
                                     title="Tokens"
-                                    size={ recoveredTokenizationRequests.length }
+                                    size={ tokens.length }
                                 />
                             ),
                             render: () => (
@@ -137,21 +121,21 @@ export default function GoToTrustProtection() {
                                         columns={[
                                             {
                                                 header: "Name",
-                                                render: request => <Cell content={ request.requestedTokenName } />,
+                                                render: token => <Cell content={ token.asset.metadata.symbol } />,
                                                 width: "150px",
                                             },
                                             {
                                                 header: "Description",
-                                                render: request => <Cell content={ `${request.bars} gold bar(s)` } />,
+                                                render: token => <Cell content={ token.asset.metadata.name } />,
                                             },
                                             {
                                                 header: "Balance",
-                                                render: request => <Cell content={ requests !== null && requests.balances !== undefined ? requests.balances[request.assetDescription!.assetId] : "/" } />,
+                                                render: token => <Cell content={ token.balance } />,
                                                 width: "200px",
                                             },
                                             {
                                                 header: "Legal officer",
-                                                render: request => <Cell content={ getOfficer(request.legalOfficerAddress)!.name } />,
+                                                render: token => <Cell content={ getOfficer(token.asset.issuer)!.name } />,
                                                 width: "150px",
                                             },
                                             {
@@ -166,9 +150,20 @@ export default function GoToTrustProtection() {
                                                 width: "150px",
                                             }
                                         ]}
-                                        data={ recoveredTokenizationRequests }
+                                        data={ tokens }
                                         colorTheme={ colorTheme }
-                                        renderEmpty={ () => <EmptyTableMessage>No token to recover</EmptyTableMessage> }
+                                        renderEmpty={ () => (
+                                            <EmptyTableMessage>
+                                                {
+                                                    (balances !== null && balances.balances !== undefined) &&
+                                                    "No token to recover"
+                                                }
+                                                {
+                                                    (balances === null || balances.balances === undefined) &&
+                                                    "Fetching data..."
+                                                }
+                                            </EmptyTableMessage>
+                                        )}
                                     />
                             )
                         }

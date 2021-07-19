@@ -1,4 +1,10 @@
 import { ApiPromise } from '@polkadot/api';
+import { StorageKey, Option } from '@polkadot/types';
+import {
+    AssetId as PolkadotAssetId,
+    AssetDetails as PolkadotAsset,
+    AssetMetadata as PolkadotAssetMetadata
+} from '@polkadot/types/interfaces';
 import { randomBytes } from 'crypto';
 import BN from 'bn.js';
 
@@ -166,4 +172,75 @@ export async function assetBalance(parameters: AssetBalanceParameters): Promise<
     } = parameters;
     const balance = await api.query.assets.account(assetId, address);
     return tokensFromBalance(balance.balance, decimals);
+}
+
+export interface GetAssetsParameters {
+    api: ApiPromise,
+}
+
+export interface Asset {
+    assetId: AssetId,
+    issuer: string,
+    metadata: AssetMetadata,
+}
+
+export async function getAssets(parameters: GetAssetsParameters): Promise<Asset[]> {
+    const {
+        api,
+    } = parameters;
+    const assetIds = extractAssetIds(await api.query.assets.asset.keys());
+    const assetDetails: Option<PolkadotAsset>[] = await Promise.all(assetIds.map(assetId => api.query.assets.asset(assetId)));
+    const metadata: PolkadotAssetMetadata[] = await Promise.all(assetIds.map(assetId => api.query.assets.metadata(assetId)));
+    return assetIds.map((assetId, index) => {
+        return {
+            assetId,
+            issuer: assetDetails[0].unwrap().issuer.toString(),
+            metadata: {
+                name: metadata[index].name.toUtf8(),
+                symbol: metadata[index].symbol.toUtf8(),
+                decimals: metadata[index].decimals.toNumber(),
+            }
+        };
+    });
+}
+
+function extractAssetIds(keys: StorageKey<[PolkadotAssetId]>[]): AssetId[] {
+    return keys.map(({ args: [assetId] }) => assetId);
+}
+
+export interface AccountBalanceParameters {
+    api: ApiPromise,
+    accountId: string,
+    assets?: Asset[],
+}
+
+export interface AssetWithBalance {
+    asset: Asset,
+    balance: string,
+}
+
+export async function accountBalance(parameters: AccountBalanceParameters): Promise<AssetWithBalance[]> {
+    const {
+        api,
+        accountId,
+        assets,
+    } = parameters;
+    
+
+    let theAssets;
+    if(assets !== undefined) {
+        theAssets = assets;
+    } else {
+        theAssets = await getAssets({api: api!});
+    }
+    const balances: string[] = await Promise.all(theAssets.map(asset => assetBalance({
+        api,
+        assetId: asset.assetId,
+        decimals: asset.metadata.decimals,
+        address: accountId
+    })));
+    return theAssets.map((asset, index) => ({
+        asset,
+        balance: balances[index],
+    }));
 }
