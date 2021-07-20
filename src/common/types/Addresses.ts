@@ -1,5 +1,5 @@
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
-import { isLegalOfficer } from '../../legal-officer/Types';
+import { isLegalOfficer } from './LegalOfficer';
 
 export interface AccountAddress {
     name: string,

@@ -1,7 +1,7 @@
 import moment from 'moment';
 
 import { ProtectionRequest, ProtectionRequestStatus } from '../../legal-officer/Types';
-import { DEFAULT_IDENTITY, DEFAULT_ADDRESS } from '../../component/TestData';
+import { DEFAULT_IDENTITY, DEFAULT_ADDRESS } from '../../common/TestData';
 import { TEST_WALLET_USER } from '../TestData';
 
 export const ACTIVATED_PROTECTION_REQUEST: ProtectionRequest = createProtectionRequest("ACTIVATED", false, null);

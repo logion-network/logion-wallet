@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { ContentPane } from '../component/Dashboard';
-import Frame from '../component/Frame';
+import { ContentPane } from '../common/Dashboard';
+import Frame from '../common/Frame';
 import { useRootContext } from '../RootContext';
 
 import { useUserContext } from "./UserContext";

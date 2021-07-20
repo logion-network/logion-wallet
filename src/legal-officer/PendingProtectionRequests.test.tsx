@@ -1,5 +1,6 @@
 jest.mock('./LegalOfficerContext');
 jest.mock('../logion-chain');
+jest.mock('../logion-chain/Signature');
 jest.mock('./Model');
 
 import { shallowRender } from '../tests';

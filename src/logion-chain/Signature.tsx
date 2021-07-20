@@ -8,7 +8,9 @@ import { Moment } from 'moment';
 
 import { toIsoString } from './datetime';
 
-export type SignAndSendCallback = (result: ISubmittableResult) => void;
+export type SignedTransaction = ISubmittableResult;
+
+export type SignAndSendCallback = (result: SignedTransaction) => void;
 
 export type Unsubscriber = Promise<() => void>;
 

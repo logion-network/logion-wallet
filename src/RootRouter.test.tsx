@@ -5,7 +5,7 @@ import { setContextMock } from './logion-chain/__mocks__/LogionChainMock';
 import { shallowRender, mockAccount, act } from './tests';
 
 import RootRouter from './RootRouter';
-import { DEFAULT_LEGAL_OFFICER } from './legal-officer/Types';
+import { DEFAULT_LEGAL_OFFICER } from './common/types/LegalOfficer';
 import { setCurrentAddress } from './__mocks__/RootContextMock';
 
 test('Given null injected accounts, when rendering, then null', () => {

@@ -3,7 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import { Children } from './component/types/Helpers';
+import { Children } from './common/types/Helpers';
 
 import Logo from './Logo';
 

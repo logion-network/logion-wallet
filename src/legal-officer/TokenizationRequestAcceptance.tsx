@@ -4,18 +4,22 @@ import moment from 'moment';
 
 import {
     useLogionChain,
-    Unsubscriber,
-    ISubmittableResult,
-    createAsset,
+} from '../logion-chain';
+import {
     AssetId,
-    isFinalized,
+    createAsset,
+    DEFAULT_ASSETS_DECIMALS,
     setAssetMetadata,
     mintTokens,
-    DEFAULT_ASSETS_DECIMALS,
     balanceFromAmount,
+} from '../logion-chain/Assets';
+import {
+    SignedTransaction,
+    Unsubscriber,
     sign,
-    unsubscribe
-} from '../logion-chain';
+    unsubscribe,
+    isFinalized,
+} from '../logion-chain/Signature';
 import { useRootContext } from '../RootContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
@@ -64,7 +68,7 @@ export default function TokenizationRequestAcceptance(props: Props) {
 
     const [ acceptState, setAcceptState ] = useState<AcceptState>({status: AcceptStatus.NONE});
 
-    const [ assetCreationResult, setAssetCreationResult ] = useState<ISubmittableResult | null>(null);
+    const [ assetCreationResult, setAssetCreationResult ] = useState<SignedTransaction | null>(null);
     const [ assetCreationError, setAssetCreationError ] = useState<any>(null);
     const [ assetCreationUnsubscriber, setAssetCreationUnsubscriber ] = useState<Unsubscriber | null>(null);
 

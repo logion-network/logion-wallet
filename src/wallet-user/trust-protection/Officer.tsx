@@ -1,8 +1,8 @@
 import React from 'react';
 import * as css from 'csstype';
 
-import LegalOfficer from '../../component/types/LegalOfficer';
-import { BackgroundAndForegroundColors } from '../../component/ColorTheme';
+import { LegalOfficer } from '../../common/types/LegalOfficer';
+import { BackgroundAndForegroundColors } from '../../common/ColorTheme';
 
 import './Officer.css';
 

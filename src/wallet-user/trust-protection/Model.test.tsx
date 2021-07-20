@@ -1,11 +1,12 @@
 jest.mock("axios");
 jest.mock('../../logion-chain');
+jest.mock('../../logion-chain/Signature');
 
 import { PROTECTION_REQUEST } from "./TestData";
 import { TEST_WALLET_USER } from '../TestData';
 import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from "../../legal-officer/Types";
 import { CreateProtectionRequest, createProtectionRequest, checkActivation } from "./Model";
-import { mockPost } from "axios";
+import { mockPost } from "../../__mocks__/AxiosMock";
 import moment from "moment";
 
 const request: CreateProtectionRequest = {

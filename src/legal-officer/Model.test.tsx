@@ -8,7 +8,7 @@ import {
     acceptRequest,
     setAssetDescription
 } from './Model';
-import { mockPut, mockPost } from "axios";
+import { mockPut, mockPost } from "../__mocks__/AxiosMock";
 import moment from 'moment';
 
 test("Fetches pending requests", async () => {

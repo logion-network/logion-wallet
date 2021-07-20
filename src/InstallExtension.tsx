@@ -2,7 +2,7 @@
  import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-import { recommendedExtension } from './logion-chain';
+import { recommendedExtension } from './logion-chain/Keys';
 import LandingPage from './LandingPage';
 
 export default function InstallExtension() {

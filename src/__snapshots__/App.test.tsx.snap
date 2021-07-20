@@ -1,9 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders 1`] = `
-<LogionChainContextProvider
-  config={Object {}}
->
+<LogionChainContextProvider>
   <Main />
 </LogionChainContextProvider>
 `;

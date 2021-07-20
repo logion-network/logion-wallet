@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom';
 
 import { LEGAL_OFFICER_PATH, USER_PATH } from './RootPaths';
-import { isLegalOfficer as isLegalOfficerFunction } from './legal-officer/Types';
+import { isLegalOfficer as isLegalOfficerFunction } from './common/types/LegalOfficer';
 import LegalOfficerWallet from './legal-officer/LegalOfficerWallet';
 import Wallet from './wallet-user/Wallet';
 import { useRootContext } from './RootContext';

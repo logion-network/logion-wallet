@@ -1,4 +1,4 @@
-import LegalOfficer from "./types/LegalOfficer";
+import { LegalOfficer } from "./types/LegalOfficer";
 import Collapsible from "react-collapsible";
 import Button from 'react-bootstrap/Button';
 

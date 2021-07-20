@@ -2,9 +2,8 @@ jest.mock('@polkadot/api');
 jest.mock('@polkadot/ui-keyring');
 jest.mock('@polkadot/extension-dapp');
 
-import { useLogionChain, LogionChainContextProvider, forceKeyringLoad } from './LogionChainContext';
+import { useLogionChain, LogionChainContextProvider } from './LogionChainContext';
 import { render, waitFor, RenderResult } from '@testing-library/react';
-import { ConfigType, DEFAULT_CONFIG } from '../config';
 
 import {
     connectedAndReady,
@@ -17,13 +16,9 @@ import {
 } from '../__mocks__/PolkadotApiMock';
 import { updateInjectedAccounts, teardown as teardownExtensionDapp } from '../__mocks__/PolkadotExtensionDappMock';
 
-import { loadAllFails, teardown as teardownKeyring } from '../__mocks__/PolkadotUiKeyringMock';
-
 afterEach(() => {
     teardownApi();
     teardownExtensionDapp();
-    teardownKeyring();
-    forceKeyringLoad();
 });
 
 test('Context automatically connects to first available node', async () => {
@@ -34,18 +29,8 @@ test('Context automatically connects to first available node', async () => {
 });
 
 function InspectorInContext() {
-    const config: ConfigType = {
-        ...DEFAULT_CONFIG,
-        availableNodes: [
-            {
-                name: "name",
-                socket: "address",
-                peerId: "peerId"
-            }
-        ]
-    };
     return (
-        <LogionChainContextProvider config={config}>
+        <LogionChainContextProvider>
             <LogionContextInspector />
         </LogionChainContextProvider>
     );
@@ -81,9 +66,9 @@ function LogionContextInspector() {
 
 function expectConnectedAndReadyState(result: RenderResult) {
     expect(result.getByTestId("apiState")).toHaveTextContent("READY");
-    expect(result.getByTestId("selectedNode.name")).toHaveTextContent("name");
-    expect(result.getByTestId("selectedNode.socket")).toHaveTextContent("address");
-    expect(result.getByTestId("selectedNode.peerId")).toHaveTextContent("peerId");
+    expect(result.getByTestId("selectedNode.name")).toHaveTextContent("Logion Node");
+    expect(result.getByTestId("selectedNode.socket")).toHaveTextContent("wss://dev.logion.network:9944");
+    expect(result.getByTestId("selectedNode.peerId")).toHaveTextContent("12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2");
     expect(result.getByTestId("connectedNodeMetadata.name")).toHaveTextContent("Mock node");
     expect(result.getByTestId("connectedNodeMetadata.peerId")).toHaveTextContent("Mock peer ID");
     expect(result.getByTestId("eventsConsumption")).toHaveTextContent('STARTED');
@@ -94,12 +79,6 @@ test('Context automatically connects to first available node with ready event', 
     triggerEvent("connected");
     triggerEvent("ready");
     await waitFor(() => expectConnectedAndReadyState(result));
-});
-
-test("Context does not fail with throwing keyring.loadAll", async () => {
-    loadAllFails(true);
-    const result = render(<InspectorInContext/>);
-    expect(result.getByTestId("apiState")).toHaveTextContent("CONNECT_INIT");
 });
 
 test('Context detects connection errors', async () => {
@@ -124,7 +103,7 @@ test("Context stores at most 1024 events", async () => {
     const result = render(<InspectorInContext/>);
     connectedAndReady();
     await waitFor(() => expect(result.getByTestId("apiState")).toHaveTextContent("READY"));
-    eventsCallback(mockVec(new Array(2000)));
+    eventsCallback!(mockVec(new Array(2000)));
     await waitFor(() => expect(result.getByTestId("events.length")).toHaveTextContent('1024'));
 });
 
@@ -132,6 +111,6 @@ test("Context listens to new heads", async () => {
     const result = render(<InspectorInContext/>);
     connectedAndReady();
     await waitFor(() => expect(result.getByTestId("apiState")).toHaveTextContent("READY"));
-    newHeadsCallback({number: mockCompact(42)});
+    newHeadsCallback!({number: mockCompact(42)});
     await waitFor(() => expect(result.getByTestId("lastHeader.number")).toHaveTextContent('42'));
 });

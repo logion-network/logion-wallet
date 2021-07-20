@@ -2,10 +2,10 @@ import React from 'react';
 import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
 
-import { ISubmittableResult, isFinalized } from './logion-chain';
+import { SignedTransaction, isFinalized } from './logion-chain/Signature';
 
 export interface Props {
-    result: ISubmittableResult | null,
+    result: SignedTransaction | null,
     error: any,
     successMessage?: string | JSX.Element,
     errorMessage?: string | JSX.Element,

@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
-import { ISubmittableResult, isFinalized } from './logion-chain';
-import { unsubscribe, Unsubscriber } from './logion-chain/Signature';
+import {
+    SignedTransaction,
+    isFinalized,
+    unsubscribe,
+    Unsubscriber
+} from './logion-chain/Signature';
 
 import ExtrinsicSubmissionResult from './ExtrinsicSubmissionResult';
 
-export type SignAndSubmit = ((setResult: React.Dispatch<React.SetStateAction<ISubmittableResult | null>>, setError: React.Dispatch<React.SetStateAction<any>>) => Unsubscriber) | null;
+export type SignAndSubmit = ((setResult: React.Dispatch<React.SetStateAction<SignedTransaction | null>>, setError: React.Dispatch<React.SetStateAction<any>>) => Unsubscriber) | null;
 
 export interface Props {
     id: string,
@@ -16,7 +20,7 @@ export interface Props {
 }
 
 export default function ExtrinsicSubmitter(props: Props) {
-    const [ result, setResult ] = useState<ISubmittableResult | null>(null);
+    const [ result, setResult ] = useState<SignedTransaction | null>(null);
     const [ error, setError ] = useState<any>(null);
     const [ unsubscriber, setUnsubscriber ] = useState<Unsubscriber | null>(null);
     const [ submitted, setSubmitted ] = useState<boolean>(false);

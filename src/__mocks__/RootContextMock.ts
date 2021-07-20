@@ -1,5 +1,5 @@
 import { TEST_WALLET_USER } from '../wallet-user/TestData';
-import Addresses, { AccountAddress } from '../component/types/Addresses';
+import Addresses, { AccountAddress } from '../common/types/Addresses';
 
 export let selectAddress = jest.fn();
 

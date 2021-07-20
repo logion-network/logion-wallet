@@ -10,8 +10,8 @@ import {
     rejectRequest as modelRejectRequest,
     fetchProtectionRequests,
 } from './Model';
-import { sign } from '../logion-chain';
-import { ColorTheme } from '../component/ColorTheme';
+import { sign } from "../logion-chain/Signature";
+import { ColorTheme } from '../common/ColorTheme';
 import { useRootContext } from '../RootContext';
 import { LIGHT_MODE } from './Types';
 

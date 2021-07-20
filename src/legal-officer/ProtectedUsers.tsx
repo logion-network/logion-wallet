@@ -1,10 +1,10 @@
 import React from 'react';
 import { Table } from "react-bootstrap";
 import { useLegalOfficerContext } from "./LegalOfficerContext";
-import UserInfo from "../component/UserInfo";
-import LegalOfficerInfo from "../component/LegalOfficerInfo";
+import UserInfo from "../common/UserInfo";
+import LegalOfficerInfo from "../common/LegalOfficerInfo";
 import { useRootContext } from "../RootContext";
-import { legalOfficerByAddress } from "../wallet-user/trust-protection/Model";
+import { legalOfficerByAddress } from "../common/types/LegalOfficer";
 
 export default function ProtectedUsers() {
     const { activatedProtectionRequests } = useLegalOfficerContext();

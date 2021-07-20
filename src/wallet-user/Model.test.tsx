@@ -2,7 +2,7 @@ jest.mock("axios");
 
 import {CreateTokenRequest, createTokenRequest} from "./Model";
 import {DEFAULT_LEGAL_OFFICER} from "../legal-officer/Model";
-import {mockPost} from "axios";
+import {mockPost} from "../__mocks__/AxiosMock";
 import { TEST_WALLET_USER } from './TestData';
 
 test("Create Tokenization request", async () => {

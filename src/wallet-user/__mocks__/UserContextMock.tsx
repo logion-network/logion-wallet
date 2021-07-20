@@ -1,4 +1,5 @@
-import {DEFAULT_LEGAL_OFFICER, TokenizationRequest} from "../../legal-officer/Types";
+import {TokenizationRequest} from "../../legal-officer/Types";
+import {DEFAULT_LEGAL_OFFICER} from "../../common/types/LegalOfficer";
 import { TEST_WALLET_USER } from '../TestData';
 import {ApiPromise} from '@polkadot/api';
 import {ProtectionRequest} from "../../legal-officer/Types";

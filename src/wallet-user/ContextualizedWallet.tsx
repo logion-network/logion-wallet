@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 
 import { useLogionChain } from '../logion-chain';
 
-import Dashboard from '../component/Dashboard';
-import WarningDialog from '../component/WarningDialog';
+import Dashboard from '../common/Dashboard';
+import WarningDialog from '../common/WarningDialog';
 
 import UserRouter, { ACCOUNT_PATH, TRUST_PROTECTION_PATH, SETTINGS_PATH, RECOVERY_PATH } from "./UserRouter";
 import { useUserContext } from "./UserContext";

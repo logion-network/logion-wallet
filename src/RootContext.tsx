@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useReducer, Reducer } from "react";
 
-import Addresses, { buildAddresses } from './component/types/Addresses';
-import { Children } from './component/types/Helpers';
+import Addresses, { buildAddresses } from './common/types/Addresses';
+import { Children } from './common/types/Helpers';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import { useLogionChain } from './logion-chain';
 

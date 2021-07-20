@@ -1,5 +1,6 @@
 jest.mock('../../logion-chain');
 jest.mock('../../logion-chain/Assets');
+jest.mock('../../logion-chain/Signature');
 jest.mock('../../RootContext');
 jest.mock('../UserContext');
 
@@ -7,7 +8,7 @@ import { render, screen, waitFor, getByRole } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import { setAccountBalance } from '../../logion-chain/__mocks__/AssetsMock';
-import { DEFAULT_LEGAL_OFFICER } from "../../legal-officer/Types";
+import { DEFAULT_LEGAL_OFFICER } from "../../common/types/LegalOfficer";
 import { setRecoveredAddress } from '../../wallet-user/__mocks__/UserContextMock';
 
 import RecoveryProcess from './RecoveryProcess';

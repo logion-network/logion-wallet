@@ -1,4 +1,4 @@
-import { COLOR_THEME } from "../../component/TestData";
+import { COLOR_THEME } from "../../common/TestData";
 
 import {
     pendingTokenizationRequests,

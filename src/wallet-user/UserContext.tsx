@@ -3,7 +3,7 @@ import { Option } from '@polkadot/types';
 
 import { useLogionChain } from '../logion-chain';
 import { RecoveryConfig, getRecoveryConfig, getProxy } from '../logion-chain/Recovery';
-import { Children } from '../component/types/Helpers';
+import { Children } from '../common/types/Helpers';
 
 import { CreateTokenRequest, createTokenRequest as modelCreateTokenRequest } from "./Model";
 import { TokenizationRequest, ProtectionRequest } from "../legal-officer/Types";
@@ -12,7 +12,7 @@ import {
     CreateProtectionRequest,
     createProtectionRequest as modelCreateProtectionRequest,
 } from "./trust-protection/Model";
-import { ColorTheme } from '../component/ColorTheme';
+import { ColorTheme } from '../common/ColorTheme';
 import { useRootContext } from '../RootContext';
 import { DARK_MODE } from './Types';
 
