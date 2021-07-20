@@ -61,7 +61,7 @@ export function setAssetMetadata(parameters: any) {
     return Promise.resolve(() => {});
 }
 
-export function mintAmount(tokens: any) {
+export function balanceFromAmount(tokens: any) {
     return tokens;
 }
 

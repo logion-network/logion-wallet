@@ -1,6 +1,6 @@
 import { ApiPromise } from '@polkadot/api';
 import { Option } from '@polkadot/types';
-import { AccountId } from '@polkadot/types/interfaces';
+import { AccountId, Call } from '@polkadot/types/interfaces';
 import {
     RecoveryConfig as PolkadotRecoveryConfig,
     ActiveRecovery as PolkadotActiveRecovery
@@ -145,6 +145,30 @@ export function claimRecovery(parameters: ClaimRecoveryParameters): Unsubscriber
     return signAndSend({
         signerId,
         submittable: api.tx.recovery.claimRecovery(addressToRecover),
+        callback,
+        errorCallback,
+    });
+}
+
+export interface SignAndSendAsRecoveredParameters extends ExtrinsicSubmissionParameters {
+    api: ApiPromise,
+    recoveredAccountId: string,
+    call: Call,
+}
+
+export function signAndSendAsRecovered(parameters: SignAndSendAsRecoveredParameters): Unsubscriber {
+    const {
+        api,
+        recoveredAccountId,
+        signerId,
+        callback,
+        errorCallback,
+        call,
+    } = parameters;
+
+    return signAndSend({
+        signerId,
+        submittable: api.tx.recovery.asRecovered(recoveredAccountId, call),
         callback,
         errorCallback,
     });

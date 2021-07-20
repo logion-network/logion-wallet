@@ -30,7 +30,7 @@ export let setUserAddress = jest.fn();
 
 export let userAddress = TEST_WALLET_USER;
 
-export let recoveredAddress = null;
+export let recoveredAddress: string | null = null;
 
 export function useUserContext() {
     return {
@@ -101,4 +101,8 @@ export function UserContextProvider() {
 
 export function setContextUserAddress(address: string) {
     userAddress = address;
+}
+
+export function setRecoveredAddress(value: string) {
+    recoveredAddress = value;
 }

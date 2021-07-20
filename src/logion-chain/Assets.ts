@@ -3,10 +3,18 @@ import { StorageKey, Option } from '@polkadot/types';
 import {
     AssetId as PolkadotAssetId,
     AssetDetails as PolkadotAsset,
-    AssetMetadata as PolkadotAssetMetadata
+    AssetMetadata as PolkadotAssetMetadata,
+    Call
 } from '@polkadot/types/interfaces';
 import { randomBytes } from 'crypto';
 import BN from 'bn.js';
+import {
+    AssetId as AssetIdType,
+    AssetBalance as AssetBalanceType,
+    AssetMetadata as AssetMetadataType,
+    Asset as AssetType,
+    AssetWithBalance as AssetWithBalanceType,
+} from './Types';
 
 import {
     SignAndSendCallback,
@@ -24,7 +32,7 @@ export interface AssetCreationParameters {
     api: ApiPromise,
 }
 
-export type AssetId = BN;
+export type AssetId = AssetIdType;
 
 export interface AssetCreationResult {
     assetId: AssetId,
@@ -80,11 +88,7 @@ async function assetExists(api: ApiPromise, id: AssetId): Promise<boolean> {
     return asset.isSome;
 }
 
-export interface AssetMetadata {
-    name: string,
-    symbol: string,
-    decimals: number
-}
+export type AssetMetadata = AssetMetadataType;
 
 export interface SetAssetMetadataParameters {
     signerId: string,
@@ -111,10 +115,9 @@ export function setAssetMetadata(parameters: SetAssetMetadataParameters): Unsubs
         errorCallback,
     });
 }
+export type AssetBalance = AssetBalanceType;
 
-export type AssetBalance = BN;
-
-export function mintAmount(tokens: number, decimals: number): AssetBalance {
+export function balanceFromAmount(tokens: number, decimals: number): AssetBalance {
     let tokensBN = new BN(tokens);
     let decimalsBN = new BN(decimals);
     let ten = new BN(10);
@@ -178,11 +181,7 @@ export interface GetAssetsParameters {
     api: ApiPromise,
 }
 
-export interface Asset {
-    assetId: AssetId,
-    issuer: string,
-    metadata: AssetMetadata,
-}
+export type Asset = AssetType;
 
 export async function getAssets(parameters: GetAssetsParameters): Promise<Asset[]> {
     const {
@@ -214,10 +213,7 @@ export interface AccountBalanceParameters {
     assets?: Asset[],
 }
 
-export interface AssetWithBalance {
-    asset: Asset,
-    balance: string,
-}
+export type AssetWithBalance = AssetWithBalanceType;
 
 export async function accountBalance(parameters: AccountBalanceParameters): Promise<AssetWithBalance[]> {
     const {
@@ -243,4 +239,22 @@ export async function accountBalance(parameters: AccountBalanceParameters): Prom
         asset,
         balance: balances[index],
     }));
+}
+
+export interface BuildTransferCallParameters {
+    api: ApiPromise,
+    assetId: AssetId,
+    target: string,
+    amount: AssetBalance,
+}
+
+export function buildTransferCall(parameters: BuildTransferCallParameters): Call {
+    const {
+        api,
+        assetId,
+        target,
+        amount,
+    } = parameters;
+
+    return api.createType('Call', api.tx.assets.transfer(assetId, target, amount));
 }
