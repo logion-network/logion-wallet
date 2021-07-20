@@ -55,8 +55,6 @@ export interface EnvConfigType extends Record<string, any> {
 
 }
 
-const configFile = `./${process.env.NODE_ENV}.json`;
-console.log(`Loading config from ${configFile}`);
 const configEnv: EnvConfigType = require(`./${process.env.NODE_ENV}.json`);
 
 const envVarNames: string[] = [
@@ -66,7 +64,6 @@ const envVarNames: string[] = [
 const envVars: EnvConfigType = envVarNames.reduce<EnvConfigType>((mem, n) => {
     if (process.env[n] !== undefined) {
         const configFieldName = n.slice(10);
-        console.log(`Loading ${configFieldName} value from environment`);
         mem[configFieldName] = process.env[n];
     }
     return mem;

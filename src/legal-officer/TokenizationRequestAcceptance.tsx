@@ -12,7 +12,7 @@ import {
     setAssetMetadata,
     mintTokens,
     DEFAULT_ASSETS_DECIMALS,
-    mintAmount,
+    balanceFromAmount,
     sign,
     unsubscribe
 } from '../logion-chain';
@@ -164,7 +164,7 @@ export default function TokenizationRequestAcceptance(props: Props) {
                     errorCallback: setError,
                     assetId: acceptState.assetId!,
                     metadata: {
-                        name: props.requestToAccept!.requestedTokenName,
+                        name: `${props.requestToAccept!.bars} gold bar(s)`,
                         symbol: props.requestToAccept!.requestedTokenName,
                         decimals: DEFAULT_ASSETS_DECIMALS,
                     }
@@ -193,7 +193,7 @@ export default function TokenizationRequestAcceptance(props: Props) {
                 callback: setResult,
                 errorCallback: setError,
                 assetId: acceptState.assetId!,
-                amount: mintAmount(props.requestToAccept!.bars, DEFAULT_ASSETS_DECIMALS)
+                amount: balanceFromAmount(props.requestToAccept!.bars, DEFAULT_ASSETS_DECIMALS)
             });
             setSignAndSubmitMint(() => signAndSubmit);
         }

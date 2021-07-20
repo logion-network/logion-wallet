@@ -7,7 +7,7 @@ import {
     createAsset,
     setAssetMetadata,
     mintTokens,
-    mintAmount,
+    balanceFromAmount,
     tokensFromBalance,
 } from './Assets';
 
@@ -72,7 +72,7 @@ test("Minting", () => {
 });
 
 test("Mint amount", () => {
-    const result = mintAmount(3, 4);
+    const result = balanceFromAmount(3, 4);
     expect(result.toString()).toBe("30000");
 });
 

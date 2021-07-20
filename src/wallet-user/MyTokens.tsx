@@ -1,77 +1,77 @@
 import React, { useEffect, useState } from 'react';
-import Table from 'react-bootstrap/Table';
+
+import Table, { Cell, EmptyTableMessage } from '../component/Table';
 
 import { useRootContext } from '../RootContext';
 
-import { TokenizationRequest } from '../legal-officer/Types';
-import { useLogionChain, AssetBalance, tokensFromBalance } from '../logion-chain';
+import { useLogionChain } from '../logion-chain';
+import { AssetWithBalance } from '../logion-chain/Types';
+import { accountBalance } from '../logion-chain/Assets';
 
 import { useUserContext } from './UserContext';
+import { getOfficer } from "./trust-protection/Model";
 
-interface EnrichedRequests {
-    requests: TokenizationRequest[],
-    querying: boolean,
-    balances?: AssetBalance[],
+interface Balances {
+    accountId: string,
+    balances?: AssetWithBalance[],
 }
 
 export default function MyTokens() {
     const { currentAddress } = useRootContext();
-    const { acceptedTokenizationRequests } = useUserContext();
+    const { colorTheme } = useUserContext();
     const { api } = useLogionChain();
-
-    const [ requests, setRequests ] = useState<EnrichedRequests | null>(null);
-
-    useEffect(() => {
-        if(acceptedTokenizationRequests !== null
-                && (requests === null || acceptedTokenizationRequests !== requests!.requests)) {
-            setRequests({
-                requests: acceptedTokenizationRequests,
-                querying: false
-            });
-        }
-    }, [ acceptedTokenizationRequests, requests, setRequests ]);
+    const [ balances, setBalances ] = useState<Balances | null>(null);
 
     useEffect(() => {
-        if(api !== null && requests !== null && !requests.querying && requests.balances === undefined) {
-            setRequests({
-                requests: requests.requests,
-                querying: true
+        if(currentAddress !== "" &&
+                (balances === null || balances.accountId !== currentAddress)) {
+
+            const accountId = currentAddress;
+            setBalances({
+                accountId,
             });
             (async function() {
-                const balances = await Promise.all(requests.requests.map(
-                    request => api.query.assets.account(request.assetDescription!.assetId, currentAddress)));
-                setRequests({
-                    requests: requests.requests,
-                    querying: false,
-                    balances: balances.map(balance => balance.balance)
+                const balances = await accountBalance({
+                    api: api!,
+                    accountId,
+                });
+                setBalances({
+                    accountId,
+                    balances,
                 });
             })();
         }
-    }, [ api, requests, setRequests, currentAddress ]);
+    }, [ api, balances, currentAddress, setBalances ]);
 
+    const tokens: AssetWithBalance[] = (balances !== null && balances.balances !== undefined) ? balances.balances.filter(token => Number(token.balance) > 0) : [];
     return (
-        <>
-            {
-                requests !== null && requests.balances !== undefined &&
-                <Table striped bordered>
-                    <thead>
-                        <tr>
-                            <th>Token</th>
-                            <th>Balance</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            requests.requests.map((request, index) => (
-                                <tr key={request.id}>
-                                    <td>{request.requestedTokenName}</td>
-                                    <td>{tokensFromBalance(requests.balances![index], request.assetDescription!.decimals)}</td>
-                                </tr>
-                            ))
-                        }
-                    </tbody>
-                </Table>
-            }
-        </>
+        <Table
+            columns={[
+                {
+                    header: "Name",
+                    render: token => <Cell content={ token.asset.metadata.symbol } />,
+                    width: "150px",
+                },
+                {
+                    header: "Description",
+                    render: token => <Cell content={ token.asset.metadata.name } />,
+                },
+                {
+                    header: "Balance",
+                    render: token => <Cell content={ token.balance } />,
+                    width: "200px",
+                },
+                {
+                    header: "Legal officer",
+                    render: token => <Cell content={ getOfficer(token.asset.issuer)!.name } />,
+                    width: "150px",
+                }
+            ]}
+            data={ tokens }
+            colorTheme={ colorTheme }
+            renderEmpty={ () => (
+                <EmptyTableMessage>No token to display</EmptyTableMessage>
+            )}
+        />
     );
 }

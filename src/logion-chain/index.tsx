@@ -50,7 +50,7 @@ import {
 import {
     createAsset,
     setAssetMetadata,
-    mintAmount,
+    balanceFromAmount,
     mintTokens,
     DEFAULT_ASSETS_DECIMALS,
     tokensFromBalance,
@@ -77,7 +77,7 @@ export {
     createAsset,
     isFinalized,
     setAssetMetadata,
-    mintAmount,
+    balanceFromAmount,
     tokensFromBalance,
     mintTokens,
     DEFAULT_ASSETS_DECIMALS,

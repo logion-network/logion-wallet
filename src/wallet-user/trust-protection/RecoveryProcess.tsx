@@ -1,7 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import { useLogionChain } from '../../logion-chain';
-import { accountBalance, AssetWithBalance } from '../../logion-chain/Assets';
+import { balanceFromAmount, accountBalance, buildTransferCall } from '../../logion-chain/Assets';
+import { AssetWithBalance } from '../../logion-chain/Types';
+import { signAndSendAsRecovered } from '../../logion-chain/Recovery';
+import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
 
 import { useRootContext } from '../../RootContext';
 import { FullWidthPane } from '../../component/Dashboard';
@@ -9,10 +12,11 @@ import Tabs from '../../component/Tabs';
 import Table, { Cell, EmptyTableMessage } from '../../component/Table';
 import { ColorThemeType, GREEN } from '../../component/ColorTheme';
 import Button from '../../component/Button';
+import Icon from '../../component/Icon';
+import Dialog from '../../component/Dialog';
 
 import { useUserContext } from '../UserContext';
 import { getOfficer } from "./Model";
-import Icon from '../../component/Icon';
 
 import './RecoveryProcess.css';
 
@@ -45,6 +49,8 @@ export default function RecoveryProcess() {
     const { colorTheme, recoveredAddress } = useUserContext();
     const [ tabKey, setTabKey ] = useState<string>('tokens');
     const [ balances, setBalances ] = useState<Balances | null>(null);
+    const [ recoveredToken, setRecoveredToken ] = useState<AssetWithBalance | null>(null);
+    const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
 
     useEffect(() => {
         if(recoveredAddress !== null &&
@@ -59,7 +65,6 @@ export default function RecoveryProcess() {
                     api: api!,
                     accountId,
                 });
-                console.log(`${balances.length} entries`);
                 setBalances({
                     accountId,
                     balances,
@@ -68,13 +73,35 @@ export default function RecoveryProcess() {
         }
     }, [ api, balances, recoveredAddress, setBalances ]);
 
+    const recoverToken = useCallback(() => {
+        const amount = balanceFromAmount(Number(recoveredToken!.balance), recoveredToken!.asset.metadata.decimals);
+        const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSendAsRecovered({
+            api: api!,
+            signerId: addresses!.currentAddress.address,
+            callback: setResult,
+            errorCallback: setError,
+            recoveredAccountId: recoveredAddress!,
+            call: buildTransferCall({
+                api: api!,
+                assetId: recoveredToken!.asset.assetId,
+                amount,
+                target: addresses!.currentAddress.address,
+            }),
+        });
+        setSignAndSubmit(() => signAndSubmit);
+    }, [ api, addresses, recoveredToken, recoveredAddress ]);
+
+    const onTransferSuccess = useCallback(() => {
+        setSignAndSubmit(null);
+        setRecoveredToken(null);
+        setBalances(null);
+    }, [ setSignAndSubmit, setRecoveredToken, setBalances ]);
+
     if(addresses === null || selectAddress === null || recoveredAddress === null) {
         return null;
     }
 
     const tokens: AssetWithBalance[] = (balances !== null && balances.balances !== undefined) ? balances.balances.filter(token => Number(token.balance) > 0) : [];
-    console.log("render");
-    console.log(balances);
     return (
         <FullWidthPane
             className="RecoveryProcess"
@@ -140,9 +167,9 @@ export default function RecoveryProcess() {
                                             },
                                             {
                                                 header: "Action",
-                                                render: request => <Button
+                                                render: token => <Button
                                                     variant="recovery"
-                                                    onClick={ () => {} }
+                                                    onClick={ () => setRecoveredToken(token) }
                                                     colors={ colorTheme.buttons }
                                                 >
                                                     Transfer
@@ -171,6 +198,37 @@ export default function RecoveryProcess() {
                     colors={ colorTheme.tabs }
                     onSelect={ key => setTabKey(key || 'tokens') }
                 />
+                <Dialog
+                    show={ recoveredToken !== null }
+                    colors={ colorTheme }
+                    size="lg"
+                    actions={[
+                        {
+                            id: "cancel",
+                            buttonText: "Cancel",
+                            buttonVariant: "secondary",
+                            callback: () => setRecoveredToken(null)
+                        },
+                        {
+                            id: "transfer",
+                            buttonText: "Transfer",
+                            buttonVariant: "recovery",
+                            callback: recoverToken
+                        }
+                    ]}
+                >
+                    <p>
+                        You are about to transfer { recoveredToken?.balance } units of
+                        token { recoveredToken?.asset.metadata.symbol } to
+                        account { addresses?.currentAddress.address }.
+                    </p>
+                    <ExtrinsicSubmitter
+                        id="transfer"
+                        signAndSubmit={ signAndSubmit }
+                        onSuccess={ onTransferSuccess }
+                        onError={ () => {} }
+                    />
+                </Dialog>
             </>
         </FullWidthPane>
     );

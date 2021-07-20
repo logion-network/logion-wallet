@@ -2,7 +2,7 @@ import {
     signAndSend as signAndSendMock,
     createAsset as createAssetMock,
     setAssetMetadata as setAssetMetadataMock,
-    mintAmount as mintAmountMock,
+    balanceFromAmount as balanceFromAmountMock,
     mintTokens as mintTokensMock,
     replaceUnsubscriber as replaceUnsubscriberMock,
     useLogionChain as useLogionChainMock,
@@ -18,7 +18,7 @@ import {
 export const signAndSend = signAndSendMock;
 export const createAsset = createAssetMock;
 export const setAssetMetadata = setAssetMetadataMock;
-export const mintAmount = mintAmountMock;
+export const balanceFromAmount = balanceFromAmountMock;
 export const mintTokens = mintTokensMock;
 export const replaceUnsubscriber = replaceUnsubscriberMock;
 export const useLogionChain = useLogionChainMock;
