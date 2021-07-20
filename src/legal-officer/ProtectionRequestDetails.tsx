@@ -1,7 +1,7 @@
 import React from "react";
 
-import { Col } from '../component/Grid';
-import Detail from "../component/Detail";
+import { Col } from '../common/Grid';
+import Detail from "../common/Detail";
 
 import { ProtectionRequest } from "./Types";
 import { useLegalOfficerContext } from "./LegalOfficerContext";

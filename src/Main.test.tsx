@@ -1,9 +1,11 @@
 jest.mock('./logion-chain');
+jest.mock('./logion-chain/Keys');
 jest.mock('./config');
 
 import React from 'react';
 import Main from './Main';
-import { setContextMock, setExtensionAvailable } from './logion-chain/__mocks__/LogionChainMock';
+import { setContextMock } from './logion-chain/__mocks__/LogionChainMock';
+import { setExtensionAvailable } from './logion-chain/__mocks__/KeysMock';
 import { shallowRender, mockAccount, act } from './tests';
 
 test('Given no enabled extension, when rendering, then show loader', () => {

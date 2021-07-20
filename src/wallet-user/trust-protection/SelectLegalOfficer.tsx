@@ -2,11 +2,11 @@ import React from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import { ColorTheme, ORANGE, GREEN, RED, YELLOW } from "../../component/ColorTheme";
-import Select, { OptionType } from '../../component/Select';
-import LegalOfficer from "../../component/types/LegalOfficer";
-import Icon from "../../component/Icon";
-import FormGroup from '../../component/FormGroup';
+import { ColorTheme, ORANGE, GREEN, RED, YELLOW } from "../../common/ColorTheme";
+import Select, { OptionType } from '../../common/Select';
+import { LegalOfficer } from "../../common/types/LegalOfficer";
+import Icon from "../../common/Icon";
+import FormGroup from '../../common/FormGroup';
 
 import { LegalOfficerDecisionStatus, ProtectionRequestStatus } from "../../legal-officer/Types";
 

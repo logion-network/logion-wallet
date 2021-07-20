@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-import Tabs from '../component/Tabs';
-import { FullWidthPane } from '../component/Dashboard';
+import Tabs from '../common/Tabs';
+import { FullWidthPane } from '../common/Dashboard';
 import { useRootContext } from '../RootContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';

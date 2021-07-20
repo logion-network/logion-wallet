@@ -1,6 +1,6 @@
 import {render} from "../tests";
 import LegalOfficerInfo from "./LegalOfficerInfo";
-import {DEFAULT_LEGAL_OFFICER} from "../legal-officer/Types";
+import {DEFAULT_LEGAL_OFFICER} from "./types/LegalOfficer";
 
 test("renders", () => {
     const tree = render(<LegalOfficerInfo

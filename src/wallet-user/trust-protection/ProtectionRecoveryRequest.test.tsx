@@ -14,7 +14,7 @@ import { createRecovery } from '../../logion-chain/Recovery';
 
 import ProtectionRecoveryRequest from './ProtectionRecoveryRequest';
 import { ProtectionRequest } from '../../legal-officer/Types';
-import { DEFAULT_IDENTITY, DEFAULT_ADDRESS } from '../../component/TestData';
+import { DEFAULT_IDENTITY, DEFAULT_ADDRESS } from '../../common/TestData';
 import { TEST_WALLET_USER } from "../TestData";
 import {
     ACTIVATED_PROTECTION_REQUEST,

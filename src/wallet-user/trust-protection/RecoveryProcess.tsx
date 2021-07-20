@@ -1,22 +1,21 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
 import { useLogionChain } from '../../logion-chain';
-import { balanceFromAmount, accountBalance, buildTransferCall } from '../../logion-chain/Assets';
-import { AssetWithBalance } from '../../logion-chain/Types';
+import { balanceFromAmount, accountBalance, buildTransferCall, AssetWithBalance } from '../../logion-chain/Assets';
 import { signAndSendAsRecovered } from '../../logion-chain/Recovery';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
 
 import { useRootContext } from '../../RootContext';
-import { FullWidthPane } from '../../component/Dashboard';
-import Tabs from '../../component/Tabs';
-import Table, { Cell, EmptyTableMessage } from '../../component/Table';
-import { ColorThemeType, GREEN } from '../../component/ColorTheme';
-import Button from '../../component/Button';
-import Icon from '../../component/Icon';
-import Dialog from '../../component/Dialog';
+import { FullWidthPane } from '../../common/Dashboard';
+import Tabs from '../../common/Tabs';
+import Table, { Cell, EmptyTableMessage } from '../../common/Table';
+import { ColorThemeType, GREEN } from '../../common/ColorTheme';
+import Button from '../../common/Button';
+import Icon from '../../common/Icon';
+import Dialog from '../../common/Dialog';
+import { getOfficer } from "../../common/types/LegalOfficer";
 
 import { useUserContext } from '../UserContext';
-import { getOfficer } from "./Model";
 
 import './RecoveryProcess.css';
 

@@ -1,6 +1,6 @@
 import React from "react";
-import { ColorTheme } from "../../component/ColorTheme";
-import LegalOfficer from "../../component/types/LegalOfficer";
+import { ColorTheme } from "../../common/ColorTheme";
+import { LegalOfficer } from "../../common/types/LegalOfficer";
 
 import { LegalOfficerDecisionStatus, ProtectionRequestStatus } from "../../legal-officer/Types";
 

@@ -8,7 +8,7 @@ import { shallowRender } from '../tests';
 import MyTokens from './MyTokens';
 import { render, screen, waitFor } from '@testing-library/react';
 import { setAccountBalance } from '../logion-chain/__mocks__/AssetsMock';
-import { DEFAULT_LEGAL_OFFICER } from "../legal-officer/Types";
+import { DEFAULT_LEGAL_OFFICER } from "../common/types/LegalOfficer";
 import { TEST_WALLET_USER } from '../wallet-user/TestData';
 
 test("renders with no requests", () => {

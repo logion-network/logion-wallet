@@ -2,27 +2,27 @@ import React, { useState, useCallback } from 'react';
 import {useForm, Controller} from 'react-hook-form';
 import Form from "react-bootstrap/Form";
 
-import Button from "../../component/Button";
-import { ContentPane } from "../../component/Dashboard";
-import Frame from "../../component/Frame";
-import Alert from "../../component/Alert";
-import Dialog from '../../component/Dialog';
-import FormGroup from '../../component/FormGroup';
+import Button from "../../common/Button";
+import { ContentPane } from "../../common/Dashboard";
+import Frame from "../../common/Frame";
+import Alert from "../../common/Alert";
+import Dialog from '../../common/Dialog';
+import FormGroup from '../../common/FormGroup';
 
-import { CreateProtectionRequest, legalOfficers } from "./Model";
+import { CreateProtectionRequest } from "./Model";
 import {useUserContext} from "../UserContext";
 import moment from "moment";
 import {
-    sign,
     useLogionChain,
 } from '../../logion-chain';
+import { sign } from "../../logion-chain/Signature";
 import { getActiveRecovery, initiateRecovery } from '../../logion-chain/Recovery';
 import {Row, Col} from "react-bootstrap";
 import {useRootContext} from "../../RootContext";
 import LegalOfficers from './LegalOfficers';
 
 import './CreateProtectionRequestForm.css';
-import LegalOfficer from '../../component/types/LegalOfficer';
+import { LegalOfficer, legalOfficers } from '../../common/types/LegalOfficer';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
 import { ApiPromise } from '@polkadot/api';
 

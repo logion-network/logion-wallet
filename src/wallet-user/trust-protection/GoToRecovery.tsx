@@ -2,9 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import { useRootContext } from '../../RootContext';
-import { FullWidthPane } from '../../component/Dashboard';
-import Alert from '../../component/Alert';
-import Button from '../../component/Button';
+import { FullWidthPane } from '../../common/Dashboard';
+import Alert from '../../common/Alert';
+import Button from '../../common/Button';
 
 import { useUserContext } from '../UserContext';
 import { RECOVERY_PATH } from '../UserRouter';

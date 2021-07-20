@@ -4,9 +4,9 @@ import moment from 'moment';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Form from 'react-bootstrap/Form';
 
-import Button from '../component/Button';
-import Table, { Cell, EmptyTableMessage, DateCell } from '../component/Table';
-import { sign } from '../logion-chain';
+import Button from '../common/Button';
+import Table, { Cell, EmptyTableMessage, DateCell } from '../common/Table';
+import { sign } from '../logion-chain/Signature';
 import { useRootContext } from '../RootContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
@@ -17,7 +17,7 @@ import ProtectionRequestStatus from './ProtectionRequestStatus';
 import ProtectionRequestDetails from './ProtectionRequestDetails';
 import { useHistory } from "react-router-dom";
 import { recoveryDetailsPath } from "./LegalOfficerPaths";
-import AccountInfo from "../component/AccountInfo";
+import AccountInfo from "../common/AccountInfo";
 
 enum ReviewStatus {
     NONE,

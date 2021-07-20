@@ -5,18 +5,18 @@ import { createRecovery, claimRecovery } from '../../logion-chain/Recovery';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
 
 import { ProtectionRequest } from "../../legal-officer/Types";
-import LegalOfficer from '../../component/types/LegalOfficer';
-import { FullWidthPane } from "../../component/Dashboard";
-import Frame from "../../component/Frame";
-import Alert from '../../component/Alert';
-import Button from '../../component/Button';
-import Icon from '../../component/Icon';
-import { GREEN } from '../../component/ColorTheme';
+import { LegalOfficer, legalOfficerByAddress } from '../../common/types/LegalOfficer';
+import { FullWidthPane } from "../../common/Dashboard";
+import Frame from "../../common/Frame";
+import Alert from '../../common/Alert';
+import Button from '../../common/Button';
+import Icon from '../../common/Icon';
+import { GREEN } from '../../common/ColorTheme';
 import { useRootContext } from '../../RootContext';
 
 import { useUserContext } from '../UserContext';
 
-import { legalOfficerByAddress, checkActivation } from "./Model";
+import { checkActivation } from "./Model";
 import LegalOfficers from './LegalOfficers';
 import './ProtectionRecoveryRequest.css';
 

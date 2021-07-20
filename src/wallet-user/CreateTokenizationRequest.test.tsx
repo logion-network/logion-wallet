@@ -1,9 +1,10 @@
 jest.mock('./UserContext');
 jest.mock('../logion-chain');
+jest.mock('../logion-chain/Signature');
 jest.mock('../RootContext');
 
 import React from 'react';
-import {DEFAULT_LEGAL_OFFICER} from "../legal-officer/Types";
+import {DEFAULT_LEGAL_OFFICER} from "../common/types/LegalOfficer";
 import {setCreateTokenRequest} from "./__mocks__/UserContextMock";
 import CreateTokenizationRequest from "./CreateTokenizationRequest";
 import {shallowRender} from "../tests";

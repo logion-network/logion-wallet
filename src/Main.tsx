@@ -1,5 +1,6 @@
 import React from 'react';
-import { useLogionChain, isExtensionAvailable } from './logion-chain';
+import { useLogionChain } from './logion-chain';
+import { isExtensionAvailable } from './logion-chain/Keys';
 
 import RootRouter from './RootRouter';
 import Loader from './Loader';

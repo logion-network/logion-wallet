@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Icon from "../component/Icon";
-import { ORANGE, GREEN, RED, YELLOW } from "../component/ColorTheme";
+import Icon from "../common/Icon";
+import { ORANGE, GREEN, RED, YELLOW } from "../common/ColorTheme";
 
 import { LegalOfficerDecisionStatus, ProtectionRequestStatus as ProtectionRequestStatusType } from './Types';
 import './ProtectionRequestStatus.css';

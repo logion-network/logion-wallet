@@ -1,12 +1,14 @@
 jest.mock('./LegalOfficerContext');
 jest.mock('../logion-chain');
+jest.mock('../logion-chain/Assets');
+jest.mock('../logion-chain/Signature');
 jest.mock('./Model');
 
 import { shallowRender } from '../tests';
 import TokenizationRequestAcceptance from './TokenizationRequestAcceptance';
 import { render, screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { signAndSendCallback } from '../logion-chain/__mocks__/LogionChainMock';
+import { finalizeSubmission } from '../logion-chain/__mocks__/SignatureMock';
 import { setAcceptRequest, acceptRequest, setAssetDescription } from './__mocks__/ModelMock';
 import { ISO_DATETIME_PATTERN } from '../logion-chain/datetime';
 
@@ -46,13 +48,7 @@ test("Click on accept and proceed accepts request", async () => {
     const createButton = screen.getByTestId("proceed-create-1");
     userEvent.click(createButton);
     await waitFor(() => screen.getByText(/Submitting/));
-    act(() => signAndSendCallback({
-        isFinalized: true,
-        status: {
-            type: "finalized",
-            asFinalized: "finalized",
-        }
-    }));
+    act(finalizeSubmission);
     await waitFor(() => screen.getByText(/Asset successfully created/));
     await waitFor(() => expect(setAssetDescription).toBeCalledWith(
         expect.objectContaining({
@@ -69,26 +65,14 @@ test("Click on accept and proceed accepts request", async () => {
     const proceedMetadataButton = screen.getByTestId("proceed-metadata-1");
     userEvent.click(proceedMetadataButton);
     await waitFor(() => screen.getByText(/Submitting/));
-    act(() => signAndSendCallback({
-        isFinalized: true,
-        status: {
-            type: "finalized",
-            asFinalized: "finalized",
-        }
-    }));
+    act(finalizeSubmission);
     await waitFor(() => screen.getByText(/Metadata successfully set/));
 
     // Mint tokens result
     const proceedMintingButton = screen.getByTestId("proceed-minting-1");
     userEvent.click(proceedMintingButton);
     await waitFor(() => screen.getByText(/Submitting/));
-    act(() => signAndSendCallback({
-        isFinalized: true,
-        status: {
-            type: "finalized",
-            asFinalized: "finalized",
-        }
-    }));
+    act(finalizeSubmission);
     await waitFor(() => screen.getByText(/Tokens successfully minted/));
 
     const proceedReviewButton = screen.getByTestId("proceed-review-1");

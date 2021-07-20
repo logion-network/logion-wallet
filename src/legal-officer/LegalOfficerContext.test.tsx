@@ -1,5 +1,6 @@
 jest.mock("./Model");
 jest.mock('../logion-chain');
+jest.mock('../logion-chain/Signature');
 
 import { useEffect, useState } from 'react';
 import { LegalOfficerContextProvider, useLegalOfficerContext } from './LegalOfficerContext';

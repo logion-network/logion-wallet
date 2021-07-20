@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Table, { Cell, EmptyTableMessage, DateCell } from '../component/Table';
+import Table, { Cell, EmptyTableMessage, DateCell } from '../common/Table';
 
 import { useRootContext } from '../RootContext';
 

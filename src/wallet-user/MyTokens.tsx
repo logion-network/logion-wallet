@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
 
-import Table, { Cell, EmptyTableMessage } from '../component/Table';
+import Table, { Cell, EmptyTableMessage } from '../common/Table';
 
 import { useRootContext } from '../RootContext';
 
 import { useLogionChain } from '../logion-chain';
-import { AssetWithBalance } from '../logion-chain/Types';
-import { accountBalance } from '../logion-chain/Assets';
+import { accountBalance, AssetWithBalance } from '../logion-chain/Assets';
+
+import { getOfficer } from "../common/types/LegalOfficer";
 
 import { useUserContext } from './UserContext';
-import { getOfficer } from "./trust-protection/Model";
 
 interface Balances {
     accountId: string,

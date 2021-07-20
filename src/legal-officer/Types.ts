@@ -1,15 +1,6 @@
-import { ColorTheme, rgbaToHex } from '../component/ColorTheme';
-import Identity from '../component/types/Identity';
-import PostalAddress from '../component/types/PostalAddress';
-
-export const DEFAULT_LEGAL_OFFICER = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"; // Alice
-export const ANOTHER_LEGAL_OFFICER = "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty"; // Bob
-
-const LEGAL_OFFICERS: string[] = [ DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER ];
-
-export function isLegalOfficer(address: string): boolean {
-    return LEGAL_OFFICERS.includes(address);
-}
+import { ColorTheme, rgbaToHex } from '../common/ColorTheme';
+import Identity from '../common/types/Identity';
+import PostalAddress from '../common/types/PostalAddress';
 
 export type TokenizationRequestStatus = "PENDING" | "REJECTED" | "ACCEPTED";
 

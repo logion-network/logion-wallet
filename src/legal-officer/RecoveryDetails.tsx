@@ -3,25 +3,26 @@ import Form from 'react-bootstrap/Form';
 
 import { useRootContext } from "../RootContext";
 import { useLegalOfficerContext } from "./LegalOfficerContext";
-import { FullWidthPane } from "../component/Dashboard";
+import { FullWidthPane } from "../common/Dashboard";
 import { useParams, useHistory } from 'react-router';
 import { RECOVERY_REQUESTS_PATH } from "./LegalOfficerPaths";
-import Button from "../component/Button";
+import Button from "../common/Button";
 import React, { useEffect, useState, useCallback } from "react";
 import { Col, Row } from "react-bootstrap";
 import { acceptProtectionRequest, fetchRecoveryInfo, rejectProtectionRequest } from "./Model";
 import { RecoveryInfo } from "./Types";
-import AccountInfo from "../component/AccountInfo";
-import Alert from "../component/Alert";
-import Frame from "../component/Frame";
+import AccountInfo from "../common/AccountInfo";
+import Alert from "../common/Alert";
+import Frame from "../common/Frame";
 import "./RecoveryDetails.css"
-import Spacer from "../component/Spacer";
-import Icon from "../component/Icon";
-import Dialog from "../component/Dialog";
-import { useLogionChain, sign } from '../logion-chain';
+import Spacer from "../common/Spacer";
+import Icon from "../common/Icon";
+import Dialog from "../common/Dialog";
+import { useLogionChain } from '../logion-chain';
+import { sign } from "../logion-chain/Signature";
 import { vouchRecovery } from '../logion-chain/Recovery';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../ExtrinsicSubmitter';
-import ButtonGroup from "../component/ButtonGroup";
+import ButtonGroup from "../common/ButtonGroup";
 
 export default function RecoveryDetails() {
     const { selectAddress, addresses } = useRootContext();

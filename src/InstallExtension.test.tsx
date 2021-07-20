@@ -1,9 +1,9 @@
-jest.mock('./logion-chain');
+jest.mock('./logion-chain/Keys');
 
 import React from 'react';
 import InstallExtension from './InstallExtension';
 import { shallowRender } from './tests';
-import { setRecommendedExtension } from './logion-chain';
+import { setRecommendedExtension } from './logion-chain/__mocks__/KeysMock';
 
 test('Given unsupported browser, when rendering, then show message', () => {
     setRecommendedExtension(null);

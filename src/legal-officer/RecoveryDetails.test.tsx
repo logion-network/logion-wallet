@@ -12,7 +12,7 @@ import { RecoveryInfo } from './Types';
 import { setFetchRecoveryInfo, acceptProtectionRequest, rejectProtectionRequest } from './__mocks__/ModelMock';
 import { PROTECTION_REQUESTS_HISTORY, DEFAULT_LEGAL_OFFICER_ADDRESS } from './TestData';
 import { setAddresses } from '../__mocks__/RootContextMock';
-import { setIsFinalized } from '../logion-chain/__mocks__/LogionChainMock';
+import { setIsFinalized } from '../logion-chain/__mocks__/SignatureMock';
 import { setParams, history } from '../__mocks__/ReactRouterMock';
 import { ISO_DATETIME_PATTERN } from '../logion-chain/datetime';
 import { refreshRequests } from './__mocks__/LegalOfficerContextMock';

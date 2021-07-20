@@ -6,11 +6,11 @@ import Button from "react-bootstrap/Button";
 import moment from 'moment';
 
 import { useRootContext } from "../RootContext";
-import { DEFAULT_LEGAL_OFFICER } from '../legal-officer/Types';
+import { DEFAULT_LEGAL_OFFICER } from '../common/types/LegalOfficer';
 
 import {CreateTokenRequest} from "./Model";
 import {useUserContext} from "./UserContext";
-import { sign } from '../logion-chain';
+import { sign } from '../logion-chain/Signature';
 
 export interface Props {
     onSubmit: () => void;

@@ -1,6 +1,6 @@
 import Identity from './types/Identity';
 import PostalAddress from './types/PostalAddress';
-import { ColorTheme, rgbaToHex } from '../component/ColorTheme';
+import { ColorTheme, rgbaToHex } from '../common/ColorTheme';
 
 export const DEFAULT_IDENTITY: Identity = {
     firstName: "John",

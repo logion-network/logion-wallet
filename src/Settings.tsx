@@ -1,11 +1,12 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
 
-import { FullWidthPane } from './component/Dashboard';
-import { ColorTheme } from './component/ColorTheme';
-import Frame from './component/Frame';
+import { FullWidthPane } from './common/Dashboard';
+import { ColorTheme } from './common/ColorTheme';
+import Frame from './common/Frame';
 
-import { useLogionChain, ApiState, NodeMetadata } from './logion-chain';
+import { useLogionChain } from './logion-chain';
+import { ApiState, NodeMetadata } from './logion-chain/Connection';
 
 import { useRootContext } from './RootContext';
 

@@ -1,15 +1,14 @@
 import React, { useReducer, useContext, Context, Reducer } from 'react';
 
-import { Node, ConfigType, DEFAULT_CONFIG } from '../config';
+import config, { Node } from '../config';
 
-import jsonrpc from '@polkadot/types/interfaces/jsonrpc';
-import { ApiPromise, WsProvider } from '@polkadot/api';
-import keyring from '@polkadot/ui-keyring';
+import { ApiPromise } from '@polkadot/api';
 import { EventRecord, Header, Extrinsic, Hash, Block } from '@polkadot/types/interfaces';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
 import { fetchExtrinsics, ExtrinsicsAndHead } from './Blocks';
 import { enableExtensions } from './Keys';
+import { ApiState, NodeMetadata, buildApi } from './Connection';
 
 ///
 // Initial state for `useReducer`
@@ -24,17 +23,7 @@ export interface ExtrinsicFetchSpecification {
     since?: ExtrinsicsAndHead | null
 }
 
-export type ApiState= 'DISCONNECTED'
-    | 'CONNECT_INIT'
-    | 'CONNECTING'
-    | 'READY'
-    | 'ERROR';
-
 export interface LogionChainContextType {
-    appName: string,
-    jsonrpc: any,
-    types: any,
-    providerSocket?: string,
     api: ApiPromise | null,
     apiError: any,
     apiState: ApiState,
@@ -52,11 +41,7 @@ export interface LogionChainContextType {
     extensionsEnabled: boolean,
 }
 
-const initState = (config: ConfigType): LogionChainContextType => ({
-    appName: config.APP_NAME,
-    jsonrpc: { ...jsonrpc, ...config.RPC },
-    types: config.types,
-    providerSocket: config.PROVIDER_SOCKET,
+const initState = (): LogionChainContextType => ({
     api: null,
     apiError: null,
     apiState: 'DISCONNECTED',
@@ -90,11 +75,6 @@ type ActionType =
     | 'SET_INJECTED_ACCOUNTS'
     | 'SET_NODE_METADATA'
     | 'EXTENSIONS_ENABLED';
-
-export interface NodeMetadata {
-    name: string,
-    peerId: string
-}
 
 interface Action {
     type: ActionType,
@@ -171,15 +151,14 @@ function pushAndLimit(previousEvents: EventRecord[], newEvents: EventRecord[]): 
 // Connecting to the LogionChain node
 
 const connect = (state: LogionChainContextType, dispatch: React.Dispatch<Action>) => {
-    const { apiState, selectedNode, jsonrpc, types, providerSocket } = state;
+    const { apiState, selectedNode } = state;
     if (apiState !== 'DISCONNECTED' || selectedNode === null) {
         return;
     }
 
     dispatch({ type: 'CONNECT_INIT' });
 
-    const provider = buildProvider(selectedNode, providerSocket);
-    const _api = new ApiPromise({ provider, types, rpc: jsonrpc });
+    const _api = buildApi(selectedNode);
 
     _api.on('connected', () => {
         dispatch({ type: 'CONNECT', api: _api });
@@ -197,16 +176,6 @@ const connect = (state: LogionChainContextType, dispatch: React.Dispatch<Action>
     _api.on('error', err => dispatch({ type: 'CONNECT_ERROR', error: err }));
 };
 
-function buildProvider(selectedNode: Node | null, providerSocket?: string): WsProvider {
-    if(providerSocket !== undefined) {
-        return new WsProvider(providerSocket);
-    } else if(selectedNode !== null) {
-        return new WsProvider(selectedNode.socket);
-    } else {
-        throw new Error("No provider socket nor selected node");
-    }
-}
-
 const fetchConnectedNodeMetadata = async (api: ApiPromise, dispatch: React.Dispatch<Action>) => {
     const nodeName = await api.rpc.system.name();
     const nodePeerId = await api.rpc.system.localPeerId();
@@ -216,7 +185,7 @@ const fetchConnectedNodeMetadata = async (api: ApiPromise, dispatch: React.Dispa
     }});
 };
 
-const LogionChainContext: Context<LogionChainContextType> = React.createContext<LogionChainContextType>(initState(DEFAULT_CONFIG));
+const LogionChainContext: Context<LogionChainContextType> = React.createContext<LogionChainContextType>(initState());
 
 function consumeEvents(state: LogionChainContextType, dispatch: React.Dispatch<Action>) {
     if(state.apiState === 'READY' && state.eventsConsumption === 'PENDING') {
@@ -245,7 +214,7 @@ async function consumeInjectedAccounts(state: LogionChainContextType, dispatch: 
         dispatch({type: 'START_INJECTED_ACCOUNTS_CONSUMPTION'});
     } else if(state.injectedAccountsConsumptionState === 'STARTING') {
         dispatch({type: 'INJECTED_ACCOUNTS_CONSUMPTION_STARTED'});
-        const register = await enableExtensions(state.appName);
+        const register = await enableExtensions(config.APP_NAME);
         dispatch({type: 'EXTENSIONS_ENABLED'});
         register((accounts: InjectedAccountWithMeta[]) => {
             dispatch({type: 'SET_INJECTED_ACCOUNTS', injectedAccounts: accounts});
@@ -255,29 +224,13 @@ async function consumeInjectedAccounts(state: LogionChainContextType, dispatch: 
 
 interface LogionChainContextProviderProps {
     children: JSX.Element,
-    config: ConfigType,
-}
-
-let keyringLoaded = false;
-
-export function forceKeyringLoad() {
-    keyringLoaded = false;
 }
 
 let timeout: NodeJS.Timeout | null = null;
 
 const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX.Element => {
-    if(!keyringLoaded) {
-        keyringLoaded = true;
-        try {
-            keyring.loadAll({ isDevelopment: props.config.DEVELOPMENT_KEYRING });
-        } catch(error) {
-            console.log("Keyring loadAll failed, already initialized?");
-        }
-    }
-
-    const [state, dispatch] = useReducer(reducer, initState(props.config));
-    state.selectedNode = props.config.availableNodes[0];
+    const [state, dispatch] = useReducer(reducer, initState());
+    state.selectedNode = config.availableNodes[0];
     state.connect = () => connect(state, dispatch);
 
     connect(state, dispatch);

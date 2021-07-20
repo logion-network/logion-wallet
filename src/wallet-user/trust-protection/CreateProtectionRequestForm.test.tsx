@@ -1,9 +1,10 @@
 jest.mock('../UserContext');
 jest.mock('../../logion-chain');
+jest.mock('../../logion-chain/Signature');
 jest.mock('../../RootContext');
 
 import { TEST_WALLET_USER } from '../TestData';
-import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from "../../legal-officer/Types";
+import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from "../../common/types/LegalOfficer";
 import { ISO_DATETIME_PATTERN } from "../../logion-chain/datetime";
 import { setCreateProtectionRequest } from "../__mocks__/UserContextMock";
 import { shallowRender } from "../../tests";

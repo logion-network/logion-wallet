@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Dashboard from '../component/Dashboard';
+import Dashboard from '../common/Dashboard';
 
 import LegalOfficerRouter from './LegalOfficerRouter';
 import { useLegalOfficerContext } from './LegalOfficerContext';

@@ -1,12 +1,12 @@
 jest.mock("./logion-chain");
 jest.mock("./logion-chain/Signature");
 
-import { setIsFinalized } from './logion-chain/__mocks__/LogionChainMock';
+import { setIsFinalized } from './logion-chain/__mocks__/SignatureMock';
 import { mockSubmittableResult } from './logion-chain/__mocks__/SignatureMock';
 
 import { screen, render, waitFor, act } from '@testing-library/react';
 import ExtrinsicSubmitter, { SignAndSubmit } from './ExtrinsicSubmitter';
-import { ISubmittableResult } from './logion-chain';
+import { SignedTransaction } from './logion-chain/Signature';
 
 test("Submitter empty with null signAndSubmit", () => {
     const onSuccess = jest.fn();
@@ -45,7 +45,7 @@ test("Submitter initially showing submitting", async () => {
 
 interface SignAndSubmitMock {
     signAndSubmit: SignAndSubmit,
-    setResult: React.Dispatch<React.SetStateAction<ISubmittableResult | null>> | null,
+    setResult: React.Dispatch<React.SetStateAction<SignedTransaction | null>> | null,
     setError: React.Dispatch<React.SetStateAction<any>> | null,
 }
 
