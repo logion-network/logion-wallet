@@ -164,7 +164,7 @@ export default function TokenizationRequestAcceptance(props: Props) {
                     errorCallback: setError,
                     assetId: acceptState.assetId!,
                     metadata: {
-                        name: props.requestToAccept!.requestedTokenName,
+                        name: `${props.requestToAccept!.bars} gold bar(s)`,
                         symbol: props.requestToAccept!.requestedTokenName,
                         decimals: DEFAULT_ASSETS_DECIMALS,
                     }
