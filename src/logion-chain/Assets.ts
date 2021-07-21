@@ -15,6 +15,10 @@ import {
     signAndSend,
     Unsubscriber
 } from './Signature';
+import {
+    amount,
+    balance
+} from './numbers';
 
 export const DEFAULT_ASSETS_DECIMALS = 18;
 
@@ -127,10 +131,8 @@ export function setAssetMetadata(parameters: SetAssetMetadataParameters): Unsubs
     });
 }
 export function balanceFromAmount(tokens: number, decimals: number): AssetBalance {
-    let tokensBN = new BN(tokens);
-    let decimalsBN = new BN(decimals);
-    let ten = new BN(10);
-    return tokensBN.mul(ten.pow(decimalsBN));
+    const balanceString = balance(String(tokens), decimals);
+    return new BN(balanceString);
 }
 
 export interface MintParameters {
@@ -161,13 +163,6 @@ export function mintTokens(parameters: MintParameters): Unsubscriber {
     });
 }
 
-export function tokensFromBalance(balance: AssetBalance, decimals: number): string {
-    let balanceBN = new BN(balance);
-    let exponent = new BN(decimals);
-    let ten = new BN(10);
-    return balanceBN.div(ten.pow(exponent)).toString();
-}
-
 export interface AssetBalanceParameters {
     api: ApiPromise,
     assetId: AssetId,
@@ -183,7 +178,7 @@ export async function assetBalance(parameters: AssetBalanceParameters): Promise<
         address,
     } = parameters;
     const balance = await api.query.assets.account(assetId, address);
-    return tokensFromBalance(balance.balance, decimals);
+    return amount(balance.balance.toString(), decimals);
 }
 
 export interface GetAssetsParameters {
