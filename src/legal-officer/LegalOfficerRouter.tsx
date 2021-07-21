@@ -1,19 +1,22 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 import {
     TOKENIZATION_REQUESTS_PATH,
     PROTECTION_REQUESTS_PATH,
     RECOVERY_REQUESTS_PATH,
     SETTINGS_PATH,
-    RECOVERY_DETAILS_PATH
+    RECOVERY_DETAILS_PATH,
+    NFT_PATH,
 } from './LegalOfficerPaths';
 
+import Home from './Home';
 import TokenizationRequests from './TokenizationRequests';
 import ProtectionRequests from './ProtectionRequests';
 import RecoveryRequests from './RecoveryRequests';
 import Settings from './Settings';
 import RecoveryDetails from "./RecoveryDetails";
+import Nft from "./Nft";
 
 export default function LegalOfficerRouter() {
 
@@ -35,8 +38,11 @@ export default function LegalOfficerRouter() {
                 <Route path={ SETTINGS_PATH }>
                     <Settings />
                 </Route>
+                <Route path={ NFT_PATH }>
+                    <Nft />
+                </Route>
                 <Route path="">
-                    <Redirect to={ TOKENIZATION_REQUESTS_PATH } />
+                    <Home />
                 </Route>
             </Switch>
         </>

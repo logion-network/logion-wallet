@@ -7,10 +7,12 @@ import { useLegalOfficerContext } from './LegalOfficerContext';
 import { useRootContext } from '../RootContext';
 
 import {
+    HOME_PATH,
     TOKENIZATION_REQUESTS_PATH,
     PROTECTION_REQUESTS_PATH,
     RECOVERY_REQUESTS_PATH,
     SETTINGS_PATH,
+    NFT_PATH,
 } from './LegalOfficerPaths';
 
 export default function ContextualizedWallet() {
@@ -26,6 +28,18 @@ export default function ContextualizedWallet() {
             colors={ colorTheme }
             menuTop={[
                 {
+                    id: "home",
+                    text: "Home",
+                    to: HOME_PATH,
+                    exact: true,
+                    icon: {
+                        icon: {
+                            id: 'home'
+                        },
+                        background: colorTheme.topMenuItems.iconGradient,
+                    },
+                },
+                {
                     id: "tokens",
                     text: "Tokens",
                     to: TOKENIZATION_REQUESTS_PATH,
@@ -33,6 +47,18 @@ export default function ContextualizedWallet() {
                     icon: {
                         icon: {
                             id: 'tokens'
+                        },
+                        background: colorTheme.topMenuItems.iconGradient,
+                    },
+                },
+                {
+                    id: "nft",
+                    text: "NFT",
+                    to: NFT_PATH,
+                    exact: true,
+                    icon: {
+                        icon: {
+                            id: 'nft'
                         },
                         background: colorTheme.topMenuItems.iconGradient,
                     },
