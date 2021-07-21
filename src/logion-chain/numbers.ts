@@ -11,12 +11,12 @@ export function balance(amount: string, decimals: number): string {
 }
 
 export class ScientificNumber {
-    private _normalized: string;
-    private _tenExponant: number;
+    private readonly _normalized: string;
+    private readonly _tenExponent: number;
 
-    constructor(coefficient: string, tenExponant: number) {
+    constructor(coefficient: string, tenExponent: number) {
         this._normalized = this.normalize(coefficient);
-        this._tenExponant = tenExponant;
+        this._tenExponent = tenExponent;
     }
 
     private shiftDecimalSeparator(positions: number): string {
@@ -88,7 +88,7 @@ export class ScientificNumber {
     }
 
     convertTo(newTenExponent: number): ScientificNumber {
-        const offset = this._tenExponant - newTenExponent;
+        const offset = this._tenExponent - newTenExponent;
         return new ScientificNumber(this.shiftDecimalSeparator(offset), newTenExponent);
     }
 
@@ -96,8 +96,8 @@ export class ScientificNumber {
         return this._normalized;
     }
 
-    get tenExponant(): number {
-        return this._tenExponant;
+    get tenExponent(): number {
+        return this._tenExponent;
     }
 
     optimizeScale(maxDigits: number): ScientificNumber {
@@ -116,26 +116,26 @@ export class ScientificNumber {
 
     limitIntegerDigits(integerPart: string, maxDigits: number): ScientificNumber {
         const delta = integerPart.length - maxDigits;
-        return this.convertTo(this._tenExponant + delta);
+        return this.convertTo(this._tenExponent + delta);
     }
 
     limitDecimalDigits(decimalPart: string, relevantDecimalPart: string): ScientificNumber {
         const delta = relevantDecimalPart.length - decimalPart.length - 1;
-        return this.convertTo(this._tenExponant + delta);
+        return this.convertTo(this._tenExponent + delta);
     }
 }
 
 export class PrefixedNumber {
-    private _scientificNumber: ScientificNumber;
-    private _prefix: UnitPrefix;
+    private readonly _scientificNumber: ScientificNumber;
+    private readonly _prefix: UnitPrefix;
 
     constructor(num: string, prefix: UnitPrefix) {
-        this._scientificNumber = new ScientificNumber(num, prefix.tenExponant);
+        this._scientificNumber = new ScientificNumber(num, prefix.tenExponent);
         this._prefix = prefix;
     }
 
     convertTo(prefix: UnitPrefix): PrefixedNumber {
-        const newScaled = this._scientificNumber.convertTo(prefix.tenExponant);
+        const newScaled = this._scientificNumber.convertTo(prefix.tenExponent);
         return new PrefixedNumber(newScaled.normalized, prefix);
     }
 
@@ -149,79 +149,79 @@ export class PrefixedNumber {
 
     optimizeScale(maxDigits: number): PrefixedNumber {
         const optimized = this._scientificNumber.optimizeScale(maxDigits);
-        const optimalPrefix = closestPrefix(optimized.tenExponant);
+        const optimalPrefix = closestPrefix(optimized.tenExponent);
         return this.convertTo(optimalPrefix);
     }
 }
 
 export const EXA: UnitPrefix = {
     symbol: 'E',
-    tenExponant: 18,
+    tenExponent: 18,
 };
 
 export const PETA: UnitPrefix = {
     symbol: 'P',
-    tenExponant: 15,
+    tenExponent: 15,
 };
 
 export const TERA: UnitPrefix = {
     symbol: 'T',
-    tenExponant: 12,
+    tenExponent: 12,
 };
 
 export const GIGA: UnitPrefix = {
     symbol: 'G',
-    tenExponant: 9,
+    tenExponent: 9,
 };
 
 export const MEGA: UnitPrefix = {
     symbol: 'M',
-    tenExponant: 6,
+    tenExponent: 6,
 };
 
 export const KILO: UnitPrefix = {
     symbol: 'k',
-    tenExponant: 3,
+    tenExponent: 3,
 };
 
 export const NONE: UnitPrefix = {
     symbol: '',
-    tenExponant: 0,
+    tenExponent: 0,
 };
 
 export const MILLI: UnitPrefix = {
     symbol: 'm',
-    tenExponant: -3,
+    tenExponent: -3,
 };
 
 export const MICRO: UnitPrefix = {
     symbol: 'µ',
-    tenExponant: -6,
+    tenExponent: -6,
 };
 
 export const NANO: UnitPrefix = {
     symbol: 'n',
-    tenExponant: -9,
+    tenExponent: -9,
 };
 
 export const PICO: UnitPrefix = {
     symbol: 'p',
-    tenExponant: -12,
+    tenExponent: -12,
 };
 
 export const FEMTO: UnitPrefix = {
     symbol: 'f',
-    tenExponant: -15,
+    tenExponent: -15,
 };
 
 export const ATTO: UnitPrefix = {
     symbol: 'a',
-    tenExponant: -18,
+    tenExponent: -18,
 };
 
 export interface UnitPrefix {
     symbol: string,
-    tenExponant: number,
+    tenExponent: number,
 }
 
 const SORTED_UNITS: UnitPrefix[] = [
@@ -238,17 +238,17 @@ const SORTED_UNITS: UnitPrefix[] = [
     PICO,
     FEMTO,
     ATTO
-].sort((a, b) => a.tenExponant - b.tenExponant);
+].sort((a, b) => a.tenExponent - b.tenExponent);
 
-function closestPrefix(tenExponant: number): UnitPrefix {
+function closestPrefix(tenExponent: number): UnitPrefix {
     let from: number = 0;
     let to: number = SORTED_UNITS.length;
     let candidate: number = -1;
     while((to - from) > 1) {
         const next = Math.floor(from + (to - from) / 2);
-        if(SORTED_UNITS[next].tenExponant > tenExponant) {
+        if(SORTED_UNITS[next].tenExponent > tenExponent) {
             to = next;
-        } else if(SORTED_UNITS[next].tenExponant < tenExponant) {
+        } else if(SORTED_UNITS[next].tenExponent < tenExponent) {
             from = next;
         } else {
             candidate = next;
@@ -259,25 +259,25 @@ function closestPrefix(tenExponant: number): UnitPrefix {
         candidate = from;
     }
     if(candidate === 0) {
-        const candidateDistance = Math.abs(SORTED_UNITS[candidate].tenExponant - tenExponant);
-        const nextDistance = Math.abs(SORTED_UNITS[candidate + 1].tenExponant - tenExponant);
+        const candidateDistance = Math.abs(SORTED_UNITS[candidate].tenExponent - tenExponent);
+        const nextDistance = Math.abs(SORTED_UNITS[candidate + 1].tenExponent - tenExponent);
         if(nextDistance < candidateDistance) {
             return SORTED_UNITS[candidate + 1];
         } else {
             return SORTED_UNITS[candidate];
         }
     } else if(candidate === SORTED_UNITS.length - 1) {
-        const candidateDistance = Math.abs(SORTED_UNITS[candidate].tenExponant - tenExponant);
-        const previousDistance = Math.abs(SORTED_UNITS[candidate - 1].tenExponant - tenExponant);
+        const candidateDistance = Math.abs(SORTED_UNITS[candidate].tenExponent - tenExponent);
+        const previousDistance = Math.abs(SORTED_UNITS[candidate - 1].tenExponent - tenExponent);
         if(previousDistance < candidateDistance) {
             return SORTED_UNITS[candidate - 1];
         } else {
             return SORTED_UNITS[candidate];
         }
     } else {
-        const candidateDistance = Math.abs(SORTED_UNITS[candidate].tenExponant - tenExponant);
-        const previousDistance = Math.abs(SORTED_UNITS[candidate - 1].tenExponant - tenExponant);
-        const nextDistance = Math.abs(SORTED_UNITS[candidate + 1].tenExponant - tenExponant);
+        const candidateDistance = Math.abs(SORTED_UNITS[candidate].tenExponent - tenExponent);
+        const previousDistance = Math.abs(SORTED_UNITS[candidate - 1].tenExponent - tenExponent);
+        const nextDistance = Math.abs(SORTED_UNITS[candidate + 1].tenExponent - tenExponent);
         if(previousDistance < candidateDistance && previousDistance < nextDistance) {
             return SORTED_UNITS[candidate - 1];
         } else if(nextDistance < candidateDistance && nextDistance < previousDistance) {

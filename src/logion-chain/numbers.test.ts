@@ -52,14 +52,14 @@ test("optimizeScale large", () => {
     const prefixed = new ScientificNumber("42000000", 0);
     const result = prefixed.optimizeScale(3);
     expect(result.normalized).toBe('420.');
-    expect(result.tenExponant).toBe(5);
+    expect(result.tenExponent).toBe(5);
 });
 
 test("optimizeScale small", () => {
     const prefixed = new ScientificNumber("0.00042", 0);
     const result = prefixed.optimizeScale(3);
     expect(result.normalized).toBe('4.2');
-    expect(result.tenExponant).toBe(-4);
+    expect(result.tenExponent).toBe(-4);
 });
 
 test("optimizeScale large prefixed", () => {
