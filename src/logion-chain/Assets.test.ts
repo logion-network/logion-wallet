@@ -7,8 +7,6 @@ import {
     createAsset,
     setAssetMetadata,
     mintTokens,
-    balanceFromAmount,
-    tokensFromBalance,
 } from './Assets';
 
 test("Creation of new asset", async () => {
@@ -69,16 +67,6 @@ test("Minting", () => {
 
     expect(assetId).toBeDefined();
     expect(unsubscriber).toBeDefined();
-});
-
-test("Mint amount", () => {
-    const result = balanceFromAmount(3, 4);
-    expect(result.toString()).toBe("30000");
-});
-
-test("tokens from balance", () => {
-    const result = tokensFromBalance(new BN("30000"), 4);
-    expect(result.toString()).toBe("3");
 });
 
 test("Creation of new asset but not able to find unused ID", async () => {
