@@ -150,12 +150,42 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
             "to": "#6050dc",
           },
           "icon": Object {
+            "id": "home",
+          },
+        },
+        "id": "home",
+        "text": "Home",
+        "to": "/user",
+      },
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
             "id": "tokens",
           },
         },
         "id": "tokens",
         "text": "Tokens",
         "to": "/user/account",
+      },
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
+            "id": "nft",
+          },
+        },
+        "id": "nft",
+        "text": "NFT",
+        "to": "/user/nft",
       },
     ]
   }
@@ -440,12 +470,42 @@ exports[`Given connected, when rendering, then show account, no connect button a
             "to": "#6050dc",
           },
           "icon": Object {
+            "id": "home",
+          },
+        },
+        "id": "home",
+        "text": "Home",
+        "to": "/user",
+      },
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
             "id": "tokens",
           },
         },
         "id": "tokens",
         "text": "Tokens",
         "to": "/user/account",
+      },
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
+            "id": "nft",
+          },
+        },
+        "id": "nft",
+        "text": "NFT",
+        "to": "/user/nft",
       },
     ]
   }
@@ -730,12 +790,42 @@ exports[`Given connecting, when rendering, then show account, no button, no node
             "to": "#6050dc",
           },
           "icon": Object {
+            "id": "home",
+          },
+        },
+        "id": "home",
+        "text": "Home",
+        "to": "/user",
+      },
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
             "id": "tokens",
           },
         },
         "id": "tokens",
         "text": "Tokens",
         "to": "/user/account",
+      },
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
+            "id": "nft",
+          },
+        },
+        "id": "nft",
+        "text": "NFT",
+        "to": "/user/nft",
       },
     ]
   }
@@ -1019,12 +1109,42 @@ exports[`Given connection error, when rendering, then show account, no button, n
             "to": "#6050dc",
           },
           "icon": Object {
+            "id": "home",
+          },
+        },
+        "id": "home",
+        "text": "Home",
+        "to": "/user",
+      },
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
             "id": "tokens",
           },
         },
         "id": "tokens",
         "text": "Tokens",
         "to": "/user/account",
+      },
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
+            "id": "nft",
+          },
+        },
+        "id": "nft",
+        "text": "NFT",
+        "to": "/user/nft",
       },
     ]
   }
@@ -1308,12 +1428,42 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
             "to": "#6050dc",
           },
           "icon": Object {
+            "id": "home",
+          },
+        },
+        "id": "home",
+        "text": "Home",
+        "to": "/user",
+      },
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
             "id": "tokens",
           },
         },
         "id": "tokens",
         "text": "Tokens",
         "to": "/user/account",
+      },
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
+            "id": "nft",
+          },
+        },
+        "id": "nft",
+        "text": "NFT",
+        "to": "/user/nft",
       },
     ]
   }
@@ -1597,12 +1747,42 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
             "to": "#6050dc",
           },
           "icon": Object {
+            "id": "home",
+          },
+        },
+        "id": "home",
+        "text": "Home",
+        "to": "/user",
+      },
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
             "id": "tokens",
           },
         },
         "id": "tokens",
         "text": "Tokens",
         "to": "/user/account",
+      },
+      Object {
+        "exact": true,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
+            "id": "nft",
+          },
+        },
+        "id": "nft",
+        "text": "NFT",
+        "to": "/user/nft",
       },
     ]
   }

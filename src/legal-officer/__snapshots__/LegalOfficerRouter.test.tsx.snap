@@ -29,11 +29,14 @@ exports[`renders 1`] = `
       <Settings />
     </Route>
     <Route
+      path="/legal-officer/nft"
+    >
+      <Account />
+    </Route>
+    <Route
       path=""
     >
-      <Redirect
-        to="/legal-officer/tokenization"
-      />
+      <Account />
     </Route>
   </Switch>
 </React.Fragment>

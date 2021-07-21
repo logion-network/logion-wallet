@@ -1,7 +1,7 @@
 jest.mock("../logion-chain");
 
 import React from 'react';
-import LegalOfficerWallet from './LegalOfficerWallet';
+import Main from './Main';
 import { DEFAULT_LEGAL_OFFICER } from './Types';
 import { shallowRender, mockAccount } from '../tests';
 import { setContextMock } from '../logion-chain/__mocks__/LogionChainMock';
@@ -12,6 +12,6 @@ test('renders', () => {
             mockAccount(DEFAULT_LEGAL_OFFICER, "Account name")
         ]
     });
-    const tree = shallowRender(<LegalOfficerWallet />);
+    const tree = shallowRender(<Main />);
     expect(tree).toMatchSnapshot();
 });
