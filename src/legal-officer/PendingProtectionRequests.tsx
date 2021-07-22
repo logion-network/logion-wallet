@@ -5,7 +5,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Form from 'react-bootstrap/Form';
 
 import Button from '../common/Button';
-import Table, { Cell, EmptyTableMessage, DateCell } from '../common/Table';
+import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../common/Table';
 import { sign } from '../logion-chain/Signature';
 import { useRootContext } from '../RootContext';
 
@@ -131,7 +131,7 @@ export default function PendingProtectionRequests(props: Props) {
                     },
                     {
                         header: "Submission date",
-                        render: request => <DateCell dateTime={ request.createdOn } />,
+                        render: request => <DateTimeCell dateTime={ request.createdOn } />,
                         width: "120px",
                     },
                     {

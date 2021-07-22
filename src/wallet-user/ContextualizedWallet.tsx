@@ -12,7 +12,8 @@ import UserRouter, {
     TRUST_PROTECTION_PATH,
     SETTINGS_PATH,
     RECOVERY_PATH,
-    NFT_PATH
+    NFT_PATH,
+    WALLET_PATH,
 } from "./UserRouter";
 import { useUserContext } from "./UserContext";
 import { useRootContext } from '../RootContext';
@@ -43,6 +44,18 @@ export default function ContextualizedWallet() {
                     icon: {
                         icon: {
                             id: 'home'
+                        },
+                        background: colorTheme.topMenuItems.iconGradient,
+                    },
+                },
+                {
+                    id: "wallet",
+                    text: "Wallet",
+                    to: WALLET_PATH,
+                    exact: true,
+                    icon: {
+                        icon: {
+                            id: 'wallet'
                         },
                         background: colorTheme.topMenuItems.iconGradient,
                     },

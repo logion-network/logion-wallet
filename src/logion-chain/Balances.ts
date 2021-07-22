@@ -1,5 +1,7 @@
 import { ApiPromise } from '@polkadot/api';
 
+export const LOG_DECIMALS = 18;
+
 export interface GetAccountDataParameters {
     api: ApiPromise,
     accountId: string,
