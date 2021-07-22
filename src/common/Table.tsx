@@ -17,6 +17,7 @@ export interface CellProps {
     wordBreak?: Css.Property.WordBreak,
     overflowing?: boolean,
     tooltipId?: string,
+    align?: Css.Property.TextAlign,
 }
 
 export function Cell(props: CellProps) {
@@ -34,6 +35,10 @@ export function Cell(props: CellProps) {
 
     if(props.overflowing !== undefined && props.overflowing) {
         className = className + " overflowing";
+    }
+
+    if(props.align !== undefined) {
+        style.textAlign = props.align;
     }
 
     if(props.tooltipId !== undefined) {
@@ -281,11 +286,15 @@ function ShowDetailsButton(props: ShowDetailsButtonProps) {
     );
 }
 
-export interface DateCellProps {
-    dateTime: string,
+export interface DateTimeCellProps {
+    dateTime: string | null,
 }
 
-export function DateCell(props: DateCellProps) {
+export function DateTimeCell(props: DateTimeCellProps) {
+
+    if(props.dateTime === null) {
+        return <Cell content="-" align="center" />;
+    }
 
     const momentObject = moment(props.dateTime);
     const date = momentObject.format('L');
@@ -296,5 +305,19 @@ export function DateCell(props: DateCellProps) {
             { date }<br/>
             { time }
         </div>
+    );
+}
+
+export function DateCell(props: DateTimeCellProps) {
+
+    if(props.dateTime === null) {
+        return <Cell content="-" align="center" />;
+    }
+
+    const momentObject = moment(props.dateTime);
+    const date = momentObject.format('L');
+
+    return (
+        <Cell content={ date }/>
     );
 }

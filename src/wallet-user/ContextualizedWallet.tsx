@@ -6,7 +6,15 @@ import { useLogionChain } from '../logion-chain';
 import Dashboard from '../common/Dashboard';
 import WarningDialog from '../common/WarningDialog';
 
-import UserRouter, { ACCOUNT_PATH, TRUST_PROTECTION_PATH, SETTINGS_PATH, RECOVERY_PATH } from "./UserRouter";
+import UserRouter, {
+    HOME_PATH,
+    ACCOUNT_PATH,
+    TRUST_PROTECTION_PATH,
+    SETTINGS_PATH,
+    RECOVERY_PATH,
+    NFT_PATH,
+    WALLET_PATH,
+} from "./UserRouter";
 import { useUserContext } from "./UserContext";
 import { useRootContext } from '../RootContext';
 
@@ -29,6 +37,30 @@ export default function ContextualizedWallet() {
             colors={ colorTheme }
             menuTop={[
                 {
+                    id: "home",
+                    text: "Home",
+                    to: HOME_PATH,
+                    exact: true,
+                    icon: {
+                        icon: {
+                            id: 'home'
+                        },
+                        background: colorTheme.topMenuItems.iconGradient,
+                    },
+                },
+                {
+                    id: "wallet",
+                    text: "Wallet",
+                    to: WALLET_PATH,
+                    exact: true,
+                    icon: {
+                        icon: {
+                            id: 'wallet'
+                        },
+                        background: colorTheme.topMenuItems.iconGradient,
+                    },
+                },
+                {
                     id: "tokens",
                     text: "Tokens",
                     to: ACCOUNT_PATH,
@@ -36,6 +68,18 @@ export default function ContextualizedWallet() {
                     icon: {
                         icon: {
                             id: 'tokens'
+                        },
+                        background: colorTheme.topMenuItems.iconGradient,
+                    },
+                },
+                {
+                    id: "nft",
+                    text: "NFT",
+                    to: NFT_PATH,
+                    exact: true,
+                    icon: {
+                        icon: {
+                            id: 'nft'
                         },
                         background: colorTheme.topMenuItems.iconGradient,
                     },

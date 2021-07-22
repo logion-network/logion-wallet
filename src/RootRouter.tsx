@@ -8,8 +8,8 @@ import {
 
 import { LEGAL_OFFICER_PATH, USER_PATH } from './RootPaths';
 import { isLegalOfficer as isLegalOfficerFunction } from './common/types/LegalOfficer';
-import LegalOfficerWallet from './legal-officer/LegalOfficerWallet';
-import Wallet from './wallet-user/Wallet';
+import LegalOfficerMain from './legal-officer/Main';
+import UserMain from './wallet-user/Main';
 import { useRootContext } from './RootContext';
 
 export default function RootRouter() {
@@ -31,10 +31,10 @@ export default function RootRouter() {
         <Router>
             <Switch>
                 <Route path={ LEGAL_OFFICER_PATH }>
-                    { isLegalOfficer ? <LegalOfficerWallet /> : <Redirect to={ USER_PATH } /> }
+                    { isLegalOfficer ? <LegalOfficerMain /> : <Redirect to={ USER_PATH } /> }
                 </Route>
                 <Route path={ USER_PATH }>
-                    { !isLegalOfficer ? <Wallet /> : <Redirect to={ LEGAL_OFFICER_PATH } /> }
+                    { !isLegalOfficer ? <UserMain /> : <Redirect to={ LEGAL_OFFICER_PATH } /> }
                 </Route>
                 <Route path="/">
                     <Redirect to={ redirectTo } />

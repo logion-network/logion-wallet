@@ -24,11 +24,19 @@ exports[`renders 1`] = `
       <Recovery />
     </Route>
     <Route
+      path="/user/nft"
+    >
+      <Account />
+    </Route>
+    <Route
+      path="/user/wallet"
+    >
+      <Account />
+    </Route>
+    <Route
       path=""
     >
-      <Redirect
-        to="/user/account"
-      />
+      <Account />
     </Route>
   </Switch>
 </React.Fragment>
