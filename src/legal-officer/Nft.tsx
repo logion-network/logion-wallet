@@ -15,10 +15,10 @@ export default function Account() {
 
     return (
         <FullWidthPane
-            mainTitle="Home"
+            mainTitle="NFT"
             titleIcon={{
                 icon: {
-                    id: 'tokens'
+                    id: 'nft'
                 },
                 background: colorTheme.topMenuItems.iconGradient,
             }}
