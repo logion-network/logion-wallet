@@ -29,16 +29,18 @@ export default function Gauge(props: Props) {
         <div className="Gauge">
             <div className="title">{props.title}</div>
             <div className="reading">
-                <div className="value"
-                    style={{color}}
-                >
-                    <div className="integer-part">{props.readingIntegerPart}</div>
-                    {
-                        props.readingDecimalPart !== undefined &&
-                        <div className="decimal-part">.{ props.readingDecimalPart }</div>
-                    }
+                <div className="value-unit">
+                    <div className="value"
+                        style={{color}}
+                    >
+                        <div className="integer-part">{props.readingIntegerPart}</div>
+                        {
+                            props.readingDecimalPart !== undefined &&
+                            <div className="decimal-part">.{ props.readingDecimalPart }</div>
+                        }
+                    </div>
+                    <div className="unit">{props.unit}</div>
                 </div>
-                <div className="unit">{props.unit}</div>
             </div>
         </div>
     );

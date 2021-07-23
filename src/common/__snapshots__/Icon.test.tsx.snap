@@ -3,41 +3,53 @@
 exports[`Category icon with undefined variant 1`] = `
 <img
   alt=""
+  height={36}
   src="/assets/categories/category/iconId.svg"
+  width="auto"
 />
 `;
 
 exports[`Category icon with variant 1`] = `
 <img
   alt=""
+  height={36}
   src="/assets/categories/category/themes/dark/iconId.svg"
+  width="auto"
 />
 `;
 
 exports[`Category icon without variant 1`] = `
 <img
   alt=""
+  height={36}
   src="/assets/categories/category/iconId.svg"
+  width="auto"
 />
 `;
 
 exports[`No category icon with no variants 1`] = `
 <img
   alt=""
+  height={36}
   src="/assets/iconId.svg"
+  width="auto"
 />
 `;
 
 exports[`No category icon with undefined variants 1`] = `
 <img
   alt=""
+  height={36}
   src="/assets/iconId.svg"
+  width="auto"
 />
 `;
 
 exports[`Simple icon with variant 1`] = `
 <img
   alt=""
+  height={36}
   src="/assets/themes/dark/iconId.svg"
+  width="auto"
 />
 `;

@@ -8,6 +8,10 @@
     font-weight: bold;
 }
 
+.Button.btn.slim {
+    padding: 0 20px;
+}
+
 .Button.btn.btn-secondary {
     position: relative;
     background: black;

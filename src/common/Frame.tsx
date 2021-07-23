@@ -12,6 +12,8 @@ export interface Props {
     className?: string,
     fullHeight?: boolean,
     altColors?: boolean,
+    title?: string,
+    fillHeight?: boolean,
 }
 
 export default function Frame(props: Props) {
@@ -37,6 +39,9 @@ export default function Frame(props: Props) {
     if(props.fullHeight !== undefined && props.fullHeight) {
         className = className + " full-height";
     }
+    if(props.fillHeight !== undefined && props.fillHeight) {
+        className = className + " fill-height";
+    }
 
     return (
         <div
@@ -50,6 +55,10 @@ export default function Frame(props: Props) {
             <style>
             { inlineCss }
             </style>
+            {
+                props.title !== undefined &&
+                <div className="title">{ props.title }</div>
+            }
             { props.children }
         </div>
     );

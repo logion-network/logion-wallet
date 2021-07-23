@@ -27,6 +27,7 @@ export interface Props {
     onClick?: () => void,
     id?: string,
     "data-testid"?: string,
+    slim?: boolean,
 }
 
 export default function Button(props: Props) {
@@ -69,7 +70,7 @@ export default function Button(props: Props) {
             disabled={ disabled }
             onClick={ onClick }
             data-testid={ testId }
-            className="Button"
+            className={ "Button" + ((props.slim !== undefined && props.slim) ? " slim" : "") }
             style={ style }
             type={ props.type }
         >
