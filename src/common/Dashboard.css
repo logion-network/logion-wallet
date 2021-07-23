@@ -24,6 +24,18 @@
     min-height: calc(100% - 135px);
 }
 
+.Dashboard .ContentArea [class*="col-"] {
+    padding-right: 0;
+}
+
+.Dashboard .ContentArea [class*="col-"]:nth-child(n+2) {
+    padding-left: 40px;
+}
+
+.Dashboard .ContentArea [class*="col-"]:last-child {
+    padding-right: 10px;
+}
+
 .Dashboard .PrimaryArea {
     font-size: 14px;
     overflow-x: hidden;

@@ -9,11 +9,9 @@ import { ScientificNumber, PrefixedNumber, convertToPrefixed } from '../logion-c
 import { FullWidthPane } from '../common/Dashboard';
 import Frame from '../common/Frame';
 import Gauge from '../common/Gauge';
-import MenuIcon from '../common/MenuIcon';
 import Table, { Cell, DateCell, EmptyTableMessage } from '../common/Table';
-import Button from '../common/Button';
-import Clickable from '../common/Clickable';
 import Icon from '../common/Icon';
+import Button from '../common/Button';
 import { useRootContext } from '../RootContext';
 
 import { useUserContext } from "./UserContext";
@@ -88,9 +86,22 @@ export default function Account() {
             selectAddress={ selectAddress }
         >
             <Row>
+                <Col md={8}>
+                    <Frame
+                        colors={ colorTheme }
+                        title="Balance per month"
+                    >
+                        <img
+                            className="fake-graph"
+                            src={ `${process.env.PUBLIC_URL}/assets/fake_balance_history.png` }
+                            alt="Fake balance graph"
+                        />
+                    </Frame>
+                </Col>
                 <Col md={4}>
                     <Frame
                         colors={ colorTheme }
+                        fillHeight
                     >
                         <Gauge
                             title="Current LOG balance"
@@ -100,24 +111,8 @@ export default function Account() {
                             level={ level }
                         />
                         <div className="actions">
-                            <Clickable>
-                                <MenuIcon
-                                    icon={{
-                                        id: 'send'
-                                    }}
-                                    background={ colorTheme.topMenuItems.iconGradient }
-                                    colorThemeType={ colorTheme.type }
-                                />
-                            </Clickable>
-                            <Clickable>
-                                <MenuIcon
-                                    icon={{
-                                        id: 'buy'
-                                    }}
-                                    background={ colorTheme.topMenuItems.iconGradient }
-                                    colorThemeType={ colorTheme.type }
-                                />
-                            </Clickable>
+                            <Button colors={ colorTheme.buttons } slim><Icon icon={{id:'send'}} /> Send</Button>
+                            <Button colors={ colorTheme.buttons } slim><Icon icon={{id:'buy'}} /> Buy</Button>
                         </div>
                     </Frame>
                 </Col>
@@ -154,7 +149,7 @@ export default function Account() {
                         },
                         {
                             header: "",
-                            render: asset => <Button colors={ colorTheme.buttons }>More</Button>
+                            render: asset => asset.name !== 'DOT' ? <Button colors={ colorTheme.buttons }>More</Button> : <NotAvailable/>
                         }
                     ]}
                     data={ allAssets }
@@ -184,6 +179,16 @@ function AssetNameCell(props: AssetNameCellProps) {
         <div className="asset-name-cell">
             <Icon icon={{id: props.asset.iconId}} type="png" />
             <span className="name">{ props.asset.name }</span>
+        </div>
+    );
+}
+
+function NotAvailable() {
+
+    return (
+        <div className="not-available">
+            <img src={ `${process.env.PUBLIC_URL}/assets/unicorn.svg` } height={ 36 } alt="unicorn" />
+            <span>Not available (yet)</span>
         </div>
     );
 }
