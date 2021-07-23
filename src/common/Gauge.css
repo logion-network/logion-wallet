@@ -1,6 +1,10 @@
+.Gauge {
+    position: relative;
+}
+
 .Gauge .title {
     font-size: 18px;
-    margin-bottom: 80px;
+    margin-bottom: 40px;
     font-weight: bold;
 }
 
@@ -8,6 +12,17 @@
     display: flex;
     align-items: baseline;
     justify-content: center;
+    background-image: url("../img/gauge.png");
+    background-size: contain;
+    background-position: center 100%;
+    background-repeat: no-repeat;
+    height: 240px;
+}
+
+.Gauge .reading .value-unit {
+    display: flex;
+    align-items: baseline;
+    padding-top: 130px;
 }
 
 .Gauge .reading .value {
