@@ -4,8 +4,7 @@ import Col from 'react-bootstrap/Col';
 
 import { useLogionChain } from '../logion-chain';
 import { AccountData, getAccountData, LOG_DECIMALS } from '../logion-chain/Balances';
-import { NormalizedNumber, ScientificNumber, PrefixedNumber, convertToPrefixed } from '../logion-chain/numbers';
-import { accountBalance, AssetWithBalance } from '../logion-chain/Assets';
+import { ScientificNumber, PrefixedNumber, convertToPrefixed } from '../logion-chain/numbers';
 
 import { FullWidthPane } from '../common/Dashboard';
 import Frame from '../common/Frame';
@@ -14,6 +13,7 @@ import MenuIcon from '../common/MenuIcon';
 import Table, { Cell, DateCell, EmptyTableMessage } from '../common/Table';
 import Button from '../common/Button';
 import Clickable from '../common/Clickable';
+import Icon from '../common/Icon';
 import { useRootContext } from '../RootContext';
 
 import { useUserContext } from "./UserContext";
@@ -21,11 +21,6 @@ import { useUserContext } from "./UserContext";
 import './Wallet.css';
 
 const ARTIFICIAL_MAX_BALANCE = new ScientificNumber("100", -LOG_DECIMALS);
-
-interface Balances {
-    accountId: string,
-    balances?: AssetWithBalance[],
-}
 
 export default function Account() {
     const { selectAddress, addresses } = useRootContext();
@@ -35,7 +30,6 @@ export default function Account() {
     const [ accountData, setAccountData ] = useState<AccountData | null>(null);
     const [ balance, setBalance ] = useState<PrefixedNumber>(PrefixedNumber.ZERO);
     const [ level, setLevel ] = useState<number>(0);
-    const [ assetBalances, setAssetBalances ] = useState<Balances | null>(null);
 
     useEffect(() => {
         if(addresses !== null
@@ -56,27 +50,6 @@ export default function Account() {
         }
     }, [ accountData, addresses, api, dataAddress ]);
 
-    useEffect(() => {
-        if(addresses !== null
-            && (assetBalances === null || assetBalances.accountId !== addresses.currentAddress.address)) {
-
-            const accountId = addresses.currentAddress.address;
-            setAssetBalances({
-                accountId,
-            });
-            (async function() {
-                const balances = await accountBalance({
-                    api: api!,
-                    accountId,
-                });
-                setAssetBalances({
-                    accountId,
-                    balances,
-                });
-            })();
-        }
-    }, [ api, assetBalances, addresses, setAssetBalances ]);
-
     if(addresses === null || selectAddress === null) {
         return null;
     }
@@ -84,28 +57,21 @@ export default function Account() {
     let allAssets = [
         {
             name: "LOG",
+            iconId: 'log',
             balance: `${balance.coefficient.toFixedPrecision(2)} ${balance.prefix.symbol}LOG`,
+            lastTransactionDate: null,
+            lastTransactionType: null,
+            lastTransactionAmount: null,
+        },
+        {
+            name: "DOT",
+            iconId: 'dot',
+            balance: `0.00 DOT`,
             lastTransactionDate: null,
             lastTransactionType: null,
             lastTransactionAmount: null,
         }
     ];
-    if(assetBalances !== null && assetBalances.balances !== undefined) {
-        const assets = assetBalances.balances
-            .filter(assetBalance => !new NormalizedNumber(assetBalance.balance).isZero())
-            .map(assetBalance => {
-                const balance = new ScientificNumber(assetBalance.balance, 0);
-                const prefixedBalance = convertToPrefixed(balance).optimizeScale(3);
-                return {
-                    name: assetBalance.asset.metadata.name,
-                    balance: `${prefixedBalance.coefficient.toFixedPrecision(2)} ${prefixedBalance.prefix.symbol}${assetBalance.asset.metadata.symbol}`,
-                    lastTransactionDate: null,
-                    lastTransactionType: null,
-                    lastTransactionAmount: null,
-                };
-            });
-        allAssets = allAssets.concat(assets);
-    }
 
     return (
         <FullWidthPane
@@ -146,15 +112,6 @@ export default function Account() {
                             <Clickable>
                                 <MenuIcon
                                     icon={{
-                                        id: 'receive'
-                                    }}
-                                    background={ colorTheme.topMenuItems.iconGradient }
-                                    colorThemeType={ colorTheme.type }
-                                />
-                            </Clickable>
-                            <Clickable>
-                                <MenuIcon
-                                    icon={{
                                         id: 'buy'
                                     }}
                                     background={ colorTheme.topMenuItems.iconGradient }
@@ -176,7 +133,7 @@ export default function Account() {
                     columns={[
                         {
                             header: "Asset name",
-                            render: asset => <Cell content={ asset.name } />
+                            render: asset => <AssetNameCell asset={ asset } />
                         },
                         {
                             header: "Balance",
@@ -205,5 +162,28 @@ export default function Account() {
                 />
             </Frame>
         </FullWidthPane>
+    );
+}
+
+interface Asset {
+    name: string,
+    iconId: string,
+    balance: string,
+    lastTransactionDate: string | null,
+    lastTransactionType: string | null,
+    lastTransactionAmount: string | null,
+}
+
+interface AssetNameCellProps {
+    asset: Asset,
+}
+
+function AssetNameCell(props: AssetNameCellProps) {
+
+    return (
+        <div className="asset-name-cell">
+            <Icon icon={{id: props.asset.iconId}} type="png" />
+            <span className="name">{ props.asset.name }</span>
+        </div>
     );
 }
