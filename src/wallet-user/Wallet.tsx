@@ -9,7 +9,7 @@ import { ScientificNumber, PrefixedNumber, convertToPrefixed } from '../logion-c
 import { FullWidthPane } from '../common/Dashboard';
 import Frame from '../common/Frame';
 import Gauge from '../common/Gauge';
-import Table, { Cell, DateCell, EmptyTableMessage } from '../common/Table';
+import Table, { Cell, DateCell, EmptyTableMessage, ActionCell } from '../common/Table';
 import Icon from '../common/Icon';
 import Button from '../common/Button';
 import { useRootContext } from '../RootContext';
@@ -52,19 +52,21 @@ export default function Account() {
         return null;
     }
 
-    let allAssets = [
+    let allAssets: Asset[] = [
         {
-            name: "LOG",
+            name: "Logion",
             iconId: 'log',
-            balance: `${balance.coefficient.toFixedPrecision(2)} ${balance.prefix.symbol}LOG`,
+            balance: `${balance.coefficient.toFixedPrecision(2)}`,
+            symbol: `${balance.prefix.symbol}LOG`,
             lastTransactionDate: null,
             lastTransactionType: null,
             lastTransactionAmount: null,
         },
         {
-            name: "DOT",
+            name: "Polkadot",
             iconId: 'dot',
-            balance: `0.00 DOT`,
+            balance: `0.00`,
+            symbol: "DOT",
             lastTransactionDate: null,
             lastTransactionType: null,
             lastTransactionAmount: null,
@@ -149,7 +151,8 @@ export default function Account() {
                         },
                         {
                             header: "",
-                            render: asset => asset.name !== 'DOT' ? <Button colors={ colorTheme.buttons }>More</Button> : <NotAvailable/>
+                            render: asset => asset.symbol !== 'DOT' ? <ActionCell><Button colors={ colorTheme.buttons }>More</Button></ActionCell> : <NotAvailable/>,
+                            width: "200px",
                         }
                     ]}
                     data={ allAssets }
@@ -164,6 +167,7 @@ interface Asset {
     name: string,
     iconId: string,
     balance: string,
+    symbol: string,
     lastTransactionDate: string | null,
     lastTransactionType: string | null,
     lastTransactionAmount: string | null,
@@ -178,7 +182,7 @@ function AssetNameCell(props: AssetNameCellProps) {
     return (
         <div className="asset-name-cell">
             <Icon icon={{id: props.asset.iconId}} type="png" />
-            <span className="name">{ props.asset.name }</span>
+            <span className="name">{ props.asset.name } ({ props.asset.symbol })</span>
         </div>
     );
 }
@@ -187,7 +191,6 @@ function NotAvailable() {
 
     return (
         <div className="not-available">
-            <img src={ `${process.env.PUBLIC_URL}/assets/unicorn.svg` } height={ 36 } alt="unicorn" />
             <span>Not available (yet)</span>
         </div>
     );

@@ -26,14 +26,11 @@
 .Wallet .not-available {
     display: flex;
     align-items: center;
+    justify-content: center;
     color: #e6007a;
     border: 2px solid #e6007a;
     border-radius: 6px;
-    padding: 4px 20px;
-}
-
-.Wallet .not-available img {
-    margin-right: 10px;
+    padding: 9px 20px;
 }
 
 .Wallet .fake-graph {

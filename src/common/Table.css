@@ -137,3 +137,8 @@
     height: auto;
     overflow: hidden;
 }
+
+.Table .action-cell {
+    display: flex;
+    justify-content: flex-end;
+}

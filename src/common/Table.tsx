@@ -321,3 +321,16 @@ export function DateCell(props: DateTimeCellProps) {
         <Cell content={ date }/>
     );
 }
+
+export interface ActionCellProps {
+    children: Children,
+}
+
+export function ActionCell(props: ActionCellProps) {
+
+    return (
+        <div className="action-cell">
+            { props.children }
+        </div>
+    );
+}

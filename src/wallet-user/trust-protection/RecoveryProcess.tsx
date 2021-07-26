@@ -206,13 +206,15 @@ export default function RecoveryProcess() {
                             id: "cancel",
                             buttonText: "Cancel",
                             buttonVariant: "secondary",
-                            callback: () => setRecoveredToken(null)
+                            callback: () => setRecoveredToken(null),
+                            disabled: signAndSubmit !== null,
                         },
                         {
                             id: "transfer",
                             buttonText: "Transfer",
                             buttonVariant: "recovery",
-                            callback: recoverToken
+                            callback: recoverToken,
+                            disabled: signAndSubmit !== null,
                         }
                     ]}
                 >
