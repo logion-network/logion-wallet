@@ -5,6 +5,8 @@ export interface Props {
     icon: IconType,
     colorThemeType?: ColorThemeType,
     type?: 'svg' | 'png',
+    height?: string,
+    width?: string,
 }
 
 export default function Icon(props: Props) {
@@ -29,8 +31,8 @@ export default function Icon(props: Props) {
         <img
             src={ iconUrl }
             alt=''
-            height={ 36 }
-            width="auto"
+            height={ props.height }
+            width={ props.width }
         />
     );
 }

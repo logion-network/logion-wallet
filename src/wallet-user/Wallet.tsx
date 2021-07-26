@@ -181,7 +181,7 @@ function AssetNameCell(props: AssetNameCellProps) {
 
     return (
         <div className="asset-name-cell">
-            <Icon icon={{id: props.asset.iconId}} type="png" />
+            <Icon icon={{id: props.asset.iconId}} type="png" height="36px" width="auto" />
             <span className="name">{ props.asset.name } ({ props.asset.symbol })</span>
         </div>
     );
