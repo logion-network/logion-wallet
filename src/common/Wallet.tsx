@@ -54,7 +54,7 @@ export default function Wallet(props: Props) {
                     >
                         <img
                             className="fake-graph"
-                            src={ `${process.env.PUBLIC_URL}/assets/fake_balance_history.png` }
+                            src={ `${process.env.PUBLIC_URL}/assets/themes/${props.colorTheme.type}/fake_balance_history.png` }
                             alt="Fake balance graph"
                         />
                     </Frame>

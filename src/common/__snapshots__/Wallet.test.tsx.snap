@@ -221,7 +221,7 @@ exports[`renders with all data 1`] = `
         <img
           alt="Fake balance graph"
           className="fake-graph"
-          src="/assets/fake_balance_history.png"
+          src="/assets/themes/light/fake_balance_history.png"
         />
       </Frame>
     </Col>
