@@ -13,6 +13,7 @@ import {
     RECOVERY_REQUESTS_PATH,
     SETTINGS_PATH,
     NFT_PATH,
+    WALLET_PATH,
 } from './LegalOfficerPaths';
 
 export default function ContextualizedWallet() {
@@ -35,6 +36,18 @@ export default function ContextualizedWallet() {
                     icon: {
                         icon: {
                             id: 'home'
+                        },
+                        background: colorTheme.topMenuItems.iconGradient,
+                    },
+                },
+                {
+                    id: "wallet",
+                    text: "Wallet",
+                    to: WALLET_PATH,
+                    exact: true,
+                    icon: {
+                        icon: {
+                            id: 'wallet'
                         },
                         background: colorTheme.topMenuItems.iconGradient,
                     },
