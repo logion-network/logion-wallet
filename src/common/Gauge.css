@@ -13,6 +13,10 @@
     height: 240px;
 }
 
+.Gauge.arc.light .reading {
+    background-image: url("../img/gauge-light.png");
+}
+
 .Gauge .reading .value-unit {
     display: flex;
     align-items: baseline;
@@ -53,6 +57,10 @@
     width: 600px;
     height: 15px;
     margin-right: 20px;
+}
+
+.Gauge.linear.light:before {
+    background-image: url("../img/linear-gauge-light.svg");
 }
 
 .Gauge.linear .reading {

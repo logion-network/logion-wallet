@@ -13,6 +13,7 @@ function testGauge(type: 'arc' | 'linear') {
         unit={ "mLOG" }
         level={ 0.5 }
         type={ type }
+        colorThemeType="light"
     />);
     expect(result).toMatchSnapshot();
 }

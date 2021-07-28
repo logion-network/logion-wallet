@@ -26,6 +26,7 @@ export default function WalletGauge(props: Props) {
                 unit={ props.balance.prefix.symbol + "LOG" }
                 level={ props.level }
                 type={ props.type }
+                colorThemeType={ props.colorTheme.type }
             />
             <div className="actions">
                 <Button colors={ props.colorTheme.buttons } slim><Icon icon={{id:'send'}} /> Send</Button>

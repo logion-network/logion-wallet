@@ -1,3 +1,4 @@
+import { ColorThemeType } from './ColorTheme';
 import './Gauge.css';
 
 export interface Props {
@@ -6,6 +7,7 @@ export interface Props {
     unit: string,
     level: number,
     type: 'arc' | 'linear',
+    colorThemeType: ColorThemeType,
 }
 
 const RED: string = '#ea1f46';
@@ -24,7 +26,7 @@ export default function Gauge(props: Props) {
     }
 
     return (
-        <div className={ "Gauge " + props.type}>
+        <div className={ `Gauge ${props.type} ${props.colorThemeType}` }>
             <div className="reading">
                 <div className="value-unit">
                     <div className="value"

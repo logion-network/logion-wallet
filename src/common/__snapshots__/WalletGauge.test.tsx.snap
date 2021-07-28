@@ -5,6 +5,7 @@ exports[`renders arc 1`] = `
   className="WalletGauge arc"
 >
   <Gauge
+    colorThemeType="light"
     level={0.5}
     readingDecimalPart="00"
     readingIntegerPart="20"
@@ -63,6 +64,7 @@ exports[`renders linear 1`] = `
   className="WalletGauge linear"
 >
   <Gauge
+    colorThemeType="light"
     level={0.5}
     readingDecimalPart="00"
     readingIntegerPart="20"
