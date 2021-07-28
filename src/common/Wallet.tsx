@@ -5,22 +5,25 @@ import { useHistory } from 'react-router-dom';
 
 import { CoinBalance, prefixedLogBalance } from '../logion-chain/Balances';
 
-import { FullWidthPane } from '../common/Dashboard';
-import Frame from '../common/Frame';
-import Table, { Cell, DateCell, EmptyTableMessage, ActionCell } from '../common/Table';
-import Icon from '../common/Icon';
-import Button from '../common/Button';
 import { useRootContext } from '../RootContext';
 
-import { useUserContext } from "./UserContext";
-import { transactionsPath } from './UserRouter';
+import { FullWidthPane } from './Dashboard';
+import Frame from './Frame';
+import Table, { Cell, DateCell, EmptyTableMessage, ActionCell } from './Table';
+import Icon from './Icon';
+import Button from './Button';
+import { ColorTheme } from './ColorTheme';
 import WalletGauge from './WalletGauge';
 
 import './Wallet.css';
 
-export default function Account() {
-    const { selectAddress, addresses } = useRootContext();
-    const { colorTheme, balances, transactions } = useUserContext();
+export interface Props {
+    transactionsPath: (coinId: string) => string,
+    colorTheme: ColorTheme,
+}
+
+export default function Wallet(props: Props) {
+    const { selectAddress, addresses, balances, transactions } = useRootContext();
     const history = useHistory();
 
     if(addresses === null || selectAddress === null || balances === null || transactions === null) {
@@ -37,16 +40,16 @@ export default function Account() {
                 icon: {
                     id: 'wallet'
                 },
-                background: colorTheme.topMenuItems.iconGradient,
+                background: props.colorTheme.topMenuItems.iconGradient,
             }}
-            colors={ colorTheme }
+            colors={ props.colorTheme }
             addresses={ addresses }
             selectAddress={ selectAddress }
         >
             <Row>
                 <Col md={8}>
                     <Frame
-                        colors={ colorTheme }
+                        colors={ props.colorTheme }
                         title="Balance per month"
                     >
                         <img
@@ -59,14 +62,14 @@ export default function Account() {
                 <Col md={4}>
                     <Frame
                         title="Current LOG balance"
-                        colors={ colorTheme }
+                        colors={ props.colorTheme }
                         fillHeight
                     >
                         <WalletGauge
                             coin={ balances[0].coin }
                             balance={ balances[0].balance }
                             level={ balances[0].level }
-                            colorTheme={ colorTheme }
+                            colorTheme={ props.colorTheme }
                             type='arc'
                         />
                     </Frame>
@@ -74,12 +77,12 @@ export default function Account() {
             </Row>
             <Frame
                 className="assets"
-                colors={ colorTheme }
+                colors={ props.colorTheme }
             >
                 <h2>Asset balances</h2>
 
                 <Table
-                    colorTheme={ colorTheme }
+                    colorTheme={ props.colorTheme }
                     columns={[
                         {
                             header: "Asset name",
@@ -107,7 +110,7 @@ export default function Account() {
                         },
                         {
                             header: "",
-                            render: balance => balance.coin.id !== 'dot' ? <ActionCell><Button colors={ colorTheme.buttons } onClick={() => history.push(transactionsPath(balance.coin.id))}>More</Button></ActionCell> : <NotAvailable/>,
+                            render: balance => balance.coin.id !== 'dot' ? <ActionCell><Button colors={ props.colorTheme.buttons } onClick={() => history.push(props.transactionsPath(balance.coin.id))}>More</Button></ActionCell> : <NotAvailable/>,
                             width: "200px",
                         }
                     ]}

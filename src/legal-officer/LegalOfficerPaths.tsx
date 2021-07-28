@@ -11,3 +11,10 @@ export const NFT_PATH = LEGAL_OFFICER_PATH + '/nft';
 export function recoveryDetailsPath(requestId: string): string {
     return RECOVERY_DETAILS_PATH.replace(":requestId", requestId);
 }
+
+export const WALLET_PATH = LEGAL_OFFICER_PATH + '/wallet';
+
+export const TRANSACTIONS_PATH = LEGAL_OFFICER_PATH + '/transactions/:coinId';
+export function transactionsPath(coinId: string): string {
+    return TRANSACTIONS_PATH.replace(":coinId", coinId);
+}
