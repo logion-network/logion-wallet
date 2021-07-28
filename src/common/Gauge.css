@@ -2,13 +2,7 @@
     position: relative;
 }
 
-.Gauge .title {
-    font-size: 18px;
-    margin-bottom: 40px;
-    font-weight: bold;
-}
-
-.Gauge .reading {
+.Gauge.arc .reading {
     display: flex;
     align-items: baseline;
     justify-content: center;
@@ -42,4 +36,33 @@
 .Gauge .reading .unit {
     font-size: 20px;
     padding-left: 5px;
+}
+
+.Gauge.linear {
+    display: flex;
+    align-items: baseline;
+}
+
+.Gauge.linear:before {
+    content: " ";
+    display: block;
+    background-image: url("../img/linear-gauge.svg");
+    background-size: contain;
+    background-position: center 100%;
+    background-repeat: no-repeat;
+    width: 600px;
+    height: 15px;
+    margin-right: 20px;
+}
+
+.Gauge.linear .reading {
+    margin-right: 40px;
+}
+
+.Gauge.linear .reading .value .integer-part {
+    line-height: 1;
+}
+
+.Gauge.linear .reading .value-unit {
+    padding-top: 0;
 }

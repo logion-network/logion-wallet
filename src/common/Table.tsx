@@ -2,7 +2,8 @@ import React, { CSSProperties, useState, useCallback } from 'react';
 import * as Css from 'csstype';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
-import moment from 'moment';
+
+import { fromIsoString } from '../logion-chain/datetime';
 
 import { Row, Col } from './Grid';
 import { Child, Children } from './types/Helpers';
@@ -85,6 +86,7 @@ export interface Column<T> {
     smallerText?: boolean,
     splitAfter?: boolean,
     renderDetails?: (element: T) => Child,
+    align?: Css.Property.TextAlign,
 }
 
 function fontSize<T>(column: Column<T>): (string | undefined) {
@@ -196,7 +198,14 @@ export default function Table<T>(props: Props<T>) {
                 <Row>
                     {
                         props.columns.map((column, index) => (
-                            <Col key={ index } style={{width: headerComputedWidths[index]}}>{ column.header }</Col>
+                            <Col
+                                key={ index }
+                                style={{
+                                    width: headerComputedWidths[index],
+                                    textAlign: column.align === undefined ? 'center' : column.align,
+                                }}>
+                                { column.header }
+                            </Col>
                         ))
                     }
                 </Row>
@@ -224,6 +233,7 @@ export default function Table<T>(props: Props<T>) {
                                                 width: rowComputedWidths[colIndex],
                                                 fontSize: fontSize(col),
                                                 backgroundColor: className === undefined ? props.colorTheme.table.row.background : undefined,
+                                                textAlign: col.align === undefined ? 'center' : col.align,
                                             }}
                                         >
                                             { col.render(item) }
@@ -296,7 +306,7 @@ export function DateTimeCell(props: DateTimeCellProps) {
         return <Cell content="-" align="center" />;
     }
 
-    const momentObject = moment(props.dateTime);
+    const momentObject = fromIsoString(props.dateTime);
     const date = momentObject.format('L');
     const time = momentObject.format('LT');
 
@@ -314,7 +324,7 @@ export function DateCell(props: DateTimeCellProps) {
         return <Cell content="-" align="center" />;
     }
 
-    const momentObject = moment(props.dateTime);
+    const momentObject = fromIsoString(props.dateTime);
     const date = momentObject.format('L');
 
     return (

@@ -21,7 +21,16 @@
 }
 
 .Dashboard .ContentArea {
-    min-height: calc(100% - 135px);
+    height: calc(100vh - 135px);
+    overflow-y: auto;
+}
+
+.Dashboard .ContentArea [class*="row"] {
+    margin-bottom: 40px;
+}
+
+.Dashboard .ContentArea [class*="row"]:last-child {
+    margin-bottom: 0;
 }
 
 .Dashboard .ContentArea [class*="col-"] {
@@ -48,7 +57,6 @@
 .Dashboard .SecondaryArea {
     font-size: 14px;
     overflow-x: hidden;
-    min-height: 100vh;
     padding-top: 23px;
     padding-left: 20px;
     padding-right: 25px;
@@ -113,4 +121,14 @@
     font-size: 22px;
     padding-top: 20px;
     margin-left: 60px;
+}
+
+.Dashboard .back-button {
+    margin-top: 30px;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.Dashboard .back-button img {
+    margin-right: 10px;
 }

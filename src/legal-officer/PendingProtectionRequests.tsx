@@ -5,7 +5,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Form from 'react-bootstrap/Form';
 
 import Button from '../common/Button';
-import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../common/Table';
+import Table, { Column, Cell, EmptyTableMessage, DateTimeCell } from '../common/Table';
 import { sign } from '../logion-chain/Signature';
 import { useRootContext } from '../RootContext';
 
@@ -99,76 +99,142 @@ export default function PendingProtectionRequests(props: Props) {
     }
 
     let requests;
+    let columns: Column<ProtectionRequest>[];
     if(props.recovery) {
         requests = pendingRecoveryRequests;
+        columns = [
+            {
+                header: "First name",
+                render: request => <Cell content={ request.userIdentity.firstName }/>,
+                width: "200px",
+                align: 'left',
+            },
+            {
+                header: "Last name",
+                render: request => <Cell content={ request.userIdentity.lastName }/>,
+                width: "200px",
+                renderDetails: request => <ProtectionRequestDetails request={ request } />,
+                align: 'left',
+            },
+            {
+                header: "Status",
+                render: request => <ProtectionRequestStatus
+                    decision={ decision(currentAddress, request.decisions)!.status}
+                    status={ request.status }
+                />,
+                width: "140px",
+                splitAfter: true,
+            },
+            {
+                header: "Submission date",
+                render: request => <DateTimeCell dateTime={ request.createdOn } />,
+                width: "120px",
+            },
+            {
+                header: "Account number",
+                render: request => <Cell content={ request.requesterAddress } overflowing tooltipId={ `dest-${request.id}` } />,
+                align: 'left',
+            },
+            {
+                header: "Account to recover",
+                render: request => <Cell content={ request.addressToRecover } overflowing tooltipId={ `src-${request.id}` } />,
+                align: 'left',
+            },
+            {
+                header: "Action",
+                render: request => (
+                    <ButtonGroup aria-label="actions">
+                        {!props.recovery &&
+                        <Button
+                            variant="primary"
+                            onClick={() => setReviewState({status: ReviewStatus.PENDING, request: request}) }
+                            data-testid={`review-${request.id}`}
+                            colors={ colorTheme.buttons }
+                        >
+                            Review and proceed
+                        </Button>
+                        }
+                        {props.recovery &&
+                        <Button
+                            variant="primary"
+                            colors={ colorTheme.buttons }
+                            onClick={ () => history.push(recoveryDetailsPath(request.id)) }
+                        >
+                            Review and proceed
+                        </Button>
+                        }
+                    </ButtonGroup>
+                ),
+            }
+        ];
     } else {
         requests = pendingProtectionRequests;
+        columns = [
+            {
+                header: "First name",
+                render: request => <Cell content={ request.userIdentity.firstName }/>,
+                width: "200px",
+                align: 'left',
+            },
+            {
+                header: "Last name",
+                render: request => <Cell content={ request.userIdentity.lastName }/>,
+                width: "200px",
+                renderDetails: request => <ProtectionRequestDetails request={ request } />,
+                align: 'left',
+            },
+            {
+                header: "Status",
+                render: request => <ProtectionRequestStatus
+                    decision={ decision(currentAddress, request.decisions)!.status}
+                    status={ request.status }
+                />,
+                width: "140px",
+                splitAfter: true,
+            },
+            {
+                header: "Submission date",
+                render: request => <DateTimeCell dateTime={ request.createdOn } />,
+                width: "120px",
+            },
+            {
+                header: "Account number",
+                render: request => <Cell content={ request.requesterAddress } overflowing tooltipId={ `dest-${request.id}` } />,
+                align: 'left',
+            },
+            {
+                header: "Action",
+                render: request => (
+                    <ButtonGroup aria-label="actions">
+                        {!props.recovery &&
+                        <Button
+                            variant="primary"
+                            onClick={() => setReviewState({status: ReviewStatus.PENDING, request: request}) }
+                            data-testid={`review-${request.id}`}
+                            colors={ colorTheme.buttons }
+                        >
+                            Review and proceed
+                        </Button>
+                        }
+                        {props.recovery &&
+                        <Button
+                            variant="primary"
+                            colors={ colorTheme.buttons }
+                            onClick={ () => history.push(recoveryDetailsPath(request.id)) }
+                        >
+                            Review and proceed
+                        </Button>
+                        }
+                    </ButtonGroup>
+                ),
+            }
+        ];
     }
 
     return (
         <>
             <Table
-                columns={[
-                    {
-                        header: "First name",
-                        render: request => <Cell content={ request.userIdentity.firstName }/>,
-                        width: "200px",
-                    },
-                    {
-                        header: "Last name",
-                        render: request => <Cell content={ request.userIdentity.lastName }/>,
-                        width: "200px",
-                        renderDetails: request => <ProtectionRequestDetails request={ request } />,
-                    },
-                    {
-                        header: "Status",
-                        render: request => <ProtectionRequestStatus
-                            decision={ decision(currentAddress, request.decisions)!.status}
-                            status={ request.status }
-                        />,
-                        width: "140px",
-                        splitAfter: true,
-                    },
-                    {
-                        header: "Submission date",
-                        render: request => <DateTimeCell dateTime={ request.createdOn } />,
-                        width: "120px",
-                    },
-                    {
-                        header: "Account number",
-                        render: request => <Cell content={ request.requesterAddress } overflowing tooltipId={ `dest-${request.id}` } />,
-                    },
-                    {
-                        header: "Account to recover",
-                        render: request => <Cell content={ request.addressToRecover } overflowing tooltipId={ `src-${request.id}` } />,
-                    },
-                    {
-                        header: "Action",
-                        render: request => (
-                            <ButtonGroup aria-label="actions">
-                                {!props.recovery &&
-                                <Button
-                                    variant="primary"
-                                    onClick={() => setReviewState({status: ReviewStatus.PENDING, request: request}) }
-                                    data-testid={`review-${request.id}`}
-                                    colors={ colorTheme.buttons }
-                                >
-                                    Review and proceed
-                                </Button>
-                                }
-                                {props.recovery &&
-                                <Button
-                                    variant="primary"
-                                    colors={ colorTheme.buttons }
-                                    onClick={ () => history.push(recoveryDetailsPath(request.id)) }
-                                >
-                                    Review and proceed
-                                </Button>
-                                }
-                            </ButtonGroup>
-                        ),
-                    }
-                ]}
+                columns={ columns }
                 data={ requests }
                 colorTheme={ colorTheme }
                 renderEmpty={ () => <EmptyTableMessage>No request to display</EmptyTableMessage>}

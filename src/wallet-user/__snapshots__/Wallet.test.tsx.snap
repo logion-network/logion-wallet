@@ -1,0 +1,683 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders null with missing data 1`] = `null`;
+
+exports[`renders with all data 1`] = `
+<FullWidthPane
+  addresses={
+    Object {
+      "addresses": Array [
+        Object {
+          "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+          "isLegalOfficer": false,
+          "name": "name",
+        },
+      ],
+      "currentAddress": Object {
+        "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+        "isLegalOfficer": false,
+        "name": "name",
+      },
+    }
+  }
+  className="Wallet"
+  colors={
+    Object {
+      "accounts": Object {
+        "background": "#0c163d",
+        "foreground": "#ffffff",
+        "hintColor": "#ffffff99",
+        "iconBackground": "#3b6cf4",
+        "legalOfficerIcon": Object {
+          "category": "legal-officer",
+          "id": "account-shield",
+        },
+      },
+      "bottomMenuItems": Object {
+        "iconGradient": Object {
+          "from": "#7a90cb",
+          "to": "#3b6cf4",
+        },
+      },
+      "buttons": Object {
+        "secondary": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+      },
+      "dashboard": Object {
+        "background": "#0c163d",
+        "foreground": "#ffffff",
+      },
+      "dialog": Object {
+        "background": "#0c163d",
+        "borderColor": "#e6007a",
+        "foreground": "#ffffff",
+      },
+      "frame": Object {
+        "background": "#152665",
+        "foreground": "#ffffff",
+        "link": "#ffffff",
+      },
+      "recoveryItems": Object {
+        "iconGradient": Object {
+          "from": "#e95b5b",
+          "to": "#6050dc",
+        },
+      },
+      "select": Object {
+        "background": "#ffffff33",
+        "foreground": "#ffffff",
+        "menuBackgroundColor": "#152665",
+        "selectedOptionBackgroundColor": "#ffffff33",
+      },
+      "shadowColor": "#3b6cf433",
+      "sidebar": Object {
+        "activeItemBackground": "#ffffff33",
+        "background": "#152665",
+        "foreground": "#ffffff",
+      },
+      "table": Object {
+        "background": "#152665",
+        "foreground": "#ffffff",
+        "header": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+        },
+        "row": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+      },
+      "tabs": Object {
+        "background": "#152665",
+        "borderColor": "#3b6cf4",
+        "foreground": "#ffffff",
+        "inactiveTab": Object {
+          "background": "#ffffff33",
+          "foreground": "#ffffff",
+        },
+      },
+      "topMenuItems": Object {
+        "iconGradient": Object {
+          "from": "#3b6cf4",
+          "to": "#6050dc",
+        },
+      },
+      "type": "dark",
+    }
+  }
+  mainTitle="Wallet"
+  selectAddress={[MockFunction]}
+  titleIcon={
+    Object {
+      "background": Object {
+        "from": "#3b6cf4",
+        "to": "#6050dc",
+      },
+      "icon": Object {
+        "id": "wallet",
+      },
+    }
+  }
+>
+  <Row
+    noGutters={false}
+  >
+    <Col
+      md={8}
+    >
+      <Frame
+        colors={
+          Object {
+            "accounts": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+              "hintColor": "#ffffff99",
+              "iconBackground": "#3b6cf4",
+              "legalOfficerIcon": Object {
+                "category": "legal-officer",
+                "id": "account-shield",
+              },
+            },
+            "bottomMenuItems": Object {
+              "iconGradient": Object {
+                "from": "#7a90cb",
+                "to": "#3b6cf4",
+              },
+            },
+            "buttons": Object {
+              "secondary": Object {
+                "background": "#0c163d",
+                "foreground": "#ffffff",
+              },
+            },
+            "dashboard": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
+            "dialog": Object {
+              "background": "#0c163d",
+              "borderColor": "#e6007a",
+              "foreground": "#ffffff",
+            },
+            "frame": Object {
+              "background": "#152665",
+              "foreground": "#ffffff",
+              "link": "#ffffff",
+            },
+            "recoveryItems": Object {
+              "iconGradient": Object {
+                "from": "#e95b5b",
+                "to": "#6050dc",
+              },
+            },
+            "select": Object {
+              "background": "#ffffff33",
+              "foreground": "#ffffff",
+              "menuBackgroundColor": "#152665",
+              "selectedOptionBackgroundColor": "#ffffff33",
+            },
+            "shadowColor": "#3b6cf433",
+            "sidebar": Object {
+              "activeItemBackground": "#ffffff33",
+              "background": "#152665",
+              "foreground": "#ffffff",
+            },
+            "table": Object {
+              "background": "#152665",
+              "foreground": "#ffffff",
+              "header": Object {
+                "background": "#152665",
+                "foreground": "#ffffff",
+              },
+              "row": Object {
+                "background": "#0c163d",
+                "foreground": "#ffffff",
+              },
+            },
+            "tabs": Object {
+              "background": "#152665",
+              "borderColor": "#3b6cf4",
+              "foreground": "#ffffff",
+              "inactiveTab": Object {
+                "background": "#ffffff33",
+                "foreground": "#ffffff",
+              },
+            },
+            "topMenuItems": Object {
+              "iconGradient": Object {
+                "from": "#3b6cf4",
+                "to": "#6050dc",
+              },
+            },
+            "type": "dark",
+          }
+        }
+        title="Balance per month"
+      >
+        <img
+          alt="Fake balance graph"
+          className="fake-graph"
+          src="/assets/fake_balance_history.png"
+        />
+      </Frame>
+    </Col>
+    <Col
+      md={4}
+    >
+      <Frame
+        colors={
+          Object {
+            "accounts": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+              "hintColor": "#ffffff99",
+              "iconBackground": "#3b6cf4",
+              "legalOfficerIcon": Object {
+                "category": "legal-officer",
+                "id": "account-shield",
+              },
+            },
+            "bottomMenuItems": Object {
+              "iconGradient": Object {
+                "from": "#7a90cb",
+                "to": "#3b6cf4",
+              },
+            },
+            "buttons": Object {
+              "secondary": Object {
+                "background": "#0c163d",
+                "foreground": "#ffffff",
+              },
+            },
+            "dashboard": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
+            "dialog": Object {
+              "background": "#0c163d",
+              "borderColor": "#e6007a",
+              "foreground": "#ffffff",
+            },
+            "frame": Object {
+              "background": "#152665",
+              "foreground": "#ffffff",
+              "link": "#ffffff",
+            },
+            "recoveryItems": Object {
+              "iconGradient": Object {
+                "from": "#e95b5b",
+                "to": "#6050dc",
+              },
+            },
+            "select": Object {
+              "background": "#ffffff33",
+              "foreground": "#ffffff",
+              "menuBackgroundColor": "#152665",
+              "selectedOptionBackgroundColor": "#ffffff33",
+            },
+            "shadowColor": "#3b6cf433",
+            "sidebar": Object {
+              "activeItemBackground": "#ffffff33",
+              "background": "#152665",
+              "foreground": "#ffffff",
+            },
+            "table": Object {
+              "background": "#152665",
+              "foreground": "#ffffff",
+              "header": Object {
+                "background": "#152665",
+                "foreground": "#ffffff",
+              },
+              "row": Object {
+                "background": "#0c163d",
+                "foreground": "#ffffff",
+              },
+            },
+            "tabs": Object {
+              "background": "#152665",
+              "borderColor": "#3b6cf4",
+              "foreground": "#ffffff",
+              "inactiveTab": Object {
+                "background": "#ffffff33",
+                "foreground": "#ffffff",
+              },
+            },
+            "topMenuItems": Object {
+              "iconGradient": Object {
+                "from": "#3b6cf4",
+                "to": "#6050dc",
+              },
+            },
+            "type": "dark",
+          }
+        }
+        fillHeight={true}
+        title="Current LOG balance"
+      >
+        <WalletGauge
+          balance={
+            PrefixedNumber {
+              "_prefix": Object {
+                "symbol": "a",
+                "tenExponent": -18,
+              },
+              "_scientificNumber": ScientificNumber {
+                "_normalized": NormalizedNumber {
+                  "_decimalPart": "",
+                  "_integerPart": "42",
+                  "_negative": false,
+                  "_normalized": "42.",
+                },
+                "_tenExponent": -18,
+              },
+            }
+          }
+          coin={
+            Object {
+              "iconId": "log",
+              "iconType": "png",
+              "id": "log",
+              "name": "Logion",
+              "symbol": "LOG",
+            }
+          }
+          colorTheme={
+            Object {
+              "accounts": Object {
+                "background": "#0c163d",
+                "foreground": "#ffffff",
+                "hintColor": "#ffffff99",
+                "iconBackground": "#3b6cf4",
+                "legalOfficerIcon": Object {
+                  "category": "legal-officer",
+                  "id": "account-shield",
+                },
+              },
+              "bottomMenuItems": Object {
+                "iconGradient": Object {
+                  "from": "#7a90cb",
+                  "to": "#3b6cf4",
+                },
+              },
+              "buttons": Object {
+                "secondary": Object {
+                  "background": "#0c163d",
+                  "foreground": "#ffffff",
+                },
+              },
+              "dashboard": Object {
+                "background": "#0c163d",
+                "foreground": "#ffffff",
+              },
+              "dialog": Object {
+                "background": "#0c163d",
+                "borderColor": "#e6007a",
+                "foreground": "#ffffff",
+              },
+              "frame": Object {
+                "background": "#152665",
+                "foreground": "#ffffff",
+                "link": "#ffffff",
+              },
+              "recoveryItems": Object {
+                "iconGradient": Object {
+                  "from": "#e95b5b",
+                  "to": "#6050dc",
+                },
+              },
+              "select": Object {
+                "background": "#ffffff33",
+                "foreground": "#ffffff",
+                "menuBackgroundColor": "#152665",
+                "selectedOptionBackgroundColor": "#ffffff33",
+              },
+              "shadowColor": "#3b6cf433",
+              "sidebar": Object {
+                "activeItemBackground": "#ffffff33",
+                "background": "#152665",
+                "foreground": "#ffffff",
+              },
+              "table": Object {
+                "background": "#152665",
+                "foreground": "#ffffff",
+                "header": Object {
+                  "background": "#152665",
+                  "foreground": "#ffffff",
+                },
+                "row": Object {
+                  "background": "#0c163d",
+                  "foreground": "#ffffff",
+                },
+              },
+              "tabs": Object {
+                "background": "#152665",
+                "borderColor": "#3b6cf4",
+                "foreground": "#ffffff",
+                "inactiveTab": Object {
+                  "background": "#ffffff33",
+                  "foreground": "#ffffff",
+                },
+              },
+              "topMenuItems": Object {
+                "iconGradient": Object {
+                  "from": "#3b6cf4",
+                  "to": "#6050dc",
+                },
+              },
+              "type": "dark",
+            }
+          }
+          level={0.1}
+          type="arc"
+        />
+      </Frame>
+    </Col>
+  </Row>
+  <Frame
+    className="assets"
+    colors={
+      Object {
+        "accounts": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+          "hintColor": "#ffffff99",
+          "iconBackground": "#3b6cf4",
+          "legalOfficerIcon": Object {
+            "category": "legal-officer",
+            "id": "account-shield",
+          },
+        },
+        "bottomMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
+          },
+        },
+        "buttons": Object {
+          "secondary": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+        },
+        "dashboard": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "dialog": Object {
+          "background": "#0c163d",
+          "borderColor": "#e6007a",
+          "foreground": "#ffffff",
+        },
+        "frame": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+          "link": "#ffffff",
+        },
+        "recoveryItems": Object {
+          "iconGradient": Object {
+            "from": "#e95b5b",
+            "to": "#6050dc",
+          },
+        },
+        "select": Object {
+          "background": "#ffffff33",
+          "foreground": "#ffffff",
+          "menuBackgroundColor": "#152665",
+          "selectedOptionBackgroundColor": "#ffffff33",
+        },
+        "shadowColor": "#3b6cf433",
+        "sidebar": Object {
+          "activeItemBackground": "#ffffff33",
+          "background": "#152665",
+          "foreground": "#ffffff",
+        },
+        "table": Object {
+          "background": "#152665",
+          "foreground": "#ffffff",
+          "header": Object {
+            "background": "#152665",
+            "foreground": "#ffffff",
+          },
+          "row": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+        },
+        "tabs": Object {
+          "background": "#152665",
+          "borderColor": "#3b6cf4",
+          "foreground": "#ffffff",
+          "inactiveTab": Object {
+            "background": "#ffffff33",
+            "foreground": "#ffffff",
+          },
+        },
+        "topMenuItems": Object {
+          "iconGradient": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+        },
+        "type": "dark",
+      }
+    }
+  >
+    <h2>
+      Asset balances
+    </h2>
+    <Table
+      colorTheme={
+        Object {
+          "accounts": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+            "hintColor": "#ffffff99",
+            "iconBackground": "#3b6cf4",
+            "legalOfficerIcon": Object {
+              "category": "legal-officer",
+              "id": "account-shield",
+            },
+          },
+          "bottomMenuItems": Object {
+            "iconGradient": Object {
+              "from": "#7a90cb",
+              "to": "#3b6cf4",
+            },
+          },
+          "buttons": Object {
+            "secondary": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
+          },
+          "dashboard": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+          "dialog": Object {
+            "background": "#0c163d",
+            "borderColor": "#e6007a",
+            "foreground": "#ffffff",
+          },
+          "frame": Object {
+            "background": "#152665",
+            "foreground": "#ffffff",
+            "link": "#ffffff",
+          },
+          "recoveryItems": Object {
+            "iconGradient": Object {
+              "from": "#e95b5b",
+              "to": "#6050dc",
+            },
+          },
+          "select": Object {
+            "background": "#ffffff33",
+            "foreground": "#ffffff",
+            "menuBackgroundColor": "#152665",
+            "selectedOptionBackgroundColor": "#ffffff33",
+          },
+          "shadowColor": "#3b6cf433",
+          "sidebar": Object {
+            "activeItemBackground": "#ffffff33",
+            "background": "#152665",
+            "foreground": "#ffffff",
+          },
+          "table": Object {
+            "background": "#152665",
+            "foreground": "#ffffff",
+            "header": Object {
+              "background": "#152665",
+              "foreground": "#ffffff",
+            },
+            "row": Object {
+              "background": "#0c163d",
+              "foreground": "#ffffff",
+            },
+          },
+          "tabs": Object {
+            "background": "#152665",
+            "borderColor": "#3b6cf4",
+            "foreground": "#ffffff",
+            "inactiveTab": Object {
+              "background": "#ffffff33",
+              "foreground": "#ffffff",
+            },
+          },
+          "topMenuItems": Object {
+            "iconGradient": Object {
+              "from": "#3b6cf4",
+              "to": "#6050dc",
+            },
+          },
+          "type": "dark",
+        }
+      }
+      columns={
+        Array [
+          Object {
+            "align": "left",
+            "header": "Asset name",
+            "render": [Function],
+          },
+          Object {
+            "align": "right",
+            "header": "Balance",
+            "render": [Function],
+            "width": "150px",
+          },
+          Object {
+            "header": "Last transaction date",
+            "render": [Function],
+          },
+          Object {
+            "header": "Last transaction type",
+            "render": [Function],
+          },
+          Object {
+            "align": "right",
+            "header": "Last transaction amount",
+            "render": [Function],
+          },
+          Object {
+            "header": "",
+            "render": [Function],
+            "width": "200px",
+          },
+        ]
+      }
+      data={
+        Array [
+          Object {
+            "balance": PrefixedNumber {
+              "_prefix": Object {
+                "symbol": "a",
+                "tenExponent": -18,
+              },
+              "_scientificNumber": ScientificNumber {
+                "_normalized": NormalizedNumber {
+                  "_decimalPart": "",
+                  "_integerPart": "42",
+                  "_negative": false,
+                  "_normalized": "42.",
+                },
+                "_tenExponent": -18,
+              },
+            },
+            "coin": Object {
+              "iconId": "log",
+              "iconType": "png",
+              "id": "log",
+              "name": "Logion",
+              "symbol": "LOG",
+            },
+            "level": 0.1,
+          },
+        ]
+      }
+      renderEmpty={[Function]}
+    />
+  </Frame>
+</FullWidthPane>
+`;

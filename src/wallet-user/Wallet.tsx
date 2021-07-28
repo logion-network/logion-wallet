@@ -1,77 +1,33 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { useHistory } from 'react-router-dom';
 
-import { useLogionChain } from '../logion-chain';
-import { AccountData, getAccountData, LOG_DECIMALS } from '../logion-chain/Balances';
-import { ScientificNumber, PrefixedNumber, convertToPrefixed } from '../logion-chain/numbers';
+import { CoinBalance, prefixedLogBalance } from '../logion-chain/Balances';
 
 import { FullWidthPane } from '../common/Dashboard';
 import Frame from '../common/Frame';
-import Gauge from '../common/Gauge';
 import Table, { Cell, DateCell, EmptyTableMessage, ActionCell } from '../common/Table';
 import Icon from '../common/Icon';
 import Button from '../common/Button';
 import { useRootContext } from '../RootContext';
 
 import { useUserContext } from "./UserContext";
+import { transactionsPath } from './UserRouter';
+import WalletGauge from './WalletGauge';
 
 import './Wallet.css';
 
-const ARTIFICIAL_MAX_BALANCE = new ScientificNumber("100", -LOG_DECIMALS);
-
 export default function Account() {
     const { selectAddress, addresses } = useRootContext();
-    const { colorTheme } = useUserContext();
-    const { api } = useLogionChain();
-    const [ dataAddress, setDataAddress ] = useState<string | null>(null);
-    const [ accountData, setAccountData ] = useState<AccountData | null>(null);
-    const [ balance, setBalance ] = useState<PrefixedNumber>(PrefixedNumber.ZERO);
-    const [ level, setLevel ] = useState<number>(0);
+    const { colorTheme, balances, transactions } = useUserContext();
+    const history = useHistory();
 
-    useEffect(() => {
-        if(addresses !== null
-            && (accountData === null || addresses.currentAddress.address !== dataAddress)) {
-            setDataAddress(addresses.currentAddress.address);
-            setBalance(PrefixedNumber.ZERO);
-            setLevel(0);
-            (async function() {
-                const data = await getAccountData({
-                    api: api!,
-                    accountId: addresses.currentAddress.address,
-                });
-                setAccountData(data);
-                const available = new ScientificNumber(data.available, -LOG_DECIMALS).optimizeScale(3);
-                setBalance(convertToPrefixed(available));
-                setLevel(available.divideBy(ARTIFICIAL_MAX_BALANCE).toNumber());
-            })();
-        }
-    }, [ accountData, addresses, api, dataAddress ]);
-
-    if(addresses === null || selectAddress === null) {
+    if(addresses === null || selectAddress === null || balances === null || transactions === null) {
         return null;
     }
 
-    let allAssets: Asset[] = [
-        {
-            name: "Logion",
-            iconId: 'log',
-            balance: `${balance.coefficient.toFixedPrecision(2)}`,
-            symbol: `${balance.prefix.symbol}LOG`,
-            lastTransactionDate: null,
-            lastTransactionType: null,
-            lastTransactionAmount: null,
-        },
-        {
-            name: "Polkadot",
-            iconId: 'dot',
-            balance: `0.00`,
-            symbol: "DOT",
-            lastTransactionDate: null,
-            lastTransactionType: null,
-            lastTransactionAmount: null,
-        }
-    ];
+    const latestTransaction = transactions[0];
 
     return (
         <FullWidthPane
@@ -102,20 +58,17 @@ export default function Account() {
                 </Col>
                 <Col md={4}>
                     <Frame
+                        title="Current LOG balance"
                         colors={ colorTheme }
                         fillHeight
                     >
-                        <Gauge
-                            title="Current LOG balance"
-                            readingIntegerPart={ balance.coefficient.toInteger() }
-                            readingDecimalPart={ balance.coefficient.toFixedPrecisionDecimals(2) }
-                            unit={ balance.prefix.symbol + "LOG" }
-                            level={ level }
+                        <WalletGauge
+                            coin={ balances[0].coin }
+                            balance={ balances[0].balance }
+                            level={ balances[0].level }
+                            colorTheme={ colorTheme }
+                            type='arc'
                         />
-                        <div className="actions">
-                            <Button colors={ colorTheme.buttons } slim><Icon icon={{id:'send'}} /> Send</Button>
-                            <Button colors={ colorTheme.buttons } slim><Icon icon={{id:'buy'}} /> Buy</Button>
-                        </div>
                     </Frame>
                 </Col>
             </Row>
@@ -130,32 +83,35 @@ export default function Account() {
                     columns={[
                         {
                             header: "Asset name",
-                            render: asset => <AssetNameCell asset={ asset } />
+                            render: balance => <AssetNameCell balance={ balance } />,
+                            align: 'left',
                         },
                         {
                             header: "Balance",
-                            render: asset => <Cell content={ asset.balance } align="right"/>,
+                            render: balance => <Cell content={ balance.balance.coefficient.toFixedPrecision(2) } />,
                             width: "150px",
+                            align: 'right',
                         },
                         {
                             header: "Last transaction date",
-                            render: asset => <DateCell dateTime={ asset.lastTransactionDate } />
+                            render: balance => <DateCell dateTime={ balance.coin.id !== 'dot' && latestTransaction !== undefined ? latestTransaction.createdOn : null } />
                         },
                         {
                             header: "Last transaction type",
-                            render: asset => <Cell content={ asset.lastTransactionType } align="center"/>
+                            render: balance => <Cell content={ balance.coin.id !== 'dot' && latestTransaction !== undefined ? latestTransaction.type : "-" } />
                         },
                         {
                             header: "Last transaction amount",
-                            render: asset => <Cell content={ asset.lastTransactionAmount } align="right"/>
+                            render: balance => <Cell content={ balance.coin.id !== 'dot' && latestTransaction !== undefined ? prefixedLogBalance(latestTransaction.total).convertTo(balance.balance.prefix).coefficient.toFixedPrecision(2) : '-' } />,
+                            align: 'right',
                         },
                         {
                             header: "",
-                            render: asset => asset.symbol !== 'DOT' ? <ActionCell><Button colors={ colorTheme.buttons }>More</Button></ActionCell> : <NotAvailable/>,
+                            render: balance => balance.coin.id !== 'dot' ? <ActionCell><Button colors={ colorTheme.buttons } onClick={() => history.push(transactionsPath(balance.coin.id))}>More</Button></ActionCell> : <NotAvailable/>,
                             width: "200px",
                         }
                     ]}
-                    data={ allAssets }
+                    data={ balances }
                     renderEmpty={ () => <EmptyTableMessage>You have no asset yet</EmptyTableMessage> }
                 />
             </Frame>
@@ -163,26 +119,16 @@ export default function Account() {
     );
 }
 
-interface Asset {
-    name: string,
-    iconId: string,
-    balance: string,
-    symbol: string,
-    lastTransactionDate: string | null,
-    lastTransactionType: string | null,
-    lastTransactionAmount: string | null,
-}
-
 interface AssetNameCellProps {
-    asset: Asset,
+    balance: CoinBalance,
 }
 
 function AssetNameCell(props: AssetNameCellProps) {
 
     return (
         <div className="asset-name-cell">
-            <Icon icon={{id: props.asset.iconId}} type="png" height="36px" width="auto" />
-            <span className="name">{ props.asset.name } ({ props.asset.symbol })</span>
+            <Icon icon={{id: props.balance.coin.iconId}} type={ props.balance.coin.iconType } height="36px" width="auto" />
+            <span className="name">{ props.balance.coin.name } ({ props.balance.balance.prefix.symbol }{ props.balance.coin.symbol })</span>
         </div>
     );
 }

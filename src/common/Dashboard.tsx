@@ -12,6 +12,8 @@ import Menu from './Menu';
 import { MenuItemData } from './MenuItem';
 import MainMenu from './MainMenu';
 import MenuIcon from './MenuIcon';
+import Clickable from './Clickable';
+import Icon from './Icon';
 
 import './Dashboard.css';
 
@@ -67,6 +69,7 @@ interface TitlesProps {
     subTitle?: string,
     titleIcon: MenuIconType,
     colors: ColorTheme,
+    onBack?: () => void
 }
 
 function Titles(props: TitlesProps) {
@@ -83,6 +86,14 @@ function Titles(props: TitlesProps) {
             {
                 props.subTitle !== undefined &&
                 <h2>{ props.subTitle }</h2>
+            }
+            {
+                props.onBack !== undefined &&
+                <div className="back-button">
+                    <Clickable onClick={ props.onBack }>
+                        <Icon icon={{id:"back", hasVariants: true}} colorThemeType={ props.colors.type } /> Back
+                    </Clickable>
+                </div>
             }
         </div>
     );
@@ -145,6 +156,7 @@ export function ContentPane(props: ContentPaneProps) {
             colors={ props.colors }
             selectAddress={ props.selectAddress }
             addresses={ props.addresses }
+            onBack={ props.onBack }
         >
                 <PrimaryArea
                     width={ primaryPaneWidth }
@@ -176,6 +188,7 @@ export function FullWidthPane(props: FullWidthPaneProps) {
             colors={ props.colors }
             selectAddress={ props.selectAddress }
             addresses={ props.addresses }
+            onBack={ props.onBack }
         >
             <PrimaryArea width={ FULL_WIDTH }>
                 { props.children }

@@ -10,6 +10,7 @@ import TrustProtection from "./trust-protection/TrustProtection";
 import Recovery from "./trust-protection/Recovery";
 import Nft from "./Nft";
 import Wallet from "./Wallet";
+import Transactions from "./Transactions";
 
 export const HOME_PATH = USER_PATH;
 export const ACCOUNT_PATH = USER_PATH + '/account';
@@ -18,6 +19,11 @@ export const SETTINGS_PATH = USER_PATH + '/settings';
 export const RECOVERY_PATH = USER_PATH + '/recovery';
 export const NFT_PATH = USER_PATH + '/nft';
 export const WALLET_PATH = USER_PATH + '/wallet';
+
+const TRANSACTIONS_PATH = USER_PATH + '/transactions/:coinId';
+export function transactionsPath(coinId: string): string {
+    return TRANSACTIONS_PATH.replace(":coinId", coinId);
+}
 
 export default function UserRouter() {
     return (
@@ -40,6 +46,9 @@ export default function UserRouter() {
                 </Route>
                 <Route path={ WALLET_PATH }>
                     <Wallet />
+                </Route>
+                <Route path={ TRANSACTIONS_PATH }>
+                    <Transactions />
                 </Route>
                 <Route path="">
                     <Home />

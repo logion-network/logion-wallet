@@ -1,0 +1,24 @@
+.WalletGauge .actions {
+    display: flex;
+    justify-content: center;
+}
+
+.WalletGauge.arc .actions {
+    margin-top: 60px;
+    margin-bottom: 30px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.WalletGauge .actions button:nth-child(n+2) {
+    margin-left: 25px;
+}
+
+.WalletGauge.linear {
+    display: flex;
+    align-items: flex-end;
+}
+
+.WalletGauge.linear .actions {
+    margin-bottom: 10px;
+}

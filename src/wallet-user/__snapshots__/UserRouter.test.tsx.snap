@@ -34,6 +34,11 @@ exports[`renders 1`] = `
       <Account />
     </Route>
     <Route
+      path="/user/transactions/:coinId"
+    >
+      <Transactions />
+    </Route>
+    <Route
       path=""
     >
       <Account />

@@ -1,0 +1,58 @@
+.Transactions .frame-title img {
+    margin-left: 20px;
+    margin-right: 10px;
+}
+
+.Transactions .WalletGauge {
+    margin-bottom: 10px;
+}
+
+.Transactions .from-to-header .from,
+.Transactions .from-to-header .to {
+    display: inline-block;
+    width: 300px;
+}
+
+.Transactions .from-to-header .from {
+    text-align: right;
+}
+
+.Transactions .from-to-header .to {
+    text-align: left;
+}
+
+.Transactions .from-to-header .separator {
+    display: inline-block;
+    width: 62px;
+    text-align: center;
+}
+
+.Transactions .from-to-cell {
+    line-height: 40px;
+}
+
+.Transactions .from-to-cell .from,
+.Transactions .from-to-cell .to {
+    display: inline-block;
+    width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: right;
+}
+
+.Transactions .from-to-cell .to {
+    margin-left: 62px;
+    text-align: left;
+}
+
+.Transactions .amount-cell {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+}
+
+.Transactions .Table .body {
+    overflow-y: auto;
+    max-height: calc(100vh - 580px);
+}
