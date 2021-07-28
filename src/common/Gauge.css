@@ -60,7 +60,7 @@
 }
 
 .Gauge.linear.light:before {
-    background-image: url("../img/linear-gauge-light.svg");
+    background-image: url("../img/linear-gauge-light.png");
 }
 
 .Gauge.linear .reading {
