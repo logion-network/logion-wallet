@@ -20,14 +20,28 @@ export let addresses: Addresses = {
     addresses: [ DEFAULT_ACCOUNT ]
 }
 
+export let balances: any = null;
+
+export let transactions: any = null;
+
 export function useRootContext() {
     return {
         currentAddress,
         selectAddress,
         addresses,
+        balances,
+        transactions,
     };
 }
 
 export function setAddresses(value: Addresses) {
     addresses = value;
+}
+
+export function setBalances(value: any) {
+    balances = value;
+}
+
+export function setTransactions(value: any) {
+    transactions = value;
 }

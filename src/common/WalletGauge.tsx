@@ -1,10 +1,10 @@
 import { PrefixedNumber } from '../logion-chain/numbers';
 import { Coin } from '../logion-chain/Balances';
 
-import Gauge from '../common/Gauge';
-import Button from '../common/Button';
-import Icon from '../common/Icon';
-import { ColorTheme } from '../common/ColorTheme';
+import Gauge from './Gauge';
+import Button from './Button';
+import Icon from './Icon';
+import { ColorTheme } from './ColorTheme';
 
 import './WalletGauge.css';
 

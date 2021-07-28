@@ -9,8 +9,9 @@ import Settings from "./Settings";
 import TrustProtection from "./trust-protection/TrustProtection";
 import Recovery from "./trust-protection/Recovery";
 import Nft from "./Nft";
-import Wallet from "./Wallet";
-import Transactions from "./Transactions";
+import Wallet from "../common/Wallet";
+import Transactions from "../common/Transactions";
+import { useUserContext } from "./UserContext";
 
 export const HOME_PATH = USER_PATH;
 export const ACCOUNT_PATH = USER_PATH + '/account';
@@ -26,6 +27,8 @@ export function transactionsPath(coinId: string): string {
 }
 
 export default function UserRouter() {
+    const { colorTheme } = useUserContext();
+
     return (
         <>
             <Switch>
@@ -45,10 +48,16 @@ export default function UserRouter() {
                     <Nft />
                 </Route>
                 <Route path={ WALLET_PATH }>
-                    <Wallet />
+                    <Wallet
+                        transactionsPath={ transactionsPath }
+                        colorTheme={ colorTheme }
+                    />
                 </Route>
                 <Route path={ TRANSACTIONS_PATH }>
-                    <Transactions />
+                    <Transactions
+                        backPath={ WALLET_PATH }
+                        colorTheme={ colorTheme }
+                    />
                 </Route>
                 <Route path="">
                     <Home />

@@ -5,24 +5,26 @@ import Col from 'react-bootstrap/Col';
 import { PrefixedNumber } from '../logion-chain/numbers';
 import { Coin, prefixedLogBalance } from '../logion-chain/Balances';
 
-import { FullWidthPane } from '../common/Dashboard';
-import Frame from '../common/Frame';
-import Icon from '../common/Icon';
-import Table, { DateCell, Cell, EmptyTableMessage } from '../common/Table';
-import { RED, GREEN} from '../common/ColorTheme';
+import { FullWidthPane } from './Dashboard';
+import Frame from './Frame';
+import Icon from './Icon';
+import Table, { DateCell, Cell, EmptyTableMessage } from './Table';
+import { ColorTheme, RED, GREEN } from './ColorTheme';
 
 import { useRootContext } from '../RootContext';
 
-import { useUserContext } from "./UserContext";
-import { WALLET_PATH } from "./UserRouter";
 import WalletGauge from './WalletGauge';
 
 import './Transactions.css';
-import { Transaction } from './Types';
+import { Transaction } from './types/Transaction';
 
-export default function Transactions() {
-    const { selectAddress, addresses } = useRootContext();
-    const { colorTheme, balances, transactions } = useUserContext();
+export interface Props {
+    backPath: string,
+    colorTheme: ColorTheme,
+}
+
+export default function Transactions(props: Props) {
+    const { selectAddress, addresses, balances, transactions } = useRootContext();
     const { coinId } = useParams<{ coinId: string }>();
     const history = useHistory();
 
@@ -40,21 +42,21 @@ export default function Transactions() {
                 icon: {
                     id: 'wallet'
                 },
-                background: colorTheme.topMenuItems.iconGradient,
+                background: props.colorTheme.topMenuItems.iconGradient,
             }}
-            colors={ colorTheme }
+            colors={ props.colorTheme }
             addresses={ addresses }
             selectAddress={ selectAddress }
-            onBack={ () => history.push(WALLET_PATH) }
+            onBack={ () => history.push(props.backPath) }
         >
             <Row>
                 <Col>
                     <Frame
-                        colors={ colorTheme }
+                        colors={ props.colorTheme }
                         title={ <TransactionsFrameTitle coin={ balance.coin } /> }
                     >
                         <Table
-                            colorTheme={ colorTheme }
+                            colorTheme={ props.colorTheme }
                             columns={[
                                 {
                                     header: "Transaction date",
@@ -98,14 +100,14 @@ export default function Transactions() {
             <Row>
                 <Col>
                     <Frame
-                        colors={ colorTheme }
+                        colors={ props.colorTheme }
                         title={ <BalanceFrameTitle coin={ balance.coin } /> }
                     >
                         <WalletGauge
                             coin={ balance.coin }
                             balance={ balance.balance }
                             type='linear'
-                            colorTheme={ colorTheme }
+                            colorTheme={ props.colorTheme }
                             level={ balance.level }
                         />
                     </Frame>

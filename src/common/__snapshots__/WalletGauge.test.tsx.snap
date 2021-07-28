@@ -18,8 +18,8 @@ exports[`renders arc 1`] = `
       colors={
         Object {
           "secondary": Object {
-            "background": "#0c163d",
-            "foreground": "#ffffff",
+            "background": "#eff3fe",
+            "foreground": "#000000",
           },
         }
       }
@@ -38,8 +38,8 @@ exports[`renders arc 1`] = `
       colors={
         Object {
           "secondary": Object {
-            "background": "#0c163d",
-            "foreground": "#ffffff",
+            "background": "#eff3fe",
+            "foreground": "#000000",
           },
         }
       }
@@ -76,8 +76,8 @@ exports[`renders linear 1`] = `
       colors={
         Object {
           "secondary": Object {
-            "background": "#0c163d",
-            "foreground": "#ffffff",
+            "background": "#eff3fe",
+            "foreground": "#000000",
           },
         }
       }
@@ -96,8 +96,8 @@ exports[`renders linear 1`] = `
       colors={
         Object {
           "secondary": Object {
-            "background": "#0c163d",
-            "foreground": "#ffffff",
+            "background": "#eff3fe",
+            "foreground": "#000000",
           },
         }
       }

@@ -1,15 +1,23 @@
-import React, { useContext, useEffect, useReducer, Reducer } from "react";
+import React, { useContext, useEffect, useReducer, Reducer, useCallback } from "react";
+import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
+
+import { useLogionChain } from './logion-chain';
+import { CoinBalance, getBalances } from './logion-chain/Balances';
 
 import Addresses, { buildAddresses } from './common/types/Addresses';
 import { Children } from './common/types/Helpers';
-import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
-import { useLogionChain } from './logion-chain';
+import { Transaction } from './common/types/Transaction';
+import { getTransactions } from "./common/Model";
 
 export interface RootContext {
     currentAddress: string,
     selectAddress: ((address: string) => void) | null,
     addresses: Addresses | null,
     injectedAccounts: InjectedAccountWithMeta[] | null,
+    fetchForAddress: string | null,
+    dataAddress: string | null,
+    balances: CoinBalance[] | null,
+    transactions: Transaction[] | null,
 }
 
 function initialContextValue(): RootContext {
@@ -18,6 +26,10 @@ function initialContextValue(): RootContext {
         selectAddress: null,
         addresses: null,
         injectedAccounts: null,
+        fetchForAddress: null,
+        dataAddress: null,
+        balances: null,
+        transactions: null,
     }
 }
 
@@ -29,7 +41,9 @@ export interface Props {
 
 type ActionType = 'SET_SELECT_ADDRESS'
     | 'SELECT_ADDRESS'
-    | 'SET_ADDRESSES';
+    | 'SET_ADDRESSES'
+    | 'FETCH_IN_PROGRESS'
+    | 'SET_DATA';
 
 interface Action {
     type: ActionType,
@@ -38,6 +52,9 @@ interface Action {
     currentAddress?: string,
     addresses?: Addresses,
     injectedAccounts?: InjectedAccountWithMeta[],
+    dataAddress?: string,
+    balances?: CoinBalance[],
+    transactions?: Transaction[],
 }
 
 const reducer: Reducer<RootContext, Action> = (state: RootContext, action: Action): RootContext => {
@@ -60,6 +77,25 @@ const reducer: Reducer<RootContext, Action> = (state: RootContext, action: Actio
                 currentAddress: action.currentAddress!,
                 addresses: action.addresses!,
             };
+        case 'FETCH_IN_PROGRESS':
+            return {
+                ...state,
+                fetchForAddress: action.dataAddress!,
+                balances: null,
+                transactions: null,
+            };
+        case 'SET_DATA':
+            if(action.dataAddress === state.fetchForAddress) {
+                return {
+                    ...state,
+                    fetchForAddress: null,
+                    dataAddress: action.dataAddress!,
+                    balances: action.balances!,
+                    transactions: action.transactions!,
+                };
+            } else {
+                return state;
+            }
         default:
             /* istanbul ignore next */
             throw new Error(`Unknown type: ${action.type}`);
@@ -67,8 +103,45 @@ const reducer: Reducer<RootContext, Action> = (state: RootContext, action: Actio
 }
 
 export function RootContextProvider(props: Props) {
-    const { injectedAccounts } = useLogionChain();
+    const { apiState, api, injectedAccounts } = useLogionChain();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
+
+    const refreshRequests = useCallback(() => {
+        if(api !== null && contextValue !== null && contextValue.currentAddress !== '') {
+            const currentAddress = contextValue.currentAddress;
+            dispatch({
+                type: "FETCH_IN_PROGRESS",
+                dataAddress: currentAddress,
+            });
+
+            (async function () {
+                const balances = await getBalances({
+                    api: api!,
+                    accountId: currentAddress
+                });
+
+                const transactions = await getTransactions({
+                    address: currentAddress
+                });
+
+                dispatch({
+                    type: "SET_DATA",
+                    dataAddress: currentAddress,
+                    balances,
+                    transactions: transactions.transactions,
+                });
+            })();
+        }
+    }, [ api, dispatch, contextValue ]);
+
+    useEffect(() => {
+        if(apiState === "READY"
+                && contextValue.currentAddress !== ''
+                && contextValue.dataAddress !== contextValue.currentAddress
+                && contextValue.fetchForAddress !== contextValue.currentAddress) {
+            refreshRequests();
+        }
+    }, [ apiState, contextValue, refreshRequests, dispatch ]);
 
     useEffect(() => {
         if(contextValue.selectAddress === null) {
