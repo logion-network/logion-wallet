@@ -6,7 +6,7 @@ import { Hash } from 'fast-sha256';
 import { base64Encode } from '@polkadot/util-crypto';
 import { Moment } from 'moment';
 
-import { toIsoString } from '../logion-chain/datetime';
+import { toIsoString } from './datetime';
 
 export type SignedTransaction = ISubmittableResult;
 

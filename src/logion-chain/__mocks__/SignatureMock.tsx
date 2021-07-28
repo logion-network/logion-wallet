@@ -1,4 +1,4 @@
-import { toIsoString } from '../../logion-chain/datetime';
+import { toIsoString } from '../datetime';
 
 export let signAndSend = (parameters: any) => {
     signAndSendCallback = parameters.callback;
