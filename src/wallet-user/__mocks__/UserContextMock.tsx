@@ -33,6 +33,10 @@ export let userAddress = TEST_WALLET_USER;
 
 export let recoveredAddress: string | null = null;
 
+export let balances: any = null;
+
+export let transactions: any = null;
+
 export function useUserContext() {
     return {
         legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
@@ -51,6 +55,8 @@ export function useUserContext() {
         setUserAddress,
         colorTheme: DARK_MODE,
         recoveredAddress,
+        balances,
+        transactions,
     };
 }
 
@@ -106,4 +112,12 @@ export function setContextUserAddress(address: string) {
 
 export function setRecoveredAddress(value: string) {
     recoveredAddress = value;
+}
+
+export function setBalances(value: any) {
+    balances = value;
+}
+
+export function setTransactions(value: any) {
+    transactions = value;
 }

@@ -14,19 +14,30 @@ export class NormalizedNumber {
     private readonly _normalized: string;
     private readonly _integerPart: string;
     private readonly _decimalPart: string;
+    private readonly _negative: boolean;
 
     constructor(num: string) {
         this._normalized = this.normalize(num);
-        const { integerPart, decimalPart } = this._split();
+        const { negative, integerPart, decimalPart } = this._split();
+        this._negative = negative;
         this._integerPart = integerPart;
         this._decimalPart = decimalPart;
     }
 
     private _split() {
         const dotPosition = this._normalized.indexOf('.');
-        const integerPart = this._normalized.substring(0, dotPosition);
+        let integerPart;
+        let negative;
+        if(this._normalized.startsWith("-")) {
+            negative = true;
+            integerPart = this._normalized.substring(1, dotPosition);
+        } else {
+            negative = false;
+            integerPart = this._normalized.substring(0, dotPosition);
+        }
         const decimalPart = this._normalized.substring(dotPosition + 1);
         return {
+            negative,
             integerPart,
             decimalPart
         };
@@ -42,7 +53,11 @@ export class NormalizedNumber {
     }
 
     static zeroStripLeft(num: string): string {
-        return num.replace(/^0*/, '');
+        if(num.startsWith("-")) {
+            return num.replace(/^-0*/, '-');
+        } else {
+            return num.replace(/^0*/, '');
+        }
     }
 
     static zeroStripRight(num: string): string {
@@ -55,6 +70,7 @@ export class NormalizedNumber {
 
     split() {
         return {
+            negative: this._negative,
             integerPart: this._integerPart,
             decimalPart: this._decimalPart,
         };
@@ -73,11 +89,19 @@ export class NormalizedNumber {
     }
 
     toInteger() {
-        return this._integerPart;
+        let integer = this._integerPart;
+        if(integer.length === 0) {
+            integer = "0";
+        }
+        if(this._negative) {
+            return "-" + integer;
+        } else {
+            return integer;
+        }
     }
 
     toFixedPrecision(decimals: number) {
-        return this._integerPart + "." + this.toFixedPrecisionDecimals(decimals);
+        return this.toInteger() + "." + this.toFixedPrecisionDecimals(decimals);
     }
 
     toFixedPrecisionDecimals(decimals: number) {
@@ -89,7 +113,19 @@ export class NormalizedNumber {
     }
 
     isZero() {
-        return this._normalized === '.';
+        return this._normalized === '.' || this._normalized === "-.";
+    }
+
+    negate() {
+        if(this._normalized.startsWith("-")) {
+            return new NormalizedNumber(this._normalized.substring(1));
+        } else {
+            return new NormalizedNumber("-" + this._normalized);
+        }
+    }
+
+    isNegative() {
+        return this._negative;
     }
 }
 
@@ -106,11 +142,16 @@ export class ScientificNumber {
         this._tenExponent = tenExponent;
     }
 
+    convertTo(newTenExponent: number): ScientificNumber {
+        const offset = this._tenExponent - newTenExponent;
+        return new ScientificNumber(this.shiftDecimalSeparator(offset), newTenExponent);
+    }
+
     private shiftDecimalSeparator(positions: number): string {
         if(positions === 0) {
             return this._normalized.toString();
         } else {
-            const { integerPart, decimalPart } = this._normalized.split();
+            const { negative, integerPart, decimalPart } = this._normalized.split();
             if(positions > 0) {
                 let rightWithDot;
                 if(decimalPart.length <= positions) {
@@ -120,7 +161,13 @@ export class ScientificNumber {
                     const pivot = positions;
                     rightWithDot = decimalPart.substring(0, pivot) + "." + decimalPart.substring(pivot);
                 }
-                return integerPart + rightWithDot;
+
+                const absolute = integerPart + rightWithDot;
+                if(negative) {
+                    return "-" + absolute;
+                } else {
+                    return absolute;
+                }
             } else { // positions < 0
                 let leftWithDot;
                 if(integerPart.length <= -positions) {
@@ -130,14 +177,15 @@ export class ScientificNumber {
                     const pivot = integerPart.length + positions;
                     leftWithDot = integerPart.substring(0, pivot) + "." + integerPart.substring(pivot);
                 }
-                return NormalizedNumber.zeroStripRight(leftWithDot + decimalPart);
+
+                const absolute = NormalizedNumber.zeroStripRight(leftWithDot + decimalPart);
+                if(negative) {
+                    return "-" + absolute;
+                } else {
+                    return absolute;
+                }
             }
         }
-    }
-
-    convertTo(newTenExponent: number): ScientificNumber {
-        const offset = this._tenExponent - newTenExponent;
-        return new ScientificNumber(this.shiftDecimalSeparator(offset), newTenExponent);
     }
 
     get normalized(): NormalizedNumber {
@@ -192,6 +240,10 @@ export class ScientificNumber {
         const optimalThis = this.optimizeScale(1);
         return Number(optimalThis.coefficient) * Math.pow(10, optimalThis._tenExponent);
     }
+
+    negate() {
+        return new ScientificNumber(this.coefficient.negate(), this._tenExponent);
+    }
 }
 
 export const NONE: UnitPrefix = {
@@ -231,6 +283,14 @@ export class PrefixedNumber {
 
     toNumber() {
         return this._scientificNumber.toNumber();
+    }
+
+    negate() {
+        return new PrefixedNumber(this._scientificNumber.coefficient.negate(), this._prefix);
+    }
+
+    isNegative() {
+        return this.coefficient.isNegative();
     }
 }
 

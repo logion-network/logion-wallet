@@ -12,7 +12,7 @@ export interface Props {
     className?: string,
     fullHeight?: boolean,
     altColors?: boolean,
-    title?: string,
+    title?: Children,
     fillHeight?: boolean,
 }
 

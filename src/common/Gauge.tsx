@@ -1,13 +1,11 @@
-import React from 'react';
-
 import './Gauge.css';
 
 export interface Props {
-    title: string,
     readingIntegerPart: string,
     readingDecimalPart?: string,
     unit: string,
     level: number,
+    type: 'arc' | 'linear',
 }
 
 const RED: string = '#ea1f46';
@@ -26,8 +24,7 @@ export default function Gauge(props: Props) {
     }
 
     return (
-        <div className="Gauge">
-            <div className="title">{props.title}</div>
+        <div className={ "Gauge " + props.type}>
             <div className="reading">
                 <div className="value-unit">
                     <div className="value"

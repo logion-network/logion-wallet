@@ -3,9 +3,14 @@ import { Option } from '@polkadot/types';
 
 import { useLogionChain } from '../logion-chain';
 import { RecoveryConfig, getRecoveryConfig, getProxy } from '../logion-chain/Recovery';
+import { CoinBalance, getBalances } from '../logion-chain/Balances';
 import { Children } from '../common/types/Helpers';
 
-import { CreateTokenRequest, createTokenRequest as modelCreateTokenRequest } from "./Model";
+import {
+    CreateTokenRequest,
+    createTokenRequest as modelCreateTokenRequest,
+    getTransactions,
+} from "./Model";
 import { TokenizationRequest, ProtectionRequest } from "../legal-officer/Types";
 import { fetchRequests, fetchProtectionRequests } from "../legal-officer/Model";
 import {
@@ -14,7 +19,7 @@ import {
 } from "./trust-protection/Model";
 import { ColorTheme } from '../common/ColorTheme';
 import { useRootContext } from '../RootContext';
-import { DARK_MODE } from './Types';
+import { DARK_MODE, Transaction } from './Types';
 
 export interface UserContext {
     dataAddress: string | null,
@@ -32,6 +37,8 @@ export interface UserContext {
     recoveryConfig: Option<RecoveryConfig> | null,
     colorTheme: ColorTheme,
     recoveredAddress?: string | null,
+    balances: CoinBalance[] | null,
+    transactions: Transaction[] | null,
 }
 
 function initialContextValue(): UserContext {
@@ -50,6 +57,8 @@ function initialContextValue(): UserContext {
         rejectedProtectionRequests: null,
         recoveryConfig: null,
         colorTheme: DARK_MODE,
+        balances: null,
+        transactions: null,
     }
 }
 
@@ -79,6 +88,8 @@ interface Action {
     createProtectionRequest?: (request: CreateProtectionRequest) => Promise<void>,
     clearBeforeRefresh?: boolean,
     recoveredAddress?: string | null,
+    balances?: CoinBalance[],
+    transactions?: Transaction[],
 }
 
 const reducer: Reducer<UserContext, Action> = (state: UserContext, action: Action): UserContext => {
@@ -96,6 +107,9 @@ const reducer: Reducer<UserContext, Action> = (state: UserContext, action: Actio
                     acceptedProtectionRequests: null,
                     rejectedProtectionRequests: null,
                     recoveryConfig: null,
+                    recoveredAddress: null,
+                    balances: null,
+                    transactions: null,
                 };
             } else {
                 return {
@@ -117,6 +131,8 @@ const reducer: Reducer<UserContext, Action> = (state: UserContext, action: Actio
                     rejectedProtectionRequests: action.rejectedProtectionRequests!,
                     recoveryConfig: action.recoveryConfig!,
                     recoveredAddress: action.recoveredAddress!,
+                    balances: action.balances!,
+                    transactions: action.transactions!,
                     fetchForAddress: null,
                 };
             } else {
@@ -229,6 +245,15 @@ export function UserContextProvider(props: Props) {
                     }
                 }
 
+                const balances = await getBalances({
+                    api: api!,
+                    accountId: currentAddress
+                });
+
+                const transactions = await getTransactions({
+                    address: currentAddress
+                });
+
                 dispatch({
                     type: "SET_DATA",
                     dataAddress: currentAddress,
@@ -240,6 +265,8 @@ export function UserContextProvider(props: Props) {
                     rejectedProtectionRequests,
                     recoveryConfig,
                     recoveredAddress,
+                    balances,
+                    transactions: transactions.transactions,
                 });
             })();
         }

@@ -95,11 +95,13 @@ exports[`Renders pending requests 1`] = `
     columns={
       Array [
         Object {
+          "align": "left",
           "header": "First name",
           "render": [Function],
           "width": "200px",
         },
         Object {
+          "align": "left",
           "header": "Last name",
           "render": [Function],
           "renderDetails": [Function],
@@ -117,11 +119,8 @@ exports[`Renders pending requests 1`] = `
           "width": "120px",
         },
         Object {
+          "align": "left",
           "header": "Account number",
-          "render": [Function],
-        },
-        Object {
-          "header": "Account to recover",
           "render": [Function],
         },
         Object {

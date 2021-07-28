@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders arc 1`] = `
+<div
+  className="Gauge arc"
+>
+  <div
+    className="reading"
+  >
+    <div
+      className="value-unit"
+    >
+      <div
+        className="value"
+        style={
+          Object {
+            "color": "#ff9b3f",
+          }
+        }
+      >
+        <div
+          className="integer-part"
+        >
+          99
+        </div>
+        <div
+          className="decimal-part"
+        >
+          .
+          00
+        </div>
+      </div>
+      <div
+        className="unit"
+      >
+        mLOG
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`renders linear 1`] = `
+<div
+  className="Gauge linear"
+>
+  <div
+    className="reading"
+  >
+    <div
+      className="value-unit"
+    >
+      <div
+        className="value"
+        style={
+          Object {
+            "color": "#ff9b3f",
+          }
+        }
+      >
+        <div
+          className="integer-part"
+        >
+          99
+        </div>
+        <div
+          className="decimal-part"
+        >
+          .
+          00
+        </div>
+      </div>
+      <div
+        className="unit"
+      >
+        mLOG
+      </div>
+    </div>
+  </div>
+</div>
+`;

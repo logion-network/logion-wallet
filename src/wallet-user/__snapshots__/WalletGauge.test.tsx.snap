@@ -1,0 +1,117 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders arc 1`] = `
+<div
+  className="WalletGauge arc"
+>
+  <Gauge
+    level={0.5}
+    readingDecimalPart="00"
+    readingIntegerPart="20"
+    type="arc"
+    unit="mLOG"
+  />
+  <div
+    className="actions"
+  >
+    <Button
+      colors={
+        Object {
+          "secondary": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+        }
+      }
+      slim={true}
+    >
+      <Icon
+        icon={
+          Object {
+            "id": "send",
+          }
+        }
+      />
+       Send
+    </Button>
+    <Button
+      colors={
+        Object {
+          "secondary": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+        }
+      }
+      slim={true}
+    >
+      <Icon
+        icon={
+          Object {
+            "id": "buy",
+          }
+        }
+      />
+       Buy
+    </Button>
+  </div>
+</div>
+`;
+
+exports[`renders linear 1`] = `
+<div
+  className="WalletGauge linear"
+>
+  <Gauge
+    level={0.5}
+    readingDecimalPart="00"
+    readingIntegerPart="20"
+    type="linear"
+    unit="mLOG"
+  />
+  <div
+    className="actions"
+  >
+    <Button
+      colors={
+        Object {
+          "secondary": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+        }
+      }
+      slim={true}
+    >
+      <Icon
+        icon={
+          Object {
+            "id": "send",
+          }
+        }
+      />
+       Send
+    </Button>
+    <Button
+      colors={
+        Object {
+          "secondary": Object {
+            "background": "#0c163d",
+            "foreground": "#ffffff",
+          },
+        }
+      }
+      slim={true}
+    >
+      <Icon
+        icon={
+          Object {
+            "id": "buy",
+          }
+        }
+      />
+       Buy
+    </Button>
+  </div>
+</div>
+`;

@@ -1,4 +1,4 @@
-import { Moment } from 'moment';
+import moment, { Moment } from 'moment';
 
 export function toIsoString(moment: Moment): string {
     let signedOn = moment.toISOString(false);
@@ -10,3 +10,11 @@ export function toIsoString(moment: Moment): string {
 }
 
 export const ISO_DATETIME_PATTERN = /[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}.[0-9]{3}/;
+
+export function fromIsoString(isoString: string): Moment {
+    if(isoString.endsWith('Z')) {
+        return moment(isoString);
+    } else {
+        return moment(isoString.substring(0, isoString.length - 1));
+    }
+}
