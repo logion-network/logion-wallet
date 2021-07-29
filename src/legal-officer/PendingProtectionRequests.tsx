@@ -11,7 +11,7 @@ import { useRootContext } from '../RootContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import { acceptProtectionRequest, rejectProtectionRequest, decision } from './Model';
-import { ProtectionRequest } from './Types';
+import { ProtectionRequest } from '../common/types/ModelTypes';
 import ProcessStep from './ProcessStep';
 import ProtectionRequestStatus from './ProtectionRequestStatus';
 import ProtectionRequestDetails from './ProtectionRequestDetails';

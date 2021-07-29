@@ -1,9 +1,7 @@
 import {
-    fetchRequests,
     rejectRequest,
     acceptRequest,
     setAssetDescription,
-    fetchProtectionRequests,
     rejectProtectionRequest,
     acceptProtectionRequest,
     decision,
@@ -11,11 +9,9 @@ import {
 } from './ModelMock';
 
 export {
-    fetchRequests,
     rejectRequest,
     acceptRequest,
     setAssetDescription,
-    fetchProtectionRequests,
     rejectProtectionRequest,
     acceptProtectionRequest,
     decision,

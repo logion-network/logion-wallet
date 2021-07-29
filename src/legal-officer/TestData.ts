@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { toIsoString } from '../logion-chain/datetime';
-import { ProtectionRequest } from './Types';
+import { ProtectionRequest } from '../common/types/ModelTypes';
 import { DEFAULT_LEGAL_OFFICER } from '../common/types/LegalOfficer';
 import { AccountAddress } from '../common/types/Addresses';
 

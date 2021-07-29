@@ -9,8 +9,8 @@ import {
     CreateTokenRequest,
     createTokenRequest as modelCreateTokenRequest,
 } from "./Model";
-import { TokenizationRequest, ProtectionRequest } from "../legal-officer/Types";
-import { fetchRequests, fetchProtectionRequests } from "../legal-officer/Model";
+import { TokenizationRequest, ProtectionRequest } from "../common/types/ModelTypes";
+import { fetchRequests, fetchProtectionRequests } from "../common/Model";
 import {
     CreateProtectionRequest,
     createProtectionRequest as modelCreateProtectionRequest,

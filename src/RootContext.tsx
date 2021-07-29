@@ -6,7 +6,7 @@ import { CoinBalance, getBalances } from './logion-chain/Balances';
 
 import Addresses, { buildAddresses } from './common/types/Addresses';
 import { Children } from './common/types/Helpers';
-import { Transaction } from './common/types/Transaction';
+import { Transaction } from './common/types/ModelTypes';
 import { getTransactions } from "./common/Model";
 
 export interface RootContext {

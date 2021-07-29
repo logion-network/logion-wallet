@@ -3,26 +3,10 @@ import { Moment } from 'moment';
 import { toIsoString } from '../logion-chain/datetime';
 
 import {
-    TokenizationRequestStatus,
-    TokenizationRequest,
     AssetDescription,
-    LegalOfficerDecisionStatus,
-    ProtectionRequest,
     LegalOfficerDecision,
-    ProtectionRequestStatus,
-    RecoveryInfo,
-} from './Types';
-
-export interface FetchRequestSpecification {
-    legalOfficerAddress?: string,
-    requesterAddress?: string,
-    status: TokenizationRequestStatus
-}
-
-export async function fetchRequests(specification: FetchRequestSpecification): Promise<TokenizationRequest[]> {
-    const response = await axios.put("/api/token-request", specification);
-    return response.data.requests;
-}
+} from '../common/types/ModelTypes';
+import { RecoveryInfo } from './Types';
 
 export interface RejectRequestParameters {
     requestId: string,
@@ -70,22 +54,6 @@ export async function setAssetDescription(parameters: SetAssetDescriptionRequest
         description: parameters.description,
         sessionToken: parameters.sessionToken,
     });
-}
-
-export type ProtectionRequestKind = 'RECOVERY' | 'PROTECTION_ONLY' | 'ANY';
-
-export interface FetchProtectionRequestSpecification {
-    legalOfficerAddress?: string,
-    requesterAddress?: string,
-    decisionStatuses: LegalOfficerDecisionStatus[],
-    kind: ProtectionRequestKind,
-    protectionRequestStatus?: ProtectionRequestStatus,
-}
-
-export async function fetchProtectionRequests(
-        specification: FetchProtectionRequestSpecification): Promise<ProtectionRequest[]> {
-    const response = await axios.put("/api/protection-request", specification);
-    return response.data.requests;
 }
 
 export interface RejectProtectionRequestParameters {

@@ -8,7 +8,7 @@ import { LegalOfficer } from "../../common/types/LegalOfficer";
 import Icon from "../../common/Icon";
 import FormGroup from '../../common/FormGroup';
 
-import { LegalOfficerDecisionStatus, ProtectionRequestStatus } from "../../legal-officer/Types";
+import { LegalOfficerDecisionStatus, ProtectionRequestStatus } from "../../common/types/ModelTypes";
 
 import Officer from './Officer';
 import './SelectLegalOfficer.css';
