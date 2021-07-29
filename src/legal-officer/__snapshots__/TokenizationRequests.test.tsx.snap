@@ -2,22 +2,6 @@
 
 exports[`renders 1`] = `
 <ContentPane
-  addresses={
-    Object {
-      "addresses": Array [
-        Object {
-          "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-          "isLegalOfficer": false,
-          "name": "name",
-        },
-      ],
-      "currentAddress": Object {
-        "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-        "isLegalOfficer": false,
-        "name": "name",
-      },
-    }
-  }
   colors={
     Object {
       "accounts": Object {
@@ -297,7 +281,6 @@ exports[`renders 1`] = `
       <RejectedTokenizationRequests />
     </Frame>
   }
-  selectAddress={[MockFunction]}
   titleIcon={
     Object {
       "background": Object {

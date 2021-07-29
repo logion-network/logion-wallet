@@ -44,7 +44,7 @@ function TabTitle(props: TabTitleProps) {
 
 export default function RecoveryProcess() {
     const { api } = useLogionChain();
-    const { selectAddress, addresses } = useRootContext();
+    const { addresses } = useRootContext();
     const { colorTheme, recoveredAddress } = useUserContext();
     const [ tabKey, setTabKey ] = useState<string>('tokens');
     const [ balances, setBalances ] = useState<Balances | null>(null);
@@ -96,7 +96,7 @@ export default function RecoveryProcess() {
         setBalances(null);
     }, [ setSignAndSubmit, setRecoveredToken, setBalances ]);
 
-    if(addresses === null || selectAddress === null || recoveredAddress === null) {
+    if(recoveredAddress === null) {
         return null;
     }
 
@@ -112,8 +112,6 @@ export default function RecoveryProcess() {
                 background: colorTheme.recoveryItems.iconGradient,
             }}
             colors={ colorTheme }
-            addresses={ addresses }
-            selectAddress={ selectAddress }
         >
             <>
                 <div

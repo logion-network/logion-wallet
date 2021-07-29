@@ -24,11 +24,11 @@ export interface Props {
 }
 
 export default function Transactions(props: Props) {
-    const { selectAddress, addresses, balances, transactions } = useRootContext();
+    const { addresses, balances, transactions } = useRootContext();
     const { coinId } = useParams<{ coinId: string }>();
     const history = useHistory();
 
-    if(addresses === null || selectAddress === null || balances === null || transactions === null) {
+    if(balances === null || transactions === null) {
         return null;
     }
 
@@ -45,8 +45,6 @@ export default function Transactions(props: Props) {
                 background: props.colorTheme.topMenuItems.iconGradient,
             }}
             colors={ props.colorTheme }
-            addresses={ addresses }
-            selectAddress={ selectAddress }
             onBack={ () => history.push(props.backPath) }
         >
             <Row>

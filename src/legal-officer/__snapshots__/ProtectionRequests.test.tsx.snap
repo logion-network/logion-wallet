@@ -2,22 +2,6 @@
 
 exports[`renders 1`] = `
 <FullWidthPane
-  addresses={
-    Object {
-      "addresses": Array [
-        Object {
-          "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-          "isLegalOfficer": false,
-          "name": "name",
-        },
-      ],
-      "currentAddress": Object {
-        "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-        "isLegalOfficer": false,
-        "name": "name",
-      },
-    }
-  }
   className="ProtectionRequests"
   colors={
     Object {
@@ -107,7 +91,6 @@ exports[`renders 1`] = `
     }
   }
   mainTitle="Protection management"
-  selectAddress={[MockFunction]}
   titleIcon={
     Object {
       "icon": Object {

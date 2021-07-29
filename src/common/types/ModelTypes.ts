@@ -44,6 +44,8 @@ export interface ProtectionRequest {
     status: ProtectionRequestStatus,
 }
 
+export type TransactionType = 'Sent' | 'Received' | 'Other';
+
 export interface Transaction {
     from: string,
     to: string,
@@ -55,7 +57,7 @@ export interface Transaction {
     reserved: string,
     total: string,
     createdOn: string,
-    type: string,
+    type: TransactionType,
 }
 
 export interface TransactionsSet {

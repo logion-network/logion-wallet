@@ -59,7 +59,7 @@ interface FormValues {
 export default function CreateProtectionRequestForm(props: Props) {
     const { api } = useLogionChain();
     const { control, handleSubmit, formState: {errors} } = useForm<FormValues>();
-    const { selectAddress, addresses, currentAddress } = useRootContext();
+    const { currentAddress } = useRootContext();
     const { createProtectionRequest, colorTheme, refreshRequests } = useUserContext();
     const [ legalOfficer1, setLegalOfficer1 ] = useState<LegalOfficer | null>(null);
     const [ legalOfficer2, setLegalOfficer2 ] = useState<LegalOfficer | null>(null);
@@ -160,10 +160,6 @@ export default function CreateProtectionRequestForm(props: Props) {
         })();
     }, [ api, currentAddress, addressToRecover, setSignAndSubmit ]);
 
-    if(addresses === null || selectAddress === null) {
-        return null;
-    }
-
     let legalOfficersTitle;
     if(props.isRecovery) {
         legalOfficersTitle = "Select your Legal Officers";
@@ -183,8 +179,6 @@ export default function CreateProtectionRequestForm(props: Props) {
                 background: props.isRecovery ? colorTheme.recoveryItems.iconGradient : undefined,
             }}
             colors={ colorTheme }
-            addresses={ addresses }
-            selectAddress={ selectAddress }
             primaryPaneWidth={ 6 }
             primaryAreaChildren={
                 <>

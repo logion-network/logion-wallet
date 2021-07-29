@@ -8,13 +8,17 @@ import AccountAddress from './AccountAddress';
 import { AccountAddressColors, ColorThemeType } from './ColorTheme';
 
 export interface Props {
-    addresses: Addresses,
+    addresses: Addresses | null,
+    selectAddress: ((userAddress: string) => void) | null,
     colors: AccountAddressColors,
-    selectAddress: (userAddress: string) => void,
     colorThemeType: ColorThemeType,
 }
 
 export default function AddressSwitcher(props: Props) {
+
+    if(props.addresses === null || props.selectAddress === null) {
+        return null;
+    }
 
     return (
         <div
@@ -39,7 +43,7 @@ export default function AddressSwitcher(props: Props) {
                         props.addresses.addresses.map(address => (
                             <Dropdown.Item
                                 key={ address.address }
-                                onClick={ () => props.selectAddress(address.address) }
+                                onClick={ () => props.selectAddress!(address.address) }
                                 style={{
                                     color: props.colors.foreground,
                                     backgroundColor: props.colors.background,

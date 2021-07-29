@@ -4,22 +4,6 @@ exports[`renders null with missing data 1`] = `null`;
 
 exports[`renders with all data 1`] = `
 <FullWidthPane
-  addresses={
-    Object {
-      "addresses": Array [
-        Object {
-          "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-          "isLegalOfficer": false,
-          "name": "name",
-        },
-      ],
-      "currentAddress": Object {
-        "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-        "isLegalOfficer": false,
-        "name": "name",
-      },
-    }
-  }
   className="Transactions"
   colors={
     Object {
@@ -110,7 +94,6 @@ exports[`renders with all data 1`] = `
   }
   mainTitle="Wallet"
   onBack={[Function]}
-  selectAddress={[MockFunction]}
   titleIcon={
     Object {
       "background": Object {

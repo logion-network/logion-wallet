@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 import Tabs from '../common/Tabs';
 import { FullWidthPane } from '../common/Dashboard';
-import { useRootContext } from '../RootContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import PendingProtectionRequests from './PendingProtectionRequests';
@@ -10,13 +9,8 @@ import ProtectionRequestsHistory from './ProtectionRequestsHistory';
 import './RecoveryRequests.css';
 
 export default function RecoveryRequests() {
-    const { selectAddress, addresses } = useRootContext();
     const { colorTheme } = useLegalOfficerContext();
     const [ tabKey, setTabKey ] = useState<string>('pending');
-
-    if(addresses === null || selectAddress === null) {
-        return null;
-    }
 
     return (
         <FullWidthPane
@@ -29,8 +23,6 @@ export default function RecoveryRequests() {
                 },
             }}
             colors={ colorTheme }
-            addresses={ addresses }
-            selectAddress={ selectAddress }
         >
             <Tabs
                 activeKey={ tabKey }

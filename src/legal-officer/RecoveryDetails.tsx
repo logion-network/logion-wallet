@@ -25,7 +25,7 @@ import ExtrinsicSubmitter, { SignAndSubmit } from '../ExtrinsicSubmitter';
 import ButtonGroup from "../common/ButtonGroup";
 
 export default function RecoveryDetails() {
-    const { selectAddress, addresses } = useRootContext();
+    const { addresses } = useRootContext();
     const { api } = useLogionChain();
     const { colorTheme, refreshRequests } = useLegalOfficerContext();
     const { requestId } = useParams<{ requestId: string }>();
@@ -97,7 +97,7 @@ export default function RecoveryDetails() {
         })();
     }, [ requestId, addresses, rejectReason, refreshRequests, history ]);
 
-    if (addresses === null || selectAddress === null || recoveryInfo === null) {
+    if (recoveryInfo === null) {
         return null;
     }
 
@@ -112,8 +112,6 @@ export default function RecoveryDetails() {
                 },
             } }
             colors={ colorTheme }
-            addresses={ addresses }
-            selectAddress={ selectAddress }
         >
             <Frame
                 className="main-frame"

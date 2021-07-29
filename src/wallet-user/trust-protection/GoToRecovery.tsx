@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { useRootContext } from '../../RootContext';
 import { FullWidthPane } from '../../common/Dashboard';
 import Alert from '../../common/Alert';
 import Button from '../../common/Button';
@@ -10,12 +9,7 @@ import { useUserContext } from '../UserContext';
 import { RECOVERY_PATH } from '../UserRouter';
 
 export default function GoToTrustProtection() {
-    const { selectAddress, addresses } = useRootContext();
     const { colorTheme } = useUserContext();
-
-    if(addresses === null || selectAddress === null) {
-        return null;
-    }
 
     return (
         <FullWidthPane
@@ -28,8 +22,6 @@ export default function GoToTrustProtection() {
                 },
             }}
             colors={ colorTheme }
-            addresses={ addresses }
-            selectAddress={ selectAddress }
         >
             <Alert variant="info">
                 Please go to Recovery in order to follow the status of recovery process.

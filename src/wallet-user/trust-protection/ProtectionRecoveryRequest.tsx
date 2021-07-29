@@ -29,7 +29,7 @@ export interface Props {
 
 export default function ProtectionRecoveryRequest(props: Props) {
     const { api } = useLogionChain();
-    const { selectAddress, addresses, currentAddress } = useRootContext();
+    const { currentAddress } = useRootContext();
     const { refreshRequests, colorTheme, recoveryConfig, recoveredAddress } = useUserContext();
     const [ confirmButtonEnabled, setConfirmButtonEnabled ] = useState(props.request.status === "PENDING");
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
@@ -57,7 +57,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
         setSignAndSubmitClaim(() => signAndSubmit);
     }, [ api, currentAddress, props, setSignAndSubmitClaim ]);
 
-    if(addresses === null || selectAddress === null || recoveryConfig === null || recoveredAddress === undefined) {
+    if(recoveryConfig === null || recoveredAddress === undefined) {
         return null;
     }
 
@@ -142,8 +142,6 @@ export default function ProtectionRecoveryRequest(props: Props) {
                 background: props.request.isRecovery && props.request.status !== 'ACTIVATED' ? colorTheme.recoveryItems.iconGradient : undefined,
             }}
             colors={ colorTheme }
-            addresses={ addresses }
-            selectAddress={ selectAddress }
         >
                 <Frame
                     className="ProtectionRecoveryRequest"

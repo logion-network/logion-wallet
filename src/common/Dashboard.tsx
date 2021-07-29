@@ -4,7 +4,6 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import { Children } from './types/Helpers';
-import Addresses from './types/Addresses';
 import Logo from './Logo';
 import AddressSwitcher from './AddressSwitcher';
 import { ColorTheme, MenuIcon as MenuIconType } from './ColorTheme';
@@ -14,6 +13,7 @@ import MainMenu from './MainMenu';
 import MenuIcon from './MenuIcon';
 import Clickable from './Clickable';
 import Icon from './Icon';
+import { useRootContext } from '../RootContext';
 
 import './Dashboard.css';
 
@@ -55,7 +55,7 @@ function SecondaryArea(props: SecondaryAreaProps) {
     );
 }
 
-export interface ContentPaneProps extends TitlesProps, AddressSwitcherProps {
+export interface ContentPaneProps extends TitlesProps {
     primaryAreaChildren: Children,
     secondaryAreaChildren: Children,
     primaryPaneWidth?: number,
@@ -99,18 +99,14 @@ function Titles(props: TitlesProps) {
     );
 }
 
-interface AddressSwitcherProps {
-    colors: ColorTheme,
-    addresses: Addresses,
-    selectAddress: (userAddress: string) => void,
-}
-
-export interface BasePaneProps extends TitlesProps, AddressSwitcherProps {
+export interface BasePaneProps extends TitlesProps {
     children: Children,
     className?: string,
+    colors: ColorTheme,
 }
 
 function BasePane(props: BasePaneProps) {
+    const { selectAddress, addresses } = useRootContext();
 
     let contentAreaClass = "ContentArea";
     if(props.className !== undefined) {
@@ -126,9 +122,9 @@ function BasePane(props: BasePaneProps) {
                 <Col md={ 4 }>
                     <div className="AddressSwitcherArea">
                         <AddressSwitcher
-                            addresses={ props.addresses }
+                            addresses={ addresses }
                             colors={ props.colors.accounts }
-                            selectAddress={ props.selectAddress }
+                            selectAddress={ selectAddress }
                             colorThemeType={ props.colors.type }
                         />
                     </div>
@@ -154,8 +150,6 @@ export function ContentPane(props: ContentPaneProps) {
             subTitle={ props.subTitle }
             titleIcon={ props.titleIcon }
             colors={ props.colors }
-            selectAddress={ props.selectAddress }
-            addresses={ props.addresses }
             onBack={ props.onBack }
         >
                 <PrimaryArea
@@ -172,7 +166,7 @@ export function ContentPane(props: ContentPaneProps) {
     );
 }
 
-export interface FullWidthPaneProps extends TitlesProps, AddressSwitcherProps {
+export interface FullWidthPaneProps extends BasePaneProps {
     children: Children,
     className?: string,
 }
@@ -186,8 +180,6 @@ export function FullWidthPane(props: FullWidthPaneProps) {
             subTitle={ props.subTitle }
             titleIcon={ props.titleIcon }
             colors={ props.colors }
-            selectAddress={ props.selectAddress }
-            addresses={ props.addresses }
             onBack={ props.onBack }
         >
             <PrimaryArea width={ FULL_WIDTH }>

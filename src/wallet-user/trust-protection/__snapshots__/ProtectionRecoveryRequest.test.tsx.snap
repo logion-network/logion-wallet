@@ -2,22 +2,6 @@
 
 exports[`activated protection request 1`] = `
 <FullWidthPane
-  addresses={
-    Object {
-      "addresses": Array [
-        Object {
-          "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-          "isLegalOfficer": false,
-          "name": "name",
-        },
-      ],
-      "currentAddress": Object {
-        "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-        "isLegalOfficer": false,
-        "name": "name",
-      },
-    }
-  }
   colors={
     Object {
       "accounts": Object {
@@ -105,7 +89,6 @@ exports[`activated protection request 1`] = `
     }
   }
   mainTitle="My Logion Trust Protection"
-  selectAddress={[MockFunction]}
   titleIcon={
     Object {
       "background": undefined,
@@ -354,22 +337,6 @@ Belgium",
 
 exports[`activated recovery request 1`] = `
 <FullWidthPane
-  addresses={
-    Object {
-      "addresses": Array [
-        Object {
-          "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-          "isLegalOfficer": false,
-          "name": "name",
-        },
-      ],
-      "currentAddress": Object {
-        "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-        "isLegalOfficer": false,
-        "name": "name",
-      },
-    }
-  }
   colors={
     Object {
       "accounts": Object {
@@ -457,7 +424,6 @@ exports[`activated recovery request 1`] = `
     }
   }
   mainTitle="My Logion Trust Protection"
-  selectAddress={[MockFunction]}
   titleIcon={
     Object {
       "background": undefined,
@@ -715,22 +681,6 @@ Belgium",
 
 exports[`pending protection request 1`] = `
 <FullWidthPane
-  addresses={
-    Object {
-      "addresses": Array [
-        Object {
-          "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-          "isLegalOfficer": false,
-          "name": "name",
-        },
-      ],
-      "currentAddress": Object {
-        "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-        "isLegalOfficer": false,
-        "name": "name",
-      },
-    }
-  }
   colors={
     Object {
       "accounts": Object {
@@ -818,7 +768,6 @@ exports[`pending protection request 1`] = `
     }
   }
   mainTitle="My Logion Trust Protection"
-  selectAddress={[MockFunction]}
   titleIcon={
     Object {
       "background": undefined,
@@ -1067,22 +1016,6 @@ Belgium",
 
 exports[`pending recovery request 1`] = `
 <FullWidthPane
-  addresses={
-    Object {
-      "addresses": Array [
-        Object {
-          "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-          "isLegalOfficer": false,
-          "name": "name",
-        },
-      ],
-      "currentAddress": Object {
-        "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-        "isLegalOfficer": false,
-        "name": "name",
-      },
-    }
-  }
   colors={
     Object {
       "accounts": Object {
@@ -1170,7 +1103,6 @@ exports[`pending recovery request 1`] = `
     }
   }
   mainTitle="Recovery"
-  selectAddress={[MockFunction]}
   titleIcon={
     Object {
       "background": Object {
@@ -1443,22 +1375,6 @@ Belgium",
 
 exports[`protection request 1`] = `
 <FullWidthPane
-  addresses={
-    Object {
-      "addresses": Array [
-        Object {
-          "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-          "isLegalOfficer": false,
-          "name": "name",
-        },
-      ],
-      "currentAddress": Object {
-        "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-        "isLegalOfficer": false,
-        "name": "name",
-      },
-    }
-  }
   colors={
     Object {
       "accounts": Object {
@@ -1546,7 +1462,6 @@ exports[`protection request 1`] = `
     }
   }
   mainTitle="My Logion Trust Protection"
-  selectAddress={[MockFunction]}
   titleIcon={
     Object {
       "background": undefined,
@@ -1781,22 +1696,6 @@ Belgium",
 
 exports[`recovery request 1`] = `
 <FullWidthPane
-  addresses={
-    Object {
-      "addresses": Array [
-        Object {
-          "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-          "isLegalOfficer": false,
-          "name": "name",
-        },
-      ],
-      "currentAddress": Object {
-        "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-        "isLegalOfficer": false,
-        "name": "name",
-      },
-    }
-  }
   colors={
     Object {
       "accounts": Object {
@@ -1884,7 +1783,6 @@ exports[`recovery request 1`] = `
     }
   }
   mainTitle="My Logion Trust Protection"
-  selectAddress={[MockFunction]}
   subTitle="Recovery process status"
   titleIcon={
     Object {

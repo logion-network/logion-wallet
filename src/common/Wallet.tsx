@@ -14,6 +14,7 @@ import Icon from './Icon';
 import Button from './Button';
 import { ColorTheme } from './ColorTheme';
 import WalletGauge from './WalletGauge';
+import Loader from './Loader';
 
 import './Wallet.css';
 
@@ -23,14 +24,6 @@ export interface Props {
 }
 
 export default function Wallet(props: Props) {
-    const { selectAddress, addresses, balances, transactions } = useRootContext();
-    const history = useHistory();
-
-    if(addresses === null || selectAddress === null || balances === null || transactions === null) {
-        return null;
-    }
-
-    const latestTransaction = transactions[0];
 
     return (
         <FullWidthPane
@@ -43,9 +36,24 @@ export default function Wallet(props: Props) {
                 background: props.colorTheme.topMenuItems.iconGradient,
             }}
             colors={ props.colorTheme }
-            addresses={ addresses }
-            selectAddress={ selectAddress }
         >
+            <Content { ...props } />
+        </FullWidthPane>
+    );
+}
+
+export function Content(props: Props) {
+    const { balances, transactions } = useRootContext();
+    const history = useHistory();
+
+    if(balances === null || transactions === null) {
+        return <Loader />;
+    }
+
+    const latestTransaction = transactions[0];
+
+    return (
+        <>
             <Row>
                 <Col md={8}>
                     <Frame
@@ -118,7 +126,7 @@ export default function Wallet(props: Props) {
                     renderEmpty={ () => <EmptyTableMessage>You have no asset yet</EmptyTableMessage> }
                 />
             </Frame>
-        </FullWidthPane>
+        </>
     );
 }
 
