@@ -14,7 +14,7 @@
 }
 
 .Gauge.arc.light .reading {
-    background-image: url("../img/gauge-light.png");
+    background-image: url("../img/gauge-light.svg");
 }
 
 .Gauge .reading .value-unit {
@@ -60,7 +60,7 @@
 }
 
 .Gauge.linear.light:before {
-    background-image: url("../img/linear-gauge-light.png");
+    background-image: url("../img/linear-gauge-light.svg");
 }
 
 .Gauge.linear .reading {
