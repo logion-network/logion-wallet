@@ -8,12 +8,12 @@ import { setProtectionRequestsHistory } from './__mocks__/LegalOfficerContextMoc
 import { PROTECTION_REQUESTS_HISTORY } from './TestData';
 
 test("Renders null with no data", () => {
-    const tree = shallowRender(<ProtectionRequestsHistory recovery={ false } />);
+    const tree = shallowRender(<ProtectionRequestsHistory />);
     expect(tree).toMatchSnapshot();
 });
 
 test("Renders requests history", () => {
     setProtectionRequestsHistory(PROTECTION_REQUESTS_HISTORY);
-    const tree = shallowRender(<ProtectionRequestsHistory recovery={ false } />);
+    const tree = shallowRender(<ProtectionRequestsHistory />);
     expect(tree).toMatchSnapshot();
 });

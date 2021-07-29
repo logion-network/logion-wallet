@@ -16,6 +16,8 @@ export let activatedProtectionRequests: any[] | null = null;
 
 export let protectionRequestsHistory: any[] | null = null;
 
+export let recoveryRequestsHistory: any[] | null = null;
+
 export function setPendingRequests(requests: any[]) {
     pendingTokenizationRequests = requests;
 }
@@ -46,4 +48,8 @@ export function setActivatedProtectionRequests(requests: any[]) {
 
 export function setProtectionRequestsHistory(requests: any[]) {
     protectionRequestsHistory = requests;
+}
+
+export function setRecoveryRequestsHistory(requests: any[]) {
+    recoveryRequestsHistory = requests;
 }

@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders null with no data 1`] = `
+<React.Fragment>
+  <Table
+    columns={
+      Array [
+        Object {
+          "align": "left",
+          "header": "First name",
+          "render": [Function],
+          "width": "200px",
+        },
+        Object {
+          "align": "left",
+          "header": "Last name",
+          "render": [Function],
+          "renderDetails": [Function],
+          "width": "200px",
+        },
+        Object {
+          "header": "Status",
+          "render": [Function],
+          "splitAfter": true,
+          "width": "140px",
+        },
+        Object {
+          "header": "Submission date",
+          "render": [Function],
+          "smallerText": true,
+          "width": "120px",
+        },
+        Object {
+          "align": "left",
+          "header": "Account number",
+          "render": [Function],
+        },
+        Object {
+          "align": "left",
+          "header": "Account to recover",
+          "render": [Function],
+        },
+      ]
+    }
+    renderEmpty={[Function]}
+  />
+</React.Fragment>
+`;
+
+exports[`Renders requests history 1`] = `
+<React.Fragment>
+  <Table
+    columns={
+      Array [
+        Object {
+          "align": "left",
+          "header": "First name",
+          "render": [Function],
+          "width": "200px",
+        },
+        Object {
+          "align": "left",
+          "header": "Last name",
+          "render": [Function],
+          "renderDetails": [Function],
+          "width": "200px",
+        },
+        Object {
+          "header": "Status",
+          "render": [Function],
+          "splitAfter": true,
+          "width": "140px",
+        },
+        Object {
+          "header": "Submission date",
+          "render": [Function],
+          "smallerText": true,
+          "width": "120px",
+        },
+        Object {
+          "align": "left",
+          "header": "Account number",
+          "render": [Function],
+        },
+        Object {
+          "align": "left",
+          "header": "Account to recover",
+          "render": [Function],
+        },
+      ]
+    }
+    renderEmpty={[Function]}
+  />
+</React.Fragment>
+`;

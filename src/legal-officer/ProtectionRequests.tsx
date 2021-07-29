@@ -36,7 +36,7 @@ export default function ProtectionRequests() {
                         {
                             key: "history",
                             title: "History",
-                            render: () => <ProtectionRequestsHistory recovery={ false } />
+                            render: () => <ProtectionRequestsHistory />
                         }
                     ]}
                 />

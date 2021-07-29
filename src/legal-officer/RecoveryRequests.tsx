@@ -4,7 +4,7 @@ import Tabs from '../common/Tabs';
 import { FullWidthPane } from '../common/Dashboard';
 
 import PendingProtectionRequests from './PendingProtectionRequests';
-import ProtectionRequestsHistory from './ProtectionRequestsHistory';
+import RecoveryRequestsHistory from './RecoveryRequestsHistory';
 import './RecoveryRequests.css';
 
 export default function RecoveryRequests() {
@@ -33,7 +33,7 @@ export default function RecoveryRequests() {
                     {
                         key: "history",
                         title: "History",
-                        render: () => <ProtectionRequestsHistory recovery={ true } />
+                        render: () => <RecoveryRequestsHistory />
                     }
                 ]}
             />

@@ -9,11 +9,12 @@ import { decision } from './Model';
 import ProtectionRequestStatus from './ProtectionRequestStatus';
 import ProtectionRequestDetails from './ProtectionRequestDetails';
 
-export default function ProtectionRequestsHistory() {
-    const { currentAddress } = useCommonContext();
-    const { protectionRequestsHistory } = useLegalOfficerContext();
 
-    if (protectionRequestsHistory === null) {
+export default function RecoveryRequestsHistory() {
+    const { currentAddress } = useCommonContext();
+    const { recoveryRequestsHistory } = useLegalOfficerContext();
+
+    if (recoveryRequestsHistory === null) {
         return null;
     }
 
@@ -54,8 +55,13 @@ export default function ProtectionRequestsHistory() {
                         render: request => <Cell content={ request.requesterAddress } overflowing tooltipId={ `dest-${request.id}` } />,
                         align: 'left',
                     },
+                    {
+                        header: "Account to recover",
+                        render: request => <Cell content={ request.addressToRecover } overflowing tooltipId={ `src-${request.id}` } />,
+                        align: 'left',
+                    }
                 ]}
-                data={ protectionRequestsHistory }
+                data={ recoveryRequestsHistory }
                 renderEmpty={ () => <EmptyTableMessage>No processed request</EmptyTableMessage>}
             />
         </>
