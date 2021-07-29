@@ -17,27 +17,27 @@ exports[`renders Dashboard 1`] = `
   fluid={true}
   style={
     Object {
-      "backgroundColor": "#eff3fe",
-      "color": "#000000",
+      "backgroundColor": "#0c163d",
+      "color": "#ffffff",
     }
   }
 >
   <style>
     
     .Dashboard .PrimaryArea .table {
-        color: #000000;
+        color: #ffffff;
     }
 
     .Dashboard .SecondaryArea .table {
-        color: #000000;
+        color: #ffffff;
     }
 
     .Dashboard a {
-        color: #000000;
+        color: #ffffff;
     }
 
     .Dashboard .Sidebar .MenuItem.active {
-        background-color: #d8e2fd;
+        background-color: #ffffff33;
     }
     
   </style>
@@ -51,28 +51,23 @@ exports[`renders Dashboard 1`] = `
         className="Sidebar"
         style={
           Object {
-            "backgroundColor": "#ffffff",
-            "boxShadow": "0 0 25px #3b6cf41a",
-            "color": "#000000",
+            "backgroundColor": "#152665",
+            "boxShadow": "0 0 25px #3b6cf433",
+            "color": "#ffffff",
           }
         }
       >
         <Logo
-          colorThemeType="light"
-          shadowColor="#3b6cf41a"
+          shadowColor="#3b6cf433"
         />
         <div
           className="MenuArea"
         >
           <Menu
-            colorThemeType="light"
             items={Array []}
           />
-          <MainMenu
-            colorThemeType="light"
-          />
+          <MainMenu />
           <Menu
-            colorThemeType="light"
             items={Array []}
           />
         </div>

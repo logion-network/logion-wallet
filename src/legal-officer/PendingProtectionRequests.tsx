@@ -38,7 +38,7 @@ export interface Props {
 
 export default function PendingProtectionRequests(props: Props) {
     const { currentAddress } = useCommonContext();
-    const { pendingProtectionRequests, refreshRequests, pendingRecoveryRequests, colorTheme } = useLegalOfficerContext();
+    const { pendingProtectionRequests, refreshRequests, pendingRecoveryRequests } = useLegalOfficerContext();
     const [ rejectReason, setRejectReason ] = useState<string>("");
     const [ reviewState, setReviewState ] = useState<ReviewState>(NO_REVIEW_STATE);
     const history = useHistory();
@@ -149,7 +149,6 @@ export default function PendingProtectionRequests(props: Props) {
                             variant="primary"
                             onClick={() => setReviewState({status: ReviewStatus.PENDING, request: request}) }
                             data-testid={`review-${request.id}`}
-                            colors={ colorTheme.buttons }
                         >
                             Review and proceed
                         </Button>
@@ -157,7 +156,6 @@ export default function PendingProtectionRequests(props: Props) {
                         {props.recovery &&
                         <Button
                             variant="primary"
-                            colors={ colorTheme.buttons }
                             onClick={ () => history.push(recoveryDetailsPath(request.id)) }
                         >
                             Review and proceed
@@ -211,7 +209,6 @@ export default function PendingProtectionRequests(props: Props) {
                             variant="primary"
                             onClick={() => setReviewState({status: ReviewStatus.PENDING, request: request}) }
                             data-testid={`review-${request.id}`}
-                            colors={ colorTheme.buttons }
                         >
                             Review and proceed
                         </Button>
@@ -219,7 +216,6 @@ export default function PendingProtectionRequests(props: Props) {
                         {props.recovery &&
                         <Button
                             variant="primary"
-                            colors={ colorTheme.buttons }
                             onClick={ () => history.push(recoveryDetailsPath(request.id)) }
                         >
                             Review and proceed
@@ -236,7 +232,6 @@ export default function PendingProtectionRequests(props: Props) {
             <Table
                 columns={ columns }
                 data={ requests }
-                colorTheme={ colorTheme }
                 renderEmpty={ () => <EmptyTableMessage>No request to display</EmptyTableMessage>}
             />
 
@@ -280,7 +275,6 @@ export default function PendingProtectionRequests(props: Props) {
                         address={ reviewState.request!.requesterAddress }
                         identity={ reviewState.request!.userIdentity }
                         postalAddress={ reviewState.request!.userPostalAddress }
-                        colorTheme={ colorTheme }
                     />
                     <p>I executed my due diligence and accept to be the Legal Officer of this user</p>
                 </ProcessStep>

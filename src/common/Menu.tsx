@@ -1,13 +1,11 @@
 import React from 'react';
 
 import MenuItemComponent, { MenuItemData } from './MenuItem';
-import { ColorThemeType } from './ColorTheme';
 
 import './Menu.css';
 
 export interface Props {
     items: MenuItemData[],
-    colorThemeType: ColorThemeType,
 }
 
 export default function Menu(props: Props) {
@@ -16,7 +14,7 @@ export default function Menu(props: Props) {
         <div className="Menu">
             {
                 props.items.map(item => (
-                    <MenuItemComponent key={ item.id } item={ item } colorThemeType={ props.colorThemeType } />
+                    <MenuItemComponent key={ item.id } item={ item } />
                 ))
             }
         </div>

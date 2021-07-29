@@ -1,5 +1,4 @@
 import React from "react";
-import { ColorTheme } from "../../common/ColorTheme";
 import { LegalOfficer } from "../../common/types/LegalOfficer";
 
 import { LegalOfficerDecisionStatus, ProtectionRequestStatus } from "../../common/types/ModelTypes";
@@ -13,7 +12,6 @@ export interface Props {
     setLegalOfficer1: (legalOfficer: LegalOfficer) => void,
     legalOfficer2: LegalOfficer | null,
     setLegalOfficer2: (legalOfficer: LegalOfficer) => void,
-    colorTheme: ColorTheme,
     mode: Mode,
     legalOfficer1Decision?: LegalOfficerDecisionStatus,
     legalOfficer2Decision?: LegalOfficerDecisionStatus,
@@ -30,7 +28,6 @@ export default function LegalOfficers(props: Props) {
                     legalOfficer={ props.legalOfficer1 }
                     otherLegalOfficer={ props.legalOfficer2 }
                     setLegalOfficer={ props.setLegalOfficer1 }
-                    colorTheme={ props.colorTheme }
                     legalOfficers={ props.legalOfficers }
                     mode={ props.mode }
                     decision={ props.legalOfficer1Decision }
@@ -44,7 +41,6 @@ export default function LegalOfficers(props: Props) {
                     legalOfficer={ props.legalOfficer2 }
                     otherLegalOfficer={ props.legalOfficer1 }
                     setLegalOfficer={ props.setLegalOfficer2 }
-                    colorTheme={ props.colorTheme }
                     legalOfficers={ props.legalOfficers }
                     mode={ props.mode }
                     decision={ props.legalOfficer2Decision }

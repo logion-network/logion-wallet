@@ -15,6 +15,6 @@ export function fromIsoString(isoString: string): Moment {
     if(isoString.endsWith('Z')) {
         return moment(isoString);
     } else {
-        return moment(isoString.substring(0, isoString.length - 1));
+        return moment(isoString + "Z");
     }
 }

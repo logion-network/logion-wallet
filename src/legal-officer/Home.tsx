@@ -2,10 +2,10 @@ import React from 'react';
 
 import { FullWidthPane } from '../common/Dashboard';
 
-import { useLegalOfficerContext } from "./LegalOfficerContext";
+import { useCommonContext } from "../common/CommonContext";
 
 export default function Account() {
-    const { colorTheme } = useLegalOfficerContext();
+    const { colorTheme } = useCommonContext();
 
     return (
         <FullWidthPane
@@ -16,7 +16,6 @@ export default function Account() {
                 },
                 background: colorTheme.topMenuItems.iconGradient,
             }}
-            colors={ colorTheme }
         >
         </FullWidthPane>
     );

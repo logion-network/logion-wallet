@@ -5,9 +5,9 @@ exports[`renders 1`] = `
   className="Frame"
   style={
     Object {
-      "backgroundColor": "#ffffff",
-      "boxShadow": "0 0 25px #3b6cf41a",
-      "color": "#000000",
+      "backgroundColor": "#152665",
+      "boxShadow": "0 0 25px #3b6cf433",
+      "color": "#ffffff",
     }
   }
 >
@@ -15,7 +15,7 @@ exports[`renders 1`] = `
     
     .Frame a,
     .Frame .btn-link {
-        color: #3b6cf426
+        color: #ffffff
     }
     
   </style>

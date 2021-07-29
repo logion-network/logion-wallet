@@ -9,16 +9,16 @@ exports[`renders 1`] = `
     .Tabs .nav-tabs .nav-link {
         border-color: #3b6cf4;
         color: #ffffff;
-        background-color: #d8e2fd;
+        background-color: #ffffff33;
     }
     .Tabs .nav-tabs .nav-link.active {
         color: #ffffff;
-        background-color: #0c163d;
-        border-bottom-color: #0c163d;
+        background-color: #152665;
+        border-bottom-color: #152665;
     }
     .Tabs .tab-content {
         color: #ffffff;
-        background-color: #0c163d;
+        background-color: #152665;
         border: 1px solid #3b6cf4;
     }
     

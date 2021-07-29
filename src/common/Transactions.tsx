@@ -1,6 +1,8 @@
 import { useParams, useHistory } from 'react-router';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 
 import { PrefixedNumber } from '../logion-chain/numbers';
 import { Coin, prefixedLogBalance } from '../logion-chain/Balances';
@@ -9,7 +11,7 @@ import { FullWidthPane } from './Dashboard';
 import Frame from './Frame';
 import Icon from './Icon';
 import Table, { DateCell, Cell, EmptyTableMessage } from './Table';
-import { ColorTheme, RED, GREEN } from './ColorTheme';
+import { RED, GREEN } from './ColorTheme';
 
 import { useCommonContext } from './CommonContext';
 
@@ -20,11 +22,10 @@ import { Transaction } from './types/ModelTypes';
 
 export interface Props {
     backPath: string,
-    colorTheme: ColorTheme,
 }
 
 export default function Transactions(props: Props) {
-    const { addresses, balances, transactions } = useCommonContext();
+    const { addresses, balances, transactions, colorTheme } = useCommonContext();
     const { coinId } = useParams<{ coinId: string }>();
     const history = useHistory();
 
@@ -42,19 +43,16 @@ export default function Transactions(props: Props) {
                 icon: {
                     id: 'wallet'
                 },
-                background: props.colorTheme.topMenuItems.iconGradient,
+                background: colorTheme.topMenuItems.iconGradient,
             }}
-            colors={ props.colorTheme }
             onBack={ () => history.push(props.backPath) }
         >
             <Row>
                 <Col>
                     <Frame
-                        colors={ props.colorTheme }
                         title={ <TransactionsFrameTitle coin={ balance.coin } /> }
                     >
                         <Table
-                            colorTheme={ props.colorTheme }
                             columns={[
                                 {
                                     header: "Transaction date",
@@ -98,14 +96,12 @@ export default function Transactions(props: Props) {
             <Row>
                 <Col>
                     <Frame
-                        colors={ props.colorTheme }
                         title={ <BalanceFrameTitle coin={ balance.coin } /> }
                     >
                         <WalletGauge
                             coin={ balance.coin }
                             balance={ balance.balance }
                             type='linear'
-                            colorTheme={ props.colorTheme }
                             level={ balance.level }
                         />
                     </Frame>
@@ -161,8 +157,28 @@ interface FromToCellProps {
 function FromToCell(props: FromToCellProps) {
     return (
         <div className="from-to-cell">
-            <span className="from">{ props.from }</span>
-            <span className="to">{ props.to !== null ? props.to : "-" }</span>
+            <OverlayTrigger
+              placement="bottom"
+              delay={ 500 }
+              overlay={
+                <Tooltip id={`tooltip-${props.from}`}>
+                  { props.from }
+                </Tooltip>
+              }
+            >
+                <span className="from">{ props.from }</span>
+            </OverlayTrigger>
+            <OverlayTrigger
+              placement="bottom"
+              delay={ 500 }
+              overlay={
+                <Tooltip id={`tooltip-${props.to}`}>
+                  { props.to }
+                </Tooltip>
+              }
+            >
+                <span className="to">{ props.to !== null ? props.to : "-" }</span>
+            </OverlayTrigger>
         </div>
     );
 }

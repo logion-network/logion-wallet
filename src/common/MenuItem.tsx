@@ -1,7 +1,7 @@
 import React, { CSSProperties } from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { ColorThemeType, MenuIcon as ColorThemeMenuIcon } from './ColorTheme';
+import { MenuIcon as ColorThemeMenuIcon } from './ColorTheme';
 import MenuIcon from './MenuIcon';
 
 import './MenuItem.css';
@@ -17,7 +17,6 @@ export interface MenuItemData {
 export interface Props {
     item: MenuItemData,
     height?: number,
-    colorThemeType: ColorThemeType,
 }
 
 export default function MenuItem(props: Props) {
@@ -39,7 +38,6 @@ export default function MenuItem(props: Props) {
                     props.item.icon !== undefined &&
                     <MenuIcon
                         { ...props.item.icon }
-                        colorThemeType={ props.colorThemeType }
                     />
                 }
                 <span className="text">{ props.item.text }</span>

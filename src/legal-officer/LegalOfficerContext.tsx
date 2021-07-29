@@ -13,7 +13,6 @@ import {
     rejectRequest as modelRejectRequest,
 } from './Model';
 import { sign } from "../logion-chain/Signature";
-import { ColorTheme } from '../common/ColorTheme';
 import { useCommonContext } from '../common/CommonContext';
 import { LIGHT_MODE } from './Types';
 
@@ -29,7 +28,6 @@ export interface LegalOfficerContext {
     protectionRequestsHistory: ProtectionRequest[] | null,
     pendingRecoveryRequests: ProtectionRequest[] | null,
     recoveryRequestsHistory: ProtectionRequest[] | null,
-    colorTheme: ColorTheme,
 }
 
 function initialContextValue(): LegalOfficerContext {
@@ -45,7 +43,6 @@ function initialContextValue(): LegalOfficerContext {
         protectionRequestsHistory: null,
         pendingRecoveryRequests: null,
         recoveryRequestsHistory: null,
-        colorTheme: LIGHT_MODE,
     };
 }
 
@@ -56,10 +53,16 @@ export interface Props {
 }
 
 export function LegalOfficerContextProvider(props: Props) {
-    const { currentAddress } = useCommonContext();
+    const { currentAddress, colorTheme, setColorTheme } = useCommonContext();
     const [ contextValue, setContextValue ] = useState<LegalOfficerContext>(initialContextValue());
     const [ fetchedInitially, setFetchedInitially ] = useState<boolean>(false);
     const [ refreshing, setRefreshing ] = useState<boolean>(false);
+
+    useEffect(() => {
+        if(colorTheme !== LIGHT_MODE && setColorTheme !== null) {
+            setColorTheme(LIGHT_MODE);
+        }
+    }, [ colorTheme, setColorTheme ]);
 
     const refreshRequests = useCallback(() => {
         async function fetchAndSetAll() {

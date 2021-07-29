@@ -3,14 +3,14 @@ import React from 'react';
 import { ContentPane } from '../common/Dashboard';
 import Frame from '../common/Frame';
 
-import { useLegalOfficerContext } from './LegalOfficerContext';
+import { useCommonContext } from '../common/CommonContext';
 import PendingTokenizationRequests from './PendingTokenizationRequests';
 import AcceptedTokenizationRequests from './AcceptedTokenizationRequests';
 import RejectedTokenizationRequests from './RejectedTokenizationRequests';
 import RefreshTokenizationRequestsButton from './RefreshTokenizationRequestsButton';
 
 export default function TokenizationRequests() {
-    const { colorTheme } = useLegalOfficerContext();
+    const { colorTheme } = useCommonContext();
 
     return (
         <ContentPane
@@ -21,19 +21,14 @@ export default function TokenizationRequests() {
                 },
                 background: colorTheme.topMenuItems.iconGradient,
             }}
-            colors={ colorTheme }
             primaryAreaChildren={
-                <Frame
-                    colors={ colorTheme }
-                >
+                <Frame>
                     <RefreshTokenizationRequestsButton/>
                     <PendingTokenizationRequests />
                 </Frame>
             }
             secondaryAreaChildren={
-                <Frame
-                    colors={ colorTheme }
-                >
+                <Frame>
                     <h2>History</h2>
                     <AcceptedTokenizationRequests />
                     <RejectedTokenizationRequests />

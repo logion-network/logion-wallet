@@ -8,6 +8,7 @@ import Addresses, { buildAddresses } from './types/Addresses';
 import { Children } from './types/Helpers';
 import { Transaction } from './types/ModelTypes';
 import { getTransactions } from "./Model";
+import { ColorTheme, DEFAULT_COLOR_THEME } from "./ColorTheme";
 
 export interface CommonContext {
     currentAddress: string,
@@ -18,6 +19,8 @@ export interface CommonContext {
     dataAddress: string | null,
     balances: CoinBalance[] | null,
     transactions: Transaction[] | null,
+    colorTheme: ColorTheme,
+    setColorTheme: ((colorTheme: ColorTheme) => void) | null,
 }
 
 function initialContextValue(): CommonContext {
@@ -30,6 +33,8 @@ function initialContextValue(): CommonContext {
         dataAddress: null,
         balances: null,
         transactions: null,
+        colorTheme: DEFAULT_COLOR_THEME,
+        setColorTheme: null,
     }
 }
 
@@ -43,7 +48,9 @@ type ActionType = 'SET_SELECT_ADDRESS'
     | 'SELECT_ADDRESS'
     | 'SET_ADDRESSES'
     | 'FETCH_IN_PROGRESS'
-    | 'SET_DATA';
+    | 'SET_DATA'
+    | 'SET_COLOR_THEME'
+    | 'SET_SET_COLOR_THEME';
 
 interface Action {
     type: ActionType,
@@ -55,6 +62,8 @@ interface Action {
     dataAddress?: string,
     balances?: CoinBalance[],
     transactions?: Transaction[],
+    newColorTheme?: ColorTheme,
+    setColorTheme?: ((colorTheme: ColorTheme) => void),
 }
 
 const reducer: Reducer<CommonContext, Action> = (state: CommonContext, action: Action): CommonContext => {
@@ -96,6 +105,16 @@ const reducer: Reducer<CommonContext, Action> = (state: CommonContext, action: A
             } else {
                 return state;
             }
+        case 'SET_SET_COLOR_THEME':
+            return {
+                ...state,
+                setColorTheme: action.setColorTheme!,
+            };
+        case 'SET_COLOR_THEME':
+            return {
+                ...state,
+                colorTheme: action.newColorTheme!,
+            };
         default:
             /* istanbul ignore next */
             throw new Error(`Unknown type: ${action.type}`);
@@ -154,6 +173,21 @@ export function CommonContextProvider(props: Props) {
             dispatch({
                 type: 'SET_SELECT_ADDRESS',
                 selectAddress,
+            });
+        }
+    }, [ contextValue ]);
+
+    useEffect(() => {
+        if(contextValue.setColorTheme === null) {
+            const setColorTheme = (colorTheme: ColorTheme) => {
+                dispatch({
+                    type: 'SET_COLOR_THEME',
+                    newColorTheme: colorTheme,
+                })
+            }
+            dispatch({
+                type: 'SET_SET_COLOR_THEME',
+                setColorTheme,
             });
         }
     }, [ contextValue ]);

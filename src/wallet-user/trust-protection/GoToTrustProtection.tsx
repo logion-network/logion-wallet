@@ -4,12 +4,12 @@ import { Link } from 'react-router-dom';
 import { FullWidthPane } from '../../common/Dashboard';
 import Alert from '../../common/Alert';
 import Button from '../../common/Button';
+import { useCommonContext } from '../../common/CommonContext';
 
-import { useUserContext } from '../UserContext';
 import { TRUST_PROTECTION_PATH } from '../UserRouter';
 
 export default function GoToTrustProtection() {
-    const { colorTheme } = useUserContext();
+    const { colorTheme } = useCommonContext();
 
     return (
         <FullWidthPane
@@ -21,7 +21,6 @@ export default function GoToTrustProtection() {
                 },
                 background: colorTheme.recoveryItems.iconGradient,
             }}
-            colors={ colorTheme }
         >
             <Alert variant="info">
                 A Trust Protection process is already in progress with this address or it is already protected.
@@ -31,7 +30,6 @@ export default function GoToTrustProtection() {
 
             <Button
                 variant="primary"
-                colors={ colorTheme.buttons }
             >
                 <Link to={ TRUST_PROTECTION_PATH }>Go to My Logion Trust Protection</Link>
             </Button>

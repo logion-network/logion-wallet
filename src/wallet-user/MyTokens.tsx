@@ -9,8 +9,6 @@ import { accountBalance, AssetWithBalance } from '../logion-chain/Assets';
 
 import { getOfficer } from "../common/types/LegalOfficer";
 
-import { useUserContext } from './UserContext';
-
 interface Balances {
     accountId: string,
     balances?: AssetWithBalance[],
@@ -18,7 +16,6 @@ interface Balances {
 
 export default function MyTokens() {
     const { currentAddress } = useCommonContext();
-    const { colorTheme } = useUserContext();
     const { api } = useLogionChain();
     const [ balances, setBalances ] = useState<Balances | null>(null);
 
@@ -68,7 +65,6 @@ export default function MyTokens() {
                 }
             ]}
             data={ tokens }
-            colorTheme={ colorTheme }
             renderEmpty={ () => (
                 <EmptyTableMessage>No token to display</EmptyTableMessage>
             )}

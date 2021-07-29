@@ -12,98 +12,10 @@ exports[`renders with custom space above 1`] = `
       },
     ]
   }
-  colors={
-    Object {
-      "accounts": Object {
-        "background": "eff3fe",
-        "foreground": "#000000",
-        "hintColor": "#00000099",
-        "iconBackground": "#3b6cf4",
-        "legalOfficerIcon": Object {
-          "category": "legal-officer",
-          "id": "account-shield",
-        },
-      },
-      "bottomMenuItems": Object {
-        "iconGradient": Object {
-          "from": "#7a90cb",
-          "to": "#3b6cf4",
-        },
-      },
-      "buttons": Object {
-        "secondary": Object {
-          "background": "#eff3fe",
-          "foreground": "#000000",
-        },
-      },
-      "dashboard": Object {
-        "background": "#eff3fe",
-        "foreground": "#000000",
-      },
-      "dialog": Object {
-        "background": "#eff3fe",
-        "borderColor": "#e6007a",
-        "foreground": "#000000",
-      },
-      "frame": Object {
-        "altBackground": "#eff3fe",
-        "background": "#ffffff",
-        "foreground": "#000000",
-        "link": "#3b6cf426",
-      },
-      "recoveryItems": Object {
-        "iconGradient": Object {
-          "from": "#7a90cb",
-          "to": "#3b6cf4",
-        },
-      },
-      "select": Object {
-        "background": "#ffffff",
-        "foreground": "#000000",
-        "menuBackgroundColor": "#ffffff",
-        "selectedOptionBackgroundColor": "#ffffff",
-      },
-      "shadowColor": "#3b6cf41a",
-      "sidebar": Object {
-        "activeItemBackground": "#d8e2fd",
-        "background": "#ffffff",
-        "foreground": "#000000",
-      },
-      "table": Object {
-        "background": "#0c163d",
-        "foreground": "#ffffff",
-        "header": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-        },
-        "row": Object {
-          "background": "#152665",
-          "foreground": "#ffffff",
-        },
-      },
-      "tabs": Object {
-        "background": "#0c163d",
-        "borderColor": "#3b6cf4",
-        "foreground": "#ffffff",
-        "inactiveTab": Object {
-          "background": "#d8e2fd",
-          "foreground": "#ffffff",
-        },
-      },
-      "topMenuItems": Object {
-        "iconGradient": Object {
-          "from": "#3b6cf4",
-          "to": "#6050dc",
-        },
-      },
-      "type": "light",
-    }
-  }
   show={true}
   size="lg"
 >
   <Icon
-    colorThemeType="light"
     icon={
       Object {
         "id": "warning",
@@ -130,98 +42,10 @@ exports[`renders with default space above 1`] = `
       },
     ]
   }
-  colors={
-    Object {
-      "accounts": Object {
-        "background": "eff3fe",
-        "foreground": "#000000",
-        "hintColor": "#00000099",
-        "iconBackground": "#3b6cf4",
-        "legalOfficerIcon": Object {
-          "category": "legal-officer",
-          "id": "account-shield",
-        },
-      },
-      "bottomMenuItems": Object {
-        "iconGradient": Object {
-          "from": "#7a90cb",
-          "to": "#3b6cf4",
-        },
-      },
-      "buttons": Object {
-        "secondary": Object {
-          "background": "#eff3fe",
-          "foreground": "#000000",
-        },
-      },
-      "dashboard": Object {
-        "background": "#eff3fe",
-        "foreground": "#000000",
-      },
-      "dialog": Object {
-        "background": "#eff3fe",
-        "borderColor": "#e6007a",
-        "foreground": "#000000",
-      },
-      "frame": Object {
-        "altBackground": "#eff3fe",
-        "background": "#ffffff",
-        "foreground": "#000000",
-        "link": "#3b6cf426",
-      },
-      "recoveryItems": Object {
-        "iconGradient": Object {
-          "from": "#7a90cb",
-          "to": "#3b6cf4",
-        },
-      },
-      "select": Object {
-        "background": "#ffffff",
-        "foreground": "#000000",
-        "menuBackgroundColor": "#ffffff",
-        "selectedOptionBackgroundColor": "#ffffff",
-      },
-      "shadowColor": "#3b6cf41a",
-      "sidebar": Object {
-        "activeItemBackground": "#d8e2fd",
-        "background": "#ffffff",
-        "foreground": "#000000",
-      },
-      "table": Object {
-        "background": "#0c163d",
-        "foreground": "#ffffff",
-        "header": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-        },
-        "row": Object {
-          "background": "#152665",
-          "foreground": "#ffffff",
-        },
-      },
-      "tabs": Object {
-        "background": "#0c163d",
-        "borderColor": "#3b6cf4",
-        "foreground": "#ffffff",
-        "inactiveTab": Object {
-          "background": "#d8e2fd",
-          "foreground": "#ffffff",
-        },
-      },
-      "topMenuItems": Object {
-        "iconGradient": Object {
-          "from": "#3b6cf4",
-          "to": "#6050dc",
-        },
-      },
-      "type": "light",
-    }
-  }
   show={true}
   size="lg"
 >
   <Icon
-    colorThemeType="light"
     icon={
       Object {
         "id": "warning",

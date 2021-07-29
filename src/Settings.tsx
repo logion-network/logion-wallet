@@ -2,8 +2,8 @@ import React from 'react';
 import Button from 'react-bootstrap/Button';
 
 import { FullWidthPane } from './common/Dashboard';
-import { ColorTheme } from './common/ColorTheme';
 import Frame from './common/Frame';
+import { useCommonContext } from './common/CommonContext';
 
 import { useLogionChain } from './logion-chain';
 import { ApiState, NodeMetadata } from './logion-chain/Connection';
@@ -22,12 +22,9 @@ function status(apiState: ApiState, metadata: NodeMetadata | null): string {
     }
 }
 
-export interface Props {
-    colors: ColorTheme,
-}
-
-export default function Settings(props: Props) {
+export default function Settings() {
     const { apiState, connect, connectedNodeMetadata } = useLogionChain();
+    const { colorTheme } = useCommonContext();
 
     const connectButton = apiState === 'DISCONNECTED' ? <Button onClick={connect}>Connect</Button> : null;
 
@@ -38,13 +35,10 @@ export default function Settings(props: Props) {
                 icon: {
                     id: 'settings'
                 },
-                background: props.colors.bottomMenuItems.iconGradient,
+                background: colorTheme.bottomMenuItems.iconGradient,
             }}
-            colors={ props.colors }
         >
-            <Frame
-                colors={ props.colors }
-            >
+            <Frame>
                 <h2>You are ready to use the Logion wallet, congratulations!</h2>
                 <p>You are currently {status(apiState, connectedNodeMetadata)}</p>
                 {connectButton}

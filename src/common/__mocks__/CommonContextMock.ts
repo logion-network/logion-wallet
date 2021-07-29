@@ -1,4 +1,5 @@
 import { TEST_WALLET_USER } from '../../wallet-user/TestData';
+import { COLOR_THEME } from '../TestData';
 import Addresses, { AccountAddress } from '../types/Addresses';
 
 export let selectAddress = jest.fn();
@@ -31,6 +32,7 @@ export function useCommonContext() {
         addresses,
         balances,
         transactions,
+        colorTheme: COLOR_THEME,
     };
 }
 

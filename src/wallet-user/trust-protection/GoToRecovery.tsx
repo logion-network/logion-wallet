@@ -5,11 +5,9 @@ import { FullWidthPane } from '../../common/Dashboard';
 import Alert from '../../common/Alert';
 import Button from '../../common/Button';
 
-import { useUserContext } from '../UserContext';
 import { RECOVERY_PATH } from '../UserRouter';
 
 export default function GoToTrustProtection() {
-    const { colorTheme } = useUserContext();
 
     return (
         <FullWidthPane
@@ -21,7 +19,6 @@ export default function GoToTrustProtection() {
                     hasVariants: true,
                 },
             }}
-            colors={ colorTheme }
         >
             <Alert variant="info">
                 Please go to Recovery in order to follow the status of recovery process.
@@ -29,7 +26,6 @@ export default function GoToTrustProtection() {
 
             <Button
                 variant="primary"
-                colors={ colorTheme.buttons }
             >
                 <Link to={ RECOVERY_PATH }>Go to Recovery</Link>
             </Button>

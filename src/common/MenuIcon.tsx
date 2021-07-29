@@ -1,12 +1,12 @@
 import React, { CSSProperties } from 'react';
 
-import { ColorThemeType, MenuIcon as ColorThemeMenuIcon } from './ColorTheme';
+import { MenuIcon as ColorThemeMenuIcon } from './ColorTheme';
 import Icon from './Icon';
 
 import './MenuIcon.css';
 
 export interface Props extends ColorThemeMenuIcon {
-    colorThemeType: ColorThemeType,
+    
 }
 
 export default function MenuIcon(props: Props) {
@@ -32,7 +32,6 @@ export default function MenuIcon(props: Props) {
                 props.icon !== undefined &&
                 <Icon
                     icon={ props.icon }
-                    colorThemeType={ props.colorThemeType }
                 />
             }
         </div>

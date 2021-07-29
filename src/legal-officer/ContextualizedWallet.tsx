@@ -3,7 +3,6 @@ import React from 'react';
 import Dashboard from '../common/Dashboard';
 
 import LegalOfficerRouter from './LegalOfficerRouter';
-import { useLegalOfficerContext } from './LegalOfficerContext';
 import { useCommonContext } from '../common/CommonContext';
 
 import {
@@ -17,8 +16,7 @@ import {
 } from './LegalOfficerPaths';
 
 export default function ContextualizedWallet() {
-    const { selectAddress, addresses } = useCommonContext();
-    const { colorTheme } = useLegalOfficerContext();
+    const { selectAddress, addresses, colorTheme } = useCommonContext();
 
     if(addresses === null || selectAddress === null) {
         return null;
@@ -26,7 +24,6 @@ export default function ContextualizedWallet() {
 
     return (
         <Dashboard
-            colors={ colorTheme }
             menuTop={[
                 {
                     id: "home",

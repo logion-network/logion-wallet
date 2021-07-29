@@ -1,4 +1,4 @@
-import { ColorThemeType } from './ColorTheme';
+import { useCommonContext } from './CommonContext';
 import './Gauge.css';
 
 export interface Props {
@@ -7,7 +7,6 @@ export interface Props {
     unit: string,
     level: number,
     type: 'arc' | 'linear',
-    colorThemeType: ColorThemeType,
 }
 
 const RED: string = '#ea1f46';
@@ -15,6 +14,7 @@ const ORANGE: string = '#ff9b3f';
 const GREEN: string = '#37ad4b';
 
 export default function Gauge(props: Props) {
+    const { colorTheme } = useCommonContext();
 
     let color;
     if(props.level <= 0.1) {
@@ -26,7 +26,7 @@ export default function Gauge(props: Props) {
     }
 
     return (
-        <div className={ `Gauge ${props.type} ${props.colorThemeType}` }>
+        <div className={ `Gauge ${props.type} ${colorTheme.type}` }>
             <div className="reading">
                 <div className="value-unit">
                     <div className="value"

@@ -12,7 +12,6 @@ import Frame from './Frame';
 import Table, { Cell, DateCell, EmptyTableMessage, ActionCell } from './Table';
 import Icon from './Icon';
 import Button from './Button';
-import { ColorTheme } from './ColorTheme';
 import WalletGauge from './WalletGauge';
 import Loader from './Loader';
 
@@ -20,10 +19,10 @@ import './Wallet.css';
 
 export interface Props {
     transactionsPath: (coinId: string) => string,
-    colorTheme: ColorTheme,
 }
 
 export default function Wallet(props: Props) {
+    const { colorTheme } = useCommonContext();
 
     return (
         <FullWidthPane
@@ -33,9 +32,8 @@ export default function Wallet(props: Props) {
                 icon: {
                     id: 'wallet'
                 },
-                background: props.colorTheme.topMenuItems.iconGradient,
+                background: colorTheme.topMenuItems.iconGradient,
             }}
-            colors={ props.colorTheme }
         >
             <Content { ...props } />
         </FullWidthPane>
@@ -43,7 +41,7 @@ export default function Wallet(props: Props) {
 }
 
 export function Content(props: Props) {
-    const { balances, transactions } = useCommonContext();
+    const { balances, transactions, colorTheme } = useCommonContext();
     const history = useHistory();
 
     if(balances === null || transactions === null) {
@@ -57,12 +55,11 @@ export function Content(props: Props) {
             <Row>
                 <Col md={8}>
                     <Frame
-                        colors={ props.colorTheme }
                         title="Balance per month"
                     >
                         <img
                             className="fake-graph"
-                            src={ `${process.env.PUBLIC_URL}/assets/themes/${props.colorTheme.type}/fake_balance_history.png` }
+                            src={ `${process.env.PUBLIC_URL}/assets/themes/${colorTheme.type}/fake_balance_history.png` }
                             alt="Fake balance graph"
                         />
                     </Frame>
@@ -70,14 +67,12 @@ export function Content(props: Props) {
                 <Col md={4}>
                     <Frame
                         title="Current LOG balance"
-                        colors={ props.colorTheme }
                         fillHeight
                     >
                         <WalletGauge
                             coin={ balances[0].coin }
                             balance={ balances[0].balance }
                             level={ balances[0].level }
-                            colorTheme={ props.colorTheme }
                             type='arc'
                         />
                     </Frame>
@@ -85,12 +80,10 @@ export function Content(props: Props) {
             </Row>
             <Frame
                 className="assets"
-                colors={ props.colorTheme }
             >
                 <h2>Asset balances</h2>
 
                 <Table
-                    colorTheme={ props.colorTheme }
                     columns={[
                         {
                             header: "Asset name",
@@ -118,7 +111,7 @@ export function Content(props: Props) {
                         },
                         {
                             header: "",
-                            render: balance => balance.coin.id !== 'dot' ? <ActionCell><Button colors={ props.colorTheme.buttons } onClick={() => history.push(props.transactionsPath(balance.coin.id))}>More</Button></ActionCell> : <NotAvailable/>,
+                            render: balance => balance.coin.id !== 'dot' ? <ActionCell><Button onClick={() => history.push(props.transactionsPath(balance.coin.id))}>More</Button></ActionCell> : <NotAvailable/>,
                             width: "200px",
                         }
                     ]}

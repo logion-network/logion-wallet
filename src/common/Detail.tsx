@@ -1,21 +1,20 @@
-import React from 'react';
-import { ColorTheme } from './ColorTheme';
+import { useCommonContext } from './CommonContext';
 
 import './Detail.css';
 
 export interface Props {
     label: string,
     value: string,
-    colorTheme: ColorTheme,
 }
 
 export default function Detail(props: Props) {
+    const { colorTheme } = useCommonContext();
 
     return (
         <div
             className="Detail"
             style={{
-                color: props.colorTheme.dashboard.foreground,
+                color: colorTheme.dashboard.foreground,
             }}
         >
             <div className="label">{ props.label }</div>

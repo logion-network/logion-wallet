@@ -4,7 +4,6 @@ import Tabs from '../common/Tabs';
 import { FullWidthPane } from '../common/Dashboard';
 import Frame from '../common/Frame';
 
-import { useLegalOfficerContext } from './LegalOfficerContext';
 import PendingProtectionRequests from './PendingProtectionRequests';
 import ProtectionRequestsHistory from './ProtectionRequestsHistory';
 import ProtectedUsers from "./ProtectedUsers";
@@ -12,7 +11,6 @@ import ProtectedUsers from "./ProtectedUsers";
 import './ProtectionRequests.css';
 
 export default function ProtectionRequests() {
-    const { colorTheme } = useLegalOfficerContext();
     const [ tabKey, setTabKey ] = useState<string>('pending');
 
     return (
@@ -25,7 +23,6 @@ export default function ProtectionRequests() {
                     hasVariants: true,
                 },
             }}
-            colors={ colorTheme }
         >
                 <Tabs
                     activeKey={ tabKey }
@@ -42,13 +39,10 @@ export default function ProtectionRequests() {
                             render: () => <ProtectionRequestsHistory recovery={ false } />
                         }
                     ]}
-                    colors={ colorTheme.tabs }
                 />
 
                 <h2>Activated User Account Protection under my watch</h2>
-                <Frame
-                        colors={colorTheme}
-                >
+                <Frame>
                     <ProtectedUsers/>
                 </Frame>
         </FullWidthPane>

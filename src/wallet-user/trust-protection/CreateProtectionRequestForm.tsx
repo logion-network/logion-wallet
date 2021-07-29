@@ -59,8 +59,8 @@ interface FormValues {
 export default function CreateProtectionRequestForm(props: Props) {
     const { api } = useLogionChain();
     const { control, handleSubmit, formState: {errors} } = useForm<FormValues>();
-    const { currentAddress } = useCommonContext();
-    const { createProtectionRequest, colorTheme, refreshRequests } = useUserContext();
+    const { currentAddress, colorTheme } = useCommonContext();
+    const { createProtectionRequest, refreshRequests } = useUserContext();
     const [ legalOfficer1, setLegalOfficer1 ] = useState<LegalOfficer | null>(null);
     const [ legalOfficer2, setLegalOfficer2 ] = useState<LegalOfficer | null>(null);
     const [ addressToRecover, setAddressToRecover ] = useState<string>("");
@@ -178,7 +178,6 @@ export default function CreateProtectionRequestForm(props: Props) {
                 },
                 background: props.isRecovery ? colorTheme.recoveryItems.iconGradient : undefined,
             }}
-            colors={ colorTheme }
             primaryPaneWidth={ 6 }
             primaryAreaChildren={
                 <>
@@ -186,7 +185,6 @@ export default function CreateProtectionRequestForm(props: Props) {
                     props.isRecovery &&
                     <Frame
                         className="CreateProtectionRequestFormInitiateRecovery"
-                        colors={ colorTheme }
                     >
                         <h3>Initiate recovery</h3>
                         {
@@ -210,7 +208,6 @@ export default function CreateProtectionRequestForm(props: Props) {
                                 {
                                     signAndSubmit === null &&
                                     <Button
-                                        colors={ colorTheme.buttons }
                                         onClick={ initiateRecoveryOnClick }
                                         disabled={ !isValidAccountId(api!, addressToRecover) }
                                     >
@@ -237,7 +234,6 @@ export default function CreateProtectionRequestForm(props: Props) {
 
                 <Frame
                     className="CreateProtectionRequestFormLegalOfficers"
-                    colors={ colorTheme }
                     disabled={ props.isRecovery && !activeRecovery }
                 >
                     <h3>{ legalOfficersTitle }</h3>
@@ -257,7 +253,6 @@ export default function CreateProtectionRequestForm(props: Props) {
                         setLegalOfficer1={ setLegalOfficer1 }
                         legalOfficer2={ legalOfficer2 }
                         setLegalOfficer2={ setLegalOfficer2 }
-                        colorTheme={ colorTheme }
                         mode={ props.isRecovery ? 'select' : 'choose' }
                         status={ null }
                     />
@@ -267,7 +262,6 @@ export default function CreateProtectionRequestForm(props: Props) {
             secondaryAreaChildren={
                 <Frame
                     className="CreateProtectionRequestFormOther"
-                    colors={ colorTheme }
                     disabled={ legalOfficer1 === null || legalOfficer2 === null || legalOfficer1.address === legalOfficer2.address }
                 >
                     <h3>Fill in your personal information</h3>
@@ -524,7 +518,6 @@ export default function CreateProtectionRequestForm(props: Props) {
                             />
     
                             <Button
-                                colors={ colorTheme.buttons }
                                 action={{
                                     id: "submit",
                                     buttonVariant: "primary",
@@ -546,7 +539,6 @@ export default function CreateProtectionRequestForm(props: Props) {
                                 buttonVariant: 'primary'
                             }
                         ]}
-                        colors={ colorTheme }
                     >
                         <>
                             The legal officers have been informed of your request.

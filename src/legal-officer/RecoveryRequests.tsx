@@ -3,13 +3,11 @@ import React, { useState } from 'react';
 import Tabs from '../common/Tabs';
 import { FullWidthPane } from '../common/Dashboard';
 
-import { useLegalOfficerContext } from './LegalOfficerContext';
 import PendingProtectionRequests from './PendingProtectionRequests';
 import ProtectionRequestsHistory from './ProtectionRequestsHistory';
 import './RecoveryRequests.css';
 
 export default function RecoveryRequests() {
-    const { colorTheme } = useLegalOfficerContext();
     const [ tabKey, setTabKey ] = useState<string>('pending');
 
     return (
@@ -22,7 +20,6 @@ export default function RecoveryRequests() {
                     hasVariants: true,
                 },
             }}
-            colors={ colorTheme }
         >
             <Tabs
                 activeKey={ tabKey }
@@ -39,7 +36,6 @@ export default function RecoveryRequests() {
                         render: () => <ProtectionRequestsHistory recovery={ true } />
                     }
                 ]}
-                colors={ colorTheme.tabs }
             />
         </FullWidthPane>
     );

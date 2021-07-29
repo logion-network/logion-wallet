@@ -1,12 +1,9 @@
-import React from 'react';
-
 import { Children } from './types/Helpers';
-import { ColorTheme } from './ColorTheme';
+import { useCommonContext } from './CommonContext';
 
 import './Frame.css';
 
 export interface Props {
-    colors: ColorTheme,
     children: Children,
     disabled?: boolean,
     className?: string,
@@ -17,15 +14,16 @@ export interface Props {
 }
 
 export default function Frame(props: Props) {
+    const { colorTheme } = useCommonContext();
 
     const backgroundColor =
         (props.altColors !== undefined && props.altColors) ?
-            props.colors.frame.altBackground :
-            props.colors.frame.background;
+            colorTheme.frame.altBackground :
+            colorTheme.frame.background;
     const inlineCss = `
     .Frame a,
     .Frame .btn-link {
-        color: ${props.colors.frame.link}
+        color: ${colorTheme.frame.link}
     }
     `;
 
@@ -48,8 +46,8 @@ export default function Frame(props: Props) {
             className={ className }
             style={{
                 backgroundColor,
-                color: props.colors.frame.foreground,
-                boxShadow: `0 0 25px ${props.colors.shadowColor}`,
+                color: colorTheme.frame.foreground,
+                boxShadow: `0 0 25px ${colorTheme.shadowColor}`,
             }}
         >
             <style>

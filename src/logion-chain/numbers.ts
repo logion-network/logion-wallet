@@ -46,10 +46,14 @@ export class NormalizedNumber {
     private normalize(num: string): string {
         let sanitized = NormalizedNumber.zeroStripLeft(num);
         if(sanitized.indexOf('.') === -1) {
-            return sanitized + ".";
+            sanitized = sanitized + ".";
         } else {
-            return NormalizedNumber.zeroStripRight(sanitized);
+            sanitized = NormalizedNumber.zeroStripRight(sanitized);
         }
+        if(sanitized === '-.') {
+            sanitized = '.';
+        }
+        return sanitized;
     }
 
     static zeroStripLeft(num: string): string {
@@ -113,10 +117,14 @@ export class NormalizedNumber {
     }
 
     isZero() {
-        return this._normalized === '.' || this._normalized === "-.";
+        return this._normalized === '.';
     }
 
     negate() {
+        if(this.isZero()) {
+            return this;
+        }
+
         if(this._normalized.startsWith("-")) {
             return new NormalizedNumber(this._normalized.substring(1));
         } else {

@@ -29,8 +29,8 @@ export interface Props {
 
 export default function ProtectionRecoveryRequest(props: Props) {
     const { api } = useLogionChain();
-    const { currentAddress } = useCommonContext();
-    const { refreshRequests, colorTheme, recoveryConfig, recoveredAddress } = useUserContext();
+    const { currentAddress, colorTheme } = useCommonContext();
+    const { refreshRequests, recoveryConfig, recoveredAddress } = useUserContext();
     const [ confirmButtonEnabled, setConfirmButtonEnabled ] = useState(props.request.status === "PENDING");
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
     const [ signAndSubmitClaim, setSignAndSubmitClaim ] = useState<SignAndSubmit>(null);
@@ -141,12 +141,8 @@ export default function ProtectionRecoveryRequest(props: Props) {
                 },
                 background: props.request.isRecovery && props.request.status !== 'ACTIVATED' ? colorTheme.recoveryItems.iconGradient : undefined,
             }}
-            colors={ colorTheme }
         >
-                <Frame
-                    className="ProtectionRecoveryRequest"
-                    colors={ colorTheme }
-                >
+                <Frame className="ProtectionRecoveryRequest">
                     { alert }
 
                     {
@@ -159,7 +155,6 @@ export default function ProtectionRecoveryRequest(props: Props) {
                             }}
                         >
                             <Icon
-                                colorThemeType={ colorTheme.type }
                                 icon={{id: 'activated'}}
                             /> Your Logion Trust Protection is active
                         </div>
@@ -170,7 +165,6 @@ export default function ProtectionRecoveryRequest(props: Props) {
                         <Button
                             data-testid="btnActivate"
                             onClick={ activateProtection }
-                            colors={ colorTheme.buttons }
                         >
                             Activate
                         </Button>
@@ -192,7 +186,6 @@ export default function ProtectionRecoveryRequest(props: Props) {
                             checkActivation(props.request)
                                 .then(() => setConfirmButtonEnabled(false))
                             }}
-                            colors={ colorTheme.buttons }
                         >
                             Re-Sync Confirmation
                         </Button>
@@ -202,7 +195,6 @@ export default function ProtectionRecoveryRequest(props: Props) {
                         <Button
                             data-testid="btnClaim"
                             onClick={ doClaimRecovery }
-                            colors={ colorTheme.buttons }
                         >
                             Claim
                         </Button>
@@ -226,7 +218,6 @@ export default function ProtectionRecoveryRequest(props: Props) {
                         legalOfficer2={ legalOfficer2 }
                         setLegalOfficer2={ () => {} }
                         legalOfficer2Decision={ legalOfficer2Decision }
-                        colorTheme={ colorTheme }
                         mode="view"
                         status={ props.request.status }
                     />

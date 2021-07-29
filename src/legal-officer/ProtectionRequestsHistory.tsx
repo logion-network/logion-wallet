@@ -16,7 +16,7 @@ export interface Props {
 
 export default function ProtectionRequestsHistory(props: Props) {
     const { currentAddress } = useCommonContext();
-    const { protectionRequestsHistory, recoveryRequestsHistory, colorTheme } = useLegalOfficerContext();
+    const { protectionRequestsHistory, recoveryRequestsHistory } = useLegalOfficerContext();
 
     if (protectionRequestsHistory === null || recoveryRequestsHistory === null) {
         return null;
@@ -110,7 +110,6 @@ export default function ProtectionRequestsHistory(props: Props) {
             <Table
                 columns={ columns }
                 data={ requests }
-                colorTheme={ colorTheme }
                 renderEmpty={ () => <EmptyTableMessage>No processed request</EmptyTableMessage>}
             />
         </>

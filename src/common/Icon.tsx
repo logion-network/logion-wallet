@@ -1,16 +1,16 @@
-import React from 'react';
-import { Icon as IconType, ColorThemeType } from './ColorTheme';
+import { Icon as IconType } from './ColorTheme';
+import { useCommonContext } from './CommonContext';
 
 export interface Props {
     icon: IconType,
-    colorThemeType?: ColorThemeType,
     type?: 'svg' | 'png',
     height?: string,
     width?: string,
 }
 
 export default function Icon(props: Props) {
-    
+    const { colorTheme } = useCommonContext();
+
     let ext = 'svg';
     if(props.type !== undefined) {
         ext = props.type;
@@ -18,11 +18,11 @@ export default function Icon(props: Props) {
 
     let iconUrl = undefined;
     if(props.icon.category !== undefined && (props.icon.hasVariants !== undefined) && props.icon.hasVariants) {
-        iconUrl = `${process.env.PUBLIC_URL}/assets/categories/${props.icon.category}/themes/${props.colorThemeType}/${props.icon.id}.${ext}`;
+        iconUrl = `${process.env.PUBLIC_URL}/assets/categories/${props.icon.category}/themes/${colorTheme.type}/${props.icon.id}.${ext}`;
     } else if(props.icon.category !== undefined && ((props.icon.hasVariants === undefined) || !props.icon.hasVariants)) {
         iconUrl = `${process.env.PUBLIC_URL}/assets/categories/${props.icon.category}/${props.icon.id}.${ext}`;
     } else if(props.icon.category === undefined && ((props.icon.hasVariants !== undefined) && props.icon.hasVariants)) {
-        iconUrl = `${process.env.PUBLIC_URL}/assets/themes/${props.colorThemeType}/${props.icon.id}.${ext}`;
+        iconUrl = `${process.env.PUBLIC_URL}/assets/themes/${colorTheme.type}/${props.icon.id}.${ext}`;
     } else {
         iconUrl = `${process.env.PUBLIC_URL}/assets/${props.icon.id}.${ext}`;
     }

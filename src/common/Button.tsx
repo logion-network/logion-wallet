@@ -3,7 +3,7 @@ import { ButtonVariant } from 'react-bootstrap/types';
 import BootstrapButton, { ButtonType } from 'react-bootstrap/Button';
 
 import { Children } from './types/Helpers';
-import { ButtonsColors } from './ColorTheme';
+import { useCommonContext } from './CommonContext';
 
 import './Button.css';
 
@@ -18,7 +18,6 @@ export interface Action {
 
 export interface Props {
     action?: Action,
-    colors: ButtonsColors,
     type?: ButtonType,
     key?: string,
     variant?: ButtonVariant,
@@ -31,6 +30,7 @@ export interface Props {
 }
 
 export default function Button(props: Props) {
+    const { colorTheme } = useCommonContext();
 
     let key;
     let variant;
@@ -58,8 +58,8 @@ export default function Button(props: Props) {
 
     let style: CSSProperties = {};
     if(variant === 'secondary') {
-        style.backgroundColor = props.colors.secondary.background;
-        style.color = props.colors.secondary.foreground;
+        style.backgroundColor = colorTheme.buttons.secondary.background;
+        style.color = colorTheme.buttons.secondary.foreground;
     }
 
     return (

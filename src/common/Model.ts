@@ -8,7 +8,6 @@ import {
     ProtectionRequestStatus,
     ProtectionRequest,
     Transaction,
-    TransactionType,
 } from './types/ModelTypes';
 
 export interface FetchRequestSpecification {
@@ -43,7 +42,7 @@ export interface FetchTransactionsSpecficication {
 }
 
 export async function getTransactions(request: FetchTransactionsSpecficication): Promise<TransactionsSet> {
-    const response = await axios.put("/api/protection-request", request);
+    const response = await axios.put("/api/transaction", request);
     return {
         transactions: response.data.transactions.map((transaction: Transaction) => enrichTransaction(transaction, request.address))
     };
@@ -56,6 +55,43 @@ function enrichTransaction(transaction: Transaction, address: string): Transacti
     }
 }
 
-function transactionType(transaction: Transaction, address: string): TransactionType {
-    return 'Other';
+function transactionType(transaction: Transaction, address: string): string {
+    console.log(transaction);
+    if(transaction.pallet === "recovery") {
+        if(transaction.method === "createRecovery") {
+            return "Recovery created";
+        } else if(transaction.method === "vouchRecovery") {
+            return "Recovery vouched";
+        } else if(transaction.method === "initiateRecovery") {
+            return "Recovery initiated";
+        } else if(transaction.method === "claimRecovery") {
+            return "Recovery claimed";
+        } else if(transaction.method === "asRecovered") {
+            return "Assets recovered";
+        } else {
+            return "Other";
+        }
+    } else if(transaction.pallet === "balances") {
+        if(transaction.method.startsWith("transfer")) {
+            if(transaction.from === address) {
+                return "Sent";
+            } else {
+                return "Received";
+            }
+        } else {
+            return "Other";
+        }
+    } else if(transaction.pallet === "assets") {
+        if(transaction.method === "mint") {
+            return "Asset tokens minted";
+        } else if(transaction.method === "create") {
+            return "Asset created";
+        } else if(transaction.method === "setMetadata") {
+            return "Asset metadata set";
+        } else {
+            return "Other";
+        }
+    } else {
+        return 'Other';
+    }
 }

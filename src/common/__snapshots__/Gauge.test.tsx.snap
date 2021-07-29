@@ -2,7 +2,7 @@
 
 exports[`renders arc 1`] = `
 <div
-  className="Gauge arc light"
+  className="Gauge arc dark"
 >
   <div
     className="reading"
@@ -42,7 +42,7 @@ exports[`renders arc 1`] = `
 
 exports[`renders linear 1`] = `
 <div
-  className="Gauge linear light"
+  className="Gauge linear dark"
 >
   <div
     className="reading"

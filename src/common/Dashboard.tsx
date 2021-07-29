@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import { Children } from './types/Helpers';
 import Logo from './Logo';
 import AddressSwitcher from './AddressSwitcher';
-import { ColorTheme, MenuIcon as MenuIconType } from './ColorTheme';
+import { MenuIcon as MenuIconType } from './ColorTheme';
 import Menu from './Menu';
 import { MenuItemData } from './MenuItem';
 import MainMenu from './MainMenu';
@@ -68,7 +68,6 @@ interface TitlesProps {
     mainTitle: string,
     subTitle?: string,
     titleIcon: MenuIconType,
-    colors: ColorTheme,
     onBack?: () => void
 }
 
@@ -79,7 +78,6 @@ function Titles(props: TitlesProps) {
             <h1>
                 <MenuIcon
                     { ...props.titleIcon }
-                    colorThemeType={ props.colors.type }
                 />
                 { props.mainTitle }
             </h1>
@@ -91,7 +89,7 @@ function Titles(props: TitlesProps) {
                 props.onBack !== undefined &&
                 <div className="back-button">
                     <Clickable onClick={ props.onBack }>
-                        <Icon icon={{id:"back", hasVariants: true}} colorThemeType={ props.colors.type } /> Back
+                        <Icon icon={{id:"back", hasVariants: true}} /> Back
                     </Clickable>
                 </div>
             }
@@ -102,7 +100,6 @@ function Titles(props: TitlesProps) {
 export interface BasePaneProps extends TitlesProps {
     children: Children,
     className?: string,
-    colors: ColorTheme,
 }
 
 function BasePane(props: BasePaneProps) {
@@ -123,9 +120,7 @@ function BasePane(props: BasePaneProps) {
                     <div className="AddressSwitcherArea">
                         <AddressSwitcher
                             addresses={ addresses }
-                            colors={ props.colors.accounts }
                             selectAddress={ selectAddress }
-                            colorThemeType={ props.colors.type }
                         />
                     </div>
                 </Col>
@@ -149,7 +144,6 @@ export function ContentPane(props: ContentPaneProps) {
             mainTitle={ props.mainTitle }
             subTitle={ props.subTitle }
             titleIcon={ props.titleIcon }
-            colors={ props.colors }
             onBack={ props.onBack }
         >
                 <PrimaryArea
@@ -179,7 +173,6 @@ export function FullWidthPane(props: FullWidthPaneProps) {
             mainTitle={ props.mainTitle }
             subTitle={ props.subTitle }
             titleIcon={ props.titleIcon }
-            colors={ props.colors }
             onBack={ props.onBack }
         >
             <PrimaryArea width={ FULL_WIDTH }>
@@ -194,26 +187,26 @@ export interface Props {
     menuTop: MenuItemData[],
     menuMiddle: MenuItemData[],
     menuBottom: MenuItemData[],
-    colors: ColorTheme,
 }
 
 export default function Dashboard(props: Props) {
+    const { colorTheme } = useCommonContext();
 
     const inlineCss = `
     .Dashboard .PrimaryArea .table {
-        color: ${props.colors.dashboard.foreground};
+        color: ${colorTheme.dashboard.foreground};
     }
 
     .Dashboard .SecondaryArea .table {
-        color: ${props.colors.dashboard.foreground};
+        color: ${colorTheme.dashboard.foreground};
     }
 
     .Dashboard a {
-        color: ${props.colors.dashboard.foreground};
+        color: ${colorTheme.dashboard.foreground};
     }
 
     .Dashboard .Sidebar .MenuItem.active {
-        background-color: ${props.colors.sidebar.activeItemBackground};
+        background-color: ${colorTheme.sidebar.activeItemBackground};
     }
     `;
 
@@ -222,8 +215,8 @@ export default function Dashboard(props: Props) {
             className="Dashboard"
             fluid
             style={{
-                backgroundColor: props.colors.dashboard.background,
-                color: props.colors.dashboard.foreground,
+                backgroundColor: colorTheme.dashboard.background,
+                color: colorTheme.dashboard.foreground,
             }}
         >
             <style>
@@ -233,29 +226,25 @@ export default function Dashboard(props: Props) {
                 <Col md={ SIDEBAR_WIDTH }>
                     <div className="Sidebar"
                         style={{
-                            backgroundColor: props.colors.sidebar.background,
-                            color: props.colors.sidebar.foreground,
-                            boxShadow: `0 0 25px ${props.colors.shadowColor}`,
+                            backgroundColor: colorTheme.sidebar.background,
+                            color: colorTheme.sidebar.foreground,
+                            boxShadow: `0 0 25px ${colorTheme.shadowColor}`,
                         }}
                     >
                         <Logo
-                            shadowColor={ props.colors.shadowColor }
-                            colorThemeType={ props.colors.type }
+                            shadowColor={ colorTheme.shadowColor }
                         />
                         <div
                             className="MenuArea"
                         >
                             <Menu
                                 items={ props.menuTop }
-                                colorThemeType={ props.colors.type }
                             />
                             <MainMenu
                                 items={ props.menuMiddle }
-                                colorThemeType={ props.colors.type }
                             />
                             <Menu
                                 items={ props.menuBottom }
-                                colorThemeType={ props.colors.type }
                             />
                         </div>
                     </div>

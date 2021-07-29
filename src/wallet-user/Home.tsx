@@ -2,10 +2,10 @@ import React from 'react';
 
 import { FullWidthPane } from '../common/Dashboard';
 
-import { useUserContext } from "./UserContext";
+import { useCommonContext } from "../common/CommonContext";
 
 export default function Account() {
-    const { colorTheme } = useUserContext();
+    const { colorTheme } = useCommonContext();
 
     return (
         <FullWidthPane
@@ -16,7 +16,6 @@ export default function Account() {
                 },
                 background: colorTheme.topMenuItems.iconGradient,
             }}
-            colors={ colorTheme }
         >
         </FullWidthPane>
     );
