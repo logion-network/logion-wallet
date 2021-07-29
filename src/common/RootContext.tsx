@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useReducer, Reducer, useCallback } from "react";
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
-import { useLogionChain } from './logion-chain';
-import { CoinBalance, getBalances } from './logion-chain/Balances';
+import { useLogionChain } from '../logion-chain';
+import { CoinBalance, getBalances } from '../logion-chain/Balances';
 
-import Addresses, { buildAddresses } from './common/types/Addresses';
-import { Children } from './common/types/Helpers';
-import { Transaction } from './common/types/ModelTypes';
-import { getTransactions } from "./common/Model";
+import Addresses, { buildAddresses } from './types/Addresses';
+import { Children } from './types/Helpers';
+import { Transaction } from './types/ModelTypes';
+import { getTransactions } from "./Model";
 
 export interface RootContext {
     currentAddress: string,

@@ -10,7 +10,7 @@ import { LEGAL_OFFICER_PATH, USER_PATH } from './RootPaths';
 import { isLegalOfficer as isLegalOfficerFunction } from './common/types/LegalOfficer';
 import LegalOfficerMain from './legal-officer/Main';
 import UserMain from './wallet-user/Main';
-import { useRootContext } from './RootContext';
+import { useRootContext } from './common/RootContext';
 
 export default function RootRouter() {
     const { currentAddress } = useRootContext();

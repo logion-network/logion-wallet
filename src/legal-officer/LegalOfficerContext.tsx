@@ -14,7 +14,7 @@ import {
 } from './Model';
 import { sign } from "../logion-chain/Signature";
 import { ColorTheme } from '../common/ColorTheme';
-import { useRootContext } from '../RootContext';
+import { useRootContext } from '../common/RootContext';
 import { LIGHT_MODE } from './Types';
 
 export interface LegalOfficerContext {

@@ -3,7 +3,7 @@ import { Table } from "react-bootstrap";
 import { useLegalOfficerContext } from "./LegalOfficerContext";
 import UserInfo from "../common/UserInfo";
 import LegalOfficerInfo from "../common/LegalOfficerInfo";
-import { useRootContext } from "../RootContext";
+import { useRootContext } from "../common/RootContext";
 import { legalOfficerByAddress } from "../common/types/LegalOfficer";
 
 export default function ProtectedUsers() {

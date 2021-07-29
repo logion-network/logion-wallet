@@ -2,7 +2,7 @@ import React from 'react';
 
 import Table, { Column, Cell, EmptyTableMessage, DateTimeCell } from '../common/Table';
 
-import { useRootContext } from '../RootContext';
+import { useRootContext } from '../common/RootContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import { decision } from './Model';

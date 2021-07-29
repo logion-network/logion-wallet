@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {useRootContext} from "../../RootContext";
+import {useRootContext} from "../../common/RootContext";
 import {useUserContext} from "../UserContext";
 import { findRequest, isRecovery } from "./Model";
 

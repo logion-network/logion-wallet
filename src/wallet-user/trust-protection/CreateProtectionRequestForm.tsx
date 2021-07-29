@@ -18,7 +18,7 @@ import {
 import { sign } from "../../logion-chain/Signature";
 import { getActiveRecovery, initiateRecovery } from '../../logion-chain/Recovery';
 import {Row, Col} from "react-bootstrap";
-import {useRootContext} from "../../RootContext";
+import {useRootContext} from "../../common/RootContext";
 import LegalOfficers from './LegalOfficers';
 
 import './CreateProtectionRequestForm.css';

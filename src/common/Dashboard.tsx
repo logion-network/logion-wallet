@@ -13,7 +13,7 @@ import MainMenu from './MainMenu';
 import MenuIcon from './MenuIcon';
 import Clickable from './Clickable';
 import Icon from './Icon';
-import { useRootContext } from '../RootContext';
+import { useRootContext } from './RootContext';
 
 import './Dashboard.css';
 

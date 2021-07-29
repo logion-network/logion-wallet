@@ -5,7 +5,7 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
 import moment from 'moment';
 
-import { useRootContext } from "../RootContext";
+import { useRootContext } from "../common/RootContext";
 import { DEFAULT_LEGAL_OFFICER } from '../common/types/LegalOfficer';
 
 import {CreateTokenRequest} from "./Model";

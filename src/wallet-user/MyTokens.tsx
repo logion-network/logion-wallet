@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import Table, { Cell, EmptyTableMessage } from '../common/Table';
 
-import { useRootContext } from '../RootContext';
+import { useRootContext } from '../common/RootContext';
 
 import { useLogionChain } from '../logion-chain';
 import { accountBalance, AssetWithBalance } from '../logion-chain/Assets';

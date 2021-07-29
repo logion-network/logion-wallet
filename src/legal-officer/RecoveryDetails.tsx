@@ -1,7 +1,7 @@
 import moment from 'moment';
 import Form from 'react-bootstrap/Form';
 
-import { useRootContext } from "../RootContext";
+import { useRootContext } from "../common/RootContext";
 import { useLegalOfficerContext } from "./LegalOfficerContext";
 import { FullWidthPane } from "../common/Dashboard";
 import { useParams, useHistory } from 'react-router';

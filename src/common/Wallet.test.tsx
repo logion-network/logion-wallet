@@ -1,9 +1,9 @@
-jest.mock("../RootContext");
+jest.mock("./RootContext");
 
 import { shallowRender } from '../tests';
 
 import Wallet, { Content } from './Wallet';
-import { setBalances, setTransactions } from '../__mocks__/RootContextMock';
+import { setBalances, setTransactions } from './__mocks__/RootContextMock';
 import { DEFAULT_COIN_BALANCE, DEFAULT_TRANSACTION, COLOR_THEME } from './TestData';
 
 test('renders content', () => {

@@ -6,7 +6,7 @@ import RootRouter from './RootRouter';
 import Loader from './Loader';
 import InstallExtension from './InstallExtension';
 import CreateAccount from './CreateAccount';
-import { RootContextProvider } from './RootContext';
+import { RootContextProvider } from './common/RootContext';
 
 export default function Main() {
     const { injectedAccounts, extensionsEnabled } = useLogionChain();

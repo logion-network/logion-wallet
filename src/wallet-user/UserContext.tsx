@@ -16,7 +16,7 @@ import {
     createProtectionRequest as modelCreateProtectionRequest,
 } from "./trust-protection/Model";
 import { ColorTheme } from '../common/ColorTheme';
-import { useRootContext } from '../RootContext';
+import { useRootContext } from '../common/RootContext';
 import { DARK_MODE } from './Types';
 
 export interface UserContext {

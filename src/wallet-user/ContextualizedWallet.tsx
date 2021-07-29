@@ -16,7 +16,7 @@ import UserRouter, {
     WALLET_PATH,
 } from "./UserRouter";
 import { useUserContext } from "./UserContext";
-import { useRootContext } from '../RootContext';
+import { useRootContext } from '../common/RootContext';
 
 export default function ContextualizedWallet() {
     const { apiState } = useLogionChain();

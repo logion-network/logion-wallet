@@ -7,7 +7,7 @@ import Form from 'react-bootstrap/Form';
 import Button from '../common/Button';
 import Table, { Column, Cell, EmptyTableMessage, DateTimeCell } from '../common/Table';
 import { sign } from '../logion-chain/Signature';
-import { useRootContext } from '../RootContext';
+import { useRootContext } from '../common/RootContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import { acceptProtectionRequest, rejectProtectionRequest, decision } from './Model';

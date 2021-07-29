@@ -4,7 +4,7 @@ import Dashboard from '../common/Dashboard';
 
 import LegalOfficerRouter from './LegalOfficerRouter';
 import { useLegalOfficerContext } from './LegalOfficerContext';
-import { useRootContext } from '../RootContext';
+import { useRootContext } from '../common/RootContext';
 
 import {
     HOME_PATH,

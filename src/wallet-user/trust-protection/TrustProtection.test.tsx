@@ -1,5 +1,5 @@
 jest.mock('../UserContext');
-jest.mock('../../RootContext');
+jest.mock('../../common/RootContext');
 
 import { setPendingProtectionRequests, setAcceptedProtectionRequests, setRecoveryConfig } from "../__mocks__/UserContextMock";
 import { shallowRender } from "../../tests";

@@ -5,7 +5,7 @@ import { balanceFromAmount, accountBalance, buildTransferCall, AssetWithBalance 
 import { signAndSendAsRecovered } from '../../logion-chain/Recovery';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
 
-import { useRootContext } from '../../RootContext';
+import { useRootContext } from '../../common/RootContext';
 import { FullWidthPane } from '../../common/Dashboard';
 import Tabs from '../../common/Tabs';
 import Table, { Cell, EmptyTableMessage } from '../../common/Table';

@@ -11,7 +11,7 @@ import Icon from './Icon';
 import Table, { DateCell, Cell, EmptyTableMessage } from './Table';
 import { ColorTheme, RED, GREEN } from './ColorTheme';
 
-import { useRootContext } from '../RootContext';
+import { useRootContext } from './RootContext';
 
 import WalletGauge from './WalletGauge';
 

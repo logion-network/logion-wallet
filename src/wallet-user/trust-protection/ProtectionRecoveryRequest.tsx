@@ -12,7 +12,7 @@ import Alert from '../../common/Alert';
 import Button from '../../common/Button';
 import Icon from '../../common/Icon';
 import { GREEN } from '../../common/ColorTheme';
-import { useRootContext } from '../../RootContext';
+import { useRootContext } from '../../common/RootContext';
 
 import { useUserContext } from '../UserContext';
 

@@ -20,7 +20,7 @@ import {
     unsubscribe,
     isFinalized,
 } from '../logion-chain/Signature';
-import { useRootContext } from '../RootContext';
+import { useRootContext } from '../common/RootContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import {

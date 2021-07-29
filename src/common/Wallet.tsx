@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 import { CoinBalance, prefixedLogBalance } from '../logion-chain/Balances';
 
-import { useRootContext } from '../RootContext';
+import { useRootContext } from './RootContext';
 
 import { FullWidthPane } from './Dashboard';
 import Frame from './Frame';
