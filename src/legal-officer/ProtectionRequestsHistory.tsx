@@ -6,7 +6,7 @@ import { useRootContext } from '../RootContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import { decision } from './Model';
-import { ProtectionRequest } from './Types';
+import { ProtectionRequest } from '../common/types/ModelTypes';
 import ProtectionRequestStatus from './ProtectionRequestStatus';
 import ProtectionRequestDetails from './ProtectionRequestDetails';
 

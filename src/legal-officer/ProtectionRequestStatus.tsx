@@ -3,7 +3,7 @@ import React from 'react';
 import Icon from "../common/Icon";
 import { ORANGE, GREEN, RED, YELLOW } from "../common/ColorTheme";
 
-import { LegalOfficerDecisionStatus, ProtectionRequestStatus as ProtectionRequestStatusType } from './Types';
+import { LegalOfficerDecisionStatus, ProtectionRequestStatus as ProtectionRequestStatusType } from '../common/types/ModelTypes';
 import './ProtectionRequestStatus.css';
 
 export interface Props {

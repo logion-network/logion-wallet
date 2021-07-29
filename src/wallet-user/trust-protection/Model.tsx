@@ -1,6 +1,6 @@
 import axios from "axios";
 import moment, {Moment} from "moment";
-import {ProtectionRequest} from "../../legal-officer/Types";
+import {ProtectionRequest} from "../../common/types/ModelTypes";
 import Identity from '../../common/types/Identity';
 import PostalAddress from '../../common/types/PostalAddress';
 import { toIsoString } from "../../logion-chain/datetime";

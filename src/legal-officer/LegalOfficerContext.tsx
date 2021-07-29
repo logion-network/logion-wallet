@@ -4,11 +4,13 @@ import moment from 'moment';
 import {
     TokenizationRequest,
     ProtectionRequest,
-} from './Types';
+} from '../common/types/ModelTypes';
 import {
     fetchRequests,
-    rejectRequest as modelRejectRequest,
     fetchProtectionRequests,
+} from '../common/Model';
+import {
+    rejectRequest as modelRejectRequest,
 } from './Model';
 import { sign } from "../logion-chain/Signature";
 import { ColorTheme } from '../common/ColorTheme';

@@ -1,8 +1,7 @@
-import {TokenizationRequest} from "../../legal-officer/Types";
 import {DEFAULT_LEGAL_OFFICER} from "../../common/types/LegalOfficer";
 import { TEST_WALLET_USER } from '../TestData';
 import {ApiPromise} from '@polkadot/api';
-import {ProtectionRequest} from "../../legal-officer/Types";
+import {TokenizationRequest, ProtectionRequest} from "../../common/types/ModelTypes";
 import { DARK_MODE } from '../Types';
 
 export let createTokenRequest = () => null;

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Moment } from 'moment';
-import { TokenizationRequest } from "../legal-officer/Types";
+import { TokenizationRequest } from "../common/types/ModelTypes";
 
 export interface CreateTokenRequest {
     legalOfficerAddress: string,

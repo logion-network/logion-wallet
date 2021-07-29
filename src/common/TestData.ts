@@ -3,7 +3,7 @@ import { PrefixedNumber, ATTO } from '../logion-chain/numbers';
 
 import Identity from './types/Identity';
 import PostalAddress from './types/PostalAddress';
-import { Transaction } from './types/Transaction';
+import { Transaction } from './types/ModelTypes';
 import { ColorTheme, rgbaToHex } from './ColorTheme';
 
 export const DEFAULT_IDENTITY: Identity = {

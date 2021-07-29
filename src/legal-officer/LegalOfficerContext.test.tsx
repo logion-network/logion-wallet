@@ -1,11 +1,13 @@
 jest.mock("./Model");
 jest.mock('../logion-chain');
 jest.mock('../logion-chain/Signature');
+jest.mock("../common/Model");
 
 import { useEffect, useState } from 'react';
 import { LegalOfficerContextProvider, useLegalOfficerContext } from './LegalOfficerContext';
 import { render, waitFor } from '@testing-library/react';
-import { DEFAULT_LEGAL_OFFICER, rejectRequest, setFetchRequests } from './__mocks__/ModelMock';
+import { DEFAULT_LEGAL_OFFICER, rejectRequest } from './__mocks__/ModelMock';
+import { setFetchRequests } from '../common/__mocks__/ModelMock';
 import { ISO_DATETIME_PATTERN } from '../logion-chain/datetime';
 
 beforeEach(() => {
@@ -46,7 +48,7 @@ test("Context initially fetches requests", async () => {
 
 function TestProvider(props: TestConsumerProps) {
     return (
-        <LegalOfficerContextProvider legalOfficerAddress={ DEFAULT_LEGAL_OFFICER }>
+        <LegalOfficerContextProvider>
             <TestConsumer {...props} />
         </LegalOfficerContextProvider>
     );

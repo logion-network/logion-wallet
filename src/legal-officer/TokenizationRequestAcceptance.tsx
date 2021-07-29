@@ -25,7 +25,7 @@ import { useRootContext } from '../RootContext';
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import {
     TokenizationRequest,
-} from './Types';
+} from '../common/types/ModelTypes';
 import {
     acceptRequest,
     setAssetDescription,

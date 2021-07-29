@@ -2,7 +2,7 @@ import React from "react";
 import { ColorTheme } from "../../common/ColorTheme";
 import { LegalOfficer } from "../../common/types/LegalOfficer";
 
-import { LegalOfficerDecisionStatus, ProtectionRequestStatus } from "../../legal-officer/Types";
+import { LegalOfficerDecisionStatus, ProtectionRequestStatus } from "../../common/types/ModelTypes";
 
 import SelectLegalOfficer, { Mode } from './SelectLegalOfficer';
 import './LegalOfficers.css';

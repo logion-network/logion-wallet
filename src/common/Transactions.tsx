@@ -16,7 +16,7 @@ import { useRootContext } from '../RootContext';
 import WalletGauge from './WalletGauge';
 
 import './Transactions.css';
-import { Transaction } from './types/Transaction';
+import { Transaction } from './types/ModelTypes';
 
 export interface Props {
     backPath: string,

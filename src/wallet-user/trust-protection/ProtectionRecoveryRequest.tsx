@@ -4,7 +4,7 @@ import { useLogionChain } from '../../logion-chain';
 import { createRecovery, claimRecovery } from '../../logion-chain/Recovery';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
 
-import { ProtectionRequest } from "../../legal-officer/Types";
+import { ProtectionRequest } from "../../common/types/ModelTypes";
 import { LegalOfficer, legalOfficerByAddress } from '../../common/types/LegalOfficer';
 import { FullWidthPane } from "../../common/Dashboard";
 import Frame from "../../common/Frame";

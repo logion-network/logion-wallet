@@ -3,7 +3,7 @@ import React from "react";
 import { Col } from '../common/Grid';
 import Detail from "../common/Detail";
 
-import { ProtectionRequest } from "./Types";
+import { ProtectionRequest } from "../common/types/ModelTypes";
 import { useLegalOfficerContext } from "./LegalOfficerContext";
 
 export interface ProtectionRequestDetailsProps {

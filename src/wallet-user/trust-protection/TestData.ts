@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { ProtectionRequest, ProtectionRequestStatus } from '../../legal-officer/Types';
+import { ProtectionRequest, ProtectionRequestStatus } from '../../common/types/ModelTypes';
 import { DEFAULT_IDENTITY, DEFAULT_ADDRESS } from '../../common/TestData';
 import { TEST_WALLET_USER } from '../TestData';
 
