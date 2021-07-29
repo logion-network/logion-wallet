@@ -2,7 +2,7 @@ import React from 'react';
 
 import Table, { Column, Cell, EmptyTableMessage, DateTimeCell } from '../common/Table';
 
-import { useRootContext } from '../common/RootContext';
+import { useCommonContext } from '../common/CommonContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import { decision } from './Model';
@@ -15,7 +15,7 @@ export interface Props {
 }
 
 export default function ProtectionRequestsHistory(props: Props) {
-    const { currentAddress } = useRootContext();
+    const { currentAddress } = useCommonContext();
     const { protectionRequestsHistory, recoveryRequestsHistory, colorTheme } = useLegalOfficerContext();
 
     if (protectionRequestsHistory === null || recoveryRequestsHistory === null) {

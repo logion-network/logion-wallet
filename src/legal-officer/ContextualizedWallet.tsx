@@ -4,7 +4,7 @@ import Dashboard from '../common/Dashboard';
 
 import LegalOfficerRouter from './LegalOfficerRouter';
 import { useLegalOfficerContext } from './LegalOfficerContext';
-import { useRootContext } from '../common/RootContext';
+import { useCommonContext } from '../common/CommonContext';
 
 import {
     HOME_PATH,
@@ -17,7 +17,7 @@ import {
 } from './LegalOfficerPaths';
 
 export default function ContextualizedWallet() {
-    const { selectAddress, addresses } = useRootContext();
+    const { selectAddress, addresses } = useCommonContext();
     const { colorTheme } = useLegalOfficerContext();
 
     if(addresses === null || selectAddress === null) {

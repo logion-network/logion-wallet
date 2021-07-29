@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 
 import { CoinBalance, prefixedLogBalance } from '../logion-chain/Balances';
 
-import { useRootContext } from './RootContext';
+import { useCommonContext } from './CommonContext';
 
 import { FullWidthPane } from './Dashboard';
 import Frame from './Frame';
@@ -43,7 +43,7 @@ export default function Wallet(props: Props) {
 }
 
 export function Content(props: Props) {
-    const { balances, transactions } = useRootContext();
+    const { balances, transactions } = useCommonContext();
     const history = useHistory();
 
     if(balances === null || transactions === null) {

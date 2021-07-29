@@ -16,7 +16,7 @@ import {
     createProtectionRequest as modelCreateProtectionRequest,
 } from "./trust-protection/Model";
 import { ColorTheme } from '../common/ColorTheme';
-import { useRootContext } from '../common/RootContext';
+import { useCommonContext } from '../common/CommonContext';
 import { DARK_MODE } from './Types';
 
 export interface UserContext {
@@ -158,7 +158,7 @@ export interface Props {
 }
 
 export function UserContextProvider(props: Props) {
-    const { currentAddress } = useRootContext();
+    const { currentAddress } = useCommonContext();
     const { api, apiState } = useLogionChain();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 

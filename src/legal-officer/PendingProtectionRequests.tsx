@@ -7,7 +7,7 @@ import Form from 'react-bootstrap/Form';
 import Button from '../common/Button';
 import Table, { Column, Cell, EmptyTableMessage, DateTimeCell } from '../common/Table';
 import { sign } from '../logion-chain/Signature';
-import { useRootContext } from '../common/RootContext';
+import { useCommonContext } from '../common/CommonContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import { acceptProtectionRequest, rejectProtectionRequest, decision } from './Model';
@@ -37,7 +37,7 @@ export interface Props {
 }
 
 export default function PendingProtectionRequests(props: Props) {
-    const { currentAddress } = useRootContext();
+    const { currentAddress } = useCommonContext();
     const { pendingProtectionRequests, refreshRequests, pendingRecoveryRequests, colorTheme } = useLegalOfficerContext();
     const [ rejectReason, setRejectReason ] = useState<string>("");
     const [ reviewState, setReviewState ] = useState<ReviewState>(NO_REVIEW_STATE);

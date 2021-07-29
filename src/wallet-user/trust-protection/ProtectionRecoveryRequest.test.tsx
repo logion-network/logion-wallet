@@ -1,6 +1,6 @@
 jest.mock('../UserContext');
 jest.mock('../../logion-chain');
-jest.mock('../../common/RootContext');
+jest.mock('../../common/CommonContext');
 jest.mock('../../logion-chain/Signature');
 jest.mock('../../logion-chain/Recovery');
 

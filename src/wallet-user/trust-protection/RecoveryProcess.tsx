@@ -5,7 +5,7 @@ import { balanceFromAmount, accountBalance, buildTransferCall, AssetWithBalance 
 import { signAndSendAsRecovered } from '../../logion-chain/Recovery';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
 
-import { useRootContext } from '../../common/RootContext';
+import { useCommonContext } from '../../common/CommonContext';
 import { FullWidthPane } from '../../common/Dashboard';
 import Tabs from '../../common/Tabs';
 import Table, { Cell, EmptyTableMessage } from '../../common/Table';
@@ -44,7 +44,7 @@ function TabTitle(props: TabTitleProps) {
 
 export default function RecoveryProcess() {
     const { api } = useLogionChain();
-    const { addresses } = useRootContext();
+    const { addresses } = useCommonContext();
     const { colorTheme, recoveredAddress } = useUserContext();
     const [ tabKey, setTabKey ] = useState<string>('tokens');
     const [ balances, setBalances ] = useState<Balances | null>(null);

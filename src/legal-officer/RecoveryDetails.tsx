@@ -1,7 +1,7 @@
 import moment from 'moment';
 import Form from 'react-bootstrap/Form';
 
-import { useRootContext } from "../common/RootContext";
+import { useCommonContext } from "../common/CommonContext";
 import { useLegalOfficerContext } from "./LegalOfficerContext";
 import { FullWidthPane } from "../common/Dashboard";
 import { useParams, useHistory } from 'react-router';
@@ -25,7 +25,7 @@ import ExtrinsicSubmitter, { SignAndSubmit } from '../ExtrinsicSubmitter';
 import ButtonGroup from "../common/ButtonGroup";
 
 export default function RecoveryDetails() {
-    const { addresses } = useRootContext();
+    const { addresses } = useCommonContext();
     const { api } = useLogionChain();
     const { colorTheme, refreshRequests } = useLegalOfficerContext();
     const { requestId } = useParams<{ requestId: string }>();

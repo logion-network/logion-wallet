@@ -3,12 +3,12 @@ import { Table } from "react-bootstrap";
 import { useLegalOfficerContext } from "./LegalOfficerContext";
 import UserInfo from "../common/UserInfo";
 import LegalOfficerInfo from "../common/LegalOfficerInfo";
-import { useRootContext } from "../common/RootContext";
+import { useCommonContext } from "../common/CommonContext";
 import { legalOfficerByAddress } from "../common/types/LegalOfficer";
 
 export default function ProtectedUsers() {
     const { activatedProtectionRequests } = useLegalOfficerContext();
-    const { currentAddress } = useRootContext();
+    const { currentAddress } = useCommonContext();
 
     return (
             <>

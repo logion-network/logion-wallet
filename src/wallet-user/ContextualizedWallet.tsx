@@ -16,11 +16,11 @@ import UserRouter, {
     WALLET_PATH,
 } from "./UserRouter";
 import { useUserContext } from "./UserContext";
-import { useRootContext } from '../common/RootContext';
+import { useCommonContext } from '../common/CommonContext';
 
 export default function ContextualizedWallet() {
     const { apiState } = useLogionChain();
-    const { selectAddress, addresses } = useRootContext();
+    const { selectAddress, addresses } = useCommonContext();
     const { colorTheme, pendingProtectionRequests, acceptedProtectionRequests } = useUserContext();
     const [ discardProtection, setDiscardProtection ] = useState<boolean>(false);
 

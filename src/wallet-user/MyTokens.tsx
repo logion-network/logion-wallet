@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import Table, { Cell, EmptyTableMessage } from '../common/Table';
 
-import { useRootContext } from '../common/RootContext';
+import { useCommonContext } from '../common/CommonContext';
 
 import { useLogionChain } from '../logion-chain';
 import { accountBalance, AssetWithBalance } from '../logion-chain/Assets';
@@ -17,7 +17,7 @@ interface Balances {
 }
 
 export default function MyTokens() {
-    const { currentAddress } = useRootContext();
+    const { currentAddress } = useCommonContext();
     const { colorTheme } = useUserContext();
     const { api } = useLogionChain();
     const [ balances, setBalances ] = useState<Balances | null>(null);

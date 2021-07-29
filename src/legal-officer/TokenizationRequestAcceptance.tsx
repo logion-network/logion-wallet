@@ -20,7 +20,7 @@ import {
     unsubscribe,
     isFinalized,
 } from '../logion-chain/Signature';
-import { useRootContext } from '../common/RootContext';
+import { useCommonContext } from '../common/CommonContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import {
@@ -63,7 +63,7 @@ export interface Props {
 
 export default function TokenizationRequestAcceptance(props: Props) {
     const { api } = useLogionChain();
-    const { currentAddress } = useRootContext();
+    const { currentAddress } = useCommonContext();
     const { refreshRequests } = useLegalOfficerContext();
 
     const [ acceptState, setAcceptState ] = useState<AcceptState>({status: AcceptStatus.NONE});

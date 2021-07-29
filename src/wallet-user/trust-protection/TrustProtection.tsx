@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {useRootContext} from "../../common/RootContext";
+import {useCommonContext} from "../../common/CommonContext";
 import {useUserContext} from "../UserContext";
 import { findRequest, isRecovery } from "./Model";
 
@@ -9,7 +9,7 @@ import CreateProtectionRequestForm from "./CreateProtectionRequestForm";
 import ProtectionRecoveryRequest from './ProtectionRecoveryRequest';
 
 export default function TrustProtection() {
-    const { currentAddress } = useRootContext();
+    const { currentAddress } = useCommonContext();
     const { pendingProtectionRequests, acceptedProtectionRequests, recoveryConfig } = useUserContext();
 
     if (pendingProtectionRequests === null || acceptedProtectionRequests === null || recoveryConfig === null) {

@@ -1,7 +1,7 @@
 jest.mock('../../logion-chain');
 jest.mock('../../logion-chain/Assets');
 jest.mock('../../logion-chain/Signature');
-jest.mock('../../common/RootContext');
+jest.mock('../../common/CommonContext');
 jest.mock('../UserContext');
 
 import { render, screen, waitFor, getByRole } from '@testing-library/react';

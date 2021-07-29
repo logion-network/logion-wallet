@@ -18,7 +18,7 @@ import {
 import { sign } from "../../logion-chain/Signature";
 import { getActiveRecovery, initiateRecovery } from '../../logion-chain/Recovery';
 import {Row, Col} from "react-bootstrap";
-import {useRootContext} from "../../common/RootContext";
+import {useCommonContext} from "../../common/CommonContext";
 import LegalOfficers from './LegalOfficers';
 
 import './CreateProtectionRequestForm.css';
@@ -59,7 +59,7 @@ interface FormValues {
 export default function CreateProtectionRequestForm(props: Props) {
     const { api } = useLogionChain();
     const { control, handleSubmit, formState: {errors} } = useForm<FormValues>();
-    const { currentAddress } = useRootContext();
+    const { currentAddress } = useCommonContext();
     const { createProtectionRequest, colorTheme, refreshRequests } = useUserContext();
     const [ legalOfficer1, setLegalOfficer1 ] = useState<LegalOfficer | null>(null);
     const [ legalOfficer2, setLegalOfficer2 ] = useState<LegalOfficer | null>(null);

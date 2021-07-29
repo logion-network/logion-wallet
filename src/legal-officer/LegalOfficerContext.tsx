@@ -14,7 +14,7 @@ import {
 } from './Model';
 import { sign } from "../logion-chain/Signature";
 import { ColorTheme } from '../common/ColorTheme';
-import { useRootContext } from '../common/RootContext';
+import { useCommonContext } from '../common/CommonContext';
 import { LIGHT_MODE } from './Types';
 
 export interface LegalOfficerContext {
@@ -56,7 +56,7 @@ export interface Props {
 }
 
 export function LegalOfficerContextProvider(props: Props) {
-    const { currentAddress } = useRootContext();
+    const { currentAddress } = useCommonContext();
     const [ contextValue, setContextValue ] = useState<LegalOfficerContext>(initialContextValue());
     const [ fetchedInitially, setFetchedInitially ] = useState<boolean>(false);
     const [ refreshing, setRefreshing ] = useState<boolean>(false);

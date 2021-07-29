@@ -9,7 +9,7 @@ import { Children } from './types/Helpers';
 import { Transaction } from './types/ModelTypes';
 import { getTransactions } from "./Model";
 
-export interface RootContext {
+export interface CommonContext {
     currentAddress: string,
     selectAddress: ((address: string) => void) | null,
     addresses: Addresses | null,
@@ -20,7 +20,7 @@ export interface RootContext {
     transactions: Transaction[] | null,
 }
 
-function initialContextValue(): RootContext {
+function initialContextValue(): CommonContext {
     return {
         currentAddress: "",
         selectAddress: null,
@@ -33,7 +33,7 @@ function initialContextValue(): RootContext {
     }
 }
 
-const RootContextObject: React.Context<RootContext> = React.createContext(initialContextValue());
+const CommonContextObject: React.Context<CommonContext> = React.createContext(initialContextValue());
 
 export interface Props {
     children: Children
@@ -57,7 +57,7 @@ interface Action {
     transactions?: Transaction[],
 }
 
-const reducer: Reducer<RootContext, Action> = (state: RootContext, action: Action): RootContext => {
+const reducer: Reducer<CommonContext, Action> = (state: CommonContext, action: Action): CommonContext => {
     switch (action.type) {
         case 'SET_SELECT_ADDRESS':
             return {
@@ -102,7 +102,7 @@ const reducer: Reducer<RootContext, Action> = (state: RootContext, action: Actio
     }
 }
 
-export function RootContextProvider(props: Props) {
+export function CommonContextProvider(props: Props) {
     const { apiState, api, injectedAccounts } = useLogionChain();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
@@ -177,12 +177,12 @@ export function RootContextProvider(props: Props) {
     }, [ injectedAccounts, contextValue ]);
 
     return (
-        <RootContextObject.Provider value={contextValue}>
+        <CommonContextObject.Provider value={contextValue}>
             {props.children}
-        </RootContextObject.Provider>
+        </CommonContextObject.Provider>
     );
 }
 
-export function useRootContext(): RootContext {
-    return {...useContext(RootContextObject)};
+export function useCommonContext(): CommonContext {
+    return {...useContext(CommonContextObject)};
 }

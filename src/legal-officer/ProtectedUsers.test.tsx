@@ -1,4 +1,4 @@
-jest.mock("../common/RootContext");
+jest.mock("../common/CommonContext");
 jest.mock('./LegalOfficerContext');
 
 import { ProtectionRequest } from "../common/types/ModelTypes";

@@ -1,7 +1,7 @@
 jest.mock('../UserContext');
 jest.mock('../../logion-chain');
 jest.mock('../../logion-chain/Signature');
-jest.mock('../../common/RootContext');
+jest.mock('../../common/CommonContext');
 
 import { TEST_WALLET_USER } from '../TestData';
 import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from "../../common/types/LegalOfficer";

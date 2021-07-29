@@ -24,7 +24,7 @@ export let balances: any = null;
 
 export let transactions: any = null;
 
-export function useRootContext() {
+export function useCommonContext() {
     return {
         currentAddress,
         selectAddress,

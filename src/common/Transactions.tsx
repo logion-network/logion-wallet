@@ -11,7 +11,7 @@ import Icon from './Icon';
 import Table, { DateCell, Cell, EmptyTableMessage } from './Table';
 import { ColorTheme, RED, GREEN } from './ColorTheme';
 
-import { useRootContext } from './RootContext';
+import { useCommonContext } from './CommonContext';
 
 import WalletGauge from './WalletGauge';
 
@@ -24,7 +24,7 @@ export interface Props {
 }
 
 export default function Transactions(props: Props) {
-    const { addresses, balances, transactions } = useRootContext();
+    const { addresses, balances, transactions } = useCommonContext();
     const { coinId } = useParams<{ coinId: string }>();
     const history = useHistory();
 

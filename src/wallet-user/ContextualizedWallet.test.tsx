@@ -1,5 +1,5 @@
 jest.mock('../logion-chain');
-jest.mock('../common/RootContext');
+jest.mock('../common/CommonContext');
 jest.mock('./UserContext');
 
 import React from 'react';

@@ -13,7 +13,7 @@ import MainMenu from './MainMenu';
 import MenuIcon from './MenuIcon';
 import Clickable from './Clickable';
 import Icon from './Icon';
-import { useRootContext } from './RootContext';
+import { useCommonContext } from './CommonContext';
 
 import './Dashboard.css';
 
@@ -106,7 +106,7 @@ export interface BasePaneProps extends TitlesProps {
 }
 
 function BasePane(props: BasePaneProps) {
-    const { selectAddress, addresses } = useRootContext();
+    const { selectAddress, addresses } = useCommonContext();
 
     let contentAreaClass = "ContentArea";
     if(props.className !== undefined) {

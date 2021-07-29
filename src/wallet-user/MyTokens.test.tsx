@@ -1,6 +1,6 @@
 jest.mock('../logion-chain');
 jest.mock('../logion-chain/Assets');
-jest.mock('../common/RootContext');
+jest.mock('../common/CommonContext');
 jest.mock('./UserContext');
 jest.mock('react-router-dom');
 

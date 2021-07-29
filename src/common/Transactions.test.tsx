@@ -1,10 +1,10 @@
 jest.mock('react-router');
-jest.mock("./RootContext");
+jest.mock("./CommonContext");
 
 import { shallowRender } from '../tests';
 
 import Transactions from './Transactions';
-import { setBalances, setTransactions } from './__mocks__/RootContextMock';
+import { setBalances, setTransactions } from './__mocks__/CommonContextMock';
 import { setParams } from '../__mocks__/ReactRouterMock';
 import { DEFAULT_COIN_BALANCE, DEFAULT_TRANSACTION, COLOR_THEME } from './TestData';
 
