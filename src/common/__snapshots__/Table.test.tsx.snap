@@ -7,7 +7,7 @@ exports[`renders 1`] = `
   <style>
     
             .Table .body .Row .Col.split-after::before {
-                background-color: #152665;
+                background-color: #0c163d;
             }
             
   </style>
@@ -15,7 +15,7 @@ exports[`renders 1`] = `
     className="header"
     style={
       Object {
-        "backgroundColor": "#0c163d",
+        "backgroundColor": "#152665",
         "color": "#ffffff",
       }
     }
@@ -68,7 +68,7 @@ exports[`renders 1`] = `
         <Col
           style={
             Object {
-              "backgroundColor": "#152665",
+              "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "center",
               "width": "50%",
@@ -82,7 +82,7 @@ exports[`renders 1`] = `
         <Col
           style={
             Object {
-              "backgroundColor": "#152665",
+              "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "center",
               "width": "100px",
@@ -97,7 +97,7 @@ exports[`renders 1`] = `
         <Col
           style={
             Object {
-              "backgroundColor": "#152665",
+              "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "center",
               "width": "calc(( 50% - 100px ) / 1)",
@@ -122,7 +122,7 @@ exports[`renders 1`] = `
         <Col
           style={
             Object {
-              "backgroundColor": "#152665",
+              "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "center",
               "width": "50%",
@@ -136,7 +136,7 @@ exports[`renders 1`] = `
         <Col
           style={
             Object {
-              "backgroundColor": "#152665",
+              "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "center",
               "width": "100px",
@@ -151,7 +151,7 @@ exports[`renders 1`] = `
         <Col
           style={
             Object {
-              "backgroundColor": "#152665",
+              "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "center",
               "width": "calc(( 50% - 100px ) / 1)",

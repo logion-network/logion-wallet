@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 
 import Button, { Action } from './Button';
 import { Children } from './types/Helpers';
-import { ColorTheme } from './ColorTheme';
+import { useCommonContext } from './CommonContext';
 
 import './Dialog.css';
 
@@ -15,10 +15,10 @@ export interface Props {
     modalTestId?: string,
     actions: Action[],
     size: ModalSize,
-    colors: ColorTheme,
 }
 
 export default function Dialog(props: Props) {
+    const { colorTheme } = useCommonContext();
 
     if(props.actions.length === 0) {
         throw new Error("There is no way for this dialog to be closed");
@@ -40,10 +40,10 @@ export default function Dialog(props: Props) {
                     background-color: white;
                 }
                 .Dialog .modal-dialog .modal-content {
-                    box-shadow: 0 0 25px ${props.colors.shadowColor};
-                    border-color: ${props.colors.dialog.borderColor};
-                    color: ${props.colors.dialog.foreground};
-                    background-color: ${props.colors.dialog.background};
+                    box-shadow: 0 0 25px ${colorTheme.shadowColor};
+                    border-color: ${colorTheme.dialog.borderColor};
+                    color: ${colorTheme.dialog.foreground};
+                    background-color: ${colorTheme.dialog.background};
                 }
                 `
                 }
@@ -57,7 +57,6 @@ export default function Dialog(props: Props) {
                         <Button
                             key={ action.id }
                             action={ action }
-                            colors={ props.colors.buttons }
                         />
                     ))
                 }

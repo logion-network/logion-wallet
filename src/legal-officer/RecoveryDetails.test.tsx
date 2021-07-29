@@ -1,4 +1,4 @@
-jest.mock("../RootContext");
+jest.mock("../common/CommonContext");
 jest.mock("./Model");
 jest.mock("./LegalOfficerContext");
 jest.mock("../logion-chain");
@@ -11,7 +11,7 @@ import RecoveryDetails from './RecoveryDetails';
 import { RecoveryInfo } from './Types';
 import { setFetchRecoveryInfo, acceptProtectionRequest, rejectProtectionRequest } from './__mocks__/ModelMock';
 import { PROTECTION_REQUESTS_HISTORY, DEFAULT_LEGAL_OFFICER_ADDRESS } from './TestData';
-import { setAddresses } from '../__mocks__/RootContextMock';
+import { setAddresses } from '../common/__mocks__/CommonContextMock';
 import { setIsFinalized } from '../logion-chain/__mocks__/SignatureMock';
 import { setParams, history } from '../__mocks__/ReactRouterMock';
 import { ISO_DATETIME_PATTERN } from '../logion-chain/datetime';

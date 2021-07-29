@@ -1,5 +1,6 @@
-import { TEST_WALLET_USER } from '../wallet-user/TestData';
-import Addresses, { AccountAddress } from '../common/types/Addresses';
+import { TEST_WALLET_USER } from '../../wallet-user/TestData';
+import { COLOR_THEME } from '../TestData';
+import Addresses, { AccountAddress } from '../types/Addresses';
 
 export let selectAddress = jest.fn();
 
@@ -24,13 +25,14 @@ export let balances: any = null;
 
 export let transactions: any = null;
 
-export function useRootContext() {
+export function useCommonContext() {
     return {
         currentAddress,
         selectAddress,
         addresses,
         balances,
         transactions,
+        colorTheme: COLOR_THEME,
     };
 }
 

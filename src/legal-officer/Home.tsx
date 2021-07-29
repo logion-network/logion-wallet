@@ -1,17 +1,11 @@
 import React from 'react';
 
 import { FullWidthPane } from '../common/Dashboard';
-import { useRootContext } from '../RootContext';
 
-import { useLegalOfficerContext } from "./LegalOfficerContext";
+import { useCommonContext } from "../common/CommonContext";
 
 export default function Account() {
-    const { selectAddress, addresses } = useRootContext();
-    const { colorTheme } = useLegalOfficerContext();
-
-    if(addresses === null || selectAddress === null) {
-        return null;
-    }
+    const { colorTheme } = useCommonContext();
 
     return (
         <FullWidthPane
@@ -22,9 +16,6 @@ export default function Account() {
                 },
                 background: colorTheme.topMenuItems.iconGradient,
             }}
-            colors={ colorTheme }
-            addresses={ addresses }
-            selectAddress={ selectAddress }
         >
         </FullWidthPane>
     );

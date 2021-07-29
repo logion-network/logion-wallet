@@ -5,7 +5,6 @@ exports[`renders arc 1`] = `
   className="WalletGauge arc"
 >
   <Gauge
-    colorThemeType="light"
     level={0.5}
     readingDecimalPart="00"
     readingIntegerPart="20"
@@ -16,14 +15,6 @@ exports[`renders arc 1`] = `
     className="actions"
   >
     <Button
-      colors={
-        Object {
-          "secondary": Object {
-            "background": "#eff3fe",
-            "foreground": "#000000",
-          },
-        }
-      }
       slim={true}
     >
       <Icon
@@ -36,14 +27,6 @@ exports[`renders arc 1`] = `
        Send
     </Button>
     <Button
-      colors={
-        Object {
-          "secondary": Object {
-            "background": "#eff3fe",
-            "foreground": "#000000",
-          },
-        }
-      }
       slim={true}
     >
       <Icon
@@ -64,7 +47,6 @@ exports[`renders linear 1`] = `
   className="WalletGauge linear"
 >
   <Gauge
-    colorThemeType="light"
     level={0.5}
     readingDecimalPart="00"
     readingIntegerPart="20"
@@ -75,14 +57,6 @@ exports[`renders linear 1`] = `
     className="actions"
   >
     <Button
-      colors={
-        Object {
-          "secondary": Object {
-            "background": "#eff3fe",
-            "foreground": "#000000",
-          },
-        }
-      }
       slim={true}
     >
       <Icon
@@ -95,14 +69,6 @@ exports[`renders linear 1`] = `
        Send
     </Button>
     <Button
-      colors={
-        Object {
-          "secondary": Object {
-            "background": "#eff3fe",
-            "foreground": "#000000",
-          },
-        }
-      }
       slim={true}
     >
       <Icon

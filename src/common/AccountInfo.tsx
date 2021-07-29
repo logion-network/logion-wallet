@@ -5,7 +5,7 @@ import PostalAddress from "./PostalAddress";
 import Frame from "./Frame";
 import React from "react";
 import './AccountInfo.css';
-import { ColorTheme } from "./ColorTheme";
+import { useCommonContext } from "./CommonContext";
 import ComparableField from "./ComparableField";
 
 export interface Props {
@@ -15,29 +15,29 @@ export interface Props {
     postalAddress: PostalAddressType
     otherIdentity?: IdentityType
     otherPostalAddress?: PostalAddressType
-    colorTheme: ColorTheme
 }
 
 export default function AccountInfo(props: Props) {
+    const { colorTheme } = useCommonContext();
 
     return (
-        <Frame className="AccountInfo" colors={ props.colorTheme } altColors={ true }>
+        <Frame className="AccountInfo" altColors={ true }>
             <ComparableField
                 id="accountAddress"
                 label={ props.label }
                 data={ props }
                 field={ props => props.address }
-                colors={ props.colorTheme.dashboard }
+                colors={ colorTheme.dashboard }
             />
             <Identity
                 identity={ props.identity }
                 otherIdentity={ props.otherIdentity }
-                colors={ props.colorTheme.dashboard }
+                colors={ colorTheme.dashboard }
             />
             <PostalAddress
                 postalAddress={ props.postalAddress }
                 otherPostalAddress={ props.otherPostalAddress }
-                colors={ props.colorTheme.dashboard }
+                colors={ colorTheme.dashboard }
             />
         </Frame>
     )

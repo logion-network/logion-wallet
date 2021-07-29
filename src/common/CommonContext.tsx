@@ -1,15 +1,16 @@
 import React, { useContext, useEffect, useReducer, Reducer, useCallback } from "react";
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
-import { useLogionChain } from './logion-chain';
-import { CoinBalance, getBalances } from './logion-chain/Balances';
+import { useLogionChain } from '../logion-chain';
+import { CoinBalance, getBalances } from '../logion-chain/Balances';
 
-import Addresses, { buildAddresses } from './common/types/Addresses';
-import { Children } from './common/types/Helpers';
-import { Transaction } from './common/types/ModelTypes';
-import { getTransactions } from "./common/Model";
+import Addresses, { buildAddresses } from './types/Addresses';
+import { Children } from './types/Helpers';
+import { Transaction } from './types/ModelTypes';
+import { getTransactions } from "./Model";
+import { ColorTheme, DEFAULT_COLOR_THEME } from "./ColorTheme";
 
-export interface RootContext {
+export interface CommonContext {
     currentAddress: string,
     selectAddress: ((address: string) => void) | null,
     addresses: Addresses | null,
@@ -18,9 +19,11 @@ export interface RootContext {
     dataAddress: string | null,
     balances: CoinBalance[] | null,
     transactions: Transaction[] | null,
+    colorTheme: ColorTheme,
+    setColorTheme: ((colorTheme: ColorTheme) => void) | null,
 }
 
-function initialContextValue(): RootContext {
+function initialContextValue(): CommonContext {
     return {
         currentAddress: "",
         selectAddress: null,
@@ -30,10 +33,12 @@ function initialContextValue(): RootContext {
         dataAddress: null,
         balances: null,
         transactions: null,
+        colorTheme: DEFAULT_COLOR_THEME,
+        setColorTheme: null,
     }
 }
 
-const RootContextObject: React.Context<RootContext> = React.createContext(initialContextValue());
+const CommonContextObject: React.Context<CommonContext> = React.createContext(initialContextValue());
 
 export interface Props {
     children: Children
@@ -43,7 +48,9 @@ type ActionType = 'SET_SELECT_ADDRESS'
     | 'SELECT_ADDRESS'
     | 'SET_ADDRESSES'
     | 'FETCH_IN_PROGRESS'
-    | 'SET_DATA';
+    | 'SET_DATA'
+    | 'SET_COLOR_THEME'
+    | 'SET_SET_COLOR_THEME';
 
 interface Action {
     type: ActionType,
@@ -55,9 +62,11 @@ interface Action {
     dataAddress?: string,
     balances?: CoinBalance[],
     transactions?: Transaction[],
+    newColorTheme?: ColorTheme,
+    setColorTheme?: ((colorTheme: ColorTheme) => void),
 }
 
-const reducer: Reducer<RootContext, Action> = (state: RootContext, action: Action): RootContext => {
+const reducer: Reducer<CommonContext, Action> = (state: CommonContext, action: Action): CommonContext => {
     switch (action.type) {
         case 'SET_SELECT_ADDRESS':
             return {
@@ -96,13 +105,23 @@ const reducer: Reducer<RootContext, Action> = (state: RootContext, action: Actio
             } else {
                 return state;
             }
+        case 'SET_SET_COLOR_THEME':
+            return {
+                ...state,
+                setColorTheme: action.setColorTheme!,
+            };
+        case 'SET_COLOR_THEME':
+            return {
+                ...state,
+                colorTheme: action.newColorTheme!,
+            };
         default:
             /* istanbul ignore next */
             throw new Error(`Unknown type: ${action.type}`);
     }
 }
 
-export function RootContextProvider(props: Props) {
+export function CommonContextProvider(props: Props) {
     const { apiState, api, injectedAccounts } = useLogionChain();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
@@ -159,6 +178,21 @@ export function RootContextProvider(props: Props) {
     }, [ contextValue ]);
 
     useEffect(() => {
+        if(contextValue.setColorTheme === null) {
+            const setColorTheme = (colorTheme: ColorTheme) => {
+                dispatch({
+                    type: 'SET_COLOR_THEME',
+                    newColorTheme: colorTheme,
+                })
+            }
+            dispatch({
+                type: 'SET_SET_COLOR_THEME',
+                setColorTheme,
+            });
+        }
+    }, [ contextValue ]);
+
+    useEffect(() => {
         if(contextValue.injectedAccounts !== injectedAccounts
             && injectedAccounts !== null) {
 
@@ -177,12 +211,12 @@ export function RootContextProvider(props: Props) {
     }, [ injectedAccounts, contextValue ]);
 
     return (
-        <RootContextObject.Provider value={contextValue}>
+        <CommonContextObject.Provider value={contextValue}>
             {props.children}
-        </RootContextObject.Provider>
+        </CommonContextObject.Provider>
     );
 }
 
-export function useRootContext(): RootContext {
-    return {...useContext(RootContextObject)};
+export function useCommonContext(): CommonContext {
+    return {...useContext(CommonContextObject)};
 }

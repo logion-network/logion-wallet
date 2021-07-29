@@ -15,8 +15,7 @@ import {
     CreateProtectionRequest,
     createProtectionRequest as modelCreateProtectionRequest,
 } from "./trust-protection/Model";
-import { ColorTheme } from '../common/ColorTheme';
-import { useRootContext } from '../RootContext';
+import { useCommonContext } from '../common/CommonContext';
 import { DARK_MODE } from './Types';
 
 export interface UserContext {
@@ -33,7 +32,6 @@ export interface UserContext {
     acceptedProtectionRequests: ProtectionRequest[] | null,
     rejectedProtectionRequests: ProtectionRequest[] | null,
     recoveryConfig: Option<RecoveryConfig> | null,
-    colorTheme: ColorTheme,
     recoveredAddress?: string | null,
 }
 
@@ -52,7 +50,6 @@ function initialContextValue(): UserContext {
         acceptedProtectionRequests: null,
         rejectedProtectionRequests: null,
         recoveryConfig: null,
-        colorTheme: DARK_MODE,
     }
 }
 
@@ -158,7 +155,7 @@ export interface Props {
 }
 
 export function UserContextProvider(props: Props) {
-    const { currentAddress } = useRootContext();
+    const { currentAddress, colorTheme, setColorTheme } = useCommonContext();
     const { api, apiState } = useLogionChain();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
@@ -178,6 +175,12 @@ export function UserContextProvider(props: Props) {
             });
         }
     }, [contextValue, dispatch]);
+
+    useEffect(() => {
+        if(colorTheme !== DARK_MODE && setColorTheme !== null) {
+            setColorTheme(DARK_MODE);
+        }
+    }, [ colorTheme, setColorTheme ]);
 
     const refreshRequests = useCallback((clearBeforeRefresh: boolean) => {
         if(api !== null) {

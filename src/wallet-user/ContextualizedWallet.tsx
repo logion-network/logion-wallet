@@ -16,12 +16,12 @@ import UserRouter, {
     WALLET_PATH,
 } from "./UserRouter";
 import { useUserContext } from "./UserContext";
-import { useRootContext } from '../RootContext';
+import { useCommonContext } from '../common/CommonContext';
 
 export default function ContextualizedWallet() {
     const { apiState } = useLogionChain();
-    const { selectAddress, addresses } = useRootContext();
-    const { colorTheme, pendingProtectionRequests, acceptedProtectionRequests } = useUserContext();
+    const { selectAddress, addresses, colorTheme } = useCommonContext();
+    const { pendingProtectionRequests, acceptedProtectionRequests } = useUserContext();
     const [ discardProtection, setDiscardProtection ] = useState<boolean>(false);
 
     if(selectAddress === null || addresses === null) {
@@ -34,7 +34,6 @@ export default function ContextualizedWallet() {
 
     return (
         <Dashboard
-            colors={ colorTheme }
             menuTop={[
                 {
                     id: "home",
@@ -152,7 +151,6 @@ export default function ContextualizedWallet() {
                         buttonVariant: 'recovery'
                     }
                 ]}
-                colors={ colorTheme }
             >
                 <>
                     Dear user,<br/>

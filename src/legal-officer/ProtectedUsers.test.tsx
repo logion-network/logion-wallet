@@ -1,7 +1,7 @@
-jest.mock("../RootContext");
+jest.mock("../common/CommonContext");
 jest.mock('./LegalOfficerContext');
 
-import { ProtectionRequest } from "./Types";
+import { ProtectionRequest } from "../common/types/ModelTypes";
 import React from 'react';
 import ProtectedUsers from "./ProtectedUsers";
 import { shallowRender } from '../tests';

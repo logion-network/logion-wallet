@@ -5,7 +5,7 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Button from "react-bootstrap/Button";
 import moment from 'moment';
 
-import { useRootContext } from "../RootContext";
+import { useCommonContext } from "../common/CommonContext";
 import { DEFAULT_LEGAL_OFFICER } from '../common/types/LegalOfficer';
 
 import {CreateTokenRequest} from "./Model";
@@ -26,7 +26,7 @@ export default function CreateTokenizationRequest(props: Props) {
 
     const { control, handleSubmit, formState: { errors } } = useForm<FormValues>();
     const { createTokenRequest } = useUserContext();
-    const { currentAddress } = useRootContext();
+    const { currentAddress } = useCommonContext();
 
     const submit = async (formValues: FormValues) => {
         const attributes = [

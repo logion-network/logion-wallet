@@ -52,7 +52,7 @@ exports[`renders in light mode 1`] = `
     >
       <img
         alt="logo"
-        src="/logo_black.png"
+        src="/logo.png"
       />
     </div>
     <div

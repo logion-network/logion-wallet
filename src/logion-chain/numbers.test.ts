@@ -8,6 +8,7 @@ import {
     KILO,
     ScientificNumber,
     MEGA,
+    ATTO,
 } from './numbers';
 
 test("amount given balance", () => {
@@ -200,4 +201,10 @@ test("negate positive PrefixedNumber", () => {
     const a = new PrefixedNumber("50.00", NONE);
     const result = a.negate();
     expect(result.toNumber()).toBe(-50);
+});
+
+test("negated zero remains zero", () => {
+    const a = new PrefixedNumber("0", ATTO);
+    const result = a.negate();
+    expect(result.isNegative()).toBe(false);
 });

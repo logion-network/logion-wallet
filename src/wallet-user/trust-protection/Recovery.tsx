@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useRootContext } from "../../RootContext";
+import { useCommonContext } from "../../common/CommonContext";
 import { useUserContext } from "../UserContext";
 import { findRequest, isRecovery } from "./Model";
 
@@ -10,7 +10,7 @@ import ProtectionRecoveryRequest from './ProtectionRecoveryRequest';
 import RecoveryProcess from './RecoveryProcess';
 
 export default function Recovery() {
-    const { currentAddress } = useRootContext();
+    const { currentAddress } = useCommonContext();
     const { pendingProtectionRequests, acceptedProtectionRequests, recoveryConfig, recoveredAddress } = useUserContext();
 
     if (pendingProtectionRequests === null || acceptedProtectionRequests === null || recoveryConfig === null

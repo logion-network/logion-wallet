@@ -2,9 +2,8 @@ import React from 'react';
 
 import { ContentPane } from '../common/Dashboard';
 import Frame from '../common/Frame';
-import { useRootContext } from '../RootContext';
 
-import { useUserContext } from "./UserContext";
+import { useCommonContext } from "../common/CommonContext";
 import MyTokens from './MyTokens';
 import Tokenization from "./Tokenization";
 import RefreshRequestsButton from './RefreshRequestsButton';
@@ -13,12 +12,7 @@ import AcceptedTokenizationRequests from './AcceptedTokenizationRequests';
 import RejectedTokenizationRequests from './RejectedTokenizationRequests';
 
 export default function Account() {
-    const { selectAddress, addresses } = useRootContext();
-    const { colorTheme } = useUserContext();
-
-    if(addresses === null || selectAddress === null) {
-        return null;
-    }
+    const { colorTheme } = useCommonContext();
 
     return (
         <ContentPane
@@ -29,14 +23,9 @@ export default function Account() {
                 },
                 background: colorTheme.topMenuItems.iconGradient,
             }}
-            colors={ colorTheme }
-            addresses={ addresses }
-            selectAddress={ selectAddress }
             primaryAreaChildren={
                 <>
-                    <Frame
-                        colors={ colorTheme }
-                    >
+                    <Frame>
                         <MyTokens />
                         <Tokenization/>
                         <RefreshRequestsButton/>
@@ -46,9 +35,7 @@ export default function Account() {
             }
             secondaryAreaChildren={
                 <>
-                    <Frame
-                        colors={ colorTheme }
-                    >
+                    <Frame>
                         <h2>History</h2>
                         <AcceptedTokenizationRequests />
                         <RejectedTokenizationRequests />

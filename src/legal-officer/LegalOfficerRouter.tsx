@@ -17,15 +17,13 @@ import Home from './Home';
 import TokenizationRequests from './TokenizationRequests';
 import ProtectionRequests from './ProtectionRequests';
 import RecoveryRequests from './RecoveryRequests';
-import Settings from './Settings';
+import Settings from '../Settings';
 import RecoveryDetails from "./RecoveryDetails";
 import Nft from "./Nft";
 import Wallet from "../common/Wallet";
 import Transactions from "../common/Transactions";
-import { useLegalOfficerContext } from "./LegalOfficerContext";
 
 export default function LegalOfficerRouter() {
-    const { colorTheme } = useLegalOfficerContext();
 
     return (
         <>
@@ -51,13 +49,11 @@ export default function LegalOfficerRouter() {
                 <Route path={ WALLET_PATH }>
                     <Wallet
                         transactionsPath={ transactionsPath }
-                        colorTheme={ colorTheme }
                     />
                 </Route>
                 <Route path={ TRANSACTIONS_PATH }>
                     <Transactions
                         backPath={ WALLET_PATH }
-                        colorTheme={ colorTheme }
                     />
                 </Route>
                 <Route path="">

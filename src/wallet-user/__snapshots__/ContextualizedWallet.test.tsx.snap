@@ -2,92 +2,6 @@
 
 exports[`Given connected and no metadata, when rendering, then show account, no connect button, no node info, tokenization 1`] = `
 <Dashboard
-  colors={
-    Object {
-      "accounts": Object {
-        "background": "#0c163d",
-        "foreground": "#ffffff",
-        "hintColor": "#ffffff99",
-        "iconBackground": "#3b6cf4",
-        "legalOfficerIcon": Object {
-          "category": "legal-officer",
-          "id": "account-shield",
-        },
-      },
-      "bottomMenuItems": Object {
-        "iconGradient": Object {
-          "from": "#7a90cb",
-          "to": "#3b6cf4",
-        },
-      },
-      "buttons": Object {
-        "secondary": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-        },
-      },
-      "dashboard": Object {
-        "background": "#0c163d",
-        "foreground": "#ffffff",
-      },
-      "dialog": Object {
-        "background": "#0c163d",
-        "borderColor": "#e6007a",
-        "foreground": "#ffffff",
-      },
-      "frame": Object {
-        "background": "#152665",
-        "foreground": "#ffffff",
-        "link": "#ffffff",
-      },
-      "recoveryItems": Object {
-        "iconGradient": Object {
-          "from": "#e95b5b",
-          "to": "#6050dc",
-        },
-      },
-      "select": Object {
-        "background": "#ffffff33",
-        "foreground": "#ffffff",
-        "menuBackgroundColor": "#152665",
-        "selectedOptionBackgroundColor": "#ffffff33",
-      },
-      "shadowColor": "#3b6cf433",
-      "sidebar": Object {
-        "activeItemBackground": "#ffffff33",
-        "background": "#152665",
-        "foreground": "#ffffff",
-      },
-      "table": Object {
-        "background": "#152665",
-        "foreground": "#ffffff",
-        "header": Object {
-          "background": "#152665",
-          "foreground": "#ffffff",
-        },
-        "row": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-        },
-      },
-      "tabs": Object {
-        "background": "#152665",
-        "borderColor": "#3b6cf4",
-        "foreground": "#ffffff",
-        "inactiveTab": Object {
-          "background": "#ffffff33",
-          "foreground": "#ffffff",
-        },
-      },
-      "topMenuItems": Object {
-        "iconGradient": Object {
-          "from": "#3b6cf4",
-          "to": "#6050dc",
-        },
-      },
-      "type": "dark",
-    }
-  }
   menuBottom={
     Array [
       Object {
@@ -109,8 +23,8 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
         "exact": true,
         "icon": Object {
           "background": Object {
-            "from": "#e95b5b",
-            "to": "#6050dc",
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
           },
           "icon": Object {
             "id": "recovery",
@@ -236,92 +150,6 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
           "id": "recovery",
         },
       ]
-    }
-    colors={
-      Object {
-        "accounts": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-          "hintColor": "#ffffff99",
-          "iconBackground": "#3b6cf4",
-          "legalOfficerIcon": Object {
-            "category": "legal-officer",
-            "id": "account-shield",
-          },
-        },
-        "bottomMenuItems": Object {
-          "iconGradient": Object {
-            "from": "#7a90cb",
-            "to": "#3b6cf4",
-          },
-        },
-        "buttons": Object {
-          "secondary": Object {
-            "background": "#0c163d",
-            "foreground": "#ffffff",
-          },
-        },
-        "dashboard": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-        },
-        "dialog": Object {
-          "background": "#0c163d",
-          "borderColor": "#e6007a",
-          "foreground": "#ffffff",
-        },
-        "frame": Object {
-          "background": "#152665",
-          "foreground": "#ffffff",
-          "link": "#ffffff",
-        },
-        "recoveryItems": Object {
-          "iconGradient": Object {
-            "from": "#e95b5b",
-            "to": "#6050dc",
-          },
-        },
-        "select": Object {
-          "background": "#ffffff33",
-          "foreground": "#ffffff",
-          "menuBackgroundColor": "#152665",
-          "selectedOptionBackgroundColor": "#ffffff33",
-        },
-        "shadowColor": "#3b6cf433",
-        "sidebar": Object {
-          "activeItemBackground": "#ffffff33",
-          "background": "#152665",
-          "foreground": "#ffffff",
-        },
-        "table": Object {
-          "background": "#152665",
-          "foreground": "#ffffff",
-          "header": Object {
-            "background": "#152665",
-            "foreground": "#ffffff",
-          },
-          "row": Object {
-            "background": "#0c163d",
-            "foreground": "#ffffff",
-          },
-        },
-        "tabs": Object {
-          "background": "#152665",
-          "borderColor": "#3b6cf4",
-          "foreground": "#ffffff",
-          "inactiveTab": Object {
-            "background": "#ffffff33",
-            "foreground": "#ffffff",
-          },
-        },
-        "topMenuItems": Object {
-          "iconGradient": Object {
-            "from": "#3b6cf4",
-            "to": "#6050dc",
-          },
-        },
-        "type": "dark",
-      }
     }
     show={false}
     size="lg"
@@ -337,92 +165,6 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
 
 exports[`Given connected, when rendering, then show account, no connect button and tokenization 1`] = `
 <Dashboard
-  colors={
-    Object {
-      "accounts": Object {
-        "background": "#0c163d",
-        "foreground": "#ffffff",
-        "hintColor": "#ffffff99",
-        "iconBackground": "#3b6cf4",
-        "legalOfficerIcon": Object {
-          "category": "legal-officer",
-          "id": "account-shield",
-        },
-      },
-      "bottomMenuItems": Object {
-        "iconGradient": Object {
-          "from": "#7a90cb",
-          "to": "#3b6cf4",
-        },
-      },
-      "buttons": Object {
-        "secondary": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-        },
-      },
-      "dashboard": Object {
-        "background": "#0c163d",
-        "foreground": "#ffffff",
-      },
-      "dialog": Object {
-        "background": "#0c163d",
-        "borderColor": "#e6007a",
-        "foreground": "#ffffff",
-      },
-      "frame": Object {
-        "background": "#152665",
-        "foreground": "#ffffff",
-        "link": "#ffffff",
-      },
-      "recoveryItems": Object {
-        "iconGradient": Object {
-          "from": "#e95b5b",
-          "to": "#6050dc",
-        },
-      },
-      "select": Object {
-        "background": "#ffffff33",
-        "foreground": "#ffffff",
-        "menuBackgroundColor": "#152665",
-        "selectedOptionBackgroundColor": "#ffffff33",
-      },
-      "shadowColor": "#3b6cf433",
-      "sidebar": Object {
-        "activeItemBackground": "#ffffff33",
-        "background": "#152665",
-        "foreground": "#ffffff",
-      },
-      "table": Object {
-        "background": "#152665",
-        "foreground": "#ffffff",
-        "header": Object {
-          "background": "#152665",
-          "foreground": "#ffffff",
-        },
-        "row": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-        },
-      },
-      "tabs": Object {
-        "background": "#152665",
-        "borderColor": "#3b6cf4",
-        "foreground": "#ffffff",
-        "inactiveTab": Object {
-          "background": "#ffffff33",
-          "foreground": "#ffffff",
-        },
-      },
-      "topMenuItems": Object {
-        "iconGradient": Object {
-          "from": "#3b6cf4",
-          "to": "#6050dc",
-        },
-      },
-      "type": "dark",
-    }
-  }
   menuBottom={
     Array [
       Object {
@@ -444,8 +186,8 @@ exports[`Given connected, when rendering, then show account, no connect button a
         "exact": true,
         "icon": Object {
           "background": Object {
-            "from": "#e95b5b",
-            "to": "#6050dc",
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
           },
           "icon": Object {
             "id": "recovery",
@@ -571,92 +313,6 @@ exports[`Given connected, when rendering, then show account, no connect button a
           "id": "recovery",
         },
       ]
-    }
-    colors={
-      Object {
-        "accounts": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-          "hintColor": "#ffffff99",
-          "iconBackground": "#3b6cf4",
-          "legalOfficerIcon": Object {
-            "category": "legal-officer",
-            "id": "account-shield",
-          },
-        },
-        "bottomMenuItems": Object {
-          "iconGradient": Object {
-            "from": "#7a90cb",
-            "to": "#3b6cf4",
-          },
-        },
-        "buttons": Object {
-          "secondary": Object {
-            "background": "#0c163d",
-            "foreground": "#ffffff",
-          },
-        },
-        "dashboard": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-        },
-        "dialog": Object {
-          "background": "#0c163d",
-          "borderColor": "#e6007a",
-          "foreground": "#ffffff",
-        },
-        "frame": Object {
-          "background": "#152665",
-          "foreground": "#ffffff",
-          "link": "#ffffff",
-        },
-        "recoveryItems": Object {
-          "iconGradient": Object {
-            "from": "#e95b5b",
-            "to": "#6050dc",
-          },
-        },
-        "select": Object {
-          "background": "#ffffff33",
-          "foreground": "#ffffff",
-          "menuBackgroundColor": "#152665",
-          "selectedOptionBackgroundColor": "#ffffff33",
-        },
-        "shadowColor": "#3b6cf433",
-        "sidebar": Object {
-          "activeItemBackground": "#ffffff33",
-          "background": "#152665",
-          "foreground": "#ffffff",
-        },
-        "table": Object {
-          "background": "#152665",
-          "foreground": "#ffffff",
-          "header": Object {
-            "background": "#152665",
-            "foreground": "#ffffff",
-          },
-          "row": Object {
-            "background": "#0c163d",
-            "foreground": "#ffffff",
-          },
-        },
-        "tabs": Object {
-          "background": "#152665",
-          "borderColor": "#3b6cf4",
-          "foreground": "#ffffff",
-          "inactiveTab": Object {
-            "background": "#ffffff33",
-            "foreground": "#ffffff",
-          },
-        },
-        "topMenuItems": Object {
-          "iconGradient": Object {
-            "from": "#3b6cf4",
-            "to": "#6050dc",
-          },
-        },
-        "type": "dark",
-      }
     }
     show={false}
     size="lg"
@@ -672,92 +328,6 @@ exports[`Given connected, when rendering, then show account, no connect button a
 
 exports[`Given connecting, when rendering, then show account, no button, no node info 1`] = `
 <Dashboard
-  colors={
-    Object {
-      "accounts": Object {
-        "background": "#0c163d",
-        "foreground": "#ffffff",
-        "hintColor": "#ffffff99",
-        "iconBackground": "#3b6cf4",
-        "legalOfficerIcon": Object {
-          "category": "legal-officer",
-          "id": "account-shield",
-        },
-      },
-      "bottomMenuItems": Object {
-        "iconGradient": Object {
-          "from": "#7a90cb",
-          "to": "#3b6cf4",
-        },
-      },
-      "buttons": Object {
-        "secondary": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-        },
-      },
-      "dashboard": Object {
-        "background": "#0c163d",
-        "foreground": "#ffffff",
-      },
-      "dialog": Object {
-        "background": "#0c163d",
-        "borderColor": "#e6007a",
-        "foreground": "#ffffff",
-      },
-      "frame": Object {
-        "background": "#152665",
-        "foreground": "#ffffff",
-        "link": "#ffffff",
-      },
-      "recoveryItems": Object {
-        "iconGradient": Object {
-          "from": "#e95b5b",
-          "to": "#6050dc",
-        },
-      },
-      "select": Object {
-        "background": "#ffffff33",
-        "foreground": "#ffffff",
-        "menuBackgroundColor": "#152665",
-        "selectedOptionBackgroundColor": "#ffffff33",
-      },
-      "shadowColor": "#3b6cf433",
-      "sidebar": Object {
-        "activeItemBackground": "#ffffff33",
-        "background": "#152665",
-        "foreground": "#ffffff",
-      },
-      "table": Object {
-        "background": "#152665",
-        "foreground": "#ffffff",
-        "header": Object {
-          "background": "#152665",
-          "foreground": "#ffffff",
-        },
-        "row": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-        },
-      },
-      "tabs": Object {
-        "background": "#152665",
-        "borderColor": "#3b6cf4",
-        "foreground": "#ffffff",
-        "inactiveTab": Object {
-          "background": "#ffffff33",
-          "foreground": "#ffffff",
-        },
-      },
-      "topMenuItems": Object {
-        "iconGradient": Object {
-          "from": "#3b6cf4",
-          "to": "#6050dc",
-        },
-      },
-      "type": "dark",
-    }
-  }
   menuBottom={
     Array [
       Object {
@@ -779,8 +349,8 @@ exports[`Given connecting, when rendering, then show account, no button, no node
         "exact": true,
         "icon": Object {
           "background": Object {
-            "from": "#e95b5b",
-            "to": "#6050dc",
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
           },
           "icon": Object {
             "id": "recovery",
@@ -905,92 +475,6 @@ exports[`Given connecting, when rendering, then show account, no button, no node
           "id": "recovery",
         },
       ]
-    }
-    colors={
-      Object {
-        "accounts": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-          "hintColor": "#ffffff99",
-          "iconBackground": "#3b6cf4",
-          "legalOfficerIcon": Object {
-            "category": "legal-officer",
-            "id": "account-shield",
-          },
-        },
-        "bottomMenuItems": Object {
-          "iconGradient": Object {
-            "from": "#7a90cb",
-            "to": "#3b6cf4",
-          },
-        },
-        "buttons": Object {
-          "secondary": Object {
-            "background": "#0c163d",
-            "foreground": "#ffffff",
-          },
-        },
-        "dashboard": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-        },
-        "dialog": Object {
-          "background": "#0c163d",
-          "borderColor": "#e6007a",
-          "foreground": "#ffffff",
-        },
-        "frame": Object {
-          "background": "#152665",
-          "foreground": "#ffffff",
-          "link": "#ffffff",
-        },
-        "recoveryItems": Object {
-          "iconGradient": Object {
-            "from": "#e95b5b",
-            "to": "#6050dc",
-          },
-        },
-        "select": Object {
-          "background": "#ffffff33",
-          "foreground": "#ffffff",
-          "menuBackgroundColor": "#152665",
-          "selectedOptionBackgroundColor": "#ffffff33",
-        },
-        "shadowColor": "#3b6cf433",
-        "sidebar": Object {
-          "activeItemBackground": "#ffffff33",
-          "background": "#152665",
-          "foreground": "#ffffff",
-        },
-        "table": Object {
-          "background": "#152665",
-          "foreground": "#ffffff",
-          "header": Object {
-            "background": "#152665",
-            "foreground": "#ffffff",
-          },
-          "row": Object {
-            "background": "#0c163d",
-            "foreground": "#ffffff",
-          },
-        },
-        "tabs": Object {
-          "background": "#152665",
-          "borderColor": "#3b6cf4",
-          "foreground": "#ffffff",
-          "inactiveTab": Object {
-            "background": "#ffffff33",
-            "foreground": "#ffffff",
-          },
-        },
-        "topMenuItems": Object {
-          "iconGradient": Object {
-            "from": "#3b6cf4",
-            "to": "#6050dc",
-          },
-        },
-        "type": "dark",
-      }
     }
     show={false}
     size="lg"
@@ -1006,92 +490,6 @@ exports[`Given connecting, when rendering, then show account, no button, no node
 
 exports[`Given connection error, when rendering, then show account, no button, no node info 1`] = `
 <Dashboard
-  colors={
-    Object {
-      "accounts": Object {
-        "background": "#0c163d",
-        "foreground": "#ffffff",
-        "hintColor": "#ffffff99",
-        "iconBackground": "#3b6cf4",
-        "legalOfficerIcon": Object {
-          "category": "legal-officer",
-          "id": "account-shield",
-        },
-      },
-      "bottomMenuItems": Object {
-        "iconGradient": Object {
-          "from": "#7a90cb",
-          "to": "#3b6cf4",
-        },
-      },
-      "buttons": Object {
-        "secondary": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-        },
-      },
-      "dashboard": Object {
-        "background": "#0c163d",
-        "foreground": "#ffffff",
-      },
-      "dialog": Object {
-        "background": "#0c163d",
-        "borderColor": "#e6007a",
-        "foreground": "#ffffff",
-      },
-      "frame": Object {
-        "background": "#152665",
-        "foreground": "#ffffff",
-        "link": "#ffffff",
-      },
-      "recoveryItems": Object {
-        "iconGradient": Object {
-          "from": "#e95b5b",
-          "to": "#6050dc",
-        },
-      },
-      "select": Object {
-        "background": "#ffffff33",
-        "foreground": "#ffffff",
-        "menuBackgroundColor": "#152665",
-        "selectedOptionBackgroundColor": "#ffffff33",
-      },
-      "shadowColor": "#3b6cf433",
-      "sidebar": Object {
-        "activeItemBackground": "#ffffff33",
-        "background": "#152665",
-        "foreground": "#ffffff",
-      },
-      "table": Object {
-        "background": "#152665",
-        "foreground": "#ffffff",
-        "header": Object {
-          "background": "#152665",
-          "foreground": "#ffffff",
-        },
-        "row": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-        },
-      },
-      "tabs": Object {
-        "background": "#152665",
-        "borderColor": "#3b6cf4",
-        "foreground": "#ffffff",
-        "inactiveTab": Object {
-          "background": "#ffffff33",
-          "foreground": "#ffffff",
-        },
-      },
-      "topMenuItems": Object {
-        "iconGradient": Object {
-          "from": "#3b6cf4",
-          "to": "#6050dc",
-        },
-      },
-      "type": "dark",
-    }
-  }
   menuBottom={
     Array [
       Object {
@@ -1113,8 +511,8 @@ exports[`Given connection error, when rendering, then show account, no button, n
         "exact": true,
         "icon": Object {
           "background": Object {
-            "from": "#e95b5b",
-            "to": "#6050dc",
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
           },
           "icon": Object {
             "id": "recovery",
@@ -1239,92 +637,6 @@ exports[`Given connection error, when rendering, then show account, no button, n
           "id": "recovery",
         },
       ]
-    }
-    colors={
-      Object {
-        "accounts": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-          "hintColor": "#ffffff99",
-          "iconBackground": "#3b6cf4",
-          "legalOfficerIcon": Object {
-            "category": "legal-officer",
-            "id": "account-shield",
-          },
-        },
-        "bottomMenuItems": Object {
-          "iconGradient": Object {
-            "from": "#7a90cb",
-            "to": "#3b6cf4",
-          },
-        },
-        "buttons": Object {
-          "secondary": Object {
-            "background": "#0c163d",
-            "foreground": "#ffffff",
-          },
-        },
-        "dashboard": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-        },
-        "dialog": Object {
-          "background": "#0c163d",
-          "borderColor": "#e6007a",
-          "foreground": "#ffffff",
-        },
-        "frame": Object {
-          "background": "#152665",
-          "foreground": "#ffffff",
-          "link": "#ffffff",
-        },
-        "recoveryItems": Object {
-          "iconGradient": Object {
-            "from": "#e95b5b",
-            "to": "#6050dc",
-          },
-        },
-        "select": Object {
-          "background": "#ffffff33",
-          "foreground": "#ffffff",
-          "menuBackgroundColor": "#152665",
-          "selectedOptionBackgroundColor": "#ffffff33",
-        },
-        "shadowColor": "#3b6cf433",
-        "sidebar": Object {
-          "activeItemBackground": "#ffffff33",
-          "background": "#152665",
-          "foreground": "#ffffff",
-        },
-        "table": Object {
-          "background": "#152665",
-          "foreground": "#ffffff",
-          "header": Object {
-            "background": "#152665",
-            "foreground": "#ffffff",
-          },
-          "row": Object {
-            "background": "#0c163d",
-            "foreground": "#ffffff",
-          },
-        },
-        "tabs": Object {
-          "background": "#152665",
-          "borderColor": "#3b6cf4",
-          "foreground": "#ffffff",
-          "inactiveTab": Object {
-            "background": "#ffffff33",
-            "foreground": "#ffffff",
-          },
-        },
-        "topMenuItems": Object {
-          "iconGradient": Object {
-            "from": "#3b6cf4",
-            "to": "#6050dc",
-          },
-        },
-        "type": "dark",
-      }
     }
     show={false}
     size="lg"
@@ -1340,92 +652,6 @@ exports[`Given connection error, when rendering, then show account, no button, n
 
 exports[`Given disconnected, when rendering, then show disconnected and connect button 1`] = `
 <Dashboard
-  colors={
-    Object {
-      "accounts": Object {
-        "background": "#0c163d",
-        "foreground": "#ffffff",
-        "hintColor": "#ffffff99",
-        "iconBackground": "#3b6cf4",
-        "legalOfficerIcon": Object {
-          "category": "legal-officer",
-          "id": "account-shield",
-        },
-      },
-      "bottomMenuItems": Object {
-        "iconGradient": Object {
-          "from": "#7a90cb",
-          "to": "#3b6cf4",
-        },
-      },
-      "buttons": Object {
-        "secondary": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-        },
-      },
-      "dashboard": Object {
-        "background": "#0c163d",
-        "foreground": "#ffffff",
-      },
-      "dialog": Object {
-        "background": "#0c163d",
-        "borderColor": "#e6007a",
-        "foreground": "#ffffff",
-      },
-      "frame": Object {
-        "background": "#152665",
-        "foreground": "#ffffff",
-        "link": "#ffffff",
-      },
-      "recoveryItems": Object {
-        "iconGradient": Object {
-          "from": "#e95b5b",
-          "to": "#6050dc",
-        },
-      },
-      "select": Object {
-        "background": "#ffffff33",
-        "foreground": "#ffffff",
-        "menuBackgroundColor": "#152665",
-        "selectedOptionBackgroundColor": "#ffffff33",
-      },
-      "shadowColor": "#3b6cf433",
-      "sidebar": Object {
-        "activeItemBackground": "#ffffff33",
-        "background": "#152665",
-        "foreground": "#ffffff",
-      },
-      "table": Object {
-        "background": "#152665",
-        "foreground": "#ffffff",
-        "header": Object {
-          "background": "#152665",
-          "foreground": "#ffffff",
-        },
-        "row": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-        },
-      },
-      "tabs": Object {
-        "background": "#152665",
-        "borderColor": "#3b6cf4",
-        "foreground": "#ffffff",
-        "inactiveTab": Object {
-          "background": "#ffffff33",
-          "foreground": "#ffffff",
-        },
-      },
-      "topMenuItems": Object {
-        "iconGradient": Object {
-          "from": "#3b6cf4",
-          "to": "#6050dc",
-        },
-      },
-      "type": "dark",
-    }
-  }
   menuBottom={
     Array [
       Object {
@@ -1447,8 +673,8 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
         "exact": true,
         "icon": Object {
           "background": Object {
-            "from": "#e95b5b",
-            "to": "#6050dc",
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
           },
           "icon": Object {
             "id": "recovery",
@@ -1574,92 +800,6 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
         },
       ]
     }
-    colors={
-      Object {
-        "accounts": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-          "hintColor": "#ffffff99",
-          "iconBackground": "#3b6cf4",
-          "legalOfficerIcon": Object {
-            "category": "legal-officer",
-            "id": "account-shield",
-          },
-        },
-        "bottomMenuItems": Object {
-          "iconGradient": Object {
-            "from": "#7a90cb",
-            "to": "#3b6cf4",
-          },
-        },
-        "buttons": Object {
-          "secondary": Object {
-            "background": "#0c163d",
-            "foreground": "#ffffff",
-          },
-        },
-        "dashboard": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-        },
-        "dialog": Object {
-          "background": "#0c163d",
-          "borderColor": "#e6007a",
-          "foreground": "#ffffff",
-        },
-        "frame": Object {
-          "background": "#152665",
-          "foreground": "#ffffff",
-          "link": "#ffffff",
-        },
-        "recoveryItems": Object {
-          "iconGradient": Object {
-            "from": "#e95b5b",
-            "to": "#6050dc",
-          },
-        },
-        "select": Object {
-          "background": "#ffffff33",
-          "foreground": "#ffffff",
-          "menuBackgroundColor": "#152665",
-          "selectedOptionBackgroundColor": "#ffffff33",
-        },
-        "shadowColor": "#3b6cf433",
-        "sidebar": Object {
-          "activeItemBackground": "#ffffff33",
-          "background": "#152665",
-          "foreground": "#ffffff",
-        },
-        "table": Object {
-          "background": "#152665",
-          "foreground": "#ffffff",
-          "header": Object {
-            "background": "#152665",
-            "foreground": "#ffffff",
-          },
-          "row": Object {
-            "background": "#0c163d",
-            "foreground": "#ffffff",
-          },
-        },
-        "tabs": Object {
-          "background": "#152665",
-          "borderColor": "#3b6cf4",
-          "foreground": "#ffffff",
-          "inactiveTab": Object {
-            "background": "#ffffff33",
-            "foreground": "#ffffff",
-          },
-        },
-        "topMenuItems": Object {
-          "iconGradient": Object {
-            "from": "#3b6cf4",
-            "to": "#6050dc",
-          },
-        },
-        "type": "dark",
-      }
-    }
     show={false}
     size="lg"
   >
@@ -1674,92 +814,6 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
 
 exports[`Given no injected account, when rendering, then nothing displayed 1`] = `
 <Dashboard
-  colors={
-    Object {
-      "accounts": Object {
-        "background": "#0c163d",
-        "foreground": "#ffffff",
-        "hintColor": "#ffffff99",
-        "iconBackground": "#3b6cf4",
-        "legalOfficerIcon": Object {
-          "category": "legal-officer",
-          "id": "account-shield",
-        },
-      },
-      "bottomMenuItems": Object {
-        "iconGradient": Object {
-          "from": "#7a90cb",
-          "to": "#3b6cf4",
-        },
-      },
-      "buttons": Object {
-        "secondary": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-        },
-      },
-      "dashboard": Object {
-        "background": "#0c163d",
-        "foreground": "#ffffff",
-      },
-      "dialog": Object {
-        "background": "#0c163d",
-        "borderColor": "#e6007a",
-        "foreground": "#ffffff",
-      },
-      "frame": Object {
-        "background": "#152665",
-        "foreground": "#ffffff",
-        "link": "#ffffff",
-      },
-      "recoveryItems": Object {
-        "iconGradient": Object {
-          "from": "#e95b5b",
-          "to": "#6050dc",
-        },
-      },
-      "select": Object {
-        "background": "#ffffff33",
-        "foreground": "#ffffff",
-        "menuBackgroundColor": "#152665",
-        "selectedOptionBackgroundColor": "#ffffff33",
-      },
-      "shadowColor": "#3b6cf433",
-      "sidebar": Object {
-        "activeItemBackground": "#ffffff33",
-        "background": "#152665",
-        "foreground": "#ffffff",
-      },
-      "table": Object {
-        "background": "#152665",
-        "foreground": "#ffffff",
-        "header": Object {
-          "background": "#152665",
-          "foreground": "#ffffff",
-        },
-        "row": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-        },
-      },
-      "tabs": Object {
-        "background": "#152665",
-        "borderColor": "#3b6cf4",
-        "foreground": "#ffffff",
-        "inactiveTab": Object {
-          "background": "#ffffff33",
-          "foreground": "#ffffff",
-        },
-      },
-      "topMenuItems": Object {
-        "iconGradient": Object {
-          "from": "#3b6cf4",
-          "to": "#6050dc",
-        },
-      },
-      "type": "dark",
-    }
-  }
   menuBottom={
     Array [
       Object {
@@ -1781,8 +835,8 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
         "exact": true,
         "icon": Object {
           "background": Object {
-            "from": "#e95b5b",
-            "to": "#6050dc",
+            "from": "#7a90cb",
+            "to": "#3b6cf4",
           },
           "icon": Object {
             "id": "recovery",
@@ -1908,92 +962,6 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
           "id": "recovery",
         },
       ]
-    }
-    colors={
-      Object {
-        "accounts": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-          "hintColor": "#ffffff99",
-          "iconBackground": "#3b6cf4",
-          "legalOfficerIcon": Object {
-            "category": "legal-officer",
-            "id": "account-shield",
-          },
-        },
-        "bottomMenuItems": Object {
-          "iconGradient": Object {
-            "from": "#7a90cb",
-            "to": "#3b6cf4",
-          },
-        },
-        "buttons": Object {
-          "secondary": Object {
-            "background": "#0c163d",
-            "foreground": "#ffffff",
-          },
-        },
-        "dashboard": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-        },
-        "dialog": Object {
-          "background": "#0c163d",
-          "borderColor": "#e6007a",
-          "foreground": "#ffffff",
-        },
-        "frame": Object {
-          "background": "#152665",
-          "foreground": "#ffffff",
-          "link": "#ffffff",
-        },
-        "recoveryItems": Object {
-          "iconGradient": Object {
-            "from": "#e95b5b",
-            "to": "#6050dc",
-          },
-        },
-        "select": Object {
-          "background": "#ffffff33",
-          "foreground": "#ffffff",
-          "menuBackgroundColor": "#152665",
-          "selectedOptionBackgroundColor": "#ffffff33",
-        },
-        "shadowColor": "#3b6cf433",
-        "sidebar": Object {
-          "activeItemBackground": "#ffffff33",
-          "background": "#152665",
-          "foreground": "#ffffff",
-        },
-        "table": Object {
-          "background": "#152665",
-          "foreground": "#ffffff",
-          "header": Object {
-            "background": "#152665",
-            "foreground": "#ffffff",
-          },
-          "row": Object {
-            "background": "#0c163d",
-            "foreground": "#ffffff",
-          },
-        },
-        "tabs": Object {
-          "background": "#152665",
-          "borderColor": "#3b6cf4",
-          "foreground": "#ffffff",
-          "inactiveTab": Object {
-            "background": "#ffffff33",
-            "foreground": "#ffffff",
-          },
-        },
-        "topMenuItems": Object {
-          "iconGradient": Object {
-            "from": "#3b6cf4",
-            "to": "#6050dc",
-          },
-        },
-        "type": "dark",
-      }
     }
     show={false}
     size="lg"

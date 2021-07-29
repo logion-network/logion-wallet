@@ -6,7 +6,7 @@ import RootRouter from './RootRouter';
 import Loader from './Loader';
 import InstallExtension from './InstallExtension';
 import CreateAccount from './CreateAccount';
-import { RootContextProvider } from './RootContext';
+import { CommonContextProvider } from './common/CommonContext';
 
 export default function Main() {
     const { injectedAccounts, extensionsEnabled } = useLogionChain();
@@ -20,9 +20,9 @@ export default function Main() {
             } else {
                 if(injectedAccounts.length > 0) {
                     return (
-                        <RootContextProvider>
+                        <CommonContextProvider>
                             <RootRouter />
-                        </RootContextProvider>
+                        </CommonContextProvider>
                     );
                 } else {
                     return <CreateAccount />;

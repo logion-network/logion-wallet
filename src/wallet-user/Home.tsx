@@ -1,17 +1,11 @@
 import React from 'react';
 
 import { FullWidthPane } from '../common/Dashboard';
-import { useRootContext } from '../RootContext';
 
-import { useUserContext } from "./UserContext";
+import { useCommonContext } from "../common/CommonContext";
 
 export default function Account() {
-    const { selectAddress, addresses } = useRootContext();
-    const { colorTheme } = useUserContext();
-
-    if(addresses === null || selectAddress === null) {
-        return null;
-    }
+    const { colorTheme } = useCommonContext();
 
     return (
         <FullWidthPane
@@ -22,9 +16,6 @@ export default function Account() {
                 },
                 background: colorTheme.topMenuItems.iconGradient,
             }}
-            colors={ colorTheme }
-            addresses={ addresses }
-            selectAddress={ selectAddress }
         >
         </FullWidthPane>
     );

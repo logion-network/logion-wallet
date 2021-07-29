@@ -1,7 +1,7 @@
 import moment from 'moment';
 import Form from 'react-bootstrap/Form';
 
-import { useRootContext } from "../RootContext";
+import { useCommonContext } from "../common/CommonContext";
 import { useLegalOfficerContext } from "./LegalOfficerContext";
 import { FullWidthPane } from "../common/Dashboard";
 import { useParams, useHistory } from 'react-router';
@@ -25,9 +25,9 @@ import ExtrinsicSubmitter, { SignAndSubmit } from '../ExtrinsicSubmitter';
 import ButtonGroup from "../common/ButtonGroup";
 
 export default function RecoveryDetails() {
-    const { selectAddress, addresses } = useRootContext();
+    const { addresses } = useCommonContext();
     const { api } = useLogionChain();
-    const { colorTheme, refreshRequests } = useLegalOfficerContext();
+    const { refreshRequests } = useLegalOfficerContext();
     const { requestId } = useParams<{ requestId: string }>();
     const [ recoveryInfo, setRecoveryInfo ] = useState<RecoveryInfo | null>(null);
     const [ approve, setApprove ] = useState(false);
@@ -97,7 +97,7 @@ export default function RecoveryDetails() {
         })();
     }, [ requestId, addresses, rejectReason, refreshRequests, history ]);
 
-    if (addresses === null || selectAddress === null || recoveryInfo === null) {
+    if (recoveryInfo === null) {
         return null;
     }
 
@@ -111,14 +111,8 @@ export default function RecoveryDetails() {
                     hasVariants: true,
                 },
             } }
-            colors={ colorTheme }
-            addresses={ addresses }
-            selectAddress={ selectAddress }
         >
-            <Frame
-                className="main-frame"
-                colors={ colorTheme }
-            >
+            <Frame className="main-frame">
                 <Row>
                     <Alert variant="info">
                         I did my due diligence and authorize the transfer of all assets<br />
@@ -138,7 +132,6 @@ export default function RecoveryDetails() {
                             postalAddress={ recoveryInfo.accountToRecover.userPostalAddress }
                             otherIdentity={ recoveryInfo.recoveryAccount.userIdentity }
                             otherPostalAddress={ recoveryInfo.recoveryAccount.userPostalAddress }
-                            colorTheme={ colorTheme }
                         />
                     </Col>
                     <Col className="AccountInfoTo">
@@ -150,20 +143,16 @@ export default function RecoveryDetails() {
                             postalAddress={ recoveryInfo.recoveryAccount.userPostalAddress }
                             otherIdentity={ recoveryInfo.accountToRecover.userIdentity }
                             otherPostalAddress={ recoveryInfo.accountToRecover.userPostalAddress }
-                            colorTheme={ colorTheme }
                         />
                     </Col>
                 </Row>
                 <Row>
                     <ButtonGroup aria-label="actions">
-                        <Button colors={ colorTheme.buttons }
-                                variant="outline-primary" onClick={ () => history.push(RECOVERY_REQUESTS_PATH) }>
+                        <Button variant="outline-primary" onClick={ () => history.push(RECOVERY_REQUESTS_PATH) }>
                             Back to requests list
                         </Button>
-                        <Button colors={ colorTheme.buttons }
-                                variant="danger" onClick={ () => setReject(true) }>Refuse</Button>
-                        <Button colors={ colorTheme.buttons }
-                                variant="primary" onClick={ () => setApprove(true) }>Proceed</Button>
+                        <Button variant="danger" onClick={ () => setReject(true) }>Refuse</Button>
+                        <Button variant="primary" onClick={ () => setApprove(true) }>Proceed</Button>
                     </ButtonGroup>
                 </Row>
             </Frame>
@@ -186,7 +175,6 @@ export default function RecoveryDetails() {
                 ]}
                 show={ approve }
                 size="lg"
-                colors={ colorTheme }
             >
                 <p>
                     I did my due diligence and accept to grant the
@@ -217,7 +205,6 @@ export default function RecoveryDetails() {
                 ]}
                 show={ reject }
                 size="lg"
-                colors={ colorTheme }
             >
                 I did my due diligence and refuse to grant the
                 account { recoveryInfo.accountToRecover.requesterAddress } the right to transfer all assets

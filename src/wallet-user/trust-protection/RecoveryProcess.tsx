@@ -5,11 +5,11 @@ import { balanceFromAmount, accountBalance, buildTransferCall, AssetWithBalance 
 import { signAndSendAsRecovered } from '../../logion-chain/Recovery';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
 
-import { useRootContext } from '../../RootContext';
+import { useCommonContext } from '../../common/CommonContext';
 import { FullWidthPane } from '../../common/Dashboard';
 import Tabs from '../../common/Tabs';
 import Table, { Cell, EmptyTableMessage } from '../../common/Table';
-import { ColorThemeType, GREEN } from '../../common/ColorTheme';
+import { GREEN } from '../../common/ColorTheme';
 import Button from '../../common/Button';
 import Icon from '../../common/Icon';
 import Dialog from '../../common/Dialog';
@@ -26,7 +26,6 @@ interface Balances {
 
 interface TabTitleProps {
     iconId: string,
-    colorThemeType: ColorThemeType,
     title: string,
     size: number,
 }
@@ -35,7 +34,7 @@ function TabTitle(props: TabTitleProps) {
 
     return (
         <div className="recovery-tab-title">
-            <Icon icon={{id: props.iconId}} colorThemeType={ props.colorThemeType }/>
+            <Icon icon={{id: props.iconId}} />
             <span className="title">{ props.title }</span>
             <span className="size">{ props.size }</span>
         </div>
@@ -44,8 +43,8 @@ function TabTitle(props: TabTitleProps) {
 
 export default function RecoveryProcess() {
     const { api } = useLogionChain();
-    const { selectAddress, addresses } = useRootContext();
-    const { colorTheme, recoveredAddress } = useUserContext();
+    const { addresses, colorTheme } = useCommonContext();
+    const { recoveredAddress } = useUserContext();
     const [ tabKey, setTabKey ] = useState<string>('tokens');
     const [ balances, setBalances ] = useState<Balances | null>(null);
     const [ recoveredToken, setRecoveredToken ] = useState<AssetWithBalance | null>(null);
@@ -96,7 +95,7 @@ export default function RecoveryProcess() {
         setBalances(null);
     }, [ setSignAndSubmit, setRecoveredToken, setBalances ]);
 
-    if(addresses === null || selectAddress === null || recoveredAddress === null) {
+    if(recoveredAddress === null) {
         return null;
     }
 
@@ -111,9 +110,6 @@ export default function RecoveryProcess() {
                 },
                 background: colorTheme.recoveryItems.iconGradient,
             }}
-            colors={ colorTheme }
-            addresses={ addresses }
-            selectAddress={ selectAddress }
         >
             <>
                 <div
@@ -124,7 +120,6 @@ export default function RecoveryProcess() {
                     }}
                 >
                     <Icon
-                        colorThemeType={ colorTheme.type }
                         icon={{id: 'activated'}}
                     /> You are now ready to transfer assets
                     from recovered address { recoveredAddress }.
@@ -137,7 +132,6 @@ export default function RecoveryProcess() {
                             title: (
                                 <TabTitle
                                     iconId="tokens"
-                                    colorThemeType={ colorTheme.type }
                                     title="Tokens"
                                     size={ tokens.length }
                                 />
@@ -169,7 +163,6 @@ export default function RecoveryProcess() {
                                                 render: token => <Button
                                                     variant="recovery"
                                                     onClick={ () => setRecoveredToken(token) }
-                                                    colors={ colorTheme.buttons }
                                                 >
                                                     Transfer
                                                 </Button>,
@@ -177,7 +170,6 @@ export default function RecoveryProcess() {
                                             }
                                         ]}
                                         data={ tokens }
-                                        colorTheme={ colorTheme }
                                         renderEmpty={ () => (
                                             <EmptyTableMessage>
                                                 {
@@ -194,12 +186,10 @@ export default function RecoveryProcess() {
                             )
                         }
                     ]}
-                    colors={ colorTheme.tabs }
                     onSelect={ key => setTabKey(key || 'tokens') }
                 />
                 <Dialog
                     show={ recoveredToken !== null }
-                    colors={ colorTheme }
                     size="lg"
                     actions={[
                         {

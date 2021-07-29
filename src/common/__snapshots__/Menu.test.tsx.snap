@@ -5,7 +5,6 @@ exports[`renders 1`] = `
   className="Menu"
 >
   <MenuItem
-    colorThemeType="dark"
     item={
       Object {
         "exact": true,
@@ -16,7 +15,6 @@ exports[`renders 1`] = `
     }
   />
   <MenuItem
-    colorThemeType="dark"
     item={
       Object {
         "exact": true,

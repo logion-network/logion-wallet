@@ -2,291 +2,17 @@
 
 exports[`renders 1`] = `
 <ContentPane
-  addresses={
-    Object {
-      "addresses": Array [
-        Object {
-          "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-          "isLegalOfficer": false,
-          "name": "name",
-        },
-      ],
-      "currentAddress": Object {
-        "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-        "isLegalOfficer": false,
-        "name": "name",
-      },
-    }
-  }
-  colors={
-    Object {
-      "accounts": Object {
-        "background": "#0c163d",
-        "foreground": "#ffffff",
-        "hintColor": "#ffffff99",
-        "iconBackground": "#3b6cf4",
-        "legalOfficerIcon": Object {
-          "category": "legal-officer",
-          "id": "account-shield",
-        },
-      },
-      "bottomMenuItems": Object {
-        "iconGradient": Object {
-          "from": "#7a90cb",
-          "to": "#3b6cf4",
-        },
-      },
-      "buttons": Object {
-        "secondary": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-        },
-      },
-      "dashboard": Object {
-        "background": "#0c163d",
-        "foreground": "#ffffff",
-      },
-      "dialog": Object {
-        "background": "#0c163d",
-        "borderColor": "#e6007a",
-        "foreground": "#ffffff",
-      },
-      "frame": Object {
-        "background": "#152665",
-        "foreground": "#ffffff",
-        "link": "#ffffff",
-      },
-      "recoveryItems": Object {
-        "iconGradient": Object {
-          "from": "#e95b5b",
-          "to": "#6050dc",
-        },
-      },
-      "select": Object {
-        "background": "#ffffff33",
-        "foreground": "#ffffff",
-        "menuBackgroundColor": "#152665",
-        "selectedOptionBackgroundColor": "#ffffff33",
-      },
-      "shadowColor": "#3b6cf433",
-      "sidebar": Object {
-        "activeItemBackground": "#ffffff33",
-        "background": "#152665",
-        "foreground": "#ffffff",
-      },
-      "table": Object {
-        "background": "#152665",
-        "foreground": "#ffffff",
-        "header": Object {
-          "background": "#152665",
-          "foreground": "#ffffff",
-        },
-        "row": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-        },
-      },
-      "tabs": Object {
-        "background": "#152665",
-        "borderColor": "#3b6cf4",
-        "foreground": "#ffffff",
-        "inactiveTab": Object {
-          "background": "#ffffff33",
-          "foreground": "#ffffff",
-        },
-      },
-      "topMenuItems": Object {
-        "iconGradient": Object {
-          "from": "#3b6cf4",
-          "to": "#6050dc",
-        },
-      },
-      "type": "dark",
-    }
-  }
   mainTitle="My Logion Trust Protection"
   primaryAreaChildren={
     <React.Fragment>
       <Frame
         className="CreateProtectionRequestFormLegalOfficers"
-        colors={
-          Object {
-            "accounts": Object {
-              "background": "#0c163d",
-              "foreground": "#ffffff",
-              "hintColor": "#ffffff99",
-              "iconBackground": "#3b6cf4",
-              "legalOfficerIcon": Object {
-                "category": "legal-officer",
-                "id": "account-shield",
-              },
-            },
-            "bottomMenuItems": Object {
-              "iconGradient": Object {
-                "from": "#7a90cb",
-                "to": "#3b6cf4",
-              },
-            },
-            "buttons": Object {
-              "secondary": Object {
-                "background": "#0c163d",
-                "foreground": "#ffffff",
-              },
-            },
-            "dashboard": Object {
-              "background": "#0c163d",
-              "foreground": "#ffffff",
-            },
-            "dialog": Object {
-              "background": "#0c163d",
-              "borderColor": "#e6007a",
-              "foreground": "#ffffff",
-            },
-            "frame": Object {
-              "background": "#152665",
-              "foreground": "#ffffff",
-              "link": "#ffffff",
-            },
-            "recoveryItems": Object {
-              "iconGradient": Object {
-                "from": "#e95b5b",
-                "to": "#6050dc",
-              },
-            },
-            "select": Object {
-              "background": "#ffffff33",
-              "foreground": "#ffffff",
-              "menuBackgroundColor": "#152665",
-              "selectedOptionBackgroundColor": "#ffffff33",
-            },
-            "shadowColor": "#3b6cf433",
-            "sidebar": Object {
-              "activeItemBackground": "#ffffff33",
-              "background": "#152665",
-              "foreground": "#ffffff",
-            },
-            "table": Object {
-              "background": "#152665",
-              "foreground": "#ffffff",
-              "header": Object {
-                "background": "#152665",
-                "foreground": "#ffffff",
-              },
-              "row": Object {
-                "background": "#0c163d",
-                "foreground": "#ffffff",
-              },
-            },
-            "tabs": Object {
-              "background": "#152665",
-              "borderColor": "#3b6cf4",
-              "foreground": "#ffffff",
-              "inactiveTab": Object {
-                "background": "#ffffff33",
-                "foreground": "#ffffff",
-              },
-            },
-            "topMenuItems": Object {
-              "iconGradient": Object {
-                "from": "#3b6cf4",
-                "to": "#6050dc",
-              },
-            },
-            "type": "dark",
-          }
-        }
         disabled={false}
       >
         <h3>
           Choose your Legal Officers
         </h3>
         <LegalOfficers
-          colorTheme={
-            Object {
-              "accounts": Object {
-                "background": "#0c163d",
-                "foreground": "#ffffff",
-                "hintColor": "#ffffff99",
-                "iconBackground": "#3b6cf4",
-                "legalOfficerIcon": Object {
-                  "category": "legal-officer",
-                  "id": "account-shield",
-                },
-              },
-              "bottomMenuItems": Object {
-                "iconGradient": Object {
-                  "from": "#7a90cb",
-                  "to": "#3b6cf4",
-                },
-              },
-              "buttons": Object {
-                "secondary": Object {
-                  "background": "#0c163d",
-                  "foreground": "#ffffff",
-                },
-              },
-              "dashboard": Object {
-                "background": "#0c163d",
-                "foreground": "#ffffff",
-              },
-              "dialog": Object {
-                "background": "#0c163d",
-                "borderColor": "#e6007a",
-                "foreground": "#ffffff",
-              },
-              "frame": Object {
-                "background": "#152665",
-                "foreground": "#ffffff",
-                "link": "#ffffff",
-              },
-              "recoveryItems": Object {
-                "iconGradient": Object {
-                  "from": "#e95b5b",
-                  "to": "#6050dc",
-                },
-              },
-              "select": Object {
-                "background": "#ffffff33",
-                "foreground": "#ffffff",
-                "menuBackgroundColor": "#152665",
-                "selectedOptionBackgroundColor": "#ffffff33",
-              },
-              "shadowColor": "#3b6cf433",
-              "sidebar": Object {
-                "activeItemBackground": "#ffffff33",
-                "background": "#152665",
-                "foreground": "#ffffff",
-              },
-              "table": Object {
-                "background": "#152665",
-                "foreground": "#ffffff",
-                "header": Object {
-                  "background": "#152665",
-                  "foreground": "#ffffff",
-                },
-                "row": Object {
-                  "background": "#0c163d",
-                  "foreground": "#ffffff",
-                },
-              },
-              "tabs": Object {
-                "background": "#152665",
-                "borderColor": "#3b6cf4",
-                "foreground": "#ffffff",
-                "inactiveTab": Object {
-                  "background": "#ffffff33",
-                  "foreground": "#ffffff",
-                },
-              },
-              "topMenuItems": Object {
-                "iconGradient": Object {
-                  "from": "#3b6cf4",
-                  "to": "#6050dc",
-                },
-              },
-              "type": "dark",
-            }
-          }
           legalOfficer1={null}
           legalOfficer2={null}
           legalOfficers={
@@ -363,92 +89,6 @@ France",
   secondaryAreaChildren={
     <Frame
       className="CreateProtectionRequestFormOther"
-      colors={
-        Object {
-          "accounts": Object {
-            "background": "#0c163d",
-            "foreground": "#ffffff",
-            "hintColor": "#ffffff99",
-            "iconBackground": "#3b6cf4",
-            "legalOfficerIcon": Object {
-              "category": "legal-officer",
-              "id": "account-shield",
-            },
-          },
-          "bottomMenuItems": Object {
-            "iconGradient": Object {
-              "from": "#7a90cb",
-              "to": "#3b6cf4",
-            },
-          },
-          "buttons": Object {
-            "secondary": Object {
-              "background": "#0c163d",
-              "foreground": "#ffffff",
-            },
-          },
-          "dashboard": Object {
-            "background": "#0c163d",
-            "foreground": "#ffffff",
-          },
-          "dialog": Object {
-            "background": "#0c163d",
-            "borderColor": "#e6007a",
-            "foreground": "#ffffff",
-          },
-          "frame": Object {
-            "background": "#152665",
-            "foreground": "#ffffff",
-            "link": "#ffffff",
-          },
-          "recoveryItems": Object {
-            "iconGradient": Object {
-              "from": "#e95b5b",
-              "to": "#6050dc",
-            },
-          },
-          "select": Object {
-            "background": "#ffffff33",
-            "foreground": "#ffffff",
-            "menuBackgroundColor": "#152665",
-            "selectedOptionBackgroundColor": "#ffffff33",
-          },
-          "shadowColor": "#3b6cf433",
-          "sidebar": Object {
-            "activeItemBackground": "#ffffff33",
-            "background": "#152665",
-            "foreground": "#ffffff",
-          },
-          "table": Object {
-            "background": "#152665",
-            "foreground": "#ffffff",
-            "header": Object {
-              "background": "#152665",
-              "foreground": "#ffffff",
-            },
-            "row": Object {
-              "background": "#0c163d",
-              "foreground": "#ffffff",
-            },
-          },
-          "tabs": Object {
-            "background": "#152665",
-            "borderColor": "#3b6cf4",
-            "foreground": "#ffffff",
-            "inactiveTab": Object {
-              "background": "#ffffff33",
-              "foreground": "#ffffff",
-            },
-          },
-          "topMenuItems": Object {
-            "iconGradient": Object {
-              "from": "#3b6cf4",
-              "to": "#6050dc",
-            },
-          },
-          "type": "dark",
-        }
-      }
       disabled={true}
     >
       <h3>
@@ -472,9 +112,10 @@ France",
             <FormGroup
               colors={
                 Object {
-                  "background": "#152665",
-                  "foreground": "#ffffff",
-                  "link": "#ffffff",
+                  "altBackground": "#eff3fe",
+                  "background": "#ffffff",
+                  "foreground": "#000000",
+                  "link": "#3b6cf426",
                 }
               }
               control={
@@ -570,9 +211,10 @@ France",
             <FormGroup
               colors={
                 Object {
-                  "background": "#152665",
-                  "foreground": "#ffffff",
-                  "link": "#ffffff",
+                  "altBackground": "#eff3fe",
+                  "background": "#ffffff",
+                  "foreground": "#000000",
+                  "link": "#3b6cf426",
                 }
               }
               control={
@@ -672,9 +314,10 @@ France",
             <FormGroup
               colors={
                 Object {
-                  "background": "#152665",
-                  "foreground": "#ffffff",
-                  "link": "#ffffff",
+                  "altBackground": "#eff3fe",
+                  "background": "#ffffff",
+                  "foreground": "#000000",
+                  "link": "#3b6cf426",
                 }
               }
               control={
@@ -770,9 +413,10 @@ France",
             <FormGroup
               colors={
                 Object {
-                  "background": "#152665",
-                  "foreground": "#ffffff",
-                  "link": "#ffffff",
+                  "altBackground": "#eff3fe",
+                  "background": "#ffffff",
+                  "foreground": "#000000",
+                  "link": "#3b6cf426",
                 }
               }
               control={
@@ -869,9 +513,10 @@ France",
         <FormGroup
           colors={
             Object {
-              "background": "#152665",
-              "foreground": "#ffffff",
-              "link": "#ffffff",
+              "altBackground": "#eff3fe",
+              "background": "#ffffff",
+              "foreground": "#000000",
+              "link": "#3b6cf426",
             }
           }
           control={
@@ -963,9 +608,10 @@ France",
         <FormGroup
           colors={
             Object {
-              "background": "#152665",
-              "foreground": "#ffffff",
-              "link": "#ffffff",
+              "altBackground": "#eff3fe",
+              "background": "#ffffff",
+              "foreground": "#000000",
+              "link": "#3b6cf426",
             }
           }
           control={
@@ -1058,9 +704,10 @@ France",
             <FormGroup
               colors={
                 Object {
-                  "background": "#152665",
-                  "foreground": "#ffffff",
-                  "link": "#ffffff",
+                  "altBackground": "#eff3fe",
+                  "background": "#ffffff",
+                  "foreground": "#000000",
+                  "link": "#3b6cf426",
                 }
               }
               control={
@@ -1156,9 +803,10 @@ France",
             <FormGroup
               colors={
                 Object {
-                  "background": "#152665",
-                  "foreground": "#ffffff",
-                  "link": "#ffffff",
+                  "altBackground": "#eff3fe",
+                  "background": "#ffffff",
+                  "foreground": "#000000",
+                  "link": "#3b6cf426",
                 }
               }
               control={
@@ -1252,9 +900,10 @@ France",
         <FormGroup
           colors={
             Object {
-              "background": "#152665",
-              "foreground": "#ffffff",
-              "link": "#ffffff",
+              "altBackground": "#eff3fe",
+              "background": "#ffffff",
+              "foreground": "#000000",
+              "link": "#3b6cf426",
             }
           }
           control={
@@ -1349,9 +998,10 @@ France",
           <FormGroup
             colors={
               Object {
-                "background": "#152665",
-                "foreground": "#ffffff",
-                "link": "#ffffff",
+                "altBackground": "#eff3fe",
+                "background": "#ffffff",
+                "foreground": "#000000",
+                "link": "#3b6cf426",
               }
             }
             control={
@@ -1449,14 +1099,6 @@ France",
                 "id": "submit",
               }
             }
-            colors={
-              Object {
-                "secondary": Object {
-                  "background": "#0c163d",
-                  "foreground": "#ffffff",
-                },
-              }
-            }
             type="submit"
           />
         </div>
@@ -1472,92 +1114,6 @@ France",
             },
           ]
         }
-        colors={
-          Object {
-            "accounts": Object {
-              "background": "#0c163d",
-              "foreground": "#ffffff",
-              "hintColor": "#ffffff99",
-              "iconBackground": "#3b6cf4",
-              "legalOfficerIcon": Object {
-                "category": "legal-officer",
-                "id": "account-shield",
-              },
-            },
-            "bottomMenuItems": Object {
-              "iconGradient": Object {
-                "from": "#7a90cb",
-                "to": "#3b6cf4",
-              },
-            },
-            "buttons": Object {
-              "secondary": Object {
-                "background": "#0c163d",
-                "foreground": "#ffffff",
-              },
-            },
-            "dashboard": Object {
-              "background": "#0c163d",
-              "foreground": "#ffffff",
-            },
-            "dialog": Object {
-              "background": "#0c163d",
-              "borderColor": "#e6007a",
-              "foreground": "#ffffff",
-            },
-            "frame": Object {
-              "background": "#152665",
-              "foreground": "#ffffff",
-              "link": "#ffffff",
-            },
-            "recoveryItems": Object {
-              "iconGradient": Object {
-                "from": "#e95b5b",
-                "to": "#6050dc",
-              },
-            },
-            "select": Object {
-              "background": "#ffffff33",
-              "foreground": "#ffffff",
-              "menuBackgroundColor": "#152665",
-              "selectedOptionBackgroundColor": "#ffffff33",
-            },
-            "shadowColor": "#3b6cf433",
-            "sidebar": Object {
-              "activeItemBackground": "#ffffff33",
-              "background": "#152665",
-              "foreground": "#ffffff",
-            },
-            "table": Object {
-              "background": "#152665",
-              "foreground": "#ffffff",
-              "header": Object {
-                "background": "#152665",
-                "foreground": "#ffffff",
-              },
-              "row": Object {
-                "background": "#0c163d",
-                "foreground": "#ffffff",
-              },
-            },
-            "tabs": Object {
-              "background": "#152665",
-              "borderColor": "#3b6cf4",
-              "foreground": "#ffffff",
-              "inactiveTab": Object {
-                "background": "#ffffff33",
-                "foreground": "#ffffff",
-              },
-            },
-            "topMenuItems": Object {
-              "iconGradient": Object {
-                "from": "#3b6cf4",
-                "to": "#6050dc",
-              },
-            },
-            "type": "dark",
-          }
-        }
         show={false}
         size="lg"
       >
@@ -1567,7 +1123,6 @@ France",
       </Dialog>
     </Frame>
   }
-  selectAddress={[MockFunction]}
   subTitle="Activate my Logion Trust Protection"
   titleIcon={
     Object {

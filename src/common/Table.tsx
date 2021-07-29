@@ -7,7 +7,7 @@ import { fromIsoString } from '../logion-chain/datetime';
 
 import { Row, Col } from './Grid';
 import { Child, Children } from './types/Helpers';
-import { ColorTheme } from './ColorTheme';
+import { useCommonContext } from './CommonContext';
 import './Table.css';
 import Icon from './Icon';
 
@@ -100,7 +100,6 @@ function fontSize<T>(column: Column<T>): (string | undefined) {
 export interface Props<T> {
     data: T[],
     columns: Column<T>[],
-    colorTheme: ColorTheme,
     renderEmpty: () => Children,
 }
 
@@ -157,6 +156,7 @@ function computeColumnWidths<T>(columns: Column<T>[], header: boolean): string[]
 }
 
 export default function Table<T>(props: Props<T>) {
+    const { colorTheme } = useCommonContext();
     const [ detailsExpanded, setDetailsExpanded ] = useState<boolean[]>(initialDetailsExpanded(props.data));
 
     let renderDetails: ((element: T) => Children) | undefined = undefined;
@@ -183,7 +183,7 @@ export default function Table<T>(props: Props<T>) {
             {
             `
             .Table .body .Row .Col.split-after::before {
-                background-color: ${props.colorTheme.table.row.background};
+                background-color: ${colorTheme.table.row.background};
             }
             `
             }
@@ -191,8 +191,8 @@ export default function Table<T>(props: Props<T>) {
             <div
                 className="header"
                 style={{
-                    color: props.colorTheme.table.header.foreground,
-                    backgroundColor: props.colorTheme.table.header.background,
+                    color: colorTheme.table.header.foreground,
+                    backgroundColor: colorTheme.table.header.background,
                 }}
             >
                 <Row>
@@ -219,7 +219,7 @@ export default function Table<T>(props: Props<T>) {
                             className={ renderDetails !== undefined ? "has-details" : "" }
                             key={ itemIndex }
                             style={{
-                                color: props.colorTheme.table.row.foreground,
+                                color: colorTheme.table.row.foreground,
                             }}
                         >
                             {
@@ -232,7 +232,7 @@ export default function Table<T>(props: Props<T>) {
                                             style={{
                                                 width: rowComputedWidths[colIndex],
                                                 fontSize: fontSize(col),
-                                                backgroundColor: className === undefined ? props.colorTheme.table.row.background : undefined,
+                                                backgroundColor: className === undefined ? colorTheme.table.row.background : undefined,
                                                 textAlign: col.align === undefined ? 'center' : col.align,
                                             }}
                                         >
@@ -255,8 +255,8 @@ export default function Table<T>(props: Props<T>) {
                                 className={ "details" + (detailsExpanded[itemIndex] ? " expanded" : "") }
                                 key={ itemIndex + "-details" }
                                 style={{
-                                    color: props.colorTheme.table.row.foreground,
-                                    backgroundColor: props.colorTheme.table.row.background,
+                                    color: colorTheme.table.row.foreground,
+                                    backgroundColor: colorTheme.table.row.background,
                                 }}
                             >
                                 { renderDetails(item) }
@@ -270,8 +270,8 @@ export default function Table<T>(props: Props<T>) {
                     <Row
                         className="empty-data"
                         style={{
-                            color: props.colorTheme.table.row.foreground,
-                            backgroundColor: props.colorTheme.table.row.background,
+                            color: colorTheme.table.row.foreground,
+                            backgroundColor: colorTheme.table.row.background,
                         }}
                     >
                         { props.renderEmpty() }

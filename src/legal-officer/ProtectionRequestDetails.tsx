@@ -4,14 +4,12 @@ import { Col } from '../common/Grid';
 import Detail from "../common/Detail";
 
 import { ProtectionRequest } from "../common/types/ModelTypes";
-import { useLegalOfficerContext } from "./LegalOfficerContext";
 
 export interface ProtectionRequestDetailsProps {
     request : ProtectionRequest,
 }
 
 export default function ProtectionRequestDetails(props: ProtectionRequestDetailsProps) {
-    const { colorTheme } = useLegalOfficerContext();
 
     return (
         <>
@@ -21,7 +19,6 @@ export default function ProtectionRequestDetails(props: ProtectionRequestDetails
                 <Detail
                     label="Email"
                     value={ props.request.userIdentity.email }
-                    colorTheme={ colorTheme }
                 />
             </Col>
             <Col
@@ -30,7 +27,6 @@ export default function ProtectionRequestDetails(props: ProtectionRequestDetails
                 <Detail
                     label="Phone number"
                     value={ props.request.userIdentity.phoneNumber }
-                    colorTheme={ colorTheme }
                 />
             </Col>
             <Col
@@ -39,7 +35,6 @@ export default function ProtectionRequestDetails(props: ProtectionRequestDetails
                 <Detail
                     label="Line 1"
                     value={ props.request.userPostalAddress.line1 }
-                    colorTheme={ colorTheme }
                 />
             </Col>
             <Col
@@ -48,7 +43,6 @@ export default function ProtectionRequestDetails(props: ProtectionRequestDetails
                 <Detail
                     label="Postal code"
                     value={ props.request.userPostalAddress.postalCode }
-                    colorTheme={ colorTheme }
                 />
             </Col>
             <Col
@@ -57,7 +51,6 @@ export default function ProtectionRequestDetails(props: ProtectionRequestDetails
                 <Detail
                     label="City"
                     value={ props.request.userPostalAddress.city }
-                    colorTheme={ colorTheme }
                 />
             </Col>
             <Col
@@ -66,7 +59,6 @@ export default function ProtectionRequestDetails(props: ProtectionRequestDetails
                 <Detail
                     label="Country"
                     value={ props.request.userPostalAddress.country }
-                    colorTheme={ colorTheme }
                 />
             </Col>
         </>

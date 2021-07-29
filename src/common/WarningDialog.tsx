@@ -5,7 +5,6 @@ import { Action } from './Button';
 import Icon from './Icon';
 
 import { Children } from './types/Helpers';
-import { ColorTheme } from './ColorTheme';
 
 import './WarningDialog.css';
 
@@ -14,7 +13,6 @@ export interface Props {
     modalTestId?: string,
     actions: Action[],
     size: ModalSize,
-    colors: ColorTheme,
     children: Children,
 }
 
@@ -25,11 +23,9 @@ export default function WarningDialog(props: Props) {
             show={ props.show }
             size={ props.size }
             actions={ props.actions }
-            colors={ props.colors }
             modalTestId={ props.modalTestId }
         >
             <Icon
-                colorThemeType={ props.colors.type }
                 icon={{
                     id: "warning"
                 }}

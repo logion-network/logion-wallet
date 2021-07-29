@@ -2,7 +2,7 @@ import React from 'react';
 
 import Table, { Column, Cell, EmptyTableMessage, DateTimeCell } from '../common/Table';
 
-import { useRootContext } from '../RootContext';
+import { useCommonContext } from '../common/CommonContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import { decision } from './Model';
@@ -15,8 +15,8 @@ export interface Props {
 }
 
 export default function ProtectionRequestsHistory(props: Props) {
-    const { currentAddress } = useRootContext();
-    const { protectionRequestsHistory, recoveryRequestsHistory, colorTheme } = useLegalOfficerContext();
+    const { currentAddress } = useCommonContext();
+    const { protectionRequestsHistory, recoveryRequestsHistory } = useLegalOfficerContext();
 
     if (protectionRequestsHistory === null || recoveryRequestsHistory === null) {
         return null;
@@ -110,7 +110,6 @@ export default function ProtectionRequestsHistory(props: Props) {
             <Table
                 columns={ columns }
                 data={ requests }
-                colorTheme={ colorTheme }
                 renderEmpty={ () => <EmptyTableMessage>No processed request</EmptyTableMessage>}
             />
         </>

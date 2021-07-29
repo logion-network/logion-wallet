@@ -24,10 +24,10 @@ exports[`renders with custom space above 1`] = `
                     background-color: white;
                 }
                 .Dialog .modal-dialog .modal-content {
-                    box-shadow: 0 0 25px #3b6cf41a;
+                    box-shadow: 0 0 25px #3b6cf433;
                     border-color: #e6007a;
-                    color: #000000;
-                    background-color: #eff3fe;
+                    color: #ffffff;
+                    background-color: #0c163d;
                 }
                 
   </style>
@@ -42,14 +42,6 @@ exports[`renders with custom space above 1`] = `
           "buttonVariant": "primary",
           "callback": [MockFunction],
           "id": "button",
-        }
-      }
-      colors={
-        Object {
-          "secondary": Object {
-            "background": "#eff3fe",
-            "foreground": "#000000",
-          },
         }
       }
     />
@@ -81,10 +73,10 @@ exports[`renders with default space above 1`] = `
                     background-color: white;
                 }
                 .Dialog .modal-dialog .modal-content {
-                    box-shadow: 0 0 25px #3b6cf41a;
+                    box-shadow: 0 0 25px #3b6cf433;
                     border-color: #e6007a;
-                    color: #000000;
-                    background-color: #eff3fe;
+                    color: #ffffff;
+                    background-color: #0c163d;
                 }
                 
   </style>
@@ -99,14 +91,6 @@ exports[`renders with default space above 1`] = `
           "buttonVariant": "primary",
           "callback": [MockFunction],
           "id": "button",
-        }
-      }
-      colors={
-        Object {
-          "secondary": Object {
-            "background": "#eff3fe",
-            "foreground": "#000000",
-          },
         }
       }
     />

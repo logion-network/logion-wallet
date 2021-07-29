@@ -1,5 +1,5 @@
 jest.mock('../UserContext');
-jest.mock('../../RootContext');
+jest.mock('../../common/CommonContext');
 
 import React from "react";
 import {shallowRender} from "../../tests";

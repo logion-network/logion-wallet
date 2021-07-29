@@ -2,29 +2,28 @@ import React, { CSSProperties } from 'react';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
-import { AccountAddressColors, ColorThemeType } from './ColorTheme';
 import { AccountAddress as AddressType } from './types/Addresses';
+import { useCommonContext } from './CommonContext';
 
 import './AccountAddress.css';
 
 export interface Props {
     hint?: string,
     address: AddressType,
-    colors: AccountAddressColors,
-    colorThemeType: ColorThemeType,
 }
 
 export default function AccountAddress(props: Props) {
+    const { colorTheme } = useCommonContext();
 
     let style: CSSProperties = {};
-    const icon = props.colors.legalOfficerIcon;
+    const icon = colorTheme.accounts.legalOfficerIcon;
     if(props.address.isLegalOfficer) {
         style['backgroundImage'] = `url("${process.env.PUBLIC_URL}/assets/${icon.id}.svg")`;
         style['backgroundRepeat'] = 'no-repeat';
         style['backgroundPositionX'] = '6px';
         style['backgroundPositionY'] = 'center';
     } else {
-        style['backgroundColor'] = props.colors.iconBackground;
+        style['backgroundColor'] = colorTheme.accounts.iconBackground;
     }
 
     return (
@@ -46,7 +45,7 @@ export default function AccountAddress(props: Props) {
                     <div
                         className="hint"
                         style={{
-                            color: props.colors.hintColor,
+                            color: colorTheme.accounts.hintColor,
                         }}
                     >
                         { props.hint }
@@ -55,7 +54,7 @@ export default function AccountAddress(props: Props) {
                 <div
                     className="name"
                     style={{
-                        color: props.colors.foreground,
+                        color: colorTheme.accounts.foreground,
                     }}
                 >
                     { props.address.name }
@@ -63,7 +62,7 @@ export default function AccountAddress(props: Props) {
                 <div
                     className="address"
                     style={{
-                        color: props.colors.foreground,
+                        color: colorTheme.accounts.foreground,
                     }}
                 >
                     <OverlayTrigger

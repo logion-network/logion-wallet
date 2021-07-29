@@ -1,18 +1,16 @@
-import React from 'react';
-
-import { ColorThemeType } from './ColorTheme';
+import { useCommonContext } from './CommonContext';
 
 import './Logo.css';
 
 export interface Props {
     shadowColor: string,
-    colorThemeType: ColorThemeType
 }
 
 export default function Logo(props: Props) {
+    const { colorTheme } = useCommonContext();
 
     let fileName;
-    if(props.colorThemeType === 'dark') {
+    if(colorTheme.type === 'dark') {
         fileName = 'logo.png';
     } else {
         fileName = 'logo_black.png';

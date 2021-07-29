@@ -12,7 +12,7 @@ import Alert from '../../common/Alert';
 import Button from '../../common/Button';
 import Icon from '../../common/Icon';
 import { GREEN } from '../../common/ColorTheme';
-import { useRootContext } from '../../RootContext';
+import { useCommonContext } from '../../common/CommonContext';
 
 import { useUserContext } from '../UserContext';
 
@@ -29,8 +29,8 @@ export interface Props {
 
 export default function ProtectionRecoveryRequest(props: Props) {
     const { api } = useLogionChain();
-    const { selectAddress, addresses, currentAddress } = useRootContext();
-    const { refreshRequests, colorTheme, recoveryConfig, recoveredAddress } = useUserContext();
+    const { currentAddress, colorTheme } = useCommonContext();
+    const { refreshRequests, recoveryConfig, recoveredAddress } = useUserContext();
     const [ confirmButtonEnabled, setConfirmButtonEnabled ] = useState(props.request.status === "PENDING");
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
     const [ signAndSubmitClaim, setSignAndSubmitClaim ] = useState<SignAndSubmit>(null);
@@ -57,7 +57,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
         setSignAndSubmitClaim(() => signAndSubmit);
     }, [ api, currentAddress, props, setSignAndSubmitClaim ]);
 
-    if(addresses === null || selectAddress === null || recoveryConfig === null || recoveredAddress === undefined) {
+    if(recoveryConfig === null || recoveredAddress === undefined) {
         return null;
     }
 
@@ -141,14 +141,8 @@ export default function ProtectionRecoveryRequest(props: Props) {
                 },
                 background: props.request.isRecovery && props.request.status !== 'ACTIVATED' ? colorTheme.recoveryItems.iconGradient : undefined,
             }}
-            colors={ colorTheme }
-            addresses={ addresses }
-            selectAddress={ selectAddress }
         >
-                <Frame
-                    className="ProtectionRecoveryRequest"
-                    colors={ colorTheme }
-                >
+                <Frame className="ProtectionRecoveryRequest">
                     { alert }
 
                     {
@@ -161,7 +155,6 @@ export default function ProtectionRecoveryRequest(props: Props) {
                             }}
                         >
                             <Icon
-                                colorThemeType={ colorTheme.type }
                                 icon={{id: 'activated'}}
                             /> Your Logion Trust Protection is active
                         </div>
@@ -172,7 +165,6 @@ export default function ProtectionRecoveryRequest(props: Props) {
                         <Button
                             data-testid="btnActivate"
                             onClick={ activateProtection }
-                            colors={ colorTheme.buttons }
                         >
                             Activate
                         </Button>
@@ -194,7 +186,6 @@ export default function ProtectionRecoveryRequest(props: Props) {
                             checkActivation(props.request)
                                 .then(() => setConfirmButtonEnabled(false))
                             }}
-                            colors={ colorTheme.buttons }
                         >
                             Re-Sync Confirmation
                         </Button>
@@ -204,7 +195,6 @@ export default function ProtectionRecoveryRequest(props: Props) {
                         <Button
                             data-testid="btnClaim"
                             onClick={ doClaimRecovery }
-                            colors={ colorTheme.buttons }
                         >
                             Claim
                         </Button>
@@ -228,7 +218,6 @@ export default function ProtectionRecoveryRequest(props: Props) {
                         legalOfficer2={ legalOfficer2 }
                         setLegalOfficer2={ () => {} }
                         legalOfficer2Decision={ legalOfficer2Decision }
-                        colorTheme={ colorTheme }
                         mode="view"
                         status={ props.request.status }
                     />

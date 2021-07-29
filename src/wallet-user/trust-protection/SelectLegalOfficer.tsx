@@ -2,11 +2,12 @@ import React from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
-import { ColorTheme, ORANGE, GREEN, RED, YELLOW } from "../../common/ColorTheme";
+import { ORANGE, GREEN, RED, YELLOW } from "../../common/ColorTheme";
 import Select, { OptionType } from '../../common/Select';
 import { LegalOfficer } from "../../common/types/LegalOfficer";
 import Icon from "../../common/Icon";
 import FormGroup from '../../common/FormGroup';
+import { useCommonContext } from '../../common/CommonContext';
 
 import { LegalOfficerDecisionStatus, ProtectionRequestStatus } from "../../common/types/ModelTypes";
 
@@ -28,13 +29,13 @@ export interface Props {
     legalOfficer: LegalOfficer | null,
     otherLegalOfficer: LegalOfficer | null,
     setLegalOfficer: (legalOfficer: LegalOfficer) => void,
-    colorTheme: ColorTheme,
     mode: Mode,
     decision?: LegalOfficerDecisionStatus,
     status: ProtectionRequestStatus | null,
 }
 
 export default function SelectLegalOfficer(props: Props) {
+    const { colorTheme } = useCommonContext();
 
     const legalOfficersByAddress: Record<string, LegalOfficer> = {};
     const legalOfficersOptions: OptionType[] = [];
@@ -59,28 +60,24 @@ export default function SelectLegalOfficer(props: Props) {
         if(props.decision === "PENDING") {
             statusColor = ORANGE;
             icon = (<Icon
-                colorThemeType={ props.colorTheme.type }
                 icon={{ id: "pending" }}
             />);
             status = <span style={{color: statusColor}}>Pending</span>;
         } else if(props.decision === "ACCEPTED" && props.status === "ACTIVATED") {
             statusColor = GREEN;
             icon = (<Icon
-                colorThemeType={ props.colorTheme.type }
                 icon={{ id: "activated" }}
             />);
             status = <span style={{color: statusColor}}>Accepted</span>;
         } else if(props.decision === "ACCEPTED" && props.status === "PENDING") {
             statusColor = YELLOW;
             icon = (<Icon
-                colorThemeType={ props.colorTheme.type }
                 icon={{ id: "accepted" }}
             />);
             status = <span style={{color: statusColor}}>Accepted</span>;
         } else if(props.decision === "REJECTED") {
             statusColor = RED;
             icon = (<Icon
-                colorThemeType={ props.colorTheme.type }
                 icon={{ id: "rejected" }}
             />);
             status = <span style={{color: statusColor}}>Rejected</span>;
@@ -103,13 +100,12 @@ export default function SelectLegalOfficer(props: Props) {
                                 options={ legalOfficersOptions }
                                 value={ props.legalOfficer !== null ? buildOption(props.legalOfficer) : null}
                                 onChange={ value => props.setLegalOfficer(legalOfficersByAddress[value!.value] || null) }
-                                colors={ props.colorTheme.select }
                                 disabled={ props.mode === "view" }
                                 statusColor={ statusColor }
                             />
                         }
                         feedback="Required and different from other legal officer"
-                        colors={ props.colorTheme.frame }
+                        colors={ colorTheme.frame }
                     />
                 </Col>
                 <Col md={ 4 }>
@@ -120,7 +116,7 @@ export default function SelectLegalOfficer(props: Props) {
             </Row>
             <Officer
                 officer={ props.legalOfficer }
-                colors={ props.colorTheme.frame }
+                colors={ colorTheme.frame }
                 borderColor={ statusColor }
             />
         </div>

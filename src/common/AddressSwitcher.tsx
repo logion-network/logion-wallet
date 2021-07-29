@@ -5,22 +5,25 @@ import Addresses from './types/Addresses';
 
 import './AddressSwitcher.css';
 import AccountAddress from './AccountAddress';
-import { AccountAddressColors, ColorThemeType } from './ColorTheme';
+import { useCommonContext } from './CommonContext';
 
 export interface Props {
-    addresses: Addresses,
-    colors: AccountAddressColors,
-    selectAddress: (userAddress: string) => void,
-    colorThemeType: ColorThemeType,
+    addresses: Addresses | null,
+    selectAddress: ((userAddress: string) => void) | null,
 }
 
 export default function AddressSwitcher(props: Props) {
+    const { colorTheme } = useCommonContext();
+
+    if(props.addresses === null || props.selectAddress === null) {
+        return null;
+    }
 
     return (
         <div
             className="AddressSwitcher"
             style={{
-                color: props.colors.foreground
+                color: colorTheme.accounts.foreground
             }}
         >
             <Dropdown>
@@ -29,8 +32,6 @@ export default function AddressSwitcher(props: Props) {
                         <AccountAddress
                             hint="Click to select another address"
                             address={ props.addresses.currentAddress }
-                            colors={ props.colors }
-                            colorThemeType={ props.colorThemeType }
                         />
                     </div>
                 </Dropdown.Toggle>
@@ -39,16 +40,14 @@ export default function AddressSwitcher(props: Props) {
                         props.addresses.addresses.map(address => (
                             <Dropdown.Item
                                 key={ address.address }
-                                onClick={ () => props.selectAddress(address.address) }
+                                onClick={ () => props.selectAddress!(address.address) }
                                 style={{
-                                    color: props.colors.foreground,
-                                    backgroundColor: props.colors.background,
+                                    color: colorTheme.accounts.foreground,
+                                    backgroundColor: colorTheme.accounts.background,
                                 }}
                             >
                                 <AccountAddress
                                     address={ address }
-                                    colors={ props.colors }
-                                    colorThemeType={ props.colorThemeType }
                                 />
                             </Dropdown.Item>
                         ))

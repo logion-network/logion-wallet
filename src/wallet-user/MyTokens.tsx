@@ -2,14 +2,12 @@ import React, { useEffect, useState } from 'react';
 
 import Table, { Cell, EmptyTableMessage } from '../common/Table';
 
-import { useRootContext } from '../RootContext';
+import { useCommonContext } from '../common/CommonContext';
 
 import { useLogionChain } from '../logion-chain';
 import { accountBalance, AssetWithBalance } from '../logion-chain/Assets';
 
 import { getOfficer } from "../common/types/LegalOfficer";
-
-import { useUserContext } from './UserContext';
 
 interface Balances {
     accountId: string,
@@ -17,8 +15,7 @@ interface Balances {
 }
 
 export default function MyTokens() {
-    const { currentAddress } = useRootContext();
-    const { colorTheme } = useUserContext();
+    const { currentAddress } = useCommonContext();
     const { api } = useLogionChain();
     const [ balances, setBalances ] = useState<Balances | null>(null);
 
@@ -68,7 +65,6 @@ export default function MyTokens() {
                 }
             ]}
             data={ tokens }
-            colorTheme={ colorTheme }
             renderEmpty={ () => (
                 <EmptyTableMessage>No token to display</EmptyTableMessage>
             )}
