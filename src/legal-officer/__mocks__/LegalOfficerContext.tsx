@@ -3,8 +3,7 @@ import { COLOR_THEME } from "../../common/TestData";
 import {
     pendingTokenizationRequests,
     rejectRequest,
-    rejectedTokenizationRequests,
-    acceptedTokenizationRequests,
+    tokenizationRequestsHistory,
     refreshRequests,
     pendingProtectionRequests,
     activatedProtectionRequests,
@@ -15,8 +14,7 @@ export function useLegalOfficerContext() {
     return {
         pendingTokenizationRequests,
         rejectRequest,
-        rejectedTokenizationRequests,
-        acceptedTokenizationRequests,
+        tokenizationRequestsHistory,
         refreshRequests,
         pendingProtectionRequests,
         activatedProtectionRequests,

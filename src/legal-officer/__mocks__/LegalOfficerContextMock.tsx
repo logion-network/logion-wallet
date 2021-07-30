@@ -4,9 +4,7 @@ export let rejectRequest = () => {
 
 };
 
-export let acceptedTokenizationRequests: any[] | null = null;
-
-export let rejectedTokenizationRequests: any[] | null = null;
+export let tokenizationRequestsHistory: any[] | null = null;
 
 export let refreshRequests = jest.fn();
 
@@ -26,12 +24,8 @@ export function setRejectRequest(callback: any) {
     rejectRequest = callback;
 }
 
-export function setRejectedRequests(requests: any[]) {
-    rejectedTokenizationRequests = requests;
-}
-
-export function setAcceptedRequests(requests: any[]) {
-    acceptedTokenizationRequests = requests;
+export function setTokenizationRequestsHistory(requests: any[]) {
+    tokenizationRequestsHistory = requests;
 }
 
 export function setRefreshRequests(callback: any) {

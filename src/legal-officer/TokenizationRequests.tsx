@@ -1,19 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-import { ContentPane } from '../common/Dashboard';
-import Frame from '../common/Frame';
+import { FullWidthPane } from '../common/Dashboard';
+import Tabs from '../common/Tabs';
 
 import { useCommonContext } from '../common/CommonContext';
 import PendingTokenizationRequests from './PendingTokenizationRequests';
-import AcceptedTokenizationRequests from './AcceptedTokenizationRequests';
-import RejectedTokenizationRequests from './RejectedTokenizationRequests';
-import RefreshTokenizationRequestsButton from './RefreshTokenizationRequestsButton';
+import TokenizationRequestsHistory from './TokenizationRequestsHistory';
 
 export default function TokenizationRequests() {
     const { colorTheme } = useCommonContext();
+    const [ tabKey, setTabKey ] = useState<string>('pending');
 
     return (
-        <ContentPane
+        <FullWidthPane
             mainTitle="Tokens"
             titleIcon={{
                 icon: {
@@ -21,19 +20,23 @@ export default function TokenizationRequests() {
                 },
                 background: colorTheme.topMenuItems.iconGradient,
             }}
-            primaryAreaChildren={
-                <Frame>
-                    <RefreshTokenizationRequestsButton/>
-                    <PendingTokenizationRequests />
-                </Frame>
-            }
-            secondaryAreaChildren={
-                <Frame>
-                    <h2>History</h2>
-                    <AcceptedTokenizationRequests />
-                    <RejectedTokenizationRequests />
-                </Frame>
-            }
-        />
+        >
+            <Tabs
+                activeKey={ tabKey }
+                onSelect={ key => setTabKey(key || 'pending') }
+                tabs={[
+                    {
+                        key: "pending",
+                        title: "Pending",
+                        render: () => <PendingTokenizationRequests />
+                    },
+                    {
+                        key: "history",
+                        title: "History",
+                        render: () => <TokenizationRequestsHistory />
+                    }
+                ]}
+            />
+        </FullWidthPane>
     );
 }
