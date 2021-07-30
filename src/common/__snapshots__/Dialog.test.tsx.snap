@@ -5,6 +5,7 @@ exports[`renders with custom space above 1`] = `
   animation={true}
   autoFocus={true}
   backdrop="static"
+  centered={true}
   className="Dialog"
   dialogAs={
     Object {
@@ -20,9 +21,6 @@ exports[`renders with custom space above 1`] = `
 >
   <style>
     
-                .Dialog .modal-dialog {
-                    background-color: white;
-                }
                 .Dialog .modal-dialog .modal-content {
                     box-shadow: 0 0 25px #3b6cf433;
                     border-color: #e6007a;
@@ -31,21 +29,25 @@ exports[`renders with custom space above 1`] = `
                 }
                 
   </style>
-  <ModalBody>
-    Content
-  </ModalBody>
-  <ModalFooter>
-    <Button
-      action={
-        Object {
-          "buttonText": "Text",
-          "buttonVariant": "primary",
-          "callback": [MockFunction],
-          "id": "button",
+  <Form
+    inline={false}
+  >
+    <ModalBody>
+      Content
+    </ModalBody>
+    <ModalFooter>
+      <Button
+        action={
+          Object {
+            "buttonText": "Text",
+            "buttonVariant": "primary",
+            "callback": [MockFunction],
+            "id": "button",
+          }
         }
-      }
-    />
-  </ModalFooter>
+      />
+    </ModalFooter>
+  </Form>
 </Modal>
 `;
 
@@ -54,6 +56,7 @@ exports[`renders with default space above 1`] = `
   animation={true}
   autoFocus={true}
   backdrop="static"
+  centered={true}
   className="Dialog"
   dialogAs={
     Object {
@@ -69,9 +72,6 @@ exports[`renders with default space above 1`] = `
 >
   <style>
     
-                .Dialog .modal-dialog {
-                    background-color: white;
-                }
                 .Dialog .modal-dialog .modal-content {
                     box-shadow: 0 0 25px #3b6cf433;
                     border-color: #e6007a;
@@ -80,20 +80,24 @@ exports[`renders with default space above 1`] = `
                 }
                 
   </style>
-  <ModalBody>
-    Content
-  </ModalBody>
-  <ModalFooter>
-    <Button
-      action={
-        Object {
-          "buttonText": "Text",
-          "buttonVariant": "primary",
-          "callback": [MockFunction],
-          "id": "button",
+  <Form
+    inline={false}
+  >
+    <ModalBody>
+      Content
+    </ModalBody>
+    <ModalFooter>
+      <Button
+        action={
+          Object {
+            "buttonText": "Text",
+            "buttonVariant": "primary",
+            "callback": [MockFunction],
+            "id": "button",
+          }
         }
-      }
-    />
-  </ModalFooter>
+      />
+    </ModalFooter>
+  </Form>
 </Modal>
 `;

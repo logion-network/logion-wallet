@@ -8,7 +8,7 @@ import WarningDialog from '../common/WarningDialog';
 
 import UserRouter, {
     HOME_PATH,
-    ACCOUNT_PATH,
+    TOKENS_PATH,
     TRUST_PROTECTION_PATH,
     SETTINGS_PATH,
     RECOVERY_PATH,
@@ -61,7 +61,7 @@ export default function ContextualizedWallet() {
                 {
                     id: "tokens",
                     text: "Tokens",
-                    to: ACCOUNT_PATH,
+                    to: TOKENS_PATH,
                     exact: true,
                     icon: {
                         icon: {

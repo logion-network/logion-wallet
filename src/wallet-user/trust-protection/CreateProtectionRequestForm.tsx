@@ -522,9 +522,9 @@ export default function CreateProtectionRequestForm(props: Props) {
                                     id: "submit",
                                     buttonVariant: "primary",
                                     buttonText: "Next",
-                                    buttonTestId: "btnSubmit"
+                                    buttonTestId: "btnSubmit",
+                                    type: 'submit',
                                 }}
-                                type='submit'
                             />
                         </div>
                     </Form>

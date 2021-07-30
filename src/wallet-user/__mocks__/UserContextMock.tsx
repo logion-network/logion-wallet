@@ -10,9 +10,7 @@ export let createdTokenRequest: TokenizationRequest | null = null;
 
 export let pendingTokenizationRequests: TokenizationRequest[] | null = null;
 
-export let acceptedTokenizationRequests: TokenizationRequest[] | null = null;
-
-export let rejectedTokenizationRequests: TokenizationRequest[] | null = null;
+export let tokenizationRequestsHistory: TokenizationRequest[] | null = null;
 
 export let refreshRequests = jest.fn();
 
@@ -39,8 +37,7 @@ export function useUserContext() {
         createTokenRequest,
         createdTokenRequest,
         pendingTokenizationRequests,
-        acceptedTokenizationRequests,
-        rejectedTokenizationRequests,
+        tokenizationRequestsHistory,
         refreshRequests,
         createProtectionRequest,
         pendingProtectionRequests,
@@ -65,12 +62,8 @@ export function setPendingRequests(requests: TokenizationRequest[]) {
     pendingTokenizationRequests = requests;
 }
 
-export function setRejectedRequests(requests: TokenizationRequest[]) {
-    rejectedTokenizationRequests = requests;
-}
-
-export function setAcceptedRequests(requests: TokenizationRequest[]) {
-    acceptedTokenizationRequests = requests;
+export function setTokenizationRequestsHistory(requests: TokenizationRequest[]) {
+    tokenizationRequestsHistory = requests;
 }
 
 export function setRefreshRequests(func: any) {

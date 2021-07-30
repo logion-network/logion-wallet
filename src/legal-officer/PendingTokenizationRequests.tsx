@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-
-import Table from 'react-bootstrap/Table';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+
+import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../common/Table';
+import Button from '../common/Button';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import { TokenizationRequest } from '../common/types/ModelTypes';
@@ -39,48 +38,53 @@ export default function PendingTokenizationRequests() {
 
     return (
         <>
-            <h2>Pending</h2>
-            <Table striped bordered responsive>
-                <thead>
-                    <tr>
-                        <th>Requester</th>
-                        <th>Token</th>
-                        <th>Bars</th>
-                        <th>Created</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <Table
+                columns={[
                     {
-                        pendingTokenizationRequests.map(request => (
-                            <tr key={request.id}>
-                                <td>{request.requesterAddress}</td>
-                                <td>{request.requestedTokenName}</td>
-                                <td>{request.bars}</td>
-                                <td>{request.createdOn}</td>
-                                <td>
-                                    <ButtonGroup aria-label="actions">
-                                        <Button
-                                            variant="success"
-                                            onClick={() => setRequestToAccept(getTokenizationRequest(request.id))}
-                                            data-testid={`accept-${request.id}`}
-                                        >
-                                            V
-                                        </Button>
-                                        <Button
-                                            variant="danger"
-                                            onClick={() => setRequestToReject(request.id)}
-                                            data-testid={`reject-${request.id}`}
-                                        >
-                                            X
-                                        </Button>
-                                    </ButtonGroup>
-                                </td>
-                            </tr>
-                        ))
+                        header: "Requester",
+                        render: request => <Cell content={ request.requesterAddress } />,
+                        align: "left",
+                    },
+                    {
+                        header: "Token",
+                        render: request => <Cell content={ request.requestedTokenName } />,
+                        width: "300px",
+                    },
+                    {
+                        header: "Bars",
+                        render: request => <Cell content={ request.bars } />,
+                        align: 'right',
+                        width: "100px",
+                    },
+                    {
+                        header: "Created",
+                        render: request => <DateTimeCell dateTime={ request.createdOn || null } />,
+                        width: "150px",
+                    },
+                    {
+                        header: "",
+                        render: request => (<>
+                            <Button
+                                variant="success"
+                                onClick={() => setRequestToAccept(getTokenizationRequest(request.id))}
+                                data-testid={`accept-${request.id}`}
+                            >
+                                V
+                            </Button>
+                            <Button
+                                variant="danger"
+                                onClick={() => setRequestToReject(request.id)}
+                                data-testid={`reject-${request.id}`}
+                            >
+                                X
+                            </Button>
+                        </>),
+                        width: "200px",
                     }
-                </tbody>
-            </Table>
+                ]}
+                data={ pendingTokenizationRequests }
+                renderEmpty={ () => <EmptyTableMessage>No pending request</EmptyTableMessage> }
+            />
 
             {
                 requestToReject !== null &&

@@ -2,9 +2,9 @@ jest.mock('../common/CommonContext');
 
 import React from "react";
 import {shallowRender} from "../tests";
-import Account from "./Account";
+import Tokens from "./Tokens";
 
 test("renders", () => {
-    const tree = shallowRender(<Account/>)
+    const tree = shallowRender(<Tokens/>)
     expect(tree).toMatchSnapshot();
 });

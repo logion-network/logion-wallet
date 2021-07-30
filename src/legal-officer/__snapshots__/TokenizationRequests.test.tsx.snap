@@ -1,23 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders 1`] = `
-<ContentPane
+<FullWidthPane
   mainTitle="Tokens"
-  primaryAreaChildren={
-    <Frame>
-      <RefreshTokenizationRequestsButton />
-      <PendingTokenizationRequests />
-    </Frame>
-  }
-  secondaryAreaChildren={
-    <Frame>
-      <h2>
-        History
-      </h2>
-      <AcceptedTokenizationRequests />
-      <RejectedTokenizationRequests />
-    </Frame>
-  }
   titleIcon={
     Object {
       "background": Object {
@@ -29,5 +14,24 @@ exports[`renders 1`] = `
       },
     }
   }
-/>
+>
+  <Tabs
+    activeKey="pending"
+    onSelect={[Function]}
+    tabs={
+      Array [
+        Object {
+          "key": "pending",
+          "render": [Function],
+          "title": "Pending",
+        },
+        Object {
+          "key": "history",
+          "render": [Function],
+          "title": "History",
+        },
+      ]
+    }
+  />
+</FullWidthPane>
 `;

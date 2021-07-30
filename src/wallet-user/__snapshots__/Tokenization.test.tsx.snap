@@ -5,32 +5,113 @@ exports[`REQUEST_TOKENIZATION: Disable button, Show form 1`] = `
   className="Tokenization"
 >
   <Button
-    active={false}
-    disabled={true}
     onClick={[Function]}
-    variant="primary"
   >
-    Create token
+    Request token creation
   </Button>
-  <CreateTokenizationRequest
-    onCancel={[Function]}
+  <Dialog
+    actions={
+      Array [
+        Object {
+          "buttonText": "Submit",
+          "buttonVariant": "primary",
+          "id": "submit",
+          "type": "submit",
+        },
+        Object {
+          "buttonText": "Cancel",
+          "buttonVariant": "secondary",
+          "callback": [Function],
+          "id": "cancel",
+        },
+      ]
+    }
     onSubmit={[Function]}
-  />
-</div>
-`;
-
-exports[`REQUEST_TOKENIZATION_DONE: Enable button, Show message 1`] = `
-<div
-  className="Tokenization"
->
-  <Button
-    active={false}
-    disabled={false}
-    onClick={[Function]}
-    variant="primary"
+    show={true}
+    size="lg"
   >
-    Create token
-  </Button>
+    <TokenCreationForm
+      colors={
+        Object {
+          "background": "#eff3fe",
+          "borderColor": "#e6007a",
+          "foreground": "#000000",
+        }
+      }
+      control={
+        Object {
+          "defaultValuesRef": Object {
+            "current": Object {},
+          },
+          "fieldArrayDefaultValuesRef": Object {
+            "current": Object {},
+          },
+          "fieldsRef": Object {
+            "current": Object {},
+          },
+          "formStateRef": Object {
+            "current": Object {
+              "dirtyFields": Object {},
+              "errors": Object {},
+              "isDirty": false,
+              "isSubmitSuccessful": false,
+              "isSubmitted": false,
+              "isSubmitting": false,
+              "isValid": false,
+              "isValidating": false,
+              "submitCount": 0,
+              "touchedFields": Object {},
+            },
+          },
+          "getIsDirty": [Function],
+          "inFieldArrayActionRef": Object {
+            "current": false,
+          },
+          "namesRef": Object {
+            "current": Object {
+              "array": Set {},
+              "mount": Set {},
+              "unMount": Set {},
+              "watch": Set {},
+              "watchAll": false,
+            },
+          },
+          "readFormStateRef": Object {
+            "current": Object {
+              "dirtyFields": false,
+              "errors": "all",
+              "isDirty": false,
+              "isValid": false,
+              "isValidating": false,
+              "touchedFields": false,
+            },
+          },
+          "register": [Function],
+          "shouldUnmount": undefined,
+          "subjectsRef": Object {
+            "current": Object {
+              "array": ke {
+                "observers": Array [],
+              },
+              "control": ke {
+                "observers": Array [],
+              },
+              "state": ke {
+                "observers": Array [],
+              },
+              "watch": ke {
+                "observers": Array [],
+              },
+            },
+          },
+          "unregister": [Function],
+          "updateIsValid": [Function],
+          "watchInternal": [Function],
+        }
+      }
+      errors={Object {}}
+    />
+  </Dialog>
 </div>
 `;
 
@@ -39,12 +120,112 @@ exports[`START: Enable button 1`] = `
   className="Tokenization"
 >
   <Button
-    active={false}
-    disabled={false}
     onClick={[Function]}
-    variant="primary"
   >
-    Create token
+    Request token creation
   </Button>
+  <Dialog
+    actions={
+      Array [
+        Object {
+          "buttonText": "Submit",
+          "buttonVariant": "primary",
+          "id": "submit",
+          "type": "submit",
+        },
+        Object {
+          "buttonText": "Cancel",
+          "buttonVariant": "secondary",
+          "callback": [Function],
+          "id": "cancel",
+        },
+      ]
+    }
+    onSubmit={[Function]}
+    show={false}
+    size="lg"
+  >
+    <TokenCreationForm
+      colors={
+        Object {
+          "background": "#eff3fe",
+          "borderColor": "#e6007a",
+          "foreground": "#000000",
+        }
+      }
+      control={
+        Object {
+          "defaultValuesRef": Object {
+            "current": Object {},
+          },
+          "fieldArrayDefaultValuesRef": Object {
+            "current": Object {},
+          },
+          "fieldsRef": Object {
+            "current": Object {},
+          },
+          "formStateRef": Object {
+            "current": Object {
+              "dirtyFields": Object {},
+              "errors": Object {},
+              "isDirty": false,
+              "isSubmitSuccessful": false,
+              "isSubmitted": false,
+              "isSubmitting": false,
+              "isValid": false,
+              "isValidating": false,
+              "submitCount": 0,
+              "touchedFields": Object {},
+            },
+          },
+          "getIsDirty": [Function],
+          "inFieldArrayActionRef": Object {
+            "current": false,
+          },
+          "namesRef": Object {
+            "current": Object {
+              "array": Set {},
+              "mount": Set {},
+              "unMount": Set {},
+              "watch": Set {},
+              "watchAll": false,
+            },
+          },
+          "readFormStateRef": Object {
+            "current": Object {
+              "dirtyFields": false,
+              "errors": "all",
+              "isDirty": false,
+              "isValid": false,
+              "isValidating": false,
+              "touchedFields": false,
+            },
+          },
+          "register": [Function],
+          "shouldUnmount": undefined,
+          "subjectsRef": Object {
+            "current": Object {
+              "array": ke {
+                "observers": Array [],
+              },
+              "control": ke {
+                "observers": Array [],
+              },
+              "state": ke {
+                "observers": Array [],
+              },
+              "watch": ke {
+                "observers": Array [],
+              },
+            },
+          },
+          "unregister": [Function],
+          "updateIsValid": [Function],
+          "watchInternal": [Function],
+        }
+      }
+      errors={Object {}}
+    />
+  </Dialog>
 </div>
 `;

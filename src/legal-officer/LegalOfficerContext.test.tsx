@@ -59,7 +59,7 @@ interface TestConsumerProps {
 }
 
 function TestConsumer(props: TestConsumerProps) {
-    const { pendingTokenizationRequests, rejectRequest, rejectedTokenizationRequests } = useLegalOfficerContext();
+    const { pendingTokenizationRequests, rejectRequest, tokenizationRequestsHistory } = useLegalOfficerContext();
     const [rejected, setRejected] = useState<boolean>(false);
 
     useEffect(() => {
@@ -72,7 +72,7 @@ function TestConsumer(props: TestConsumerProps) {
     return (
         <div>
             <p data-testid="pendingTokenizationRequests.length">{lengthOrNull(pendingTokenizationRequests)}</p>
-            <p data-testid="rejectedTokenizationRequests.length">{lengthOrNull(rejectedTokenizationRequests)}</p>
+            <p data-testid="rejectedTokenizationRequests.length">{lengthOrNull(tokenizationRequestsHistory)}</p>
         </div>
     );
 }

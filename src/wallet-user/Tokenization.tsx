@@ -1,9 +1,18 @@
 import React, { useState, useCallback } from "react";
-import Button from "react-bootstrap/Button";
+import { useForm } from 'react-hook-form';
+import moment from 'moment';
+
+import { sign } from '../logion-chain/Signature';
+
+import { useCommonContext } from "../common/CommonContext";
+import Button from "../common/Button";
+import Dialog from "../common/Dialog";
+import { DEFAULT_LEGAL_OFFICER } from '../common/types/LegalOfficer';
 
 import { useUserContext } from './UserContext';
+import { CreateTokenRequest } from "./Model";
+import TokenCreationForm from './TokenCreationForm';
 
-import CreateTokenizationRequest from "./CreateTokenizationRequest";
 import './Tokenization.css';
 
 export enum State {
@@ -15,25 +24,78 @@ export interface Props {
     initialState?: State
 }
 
-export default function Tokenization(props: Props) {
-    const { refreshRequests } = useUserContext();
-    const [state, setState] = useState(props.initialState !== null ? props.initialState : State.START)
+interface FormValues {
+    requestedTokenName: string,
+    bars: number,
+}
 
-    const completeTokenization = useCallback(() => {
-        setState(State.START);
-        refreshRequests!(true);
-    }, [ setState, refreshRequests ]);
+export default function Tokenization(props: Props) {
+    const { currentAddress, colorTheme } = useCommonContext();
+    const { refreshRequests, createTokenRequest } = useUserContext();
+    const [state, setState] = useState(props.initialState !== null ? props.initialState : State.START)
+    const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>();
+
+    const submit = useCallback((formValues: FormValues) => {
+        console.log(formValues);
+        (async function() {
+            const attributes = [
+                `${DEFAULT_LEGAL_OFFICER}`,
+                `${formValues.requestedTokenName}`,
+                `${formValues.bars}`
+            ];
+            const signedOn = moment();
+            const signature = await sign({
+                signerId: currentAddress,
+                resource: 'token-request',
+                operation: 'create',
+                signedOn,
+                attributes,
+            });
+            const request: CreateTokenRequest = {
+                legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
+                requesterAddress: currentAddress,
+                bars: Number(formValues.bars),
+                requestedTokenName: formValues.requestedTokenName,
+                signature,
+                signedOn,
+            }
+            await createTokenRequest!(request);
+            reset();
+            setState(State.START);
+            refreshRequests!(true);
+        })();
+    }, [ currentAddress, createTokenRequest, setState, refreshRequests, reset ]);
 
     return (
         <div className="Tokenization">
-            <Button disabled={state === State.REQUEST_TOKENIZATION} onClick={() => setState(State.REQUEST_TOKENIZATION)}>
-                Create token
+            <Button onClick={ () => setState(State.REQUEST_TOKENIZATION) }>
+                Request token creation
             </Button>
-            {state === State.REQUEST_TOKENIZATION && (
-                <CreateTokenizationRequest
-                    onSubmit={ completeTokenization }
-                    onCancel={() => setState(State.START)}/>
-            )}
+            <Dialog
+                show={ state === State.REQUEST_TOKENIZATION }
+                size="lg"
+                actions={[
+                    {
+                        id: "submit",
+                        buttonText: 'Submit',
+                        buttonVariant: 'primary',
+                        type: 'submit',
+                    },
+                    {
+                        id: "cancel",
+                        callback: () => { reset() ; setState(State.START) },
+                        buttonText: 'Cancel',
+                        buttonVariant: 'secondary',
+                    }
+                ]}
+                onSubmit={handleSubmit(submit)}
+            >
+                <TokenCreationForm
+                    control={ control }
+                    errors={ errors }
+                    colors={ colorTheme.dialog }
+                />
+            </Dialog>
         </div>
     );
 }
