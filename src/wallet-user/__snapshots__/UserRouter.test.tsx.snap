@@ -24,11 +24,6 @@ exports[`renders 1`] = `
       <Recovery />
     </Route>
     <Route
-      path="/user/nft"
-    >
-      <Account />
-    </Route>
-    <Route
       path="/user/wallet"
     >
       <Wallet

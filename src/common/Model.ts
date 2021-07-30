@@ -56,7 +56,6 @@ function enrichTransaction(transaction: Transaction, address: string): Transacti
 }
 
 function transactionType(transaction: Transaction, address: string): string {
-    console.log(transaction);
     if(transaction.pallet === "recovery") {
         if(transaction.method === "createRecovery") {
             return "Recovery created";

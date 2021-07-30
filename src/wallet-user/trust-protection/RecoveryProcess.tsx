@@ -49,6 +49,7 @@ export default function RecoveryProcess() {
     const [ balances, setBalances ] = useState<Balances | null>(null);
     const [ recoveredToken, setRecoveredToken ] = useState<AssetWithBalance | null>(null);
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
+    const [ signAndSubmitError, setSignAndSubmitError ] = useState<boolean>(false);
 
     useEffect(() => {
         if(recoveredAddress !== null &&
@@ -91,6 +92,7 @@ export default function RecoveryProcess() {
 
     const onTransferSuccess = useCallback(() => {
         setSignAndSubmit(null);
+        setSignAndSubmitError(false);
         setRecoveredToken(null);
         setBalances(null);
     }, [ setSignAndSubmit, setRecoveredToken, setBalances ]);
@@ -196,8 +198,8 @@ export default function RecoveryProcess() {
                             id: "cancel",
                             buttonText: "Cancel",
                             buttonVariant: "secondary",
-                            callback: () => setRecoveredToken(null),
-                            disabled: signAndSubmit !== null,
+                            callback: () => { setRecoveredToken(null); setSignAndSubmit(null); setSignAndSubmitError(false); },
+                            disabled: signAndSubmit !== null && !signAndSubmitError,
                         },
                         {
                             id: "transfer",
@@ -217,7 +219,7 @@ export default function RecoveryProcess() {
                         id="transfer"
                         signAndSubmit={ signAndSubmit }
                         onSuccess={ onTransferSuccess }
-                        onError={ () => {} }
+                        onError={ () => setSignAndSubmitError(true) }
                     />
                 </Dialog>
             </>

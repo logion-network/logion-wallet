@@ -11,7 +11,6 @@ import {
     PROTECTION_REQUESTS_PATH,
     RECOVERY_REQUESTS_PATH,
     SETTINGS_PATH,
-    NFT_PATH,
     WALLET_PATH,
 } from './LegalOfficerPaths';
 
@@ -57,18 +56,6 @@ export default function ContextualizedWallet() {
                     icon: {
                         icon: {
                             id: 'tokens'
-                        },
-                        background: colorTheme.topMenuItems.iconGradient,
-                    },
-                },
-                {
-                    id: "nft",
-                    text: "NFT",
-                    to: NFT_PATH,
-                    exact: true,
-                    icon: {
-                        icon: {
-                            id: 'nft'
                         },
                         background: colorTheme.topMenuItems.iconGradient,
                     },

@@ -7,7 +7,6 @@ import {
     RECOVERY_REQUESTS_PATH,
     SETTINGS_PATH,
     RECOVERY_DETAILS_PATH,
-    NFT_PATH,
     WALLET_PATH,
     transactionsPath,
     TRANSACTIONS_PATH,
@@ -19,7 +18,6 @@ import ProtectionRequests from './ProtectionRequests';
 import RecoveryRequests from './RecoveryRequests';
 import Settings from '../Settings';
 import RecoveryDetails from "./RecoveryDetails";
-import Nft from "./Nft";
 import Wallet from "../common/Wallet";
 import Transactions from "../common/Transactions";
 
@@ -42,9 +40,6 @@ export default function LegalOfficerRouter() {
                 </Route>
                 <Route path={ SETTINGS_PATH }>
                     <Settings />
-                </Route>
-                <Route path={ NFT_PATH }>
-                    <Nft />
                 </Route>
                 <Route path={ WALLET_PATH }>
                     <Wallet

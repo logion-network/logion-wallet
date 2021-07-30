@@ -8,7 +8,6 @@ import Account from "./Account";
 import Settings from "../Settings";
 import TrustProtection from "./trust-protection/TrustProtection";
 import Recovery from "./trust-protection/Recovery";
-import Nft from "./Nft";
 import Wallet from "../common/Wallet";
 import Transactions from "../common/Transactions";
 
@@ -17,7 +16,6 @@ export const ACCOUNT_PATH = USER_PATH + '/account';
 export const TRUST_PROTECTION_PATH = USER_PATH + '/protection';
 export const SETTINGS_PATH = USER_PATH + '/settings';
 export const RECOVERY_PATH = USER_PATH + '/recovery';
-export const NFT_PATH = USER_PATH + '/nft';
 export const WALLET_PATH = USER_PATH + '/wallet';
 
 const TRANSACTIONS_PATH = USER_PATH + '/transactions/:coinId';
@@ -41,9 +39,6 @@ export default function UserRouter() {
                 </Route>
                 <Route path={ RECOVERY_PATH }>
                     <Recovery />
-                </Route>
-                <Route path={ NFT_PATH }>
-                    <Nft />
                 </Route>
                 <Route path={ WALLET_PATH }>
                     <Wallet

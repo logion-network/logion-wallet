@@ -100,21 +100,6 @@ exports[`renders 1`] = `
         "text": "Tokens",
         "to": "/legal-officer/tokenization",
       },
-      Object {
-        "exact": true,
-        "icon": Object {
-          "background": Object {
-            "from": "#3b6cf4",
-            "to": "#6050dc",
-          },
-          "icon": Object {
-            "id": "nft",
-          },
-        },
-        "id": "nft",
-        "text": "NFT",
-        "to": "/legal-officer/nft",
-      },
     ]
   }
 >

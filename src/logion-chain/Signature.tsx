@@ -49,8 +49,12 @@ export async function replaceUnsubscriber(
 
 export async function unsubscribe(unsubscriber: Unsubscriber | null): Promise<void> {
     if(unsubscriber !== null) {
-        const callable = await unsubscriber;
-        callable();
+        try {
+            const callable = await unsubscriber;
+            callable();
+        } catch(e) {
+            console.log("Could not unsubscribe: " + e);
+        }
     }
 }
 
