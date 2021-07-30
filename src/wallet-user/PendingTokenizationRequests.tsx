@@ -1,8 +1,6 @@
 import React from 'react';
 
-import Table from 'react-bootstrap/Table';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip';
+import Table, { Cell, EmptyTableMessage, DateCell } from '../common/Table';
 
 import { useUserContext } from './UserContext';
 
@@ -15,41 +13,33 @@ export default function PendingTokenizationRequests() {
 
     return (
         <>
-            <h2>Pending</h2>
-            <Table striped bordered responsive>
-                <thead>
-                    <tr>
-                        <th>Legal Officer</th>
-                        <th>Token</th>
-                        <th>Bars</th>
-                        <th>Created</th>
-                    </tr>
-                </thead>
-                <tbody>
+            <Table
+                columns={[
                     {
-                        pendingTokenizationRequests.map(request => (
-                            <tr key={request.id}>
-                                <td>
-                                    <OverlayTrigger
-                                      key="top"
-                                      placement="top"
-                                      overlay={
-                                        <Tooltip id={`tooltip-${request.id}`}>
-                                          {request.legalOfficerAddress}
-                                        </Tooltip>
-                                      }
-                                    >
-                                      <span>Your Legal Officer</span>
-                                    </OverlayTrigger>
-                                </td>
-                                <td>{request.requestedTokenName}</td>
-                                <td>{request.bars}</td>
-                                <td>{request.createdOn}</td>
-                            </tr>
-                        ))
+                        header: "Legal officer",
+                        render: request => <Cell content={ request.legalOfficerAddress } />,
+                        align: 'left',
+                    },
+                    {
+                        header: "Token name",
+                        render: request => <Cell content={ request.requestedTokenName } />,
+                        align: 'left',
+                    },
+                    {
+                        header: "Bars",
+                        render: request => <Cell content={ request.bars } />,
+                        align: 'right',
+                        width: '200px',
+                    },
+                    {
+                        header: "Creation date",
+                        render: request => <DateCell dateTime={ request.createdOn || null } />,
+                        width: '200px',
                     }
-                </tbody>
-            </Table>
+                ]}
+                data={ pendingTokenizationRequests }
+                renderEmpty={ () => <EmptyTableMessage>No pending tokenization request</EmptyTableMessage> }
+            />
         </>
     );
 }

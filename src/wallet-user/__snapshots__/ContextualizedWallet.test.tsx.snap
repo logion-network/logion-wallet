@@ -99,7 +99,7 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
         },
         "id": "tokens",
         "text": "Tokens",
-        "to": "/user/account",
+        "to": "/user/tokens",
       },
     ]
   }
@@ -247,7 +247,7 @@ exports[`Given connected, when rendering, then show account, no connect button a
         },
         "id": "tokens",
         "text": "Tokens",
-        "to": "/user/account",
+        "to": "/user/tokens",
       },
     ]
   }
@@ -395,7 +395,7 @@ exports[`Given connecting, when rendering, then show account, no button, no node
         },
         "id": "tokens",
         "text": "Tokens",
-        "to": "/user/account",
+        "to": "/user/tokens",
       },
     ]
   }
@@ -542,7 +542,7 @@ exports[`Given connection error, when rendering, then show account, no button, n
         },
         "id": "tokens",
         "text": "Tokens",
-        "to": "/user/account",
+        "to": "/user/tokens",
       },
     ]
   }
@@ -689,7 +689,7 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
         },
         "id": "tokens",
         "text": "Tokens",
-        "to": "/user/account",
+        "to": "/user/tokens",
       },
     ]
   }
@@ -836,7 +836,7 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
         },
         "id": "tokens",
         "text": "Tokens",
-        "to": "/user/account",
+        "to": "/user/tokens",
       },
     ]
   }

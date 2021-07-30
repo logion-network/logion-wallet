@@ -14,6 +14,7 @@ export interface Action {
     buttonVariant: ButtonVariant,
     buttonText: Children,
     buttonTestId?: string,
+    type?: ButtonType,
 }
 
 export interface Props {
@@ -23,7 +24,7 @@ export interface Props {
     variant?: ButtonVariant,
     disabled?: boolean,
     children?: Children,
-    onClick?: () => void,
+    onClick?: (e?: any) => void,
     id?: string,
     "data-testid"?: string,
     slim?: boolean,
@@ -39,6 +40,7 @@ export default function Button(props: Props) {
     let testId;
     let children;
     let id;
+    let type;
     if(props.action !== undefined) {
         key = props.action.id;
         variant = props.action.buttonVariant;
@@ -46,6 +48,7 @@ export default function Button(props: Props) {
         onClick = props.action.callback;
         testId = props.action.buttonTestId;
         children = props.action.buttonText;
+        type = props.action.type;
     } else {
         key = props.key;
         variant = props.variant;
@@ -54,6 +57,7 @@ export default function Button(props: Props) {
         testId = props['data-testid'];
         children = props.children;
         id = props.id;
+        type = props.type;
     }
 
     let style: CSSProperties = {};
@@ -72,7 +76,7 @@ export default function Button(props: Props) {
             data-testid={ testId }
             className={ "Button" + ((props.slim !== undefined && props.slim) ? " slim" : "") }
             style={ style }
-            type={ props.type }
+            type={ type }
         >
             { children }
         </BootstrapButton>

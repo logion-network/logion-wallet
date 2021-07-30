@@ -8,8 +8,6 @@
 }
 
 .Dialog.modal.show .modal-dialog {
-    top: 50%;
-    transform: translateY(-100%);
     margin-top: 0;
     margin-bottom: 0;
 }

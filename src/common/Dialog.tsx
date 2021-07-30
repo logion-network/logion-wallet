@@ -1,5 +1,6 @@
 import React from 'react';
 import Modal from 'react-bootstrap/Modal';
+import Form from 'react-bootstrap/Form';
 
 import Button, { Action } from './Button';
 import { Children } from './types/Helpers';
@@ -15,6 +16,7 @@ export interface Props {
     modalTestId?: string,
     actions: Action[],
     size: ModalSize,
+    onSubmit?: () => {},
 }
 
 export default function Dialog(props: Props) {
@@ -32,13 +34,11 @@ export default function Dialog(props: Props) {
             size={ props.size }
             data-testid={ props.modalTestId }
             className="Dialog"
+            centered
         >
             <style>
                 {
                 `
-                .Dialog .modal-dialog {
-                    background-color: white;
-                }
                 .Dialog .modal-dialog .modal-content {
                     box-shadow: 0 0 25px ${colorTheme.shadowColor};
                     border-color: ${colorTheme.dialog.borderColor};
@@ -48,19 +48,21 @@ export default function Dialog(props: Props) {
                 `
                 }
             </style>
-            <Modal.Body>
-                { props.children }
-            </Modal.Body>
-            <Modal.Footer>
-                {
-                    props.actions.map(action => (
-                        <Button
-                            key={ action.id }
-                            action={ action }
-                        />
-                    ))
-                }
-            </Modal.Footer>
+            <Form onSubmit={ props.onSubmit }>
+                <Modal.Body>
+                    { props.children }
+                </Modal.Body>
+                <Modal.Footer>
+                    {
+                        props.actions.map(action => (
+                            <Button
+                                key={ action.id }
+                                action={ action }
+                            />
+                        ))
+                    }
+                </Modal.Footer>
+            </Form>
         </Modal>
     );
 }

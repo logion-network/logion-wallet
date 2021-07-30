@@ -1097,9 +1097,9 @@ France",
                 "buttonText": "Next",
                 "buttonVariant": "primary",
                 "id": "submit",
+                "type": "submit",
               }
             }
-            type="submit"
           />
         </div>
       </Form>

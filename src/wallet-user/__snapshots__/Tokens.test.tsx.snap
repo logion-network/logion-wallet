@@ -1,0 +1,59 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<FullWidthPane
+  mainTitle="Tokens"
+  titleIcon={
+    Object {
+      "background": Object {
+        "from": "#3b6cf4",
+        "to": "#6050dc",
+      },
+      "icon": Object {
+        "id": "tokens",
+      },
+    }
+  }
+>
+  <Row
+    noGutters={false}
+  >
+    <Col>
+      <Frame
+        title="My tokens"
+      >
+        <MyTokens />
+        <Tokenization />
+      </Frame>
+    </Col>
+  </Row>
+  <Row
+    noGutters={false}
+  >
+    <Col>
+      <Frame
+        title="My requests"
+      >
+        <Tabs
+          activeKey="pending"
+          onSelect={[Function]}
+          tabs={
+            Array [
+              Object {
+                "key": "pending",
+                "render": [Function],
+                "title": "Pending",
+              },
+              Object {
+                "key": "history",
+                "render": [Function],
+                "title": "History",
+              },
+            ]
+          }
+        />
+      </Frame>
+    </Col>
+  </Row>
+</FullWidthPane>
+`;
