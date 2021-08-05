@@ -6,7 +6,11 @@ exports[`Given extension and loading accounts, when rendering, then show loader 
 />
 `;
 
-exports[`Given extension and no account, when rendering, then show create account 1`] = `<CreateAccount />`;
+exports[`Given extension and no account, when rendering, then show create account 1`] = `
+<LandingPage
+  activeStep="create"
+/>
+`;
 
 exports[`Given extension and one account, when rendering, then show root router 1`] = `
 <CommonContextProvider>
@@ -20,4 +24,8 @@ exports[`Given no enabled extension, when rendering, then show loader 1`] = `
 />
 `;
 
-exports[`Given no extension, when rendering, then show install 1`] = `<InstallExtension />`;
+exports[`Given no extension, when rendering, then show install 1`] = `
+<LandingPage
+  activeStep="install"
+/>
+`;

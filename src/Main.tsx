@@ -4,8 +4,7 @@ import { isExtensionAvailable } from './logion-chain/Keys';
 
 import RootRouter from './RootRouter';
 import Loader from './Loader';
-import InstallExtension from './InstallExtension';
-import CreateAccount from './CreateAccount';
+import LandingPage from './LandingPage';
 import { CommonContextProvider } from './common/CommonContext';
 
 export default function Main() {
@@ -25,11 +24,11 @@ export default function Main() {
                         </CommonContextProvider>
                     );
                 } else {
-                    return <CreateAccount />;
+                    return <LandingPage activeStep="create"/>;
                 }
             }
         } else {
-            return <InstallExtension />;
+            return <LandingPage activeStep="install"/>;
         }
     }
 }

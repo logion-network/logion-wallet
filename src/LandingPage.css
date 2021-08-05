@@ -1,28 +1,349 @@
 .LandingPage {
-    text-align: center;
+    background-color: #0c163d;
+    color: white;
 }
 
-.LandingPage .logo-slogan {
-    margin-top: 30px;
-    margin-left: 30px;
+.LandingPage .logo {
     display: flex;
     align-items: flex-end;
 }
 
-.LandingPage .logo-slogan p {
+.LandingPage .logo p {
     margin: 0;
     margin-left: 25px;
+    font-size: 16px;
 }
 
-.LandingPage .messages {
-    margin-bottom: 50px;
+.LandingPage .header-container {
+    position: relative;
 }
 
-.LandingPage .primary-message {
-    font-family: 'Lexend Deca', sans-serif;
+.LandingPage .header-container .logo {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+}
+
+.LandingPage header .call {
+    text-align: center;
+    padding-top: 70px;
+    padding-bottom: 70px;
+}
+
+.LandingPage header .call .first {
+    display: block;
+    font-family: "Lexend Deca", sans-serif;
     font-size: 50px;
 }
 
-.LandingPage .secondary-message {
+.LandingPage header .call .second {
+    display: block;
+    font-family: "Montserrat", sans-serif;
     font-size: 38px;
+}
+
+.LandingPage .step {
+    margin-right: 25px;
+}
+
+.LandingPage .step:last-child {
+    margin-left: 0;
+}
+
+.LandingPage .step:after {
+    display: block;
+    content: " ";
+    height: 70px;
+}
+
+.LandingPage .step.one:after {
+    background-color: #6050dc;
+}
+
+.LandingPage .step.two:after {
+    background-color: #6050dc;
+}
+
+.LandingPage .step.three:after {
+    background-color: #e6007a;
+}
+
+.LandingPage .step-container {
+    background: linear-gradient(45deg, #6050dc 0%, #e6007a 100%);
+    position: relative;
+    z-index: 0;
+    padding-top: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+}
+
+.LandingPage .step .step-container:before {
+    content: " ";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+}
+
+.LandingPage .step.one .step-container:before {
+    background-image: url("./img/step1-waves.svg");
+}
+
+.LandingPage .step.two .step-container:before {
+    background-image: url("./img/step2-waves.svg");
+}
+
+.LandingPage .step.three .step-container:before {
+    background-image: url("./img/step3-waves.svg");
+}
+
+.LandingPage .step-header {
+    display: flex;
+    margin-bottom: 10px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.LandingPage .step.active .step-header {
+    color: rgb(255, 255, 255);
+}
+
+.LandingPage .step-header .number {
+    font-family: "Lexend Deca", sans-serif;
+    font-size: 80px;
+    line-height: 1;
+}
+
+.LandingPage .step-header .description {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    font-family: "Montserrat", sans-serif;
+    font-size: 18px;
+    margin-left: 10px;
+    padding-bottom: 3px;
+}
+
+.LandingPage .step-header .description .action {
+    display: block;
+    font-weight: bold;
+}
+
+.LandingPage .step-content {
+    position: relative;
+}
+
+.LandingPage .step-content img {
+    height: 230px;
+}
+
+.LandingPage .step-content .button-container {
+    position: absolute;
+}
+
+.LandingPage .step-content .button-container .Button.btn.btn-primary {
+    position: relative;
+    height: 35px;
+    width: 107px;
+}
+
+.LandingPage .step-content .button-container .Button.btn.btn-primary span {
+    position: absolute;
+    display: block;
+    height: 100%;
+    width: 100%;
+    top: 0; right: 0; bottom: 0; left: 0;
+    background-clip: padding-box;
+    border: solid 1px transparent;
+    border-radius: inherit;
+    text-transform: uppercase;
+    line-height: 32px;
+}
+
+.LandingPage .step.one .step-content .button-container .Button.btn.btn-primary span {
+    color: black;
+    background-color: #bee1ff;
+}
+
+.LandingPage .step.two .step-content .button-container .Button.btn.btn-primary span {
+    color: white;
+    background-color: #3d358a;
+}
+
+.LandingPage .step.one .step-content .button-container {
+    bottom: 67px;
+    left: 115px;
+}
+
+.LandingPage .step.two .step-content .button-container {
+    bottom: 67px;
+    left: 106px;
+}
+
+.LandingPage .what-section {
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+    font-size: 18px;
+    padding-top: 70px;
+}
+
+.LandingPage .what-section h1 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.LandingPage .what-section .highlight:before, .LandingPage .what-section .highlight:after {
+    content: "\A";
+    white-space: pre;
+}
+
+.LandingPage .recovery-container {
+    position: relative;
+    background-color: #e95b5b;
+    margin-top: 100px;
+    height: 160px;
+}
+
+.LandingPage .recovery-container:before {
+    content: " ";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-image: url("./img/recovery-waves.svg");
+}
+
+.LandingPage .recovery-container .lost-password-container {
+    position: relative;
+}
+
+.LandingPage .recovery-container .lost-password {
+    position: absolute;
+    display: block;
+    top: -33px;
+    left: 0;
+    z-index: 1;
+}
+
+.LandingPage .recovery-container .recovered-password-container {
+    position: relative;
+}
+
+.LandingPage .recovery-container .recovered-password {
+    position: absolute;
+    display: block;
+    top: -70px;
+    right: 0;
+}
+
+.LandingPage .recovery-container .recovery-process {
+    font-size: 18px;
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 20px;
+}
+
+.LandingPage .recovery-container .recovery-process strong:before {
+    content: "\A";
+    white-space: pre;
+}
+
+.LandingPage .recovery-container .recovery-process .Button.btn.btn-primary {
+    background: transparent;
+    border: 2px solid white;
+}
+
+.LandingPage .recovery-container .recovery-process .Button.btn.btn-primary:focus {
+    box-shadow: none;
+}
+
+.LandingPage .protection-container {
+    text-align: center;
+    background-color: #15224f;
+    position: relative;
+    padding-top: 100px;
+    z-index: 0;
+}
+
+.LandingPage .protection-container:before {
+    content: " ";
+    top: 0;
+    left: 0;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-image: url("./img/protection_map.svg");
+    background-size: cover;
+    z-index: -1;
+}
+
+.LandingPage .protection-container .foundation {
+    font-size: 35px;
+    margin-bottom: 40px;
+}
+
+.LandingPage .protection-container .legal-officers {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+}
+
+.LandingPage .protection-container .explanation {
+    padding-bottom: 60px;
+}
+
+.LandingPage .protection-container .explanation h1 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.LandingPage .protection-container .explanation p {
+    font-size: 14px;
+}
+
+.LandingPage footer {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    font-size: 16px;
+}
+
+.LandingPage footer .contact {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.LandingPage footer .contact a.mail {
+    color: white;
+    font-weight: bold;
+}
+
+.LandingPage footer .social {
+    margin-bottom: 10px;
+}
+
+.LandingPage footer .social a {
+    padding-left: 40px;
+}
+
+.LandingPage footer .social a:first-child {
+    padding-left: 0;
+}
+
+.LandingPage footer .legal {
+    text-align: right;
+    margin-top: 10px;
+}
+
+.LandingPage footer .legal a {
+    display: block;
+    color: white;
+    margin-bottom: 10px;
 }

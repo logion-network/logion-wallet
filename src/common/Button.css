@@ -56,6 +56,13 @@
     text-decoration: none;
 }
 
+.Button.btn.btn-primary:focus,
+.Button.btn.btn-secondary:focus,
+.Button.btn.btn-warning:focus,
+.Button.btn.btn-recovery:focus {
+    box-shadow: none;
+}
+
 .Button.btn.btn-warning {
     background-color: #ff8a5c !important;
     border: none;

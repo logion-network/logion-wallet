@@ -1,51 +1,865 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders 1`] = `
+exports[`renders create 1`] = `
 <div
   className="LandingPage"
 >
   <Container
+    className="header-container"
     fluid={true}
+  >
+    <Logo />
+    <Container
+      fluid={false}
+    >
+      <header>
+        <div
+          className="call"
+        >
+          <span
+            className="first"
+          >
+            You are only 
+            2
+             (simple) steps away
+          </span>
+          <span
+            className="second"
+          >
+            from your logion legal protection
+          </span>
+        </div>
+      </header>
+    </Container>
+  </Container>
+  <Container
+    fluid={false}
+  >
+    <Row
+      noGutters={true}
+    >
+      <Col
+        className="step one"
+      >
+        <div
+          className="step-container"
+        >
+          <div
+            className="step-header"
+          >
+            <div
+              className="number"
+            >
+              01.
+            </div>
+            <div
+              className="description"
+            >
+              <span
+                className="action"
+              >
+                Download
+              </span>
+               
+              <span>
+                the plugin
+              </span>
+            </div>
+          </div>
+          <div
+            className="step-content"
+          >
+            <img
+              alt="people carrying extension"
+              src="/assets/landing/step1.svg"
+            />
+          </div>
+          <Dialog
+            actions={
+              Array [
+                Object {
+                  "buttonText": "Close",
+                  "buttonVariant": "primary",
+                  "callback": [Function],
+                  "id": "close",
+                },
+              ]
+            }
+            show={false}
+            size="lg"
+          >
+            <InstallExtension />
+          </Dialog>
+        </div>
+      </Col>
+      <Col
+        className="step two active"
+      >
+        <div
+          className="step-container"
+        >
+          <div
+            className="step-header"
+          >
+            <div
+              className="number"
+            >
+              02.
+            </div>
+            <div
+              className="description"
+            >
+              <span
+                className="action"
+              >
+                Create
+              </span>
+               
+              <span>
+                your wallet
+              </span>
+            </div>
+          </div>
+          <div
+            className="step-content"
+          >
+            <img
+              alt="people carrying extension"
+              src="/assets/landing/step2.svg"
+            />
+            <div
+              className="button-container"
+            >
+              <Button
+                onClick={[Function]}
+              >
+                <span>
+                  Start &gt;
+                </span>
+              </Button>
+            </div>
+          </div>
+          <Dialog
+            actions={
+              Array [
+                Object {
+                  "buttonText": "Close",
+                  "buttonVariant": "primary",
+                  "callback": [Function],
+                  "id": "close",
+                },
+              ]
+            }
+            show={false}
+            size="lg"
+          >
+            <CreateWallet />
+          </Dialog>
+        </div>
+      </Col>
+      <Col
+        className="step three"
+      >
+        <div
+          className="step-container"
+        >
+          <div
+            className="step-header"
+          >
+            <div
+              className="number"
+            >
+              03.
+            </div>
+            <div
+              className="description"
+            >
+              <span
+                className="action"
+              >
+                Access
+              </span>
+               
+              <span>
+                your dashboard
+              </span>
+            </div>
+          </div>
+          <div
+            className="step-content"
+          >
+            <img
+              alt="people carrying extension"
+              src="/assets/landing/step3.svg"
+            />
+          </div>
+        </div>
+      </Col>
+    </Row>
+  </Container>
+  <Container
+    fluid={false}
   >
     <Row
       noGutters={false}
     >
-      <Col>
-        <div
-          className="logo-slogan"
+      <Col
+        className="what-section"
+      >
+        <h1>
+          Logion offers
+        </h1>
+        <p>
+          <strong>
+            a blockchain network managed by legal officers
+          </strong>
+          <br />
+          that provides a decentralized and legal guarantee for all your digital assets and transactions
+        </p>
+      </Col>
+    </Row>
+  </Container>
+  <div
+    className="recovery-container"
+  >
+    <Container
+      fluid={false}
+    >
+      <Row
+        noGutters={true}
+      >
+        <Col
+          className="lost-password-container"
+          md={3}
         >
-          <Logo
-            size={100}
+          <img
+            alt="women lost password"
+            className="lost-password"
+            src="/assets/landing/recovery1.svg"
           />
-          <p>
-            One blockchain 
-            <br />
-            to trust them all
-          </p>
+        </Col>
+        <Col
+          md={6}
+        >
+          <div
+            className="recovery-process"
+          >
+            <p>
+              Inaccessible wallet? 
+              <strong>
+                recovery process
+              </strong>
+            </p>
+            <Button
+              onClick={[Function]}
+            >
+              Start my recovery process
+            </Button>
+            <Dialog
+              actions={
+                Array [
+                  Object {
+                    "buttonText": "Close",
+                    "buttonVariant": "primary",
+                    "callback": [Function],
+                    "id": "close",
+                  },
+                ]
+              }
+              show={false}
+              size="lg"
+            >
+              <ol>
+                <li>
+                  Follow the steps at the top of the page (install the extension, then create a new account)
+                </li>
+                <li>
+                  Once you access your dashboard, start a recovery with your new account
+                </li>
+              </ol>
+            </Dialog>
+          </div>
+        </Col>
+        <Col
+          className="recovered-password-container"
+          md={3}
+        >
+          <img
+            alt="legal officer giving key"
+            className="recovered-password"
+            src="/assets/landing/recovery2.svg"
+          />
+        </Col>
+      </Row>
+    </Container>
+  </div>
+  <div
+    className="protection-container"
+  >
+    <p
+      className="foundation"
+    >
+      <strong>
+        The foundation of
+      </strong>
+       your protection
+    </p>
+    <div
+      className="legal-officers"
+    >
+      <img
+        alt="male legal officer"
+        className="protection-male"
+        src="/assets/landing/protection_male.svg"
+      />
+      <img
+        alt="female legal officer"
+        className="protection-female"
+        src="/assets/landing/protection_female.svg"
+      />
+    </div>
+    <div
+      className="explanation"
+    >
+      <h1>
+        Logion Legal Officers
+      </h1>
+      <p>
+        In charge of a 
+        <strong>
+          public office
+        </strong>
+        , Logion Legal Officers are 
+        <strong>
+          identified
+        </strong>
+        <br />
+        legal experts such as Judicial Officers and Lawyers, who apply a
+        <br />
+        strict code of ethics and are 
+        <strong>
+          legaly responsible
+        </strong>
+         for their actions
+        <br />
+        while securing your transactions and related contracts.
+      </p>
+    </div>
+  </div>
+  <footer>
+    <Container
+      fluid={true}
+    >
+      <Container
+        fluid={false}
+      >
+        <Row
+          noGutters={false}
+        >
+          <Col>
+            <Logo />
+          </Col>
+          <Col>
+            <div
+              className="contact"
+            >
+              <div
+                className="social"
+              >
+                <a
+                  href="https://twitter.com/logion_network"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <img
+                    alt="twitter icon"
+                    src="/assets/landing/twitter.png"
+                  />
+                </a>
+                <a
+                  href="https://www.linkedin.com/company/logion-network/"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <img
+                    alt="linkedin icon"
+                    src="/assets/landing/linkedin.png"
+                  />
+                </a>
+                <a
+                  href="https://discord.gg/FvnxrtCYr6"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <img
+                    alt="discord icon"
+                    src="/assets/landing/discord.png"
+                  />
+                </a>
+              </div>
+              <a
+                className="mail"
+                href="mailto:info@logion.network"
+              >
+                info@logion.network
+              </a>
+            </div>
+          </Col>
+          <Col>
+            <div
+              className="legal"
+            >
+              <a
+                href="https://logion.network/"
+                rel="noreferrer"
+                target="_blank"
+              >
+                Privay policy
+              </a>
+              <a
+                href="https://logion.network/"
+                rel="noreferrer"
+                target="_blank"
+              >
+                Terms and conditions
+              </a>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </Container>
+  </footer>
+</div>
+`;
+
+exports[`renders install 1`] = `
+<div
+  className="LandingPage"
+>
+  <Container
+    className="header-container"
+    fluid={true}
+  >
+    <Logo />
+    <Container
+      fluid={false}
+    >
+      <header>
+        <div
+          className="call"
+        >
+          <span
+            className="first"
+          >
+            You are only 
+            3
+             (simple) steps away
+          </span>
+          <span
+            className="second"
+          >
+            from your logion legal protection
+          </span>
+        </div>
+      </header>
+    </Container>
+  </Container>
+  <Container
+    fluid={false}
+  >
+    <Row
+      noGutters={true}
+    >
+      <Col
+        className="step one active"
+      >
+        <div
+          className="step-container"
+        >
+          <div
+            className="step-header"
+          >
+            <div
+              className="number"
+            >
+              01.
+            </div>
+            <div
+              className="description"
+            >
+              <span
+                className="action"
+              >
+                Download
+              </span>
+               
+              <span>
+                the plugin
+              </span>
+            </div>
+          </div>
+          <div
+            className="step-content"
+          >
+            <img
+              alt="people carrying extension"
+              src="/assets/landing/step1.svg"
+            />
+            <div
+              className="button-container"
+            >
+              <Button
+                onClick={[Function]}
+              >
+                <span>
+                  Start &gt;
+                </span>
+              </Button>
+            </div>
+          </div>
+          <Dialog
+            actions={
+              Array [
+                Object {
+                  "buttonText": "Close",
+                  "buttonVariant": "primary",
+                  "callback": [Function],
+                  "id": "close",
+                },
+              ]
+            }
+            show={false}
+            size="lg"
+          >
+            <InstallExtension />
+          </Dialog>
+        </div>
+      </Col>
+      <Col
+        className="step two"
+      >
+        <div
+          className="step-container"
+        >
+          <div
+            className="step-header"
+          >
+            <div
+              className="number"
+            >
+              02.
+            </div>
+            <div
+              className="description"
+            >
+              <span
+                className="action"
+              >
+                Create
+              </span>
+               
+              <span>
+                your wallet
+              </span>
+            </div>
+          </div>
+          <div
+            className="step-content"
+          >
+            <img
+              alt="people carrying extension"
+              src="/assets/landing/step2.svg"
+            />
+          </div>
+          <Dialog
+            actions={
+              Array [
+                Object {
+                  "buttonText": "Close",
+                  "buttonVariant": "primary",
+                  "callback": [Function],
+                  "id": "close",
+                },
+              ]
+            }
+            show={false}
+            size="lg"
+          >
+            <CreateWallet />
+          </Dialog>
+        </div>
+      </Col>
+      <Col
+        className="step three"
+      >
+        <div
+          className="step-container"
+        >
+          <div
+            className="step-header"
+          >
+            <div
+              className="number"
+            >
+              03.
+            </div>
+            <div
+              className="description"
+            >
+              <span
+                className="action"
+              >
+                Access
+              </span>
+               
+              <span>
+                your dashboard
+              </span>
+            </div>
+          </div>
+          <div
+            className="step-content"
+          >
+            <img
+              alt="people carrying extension"
+              src="/assets/landing/step3.svg"
+            />
+          </div>
         </div>
       </Col>
     </Row>
+  </Container>
+  <Container
+    fluid={false}
+  >
     <Row
       noGutters={false}
     >
-      <Col>
-        <div
-          className="messages"
-        >
-          <p
-            className="primary-message"
-          >
-            The secure blockchain
-          </p>
-          <p
-            className="secondary-message"
-          >
-            accessible in two steps
-          </p>
-        </div>
+      <Col
+        className="what-section"
+      >
+        <h1>
+          Logion offers
+        </h1>
+        <p>
+          <strong>
+            a blockchain network managed by legal officers
+          </strong>
+          <br />
+          that provides a decentralized and legal guarantee for all your digital assets and transactions
+        </p>
       </Col>
     </Row>
-    Test
   </Container>
+  <div
+    className="recovery-container"
+  >
+    <Container
+      fluid={false}
+    >
+      <Row
+        noGutters={true}
+      >
+        <Col
+          className="lost-password-container"
+          md={3}
+        >
+          <img
+            alt="women lost password"
+            className="lost-password"
+            src="/assets/landing/recovery1.svg"
+          />
+        </Col>
+        <Col
+          md={6}
+        >
+          <div
+            className="recovery-process"
+          >
+            <p>
+              Inaccessible wallet? 
+              <strong>
+                recovery process
+              </strong>
+            </p>
+            <Button
+              onClick={[Function]}
+            >
+              Start my recovery process
+            </Button>
+            <Dialog
+              actions={
+                Array [
+                  Object {
+                    "buttonText": "Close",
+                    "buttonVariant": "primary",
+                    "callback": [Function],
+                    "id": "close",
+                  },
+                ]
+              }
+              show={false}
+              size="lg"
+            >
+              <ol>
+                <li>
+                  Follow the steps at the top of the page (install the extension, then create a new account)
+                </li>
+                <li>
+                  Once you access your dashboard, start a recovery with your new account
+                </li>
+              </ol>
+            </Dialog>
+          </div>
+        </Col>
+        <Col
+          className="recovered-password-container"
+          md={3}
+        >
+          <img
+            alt="legal officer giving key"
+            className="recovered-password"
+            src="/assets/landing/recovery2.svg"
+          />
+        </Col>
+      </Row>
+    </Container>
+  </div>
+  <div
+    className="protection-container"
+  >
+    <p
+      className="foundation"
+    >
+      <strong>
+        The foundation of
+      </strong>
+       your protection
+    </p>
+    <div
+      className="legal-officers"
+    >
+      <img
+        alt="male legal officer"
+        className="protection-male"
+        src="/assets/landing/protection_male.svg"
+      />
+      <img
+        alt="female legal officer"
+        className="protection-female"
+        src="/assets/landing/protection_female.svg"
+      />
+    </div>
+    <div
+      className="explanation"
+    >
+      <h1>
+        Logion Legal Officers
+      </h1>
+      <p>
+        In charge of a 
+        <strong>
+          public office
+        </strong>
+        , Logion Legal Officers are 
+        <strong>
+          identified
+        </strong>
+        <br />
+        legal experts such as Judicial Officers and Lawyers, who apply a
+        <br />
+        strict code of ethics and are 
+        <strong>
+          legaly responsible
+        </strong>
+         for their actions
+        <br />
+        while securing your transactions and related contracts.
+      </p>
+    </div>
+  </div>
+  <footer>
+    <Container
+      fluid={true}
+    >
+      <Container
+        fluid={false}
+      >
+        <Row
+          noGutters={false}
+        >
+          <Col>
+            <Logo />
+          </Col>
+          <Col>
+            <div
+              className="contact"
+            >
+              <div
+                className="social"
+              >
+                <a
+                  href="https://twitter.com/logion_network"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <img
+                    alt="twitter icon"
+                    src="/assets/landing/twitter.png"
+                  />
+                </a>
+                <a
+                  href="https://www.linkedin.com/company/logion-network/"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <img
+                    alt="linkedin icon"
+                    src="/assets/landing/linkedin.png"
+                  />
+                </a>
+                <a
+                  href="https://discord.gg/FvnxrtCYr6"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <img
+                    alt="discord icon"
+                    src="/assets/landing/discord.png"
+                  />
+                </a>
+              </div>
+              <a
+                className="mail"
+                href="mailto:info@logion.network"
+              >
+                info@logion.network
+              </a>
+            </div>
+          </Col>
+          <Col>
+            <div
+              className="legal"
+            >
+              <a
+                href="https://logion.network/"
+                rel="noreferrer"
+                target="_blank"
+              >
+                Privay policy
+              </a>
+              <a
+                href="https://logion.network/"
+                rel="noreferrer"
+                target="_blank"
+              >
+                Terms and conditions
+              </a>
+            </div>
+          </Col>
+        </Row>
+      </Container>
+    </Container>
+  </footer>
 </div>
 `;
