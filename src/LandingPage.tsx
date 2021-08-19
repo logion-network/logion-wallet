@@ -7,6 +7,7 @@ import { recommendedExtension } from './logion-chain/Keys';
 
 import Button from './common/Button';
 import Dialog from './common/Dialog';
+import Icon from './common/Icon';
 
 import './LandingPage.css';
 
@@ -56,7 +57,11 @@ export default function LandingPage(props: Props) {
                                 {
                                     props.activeStep === 'install' &&
                                     <div className="button-container">
-                                        <Button onClick={() => setShowDialog('install')}><span>Start &gt;</span></Button>
+                                        <Button onClick={() => setShowDialog('install')}>
+                                            <span>
+                                                Start <Icon icon={{id: 'forward', hasVariants: true}} colorThemeType="light" />
+                                            </span>
+                                        </Button>
                                     </div>
                                 }
                             </div>
@@ -87,7 +92,11 @@ export default function LandingPage(props: Props) {
                                 {
                                     props.activeStep === 'create' &&
                                     <div className="button-container">
-                                        <Button onClick={() => setShowDialog('create')}><span>Start &gt;</span></Button>
+                                        <Button onClick={() => setShowDialog('create')}>
+                                            <span>
+                                                Start <Icon icon={{id: 'forward', hasVariants: true}} colorThemeType="dark" />
+                                            </span>
+                                        </Button>
                                     </div>
                                 }
                             </div>
@@ -119,6 +128,7 @@ export default function LandingPage(props: Props) {
                         </div>
                     </Col>
                 </Row>
+                <div className="dark-waves" />
             </Container>
             <Container>
                 <Row>

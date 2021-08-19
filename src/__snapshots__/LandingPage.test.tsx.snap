@@ -134,7 +134,16 @@ exports[`renders create 1`] = `
                 onClick={[Function]}
               >
                 <span>
-                  Start &gt;
+                  Start 
+                  <Icon
+                    colorThemeType="dark"
+                    icon={
+                      Object {
+                        "hasVariants": true,
+                        "id": "forward",
+                      }
+                    }
+                  />
                 </span>
               </Button>
             </div>
@@ -196,6 +205,9 @@ exports[`renders create 1`] = `
         </div>
       </Col>
     </Row>
+    <div
+      className="dark-waves"
+    />
   </Container>
   <Container
     fluid={false}
@@ -512,7 +524,16 @@ exports[`renders install 1`] = `
                 onClick={[Function]}
               >
                 <span>
-                  Start &gt;
+                  Start 
+                  <Icon
+                    colorThemeType="light"
+                    icon={
+                      Object {
+                        "hasVariants": true,
+                        "id": "forward",
+                      }
+                    }
+                  />
                 </span>
               </Button>
             </div>
@@ -628,6 +649,9 @@ exports[`renders install 1`] = `
         </div>
       </Col>
     </Row>
+    <div
+      className="dark-waves"
+    />
   </Container>
   <Container
     fluid={false}

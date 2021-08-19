@@ -1,11 +1,12 @@
-import { Icon as IconType } from './ColorTheme';
+import { ColorThemeType, Icon as IconType } from './ColorTheme';
 import { useCommonContext } from './CommonContext';
 
 export interface Props {
-    icon: IconType,
-    type?: 'svg' | 'png',
-    height?: string,
-    width?: string,
+    icon: IconType;
+    type?: 'svg' | 'png';
+    height?: string;
+    width?: string;
+    colorThemeType?: ColorThemeType;
 }
 
 export default function Icon(props: Props) {
@@ -15,14 +16,21 @@ export default function Icon(props: Props) {
     if(props.type !== undefined) {
         ext = props.type;
     }
+    
+    let colorThemeType;
+    if(props.colorThemeType !== undefined) {
+        colorThemeType = props.colorThemeType;
+    } else {
+        colorThemeType = colorTheme.type;
+    }
 
     let iconUrl = undefined;
     if(props.icon.category !== undefined && (props.icon.hasVariants !== undefined) && props.icon.hasVariants) {
-        iconUrl = `${process.env.PUBLIC_URL}/assets/categories/${props.icon.category}/themes/${colorTheme.type}/${props.icon.id}.${ext}`;
+        iconUrl = `${process.env.PUBLIC_URL}/assets/categories/${props.icon.category}/themes/${colorThemeType}/${props.icon.id}.${ext}`;
     } else if(props.icon.category !== undefined && ((props.icon.hasVariants === undefined) || !props.icon.hasVariants)) {
         iconUrl = `${process.env.PUBLIC_URL}/assets/categories/${props.icon.category}/${props.icon.id}.${ext}`;
     } else if(props.icon.category === undefined && ((props.icon.hasVariants !== undefined) && props.icon.hasVariants)) {
-        iconUrl = `${process.env.PUBLIC_URL}/assets/themes/${colorTheme.type}/${props.icon.id}.${ext}`;
+        iconUrl = `${process.env.PUBLIC_URL}/assets/themes/${colorThemeType}/${props.icon.id}.${ext}`;
     } else {
         iconUrl = `${process.env.PUBLIC_URL}/assets/${props.icon.id}.${ext}`;
     }

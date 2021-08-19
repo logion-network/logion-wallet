@@ -53,7 +53,15 @@
 .LandingPage .step:after {
     display: block;
     content: " ";
-    height: 70px;
+    height: 200px;
+}
+
+.LandingPage .dark-waves {
+    position: relative;
+    background-image: url("./img/dark_waves.png");
+    height: 170px;
+    margin-top: -170px;
+    background-size: cover;
 }
 
 .LandingPage .step.one:after {
@@ -69,7 +77,6 @@
 }
 
 .LandingPage .step-container {
-    background: linear-gradient(45deg, #6050dc 0%, #e6007a 100%);
     position: relative;
     z-index: 0;
     padding-top: 5px;
@@ -77,6 +84,18 @@
     padding-right: 20px;
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
+}
+
+.LandingPage .step.one .step-container {
+    background: linear-gradient(45deg, #6050dc 0%, #e6007a 100%);
+}
+
+.LandingPage .step.two .step-container {
+    background: linear-gradient(45deg, #6050dc 0%, #3b6cf4 100%);
+}
+
+.LandingPage .step.three .step-container {
+    background: linear-gradient(45deg, #e6007a 0%, #3b6cf4 100%);
 }
 
 .LandingPage .step .step-container:before {
@@ -144,6 +163,10 @@
 
 .LandingPage .step-content .button-container {
     position: absolute;
+}
+
+.LandingPage .step .step-content .button-container img {
+    height: 16px;
 }
 
 .LandingPage .step-content .button-container .Button.btn.btn-primary {
