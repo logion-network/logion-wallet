@@ -5,7 +5,7 @@ function target() {
     if(envTarget !== undefined) {
         return envTarget;
     } else {
-        return 'https://dev.logion.network';
+        return 'http://localhost:8080';
     }
 }
 

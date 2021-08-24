@@ -13,23 +13,21 @@ yarn install
 
 ## Usage
 
-You can start the wallet in development mode with the following command:
+Use below command in order to connect to a locally running node (development mode):
 
 ```bash
 yarn start
 ```
 
-The UI is configured by default to interact with Logion's DEV infrastructure (server `dev.logion.network`).
+### Setup
 
-### Fully local setup
-
-Use below command in order to connect to a locally running node
-(see [here](https://github.com/logion-network/logion-node-prototype) for instructions about doing so)
+Use below command in order to connect to a specific node
+(see [here](https://github.com/logion-network/logion-node) for instructions about doing so)
 and service (see [here](https://github.com/logion-network/logion-backend))
 .
 
 ```bash
-export REACT_APP_PROVIDER_SOCKET=ws://localhost:9944 ; export REACT_APP_SERVICE_URL=http://localhost:8080 ; yarn start
+export REACT_APP_PROVIDER_SOCKET=ws://example.org:9944 ; export REACT_APP_SERVICE_URL=https://example.org:8080 ; yarn start
 ```
 
 You may have to change port numbers if you are not using the default configuration.
@@ -39,7 +37,7 @@ You may have to change port numbers if you are not using the default configurati
 
 Alice and Bob are the accounts associated with the legal officers currently powering the Logion wallet.
 In order to access the legal officer UI,
-Alice's keypair must be loaded in the Polkadot extension. The first step is to produce the secred seed of Alice and Bob.
+Alice's keypair must be loaded in the Polkadot extension. The first step is to produce the secret seed of Alice and Bob.
 This is achieved with the following command:
 
     subkey inspect SECRET_URI
