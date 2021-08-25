@@ -67,7 +67,7 @@ function LogionContextInspector() {
 function expectConnectedAndReadyState(result: RenderResult) {
     expect(result.getByTestId("apiState")).toHaveTextContent("READY");
     expect(result.getByTestId("selectedNode.name")).toHaveTextContent("Logion Node");
-    expect(result.getByTestId("selectedNode.socket")).toHaveTextContent("wss://dev.logion.network:9944");
+    expect(result.getByTestId("selectedNode.socket")).toHaveTextContent("wss://test.example.org:9944");
     expect(result.getByTestId("selectedNode.peerId")).toHaveTextContent("12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2");
     expect(result.getByTestId("connectedNodeMetadata.name")).toHaveTextContent("Mock node");
     expect(result.getByTestId("connectedNodeMetadata.peerId")).toHaveTextContent("Mock peer ID");
