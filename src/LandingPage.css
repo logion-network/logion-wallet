@@ -396,6 +396,7 @@
     font-size: 18px;
     text-align: left;
     text-transform: uppercase;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     height: 160px;
