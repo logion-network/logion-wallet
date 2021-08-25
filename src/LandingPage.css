@@ -213,6 +213,7 @@
     font-family: "Montserrat", sans-serif;
     font-size: 18px;
     padding-top: 70px;
+    margin-bottom: 50px;
 }
 
 .LandingPage .what-section h1 {
@@ -228,7 +229,7 @@
 .LandingPage .recovery-container {
     position: relative;
     background-color: #e95b5b;
-    margin-top: 100px;
+    margin-top: 30px;
     height: 160px;
 }
 
@@ -288,22 +289,9 @@
 
 .LandingPage .protection-container {
     text-align: center;
-    background-color: #15224f;
     position: relative;
     padding-top: 100px;
     z-index: 0;
-}
-
-.LandingPage .protection-container:before {
-    content: " ";
-    top: 0;
-    left: 0;
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    background-image: url("./img/protection_map.svg");
-    background-size: cover;
-    z-index: -1;
 }
 
 .LandingPage .protection-container .foundation {
@@ -369,4 +357,65 @@
     display: block;
     color: white;
     margin-bottom: 10px;
+}
+
+.LandingPage .section-title {
+    font-family: "Montserrat", sans-serif;
+    font-size: 22px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.LandingPage .section-title .highlight {
+    font-weight: bold;
+}
+
+.LandingPage .transaction-container {
+    position: relative;
+    background-color: #0c163d;
+    margin-top: 30px;
+    height: 160px;
+}
+
+.LandingPage .section-title.transaction-protection {
+    margin-top: 80px;
+}
+
+.LandingPage .transaction-container .transaction-protection-container {
+    position: relative;
+}
+
+.LandingPage .transaction-container .transaction-protection {
+    position: absolute;
+    display: block;
+    top: -39px;
+    right: 0;
+}
+
+.LandingPage .transaction-container .transaction-process {
+    font-size: 18px;
+    text-align: left;
+    text-transform: uppercase;
+    flex-direction: column;
+    justify-content: center;
+    height: 160px;
+}
+
+.LandingPage .transaction-container .transaction-process > p {
+    margin: 0;
+}
+
+.LandingPage .map-background {
+    position: relative;
+    background-color: #15224f;
+}
+.LandingPage .map-background:before {
+    content: " ";
+    top: 0;
+    left: 0;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-image: url("./img/protection_map.svg");
+    background-size: cover;
 }

@@ -231,6 +231,26 @@ exports[`renders create 1`] = `
       </Col>
     </Row>
   </Container>
+  <Container
+    fluid={false}
+  >
+    <Row
+      noGutters={true}
+    >
+      <Col>
+        <h1
+          className="section-title"
+        >
+          <span
+            className="highlight"
+          >
+            Asset
+          </span>
+           protection
+        </h1>
+      </Col>
+    </Row>
+  </Container>
   <div
     className="recovery-container"
   >
@@ -306,56 +326,125 @@ exports[`renders create 1`] = `
     </Container>
   </div>
   <div
-    className="protection-container"
+    className="map-background"
   >
-    <p
-      className="foundation"
+    <Container
+      fluid={false}
     >
-      <strong>
-        The foundation of
-      </strong>
-       your protection
-    </p>
+      <Row
+        noGutters={true}
+      >
+        <Col>
+          <h1
+            className="section-title transaction-protection"
+          >
+            <span
+              className="highlight"
+            >
+              Transaction
+            </span>
+             protection
+          </h1>
+        </Col>
+      </Row>
+    </Container>
     <div
-      className="legal-officers"
+      className="transaction-container"
     >
-      <img
-        alt="male legal officer"
-        className="protection-male"
-        src="/assets/landing/protection_male.svg"
-      />
-      <img
-        alt="female legal officer"
-        className="protection-female"
-        src="/assets/landing/protection_female.svg"
-      />
+      <Container
+        fluid={false}
+      >
+        <Row
+          noGutters={true}
+        >
+          <Col
+            md={7}
+          >
+            <div
+              className="transaction-process"
+            >
+              <p>
+                In charge of a 
+                <strong>
+                  public office
+                </strong>
+                , Logion Legal Officers are 
+                <strong>
+                  identified
+                </strong>
+                legal experts such as Judicial Officers and Lawyers, who apply a strict code of ethics and are 
+                <strong>
+                  legaly responsible
+                </strong>
+                 for their actions while securing your transactions and related contracts.
+              </p>
+            </div>
+          </Col>
+          <Col
+            className="transaction-protection-container"
+            md={5}
+          >
+            <img
+              alt="man adding an item to a case"
+              className="transaction-protection"
+              src="/assets/landing/transaction-protection.svg"
+            />
+          </Col>
+        </Row>
+      </Container>
     </div>
     <div
-      className="explanation"
+      className="protection-container"
     >
-      <h1>
-        Logion Legal Officers
-      </h1>
-      <p>
-        In charge of a 
+      <p
+        className="foundation"
+      >
         <strong>
-          public office
+          The foundation of
         </strong>
-        , Logion Legal Officers are 
-        <strong>
-          identified
-        </strong>
-        <br />
-        legal experts such as Judicial Officers and Lawyers, who apply a
-        <br />
-        strict code of ethics and are 
-        <strong>
-          legaly responsible
-        </strong>
-         for their actions
-        <br />
-        while securing your transactions and related contracts.
+         your protection
       </p>
+      <div
+        className="legal-officers"
+      >
+        <img
+          alt="male legal officer"
+          className="protection-male"
+          src="/assets/landing/protection_male.svg"
+        />
+        <img
+          alt="female legal officer"
+          className="protection-female"
+          src="/assets/landing/protection_female.svg"
+        />
+      </div>
+      <div
+        className="explanation"
+      >
+        <h1>
+          Logion Legal Officers
+        </h1>
+        <p>
+          In charge of a 
+          <strong>
+            public office
+          </strong>
+          , Logion Legal Officers are 
+          <strong>
+            identified
+          </strong>
+          <br />
+          legal experts such as Judicial Officers and Lawyers, who apply a
+          <br />
+          strict code of ethics and are 
+          <strong>
+            legaly responsible
+          </strong>
+           for their actions
+          <br />
+          while securing your transactions and related contracts.
+        </p>
+      </div>
     </div>
   </div>
   <footer>
@@ -675,6 +764,26 @@ exports[`renders install 1`] = `
       </Col>
     </Row>
   </Container>
+  <Container
+    fluid={false}
+  >
+    <Row
+      noGutters={true}
+    >
+      <Col>
+        <h1
+          className="section-title"
+        >
+          <span
+            className="highlight"
+          >
+            Asset
+          </span>
+           protection
+        </h1>
+      </Col>
+    </Row>
+  </Container>
   <div
     className="recovery-container"
   >
@@ -750,56 +859,125 @@ exports[`renders install 1`] = `
     </Container>
   </div>
   <div
-    className="protection-container"
+    className="map-background"
   >
-    <p
-      className="foundation"
+    <Container
+      fluid={false}
     >
-      <strong>
-        The foundation of
-      </strong>
-       your protection
-    </p>
+      <Row
+        noGutters={true}
+      >
+        <Col>
+          <h1
+            className="section-title transaction-protection"
+          >
+            <span
+              className="highlight"
+            >
+              Transaction
+            </span>
+             protection
+          </h1>
+        </Col>
+      </Row>
+    </Container>
     <div
-      className="legal-officers"
+      className="transaction-container"
     >
-      <img
-        alt="male legal officer"
-        className="protection-male"
-        src="/assets/landing/protection_male.svg"
-      />
-      <img
-        alt="female legal officer"
-        className="protection-female"
-        src="/assets/landing/protection_female.svg"
-      />
+      <Container
+        fluid={false}
+      >
+        <Row
+          noGutters={true}
+        >
+          <Col
+            md={7}
+          >
+            <div
+              className="transaction-process"
+            >
+              <p>
+                In charge of a 
+                <strong>
+                  public office
+                </strong>
+                , Logion Legal Officers are 
+                <strong>
+                  identified
+                </strong>
+                legal experts such as Judicial Officers and Lawyers, who apply a strict code of ethics and are 
+                <strong>
+                  legaly responsible
+                </strong>
+                 for their actions while securing your transactions and related contracts.
+              </p>
+            </div>
+          </Col>
+          <Col
+            className="transaction-protection-container"
+            md={5}
+          >
+            <img
+              alt="man adding an item to a case"
+              className="transaction-protection"
+              src="/assets/landing/transaction-protection.svg"
+            />
+          </Col>
+        </Row>
+      </Container>
     </div>
     <div
-      className="explanation"
+      className="protection-container"
     >
-      <h1>
-        Logion Legal Officers
-      </h1>
-      <p>
-        In charge of a 
+      <p
+        className="foundation"
+      >
         <strong>
-          public office
+          The foundation of
         </strong>
-        , Logion Legal Officers are 
-        <strong>
-          identified
-        </strong>
-        <br />
-        legal experts such as Judicial Officers and Lawyers, who apply a
-        <br />
-        strict code of ethics and are 
-        <strong>
-          legaly responsible
-        </strong>
-         for their actions
-        <br />
-        while securing your transactions and related contracts.
+         your protection
       </p>
+      <div
+        className="legal-officers"
+      >
+        <img
+          alt="male legal officer"
+          className="protection-male"
+          src="/assets/landing/protection_male.svg"
+        />
+        <img
+          alt="female legal officer"
+          className="protection-female"
+          src="/assets/landing/protection_female.svg"
+        />
+      </div>
+      <div
+        className="explanation"
+      >
+        <h1>
+          Logion Legal Officers
+        </h1>
+        <p>
+          In charge of a 
+          <strong>
+            public office
+          </strong>
+          , Logion Legal Officers are 
+          <strong>
+            identified
+          </strong>
+          <br />
+          legal experts such as Judicial Officers and Lawyers, who apply a
+          <br />
+          strict code of ethics and are 
+          <strong>
+            legaly responsible
+          </strong>
+           for their actions
+          <br />
+          while securing your transactions and related contracts.
+        </p>
+      </div>
     </div>
   </div>
   <footer>
