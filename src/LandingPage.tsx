@@ -136,7 +136,7 @@ export default function LandingPage(props: Props) {
                         <h1>Logion offers</h1>
                         <p>
                             <strong>a blockchain network managed by legal officers</strong><br/>
-                            that provides a decentralized and legal guarantee for all your digital assets and transactions
+                            that provides a decentralized and legal guarantee for all your <strong>digital assets</strong> and <strong>digital transactions</strong>
                         </p>
                     </Col>
                 </Row>
@@ -144,7 +144,7 @@ export default function LandingPage(props: Props) {
             <Container>
                 <Row noGutters>
                     <Col>
-                        <h1 className="section-title"><span className="highlight">Asset</span> protection</h1>
+                        <h1 className="section-title"><span className="highlight">Digital Asset</span> protection</h1>
                     </Col>
                 </Row>
             </Container>
@@ -191,7 +191,7 @@ export default function LandingPage(props: Props) {
                 <Container>
                     <Row noGutters>
                         <Col>
-                            <h1 className="section-title transaction-protection"><span className="highlight">Transaction</span> protection</h1>
+                            <h1 className="section-title transaction-protection"><span className="highlight">Digital Transaction</span> protection</h1>
                         </Col>
                     </Row>
                 </Container>
@@ -204,7 +204,7 @@ export default function LandingPage(props: Props) {
                                         In charge of a <strong>public office</strong>, Logion Legal Officers are <strong>identified</strong>
                                         legal experts such as Judicial Officers and Lawyers, who apply a
                                         strict code of ethics and are <strong>legaly responsible</strong> for their actions
-                                        while securing your transactions and related contracts.
+                                        while legally securing your digital assets and digital transactions.
                                     </p>
                                 </div>
                             </Col>
@@ -226,7 +226,7 @@ export default function LandingPage(props: Props) {
                             In charge of a <strong>public office</strong>, Logion Legal Officers are <strong>identified</strong><br/>
                             legal experts such as Judicial Officers and Lawyers, who apply a<br/>
                             strict code of ethics and are <strong>legaly responsible</strong> for their actions<br/>
-                            while securing your transactions and related contracts.
+                            while legally securing your digital assets and digital transactions.
                         </p>
                     </div>
                 </div>
