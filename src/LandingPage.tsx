@@ -201,10 +201,8 @@ export default function LandingPage(props: Props) {
                             <Col md={7}>
                                 <div className="transaction-process">
                                     <p>
-                                        In charge of a <strong>public office</strong>, Logion Legal Officers are <strong>identified</strong>
-                                        legal experts such as Judicial Officers and Lawyers, who apply a
-                                        strict code of ethics and are <strong>legaly responsible</strong> for their actions
-                                        while legally securing your digital assets and digital transactions.
+                                       To protect all your digital transaction, <strong>Logion Legal Officers</strong> establish a secured logion's <strong>Legal Officer Case</strong>:</br> 
+                                       a blockchain based digital folder containing all references to transaction related legal document, judicial report and digital files, certified by a Judicial Officer, enforceable within +150 countries 
                                     </p>
                                 </div>
                             </Col>
