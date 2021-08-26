@@ -201,7 +201,7 @@ export default function LandingPage(props: Props) {
                             <Col md={7}>
                                 <div className="transaction-process">
                                     <p>
-                                       To protect all your digital transaction, <strong>Logion Legal Officers</strong> establish a secured logion's <strong>Legal Officer Case</strong>:</br> 
+                                       To protect all your digital transaction, <strong>Logion Legal Officers</strong> establish a secured logion's <strong>Legal Officer Case</strong>:<br/> 
                                        a blockchain based digital folder containing all references to transaction related legal document, judicial report and digital files, certified by a Judicial Officer, enforceable within +150 countries 
                                     </p>
                                 </div>
