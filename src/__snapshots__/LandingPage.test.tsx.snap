@@ -226,7 +226,14 @@ exports[`renders create 1`] = `
             a blockchain network managed by legal officers
           </strong>
           <br />
-          that provides a decentralized and legal guarantee for all your digital assets and transactions
+          that provides a decentralized and legal guarantee for all your 
+          <strong>
+            digital assets
+          </strong>
+           and 
+          <strong>
+            digital transactions
+          </strong>
         </p>
       </Col>
     </Row>
@@ -244,7 +251,7 @@ exports[`renders create 1`] = `
           <span
             className="highlight"
           >
-            Asset
+            Digital Asset
           </span>
            protection
         </h1>
@@ -341,7 +348,7 @@ exports[`renders create 1`] = `
             <span
               className="highlight"
             >
-              Transaction
+              Digital Transaction
             </span>
              protection
           </h1>
@@ -364,19 +371,15 @@ exports[`renders create 1`] = `
               className="transaction-process"
             >
               <p>
-                In charge of a 
+                To protect all your digital transactions, 
                 <strong>
-                  public office
+                  Logion Legal Officers
                 </strong>
-                , Logion Legal Officers are 
+                 establish a secured logion's 
                 <strong>
-                  identified
+                  Legal Officer Case
                 </strong>
-                legal experts such as Judicial Officers and Lawyers, who apply a strict code of ethics and are 
-                <strong>
-                  legaly responsible
-                </strong>
-                 for their actions while securing your transactions and related contracts.
+                : a blockchain based digital folder containing all references to transaction related legal documents, judicial reports and digital files, certified by a Judicial Officer, enforceable within +150 countries
               </p>
             </div>
           </Col>
@@ -442,7 +445,7 @@ exports[`renders create 1`] = `
           </strong>
            for their actions
           <br />
-          while securing your transactions and related contracts.
+          while legally securing your digital assets and digital transactions.
         </p>
       </div>
     </div>
@@ -759,7 +762,14 @@ exports[`renders install 1`] = `
             a blockchain network managed by legal officers
           </strong>
           <br />
-          that provides a decentralized and legal guarantee for all your digital assets and transactions
+          that provides a decentralized and legal guarantee for all your 
+          <strong>
+            digital assets
+          </strong>
+           and 
+          <strong>
+            digital transactions
+          </strong>
         </p>
       </Col>
     </Row>
@@ -777,7 +787,7 @@ exports[`renders install 1`] = `
           <span
             className="highlight"
           >
-            Asset
+            Digital Asset
           </span>
            protection
         </h1>
@@ -874,7 +884,7 @@ exports[`renders install 1`] = `
             <span
               className="highlight"
             >
-              Transaction
+              Digital Transaction
             </span>
              protection
           </h1>
@@ -897,19 +907,15 @@ exports[`renders install 1`] = `
               className="transaction-process"
             >
               <p>
-                In charge of a 
+                To protect all your digital transactions, 
                 <strong>
-                  public office
+                  Logion Legal Officers
                 </strong>
-                , Logion Legal Officers are 
+                 establish a secured logion's 
                 <strong>
-                  identified
+                  Legal Officer Case
                 </strong>
-                legal experts such as Judicial Officers and Lawyers, who apply a strict code of ethics and are 
-                <strong>
-                  legaly responsible
-                </strong>
-                 for their actions while securing your transactions and related contracts.
+                : a blockchain based digital folder containing all references to transaction related legal documents, judicial reports and digital files, certified by a Judicial Officer, enforceable within +150 countries
               </p>
             </div>
           </Col>
@@ -975,7 +981,7 @@ exports[`renders install 1`] = `
           </strong>
            for their actions
           <br />
-          while securing your transactions and related contracts.
+          while legally securing your digital assets and digital transactions.
         </p>
       </div>
     </div>
