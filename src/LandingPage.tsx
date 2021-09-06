@@ -221,8 +221,7 @@ export default function LandingPage(props: Props) {
                     <div className="explanation">
                         <h1>Logion Legal Officers</h1>
                         <p>
-                            In charge of a <strong>public office</strong>, Logion Legal Officers are <strong>identified</strong><br/>
-                            legal experts such as Judicial Officers and Lawyers, who apply a<br/>
+                            In charge of a <strong>public office</strong>, Logion Legal Officers are <strong>identified</strong> Judicial Officers,<br/>who apply a
                             strict code of ethics and are <strong>legaly responsible</strong> for their actions<br/>
                             while legally securing your digital assets and digital transactions.
                         </p>
