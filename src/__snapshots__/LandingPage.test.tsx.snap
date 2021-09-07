@@ -436,10 +436,9 @@ exports[`renders create 1`] = `
           <strong>
             identified
           </strong>
+           Judicial Officers,
           <br />
-          legal experts such as Judicial Officers and Lawyers, who apply a
-          <br />
-          strict code of ethics and are 
+          who apply a strict code of ethics and are 
           <strong>
             legaly responsible
           </strong>
@@ -980,10 +979,9 @@ exports[`renders install 1`] = `
           <strong>
             identified
           </strong>
+           Judicial Officers,
           <br />
-          legal experts such as Judicial Officers and Lawyers, who apply a
-          <br />
-          strict code of ethics and are 
+          who apply a strict code of ethics and are 
           <strong>
             legaly responsible
           </strong>
