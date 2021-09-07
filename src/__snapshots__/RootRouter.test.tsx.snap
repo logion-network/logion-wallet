@@ -6,7 +6,9 @@ exports[`Given LO address, when rendering, then route to wallet or redirect 1`] 
     <Route
       path="/legal-officer"
     >
-      <LegalOfficerWallet />
+      <RenderOrRedirectToLogin
+        render={[Function]}
+      />
     </Route>
     <Route
       path="/user"
@@ -14,6 +16,11 @@ exports[`Given LO address, when rendering, then route to wallet or redirect 1`] 
       <Redirect
         to="/legal-officer"
       />
+    </Route>
+    <Route
+      path="/login"
+    >
+      <Login />
     </Route>
     <Route
       path="/"
@@ -26,7 +33,38 @@ exports[`Given LO address, when rendering, then route to wallet or redirect 1`] 
 </BrowserRouter>
 `;
 
-exports[`Given empty current address, when rendering, then null 1`] = `null`;
+exports[`Given empty current address, when rendering, then null 1`] = `
+<BrowserRouter>
+  <Switch>
+    <Route
+      path="/legal-officer"
+    >
+      <Redirect
+        to="/user"
+      />
+    </Route>
+    <Route
+      path="/user"
+    >
+      <RenderOrRedirectToLogin
+        render={[Function]}
+      />
+    </Route>
+    <Route
+      path="/login"
+    >
+      <Login />
+    </Route>
+    <Route
+      path="/"
+    >
+      <Redirect
+        to="/user"
+      />
+    </Route>
+  </Switch>
+</BrowserRouter>
+`;
 
 exports[`Given legal officer, when rendering, then route to wallet or redirect 1`] = `
 <BrowserRouter>
@@ -41,7 +79,14 @@ exports[`Given legal officer, when rendering, then route to wallet or redirect 1
     <Route
       path="/user"
     >
-      <Wallet />
+      <RenderOrRedirectToLogin
+        render={[Function]}
+      />
+    </Route>
+    <Route
+      path="/login"
+    >
+      <Login />
     </Route>
     <Route
       path="/"
@@ -67,7 +112,14 @@ exports[`Given no injected accounts, when rendering, then null 1`] = `
     <Route
       path="/user"
     >
-      <Wallet />
+      <RenderOrRedirectToLogin
+        render={[Function]}
+      />
+    </Route>
+    <Route
+      path="/login"
+    >
+      <Login />
     </Route>
     <Route
       path="/"
@@ -93,7 +145,14 @@ exports[`Given null injected accounts, when rendering, then null 1`] = `
     <Route
       path="/user"
     >
-      <Wallet />
+      <RenderOrRedirectToLogin
+        render={[Function]}
+      />
+    </Route>
+    <Route
+      path="/login"
+    >
+      <Login />
     </Route>
     <Route
       path="/"
@@ -119,7 +178,14 @@ exports[`Given wallet user, when rendering, then route to wallet or redirect 1`]
     <Route
       path="/user"
     >
-      <Wallet />
+      <RenderOrRedirectToLogin
+        render={[Function]}
+      />
+    </Route>
+    <Route
+      path="/login"
+    >
+      <Login />
     </Route>
     <Route
       path="/"

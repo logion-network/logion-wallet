@@ -2,21 +2,24 @@ jest.mock("./Model");
 jest.mock('../logion-chain');
 jest.mock('../logion-chain/Signature');
 jest.mock("../common/Model");
+jest.mock("../common/CommonContext");
 
 import { useEffect, useState } from 'react';
 import { LegalOfficerContextProvider, useLegalOfficerContext } from './LegalOfficerContext';
 import { render, waitFor } from '@testing-library/react';
-import { DEFAULT_LEGAL_OFFICER, rejectRequest } from './__mocks__/ModelMock';
+import { rejectRequest } from './__mocks__/ModelMock';
 import { setFetchRequests } from '../common/__mocks__/ModelMock';
 import { ISO_DATETIME_PATTERN } from '../logion-chain/datetime';
+import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../common/__mocks__/CommonContextMock';
 
 beforeEach(() => {
+    setCurrentAddress(DEFAULT_LEGAL_OFFICER_ACCOUNT);
     setFetchRequests(jest.fn().mockImplementation(spec => {
         if(spec.status === "PENDING") {
             return Promise.resolve([
                 {
                     id: "1",
-                    legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
+                    legalOfficerAddress: DEFAULT_LEGAL_OFFICER_ACCOUNT.address,
                     requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
                     requestedTokenName: "TOKEN1",
                     bars: 1,
@@ -27,7 +30,7 @@ beforeEach(() => {
             return Promise.resolve([
                 {
                     id: "2",
-                    legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
+                    legalOfficerAddress: DEFAULT_LEGAL_OFFICER_ACCOUNT.address,
                     requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
                     requestedTokenName: "TOKEN2",
                     bars: 1,

@@ -29,7 +29,7 @@ export interface Props {
 
 export default function ProtectionRecoveryRequest(props: Props) {
     const { api } = useLogionChain();
-    const { currentAddress, colorTheme } = useCommonContext();
+    const { addresses, colorTheme } = useCommonContext();
     const { refreshRequests, recoveryConfig, recoveredAddress } = useUserContext();
     const [ confirmButtonEnabled, setConfirmButtonEnabled ] = useState(props.request.status === "PENDING");
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
@@ -38,24 +38,24 @@ export default function ProtectionRecoveryRequest(props: Props) {
     const activateProtection = useCallback(() => {
         const signAndSubmit: SignAndSubmit = (setResult, setError) => createRecovery({
             api: api!,
-            signerId: currentAddress,
+            signerId: addresses!.currentAddress!.address,
             legalOfficers: props.request.decisions.map(decision => decision.legalOfficerAddress),
             callback: setResult,
             errorCallback: setError
         });
         setSignAndSubmit(() => signAndSubmit);
-    }, [ api, currentAddress, props, setSignAndSubmit ]);
+    }, [ api, addresses, props, setSignAndSubmit ]);
 
     const doClaimRecovery = useCallback(() => {
         const signAndSubmit: SignAndSubmit = (setResult, setError) => claimRecovery({
             api: api!,
-            signerId: currentAddress,
+            signerId: addresses!.currentAddress!.address,
             callback: setResult,
             errorCallback: setError,
             addressToRecover: props.request.addressToRecover!,
         });
         setSignAndSubmitClaim(() => signAndSubmit);
-    }, [ api, currentAddress, props, setSignAndSubmitClaim ]);
+    }, [ api, addresses, props, setSignAndSubmitClaim ]);
 
     if(recoveryConfig === null || recoveredAddress === undefined) {
         return null;

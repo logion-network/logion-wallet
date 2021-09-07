@@ -3,25 +3,8 @@
     color: white;
 }
 
-.LandingPage .logo {
-    display: flex;
-    align-items: flex-end;
-}
-
-.LandingPage .logo p {
-    margin: 0;
-    margin-left: 25px;
-    font-size: 16px;
-}
-
 .LandingPage .header-container {
     position: relative;
-}
-
-.LandingPage .header-container .logo {
-    position: absolute;
-    top: 40px;
-    left: 40px;
 }
 
 .LandingPage header .call {

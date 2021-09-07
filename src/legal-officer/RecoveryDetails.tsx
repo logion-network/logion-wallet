@@ -47,7 +47,7 @@ export default function RecoveryDetails() {
         (async function() {
             const signedOn = moment();
             const attributes = [ requestId ];
-            const currentAddress = addresses!.currentAddress.address;
+            const currentAddress = addresses!.currentAddress!.address;
             const signature = await sign({
                 signerId: currentAddress,
                 resource: 'protection-request',
@@ -77,7 +77,7 @@ export default function RecoveryDetails() {
         (async function() {
             const signedOn = moment();
             const attributes = [ requestId ];
-            const currentAddress = addresses!.currentAddress.address;
+            const currentAddress = addresses!.currentAddress!.address;
             const signature = await sign({
                 signerId: currentAddress,
                 resource: 'protection-request',

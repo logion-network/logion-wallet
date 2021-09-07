@@ -112,7 +112,7 @@ export default function Transactions(props: Props) {
 
     function transferBalance(transaction: Transaction): PrefixedNumber {
         const amount = prefixedLogBalance(transaction.transferValue);
-        if(transaction.from === addresses!.currentAddress.address) {
+        if(transaction.from === addresses!.currentAddress!.address) {
             return amount.negate();
         } else {
             return amount;

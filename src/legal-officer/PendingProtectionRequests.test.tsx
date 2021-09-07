@@ -2,16 +2,21 @@ jest.mock('./LegalOfficerContext');
 jest.mock('../logion-chain');
 jest.mock('../logion-chain/Signature');
 jest.mock('./Model');
+jest.mock('../common/CommonContext');
 
 import { shallowRender } from '../tests';
 import PendingProtectionRequests from './PendingProtectionRequests';
 import { setPendingProtectionRequests } from './__mocks__/LegalOfficerContextMock';
 import { setAcceptProtectionRequest, setRejectProtectionRequest } from './__mocks__/ModelMock';
-import { ProtectionRequest, DEFAULT_LEGAL_OFFICER } from './Types';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ISO_DATETIME_PATTERN } from '../logion-chain/datetime';
 import { PENDING_PROTECTION_REQUESTS } from './TestData';
+import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../common/__mocks__/CommonContextMock';
+
+beforeEach(() => {
+    setCurrentAddress(DEFAULT_LEGAL_OFFICER_ACCOUNT);
+});
 
 test("Renders null with no data", () => {
     const tree = shallowRender(<PendingProtectionRequests recovery={ false } />);

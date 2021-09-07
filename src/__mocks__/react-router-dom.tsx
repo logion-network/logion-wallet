@@ -7,10 +7,12 @@ export const NavLink = () => <div></div>
 
 import {
     useParams,
-    useHistory
+    useHistory,
+    useLocation,
 } from './ReactRouterMock';
 
 export {
     useParams,
     useHistory,
+    useLocation,
 };

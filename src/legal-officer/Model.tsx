@@ -88,7 +88,7 @@ export async function acceptProtectionRequest(parameters: AcceptProtectionReques
     });
 }
 
-export function decision(legalOfficerAddress: string, decisions: LegalOfficerDecision[]): (LegalOfficerDecision | null) {
+export function decision(legalOfficerAddress: string | undefined, decisions: LegalOfficerDecision[]): (LegalOfficerDecision | null) {
     for(let i = 0; i < decisions.length; ++i) {
         const decision = decisions[i];
         if(decision.legalOfficerAddress === legalOfficerAddress) {

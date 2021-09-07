@@ -3,8 +3,12 @@ export const ANOTHER_LEGAL_OFFICER = "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJ
 
 const LEGAL_OFFICERS: string[] = [ DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER ];
 
-export function isLegalOfficer(address: string): boolean {
-    return LEGAL_OFFICERS.includes(address);
+export function isLegalOfficer(address: string | undefined): boolean {
+    if(address === undefined) {
+        return false;
+    } else {
+        return LEGAL_OFFICERS.includes(address);
+    }
 }
 
 export interface LegalOfficer {

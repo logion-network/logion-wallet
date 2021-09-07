@@ -4,12 +4,15 @@ import Tooltip from 'react-bootstrap/Tooltip';
 
 import { AccountAddress as AddressType } from './types/Addresses';
 import { useCommonContext } from './CommonContext';
+import Icon from './Icon';
 
 import './AccountAddress.css';
 
 export interface Props {
-    hint?: string,
-    address: AddressType,
+    hint?: string;
+    address: AddressType;
+    disabled: boolean;
+    login?: () => void;
 }
 
 export default function AccountAddress(props: Props) {
@@ -27,7 +30,7 @@ export default function AccountAddress(props: Props) {
     }
 
     return (
-        <div className="AccountAddress">
+        <div className={ "AccountAddress" + ( props.disabled ? " disabled" : "" ) }>
             <div
                 className="icon"
                 style={ style }
@@ -78,6 +81,25 @@ export default function AccountAddress(props: Props) {
                     </OverlayTrigger>
                 </div>
             </div>
+            {
+                props.login !== undefined && props.address.token === undefined &&
+                <div
+                    className="login"
+                >
+                    <div
+                        className="login-button"
+                        onClick={ props.login }
+                        style={{
+                            border: `1px solid ${colorTheme.accounts.foreground}`
+                        }}
+                    >
+                        <Icon
+                            icon={{ id: "forward", hasVariants: true }}
+                            colorThemeType={ colorTheme.type }
+                        />
+                    </div>
+                </div>
+            }
         </div>
     );
 }

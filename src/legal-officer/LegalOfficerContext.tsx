@@ -51,7 +51,7 @@ export interface Props {
 }
 
 export function LegalOfficerContextProvider(props: Props) {
-    const { currentAddress, colorTheme, setColorTheme } = useCommonContext();
+    const { addresses, colorTheme, setColorTheme } = useCommonContext();
     const [ contextValue, setContextValue ] = useState<LegalOfficerContext>(initialContextValue());
     const [ fetchedInitially, setFetchedInitially ] = useState<boolean>(false);
     const [ refreshing, setRefreshing ] = useState<boolean>(false);
@@ -63,6 +63,7 @@ export function LegalOfficerContextProvider(props: Props) {
     }, [ colorTheme, setColorTheme ]);
 
     const refreshRequests = useCallback(() => {
+        const currentAddress = addresses!.currentAddress!.address;
         async function fetchAndSetAll() {
             const pendingTokenizationRequests = await fetchRequests({
                 legalOfficerAddress: currentAddress,
@@ -119,7 +120,7 @@ export function LegalOfficerContextProvider(props: Props) {
             });
         };
         fetchAndSetAll();
-    }, [currentAddress, contextValue, setContextValue]);
+    }, [ addresses, contextValue, setContextValue ]);
 
     useEffect(() => {
         if(contextValue.rejectRequest === null) {
@@ -130,7 +131,7 @@ export function LegalOfficerContextProvider(props: Props) {
                 ];
                 const signedOn = moment();
                 const signature = await sign({
-                    signerId: currentAddress,
+                    signerId: addresses!.currentAddress!.address,
                     resource: 'token-request',
                     operation: 'reject',
                     signedOn,
@@ -146,7 +147,7 @@ export function LegalOfficerContextProvider(props: Props) {
             };
             setContextValue({...contextValue, rejectRequest});
         }
-    }, [currentAddress, refreshRequests, contextValue, setContextValue]);
+    }, [ addresses, refreshRequests, contextValue, setContextValue ]);
 
     useEffect(() => {
         if(contextValue.refreshRequests === null) {
@@ -162,11 +163,11 @@ export function LegalOfficerContextProvider(props: Props) {
     }, [fetchedInitially, refreshRequests]);
 
     useEffect(() => {
-        if(contextValue.dataAddress !== null && contextValue.dataAddress !== currentAddress && !refreshing) {
+        if(contextValue.dataAddress !== null && contextValue.dataAddress !== addresses?.currentAddress?.address && !refreshing) {
             setRefreshing(true);
             refreshRequests();
         }
-    }, [ contextValue, currentAddress, refreshRequests, setRefreshing, refreshing ]);
+    }, [ contextValue, addresses, refreshRequests, setRefreshing, refreshing ]);
 
     return (
         <LegalOfficerContextObject.Provider value={contextValue}>

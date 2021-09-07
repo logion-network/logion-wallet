@@ -15,12 +15,13 @@ interface Balances {
 }
 
 export default function MyTokens() {
-    const { currentAddress } = useCommonContext();
+    const { addresses } = useCommonContext();
     const { api } = useLogionChain();
     const [ balances, setBalances ] = useState<Balances | null>(null);
 
     useEffect(() => {
-        if(currentAddress !== "" &&
+        const currentAddress = addresses?.currentAddress?.address;
+        if(currentAddress !== undefined &&
                 (balances === null || balances.accountId !== currentAddress)) {
 
             const accountId = currentAddress;
@@ -38,7 +39,7 @@ export default function MyTokens() {
                 });
             })();
         }
-    }, [ api, balances, currentAddress, setBalances ]);
+    }, [ api, balances, addresses, setBalances ]);
 
     const tokens: AssetWithBalance[] = (balances !== null && balances.balances !== undefined) ? balances.balances.filter(token => Number(token.balance) > 0) : [];
     return (

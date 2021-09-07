@@ -37,7 +37,7 @@ export interface Props {
 }
 
 export default function PendingProtectionRequests(props: Props) {
-    const { currentAddress } = useCommonContext();
+    const { addresses } = useCommonContext();
     const { pendingProtectionRequests, refreshRequests, pendingRecoveryRequests } = useLegalOfficerContext();
     const [ rejectReason, setRejectReason ] = useState<string>("");
     const [ reviewState, setReviewState ] = useState<ReviewState>(NO_REVIEW_STATE);
@@ -48,6 +48,7 @@ export default function PendingProtectionRequests(props: Props) {
     }, [ setReviewState ]);
 
     const rejectAndCloseModal = useCallback(() => {
+        const currentAddress = addresses!.currentAddress!.address;
         (async function() {
             const requestId = reviewState.request!.id;
             const signedOn = moment();
@@ -69,9 +70,10 @@ export default function PendingProtectionRequests(props: Props) {
             setReviewState(NO_REVIEW_STATE);
             refreshRequests!();
         })();
-    }, [ reviewState, currentAddress, rejectReason, setReviewState, refreshRequests ]);
+    }, [ reviewState, addresses, rejectReason, setReviewState, refreshRequests ]);
 
     const acceptAndCloseModal = useCallback(() => {
+        const currentAddress = addresses!.currentAddress!.address;
         (async function() {
             const requestId = reviewState.request!.id;
             const signedOn = moment();
@@ -92,7 +94,7 @@ export default function PendingProtectionRequests(props: Props) {
             setReviewState(NO_REVIEW_STATE);
             refreshRequests!();
         })();
-    }, [ reviewState, currentAddress, setReviewState, refreshRequests ]);
+    }, [ reviewState, addresses, setReviewState, refreshRequests ]);
 
     if (pendingProtectionRequests === null || pendingRecoveryRequests === null) {
         return null;
@@ -119,7 +121,7 @@ export default function PendingProtectionRequests(props: Props) {
             {
                 header: "Status",
                 render: request => <ProtectionRequestStatus
-                    decision={ decision(currentAddress, request.decisions)!.status}
+                    decision={ decision(addresses?.currentAddress?.address, request.decisions)!.status}
                     status={ request.status }
                 />,
                 width: "140px",
@@ -184,7 +186,7 @@ export default function PendingProtectionRequests(props: Props) {
             {
                 header: "Status",
                 render: request => <ProtectionRequestStatus
-                    decision={ decision(currentAddress, request.decisions)!.status}
+                    decision={ decision(addresses?.currentAddress?.address, request.decisions)!.status}
                     status={ request.status }
                 />,
                 width: "140px",

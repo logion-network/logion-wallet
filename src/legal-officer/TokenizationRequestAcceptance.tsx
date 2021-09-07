@@ -63,7 +63,7 @@ export interface Props {
 
 export default function TokenizationRequestAcceptance(props: Props) {
     const { api } = useLogionChain();
-    const { currentAddress } = useCommonContext();
+    const { addresses } = useCommonContext();
     const { refreshRequests } = useLegalOfficerContext();
 
     const [ acceptState, setAcceptState ] = useState<AcceptState>({status: AcceptStatus.NONE});
@@ -120,7 +120,7 @@ export default function TokenizationRequestAcceptance(props: Props) {
             const proceed = async () => {
                 const { assetId, unsubscriber } = await createAsset({
                     api: api!,
-                    signerId: currentAddress,
+                    signerId: addresses!.currentAddress!.address,
                     callback: setAssetCreationResult,
                     errorCallback: setAssetCreationError,
                 });
@@ -150,7 +150,7 @@ export default function TokenizationRequestAcceptance(props: Props) {
         setAcceptState,
         api,
         props.requestToAccept,
-        currentAddress,
+        addresses,
         setAssetCreationResult,
         setAssetCreationError,
     ]);
@@ -163,7 +163,7 @@ export default function TokenizationRequestAcceptance(props: Props) {
                 await unsubscribe(assetCreationUnsubscriber!);
                 const signAndSubmit: SignAndSubmit = (setResult, setError) => setAssetMetadata({
                     api: api!,
-                    signerId: currentAddress,
+                    signerId: addresses!.currentAddress!.address,
                     callback: setResult,
                     errorCallback: setError,
                     assetId: acceptState.assetId!,
@@ -181,7 +181,7 @@ export default function TokenizationRequestAcceptance(props: Props) {
         setStatus,
         setAcceptState,
         api,
-        currentAddress,
+        addresses,
         props.requestToAccept,
         assetCreationUnsubscriber,
     ]);
@@ -192,7 +192,7 @@ export default function TokenizationRequestAcceptance(props: Props) {
             setStatus(AcceptStatus.MINTING);
             const signAndSubmit: SignAndSubmit = (setResult, setError) => mintTokens({
                 api: api!,
-                signerId: currentAddress,
+                signerId: addresses!.currentAddress!.address,
                 beneficiary: props.requestToAccept!.requesterAddress,
                 callback: setResult,
                 errorCallback: setError,
@@ -206,7 +206,7 @@ export default function TokenizationRequestAcceptance(props: Props) {
         setStatus,
         setAcceptState,
         api,
-        currentAddress,
+        addresses,
         props.requestToAccept,
     ]);
 

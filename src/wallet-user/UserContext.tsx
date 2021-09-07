@@ -150,7 +150,7 @@ export interface Props {
 }
 
 export function UserContextProvider(props: Props) {
-    const { currentAddress, colorTheme, setColorTheme } = useCommonContext();
+    const { addresses, colorTheme, setColorTheme } = useCommonContext();
     const { api, apiState } = useLogionChain();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
@@ -179,6 +179,7 @@ export function UserContextProvider(props: Props) {
 
     const refreshRequests = useCallback((clearBeforeRefresh: boolean) => {
         if(api !== null) {
+            const currentAddress = addresses!.currentAddress!.address;
             dispatch({
                 type: "FETCH_IN_PROGRESS",
                 dataAddress: currentAddress,
@@ -244,16 +245,17 @@ export function UserContextProvider(props: Props) {
                 });
             })();
         }
-    }, [ api, dispatch, currentAddress ]);
+    }, [ api, dispatch, addresses ]);
 
     useEffect(() => {
         if(apiState === "READY"
-                && currentAddress !== ''
-                && contextValue.dataAddress !== currentAddress
-                && contextValue.fetchForAddress !== currentAddress) {
+                && addresses !== null
+                && addresses.currentAddress !== undefined
+                && contextValue.dataAddress !== addresses.currentAddress.address
+                && contextValue.fetchForAddress !== addresses.currentAddress.address) {
             refreshRequests(true);
         }
-    }, [ apiState, contextValue, currentAddress, refreshRequests, dispatch ]);
+    }, [ apiState, contextValue, addresses, refreshRequests, dispatch ]);
 
     useEffect(() => {
         if(contextValue.refreshRequests === null && apiState === "READY") {

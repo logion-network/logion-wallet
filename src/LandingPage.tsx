@@ -9,6 +9,8 @@ import Button from './common/Button';
 import Dialog from './common/Dialog';
 import Icon from './common/Icon';
 
+import AbsoluteLogo from './AbsoluteLogo';
+
 import './LandingPage.css';
 
 export interface Props {
@@ -34,7 +36,7 @@ export default function LandingPage(props: Props) {
     return (
         <div className="LandingPage">
             <Container fluid className="header-container">
-                <Logo />
+                <AbsoluteLogo />
                 <Container>
                     <header>
                         <div className="call">
@@ -233,7 +235,7 @@ export default function LandingPage(props: Props) {
                     <Container>
                         <Row>
                             <Col>
-                                <Logo />
+                                <AbsoluteLogo position={{type: 'relative', top: "0", left: "0"}} />
                             </Col>
                             <Col>
                                 <div className="contact">
@@ -255,15 +257,6 @@ export default function LandingPage(props: Props) {
                     </Container>
                 </Container>
             </footer>
-        </div>
-    );
-}
-
-function Logo() {
-    return (
-        <div className="logo">
-            <img src={process.env.PUBLIC_URL + "/logo.png"} alt="logo" height="70" />
-            <p>One blockchain <br/>to trust them all</p>
         </div>
     );
 }

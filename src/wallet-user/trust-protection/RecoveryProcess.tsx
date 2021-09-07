@@ -76,7 +76,7 @@ export default function RecoveryProcess() {
         const amount = balanceFromAmount(Number(recoveredToken!.balance), recoveredToken!.asset.metadata.decimals);
         const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSendAsRecovered({
             api: api!,
-            signerId: addresses!.currentAddress.address,
+            signerId: addresses!.currentAddress!.address,
             callback: setResult,
             errorCallback: setError,
             recoveredAccountId: recoveredAddress!,
@@ -84,7 +84,7 @@ export default function RecoveryProcess() {
                 api: api!,
                 assetId: recoveredToken!.asset.assetId,
                 amount,
-                target: addresses!.currentAddress.address,
+                target: addresses!.currentAddress!.address,
             }),
         });
         setSignAndSubmit(() => signAndSubmit);
@@ -213,7 +213,7 @@ export default function RecoveryProcess() {
                     <p>
                         You are about to transfer { recoveredToken?.balance } units of
                         token { recoveredToken?.asset.metadata.symbol } to
-                        account { addresses?.currentAddress.address }.
+                        account { addresses?.currentAddress?.address }.
                     </p>
                     <ExtrinsicSubmitter
                         id="transfer"
