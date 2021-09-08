@@ -1,0 +1,23 @@
+.Checkbox {
+    content: " ";
+    cursor: pointer;
+    height: 30px;
+    width: 30px;
+    border-radius: 3px;
+    border: 1px solid #1b307a;
+    position: relative;
+}
+
+.Checkbox.checked:after {
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-image: url("../img/check.svg");
+    background-size: 70% 70%;
+    background-color: #1b307a;
+    background-repeat: no-repeat;
+    background-position: center;
+}

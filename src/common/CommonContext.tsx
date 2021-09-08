@@ -4,28 +4,34 @@ import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import { useLogionChain } from '../logion-chain';
 import { CoinBalance, getBalances } from '../logion-chain/Balances';
 
-import Addresses, { buildAddresses } from './types/Addresses';
+import Addresses, { buildAddresses, AccountTokens, Token } from './types/Addresses';
 import { Children } from './types/Helpers';
 import { Transaction } from './types/ModelTypes';
 import { getTransactions } from "./Model";
 import { ColorTheme, DEFAULT_COLOR_THEME } from "./ColorTheme";
 
+const DEFAULT_NOOP = () => {};
+
 export interface CommonContext {
-    currentAddress: string,
-    selectAddress: ((address: string) => void) | null,
-    addresses: Addresses | null,
-    injectedAccounts: InjectedAccountWithMeta[] | null,
-    fetchForAddress: string | null,
-    dataAddress: string | null,
-    balances: CoinBalance[] | null,
-    transactions: Transaction[] | null,
-    colorTheme: ColorTheme,
-    setColorTheme: ((colorTheme: ColorTheme) => void) | null,
+    selectAddress: ((address: string) => void) | null;
+    addresses: Addresses | null;
+    fetchForAddress: string | null;
+    dataAddress: string | null;
+    balances: CoinBalance[] | null;
+    transactions: Transaction[] | null;
+    colorTheme: ColorTheme;
+    setColorTheme: ((colorTheme: ColorTheme) => void) | null;
+    setToken: (address: string, token: Token) => void;
+    logout: () => void;
 }
 
-function initialContextValue(): CommonContext {
+interface FullCommonContext extends CommonContext {
+    injectedAccounts: InjectedAccountWithMeta[] | null;
+    tokens: AccountTokens;
+}
+
+function initialContextValue(): FullCommonContext {
     return {
-        currentAddress: "",
         selectAddress: null,
         addresses: null,
         injectedAccounts: null,
@@ -35,10 +41,13 @@ function initialContextValue(): CommonContext {
         transactions: null,
         colorTheme: DEFAULT_COLOR_THEME,
         setColorTheme: null,
+        tokens: {},
+        setToken: DEFAULT_NOOP,
+        logout: DEFAULT_NOOP,
     }
 }
 
-const CommonContextObject: React.Context<CommonContext> = React.createContext(initialContextValue());
+const CommonContextObject: React.Context<FullCommonContext> = React.createContext(initialContextValue());
 
 export interface Props {
     children: Children
@@ -50,13 +59,16 @@ type ActionType = 'SET_SELECT_ADDRESS'
     | 'FETCH_IN_PROGRESS'
     | 'SET_DATA'
     | 'SET_COLOR_THEME'
-    | 'SET_SET_COLOR_THEME';
+    | 'SET_SET_COLOR_THEME'
+    | 'SET_SET_TOKEN'
+    | 'SET_TOKEN'
+    | 'SET_LOGOUT'
+    | 'LOGOUT';
 
 interface Action {
     type: ActionType,
     selectAddress?: ((address: string) => void),
     newAddress?: string,
-    currentAddress?: string,
     addresses?: Addresses,
     injectedAccounts?: InjectedAccountWithMeta[],
     dataAddress?: string,
@@ -64,9 +76,15 @@ interface Action {
     transactions?: Transaction[],
     newColorTheme?: ColorTheme,
     setColorTheme?: ((colorTheme: ColorTheme) => void),
+    setToken?: (address: string, token: Token) => void,
+    newToken?: {
+        address: string,
+        token: Token
+    },
+    logout?: () => void,
 }
 
-const reducer: Reducer<CommonContext, Action> = (state: CommonContext, action: Action): CommonContext => {
+const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, action: Action): FullCommonContext => {
     switch (action.type) {
         case 'SET_SELECT_ADDRESS':
             return {
@@ -76,14 +94,12 @@ const reducer: Reducer<CommonContext, Action> = (state: CommonContext, action: A
         case 'SELECT_ADDRESS':
             return {
                 ...state,
-                currentAddress: action.newAddress!,
-                addresses: buildAddresses(state.injectedAccounts!, action.newAddress!),
+                addresses: buildAddresses(state.injectedAccounts!, action.newAddress!, state.tokens),
             };
         case 'SET_ADDRESSES':
             return {
                 ...state,
                 injectedAccounts: action.injectedAccounts!,
-                currentAddress: action.currentAddress!,
                 addresses: action.addresses!,
             };
         case 'FETCH_IN_PROGRESS':
@@ -115,6 +131,30 @@ const reducer: Reducer<CommonContext, Action> = (state: CommonContext, action: A
                 ...state,
                 colorTheme: action.newColorTheme!,
             };
+        case 'SET_SET_TOKEN':
+            return {
+                ...state,
+                setToken: action.setToken!,
+            };
+        case 'SET_TOKEN':
+            const tokens = { ...state.tokens };
+            tokens[action.newToken!.address] = action.newToken!.token;
+            return {
+                ...state,
+                tokens,
+                addresses: buildAddresses(state.injectedAccounts!, state.addresses?.currentAddress?.address, tokens),
+            };
+        case 'SET_LOGOUT':
+            return {
+                ...state,
+                logout: action.logout!,
+            };
+        case 'LOGOUT':
+            return {
+                ...state,
+                tokens: {},
+                addresses: buildAddresses(state.injectedAccounts!, undefined, {}),
+            };
         default:
             /* istanbul ignore next */
             throw new Error(`Unknown type: ${action.type}`);
@@ -126,8 +166,10 @@ export function CommonContextProvider(props: Props) {
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
     const refreshRequests = useCallback(() => {
-        if(api !== null && contextValue !== null && contextValue.currentAddress !== '') {
-            const currentAddress = contextValue.currentAddress;
+        if(api !== null && contextValue !== null
+                && contextValue.addresses !== null
+                && contextValue.addresses.currentAddress !== undefined) {
+            const currentAddress = contextValue.addresses.currentAddress.address;
             dispatch({
                 type: "FETCH_IN_PROGRESS",
                 dataAddress: currentAddress,
@@ -155,9 +197,10 @@ export function CommonContextProvider(props: Props) {
 
     useEffect(() => {
         if(apiState === "READY"
-                && contextValue.currentAddress !== ''
-                && contextValue.dataAddress !== contextValue.currentAddress
-                && contextValue.fetchForAddress !== contextValue.currentAddress) {
+                && contextValue.addresses !== null
+                && contextValue.addresses.currentAddress !== undefined
+                && contextValue.dataAddress !== contextValue.addresses.currentAddress.address
+                && contextValue.fetchForAddress !== contextValue.addresses.currentAddress.address) {
             refreshRequests();
         }
     }, [ apiState, contextValue, refreshRequests, dispatch ]);
@@ -196,19 +239,41 @@ export function CommonContextProvider(props: Props) {
         if(contextValue.injectedAccounts !== injectedAccounts
             && injectedAccounts !== null) {
 
-            let selectedAddress = contextValue.currentAddress;
-            if(selectedAddress === "" && injectedAccounts.length > 0) {
-                selectedAddress = injectedAccounts[0].address;
-            }
-
             dispatch({
                 type: 'SET_ADDRESSES',
                 injectedAccounts,
-                currentAddress: selectedAddress,
-                addresses: buildAddresses(injectedAccounts, selectedAddress)
+                addresses: buildAddresses(injectedAccounts, contextValue.addresses?.currentAddress?.address, contextValue.tokens)
             });
         }
     }, [ injectedAccounts, contextValue ]);
+
+    useEffect(() => {
+        if(contextValue.setToken === DEFAULT_NOOP) {
+            const setToken = (address: string, token: Token) => {
+                dispatch({
+                    type: 'SET_TOKEN',
+                    newToken: {
+                        address,
+                        token
+                    },
+                })
+            }
+            dispatch({
+                type: 'SET_SET_TOKEN',
+                setToken,
+            });
+        }
+    }, [ contextValue ]);
+
+    useEffect(() => {
+        if(contextValue.logout === DEFAULT_NOOP) {
+            const logout = () => dispatch({ type: 'LOGOUT' });
+            dispatch({
+                type: 'SET_LOGOUT',
+                logout,
+            });
+        }
+    }, [ contextValue ]);
 
     return (
         <CommonContextObject.Provider value={contextValue}>
@@ -218,5 +283,5 @@ export function CommonContextProvider(props: Props) {
 }
 
 export function useCommonContext(): CommonContext {
-    return {...useContext(CommonContextObject)};
+    return useContext(CommonContextObject);
 }

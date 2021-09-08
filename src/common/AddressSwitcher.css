@@ -36,13 +36,23 @@
 }
 
 .AddressSwitcher .dropdown-menu .dropdown-item {
-    padding-top: 10px;
-    padding-bottom: 10px;
     padding-left: 0;
     padding-right: 0;
     margin: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
-.AddressSwitcher .dropdown-menu .dropdown-item:focus {
+.AddressSwitcher .dropdown-menu .dropdown-item:focus, .AddressSwitcher .dropdown-menu .dropdown-item:hover {
     background-color: transparent;
+}
+
+.AddressSwitcher .dropdown-menu .dropdown-item.logout {
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.AddressSwitcher.light .dropdown-toggle:after {
+    color: black;
 }

@@ -1,12 +1,18 @@
 jest.mock('./LegalOfficerContext');
 jest.mock('../logion-chain');
 jest.mock('./Model');
+jest.mock('../common/CommonContext');
 
 import { shallowRender } from '../tests';
 import PendingTokenizationRequests from './PendingTokenizationRequests';
 import { setPendingRequests, setRejectRequest } from './__mocks__/LegalOfficerContextMock';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../common/__mocks__/CommonContextMock';
+
+beforeEach(() => {
+    setCurrentAddress(DEFAULT_LEGAL_OFFICER_ACCOUNT);
+});
 
 test("Renders null with no data", () => {
     const tree = shallowRender(<PendingTokenizationRequests />);

@@ -1,65 +1,39 @@
 jest.mock('./logion-chain');
 jest.mock('./common/CommonContext');
 
-import { setContextMock } from './logion-chain/__mocks__/LogionChainMock';
-import { shallowRender, mockAccount, act } from './tests';
+import { shallowRender, act } from './tests';
 
 import RootRouter from './RootRouter';
-import { DEFAULT_LEGAL_OFFICER } from './common/types/LegalOfficer';
-import { setCurrentAddress } from './common/__mocks__/CommonContextMock';
+import { setAddresses, setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT, DEFAULT_USER_ACCOUNT } from './common/__mocks__/CommonContextMock';
 
-test('Given null injected accounts, when rendering, then null', () => {
-    setContextMock({
-        injectedAccounts: null,
-    });
-    let tree: any;
-    act(() => { tree = shallowRender(<RootRouter />) });
-    expect(tree).toMatchSnapshot();
-});
-
-test('Given no injected accounts, when rendering, then null', () => {
-    setContextMock({
-        injectedAccounts: [],
-    });
-    let tree: any;
-    act(() => { tree = shallowRender(<RootRouter />) });
-    expect(tree).toMatchSnapshot();
-});
-
-test('Given legal officer, when rendering, then route to wallet or redirect', () => {
-    setContextMock({
-        injectedAccounts: [
-            mockAccount(DEFAULT_LEGAL_OFFICER, "Account name")
-        ]
-    });
-
-    let tree: any;
-    act(() => { tree = shallowRender(<RootRouter />) });
-
-    expect(tree).toMatchSnapshot();
-});
-
-test('Given wallet user, when rendering, then route to wallet or redirect', () => {
-    setContextMock({
-        injectedAccounts: [
-            mockAccount("userAddress", "Account name")
-        ]
-    });
-
-    let tree: any;
-    act(() => { tree = shallowRender(<RootRouter />) });
-
-    expect(tree).toMatchSnapshot();
-});
-
-test('Given empty current address, when rendering, then null', () => {
-    setCurrentAddress("");
+test('Given null addresses, when rendering, then null', () => {
+    setAddresses(null);
     const tree = shallowRender(<RootRouter />);
     expect(tree).toMatchSnapshot();
 });
 
-test('Given LO address, when rendering, then route to wallet or redirect', () => {
-    setCurrentAddress(DEFAULT_LEGAL_OFFICER);
+test('Given no addresses, when rendering, then null', () => {
+    setAddresses({
+        addresses: [],
+    });
+    const tree = shallowRender(<RootRouter />);
+    expect(tree).toMatchSnapshot();
+});
+
+test('Given undefined current address, when rendering, then enable redirect to login via either legal officer or user route', () => {
+    setCurrentAddress(undefined);
+    const tree = shallowRender(<RootRouter />);
+    expect(tree).toMatchSnapshot();
+});
+
+test('Given legal officer, when rendering, then render legal officer UI or redirect to login', () => {
+    setCurrentAddress(DEFAULT_LEGAL_OFFICER_ACCOUNT);
+    const tree = shallowRender(<RootRouter />);
+    expect(tree).toMatchSnapshot();
+});
+
+test('Given wallet user, when rendering, then render user UI or redirect to login', () => {
+    setCurrentAddress(DEFAULT_USER_ACCOUNT);
     const tree = shallowRender(<RootRouter />);
     expect(tree).toMatchSnapshot();
 });

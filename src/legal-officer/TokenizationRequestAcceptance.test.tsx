@@ -1,3 +1,4 @@
+jest.mock('../common/CommonContext');
 jest.mock('./LegalOfficerContext');
 jest.mock('../logion-chain');
 jest.mock('../logion-chain/Assets');
@@ -11,13 +12,15 @@ import userEvent from '@testing-library/user-event';
 import { finalizeSubmission } from '../logion-chain/__mocks__/SignatureMock';
 import { setAcceptRequest, acceptRequest, setAssetDescription } from './__mocks__/ModelMock';
 import { ISO_DATETIME_PATTERN } from '../logion-chain/datetime';
+import { TokenizationRequest } from '../common/types/ModelTypes';
+import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../common/__mocks__/CommonContextMock';
 
 test("Renders null with no data", () => {
     const tree = shallowRender(<TokenizationRequestAcceptance requestToAccept={null} clearRequestToAccept={jest.fn()} />);
     expect(tree).toMatchSnapshot();
 });
 
-const REQUEST = {
+const REQUEST: TokenizationRequest = {
     id: "1",
     legalOfficerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
     requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
@@ -27,6 +30,7 @@ const REQUEST = {
 };
 
 test("Click on accept and proceed accepts request", async () => {
+    setCurrentAddress(DEFAULT_LEGAL_OFFICER_ACCOUNT);
     render(<TokenizationRequestAcceptance requestToAccept={REQUEST} clearRequestToAccept={jest.fn()} />);
 
     // Accept request

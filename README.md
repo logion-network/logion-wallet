@@ -27,7 +27,7 @@ and service (see [here](https://github.com/logion-network/logion-backend))
 .
 
 ```bash
-export REACT_APP_PROVIDER_SOCKET=ws://example.org:9944 ; export REACT_APP_SERVICE_URL=https://example.org:8080 ; yarn start
+export REACT_APP_PROVIDER_SOCKET=wss://example.org:9944 ; export REACT_APP_SERVICE_URL=https://example.org ; yarn start
 ```
 
 You may have to change port numbers if you are not using the default configuration.

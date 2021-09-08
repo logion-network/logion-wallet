@@ -1,7 +1,6 @@
 import { shallowRender } from '../tests';
 
 import AccountAddress from './AccountAddress';
-import { LIGHT_MODE } from '../legal-officer/Types';
 
 test("renders", () => {
     const result = shallowRender(
@@ -12,8 +11,7 @@ test("renders", () => {
                 address: "address1",
                 isLegalOfficer: false,
             }}
-            colors={ LIGHT_MODE.accounts }
-            colorThemeType="light"
+            disabled={ false }
         />
     );
     expect(result).toMatchSnapshot();

@@ -66,6 +66,11 @@
 .Button.btn.btn-warning {
     background-color: #ff8a5c !important;
     border: none;
+    color: white;
+}
+
+.Button.btn.btn-warning:hover {
+    text-decoration: underline;
 }
 
 .Button.btn.btn-danger {
@@ -85,4 +90,14 @@
 
 .Button.btn.btn-recovery:hover {
     background: linear-gradient(to top, #e95b5b, #6050dc);
+}
+
+.Button.btn.btn-salmon {
+    background-color: #e95b5b;
+    border: none;
+    color: white;
+}
+
+.Button.btn.btn-salmon:hover {
+    text-decoration: underline;
 }

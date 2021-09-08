@@ -10,7 +10,7 @@ import ProtectionRecoveryRequest from './ProtectionRecoveryRequest';
 import RecoveryProcess from './RecoveryProcess';
 
 export default function Recovery() {
-    const { currentAddress } = useCommonContext();
+    const { addresses } = useCommonContext();
     const { pendingProtectionRequests, acceptedProtectionRequests, recoveryConfig, recoveredAddress } = useUserContext();
 
     if (pendingProtectionRequests === null || acceptedProtectionRequests === null || recoveryConfig === null
@@ -19,11 +19,11 @@ export default function Recovery() {
     }
 
     const pendingProtectionRequest = findRequest({
-        address: currentAddress,
+        address: addresses!.currentAddress!.address,
         requests: pendingProtectionRequests
     });
     const acceptedProtectionRequest = findRequest({
-        address: currentAddress,
+        address: addresses!.currentAddress!.address,
         requests: acceptedProtectionRequests
     });
     const goToTrustProtection = (pendingProtectionRequest !== null && !isRecovery(pendingProtectionRequest))
