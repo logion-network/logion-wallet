@@ -4,16 +4,19 @@ function mockResponse(data: any) {
     };
 }
 
+let axiosInstance: any = {};
+
 const axios = {
 
     get: (url: string) => mockResponse({}),
     put: (url: string) => mockResponse({}),
     post: (url: string) => mockResponse({}),
+    create: () => axiosInstance,
 };
 export default axios;
 
 export function mockPut(whenUrl: string, thenData: any, thenCall?: () => void) {
-    axios.put = (url: string): any => {
+    axiosInstance.put = (url: string): any => {
         if(url === whenUrl) {
             if(thenCall !== undefined) {
                 thenCall();
@@ -24,7 +27,7 @@ export function mockPut(whenUrl: string, thenData: any, thenCall?: () => void) {
 }
 
 export function mockPost(whenUrl: string, thenData: any, thenCall?: () => void) {
-    axios.post = (url: string): any => {
+    axiosInstance.post = (url: string): any => {
         if(url === whenUrl) {
             if(thenCall !== undefined) {
                 thenCall();

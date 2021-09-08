@@ -1,4 +1,4 @@
-import axios from "axios";
+import { AxiosInstance } from "axios";
 import { Moment } from 'moment';
 import { TokenizationRequest } from "../common/types/ModelTypes";
 
@@ -11,7 +11,10 @@ export interface CreateTokenRequest {
     signedOn: Moment,
 }
 
-export async function createTokenRequest(request: CreateTokenRequest): Promise<TokenizationRequest> {
+export async function createTokenRequest(
+    axios: AxiosInstance,
+    request: CreateTokenRequest
+): Promise<TokenizationRequest> {
     const response = await axios.post("/api/token-request", request);
     return response.data;
 }

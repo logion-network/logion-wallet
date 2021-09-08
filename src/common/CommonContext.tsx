@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useReducer, Reducer, useCallback } from "react";
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
+import axios, { AxiosInstance } from 'axios';
 
 import { useLogionChain } from '../logion-chain';
 import { CoinBalance, getBalances } from '../logion-chain/Balances';
@@ -23,6 +24,7 @@ export interface CommonContext {
     setColorTheme: ((colorTheme: ColorTheme) => void) | null;
     setToken: (address: string, token: Token) => void;
     logout: () => void;
+    axios?: AxiosInstance;
 }
 
 interface FullCommonContext extends CommonContext {
@@ -91,16 +93,20 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                 ...state,
                 selectAddress: action.selectAddress!
             };
-        case 'SELECT_ADDRESS':
+        case 'SELECT_ADDRESS': {
+            const addresses = buildAddresses(state.injectedAccounts!, action.newAddress!, state.tokens);
             return {
                 ...state,
-                addresses: buildAddresses(state.injectedAccounts!, action.newAddress!, state.tokens),
+                addresses,
+                axios: buildAxiosInstance(addresses),
             };
+        }
         case 'SET_ADDRESSES':
             return {
                 ...state,
                 injectedAccounts: action.injectedAccounts!,
                 addresses: action.addresses!,
+                axios: buildAxiosInstance(action.addresses!),
             };
         case 'FETCH_IN_PROGRESS':
             return {
@@ -136,14 +142,17 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                 ...state,
                 setToken: action.setToken!,
             };
-        case 'SET_TOKEN':
+        case 'SET_TOKEN': {
             const tokens = { ...state.tokens };
             tokens[action.newToken!.address] = action.newToken!.token;
+            const addresses = buildAddresses(state.injectedAccounts!, state.addresses?.currentAddress?.address, tokens);
             return {
                 ...state,
                 tokens,
-                addresses: buildAddresses(state.injectedAccounts!, state.addresses?.currentAddress?.address, tokens),
+                addresses,
+                axios: buildAxiosInstance(addresses),
             };
+        }
         case 'SET_LOGOUT':
             return {
                 ...state,
@@ -154,10 +163,24 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                 ...state,
                 tokens: {},
                 addresses: buildAddresses(state.injectedAccounts!, undefined, {}),
+                axios: undefined,
             };
         default:
             /* istanbul ignore next */
             throw new Error(`Unknown type: ${action.type}`);
+    }
+}
+
+function buildAxiosInstance(addresses: Addresses): AxiosInstance | undefined {
+    const currentAddress = addresses.currentAddress;
+    if(currentAddress === undefined || currentAddress.token === undefined) {
+        return undefined;
+    } else {
+        return axios.create({
+            headers: {
+                'Authorization': `Bearer ${currentAddress.token.value}`,
+            }
+        });
     }
 }
 
@@ -181,7 +204,7 @@ export function CommonContextProvider(props: Props) {
                     accountId: currentAddress
                 });
 
-                const transactions = await getTransactions({
+                const transactions = await getTransactions(contextValue.axios!, {
                     address: currentAddress
                 });
 

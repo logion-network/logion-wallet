@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { AxiosInstance } from 'axios';
 
 import {
     TokenizationRequestStatus,
@@ -16,7 +16,7 @@ export interface FetchRequestSpecification {
     status: TokenizationRequestStatus
 }
 
-export async function fetchRequests(specification: FetchRequestSpecification): Promise<TokenizationRequest[]> {
+export async function fetchRequests(axios: AxiosInstance, specification: FetchRequestSpecification): Promise<TokenizationRequest[]> {
     const response = await axios.put("/api/token-request", specification);
     return response.data.requests;
 }
@@ -32,6 +32,7 @@ export interface FetchProtectionRequestSpecification {
 }
 
 export async function fetchProtectionRequests(
+        axios: AxiosInstance, 
         specification: FetchProtectionRequestSpecification): Promise<ProtectionRequest[]> {
     const response = await axios.put("/api/protection-request", specification);
     return response.data.requests;
@@ -41,7 +42,9 @@ export interface FetchTransactionsSpecficication {
     address: string,
 }
 
-export async function getTransactions(request: FetchTransactionsSpecficication): Promise<TransactionsSet> {
+export async function getTransactions(
+    axios: AxiosInstance,
+    request: FetchTransactionsSpecficication): Promise<TransactionsSet> {
     const response = await axios.put("/api/transaction", request);
     return {
         transactions: response.data.transactions.map((transaction: Transaction) => enrichTransaction(transaction, request.address))

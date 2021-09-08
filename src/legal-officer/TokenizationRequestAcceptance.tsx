@@ -63,7 +63,7 @@ export interface Props {
 
 export default function TokenizationRequestAcceptance(props: Props) {
     const { api } = useLogionChain();
-    const { addresses } = useCommonContext();
+    const { addresses, axios } = useCommonContext();
     const { refreshRequests } = useLegalOfficerContext();
 
     const [ acceptState, setAcceptState ] = useState<AcceptState>({status: AcceptStatus.NONE});
@@ -94,7 +94,7 @@ export default function TokenizationRequestAcceptance(props: Props) {
                     attributes
                 });
 
-                const { sessionToken } = await acceptRequest({
+                const { sessionToken } = await acceptRequest(axios!, {
                     requestId: request.id,
                     signature,
                     signedOn
@@ -107,7 +107,7 @@ export default function TokenizationRequestAcceptance(props: Props) {
             };
             proceed();
         }
-    }, [acceptState, props.requestToAccept, setAcceptState]);
+    }, [ axios, acceptState, props.requestToAccept, setAcceptState ]);
 
     const setStatus = useCallback((status: AcceptStatus) => {
         setAcceptState({...acceptState, status});
@@ -127,7 +127,7 @@ export default function TokenizationRequestAcceptance(props: Props) {
                 setAssetCreationUnsubscriber(unsubscriber);
 
                 const request = props.requestToAccept!;
-                await setAssetDescription({
+                await setAssetDescription(axios!, {
                     requestId: request.id,
                     description: {
                         assetId: assetId.toString(),
@@ -145,6 +145,7 @@ export default function TokenizationRequestAcceptance(props: Props) {
             proceed();
         }
     }, [
+        axios,
         acceptState,
         setStatus,
         setAcceptState,
@@ -211,7 +212,7 @@ export default function TokenizationRequestAcceptance(props: Props) {
     ]);
 
     const closeAndRefresh = useCallback(() => {
-        refreshRequests!();
+        refreshRequests!(false);
         props.clearRequestToAccept();
     }, [ refreshRequests, props ]);
 

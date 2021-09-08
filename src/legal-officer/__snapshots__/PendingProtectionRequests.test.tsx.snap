@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Renders null with no data 1`] = `null`;
+exports[`PendingProtectionRequests Renders null with no data 1`] = `null`;
 
-exports[`Renders pending requests 1`] = `
+exports[`PendingProtectionRequests Renders pending requests 1`] = `
 <React.Fragment>
   <Table
     columns={
