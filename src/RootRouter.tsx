@@ -17,7 +17,7 @@ import RenderOrRedirectToLogin from './RenderOrRedirectToLogin';
 export default function RootRouter() {
     const { addresses } = useCommonContext();
 
-    if(addresses === null) {
+    if(addresses === null || addresses.addresses.length === 0) {
         return null;
     }
 

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Given LO address, when rendering, then route to wallet or redirect 1`] = `
+exports[`Given legal officer, when rendering, then render legal officer UI or redirect to login 1`] = `
 <BrowserRouter>
   <Switch>
     <Route
@@ -33,7 +33,11 @@ exports[`Given LO address, when rendering, then route to wallet or redirect 1`] 
 </BrowserRouter>
 `;
 
-exports[`Given empty current address, when rendering, then null 1`] = `
+exports[`Given no addresses, when rendering, then null 1`] = `null`;
+
+exports[`Given null addresses, when rendering, then null 1`] = `null`;
+
+exports[`Given undefined current address, when rendering, then enable redirect to login via either legal officer or user route 1`] = `
 <BrowserRouter>
   <Switch>
     <Route
@@ -66,106 +70,7 @@ exports[`Given empty current address, when rendering, then null 1`] = `
 </BrowserRouter>
 `;
 
-exports[`Given legal officer, when rendering, then route to wallet or redirect 1`] = `
-<BrowserRouter>
-  <Switch>
-    <Route
-      path="/legal-officer"
-    >
-      <Redirect
-        to="/user"
-      />
-    </Route>
-    <Route
-      path="/user"
-    >
-      <RenderOrRedirectToLogin
-        render={[Function]}
-      />
-    </Route>
-    <Route
-      path="/login"
-    >
-      <Login />
-    </Route>
-    <Route
-      path="/"
-    >
-      <Redirect
-        to="/user"
-      />
-    </Route>
-  </Switch>
-</BrowserRouter>
-`;
-
-exports[`Given no injected accounts, when rendering, then null 1`] = `
-<BrowserRouter>
-  <Switch>
-    <Route
-      path="/legal-officer"
-    >
-      <Redirect
-        to="/user"
-      />
-    </Route>
-    <Route
-      path="/user"
-    >
-      <RenderOrRedirectToLogin
-        render={[Function]}
-      />
-    </Route>
-    <Route
-      path="/login"
-    >
-      <Login />
-    </Route>
-    <Route
-      path="/"
-    >
-      <Redirect
-        to="/user"
-      />
-    </Route>
-  </Switch>
-</BrowserRouter>
-`;
-
-exports[`Given null injected accounts, when rendering, then null 1`] = `
-<BrowserRouter>
-  <Switch>
-    <Route
-      path="/legal-officer"
-    >
-      <Redirect
-        to="/user"
-      />
-    </Route>
-    <Route
-      path="/user"
-    >
-      <RenderOrRedirectToLogin
-        render={[Function]}
-      />
-    </Route>
-    <Route
-      path="/login"
-    >
-      <Login />
-    </Route>
-    <Route
-      path="/"
-    >
-      <Redirect
-        to="/user"
-      />
-    </Route>
-  </Switch>
-</BrowserRouter>
-`;
-
-exports[`Given wallet user, when rendering, then route to wallet or redirect 1`] = `
+exports[`Given wallet user, when rendering, then render user UI or redirect to login 1`] = `
 <BrowserRouter>
   <Switch>
     <Route

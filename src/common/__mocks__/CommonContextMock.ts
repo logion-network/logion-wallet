@@ -27,7 +27,7 @@ export const DEFAULT_LEGAL_OFFICER_ACCOUNT: AccountAddress = {
     },
 }
 
-export let addresses: Addresses = {
+export let addresses: Addresses | null = {
     currentAddress: DEFAULT_USER_ACCOUNT,
     addresses: [ DEFAULT_USER_ACCOUNT ]
 }
@@ -63,7 +63,7 @@ export function setCurrentAddress(value: AccountAddress | undefined) {
     }
 }
 
-export function setAddresses(value: Addresses) {
+export function setAddresses(value: Addresses | null) {
     addresses = value;
 }
 

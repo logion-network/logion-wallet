@@ -59,15 +59,11 @@ function currentOrDefaultAddress(
 ): string | undefined {
     const loggedAddresses = Object.keys(tokens);
     if(currentAddress !== undefined) {
-        console.log(`Current address: ${currentAddress}`);
         return currentAddress;
     } else if(loggedAddresses.length > 0) {
-        console.log("Searching for default account");
         const defaultAccount = injectedAccounts.find(account => loggedAddresses.includes(account.address));
-        console.log(`Found default address: ${defaultAccount}`);
         return defaultAccount?.address;
     } else {
-        console.log("No default account found");
         return undefined;
     }
 }
