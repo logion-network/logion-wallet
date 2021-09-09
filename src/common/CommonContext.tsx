@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useReducer, Reducer, useCallback } from "react";
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import axios, { AxiosInstance } from 'axios';
+import moment from 'moment';
 
 import { useLogionChain } from '../logion-chain';
 import { CoinBalance, getBalances } from '../logion-chain/Balances';
@@ -31,6 +32,7 @@ export interface CommonContext {
 interface FullCommonContext extends CommonContext {
     injectedAccounts: InjectedAccountWithMeta[] | null;
     tokens: AccountTokens;
+    timer?: number;
 }
 
 function initialContextValue(): FullCommonContext {
@@ -44,7 +46,7 @@ function initialContextValue(): FullCommonContext {
         transactions: null,
         colorTheme: DEFAULT_COLOR_THEME,
         setColorTheme: null,
-        tokens: loadTokens(),
+        tokens: loadTokens().refresh(moment()),
         setTokens: DEFAULT_NOOP,
         logout: DEFAULT_NOOP,
     }
@@ -66,7 +68,9 @@ type ActionType = 'SET_SELECT_ADDRESS'
     | 'SET_SET_TOKEN'
     | 'SET_TOKENS'
     | 'SET_LOGOUT'
-    | 'LOGOUT';
+    | 'LOGOUT'
+    | 'SCHEDULE_TOKEN_REFRESH'
+    | 'REFRESH_TOKENS';
 
 interface Action {
     type: ActionType,
@@ -82,6 +86,7 @@ interface Action {
     setTokens?: (tokens: AccountTokens) => void,
     newTokens?: AccountTokens,
     logout?: () => void,
+    timer?: number;
 }
 
 const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, action: Action): FullCommonContext => {
@@ -141,10 +146,7 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                 setTokens: action.setTokens!,
             };
         case 'SET_TOKENS': {
-            const tokens = { ...state.tokens };
-            for(const address of Object.keys(action.newTokens!)) {
-                tokens[address] = action.newTokens![address];
-            }
+            const tokens = state.tokens.merge(action.newTokens!);
             storeTokens(tokens);
             const addresses = buildAddresses(state.injectedAccounts!, state.addresses?.currentAddress?.address, tokens);
             return {
@@ -159,14 +161,41 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                 ...state,
                 logout: action.logout!,
             };
-        case 'LOGOUT':
+        case 'LOGOUT': {
             clearTokens();
+            const tokens = new AccountTokens({});
+            const addresses = buildAddresses(state.injectedAccounts!, undefined, tokens);
+            clearInterval(state.timer!);
             return {
                 ...state,
-                tokens: {},
-                addresses: buildAddresses(state.injectedAccounts!, undefined, {}),
-                axios: undefined,
+                tokens,
+                addresses,
+                axios: buildAxiosInstance(addresses),
             };
+        }
+        case 'SCHEDULE_TOKEN_REFRESH':
+            if(state.timer === undefined) {
+                return {
+                    ...state,
+                    timer: action.timer!
+                };
+            } else {
+                clearInterval(action.timer!);
+                return state;
+            }
+        case 'REFRESH_TOKENS':
+            const tokens = state.tokens.refresh(moment());
+            if(!tokens.equals(state.tokens)) {
+                storeTokens(tokens);
+                const addresses = buildAddresses(state.injectedAccounts!, state.addresses?.currentAddress?.address, tokens);
+                return {
+                    ...state,
+                    tokens,
+                    addresses
+                }
+            } else {
+                return state;
+            }
         default:
             /* istanbul ignore next */
             throw new Error(`Unknown type: ${action.type}`);
@@ -293,6 +322,20 @@ export function CommonContextProvider(props: Props) {
             dispatch({
                 type: 'SET_LOGOUT',
                 logout,
+            });
+        }
+    }, [ contextValue ]);
+
+    useEffect(() => {
+        if(contextValue.timer === undefined) {
+            const timer = window.setInterval(() => {
+                dispatch({
+                    type: 'REFRESH_TOKENS',
+                });
+            }, 1000);
+            dispatch({
+                type: 'SCHEDULE_TOKEN_REFRESH',
+                timer
             });
         }
     }, [ contextValue ]);

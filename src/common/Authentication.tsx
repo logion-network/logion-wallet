@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { AxiosInstance } from 'axios';
-import { AccountTokens } from "./types/Addresses";
+import { AccountTokens, Token } from "./types/Addresses";
 import { sign } from '../logion-chain/Signature';
 import { toIsoString } from '../logion-chain/datetime';
 
@@ -37,12 +37,12 @@ export async function authenticate(axios: AxiosInstance, addresses: string[]): P
     });
     const authenticatedAddresses: AuthenticationResponse = authenticateResponse.data.tokens;
 
-    const tokens: AccountTokens = {};
+    const tokens: Record<string, Token> = {};
     for(const authenticatedAddress of Object.keys(authenticatedAddresses)) {
         tokens[authenticatedAddress] = {
             value: authenticatedAddresses[authenticatedAddress],
             expirationDateTime: moment().add(58, "minutes"), // TODO should be returned by backend
         }
     }
-    return tokens;
+    return new AccountTokens(tokens);
 }
