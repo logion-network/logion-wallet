@@ -63,7 +63,7 @@ export default function Login() {
                 </h1>
 
                 <div className="chooser">
-                    <h2>The following accounts were detected:</h2>
+                    <h2>The following accounts have been detected:</h2>
 
                     <div className="accounts-container">
                         {
