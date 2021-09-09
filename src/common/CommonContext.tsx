@@ -10,6 +10,7 @@ import { Children } from './types/Helpers';
 import { Transaction } from './types/ModelTypes';
 import { getTransactions } from "./Model";
 import { ColorTheme, DEFAULT_COLOR_THEME } from "./ColorTheme";
+import { storeTokens, clearTokens, loadTokens } from './Storage';
 
 const DEFAULT_NOOP = () => {};
 
@@ -43,7 +44,7 @@ function initialContextValue(): FullCommonContext {
         transactions: null,
         colorTheme: DEFAULT_COLOR_THEME,
         setColorTheme: null,
-        tokens: {},
+        tokens: loadTokens(),
         setToken: DEFAULT_NOOP,
         logout: DEFAULT_NOOP,
     }
@@ -145,6 +146,7 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
         case 'SET_TOKEN': {
             const tokens = { ...state.tokens };
             tokens[action.newToken!.address] = action.newToken!.token;
+            storeTokens(tokens);
             const addresses = buildAddresses(state.injectedAccounts!, state.addresses?.currentAddress?.address, tokens);
             return {
                 ...state,
@@ -159,6 +161,7 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                 logout: action.logout!,
             };
         case 'LOGOUT':
+            clearTokens();
             return {
                 ...state,
                 tokens: {},
