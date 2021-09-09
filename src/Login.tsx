@@ -1,15 +1,13 @@
 import { useState, useCallback } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
-import moment from 'moment';
 
 import Container from 'react-bootstrap/Container';
-
-import { sign } from "./logion-chain/Signature";
 
 import { useCommonContext } from './common/CommonContext';
 import { useLogionChain } from './logion-chain';
 import Button from './common/Button';
 import Checkbox from './common/Checkbox';
+import { authenticate } from './common/Authentication';
 
 import AbsoluteLogo from './AbsoluteLogo';
 
@@ -26,40 +24,19 @@ export default function Login() {
     const location = useLocation<LocationState>();
     const history = useHistory();
     const { connectedNodeMetadata } = useLogionChain();
-    const { addresses, setToken } = useCommonContext();
+    const { addresses, setTokens, axios } = useCommonContext();
     const [ selectedAddresses, setSelectedAddresses ] = useState<string[]>(location.state.selectedAddresses ? location.state.selectedAddresses : []);
 
     const startLogin = useCallback(async () => {
-        const attributes = [ "abc" ]; // TODO fetch from backend
-
-        const signatures: Record<string, string> = {};
-        for(const address of selectedAddresses) {
-            const signedOn = moment();
-            const signature = await sign({
-                signerId: address,
-                resource: 'authentication',
-                operation: 'login',
-                signedOn,
-                attributes,
-            });
-            signatures[address] = signature;
-        }
-
-        // TODO submit to backend
-
-        for(const address of selectedAddresses) {
-            setToken(address, {
-                value: "fake",
-                expirationDateTime: moment().add(1, 'hour')
-            });
-        }
+        const tokens = await authenticate(axios!, selectedAddresses);
+        setTokens(tokens);
 
         if(location.state && location.state.referrer) {
             history.push(location.state.referrer);
         } else {
             history.push("/");
         }
-    }, [ selectedAddresses, setToken, history, location ]);
+    }, [ axios, selectedAddresses, setTokens, history, location ]);
 
     if(addresses === null || connectedNodeMetadata === null) {
         return null;
