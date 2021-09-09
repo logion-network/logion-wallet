@@ -2,7 +2,7 @@
 
 exports[`ProtectionRecoveryRequest activated protection request 1`] = `
 <FullWidthPane
-  mainTitle="My Logion Trust Protection"
+  mainTitle="My Logion Protection"
   titleIcon={
     Object {
       "background": undefined,
@@ -78,7 +78,7 @@ Belgium",
 
 exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
 <FullWidthPane
-  mainTitle="My Logion Trust Protection"
+  mainTitle="My Logion Protection"
   titleIcon={
     Object {
       "background": undefined,
@@ -156,7 +156,7 @@ Belgium",
 
 exports[`ProtectionRecoveryRequest pending protection request 1`] = `
 <FullWidthPane
-  mainTitle="My Logion Trust Protection"
+  mainTitle="My Logion Protection"
   titleIcon={
     Object {
       "background": undefined,
@@ -310,7 +310,7 @@ Belgium",
 
 exports[`ProtectionRecoveryRequest protection request 1`] = `
 <FullWidthPane
-  mainTitle="My Logion Trust Protection"
+  mainTitle="My Logion Protection"
   titleIcon={
     Object {
       "background": undefined,
@@ -373,7 +373,7 @@ Belgium",
 
 exports[`ProtectionRecoveryRequest recovery request 1`] = `
 <FullWidthPane
-  mainTitle="My Logion Trust Protection"
+  mainTitle="My Logion Protection"
   subTitle="Recovery process status"
   titleIcon={
     Object {

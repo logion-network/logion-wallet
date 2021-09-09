@@ -74,7 +74,7 @@ export default function ContextualizedWallet() {
             menuMiddle={[
                 {
                     id: "protection",
-                    text: "My Logion Trust Protection",
+                    text: "My Logion Protection",
                     to: TRUST_PROTECTION_PATH,
                     exact: true,
                     icon: {

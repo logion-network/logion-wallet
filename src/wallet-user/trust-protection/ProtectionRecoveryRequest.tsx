@@ -68,7 +68,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
 
     const forAccount = props.request.addressToRecover !== null ? ` for account ${props.request.addressToRecover}` : "";
 
-    const mainTitle = props.request.isRecovery && props.request.status !== 'ACTIVATED' ? "Recovery" : "My Logion Trust Protection";
+    const mainTitle = props.request.isRecovery && props.request.status !== 'ACTIVATED' ? "Recovery" : "My Logion Protection";
     let subTitle;
     let alert = null;
     if(props.type === 'pending') {
@@ -103,7 +103,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
                 </Alert>
             );
         } else {
-            subTitle = "My Logion Trust protection request";
+            subTitle = "My Logion protection request";
             alert = (
                 <Alert variant="info">
                     Your Logion Trust Protection request has been accepted by your

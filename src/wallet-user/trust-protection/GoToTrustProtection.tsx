@@ -31,7 +31,7 @@ export default function GoToTrustProtection() {
             <Button
                 variant="primary"
             >
-                <Link to={ TRUST_PROTECTION_PATH }>Go to My Logion Trust Protection</Link>
+                <Link to={ TRUST_PROTECTION_PATH }>Go to My Logion Protection</Link>
             </Button>
         </FullWidthPane>
     );

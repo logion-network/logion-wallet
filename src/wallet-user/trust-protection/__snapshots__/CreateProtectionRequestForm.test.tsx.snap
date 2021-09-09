@@ -2,7 +2,7 @@
 
 exports[`renders 1`] = `
 <ContentPane
-  mainTitle="My Logion Trust Protection"
+  mainTitle="My Logion Protection"
   primaryAreaChildren={
     <React.Fragment>
       <Frame
@@ -1123,7 +1123,7 @@ France",
       </Dialog>
     </Frame>
   }
-  subTitle="Activate my Logion Trust Protection"
+  subTitle="Activate my Logion Protection"
   titleIcon={
     Object {
       "background": undefined,
