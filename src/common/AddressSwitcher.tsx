@@ -49,6 +49,7 @@ export default function AddressSwitcher(props: Props) {
                     style={{
                         color: colorTheme.accounts.foreground,
                         backgroundColor: colorTheme.accounts.background,
+                        boxShadow: `0 0 25px ${colorTheme.shadowColor}`,
                     }}
                 >
                     {

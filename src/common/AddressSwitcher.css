@@ -1,5 +1,5 @@
 .AddressSwitcher {
-    height: 75px;
+    height: 95px;
     width: 430px;
     display: flex;
 }
@@ -10,7 +10,7 @@
 
 #address-switcher-toggle {
     width: 100%;
-    height: 75px;
+    height: 95px;
     background-color: transparent;
     margin: 0;
     padding: 0;
@@ -18,6 +18,7 @@
     border: none;
     border-radius: 0;
     text-align: left;
+    padding-bottom: 20px;
 }
 
 #address-switcher-toggle:focus {
@@ -33,6 +34,20 @@
     width: 100%;
     padding: 0;
     margin: 0;
+    background-color: transparent;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+.AddressSwitcher.dark .dropdown-menu {
+    border-top: 1px solid white;
+}
+
+.AddressSwitcher.light .dropdown-menu {
+    border-top: 1px solid black;
 }
 
 .AddressSwitcher .dropdown-menu .dropdown-item {
