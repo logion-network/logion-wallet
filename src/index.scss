@@ -9,6 +9,7 @@ $font-family-monospace: "Source Code Pro", monospace !default;
 body, html {
     height: 100%;
     width: 100%;
+    min-width: 1440px;
 }
 
 #root {
