@@ -1,8 +1,5 @@
 import React, { useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
 import Dropdown from 'react-bootstrap/Dropdown';
-
-import { LOGIN_PATH, LocationState } from '../Login';
 
 import Addresses from './types/Addresses';
 
@@ -10,6 +7,7 @@ import './AddressSwitcher.css';
 import AccountAddress from './AccountAddress';
 import { useCommonContext } from './CommonContext';
 import Button from './Button';
+import { authenticate } from './Authentication';
 
 export interface Props {
     addresses: Addresses | null,
@@ -17,15 +15,14 @@ export interface Props {
 }
 
 export default function AddressSwitcher(props: Props) {
-    const history = useHistory();
-    const { colorTheme, logout } = useCommonContext();
+    const { colorTheme, logout, axios, setTokens } = useCommonContext();
 
     const login = useCallback((address: string) => {
-        const state: LocationState = {
-            selectedAddresses: [ address ]
-        };
-        history.push(LOGIN_PATH, state);
-    }, [ history ]);
+        (async function() {
+            const tokens = await authenticate(axios!, [address]);
+            setTokens(tokens);
+        })();
+    }, [ axios, setTokens ]);
 
     if(props.addresses === null || props.selectAddress === null || props.addresses.currentAddress === undefined) {
         return null;
