@@ -10,12 +10,12 @@ describe("Tokens storage", () => {
 
     it("stores tokens", () => {
         const expirationDateTime = "2021-09-09T11:28:00.000Z";
-        const tokens: AccountTokens = {
+        const tokens: AccountTokens = new AccountTokens({
             "abc": {
                 value: "token-abc",
                 expirationDateTime: moment(expirationDateTime)
             }
-        };
+        });
 
         storeTokens(tokens);
 
@@ -27,12 +27,12 @@ describe("Tokens storage", () => {
 
     it("clears tokens", () => {
         const expirationDateTime = "2021-09-09T11:28:00.000Z";
-        const tokens: AccountTokens = {
+        const tokens: AccountTokens = new AccountTokens({
             "abc": {
                 value: "token-abc",
                 expirationDateTime: moment(expirationDateTime)
             }
-        };
+        });
         storeTokens(tokens);
 
         clearTokens();
@@ -42,12 +42,12 @@ describe("Tokens storage", () => {
 
     it("loads tokens", () => {
         const expirationDateTime = "2021-09-09T11:28:00.000Z";
-        const tokens: AccountTokens = {
+        const tokens: AccountTokens = new AccountTokens({
             "abc": {
                 value: "token-abc",
                 expirationDateTime: moment(expirationDateTime)
             }
-        };
+        });
         storeTokens(tokens);
 
         const loadedTokens = loadTokens();
@@ -57,12 +57,12 @@ describe("Tokens storage", () => {
 
     it("loads only valid tokens", () => {
         const expirationDateTime = "2021-09-09T11:28:00.000Z";
-        const tokens: AccountTokens = {
+        const tokens: AccountTokens = new AccountTokens({
             "abc": {
                 value: "token-abc",
                 expirationDateTime: moment(expirationDateTime)
             }
-        };
+        });
         storeTokens(tokens);
         window.localStorage.setItem("token.def", "invalid json");
 

@@ -19,7 +19,60 @@ export default interface Addresses {
     readonly currentAddress?: AccountAddress,
 }
 
-export type AccountTokens = Record<string, Token>;
+export class AccountTokens {
+
+    constructor(initialState: Record<string, Token>) {
+        this.store = { ...initialState };
+    }
+
+    private store: Record<string, Token>;
+
+    get(address: string): Token | undefined {
+        return this.store[address];
+    }
+
+    merge(tokens: AccountTokens): AccountTokens {
+        const newStore = { ...this.store };
+        for(const address of tokens.addresses) {
+            newStore[address] = tokens.store[address];
+        }
+        return new AccountTokens(newStore);
+    }
+
+    get addresses(): string[] {
+        return Object.keys(this.store);
+    }
+
+    refresh(now: Moment): AccountTokens {
+        const newStore: Record<string, Token> = {};
+        for(const address of this.addresses) {
+            const token = this.get(address)!;
+            if(token.expirationDateTime.isAfter(now)) {
+                newStore[address] = token;
+            }
+        }
+        return new AccountTokens(newStore);
+    }
+
+    equals(other: AccountTokens): boolean {
+        if(this.length !== other.length) {
+            return false;
+        }
+        for(const address of this.addresses) {
+            const thisToken = this.get(address);
+            const otherToken = other.get(address);
+            if(thisToken!.value !== otherToken?.value
+                || !thisToken!.expirationDateTime.isSame(otherToken.expirationDateTime)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    get length(): number {
+        return this.addresses.length;
+    }
+}
 
 export function buildAddresses(
     injectedAccounts: InjectedAccountWithMeta[],
@@ -35,7 +88,7 @@ export function buildAddresses(
             name: matchingAddress.meta.name!,
             address: selectedAddress!,
             isLegalOfficer: isLegalOfficer(selectedAddress),
-            token: tokenOrUndefinedIfExpired(tokens[selectedAddress]),
+            token: tokenOrUndefinedIfExpired(tokens.get(selectedAddress)),
         }
     } else {
         currentAddress = undefined;
@@ -47,7 +100,7 @@ export function buildAddresses(
             name: injectedAccount.meta.name!,
             address: injectedAccount.address,
             isLegalOfficer: isLegalOfficer(injectedAccount.address),
-            token: tokenOrUndefinedIfExpired(tokens[injectedAccount.address]),
+            token: tokenOrUndefinedIfExpired(tokens.get(injectedAccount.address)),
         }))
     }
 }
@@ -57,7 +110,7 @@ function currentOrDefaultAddress(
     currentAddress: string | undefined,
     tokens: AccountTokens
 ): string | undefined {
-    const loggedAddresses = Object.keys(tokens);
+    const loggedAddresses = tokens.addresses;
     if(currentAddress !== undefined) {
         return currentAddress;
     } else if(loggedAddresses.length > 0) {

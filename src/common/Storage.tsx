@@ -1,11 +1,11 @@
 import moment from 'moment';
-import { AccountTokens } from "./types/Addresses";
+import { AccountTokens, Token } from "./types/Addresses";
 
 export function storeTokens(tokens: AccountTokens) {
     const storage = getStorage();
     clearTokens();
-    for(const address of Object.keys(tokens)) {
-        storage.setItem(TOKEN_KEY_PREFIX + address, JSON.stringify(tokens[address]));
+    for(const address of tokens.addresses) {
+        storage.setItem(TOKEN_KEY_PREFIX + address, JSON.stringify(tokens.get(address)));
     }
 }
 
@@ -36,7 +36,7 @@ function forEachStorageKey(callback: (key: string) => void) {
 const TOKEN_KEY_PREFIX = "token.";
 
 export function loadTokens(): AccountTokens {
-    const tokens: AccountTokens = {};
+    const tokens: Record<string, Token> = {};
     const storage = getStorage();
     forEachStorageKey(key => {
         if(key.startsWith(TOKEN_KEY_PREFIX)) {
@@ -55,5 +55,5 @@ export function loadTokens(): AccountTokens {
             }
         }
     });
-    return tokens;
+    return new AccountTokens(tokens);
 }

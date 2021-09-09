@@ -39,6 +39,6 @@ describe("Authentication", () => {
 
         const tokens = await authenticate(axiosMock.object(), addresses);
 
-        expect(tokens["abc"].value).toBe("token");
+        expect(tokens.get("abc")!.value).toBe("token");
     });
 });
