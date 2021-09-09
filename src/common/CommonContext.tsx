@@ -5,7 +5,7 @@ import axios, { AxiosInstance } from 'axios';
 import { useLogionChain } from '../logion-chain';
 import { CoinBalance, getBalances } from '../logion-chain/Balances';
 
-import Addresses, { buildAddresses, AccountTokens, Token } from './types/Addresses';
+import Addresses, { buildAddresses, AccountTokens } from './types/Addresses';
 import { Children } from './types/Helpers';
 import { Transaction } from './types/ModelTypes';
 import { getTransactions } from "./Model";
@@ -23,7 +23,7 @@ export interface CommonContext {
     transactions: Transaction[] | null;
     colorTheme: ColorTheme;
     setColorTheme: ((colorTheme: ColorTheme) => void) | null;
-    setToken: (address: string, token: Token) => void;
+    setTokens: (tokens: AccountTokens) => void;
     logout: () => void;
     axios?: AxiosInstance;
 }
@@ -45,7 +45,7 @@ function initialContextValue(): FullCommonContext {
         colorTheme: DEFAULT_COLOR_THEME,
         setColorTheme: null,
         tokens: loadTokens(),
-        setToken: DEFAULT_NOOP,
+        setTokens: DEFAULT_NOOP,
         logout: DEFAULT_NOOP,
     }
 }
@@ -64,7 +64,7 @@ type ActionType = 'SET_SELECT_ADDRESS'
     | 'SET_COLOR_THEME'
     | 'SET_SET_COLOR_THEME'
     | 'SET_SET_TOKEN'
-    | 'SET_TOKEN'
+    | 'SET_TOKENS'
     | 'SET_LOGOUT'
     | 'LOGOUT';
 
@@ -79,11 +79,8 @@ interface Action {
     transactions?: Transaction[],
     newColorTheme?: ColorTheme,
     setColorTheme?: ((colorTheme: ColorTheme) => void),
-    setToken?: (address: string, token: Token) => void,
-    newToken?: {
-        address: string,
-        token: Token
-    },
+    setTokens?: (tokens: AccountTokens) => void,
+    newTokens?: AccountTokens,
     logout?: () => void,
 }
 
@@ -141,11 +138,13 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
         case 'SET_SET_TOKEN':
             return {
                 ...state,
-                setToken: action.setToken!,
+                setTokens: action.setTokens!,
             };
-        case 'SET_TOKEN': {
+        case 'SET_TOKENS': {
             const tokens = { ...state.tokens };
-            tokens[action.newToken!.address] = action.newToken!.token;
+            for(const address of Object.keys(action.newTokens!)) {
+                tokens[address] = action.newTokens![address];
+            }
             storeTokens(tokens);
             const addresses = buildAddresses(state.injectedAccounts!, state.addresses?.currentAddress?.address, tokens);
             return {
@@ -177,7 +176,7 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
 function buildAxiosInstance(addresses: Addresses): AxiosInstance | undefined {
     const currentAddress = addresses.currentAddress;
     if(currentAddress === undefined || currentAddress.token === undefined) {
-        return undefined;
+        return axios.create();
     } else {
         return axios.create({
             headers: {
@@ -274,19 +273,16 @@ export function CommonContextProvider(props: Props) {
     }, [ injectedAccounts, contextValue ]);
 
     useEffect(() => {
-        if(contextValue.setToken === DEFAULT_NOOP) {
-            const setToken = (address: string, token: Token) => {
+        if(contextValue.setTokens === DEFAULT_NOOP) {
+            const setTokens = (tokens: AccountTokens) => {
                 dispatch({
-                    type: 'SET_TOKEN',
-                    newToken: {
-                        address,
-                        token
-                    },
+                    type: 'SET_TOKENS',
+                    newTokens: tokens,
                 })
             }
             dispatch({
                 type: 'SET_SET_TOKEN',
-                setToken,
+                setTokens,
             });
         }
     }, [ contextValue ]);
