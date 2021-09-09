@@ -1,3 +1,3 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Renders null with no data 1`] = `null`;
+exports[`TokenizationRequestAcceptance Renders null with no data 1`] = `null`;

@@ -8542,6 +8542,13 @@ moment@^2.29.1:
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
   integrity sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ==
 
+moq.ts@^7.3.4:
+  version "7.3.4"
+  resolved "https://registry.yarnpkg.com/moq.ts/-/moq.ts-7.3.4.tgz#982c3b195a54fd58c7a40a84e37a870374d15927"
+  integrity sha512-rOelPx7ns+RzyliPwHH2wFVqGowITKRQtECLvVKhiIt4oM4r2hYq4AmgQh0NpWlMxWl2fuZtPJhikrhVpAoF5g==
+  dependencies:
+    tslib "2.1.0"
+
 move-concurrently@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/move-concurrently/-/move-concurrently-1.0.1.tgz#be2c005fda32e0b29af1f05d7c4b33214c701f92"
@@ -12373,6 +12380,11 @@ tsconfig-paths@^3.9.0:
     json5 "^1.0.1"
     minimist "^1.2.0"
     strip-bom "^3.0.0"
+
+tslib@2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.1.0.tgz#da60860f1c2ecaa5703ab7d39bc05b6bf988b97a"
+  integrity sha512-hcVC3wYEziELGGmEEXue7D75zbwIIVUMWAVbHItGPx0ziyXxrOMQx4rQEVEV45Ut/1IotuEvwqPopzIOkDMf0A==
 
 tslib@^1.8.1, tslib@^1.9.0:
   version "1.14.1"

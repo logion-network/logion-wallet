@@ -10,11 +10,11 @@ import { render, waitFor } from '@testing-library/react';
 import { rejectRequest } from './__mocks__/ModelMock';
 import { setFetchRequests } from '../common/__mocks__/ModelMock';
 import { ISO_DATETIME_PATTERN } from '../logion-chain/datetime';
-import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../common/__mocks__/CommonContextMock';
+import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT, axiosMock } from '../common/__mocks__/CommonContextMock';
 
 beforeEach(() => {
     setCurrentAddress(DEFAULT_LEGAL_OFFICER_ACCOUNT);
-    setFetchRequests(jest.fn().mockImplementation(spec => {
+    setFetchRequests(jest.fn().mockImplementation((axios, spec) => {
         if(spec.status === "PENDING") {
             return Promise.resolve([
                 {
@@ -87,6 +87,7 @@ function lengthOrNull<T>(array: Array<T> | null) {
 test("Context rejects properly", async () => {
     render(<TestProvider reject={true} />);
     await waitFor(() => expect(rejectRequest).toBeCalledWith(
+        axiosMock.object(),
         expect.objectContaining({
             requestId: "1",
             rejectReason: "because",

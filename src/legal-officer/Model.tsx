@@ -1,4 +1,4 @@
-import axios from 'axios';
+import { AxiosInstance } from 'axios';
 import { Moment } from 'moment';
 import { toIsoString } from '../logion-chain/datetime';
 
@@ -15,7 +15,10 @@ export interface RejectRequestParameters {
     signedOn: Moment,
 }
 
-export async function rejectRequest(parameters: RejectRequestParameters): Promise<void> {
+export async function rejectRequest(
+    axios: AxiosInstance,
+    parameters: RejectRequestParameters
+): Promise<void> {
     await axios.post(`/api/token-request/${parameters.requestId}/reject`, {
         signature: parameters.signature,
         rejectReason: parameters.rejectReason,
@@ -33,7 +36,10 @@ export interface AcceptResult {
     sessionToken: string,
 }
 
-export async function acceptRequest(parameters: AcceptRequestParameters): Promise<AcceptResult> {
+export async function acceptRequest(
+    axios: AxiosInstance,
+    parameters: AcceptRequestParameters
+): Promise<AcceptResult> {
     const response = await axios.post(`/api/token-request/${parameters.requestId}/accept`, {
         signature: parameters.signature,
         signedOn: toIsoString(parameters.signedOn),
@@ -49,7 +55,10 @@ export interface SetAssetDescriptionRequestParameters {
     sessionToken: string,
 }
 
-export async function setAssetDescription(parameters: SetAssetDescriptionRequestParameters): Promise<void> {
+export async function setAssetDescription(
+    axios: AxiosInstance,
+    parameters: SetAssetDescriptionRequestParameters
+): Promise<void> {
     await axios.post(`/api/token-request/${parameters.requestId}/asset`, {
         description: parameters.description,
         sessionToken: parameters.sessionToken,
@@ -64,7 +73,10 @@ export interface RejectProtectionRequestParameters {
     legalOfficerAddress: string,
 }
 
-export async function rejectProtectionRequest(parameters: RejectProtectionRequestParameters): Promise<void> {
+export async function rejectProtectionRequest(
+    axios: AxiosInstance,
+    parameters: RejectProtectionRequestParameters
+): Promise<void> {
     await axios.post(`/api/protection-request/${parameters.requestId}/reject`, {
         signature: parameters.signature,
         legalOfficerAddress: parameters.legalOfficerAddress,
@@ -80,7 +92,10 @@ export interface AcceptProtectionRequestParameters {
     legalOfficerAddress: string,
 }
 
-export async function acceptProtectionRequest(parameters: AcceptProtectionRequestParameters): Promise<void> {
+export async function acceptProtectionRequest(
+    axios: AxiosInstance,
+    parameters: AcceptProtectionRequestParameters
+): Promise<void> {
     await axios.post(`/api/protection-request/${parameters.requestId}/accept`, {
         signature: parameters.signature,
         legalOfficerAddress: parameters.legalOfficerAddress,
@@ -98,7 +113,10 @@ export function decision(legalOfficerAddress: string | undefined, decisions: Leg
     return null;
 }
 
-export async function fetchRecoveryInfo(requestId: string): Promise<RecoveryInfo> {
+export async function fetchRecoveryInfo(
+    axios: AxiosInstance,
+    requestId: string
+): Promise<RecoveryInfo> {
     const response = await axios.put(`/api/protection-request/${requestId}/recovery-info`, {})
     return response.data;
 }

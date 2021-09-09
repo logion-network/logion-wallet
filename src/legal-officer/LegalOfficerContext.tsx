@@ -1,5 +1,6 @@
-import React, { useState, useContext, useEffect, useCallback } from 'react';
+import React, { useContext, useEffect, useReducer, useCallback, Reducer } from 'react';
 import moment from 'moment';
+import { AxiosInstance } from 'axios';
 
 import {
     TokenizationRequest,
@@ -17,11 +18,10 @@ import { useCommonContext } from '../common/CommonContext';
 import { LIGHT_MODE } from './Types';
 
 export interface LegalOfficerContext {
-    dataAddress: string | null,
     rejectRequest: ((requestId: string, reason: string) => Promise<void>) | null,
     pendingTokenizationRequests: TokenizationRequest[] | null,
     tokenizationRequestsHistory: TokenizationRequest[] | null,
-    refreshRequests: (() => void) | null,
+    refreshRequests: ((clearBeforeRefresh: boolean) => void) | null,
     pendingProtectionRequests: ProtectionRequest[] | null,
     activatedProtectionRequests: ProtectionRequest[] | null,
     protectionRequestsHistory: ProtectionRequest[] | null,
@@ -29,9 +29,16 @@ export interface LegalOfficerContext {
     recoveryRequestsHistory: ProtectionRequest[] | null,
 }
 
-function initialContextValue(): LegalOfficerContext {
+interface FullLegalOfficerContext extends LegalOfficerContext {
+    currentAxios?: AxiosInstance;
+    dataAddress: string | null;
+    fetchForAddress: string | null;
+}
+
+function initialContextValue(): FullLegalOfficerContext {
     return {
         dataAddress: null,
+        fetchForAddress: null,
         rejectRequest: null,
         pendingTokenizationRequests: null,
         tokenizationRequestsHistory: null,
@@ -44,17 +51,96 @@ function initialContextValue(): LegalOfficerContext {
     };
 }
 
-const LegalOfficerContextObject: React.Context<LegalOfficerContext> = React.createContext(initialContextValue());
+const LegalOfficerContextObject: React.Context<FullLegalOfficerContext> = React.createContext(initialContextValue());
+
+type ActionType = 'FETCH_IN_PROGRESS'
+    | 'SET_DATA'
+    | 'SET_REFRESH_REQUESTS_FUNCTION'
+    | 'SET_CURRENT_AXIOS'
+    | 'SET_REJECT_REQUEST'
+;
+
+interface Action {
+    type: ActionType;
+    dataAddress?: string;
+    pendingTokenizationRequests?: TokenizationRequest[];
+    tokenizationRequestsHistory?: TokenizationRequest[];
+    pendingProtectionRequests?: ProtectionRequest[];
+    protectionRequestsHistory?: ProtectionRequest[];
+    activatedProtectionRequests?: ProtectionRequest[];
+    pendingRecoveryRequests?: ProtectionRequest[],
+    recoveryRequestsHistory?: ProtectionRequest[],
+    refreshRequests?: (clearBeforeRefresh: boolean) => void;
+    clearBeforeRefresh?: boolean;
+    axios?: AxiosInstance;
+    rejectRequest?: ((requestId: string, reason: string) => Promise<void>) | null;
+}
+
+const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOfficerContext, action: Action): FullLegalOfficerContext => {
+    switch (action.type) {
+        case 'FETCH_IN_PROGRESS':
+            console.log("fetch in progress for " + action.dataAddress!);
+            if(action.clearBeforeRefresh!) {
+                return {
+                    ...state,
+                    fetchForAddress: action.dataAddress!,
+                    pendingTokenizationRequests: null,
+                    tokenizationRequestsHistory: null,
+                    pendingProtectionRequests: null,
+                    protectionRequestsHistory: null,
+                };
+            } else {
+                return {
+                    ...state,
+                    fetchForAddress: action.dataAddress!,
+                };
+            }
+        case 'SET_DATA':
+            if(action.dataAddress === state.fetchForAddress) {
+                console.log("setting data for " + state.fetchForAddress);
+                return {
+                    ...state,
+                    fetchForAddress: null,
+                    dataAddress: action.dataAddress!,
+                    pendingTokenizationRequests: action.pendingTokenizationRequests!,
+                    tokenizationRequestsHistory: action.tokenizationRequestsHistory!,
+                    pendingProtectionRequests: action.pendingProtectionRequests!,
+                    protectionRequestsHistory: action.protectionRequestsHistory!,
+                    pendingRecoveryRequests: action.pendingRecoveryRequests!,
+                    recoveryRequestsHistory: action.recoveryRequestsHistory!,
+                };
+            } else {
+                console.log(`Skipping data because ${action.dataAddress} <> ${state.fetchForAddress}`);
+                return state;
+            }
+        case "SET_REFRESH_REQUESTS_FUNCTION":
+            return {
+                ...state,
+                refreshRequests: action.refreshRequests!,
+            };
+        case "SET_CURRENT_AXIOS":
+            return {
+                ...state,
+                currentAxios: action.axios!,
+            };
+        case "SET_REJECT_REQUEST":
+            return {
+                ...state,
+                rejectRequest: action.rejectRequest!,
+            };
+        default:
+            /* istanbul ignore next */
+            throw new Error(`Unknown type: ${action.type}`);
+    }
+}
 
 export interface Props {
     children: JSX.Element | JSX.Element[] | null
 }
 
 export function LegalOfficerContextProvider(props: Props) {
-    const { addresses, colorTheme, setColorTheme } = useCommonContext();
-    const [ contextValue, setContextValue ] = useState<LegalOfficerContext>(initialContextValue());
-    const [ fetchedInitially, setFetchedInitially ] = useState<boolean>(false);
-    const [ refreshing, setRefreshing ] = useState<boolean>(false);
+    const { addresses, colorTheme, setColorTheme, axios } = useCommonContext();
+    const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
     useEffect(() => {
         if(colorTheme !== LIGHT_MODE && setColorTheme !== null) {
@@ -62,68 +148,72 @@ export function LegalOfficerContextProvider(props: Props) {
         }
     }, [ colorTheme, setColorTheme ]);
 
-    const refreshRequests = useCallback(() => {
+    const refreshRequests = useCallback((clearBeforeRefresh: boolean) => {
         const currentAddress = addresses!.currentAddress!.address;
-        async function fetchAndSetAll() {
-            const pendingTokenizationRequests = await fetchRequests({
+        dispatch({
+            type: "FETCH_IN_PROGRESS",
+            dataAddress: currentAddress,
+            clearBeforeRefresh,
+        });
+
+        (async function() {
+            const pendingTokenizationRequests = await fetchRequests(axios!, {
                 legalOfficerAddress: currentAddress,
                 status: "PENDING",
             });
-            const acceptedTokenizationRequests = await fetchRequests({
+            const acceptedTokenizationRequests = await fetchRequests(axios!, {
                 legalOfficerAddress: currentAddress,
                 status: "ACCEPTED",
             });
-            const rejectedTokenizationRequests = await fetchRequests({
+            const rejectedTokenizationRequests = await fetchRequests(axios!, {
                 legalOfficerAddress: currentAddress,
                 status: "REJECTED",
             });
-
-            const pendingProtectionRequests = await fetchProtectionRequests({
+    
+            const pendingProtectionRequests = await fetchProtectionRequests(axios!, {
                 legalOfficerAddress: currentAddress,
                 decisionStatuses: ["PENDING"],
                 kind: 'PROTECTION_ONLY',
             });
-            const activatedProtectionRequests = await fetchProtectionRequests({
+            const activatedProtectionRequests = await fetchProtectionRequests(axios!, {
                 legalOfficerAddress: currentAddress,
                 decisionStatuses: ["ACCEPTED"],
                 kind: 'ANY',
                 protectionRequestStatus: "ACTIVATED"
             });
-            const protectionRequestsHistory = await fetchProtectionRequests({
+            const protectionRequestsHistory = await fetchProtectionRequests(axios!, {
                 legalOfficerAddress: currentAddress,
                 decisionStatuses: ["ACCEPTED", "REJECTED"],
                 kind: 'PROTECTION_ONLY',
             });
-
-            const pendingRecoveryRequests = await fetchProtectionRequests({
+    
+            const pendingRecoveryRequests = await fetchProtectionRequests(axios!, {
                 legalOfficerAddress: currentAddress,
                 decisionStatuses: ["PENDING"],
                 kind: 'RECOVERY',
             });
-            const recoveryRequestsHistory = await fetchProtectionRequests({
+            const recoveryRequestsHistory = await fetchProtectionRequests(axios!, {
                 legalOfficerAddress: currentAddress,
                 decisionStatuses: ["ACCEPTED", "REJECTED"],
                 kind: 'RECOVERY',
             });
-
-            setRefreshing(false);
-            setContextValue({
-                ...contextValue,
+    
+            dispatch({
+                type: "SET_DATA",
                 pendingTokenizationRequests,
                 tokenizationRequestsHistory: acceptedTokenizationRequests.concat(rejectedTokenizationRequests),
                 pendingProtectionRequests,
                 activatedProtectionRequests,
                 protectionRequestsHistory,
+                dataAddress: currentAddress,
                 pendingRecoveryRequests,
                 recoveryRequestsHistory,
-                dataAddress: currentAddress,
             });
-        };
-        fetchAndSetAll();
-    }, [ addresses, contextValue, setContextValue ]);
+        })();
+    }, [ addresses, axios, dispatch ]);
 
     useEffect(() => {
-        if(contextValue.rejectRequest === null) {
+        if(contextValue.currentAxios !== axios) {
             const rejectRequest = async (requestId: string, rejectReason: string): Promise<void> => {
                 const attributes = [
                     `${requestId}`,
@@ -137,37 +227,48 @@ export function LegalOfficerContextProvider(props: Props) {
                     signedOn,
                     attributes
                 });
-                await modelRejectRequest({
+                await modelRejectRequest(axios!, {
                     requestId,
                     signature,
                     rejectReason,
                     signedOn,
                 });
-                refreshRequests();
+                refreshRequests(false);
             };
-            setContextValue({...contextValue, rejectRequest});
+
+            dispatch({
+                type: 'SET_REJECT_REQUEST',
+                rejectRequest
+            });
         }
-    }, [ addresses, refreshRequests, contextValue, setContextValue ]);
+    }, [ axios, addresses, refreshRequests, contextValue, dispatch ]);
 
     useEffect(() => {
-        if(contextValue.refreshRequests === null) {
-            setContextValue({...contextValue, refreshRequests});
+        if(contextValue.refreshRequests !== refreshRequests) {
+            dispatch({
+                type: 'SET_REFRESH_REQUESTS_FUNCTION',
+                refreshRequests
+            });
         }
-    }, [refreshRequests, contextValue, setContextValue]);
+    }, [ refreshRequests, contextValue, dispatch ]);
 
     useEffect(() => {
-        if(!fetchedInitially) {
-            setFetchedInitially(true);
-            refreshRequests();
+        if(addresses !== null
+                && addresses.currentAddress !== undefined
+                && contextValue.dataAddress !== addresses.currentAddress.address
+                && contextValue.fetchForAddress !== addresses.currentAddress.address) {
+            refreshRequests(true);
         }
-    }, [fetchedInitially, refreshRequests]);
-
+    }, [ contextValue, addresses, refreshRequests ]);
+    
     useEffect(() => {
-        if(contextValue.dataAddress !== null && contextValue.dataAddress !== addresses?.currentAddress?.address && !refreshing) {
-            setRefreshing(true);
-            refreshRequests();
+        if(axios !== contextValue.currentAxios) {
+            dispatch({
+                type: 'SET_CURRENT_AXIOS',
+               axios
+            })
         }
-    }, [ contextValue, addresses, refreshRequests, setRefreshing, refreshing ]);
+    }, [ axios, contextValue, dispatch ]);
 
     return (
         <LegalOfficerContextObject.Provider value={contextValue}>

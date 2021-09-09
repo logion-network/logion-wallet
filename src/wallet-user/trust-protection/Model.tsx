@@ -1,4 +1,4 @@
-import axios from "axios";
+import { AxiosInstance } from "axios";
 import moment, {Moment} from "moment";
 import {ProtectionRequest} from "../../common/types/ModelTypes";
 import Identity from '../../common/types/Identity';
@@ -31,12 +31,18 @@ export interface LegalOfficerDecision {
     status: LegalOfficerDecisionStatus
 }
 
-export async function createProtectionRequest(request: CreateProtectionRequest): Promise<ProtectionRequest> {
+export async function createProtectionRequest(
+    axios: AxiosInstance,
+    request: CreateProtectionRequest
+): Promise<ProtectionRequest> {
     const response = await axios.post("/api/protection-request", request);
     return response.data;
 }
 
-async function _checkActivation(parameters: CheckProtectionActivationParameters): Promise<void> {
+async function _checkActivation(
+    axios: AxiosInstance,
+    parameters: CheckProtectionActivationParameters
+): Promise<void> {
     await axios.post(`/api/protection-request/${parameters.requestId}/check-activation`, {
         signature: parameters.signature,
         userAddress: parameters.userAddress,
@@ -44,7 +50,10 @@ async function _checkActivation(parameters: CheckProtectionActivationParameters)
     });
 }
 
-export async function checkActivation(protectionRequest: ProtectionRequest): Promise<void> {
+export async function checkActivation(
+    axios: AxiosInstance,
+    protectionRequest: ProtectionRequest
+): Promise<void> {
     const attributes = [
         `${protectionRequest.id}`,
     ];
@@ -56,7 +65,7 @@ export async function checkActivation(protectionRequest: ProtectionRequest): Pro
         signedOn,
         attributes
     });
-    await _checkActivation({
+    await _checkActivation(axios, {
         requestId: protectionRequest.id,
         userAddress: protectionRequest.requesterAddress,
         signedOn,

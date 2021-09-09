@@ -1,52 +1,74 @@
-jest.mock("axios");
+import { It, Mock } from 'moq.ts';
+import moment from 'moment';
+import { AxiosInstance, AxiosResponse } from 'axios';
 
 import {
     rejectRequest,
     acceptRequest,
     setAssetDescription
 } from './Model';
-import { mockPost } from "../__mocks__/AxiosMock";
-import moment from 'moment';
 
-test("Rejects one as expected", async () => {
-    const rejectCallback = jest.fn();
-    const signature = "signature";
-    const legalOfficerAddress = "legalOfficerAddress";
-    mockPost("/api/token-request/1/reject", { signature, legalOfficerAddress }, rejectCallback);
-    await rejectRequest({
-        requestId: "1",
-        signature,
-        rejectReason: "",
-        signedOn: moment()
-    });
-    expect(rejectCallback).toBeCalled();
-});
+describe("Legal Officer Model", () => {
 
-test("Accepts one as expected", async () => {
-    const acceptCallback = jest.fn();
-    const signature = "signature";
-    const legalOfficerAddress = "legalOfficerAddress";
-    mockPost("/api/token-request/1/accept", { signature, legalOfficerAddress }, acceptCallback);
-    await acceptRequest({
-        requestId: "1",
-        signature,
-        signedOn: moment()
-    });
-    expect(acceptCallback).toBeCalled();
-});
+    it("Rejects one as expected", async () => {
+        const signature = "signature";
 
-test("Sets asset description as expected", async () => {
-    const callback = jest.fn();
-    const description = {
-        assetId: "assetId",
-        decimals: 18
-    };
-    const sessionToken = "token";
-    mockPost("/api/token-request/1/asset", { description, sessionToken }, callback);
-    await setAssetDescription({
-        requestId: "1",
-        description,
-        sessionToken
+        const axios = new Mock<AxiosInstance>();
+        const response = new Mock<AxiosResponse>();
+        axios.setup(instance => instance.post(It.IsAny(), It.IsAny())).returns(Promise.resolve(response.object()));
+
+        await rejectRequest(axios.object(), {
+            requestId: "1",
+            signature,
+            rejectReason: "",
+            signedOn: moment()
+        });
+
+        axios.verify(instance => instance.post("/api/token-request/1/reject", It.Is<any>(request =>
+            request.signature === signature
+            && request.rejectReason === ""
+        )));
     });
-    expect(callback).toBeCalled();
+
+    it("Accepts one as expected", async () => {
+        const signature = "signature";
+
+        const axios = new Mock<AxiosInstance>();
+        const response = new Mock<AxiosResponse>();
+        response.setup(instance => instance.data).returns({sessionToken: ""});
+        axios.setup(instance => instance.post(It.IsAny(), It.IsAny())).returns(Promise.resolve(response.object()));
+
+        await acceptRequest(axios.object(), {
+            requestId: "1",
+            signature,
+            signedOn: moment()
+        });
+
+        axios.verify(instance => instance.post("/api/token-request/1/accept", It.Is<any>(request =>
+            request.signature === signature
+        )));
+    });
+
+    it("Sets asset description as expected", async () => {
+        const description = {
+            assetId: "assetId",
+            decimals: 18
+        };
+        const sessionToken = "token";
+
+        const axios = new Mock<AxiosInstance>();
+        const response = new Mock<AxiosResponse>();
+        axios.setup(instance => instance.post(It.IsAny(), It.IsAny())).returns(Promise.resolve(response.object()));
+
+        await setAssetDescription(axios.object(), {
+            requestId: "1",
+            description,
+            sessionToken
+        });
+
+        axios.verify(instance => instance.post("/api/token-request/1/asset", It.Is<any>(request =>
+            request.description === description
+            && request.sessionToken === sessionToken
+        )));
+    });
 });

@@ -1,3 +1,5 @@
+import { Mock } from 'moq.ts';
+import { AxiosInstance } from 'axios';
 import moment from 'moment';
 
 import { TEST_WALLET_USER } from '../../wallet-user/TestData';
@@ -38,6 +40,8 @@ export let transactions: any = null;
 
 export let setColorTheme = jest.fn();
 
+export let axiosMock = new Mock<AxiosInstance>();
+
 export function useCommonContext() {
     return {
         selectAddress,
@@ -46,6 +50,7 @@ export function useCommonContext() {
         transactions,
         colorTheme: COLOR_THEME,
         setColorTheme,
+        axios: axiosMock.object(),
     };
 }
 

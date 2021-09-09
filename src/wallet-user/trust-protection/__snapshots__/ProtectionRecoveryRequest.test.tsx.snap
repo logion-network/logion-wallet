@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`activated protection request 1`] = `
+exports[`ProtectionRecoveryRequest activated protection request 1`] = `
 <FullWidthPane
   mainTitle="My Logion Trust Protection"
   titleIcon={
@@ -76,7 +76,7 @@ Belgium",
 </FullWidthPane>
 `;
 
-exports[`activated recovery request 1`] = `
+exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
 <FullWidthPane
   mainTitle="My Logion Trust Protection"
   titleIcon={
@@ -154,7 +154,7 @@ Belgium",
 </FullWidthPane>
 `;
 
-exports[`pending protection request 1`] = `
+exports[`ProtectionRecoveryRequest pending protection request 1`] = `
 <FullWidthPane
   mainTitle="My Logion Trust Protection"
   titleIcon={
@@ -223,7 +223,7 @@ Belgium",
 </FullWidthPane>
 `;
 
-exports[`pending recovery request 1`] = `
+exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
 <FullWidthPane
   mainTitle="Recovery"
   titleIcon={
@@ -308,7 +308,7 @@ Belgium",
 </FullWidthPane>
 `;
 
-exports[`protection request 1`] = `
+exports[`ProtectionRecoveryRequest protection request 1`] = `
 <FullWidthPane
   mainTitle="My Logion Trust Protection"
   titleIcon={
@@ -371,7 +371,7 @@ Belgium",
 </FullWidthPane>
 `;
 
-exports[`recovery request 1`] = `
+exports[`ProtectionRecoveryRequest recovery request 1`] = `
 <FullWidthPane
   mainTitle="My Logion Trust Protection"
   subTitle="Recovery process status"

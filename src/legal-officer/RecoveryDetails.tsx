@@ -25,7 +25,7 @@ import ExtrinsicSubmitter, { SignAndSubmit } from '../ExtrinsicSubmitter';
 import ButtonGroup from "../common/ButtonGroup";
 
 export default function RecoveryDetails() {
-    const { addresses } = useCommonContext();
+    const { addresses, axios } = useCommonContext();
     const { api } = useLogionChain();
     const { refreshRequests } = useLegalOfficerContext();
     const { requestId } = useParams<{ requestId: string }>();
@@ -38,10 +38,10 @@ export default function RecoveryDetails() {
 
     useEffect(() => {
         if (recoveryInfo === null) {
-            fetchRecoveryInfo(requestId)
+            fetchRecoveryInfo(axios!, requestId)
                 .then(recoveryInfo => setRecoveryInfo(recoveryInfo));
         }
-    }, [ recoveryInfo, setRecoveryInfo, requestId ]);
+    }, [ axios, recoveryInfo, setRecoveryInfo, requestId ]);
 
     const accept = useCallback(() => {
         (async function() {
@@ -55,7 +55,7 @@ export default function RecoveryDetails() {
                 signedOn,
                 attributes
             });
-            await acceptProtectionRequest({
+            await acceptProtectionRequest(axios!, {
                 legalOfficerAddress: currentAddress,
                 requestId,
                 signature,
@@ -71,7 +71,7 @@ export default function RecoveryDetails() {
             });
             setSignAndSubmit(() => signAndSubmit);
         })();
-    }, [ requestId, addresses, api, recoveryInfo ]);
+    }, [ axios, requestId, addresses, api, recoveryInfo ]);
 
     const doReject = useCallback(() => {
         (async function() {
@@ -85,17 +85,17 @@ export default function RecoveryDetails() {
                 signedOn,
                 attributes
             });
-            await rejectProtectionRequest({
+            await rejectProtectionRequest(axios!, {
                 legalOfficerAddress: currentAddress,
                 requestId,
                 signature,
                 rejectReason,
                 signedOn,
             });
-            refreshRequests!();
+            refreshRequests!(false);
             history.push(RECOVERY_REQUESTS_PATH);
         })();
-    }, [ requestId, addresses, rejectReason, refreshRequests, history ]);
+    }, [ axios, requestId, addresses, rejectReason, refreshRequests, history ]);
 
     if (recoveryInfo === null) {
         return null;
@@ -184,7 +184,7 @@ export default function RecoveryDetails() {
                 <ExtrinsicSubmitter
                     id="vouch"
                     signAndSubmit={ signAndSubmit }
-                    onSuccess={ () => { setSignAndSubmit(null); refreshRequests!(); history.push(RECOVERY_REQUESTS_PATH); } }
+                    onSuccess={ () => { setSignAndSubmit(null); refreshRequests!(false); history.push(RECOVERY_REQUESTS_PATH); } }
                     onError={ () => {} }
                 />
             </Dialog>

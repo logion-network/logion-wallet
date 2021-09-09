@@ -71,6 +71,7 @@
     "devDependencies": {
         "@types/react-test-renderer": "^17.0.1",
         "http-proxy-middleware": "^2.0.1",
+        "moq.ts": "^7.3.4",
         "node-sass": "^5.0.0",
         "react-app-rewired": "^2.1.8",
         "react-test-renderer": "^17.0.2"

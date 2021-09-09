@@ -37,7 +37,7 @@ export interface Props {
 }
 
 export default function PendingProtectionRequests(props: Props) {
-    const { addresses } = useCommonContext();
+    const { addresses, axios } = useCommonContext();
     const { pendingProtectionRequests, refreshRequests, pendingRecoveryRequests } = useLegalOfficerContext();
     const [ rejectReason, setRejectReason ] = useState<string>("");
     const [ reviewState, setReviewState ] = useState<ReviewState>(NO_REVIEW_STATE);
@@ -60,7 +60,7 @@ export default function PendingProtectionRequests(props: Props) {
                 signedOn,
                 attributes
             });
-            await rejectProtectionRequest({
+            await rejectProtectionRequest(axios!, {
                 legalOfficerAddress: currentAddress,
                 requestId,
                 signature,
@@ -68,9 +68,9 @@ export default function PendingProtectionRequests(props: Props) {
                 signedOn,
             });
             setReviewState(NO_REVIEW_STATE);
-            refreshRequests!();
+            refreshRequests!(false);
         })();
-    }, [ reviewState, addresses, rejectReason, setReviewState, refreshRequests ]);
+    }, [ axios, reviewState, addresses, rejectReason, setReviewState, refreshRequests ]);
 
     const acceptAndCloseModal = useCallback(() => {
         const currentAddress = addresses!.currentAddress!.address;
@@ -85,16 +85,16 @@ export default function PendingProtectionRequests(props: Props) {
                 signedOn,
                 attributes
             });
-            await acceptProtectionRequest({
+            await acceptProtectionRequest(axios!, {
                 legalOfficerAddress: currentAddress,
                 requestId,
                 signature,
                 signedOn,
             });
             setReviewState(NO_REVIEW_STATE);
-            refreshRequests!();
+            refreshRequests!(false);
         })();
-    }, [ reviewState, addresses, setReviewState, refreshRequests ]);
+    }, [ axios, reviewState, addresses, setReviewState, refreshRequests ]);
 
     if (pendingProtectionRequests === null || pendingRecoveryRequests === null) {
         return null;
