@@ -130,14 +130,14 @@ export default function CreateProtectionRequestForm(props: Props) {
     if(props.isRecovery) {
         mainTitle = "Recovery";
     } else {
-        mainTitle = "My Logion Trust Protection";
+        mainTitle = "My Logion Protection";
     }
 
     let subTitle;
     if(props.isRecovery) {
         subTitle = "Start recovery process";
     } else {
-        subTitle = "Activate my Logion Trust Protection";
+        subTitle = "Activate my Logion Protection";
     }
 
     const initiateRecoveryOnClick = useCallback(() => {

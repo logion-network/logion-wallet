@@ -49,7 +49,7 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
           "width": "auto",
         },
         "id": "protection",
-        "text": "My Logion Trust Protection",
+        "text": "My Logion Protection",
         "to": "/user/protection",
       },
     ]
@@ -197,7 +197,7 @@ exports[`Given connected, when rendering, then show account, no connect button a
           "width": "auto",
         },
         "id": "protection",
-        "text": "My Logion Trust Protection",
+        "text": "My Logion Protection",
         "to": "/user/protection",
       },
     ]
@@ -345,7 +345,7 @@ exports[`Given connecting, when rendering, then show account, no button, no node
           "width": "auto",
         },
         "id": "protection",
-        "text": "My Logion Trust Protection",
+        "text": "My Logion Protection",
         "to": "/user/protection",
       },
     ]
@@ -492,7 +492,7 @@ exports[`Given connection error, when rendering, then show account, no button, n
           "width": "auto",
         },
         "id": "protection",
-        "text": "My Logion Trust Protection",
+        "text": "My Logion Protection",
         "to": "/user/protection",
       },
     ]
@@ -639,7 +639,7 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
           "width": "auto",
         },
         "id": "protection",
-        "text": "My Logion Trust Protection",
+        "text": "My Logion Protection",
         "to": "/user/protection",
       },
     ]
@@ -786,7 +786,7 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
           "width": "auto",
         },
         "id": "protection",
-        "text": "My Logion Trust Protection",
+        "text": "My Logion Protection",
         "to": "/user/protection",
       },
     ]

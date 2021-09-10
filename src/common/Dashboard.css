@@ -21,7 +21,7 @@
 }
 
 .Dashboard .ContentArea {
-    height: calc(100vh - 135px);
+    height: calc(100vh - 155px);
     overflow-y: auto;
 }
 

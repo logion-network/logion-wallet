@@ -11,7 +11,7 @@ export default function GoToTrustProtection() {
 
     return (
         <FullWidthPane
-            mainTitle="My Logion Trust Protection"
+            mainTitle="My Logion Protection"
             subTitle="Recovery in progress"
             titleIcon={{
                 icon: {
