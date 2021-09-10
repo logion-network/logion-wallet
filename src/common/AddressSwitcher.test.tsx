@@ -19,7 +19,7 @@ const AUTHENTICATED_ADDRESS: AccountAddress = {
     isLegalOfficer: false,
     token: {
         value: "token",
-        expirationDateTime: moment('2021-09-10T10:53:00.000'),
+        expirationDateTime: moment('2021-09-10T10:53:00.000Z'),
     },
 };
 

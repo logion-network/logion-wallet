@@ -25,7 +25,7 @@ exports[`AddressSwitcher renders 1`] = `
               "isLegalOfficer": false,
               "name": "name authenticated",
               "token": Object {
-                "expirationDateTime": "2021-09-10T08:53:00.000Z",
+                "expirationDateTime": "2021-09-10T10:53:00.000Z",
                 "value": "token",
               },
             }
