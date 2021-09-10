@@ -106,6 +106,7 @@ const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOffic
                     tokenizationRequestsHistory: action.tokenizationRequestsHistory!,
                     pendingProtectionRequests: action.pendingProtectionRequests!,
                     protectionRequestsHistory: action.protectionRequestsHistory!,
+                    activatedProtectionRequests: action.activatedProtectionRequests!,
                     pendingRecoveryRequests: action.pendingRecoveryRequests!,
                     recoveryRequestsHistory: action.recoveryRequestsHistory!,
                 };

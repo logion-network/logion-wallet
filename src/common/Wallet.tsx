@@ -14,6 +14,7 @@ import Icon from './Icon';
 import Button from './Button';
 import WalletGauge from './WalletGauge';
 import Loader from './Loader';
+import { Transaction } from './types/ModelTypes';
 
 import './Wallet.css';
 
@@ -106,7 +107,7 @@ export function Content(props: Props) {
                         },
                         {
                             header: "Last transaction amount",
-                            render: balance => <Cell content={ balance.coin.id !== 'dot' && latestTransaction !== undefined ? prefixedLogBalance(latestTransaction.total).convertTo(balance.balance.prefix).coefficient.toFixedPrecision(2) : '-' } />,
+                            render: balance => <Cell content={ balance.coin.id !== 'dot' && latestTransaction !== undefined ? prefixedLogBalance(transactionAmount(latestTransaction)).convertTo(balance.balance.prefix).coefficient.toFixedPrecision(2) : '-' } />,
                             align: 'right',
                         },
                         {
@@ -144,4 +145,12 @@ function NotAvailable() {
             <span>Not available (yet)</span>
         </div>
     );
+}
+
+function transactionAmount(transaction: Transaction): string {
+    if(transaction.type === 'Received') {
+        return transaction.transferValue;
+    } else {
+        return transaction.total;
+    }
 }
