@@ -25,7 +25,7 @@ import ExtrinsicSubmitter, { SignAndSubmit } from '../ExtrinsicSubmitter';
 import ButtonGroup from "../common/ButtonGroup";
 
 export default function RecoveryDetails() {
-    const { addresses, axios } = useCommonContext();
+    const { accounts, axios } = useCommonContext();
     const { api } = useLogionChain();
     const { refreshRequests } = useLegalOfficerContext();
     const { requestId } = useParams<{ requestId: string }>();
@@ -47,7 +47,7 @@ export default function RecoveryDetails() {
         (async function() {
             const signedOn = moment();
             const attributes = [ requestId ];
-            const currentAddress = addresses!.currentAddress!.address;
+            const currentAddress = accounts!.current!.address;
             const signature = await sign({
                 signerId: currentAddress,
                 resource: 'protection-request',
@@ -71,13 +71,13 @@ export default function RecoveryDetails() {
             });
             setSignAndSubmit(() => signAndSubmit);
         })();
-    }, [ axios, requestId, addresses, api, recoveryInfo ]);
+    }, [ axios, requestId, accounts, api, recoveryInfo ]);
 
     const doReject = useCallback(() => {
         (async function() {
             const signedOn = moment();
             const attributes = [ requestId ];
-            const currentAddress = addresses!.currentAddress!.address;
+            const currentAddress = accounts!.current!.address;
             const signature = await sign({
                 signerId: currentAddress,
                 resource: 'protection-request',
@@ -95,7 +95,7 @@ export default function RecoveryDetails() {
             refreshRequests!(false);
             history.push(RECOVERY_REQUESTS_PATH);
         })();
-    }, [ axios, requestId, addresses, rejectReason, refreshRequests, history ]);
+    }, [ axios, requestId, accounts, rejectReason, refreshRequests, history ]);
 
     if (recoveryInfo === null) {
         return null;

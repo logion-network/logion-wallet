@@ -2,7 +2,7 @@ import React, { CSSProperties } from 'react';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
-import { AccountAddress as AddressType } from './types/Addresses';
+import { Account } from './types/Accounts';
 import { useCommonContext } from './CommonContext';
 import Icon from './Icon';
 
@@ -10,7 +10,7 @@ import './AccountAddress.css';
 
 export interface Props {
     hint?: string;
-    address: AddressType;
+    address: Account;
     disabled: boolean;
     login?: () => void;
 }

@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { Token, AccountTokens } from "./Addresses";
+import { Token, AccountTokens } from "./Accounts";
 
 describe("AccountTokens", () => {
 

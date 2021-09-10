@@ -140,7 +140,7 @@ export interface Props {
 }
 
 export function LegalOfficerContextProvider(props: Props) {
-    const { addresses, colorTheme, setColorTheme, axios } = useCommonContext();
+    const { accounts, colorTheme, setColorTheme, axios } = useCommonContext();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
     useEffect(() => {
@@ -150,7 +150,7 @@ export function LegalOfficerContextProvider(props: Props) {
     }, [ colorTheme, setColorTheme ]);
 
     const refreshRequests = useCallback((clearBeforeRefresh: boolean) => {
-        const currentAddress = addresses!.currentAddress!.address;
+        const currentAddress = accounts!.current!.address;
         dispatch({
             type: "FETCH_IN_PROGRESS",
             dataAddress: currentAddress,
@@ -211,7 +211,7 @@ export function LegalOfficerContextProvider(props: Props) {
                 recoveryRequestsHistory,
             });
         })();
-    }, [ addresses, axios, dispatch ]);
+    }, [ accounts, axios, dispatch ]);
 
     useEffect(() => {
         if(contextValue.currentAxios !== axios) {
@@ -222,7 +222,7 @@ export function LegalOfficerContextProvider(props: Props) {
                 ];
                 const signedOn = moment();
                 const signature = await sign({
-                    signerId: addresses!.currentAddress!.address,
+                    signerId: accounts!.current!.address,
                     resource: 'token-request',
                     operation: 'reject',
                     signedOn,
@@ -242,7 +242,7 @@ export function LegalOfficerContextProvider(props: Props) {
                 rejectRequest
             });
         }
-    }, [ axios, addresses, refreshRequests, contextValue, dispatch ]);
+    }, [ axios, accounts, refreshRequests, contextValue, dispatch ]);
 
     useEffect(() => {
         if(contextValue.refreshRequests !== refreshRequests) {
@@ -254,13 +254,13 @@ export function LegalOfficerContextProvider(props: Props) {
     }, [ refreshRequests, contextValue, dispatch ]);
 
     useEffect(() => {
-        if(addresses !== null
-                && addresses.currentAddress !== undefined
-                && contextValue.dataAddress !== addresses.currentAddress.address
-                && contextValue.fetchForAddress !== addresses.currentAddress.address) {
+        if(accounts !== null
+                && accounts.current !== undefined
+                && contextValue.dataAddress !== accounts.current.address
+                && contextValue.fetchForAddress !== accounts.current.address) {
             refreshRequests(true);
         }
-    }, [ contextValue, addresses, refreshRequests ]);
+    }, [ contextValue, accounts, refreshRequests ]);
     
     useEffect(() => {
         if(axios !== contextValue.currentAxios) {

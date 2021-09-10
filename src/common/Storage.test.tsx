@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { AccountTokens } from "./types/Addresses";
+import { AccountTokens } from "./types/Accounts";
 import {
     storeTokens,
     clearTokens,
@@ -10,7 +10,7 @@ describe("Tokens storage", () => {
 
     it("stores tokens", () => {
         const expirationDateTime = "2021-09-09T11:28:00.000Z";
-        const tokens: AccountTokens = new AccountTokens({
+        const tokens = new AccountTokens({
             "abc": {
                 value: "token-abc",
                 expirationDateTime: moment(expirationDateTime)
@@ -27,7 +27,7 @@ describe("Tokens storage", () => {
 
     it("clears tokens", () => {
         const expirationDateTime = "2021-09-09T11:28:00.000Z";
-        const tokens: AccountTokens = new AccountTokens({
+        const tokens = new AccountTokens({
             "abc": {
                 value: "token-abc",
                 expirationDateTime: moment(expirationDateTime)
@@ -42,7 +42,7 @@ describe("Tokens storage", () => {
 
     it("loads tokens", () => {
         const expirationDateTime = "2021-09-09T11:28:00.000Z";
-        const tokens: AccountTokens = new AccountTokens({
+        const tokens = new AccountTokens({
             "abc": {
                 value: "token-abc",
                 expirationDateTime: moment(expirationDateTime)
@@ -57,7 +57,7 @@ describe("Tokens storage", () => {
 
     it("loads only valid tokens", () => {
         const expirationDateTime = "2021-09-09T11:28:00.000Z";
-        const tokens: AccountTokens = new AccountTokens({
+        const tokens = new AccountTokens({
             "abc": {
                 value: "token-abc",
                 expirationDateTime: moment(expirationDateTime)

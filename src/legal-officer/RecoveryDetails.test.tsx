@@ -21,8 +21,8 @@ describe("RecoveryDetails", () => {
 
     it("Recovery requires acceptance and vouching", async () => {
         setAddresses({
-            currentAddress: DEFAULT_LEGAL_OFFICER_ADDRESS,
-            addresses: [ DEFAULT_LEGAL_OFFICER_ADDRESS],
+            current: DEFAULT_LEGAL_OFFICER_ADDRESS,
+            all: [ DEFAULT_LEGAL_OFFICER_ADDRESS],
         });
         const protectionRequest = PROTECTION_REQUESTS_HISTORY[0];
         const recoveryConfig: RecoveryInfo = {
@@ -55,8 +55,8 @@ describe("RecoveryDetails", () => {
 
     it("Recovery can be refused", async () => {
         setAddresses({
-            currentAddress: DEFAULT_LEGAL_OFFICER_ADDRESS,
-            addresses: [ DEFAULT_LEGAL_OFFICER_ADDRESS],
+            current: DEFAULT_LEGAL_OFFICER_ADDRESS,
+            all: [ DEFAULT_LEGAL_OFFICER_ADDRESS],
         });
         const protectionRequest = PROTECTION_REQUESTS_HISTORY[0];
         const recoveryConfig: RecoveryInfo = {

@@ -2,7 +2,7 @@ import moment from 'moment';
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import Addresses, { AccountAddress } from './common/types/Addresses';
+import Accounts, { Account } from './common/types/Accounts';
 import { shallowRender } from './tests';
 import { setAddresses } from './common/__mocks__/CommonContextMock';
 import { TEST_WALLET_USER } from './wallet-user/TestData';
@@ -31,9 +31,9 @@ const UNAUTHENTICATED_ADDRESS: AccountAddress = {
     isLegalOfficer: true,
 };
 
-const ADDRESSES: Addresses = {
-    currentAddress: AUTHENTICATED_ADDRESS,
-    addresses: [ UNAUTHENTICATED_ADDRESS ]
+const ADDRESSES: Accounts = {
+    current: AUTHENTICATED_ADDRESS,
+    all: [ UNAUTHENTICATED_ADDRESS ]
 };
 
 describe("Login", () => {

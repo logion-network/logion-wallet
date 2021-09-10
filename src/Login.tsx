@@ -24,7 +24,7 @@ export default function Login() {
     const location = useLocation<LocationState>();
     const history = useHistory();
     const { connectedNodeMetadata } = useLogionChain();
-    const { addresses, setTokens, axios } = useCommonContext();
+    const { accounts, setTokens, axios } = useCommonContext();
     const [ selectedAddresses, setSelectedAddresses ] = useState<string[]>(location.state.selectedAddresses ? location.state.selectedAddresses : []);
 
     const startLogin = useCallback(async () => {
@@ -38,7 +38,7 @@ export default function Login() {
         }
     }, [ axios, selectedAddresses, setTokens, history, location ]);
 
-    if(addresses === null || connectedNodeMetadata === null) {
+    if(accounts === null || connectedNodeMetadata === null) {
         return null;
     }
 
@@ -67,7 +67,7 @@ export default function Login() {
 
                     <div className="accounts-container">
                         {
-                            addresses.addresses
+                            accounts.all
                             .filter(address => address.token === undefined)
                             .map(address => (
                                 <div className="account" key={ address.address }>

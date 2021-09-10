@@ -1,7 +1,7 @@
 jest.mock('./logion-chain');
 jest.mock('./common/CommonContext');
 
-import { shallowRender, act } from './tests';
+import { shallowRender } from './tests';
 
 import RootRouter from './RootRouter';
 import { setAddresses, setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT, DEFAULT_USER_ACCOUNT } from './common/__mocks__/CommonContextMock';
@@ -14,7 +14,7 @@ test('Given null addresses, when rendering, then null', () => {
 
 test('Given no addresses, when rendering, then null', () => {
     setAddresses({
-        addresses: [],
+        all: [],
     });
     const tree = shallowRender(<RootRouter />);
     expect(tree).toMatchSnapshot();

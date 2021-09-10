@@ -7,16 +7,16 @@ export interface Token {
     readonly expirationDateTime: Moment;
 }
 
-export interface AccountAddress {
+export interface Account {
     readonly name: string,
     readonly address: string,
     readonly isLegalOfficer: boolean,
     readonly token?: Token,
 }
 
-export default interface Addresses {
-    readonly addresses: AccountAddress[],
-    readonly currentAddress?: AccountAddress,
+export default interface Accounts {
+    readonly all: Account[],
+    readonly current?: Account,
 }
 
 export class AccountTokens {
@@ -74,29 +74,29 @@ export class AccountTokens {
     }
 }
 
-export function buildAddresses(
+export function buildAccounts(
     injectedAccounts: InjectedAccountWithMeta[],
     userAddress: string | undefined,
     tokens: AccountTokens
-): Addresses {
+): Accounts {
     const selectedAddress = currentOrDefaultAddress(injectedAccounts, userAddress, tokens);
 
-    let currentAddress: AccountAddress | undefined;
+    let current: Account | undefined;
     const matchingAddress = injectedAccounts.find(injectedAccount => injectedAccount.address === selectedAddress);
     if(selectedAddress !== undefined && matchingAddress !== undefined) {
-        currentAddress = {
+        current = {
             name: matchingAddress.meta.name!,
             address: selectedAddress!,
             isLegalOfficer: isLegalOfficer(selectedAddress),
             token: tokenOrUndefinedIfExpired(tokens.get(selectedAddress)),
         }
     } else {
-        currentAddress = undefined;
+        current = undefined;
     }
 
     return {
-        currentAddress,
-        addresses: injectedAccounts.map(injectedAccount => ({
+        current,
+        all: injectedAccounts.map(injectedAccount => ({
             name: injectedAccount.meta.name!,
             address: injectedAccount.address,
             isLegalOfficer: isLegalOfficer(injectedAccount.address),

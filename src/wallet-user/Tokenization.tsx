@@ -30,7 +30,7 @@ interface FormValues {
 }
 
 export default function Tokenization(props: Props) {
-    const { addresses, colorTheme } = useCommonContext();
+    const { accounts, colorTheme } = useCommonContext();
     const { refreshRequests, createTokenRequest } = useUserContext();
     const [state, setState] = useState(props.initialState !== null ? props.initialState : State.START)
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>();
@@ -43,7 +43,7 @@ export default function Tokenization(props: Props) {
                 `${formValues.bars}`
             ];
             const signedOn = moment();
-            const currentAddress = addresses!.currentAddress!.address;
+            const currentAddress = accounts!.current!.address;
             const signature = await sign({
                 signerId: currentAddress,
                 resource: 'token-request',
@@ -64,7 +64,7 @@ export default function Tokenization(props: Props) {
             setState(State.START);
             refreshRequests!(true);
         })();
-    }, [ addresses, createTokenRequest, setState, refreshRequests, reset ]);
+    }, [ accounts, createTokenRequest, setState, refreshRequests, reset ]);
 
     return (
         <div className="Tokenization">

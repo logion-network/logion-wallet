@@ -162,7 +162,7 @@ export interface Props {
 }
 
 export function UserContextProvider(props: Props) {
-    const { addresses, colorTheme, setColorTheme, axios } = useCommonContext();
+    const { accounts, colorTheme, setColorTheme, axios } = useCommonContext();
     const { api, apiState } = useLogionChain();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
@@ -191,7 +191,7 @@ export function UserContextProvider(props: Props) {
 
     const refreshRequests = useCallback((clearBeforeRefresh: boolean) => {
         if(api !== null) {
-            const currentAddress = addresses!.currentAddress!.address;
+            const currentAddress = accounts!.current!.address;
             dispatch({
                 type: "FETCH_IN_PROGRESS",
                 dataAddress: currentAddress,
@@ -257,17 +257,17 @@ export function UserContextProvider(props: Props) {
                 });
             })();
         }
-    }, [ axios, api, dispatch, addresses ]);
+    }, [ axios, api, dispatch, accounts ]);
 
     useEffect(() => {
         if(apiState === "READY"
-                && addresses !== null
-                && addresses.currentAddress !== undefined
-                && contextValue.dataAddress !== addresses.currentAddress.address
-                && contextValue.fetchForAddress !== addresses.currentAddress.address) {
+                && accounts !== null
+                && accounts.current !== undefined
+                && contextValue.dataAddress !== accounts.current.address
+                && contextValue.fetchForAddress !== accounts.current.address) {
             refreshRequests(true);
         }
-    }, [ apiState, contextValue, addresses, refreshRequests, dispatch ]);
+    }, [ apiState, contextValue, accounts, refreshRequests, dispatch ]);
 
     useEffect(() => {
         if(contextValue.refreshRequests !== refreshRequests && apiState === "READY") {

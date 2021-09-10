@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { AccountTokens, Token } from "./types/Addresses";
+import { AccountTokens, Token } from "./types/Accounts";
 
 export function storeTokens(tokens: AccountTokens) {
     const storage = getStorage();

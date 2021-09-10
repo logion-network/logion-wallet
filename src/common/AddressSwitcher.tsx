@@ -12,7 +12,7 @@ export interface Props {
 }
 
 export default function AddressSwitcher(props: Props) {
-    const { colorTheme, logout, axios, setTokens, addresses } = useCommonContext();
+    const { colorTheme, logout, axios, setTokens, accounts } = useCommonContext();
 
     const login = useCallback((address: string) => {
         (async function() {
@@ -21,7 +21,7 @@ export default function AddressSwitcher(props: Props) {
         })();
     }, [ axios, setTokens ]);
 
-    if(addresses === null || props.selectAddress === null || addresses.currentAddress === undefined) {
+    if(accounts === null || props.selectAddress === null || accounts.current === undefined) {
         return null;
     }
 
@@ -37,8 +37,8 @@ export default function AddressSwitcher(props: Props) {
                     <div className="address-data">
                         <AccountAddress
                             hint="Click to select another address"
-                            address={ addresses.currentAddress }
-                            disabled={ addresses.currentAddress.token === undefined }
+                            address={ accounts.current }
+                            disabled={ accounts.current.token === undefined }
                         />
                     </div>
                 </Dropdown.Toggle>
@@ -50,8 +50,8 @@ export default function AddressSwitcher(props: Props) {
                     }}
                 >
                     {
-                        addresses.addresses
-                            .filter(address => address.address !== addresses!.currentAddress!.address)
+                        accounts.all
+                            .filter(address => address.address !== accounts!.current!.address)
                             .map(address => (
                             <Dropdown.Item
                                 key={ address.address }

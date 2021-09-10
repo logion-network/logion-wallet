@@ -9,7 +9,7 @@ import CreateProtectionRequestForm from "./CreateProtectionRequestForm";
 import ProtectionRecoveryRequest from './ProtectionRecoveryRequest';
 
 export default function TrustProtection() {
-    const { addresses } = useCommonContext();
+    const { accounts } = useCommonContext();
     const { pendingProtectionRequests, acceptedProtectionRequests, recoveryConfig } = useUserContext();
 
     if (pendingProtectionRequests === null || acceptedProtectionRequests === null || recoveryConfig === null) {
@@ -17,11 +17,11 @@ export default function TrustProtection() {
     }
 
     const pendingProtectionRequest = findRequest({
-        address: addresses!.currentAddress!.address,
+        address: accounts!.current!.address,
         requests: pendingProtectionRequests
     });
     const acceptedProtectionRequest = findRequest({
-        address: addresses!.currentAddress!.address,
+        address: accounts!.current!.address,
         requests: acceptedProtectionRequests
     });
     const goToRecovery = (pendingProtectionRequest !== null && isRecovery(pendingProtectionRequest))

@@ -15,13 +15,13 @@ import Login, { LOGIN_PATH } from './Login';
 import RenderOrRedirectToLogin from './RenderOrRedirectToLogin';
 
 export default function RootRouter() {
-    const { addresses } = useCommonContext();
+    const { accounts } = useCommonContext();
 
-    if(addresses === null || addresses.addresses.length === 0) {
+    if(accounts === null || accounts.all.length === 0) {
         return null;
     }
 
-    const isLegalOfficer = isLegalOfficerFunction(addresses?.currentAddress?.address);
+    const isLegalOfficer = isLegalOfficerFunction(accounts?.current?.address);
     let redirectTo;
     if(isLegalOfficer) {
         redirectTo = LEGAL_OFFICER_PATH;

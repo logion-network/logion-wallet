@@ -6,7 +6,7 @@ import moment from 'moment';
 import { useLogionChain } from '../logion-chain';
 import { CoinBalance, getBalances } from '../logion-chain/Balances';
 
-import Addresses, { buildAddresses, AccountTokens } from './types/Addresses';
+import Accounts, { buildAccounts, AccountTokens } from './types/Accounts';
 import { Children } from './types/Helpers';
 import { Transaction } from './types/ModelTypes';
 import { getTransactions } from "./Model";
@@ -17,7 +17,7 @@ const DEFAULT_NOOP = () => {};
 
 export interface CommonContext {
     selectAddress: ((address: string) => void) | null;
-    addresses: Addresses | null;
+    accounts: Accounts | null;
     fetchForAddress: string | null;
     dataAddress: string | null;
     balances: CoinBalance[] | null;
@@ -38,7 +38,7 @@ interface FullCommonContext extends CommonContext {
 function initialContextValue(): FullCommonContext {
     return {
         selectAddress: null,
-        addresses: null,
+        accounts: null,
         injectedAccounts: null,
         fetchForAddress: null,
         dataAddress: null,
@@ -76,7 +76,7 @@ interface Action {
     type: ActionType,
     selectAddress?: ((address: string) => void),
     newAddress?: string,
-    addresses?: Addresses,
+    accounts?: Accounts,
     injectedAccounts?: InjectedAccountWithMeta[],
     dataAddress?: string,
     balances?: CoinBalance[],
@@ -97,19 +97,19 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                 selectAddress: action.selectAddress!
             };
         case 'SELECT_ADDRESS': {
-            const addresses = buildAddresses(state.injectedAccounts!, action.newAddress!, state.tokens);
+            const accounts = buildAccounts(state.injectedAccounts!, action.newAddress!, state.tokens);
             return {
                 ...state,
-                addresses,
-                axios: buildAxiosInstance(addresses),
+                accounts,
+                axios: buildAxiosInstance(accounts),
             };
         }
         case 'SET_ADDRESSES':
             return {
                 ...state,
                 injectedAccounts: action.injectedAccounts!,
-                addresses: action.addresses!,
-                axios: buildAxiosInstance(action.addresses!),
+                accounts: action.accounts!,
+                axios: buildAxiosInstance(action.accounts!),
             };
         case 'FETCH_IN_PROGRESS':
             return {
@@ -148,12 +148,12 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
         case 'SET_TOKENS': {
             const tokens = state.tokens.merge(action.newTokens!);
             storeTokens(tokens);
-            const addresses = buildAddresses(state.injectedAccounts!, state.addresses?.currentAddress?.address, tokens);
+            const accounts = buildAccounts(state.injectedAccounts!, state.accounts?.current?.address, tokens);
             return {
                 ...state,
                 tokens,
-                addresses,
-                axios: buildAxiosInstance(addresses),
+                accounts,
+                axios: buildAxiosInstance(accounts),
             };
         }
         case 'SET_LOGOUT':
@@ -164,13 +164,13 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
         case 'LOGOUT': {
             clearTokens();
             const tokens = new AccountTokens({});
-            const addresses = buildAddresses(state.injectedAccounts!, undefined, tokens);
+            const accounts = buildAccounts(state.injectedAccounts!, undefined, tokens);
             clearInterval(state.timer!);
             return {
                 ...state,
                 tokens,
-                addresses,
-                axios: buildAxiosInstance(addresses),
+                accounts,
+                axios: buildAxiosInstance(accounts),
             };
         }
         case 'SCHEDULE_TOKEN_REFRESH':
@@ -187,11 +187,11 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
             const tokens = state.tokens.refresh(moment());
             if(!tokens.equals(state.tokens)) {
                 storeTokens(tokens);
-                const addresses = buildAddresses(state.injectedAccounts!, state.addresses?.currentAddress?.address, tokens);
+                const accounts = buildAccounts(state.injectedAccounts!, state.accounts?.current?.address, tokens);
                 return {
                     ...state,
                     tokens,
-                    addresses
+                    accounts
                 }
             } else {
                 return state;
@@ -202,8 +202,8 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
     }
 }
 
-function buildAxiosInstance(addresses: Addresses): AxiosInstance | undefined {
-    const currentAddress = addresses.currentAddress;
+function buildAxiosInstance(accounts: Accounts): AxiosInstance | undefined {
+    const currentAddress = accounts.current;
     if(currentAddress === undefined || currentAddress.token === undefined) {
         return axios.create();
     } else {
@@ -221,9 +221,9 @@ export function CommonContextProvider(props: Props) {
 
     const refreshRequests = useCallback(() => {
         if(api !== null && contextValue !== null
-                && contextValue.addresses !== null
-                && contextValue.addresses.currentAddress !== undefined) {
-            const currentAddress = contextValue.addresses.currentAddress.address;
+                && contextValue.accounts !== null
+                && contextValue.accounts.current !== undefined) {
+            const currentAddress = contextValue.accounts.current.address;
             dispatch({
                 type: "FETCH_IN_PROGRESS",
                 dataAddress: currentAddress,
@@ -251,10 +251,10 @@ export function CommonContextProvider(props: Props) {
 
     useEffect(() => {
         if(apiState === "READY"
-                && contextValue.addresses !== null
-                && contextValue.addresses.currentAddress !== undefined
-                && contextValue.dataAddress !== contextValue.addresses.currentAddress.address
-                && contextValue.fetchForAddress !== contextValue.addresses.currentAddress.address) {
+                && contextValue.accounts !== null
+                && contextValue.accounts.current !== undefined
+                && contextValue.dataAddress !== contextValue.accounts.current.address
+                && contextValue.fetchForAddress !== contextValue.accounts.current.address) {
             refreshRequests();
         }
     }, [ apiState, contextValue, refreshRequests, dispatch ]);
@@ -296,7 +296,7 @@ export function CommonContextProvider(props: Props) {
             dispatch({
                 type: 'SET_ADDRESSES',
                 injectedAccounts,
-                addresses: buildAddresses(injectedAccounts, contextValue.addresses?.currentAddress?.address, contextValue.tokens)
+                accounts: buildAccounts(injectedAccounts, contextValue.accounts?.current?.address, contextValue.tokens)
             });
         }
     }, [ injectedAccounts, contextValue ]);

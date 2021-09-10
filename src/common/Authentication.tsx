@@ -1,6 +1,6 @@
 import moment from 'moment';
 import { AxiosInstance } from 'axios';
-import { AccountTokens, Token } from "./types/Addresses";
+import { AccountTokens, Token } from "./types/Accounts";
 import { sign } from '../logion-chain/Signature';
 import { toIsoString } from '../logion-chain/datetime';
 
