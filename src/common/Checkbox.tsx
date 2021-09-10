@@ -7,6 +7,6 @@ export interface Props {
 
 export default function Checkbox(props: Props) {
     return (
-        <div role="checkbox" className={"Checkbox" + ( props.checked ? " checked": "")} onClick={() => props.setChecked(!props.checked)}></div>
+        <div role="checkbox" aria-checked={ props.checked } className={"Checkbox" + ( props.checked ? " checked": "")} onClick={() => props.setChecked(!props.checked)}></div>
     );
 }
