@@ -15,9 +15,9 @@ import {
 } from './LegalOfficerPaths';
 
 export default function ContextualizedWallet() {
-    const { selectAddress, addresses, colorTheme } = useCommonContext();
+    const { selectAddress, accounts, colorTheme } = useCommonContext();
 
-    if(addresses === null || selectAddress === null) {
+    if(accounts === null || selectAddress === null) {
         return null;
     }
 

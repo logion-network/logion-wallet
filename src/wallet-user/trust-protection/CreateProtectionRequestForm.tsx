@@ -59,7 +59,7 @@ interface FormValues {
 export default function CreateProtectionRequestForm(props: Props) {
     const { api } = useLogionChain();
     const { control, handleSubmit, formState: {errors} } = useForm<FormValues>();
-    const { addresses, colorTheme } = useCommonContext();
+    const { accounts, colorTheme } = useCommonContext();
     const { createProtectionRequest, refreshRequests } = useUserContext();
     const [ legalOfficer1, setLegalOfficer1 ] = useState<LegalOfficer | null>(null);
     const [ legalOfficer2, setLegalOfficer2 ] = useState<LegalOfficer | null>(null);
@@ -93,7 +93,7 @@ export default function CreateProtectionRequestForm(props: Props) {
         ];
 
         const signedOn = moment();
-        const currentAddress = addresses!.currentAddress!.address;
+        const currentAddress = accounts!.current!.address;
         const signature = await sign({
             signerId: currentAddress,
             resource: 'protection-request',
@@ -141,7 +141,7 @@ export default function CreateProtectionRequestForm(props: Props) {
     }
 
     const initiateRecoveryOnClick = useCallback(() => {
-        const currentAddress = addresses!.currentAddress!.address;
+        const currentAddress = accounts!.current!.address;
         (async function() {
             const activeRecovery = await getActiveRecovery({
                 api: api!,
@@ -160,7 +160,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                 setSignAndSubmit(() => signAndSubmit);
             }
         })();
-    }, [ api, addresses, addressToRecover, setSignAndSubmit ]);
+    }, [ api, accounts, addressToRecover, setSignAndSubmit ]);
 
     let legalOfficersTitle;
     if(props.isRecovery) {

@@ -43,7 +43,7 @@ function TabTitle(props: TabTitleProps) {
 
 export default function RecoveryProcess() {
     const { api } = useLogionChain();
-    const { addresses, colorTheme } = useCommonContext();
+    const { accounts, colorTheme } = useCommonContext();
     const { recoveredAddress } = useUserContext();
     const [ tabKey, setTabKey ] = useState<string>('tokens');
     const [ balances, setBalances ] = useState<Balances | null>(null);
@@ -76,7 +76,7 @@ export default function RecoveryProcess() {
         const amount = balanceFromAmount(Number(recoveredToken!.balance), recoveredToken!.asset.metadata.decimals);
         const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSendAsRecovered({
             api: api!,
-            signerId: addresses!.currentAddress!.address,
+            signerId: accounts!.current!.address,
             callback: setResult,
             errorCallback: setError,
             recoveredAccountId: recoveredAddress!,
@@ -84,11 +84,11 @@ export default function RecoveryProcess() {
                 api: api!,
                 assetId: recoveredToken!.asset.assetId,
                 amount,
-                target: addresses!.currentAddress!.address,
+                target: accounts!.current!.address,
             }),
         });
         setSignAndSubmit(() => signAndSubmit);
-    }, [ api, addresses, recoveredToken, recoveredAddress ]);
+    }, [ api, accounts, recoveredToken, recoveredAddress ]);
 
     const onTransferSuccess = useCallback(() => {
         setSignAndSubmit(null);
@@ -213,7 +213,7 @@ export default function RecoveryProcess() {
                     <p>
                         You are about to transfer { recoveredToken?.balance } units of
                         token { recoveredToken?.asset.metadata.symbol } to
-                        account { addresses?.currentAddress?.address }.
+                        account { accounts?.current?.address }.
                     </p>
                     <ExtrinsicSubmitter
                         id="transfer"

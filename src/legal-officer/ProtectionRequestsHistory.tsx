@@ -10,7 +10,7 @@ import ProtectionRequestStatus from './ProtectionRequestStatus';
 import ProtectionRequestDetails from './ProtectionRequestDetails';
 
 export default function ProtectionRequestsHistory() {
-    const { addresses } = useCommonContext();
+    const { accounts } = useCommonContext();
     const { protectionRequestsHistory } = useLegalOfficerContext();
 
     if (protectionRequestsHistory === null) {
@@ -37,7 +37,7 @@ export default function ProtectionRequestsHistory() {
                     {
                         header: "Status",
                         render: request => <ProtectionRequestStatus
-                            decision={ decision(addresses?.currentAddress?.address, request.decisions)!.status}
+                            decision={ decision(accounts?.current?.address, request.decisions)!.status}
                             status={ request.status }
                         />,
                         width: "140px",

@@ -25,7 +25,7 @@ export interface Props {
 }
 
 export default function Transactions(props: Props) {
-    const { addresses, balances, transactions, colorTheme } = useCommonContext();
+    const { accounts, balances, transactions, colorTheme } = useCommonContext();
     const { coinId } = useParams<{ coinId: string }>();
     const history = useHistory();
 
@@ -112,7 +112,7 @@ export default function Transactions(props: Props) {
 
     function transferBalance(transaction: Transaction): PrefixedNumber {
         const amount = prefixedLogBalance(transaction.transferValue);
-        if(transaction.from === addresses!.currentAddress!.address) {
+        if(transaction.from === accounts!.current!.address) {
             return amount.negate();
         } else {
             return amount;

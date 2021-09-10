@@ -1,7 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders ContentPane 1`] = `
-<BasePane>
+<BasePane
+  mainTitle=""
+  titleIcon={Object {}}
+>
   <PrimaryArea
     width={6}
   />
@@ -66,7 +69,9 @@ exports[`renders Dashboard 1`] = `
           <Menu
             items={Array []}
           />
-          <MainMenu />
+          <MainMenu
+            items={Array []}
+          />
           <Menu
             items={Array []}
           />
@@ -78,7 +83,10 @@ exports[`renders Dashboard 1`] = `
 `;
 
 exports[`renders FullWidthPane 1`] = `
-<BasePane>
+<BasePane
+  mainTitle=""
+  titleIcon={Object {}}
+>
   <PrimaryArea
     width={12}
   />

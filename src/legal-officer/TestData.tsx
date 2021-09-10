@@ -2,9 +2,9 @@ import moment from 'moment';
 import { toIsoString } from '../logion-chain/datetime';
 import { ProtectionRequest } from '../common/types/ModelTypes';
 import { DEFAULT_LEGAL_OFFICER } from '../common/types/LegalOfficer';
-import { AccountAddress } from '../common/types/Addresses';
+import { Account } from '../common/types/Accounts';
 
-export const DEFAULT_LEGAL_OFFICER_ADDRESS: AccountAddress = {
+export const DEFAULT_LEGAL_OFFICER_ADDRESS: Account = {
     address: DEFAULT_LEGAL_OFFICER,
     name: "Alice",
     isLegalOfficer: true

@@ -5,17 +5,17 @@ import { shallowRender, act } from './tests';
 
 import RenderOrRedirectToLogin from './RenderOrRedirectToLogin';
 import { setAddresses, setCurrentAddress, DEFAULT_USER_ACCOUNT } from './common/__mocks__/CommonContextMock';
-import { AccountAddress } from './common/types/Addresses';
+import { Account } from './common/types/Accounts';
 import { TEST_WALLET_USER } from './wallet-user/TestData';
 
 test('Given no logged account, when rendering, then redirecting to login with referrer', () => {
-    const notLoggedAccount: AccountAddress = {
+    const notLoggedAccount: Account = {
         name: "name",
         address: TEST_WALLET_USER,
         isLegalOfficer: false,
     };
     setAddresses({
-        addresses: [ notLoggedAccount ],
+        all: [ notLoggedAccount ],
     });
     const render = jest.fn();
     let tree: any;

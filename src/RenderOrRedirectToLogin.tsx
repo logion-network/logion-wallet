@@ -9,11 +9,11 @@ export interface Props {
 }
 
 export default function RenderOrRedirectToLogin(props: Props) {
-    const { addresses } = useCommonContext();
+    const { accounts } = useCommonContext();
     const location = useLocation();
 
-    if(addresses !== null
-            && addresses.addresses.find(address => address.token !== undefined) === undefined) {
+    if(accounts !== null
+            && accounts.all.find(address => address.token !== undefined) === undefined) {
         const state: LocationState = {
             referrer: location.pathname
         };

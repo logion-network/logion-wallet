@@ -1,16 +1,15 @@
 import { shallowRender } from '../tests';
 
 import Dashboard, { ContentPane, FullWidthPane } from './Dashboard';
-import { LIGHT_MODE } from '../legal-officer/Types';
-import Addresses from './types/Addresses';
+import Accounts from './types/Accounts';
 
-const ADDRESSES: Addresses = {
-    currentAddress: {
+const ADDRESSES: Accounts = {
+    current: {
         name: "Name 1",
         address: "address1",
         isLegalOfficer: false,
     },
-    addresses: [
+    accounts: [
         {
             name: "Name 1",
             address: "address1",
@@ -27,16 +26,9 @@ const ADDRESSES: Addresses = {
 test("renders Dashboard", () => {
     const result = shallowRender(
         <Dashboard
-            colors={ LIGHT_MODE }
-            addresses={ ADDRESSES }
-            selectAddress={ jest.fn() }
             menuTop={ [] }
             menuBottom={ [] }
-            shieldItem={{
-                text: "Protection",
-                to: "/",
-                exact: true,
-            }}
+            menuMiddle={ [] }
         >
         </Dashboard>
     );
@@ -48,6 +40,8 @@ test("renders ContentPane", () => {
         <ContentPane
             primaryAreaChildren={ null }
             secondaryAreaChildren={ null }
+            mainTitle=""
+            titleIcon={{ }}
         />
     );
     expect(result).toMatchSnapshot();
@@ -55,7 +49,10 @@ test("renders ContentPane", () => {
 
 test("renders FullWidthPane", () => {
     const result = shallowRender(
-        <FullWidthPane>
+        <FullWidthPane
+            mainTitle=""
+            titleIcon={{ }}
+        >
         </FullWidthPane>
     );
     expect(result).toMatchSnapshot();

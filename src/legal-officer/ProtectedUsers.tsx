@@ -8,7 +8,7 @@ import { legalOfficerByAddress } from "../common/types/LegalOfficer";
 
 export default function ProtectedUsers() {
     const { activatedProtectionRequests } = useLegalOfficerContext();
-    const { addresses } = useCommonContext();
+    const { accounts } = useCommonContext();
 
     return (
             <>
@@ -24,7 +24,7 @@ export default function ProtectedUsers() {
                         activatedProtectionRequests?.map(request => {
                             const otherLegalOfficerAddress = request.decisions
                                     .map(decision => decision.legalOfficerAddress)
-                                    .find(legalOfficerAddress => legalOfficerAddress !== addresses?.currentAddress?.address);
+                                    .find(legalOfficerAddress => legalOfficerAddress !== accounts?.current?.address);
                             return (
                                     <tr key={request.id}>
                                         <td>

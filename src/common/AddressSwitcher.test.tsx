@@ -2,7 +2,7 @@ import moment from 'moment';
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import Addresses, { AccountAddress } from './types/Addresses';
+import Accounts, { Account } from './types/Accounts';
 import { shallowRender } from '../tests';
 import AddressSwitcher from './AddressSwitcher';
 import { setAddresses } from './__mocks__/CommonContextMock';
@@ -13,7 +13,7 @@ import { authenticate } from './Authentication';
 jest.mock('./CommonContext');
 jest.mock('./Authentication');
 
-const AUTHENTICATED_ADDRESS: AccountAddress = {
+const AUTHENTICATED_ADDRESS: Account = {
     name: "name authenticated",
     address: TEST_WALLET_USER,
     isLegalOfficer: false,
@@ -23,15 +23,15 @@ const AUTHENTICATED_ADDRESS: AccountAddress = {
     },
 };
 
-const UNAUTHENTICATED_ADDRESS: AccountAddress = {
+const UNAUTHENTICATED_ADDRESS: Account = {
     name: "name unauthenticated",
     address: DEFAULT_LEGAL_OFFICER,
     isLegalOfficer: true,
 };
 
-const ADDRESSES: Addresses = {
-    currentAddress: AUTHENTICATED_ADDRESS,
-    addresses: [ UNAUTHENTICATED_ADDRESS ]
+const ADDRESSES: Accounts = {
+    current: AUTHENTICATED_ADDRESS,
+    all: [ UNAUTHENTICATED_ADDRESS ]
 };
 
 describe("AddressSwitcher", () => {
