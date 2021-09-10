@@ -221,7 +221,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                                     successMessage="Recovery successfully initiated."
                                     signAndSubmit={ signAndSubmit }
                                     onSuccess={ () => { setSignAndSubmit(null); setActiveRecovery(true); } }
-                                    onError={ () => setSignAndSubmit(null) }
+                                    onError={ () => {} }
                                 />
                             </>
                         }
