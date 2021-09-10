@@ -1,79 +1,96 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders 1`] = `
+exports[`AddressSwitcher renders 1`] = `
 <div
-  className="AccountAddress"
+  className="AddressSwitcher light"
+  style={
+    Object {
+      "color": "#000000",
+    }
+  }
 >
-  <div
-    className="icon"
-    style={
-      Object {
-        "backgroundColor": "#3b6cf4",
-      }
-    }
+  <Dropdown
+    navbar={false}
   >
-    N
-  </div>
-  <div
-    className="text"
-    style={
-      Object {
-        "justifyContent": "space-between",
-      }
-    }
-  >
-    <div
-      className="hint"
+    <DropdownToggle
+      id="address-switcher-toggle"
+    >
+      <div
+        className="address-data"
+      >
+        <AccountAddress
+          address={
+            Object {
+              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "isLegalOfficer": false,
+              "name": "name authenticated",
+              "token": Object {
+                "expirationDateTime": "2021-09-10T10:53:00.000Z",
+                "value": "token",
+              },
+            }
+          }
+          disabled={false}
+          hint="Click to select another address"
+        />
+      </div>
+    </DropdownToggle>
+    <DropdownMenu
+      align="left"
+      alignRight={false}
+      flip={true}
       style={
         Object {
-          "color": "#ffffff99",
+          "backgroundColor": "eff3fe",
+          "boxShadow": "0 0 25px #3b6cf41a",
+          "color": "#000000",
         }
       }
     >
-      My hint
-    </div>
-    <div
-      className="name"
-      style={
-        Object {
-          "color": "#ffffff",
+      <DropdownItem
+        as={
+          Object {
+            "$$typeof": Symbol(react.forward_ref),
+            "render": [Function],
+          }
         }
-      }
-    >
-      Name 1
-    </div>
-    <div
-      className="address"
-      style={
-        Object {
-          "color": "#ffffff",
+        disabled={false}
+        onClick={[Function]}
+      >
+        <AccountAddress
+          address={
+            Object {
+              "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "isLegalOfficer": true,
+              "name": "name unauthenticated",
+            }
+          }
+          disabled={true}
+          login={[Function]}
+        />
+      </DropdownItem>
+      <DropdownItem
+        as={
+          Object {
+            "$$typeof": Symbol(react.forward_ref),
+            "render": [Function],
+          }
         }
-      }
-    >
-      <OverlayTrigger
-        defaultShow={false}
-        delay={500}
-        overlay={
-          <Tooltip
-            id="tooltip-address1"
-            placement="right"
-          >
-            address1
-          </Tooltip>
-        }
-        placement="bottom"
-        trigger={
-          Array [
-            "hover",
-            "focus",
-          ]
+        className="logout"
+        disabled={false}
+        style={
+          Object {
+            "borderTop": "1px solid #000000",
+          }
         }
       >
-        <span>
-          address1
-        </span>
-      </OverlayTrigger>
-    </div>
-  </div>
+        <Button
+          variant="salmon"
+        >
+          Log Out
+        </Button>
+      </DropdownItem>
+    </DropdownMenu>
+  </Dropdown>
 </div>
 `;

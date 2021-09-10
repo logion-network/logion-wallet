@@ -103,7 +103,7 @@ export interface BasePaneProps extends TitlesProps {
 }
 
 function BasePane(props: BasePaneProps) {
-    const { selectAddress, addresses } = useCommonContext();
+    const { selectAddress } = useCommonContext();
 
     let contentAreaClass = "ContentArea";
     if(props.className !== undefined) {
@@ -119,7 +119,6 @@ function BasePane(props: BasePaneProps) {
                 <Col md={ 4 }>
                     <div className="AddressSwitcherArea">
                         <AddressSwitcher
-                            addresses={ addresses }
                             selectAddress={ selectAddress }
                         />
                     </div>

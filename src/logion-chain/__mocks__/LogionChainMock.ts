@@ -46,6 +46,9 @@ let context = {
     apiState: 'CONNECT_INIT',
     injectedAccounts: null,
     api,
+    connectedNodeMetadata: {
+        
+    }
 };
 
 export function setContextMock(value: any) {

@@ -1,8 +1,6 @@
 import React, { useCallback } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 
-import Addresses from './types/Addresses';
-
 import './AddressSwitcher.css';
 import AccountAddress from './AccountAddress';
 import { useCommonContext } from './CommonContext';
@@ -10,12 +8,11 @@ import Button from './Button';
 import { authenticate } from './Authentication';
 
 export interface Props {
-    addresses: Addresses | null,
     selectAddress: ((userAddress: string) => void) | null,
 }
 
 export default function AddressSwitcher(props: Props) {
-    const { colorTheme, logout, axios, setTokens } = useCommonContext();
+    const { colorTheme, logout, axios, setTokens, addresses } = useCommonContext();
 
     const login = useCallback((address: string) => {
         (async function() {
@@ -24,7 +21,7 @@ export default function AddressSwitcher(props: Props) {
         })();
     }, [ axios, setTokens ]);
 
-    if(props.addresses === null || props.selectAddress === null || props.addresses.currentAddress === undefined) {
+    if(addresses === null || props.selectAddress === null || addresses.currentAddress === undefined) {
         return null;
     }
 
@@ -40,8 +37,8 @@ export default function AddressSwitcher(props: Props) {
                     <div className="address-data">
                         <AccountAddress
                             hint="Click to select another address"
-                            address={ props.addresses.currentAddress }
-                            disabled={ props.addresses.currentAddress.token === undefined }
+                            address={ addresses.currentAddress }
+                            disabled={ addresses.currentAddress.token === undefined }
                         />
                     </div>
                 </Dropdown.Toggle>
@@ -53,8 +50,8 @@ export default function AddressSwitcher(props: Props) {
                     }}
                 >
                     {
-                        props.addresses.addresses
-                            .filter(address => address.address !== props.addresses!.currentAddress!.address)
+                        addresses.addresses
+                            .filter(address => address.address !== addresses!.currentAddress!.address)
                             .map(address => (
                             <Dropdown.Item
                                 key={ address.address }

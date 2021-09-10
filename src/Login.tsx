@@ -70,7 +70,7 @@ export default function Login() {
                             addresses.addresses
                             .filter(address => address.token === undefined)
                             .map(address => (
-                                <div className="account">
+                                <div className="account" key={ address.address }>
                                     <Checkbox
                                         checked={ selectedAddresses.includes(address.address) }
                                         setChecked={ selected => selectAddress(address.address, selected) }
