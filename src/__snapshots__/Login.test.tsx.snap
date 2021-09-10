@@ -1,0 +1,98 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Login renders 1`] = `
+<div
+  className="Login"
+>
+  <AbsoluteLogo />
+  <Container
+    className="column"
+    fluid={false}
+  >
+    <h1>
+      Please authenticate yourself by selecting
+      <br />
+      one or several accounts below
+    </h1>
+    <div
+      className="chooser"
+    >
+      <h2>
+        The following accounts have been detected:
+      </h2>
+      <div
+        className="accounts-container"
+      >
+        <div
+          className="account"
+        >
+          <Checkbox
+            checked={false}
+            setChecked={[Function]}
+          />
+          <div
+            className="icon"
+          >
+            N
+          </div>
+          <div
+            className="name-address"
+          >
+            <div
+              className="name"
+            >
+              name unauthenticated
+            </div>
+            <div
+              className="address"
+            >
+              5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+            </div>
+          </div>
+        </div>
+      </div>
+      <Button
+        disabled={true}
+        onClick={[Function]}
+      >
+        Log in
+      </Button>
+    </div>
+    <div
+      className="node-info"
+    >
+      <p
+        className="name"
+      >
+        You are currently connected to the following logion node: "
+        "
+      </p>
+      <p
+        className="peer-id"
+      >
+        <img
+          alt="node icon"
+          src="/assets/node.svg"
+        />
+        Peer ID: 
+      </p>
+    </div>
+  </Container>
+  <div
+    className="left-character"
+  >
+    <img
+      alt="men pointing at box"
+      src="/assets/login-left-character.svg"
+    />
+  </div>
+  <div
+    className="right-character"
+  >
+    <img
+      alt="women holding a loc"
+      src="/assets/login-right-character.svg"
+    />
+  </div>
+</div>
+`;

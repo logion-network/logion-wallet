@@ -2,16 +2,18 @@ import moment from 'moment';
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import Addresses, { AccountAddress } from './types/Addresses';
-import { shallowRender } from '../tests';
-import AddressSwitcher from './AddressSwitcher';
-import { setAddresses } from './__mocks__/CommonContextMock';
-import { TEST_WALLET_USER } from '../wallet-user/TestData';
-import { DEFAULT_LEGAL_OFFICER } from './types/LegalOfficer';
-import { authenticate } from './Authentication';
+import Addresses, { AccountAddress } from './common/types/Addresses';
+import { shallowRender } from './tests';
+import { setAddresses } from './common/__mocks__/CommonContextMock';
+import { TEST_WALLET_USER } from './wallet-user/TestData';
+import { DEFAULT_LEGAL_OFFICER } from './common/types/LegalOfficer';
+import { authenticate } from './common/Authentication';
 
-jest.mock('./CommonContext');
-jest.mock('./Authentication');
+import Login from './Login';
+
+jest.mock('./logion-chain');
+jest.mock('./common/CommonContext');
+jest.mock('./common/Authentication');
 
 const AUTHENTICATED_ADDRESS: AccountAddress = {
     name: "name authenticated",
@@ -34,14 +36,12 @@ const ADDRESSES: Addresses = {
     addresses: [ UNAUTHENTICATED_ADDRESS ]
 };
 
-describe("AddressSwitcher", () => {
+describe("Login", () => {
 
     it("renders", () => {
         setAddresses(ADDRESSES);
         const result = shallowRender(
-            <AddressSwitcher
-                selectAddress={ () => {} }
-            />
+            <Login />
         );
         expect(result).toMatchSnapshot();
     });
@@ -49,13 +49,11 @@ describe("AddressSwitcher", () => {
     it("enables log-in given unautenticated yet user", async () => {
         setAddresses(ADDRESSES);
         render(
-            <AddressSwitcher
-                selectAddress={ () => {} }
-            />
+            <Login />
         );
 
-        userEvent.click(screen.getByText("Click to select another address"));
-        await waitFor(() => userEvent.click(screen.getByRole('button', {name:"login button"})));
+        await waitFor(() => userEvent.click(screen.getByRole('checkbox')));
+        await waitFor(() => userEvent.click(screen.getByRole('button', {name: "Log in"})));
 
         await waitFor(() => expect(authenticate).toBeCalledWith(expect.anything(), [ DEFAULT_LEGAL_OFFICER ]));
     });

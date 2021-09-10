@@ -51,6 +51,7 @@ export function useCommonContext() {
         colorTheme: COLOR_THEME,
         setColorTheme,
         axios: axiosMock.object(),
+        setTokens: jest.fn(),
     };
 }
 

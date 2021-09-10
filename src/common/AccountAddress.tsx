@@ -92,6 +92,8 @@ export default function AccountAddress(props: Props) {
                         style={{
                             border: `1px solid ${colorTheme.accounts.foreground}`
                         }}
+                        role="button"
+                        aria-label="login button"
                     >
                         <Icon
                             icon={{ id: "forward", hasVariants: true }}

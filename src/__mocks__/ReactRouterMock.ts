@@ -18,6 +18,9 @@ export function setHistory(mock: object) {
 
 export let location: any = {
     pathname: "/path",
+    state: {
+        
+    }
 };
 
 export let useLocation = () => location;
