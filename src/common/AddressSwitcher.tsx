@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 import './AddressSwitcher.css';
@@ -6,6 +6,7 @@ import AccountAddress from './AccountAddress';
 import { useCommonContext } from './CommonContext';
 import Button from './Button';
 import { authenticate } from './Authentication';
+import Dialog from './Dialog';
 
 export interface Props {
     selectAddress: ((userAddress: string) => void) | null,
@@ -13,6 +14,7 @@ export interface Props {
 
 export default function AddressSwitcher(props: Props) {
     const { colorTheme, logout, axios, setTokens, accounts } = useCommonContext();
+    const [ confirm, setConfirm ] = useState<boolean>(false);
 
     const login = useCallback((address: string) => {
         (async function() {
@@ -67,7 +69,7 @@ export default function AddressSwitcher(props: Props) {
                     }
                     <Dropdown.Item
                         key="logout"
-                        onClick={ logout }
+                        onClick={ () => setConfirm(true) }
                         style={{
                             borderTop: `1px solid ${colorTheme.accounts.foreground}`,
                         }}
@@ -77,6 +79,26 @@ export default function AddressSwitcher(props: Props) {
                     </Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
+            <Dialog
+                show={ confirm }
+                actions={[
+                    {
+                        id: "confirm",
+                        buttonText: "Confirm",
+                        buttonVariant: "primary",
+                        callback: logout
+                    },
+                    {
+                        id: "cancel",
+                        buttonText: "Cancel",
+                        buttonVariant: "secondary",
+                        callback: () => setConfirm(false)
+                    }
+                ]}
+                size="lg"
+            >
+                <p>This action will log you off from <strong>all</strong> current connected accounts, do you confirm ?</p>
+            </Dialog>
         </div>
     );
 }
