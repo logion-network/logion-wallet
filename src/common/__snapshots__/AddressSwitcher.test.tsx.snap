@@ -78,6 +78,7 @@ exports[`AddressSwitcher renders 1`] = `
         }
         className="logout"
         disabled={false}
+        onClick={[Function]}
         style={
           Object {
             "borderTop": "1px solid #000000",
@@ -92,5 +93,33 @@ exports[`AddressSwitcher renders 1`] = `
       </DropdownItem>
     </DropdownMenu>
   </Dropdown>
+  <Dialog
+    actions={
+      Array [
+        Object {
+          "buttonText": "Confirm",
+          "buttonVariant": "primary",
+          "callback": undefined,
+          "id": "confirm",
+        },
+        Object {
+          "buttonText": "Cancel",
+          "buttonVariant": "secondary",
+          "callback": [Function],
+          "id": "cancel",
+        },
+      ]
+    }
+    show={false}
+    size="lg"
+  >
+    <p>
+      This action will log you off from 
+      <strong>
+        all
+      </strong>
+       current connected accounts, do you confirm ?
+    </p>
+  </Dialog>
 </div>
 `;
