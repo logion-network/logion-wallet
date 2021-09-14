@@ -28,7 +28,7 @@ describe("Authentication", () => {
         const authenticateResponseMock = new Mock<AxiosResponse>();
         authenticateResponseMock.setup(instance => instance.data).returns({
             tokens: {
-                "abc": "token"
+                "abc": { value: "token", expiredOn: "2121-06-01T12:13:34.678" }
             }
         });
         const mockSignatureRegExp = new RegExp("authentication,login," + ISO_DATETIME_PATTERN.source + ",session");
