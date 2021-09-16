@@ -167,7 +167,7 @@ export function UserContextProvider(props: Props) {
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
     useEffect(() => {
-        if (contextValue.createTokenRequest === null) {
+        if (contextValue.createTokenRequest === null || axios !== contextValue.currentAxios) {
             const createTokenRequest = async (request: CreateTokenRequest): Promise<TokenizationRequest> => {
                 const createdTokenRequest = await modelCreateTokenRequest(axios!, request);
                 dispatch({
