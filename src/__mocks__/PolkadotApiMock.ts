@@ -88,6 +88,9 @@ export class ApiPromise {
         recovery: {
             createRecovery: jest.fn().mockResolvedValue(() => {}),
             initiateRecovery: jest.fn().mockResolvedValue(() => {}),
+        },
+        logionLoc: {
+            createLoc: jest.fn().mockResolvedValue(() => {}),
         }
     }
 }
