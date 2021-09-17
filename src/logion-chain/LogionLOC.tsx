@@ -2,12 +2,12 @@ import { ApiPromise } from '@polkadot/api';
 import { ExtrinsicSubmissionParameters, signAndSend, Unsubscriber } from './Signature';
 import { UUID } from './UUID';
 
-export interface LOCCreationResult extends ExtrinsicSubmissionParameters {
+export interface LOCCreationParameters extends ExtrinsicSubmissionParameters {
     api: ApiPromise,
     locId: UUID,
 }
 
-export function createLoc(parameters: LOCCreationResult): Unsubscriber {
+export function createLoc(parameters: LOCCreationParameters): Unsubscriber {
     const {
         api,
         signerId,
