@@ -71,6 +71,7 @@ export async function sign(parameters: AttributesSignatureParameters): Promise<s
     let signedOn = toIsoString(parameters.signedOn);
     const attributes = [parameters.resource, parameters.operation, signedOn];
     const allAttributes = attributes.concat(parameters.attributes);
+    console.log(createHash(allAttributes));
     const result = await extension.signer.signRaw!({
         address: parameters.signerId,
         type: "bytes",

@@ -10,6 +10,7 @@ import {
     WALLET_PATH,
     transactionsPath,
     TRANSACTIONS_PATH,
+    LOC_REQUESTS_PATH,
 } from './LegalOfficerPaths';
 
 import Home from './Home';
@@ -20,6 +21,7 @@ import Settings from '../Settings';
 import RecoveryDetails from "./RecoveryDetails";
 import Wallet from "../common/Wallet";
 import Transactions from "../common/Transactions";
+import LocRequests from './LocRequests';
 
 export default function LegalOfficerRouter() {
 
@@ -50,6 +52,9 @@ export default function LegalOfficerRouter() {
                     <Transactions
                         backPath={ WALLET_PATH }
                     />
+                </Route>
+                <Route path={ LOC_REQUESTS_PATH }>
+                    <LocRequests />
                 </Route>
                 <Route path="">
                     <Home />

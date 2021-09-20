@@ -1,9 +1,8 @@
 import React from 'react';
 import { ButtonVariant } from 'react-bootstrap/types';
 
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import Dialog from '../common/Dialog';
+import { Action } from '../common/Button';
 
 export interface NextStep {
     id: string,
@@ -18,13 +17,24 @@ export interface Props {
     active: boolean,
     closeCallback?: () => void,
     title: string,
-    children?: JSX.Element | JSX.Element[] | null,
+    children: JSX.Element | JSX.Element[] | null,
     mayProceed?: boolean,
     proceedCallback?: () => void,
     stepTestId?: string,
     proceedButtonTestId?: string,
     closeButtonTestId?: string,
     nextSteps?: NextStep[],
+}
+
+function toAction(nextStep: NextStep): Action {
+    return {
+        id: nextStep.id,
+        callback: nextStep.callback,
+        disabled: !nextStep.mayProceed,
+        buttonVariant: nextStep.buttonVariant,
+        buttonText: nextStep.buttonText,
+        buttonTestId: nextStep.buttonTestId,
+    };
 }
 
 export default function ProcessStep(props: Props) {
@@ -73,37 +83,16 @@ export default function ProcessStep(props: Props) {
     }
 
     return (
-        <Modal
+        <Dialog
             show={ props.active }
-            backdrop={ closable ? true : "static" }
-            keyboard={ closable }
             size="lg"
             data-testid={ props.stepTestId }
-            onHide={ props.closeCallback }
+            actions={ nextSteps.map(nextStep => toAction(nextStep)) }
         >
-            <Modal.Header closeButton={ closable }>
-                <Modal.Title>{ props.title }</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
+            <>
+                <h2>{ props.title }</h2>
                 { props.children }
-            </Modal.Body>
-            <Modal.Footer>
-                <ButtonGroup>
-                {
-                    nextSteps.map(nextStep => (
-                        <Button
-                            key={ nextStep.id }
-                            variant={ nextStep.buttonVariant }
-                            disabled={ !nextStep.mayProceed }
-                            onClick={ nextStep.callback }
-                            data-testid={ nextStep.buttonTestId }
-                        >
-                            { nextStep.buttonText }
-                        </Button>
-                    ))
-                }
-                </ButtonGroup>
-            </Modal.Footer>
-        </Modal>
+            </>
+        </Dialog>
     );
 }

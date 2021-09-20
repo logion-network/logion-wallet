@@ -3,10 +3,10 @@ jest.mock('./Signature');
 
 import { setSignAndSend } from './__mocks__/SignatureMock';
 import { ApiPromise } from '@polkadot/api';
-import { createLoc } from './LogionLOC';
+import { createLoc } from './LogionLoc';
 import { UUID } from './UUID';
 
-describe("LogionLOC", () => {
+describe("LogionLoc", () => {
 
     it("submits createLoc extrinsic", () => {
         const api = new ApiPromise();

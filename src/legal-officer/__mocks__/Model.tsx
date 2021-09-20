@@ -6,6 +6,8 @@ import {
     acceptProtectionRequest,
     decision,
     fetchRecoveryInfo,
+    acceptLocRequest,
+    rejectLocRequest,
 } from './ModelMock';
 
 export {
@@ -16,4 +18,6 @@ export {
     acceptProtectionRequest,
     decision,
     fetchRecoveryInfo,
+    acceptLocRequest,
+    rejectLocRequest,
 };

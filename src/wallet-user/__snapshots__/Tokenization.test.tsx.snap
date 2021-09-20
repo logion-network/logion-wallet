@@ -40,73 +40,62 @@ exports[`REQUEST_TOKENIZATION: Disable button, Show form 1`] = `
       }
       control={
         Object {
-          "defaultValuesRef": Object {
-            "current": Object {},
+          "_defaultValues": Object {},
+          "_fields": Object {},
+          "_formState": Object {
+            "dirtyFields": Object {},
+            "errors": Object {},
+            "isDirty": false,
+            "isSubmitSuccessful": false,
+            "isSubmitted": false,
+            "isSubmitting": false,
+            "isValid": false,
+            "isValidating": false,
+            "submitCount": 0,
+            "touchedFields": Object {},
           },
-          "fieldArrayDefaultValuesRef": Object {
-            "current": Object {},
+          "_formValues": Object {},
+          "_getFieldArrayValue": [Function],
+          "_getIsDirty": [Function],
+          "_getWatch": [Function],
+          "_isInAction": false,
+          "_isMounted": false,
+          "_names": Object {
+            "array": Set {},
+            "mount": Set {},
+            "unMount": Set {},
+            "watch": Set {},
           },
-          "fieldsRef": Object {
-            "current": Object {},
+          "_proxyFormState": Object {
+            "dirtyFields": false,
+            "errors": "all",
+            "isDirty": false,
+            "isValid": false,
+            "isValidating": false,
+            "touchedFields": false,
           },
-          "formStateRef": Object {
-            "current": Object {
-              "dirtyFields": Object {},
-              "errors": Object {},
-              "isDirty": false,
-              "isSubmitSuccessful": false,
-              "isSubmitted": false,
-              "isSubmitting": false,
-              "isValid": false,
-              "isValidating": false,
-              "submitCount": 0,
-              "touchedFields": Object {},
+          "_removeFields": [Function],
+          "_shouldUnregister": undefined,
+          "_subjects": Object {
+            "array": ge {
+              "observers": Array [],
+            },
+            "control": ge {
+              "observers": Array [],
+            },
+            "state": ge {
+              "observers": Array [],
+            },
+            "watch": ge {
+              "observers": Array [],
             },
           },
-          "getIsDirty": [Function],
-          "inFieldArrayActionRef": Object {
-            "current": false,
-          },
-          "namesRef": Object {
-            "current": Object {
-              "array": Set {},
-              "mount": Set {},
-              "unMount": Set {},
-              "watch": Set {},
-              "watchAll": false,
-            },
-          },
-          "readFormStateRef": Object {
-            "current": Object {
-              "dirtyFields": false,
-              "errors": "all",
-              "isDirty": false,
-              "isValid": false,
-              "isValidating": false,
-              "touchedFields": false,
-            },
-          },
+          "_updateFieldArray": [Function],
+          "_updateProps": [Function],
+          "_updateValid": [Function],
+          "_updateValues": [Function],
           "register": [Function],
-          "shouldUnmount": undefined,
-          "subjectsRef": Object {
-            "current": Object {
-              "array": ke {
-                "observers": Array [],
-              },
-              "control": ke {
-                "observers": Array [],
-              },
-              "state": ke {
-                "observers": Array [],
-              },
-              "watch": ke {
-                "observers": Array [],
-              },
-            },
-          },
           "unregister": [Function],
-          "updateIsValid": [Function],
-          "watchInternal": [Function],
         }
       }
       errors={Object {}}
@@ -155,73 +144,62 @@ exports[`START: Enable button 1`] = `
       }
       control={
         Object {
-          "defaultValuesRef": Object {
-            "current": Object {},
+          "_defaultValues": Object {},
+          "_fields": Object {},
+          "_formState": Object {
+            "dirtyFields": Object {},
+            "errors": Object {},
+            "isDirty": false,
+            "isSubmitSuccessful": false,
+            "isSubmitted": false,
+            "isSubmitting": false,
+            "isValid": false,
+            "isValidating": false,
+            "submitCount": 0,
+            "touchedFields": Object {},
           },
-          "fieldArrayDefaultValuesRef": Object {
-            "current": Object {},
+          "_formValues": Object {},
+          "_getFieldArrayValue": [Function],
+          "_getIsDirty": [Function],
+          "_getWatch": [Function],
+          "_isInAction": false,
+          "_isMounted": false,
+          "_names": Object {
+            "array": Set {},
+            "mount": Set {},
+            "unMount": Set {},
+            "watch": Set {},
           },
-          "fieldsRef": Object {
-            "current": Object {},
+          "_proxyFormState": Object {
+            "dirtyFields": false,
+            "errors": "all",
+            "isDirty": false,
+            "isValid": false,
+            "isValidating": false,
+            "touchedFields": false,
           },
-          "formStateRef": Object {
-            "current": Object {
-              "dirtyFields": Object {},
-              "errors": Object {},
-              "isDirty": false,
-              "isSubmitSuccessful": false,
-              "isSubmitted": false,
-              "isSubmitting": false,
-              "isValid": false,
-              "isValidating": false,
-              "submitCount": 0,
-              "touchedFields": Object {},
+          "_removeFields": [Function],
+          "_shouldUnregister": undefined,
+          "_subjects": Object {
+            "array": ge {
+              "observers": Array [],
+            },
+            "control": ge {
+              "observers": Array [],
+            },
+            "state": ge {
+              "observers": Array [],
+            },
+            "watch": ge {
+              "observers": Array [],
             },
           },
-          "getIsDirty": [Function],
-          "inFieldArrayActionRef": Object {
-            "current": false,
-          },
-          "namesRef": Object {
-            "current": Object {
-              "array": Set {},
-              "mount": Set {},
-              "unMount": Set {},
-              "watch": Set {},
-              "watchAll": false,
-            },
-          },
-          "readFormStateRef": Object {
-            "current": Object {
-              "dirtyFields": false,
-              "errors": "all",
-              "isDirty": false,
-              "isValid": false,
-              "isValidating": false,
-              "touchedFields": false,
-            },
-          },
+          "_updateFieldArray": [Function],
+          "_updateProps": [Function],
+          "_updateValid": [Function],
+          "_updateValues": [Function],
           "register": [Function],
-          "shouldUnmount": undefined,
-          "subjectsRef": Object {
-            "current": Object {
-              "array": ke {
-                "observers": Array [],
-              },
-              "control": ke {
-                "observers": Array [],
-              },
-              "state": ke {
-                "observers": Array [],
-              },
-              "watch": ke {
-                "observers": Array [],
-              },
-            },
-          },
           "unregister": [Function],
-          "updateIsValid": [Function],
-          "watchInternal": [Function],
         }
       }
       errors={Object {}}

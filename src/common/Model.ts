@@ -8,6 +8,8 @@ import {
     ProtectionRequestStatus,
     ProtectionRequest,
     Transaction,
+    LocRequest,
+    LocRequestStatus,
 } from './types/ModelTypes';
 
 export interface FetchRequestSpecification {
@@ -96,4 +98,18 @@ function transactionType(transaction: Transaction, address: string): string {
     } else {
         return 'Other';
     }
+}
+
+export interface FetchLocRequestSpecification {
+    legalOfficerAddress?: string,
+    requesterAddress?: string,
+    statuses: LocRequestStatus[],
+}
+
+export async function fetchLocRequests(
+    axios: AxiosInstance,
+    specification: FetchLocRequestSpecification,
+): Promise<LocRequest[]> {
+    const response = await axios.put(`/api/loc-request`, specification);
+    return response.data.requests;
 }

@@ -3,99 +3,57 @@
 exports[`Rendering inactive step 1`] = `null`;
 
 exports[`Rendering non-closable active step, may not proceed 1`] = `
-<Modal
-  animation={true}
-  autoFocus={true}
-  backdrop="static"
-  dialogAs={
-    Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "render": [Function],
-    }
+<Dialog
+  actions={
+    Array [
+      Object {
+        "buttonTestId": undefined,
+        "buttonText": "Proceed",
+        "buttonVariant": "primary",
+        "callback": [MockFunction],
+        "disabled": true,
+        "id": "proceed",
+      },
+    ]
   }
-  enforceFocus={true}
-  keyboard={false}
-  restoreFocus={true}
   show={true}
   size="lg"
 >
-  <ModalHeader
-    closeButton={false}
-    closeLabel="Close"
-  >
-    <ModalTitle>
+  <React.Fragment>
+    <h2>
       Title
-    </ModalTitle>
-  </ModalHeader>
-  <ModalBody>
+    </h2>
     <p>
       Content
     </p>
-  </ModalBody>
-  <ModalFooter>
-    <ButtonGroup
-      role="group"
-      toggle={false}
-      vertical={false}
-    >
-      <Button
-        active={false}
-        disabled={true}
-        onClick={[MockFunction]}
-        variant="primary"
-      >
-        Proceed
-      </Button>
-    </ButtonGroup>
-  </ModalFooter>
-</Modal>
+  </React.Fragment>
+</Dialog>
 `;
 
 exports[`Rendering non-closable active step, may proceed 1`] = `
-<Modal
-  animation={true}
-  autoFocus={true}
-  backdrop="static"
-  dialogAs={
-    Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "render": [Function],
-    }
+<Dialog
+  actions={
+    Array [
+      Object {
+        "buttonTestId": undefined,
+        "buttonText": "Proceed",
+        "buttonVariant": "primary",
+        "callback": [MockFunction],
+        "disabled": false,
+        "id": "proceed",
+      },
+    ]
   }
-  enforceFocus={true}
-  keyboard={false}
-  restoreFocus={true}
   show={true}
   size="lg"
 >
-  <ModalHeader
-    closeButton={false}
-    closeLabel="Close"
-  >
-    <ModalTitle>
+  <React.Fragment>
+    <h2>
       Title
-    </ModalTitle>
-  </ModalHeader>
-  <ModalBody>
+    </h2>
     <p>
       Content
     </p>
-  </ModalBody>
-  <ModalFooter>
-    <ButtonGroup
-      role="group"
-      toggle={false}
-      vertical={false}
-    >
-      <Button
-        active={false}
-        disabled={false}
-        onClick={[MockFunction]}
-        variant="primary"
-      >
-        Proceed
-      </Button>
-    </ButtonGroup>
-  </ModalFooter>
-</Modal>
+  </React.Fragment>
+</Dialog>
 `;
