@@ -1,81 +1,74 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders 1`] = `
-Array [
-  "Patrick",
-  <div
-    className="Collapsible"
-  >
-    <span
-      aria-controls="collapsible-content-1632148599805"
-      aria-disabled={false}
-      aria-expanded={false}
-      className="Collapsible__trigger is-closed"
-      id="collapsible-trigger-1632148599805"
-      onClick={[Function]}
-      onKeyPress={[Function]}
-      role="button"
-      style={null}
-      tabIndex={null}
-    >
-      <button
-        className="btn btn-primary"
+<React.Fragment>
+  Patrick
+  <s
+    className=""
+    classParentString="Collapsible"
+    contentContainerTagName="div"
+    contentHiddenWhenClosed={false}
+    contentInnerClassName=""
+    contentOuterClassName=""
+    easing="linear"
+    lazyRender={false}
+    onClose={[Function]}
+    onClosing={[Function]}
+    onOpen={[Function]}
+    onOpening={[Function]}
+    onTriggerClosing={[Function]}
+    onTriggerOpening={[Function]}
+    open={false}
+    openedClassName=""
+    overflowWhenOpen="hidden"
+    tabIndex={null}
+    transitionCloseTime={null}
+    transitionTime={400}
+    trigger={
+      <Button
+        active={false}
         disabled={false}
-        type="button"
+        variant="primary"
       >
         More
-      </button>
-    </span>
-    <div
-      aria-labelledby="collapsible-trigger-1632148599805"
-      className="Collapsible__contentOuter"
-      hidden={false}
-      id="collapsible-content-1632148599805"
-      onTransitionEnd={[Function]}
-      role="region"
-      style={
-        Object {
-          "WebkitTransition": "height 400ms linear",
-          "height": 0,
-          "msTransition": "height 400ms linear",
-          "overflow": "hidden",
-          "transition": "height 400ms linear",
-        }
-      }
-    >
-      <div
-        className="Collapsible__contentInner"
-      >
-        <p>
-          Polkadot address: 
-          5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
-        </p>
-        <p>
-          Details: 
-          <br />
-          <span>
-            Modero Bruxelles
-            <br />
-          </span>
-          <span>
-            Central administration 
-            <br />
-          </span>
-          <span>
-            Nijverheidslaan 1
-            <br />
-          </span>
-          <span>
-            B - 1853 Grimbergen (Strombeek-Bever)
-            <br />
-          </span>
-          <span>
-            Belgium
-            <br />
-          </span>
-        </p>
-      </div>
-    </div>
-  </div>,
-]
+      </Button>
+    }
+    triggerClassName=""
+    triggerDisabled={false}
+    triggerElementProps={Object {}}
+    triggerOpenedClassName=""
+    triggerSibling={null}
+    triggerStyle={null}
+    triggerTagName="span"
+  >
+    <p>
+      Polkadot address: 
+      5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+    </p>
+    <p>
+      Details: 
+      <br />
+      <span>
+        Modero Bruxelles
+        <br />
+      </span>
+      <span>
+        Central administration 
+        <br />
+      </span>
+      <span>
+        Nijverheidslaan 1
+        <br />
+      </span>
+      <span>
+        B - 1853 Grimbergen (Strombeek-Bever)
+        <br />
+      </span>
+      <span>
+        Belgium
+        <br />
+      </span>
+    </p>
+  </s>
+</React.Fragment>
 `;

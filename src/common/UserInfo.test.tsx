@@ -1,8 +1,8 @@
-import { render } from "../tests";
+import { shallowRender } from "../tests";
 import UserInfo from "./UserInfo";
 
 test("renders", () => {
-    const tree = render(<UserInfo
+    const tree = shallowRender(<UserInfo
             address="ABC123"
             userIdentity={{
                 firstName: "John",
