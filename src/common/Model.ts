@@ -101,7 +101,7 @@ function transactionType(transaction: Transaction, address: string): string {
 }
 
 export interface FetchLocRequestSpecification {
-    legalOfficerAddress?: string,
+    ownerAddress?: string,
     requesterAddress?: string,
     statuses: LocRequestStatus[],
 }

@@ -263,7 +263,7 @@ export function CommonContextProvider(props: Props) {
                 let specificationFragment;
                 if(currentAccount.isLegalOfficer) {
                     specificationFragment = {
-                        legalOfficerAddress: currentAddress
+                        ownerAddress: currentAddress
                     }
                 } else {
                     specificationFragment = {
