@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<FullWidthPane
+  mainTitle="Cases"
+  titleIcon={
+    Object {
+      "background": Object {
+        "from": "#3b6cf4",
+        "to": "#6050dc",
+      },
+      "icon": Object {
+        "id": "tokens",
+      },
+    }
+  }
+>
+  <Tabs
+    activeKey="pending"
+    onSelect={[Function]}
+    tabs={
+      Array [
+        Object {
+          "key": "pending",
+          "render": [Function],
+          "title": "Pending",
+        },
+        Object {
+          "key": "history",
+          "render": [Function],
+          "title": "History",
+        },
+      ]
+    }
+  />
+</FullWidthPane>
+`;

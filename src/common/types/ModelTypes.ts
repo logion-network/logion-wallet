@@ -61,3 +61,16 @@ export interface Transaction {
 export interface TransactionsSet {
     transactions: Transaction[],
 }
+
+export interface LocRequest {
+    ownerAddress: string;
+    requesterAddress: string;
+    description: string;
+    createdOn: string;
+    decisionOn?: string;
+    id: string;
+    status: "OPEN" | "REQUESTED" | "REJECTED";
+    rejectReason?: string;
+}
+
+export type LocRequestStatus = "OPEN" | "REQUESTED" | "REJECTED";

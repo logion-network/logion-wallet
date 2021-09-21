@@ -23,7 +23,7 @@ export default function WarningDialog(props: Props) {
             show={ props.show }
             size={ props.size }
             actions={ props.actions }
-            modalTestId={ props.modalTestId }
+            data-testid={ props.modalTestId }
         >
             <Icon
                 icon={{

@@ -13,7 +13,7 @@ export type ModalSize = 'sm' | 'lg' | 'xl';
 export interface Props {
     show: boolean,
     children: Children,
-    modalTestId?: string,
+    "data-testid"?: string,
     actions: Action[],
     size: ModalSize,
     onSubmit?: () => {},
@@ -32,7 +32,7 @@ export default function Dialog(props: Props) {
             backdrop="static"
             keyboard={ false }
             size={ props.size }
-            data-testid={ props.modalTestId }
+            data-testid={ props["data-testid"] }
             className="Dialog"
             centered
         >

@@ -17,3 +17,5 @@ export const TRANSACTIONS_PATH = LEGAL_OFFICER_PATH + '/transactions/:coinId';
 export function transactionsPath(coinId: string): string {
     return TRANSACTIONS_PATH.replace(":coinId", coinId);
 }
+
+export const LOC_REQUESTS_PATH = LEGAL_OFFICER_PATH + '/loc';

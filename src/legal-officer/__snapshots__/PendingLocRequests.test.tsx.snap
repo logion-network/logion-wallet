@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders null with no data 1`] = `null`;
+
+exports[`Renders pending requests 1`] = `
+<React.Fragment>
+  <Table
+    columns={
+      Array [
+        Object {
+          "align": "left",
+          "header": "Requester",
+          "render": [Function],
+        },
+        Object {
+          "align": "left",
+          "header": "Description",
+          "render": [Function],
+        },
+        Object {
+          "header": "Created",
+          "render": [Function],
+          "width": "150px",
+        },
+        Object {
+          "header": "",
+          "render": [Function],
+          "width": "200px",
+        },
+      ]
+    }
+    data={
+      Array [
+        Object {
+          "id": "1",
+          "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+          "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+          "status": "REQUESTED",
+        },
+      ]
+    }
+    renderEmpty={[Function]}
+  />
+  <LocRequestAcceptance
+    clearRequestToAccept={[Function]}
+    requestToAccept={null}
+  />
+</React.Fragment>
+`;

@@ -1,9 +1,9 @@
-import {render} from "../tests";
+import {shallowRender} from "../tests";
 import LegalOfficerInfo from "./LegalOfficerInfo";
 import {DEFAULT_LEGAL_OFFICER} from "./types/LegalOfficer";
 
 test("renders", () => {
-    const tree = render(<LegalOfficerInfo
+    const tree = shallowRender(<LegalOfficerInfo
         legalOfficer={{
             name: "Patrick",
             address: DEFAULT_LEGAL_OFFICER,

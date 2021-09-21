@@ -42,6 +42,12 @@ export let setColorTheme = jest.fn();
 
 export let axiosMock = new Mock<AxiosInstance>();
 
+export let pendingLocRequests: any[] | null = null;
+
+export let locRequestsHistory: any[] | null = null;
+
+export let refresh = jest.fn();
+
 export function useCommonContext() {
     return {
         selectAddress,
@@ -52,6 +58,9 @@ export function useCommonContext() {
         setColorTheme,
         axios: axiosMock.object(),
         setTokens: jest.fn(),
+        pendingLocRequests,
+        locRequestsHistory,
+        refresh,
     };
 }
 
@@ -79,4 +88,12 @@ export function setBalances(value: any) {
 
 export function setTransactions(value: any) {
     transactions = value;
+}
+
+export function setLocRequestsHistory(requests: any[]) {
+    locRequestsHistory = requests;
+}
+
+export function setPendingLocRequests(requests: any[]) {
+    pendingLocRequests = requests;
 }

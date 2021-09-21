@@ -8,8 +8,8 @@ import { CoinBalance, getBalances } from '../logion-chain/Balances';
 
 import Accounts, { buildAccounts, AccountTokens } from './types/Accounts';
 import { Children } from './types/Helpers';
-import { Transaction } from './types/ModelTypes';
-import { getTransactions } from "./Model";
+import { Transaction, LocRequest } from './types/ModelTypes';
+import { getTransactions, fetchLocRequests } from "./Model";
 import { ColorTheme, DEFAULT_COLOR_THEME } from "./ColorTheme";
 import { storeTokens, clearTokens, loadTokens } from './Storage';
 
@@ -22,17 +22,21 @@ export interface CommonContext {
     dataAddress: string | null;
     balances: CoinBalance[] | null;
     transactions: Transaction[] | null;
+    pendingLocRequests: LocRequest[] | null;
+    locRequestsHistory: LocRequest[] | null;
     colorTheme: ColorTheme;
     setColorTheme: ((colorTheme: ColorTheme) => void) | null;
     setTokens: (tokens: AccountTokens) => void;
     logout: () => void;
     axios?: AxiosInstance;
+    refresh: () => void;
 }
 
 interface FullCommonContext extends CommonContext {
     injectedAccounts: InjectedAccountWithMeta[] | null;
     tokens: AccountTokens;
     timer?: number;
+    refreshAddress?: string;
 }
 
 function initialContextValue(): FullCommonContext {
@@ -44,11 +48,14 @@ function initialContextValue(): FullCommonContext {
         dataAddress: null,
         balances: null,
         transactions: null,
+        pendingLocRequests: null,
+        locRequestsHistory: null,
         colorTheme: DEFAULT_COLOR_THEME,
         setColorTheme: null,
         tokens: loadTokens().refresh(moment()),
         setTokens: DEFAULT_NOOP,
         logout: DEFAULT_NOOP,
+        refresh: DEFAULT_NOOP,
     }
 }
 
@@ -70,7 +77,8 @@ type ActionType = 'SET_SELECT_ADDRESS'
     | 'SET_LOGOUT'
     | 'LOGOUT'
     | 'SCHEDULE_TOKEN_REFRESH'
-    | 'REFRESH_TOKENS';
+    | 'REFRESH_TOKENS'
+    | 'SET_REFRESH';
 
 interface Action {
     type: ActionType,
@@ -87,6 +95,10 @@ interface Action {
     newTokens?: AccountTokens,
     logout?: () => void,
     timer?: number;
+    pendingLocRequests?: LocRequest[];
+    locRequestsHistory?: LocRequest[];
+    refresh?: () => void;
+    refreshAddress?: string;
 }
 
 const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, action: Action): FullCommonContext => {
@@ -126,6 +138,8 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                     dataAddress: action.dataAddress!,
                     balances: action.balances!,
                     transactions: action.transactions!,
+                    pendingLocRequests: action.pendingLocRequests!,
+                    locRequestsHistory: action.locRequestsHistory!,
                 };
             } else {
                 return state;
@@ -196,6 +210,12 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
             } else {
                 return state;
             }
+        case 'SET_REFRESH':
+            return {
+                ...state,
+                refresh: action.refresh!,
+                refreshAddress: action.refreshAddress!,
+            };
         default:
             /* istanbul ignore next */
             throw new Error(`Unknown type: ${action.type}`);
@@ -223,7 +243,8 @@ export function CommonContextProvider(props: Props) {
         if(api !== null && contextValue !== null
                 && contextValue.accounts !== null
                 && contextValue.accounts.current !== undefined) {
-            const currentAddress = contextValue.accounts.current.address;
+            const currentAccount = contextValue.accounts.current;
+            const currentAddress = currentAccount.address;
             dispatch({
                 type: "FETCH_IN_PROGRESS",
                 dataAddress: currentAddress,
@@ -239,11 +260,34 @@ export function CommonContextProvider(props: Props) {
                     address: currentAddress
                 });
 
+                let specificationFragment;
+                if(currentAccount.isLegalOfficer) {
+                    specificationFragment = {
+                        legalOfficerAddress: currentAddress
+                    }
+                } else {
+                    specificationFragment = {
+                        requesterAddress: currentAddress
+                    }
+                }
+
+                const pendingLocRequests = await fetchLocRequests(contextValue.axios!, {
+                    ...specificationFragment,
+                    statuses: ["REQUESTED"]
+                });
+
+                const locRequestsHistory = await fetchLocRequests(contextValue.axios!, {
+                    ...specificationFragment,
+                    statuses: ["OPEN", "REJECTED"]
+                });
+
                 dispatch({
                     type: "SET_DATA",
                     dataAddress: currentAddress,
                     balances,
                     transactions: transactions.transactions,
+                    pendingLocRequests,
+                    locRequestsHistory,
                 });
             })();
         }
@@ -339,6 +383,18 @@ export function CommonContextProvider(props: Props) {
             });
         }
     }, [ contextValue ]);
+
+    useEffect(() => {
+        if(contextValue.accounts !== null
+                && contextValue.accounts.current !== undefined
+                && contextValue.refreshAddress !== contextValue.accounts.current.address) {
+            dispatch({
+                type: 'SET_REFRESH',
+                refresh: refreshRequests,
+                refreshAddress: contextValue.accounts.current.address,
+            });
+        }
+    }, [ contextValue, refreshRequests, dispatch ]);
 
     return (
         <CommonContextObject.Provider value={contextValue}>

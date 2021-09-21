@@ -12,6 +12,7 @@ import {
     RECOVERY_REQUESTS_PATH,
     SETTINGS_PATH,
     WALLET_PATH,
+    LOC_REQUESTS_PATH,
 } from './LegalOfficerPaths';
 
 export default function ContextualizedWallet() {
@@ -52,6 +53,18 @@ export default function ContextualizedWallet() {
                     id: "tokens",
                     text: "Tokens",
                     to: TOKENIZATION_REQUESTS_PATH,
+                    exact: true,
+                    icon: {
+                        icon: {
+                            id: 'tokens'
+                        },
+                        background: colorTheme.topMenuItems.iconGradient,
+                    },
+                },
+                {
+                    id: "loc",
+                    text: "LOC",
+                    to: LOC_REQUESTS_PATH,
                     exact: true,
                     icon: {
                         icon: {
