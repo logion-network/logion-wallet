@@ -2,7 +2,7 @@
 
 exports[`renders 1`] = `
 <FullWidthPane
-  mainTitle="Cases"
+  mainTitle="Transaction Protection"
   titleIcon={
     Object {
       "background": Object {

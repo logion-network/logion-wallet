@@ -1,4 +1,5 @@
 import { v4, parse, stringify } from 'uuid';
+import BN from 'bn.js';
 
 export class UUID {
 
@@ -20,5 +21,10 @@ export class UUID {
 
     toHexString(): string {
         return "0x" + this.toString().replace(/-/g, "");
+    }
+
+    toDecimalString(): string {
+        const hexString = this.toString().replace(/-/g, "");
+        return new BN(hexString, 16).toString(10);
     }
 }

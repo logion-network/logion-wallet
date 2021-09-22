@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
-import { FullWidthPane } from '../common/Dashboard';
-import Tabs from '../common/Tabs';
+import { FullWidthPane } from '../../common/Dashboard';
+import Tabs from '../../common/Tabs';
 
-import { useCommonContext } from '../common/CommonContext';
-import PendingLocRequests from './PendingLocRequests';
-import LocRequestsHistory from './LocRequestsHistory';
+import { useCommonContext } from "../../common/CommonContext";
+import RequestedLocs from './RequestedLocs';
+import LocsHistory from './LocsHistory';
 
-export default function LocRequests() {
+export default function TransactionProtection() {
     const { colorTheme } = useCommonContext();
     const [ tabKey, setTabKey ] = useState<string>('pending');
 
@@ -28,12 +28,12 @@ export default function LocRequests() {
                     {
                         key: "pending",
                         title: "Pending",
-                        render: () => <PendingLocRequests />
+                        render: () => <RequestedLocs/>
                     },
                     {
                         key: "history",
                         title: "History",
-                        render: () => <LocRequestsHistory />
+                        render: () => <LocsHistory/>
                     }
                 ]}
             />

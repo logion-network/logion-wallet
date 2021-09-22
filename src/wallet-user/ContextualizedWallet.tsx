@@ -13,6 +13,7 @@ import UserRouter, {
     SETTINGS_PATH,
     RECOVERY_PATH,
     WALLET_PATH,
+    TRANSACTION_PROTECTION_PATH,
 } from "./UserRouter";
 import { useUserContext } from "./UserContext";
 import { useCommonContext } from '../common/CommonContext';
@@ -62,6 +63,18 @@ export default function ContextualizedWallet() {
                     id: "tokens",
                     text: "Tokens",
                     to: TOKENS_PATH,
+                    exact: true,
+                    icon: {
+                        icon: {
+                            id: 'tokens'
+                        },
+                        background: colorTheme.topMenuItems.iconGradient,
+                    },
+                },
+                {
+                    id: "tokens",
+                    text: "Transaction Protection",
+                    to: TRANSACTION_PROTECTION_PATH,
                     exact: true,
                     icon: {
                         icon: {

@@ -1,12 +1,11 @@
 import React from 'react';
 
-import Table, { Cell, DateTimeCell, EmptyTableMessage } from '../common/Table';
-import LocStatusCell from '../common/LocStatusCell';
+import { useCommonContext } from '../../common/CommonContext';
+import Table, { Cell, EmptyTableMessage, DateCell } from '../../common/Table';
+import LocStatusCell from '../../common/LocStatusCell';
+import LocIdCell from '../../common/LocIdCell';
 
-import { useCommonContext } from '../common/CommonContext';
-import LocIdCell from '../common/LocIdCell';
-
-export default function LocRequestsHistory() {
+export default function TokenizationRequestsHistory() {
     const { locRequestsHistory } = useCommonContext();
 
     if(locRequestsHistory === null) {
@@ -17,14 +16,14 @@ export default function LocRequestsHistory() {
         <Table
             columns={[
                 {
-                    header: "Requester",
-                    render: request => <Cell content={ request.requesterAddress }/>,
-                    align: "left",
+                    "header": "Legal officer",
+                    render: request => <Cell content={ request.ownerAddress } />,
+                    align: 'left',
                 },
                 {
-                    header: "Description",
+                    "header": "Description",
                     render: request => <Cell content={ request.description } />,
-                    align: "left",
+                    align: 'left',
                 },
                 {
                     header: "Status",
@@ -37,13 +36,14 @@ export default function LocRequestsHistory() {
                     align: "left",
                 },
                 {
-                    header: "Created",
-                    render: request => <DateTimeCell dateTime={ request.createdOn || null } />,
-                    width: "150px",
+                    "header": "Creation date",
+                    render: request => <DateCell dateTime={ request.createdOn || null } />,
+                    align: 'left',
+                    width: '200px',
                 },
             ]}
             data={ locRequestsHistory }
-            renderEmpty={() => <EmptyTableMessage>No LOC request history</EmptyTableMessage>}
+            renderEmpty={ () => <EmptyTableMessage>No LOCs</EmptyTableMessage>}
         />
     );
 }
