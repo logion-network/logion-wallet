@@ -113,3 +113,16 @@ export async function fetchLocRequests(
     const response = await axios.put(`/api/loc-request`, specification);
     return response.data.requests;
 }
+
+export interface CreateLocRequest {
+    ownerAddress?: string;
+    requesterAddress?: string;
+    description?: string;
+}
+
+export async function createLocRequest(
+    axios: AxiosInstance,
+    request: CreateLocRequest,
+): Promise<void> {
+    await axios.post(`/api/loc-request`, request);
+}

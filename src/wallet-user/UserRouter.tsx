@@ -10,6 +10,7 @@ import TrustProtection from "./trust-protection/TrustProtection";
 import Recovery from "./trust-protection/Recovery";
 import Wallet from "../common/Wallet";
 import Transactions from "../common/Transactions";
+import TransactionProtection from "./transaction-protection/TransactionProtection";
 
 export const HOME_PATH = USER_PATH;
 export const TOKENS_PATH = USER_PATH + '/tokens';
@@ -22,6 +23,8 @@ const TRANSACTIONS_PATH = USER_PATH + '/transactions/:coinId';
 export function transactionsPath(coinId: string): string {
     return TRANSACTIONS_PATH.replace(":coinId", coinId);
 }
+
+export const TRANSACTION_PROTECTION_PATH = USER_PATH + "/transaction-protection";
 
 export default function UserRouter() {
 
@@ -49,6 +52,9 @@ export default function UserRouter() {
                     <Transactions
                         backPath={ WALLET_PATH }
                     />
+                </Route>
+                <Route path={ TRANSACTION_PROTECTION_PATH }>
+                    <TransactionProtection/>
                 </Route>
                 <Route path="">
                     <Home />

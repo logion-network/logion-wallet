@@ -2,10 +2,13 @@ import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 
 import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../common/Table';
+import LocStatusCell from '../common/LocStatusCell';
 import Button from '../common/Button';
 
 import { useCommonContext } from '../common/CommonContext';
 import { LocRequest } from '../common/types/ModelTypes';
+import ButtonGroup from "../common/ButtonGroup";
+
 import ProcessStep from './ProcessStep';
 import LocRequestAcceptance from './LocRequestAcceptance';
 import { rejectLocRequest } from './Model';
@@ -56,26 +59,35 @@ export default function PendingLocRequests() {
                         align: "left",
                     },
                     {
+                        header: "Status",
+                        render: request => <LocStatusCell status={ request.status }/>,
+                        width: "140px",
+                    },
+                    {
                         header: "Created",
                         render: request => <DateTimeCell dateTime={ request.createdOn || null } />,
                         width: "150px",
                     },
                     {
                         header: "",
-                        render: request => (<>
-                            <Button
-                                onClick={() => setRequestToAccept(getLocRequest(request.id))}
-                                data-testid={`accept-${request.id}`}
-                            >
-                                V
-                            </Button>
-                            <Button
-                                onClick={() => setRequestToReject(request.id)}
-                                data-testid={`reject-${request.id}`}
-                            >
-                                X
-                            </Button>
-                        </>),
+                        render: request => (
+                            <ButtonGroup aria-label="actions">
+                                <Button
+                                    onClick={() => setRequestToAccept(getLocRequest(request.id))}
+                                    data-testid={`accept-${request.id}`}
+                                    variant="primary"
+                                >
+                                    V
+                                </Button>
+                                <Button
+                                    onClick={() => setRequestToReject(request.id)}
+                                    data-testid={`reject-${request.id}`}
+                                    variant="danger"
+                                >
+                                    X
+                                </Button>
+                            </ButtonGroup>
+                        ),
                         width: "200px",
                     }
                 ]}

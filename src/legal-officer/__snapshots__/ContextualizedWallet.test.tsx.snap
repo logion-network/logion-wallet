@@ -112,7 +112,7 @@ exports[`renders 1`] = `
           },
         },
         "id": "loc",
-        "text": "LOC",
+        "text": "Transaction Protection",
         "to": "/legal-officer/loc",
       },
     ]

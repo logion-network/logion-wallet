@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Table, { Cell, DateTimeCell, EmptyTableMessage } from '../common/Table';
+import LocStatusCell from '../common/LocStatusCell';
 
 import { useCommonContext } from '../common/CommonContext';
 
@@ -23,6 +24,11 @@ export default function LocRequestsHistory() {
                     header: "Description",
                     render: request => <Cell content={ request.description } />,
                     align: "left",
+                },
+                {
+                    header: "Status",
+                    render: request => <LocStatusCell status={ request.status }/>,
+                    width: "140px",
                 },
                 {
                     header: "Created",

@@ -15,6 +15,11 @@ exports[`Renders accepted requests 1`] = `
         "render": [Function],
       },
       Object {
+        "header": "Status",
+        "render": [Function],
+        "width": "140px",
+      },
+      Object {
         "header": "Created",
         "render": [Function],
         "width": "150px",
