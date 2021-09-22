@@ -24,4 +24,9 @@ describe("UUID", () => {
         const uuid = new UUID('6ec0bd7f-11c0-43da-975e-2a8ad9ebae0b');
         expect(uuid.toHexString()).toBe("0x6ec0bd7f11c043da975e2a8ad9ebae0b");
     });
+
+    it("produces expected decimal string", () => {
+        const uuid = new UUID('6ec0bd7f-11c0-43da-975e-2a8ad9ebae0b');
+        expect(uuid.toDecimalString()).toBe("147215843976064841756558269764787219979");
+    });
 });

@@ -4,6 +4,7 @@ import Table, { Cell, DateTimeCell, EmptyTableMessage } from '../common/Table';
 import LocStatusCell from '../common/LocStatusCell';
 
 import { useCommonContext } from '../common/CommonContext';
+import LocIdCell from '../common/LocIdCell';
 
 export default function LocRequestsHistory() {
     const { locRequestsHistory } = useCommonContext();
@@ -29,6 +30,11 @@ export default function LocRequestsHistory() {
                     header: "Status",
                     render: request => <LocStatusCell status={ request.status }/>,
                     width: "140px",
+                },
+                {
+                    header: "LOC ID",
+                    render: request => <LocIdCell id={ request.id }/>,
+                    align: "left",
                 },
                 {
                     header: "Created",

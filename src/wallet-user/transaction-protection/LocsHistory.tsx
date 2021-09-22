@@ -3,6 +3,7 @@ import React from 'react';
 import { useCommonContext } from '../../common/CommonContext';
 import Table, { Cell, EmptyTableMessage, DateCell } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';
+import LocIdCell from '../../common/LocIdCell';
 
 export default function TokenizationRequestsHistory() {
     const { locRequestsHistory } = useCommonContext();
@@ -28,6 +29,11 @@ export default function TokenizationRequestsHistory() {
                     header: "Status",
                     render: request => <LocStatusCell status={ request.status }/>,
                     width: "140px",
+                },
+                {
+                    header: "LOC ID",
+                    render: request => <LocIdCell id={ request.id }/>,
+                    align: "left",
                 },
                 {
                     "header": "Creation date",
