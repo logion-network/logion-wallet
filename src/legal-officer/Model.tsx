@@ -1,18 +1,11 @@
 import { AxiosInstance } from 'axios';
-import { Moment } from 'moment';
-import { toIsoString } from '../logion-chain/datetime';
 
-import {
-    AssetDescription,
-    LegalOfficerDecision,
-} from '../common/types/ModelTypes';
+import { AssetDescription, LegalOfficerDecision, } from '../common/types/ModelTypes';
 import { RecoveryInfo } from './Types';
 
 export interface RejectRequestParameters {
     requestId: string,
-    signature: string,
     rejectReason: string,
-    signedOn: Moment,
 }
 
 export async function rejectRequest(
@@ -20,39 +13,24 @@ export async function rejectRequest(
     parameters: RejectRequestParameters
 ): Promise<void> {
     await axios.post(`/api/token-request/${parameters.requestId}/reject`, {
-        signature: parameters.signature,
         rejectReason: parameters.rejectReason,
-        signedOn: toIsoString(parameters.signedOn),
     });
 }
 
 export interface AcceptRequestParameters {
     requestId: string,
-    signature: string,
-    signedOn: Moment,
-}
-
-export interface AcceptResult {
-    sessionToken: string,
 }
 
 export async function acceptRequest(
     axios: AxiosInstance,
     parameters: AcceptRequestParameters
-): Promise<AcceptResult> {
-    const response = await axios.post(`/api/token-request/${parameters.requestId}/accept`, {
-        signature: parameters.signature,
-        signedOn: toIsoString(parameters.signedOn),
-    });
-    return {
-        sessionToken: response.data.sessionToken
-    };
+): Promise<void> {
+    await axios.post(`/api/token-request/${parameters.requestId}/accept`);
 }
 
 export interface SetAssetDescriptionRequestParameters {
     requestId: string,
     description: AssetDescription,
-    sessionToken: string,
 }
 
 export async function setAssetDescription(
@@ -61,15 +39,12 @@ export async function setAssetDescription(
 ): Promise<void> {
     await axios.post(`/api/token-request/${parameters.requestId}/asset`, {
         description: parameters.description,
-        sessionToken: parameters.sessionToken,
     });
 }
 
 export interface RejectProtectionRequestParameters {
     requestId: string,
-    signature: string,
     rejectReason: string,
-    signedOn: Moment,
     legalOfficerAddress: string,
 }
 
@@ -78,17 +53,13 @@ export async function rejectProtectionRequest(
     parameters: RejectProtectionRequestParameters
 ): Promise<void> {
     await axios.post(`/api/protection-request/${parameters.requestId}/reject`, {
-        signature: parameters.signature,
         legalOfficerAddress: parameters.legalOfficerAddress,
         rejectReason: parameters.rejectReason,
-        signedOn: toIsoString(parameters.signedOn),
     });
 }
 
 export interface AcceptProtectionRequestParameters {
     requestId: string,
-    signature: string,
-    signedOn: Moment,
     legalOfficerAddress: string,
 }
 
@@ -97,9 +68,7 @@ export async function acceptProtectionRequest(
     parameters: AcceptProtectionRequestParameters
 ): Promise<void> {
     await axios.post(`/api/protection-request/${parameters.requestId}/accept`, {
-        signature: parameters.signature,
         legalOfficerAddress: parameters.legalOfficerAddress,
-        signedOn: toIsoString(parameters.signedOn),
     });
 }
 

@@ -1,18 +1,13 @@
 import { AxiosInstance } from "axios";
-import moment, {Moment} from "moment";
-import {ProtectionRequest} from "../../common/types/ModelTypes";
+import { ProtectionRequest } from "../../common/types/ModelTypes";
 import Identity from '../../common/types/Identity';
 import PostalAddress from '../../common/types/PostalAddress';
-import { toIsoString } from "../../logion-chain/datetime";
-import { sign } from "../../logion-chain/Signature";
 
 export interface CreateProtectionRequest {
     requesterAddress: string,
     userIdentity: Identity,
     userPostalAddress: PostalAddress,
     legalOfficerAddresses: string[],
-    signature: string,
-    signedOn: Moment,
     isRecovery: boolean,
     addressToRecover: string,
 }
@@ -20,8 +15,6 @@ export interface CreateProtectionRequest {
 export interface CheckProtectionActivationParameters {
     requestId: string,
     userAddress: string,
-    signature: string,
-    signedOn: Moment,
 }
 
 export type LegalOfficerDecisionStatus = "PENDING" | "REJECTED" | "ACCEPTED";
@@ -44,9 +37,7 @@ async function _checkActivation(
     parameters: CheckProtectionActivationParameters
 ): Promise<void> {
     await axios.post(`/api/protection-request/${parameters.requestId}/check-activation`, {
-        signature: parameters.signature,
         userAddress: parameters.userAddress,
-        signedOn: toIsoString(parameters.signedOn),
     });
 }
 
@@ -54,22 +45,9 @@ export async function checkActivation(
     axios: AxiosInstance,
     protectionRequest: ProtectionRequest
 ): Promise<void> {
-    const attributes = [
-        `${protectionRequest.id}`,
-    ];
-    const signedOn = moment();
-    const signature = await sign({
-        signerId: protectionRequest.requesterAddress,
-        resource: 'protection-request',
-        operation: 'check-activation',
-        signedOn,
-        attributes
-    });
     await _checkActivation(axios, {
         requestId: protectionRequest.id,
         userAddress: protectionRequest.requesterAddress,
-        signedOn,
-        signature
     });
 }
 

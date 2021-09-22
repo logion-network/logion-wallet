@@ -1,5 +1,4 @@
 import { AxiosInstance } from "axios";
-import { Moment } from 'moment';
 import { TokenizationRequest } from "../common/types/ModelTypes";
 
 export interface CreateTokenRequest {
@@ -7,8 +6,6 @@ export interface CreateTokenRequest {
     requesterAddress: string,
     requestedTokenName: string,
     bars: number,
-    signature: string,
-    signedOn: Moment,
 }
 
 export async function createTokenRequest(

@@ -5,7 +5,6 @@ jest.mock('../../common/CommonContext');
 
 import { TEST_WALLET_USER } from '../TestData';
 import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from "../../common/types/LegalOfficer";
-import { ISO_DATETIME_PATTERN } from "../../logion-chain/datetime";
 import { setCreateProtectionRequest } from "../__mocks__/UserContextMock";
 import { shallowRender } from "../../tests";
 import React from "react";
@@ -100,7 +99,6 @@ describe("CreateProtectionRequestForm", () => {
                     country: "Belgium"
                 },
                 legalOfficerAddresses: [DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER],
-                signature: expect.stringMatching(new RegExp("protection-request,create," + ISO_DATETIME_PATTERN.source + ",John,Doe,john.doe@logion.network,[+]1234,Place de le République Française, 10,boite 15,4000,Liège,Belgium,false,," + DEFAULT_LEGAL_OFFICER + "," + ANOTHER_LEGAL_OFFICER)),
             })
         ));
     });
@@ -152,7 +150,6 @@ describe("CreateProtectionRequestForm", () => {
                     country: "Belgium"
                 },
                 legalOfficerAddresses: [DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER],
-                signature: expect.stringMatching(new RegExp("protection-request,create," + ISO_DATETIME_PATTERN.source + ",John,Doe,john.doe@logion.network,[+]1234,Place de le République Française, 10,boite 15,4000,Liège,Belgium,true,toRecover," + DEFAULT_LEGAL_OFFICER + "," + ANOTHER_LEGAL_OFFICER)),
             })
         ));
     });

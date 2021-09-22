@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Alert from 'react-bootstrap/Alert';
-import moment from 'moment';
 
-import {
-    useLogionChain,
-} from '../logion-chain';
+import { useLogionChain, } from '../logion-chain';
 import {
     AssetId,
     createAsset,
@@ -13,23 +10,12 @@ import {
     mintTokens,
     balanceFromAmount,
 } from '../logion-chain/Assets';
-import {
-    SignedTransaction,
-    Unsubscriber,
-    sign,
-    unsubscribe,
-    isFinalized,
-} from '../logion-chain/Signature';
+import { SignedTransaction, Unsubscriber, unsubscribe, isFinalized, } from '../logion-chain/Signature';
 import { useCommonContext } from '../common/CommonContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
-import {
-    TokenizationRequest,
-} from '../common/types/ModelTypes';
-import {
-    acceptRequest,
-    setAssetDescription,
-} from './Model';
+import { TokenizationRequest, } from '../common/types/ModelTypes';
+import { acceptRequest, setAssetDescription, } from './Model';
 import ProcessStep from './ProcessStep';
 import ExtrinsicSubmissionResult from '../ExtrinsicSubmissionResult';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../ExtrinsicSubmitter';
@@ -51,7 +37,6 @@ enum AcceptStatus {
 interface AcceptState {
     status: AcceptStatus,
     assetId?: AssetId,
-    sessionToken?: string,
     metadataSet?: boolean,
     doneMinting?: boolean,
 }
@@ -82,27 +67,12 @@ export default function TokenizationRequestAcceptance(props: Props) {
 
             const proceed = async () => {
                 const request = props.requestToAccept!;
-                const attributes = [
-                    `${request.id}`,
-                ];
-                const signedOn = moment();
-                const signature = await sign({
-                    signerId: request.legalOfficerAddress,
-                    resource: 'token-request',
-                    operation: 'accept',
-                    signedOn,
-                    attributes
-                });
-
-                const { sessionToken } = await acceptRequest(axios!, {
-                    requestId: request.id,
-                    signature,
-                    signedOn
+                await acceptRequest(axios!, {
+                    requestId: request.id
                 });
 
                 setAcceptState({
-                    status: AcceptStatus.ACCEPTED,
-                    sessionToken
+                    status: AcceptStatus.ACCEPTED
                 });
             };
             proceed();
@@ -133,13 +103,11 @@ export default function TokenizationRequestAcceptance(props: Props) {
                         assetId: assetId.toString(),
                         decimals: DEFAULT_ASSETS_DECIMALS
                     },
-                    sessionToken: acceptState.sessionToken!
                 });
 
                 setAcceptState({
                     status: AcceptStatus.CREATING_ASSET,
                     assetId,
-                    sessionToken: undefined,
                 });
             };
             proceed();

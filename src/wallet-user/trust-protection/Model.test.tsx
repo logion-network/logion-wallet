@@ -1,6 +1,5 @@
 import { It, Mock } from "moq.ts";
 import { AxiosInstance, AxiosResponse } from "axios";
-import moment from "moment";
 
 import { PROTECTION_REQUEST } from "./TestData";
 import { TEST_WALLET_USER } from '../TestData';
@@ -29,8 +28,6 @@ const request: CreateProtectionRequest = {
     },
     isRecovery: false,
     addressToRecover: "",
-    signature: 'signature',
-    signedOn: moment()
 }
 
 describe("Trust Protection Model", () => {

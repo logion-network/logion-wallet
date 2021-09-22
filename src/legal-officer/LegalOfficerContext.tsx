@@ -1,19 +1,9 @@
 import React, { useContext, useEffect, useReducer, useCallback, Reducer } from 'react';
-import moment from 'moment';
 import { AxiosInstance } from 'axios';
 
-import {
-    TokenizationRequest,
-    ProtectionRequest,
-} from '../common/types/ModelTypes';
-import {
-    fetchRequests,
-    fetchProtectionRequests,
-} from '../common/Model';
-import {
-    rejectRequest as modelRejectRequest,
-} from './Model';
-import { sign } from "../logion-chain/Signature";
+import { TokenizationRequest, ProtectionRequest, } from '../common/types/ModelTypes';
+import { fetchRequests, fetchProtectionRequests, } from '../common/Model';
+import { rejectRequest as modelRejectRequest, } from './Model';
 import { useCommonContext } from '../common/CommonContext';
 import { LIGHT_MODE } from './Types';
 
@@ -170,7 +160,7 @@ export function LegalOfficerContextProvider(props: Props) {
                 legalOfficerAddress: currentAddress,
                 status: "REJECTED",
             });
-    
+
             const pendingProtectionRequests = await fetchProtectionRequests(axios!, {
                 legalOfficerAddress: currentAddress,
                 decisionStatuses: ["PENDING"],
@@ -187,7 +177,7 @@ export function LegalOfficerContextProvider(props: Props) {
                 decisionStatuses: ["ACCEPTED", "REJECTED"],
                 kind: 'PROTECTION_ONLY',
             });
-    
+
             const pendingRecoveryRequests = await fetchProtectionRequests(axios!, {
                 legalOfficerAddress: currentAddress,
                 decisionStatuses: ["PENDING"],
@@ -198,7 +188,7 @@ export function LegalOfficerContextProvider(props: Props) {
                 decisionStatuses: ["ACCEPTED", "REJECTED"],
                 kind: 'RECOVERY',
             });
-    
+
             dispatch({
                 type: "SET_DATA",
                 pendingTokenizationRequests,
@@ -216,23 +206,9 @@ export function LegalOfficerContextProvider(props: Props) {
     useEffect(() => {
         if(contextValue.currentAxios !== axios) {
             const rejectRequest = async (requestId: string, rejectReason: string): Promise<void> => {
-                const attributes = [
-                    `${requestId}`,
-                    `${rejectReason}`
-                ];
-                const signedOn = moment();
-                const signature = await sign({
-                    signerId: accounts!.current!.address,
-                    resource: 'token-request',
-                    operation: 'reject',
-                    signedOn,
-                    attributes
-                });
                 await modelRejectRequest(axios!, {
                     requestId,
-                    signature,
                     rejectReason,
-                    signedOn,
                 });
                 refreshRequests(false);
             };
@@ -261,7 +237,7 @@ export function LegalOfficerContextProvider(props: Props) {
             refreshRequests(true);
         }
     }, [ contextValue, accounts, refreshRequests ]);
-    
+
     useEffect(() => {
         if(axios !== contextValue.currentAxios) {
             dispatch({

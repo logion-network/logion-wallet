@@ -9,7 +9,6 @@ import { LegalOfficerContextProvider, useLegalOfficerContext } from './LegalOffi
 import { render, waitFor } from '@testing-library/react';
 import { rejectRequest } from './__mocks__/ModelMock';
 import { setFetchRequests } from '../common/__mocks__/ModelMock';
-import { ISO_DATETIME_PATTERN } from '../logion-chain/datetime';
 import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT, axiosMock } from '../common/__mocks__/CommonContextMock';
 
 beforeEach(() => {
@@ -91,8 +90,6 @@ test("Context rejects properly", async () => {
         expect.objectContaining({
             requestId: "1",
             rejectReason: "because",
-            signedOn: expect.anything(),
-            signature: expect.stringMatching(new RegExp("token-request,reject," + ISO_DATETIME_PATTERN.source + ",1,because")),
         })
     ));
 });
