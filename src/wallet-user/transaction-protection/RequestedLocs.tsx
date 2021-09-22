@@ -14,7 +14,11 @@ import LocCreationForm, { FormValues } from './LocCreationForm';
 export default function RequestedLocs() {
     const { colorTheme, pendingLocRequests, accounts, refresh, axios } = useCommonContext();
     const [ requestLoc, setRequestLoc ] = useState(false);
-    const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>();
+    const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>({
+        defaultValues: {
+            description: ""
+        }
+    });
 
     const submit = useCallback((formValues: FormValues) => {
         (async function() {

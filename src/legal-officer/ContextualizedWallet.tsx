@@ -68,7 +68,7 @@ export default function ContextualizedWallet() {
                     exact: true,
                     icon: {
                         icon: {
-                            id: 'tokens'
+                            id: 'loc'
                         },
                         background: colorTheme.topMenuItems.iconGradient,
                     },

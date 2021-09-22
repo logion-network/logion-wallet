@@ -72,13 +72,13 @@ export default function ContextualizedWallet() {
                     },
                 },
                 {
-                    id: "tokens",
+                    id: "loc",
                     text: "Transaction Protection",
                     to: TRANSACTION_PROTECTION_PATH,
                     exact: true,
                     icon: {
                         icon: {
-                            id: 'tokens'
+                            id: 'loc'
                         },
                         background: colorTheme.topMenuItems.iconGradient,
                     },

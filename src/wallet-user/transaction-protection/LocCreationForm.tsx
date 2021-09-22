@@ -38,7 +38,15 @@ export default function LocCreationForm(props: Props) {
                                     message: 'The description must contain at most 40 characters'
                                 }
                         }}
-                        render={({ field }) => <Form.Control isInvalid={!!props.errors.description?.message} type="text" placeholder="e.g. XYZ" data-testid="description" {...field} />}
+                        render={({ field }) => (
+                            <Form.Control
+                                isInvalid={!!props.errors.description?.message}
+                                type="text" placeholder="e.g. XYZ"
+                                data-testid="description"
+                                aria-describedby="locDescription"
+                                { ...field }
+                            />
+                        )}
                       />
                 }
                 colors={ props.colors }
