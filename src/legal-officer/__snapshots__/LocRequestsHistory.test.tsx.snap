@@ -20,6 +20,11 @@ exports[`Renders accepted requests 1`] = `
         "width": "140px",
       },
       Object {
+        "align": "left",
+        "header": "LOC ID",
+        "render": [Function],
+      },
+      Object {
         "header": "Created",
         "render": [Function],
         "width": "150px",
