@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders with text transform 1`] = `
+<span
+  className="StatusCell"
+  style={
+    Object {
+      "borderColor": "red",
+    }
+  }
+>
+  <Icon
+    icon={
+      Object {
+        "id": "icon-id",
+      }
+    }
+  />
+   
+  <span
+    style={
+      Object {
+        "color": "red",
+        "textTransform": "uppercase",
+      }
+    }
+  >
+    Some text
+  </span>
+</span>
+`;
+
+exports[`renders with undefined text transform 1`] = `
+<span
+  className="StatusCell"
+  style={
+    Object {
+      "borderColor": "red",
+    }
+  }
+>
+  <Icon
+    icon={
+      Object {
+        "id": "icon-id",
+      }
+    }
+  />
+   
+  <span
+    style={
+      Object {
+        "color": "red",
+        "textTransform": undefined,
+      }
+    }
+  >
+    Some text
+  </span>
+</span>
+`;
