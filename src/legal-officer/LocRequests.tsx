@@ -16,7 +16,7 @@ export default function LocRequests() {
             mainTitle="Transaction Protection"
             titleIcon={{
                 icon: {
-                    id: 'tokens'
+                    id: 'loc'
                 },
                 background: colorTheme.topMenuItems.iconGradient,
             }}
