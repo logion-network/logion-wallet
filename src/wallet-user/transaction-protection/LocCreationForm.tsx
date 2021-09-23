@@ -4,9 +4,14 @@ import Form from "react-bootstrap/Form";
 
 import { BackgroundAndForegroundColors } from '../../common/ColorTheme';
 import FormGroup from '../../common/FormGroup';
+import Select from '../../common/Select';
+
+import { legalOfficers } from '../../common/types/LegalOfficer';
+import { buildOptions } from '../trust-protection/SelectLegalOfficer';
 
 export interface FormValues {
     description: string;
+    legalOfficer: string;
 }
 
 export interface Props {
@@ -28,15 +33,15 @@ export default function LocCreationForm(props: Props) {
                         control={ props.control }
                         defaultValue=""
                         rules={{
-                                required: 'The description is required',
-                                minLength: {
-                                    value: 3,
-                                    message: 'The description must contain at least 3 characters'
-                                },
-                                maxLength: {
-                                    value: 40,
-                                    message: 'The description must contain at most 40 characters'
-                                }
+                            required: 'The description is required',
+                            minLength: {
+                                value: 3,
+                                message: 'The description must contain at least 3 characters'
+                            },
+                            maxLength: {
+                                value: 40,
+                                message: 'The description must contain at most 40 characters'
+                            }
                         }}
                         render={({ field }) => (
                             <Form.Control
@@ -51,6 +56,35 @@ export default function LocCreationForm(props: Props) {
                 }
                 colors={ props.colors }
                 feedback={ props.errors.description?.message }
+            />
+
+            <FormGroup
+                id={ `locOwner` }
+                label="Legal officer"
+                control={
+                    <Controller
+                        name="legalOfficer"
+                        control={ props.control }
+                        defaultValue=""
+                        rules={{
+                            required: 'You must select a Legal Officer',
+                            minLength: {
+                                value: 1,
+                                message: 'You must select a Legal Officer'
+                            },
+                            
+                        }}
+                        render={({ field }) => (
+                            <Select
+                                isInvalid={ !!props.errors.legalOfficer?.message }
+                                options={ buildOptions(legalOfficers) }
+                                { ...field }
+                            />
+                        )}
+                      />
+                }
+                feedback={ props.errors.legalOfficer?.message }
+                colors={ props.colors }
             />
         </>
     )

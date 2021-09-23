@@ -18,7 +18,7 @@ export default function LocRequestsHistory() {
             columns={[
                 {
                     header: "Requester",
-                    render: request => <Cell content={ request.requesterAddress }/>,
+                    render: request => <Cell content={ request.requesterAddress } overflowing tooltipId="requester-tooltip"/>,
                     align: "left",
                 },
                 {
@@ -33,7 +33,7 @@ export default function LocRequestsHistory() {
                 },
                 {
                     header: "LOC ID",
-                    render: request => <LocIdCell id={ request.id }/>,
+                    render: request => <LocIdCell status={ request.status } id={ request.id }/>,
                     align: "left",
                 },
                 {

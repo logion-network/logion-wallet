@@ -113,7 +113,7 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
           },
         },
         "id": "loc",
-        "text": "Transaction Protection",
+        "text": "Transaction",
         "to": "/user/transaction-protection",
       },
     ]
@@ -276,7 +276,7 @@ exports[`Given connected, when rendering, then show account, no connect button a
           },
         },
         "id": "loc",
-        "text": "Transaction Protection",
+        "text": "Transaction",
         "to": "/user/transaction-protection",
       },
     ]
@@ -439,7 +439,7 @@ exports[`Given connecting, when rendering, then show account, no button, no node
           },
         },
         "id": "loc",
-        "text": "Transaction Protection",
+        "text": "Transaction",
         "to": "/user/transaction-protection",
       },
     ]
@@ -601,7 +601,7 @@ exports[`Given connection error, when rendering, then show account, no button, n
           },
         },
         "id": "loc",
-        "text": "Transaction Protection",
+        "text": "Transaction",
         "to": "/user/transaction-protection",
       },
     ]
@@ -763,7 +763,7 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
           },
         },
         "id": "loc",
-        "text": "Transaction Protection",
+        "text": "Transaction",
         "to": "/user/transaction-protection",
       },
     ]
@@ -925,7 +925,7 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
           },
         },
         "id": "loc",
-        "text": "Transaction Protection",
+        "text": "Transaction",
         "to": "/user/transaction-protection",
       },
     ]

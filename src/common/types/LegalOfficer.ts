@@ -1,7 +1,8 @@
 export const DEFAULT_LEGAL_OFFICER = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"; // Alice
 export const ANOTHER_LEGAL_OFFICER = "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty"; // Bob
+export const A_THIRD_LEGAL_OFFICER = "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y"; // Charlie
 
-const LEGAL_OFFICERS: string[] = [ DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER ];
+const LEGAL_OFFICERS: string[] = [ DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER, A_THIRD_LEGAL_OFFICER ];
 
 export function isLegalOfficer(address: string | undefined): boolean {
     if(address === undefined) {
@@ -26,7 +27,7 @@ const defaultDetails = "Place de le République Française, 10";
 export const legalOfficers: LegalOfficer[] = [
     {name: "Patrick Gielen", address: DEFAULT_LEGAL_OFFICER, details: "Modero Bruxelles\nCentral administration \nNijverheidslaan 1\nB - 1853 Grimbergen (Strombeek-Bever)\nBelgium"},
     {name: "Guillaume Grain", address: ANOTHER_LEGAL_OFFICER, details: "SELARL ADRASTEE\nGare des Brotteaux\n14, place Jules Ferry\n69006 LYON\nFrance"},
-    {name: "Alain Barland", address: fakeAddress(5), details: defaultDetails},
+    {name: "Eline Duysens", address: A_THIRD_LEGAL_OFFICER, details: "Modero Bruxelles\nCentral administration \nNijverheidslaan 1\nB - 1853 Grimbergen (Strombeek-Bever)\nBelgium"},
     {name: "Ronald Vanswijgenhoven", address: fakeAddress(6), details: defaultDetails},
     {name: "Thibaut Barnier", address: fakeAddress(7), details: defaultDetails},
     {name: "Jona Van Leeuwen", address: fakeAddress(8), details: defaultDetails},

@@ -1,7 +1,8 @@
 jest.mock('../../common/CommonContext');
 jest.mock('../../common/Model');
 
-import {fireEvent, render, screen, waitFor} from '@testing-library/react';
+import {fireEvent, getByText, render, screen, waitFor} from '@testing-library/react';
+import userEvent from '@testing-library/user-event'
 
 import { shallowRender } from '../../tests';
 import RequestedLocs from './RequestedLocs';
@@ -50,10 +51,13 @@ it("should create a LOC and display no message when a valid form is submitted", 
 
     const description = "description";
     const descriptionInput = screen.getByRole("textbox", {name: "Description"});
-    fireEvent.input(descriptionInput, {target: {value: description}})
+    userEvent.type(descriptionInput, description);
+
+    userEvent.click(screen.getByText("Select..."));
+    await waitFor(() => userEvent.click(screen.getByText("Patrick Gielen")));
 
     const button = screen.getByRole('button', {name: "Submit"});
-    fireEvent.click(button);
+    userEvent.click(button);
 
     await waitFor(() => expect(createLocRequest).toBeCalledWith(
         axiosMock.object(),

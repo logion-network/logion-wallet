@@ -16,6 +16,14 @@ import './SelectLegalOfficer.css';
 
 export type Mode = 'choose' | 'select' | 'view';
 
+export function buildOptions(legalOfficers: LegalOfficer[]): OptionType[] {
+    const options: OptionType[] = [];
+    legalOfficers.forEach(legalOfficer => {
+        options.push(buildOption(legalOfficer));
+    });
+    return options;
+}
+
 function buildOption(legalOfficer: LegalOfficer): OptionType {
     return {
         label: legalOfficer.name,
@@ -37,10 +45,9 @@ export interface Props {
 export default function SelectLegalOfficer(props: Props) {
     const { colorTheme } = useCommonContext();
 
+    const legalOfficersOptions: OptionType[] = buildOptions(props.legalOfficers);
     const legalOfficersByAddress: Record<string, LegalOfficer> = {};
-    const legalOfficersOptions: OptionType[] = [];
     props.legalOfficers.forEach(legalOfficer => {
-        legalOfficersOptions.push(buildOption(legalOfficer));
         legalOfficersByAddress[legalOfficer.address] = legalOfficer;
     });
 
@@ -98,8 +105,8 @@ export default function SelectLegalOfficer(props: Props) {
                             <Select
                                 isInvalid={ props.legalOfficer === null || (props.otherLegalOfficer !== null && props.legalOfficer.address === props.otherLegalOfficer.address) }
                                 options={ legalOfficersOptions }
-                                value={ props.legalOfficer !== null ? buildOption(props.legalOfficer) : null}
-                                onChange={ value => props.setLegalOfficer(legalOfficersByAddress[value!.value] || null) }
+                                value={ props.legalOfficer !== null ? props.legalOfficer.address : null}
+                                onChange={ value => props.setLegalOfficer(legalOfficersByAddress[value!] || null) }
                                 disabled={ props.mode === "view" }
                                 statusColor={ statusColor }
                             />

@@ -75,7 +75,7 @@ export default function PendingLocRequests() {
                                 <Button
                                     onClick={() => setRequestToAccept(getLocRequest(request.id))}
                                     data-testid={`accept-${request.id}`}
-                                    variant="primary"
+                                    variant="success"
                                 >
                                     V
                                 </Button>

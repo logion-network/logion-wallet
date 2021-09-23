@@ -5,7 +5,7 @@ import { createRecovery, claimRecovery } from '../../logion-chain/Recovery';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
 
 import { ProtectionRequest } from "../../common/types/ModelTypes";
-import { LegalOfficer, legalOfficerByAddress } from '../../common/types/LegalOfficer';
+import { LegalOfficer, legalOfficerByAddress, legalOfficers } from '../../common/types/LegalOfficer';
 import { FullWidthPane } from "../../common/Dashboard";
 import Frame from "../../common/Frame";
 import Alert from '../../common/Alert';
@@ -211,7 +211,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
                     }
 
                     <LegalOfficers
-                        legalOfficers={ [] }
+                        legalOfficers={ legalOfficers }
                         legalOfficer1={ legalOfficer1 }
                         setLegalOfficer1={ () => {} }
                         legalOfficer1Decision={ legalOfficer1Decision }

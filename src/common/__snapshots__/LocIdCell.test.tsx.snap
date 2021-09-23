@@ -2,6 +2,6 @@
 
 exports[`renders UUID as decimal 1`] = `
 <Cell
-  content="147215843976064841756558269764787219979"
+  content="-"
 />
 `;

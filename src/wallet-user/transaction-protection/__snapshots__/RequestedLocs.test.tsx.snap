@@ -80,6 +80,7 @@ exports[`Renders pending requests 1`] = `
         Object {
           "_defaultValues": Object {
             "description": "",
+            "legalOfficer": "",
           },
           "_fields": Object {},
           "_formState": Object {
