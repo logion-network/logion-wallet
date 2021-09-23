@@ -11,7 +11,6 @@ import { render, screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { finalizeSubmission } from '../logion-chain/__mocks__/SignatureMock';
 import { setAcceptRequest, acceptRequest, setAssetDescription } from './__mocks__/ModelMock';
-import { ISO_DATETIME_PATTERN } from '../logion-chain/datetime';
 import { TokenizationRequest } from '../common/types/ModelTypes';
 import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT, axiosMock } from '../common/__mocks__/CommonContextMock';
 
@@ -45,8 +44,6 @@ describe("TokenizationRequestAcceptance", () => {
             axiosMock.object(),
             expect.objectContaining({
                 requestId: "1",
-                signedOn: expect.anything(),
-                signature: expect.stringMatching(new RegExp("token-request,accept," + ISO_DATETIME_PATTERN.source + ",1")),
             })
         ));
 
@@ -65,7 +62,6 @@ describe("TokenizationRequestAcceptance", () => {
                     assetId: "assetId",
                     decimals: 18
                 },
-                sessionToken: "token"
             })
         ));
 

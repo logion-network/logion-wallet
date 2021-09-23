@@ -1,8 +1,7 @@
 import { It, Mock } from "moq.ts";
 import { AxiosInstance, AxiosResponse } from "axios";
-import moment from "moment";
 
-import {CreateTokenRequest, createTokenRequest} from "./Model";
+import { CreateTokenRequest, createTokenRequest } from "./Model";
 import { TEST_WALLET_USER } from './TestData';
 import { DEFAULT_LEGAL_OFFICER } from "../common/types/LegalOfficer";
 
@@ -14,8 +13,6 @@ describe("Wallet User Model", () => {
             requestedTokenName: 'TestToken',
             requesterAddress: TEST_WALLET_USER,
             bars: 10,
-            signature: 'signature',
-            signedOn: moment(),
         }
 
         const axios = new Mock<AxiosInstance>();

@@ -1,11 +1,10 @@
 jest.mock("./Model");
 jest.mock("../logion-chain");
 
-import moment from 'moment';
-import {render, waitFor} from "@testing-library/react";
+import { render, waitFor } from "@testing-library/react";
 
-import {useEffect, useState} from "react";
-import {UserContextProvider, useUserContext} from "./UserContext";
+import { useEffect, useState } from "react";
+import { UserContextProvider, useUserContext } from "./UserContext";
 
 function TestProvider() {
     return (
@@ -32,8 +31,6 @@ function TestConsumer() {
                 requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
                 requestedTokenName: "TOKEN1",
                 bars: 1,
-                signature: "signature",
-                signedOn: moment(),
             });
             setCreated(true);
         }

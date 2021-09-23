@@ -1,4 +1,3 @@
-import moment from 'moment';
 import Form from 'react-bootstrap/Form';
 
 import { useCommonContext } from "../common/CommonContext";
@@ -19,7 +18,6 @@ import Spacer from "../common/Spacer";
 import Icon from "../common/Icon";
 import Dialog from "../common/Dialog";
 import { useLogionChain } from '../logion-chain';
-import { sign } from "../logion-chain/Signature";
 import { vouchRecovery } from '../logion-chain/Recovery';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../ExtrinsicSubmitter';
 import ButtonGroup from "../common/ButtonGroup";
@@ -45,21 +43,10 @@ export default function RecoveryDetails() {
 
     const accept = useCallback(() => {
         (async function() {
-            const signedOn = moment();
-            const attributes = [ requestId ];
             const currentAddress = accounts!.current!.address;
-            const signature = await sign({
-                signerId: currentAddress,
-                resource: 'protection-request',
-                operation: 'accept',
-                signedOn,
-                attributes
-            });
             await acceptProtectionRequest(axios!, {
                 legalOfficerAddress: currentAddress,
                 requestId,
-                signature,
-                signedOn,
             });
             const signAndSubmit: SignAndSubmit = (callback, errorCallback) => vouchRecovery({
                 api: api!,
@@ -75,22 +62,11 @@ export default function RecoveryDetails() {
 
     const doReject = useCallback(() => {
         (async function() {
-            const signedOn = moment();
-            const attributes = [ requestId ];
             const currentAddress = accounts!.current!.address;
-            const signature = await sign({
-                signerId: currentAddress,
-                resource: 'protection-request',
-                operation: 'reject',
-                signedOn,
-                attributes
-            });
             await rejectProtectionRequest(axios!, {
                 legalOfficerAddress: currentAddress,
                 requestId,
-                signature,
                 rejectReason,
-                signedOn,
             });
             refreshRequests!(false);
             history.push(RECOVERY_REQUESTS_PATH);

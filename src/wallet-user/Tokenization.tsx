@@ -1,8 +1,5 @@
 import React, { useState, useCallback } from "react";
 import { useForm } from 'react-hook-form';
-import moment from 'moment';
-
-import { sign } from '../logion-chain/Signature';
 
 import { useCommonContext } from "../common/CommonContext";
 import Button from "../common/Button";
@@ -37,27 +34,12 @@ export default function Tokenization(props: Props) {
 
     const submit = useCallback((formValues: FormValues) => {
         (async function() {
-            const attributes = [
-                `${DEFAULT_LEGAL_OFFICER}`,
-                `${formValues.requestedTokenName}`,
-                `${formValues.bars}`
-            ];
-            const signedOn = moment();
             const currentAddress = accounts!.current!.address;
-            const signature = await sign({
-                signerId: currentAddress,
-                resource: 'token-request',
-                operation: 'create',
-                signedOn,
-                attributes,
-            });
             const request: CreateTokenRequest = {
                 legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
                 requesterAddress: currentAddress,
                 bars: Number(formValues.bars),
                 requestedTokenName: formValues.requestedTokenName,
-                signature,
-                signedOn,
             }
             await createTokenRequest!(request);
             reset();

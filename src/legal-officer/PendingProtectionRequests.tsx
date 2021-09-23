@@ -1,12 +1,10 @@
 import React, { useState, useCallback } from 'react';
-import moment from 'moment';
 
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Form from 'react-bootstrap/Form';
 
 import Button from '../common/Button';
 import Table, { Column, Cell, EmptyTableMessage, DateTimeCell } from '../common/Table';
-import { sign } from '../logion-chain/Signature';
 import { useCommonContext } from '../common/CommonContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
@@ -51,21 +49,10 @@ export default function PendingProtectionRequests(props: Props) {
         const currentAddress = accounts!.current!.address;
         (async function() {
             const requestId = reviewState.request!.id;
-            const signedOn = moment();
-            const attributes = [ requestId, rejectReason ];
-            const signature = await sign({
-                signerId: currentAddress,
-                resource: 'protection-request',
-                operation: 'reject',
-                signedOn,
-                attributes
-            });
             await rejectProtectionRequest(axios!, {
                 legalOfficerAddress: currentAddress,
                 requestId,
-                signature,
                 rejectReason,
-                signedOn,
             });
             setReviewState(NO_REVIEW_STATE);
             refreshRequests!(false);
@@ -76,20 +63,9 @@ export default function PendingProtectionRequests(props: Props) {
         const currentAddress = accounts!.current!.address;
         (async function() {
             const requestId = reviewState.request!.id;
-            const signedOn = moment();
-            const attributes = [ requestId ];
-            const signature = await sign({
-                signerId: currentAddress,
-                resource: 'protection-request',
-                operation: 'accept',
-                signedOn,
-                attributes
-            });
             await acceptProtectionRequest(axios!, {
                 legalOfficerAddress: currentAddress,
                 requestId,
-                signature,
-                signedOn,
             });
             setReviewState(NO_REVIEW_STATE);
             refreshRequests!(false);

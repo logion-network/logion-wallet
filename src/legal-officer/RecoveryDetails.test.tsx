@@ -14,7 +14,6 @@ import { PROTECTION_REQUESTS_HISTORY, DEFAULT_LEGAL_OFFICER_ADDRESS } from './Te
 import { axiosMock, setAddresses } from '../common/__mocks__/CommonContextMock';
 import { setIsFinalized } from '../logion-chain/__mocks__/SignatureMock';
 import { setParams, history } from '../__mocks__/ReactRouterMock';
-import { ISO_DATETIME_PATTERN } from '../logion-chain/datetime';
 import { refreshRequests } from './__mocks__/LegalOfficerContextMock';
 
 describe("RecoveryDetails", () => {
@@ -46,8 +45,6 @@ describe("RecoveryDetails", () => {
         await waitFor(() => expect(acceptProtectionRequest).toBeCalledWith(axiosMock.object(), expect.objectContaining({
             legalOfficerAddress: DEFAULT_LEGAL_OFFICER_ADDRESS.address,
             requestId: protectionRequest.id,
-            signature: expect.stringMatching(new RegExp("protection-request,accept," + ISO_DATETIME_PATTERN.source + ",1")),
-            signedOn: expect.anything(),
         })));
 
         await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent("Submitting..."));
@@ -80,8 +77,6 @@ describe("RecoveryDetails", () => {
         await waitFor(() => expect(rejectProtectionRequest).toBeCalledWith(axiosMock.object(), expect.objectContaining({
             legalOfficerAddress: DEFAULT_LEGAL_OFFICER_ADDRESS.address,
             requestId: protectionRequest.id,
-            signature: expect.stringMatching(new RegExp("protection-request,reject," + ISO_DATETIME_PATTERN.source + ",1")),
-            signedOn: expect.anything(),
         })));
         await waitFor(() => expect(refreshRequests).toBeCalled());
         await waitFor(() => expect(history.push).toBeCalledWith("/legal-officer/recovery"));

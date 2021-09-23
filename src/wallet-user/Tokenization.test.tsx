@@ -4,16 +4,15 @@ jest.mock('../logion-chain/Signature');
 jest.mock('../common/CommonContext');
 
 import React from "react";
-import {fireEvent, render, screen, waitFor} from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import {shallowRender} from "../tests";
+import { shallowRender } from "../tests";
 
-import Tokenization, {State} from "./Tokenization";
+import Tokenization, { State } from "./Tokenization";
 import { setCreateTokenRequest } from "./__mocks__/UserContextMock";
 import { DEFAULT_LEGAL_OFFICER } from "../common/types/LegalOfficer";
 import { TEST_WALLET_USER } from "./TestData";
-import { ISO_DATETIME_PATTERN } from "../logion-chain/datetime";
 
 test("START: Enable button", () => {
     const tree = shallowRender(<Tokenization />)
@@ -65,7 +64,6 @@ describe("CreateTokenizationRequest", () => {
                 requesterAddress: TEST_WALLET_USER,
                 requestedTokenName: 'DOT7',
                 bars: 7,
-                signature: expect.stringMatching(new RegExp("token-request,create," + ISO_DATETIME_PATTERN.source + "," + DEFAULT_LEGAL_OFFICER + ",DOT7,7")),
             })
         ));
     });

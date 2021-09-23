@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import {useForm, Controller} from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import Form from "react-bootstrap/Form";
 
 import Button from "../../common/Button";
@@ -10,15 +10,11 @@ import Dialog from '../../common/Dialog';
 import FormGroup from '../../common/FormGroup';
 
 import { CreateProtectionRequest } from "./Model";
-import {useUserContext} from "../UserContext";
-import moment from "moment";
-import {
-    useLogionChain,
-} from '../../logion-chain';
-import { sign } from "../../logion-chain/Signature";
+import { useUserContext } from "../UserContext";
+import { useLogionChain, } from '../../logion-chain';
 import { getActiveRecovery, initiateRecovery } from '../../logion-chain/Recovery';
-import {Row, Col} from "react-bootstrap";
-import {useCommonContext} from "../../common/CommonContext";
+import { Row, Col } from "react-bootstrap";
+import { useCommonContext } from "../../common/CommonContext";
 import LegalOfficers from './LegalOfficers';
 
 import './CreateProtectionRequestForm.css';
@@ -74,33 +70,7 @@ export default function CreateProtectionRequestForm(props: Props) {
             || (props.isRecovery && !activeRecovery)) {
             return;
         }
-
-        const attributes = [
-            `${formValues.firstName}`,
-            `${formValues.lastName}`,
-            `${formValues.email}`,
-            `${formValues.phoneNumber}`,
-
-            `${formValues.line1}`,
-            `${formValues.line2}`,
-            `${formValues.postalCode}`,
-            `${formValues.city}`,
-            `${formValues.country}`,
-            `${props.isRecovery}`,
-            `${addressToRecover}`,
-            `${legalOfficer1.address}`,
-            `${legalOfficer2.address}`,
-        ];
-
-        const signedOn = moment();
         const currentAddress = accounts!.current!.address;
-        const signature = await sign({
-            signerId: currentAddress,
-            resource: 'protection-request',
-            operation: 'create',
-            signedOn,
-            attributes,
-        });
         const request: CreateProtectionRequest = {
             requesterAddress: currentAddress,
             userIdentity: {
@@ -117,8 +87,6 @@ export default function CreateProtectionRequestForm(props: Props) {
                 country: formValues.country,
             },
             legalOfficerAddresses: [ legalOfficer1.address, legalOfficer2.address ],
-            signature,
-            signedOn,
             isRecovery: props.isRecovery,
             addressToRecover: addressToRecover,
         }
@@ -518,7 +486,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                                 colors={ colorTheme.frame }
                                 noFeedback
                             />
-    
+
                             <Button
                                 action={{
                                     id: "submit",

@@ -10,7 +10,6 @@ import { setPendingProtectionRequests } from './__mocks__/LegalOfficerContextMoc
 import { setAcceptProtectionRequest, setRejectProtectionRequest } from './__mocks__/ModelMock';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { ISO_DATETIME_PATTERN } from '../logion-chain/datetime';
 import { PENDING_PROTECTION_REQUESTS } from './TestData';
 import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT, axiosMock } from '../common/__mocks__/CommonContextMock';
 
@@ -83,9 +82,7 @@ describe("PendingProtectionRequests", () => {
             axiosMock.object(),
             expect.objectContaining({
                 requestId: "1",
-                signature: expect.stringMatching(new RegExp("protection-request,reject," + ISO_DATETIME_PATTERN.source + ",1,")),
                 rejectReason,
-                signedOn: expect.anything(),
             })
         ));
         expect(acceptCallback).not.toBeCalled();
@@ -113,8 +110,6 @@ describe("PendingProtectionRequests", () => {
             axiosMock.object(),
             expect.objectContaining({
                 requestId: "1",
-                signature: expect.stringMatching(new RegExp("protection-request,accept," + ISO_DATETIME_PATTERN.source + ",1")),
-                signedOn: expect.anything(),
             })
         ));
         expect(rejectCallback).not.toBeCalled();
