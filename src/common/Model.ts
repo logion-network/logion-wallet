@@ -118,6 +118,10 @@ export interface CreateLocRequest {
     ownerAddress?: string;
     requesterAddress?: string;
     description?: string;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    phone?: string;
 }
 
 export async function createLocRequest(

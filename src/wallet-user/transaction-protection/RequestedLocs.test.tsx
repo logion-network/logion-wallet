@@ -1,7 +1,8 @@
 jest.mock('../../common/CommonContext');
 jest.mock('../../common/Model');
+jest.mock('../../wallet-user/UserContext');
 
-import {fireEvent, getByText, render, screen, waitFor} from '@testing-library/react';
+import {fireEvent, render, screen, waitFor} from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
 
 import { shallowRender } from '../../tests';
@@ -10,6 +11,7 @@ import { axiosMock, setPendingLocRequests } from '../../common/__mocks__/CommonC
 import { createLocRequest } from '../../common/Model';
 import { DEFAULT_LEGAL_OFFICER } from '../../common/types/LegalOfficer';
 import { TEST_WALLET_USER } from '../TestData';
+import { setRecoveryConfig } from '../../wallet-user/__mocks__/UserContextMock';
 
 it("Renders null with no data", () => {
     const tree = shallowRender(<RequestedLocs />);
@@ -46,6 +48,20 @@ function openDialog() {
 }
 
 it("should create a LOC and display no message when a valid form is submitted", async () => {
+    setRecoveryConfig({
+        isNone: false,
+        unwrap: () => ({
+            friends: {
+                toArray: () => [
+                    { toString: () => DEFAULT_LEGAL_OFFICER }
+                ]
+            }
+        })
+    });
+    await itCreatesLoc(false);
+});
+
+async function itCreatesLoc(fillIdentityInfo: boolean) {
     render(<RequestedLocs/>);
     openDialog();
 
@@ -55,6 +71,13 @@ it("should create a LOC and display no message when a valid form is submitted", 
 
     userEvent.click(screen.getByText("Select..."));
     await waitFor(() => userEvent.click(screen.getByText("Patrick Gielen")));
+
+    if(fillIdentityInfo) {
+        userEvent.type(screen.getByRole("textbox", {name: "First Name"}), "John");
+        userEvent.type(screen.getByRole("textbox", {name: "Last Name"}), "Doe");
+        userEvent.type(screen.getByRole("textbox", {name: "E-mail"}), "john@doe.com");
+        userEvent.type(screen.getByRole("textbox", {name: "Phone"}), "+123456");
+    }
 
     const button = screen.getByRole('button', {name: "Submit"});
     userEvent.click(button);
@@ -67,7 +90,7 @@ it("should create a LOC and display no message when a valid form is submitted", 
             description,
         })
     ));
-});
+}
 
 it("should close dialog and not create token when cancel is pressed", async () => {
     render(<RequestedLocs/>);
@@ -78,4 +101,18 @@ it("should close dialog and not create token when cancel is pressed", async () =
     fireEvent.click(button)
     expect(createLocRequest).not.toBeCalled();
     await waitFor(() => expect(dialog).not.toBeInTheDocument());
+});
+
+it("should create a LOC with identity info if not protected by selected LO", async () => {
+    setRecoveryConfig({
+        isNone: false,
+        unwrap: () => ({
+            friends: {
+                toArray: () => [
+                    { toString: () => "" }
+                ]
+            }
+        })
+    });
+    await itCreatesLoc(true);
 });

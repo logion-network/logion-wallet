@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useCommonContext } from '../../common/CommonContext';
@@ -13,12 +13,17 @@ import LocCreationForm, { FormValues } from './LocCreationForm';
 export default function RequestedLocs() {
     const { colorTheme, pendingLocRequests, accounts, refresh, axios } = useCommonContext();
     const [ requestLoc, setRequestLoc ] = useState(false);
-    const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>({
+    const { control, handleSubmit, formState: { errors }, reset, watch } = useForm<FormValues>({
         defaultValues: {
             description: "",
             legalOfficer: "",
+            firstName: "",
+            lastName: "",
+            email: "",
+            phone: ""
         }
     });
+    const [ selectedLegalOfficer, setSelectedLegalOfficer ] = useState<string | null>(null);
 
     const submit = useCallback((formValues: FormValues) => {
         (async function() {
@@ -27,6 +32,10 @@ export default function RequestedLocs() {
                 ownerAddress: formValues.legalOfficer,
                 requesterAddress: currentAddress,
                 description: formValues.description,
+                firstName: formValues.firstName,
+                lastName: formValues.lastName,
+                email: formValues.email,
+                phone: formValues.phone,
             }
             await createLocRequest!(axios!, request);
             reset();
@@ -34,6 +43,11 @@ export default function RequestedLocs() {
             refresh!();
         })();
     }, [ axios, accounts, setRequestLoc, refresh, reset ]);
+
+    useEffect(() => {
+        const subscription = watch(({ legalOfficer }) => setSelectedLegalOfficer(legalOfficer));
+        return () => subscription.unsubscribe();
+    }, [watch]);
 
     if(pendingLocRequests === null) {
         return null;
@@ -91,6 +105,7 @@ export default function RequestedLocs() {
                     control={ control }
                     errors={ errors }
                     colors={ colorTheme.dialog }
+                    legalOfficer={ selectedLegalOfficer }
                 />
             </Dialog>
         </>
