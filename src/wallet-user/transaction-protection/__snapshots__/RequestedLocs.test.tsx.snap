@@ -145,6 +145,7 @@ exports[`Renders pending requests 1`] = `
       }
       errors={Object {}}
       legalOfficer={null}
+      showIdentityFields={true}
     />
   </Dialog>
 </React.Fragment>

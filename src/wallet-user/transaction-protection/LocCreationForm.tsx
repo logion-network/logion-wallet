@@ -1,7 +1,6 @@
 import React from 'react';
 import { Controller, Control, FieldErrors } from 'react-hook-form';
 import Form from "react-bootstrap/Form";
-import { Option } from '@polkadot/types';
 
 import { BackgroundAndForegroundColors } from '../../common/ColorTheme';
 import FormGroup from '../../common/FormGroup';
@@ -9,8 +8,6 @@ import Select from '../../common/Select';
 
 import { legalOfficers } from '../../common/types/LegalOfficer';
 import { buildOptions } from '../trust-protection/SelectLegalOfficer';
-import { useUserContext } from '../UserContext';
-import { RecoveryConfig } from '../../logion-chain/Recovery';
 
 export interface FormValues {
     description: string;
@@ -26,23 +23,10 @@ export interface Props {
     errors: FieldErrors<FormValues>;
     colors: BackgroundAndForegroundColors;
     legalOfficer: string | null;
-}
-
-function shouldShowIdentityFields(
-    legalOfficer: string | null,
-    recoveryConfig: Option<RecoveryConfig> | null
-): boolean {
-    if(legalOfficer === null || recoveryConfig === null || recoveryConfig.isNone) {
-        return true;
-    } else {
-        return !recoveryConfig.unwrap().friends.toArray().map(accountId => accountId.toString()).includes(legalOfficer);
-    }
+    showIdentityFields: boolean;
 }
 
 export default function LocCreationForm(props: Props) {
-    const { recoveryConfig } = useUserContext();
-
-    const showIdentityFields = shouldShowIdentityFields(props.legalOfficer, recoveryConfig);
 
     return (
         <>
@@ -110,7 +94,7 @@ export default function LocCreationForm(props: Props) {
             />
 
             {
-                showIdentityFields &&
+                props.showIdentityFields &&
                 <>
                     <FormGroup
                         id="firstName"
