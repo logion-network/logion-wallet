@@ -12,12 +12,18 @@ import { buildOptions } from '../trust-protection/SelectLegalOfficer';
 export interface FormValues {
     description: string;
     legalOfficer: string;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    phone?: string;
 }
 
 export interface Props {
-    control: Control<FormValues>,
-    errors: FieldErrors<FormValues>,
-    colors: BackgroundAndForegroundColors,
+    control: Control<FormValues>;
+    errors: FieldErrors<FormValues>;
+    colors: BackgroundAndForegroundColors;
+    legalOfficer: string | null;
+    showIdentityFields: boolean;
 }
 
 export default function LocCreationForm(props: Props) {
@@ -86,6 +92,115 @@ export default function LocCreationForm(props: Props) {
                 feedback={ props.errors.legalOfficer?.message }
                 colors={ props.colors }
             />
+
+            {
+                props.showIdentityFields &&
+                <>
+                    <FormGroup
+                        id="firstName"
+                        label="First Name"
+                        control={
+                            <Controller
+                                name="firstName"
+                                control={ props.control }
+                                defaultValue=""
+                                rules={{
+                                    required: 'First name is required'
+                                }}
+                                render={({ field }) => (
+                                    <Form.Control
+                                        isInvalid={!!props.errors.firstName?.message}
+                                        type="text"
+                                        data-testid="firstName"
+                                        aria-describedby="firstName"
+                                        { ...field }
+                                    />
+                                )}
+                              />
+                        }
+                        colors={ props.colors }
+                        feedback={ props.errors.firstName?.message }
+                    />
+
+                    <FormGroup
+                        id="lastName"
+                        label="Last Name"
+                        control={
+                            <Controller
+                                name="lastName"
+                                control={ props.control }
+                                defaultValue=""
+                                rules={{
+                                    required: 'Last name is required'
+                                }}
+                                render={({ field }) => (
+                                    <Form.Control
+                                        isInvalid={!!props.errors.lastName?.message}
+                                        type="text"
+                                        data-testid="lastName"
+                                        aria-describedby="lastName"
+                                        { ...field }
+                                    />
+                                )}
+                              />
+                        }
+                        colors={ props.colors }
+                        feedback={ props.errors.lastName?.message }
+                    />
+
+                    <FormGroup
+                        id="email"
+                        label="E-mail"
+                        control={
+                            <Controller
+                                name="email"
+                                control={ props.control }
+                                defaultValue=""
+                                rules={{
+                                    required: 'E-mail is required'
+                                }}
+                                render={({ field }) => (
+                                    <Form.Control
+                                        isInvalid={!!props.errors.email?.message}
+                                        type="text"
+                                        data-testid="email"
+                                        aria-describedby="email"
+                                        { ...field }
+                                    />
+                                )}
+                              />
+                        }
+                        colors={ props.colors }
+                        feedback={ props.errors.email?.message }
+                    />
+
+                    <FormGroup
+                        id="phone"
+                        label="Phone"
+                        control={
+                            <Controller
+                                name="phone"
+                                control={ props.control }
+                                defaultValue=""
+                                rules={{
+                                    required: 'Phone is required'
+                                }}
+                                render={({ field }) => (
+                                    <Form.Control
+                                        isInvalid={!!props.errors.phone?.message}
+                                        type="text"
+                                        data-testid="phone"
+                                        aria-describedby="phone"
+                                        { ...field }
+                                    />
+                                )}
+                              />
+                        }
+                        colors={ props.colors }
+                        feedback={ props.errors.phone?.message }
+                    />
+                </>
+            }
         </>
     )
 }

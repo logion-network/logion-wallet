@@ -22,7 +22,7 @@ export let acceptedProtectionRequests: ProtectionRequest[] | null = null;
 
 export let api = new ApiPromise();
 
-export let recoveryConfig = {isEmpty: true};
+export let recoveryConfig = {isEmpty: true, isSome: false, isNone: true};
 
 export let setUserAddress = jest.fn();
 

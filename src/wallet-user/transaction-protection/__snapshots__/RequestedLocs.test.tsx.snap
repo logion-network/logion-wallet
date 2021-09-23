@@ -80,7 +80,11 @@ exports[`Renders pending requests 1`] = `
         Object {
           "_defaultValues": Object {
             "description": "",
+            "email": "",
+            "firstName": "",
+            "lastName": "",
             "legalOfficer": "",
+            "phone": "",
           },
           "_fields": Object {},
           "_formState": Object {
@@ -140,6 +144,8 @@ exports[`Renders pending requests 1`] = `
         }
       }
       errors={Object {}}
+      legalOfficer={null}
+      showIdentityFields={true}
     />
   </Dialog>
 </React.Fragment>

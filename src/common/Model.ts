@@ -11,6 +11,7 @@ import {
     LocRequest,
     LocRequestStatus,
 } from './types/ModelTypes';
+import Identity from './types/Identity';
 
 export interface FetchRequestSpecification {
     legalOfficerAddress?: string,
@@ -118,6 +119,7 @@ export interface CreateLocRequest {
     ownerAddress?: string;
     requesterAddress?: string;
     description?: string;
+    userIdentity?: Identity;
 }
 
 export async function createLocRequest(
