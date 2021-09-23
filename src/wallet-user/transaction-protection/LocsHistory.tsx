@@ -32,7 +32,7 @@ export default function TokenizationRequestsHistory() {
                 },
                 {
                     header: "LOC ID",
-                    render: request => <LocIdCell id={ request.id }/>,
+                    render: request => <LocIdCell status={ request.status } id={ request.id }/>,
                     align: "left",
                 },
                 {

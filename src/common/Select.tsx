@@ -1,5 +1,5 @@
 import ReactSelect, { ValueType, ActionMeta, StylesConfig, GroupTypeBase } from 'react-select';
-import { SelectColors, BLUE } from './ColorTheme';
+import { SelectColors, BLUE, RED } from './ColorTheme';
 import { useCommonContext } from './CommonContext';
 
 import './Select.css';
@@ -9,14 +9,15 @@ export type OptionType = { label: string; value: string };
 export interface Props {
     options: ReadonlyArray<OptionType>,
     dataTestId?: string,
-    value: OptionType | null,
-    onChange: (value: OptionType | null) => void,
+    value: string | null,
+    onChange: (value: string | null) => void,
     isInvalid?: boolean,
     disabled?: boolean,
     statusColor?: string,
+    name?: string | undefined;
 }
 
-function buildStyles(colors: SelectColors, statusColor?: string): StylesConfig<OptionType, false, GroupTypeBase<OptionType>> {
+function buildStyles(colors: SelectColors, statusColor?: string, isInvalid?: boolean): StylesConfig<OptionType, false, GroupTypeBase<OptionType>> {
     return {
         option: (provided, state) => {
             let backgroundColor = undefined;
@@ -34,7 +35,7 @@ function buildStyles(colors: SelectColors, statusColor?: string): StylesConfig<O
         control: (provided) => ({
             ...provided,
             boxShadow: undefined,
-            backgroundColor: statusColor !== undefined ? statusColor + "33" : colors.background,
+            backgroundColor: controlBackgroundColor(colors, statusColor, isInvalid),
             color: colors.foreground,
             borderColor: statusColor !== undefined ? statusColor : "#3b6cf4",
         }),
@@ -55,11 +56,21 @@ function buildStyles(colors: SelectColors, statusColor?: string): StylesConfig<O
     };
 }
 
+function controlBackgroundColor(colors: SelectColors, statusColor?: string, isInvalid?: boolean): string {
+    if(statusColor !== undefined) {
+        return statusColor + "33";
+    } else if(isInvalid !== undefined && isInvalid) {
+        return RED + "33";
+    } else {
+        return colors.background;
+    }
+}
+
 export default function Select(props: Props) {
     const { colorTheme } = useCommonContext();
 
     const onChange = (value: ValueType<OptionType, false>, _: ActionMeta<OptionType>) => {
-        props.onChange(value);
+        props.onChange(value !== null ? value.value : null);
     };
 
     const color = props.statusColor === undefined ? BLUE : props.statusColor;
@@ -72,6 +83,23 @@ export default function Select(props: Props) {
     }
     `;
 
+    function toOptionType(value: string | null): OptionType | null {
+        if(value === null) {
+            return null;
+        } else {
+            return findOptionTypeByValue(value);
+        }
+    }
+
+    function findOptionTypeByValue(value: string): OptionType | null {
+        for(const option of props.options) {
+            if(option.value === value) {
+                return option;
+            }
+        }
+        return null;
+    }
+
     return (
         <>
             <style>
@@ -82,9 +110,10 @@ export default function Select(props: Props) {
                 classNamePrefix="Select"
                 options={ props.options }
                 onChange={ onChange }
-                value={ props.value }
-                styles={ buildStyles(colorTheme.select, props.statusColor) }
+                value={ toOptionType(props.value) }
+                styles={ buildStyles(colorTheme.select, props.statusColor, props.isInvalid) }
                 isDisabled={ props.disabled }
+                name={ props.name }
             />
         </>
     );

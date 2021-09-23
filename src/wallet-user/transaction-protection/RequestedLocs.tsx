@@ -7,7 +7,6 @@ import LocStatusCell from '../../common/LocStatusCell';
 import Button from '../../common/Button';
 import Dialog from '../../common/Dialog';
 import { CreateLocRequest, createLocRequest } from '../../common/Model';
-import { DEFAULT_LEGAL_OFFICER } from '../../common/types/LegalOfficer';
 
 import LocCreationForm, { FormValues } from './LocCreationForm';
 
@@ -16,7 +15,8 @@ export default function RequestedLocs() {
     const [ requestLoc, setRequestLoc ] = useState(false);
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>({
         defaultValues: {
-            description: ""
+            description: "",
+            legalOfficer: "",
         }
     });
 
@@ -24,7 +24,7 @@ export default function RequestedLocs() {
         (async function() {
             const currentAddress = accounts!.current!.address;
             const request: CreateLocRequest = {
-                ownerAddress: DEFAULT_LEGAL_OFFICER,
+                ownerAddress: formValues.legalOfficer,
                 requesterAddress: currentAddress,
                 description: formValues.description,
             }
@@ -45,7 +45,7 @@ export default function RequestedLocs() {
                 columns={[
                     {
                         header: "Legal officer",
-                        render: request => <Cell content={ request.ownerAddress } />,
+                        render: request => <Cell content={ request.ownerAddress }  overflowing tooltipId={ `dest-${request.id}` } />,
                         align: 'left',
                     },
                     {
