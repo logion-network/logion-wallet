@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders OPEN 1`] = `
+<StatusCell
+  color="#37ad4b"
+  icon={
+    Object {
+      "id": "activated",
+    }
+  }
+  text="Open"
+/>
+`;
+
+exports[`renders REJECTED 1`] = `
+<StatusCell
+  color="#e11a25"
+  icon={
+    Object {
+      "id": "rejected",
+    }
+  }
+  text="Rejected"
+/>
+`;
+
+exports[`renders REQUESTED 1`] = `
+<StatusCell
+  color="#ff9b3f"
+  icon={
+    Object {
+      "id": "pending",
+    }
+  }
+  text="Pending"
+/>
+`;
