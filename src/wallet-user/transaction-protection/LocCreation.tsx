@@ -19,7 +19,7 @@ function shouldShowIdentityFields(
 ): boolean {
     if(recoveryConfig === null || recoveryConfig.isNone) {
         return true;
-    } else if(legalOfficer === null) {
+    } else if(legalOfficer === null || legalOfficer === "") {
         return false;
     } else {
         return !recoveryConfig.unwrap().friends.toArray().map(accountId => accountId.toString()).includes(legalOfficer);

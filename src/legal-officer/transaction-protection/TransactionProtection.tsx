@@ -7,7 +7,7 @@ import Tabs from '../../common/Tabs';
 
 import { useCommonContext } from '../../common/CommonContext';
 import PendingLocRequests from './PendingLocRequests';
-import LocRequestsHistory from './LocRequestsHistory';
+import RejectedLocRequests from './RejectedLocRequests';
 import OpenedLocs from './OpenedLocs';
 import Frame from '../../common/Frame';
 
@@ -51,7 +51,7 @@ export default function LocRequests() {
                                 {
                                     key: "rejected",
                                     title: "Rejected",
-                                    render: () => <LocRequestsHistory/>
+                                    render: () => <RejectedLocRequests/>
                                 }
                             ]}
                         />
