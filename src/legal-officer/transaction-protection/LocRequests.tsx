@@ -17,7 +17,7 @@ export default function LocRequests() {
 
     return (
         <FullWidthPane
-            mainTitle="Transaction Protection"
+            mainTitle="Transaction Protection Cases"
             titleIcon={{
                 icon: {
                     id: 'loc'
