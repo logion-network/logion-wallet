@@ -3,11 +3,12 @@ import React from 'react';
 import { useCommonContext } from '../../common/CommonContext';
 import Table, { Cell, EmptyTableMessage, DateCell } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';
+import LocIdCell from '../../common/LocIdCell';
 
-export default function RequestedLocs() {
-    const { pendingLocRequests } = useCommonContext();
+export default function RejectedLocs() {
+    const { rejectedLocRequests } = useCommonContext();
 
-    if(pendingLocRequests === null) {
+    if(rejectedLocRequests === null) {
         return null;
     }
 
@@ -15,8 +16,8 @@ export default function RequestedLocs() {
         <Table
             columns={[
                 {
-                    header: "Legal officer",
-                    render: request => <Cell content={ request.ownerAddress }  overflowing tooltipId={ `dest-${request.id}` } />,
+                    "header": "Legal officer",
+                    render: request => <Cell content={ request.ownerAddress } />,
                     align: 'left',
                 },
                 {
@@ -30,13 +31,19 @@ export default function RequestedLocs() {
                     width: "140px",
                 },
                 {
-                    header: "Creation date",
+                    header: "LOC ID",
+                    render: request => <LocIdCell status={ request.status } id={ request.id }/>,
+                    align: "left",
+                },
+                {
+                    "header": "Creation date",
                     render: request => <DateCell dateTime={ request.createdOn || null } />,
+                    align: 'left',
                     width: '200px',
-                }
+                },
             ]}
-            data={ pendingLocRequests }
-            renderEmpty={ () => <EmptyTableMessage>No requested LOCs</EmptyTableMessage> }
+            data={ rejectedLocRequests }
+            renderEmpty={ () => <EmptyTableMessage>No LOCs</EmptyTableMessage>}
         />
     );
 }

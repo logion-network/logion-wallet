@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import Alert from 'react-bootstrap/Alert';
 
-import { useLogionChain } from '../logion-chain';
-import { UUID } from '../logion-chain/UUID';
-import { createLoc } from '../logion-chain/LogionLoc';
-import { useCommonContext } from '../common/CommonContext';
+import { useLogionChain } from '../../logion-chain';
+import { UUID } from '../../logion-chain/UUID';
+import { createLoc } from '../../logion-chain/LogionLoc';
+import { useCommonContext } from '../../common/CommonContext';
+import { LocRequest } from '../../common/types/ModelTypes';
+import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
 
-import { LocRequest } from '../common/types/ModelTypes';
-import { acceptLocRequest } from './Model';
-import ProcessStep from './ProcessStep';
-import ExtrinsicSubmitter, { SignAndSubmit } from '../ExtrinsicSubmitter';
+import { acceptLocRequest } from '../Model';
+import ProcessStep from '../ProcessStep';
 
 enum AcceptStatus {
     NONE,

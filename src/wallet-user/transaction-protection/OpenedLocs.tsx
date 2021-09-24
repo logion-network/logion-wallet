@@ -5,10 +5,10 @@ import Table, { Cell, EmptyTableMessage, DateCell } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';
 import LocIdCell from '../../common/LocIdCell';
 
-export default function TokenizationRequestsHistory() {
-    const { locRequestsHistory } = useCommonContext();
+export default function OpenedLocs() {
+    const { openedLocRequests } = useCommonContext();
 
-    if(locRequestsHistory === null) {
+    if(openedLocRequests === null) {
         return null;
     }
 
@@ -42,7 +42,7 @@ export default function TokenizationRequestsHistory() {
                     width: '200px',
                 },
             ]}
-            data={ locRequestsHistory }
+            data={ openedLocRequests }
             renderEmpty={ () => <EmptyTableMessage>No LOCs</EmptyTableMessage>}
         />
     );

@@ -1,8 +1,8 @@
-jest.mock('../common/CommonContext');
+jest.mock('../../common/CommonContext');
 
 import React from 'react';
 import LocRequests from './LocRequests';
-import { shallowRender } from '../tests';
+import { shallowRender } from '../../tests';
 
 test('renders', () => {
     const tree = shallowRender(<LocRequests />);

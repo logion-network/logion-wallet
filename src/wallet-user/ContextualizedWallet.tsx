@@ -73,7 +73,7 @@ export default function ContextualizedWallet() {
                 },
                 {
                     id: "loc",
-                    text: "Transaction",
+                    text: "Transactions",
                     to: TRANSACTION_PROTECTION_PATH,
                     exact: true,
                     icon: {

@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 
-import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../common/Table';
-import LocStatusCell from '../common/LocStatusCell';
-import Button from '../common/Button';
+import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../../common/Table';
+import LocStatusCell from '../../common/LocStatusCell';
+import Button from '../../common/Button';
 
-import { useCommonContext } from '../common/CommonContext';
-import { LocRequest } from '../common/types/ModelTypes';
-import ButtonGroup from "../common/ButtonGroup";
+import { useCommonContext } from '../../common/CommonContext';
+import { LocRequest } from '../../common/types/ModelTypes';
+import ButtonGroup from "../../common/ButtonGroup";
 
-import ProcessStep from './ProcessStep';
+import ProcessStep from '../ProcessStep';
+import { rejectLocRequest } from '../Model';
+
 import LocRequestAcceptance from './LocRequestAcceptance';
-import { rejectLocRequest } from './Model';
 
 export default function PendingLocRequests() {
     const { pendingLocRequests, axios, refresh } = useCommonContext();

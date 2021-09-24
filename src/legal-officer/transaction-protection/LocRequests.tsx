@@ -4,22 +4,20 @@ import Col from 'react-bootstrap/Col';
 
 import { FullWidthPane } from '../../common/Dashboard';
 import Tabs from '../../common/Tabs';
+
+import { useCommonContext } from '../../common/CommonContext';
+import PendingLocRequests from './PendingLocRequests';
+import LocRequestsHistory from './LocRequestsHistory';
+import OpenedLocs from '../../wallet-user/transaction-protection/OpenedLocs';
 import Frame from '../../common/Frame';
-import { useCommonContext } from "../../common/CommonContext";
 
-import OpenedLocs from './OpenedLocs';
-import RequestedLocs from './RequestedLocs';
-import RejectedLocs from './RejectedLocs';
-import LocCreation from './LocCreation';
-
-export default function TransactionProtection() {
+export default function LocRequests() {
     const { colorTheme } = useCommonContext();
     const [ tabKey, setTabKey ] = useState<string>('pending');
 
     return (
         <FullWidthPane
             mainTitle="Transaction Protection"
-            subTitle="Logion Officer Cases"
             titleIcon={{
                 icon: {
                     id: 'loc'
@@ -33,14 +31,13 @@ export default function TransactionProtection() {
                         title="Open Transaction Protection Case(s)"
                     >
                         <OpenedLocs/>
-                        <LocCreation/>
                     </Frame>
                 </Col>
             </Row>
             <Row>
                 <Col>
                     <Frame
-                        title="Transaction Protection Request(s)"
+                        title="Transaction Protection Case Request(s)"
                     >
                         <Tabs
                             activeKey={ tabKey }
@@ -49,12 +46,12 @@ export default function TransactionProtection() {
                                 {
                                     key: "pending",
                                     title: "Pending",
-                                    render: () => <RequestedLocs/>
+                                    render: () => <PendingLocRequests/>
                                 },
                                 {
                                     key: "rejected",
                                     title: "Rejected",
-                                    render: () => <RejectedLocs/>
+                                    render: () => <LocRequestsHistory/>
                                 }
                             ]}
                         />

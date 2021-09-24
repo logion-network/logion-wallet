@@ -3,7 +3,6 @@
 exports[`renders 1`] = `
 <FullWidthPane
   mainTitle="Transaction Protection"
-  subTitle="Logion Officer Cases"
   titleIcon={
     Object {
       "background": Object {
@@ -24,7 +23,6 @@ exports[`renders 1`] = `
         title="Open Transaction Protection Case(s)"
       >
         <OpenedLocs />
-        <LocCreation />
       </Frame>
     </Col>
   </Row>
@@ -33,7 +31,7 @@ exports[`renders 1`] = `
   >
     <Col>
       <Frame
-        title="Transaction Protection Request(s)"
+        title="Transaction Protection Case Request(s)"
       >
         <Tabs
           activeKey="pending"

@@ -21,7 +21,7 @@ import Settings from '../Settings';
 import RecoveryDetails from "./RecoveryDetails";
 import Wallet from "../common/Wallet";
 import Transactions from "../common/Transactions";
-import LocRequests from './LocRequests';
+import LocRequests from './transaction-protection/LocRequests';
 
 export default function LegalOfficerRouter() {
 
