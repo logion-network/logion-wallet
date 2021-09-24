@@ -4,7 +4,7 @@ import Table, { Cell, DateTimeCell, EmptyTableMessage } from '../../common/Table
 import LocStatusCell from '../../common/LocStatusCell';
 
 import { useCommonContext } from '../../common/CommonContext';
-import LocIdCell from '../../common/LocIdCell';
+import UserIdentityNameCell from '../../common/UserIdentityNameCell';
 
 export default function LocRequestsHistory() {
     const { rejectedLocRequests } = useCommonContext();
@@ -18,7 +18,7 @@ export default function LocRequestsHistory() {
             columns={[
                 {
                     header: "Requester",
-                    render: request => <Cell content={ request.requesterAddress } overflowing tooltipId="requester-tooltip"/>,
+                    render: request => <UserIdentityNameCell userIdentity={ request.userIdentity } />,
                     align: "left",
                 },
                 {
@@ -32,14 +32,15 @@ export default function LocRequestsHistory() {
                     width: "140px",
                 },
                 {
-                    header: "LOC ID",
-                    render: request => <LocIdCell status={ request.status } id={ request.id }/>,
+                    header: "Reason",
+                    render: request => <Cell content={ request.rejectReason || "" } overflowing tooltipId="rejectReasonId" />,
                     align: "left",
                 },
                 {
-                    header: "Created",
+                    header: "Creation Date",
                     render: request => <DateTimeCell dateTime={ request.createdOn || null } />,
-                    width: "150px",
+                    width: '200px',
+                    align: 'center',
                 },
             ]}
             data={ rejectedLocRequests }

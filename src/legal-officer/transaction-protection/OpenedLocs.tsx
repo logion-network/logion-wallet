@@ -1,9 +1,10 @@
 import React from 'react';
 
 import { useCommonContext } from '../../common/CommonContext';
-import Table, { Cell, EmptyTableMessage, DateCell } from '../../common/Table';
+import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';
 import LocIdCell from '../../common/LocIdCell';
+import UserIdentityNameCell from '../../common/UserIdentityNameCell';
 
 export default function OpenedLocs() {
     const { openedLocRequests } = useCommonContext();
@@ -17,7 +18,7 @@ export default function OpenedLocs() {
             columns={[
                 {
                     "header": "Requester",
-                    render: request => <Cell content={ request.requesterAddress } />,
+                    render: request => <UserIdentityNameCell userIdentity={ request.userIdentity }/>,
                     align: 'left',
                 },
                 {
@@ -37,9 +38,9 @@ export default function OpenedLocs() {
                 },
                 {
                     "header": "Creation date",
-                    render: request => <DateCell dateTime={ request.createdOn || null } />,
-                    align: 'left',
+                    render: request => <DateTimeCell dateTime={ request.createdOn || null } />,
                     width: '200px',
+                    align: 'center',
                 },
             ]}
             data={ openedLocRequests }

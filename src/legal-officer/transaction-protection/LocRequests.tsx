@@ -8,7 +8,7 @@ import Tabs from '../../common/Tabs';
 import { useCommonContext } from '../../common/CommonContext';
 import PendingLocRequests from './PendingLocRequests';
 import LocRequestsHistory from './LocRequestsHistory';
-import OpenedLocs from '../../wallet-user/transaction-protection/OpenedLocs';
+import OpenedLocs from './OpenedLocs';
 import Frame from '../../common/Frame';
 
 export default function LocRequests() {

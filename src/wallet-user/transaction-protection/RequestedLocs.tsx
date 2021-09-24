@@ -1,8 +1,9 @@
 import React from 'react';
 
 import { useCommonContext } from '../../common/CommonContext';
-import Table, { Cell, EmptyTableMessage, DateCell } from '../../common/Table';
+import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';
+import LegalOfficerName from '../../common/LegalOfficerNameCell';
 
 export default function RequestedLocs() {
     const { pendingLocRequests } = useCommonContext();
@@ -16,7 +17,7 @@ export default function RequestedLocs() {
             columns={[
                 {
                     header: "Legal officer",
-                    render: request => <Cell content={ request.ownerAddress }  overflowing tooltipId={ `dest-${request.id}` } />,
+                    render: request => <LegalOfficerName address={ request.ownerAddress } />,
                     align: 'left',
                 },
                 {
@@ -31,8 +32,9 @@ export default function RequestedLocs() {
                 },
                 {
                     header: "Creation date",
-                    render: request => <DateCell dateTime={ request.createdOn || null } />,
+                    render: request => <DateTimeCell dateTime={ request.createdOn || null } />,
                     width: '200px',
+                    align: 'center',
                 }
             ]}
             data={ pendingLocRequests }
