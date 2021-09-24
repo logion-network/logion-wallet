@@ -130,4 +130,4 @@ explore and interact with a Logion node. The procedure is as follows:
 
     docker run --name my-logion-wallet -p 8080:80 logion-wallet
 
-With your browser, you may now navigate to `http://localhost:8080`.
+With your browser, you may now navigate to [http://localhost:8080](http://localhost:8080).
