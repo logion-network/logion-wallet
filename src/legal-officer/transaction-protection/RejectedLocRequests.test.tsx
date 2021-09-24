@@ -3,14 +3,14 @@ jest.mock('../../common/CommonContext');
 import { shallowRender } from '../../tests';
 import { setRejectedLocRequests } from '../../common/__mocks__/CommonContextMock';
 
-import LocRequestsHistory from './LocRequestsHistory';
+import RejectedLocRequests from './RejectedLocRequests';
 
 test("Renders null with no data", () => {
-    const tree = shallowRender(<LocRequestsHistory />);
+    const tree = shallowRender(<RejectedLocRequests />);
     expect(tree).toMatchSnapshot();
 });
 
-test("Renders accepted requests", () => {
+test("Renders rejected requests", () => {
     setRejectedLocRequests([
         {
             id: "1",
@@ -21,6 +21,6 @@ test("Renders accepted requests", () => {
             status: "REJECTED"
         }
     ]);
-    const tree = shallowRender(<LocRequestsHistory />);
+    const tree = shallowRender(<RejectedLocRequests />);
     expect(tree).toMatchSnapshot();
 });

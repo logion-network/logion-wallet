@@ -1,10 +1,10 @@
 jest.mock('../../common/CommonContext');
 
 import React from 'react';
-import LocRequests from './LocRequests';
+import TransactionProtection from './TransactionProtection';
 import { shallowRender } from '../../tests';
 
 test('renders', () => {
-    const tree = shallowRender(<LocRequests />);
+    const tree = shallowRender(<TransactionProtection/>);
     expect(tree).toMatchSnapshot();
 });

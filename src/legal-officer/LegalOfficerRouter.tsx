@@ -21,7 +21,7 @@ import Settings from '../Settings';
 import RecoveryDetails from "./RecoveryDetails";
 import Wallet from "../common/Wallet";
 import Transactions from "../common/Transactions";
-import LocRequests from './transaction-protection/LocRequests';
+import TransactionProtection from './transaction-protection/TransactionProtection';
 
 export default function LegalOfficerRouter() {
 
@@ -54,7 +54,7 @@ export default function LegalOfficerRouter() {
                     />
                 </Route>
                 <Route path={ LOC_REQUESTS_PATH }>
-                    <LocRequests />
+                    <TransactionProtection/>
                 </Route>
                 <Route path="">
                     <Home />

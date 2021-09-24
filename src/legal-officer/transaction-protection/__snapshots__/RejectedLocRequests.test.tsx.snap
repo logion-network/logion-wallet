@@ -1,6 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Renders accepted requests 1`] = `
+exports[`Renders null with no data 1`] = `null`;
+
+exports[`Renders rejected requests 1`] = `
 <Table
   columns={
     Array [
@@ -48,5 +50,3 @@ exports[`Renders accepted requests 1`] = `
   renderEmpty={[Function]}
 />
 `;
-
-exports[`Renders null with no data 1`] = `null`;
