@@ -1,9 +1,9 @@
 import React from 'react';
 
 import { useCommonContext } from '../../common/CommonContext';
-import Table, { Cell, EmptyTableMessage, DateCell } from '../../common/Table';
+import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';
-import LocIdCell from '../../common/LocIdCell';
+import LegalOfficerName from '../../common/LegalOfficerNameCell';
 
 export default function RejectedLocs() {
     const { rejectedLocRequests } = useCommonContext();
@@ -17,7 +17,7 @@ export default function RejectedLocs() {
             columns={[
                 {
                     "header": "Legal officer",
-                    render: request => <Cell content={ request.ownerAddress } />,
+                    render: request => <LegalOfficerName address={ request.ownerAddress } />,
                     align: 'left',
                 },
                 {
@@ -31,15 +31,15 @@ export default function RejectedLocs() {
                     width: "140px",
                 },
                 {
-                    header: "LOC ID",
-                    render: request => <LocIdCell status={ request.status } id={ request.id }/>,
-                    align: "left",
+                    "header": "Reason",
+                    render: request => <Cell content={ request.rejectReason || "" } overflowing tooltipId="rejectReasonId"/>,
+                    align: 'left',
                 },
                 {
                     "header": "Creation date",
-                    render: request => <DateCell dateTime={ request.createdOn || null } />,
-                    align: 'left',
+                    render: request => <DateTimeCell dateTime={ request.createdOn || null } />,
                     width: '200px',
+                    align: 'center',
                 },
             ]}
             data={ rejectedLocRequests }

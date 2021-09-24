@@ -13,6 +13,7 @@ import ProcessStep from '../ProcessStep';
 import { rejectLocRequest } from '../Model';
 
 import LocRequestAcceptance from './LocRequestAcceptance';
+import UserIdentityNameCell from '../../common/UserIdentityNameCell';
 
 export default function PendingLocRequests() {
     const { pendingLocRequests, axios, refresh } = useCommonContext();
@@ -51,7 +52,7 @@ export default function PendingLocRequests() {
                 columns={[
                     {
                         header: "Requester",
-                        render: request => <Cell content={ request.requesterAddress } />,
+                        render: request => <UserIdentityNameCell userIdentity={ request.userIdentity } />,
                         align: "left",
                     },
                     {
@@ -65,9 +66,10 @@ export default function PendingLocRequests() {
                         width: "140px",
                     },
                     {
-                        header: "Created",
+                        header: "Creation Date",
                         render: request => <DateTimeCell dateTime={ request.createdOn || null } />,
-                        width: "150px",
+                        width: '200px',
+                        align: 'center',
                     },
                     {
                         header: "",
