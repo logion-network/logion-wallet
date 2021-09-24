@@ -2,9 +2,10 @@ import React from 'react';
 
 import Table, { Cell, DateTimeCell, EmptyTableMessage } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';
-
 import { useCommonContext } from '../../common/CommonContext';
 import UserIdentityNameCell from '../../common/UserIdentityNameCell';
+
+import LocRequestDetails from './LocRequestDetails';
 
 export default function LocRequestsHistory() {
     const { rejectedLocRequests } = useCommonContext();
@@ -20,6 +21,7 @@ export default function LocRequestsHistory() {
                     header: "Requester",
                     render: request => <UserIdentityNameCell userIdentity={ request.userIdentity } />,
                     align: "left",
+                    renderDetails: request => <LocRequestDetails request={ request }/>
                 },
                 {
                     header: "Description",

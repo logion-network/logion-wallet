@@ -8,12 +8,13 @@ import Button from '../../common/Button';
 import { useCommonContext } from '../../common/CommonContext';
 import { LocRequest } from '../../common/types/ModelTypes';
 import ButtonGroup from "../../common/ButtonGroup";
+import UserIdentityNameCell from '../../common/UserIdentityNameCell';
 
 import ProcessStep from '../ProcessStep';
 import { rejectLocRequest } from '../Model';
 
 import LocRequestAcceptance from './LocRequestAcceptance';
-import UserIdentityNameCell from '../../common/UserIdentityNameCell';
+import LocRequestDetails from './LocRequestDetails';
 
 export default function PendingLocRequests() {
     const { pendingLocRequests, axios, refresh } = useCommonContext();
@@ -54,6 +55,7 @@ export default function PendingLocRequests() {
                         header: "Requester",
                         render: request => <UserIdentityNameCell userIdentity={ request.userIdentity } />,
                         align: "left",
+                        renderDetails: request => <LocRequestDetails request={ request }/>
                     },
                     {
                         header: "Description",

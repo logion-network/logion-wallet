@@ -17,8 +17,10 @@ function shouldShowIdentityFields(
     legalOfficer: string | null,
     recoveryConfig: Option<RecoveryConfig> | null
 ): boolean {
-    if(legalOfficer === null || recoveryConfig === null || recoveryConfig.isNone) {
+    if(recoveryConfig === null || recoveryConfig.isNone) {
         return true;
+    } else if(legalOfficer === null) {
+        return false;
     } else {
         return !recoveryConfig.unwrap().friends.toArray().map(accountId => accountId.toString()).includes(legalOfficer);
     }

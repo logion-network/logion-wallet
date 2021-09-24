@@ -11,6 +11,7 @@ exports[`Renders pending requests 1`] = `
           "align": "left",
           "header": "Requester",
           "render": [Function],
+          "renderDetails": [Function],
         },
         Object {
           "align": "left",
