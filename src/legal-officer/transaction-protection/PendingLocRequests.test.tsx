@@ -1,15 +1,19 @@
-jest.mock('./LegalOfficerContext');
-jest.mock('../logion-chain');
-jest.mock('./Model');
-jest.mock('../common/CommonContext');
+jest.mock('../../logion-chain');
+jest.mock('../../common/CommonContext');
+jest.mock('../LegalOfficerContext');
+jest.mock('../Model');
 
-import { shallowRender } from '../tests';
-import PendingLocRequests from './PendingLocRequests';
-import { axiosMock, setPendingLocRequests } from '../common/__mocks__/CommonContextMock';
-import { setRejectLocRequest } from './__mocks__/ModelMock';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../common/__mocks__/CommonContextMock';
+
+import { shallowRender } from '../../tests';
+
+import { axiosMock, setPendingLocRequests } from '../../common/__mocks__/CommonContextMock';
+import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../../common/__mocks__/CommonContextMock';
+
+import { setRejectLocRequest } from '../__mocks__/ModelMock';
+
+import PendingLocRequests from './PendingLocRequests';
 
 beforeEach(() => {
     setCurrentAddress(DEFAULT_LEGAL_OFFICER_ACCOUNT);

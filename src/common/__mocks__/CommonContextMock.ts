@@ -44,7 +44,9 @@ export let axiosMock = new Mock<AxiosInstance>();
 
 export let pendingLocRequests: any[] | null = null;
 
-export let locRequestsHistory: any[] | null = null;
+export let rejectedLocRequests: any[] | null = null;
+
+export let openedLocRequests: any[] | null = null;
 
 export let refresh = jest.fn();
 
@@ -59,7 +61,8 @@ export function useCommonContext() {
         axios: axiosMock.object(),
         setTokens: jest.fn(),
         pendingLocRequests,
-        locRequestsHistory,
+        rejectedLocRequests,
+        openedLocRequests,
         refresh,
     };
 }
@@ -90,8 +93,12 @@ export function setTransactions(value: any) {
     transactions = value;
 }
 
-export function setLocRequestsHistory(requests: any[]) {
-    locRequestsHistory = requests;
+export function setRejectedLocRequests(requests: any[]) {
+    rejectedLocRequests = requests;
+}
+
+export function setOpenedLocRequests(requests: any[]) {
+    openedLocRequests = requests;
 }
 
 export function setPendingLocRequests(requests: any[]) {

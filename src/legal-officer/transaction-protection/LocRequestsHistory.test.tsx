@@ -1,8 +1,9 @@
-jest.mock('../common/CommonContext');
+jest.mock('../../common/CommonContext');
 
-import { shallowRender } from '../tests';
+import { shallowRender } from '../../tests';
+import { setRejectedLocRequests } from '../../common/__mocks__/CommonContextMock';
+
 import LocRequestsHistory from './LocRequestsHistory';
-import { setLocRequestsHistory } from '../common/__mocks__/CommonContextMock';
 
 test("Renders null with no data", () => {
     const tree = shallowRender(<LocRequestsHistory />);
@@ -10,7 +11,7 @@ test("Renders null with no data", () => {
 });
 
 test("Renders accepted requests", () => {
-    setLocRequestsHistory([
+    setRejectedLocRequests([
         {
             id: "1",
             legalOfficerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",

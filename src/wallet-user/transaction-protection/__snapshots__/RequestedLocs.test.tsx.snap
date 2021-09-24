@@ -3,150 +3,42 @@
 exports[`Renders null with no data 1`] = `null`;
 
 exports[`Renders pending requests 1`] = `
-<React.Fragment>
-  <Table
-    columns={
-      Array [
-        Object {
-          "align": "left",
-          "header": "Legal officer",
-          "render": [Function],
-        },
-        Object {
-          "align": "left",
-          "header": "Description",
-          "render": [Function],
-        },
-        Object {
-          "header": "Status",
-          "render": [Function],
-          "width": "140px",
-        },
-        Object {
-          "header": "Creation date",
-          "render": [Function],
-          "width": "200px",
-        },
-      ]
-    }
-    data={
-      Array [
-        Object {
-          "description": "LOC description",
-          "id": "1",
-          "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-          "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-          "status": "REQUESTED",
-        },
-      ]
-    }
-    renderEmpty={[Function]}
-  />
-  <Button
-    onClick={[Function]}
-  >
-    Request new LOC
-  </Button>
-  <Dialog
-    actions={
-      Array [
-        Object {
-          "buttonText": "Submit",
-          "buttonVariant": "primary",
-          "id": "submit",
-          "type": "submit",
-        },
-        Object {
-          "buttonText": "Cancel",
-          "buttonVariant": "secondary",
-          "callback": [Function],
-          "id": "cancel",
-        },
-      ]
-    }
-    onSubmit={[Function]}
-    show={false}
-    size="lg"
-  >
-    <LocCreationForm
-      colors={
-        Object {
-          "background": "#eff3fe",
-          "borderColor": "#e6007a",
-          "foreground": "#000000",
-        }
-      }
-      control={
-        Object {
-          "_defaultValues": Object {
-            "description": "",
-            "email": "",
-            "firstName": "",
-            "lastName": "",
-            "legalOfficer": "",
-            "phone": "",
-          },
-          "_fields": Object {},
-          "_formState": Object {
-            "dirtyFields": Object {},
-            "errors": Object {},
-            "isDirty": false,
-            "isSubmitSuccessful": false,
-            "isSubmitted": false,
-            "isSubmitting": false,
-            "isValid": false,
-            "isValidating": false,
-            "submitCount": 0,
-            "touchedFields": Object {},
-          },
-          "_formValues": Object {},
-          "_getFieldArrayValue": [Function],
-          "_getIsDirty": [Function],
-          "_getWatch": [Function],
-          "_isInAction": false,
-          "_isMounted": false,
-          "_names": Object {
-            "array": Set {},
-            "mount": Set {},
-            "unMount": Set {},
-            "watch": Set {},
-          },
-          "_proxyFormState": Object {
-            "dirtyFields": false,
-            "errors": "all",
-            "isDirty": false,
-            "isValid": false,
-            "isValidating": false,
-            "touchedFields": false,
-          },
-          "_removeFields": [Function],
-          "_shouldUnregister": undefined,
-          "_subjects": Object {
-            "array": ge {
-              "observers": Array [],
-            },
-            "control": ge {
-              "observers": Array [],
-            },
-            "state": ge {
-              "observers": Array [],
-            },
-            "watch": ge {
-              "observers": Array [],
-            },
-          },
-          "_updateFieldArray": [Function],
-          "_updateProps": [Function],
-          "_updateValid": [Function],
-          "_updateValues": [Function],
-          "register": [Function],
-          "unregister": [Function],
-        }
-      }
-      errors={Object {}}
-      legalOfficer={null}
-      showIdentityFields={true}
-    />
-  </Dialog>
-</React.Fragment>
+<Table
+  columns={
+    Array [
+      Object {
+        "align": "left",
+        "header": "Legal officer",
+        "render": [Function],
+      },
+      Object {
+        "align": "left",
+        "header": "Description",
+        "render": [Function],
+      },
+      Object {
+        "header": "Status",
+        "render": [Function],
+        "width": "140px",
+      },
+      Object {
+        "header": "Creation date",
+        "render": [Function],
+        "width": "200px",
+      },
+    ]
+  }
+  data={
+    Array [
+      Object {
+        "description": "LOC description",
+        "id": "1",
+        "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "status": "REQUESTED",
+      },
+    ]
+  }
+  renderEmpty={[Function]}
+/>
 `;
