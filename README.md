@@ -19,6 +19,8 @@ Use below command in order to connect to a locally running node (development mod
 yarn start
 ```
 
+You may also use the Docker way (see below).
+
 ### Setup
 
 Use below command in order to connect to a specific node
@@ -117,3 +119,15 @@ explore and interact with a Logion node. The procedure is as follows:
 * The [Node](https://github.com/logion-network/logion-node) is the implementation of the chain.
 * The [Typescript backend](https://github.com/logion-network/logion-backend-ts) stores data which cannot be exposed publicly, or which wait legal officer's approval.
 * The [Wallet](https://github.com/logion-network/logion-wallet) is the user application.
+
+## Docker
+
+### Build
+
+    docker build . -t logion-wallet
+
+### Run
+
+    docker run --name my-logion-wallet -p 8080:80 logion-wallet
+
+With your browser, you may now navigate to [http://localhost:8080](http://localhost:8080).
