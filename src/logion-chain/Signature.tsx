@@ -4,6 +4,7 @@ import { SubmittableExtrinsic } from '@polkadot/api/submittable/types';
 import { toHex } from './Codec';
 import { Hash } from 'fast-sha256';
 import { base64Encode } from '@polkadot/util-crypto';
+import { TextEncoder } from '@polkadot/x-textencoder';
 import { Moment } from 'moment';
 
 import { toIsoString } from './datetime';

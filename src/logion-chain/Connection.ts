@@ -2,6 +2,8 @@ import { ApiPromise, WsProvider } from '@polkadot/api';
 import jsonrpc from '@polkadot/types/interfaces/jsonrpc';
 import config, { Node } from '../config';
 
+import * as definitions from './interfaces/definitions';
+
 export type ApiState= 'DISCONNECTED'
     | 'CONNECT_INIT'
     | 'CONNECTING'
@@ -16,7 +18,8 @@ export interface NodeMetadata {
 export function buildApi(selectedNode: Node | null): ApiPromise {
     const providerSocket = config.PROVIDER_SOCKET;
     const provider = buildProvider(selectedNode, providerSocket);
-    return new ApiPromise({ provider, types: config.types, rpc: { ...jsonrpc, ...config.RPC } });
+    const types = Object.values(definitions).reduce((res, { types }): object => ({ ...res, ...types }), {});
+    return new ApiPromise({ provider, types, rpc: { ...jsonrpc, ...config.RPC } });
 }
 
 function buildProvider(selectedNode: Node | null, providerSocket?: string): WsProvider {
