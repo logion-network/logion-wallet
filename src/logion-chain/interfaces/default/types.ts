@@ -2,7 +2,7 @@
 /* eslint-disable */
 
 import type { Bytes, Struct, Vec, bool, u128, u32, u64, u8 } from '@polkadot/types';
-import type { AccountId, Balance, MultiAddress } from '@polkadot/types/interfaces/runtime';
+import type { AccountId, Balance, Hash, MultiAddress } from '@polkadot/types/interfaces/runtime';
 import type { AccountInfoWithDualRefCount } from '@polkadot/types/interfaces/system';
 import type { DepositBalance } from '@polkadot/types/interfaces/uniques';
 
@@ -43,6 +43,7 @@ export interface LegalOfficerCaseOf extends Struct {
   readonly owner: AccountId;
   readonly requester: AccountId;
   readonly metadata: Vec<MetadataItem>;
+  readonly hashes: Vec<Hash>;
 }
 
 /** @name LocId */

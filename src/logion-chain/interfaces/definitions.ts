@@ -24,13 +24,14 @@ export default {
             deposit: "DepositBalance",
             name: "Vec<u8>",
             symbol: "Vec<u8>",
-            decimals: "u8"
+            decimals: "u8",
         },
         LocId: "u128",
         LegalOfficerCaseOf: {
             owner: "AccountId",
             requester: "AccountId",
-            metadata: "Vec<MetadataItem>"
+            metadata: "Vec<MetadataItem>",
+            hashes: "Vec<Hash>"
         },
         MetadataItem: {
             name: "Vec<u8>",

@@ -37,6 +37,9 @@ export const DEFAULT_LOC = {
             name: "meta_name",
             value: "meta_value",
         }
+    ],
+    hashes: [
+        "0x91820202c3d0fea0c494b53e3352f1934bc177484e3f41ca2c4bca4572d71cd2"
     ]
 }
 
@@ -87,6 +90,11 @@ export class ApiPromise {
                                 toUtf8: () => item.value
                             }
                         }))
+                    },
+                    hashes: {
+                        toArray: () => DEFAULT_LOC.hashes.map(hash => ({
+                            toHexString: () => hash
+                        }))
                     }
                 })
             })
@@ -122,6 +130,7 @@ export class ApiPromise {
         logionLoc: {
             createLoc: jest.fn().mockResolvedValue(() => {}),
             addMetadata: jest.fn().mockResolvedValue(() => {}),
+            addHash: jest.fn().mockResolvedValue(() => {}),
         }
     }
 }
