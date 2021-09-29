@@ -29,6 +29,17 @@ export function setQueryRecoveryActiveRecoveries(mockFn: any) {
     queryRecoveryActiveRecoveries = mockFn;
 }
 
+export const DEFAULT_LOC = {
+    owner: "owner",
+    requester: "requester",
+    metadata: [
+        {
+            name: "meta_name",
+            value: "meta_value",
+        }
+    ]
+}
+
 export class ApiPromise {
     assetQueriesBeforeNone: number = 1;
 
@@ -60,6 +71,25 @@ export class ApiPromise {
         recovery: {
             recoverable: queryRecoveryRecoverable,
             activeRecoveries: queryRecoveryActiveRecoveries,
+        },
+        logionLoc: {
+            locMap: () => Promise.resolve({
+                isSome: true,
+                unwrap: () => ({
+                    owner: DEFAULT_LOC.owner,
+                    requester: DEFAULT_LOC.requester,
+                    metadata: {
+                        toArray: () => DEFAULT_LOC.metadata.map(item => ({
+                            name: {
+                                toUtf8: () => item.name
+                            },
+                            value: {
+                                toUtf8: () => item.value
+                            }
+                        }))
+                    }
+                })
+            })
         }
     }
 
@@ -91,6 +121,7 @@ export class ApiPromise {
         },
         logionLoc: {
             createLoc: jest.fn().mockResolvedValue(() => {}),
+            addMetadata: jest.fn().mockResolvedValue(() => {}),
         }
     }
 }

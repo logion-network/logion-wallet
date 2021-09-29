@@ -77,48 +77,21 @@ explore and interact with a Logion node. The procedure is as follows:
 1. Launch the node locally (see above)
 2. Launch the web app with [this link](https://polkadot.js.org/apps)
 3. Select the local node by clicking on the top-left icon and selecting "Development > Local node"
-4. Configure below custom data (see `src/config/index.tsx`) in "Settings > Developer" screen and click "Save"
-5. You should now be able to interact with the locally running node
+4. Configure custom data (see `src/logion-chain/interfaces/definitions.ts`)
+   in "Settings > Developer" screen and click "Save"
+5. You should now be able to interact with the node running locally
 
-```
-{
-  "Address": "MultiAddress",
-  "LookupSource": "MultiAddress",
-  "AccountInfo": "AccountInfoWithDualRefCount",
-  "PeerId": "(Vec<u8>)",
-  "TAssetBalance": "u128",
-  "AssetId": "u64",
-  "AssetDetails": {
-    "owner": "AccountId",
-    "issuer": "AccountId",
-    "admin": "AccountId",
-    "freezer": "AccountId",
-    "supply": "Balance",
-    "deposit": "DepositBalance",
-    "max_zombies": "u32",
-    "min_balance": "Balance",
-    "zombies": "u32",
-    "accounts": "u32",
-    "is_frozen": "bool"
-  },
-  "AssetMetadata": {
-    "deposit": "DepositBalance",
-    "name": "Vec<u8>",
-    "symbol": "Vec<u8>",
-    "decimals": "u8"
-  },
-  "LocId": "u128",
-  "LegalOfficerCaseOf": {
-    "owner": "AccountId"
-  }
-}
-```
 
-## Logion Components
+## Generating custom types for Polkadot JS
 
-* The [Node](https://github.com/logion-network/logion-node) is the implementation of the chain.
-* The [Typescript backend](https://github.com/logion-network/logion-backend-ts) stores data which cannot be exposed publicly, or which wait legal officer's approval.
-* The [Wallet](https://github.com/logion-network/logion-wallet) is the user application.
+The logion-chain SDK must be synchronized each time the logion node API changes (new custom types, queries,
+transactions, etc.). To do so:
+
+1. Update `src/logion-chain/interfaces/definitions.ts` file (may not be needed)
+2. Start a local logion node
+3. Run `yarn generate:defs-meta`
+
+You are then able to fix and/or enrich the logion-chain SDK.
 
 ## Docker
 
@@ -131,3 +104,9 @@ explore and interact with a Logion node. The procedure is as follows:
     docker run --name my-logion-wallet -p 8080:80 logion-wallet
 
 With your browser, you may now navigate to [http://localhost:8080](http://localhost:8080).
+
+## Logion Components
+
+* The [Node](https://github.com/logion-network/logion-node) is the implementation of the chain.
+* The [Typescript backend](https://github.com/logion-network/logion-backend-ts) stores data which cannot be exposed publicly, or which wait legal officer's approval.
+* The [Wallet](https://github.com/logion-network/logion-wallet) is the user application.

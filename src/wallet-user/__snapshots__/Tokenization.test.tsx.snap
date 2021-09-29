@@ -58,8 +58,6 @@ exports[`REQUEST_TOKENIZATION: Disable button, Show form 1`] = `
           "_getFieldArrayValue": [Function],
           "_getIsDirty": [Function],
           "_getWatch": [Function],
-          "_isInAction": false,
-          "_isMounted": false,
           "_names": Object {
             "array": Set {},
             "mount": Set {},
@@ -76,24 +74,35 @@ exports[`REQUEST_TOKENIZATION: Disable button, Show form 1`] = `
           },
           "_removeFields": [Function],
           "_shouldUnregister": undefined,
+          "_stateFlags": Object {
+            "action": false,
+            "mount": false,
+            "watch": false,
+          },
           "_subjects": Object {
-            "array": ge {
+            "array": me {
               "observers": Array [],
             },
-            "control": ge {
+            "control": me {
               "observers": Array [],
             },
-            "state": ge {
-              "observers": Array [],
+            "state": me {
+              "observers": Array [
+                ye {
+                  "closed": false,
+                  "observer": Object {
+                    "next": [Function],
+                  },
+                },
+              ],
             },
-            "watch": ge {
+            "watch": me {
               "observers": Array [],
             },
           },
           "_updateFieldArray": [Function],
           "_updateProps": [Function],
           "_updateValid": [Function],
-          "_updateValues": [Function],
           "register": [Function],
           "unregister": [Function],
         }
@@ -162,8 +171,6 @@ exports[`START: Enable button 1`] = `
           "_getFieldArrayValue": [Function],
           "_getIsDirty": [Function],
           "_getWatch": [Function],
-          "_isInAction": false,
-          "_isMounted": false,
           "_names": Object {
             "array": Set {},
             "mount": Set {},
@@ -180,24 +187,35 @@ exports[`START: Enable button 1`] = `
           },
           "_removeFields": [Function],
           "_shouldUnregister": undefined,
+          "_stateFlags": Object {
+            "action": false,
+            "mount": false,
+            "watch": false,
+          },
           "_subjects": Object {
-            "array": ge {
+            "array": me {
               "observers": Array [],
             },
-            "control": ge {
+            "control": me {
               "observers": Array [],
             },
-            "state": ge {
-              "observers": Array [],
+            "state": me {
+              "observers": Array [
+                ye {
+                  "closed": false,
+                  "observer": Object {
+                    "next": [Function],
+                  },
+                },
+              ],
             },
-            "watch": ge {
+            "watch": me {
               "observers": Array [],
             },
           },
           "_updateFieldArray": [Function],
           "_updateProps": [Function],
           "_updateValid": [Function],
-          "_updateValues": [Function],
           "register": [Function],
           "unregister": [Function],
         }

@@ -65,6 +65,7 @@ export default function LocRequestAcceptance(props: Props) {
                     callback: setResult,
                     errorCallback: setError,
                     locId: new UUID(props.requestToAccept!.id),
+                    requester: props.requestToAccept!.requesterAddress,
                 });
                 setSignAndSubmit(() => signAndSubmit);
             };
