@@ -117,3 +117,14 @@ explore and interact with a Logion node. The procedure is as follows:
 * The [Node](https://github.com/logion-network/logion-node) is the implementation of the chain.
 * The [Typescript backend](https://github.com/logion-network/logion-backend-ts) stores data which cannot be exposed publicly, or which wait legal officer's approval.
 * The [Wallet](https://github.com/logion-network/logion-wallet) is the user application.
+
+## Generating custom types for Polkadot JS
+
+The logion-chain SDK must be synchronized each time the logion node API changes (new custom types, queries,
+transactions, etc.). To do so:
+
+1. Update `src/logion-chain/interfaces/definitions.ts` file (may not be needed)
+2. Start a local logion node
+3. Run `yarn generate:defs-meta`
+
+You are then able to fix and/or enrich the logion-chain SDK.
