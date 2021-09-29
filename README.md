@@ -19,6 +19,8 @@ Use below command in order to connect to a locally running node (development mod
 yarn start
 ```
 
+You may also use the Docker way (see below).
+
 ### Setup
 
 Use below command in order to connect to a specific node
@@ -128,3 +130,15 @@ transactions, etc.). To do so:
 3. Run `yarn generate:defs-meta`
 
 You are then able to fix and/or enrich the logion-chain SDK.
+
+## Docker
+
+### Build
+
+    docker build . -t logion-wallet
+
+### Run
+
+    docker run --name my-logion-wallet -p 8080:80 logion-wallet
+
+With your browser, you may now navigate to [http://localhost:8080](http://localhost:8080).
