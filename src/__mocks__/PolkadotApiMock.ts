@@ -47,7 +47,7 @@ export class ApiPromise {
     assetQueriesBeforeNone: number = 1;
 
     constructor(_: ApiPromiseArgs) {
-        
+
     }
 
     on(eventName: string, callback: () => void) {
@@ -93,7 +93,7 @@ export class ApiPromise {
                     },
                     hashes: {
                         toArray: () => DEFAULT_LOC.hashes.map(hash => ({
-                            toHexString: () => hash
+                            toHex: () => hash
                         }))
                     }
                 })
