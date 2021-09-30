@@ -7,4 +7,5 @@ export interface LegalOfficerCase {
     owner: string;
     requester: string;
     metadata: MetadataItem[];
+    hashes: string[];
 }

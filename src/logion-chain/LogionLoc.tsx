@@ -78,7 +78,7 @@ export async function getLegalOfficerCase(
                 name: rawItem.name.toUtf8(),
                 value: rawItem.value.toUtf8(),
             })),
-            hashes: rawLoc.hashes.toArray().map(rawHash => rawHash.toHexString())
+            hashes: rawLoc.hashes.toArray().map(rawHash => rawHash.toHex())
         };
     } else {
         return undefined;
