@@ -77,9 +77,34 @@ export async function getLegalOfficerCase(
             metadata: rawLoc.metadata.toArray().map(rawItem => ({
                 name: rawItem.name.toUtf8(),
                 value: rawItem.value.toUtf8(),
-            }))
+            })),
+            hashes: rawLoc.hashes.toArray().map(rawHash => rawHash.toHexString())
         };
     } else {
         return undefined;
     }
+}
+
+export interface AddHashParameters extends ExtrinsicSubmissionParameters {
+    api: ApiPromise;
+    locId: UUID;
+    hash: string;
+}
+
+export function addHash(parameters: AddHashParameters): Unsubscriber {
+    const {
+        api,
+        signerId,
+        callback,
+        errorCallback,
+        locId,
+        hash,
+    } = parameters;
+
+    return signAndSend({
+        signerId,
+        submittable: api.tx.logionLoc.addHash(locId.toHexString(), hash),
+        callback,
+        errorCallback,
+    });
 }

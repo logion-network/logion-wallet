@@ -4,7 +4,7 @@ jest.mock('./Signature');
 import { stringToHex } from '@polkadot/util';
 import { setSignAndSend } from './__mocks__/SignatureMock';
 import { ApiPromise } from '@polkadot/api';
-import { createLoc, addMetadata, getLegalOfficerCase } from './LogionLoc';
+import { createLoc, addMetadata, getLegalOfficerCase, addHash } from './LogionLoc';
 import { UUID } from './UUID';
 import { DEFAULT_LOC } from '../__mocks__/PolkadotApiMock';
 
@@ -88,5 +88,36 @@ describe("LogionLoc", () => {
         });
 
         expect(loc).toEqual(DEFAULT_LOC);
+    });
+
+    it("submits addHash extrinsic", () => {
+        const api = new ApiPromise();
+        const callback = jest.fn();
+        const errorCallback = jest.fn();
+
+        const signAndSend = jest.fn();
+        setSignAndSend(signAndSend);
+
+        const hash = "0x91820202c3d0fea0c494b53e3352f1934bc177484e3f41ca2c4bca4572d71cd2";
+
+        const locId = new UUID();
+        addHash({
+            api,
+            signerId: "signerId",
+            callback,
+            errorCallback,
+            locId,
+            hash,
+        });
+
+        expect(signAndSend).toBeCalledWith(
+            expect.objectContaining({
+                signerId: "signerId",
+                callback,
+                errorCallback,
+            }),
+        );
+
+        expect(api.tx.logionLoc.addHash).toBeCalledWith(locId.toHexString(), hash);
     });
 });

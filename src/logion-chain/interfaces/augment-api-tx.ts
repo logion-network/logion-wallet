@@ -8,7 +8,7 @@ import type { TAssetBalance } from '@polkadot/types/interfaces/assets';
 import type { Extrinsic } from '@polkadot/types/interfaces/extrinsics';
 import type { GrandpaEquivocationProof, KeyOwnerProof } from '@polkadot/types/interfaces/grandpa';
 import type { ProxyType } from '@polkadot/types/interfaces/proxy';
-import type { AccountId, AssetId, Balance, BlockNumber, Call, CallHashOf, ChangesTrieConfiguration, KeyValue, LookupSource, Moment, OpaqueCall, Perbill, Weight } from '@polkadot/types/interfaces/runtime';
+import type { AccountId, AssetId, Balance, BlockNumber, Call, CallHashOf, ChangesTrieConfiguration, Hash, KeyValue, LookupSource, Moment, OpaqueCall, Perbill, Weight } from '@polkadot/types/interfaces/runtime';
 import type { Key } from '@polkadot/types/interfaces/system';
 import type { Timepoint } from '@polkadot/types/interfaces/utility';
 import type { AnyNumber, ITuple } from '@polkadot/types/types';
@@ -408,7 +408,11 @@ declare module '@polkadot/api/types/submittable' {
     };
     logionLoc: {
       /**
-       * Set LOC metadata
+       * Add hash to LOC
+       **/
+      addHash: AugmentedSubmittable<(locId: Compact<LocId> | AnyNumber | Uint8Array, hash: Hash | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<LocId>, Hash]>;
+      /**
+       * Add LOC metadata
        **/
       addMetadata: AugmentedSubmittable<(locId: Compact<LocId> | AnyNumber | Uint8Array, item: MetadataItem | { name?: any; value?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<LocId>, MetadataItem]>;
       /**
