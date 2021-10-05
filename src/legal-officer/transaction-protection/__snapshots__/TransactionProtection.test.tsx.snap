@@ -20,9 +20,21 @@ exports[`renders 1`] = `
   >
     <Col>
       <Frame
-        title="Open Transaction Protection Case(s)"
+        title="Transaction Protection Case(s)"
       >
-        <OpenedLocs />
+        <Tabs
+          activeKey="open"
+          onSelect={[Function]}
+          tabs={
+            Array [
+              Object {
+                "key": "open",
+                "render": [Function],
+                "title": "Open",
+              },
+            ]
+          }
+        />
       </Frame>
     </Col>
   </Row>

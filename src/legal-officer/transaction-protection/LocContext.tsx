@@ -135,12 +135,12 @@ export function LocContextProvider(props: Props) {
 
     const removeMetadataFunction = useCallback((locItem: LocItem) => {
             dispatch({ type: 'DELETE_ITEM', locItem })
-        }, []
+        }, [ dispatch ]
     )
 
     const changeItemStatusFunction = useCallback((locItem: LocItem, status: LocItemStatus) => {
             dispatch({ type: 'UPDATE_ITEM', locItem, status })
-        }, []
+        }, [ dispatch ]
     )
 
     useEffect(() => {
@@ -151,10 +151,10 @@ export function LocContextProvider(props: Props) {
             const changeItemStatus = changeItemStatusFunction;
             dispatch({ type: 'SET_FUNCTIONS', addMetadata, publishMetadata, removeMetadata, changeItemStatus })
         }
-    }, [ contextValue, addMetadataFunction, publishMetadataFunction, removeMetadataFunction, changeItemStatusFunction ])
+    }, [ contextValue, addMetadataFunction, publishMetadataFunction, removeMetadataFunction, changeItemStatusFunction, dispatch ])
 
     useEffect(() => {
-        if (contextValue.loc === null && api != null) {
+        if (contextValue.loc === null && api !== null) {
             getLegalOfficerCase({ locId: contextValue.locId, api })
                 .then(loc => {
                     dispatch({ type: 'SET_LOC', loc })

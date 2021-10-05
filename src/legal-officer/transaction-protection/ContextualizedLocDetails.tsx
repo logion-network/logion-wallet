@@ -6,7 +6,7 @@ import Button from "../../common/Button";
 import ButtonGroup from "../../common/ButtonGroup";
 import { Col } from "react-bootstrap";
 import { format } from "../../logion-chain/datetime";
-import LocPublicData from "./LocPublicData";
+import LocPublicDataButton from "./LocPublicDataButton";
 import { useLocContext } from "./LocContext";
 import LocItems from "./LocItems";
 import LocItemDetail from "./LocItemDetail";
@@ -62,7 +62,7 @@ export default function ContextualizedLocDetails(props: Props) {
                     }
                 } ] } />
             <ButtonGroup>
-                <LocPublicData />
+                <LocPublicDataButton />
                 <Button disabled={ true }>Add a confidential document</Button>
                 <Button disabled={ true }>Close LOC</Button>
             </ButtonGroup>

@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import React, { useCallback, useState } from "react";
 import { useLocContext } from "./LocContext";
 
-export default function LocPublicData() {
+export default function LocPublicDataButton() {
 
     const { colorTheme } = useCommonContext();
     const [ visible, setVisible ] = useState(false);

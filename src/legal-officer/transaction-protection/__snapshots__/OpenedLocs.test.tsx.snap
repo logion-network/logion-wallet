@@ -32,6 +32,12 @@ exports[`Renders pending requests 1`] = `
         "render": [Function],
         "width": "200px",
       },
+      Object {
+        "align": "center",
+        "header": "Action",
+        "render": [Function],
+        "width": "200px",
+      },
     ]
   }
   data={
