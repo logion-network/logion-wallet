@@ -25,5 +25,7 @@ jobs:
           uses: c-hive/gha-yarn-cache@v1
         - name: Install node modules
           run: yarn install
+        - name: Build
+          run: yarn build
         - name: Run test
           run: yarn test
