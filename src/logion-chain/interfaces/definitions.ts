@@ -31,7 +31,8 @@ export default {
             owner: "AccountId",
             requester: "AccountId",
             metadata: "Vec<MetadataItem>",
-            hashes: "Vec<Hash>"
+            hashes: "Vec<Hash>",
+            closed: "bool"
         },
         MetadataItem: {
             name: "Vec<u8>",

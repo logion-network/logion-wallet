@@ -44,6 +44,7 @@ export interface LegalOfficerCaseOf extends Struct {
   readonly requester: AccountId;
   readonly metadata: Vec<MetadataItem>;
   readonly hashes: Vec<Hash>;
+  readonly closed: bool;
 }
 
 /** @name LocId */

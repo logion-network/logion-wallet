@@ -143,9 +143,17 @@ declare module '@polkadot/api/types/errors' {
     };
     logionLoc: {
       /**
+       * Occurs when trying to close an already closed LOC
+       **/
+      AlreadyClosed: AugmentedError<ApiType>;
+      /**
        * The LOC ID has already been used.
        **/
       AlreadyExists: AugmentedError<ApiType>;
+      /**
+       * Occurs when trying to mutate a closed LOC
+       **/
+      CannotMutate: AugmentedError<ApiType>;
       /**
        * Target LOC does not exist
        **/

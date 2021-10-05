@@ -416,6 +416,10 @@ declare module '@polkadot/api/types/submittable' {
        **/
       addMetadata: AugmentedSubmittable<(locId: Compact<LocId> | AnyNumber | Uint8Array, item: MetadataItem | { name?: any; value?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<LocId>, MetadataItem]>;
       /**
+       * Close LOC.
+       **/
+      close: AugmentedSubmittable<(locId: Compact<LocId> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<LocId>]>;
+      /**
        * Creates a new LOC
        **/
       createLoc: AugmentedSubmittable<(locId: Compact<LocId> | AnyNumber | Uint8Array, requester: AccountId | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<LocId>, AccountId]>;

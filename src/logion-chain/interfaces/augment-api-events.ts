@@ -142,6 +142,10 @@ declare module '@polkadot/api/types/events' {
     };
     logionLoc: {
       /**
+       * Issued when LOC is closed. [locId]
+       **/
+      LocClosed: AugmentedEvent<ApiType, [LocId]>;
+      /**
        * Issued upon LOC creation. [locId]
        **/
       LocCreated: AugmentedEvent<ApiType, [LocId]>;
