@@ -1,15 +1,20 @@
 import React from 'react';
 
 import { useCommonContext } from '../../common/CommonContext';
-import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../../common/Table';
+import Table, { Cell, EmptyTableMessage, DateTimeCell, ActionCell } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';
 import LocIdCell from '../../common/LocIdCell';
 import UserIdentityNameCell from '../../common/UserIdentityNameCell';
+import Button from "../../common/Button";
+import { useHistory } from "react-router-dom";
+import { locDetailsPath } from "../LegalOfficerPaths";
+import ButtonGroup from "../../common/ButtonGroup";
 
 export default function OpenedLocs() {
     const { openedLocRequests } = useCommonContext();
+    const history = useHistory();
 
-    if(openedLocRequests === null) {
+    if (openedLocRequests === null) {
         return null;
     }
 
@@ -33,18 +38,30 @@ export default function OpenedLocs() {
                 },
                 {
                     header: "LOC ID",
-                    render: request => <LocIdCell status={ request.status } id={ request.id }/>,
+                    render: request => <LocIdCell status={ request.status } id={ request.id } />,
                     align: "left",
                 },
                 {
-                    "header": "Creation date",
+                    header: "Creation date",
                     render: request => <DateTimeCell dateTime={ request.createdOn || null } />,
                     width: '200px',
                     align: 'center',
                 },
-            ]}
+                {
+                    header: "Action",
+                    render: request =>
+                        <ActionCell>
+                            <ButtonGroup>
+                                <Button onClick={ () => history.push(locDetailsPath(request.id)) }>Manage LOC</Button>
+                            </ButtonGroup>
+                        </ActionCell>
+                    ,
+                    width: '200px',
+                    align: 'center',
+                }
+            ] }
             data={ openedLocRequests }
-            renderEmpty={ () => <EmptyTableMessage>No LOCs</EmptyTableMessage>}
+            renderEmpty={ () => <EmptyTableMessage>No LOCs</EmptyTableMessage> }
         />
     );
 }

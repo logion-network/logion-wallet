@@ -3,7 +3,7 @@ import * as Css from 'csstype';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
-import { fromIsoString } from '../logion-chain/datetime';
+import { format } from '../logion-chain/datetime';
 
 import { Row, Col } from './Grid';
 import { Child, Children } from './types/Helpers';
@@ -306,9 +306,7 @@ export function DateTimeCell(props: DateTimeCellProps) {
         return <Cell content="-" align="center" />;
     }
 
-    const momentObject = fromIsoString(props.dateTime);
-    const date = momentObject.format('L');
-    const time = momentObject.format('LT');
+    const { date, time } = format(props.dateTime)
 
     return (
         <div className="date-cell">
@@ -324,8 +322,7 @@ export function DateCell(props: DateTimeCellProps) {
         return <Cell content="-" align="center" />;
     }
 
-    const momentObject = fromIsoString(props.dateTime);
-    const date = momentObject.format('L');
+    const { date } = format(props.dateTime)
 
     return (
         <Cell content={ date }/>

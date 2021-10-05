@@ -48,6 +48,13 @@ exports[`renders 1`] = `
       <LocRequests />
     </Route>
     <Route
+      path="/legal-officer/loc-details/:locId"
+    >
+      <LocDetails
+        backPath="/legal-officer/loc"
+      />
+    </Route>
+    <Route
       path=""
     >
       <Account />

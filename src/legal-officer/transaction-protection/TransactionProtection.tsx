@@ -13,24 +13,32 @@ import Frame from '../../common/Frame';
 
 export default function LocRequests() {
     const { colorTheme } = useCommonContext();
-    const [ tabKey, setTabKey ] = useState<string>('pending');
+    const [ locTabKey, setLocTabKey ] = useState<string>('open');
+    const [ requestTabKey, setRequestTabKey ] = useState<string>('pending');
 
     return (
         <FullWidthPane
             mainTitle="Transaction Protection Cases"
-            titleIcon={{
+            titleIcon={ {
                 icon: {
                     id: 'loc'
                 },
                 background: colorTheme.topMenuItems.iconGradient,
-            }}
+            } }
         >
             <Row>
                 <Col>
                     <Frame
-                        title="Open Transaction Protection Case(s)"
+                        title="Transaction Protection Case(s)"
                     >
-                        <OpenedLocs/>
+                        <Tabs
+                            activeKey={ locTabKey }
+                            onSelect={ key => setLocTabKey(key || 'open') }
+                            tabs={ [ {
+                                key: "open",
+                                title: "Open",
+                                render: () => <OpenedLocs />
+                            } ] } />
                     </Frame>
                 </Col>
             </Row>
@@ -40,18 +48,18 @@ export default function LocRequests() {
                         title="Transaction Protection Case Request(s)"
                     >
                         <Tabs
-                            activeKey={ tabKey }
-                            onSelect={ key => setTabKey(key || 'pending') }
-                            tabs={[
+                            activeKey={ requestTabKey }
+                            onSelect={ key => setRequestTabKey(key || 'pending') }
+                            tabs={ [
                                 {
                                     key: "pending",
                                     title: "Pending",
-                                    render: () => <PendingLocRequests/>
+                                    render: () => <PendingLocRequests />
                                 },
                                 {
                                     key: "rejected",
                                     title: "Rejected",
-                                    render: () => <RejectedLocRequests/>
+                                    render: () => <RejectedLocRequests />
                                 }
                             ]}
                         />
