@@ -1,7 +1,7 @@
 jest.mock("./logion-chain");
 jest.mock("./logion-chain/Signature");
 
-import { setIsFinalized } from './logion-chain/__mocks__/SignatureMock';
+import { setIsSuccessful } from './logion-chain/__mocks__/SignatureMock';
 import { mockSubmittableResult } from './logion-chain/__mocks__/SignatureMock';
 
 import { screen, render, waitFor, act } from '@testing-library/react';
@@ -11,7 +11,7 @@ import { SignedTransaction } from './logion-chain/Signature';
 test("Submitter empty with null signAndSubmit", () => {
     const onSuccess = jest.fn();
     const onError = jest.fn();
-    setIsFinalized(false);
+    setIsSuccessful(false);
 
     render(<ExtrinsicSubmitter
         id="extrinsicId"
@@ -28,7 +28,7 @@ test("Submitter empty with null signAndSubmit", () => {
 test("Submitter initially showing submitting", async () => {
     const onSuccess = jest.fn();
     const onError = jest.fn();
-    setIsFinalized(false);
+    setIsSuccessful(false);
     const result = buildSignAndSubmitMock();
 
     render(<ExtrinsicSubmitter
@@ -66,7 +66,7 @@ function buildSignAndSubmitMock(): SignAndSubmitMock {
 test("Submitter shows error and calls onError", async () => {
     const onSuccess = jest.fn();
     const onError = jest.fn();
-    setIsFinalized(false);
+    setIsSuccessful(false);
     const result = buildSignAndSubmitMock();
 
     render(<ExtrinsicSubmitter
@@ -87,7 +87,7 @@ test("Submitter shows error and calls onError", async () => {
 test("Submitter shows progress", async () => {
     const onSuccess = jest.fn();
     const onError = jest.fn();
-    setIsFinalized(false);
+    setIsSuccessful(false);
     const result = buildSignAndSubmitMock();
 
     render(<ExtrinsicSubmitter
@@ -108,7 +108,7 @@ test("Submitter shows progress", async () => {
 test("Submitter shows success and calls onSuccess", async () => {
     const onSuccess = jest.fn();
     const onError = jest.fn();
-    setIsFinalized(true);
+    setIsSuccessful(true);
     const result = buildSignAndSubmitMock();
 
     render(<ExtrinsicSubmitter

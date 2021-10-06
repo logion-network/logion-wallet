@@ -89,6 +89,6 @@ export function createHash(attributes: any[]): string {
     return base64Encode(digest.digest());
 }
 
-export function isFinalized(status: ISubmittableResult | null) {
-    return status !== null && status.isFinalized;
+export function isSuccessful(status: ISubmittableResult | null) {
+    return status !== null && status.isInBlock;
 }

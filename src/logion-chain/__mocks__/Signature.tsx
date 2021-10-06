@@ -3,7 +3,7 @@ import {
     unsubscribe,
     replaceUnsubscriber,
     sign,
-    isFinalized,
+    isSuccessful,
 } from './SignatureMock';
 
 export {
@@ -11,7 +11,7 @@ export {
     unsubscribe,
     replaceUnsubscriber,
     sign,
-    isFinalized,
+    isSuccessful,
 };
 
 import {

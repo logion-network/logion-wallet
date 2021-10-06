@@ -10,7 +10,7 @@ import {
     mintTokens,
     balanceFromAmount,
 } from '../logion-chain/Assets';
-import { SignedTransaction, Unsubscriber, unsubscribe, isFinalized, } from '../logion-chain/Signature';
+import { SignedTransaction, Unsubscriber, unsubscribe, isSuccessful } from '../logion-chain/Signature';
 import { useCommonContext } from '../common/CommonContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
@@ -236,7 +236,7 @@ export default function TokenizationRequestAcceptance(props: Props) {
             <ProcessStep
                 active={ acceptState.status === AcceptStatus.CREATING_ASSET }
                 title={ `Creating asset for request ${props.requestToAccept.id}` }
-                mayProceed={ isFinalized(assetCreationResult) }
+                mayProceed={ isSuccessful(assetCreationResult) }
                 proceedCallback={ () => setStatus(AcceptStatus.SET_METADATA_PENDING) }
                 stepTestId={ `modal-creating-${props.requestToAccept.id}` }
                 proceedButtonTestId={ `proceed-metadata-${props.requestToAccept.id}` }

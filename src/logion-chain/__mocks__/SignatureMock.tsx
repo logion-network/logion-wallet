@@ -21,9 +21,9 @@ export function setSignAndSend(fn: any) {
     signAndSend = fn;
 }
 
-export function mockSubmittableResult(isFinalized: boolean, statusType?: string) {
+export function mockSubmittableResult(isInBlock: boolean, statusType?: string) {
     return {
-        isFinalized,
+        isInBlock,
         status: {
             type: statusType
         }
@@ -45,12 +45,12 @@ export function sign(parameters: any) {
     return Promise.resolve(attributes.toString());
 }
 
-export let _isFinalized = true;
+export let _isSuccessful = true;
 
-export function isFinalized(result: any) {
-    return _isFinalized;
+export function isSuccessful(result: any) {
+    return _isSuccessful;
 }
 
-export function setIsFinalized(value: boolean) {
-    _isFinalized = value;
+export function setIsSuccessful(value: boolean) {
+    _isSuccessful = value;
 }
