@@ -9,6 +9,7 @@ import { useCommonContext } from '../../common/CommonContext';
 import PendingLocRequests from './PendingLocRequests';
 import RejectedLocRequests from './RejectedLocRequests';
 import OpenedLocs from './OpenedLocs';
+import ClosedLocs from './ClosedLocs';
 import Frame from '../../common/Frame';
 
 export default function LocRequests() {
@@ -34,11 +35,18 @@ export default function LocRequests() {
                         <Tabs
                             activeKey={ locTabKey }
                             onSelect={ key => setLocTabKey(key || 'open') }
-                            tabs={ [ {
-                                key: "open",
-                                title: "Open",
-                                render: () => <OpenedLocs />
-                            } ] } />
+                            tabs={[
+                                {
+                                    key: "open",
+                                    title: "Open",
+                                    render: () => <OpenedLocs />
+                                },
+                                {
+                                    key: "closed",
+                                    title: "Closed",
+                                    render: () => <ClosedLocs />
+                                }
+                            ]} />
                     </Frame>
                 </Col>
             </Row>

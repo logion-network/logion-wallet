@@ -48,6 +48,8 @@ export let rejectedLocRequests: any[] | null = null;
 
 export let openedLocRequests: any[] | null = null;
 
+export let closedLocRequests: any[] | null = null;
+
 export let refresh = jest.fn();
 
 export function useCommonContext() {
@@ -63,6 +65,7 @@ export function useCommonContext() {
         pendingLocRequests,
         rejectedLocRequests,
         openedLocRequests,
+        closedLocRequests,
         refresh,
     };
 }
@@ -103,4 +106,8 @@ export function setOpenedLocRequests(requests: any[]) {
 
 export function setPendingLocRequests(requests: any[]) {
     pendingLocRequests = requests;
+}
+
+export function setClosedLocRequests(requests: any[]) {
+    closedLocRequests = requests;
 }

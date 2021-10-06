@@ -72,6 +72,7 @@ export interface LocRequest {
     status: "OPEN" | "REQUESTED" | "REJECTED";
     rejectReason?: string;
     userIdentity?: Identity;
+    closedOn?: string;
 }
 
-export type LocRequestStatus = "OPEN" | "REQUESTED" | "REJECTED";
+export type LocRequestStatus = "OPEN" | "REQUESTED" | "REJECTED" | "CLOSED";
