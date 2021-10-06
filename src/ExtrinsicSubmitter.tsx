@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import {
     SignedTransaction,
-    isFinalized,
+    isSuccessful,
     unsubscribe,
     Unsubscriber
 } from './logion-chain/Signature';
@@ -41,7 +41,7 @@ export default function ExtrinsicSubmitter(props: Props) {
     }, [ unsubscriber, setUnsubscriber, setResult, setError, props, submitted ]);
 
     useEffect(() => {
-        if (isFinalized(result) && !notified) {
+        if (isSuccessful(result) && !notified) {
             setNotified(true);
             (async function() {
                 await unsubscribe(unsubscriber);

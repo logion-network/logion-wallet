@@ -12,7 +12,7 @@ import { RecoveryInfo } from './Types';
 import { setFetchRecoveryInfo, acceptProtectionRequest, rejectProtectionRequest } from './__mocks__/ModelMock';
 import { PROTECTION_REQUESTS_HISTORY, DEFAULT_LEGAL_OFFICER_ADDRESS } from './TestData';
 import { axiosMock, setAddresses } from '../common/__mocks__/CommonContextMock';
-import { setIsFinalized } from '../logion-chain/__mocks__/SignatureMock';
+import { setIsSuccessful } from '../logion-chain/__mocks__/SignatureMock';
 import { setParams, history } from '../__mocks__/ReactRouterMock';
 import { refreshRequests } from './__mocks__/LegalOfficerContextMock';
 
@@ -29,7 +29,7 @@ describe("RecoveryDetails", () => {
             recoveryAccount: protectionRequest,
         };
         setFetchRecoveryInfo(jest.fn().mockResolvedValue(recoveryConfig));
-        setIsFinalized(false);
+        setIsSuccessful(false);
         setParams({ requestId: protectionRequest.id });
 
         render(<RecoveryDetails />);
@@ -61,7 +61,7 @@ describe("RecoveryDetails", () => {
             recoveryAccount: protectionRequest,
         };
         setFetchRecoveryInfo(jest.fn().mockResolvedValue(recoveryConfig));
-        setIsFinalized(false);
+        setIsSuccessful(false);
         setParams({ requestId: protectionRequest.id });
 
         render(<RecoveryDetails />);

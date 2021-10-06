@@ -13,7 +13,7 @@ import {
     replaceUnsubscriber,
     AttributesSignatureParameters,
     sign,
-    isFinalized
+    isSuccessful
 } from './Signature';
 import { mockSubmittableResult } from './__mocks__/SignatureMock';
 import { mockSubmittable, mockSigner } from '../__mocks__/PolkadotApiMock';
@@ -110,16 +110,16 @@ test.each(
 );
 
 test("isFinalized with null", () => {
-    const result = isFinalized(null);
+    const result = isSuccessful(null);
     expect(result).toBe(false);
 });
 
 test("isFinalized with non-finalized result", () => {
-    const result = isFinalized(mockSubmittableResult(false));
+    const result = isSuccessful(mockSubmittableResult(false));
     expect(result).toBe(false);
 });
 
 test("isFinalized with finalized result", () => {
-    const result = isFinalized(mockSubmittableResult(true));
+    const result = isSuccessful(mockSubmittableResult(true));
     expect(result).toBe(true);
 });

@@ -2,7 +2,7 @@ import React from 'react';
 import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
 
-import { SignedTransaction, isFinalized } from './logion-chain/Signature';
+import { SignedTransaction, isSuccessful } from './logion-chain/Signature';
 
 export interface Props {
     result: SignedTransaction | null,
@@ -22,7 +22,7 @@ export default function ExtrinsicSubmissionResult(props: Props) {
                     <p>Submitting...</p>
                 </Alert>
             );
-        } else if(!isFinalized(result)) {
+        } else if(!isSuccessful(result)) {
             return (
                 <Alert variant="info">
                     <Spinner animation="border"/>

@@ -13,22 +13,22 @@ test("No result, error", () => {
 });
 
 test("Non-finalized result, error", () => {
-    const tree = render(<ExtrinsicSubmissionResult result={{isFinalized: false}} error={"error"} />);
+    const tree = render(<ExtrinsicSubmissionResult result={{isInBlock: false}} error={"error"} />);
     expect(tree).toMatchSnapshot();
 });
 
 test("Non-finalized result, no error", () => {
-    const tree = render(<ExtrinsicSubmissionResult result={{isFinalized: false, status: {type: "type"}}} error={null} />);
+    const tree = render(<ExtrinsicSubmissionResult result={{isInBlock: false, status: {type: "type"}}} error={null} />);
     expect(tree).toMatchSnapshot();
 });
 
 test("Finalized result, no error", () => {
-    const tree = render(<ExtrinsicSubmissionResult result={{isFinalized: true}} error={null} />);
+    const tree = render(<ExtrinsicSubmissionResult result={{isInBlock: true}} error={null} />);
     expect(tree).toMatchSnapshot();
 });
 
 test("Finalized result, no error, custom message", () => {
-    const tree = render(<ExtrinsicSubmissionResult result={{isFinalized: true}} error={null} successMessage="Success" />);
+    const tree = render(<ExtrinsicSubmissionResult result={{isInBlock: true}} error={null} successMessage="Success" />);
     expect(tree).toMatchSnapshot();
 });
 
