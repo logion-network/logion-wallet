@@ -3,7 +3,6 @@ import { useCommonContext } from "../../common/CommonContext";
 import { FullWidthPane } from "../../common/Dashboard";
 import Tabs from "../../common/Tabs";
 import Button from "../../common/Button";
-import ButtonGroup from "../../common/ButtonGroup";
 import { Col } from "react-bootstrap";
 import { format } from "../../logion-chain/datetime";
 import LocPublicDataButton from "./LocPublicDataButton";
@@ -11,6 +10,9 @@ import { useLocContext } from "./LocContext";
 import LocItems from "./LocItems";
 import LocItemDetail from "./LocItemDetail";
 import { Row } from "../../common/Grid";
+import TwoSideButtonGroup from "../../common/TwoSideButtonGroup";
+
+import "./ContextualizedLocDetails.css";
 
 export interface Props {
     backPath: string,
@@ -35,6 +37,7 @@ export default function ContextualizedLocDetails(props: Props) {
                 background: colorTheme.topMenuItems.iconGradient,
             } }
             onBack={ () => history.push(props.backPath) }
+            className="ContextualizedLocDetails"
         >
             <Tabs
                 activeKey="details"
@@ -47,11 +50,11 @@ export default function ContextualizedLocDetails(props: Props) {
                         const { date, time } = format(locRequest.createdOn)
                         return <>
                             <Row>
-                                <Col md={ 4 }>
+                                <Col md={ 6 }>
                                     <LocItemDetail label="LOC ID">{ locId.toDecimalString() }</LocItemDetail>
                                     <LocItemDetail label="Creation date">{ date } / { time }</LocItemDetail>
                                 </Col>
-                                <Col md={ 4 }>
+                                <Col md={ 6 }>
                                     <LocItemDetail
                                         label="Requested by">{ locRequest.userIdentity?.firstName || "" } { locRequest.userIdentity?.lastName || "" }<br />{ locRequest.requesterAddress }
                                     </LocItemDetail>
@@ -61,11 +64,17 @@ export default function ContextualizedLocDetails(props: Props) {
                         </>
                     }
                 } ] } />
-            <ButtonGroup>
-                <LocPublicDataButton />
-                <Button disabled={ true }>Add a confidential document</Button>
-                <Button disabled={ true }>Close LOC</Button>
-            </ButtonGroup>
+            <TwoSideButtonGroup
+                left={
+                    <>
+                        <LocPublicDataButton />
+                        <Button disabled={ true }>Add a confidential document</Button>
+                    </>
+                }
+                right={
+                    <Button disabled={ true }>Close LOC</Button>
+                }
+            />
         </FullWidthPane>
     );
 }

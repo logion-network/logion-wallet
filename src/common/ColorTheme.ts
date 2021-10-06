@@ -100,6 +100,7 @@ export const RED: string = "#e11a25";
 export const GREEN: string = "#37ad4b";
 export const BLUE: string = "#3b6cf4";
 export const YELLOW: string = "#f0c300";
+export const POLKADOT: string = "#e6007a";
 
 export const DEFAULT_COLOR_THEME: ColorTheme = {
     type: 'dark',
