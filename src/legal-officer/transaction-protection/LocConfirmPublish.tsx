@@ -37,8 +37,12 @@ export default function LocConfirmPublish(props: Props) {
 
     return (
         <>
-            <Button onClick={ () => setPublishState({ status: PublishStatus.START }) }>Publish to the
-                blockchain</Button>
+            <Button
+                onClick={ () => setPublishState({ status: PublishStatus.START }) }
+                variant="polkadot"
+            >
+                Publish to the blockchain
+            </Button>
             <ProcessStep
                 active={ publishState.status === PublishStatus.START || publishState.status === PublishStatus.PUBLISH_PENDING }
                 title="Publish Data (1/2)"

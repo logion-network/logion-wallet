@@ -1,4 +1,5 @@
 import Table, { Cell, DateTimeCell, EmptyTableMessage, ActionCell } from "../../common/Table";
+import StatusCell from "../../common/StatusCell";
 import LegalOfficerName from "../../common/LegalOfficerNameCell";
 import { useLocContext } from "./LocContext";
 import ButtonGroup from "../../common/ButtonGroup";
@@ -6,6 +7,7 @@ import Button from "../../common/Button";
 import React from "react";
 import LocItemDetails from "./LocItemDetails";
 import LocConfirmPublish from "./LocConfirmPublish";
+import { POLKADOT } from "../../common/ColorTheme";
 
 export default function LocItems() {
 
@@ -22,22 +24,26 @@ export default function LocItems() {
                     {
                         header: "Name",
                         render: locItem => <Cell content={ locItem.name } />,
-                        renderDetails: locItem => <LocItemDetails item={ locItem } />
+                        renderDetails: locItem => <LocItemDetails item={ locItem } />,
+                        align: "left",
+                        width: "250px"
                     },
                     {
                         header: "Timestamp",
-                        render: locItem => <DateTimeCell dateTime={ locItem.timestamp } />
+                        render: locItem => <DateTimeCell dateTime={ locItem.timestamp } />,
+                        width: "200px"
                     },
                     {
                         header: "Type",
-                        render: locItem => locItem.type
+                        render: locItem => <Cell content={ locItem.type } />,
+                        width: "200px"
                     },
                     {
                         header: "Submitted by",
                         render: locItem => <LegalOfficerName address={ locItem.submitter } />
                     },
                     {
-                        header: "Status",
+                        header: "",
                         render: locItem => {
                             if (locItem.status === 'DRAFT') {
                                 return (
@@ -54,7 +60,7 @@ export default function LocItems() {
                                         </ButtonGroup>
                                     </ActionCell>)
                             } else {
-                                return (<Cell content={ locItem.status } />)
+                                return (<StatusCell text={ locItem.status } color={ POLKADOT } />)
                             }
                         }
                     }

@@ -4,6 +4,7 @@ import BootstrapButton, { ButtonType } from 'react-bootstrap/Button';
 
 import { Children } from './types/Helpers';
 import { useCommonContext } from './CommonContext';
+import { POLKADOT } from './ColorTheme';
 
 import './Button.css';
 
@@ -64,6 +65,9 @@ export default function Button(props: Props) {
     if(variant === 'secondary') {
         style.backgroundColor = colorTheme.buttons.secondary.background;
         style.color = colorTheme.buttons.secondary.foreground;
+    } else if(variant === 'polkadot') {
+        style.backgroundColor = POLKADOT;
+        style.color = "white";
     }
 
     return (
