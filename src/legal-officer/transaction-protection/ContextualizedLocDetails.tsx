@@ -2,7 +2,6 @@ import { useHistory } from "react-router";
 import { useCommonContext } from "../../common/CommonContext";
 import { FullWidthPane } from "../../common/Dashboard";
 import Tabs from "../../common/Tabs";
-import Button from "../../common/Button";
 import { Col } from "react-bootstrap";
 import { format } from "../../logion-chain/datetime";
 import LocPublicDataButton from "./LocPublicDataButton";
@@ -12,6 +11,7 @@ import LocItemDetail from "./LocItemDetail";
 import { Row } from "../../common/Grid";
 import TwoSideButtonGroup from "../../common/TwoSideButtonGroup";
 import CloseLocButton from "./CloseLocButton";
+import LocPrivateFileButton from "./LocPrivateFileButton";
 
 import "./ContextualizedLocDetails.css";
 
@@ -69,7 +69,7 @@ export default function ContextualizedLocDetails(props: Props) {
                 left={
                     <>
                         <LocPublicDataButton />
-                        <Button disabled={ true }>Add a confidential document</Button>
+                        <LocPrivateFileButton />
                     </>
                 }
                 right={

@@ -114,3 +114,26 @@ export async function acceptLocRequest(
 ): Promise<void> {
     await axios.post(`/api/loc-request/${parameters.requestId}/accept`, { });
 }
+
+export interface AddFileParameters {
+    locId: string,
+    file: File,
+    fileName: string
+}
+
+export interface AddFileResult {
+    hash: string
+}
+
+export async function addFile(
+    axios: AxiosInstance,
+    parameters: AddFileParameters
+): Promise<AddFileResult> {
+    const formData = new FormData();
+    formData.append('file', parameters.file, parameters.fileName);
+    const response = await axios.post(
+        `/api/loc-request/${ parameters.locId }/files`,
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } })
+    return response.data;
+}

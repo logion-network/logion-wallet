@@ -5,39 +5,65 @@ import { useLocContext } from "./LocContext";
 import ButtonGroup from "../../common/ButtonGroup";
 import Button from "../../common/Button";
 import React from "react";
-import LocItemDetails from "./LocItemDetails";
-import LocConfirmPublish from "./LocConfirmPublish";
+import LocPublicDataDetails from "./LocPublicDataDetails";
+import LocPublishPublicDataButton from "./LocPublishPublicDataButton";
 import { POLKADOT } from "../../common/ColorTheme";
+import { Child } from "../../common/types/Helpers";
+import LocPrivateFileDetails from "./LocPrivateFileDetails";
+import LocPublishPrivateFileButton from "./LocPublishPrivateFileButton";
 
 export default function LocItems() {
 
-    const { locItems, publishMetadata, removeMetadata } = useLocContext();
+    const { locItems, removeMetadata } = useLocContext();
 
-    if (publishMetadata === null || removeMetadata === null) {
+    if (removeMetadata === null) {
         return null;
     }
 
+    function renderDetails(locItem: LocItem): Child {
+        return locItem.type === 'Data' ?
+            <LocPublicDataDetails item={ locItem } /> :
+            <LocPrivateFileDetails item={ locItem } />
+    }
+
+    function renderActions(locItem: LocItem): Child {
+        return (
+            <ActionCell>
+                <ButtonGroup>
+                    { locItem.type === 'Data' && <LocPublishPublicDataButton locItem={ locItem } /> }
+                    { locItem.type === 'Document' && <LocPublishPrivateFileButton locItem={ locItem } /> }
+                    <Button
+                        variant="danger"
+                        onClick={ () => removeMetadata!(locItem) }
+                        data-testid={ `remove-${ locItem.name }` }
+                    >
+                        X
+                    </Button>
+                </ButtonGroup>
+            </ActionCell>)
+    }
+
     return (
-            <Table
-                data={ locItems }
-                columns={ [
-                    {
-                        header: "Name",
-                        render: locItem => <Cell content={ locItem.name } />,
-                        renderDetails: locItem => <LocItemDetails item={ locItem } />,
-                        align: "left",
-                        width: "250px"
-                    },
-                    {
-                        header: "Timestamp",
-                        render: locItem => <DateTimeCell dateTime={ locItem.timestamp } />,
-                        width: "200px"
-                    },
-                    {
-                        header: "Type",
-                        render: locItem => <Cell content={ locItem.type } />,
-                        width: "200px"
-                    },
+        <Table
+            data={ locItems }
+            columns={ [
+                {
+                    header: "Name",
+                    render: locItem => <Cell content={ locItem.name } />,
+                    renderDetails: locItem => renderDetails(locItem),
+                    align: "left",
+                    width: "250px"
+                },
+                {
+                    header: "Timestamp",
+                    render: locItem => <DateTimeCell dateTime={ locItem.timestamp } />,
+                    width: "200px"
+                },
+                {
+                    header: "Type",
+                    render: locItem => <Cell content={ locItem.type } />,
+                    width: "200px"
+                },
                     {
                         header: "Submitted by",
                         render: locItem => <LegalOfficerName address={ locItem.submitter } />
@@ -46,19 +72,7 @@ export default function LocItems() {
                         header: "",
                         render: locItem => {
                             if (locItem.status === 'DRAFT') {
-                                return (
-                                    <ActionCell>
-                                        <ButtonGroup>
-                                            <LocConfirmPublish locItem={ locItem } />
-                                            <Button
-                                                variant="danger"
-                                                onClick={ () => removeMetadata(locItem) }
-                                                data-testid={ `remove-${ locItem.name }` }
-                                            >
-                                                X
-                                            </Button>
-                                        </ButtonGroup>
-                                    </ActionCell>)
+                                return renderActions(locItem)
                             } else {
                                 return (<StatusCell text={ locItem.status } color={ POLKADOT } />)
                             }
