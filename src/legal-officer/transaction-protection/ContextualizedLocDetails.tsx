@@ -11,6 +11,7 @@ import LocItems from "./LocItems";
 import LocItemDetail from "./LocItemDetail";
 import { Row } from "../../common/Grid";
 import TwoSideButtonGroup from "../../common/TwoSideButtonGroup";
+import CloseLocButton from "./CloseLocButton";
 
 import "./ContextualizedLocDetails.css";
 
@@ -72,7 +73,7 @@ export default function ContextualizedLocDetails(props: Props) {
                     </>
                 }
                 right={
-                    <Button disabled={ true }>Close LOC</Button>
+                    <CloseLocButton/>
                 }
             />
         </FullWidthPane>

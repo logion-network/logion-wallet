@@ -1,0 +1,62 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders null with no data 1`] = `null`;
+
+exports[`Renders pending requests 1`] = `
+<Table
+  columns={
+    Array [
+      Object {
+        "align": "left",
+        "header": "Requester",
+        "render": [Function],
+      },
+      Object {
+        "align": "left",
+        "header": "Description",
+        "render": [Function],
+      },
+      Object {
+        "header": "Status",
+        "render": [Function],
+        "width": "140px",
+      },
+      Object {
+        "align": "left",
+        "header": "LOC ID",
+        "render": [Function],
+      },
+      Object {
+        "align": "center",
+        "header": "Creation date",
+        "render": [Function],
+        "width": "200px",
+      },
+      Object {
+        "align": "center",
+        "header": "Closing date",
+        "render": [Function],
+        "width": "200px",
+      },
+      Object {
+        "align": "center",
+        "header": "Action",
+        "render": [Function],
+        "width": "200px",
+      },
+    ]
+  }
+  data={
+    Array [
+      Object {
+        "description": "LOC description",
+        "id": "1",
+        "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "status": "CLOSED",
+      },
+    ]
+  }
+  renderEmpty={[Function]}
+/>
+`;

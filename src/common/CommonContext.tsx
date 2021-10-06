@@ -25,6 +25,7 @@ export interface CommonContext {
     pendingLocRequests: LocRequest[] | null;
     rejectedLocRequests: LocRequest[] | null;
     openedLocRequests: LocRequest[] | null;
+    closedLocRequests: LocRequest[] | null;
     colorTheme: ColorTheme;
     setColorTheme: ((colorTheme: ColorTheme) => void) | null;
     setTokens: (tokens: AccountTokens) => void;
@@ -52,6 +53,7 @@ function initialContextValue(): FullCommonContext {
         pendingLocRequests: null,
         rejectedLocRequests: null,
         openedLocRequests: null,
+        closedLocRequests: null,
         colorTheme: DEFAULT_COLOR_THEME,
         setColorTheme: null,
         tokens: loadTokens().refresh(moment()),
@@ -99,6 +101,7 @@ interface Action {
     timer?: number;
     pendingLocRequests?: LocRequest[];
     openedLocRequests?: LocRequest[];
+    closedLocRequests?: LocRequest[];
     rejectedLocRequests?: LocRequest[];
     refresh?: () => void;
     refreshAddress?: string;
@@ -143,6 +146,7 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                     transactions: action.transactions!,
                     pendingLocRequests: action.pendingLocRequests!,
                     openedLocRequests: action.openedLocRequests!,
+                    closedLocRequests: action.closedLocRequests!,
                     rejectedLocRequests: action.rejectedLocRequests!,
                 };
             } else {
@@ -285,6 +289,11 @@ export function CommonContextProvider(props: Props) {
                     statuses: ["OPEN"]
                 });
 
+                const closedLocRequests = await fetchLocRequests(contextValue.axios!, {
+                    ...specificationFragment,
+                    statuses: ["CLOSED"]
+                });
+
                 const rejectedLocRequests = await fetchLocRequests(contextValue.axios!, {
                     ...specificationFragment,
                     statuses: ["REJECTED"]
@@ -297,6 +306,7 @@ export function CommonContextProvider(props: Props) {
                     transactions: transactions.transactions,
                     pendingLocRequests,
                     openedLocRequests,
+                    closedLocRequests,
                     rejectedLocRequests,
                 });
             })();
