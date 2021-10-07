@@ -24,7 +24,7 @@ export interface Props {
 export default function LocPublishPrivateFileButton(props: Props) {
 
     const [ publishState, setPublishState ] = useState<PublishState>({ status: PublishStatus.NONE });
-    const { publishFile, changeItemStatus } = useLocContext();
+    const { publishFile, changeItemStatus, confirmFile } = useLocContext();
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
 
     useEffect(() => {
@@ -66,6 +66,7 @@ export default function LocPublishPrivateFileButton(props: Props) {
                     signAndSubmit={ signAndSubmit }
                     successMessage="LOC document related data successfully published"
                     onSuccess={ () => {
+                        confirmFile!(props.locItem)
                         setPublishState({ status: PublishStatus.PUBLISHED })
                         changeItemStatus!(props.locItem, 'PUBLISHED')
                     } }

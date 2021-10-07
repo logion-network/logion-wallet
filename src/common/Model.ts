@@ -12,6 +12,7 @@ import {
     LocRequestStatus,
 } from './types/ModelTypes';
 import Identity from './types/Identity';
+import { UUID } from '../logion-chain/UUID';
 
 export interface FetchRequestSpecification {
     legalOfficerAddress?: string,
@@ -127,4 +128,22 @@ export async function createLocRequest(
     request: CreateLocRequest,
 ): Promise<void> {
     await axios.post(`/api/loc-request`, request);
+}
+
+export async function confirmLocFile(
+    axios: AxiosInstance,
+    locId: UUID,
+    hash: string
+): Promise<void> {
+    const requestId = locId.toString();
+    await axios.put(`/api/loc-request/${requestId}/files/${hash}/confirm`);
+}
+
+export async function deleteLocFile(
+    axios: AxiosInstance,
+    locId: UUID,
+    hash: string
+): Promise<void> {
+    const requestId = locId.toString();
+    await axios.delete(`/api/loc-request/${requestId}/files/${hash}`);
 }
