@@ -2,12 +2,11 @@ import { UUID } from "../../logion-chain/UUID";
 import React, { useContext, useReducer, Reducer, useEffect, useCallback } from "react";
 import { LocRequest } from "../../common/types/ModelTypes";
 import { useCommonContext } from "../../common/CommonContext";
-import { getLegalOfficerCase, addMetadata } from "../../logion-chain/LogionLoc";
+import { getLegalOfficerCase, addMetadata, addHash } from "../../logion-chain/LogionLoc";
 import { LegalOfficerCase } from "../../logion-chain/Types";
 import { useLogionChain } from "../../logion-chain";
 import { SignAndSubmit } from "../../ExtrinsicSubmitter";
 import { SignAndSendCallback } from "../../logion-chain/Signature";
-
 
 export interface LocContext {
     locId: UUID
@@ -16,6 +15,8 @@ export interface LocContext {
     locItems: LocItem[]
     addMetadata: ((name: string, value: string) => void) | null
     publishMetadata: ((locItem: LocItem) => SignAndSubmit) | null
+    addFile: ((name: string, hash: string) => void) | null
+    publishFile: ((locItem: LocItem) => SignAndSubmit) | null
     removeMetadata: ((locItem: LocItem) => void) | null
     changeItemStatus: ((locItem: LocItem, status: LocItemStatus) => void) | null
 }
@@ -28,6 +29,8 @@ function initialContextValue(locId: UUID): LocContext {
         locItems: [],
         addMetadata: null,
         publishMetadata: null,
+        addFile: null,
+        publishFile: null,
         removeMetadata: null,
         changeItemStatus: null,
     }
@@ -50,6 +53,8 @@ interface Action {
     status?: LocItemStatus,
     addMetadata?: (name: string, value: string) => void,
     publishMetadata?: (locItem: LocItem) => SignAndSubmit,
+    addFile?: (name: string, hash: string) => void
+    publishFile?: (locItem: LocItem) => SignAndSubmit,
     removeMetadata?: (locItem: LocItem) => void,
     changeItemStatus?: ((locItem: LocItem, status: LocItemStatus) => void)
 }
@@ -67,6 +72,8 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
                 ...state,
                 addMetadata: action.addMetadata!,
                 publishMetadata: action.publishMetadata!,
+                addFile: action.addFile!,
+                publishFile: action.publishFile!,
                 removeMetadata: action.removeMetadata!,
                 changeItemStatus: action.changeItemStatus!
             }
@@ -133,6 +140,37 @@ export function LocContextProvider(props: Props) {
         }, [ api, contextValue.locId ]
     )
 
+    const addFileFunction = useCallback((name: string, hash: string) => {
+            const locItem: LocItem = {
+                name,
+                value: hash,
+                type: 'Document',
+                timestamp: null,
+                submitter: contextValue.loc!.owner,
+                status: 'DRAFT'
+            }
+            dispatch({ type: 'ADD_ITEM', locItem: locItem })
+        }, [ contextValue.loc ]
+    )
+
+    const publishFileFunction = useCallback((item: LocItem) => {
+            const signAndSubmit: SignAndSubmit = (setResult, setError) => {
+                const callback: SignAndSendCallback = (signedTransaction) => {
+                    setResult(signedTransaction)
+                };
+                return addHash({
+                    locId: contextValue.locId,
+                    api: api!,
+                    signerId: item.submitter,
+                    hash: item.value,
+                    callback,
+                    errorCallback: setError
+                })
+            };
+            return signAndSubmit;
+        }, [ api, contextValue.locId ]
+    )
+
     const removeMetadataFunction = useCallback((locItem: LocItem) => {
             dispatch({ type: 'DELETE_ITEM', locItem })
         }, [ dispatch ]
@@ -147,11 +185,13 @@ export function LocContextProvider(props: Props) {
         if (contextValue.loc !== null && contextValue.addMetadata === null) {
             const addMetadata = addMetadataFunction
             const publishMetadata = publishMetadataFunction;
+            const addFile = addFileFunction
+            const publishFile = publishFileFunction;
             const removeMetadata = removeMetadataFunction;
             const changeItemStatus = changeItemStatusFunction;
-            dispatch({ type: 'SET_FUNCTIONS', addMetadata, publishMetadata, removeMetadata, changeItemStatus })
+            dispatch({ type: 'SET_FUNCTIONS', addMetadata, publishMetadata, addFile, publishFile, removeMetadata, changeItemStatus })
         }
-    }, [ contextValue, addMetadataFunction, publishMetadataFunction, removeMetadataFunction, changeItemStatusFunction, dispatch ])
+    }, [ contextValue, addMetadataFunction, publishMetadataFunction, addFileFunction, publishFileFunction, removeMetadataFunction, changeItemStatusFunction, dispatch ])
 
     useEffect(() => {
         if (contextValue.loc === null && api !== null) {
@@ -165,6 +205,17 @@ export function LocContextProvider(props: Props) {
                             submitter: loc!.owner,
                             timestamp: null,
                             type: 'Data',
+                            status: 'PUBLISHED'
+                        }
+                        dispatch({ type: 'ADD_ITEM', locItem })
+                    })
+                    loc!.hashes.forEach(item => {
+                        const locItem: LocItem = {
+                            name: "???",
+                            value: item,
+                            submitter: loc!.owner,
+                            timestamp: null,
+                            type: 'Document',
                             status: 'PUBLISHED'
                         }
                         dispatch({ type: 'ADD_ITEM', locItem })

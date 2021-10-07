@@ -21,7 +21,7 @@ export interface Props {
     locItem: LocItem
 }
 
-export default function LocConfirmPublish(props: Props) {
+export default function LocPublishPublicDataButton(props: Props) {
 
     const [ publishState, setPublishState ] = useState<PublishState>({ status: PublishStatus.NONE });
     const { publishMetadata, changeItemStatus } = useLocContext();

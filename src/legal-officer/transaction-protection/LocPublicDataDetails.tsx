@@ -7,7 +7,7 @@ export interface Props {
     item: LocItem
 }
 
-export default function LocItemDetails(props: Props) {
+export default function LocPublicDataDetails(props: Props) {
 
     return (
         <Col className="LocItemDetails" style={{ width: "100%" }}>
