@@ -6,10 +6,10 @@ import LocStatusCell from '../../common/LocStatusCell';
 import LocIdCell from '../../common/LocIdCell';
 import LegalOfficerName from '../../common/LegalOfficerNameCell';
 
-export default function OpenedLocs() {
-    const { openedLocRequests } = useCommonContext();
+export default function ClosedLocs() {
+    const { closedLocRequests } = useCommonContext();
 
-    if(openedLocRequests === null) {
+    if(closedLocRequests === null) {
         return null;
     }
 
@@ -42,8 +42,14 @@ export default function OpenedLocs() {
                     width: '200px',
                     align: 'center',
                 },
+                {
+                    header: "Closing date",
+                    render: request => <DateTimeCell dateTime={ request.closedOn || null } />,
+                    width: '200px',
+                    align: 'center',
+                },
             ]}
-            data={ openedLocRequests }
+            data={ closedLocRequests }
             renderEmpty={ () => <EmptyTableMessage>No LOCs</EmptyTableMessage>}
         />
     );

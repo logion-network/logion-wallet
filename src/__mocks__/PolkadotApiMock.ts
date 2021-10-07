@@ -40,7 +40,8 @@ export const DEFAULT_LOC = {
     ],
     hashes: [
         "0x91820202c3d0fea0c494b53e3352f1934bc177484e3f41ca2c4bca4572d71cd2"
-    ]
+    ],
+    closed: false,
 }
 
 export class ApiPromise {
@@ -95,6 +96,10 @@ export class ApiPromise {
                         toArray: () => DEFAULT_LOC.hashes.map(hash => ({
                             toHex: () => hash
                         }))
+                    },
+                    closed: {
+                        isTrue: DEFAULT_LOC.closed,
+                        isFalse: !DEFAULT_LOC.closed,
                     }
                 })
             })

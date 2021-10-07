@@ -11,10 +11,14 @@ import OpenedLocs from './OpenedLocs';
 import RequestedLocs from './RequestedLocs';
 import RejectedLocs from './RejectedLocs';
 import LocCreation from './LocCreation';
+import ClosedLocs from './ClosedLocs';
+
+import './TransactionProtection.css';
 
 export default function TransactionProtection() {
     const { colorTheme } = useCommonContext();
-    const [ tabKey, setTabKey ] = useState<string>('pending');
+    const [ locTabKey, setLocTabKey ] = useState<string>('open');
+    const [ requestTabKey, setRequestTabKey ] = useState<string>('pending');
 
     return (
         <FullWidthPane
@@ -26,13 +30,29 @@ export default function TransactionProtection() {
                 },
                 background: colorTheme.topMenuItems.iconGradient,
             }}
+            className="TransactionProtection"
         >
             <Row>
                 <Col>
                     <Frame
-                        title="Open Transaction Protection Case(s)"
+                        title="Transaction Protection Case(s)"
                     >
-                        <OpenedLocs/>
+                        <Tabs
+                            activeKey={ locTabKey }
+                            onSelect={ key => setLocTabKey(key || 'open') }
+                            tabs={[
+                                {
+                                    key: "open",
+                                    title: "Open",
+                                    render: () => <OpenedLocs/>
+                                },
+                                {
+                                    key: "closed",
+                                    title: "Closed",
+                                    render: () => <ClosedLocs/>
+                                }
+                            ]}
+                        />
                         <LocCreation/>
                     </Frame>
                 </Col>
@@ -43,8 +63,8 @@ export default function TransactionProtection() {
                         title="Transaction Protection Request(s)"
                     >
                         <Tabs
-                            activeKey={ tabKey }
-                            onSelect={ key => setTabKey(key || 'pending') }
+                            activeKey={ requestTabKey }
+                            onSelect={ key => setRequestTabKey(key || 'pending') }
                             tabs={[
                                 {
                                     key: "pending",

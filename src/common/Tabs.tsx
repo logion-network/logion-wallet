@@ -16,14 +16,20 @@ export interface Props {
     activeKey: string,
     onSelect: (key: string) => void,
     tabs: Tab[],
+    borderColor?: string,
 }
 
 export default function Tabs(props: Props) {
     const { colorTheme } = useCommonContext();
 
+    let borderColor = props.borderColor;
+    if(borderColor === undefined) {
+        borderColor = colorTheme.tabs.borderColor;
+    }
+
     const customCss = `
     .Tabs .nav-tabs .nav-link {
-        border-color: ${colorTheme.tabs.borderColor};
+        border-color: ${borderColor};
         color: ${colorTheme.tabs.inactiveTab.foreground};
         background-color: ${colorTheme.tabs.inactiveTab.background};
     }
@@ -35,7 +41,7 @@ export default function Tabs(props: Props) {
     .Tabs .tab-content {
         color: ${colorTheme.tabs.foreground};
         background-color: ${colorTheme.tabs.background};
-        border: 1px solid ${colorTheme.tabs.borderColor};
+        border: 1px solid ${borderColor};
     }
     `;
 

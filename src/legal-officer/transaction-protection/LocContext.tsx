@@ -2,7 +2,7 @@ import { UUID } from "../../logion-chain/UUID";
 import React, { useContext, useReducer, Reducer, useEffect, useCallback } from "react";
 import { LocRequest } from "../../common/types/ModelTypes";
 import { useCommonContext } from "../../common/CommonContext";
-import { getLegalOfficerCase, addMetadata, addHash } from "../../logion-chain/LogionLoc";
+import { getLegalOfficerCase, addMetadata, addHash, closeLoc } from "../../logion-chain/LogionLoc";
 import { LegalOfficerCase } from "../../logion-chain/Types";
 import { useLogionChain } from "../../logion-chain";
 import { SignAndSubmit } from "../../ExtrinsicSubmitter";
@@ -19,6 +19,8 @@ export interface LocContext {
     publishFile: ((locItem: LocItem) => SignAndSubmit) | null
     removeMetadata: ((locItem: LocItem) => void) | null
     changeItemStatus: ((locItem: LocItem, status: LocItemStatus) => void) | null
+    close: (() => void) | null
+    closeExtrinsic: (() => SignAndSubmit) | null
 }
 
 function initialContextValue(locId: UUID): LocContext {
@@ -33,6 +35,8 @@ function initialContextValue(locId: UUID): LocContext {
         publishFile: null,
         removeMetadata: null,
         changeItemStatus: null,
+        close: null,
+        closeExtrinsic: null,
     }
 }
 
@@ -44,6 +48,7 @@ type ActionType = 'SET_LOC_REQUEST'
     | 'ADD_ITEM'
     | 'UPDATE_ITEM'
     | 'DELETE_ITEM'
+    | 'CLOSE'
 
 interface Action {
     type: ActionType,
@@ -56,7 +61,9 @@ interface Action {
     addFile?: (name: string, hash: string) => void
     publishFile?: (locItem: LocItem) => SignAndSubmit,
     removeMetadata?: (locItem: LocItem) => void,
-    changeItemStatus?: ((locItem: LocItem, status: LocItemStatus) => void)
+    changeItemStatus?: ((locItem: LocItem, status: LocItemStatus) => void),
+    close?: () => void,
+    closeExtrinsic?: () => SignAndSubmit,
 }
 
 const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action): LocContext => {
@@ -75,7 +82,9 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
                 addFile: action.addFile!,
                 publishFile: action.publishFile!,
                 removeMetadata: action.removeMetadata!,
-                changeItemStatus: action.changeItemStatus!
+                changeItemStatus: action.changeItemStatus!,
+                closeExtrinsic: action.closeExtrinsic!,
+                close: action.close!,
             }
         case "ADD_ITEM":
             return { ...state, locItems: state.locItems.concat(action.locItem!) }
@@ -85,6 +94,14 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
         case "DELETE_ITEM":
             items.splice(itemIndex, 1)
             return { ...state, locItems: items }
+        case "CLOSE":
+            return {
+                ...state,
+                loc: {
+                    ...state.loc!,
+                    closed: true,
+                }
+            }
         default:
             throw new Error(`Unknown type: ${ action.type }`);
     }
@@ -97,17 +114,20 @@ export interface Props {
 
 export function LocContextProvider(props: Props) {
     const { api } = useLogionChain();
-    const { openedLocRequests } = useCommonContext();
+    const { openedLocRequests, closedLocRequests } = useCommonContext();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue(props.locId));
 
     useEffect(() => {
-        if (contextValue.locRequest === null && openedLocRequests !== null) {
-            const locRequest = openedLocRequests.find(locRequest => locRequest.id === contextValue.locId.toString());
+        if (contextValue.locRequest === null && openedLocRequests !== null && closedLocRequests !== null) {
+            let locRequest = openedLocRequests.find(locRequest => locRequest.id === contextValue.locId.toString());
+            if(locRequest === undefined) {
+                locRequest = closedLocRequests.find(locRequest => locRequest.id === contextValue.locId.toString());
+            }
             if (locRequest !== undefined) {
                 dispatch({ type: 'SET_LOC_REQUEST', locRequest })
             }
         }
-    }, [ contextValue, openedLocRequests ])
+    }, [ contextValue, openedLocRequests, closedLocRequests ])
 
     const addMetadataFunction = useCallback((name: string, value: string) => {
             const locItem: LocItem = {
@@ -181,6 +201,28 @@ export function LocContextProvider(props: Props) {
         }, [ dispatch ]
     )
 
+    const closeExtrinsicFunction = useCallback(() => {
+            const signAndSubmit: SignAndSubmit = (setResult, setError) => {
+                const callback: SignAndSendCallback = (signedTransaction) => {
+                    setResult(signedTransaction)
+                };
+                return closeLoc({
+                    locId: contextValue.locId,
+                    api: api!,
+                    signerId: contextValue.loc!.owner,
+                    callback,
+                    errorCallback: setError
+                })
+            };
+            return signAndSubmit;
+        }, [ api, contextValue.locId, contextValue.loc ]
+    )
+
+    const closeFunction = useCallback(() => {
+            dispatch({ type: 'CLOSE' })
+        }, [ dispatch ]
+    )
+
     useEffect(() => {
         if (contextValue.loc !== null && contextValue.addMetadata === null) {
             const addMetadata = addMetadataFunction
@@ -189,9 +231,11 @@ export function LocContextProvider(props: Props) {
             const publishFile = publishFileFunction;
             const removeMetadata = removeMetadataFunction;
             const changeItemStatus = changeItemStatusFunction;
-            dispatch({ type: 'SET_FUNCTIONS', addMetadata, publishMetadata, addFile, publishFile, removeMetadata, changeItemStatus })
+            const closeExtrinsic = closeExtrinsicFunction;
+            const close = closeFunction;
+            dispatch({ type: 'SET_FUNCTIONS', addMetadata, publishMetadata, addFile, publishFile, removeMetadata, changeItemStatus, closeExtrinsic, close })
         }
-    }, [ contextValue, addMetadataFunction, publishMetadataFunction, addFileFunction, publishFileFunction, removeMetadataFunction, changeItemStatusFunction, dispatch ])
+    }, [ contextValue, addMetadataFunction, publishMetadataFunction, addFileFunction, publishFileFunction, removeMetadataFunction, changeItemStatusFunction, closeFunction, closeExtrinsicFunction, dispatch ])
 
     useEffect(() => {
         if (contextValue.loc === null && api !== null) {
