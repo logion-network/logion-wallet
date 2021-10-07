@@ -62,6 +62,18 @@ export interface TransactionsSet {
     transactions: Transaction[],
 }
 
+export interface LocFile {
+    name: string;
+    hash: string;
+    addedOn: string;
+}
+
+export interface LocMetadataItem {
+    name: string;
+    value: string;
+    addedOn: string;
+}
+
 export interface LocRequest {
     ownerAddress: string;
     requesterAddress: string;
@@ -73,6 +85,8 @@ export interface LocRequest {
     rejectReason?: string;
     userIdentity?: Identity;
     closedOn?: string;
+    files: LocFile[];
+    metadata: LocMetadataItem[];
 }
 
 export type LocRequestStatus = "OPEN" | "REQUESTED" | "REJECTED" | "CLOSED";

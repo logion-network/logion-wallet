@@ -1,7 +1,7 @@
 import { UUID } from "../../logion-chain/UUID";
-import React, { useContext, useReducer, Reducer, useEffect, useCallback } from "react";
-import { LocRequest } from "../../common/types/ModelTypes";
-import { confirmLocFile, deleteLocFile, preClose } from "../../common/Model";
+import React, { useContext, useReducer, Reducer, useEffect, useCallback, useState } from "react";
+import { LocRequest, LocFile, LocMetadataItem } from "../../common/types/ModelTypes";
+import { confirmLocFile, deleteLocFile, preClose, fetchLocRequest } from "../../common/Model";
 import { useCommonContext } from "../../common/CommonContext";
 import { getLegalOfficerCase, addMetadata, addHash, closeLoc } from "../../logion-chain/LogionLoc";
 import { LegalOfficerCase } from "../../logion-chain/Types";
@@ -18,7 +18,7 @@ export interface LocContext {
     publishMetadata: ((locItem: LocItem) => SignAndSubmit) | null
     addFile: ((name: string, hash: string) => void) | null
     publishFile: ((locItem: LocItem) => SignAndSubmit) | null
-    removeMetadata: ((locItem: LocItem) => void) | null
+    removeItem: ((locItem: LocItem) => void) | null
     changeItemStatus: ((locItem: LocItem, status: LocItemStatus) => void) | null
     close: (() => void) | null
     closeExtrinsic: (() => SignAndSubmit) | null
@@ -27,6 +27,9 @@ export interface LocContext {
 }
 
 export const UNKNOWN_FILE = "-";
+
+const MAX_REFRESH = 20;
+const REFRESH_INTERVAL = 5000;
 
 function initialContextValue(locId: UUID): LocContext {
     return {
@@ -38,7 +41,7 @@ function initialContextValue(locId: UUID): LocContext {
         publishMetadata: null,
         addFile: null,
         publishFile: null,
-        removeMetadata: null,
+        removeItem: null,
         changeItemStatus: null,
         close: null,
         closeExtrinsic: null,
@@ -53,7 +56,9 @@ type ActionType = 'SET_LOC_REQUEST'
     | 'SET_LOC'
     | 'SET_FUNCTIONS'
     | 'ADD_ITEM'
-    | 'UPDATE_ITEM'
+    | 'UPDATE_ITEM_STATUS'
+    | 'UPDATE_ITEM_NAME'
+    | 'UPDATE_ITEM_TIMESTAMP'
     | 'DELETE_ITEM'
     | 'CLOSE'
 
@@ -63,11 +68,13 @@ interface Action {
     loc?: LegalOfficerCase,
     locItem?: LocItem,
     status?: LocItemStatus,
+    name?: string,
+    timestamp?: string,
     addMetadata?: (name: string, value: string) => void,
     publishMetadata?: (locItem: LocItem) => SignAndSubmit,
     addFile?: (name: string, hash: string) => void
     publishFile?: (locItem: LocItem) => SignAndSubmit,
-    removeMetadata?: (locItem: LocItem) => void,
+    removeItem?: (locItem: LocItem) => void,
     changeItemStatus?: ((locItem: LocItem, status: LocItemStatus) => void),
     close?: () => void,
     closeExtrinsic?: () => SignAndSubmit,
@@ -76,6 +83,7 @@ interface Action {
 }
 
 const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action): LocContext => {
+    console.log(`ActionType: ${ action.type }`)
     const items = state.locItems.concat();
     const itemIndex = items.indexOf(action.locItem!);
     switch (action.type) {
@@ -90,7 +98,7 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
                 publishMetadata: action.publishMetadata!,
                 addFile: action.addFile!,
                 publishFile: action.publishFile!,
-                removeMetadata: action.removeMetadata!,
+                removeItem: action.removeItem!,
                 changeItemStatus: action.changeItemStatus!,
                 closeExtrinsic: action.closeExtrinsic!,
                 close: action.close!,
@@ -99,8 +107,14 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
             }
         case "ADD_ITEM":
             return { ...state, locItems: state.locItems.concat(action.locItem!) }
-        case "UPDATE_ITEM":
+        case "UPDATE_ITEM_STATUS":
             items[itemIndex] = { ...action.locItem!, status: action.status! }
+            return { ...state, locItems: items }
+        case "UPDATE_ITEM_NAME":
+            items[itemIndex] = { ...action.locItem!, name: action.name! }
+            return { ...state, locItems: items }
+        case "UPDATE_ITEM_TIMESTAMP":
+            items[itemIndex] = { ...action.locItem!, timestamp: action.timestamp! }
             return { ...state, locItems: items }
         case "DELETE_ITEM":
             items.splice(itemIndex, 1)
@@ -124,21 +138,105 @@ export interface Props {
 }
 
 export function LocContextProvider(props: Props) {
+
+    const UNKNOWN_FILE = "-";
     const { api } = useLogionChain();
-    const { openedLocRequests, closedLocRequests, axios } = useCommonContext();
+    const { axios } = useCommonContext();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue(props.locId));
+    const [ refreshing, setRefreshing ] = useState<boolean>(false);
+    const [ refreshCounter, setRefreshCounter ] = useState<number>(0);
 
     useEffect(() => {
-        if (contextValue.locRequest === null && openedLocRequests !== null && closedLocRequests !== null) {
-            let locRequest = openedLocRequests.find(locRequest => locRequest.id === contextValue.locId.toString());
-            if(locRequest === undefined) {
-                locRequest = closedLocRequests.find(locRequest => locRequest.id === contextValue.locId.toString());
-            }
-            if (locRequest !== undefined) {
-                dispatch({ type: 'SET_LOC_REQUEST', locRequest })
+        if (contextValue.locRequest === null && axios !== undefined) {
+            fetchLocRequest(axios, contextValue.locId.toString())
+                .then(locRequest => {
+                    dispatch({ type: 'SET_LOC_REQUEST', locRequest });
+                })
+        }
+    }, [ contextValue.locRequest, contextValue.locId, axios ])
+
+    const enum NextRefresh {
+        STOP,
+        SCHEDULE,
+        IMMEDIATE
+    }
+
+    const refreshNameTimestamp = useCallback<() => Promise<NextRefresh>>(() => {
+        console.log(`refreshNameTimestamp() ${ refreshCounter } ${ new Date() }`)
+
+        function findItem(locRequest: LocRequest, item: LocItem): LocMetadataItem | LocFile | undefined {
+            if (item.type === 'Document') {
+                return findFile(locRequest, item.value)
+            } else {
+                return locRequest.metadata.find(metadata => metadata.name === item.name)
             }
         }
-    }, [ contextValue, openedLocRequests, closedLocRequests ])
+
+        function findFile(locRequest: LocRequest, hash: string): LocFile | undefined {
+            return locRequest.files.find(file => file.hash === hash)
+        }
+
+        function allItemsOK(items: LocItem[]): boolean {
+            return items.find(item => item.status === "PUBLISHED" && (item.name === UNKNOWN_FILE || item.timestamp === null)) === undefined
+        }
+
+        if (contextValue.loc === null || axios === undefined) {
+            return Promise.resolve(NextRefresh.SCHEDULE);
+        }
+
+        if (allItemsOK(contextValue.locItems)) {
+            return Promise.resolve(NextRefresh.STOP);
+        }
+
+        const proceed = async () => {
+            let nextRefresh = NextRefresh.SCHEDULE;
+            const locRequest = await fetchLocRequest(axios, contextValue.locId.toString());
+            contextValue.locItems
+                .filter(locItem => locItem.type === 'Document' && locItem.name === UNKNOWN_FILE)
+                .forEach(locItem => {
+                    const locFile = findFile(locRequest, locItem.value)
+                    if (locFile && locFile.name) {
+                        nextRefresh = NextRefresh.IMMEDIATE;
+                        dispatch({ type: 'UPDATE_ITEM_NAME', locItem, name: locFile.name })
+                    }
+                })
+            contextValue.locItems
+                .filter(locItem => locItem.timestamp === null)
+                .forEach(locItem => {
+                    const locFile = findItem(locRequest, locItem)
+                    if (locFile && locFile.addedOn) {
+                        nextRefresh = NextRefresh.IMMEDIATE;
+                        dispatch({ type: 'UPDATE_ITEM_TIMESTAMP', locItem, timestamp: locFile.addedOn })
+                    }
+                })
+            return nextRefresh;
+        }
+        return proceed()
+    }, [ contextValue.loc, contextValue.locItems, contextValue.locId, axios, refreshCounter, NextRefresh.STOP, NextRefresh.SCHEDULE, NextRefresh.IMMEDIATE])
+
+    useEffect(() => {
+        if (refreshCounter > 0 && !refreshing) {
+            (async function () {
+                setRefreshing(true)
+                const nextRefresh = await refreshNameTimestamp();
+                switch (nextRefresh) {
+                    case NextRefresh.STOP:
+                        setRefreshCounter(0);
+                        setRefreshing(false)
+                        break;
+                    case NextRefresh.SCHEDULE:
+                        setRefreshCounter(refreshCounter - 1)
+                        setTimeout(() => setRefreshing(false), REFRESH_INTERVAL, null)
+                        break;
+                    case NextRefresh.IMMEDIATE:
+                        setRefreshCounter(refreshCounter - 1)
+                        setRefreshing(false)
+                        break;
+                }
+            })()
+        }
+    }, [ refreshNameTimestamp, refreshCounter, setRefreshCounter, refreshing, setRefreshing, NextRefresh.STOP, NextRefresh.SCHEDULE, NextRefresh.IMMEDIATE ])
+
 
     const addMetadataFunction = useCallback((name: string, value: string) => {
             const locItem: LocItem = {
@@ -150,7 +248,8 @@ export function LocContextProvider(props: Props) {
                 status: 'DRAFT'
             }
             dispatch({ type: 'ADD_ITEM', locItem: locItem })
-        }, [ contextValue.loc ]
+            setRefreshCounter(MAX_REFRESH)
+        }, [ contextValue.loc, setRefreshCounter ]
     )
 
     const publishMetadataFunction = useCallback((item: LocItem) => {
@@ -162,7 +261,7 @@ export function LocContextProvider(props: Props) {
                     locId: contextValue.locId,
                     api: api!,
                     signerId: item.submitter,
-                    item,
+                    item: { name: item.name || "", value: item.value },
                     callback,
                     errorCallback: setError
                 })
@@ -181,7 +280,8 @@ export function LocContextProvider(props: Props) {
                 status: 'DRAFT'
             }
             dispatch({ type: 'ADD_ITEM', locItem: locItem })
-        }, [ contextValue.loc ]
+            setRefreshCounter(MAX_REFRESH)
+        }, [ contextValue.loc, setRefreshCounter ]
     )
 
     const publishFileFunction = useCallback((item: LocItem) => {
@@ -202,10 +302,10 @@ export function LocContextProvider(props: Props) {
         }, [ api, contextValue.locId ]
     )
 
-    const removeMetadataFunction = useCallback((locItem: LocItem) => {
-            if(locItem.type === 'Document') {
+    const removeItemFunction = useCallback((locItem: LocItem) => {
+            if (locItem.type === 'Document') {
                 deleteLocFile(axios!, contextValue.locId, locItem.value)
-                .then(() => dispatch({ type: 'DELETE_ITEM', locItem }));
+                    .then(() => dispatch({ type: 'DELETE_ITEM', locItem }));
             } else {
                 dispatch({ type: 'DELETE_ITEM', locItem });
             }
@@ -213,7 +313,8 @@ export function LocContextProvider(props: Props) {
     )
 
     const changeItemStatusFunction = useCallback((locItem: LocItem, status: LocItemStatus) => {
-            dispatch({ type: 'UPDATE_ITEM', locItem, status })
+            dispatch({ type: 'UPDATE_ITEM_STATUS', locItem, status })
+            setRefreshCounter(MAX_REFRESH)
         }, [ dispatch ]
     )
 
@@ -256,15 +357,27 @@ export function LocContextProvider(props: Props) {
             const publishMetadata = publishMetadataFunction;
             const addFile = addFileFunction
             const publishFile = publishFileFunction;
-            const removeMetadata = removeMetadataFunction;
+            const removeItem = removeItemFunction;
             const changeItemStatus = changeItemStatusFunction;
             const closeExtrinsic = closeExtrinsicFunction;
             const close = closeFunction;
             const confirmFile = confirmFileFunction;
             const deleteFile = deleteFileFunction;
-            dispatch({ type: 'SET_FUNCTIONS', addMetadata, publishMetadata, addFile, publishFile, removeMetadata, changeItemStatus, closeExtrinsic, close, confirmFile, deleteFile })
+            dispatch({
+                type: 'SET_FUNCTIONS',
+                addMetadata,
+                publishMetadata,
+                addFile,
+                publishFile,
+                removeItem,
+                changeItemStatus,
+                closeExtrinsic,
+                close,
+                confirmFile,
+                deleteFile
+            })
         }
-    }, [ contextValue, addMetadataFunction, publishMetadataFunction, addFileFunction, publishFileFunction, removeMetadataFunction, changeItemStatusFunction, closeFunction, closeExtrinsicFunction, confirmFileFunction, deleteFileFunction, dispatch ])
+    }, [ contextValue, addMetadataFunction, publishMetadataFunction, addFileFunction, publishFileFunction, removeItemFunction, changeItemStatusFunction, closeFunction, closeExtrinsicFunction, confirmFileFunction, deleteFileFunction, dispatch ])
 
     useEffect(() => {
         if (contextValue.loc === null && api !== null) {
@@ -281,6 +394,7 @@ export function LocContextProvider(props: Props) {
                             status: 'PUBLISHED'
                         }
                         dispatch({ type: 'ADD_ITEM', locItem })
+                        setRefreshCounter(MAX_REFRESH)
                     })
                     loc!.hashes.forEach(item => {
                         const locItem: LocItem = {
@@ -292,10 +406,11 @@ export function LocContextProvider(props: Props) {
                             status: 'PUBLISHED'
                         }
                         dispatch({ type: 'ADD_ITEM', locItem })
+                        setRefreshCounter(MAX_REFRESH)
                     })
                 })
         }
-    }, [ contextValue.loc, api, contextValue.locId ])
+    }, [ contextValue.loc, api, contextValue.locId, setRefreshCounter ])
 
     return (
         <LocContextObject.Provider value={ contextValue }>

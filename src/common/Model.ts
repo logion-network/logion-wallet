@@ -36,8 +36,8 @@ export interface FetchProtectionRequestSpecification {
 }
 
 export async function fetchProtectionRequests(
-        axios: AxiosInstance, 
-        specification: FetchProtectionRequestSpecification): Promise<ProtectionRequest[]> {
+    axios: AxiosInstance,
+    specification: FetchProtectionRequestSpecification): Promise<ProtectionRequest[]> {
     const response = await axios.put("/api/protection-request", specification);
     return response.data.requests;
 }
@@ -114,6 +114,20 @@ export async function fetchLocRequests(
 ): Promise<LocRequest[]> {
     const response = await axios.put(`/api/loc-request`, specification);
     return response.data.requests;
+}
+
+export async function fetchLocRequest(
+    axios: AxiosInstance,
+    requestId: string
+): Promise<LocRequest> {
+    const response = await axios.get(`/api/loc-request/${ requestId }`, {
+        headers: {
+            'Cache-Control': 'no-cache',
+            'Pragma': 'no-cache',
+            'Expires': '0',
+        }
+    });
+    return response.data;
 }
 
 export interface CreateLocRequest {
