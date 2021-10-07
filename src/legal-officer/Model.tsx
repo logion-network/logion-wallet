@@ -137,3 +137,16 @@ export async function addFile(
         { headers: { "Content-Type": "multipart/form-data" } })
     return response.data;
 }
+
+export interface GetFileParameters {
+    locId: string,
+    hash: string
+}
+
+export async function getFile(
+    axios: AxiosInstance,
+    parameters: GetFileParameters
+):Promise<any> {
+    const response = axios.get(`/api/loc-request/${ parameters.locId }/files/${ parameters.hash }`, { responseType: 'blob' });
+    return response.then(response => response.data);
+}
