@@ -13,7 +13,9 @@ yarn install
 
 ## Usage
 
-Use below command in order to connect to a locally running node (development mode):
+Use below command in order to connect to a locally running infrastructure
+(see [here](https://github.com/logion-network/logion-backend-ts#quick-start) for the backend and see
+[here](https://github.com/logion-network/logion-node#getting-started) for the node):
 
 ```bash
 yarn start
@@ -21,18 +23,13 @@ yarn start
 
 You may also use the Docker way (see below).
 
-### Setup
+### Connecting to a hosted infrastructure
 
-Use below command in order to connect to a specific node
-(see [here](https://github.com/logion-network/logion-node) for instructions about doing so)
-and service (see [here](https://github.com/logion-network/logion-backend))
-.
+Use below command in order to connect to a hosted node and backend.
 
 ```bash
 export REACT_APP_PROVIDER_SOCKET=wss://example.org:9944 ; export REACT_APP_SERVICE_URL=https://example.org ; yarn start
 ```
-
-You may have to change port numbers if you are not using the default configuration.
 
 
 ### Test users
