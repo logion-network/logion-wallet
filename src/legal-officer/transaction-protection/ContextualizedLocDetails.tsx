@@ -10,10 +10,12 @@ import LocItems from "./LocItems";
 import LocItemDetail from "./LocItemDetail";
 import { Row } from "../../common/Grid";
 import TwoSideButtonGroup from "../../common/TwoSideButtonGroup";
+import { POLKADOT } from "../../common/ColorTheme";
 import CloseLocButton from "./CloseLocButton";
 import LocPrivateFileButton from "./LocPrivateFileButton";
 
 import "./ContextualizedLocDetails.css";
+import Icon from "../../common/Icon";
 
 export interface Props {
     backPath: string,
@@ -55,27 +57,38 @@ export default function ContextualizedLocDetails(props: Props) {
                                     <LocItemDetail label="LOC ID">{ locId.toDecimalString() }</LocItemDetail>
                                     <LocItemDetail label="Creation date">{ date } / { time }</LocItemDetail>
                                 </Col>
-                                <Col md={ 6 }>
+                                <Col md={ 6 } className="closed-icon-container">
                                     <LocItemDetail
                                         label="Requested by">{ locRequest.userIdentity?.firstName || "" } { locRequest.userIdentity?.lastName || "" }<br />{ locRequest.requesterAddress }
                                     </LocItemDetail>
+                                    {
+                                        loc.closed &&
+                                        <div className="closed-icon">
+                                            <Icon icon={{id:"polkadot_shield"}} />
+                                        </div>
+                                    }
                                 </Col>
                             </Row>
                             <LocItems />
                         </>
                     }
-                } ] } />
-            <TwoSideButtonGroup
-                left={
-                    <>
-                        <LocPublicDataButton />
-                        <LocPrivateFileButton />
-                    </>
-                }
-                right={
-                    <CloseLocButton/>
-                }
+                } ] }
+                borderColor={ loc.closed ? POLKADOT : undefined }
             />
+            {
+                !loc.closed &&
+                <TwoSideButtonGroup
+                    left={
+                        <>
+                            <LocPublicDataButton />
+                            <LocPrivateFileButton />
+                        </>
+                    }
+                    right={
+                        <CloseLocButton/>
+                    }
+                />
+            }
         </FullWidthPane>
     );
 }

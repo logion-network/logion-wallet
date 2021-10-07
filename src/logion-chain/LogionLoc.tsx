@@ -78,7 +78,8 @@ export async function getLegalOfficerCase(
                 name: rawItem.name.toUtf8(),
                 value: rawItem.value.toUtf8(),
             })),
-            hashes: rawLoc.hashes.toArray().map(rawHash => rawHash.toHex())
+            hashes: rawLoc.hashes.toArray().map(rawHash => rawHash.toHex()),
+            closed: rawLoc.closed.isTrue,
         };
     } else {
         return undefined;
@@ -104,6 +105,28 @@ export function addHash(parameters: AddHashParameters): Unsubscriber {
     return signAndSend({
         signerId,
         submittable: api.tx.logionLoc.addHash(locId.toHexString(), hash),
+        callback,
+        errorCallback,
+    });
+}
+
+export interface CloseLocParameters extends ExtrinsicSubmissionParameters {
+    api: ApiPromise;
+    locId: UUID;
+}
+
+export function closeLoc(parameters: CloseLocParameters): Unsubscriber {
+    const {
+        api,
+        signerId,
+        callback,
+        errorCallback,
+        locId,
+    } = parameters;
+
+    return signAndSend({
+        signerId,
+        submittable: api.tx.logionLoc.close(locId.toHexString()),
         callback,
         errorCallback,
     });

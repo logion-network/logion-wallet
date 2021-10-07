@@ -2,6 +2,7 @@
 
 exports[`renders 1`] = `
 <FullWidthPane
+  className="TransactionProtection"
   mainTitle="Transaction Protection"
   subTitle="Logion Officer Cases"
   titleIcon={
@@ -21,9 +22,26 @@ exports[`renders 1`] = `
   >
     <Col>
       <Frame
-        title="Open Transaction Protection Case(s)"
+        title="Transaction Protection Case(s)"
       >
-        <OpenedLocs />
+        <Tabs
+          activeKey="open"
+          onSelect={[Function]}
+          tabs={
+            Array [
+              Object {
+                "key": "open",
+                "render": [Function],
+                "title": "Open",
+              },
+              Object {
+                "key": "closed",
+                "render": [Function],
+                "title": "Closed",
+              },
+            ]
+          }
+        />
         <LocCreation />
       </Frame>
     </Col>
