@@ -11,10 +11,13 @@ import { POLKADOT } from "../../common/ColorTheme";
 import { Child } from "../../common/types/Helpers";
 import LocPrivateFileDetails from "./LocPrivateFileDetails";
 import LocPublishPrivateFileButton from "./LocPublishPrivateFileButton";
+import ViewFileButton from "../../common/ViewFileButton";
+import { AxiosInstance } from "axios";
+import { getFile } from "../Model";
 
 export default function LocItems() {
 
-    const { locItems, removeMetadata } = useLocContext();
+    const { locId, locItems, removeMetadata } = useLocContext();
 
     if (removeMetadata === null) {
         return null;
@@ -43,6 +46,28 @@ export default function LocItems() {
             </ActionCell>)
     }
 
+    function renderType(locItem: LocItem): Child {
+        if (locItem.type === 'Document') {
+            return (
+                <>
+                    <ActionCell>
+                        <span>Document</span>
+                        <ViewFileButton
+                            fileName={ locItem.name }
+                            downloader={ (axios: AxiosInstance) => getFile(axios, {
+                                locId: locId.toString(),
+                                hash: locItem.value
+                            }) } />
+                    </ActionCell>
+                </>
+            )
+        } else {
+            return (
+                <Cell content={ locItem.type } />
+            )
+        }
+    }
+
     return (
         <Table
             data={ locItems }
@@ -61,7 +86,7 @@ export default function LocItems() {
                 },
                 {
                     header: "Type",
-                    render: locItem => <Cell content={ locItem.type } />,
+                    render: locItem => renderType(locItem),
                     width: "200px"
                 },
                     {
