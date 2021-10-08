@@ -1,6 +1,7 @@
 import { UUID } from "../../logion-chain/UUID";
 import React, { useContext, useReducer, Reducer, useEffect, useCallback } from "react";
 import { LocRequest } from "../../common/types/ModelTypes";
+import { confirmLocFile, deleteLocFile } from "../../common/Model";
 import { useCommonContext } from "../../common/CommonContext";
 import { getLegalOfficerCase, addMetadata, addHash, closeLoc } from "../../logion-chain/LogionLoc";
 import { LegalOfficerCase } from "../../logion-chain/Types";
@@ -21,6 +22,8 @@ export interface LocContext {
     changeItemStatus: ((locItem: LocItem, status: LocItemStatus) => void) | null
     close: (() => void) | null
     closeExtrinsic: (() => SignAndSubmit) | null
+    confirmFile: ((locItem: LocItem) => void) | null
+    deleteFile: ((locItem: LocItem) => void) | null
 }
 
 function initialContextValue(locId: UUID): LocContext {
@@ -37,6 +40,8 @@ function initialContextValue(locId: UUID): LocContext {
         changeItemStatus: null,
         close: null,
         closeExtrinsic: null,
+        confirmFile: null,
+        deleteFile: null,
     }
 }
 
@@ -64,6 +69,8 @@ interface Action {
     changeItemStatus?: ((locItem: LocItem, status: LocItemStatus) => void),
     close?: () => void,
     closeExtrinsic?: () => SignAndSubmit,
+    confirmFile?: (locItem: LocItem) => void,
+    deleteFile?: (locItem: LocItem) => void,
 }
 
 const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action): LocContext => {
@@ -85,6 +92,8 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
                 changeItemStatus: action.changeItemStatus!,
                 closeExtrinsic: action.closeExtrinsic!,
                 close: action.close!,
+                confirmFile: action.confirmFile!,
+                deleteFile: action.deleteFile!,
             }
         case "ADD_ITEM":
             return { ...state, locItems: state.locItems.concat(action.locItem!) }
@@ -114,7 +123,7 @@ export interface Props {
 
 export function LocContextProvider(props: Props) {
     const { api } = useLogionChain();
-    const { openedLocRequests, closedLocRequests } = useCommonContext();
+    const { openedLocRequests, closedLocRequests, axios } = useCommonContext();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue(props.locId));
 
     useEffect(() => {
@@ -192,8 +201,13 @@ export function LocContextProvider(props: Props) {
     )
 
     const removeMetadataFunction = useCallback((locItem: LocItem) => {
-            dispatch({ type: 'DELETE_ITEM', locItem })
-        }, [ dispatch ]
+            if(locItem.type === 'Document') {
+                deleteLocFile(axios!, contextValue.locId, locItem.value)
+                .then(() => dispatch({ type: 'DELETE_ITEM', locItem }));
+            } else {
+                dispatch({ type: 'DELETE_ITEM', locItem });
+            }
+        }, [ axios, contextValue.locId, dispatch ]
     )
 
     const changeItemStatusFunction = useCallback((locItem: LocItem, status: LocItemStatus) => {
@@ -223,6 +237,16 @@ export function LocContextProvider(props: Props) {
         }, [ dispatch ]
     )
 
+    const confirmFileFunction = useCallback((item: LocItem) => {
+            confirmLocFile(axios!, contextValue.locId, item.value);
+        }, [ axios, contextValue.locId ]
+    )
+
+    const deleteFileFunction = useCallback((item: LocItem) => {
+            deleteLocFile(axios!, contextValue.locId, item.value);
+        }, [ axios, contextValue.locId ]
+    )
+
     useEffect(() => {
         if (contextValue.loc !== null && contextValue.addMetadata === null) {
             const addMetadata = addMetadataFunction
@@ -233,9 +257,11 @@ export function LocContextProvider(props: Props) {
             const changeItemStatus = changeItemStatusFunction;
             const closeExtrinsic = closeExtrinsicFunction;
             const close = closeFunction;
-            dispatch({ type: 'SET_FUNCTIONS', addMetadata, publishMetadata, addFile, publishFile, removeMetadata, changeItemStatus, closeExtrinsic, close })
+            const confirmFile = confirmFileFunction;
+            const deleteFile = deleteFileFunction;
+            dispatch({ type: 'SET_FUNCTIONS', addMetadata, publishMetadata, addFile, publishFile, removeMetadata, changeItemStatus, closeExtrinsic, close, confirmFile, deleteFile })
         }
-    }, [ contextValue, addMetadataFunction, publishMetadataFunction, addFileFunction, publishFileFunction, removeMetadataFunction, changeItemStatusFunction, closeFunction, closeExtrinsicFunction, dispatch ])
+    }, [ contextValue, addMetadataFunction, publishMetadataFunction, addFileFunction, publishFileFunction, removeMetadataFunction, changeItemStatusFunction, closeFunction, closeExtrinsicFunction, confirmFileFunction, deleteFileFunction, dispatch ])
 
     useEffect(() => {
         if (contextValue.loc === null && api !== null) {

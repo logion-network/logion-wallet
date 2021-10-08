@@ -3,6 +3,8 @@ import Button from "../../common/Button";
 import ProcessStep from "../ProcessStep";
 import Alert from "../../common/Alert";
 import ExtrinsicSubmitter, { SignAndSubmit } from "../../ExtrinsicSubmitter";
+import { useCommonContext } from "../../common/CommonContext";
+
 import { useLocContext } from "./LocContext";
 
 enum CloseStatus {
@@ -18,6 +20,7 @@ interface CloseState {
 }
 
 export default function LocPublicDataButton() {
+    const { refresh } = useCommonContext();
     const { closeExtrinsic, close } = useLocContext();
     const [ closeState, setCloseState ] = useState<CloseState>({ status: CloseStatus.NONE });
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
@@ -62,6 +65,7 @@ export default function LocPublicDataButton() {
                     onSuccess={ () => {
                         setCloseState({ status: CloseStatus.CLOSED })
                         close!()
+                        refresh!()
                     } }
                     onError={ () => {
                     } } />
