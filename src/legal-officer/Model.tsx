@@ -143,10 +143,23 @@ export interface GetFileParameters {
     hash: string
 }
 
+export interface TypedFile {
+    data: any,
+    extension: string
+}
+
 export async function getFile(
     axios: AxiosInstance,
     parameters: GetFileParameters
-):Promise<any> {
-    const response = axios.get(`/api/loc-request/${ parameters.locId }/files/${ parameters.hash }`, { responseType: 'blob' });
-    return response.then(response => response.data);
+): Promise<TypedFile> {
+    const response = await axios.get(`/api/loc-request/${ parameters.locId }/files/${ parameters.hash }`, { responseType: 'blob' });
+    const contentType:string = response.headers['content-type'];
+    return { data: response.data, extension: determineExtension(contentType) };
+}
+
+function determineExtension(contentType: string) {
+    if (!contentType || contentType.indexOf("/") < 0) {
+        return "txt"
+    }
+    return contentType.split("/")[1];
 }

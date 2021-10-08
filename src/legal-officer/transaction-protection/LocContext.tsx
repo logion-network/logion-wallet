@@ -26,6 +26,8 @@ export interface LocContext {
     deleteFile: ((locItem: LocItem) => void) | null
 }
 
+export const UNKNOWN_FILE = "-";
+
 function initialContextValue(locId: UUID): LocContext {
     return {
         locId,
@@ -282,7 +284,7 @@ export function LocContextProvider(props: Props) {
                     })
                     loc!.hashes.forEach(item => {
                         const locItem: LocItem = {
-                            name: "???",
+                            name: UNKNOWN_FILE,
                             value: item,
                             submitter: loc!.owner,
                             timestamp: null,
