@@ -1,7 +1,7 @@
 import { UUID } from "../../logion-chain/UUID";
 import React, { useContext, useReducer, Reducer, useEffect, useCallback } from "react";
 import { LocRequest } from "../../common/types/ModelTypes";
-import { confirmLocFile, deleteLocFile } from "../../common/Model";
+import { confirmLocFile, deleteLocFile, preClose } from "../../common/Model";
 import { useCommonContext } from "../../common/CommonContext";
 import { getLegalOfficerCase, addMetadata, addHash, closeLoc } from "../../logion-chain/LogionLoc";
 import { LegalOfficerCase } from "../../logion-chain/Types";
@@ -233,8 +233,9 @@ export function LocContextProvider(props: Props) {
     )
 
     const closeFunction = useCallback(() => {
-            dispatch({ type: 'CLOSE' })
-        }, [ dispatch ]
+            preClose(axios!, contextValue.locId)
+                .then(() => dispatch({ type: 'CLOSE' }));
+        }, [ axios, contextValue.locId, dispatch ]
     )
 
     const confirmFileFunction = useCallback((item: LocItem) => {

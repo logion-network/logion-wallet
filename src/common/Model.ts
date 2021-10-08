@@ -147,3 +147,11 @@ export async function deleteLocFile(
     const requestId = locId.toString();
     await axios.delete(`/api/loc-request/${requestId}/files/${hash}`);
 }
+
+export async function preClose(
+    axios: AxiosInstance,
+    locId: UUID,
+): Promise<void> {
+    const requestId = locId.toString();
+    await axios.post(`/api/loc-request/${requestId}/close`);
+}
