@@ -46,12 +46,11 @@ export default function LocItems() {
             </ActionCell>)
     }
 
-    function renderType(locItem: LocItem): Child {
+    function renderViewButton(locItem: LocItem): Child {
         if (locItem.type === 'Document') {
             return (
                 <>
                     <ActionCell>
-                        <span>Document</span>
                         <ViewFileButton
                             fileName={ locItem.name === UNKNOWN_FILE ? locItem.value : locItem.name }
                             downloader={ (axios: AxiosInstance) => getFile(axios, {
@@ -62,9 +61,7 @@ export default function LocItems() {
                 </>
             )
         } else {
-            return (
-                <Cell content={ locItem.type } />
-            )
+            return null
         }
     }
 
@@ -86,25 +83,30 @@ export default function LocItems() {
                 },
                 {
                     header: "Type",
-                    render: locItem => renderType(locItem),
-                    width: "200px"
+                    render: locItem => <Cell content={ locItem.type } />,
+                    width: "150px"
                 },
-                    {
-                        header: "Submitted by",
-                        render: locItem => <LegalOfficerName address={ locItem.submitter } />
-                    },
-                    {
-                        header: "",
-                        render: locItem => {
-                            if (locItem.status === 'DRAFT') {
-                                return renderActions(locItem)
-                            } else {
-                                return (<StatusCell text={ locItem.status } color={ POLKADOT } />)
-                            }
+                {
+                    header: "Submitted by",
+                    render: locItem => <LegalOfficerName address={ locItem.submitter } />
+                },
+                {
+                    header: "",
+                    render: locItem => renderViewButton(locItem),
+                    width: "150px"
+                },
+                {
+                    header: "",
+                    render: locItem => {
+                        if (locItem.status === 'DRAFT') {
+                            return renderActions(locItem)
+                        } else {
+                            return (<StatusCell text={ locItem.status } color={ POLKADOT } />)
                         }
                     }
-                ] }
-                renderEmpty={ () => <EmptyTableMessage>No public data nor private documents
-                    yet</EmptyTableMessage> } />
+                }
+            ] }
+            renderEmpty={ () => <EmptyTableMessage>No public data nor private documents
+                yet</EmptyTableMessage> } />
     )
 }
