@@ -17,9 +17,9 @@ import { getFile } from "../Model";
 
 export default function LocItems() {
 
-    const { locId, locItems, removeMetadata } = useLocContext();
+    const { locId, locItems, removeItem } = useLocContext();
 
-    if (removeMetadata === null) {
+    if (removeItem === null) {
         return null;
     }
 
@@ -37,7 +37,7 @@ export default function LocItems() {
                     { locItem.type === 'Document' && <LocPublishPrivateFileButton locItem={ locItem } /> }
                     <Button
                         variant="danger"
-                        onClick={ () => removeMetadata!(locItem) }
+                        onClick={ () => removeItem!(locItem) }
                         data-testid={ `remove-${ locItem.name }` }
                     >
                         X
@@ -78,7 +78,9 @@ export default function LocItems() {
                 },
                 {
                     header: "Timestamp",
-                    render: locItem => <DateTimeCell dateTime={ locItem.timestamp } />,
+                    render: locItem => <DateTimeCell
+                        dateTime={ locItem.timestamp }
+                        spinner={ locItem.status === 'PUBLISHED' } />,
                     width: "200px"
                 },
                 {

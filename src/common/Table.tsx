@@ -10,6 +10,7 @@ import { Child, Children } from './types/Helpers';
 import { useCommonContext } from './CommonContext';
 import './Table.css';
 import Icon from './Icon';
+import Spinner from "react-bootstrap/Spinner";
 
 
 export interface CellProps {
@@ -298,19 +299,24 @@ function ShowDetailsButton(props: ShowDetailsButtonProps) {
 
 export interface DateTimeCellProps {
     dateTime: string | null,
+    spinner?: boolean,
 }
 
 export function DateTimeCell(props: DateTimeCellProps) {
 
-    if(props.dateTime === null) {
-        return <Cell content="-" align="center" />;
+    if (props.dateTime === null) {
+        if (props.spinner) {
+            return <Spinner animation="border" />
+        } else {
+            return <Cell content="-" align="center" />;
+        }
     }
 
     const { date, time } = format(props.dateTime)
 
     return (
         <div className="date-cell">
-            { date }<br/>
+            { date }<br />
             { time }
         </div>
     );
