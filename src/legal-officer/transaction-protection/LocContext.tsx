@@ -83,7 +83,6 @@ interface Action {
 }
 
 const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action): LocContext => {
-    console.log(`ActionType: ${ action.type }`)
     const items = state.locItems.concat();
     const itemIndex = items.indexOf(action.locItem!);
     switch (action.type) {
@@ -137,6 +136,12 @@ export interface Props {
     children: JSX.Element | JSX.Element[] | null
 }
 
+const enum NextRefresh {
+    STOP,
+    SCHEDULE,
+    IMMEDIATE
+}
+
 export function LocContextProvider(props: Props) {
 
     const UNKNOWN_FILE = "-";
@@ -155,15 +160,7 @@ export function LocContextProvider(props: Props) {
         }
     }, [ contextValue.locRequest, contextValue.locId, axios ])
 
-    const enum NextRefresh {
-        STOP,
-        SCHEDULE,
-        IMMEDIATE
-    }
-
     const refreshNameTimestamp = useCallback<() => Promise<NextRefresh>>(() => {
-        console.log(`refreshNameTimestamp() ${ refreshCounter } ${ new Date() }`)
-
         function findItem(locRequest: LocRequest, item: LocItem): LocMetadataItem | LocFile | undefined {
             if (item.type === 'Document') {
                 return findFile(locRequest, item.value)
@@ -212,7 +209,7 @@ export function LocContextProvider(props: Props) {
             return nextRefresh;
         }
         return proceed()
-    }, [ contextValue.loc, contextValue.locItems, contextValue.locId, axios, refreshCounter, NextRefresh.STOP, NextRefresh.SCHEDULE, NextRefresh.IMMEDIATE])
+    }, [ contextValue.loc, contextValue.locItems, contextValue.locId, axios ])
 
     useEffect(() => {
         if (refreshCounter > 0 && !refreshing) {
@@ -235,7 +232,7 @@ export function LocContextProvider(props: Props) {
                 }
             })()
         }
-    }, [ refreshNameTimestamp, refreshCounter, setRefreshCounter, refreshing, setRefreshing, NextRefresh.STOP, NextRefresh.SCHEDULE, NextRefresh.IMMEDIATE ])
+    }, [ refreshNameTimestamp, refreshCounter, setRefreshCounter, refreshing, setRefreshing ])
 
 
     const addMetadataFunction = useCallback((name: string, value: string) => {

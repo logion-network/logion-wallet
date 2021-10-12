@@ -120,13 +120,7 @@ export async function fetchLocRequest(
     axios: AxiosInstance,
     requestId: string
 ): Promise<LocRequest> {
-    const response = await axios.get(`/api/loc-request/${ requestId }`, {
-        headers: {
-            'Cache-Control': 'no-cache',
-            'Pragma': 'no-cache',
-            'Expires': '0',
-        }
-    });
+    const response = await axios.get(`/api/loc-request/${ requestId }`);
     return response.data;
 }
 
