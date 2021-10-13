@@ -39,5 +39,7 @@ const envVars: EnvConfigType = envVarNames.reduce<EnvConfigType>((mem, n) => {
     return mem;
 }, {});
 
-const config: ConfigType = { ...DEFAULT_CONFIG, ...configEnv, ...envVars };
+declare var CONFIG: any;
+
+const config: ConfigType = { ...DEFAULT_CONFIG, ...configEnv, ...envVars, ...CONFIG };
 export default config;
