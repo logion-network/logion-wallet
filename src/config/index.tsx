@@ -39,5 +39,15 @@ const envVars: EnvConfigType = envVarNames.reduce<EnvConfigType>((mem, n) => {
     return mem;
 }, {});
 
-const config: ConfigType = { ...DEFAULT_CONFIG, ...configEnv, ...envVars };
+declare var CONFIG: any;
+
+let runtimeConfig = {};
+if(CONFIG !== undefined) {
+    console.log("Loading runtime configuration.");
+    runtimeConfig = CONFIG;
+} else {
+    console.log("No runtime configuration detected.");
+}
+
+const config: ConfigType = { ...DEFAULT_CONFIG, ...configEnv, ...envVars, ...runtimeConfig };
 export default config;
