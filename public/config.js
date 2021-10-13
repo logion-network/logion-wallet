@@ -1,5 +1,5 @@
+let CONFIG = {
 // Uncomment below lines to provide runtime configuration.
-//let CONFIG = {
 //    APP_NAME: "Logion Wallet",
 //    availableNodes: [
 //        {
@@ -8,4 +8,4 @@
 //            socket: "ws://localhost:9944"
 //        }
 //    ]
-//};
+};
