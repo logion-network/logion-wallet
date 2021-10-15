@@ -14,6 +14,7 @@ import LocPublishPrivateFileButton from "./LocPublishPrivateFileButton";
 import ViewFileButton from "../../common/ViewFileButton";
 import { AxiosInstance } from "axios";
 import { getFile } from "../Model";
+import { LocItem } from "./types";
 
 export default function LocItems() {
 
@@ -24,16 +25,27 @@ export default function LocItems() {
     }
 
     function renderDetails(locItem: LocItem): Child {
-        return locItem.type === 'Data' ?
-            <LocPublicDataDetails item={ locItem } /> :
-            <LocPrivateFileDetails item={ locItem } />
+        return (
+            <>
+                { locItem.type === 'Data' && <LocPublicDataDetails item={ locItem } label={ locItem.name } /> }
+                { locItem.type === 'Document' && <LocPrivateFileDetails item={ locItem } /> }
+                { locItem.type === 'Linked LOC' && <LocPublicDataDetails item={ locItem } label={ locItem.type } /> }
+            </>
+        )
     }
 
     function renderActions(locItem: LocItem): Child {
         return (
             <ActionCell>
                 <ButtonGroup>
-                    { locItem.type === 'Data' && <LocPublishPublicDataButton locItem={ locItem } /> }
+                    { locItem.type === 'Data' && <LocPublishPublicDataButton
+                        locItem={ locItem }
+                        action={ (locContext, locItem) => locContext.publishMetadata!(locItem) }
+                    /> }
+                    { locItem.type === 'Linked LOC' && <LocPublishPublicDataButton
+                        locItem={ locItem }
+                        action={ (locContext, locItem) => locContext.publishLocLink!(locItem) }
+                    /> }
                     { locItem.type === 'Document' && <LocPublishPrivateFileButton locItem={ locItem } /> }
                     <Button
                         variant="danger"

@@ -1,15 +1,36 @@
-import { v4, parse, stringify } from 'uuid';
+import { v4, parse, stringify, validate } from 'uuid';
 import BN from 'bn.js';
 
 export class UUID {
 
     constructor(value?: string | Array<number>) {
-        if(value === undefined) {
+        if (value === undefined) {
             this.bytes = parse(v4())
-        } else if(typeof value === 'string') {
+        } else if (typeof value === 'string') {
             this.bytes = parse(value);
         } else {
             this.bytes = [ ...value ];
+            stringify(this.bytes);
+        }
+    }
+
+    static fromAnyString(value: string): UUID | undefined {
+        if (validate(value)) {
+            return new UUID(value);
+        } else {
+            return this.fromDecimalString(value)
+        }
+    }
+
+    static fromDecimalString(value: string): UUID | undefined {
+        if (!/^\d+$/.test(value)) {
+            return undefined;
+        }
+        try {
+            const numbers = new BN(value, 10).toArray();
+            return new UUID(numbers);
+        } catch (error) {
+            return undefined
         }
     }
 

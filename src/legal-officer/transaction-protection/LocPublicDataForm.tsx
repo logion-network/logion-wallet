@@ -38,17 +38,17 @@ export default function LocPublicDataForm(props: Props) {
                                 value: 40,
                                 message: 'The Data Name must contain at most 40 characters'
                             }
-                        }}
-                        render={({ field }) => (
+                        } }
+                        render={ ({ field }) => (
                             <Form.Control
-                                isInvalid={!!props.errors.dataName?.message}
+                                isInvalid={ !!props.errors.dataName?.message }
                                 type="text" placeholder="e.g. XYZ"
                                 data-testid="dataName"
                                 aria-describedby="locDataName"
                                 { ...field }
                             />
-                        )}                    />
-
+                        ) }
+                    />
                 }
                 colors={ props.colors } />
             <FormGroup

@@ -1,9 +1,10 @@
 import Button from "../../common/Button";
 import React, { useState, useEffect } from "react";
-import { useLocContext } from "./LocContext";
+import { useLocContext, LocContext } from "./LocContext";
 import ExtrinsicSubmitter, { SignAndSubmit } from "../../ExtrinsicSubmitter";
 import ProcessStep from "../ProcessStep";
 import Alert from "../../common/Alert";
+import { LocItem } from "./types";
 
 enum PublishStatus {
     NONE,
@@ -19,21 +20,23 @@ interface PublishState {
 
 export interface Props {
     locItem: LocItem
+    action: (locContext: LocContext, locItem: LocItem) => SignAndSubmit
 }
 
 export default function LocPublishPublicDataButton(props: Props) {
 
+    const { action, locItem } = props;
     const [ publishState, setPublishState ] = useState<PublishState>({ status: PublishStatus.NONE });
-    const { publishMetadata, changeItemStatus } = useLocContext();
+    const locContext = useLocContext();
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
 
     useEffect(() => {
-        if (publishMetadata !== null && publishState.status === PublishStatus.PUBLISH_PENDING) {
+        if (action !== null && publishState.status === PublishStatus.PUBLISH_PENDING) {
             setPublishState({ status: PublishStatus.PUBLISHING });
-            const signAndSubmit: SignAndSubmit = publishMetadata(props.locItem);
+            const signAndSubmit: SignAndSubmit = action(locContext, locItem)
             setSignAndSubmit(() => signAndSubmit);
         }
-    }, [ publishMetadata, publishState, setPublishState, props.locItem ])
+    }, [ action, publishState, setPublishState, locItem, locContext ])
 
     return (
         <>
@@ -67,7 +70,7 @@ export default function LocPublishPublicDataButton(props: Props) {
                     successMessage="LOC public data successfully published"
                     onSuccess={ () => {
                         setPublishState({ status: PublishStatus.PUBLISHED })
-                        changeItemStatus!(props.locItem, 'PUBLISHED')
+                        locContext.changeItemStatus!(props.locItem, 'PUBLISHED')
                     } }
                     onError={ () => {
                     } } />
