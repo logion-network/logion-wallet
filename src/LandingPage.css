@@ -368,6 +368,7 @@
 
 .LandingPage .section-title.transaction-protection {
     margin-top: 80px;
+    position: relative;
 }
 
 .LandingPage .transaction-container .transaction-protection-container {
