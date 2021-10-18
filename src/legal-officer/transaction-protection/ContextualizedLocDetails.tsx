@@ -16,6 +16,7 @@ import LocPrivateFileButton from "./LocPrivateFileButton";
 
 import "./ContextualizedLocDetails.css";
 import Icon from "../../common/Icon";
+import LocLinkButton from "./LocLinkButton";
 
 export interface Props {
     backPath: string,
@@ -53,18 +54,22 @@ export default function ContextualizedLocDetails(props: Props) {
                         const { date, time } = format(locRequest.createdOn)
                         return <>
                             <Row>
-                                <Col md={ 6 }>
+                                <Col md={ 4 }>
                                     <LocItemDetail label="LOC ID">{ locId.toDecimalString() }</LocItemDetail>
                                     <LocItemDetail label="Creation date">{ date } / { time }</LocItemDetail>
                                 </Col>
-                                <Col md={ 6 } className="closed-icon-container">
+                                <Col md={ 4 }>
+                                    <LocItemDetail label="Description">{ locRequest?.description }</LocItemDetail>
+                                </Col>
+
+                                <Col md={ 4 } className="closed-icon-container">
                                     <LocItemDetail
                                         label="Requested by">{ locRequest.userIdentity?.firstName || "" } { locRequest.userIdentity?.lastName || "" }<br />{ locRequest.requesterAddress }
                                     </LocItemDetail>
                                     {
                                         loc.closed &&
                                         <div className="closed-icon">
-                                            <Icon icon={{id:"polkadot_shield"}} />
+                                            <Icon icon={ { id: "polkadot_shield" } } />
                                         </div>
                                     }
                                 </Col>
@@ -82,6 +87,7 @@ export default function ContextualizedLocDetails(props: Props) {
                         <>
                             <LocPublicDataButton />
                             <LocPrivateFileButton />
+                            <LocLinkButton/>
                         </>
                     }
                     right={

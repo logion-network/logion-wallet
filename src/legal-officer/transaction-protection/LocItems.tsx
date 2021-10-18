@@ -1,7 +1,7 @@
 import Table, { Cell, DateTimeCell, EmptyTableMessage, ActionCell } from "../../common/Table";
 import StatusCell from "../../common/StatusCell";
 import LegalOfficerName from "../../common/LegalOfficerNameCell";
-import { useLocContext, UNKNOWN_FILE } from "./LocContext";
+import { useLocContext } from "./LocContext";
 import ButtonGroup from "../../common/ButtonGroup";
 import Button from "../../common/Button";
 import React from "react";
@@ -14,6 +14,8 @@ import LocPublishPrivateFileButton from "./LocPublishPrivateFileButton";
 import ViewFileButton from "../../common/ViewFileButton";
 import { AxiosInstance } from "axios";
 import { getFile } from "../Model";
+import { LocItem } from "./types";
+import { UNKNOWN_NAME } from "./LocItemFactory";
 
 export default function LocItems() {
 
@@ -24,16 +26,27 @@ export default function LocItems() {
     }
 
     function renderDetails(locItem: LocItem): Child {
-        return locItem.type === 'Data' ?
-            <LocPublicDataDetails item={ locItem } /> :
-            <LocPrivateFileDetails item={ locItem } />
+        return (
+            <>
+                { locItem.type === 'Data' && <LocPublicDataDetails item={ locItem } label={ locItem.name } /> }
+                { locItem.type === 'Document' && <LocPrivateFileDetails item={ locItem } /> }
+                { locItem.type === 'Linked LOC' && <LocPublicDataDetails item={ locItem } label={ locItem.type } /> }
+            </>
+        )
     }
 
     function renderActions(locItem: LocItem): Child {
         return (
             <ActionCell>
                 <ButtonGroup>
-                    { locItem.type === 'Data' && <LocPublishPublicDataButton locItem={ locItem } /> }
+                    { locItem.type === 'Data' && <LocPublishPublicDataButton
+                        locItem={ locItem }
+                        action={ (locContext, locItem) => locContext.publishMetadata!(locItem) }
+                    /> }
+                    { locItem.type === 'Linked LOC' && <LocPublishPublicDataButton
+                        locItem={ locItem }
+                        action={ (locContext, locItem) => locContext.publishLocLink!(locItem) }
+                    /> }
                     { locItem.type === 'Document' && <LocPublishPrivateFileButton locItem={ locItem } /> }
                     <Button
                         variant="danger"
@@ -52,7 +65,7 @@ export default function LocItems() {
                 <>
                     <ActionCell>
                         <ViewFileButton
-                            fileName={ locItem.name === UNKNOWN_FILE ? locItem.value : locItem.name }
+                            fileName={ locItem.name === UNKNOWN_NAME ? locItem.value : locItem.name }
                             downloader={ (axios: AxiosInstance) => getFile(axios, {
                                 locId: locId.toString(),
                                 hash: locItem.value

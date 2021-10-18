@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LocLinkExistingForm renders 1`] = `
+<React.Fragment>
+  <h3>
+    Link this LOC to an existing LOC
+  </h3>
+  <p>
+    Important: after publication, these data will be publicly available on the blockchain.
+  </p>
+  <FormGroup
+    colors={
+      Object {
+        "background": "#0c163d",
+        "borderColor": "#e6007a",
+        "foreground": "#ffffff",
+      }
+    }
+    control={
+      <Unknown
+        control={[Function]}
+        name="locId"
+        render={[Function]}
+        rules={
+          Object {
+            "maxLength": Object {
+              "message": "The LOC ID has at most 39 digits",
+              "value": 39,
+            },
+            "required": "The LOC ID is required",
+          }
+        }
+      />
+    }
+    id="locLinkExistingLoc"
+    label="Please set the LOC ID you would like to link with this LOC:"
+  />
+</React.Fragment>
+`;

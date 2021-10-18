@@ -4,6 +4,7 @@ import { useLocContext } from "./LocContext";
 import ExtrinsicSubmitter, { SignAndSubmit } from "../../ExtrinsicSubmitter";
 import ProcessStep from "../ProcessStep";
 import Alert from "../../common/Alert";
+import { LocItem } from "./types";
 
 enum PublishStatus {
     NONE,

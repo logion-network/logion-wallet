@@ -1,11 +1,12 @@
-type LocItemStatus = 'DRAFT' | 'PUBLISHED'
+export type LocItemStatus = 'DRAFT' | 'PUBLISHED'
 
-interface LocItem {
+export type LocItemType = 'Data' | 'Document' | 'Linked LOC'
+
+export interface LocItem {
     name: string,
     value: string,
     timestamp: string | null,
-    type: 'Data' | 'Document',
+    type: LocItemType,
     submitter: string,
     status: LocItemStatus
 }
-

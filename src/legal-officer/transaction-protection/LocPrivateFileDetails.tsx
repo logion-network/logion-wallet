@@ -2,6 +2,7 @@ import { Col } from "../../common/Grid";
 import LocItemDetail from "./LocItemDetail";
 
 import './LocItemDetails.css'
+import { LocItem } from "./types";
 
 export interface Props {
     item: LocItem

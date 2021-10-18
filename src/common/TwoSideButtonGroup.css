@@ -6,6 +6,14 @@
     justify-content: space-between;
 }
 
+.TwoSideButtonGroup .left,
+.TwoSideButtonGroup .right {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
 .TwoSideButtonGroup .left *,
 .TwoSideButtonGroup .right * {
     margin-left: 20px;
