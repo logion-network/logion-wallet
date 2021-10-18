@@ -1,7 +1,7 @@
 import Table, { Cell, DateTimeCell, EmptyTableMessage, ActionCell } from "../../common/Table";
 import StatusCell from "../../common/StatusCell";
 import LegalOfficerName from "../../common/LegalOfficerNameCell";
-import { useLocContext, UNKNOWN_FILE } from "./LocContext";
+import { useLocContext } from "./LocContext";
 import ButtonGroup from "../../common/ButtonGroup";
 import Button from "../../common/Button";
 import React from "react";
@@ -15,6 +15,7 @@ import ViewFileButton from "../../common/ViewFileButton";
 import { AxiosInstance } from "axios";
 import { getFile } from "../Model";
 import { LocItem } from "./types";
+import { UNKNOWN_NAME } from "./LocItemFactory";
 
 export default function LocItems() {
 
@@ -64,7 +65,7 @@ export default function LocItems() {
                 <>
                     <ActionCell>
                         <ViewFileButton
-                            fileName={ locItem.name === UNKNOWN_FILE ? locItem.value : locItem.name }
+                            fileName={ locItem.name === UNKNOWN_NAME ? locItem.value : locItem.name }
                             downloader={ (axios: AxiosInstance) => getFile(axios, {
                                 locId: locId.toString(),
                                 hash: locItem.value

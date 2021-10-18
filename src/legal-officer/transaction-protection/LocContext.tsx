@@ -4,11 +4,18 @@ import { LocRequest, LocFile, LocMetadataItem } from "../../common/types/ModelTy
 import { confirmLocFile, deleteLocFile, preClose, fetchLocRequest } from "../../common/Model";
 import { useCommonContext } from "../../common/CommonContext";
 import { getLegalOfficerCase, addMetadata, addHash, closeLoc } from "../../logion-chain/LogionLoc";
-import { LegalOfficerCase, MetadataItem, ReservedName } from "../../logion-chain/Types";
+import { LegalOfficerCase, ReservedName } from "../../logion-chain/Types";
 import { useLogionChain } from "../../logion-chain";
 import { SignAndSubmit } from "../../ExtrinsicSubmitter";
 import { SignAndSendCallback } from "../../logion-chain/Signature";
-import { LocItemType, LocItemStatus, LOC_ITEM_TYPES, LocItem } from "./types";
+import { LocItemStatus, LocItem } from "./types";
+import {
+    createPublishedMetadataLocItem,
+    createPublishedFileLocItem,
+    createDraftFileLocItem,
+    createDraftMetadataLocItem,
+    createDraftLinkedLocItem, UNKNOWN_NAME
+} from "./LocItemFactory";
 
 export interface LocContext {
     locId: UUID
@@ -28,8 +35,6 @@ export interface LocContext {
     confirmFile: ((locItem: LocItem) => void) | null
     deleteFile: ((locItem: LocItem) => void) | null
 }
-
-export const UNKNOWN_FILE = "-";
 
 const MAX_REFRESH = 20;
 const REFRESH_INTERVAL = 5000;
@@ -153,7 +158,6 @@ const enum NextRefresh {
 
 export function LocContextProvider(props: Props) {
 
-    const UNKNOWN_NAME = "-";
     const { api } = useLogionChain();
     const { axios } = useCommonContext();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue(props.locId));
@@ -188,6 +192,46 @@ export function LocContextProvider(props: Props) {
             return items.find(item => item.status === "PUBLISHED" && (item.name === UNKNOWN_NAME || item.timestamp === null)) === undefined
         }
 
+        function refreshDocumentNames(locRequest: LocRequest): boolean {
+            let refreshed = false;
+            contextValue.locItems
+                .filter(locItem => locItem.type === 'Document' && locItem.name === UNKNOWN_NAME)
+                .forEach(locItem => {
+                    const locFile = findFile(locRequest, locItem.value)
+                    if (locFile && locFile.name) {
+                        refreshed = true;
+                        dispatch({ type: 'UPDATE_ITEM_NAME', locItem, name: locFile.name })
+                    }
+                })
+            return refreshed;
+        }
+
+        function refreshTimestamps(locRequest: LocRequest): boolean {
+            let refreshed = false;
+            contextValue.locItems
+                .filter(locItem => locItem.timestamp === null)
+                .forEach(locItem => {
+                    const locFile = findItem(locRequest, locItem)
+                    if (locFile && locFile.addedOn) {
+                        refreshed = true;
+                        dispatch({ type: 'UPDATE_ITEM_TIMESTAMP', locItem, timestamp: locFile.addedOn })
+                    }
+                })
+            return refreshed;
+        }
+
+        async function refreshLinkedLocsDescription(): Promise<boolean> {
+            let refreshed = false;
+            for (const locItem of contextValue.locItems
+                .filter(locItem => locItem.type === 'Linked LOC' && locItem.name === UNKNOWN_NAME)) {
+                const otherLocId = UUID.fromDecimalString(locItem.value);
+                const otherLocRequest = await fetchLocRequest(axios!, otherLocId!.toString())
+                dispatch({ type: 'UPDATE_ITEM_NAME', locItem, name: otherLocRequest.description })
+                refreshed = true;
+            }
+            return refreshed;
+        }
+
         if (contextValue.loc === null || axios === undefined) {
             return Promise.resolve(NextRefresh.SCHEDULE);
         }
@@ -199,31 +243,15 @@ export function LocContextProvider(props: Props) {
         const proceed = async () => {
             let nextRefresh = NextRefresh.SCHEDULE;
             const locRequest = await fetchLocRequest(axios, contextValue.locId.toString());
-            contextValue.locItems
-                .filter(locItem => locItem.type === 'Document' && locItem.name === UNKNOWN_NAME)
-                .forEach(locItem => {
-                    const locFile = findFile(locRequest, locItem.value)
-                    if (locFile && locFile.name) {
-                        nextRefresh = NextRefresh.IMMEDIATE;
-                        dispatch({ type: 'UPDATE_ITEM_NAME', locItem, name: locFile.name })
-                    }
-                })
-            for (const locItem of contextValue.locItems
-                .filter(locItem => locItem.type === 'Linked LOC' && locItem.name === UNKNOWN_NAME)) {
-                const otherLocId = UUID.fromDecimalString(locItem.value);
-                const otherLocRequest = await fetchLocRequest(axios, otherLocId!.toString())
-                dispatch({ type: 'UPDATE_ITEM_NAME', locItem, name: otherLocRequest.description })
+            if (refreshDocumentNames(locRequest)) {
                 nextRefresh = NextRefresh.IMMEDIATE;
             }
-            contextValue.locItems
-                .filter(locItem => locItem.timestamp === null)
-                .forEach(locItem => {
-                    const locFile = findItem(locRequest, locItem)
-                    if (locFile && locFile.addedOn) {
-                        nextRefresh = NextRefresh.IMMEDIATE;
-                        dispatch({ type: 'UPDATE_ITEM_TIMESTAMP', locItem, timestamp: locFile.addedOn })
-                    }
-                })
+            if (refreshTimestamps(locRequest)) {
+                nextRefresh = NextRefresh.IMMEDIATE;
+            }
+            if (await refreshLinkedLocsDescription()) {
+                nextRefresh = NextRefresh.IMMEDIATE;
+            }
             return nextRefresh;
         }
         return proceed()
@@ -253,20 +281,6 @@ export function LocContextProvider(props: Props) {
     }, [ refreshNameTimestamp, refreshCounter, setRefreshCounter, refreshing, setRefreshing ])
 
 
-    const addMetadataFunction = useCallback((name: string, value: string, type: LocItemType) => {
-            const locItem: LocItem = {
-                name,
-                value,
-                type,
-                timestamp: null,
-                submitter: contextValue.loc!.owner,
-                status: 'DRAFT'
-            }
-            dispatch({ type: 'ADD_ITEM', locItem: locItem })
-            setRefreshCounter(MAX_REFRESH)
-        }, [ contextValue.loc, setRefreshCounter ]
-    )
-
     const publishMetadataFunction = useCallback((item: LocItem, name: string) => {
             const signAndSubmit: SignAndSubmit = (setResult, setError) => {
                 const callback: SignAndSendCallback = (signedTransaction) => {
@@ -285,29 +299,21 @@ export function LocContextProvider(props: Props) {
         }, [ api, contextValue.locId ]
     )
 
-    const addFileFunction = useCallback((name: string, hash: string) => {
-        const locItem: LocItem = {
-            name,
-                value: hash,
-                type: 'Document',
-                timestamp: null,
-                submitter: contextValue.loc!.owner,
-                status: 'DRAFT'
-            }
-            dispatch({ type: 'ADD_ITEM', locItem: locItem })
-            setRefreshCounter(MAX_REFRESH)
-        }, [ contextValue.loc, setRefreshCounter ]
-    )
+    const addLocItemFunction = useCallback((locItemCreator: () => LocItem) => {
+        const locItem = locItemCreator();
+        dispatch({ type: 'ADD_ITEM', locItem })
+        setRefreshCounter(MAX_REFRESH)
+    }, [ setRefreshCounter ])
 
     const publishFileFunction = useCallback((item: LocItem) => {
-            const signAndSubmit: SignAndSubmit = (setResult, setError) => {
-                const callback: SignAndSendCallback = (signedTransaction) => {
-                    setResult(signedTransaction)
-                };
-                return addHash({
-                    locId: contextValue.locId,
-                    api: api!,
-                    signerId: item.submitter,
+        const signAndSubmit: SignAndSubmit = (setResult, setError) => {
+            const callback: SignAndSendCallback = (signedTransaction) => {
+                setResult(signedTransaction)
+            };
+            return addHash({
+                locId: contextValue.locId,
+                api: api!,
+                signerId: item.submitter,
                     hash: item.value,
                     callback,
                     errorCallback: setError
@@ -367,19 +373,16 @@ export function LocContextProvider(props: Props) {
     )
 
     useEffect(() => {
-        if (contextValue.loc !== null && contextValue.addMetadata === null) {
-            const addMetadata = (name: string, value: string) => addMetadataFunction(name, value, 'Data')
-            const linkLoc = (otherLocId: UUID, otherLocDescription: string) => addMetadataFunction(otherLocDescription, otherLocId.toDecimalString(), 'Linked LOC')
+        if (contextValue.loc !== null && contextValue.loc.owner !== null && contextValue.addMetadata === null) {
+            const submitter = contextValue.loc!.owner;
+            const addMetadata = (name: string, value: string) => addLocItemFunction(
+                () => createDraftMetadataLocItem(name, value, submitter));
+            const linkLoc = (otherLocId: UUID, otherLocDescription: string) => addLocItemFunction(
+                () => createDraftLinkedLocItem(otherLocId, otherLocDescription, submitter))
             const publishLocLink = (locItem: LocItem) => publishMetadataFunction(locItem, ReservedName['LinkedLocId']);
             const publishMetadata = (locItem: LocItem) => publishMetadataFunction(locItem, locItem.name);
-            const addFile = addFileFunction
-            const publishFile = publishFileFunction;
-            const removeItem = removeItemFunction;
-            const changeItemStatus = changeItemStatusFunction;
-            const closeExtrinsic = closeExtrinsicFunction;
-            const close = closeFunction;
-            const confirmFile = confirmFileFunction;
-            const deleteFile = deleteFileFunction;
+            const addFile = (name: string, hash: string) => addLocItemFunction(
+                () => createDraftFileLocItem(name, hash, submitter))
             dispatch({
                 type: 'SET_FUNCTIONS',
                 addMetadata,
@@ -387,33 +390,18 @@ export function LocContextProvider(props: Props) {
                 publishLocLink,
                 publishMetadata,
                 addFile,
-                publishFile,
-                removeItem,
-                changeItemStatus,
-                closeExtrinsic,
-                close,
-                confirmFile,
-                deleteFile
+                publishFile: publishFileFunction,
+                removeItem: removeItemFunction,
+                changeItemStatus: changeItemStatusFunction,
+                closeExtrinsic: closeExtrinsicFunction,
+                close: closeFunction,
+                confirmFile: confirmFileFunction,
+                deleteFile: deleteFileFunction
             })
         }
-    }, [ contextValue, addMetadataFunction, publishMetadataFunction, addFileFunction, publishFileFunction, removeItemFunction, changeItemStatusFunction, closeFunction, closeExtrinsicFunction, confirmFileFunction, deleteFileFunction, dispatch ])
-
-    function toLocItem(item: MetadataItem, submitter: string): LocItem {
-        let type: LocItemType = LOC_ITEM_TYPES[item.name as ReservedName]
-        let name = UNKNOWN_NAME;
-        if (!type) {
-            type = 'Data'
-            name = item.name
-        }
-        return {
-            name,
-            value: item.value,
-            submitter,
-            timestamp: null,
-            type,
-            status: 'PUBLISHED'
-        };
-    }
+    }, [ contextValue.loc, contextValue.addMetadata, addLocItemFunction, publishMetadataFunction,
+        publishFileFunction, removeItemFunction, changeItemStatusFunction, closeFunction, closeExtrinsicFunction,
+        confirmFileFunction, deleteFileFunction, dispatch ])
 
     useEffect(() => {
         if (contextValue.loc === null && api !== null) {
@@ -421,19 +409,12 @@ export function LocContextProvider(props: Props) {
                 .then(loc => {
                     dispatch({ type: 'SET_LOC', loc })
                     loc!.metadata.forEach(item => {
-                        let locItem = toLocItem(item, loc!.owner)
+                        const locItem = createPublishedMetadataLocItem(item, loc!.owner)
                         dispatch({ type: 'ADD_ITEM', locItem })
                         setRefreshCounter(MAX_REFRESH)
                     })
                     loc!.hashes.forEach(item => {
-                        const locItem: LocItem = {
-                            name: UNKNOWN_NAME,
-                            value: item,
-                            submitter: loc!.owner,
-                            timestamp: null,
-                            type: 'Document',
-                            status: 'PUBLISHED'
-                        }
+                        const locItem = createPublishedFileLocItem(item, loc!.owner)
                         dispatch({ type: 'ADD_ITEM', locItem })
                         setRefreshCounter(MAX_REFRESH)
                     })
