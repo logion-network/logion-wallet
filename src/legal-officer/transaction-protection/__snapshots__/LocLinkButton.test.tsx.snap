@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LocLinkExistingForm renders 1`] = `
+exports[`LocLinkButton renders 1`] = `
 <React.Fragment>
   <Dropdown
     navbar={false}
@@ -45,10 +45,15 @@ exports[`LocLinkExistingForm renders 1`] = `
     exit={[Function]}
     show={false}
   />
+  <LocCreationDialog
+    exit={[Function]}
+    onSuccess={[Function]}
+    show={false}
+  />
 </React.Fragment>
 `;
 
-exports[`LocLinkExistingForm renders LINK_EXISTING 1`] = `
+exports[`LocLinkButton renders LINK_EXISTING 1`] = `
 <React.Fragment>
   <Dropdown
     navbar={false}
@@ -91,6 +96,64 @@ exports[`LocLinkExistingForm renders LINK_EXISTING 1`] = `
   </Dropdown>
   <LocLinkExistingDialog
     exit={[Function]}
+    show={true}
+  />
+  <LocCreationDialog
+    exit={[Function]}
+    onSuccess={[Function]}
+    show={false}
+  />
+</React.Fragment>
+`;
+
+exports[`LocLinkButton renders LINK_NEW 1`] = `
+<React.Fragment>
+  <Dropdown
+    navbar={false}
+  >
+    <DropdownToggle
+      className="Button"
+    >
+      Link this LOC to another LOC
+    </DropdownToggle>
+    <DropdownMenu
+      align="left"
+      alignRight={false}
+      flip={true}
+    >
+      <DropdownItem
+        as={
+          Object {
+            "$$typeof": Symbol(react.forward_ref),
+            "render": [Function],
+          }
+        }
+        disabled={false}
+        onClick={[Function]}
+      >
+        Link to an existing LOC
+      </DropdownItem>
+      <DropdownItem
+        as={
+          Object {
+            "$$typeof": Symbol(react.forward_ref),
+            "render": [Function],
+          }
+        }
+        disabled={false}
+        onClick={[Function]}
+      >
+        Link to a new LOC
+      </DropdownItem>
+    </DropdownMenu>
+  </Dropdown>
+  <LocLinkExistingDialog
+    exit={[Function]}
+    show={false}
+  />
+  <LocCreationDialog
+    exit={[Function]}
+    onSuccess={[Function]}
     show={true}
   />
 </React.Fragment>

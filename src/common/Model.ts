@@ -134,8 +134,9 @@ export interface CreateLocRequest {
 export async function createLocRequest(
     axios: AxiosInstance,
     request: CreateLocRequest,
-): Promise<void> {
-    await axios.post(`/api/loc-request`, request);
+): Promise<LocRequest> {
+    const response = await axios.post(`/api/loc-request`, request);
+    return response.data;
 }
 
 export async function confirmLocFile(
