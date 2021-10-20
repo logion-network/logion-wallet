@@ -8,6 +8,7 @@ import { useLocContext } from "./LocContext";
 import { LocRequest } from "../../common/types/ModelTypes";
 import { UUID } from "../../logion-chain/UUID";
 import LocCreationSteps from "./LocCreationSteps";
+import { useLegalOfficerContext } from '../LegalOfficerContext';
 
 export interface Props {
     show: boolean,
@@ -16,7 +17,8 @@ export interface Props {
 }
 
 export default function LocCreationDialog(props: Props) {
-    const { colorTheme, accounts, axios } = useCommonContext();
+    const { colorTheme, accounts } = useCommonContext();
+    const { axios } = useLegalOfficerContext();
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>({
         defaultValues: {
             description: ""

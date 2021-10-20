@@ -8,6 +8,7 @@ import { useCommonContext } from '../../common/CommonContext';
 import { LocRequest } from '../../common/types/ModelTypes';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
 import ProcessStep from '../ProcessStep';
+import { useLegalOfficerContext } from '../LegalOfficerContext';
 
 enum CreationStatus {
     NONE,
@@ -29,7 +30,8 @@ export interface Props {
 
 export default function LocCreationSteps(props: Props) {
     const { api } = useLogionChain();
-    const { accounts, axios } = useCommonContext();
+    const { accounts } = useCommonContext();
+    const { axios } = useLegalOfficerContext();
 
     const [ creationState, setCreationState ] = useState<CreationState>({ status: CreationStatus.NONE });
 
