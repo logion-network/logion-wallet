@@ -8,6 +8,14 @@ const LOC_ITEM_TYPES: Record<ReservedName, LocItemType> = {
     [ReservedName.LinkedLocId]: "Linked LOC"
 }
 
+export function displayName(item: MetadataItem): string {
+    let type: LocItemType = LOC_ITEM_TYPES[item.name as ReservedName]
+    if (type) {
+        return type
+    } else {
+        return item.name;
+    }
+}
 export function createPublishedFileLocItem(hash: string, submitter: string): LocItem {
     return createItem(UNKNOWN_NAME, hash, submitter, 'Document', 'PUBLISHED')
 }

@@ -1,0 +1,48 @@
+.Certificate {
+    margin: 70px;
+    padding: 70px;
+    font-size: 22px;
+    border: 20px solid #3b6cf4;
+}
+
+.Certificate .header {
+    margin-bottom: 100px;
+}
+
+.Certificate .header h1 {
+    font-size: 72px;
+    font-weight: 600;
+}
+
+.Certificate .header h2 {
+    font-size: 41px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.Certificate .header h1,h2 {
+    text-align: center;
+}
+
+.Certificate .background-icon {
+    position: absolute;
+    bottom: -100px;
+    right: 70px;
+}
+
+.Certificate .folder-icon {
+    position: absolute;
+    bottom: -100px;
+    right: 150px;
+}
+
+.Certificate .shield-icon {
+    position: absolute;
+    top: 0;
+    right: 180px;
+}
+
+.Certificate .logo {
+    height: 160px;
+}
+
