@@ -17,15 +17,32 @@ import LocPrivateFileButton from "./LocPrivateFileButton";
 import "./ContextualizedLocDetails.css";
 import Icon from "../../common/Icon";
 import LocLinkButton from "./LocLinkButton";
+import { UUID } from "../../logion-chain/UUID";
+import { fetchLocRequest } from "../../common/Model";
+import { useEffect, useState } from "react";
 
 export interface Props {
     backPath: string,
+    otherLocId?: UUID
 }
 
 export default function ContextualizedLocDetails(props: Props) {
     const { colorTheme } = useCommonContext();
     const history = useHistory();
-    const { loc, locId, locRequest } = useLocContext();
+    const { loc, locId, locRequest, linkLoc } = useLocContext();
+    const { axios } = useCommonContext()
+    const [ otherLocAdded, setOtherLocAdded ] = useState<boolean>()
+
+    useEffect(() => {
+        const otherLocId = props.otherLocId;
+        if (linkLoc && axios && otherLocId && !otherLocAdded) {
+            setOtherLocAdded(true);
+            fetchLocRequest(axios, otherLocId.toString())
+                .then(otherLocRequest => {
+                    linkLoc(otherLocId, otherLocRequest.description)
+                })
+        }
+    }, [ linkLoc, axios, props.otherLocId, otherLocAdded, setOtherLocAdded ])
 
     if (loc === null || locRequest === null) {
         return null;

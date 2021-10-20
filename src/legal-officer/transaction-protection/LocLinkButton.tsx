@@ -1,6 +1,11 @@
 import { Dropdown } from "react-bootstrap";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import LocLinkExistingDialog from "./LocLinkExistingLocDialog";
+import LocCreationDialog from "./LocCreationDialog";
+import { locDetailsPath } from "../LegalOfficerPaths";
+import { useHistory } from "react-router-dom";
+import { useLocContext } from "./LocContext";
+import { UUID } from "../../logion-chain/UUID";
 
 export const enum Visible {
     NONE,
@@ -14,6 +19,13 @@ export interface Props {
 
 export default function LocLinkButton(props: Props) {
     const [ visible, setVisible ] = useState<Visible>(props.visible ? props.visible : Visible.NONE);
+    const history = useHistory();
+    const { locId } = useLocContext();
+
+    const goToNewLoc = useCallback((newLocId: UUID) => {
+        history.push(locDetailsPath(newLocId.toString(), locId.toString()))
+        history.go(0)
+    }, [ history, locId ])
 
     return (
         <>
@@ -28,7 +40,15 @@ export default function LocLinkButton(props: Props) {
                     </Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
-            <LocLinkExistingDialog show={ visible === Visible.LINK_EXISTING } exit={ () => setVisible(Visible.NONE) } />
+            <LocLinkExistingDialog
+                show={ visible === Visible.LINK_EXISTING }
+                exit={ () => setVisible(Visible.NONE) }
+            />
+            <LocCreationDialog
+                show={ visible === Visible.LINK_NEW }
+                exit={ () => setVisible(Visible.NONE) }
+                onSuccess={ goToNewLoc }
+            />
         </>
     )
 }
