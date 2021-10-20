@@ -119,7 +119,11 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
                 deleteFile: action.deleteFile!,
             }
         case "ADD_ITEM":
-            return { ...state, locItems: state.locItems.concat(action.locItem!) }
+            if (itemExists(action.locItem!, state.locItems)) {
+                return { ...state }
+            } else {
+                return { ...state, locItems: state.locItems.concat(action.locItem!) }
+            }
         case "UPDATE_ITEM_STATUS":
             items[itemIndex] = { ...action.locItem!, status: action.status! }
             return { ...state, locItems: items }
@@ -143,6 +147,13 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
         default:
             throw new Error(`Unknown type: ${ action.type }`);
     }
+}
+
+function itemExists(locItem: LocItem, locItems: LocItem[]): boolean {
+    return locItems.find(item =>
+        item.type === locItem.type &&
+        item.name === locItem.name &&
+        item.value === locItem.value) !== undefined;
 }
 
 export interface Props {
