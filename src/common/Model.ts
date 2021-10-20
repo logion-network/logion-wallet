@@ -112,6 +112,14 @@ export async function fetchLocRequest(
     return response.data;
 }
 
+export async function fetchPublicLoc(
+    axios: AxiosInstance,
+    requestId: string
+): Promise<LocRequest> {
+    const response = await axios.get(`/api/loc-request/${ requestId }/public`);
+    return response.data;
+}
+
 export interface CreateLocRequest {
     ownerAddress?: string;
     requesterAddress?: string;

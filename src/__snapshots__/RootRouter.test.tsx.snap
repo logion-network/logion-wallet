@@ -23,6 +23,11 @@ exports[`Given legal officer, when rendering, then render legal officer UI or re
       <Login />
     </Route>
     <Route
+      path="/certificate/:locId"
+    >
+      <Certificate />
+    </Route>
+    <Route
       path="/"
     >
       <Redirect
@@ -60,6 +65,11 @@ exports[`Given undefined current address, when rendering, then enable redirect t
       <Login />
     </Route>
     <Route
+      path="/certificate/:locId"
+    >
+      <Certificate />
+    </Route>
+    <Route
       path="/"
     >
       <Redirect
@@ -91,6 +101,11 @@ exports[`Given wallet user, when rendering, then render user UI or redirect to l
       path="/login"
     >
       <Login />
+    </Route>
+    <Route
+      path="/certificate/:locId"
+    >
+      <Certificate />
     </Route>
     <Route
       path="/"

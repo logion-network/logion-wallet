@@ -62,7 +62,7 @@ export interface LocRequest {
     createdOn: string;
     decisionOn?: string;
     id: string;
-    status: "OPEN" | "REQUESTED" | "REJECTED";
+    status: "OPEN" | "REQUESTED" | "REJECTED" | "CLOSED";
     rejectReason?: string;
     userIdentity?: Identity;
     closedOn?: string;
