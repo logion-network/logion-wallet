@@ -1,4 +1,4 @@
-import { It, Mock } from "moq.ts";
+import { It, Mock, Times } from "moq.ts";
 import { AxiosInstance, AxiosResponse } from "axios";
 
 import { PROTECTION_REQUEST } from "./TestData";
@@ -64,12 +64,12 @@ describe("Trust Protection Model", () => {
         const response = new Mock<AxiosResponse>();
         axios.setup(instance => instance.post(It.IsAny(), It.IsAny())).returns(Promise.resolve(response.object()));
 
-        await checkActivation(axios.object(), PROTECTION_REQUEST);
+        await checkActivation(() => axios.object(), PROTECTION_REQUEST);
 
         axios.verify(instance => instance.post(
                 "/api/protection-request/2eb5f71c-7f31-44b5-9390-c3bf56501880/check-activation",
                 It.Is<any>(_request =>
              _request.userAddress === request.requesterAddress
-        )));
+        )), Times.Exactly(2));
     });
 });

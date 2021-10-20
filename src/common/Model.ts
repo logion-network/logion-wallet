@@ -1,8 +1,6 @@
 import { AxiosInstance } from 'axios';
 
 import {
-    TokenizationRequestStatus,
-    TokenizationRequest,
     TransactionsSet,
     LegalOfficerDecisionStatus,
     ProtectionRequestStatus,
@@ -13,17 +11,6 @@ import {
 } from './types/ModelTypes';
 import Identity from './types/Identity';
 import { UUID } from '../logion-chain/UUID';
-
-export interface FetchRequestSpecification {
-    legalOfficerAddress?: string,
-    requesterAddress?: string,
-    status: TokenizationRequestStatus
-}
-
-export async function fetchRequests(axios: AxiosInstance, specification: FetchRequestSpecification): Promise<TokenizationRequest[]> {
-    const response = await axios.put("/api/token-request", specification);
-    return response.data.requests;
-}
 
 export type ProtectionRequestKind = 'RECOVERY' | 'PROTECTION_ONLY' | 'ANY';
 
@@ -48,7 +35,8 @@ export interface FetchTransactionsSpecficication {
 
 export async function getTransactions(
     axios: AxiosInstance,
-    request: FetchTransactionsSpecficication): Promise<TransactionsSet> {
+    request: FetchTransactionsSpecficication
+): Promise<TransactionsSet> {
     const response = await axios.put("/api/transaction", request);
     return {
         transactions: response.data.transactions.map((transaction: Transaction) => enrichTransaction(transaction, request.address))

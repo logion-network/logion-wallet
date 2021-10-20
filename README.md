@@ -14,23 +14,15 @@ yarn install
 ## Usage
 
 Use below command in order to connect to a locally running infrastructure
-(see [here](https://github.com/logion-network/logion-backend-ts#quick-start) for the backend and see
-[here](https://github.com/logion-network/logion-node#getting-started) for the node):
+(see [this project](https://github.com/logion-network/logion-test):
 
 ```bash
 yarn start
 ```
 
-You may also use the Docker way (see below).
-
 ### Connecting to a hosted infrastructure
 
-Use below command in order to connect to a hosted node and backend.
-
-```bash
-export REACT_APP_PROVIDER_SOCKET=wss://example.org:9944 ; export REACT_APP_SERVICE_URL=https://example.org ; yarn start
-```
-
+Change the endpoints in `src/config/development.json`.
 
 ### Test users
 
@@ -89,21 +81,3 @@ transactions, etc.). To do so:
 3. Run `yarn generate:defs-meta`
 
 You are then able to fix and/or enrich the logion-chain SDK.
-
-## Docker
-
-### Build
-
-    docker build . -t logion-wallet
-
-### Run
-
-    docker run --name my-logion-wallet -p 8080:80 logion-wallet
-
-With your browser, you may now navigate to [http://localhost:8080](http://localhost:8080).
-
-## Logion Components
-
-* The [Node](https://github.com/logion-network/logion-node) is the implementation of the chain.
-* The [Typescript backend](https://github.com/logion-network/logion-backend-ts) stores data which cannot be exposed publicly, or which wait legal officer's approval.
-* The [Wallet](https://github.com/logion-network/logion-wallet) is the user application.

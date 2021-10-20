@@ -1,15 +1,16 @@
 import React, { useContext, useEffect, useReducer, Reducer, useCallback } from "react";
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
-import axios, { AxiosInstance } from 'axios';
+import { AxiosInstance } from 'axios';
 import moment from 'moment';
 
 import { useLogionChain } from '../logion-chain';
 import { CoinBalance, getBalances } from '../logion-chain/Balances';
 
-import Accounts, { buildAccounts, AccountTokens } from './types/Accounts';
+import { AxiosFactory, buildAxiosFactory, fetchFromAvailableNodes, anyNodeAxios } from './api';
+import Accounts, { buildAccounts, AccountTokens, Account } from './types/Accounts';
 import { Children } from './types/Helpers';
 import { Transaction, LocRequest } from './types/ModelTypes';
-import { getTransactions, fetchLocRequests } from "./Model";
+import { getTransactions, FetchLocRequestSpecification, fetchLocRequests } from "./Model";
 import { ColorTheme, DEFAULT_COLOR_THEME } from "./ColorTheme";
 import { storeTokens, clearTokens, loadTokens } from './Storage';
 
@@ -30,7 +31,7 @@ export interface CommonContext {
     setColorTheme: ((colorTheme: ColorTheme) => void) | null;
     setTokens: (tokens: AccountTokens) => void;
     logout: () => void;
-    axios?: AxiosInstance;
+    axiosFactory?: AxiosFactory;
     refresh: () => void;
 }
 
@@ -119,7 +120,7 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
             return {
                 ...state,
                 accounts,
-                axios: buildAxiosInstance(accounts),
+                axiosFactory: buildAxiosFactory(accounts),
             };
         }
         case 'SET_ADDRESSES':
@@ -127,7 +128,7 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                 ...state,
                 injectedAccounts: action.injectedAccounts!,
                 accounts: action.accounts!,
-                axios: buildAxiosInstance(action.accounts!),
+                axiosFactory: buildAxiosFactory(action.accounts!),
             };
         case 'FETCH_IN_PROGRESS':
             return {
@@ -175,7 +176,7 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                 ...state,
                 tokens,
                 accounts,
-                axios: buildAxiosInstance(accounts),
+                axiosFactory: buildAxiosFactory(accounts),
             };
         }
         case 'SET_LOGOUT':
@@ -192,7 +193,7 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                 ...state,
                 tokens,
                 accounts,
-                axios: buildAxiosInstance(accounts),
+                axiosFactory: buildAxiosFactory(accounts),
             };
         }
         case 'SCHEDULE_TOKEN_REFRESH':
@@ -230,19 +231,6 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
     }
 }
 
-function buildAxiosInstance(accounts: Accounts): AxiosInstance | undefined {
-    const currentAddress = accounts.current;
-    if(currentAddress === undefined || currentAddress.token === undefined) {
-        return axios.create();
-    } else {
-        return axios.create({
-            headers: {
-                'Authorization': `Bearer ${currentAddress.token.value}`,
-            }
-        });
-    }
-}
-
 export function CommonContextProvider(props: Props) {
     const { apiState, api, injectedAccounts } = useLogionChain();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
@@ -264,11 +252,9 @@ export function CommonContextProvider(props: Props) {
                     accountId: currentAddress
                 });
 
-                const transactions = await getTransactions(contextValue.axios!, {
-                    address: currentAddress
-                });
+                const transactions = await fetchTransactionsGivenAccount(contextValue.accounts!, contextValue.axiosFactory!);
 
-                let specificationFragment;
+                let specificationFragment: any;
                 if(currentAccount.isLegalOfficer) {
                     specificationFragment = {
                         ownerAddress: currentAddress
@@ -279,22 +265,22 @@ export function CommonContextProvider(props: Props) {
                     }
                 }
 
-                const pendingLocRequests = await fetchLocRequests(contextValue.axios!, {
+                const pendingLocRequests = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
                     ...specificationFragment,
                     statuses: ["REQUESTED"]
                 });
 
-                const openedLocRequests = await fetchLocRequests(contextValue.axios!, {
+                const openedLocRequests = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
                     ...specificationFragment,
                     statuses: ["OPEN"]
                 });
 
-                const closedLocRequests = await fetchLocRequests(contextValue.axios!, {
+                const closedLocRequests = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
                     ...specificationFragment,
                     statuses: ["CLOSED"]
                 });
 
-                const rejectedLocRequests = await fetchLocRequests(contextValue.axios!, {
+                const rejectedLocRequests = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
                     ...specificationFragment,
                     statuses: ["REJECTED"]
                 });
@@ -303,7 +289,7 @@ export function CommonContextProvider(props: Props) {
                     type: "SET_DATA",
                     dataAddress: currentAddress,
                     balances,
-                    transactions: transactions.transactions,
+                    transactions,
                     pendingLocRequests,
                     openedLocRequests,
                     closedLocRequests,
@@ -425,4 +411,29 @@ export function CommonContextProvider(props: Props) {
 
 export function useCommonContext(): CommonContext {
     return useContext(CommonContextObject);
+}
+
+async function fetchLocRequestsGivenAccount(currentAccount: Account, axiosFactory: AxiosFactory, specification: FetchLocRequestSpecification): Promise<LocRequest[]> {
+        return fetchGivenAccount(currentAccount, axiosFactory, axios => fetchLocRequests(axios, specification));
+    }
+
+async function fetchGivenAccount<E>(currentAccount: Account, axiosFactory: AxiosFactory, query: (axios: AxiosInstance) => Promise<E[]>): Promise<E[]> {
+    if(currentAccount.isLegalOfficer) {
+        return await query(axiosFactory(currentAccount.address));
+    } else {
+        return await fetchFromAvailableNodes(axiosFactory, axios => query(axios));
+    }
+}
+
+async function fetchTransactionsGivenAccount(accounts: Accounts, axiosFactory: AxiosFactory): Promise<Transaction[]> {
+    const currentAccount = accounts.current!;
+    let axios;
+    if(currentAccount.isLegalOfficer) {
+        axios = axiosFactory(currentAccount.address);
+    } else {
+        axios = anyNodeAxios(accounts);
+    }
+    return (await getTransactions(axios, {
+        address: currentAccount.address
+    })).transactions;
 }

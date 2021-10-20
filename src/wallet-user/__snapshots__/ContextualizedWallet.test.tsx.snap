@@ -94,21 +94,6 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
             "to": "#6050dc",
           },
           "icon": Object {
-            "id": "tokens",
-          },
-        },
-        "id": "tokens",
-        "text": "Tokens",
-        "to": "/user/tokens",
-      },
-      Object {
-        "exact": true,
-        "icon": Object {
-          "background": Object {
-            "from": "#3b6cf4",
-            "to": "#6050dc",
-          },
-          "icon": Object {
             "id": "loc",
           },
         },
@@ -248,21 +233,6 @@ exports[`Given connected, when rendering, then show account, no connect button a
         "id": "wallet",
         "text": "Wallet",
         "to": "/user/wallet",
-      },
-      Object {
-        "exact": true,
-        "icon": Object {
-          "background": Object {
-            "from": "#3b6cf4",
-            "to": "#6050dc",
-          },
-          "icon": Object {
-            "id": "tokens",
-          },
-        },
-        "id": "tokens",
-        "text": "Tokens",
-        "to": "/user/tokens",
       },
       Object {
         "exact": true,
@@ -420,21 +390,6 @@ exports[`Given connecting, when rendering, then show account, no button, no node
             "to": "#6050dc",
           },
           "icon": Object {
-            "id": "tokens",
-          },
-        },
-        "id": "tokens",
-        "text": "Tokens",
-        "to": "/user/tokens",
-      },
-      Object {
-        "exact": true,
-        "icon": Object {
-          "background": Object {
-            "from": "#3b6cf4",
-            "to": "#6050dc",
-          },
-          "icon": Object {
             "id": "loc",
           },
         },
@@ -573,21 +528,6 @@ exports[`Given connection error, when rendering, then show account, no button, n
         "id": "wallet",
         "text": "Wallet",
         "to": "/user/wallet",
-      },
-      Object {
-        "exact": true,
-        "icon": Object {
-          "background": Object {
-            "from": "#3b6cf4",
-            "to": "#6050dc",
-          },
-          "icon": Object {
-            "id": "tokens",
-          },
-        },
-        "id": "tokens",
-        "text": "Tokens",
-        "to": "/user/tokens",
       },
       Object {
         "exact": true,
@@ -744,21 +684,6 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
             "to": "#6050dc",
           },
           "icon": Object {
-            "id": "tokens",
-          },
-        },
-        "id": "tokens",
-        "text": "Tokens",
-        "to": "/user/tokens",
-      },
-      Object {
-        "exact": true,
-        "icon": Object {
-          "background": Object {
-            "from": "#3b6cf4",
-            "to": "#6050dc",
-          },
-          "icon": Object {
             "id": "loc",
           },
         },
@@ -897,21 +822,6 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
         "id": "wallet",
         "text": "Wallet",
         "to": "/user/wallet",
-      },
-      Object {
-        "exact": true,
-        "icon": Object {
-          "background": Object {
-            "from": "#3b6cf4",
-            "to": "#6050dc",
-          },
-          "icon": Object {
-            "id": "tokens",
-          },
-        },
-        "id": "tokens",
-        "text": "Tokens",
-        "to": "/user/tokens",
       },
       Object {
         "exact": true,

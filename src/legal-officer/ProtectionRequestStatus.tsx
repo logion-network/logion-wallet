@@ -7,7 +7,7 @@ import { LegalOfficerDecisionStatus, ProtectionRequestStatus as ProtectionReques
 import './ProtectionRequestStatus.css';
 
 export interface Props {
-    decision: LegalOfficerDecisionStatus | null,
+    decision?: LegalOfficerDecisionStatus | null,
     status: ProtectionRequestStatusType,
 }
 
@@ -16,7 +16,7 @@ export default function ProtectionRequestStatus(props: Props) {
     let icon;
     let status;
     let statusColor: string | undefined = undefined;
-    if(props.decision !== null) {
+    if(props.decision !== null && props.decision !== undefined) {
         if(props.decision === "PENDING") {
             statusColor = ORANGE;
             icon = (<Icon icon={{ id: "pending" }} />);

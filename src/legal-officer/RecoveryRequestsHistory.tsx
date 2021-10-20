@@ -38,7 +38,7 @@ export default function RecoveryRequestsHistory() {
                     {
                         header: "Status",
                         render: request => <ProtectionRequestStatus
-                            decision={ decision(accounts?.current?.address, request.decisions)!.status }
+                            decision={ decision(accounts?.current?.address, request.decisions)?.status }
                             status={ request.status }
                         />,
                         width: "140px",

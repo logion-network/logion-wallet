@@ -17,19 +17,19 @@ import LocRequestAcceptance from './LocRequestAcceptance';
 import LocRequestDetails from './LocRequestDetails';
 
 export default function PendingLocRequests() {
-    const { pendingLocRequests, axios, refresh } = useCommonContext();
+    const { pendingLocRequests, axiosFactory, refresh, accounts } = useCommonContext();
     const [ requestToReject, setRequestToReject ] = useState<string | null>(null);
     const [ reason, setReason ] = useState<string>("");
     const [ requestToAccept, setRequestToAccept ] = useState<LocRequest | null>(null);
 
     const handleClose = () => setRequestToReject(null);
 
-    if (pendingLocRequests === null) {
+    if (pendingLocRequests === null || axiosFactory === undefined) {
         return null;
     }
 
     const rejectAndCloseModal = async () => {
-        await rejectLocRequest(axios!, {
+        await rejectLocRequest(axiosFactory(accounts!.current!.address)!, {
             requestId: requestToReject!,
             rejectReason: reason!,
         });

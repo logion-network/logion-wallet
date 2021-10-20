@@ -15,7 +15,7 @@ jest.mock('./logion-chain');
 jest.mock('./common/CommonContext');
 jest.mock('./common/Authentication');
 
-const AUTHENTICATED_ADDRESS: AccountAddress = {
+const AUTHENTICATED_ADDRESS: Account = {
     name: "name authenticated",
     address: TEST_WALLET_USER,
     isLegalOfficer: false,
@@ -25,7 +25,7 @@ const AUTHENTICATED_ADDRESS: AccountAddress = {
     },
 };
 
-const UNAUTHENTICATED_ADDRESS: AccountAddress = {
+const UNAUTHENTICATED_ADDRESS: Account = {
     name: "name unauthenticated",
     address: DEFAULT_LEGAL_OFFICER,
     isLegalOfficer: true,

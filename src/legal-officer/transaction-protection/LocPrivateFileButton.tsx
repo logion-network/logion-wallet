@@ -13,12 +13,12 @@ export default function LocPrivateFileButton() {
     const [ visible, setVisible ] = useState(false);
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>();
     const [ file, setFile ] = useState<File | null>(null);
-    const { axios } = useCommonContext()
-    const { locId, addFile } = useLocContext();
+    const { axiosFactory } = useCommonContext();
+    const { loc, locId, addFile } = useLocContext();
 
     const submit = useCallback(async (formValues: FormValues) => {
         if (file) {
-            const response = await modelAddFile(axios!, {
+            const response = await modelAddFile(axiosFactory!(loc!.owner)!, {
                 file,
                 locId: locId.toString(),
                 fileName: formValues.fileName
@@ -26,7 +26,7 @@ export default function LocPrivateFileButton() {
             addFile!(formValues.fileName, response.hash);
             setVisible(false)
         }
-    }, [ axios, file, locId, addFile ])
+    }, [ axiosFactory, loc, file, locId, addFile ])
 
     return (
         <>

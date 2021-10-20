@@ -2,9 +2,25 @@
     "APP_NAME": "Logion Wallet DEV",
     "availableNodes": [
         {
-            "name": "Logion Node",
+            "name": "Logion Node 1",
             "peerId": "12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2",
-            "socket": "ws://127.0.0.1:9944"
+            "socket": "ws://localhost:9944",
+            "api": "http://localhost:8080",
+            "owner": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
+        },
+        {
+            "name": "Logion Node 2",
+            "peerId": "12D3KooWQYV9dGMFoRzNStwpXztXaBUjtPqi6aU76ZgUriHhKust",
+            "socket": "ws://localhost:9945",
+            "api": "http://localhost:8081",
+            "owner": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty"
+        },
+        {
+            "name": "Logion Node 3",
+            "peerId": "12D3KooWJvyP3VJYymTqG7eH4PM5rN4T2agk5cdNCfNymAqwqcvZ",
+            "socket": "ws://localhost:9946",
+            "api": "http://localhost:8082",
+            "owner": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y"
         }
     ]
 }

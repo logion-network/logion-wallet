@@ -18,23 +18,10 @@ export interface LegalOfficer {
     details: string
 }
 
-function fakeAddress(i: number) {
-    return "1234567890-abcd-" + i;
-}
-
-const defaultDetails = "Place de le République Française, 10";
-
 export const legalOfficers: LegalOfficer[] = [
     {name: "Patrick Gielen", address: DEFAULT_LEGAL_OFFICER, details: "Modero Bruxelles\nCentral administration \nNijverheidslaan 1\nB - 1853 Grimbergen (Strombeek-Bever)\nBelgium"},
     {name: "Guillaume Grain", address: ANOTHER_LEGAL_OFFICER, details: "SELARL ADRASTEE\nGare des Brotteaux\n14, place Jules Ferry\n69006 LYON\nFrance"},
     {name: "Eline Duysens", address: A_THIRD_LEGAL_OFFICER, details: "Modero Bruxelles\nCentral administration \nNijverheidslaan 1\nB - 1853 Grimbergen (Strombeek-Bever)\nBelgium"},
-    {name: "Ronald Vanswijgenhoven", address: fakeAddress(6), details: defaultDetails},
-    {name: "Thibaut Barnier", address: fakeAddress(7), details: defaultDetails},
-    {name: "Jona Van Leeuwen", address: fakeAddress(8), details: defaultDetails},
-    {name: "Carlos Calvo", address: fakeAddress(9), details: defaultDetails},
-    {name: "Ilias Tsipos", address: fakeAddress(10), details: defaultDetails},
-    {name: "Pedroso Leal", address: fakeAddress(11), details: defaultDetails},
-    {name: "Marc Schmitz", address: fakeAddress(12), details: defaultDetails},
 ];
 
 export function getOfficer(address: string | undefined): LegalOfficer | null {

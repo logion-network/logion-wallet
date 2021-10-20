@@ -24,11 +24,11 @@ export default function Login() {
     const location = useLocation<LocationState>();
     const history = useHistory();
     const { connectedNodeMetadata } = useLogionChain();
-    const { accounts, setTokens, axios } = useCommonContext();
+    const { accounts, setTokens, axiosFactory } = useCommonContext();
     const [ selectedAddresses, setSelectedAddresses ] = useState<string[]>(location.state.selectedAddresses ? location.state.selectedAddresses : []);
 
     const startLogin = useCallback(async () => {
-        const tokens = await authenticate(axios!, selectedAddresses);
+        const tokens = await authenticate(axiosFactory!(), selectedAddresses);
         setTokens(tokens);
 
         if(location.state && location.state.referrer) {
@@ -36,9 +36,9 @@ export default function Login() {
         } else {
             history.push("/");
         }
-    }, [ axios, selectedAddresses, setTokens, history, location ]);
+    }, [ axiosFactory, selectedAddresses, setTokens, history, location ]);
 
-    if(accounts === null || connectedNodeMetadata === null) {
+    if(accounts === null || connectedNodeMetadata === null || axiosFactory === undefined) {
         return null;
     }
 

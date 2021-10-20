@@ -93,21 +93,6 @@ exports[`renders 1`] = `
             "to": "#6050dc",
           },
           "icon": Object {
-            "id": "tokens",
-          },
-        },
-        "id": "tokens",
-        "text": "Tokens",
-        "to": "/legal-officer/tokenization",
-      },
-      Object {
-        "exact": true,
-        "icon": Object {
-          "background": Object {
-            "from": "#3b6cf4",
-            "to": "#6050dc",
-          },
-          "icon": Object {
             "id": "loc",
           },
         },

@@ -1,46 +1,7 @@
 import { AxiosInstance } from 'axios';
 
-import { AssetDescription, LegalOfficerDecision, } from '../common/types/ModelTypes';
+import { LegalOfficerDecision, } from '../common/types/ModelTypes';
 import { RecoveryInfo } from './Types';
-
-export interface RejectRequestParameters {
-    requestId: string,
-    rejectReason: string,
-}
-
-export async function rejectRequest(
-    axios: AxiosInstance,
-    parameters: RejectRequestParameters
-): Promise<void> {
-    await axios.post(`/api/token-request/${parameters.requestId}/reject`, {
-        rejectReason: parameters.rejectReason,
-    });
-}
-
-export interface AcceptRequestParameters {
-    requestId: string,
-}
-
-export async function acceptRequest(
-    axios: AxiosInstance,
-    parameters: AcceptRequestParameters
-): Promise<void> {
-    await axios.post(`/api/token-request/${parameters.requestId}/accept`);
-}
-
-export interface SetAssetDescriptionRequestParameters {
-    requestId: string,
-    description: AssetDescription,
-}
-
-export async function setAssetDescription(
-    axios: AxiosInstance,
-    parameters: SetAssetDescriptionRequestParameters
-): Promise<void> {
-    await axios.post(`/api/token-request/${parameters.requestId}/asset`, {
-        description: parameters.description,
-    });
-}
 
 export interface RejectProtectionRequestParameters {
     requestId: string,

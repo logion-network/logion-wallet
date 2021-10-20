@@ -7,7 +7,6 @@ import { useCommonContext } from '../common/CommonContext';
 
 import {
     HOME_PATH,
-    TOKENIZATION_REQUESTS_PATH,
     PROTECTION_REQUESTS_PATH,
     RECOVERY_REQUESTS_PATH,
     SETTINGS_PATH,
@@ -45,18 +44,6 @@ export default function ContextualizedWallet() {
                     icon: {
                         icon: {
                             id: 'wallet'
-                        },
-                        background: colorTheme.topMenuItems.iconGradient,
-                    },
-                },
-                {
-                    id: "tokens",
-                    text: "Tokens",
-                    to: TOKENIZATION_REQUESTS_PATH,
-                    exact: true,
-                    icon: {
-                        icon: {
-                            id: 'tokens'
                         },
                         background: colorTheme.topMenuItems.iconGradient,
                     },

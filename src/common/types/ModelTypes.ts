@@ -1,26 +1,6 @@
 import Identity from './Identity';
 import PostalAddress from './PostalAddress';
 
-export type TokenizationRequestStatus = "PENDING" | "REJECTED" | "ACCEPTED";
-
-export interface AssetDescription {
-    assetId: string,
-    decimals: number,
-}
-
-export interface TokenizationRequest {
-    id: string,
-    legalOfficerAddress: string,
-    requesterAddress: string,
-    requestedTokenName: string,
-    bars: number,
-    status: TokenizationRequestStatus,
-    rejectReason?: string | null,
-    createdOn?: string,
-    decisionOn?: string,
-    assetDescription?: AssetDescription,
-}
-
 export type LegalOfficerDecisionStatus = "PENDING" | "REJECTED" | "ACCEPTED";
 
 export type ProtectionRequestStatus = "PENDING" | "ACTIVATED";
@@ -30,6 +10,7 @@ export interface LegalOfficerDecision {
     status: LegalOfficerDecisionStatus,
     rejectReason: string | null,
     decisionOn: string | null,
+    requestId?: string;
 }
 
 export interface ProtectionRequest {

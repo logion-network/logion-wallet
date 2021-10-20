@@ -159,19 +159,19 @@ const enum NextRefresh {
 export function LocContextProvider(props: Props) {
 
     const { api } = useLogionChain();
-    const { axios } = useCommonContext();
+    const { axiosFactory, accounts } = useCommonContext();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue(props.locId));
     const [ refreshing, setRefreshing ] = useState<boolean>(false);
     const [ refreshCounter, setRefreshCounter ] = useState<number>(0);
 
     useEffect(() => {
-        if (contextValue.locRequest === null && axios !== undefined) {
-            fetchLocRequest(axios, contextValue.locId.toString())
+        if (contextValue.locRequest === null && axiosFactory !== undefined) {
+            fetchLocRequest(axiosFactory(accounts!.current!.address)!, contextValue.locId.toString())
                 .then(locRequest => {
                     dispatch({ type: 'SET_LOC_REQUEST', locRequest });
                 })
         }
-    }, [ contextValue.locRequest, contextValue.locId, axios ])
+    }, [ contextValue.locRequest, contextValue.locId, axiosFactory, accounts ])
 
     const refreshNameTimestamp = useCallback<() => Promise<NextRefresh>>(() => {
         function findItem(locRequest: LocRequest, item: LocItem): LocMetadataItem | LocFile | undefined {
@@ -225,14 +225,14 @@ export function LocContextProvider(props: Props) {
             for (const locItem of contextValue.locItems
                 .filter(locItem => locItem.type === 'Linked LOC' && locItem.name === UNKNOWN_NAME)) {
                 const otherLocId = UUID.fromDecimalString(locItem.value);
-                const otherLocRequest = await fetchLocRequest(axios!, otherLocId!.toString())
+                const otherLocRequest = await fetchLocRequest(axiosFactory!(accounts!.current!.address)!, otherLocId!.toString())
                 dispatch({ type: 'UPDATE_ITEM_NAME', locItem, name: otherLocRequest.description })
                 refreshed = true;
             }
             return refreshed;
         }
 
-        if (contextValue.loc === null || axios === undefined) {
+        if (contextValue.loc === null || axiosFactory === undefined) {
             return Promise.resolve(NextRefresh.SCHEDULE);
         }
 
@@ -242,7 +242,7 @@ export function LocContextProvider(props: Props) {
 
         const proceed = async () => {
             let nextRefresh = NextRefresh.SCHEDULE;
-            const locRequest = await fetchLocRequest(axios, contextValue.locId.toString());
+            const locRequest = await fetchLocRequest(axiosFactory(accounts!.current!.address)!, contextValue.locId.toString());
             if (refreshDocumentNames(locRequest)) {
                 nextRefresh = NextRefresh.IMMEDIATE;
             }
@@ -255,7 +255,7 @@ export function LocContextProvider(props: Props) {
             return nextRefresh;
         }
         return proceed()
-    }, [ contextValue.loc, contextValue.locItems, contextValue.locId, axios ])
+    }, [ contextValue.loc, contextValue.locItems, contextValue.locId, axiosFactory, accounts ])
 
     useEffect(() => {
         if (refreshCounter > 0 && !refreshing) {
@@ -325,12 +325,12 @@ export function LocContextProvider(props: Props) {
 
     const removeItemFunction = useCallback((locItem: LocItem) => {
             if (locItem.type === 'Document') {
-                deleteLocFile(axios!, contextValue.locId, locItem.value)
+                deleteLocFile(axiosFactory!(accounts!.current!.address)!, contextValue.locId, locItem.value)
                     .then(() => dispatch({ type: 'DELETE_ITEM', locItem }));
             } else {
                 dispatch({ type: 'DELETE_ITEM', locItem });
             }
-        }, [ axios, contextValue.locId, dispatch ]
+        }, [ axiosFactory, accounts, contextValue.locId, dispatch ]
     )
 
     const changeItemStatusFunction = useCallback((locItem: LocItem, status: LocItemStatus) => {
@@ -357,19 +357,19 @@ export function LocContextProvider(props: Props) {
     )
 
     const closeFunction = useCallback(() => {
-            preClose(axios!, contextValue.locId)
+            preClose(axiosFactory!(accounts!.current!.address)!, contextValue.locId)
                 .then(() => dispatch({ type: 'CLOSE' }));
-        }, [ axios, contextValue.locId, dispatch ]
+        }, [ axiosFactory, accounts, contextValue.locId, dispatch ]
     )
 
     const confirmFileFunction = useCallback((item: LocItem) => {
-            confirmLocFile(axios!, contextValue.locId, item.value);
-        }, [ axios, contextValue.locId ]
+            confirmLocFile(axiosFactory!(accounts!.current!.address)!, contextValue.locId, item.value);
+        }, [ axiosFactory, accounts, contextValue.locId ]
     )
 
     const deleteFileFunction = useCallback((item: LocItem) => {
-            deleteLocFile(axios!, contextValue.locId, item.value);
-        }, [ axios, contextValue.locId ]
+            deleteLocFile(axiosFactory!(accounts!.current!.address)!, contextValue.locId, item.value);
+        }, [ axiosFactory, accounts, contextValue.locId ]
     )
 
     useEffect(() => {

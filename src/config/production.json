@@ -4,7 +4,9 @@
         {
             "name": "Logion Node",
             "peerId": "12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2",
-            "socket": "wss://production.example.org:9944"
+            "socket": "wss://production.example.org:9944",
+            "api": "https://production.example.org",
+            "owner": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
         }
     ]
 }

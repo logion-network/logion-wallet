@@ -13,15 +13,15 @@ export interface Props {
 }
 
 export default function AddressSwitcher(props: Props) {
-    const { colorTheme, logout, axios, setTokens, accounts } = useCommonContext();
+    const { colorTheme, logout, axiosFactory, setTokens, accounts } = useCommonContext();
     const [ confirm, setConfirm ] = useState<boolean>(false);
 
     const login = useCallback((address: string) => {
         (async function() {
-            const tokens = await authenticate(axios!, [address]);
+            const tokens = await authenticate(axiosFactory!(), [address]);
             setTokens(tokens);
         })();
-    }, [ axios, setTokens ]);
+    }, [ axiosFactory, setTokens ]);
 
     if(accounts === null || props.selectAddress === null || accounts.current === undefined) {
         return null;

@@ -60,7 +60,7 @@ export function useCommonContext() {
         transactions,
         colorTheme: COLOR_THEME,
         setColorTheme,
-        axios: axiosMock.object(),
+        axiosFactory: () => axiosMock.object(),
         setTokens: jest.fn(),
         pendingLocRequests,
         rejectedLocRequests,

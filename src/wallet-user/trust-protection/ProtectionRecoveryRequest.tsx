@@ -29,7 +29,7 @@ export interface Props {
 
 export default function ProtectionRecoveryRequest(props: Props) {
     const { api } = useLogionChain();
-    const { accounts, colorTheme, axios } = useCommonContext();
+    const { accounts, colorTheme, axiosFactory } = useCommonContext();
     const { refreshRequests, recoveryConfig, recoveredAddress } = useUserContext();
     const [ confirmButtonEnabled, setConfirmButtonEnabled ] = useState(props.request.status === "PENDING");
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
@@ -173,7 +173,11 @@ export default function ProtectionRecoveryRequest(props: Props) {
                         id="activatedProtection"
                         successMessage="Protection successfully activated."
                         signAndSubmit={ signAndSubmit }
-                        onSuccess={ () => { setSignAndSubmit(null); checkActivation(axios!, props.request).finally(() => refreshRequests!(true)); } }
+                        onSuccess={ () => {
+                            setSignAndSubmit(null);
+                            checkActivation(axiosFactory!, props.request)
+                            .finally(() => refreshRequests!(true));
+                        }}
                         onError={ () => {} }
                     />
                     {
@@ -183,7 +187,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
                         <Button
                             id="btnConfirmProtection"
                             onClick={() => {
-                            checkActivation(axios!, props.request)
+                                checkActivation(axiosFactory!, props.request)
                                 .then(() => setConfirmButtonEnabled(false))
                             }}
                         >

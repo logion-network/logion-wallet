@@ -23,7 +23,7 @@ import ExtrinsicSubmitter, { SignAndSubmit } from '../ExtrinsicSubmitter';
 import ButtonGroup from "../common/ButtonGroup";
 
 export default function RecoveryDetails() {
-    const { accounts, axios } = useCommonContext();
+    const { accounts, axiosFactory } = useCommonContext();
     const { api } = useLogionChain();
     const { refreshRequests } = useLegalOfficerContext();
     const { requestId } = useParams<{ requestId: string }>();
@@ -35,16 +35,17 @@ export default function RecoveryDetails() {
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
 
     useEffect(() => {
-        if (recoveryInfo === null) {
-            fetchRecoveryInfo(axios!, requestId)
+        if (recoveryInfo === null && axiosFactory !== undefined) {
+            const currentAddress = accounts!.current!.address;
+            fetchRecoveryInfo(axiosFactory(currentAddress)!, requestId)
                 .then(recoveryInfo => setRecoveryInfo(recoveryInfo));
         }
-    }, [ axios, recoveryInfo, setRecoveryInfo, requestId ]);
+    }, [ axiosFactory, accounts, recoveryInfo, setRecoveryInfo, requestId ]);
 
     const accept = useCallback(() => {
         (async function() {
             const currentAddress = accounts!.current!.address;
-            await acceptProtectionRequest(axios!, {
+            await acceptProtectionRequest(axiosFactory!(currentAddress)!, {
                 legalOfficerAddress: currentAddress,
                 requestId,
             });
@@ -58,12 +59,12 @@ export default function RecoveryDetails() {
             });
             setSignAndSubmit(() => signAndSubmit);
         })();
-    }, [ axios, requestId, accounts, api, recoveryInfo ]);
+    }, [ axiosFactory, requestId, accounts, api, recoveryInfo ]);
 
     const doReject = useCallback(() => {
         (async function() {
             const currentAddress = accounts!.current!.address;
-            await rejectProtectionRequest(axios!, {
+            await rejectProtectionRequest(axiosFactory!(currentAddress)!, {
                 legalOfficerAddress: currentAddress,
                 requestId,
                 rejectReason,
@@ -71,7 +72,7 @@ export default function RecoveryDetails() {
             refreshRequests!(false);
             history.push(RECOVERY_REQUESTS_PATH);
         })();
-    }, [ axios, requestId, accounts, rejectReason, refreshRequests, history ]);
+    }, [ axiosFactory, requestId, accounts, rejectReason, refreshRequests, history ]);
 
     if (recoveryInfo === null) {
         return null;

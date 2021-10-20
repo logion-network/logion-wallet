@@ -2,7 +2,6 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
 import {
-    TOKENIZATION_REQUESTS_PATH,
     PROTECTION_REQUESTS_PATH,
     RECOVERY_REQUESTS_PATH,
     SETTINGS_PATH,
@@ -14,7 +13,6 @@ import {
 } from './LegalOfficerPaths';
 
 import Home from './Home';
-import TokenizationRequests from './TokenizationRequests';
 import ProtectionRequests from './ProtectionRequests';
 import RecoveryRequests from './RecoveryRequests';
 import Settings from '../Settings';
@@ -29,9 +27,6 @@ export default function LegalOfficerRouter() {
     return (
         <>
             <Switch>
-                <Route path={ TOKENIZATION_REQUESTS_PATH }>
-                    <TokenizationRequests />
-                </Route>
                 <Route path={ PROTECTION_REQUESTS_PATH }>
                     <ProtectionRequests />
                 </Route>

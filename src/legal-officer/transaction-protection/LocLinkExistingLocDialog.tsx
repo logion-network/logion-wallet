@@ -17,7 +17,7 @@ export interface Props {
 export default function LocLinkExistingDialog(props: Props) {
     const { api } = useLogionChain();
     const { linkLoc } = useLocContext();
-    const { axios } = useCommonContext();
+    const { axiosFactory } = useCommonContext();
     const { control, handleSubmit, setError, clearErrors, formState: { errors }, reset } = useForm<FormValues>({
         defaultValues: {
             locId: ""
@@ -34,13 +34,13 @@ export default function LocLinkExistingDialog(props: Props) {
             if (!loc) {
                 setError("locId", { type: "value", message: "LOC not found on chain" })
             } else {
-                const locRequest = await fetchLocRequest(axios!, locId.toString())
+                const locRequest = await fetchLocRequest(axiosFactory!(loc.owner)!, locId.toString())
                 linkLoc!(locId, locRequest.description)
                 reset();
                 props.exit();
             }
         }
-    }, [ props, linkLoc, api, setError, clearErrors, reset, axios ])
+    }, [ props, linkLoc, api, setError, clearErrors, reset, axiosFactory ])
 
     return (
         <>
