@@ -16,7 +16,7 @@ export interface Props {
 }
 
 export default function LocCreationDialog(props: Props) {
-    const { colorTheme, accounts } = useCommonContext();
+    const { colorTheme, accounts, refresh } = useCommonContext();
     const { axios } = useLegalOfficerContext();
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>({
         defaultValues: {
@@ -36,8 +36,9 @@ export default function LocCreationDialog(props: Props) {
                 userIdentity: locRequest!.userIdentity,
             }
             setNewLocRequest(await createLocRequest!(axios!, request));
+            refresh()
         })();
-    }, [ axios, accounts, locRequest ]);
+    }, [ axios, accounts, locRequest, refresh ]);
 
     return (
         <>
