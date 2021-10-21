@@ -65,6 +65,7 @@ export default function LocItems() {
                 <>
                     <ActionCell>
                         <ViewFileButton
+                            nodeOwner={ locItem.submitter }
                             fileName={ locItem.name === UNKNOWN_NAME ? locItem.value : locItem.name }
                             downloader={ (axios: AxiosInstance) => getFile(axios, {
                                 locId: locId.toString(),

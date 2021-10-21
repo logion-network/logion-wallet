@@ -25,13 +25,15 @@ function createProtectionRequest(status: ProtectionRequestStatus, isRecovery:boo
                 legalOfficerAddress: '5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty',
                 status: 'PENDING',
                 rejectReason: null,
-                decisionOn: null
+                decisionOn: null,
+                requestId: '2eb5f71c-7f31-44b5-9390-c3bf56501880'
             },
             {
                 legalOfficerAddress: '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
                 status: 'PENDING',
                 rejectReason: null,
-                decisionOn: null
+                decisionOn: null,
+                requestId: '2eb5f71c-7f31-44b5-9390-c3bf56501880'
             }
         ],
         userIdentity: DEFAULT_IDENTITY,

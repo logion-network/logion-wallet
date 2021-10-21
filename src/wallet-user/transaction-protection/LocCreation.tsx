@@ -27,7 +27,7 @@ function shouldShowIdentityFields(
 }
 
 export default function LocCreation() {
-    const { colorTheme, accounts, refresh, axios } = useCommonContext();
+    const { colorTheme, accounts, refresh, axiosFactory } = useCommonContext();
     const { recoveryConfig } = useUserContext();
     const [ requestLoc, setRequestLoc ] = useState(false);
     const { control, handleSubmit, formState: { errors }, reset, watch } = useForm<FormValues>({
@@ -63,12 +63,12 @@ export default function LocCreation() {
                 description: formValues.description,
                 userIdentity,
             }
-            await createLocRequest!(axios!, request);
+            await createLocRequest!(axiosFactory!(formValues.legalOfficer), request);
             setRequestLoc(false);
             reset();
             refresh!();
         })();
-    }, [ axios, accounts, setRequestLoc, refresh, reset, showIdentityFields ]);
+    }, [ axiosFactory, accounts, setRequestLoc, refresh, reset, showIdentityFields ]);
 
     useEffect(() => {
         const subscription = watch(({ legalOfficer }) => setSelectedLegalOfficer(legalOfficer));

@@ -2,6 +2,7 @@ import { AxiosInstance } from "axios";
 import { ProtectionRequest } from "../../common/types/ModelTypes";
 import Identity from '../../common/types/Identity';
 import PostalAddress from '../../common/types/PostalAddress';
+import { AxiosFactory } from "../../common/api";
 
 export interface CreateProtectionRequest {
     requesterAddress: string,
@@ -42,13 +43,16 @@ async function _checkActivation(
 }
 
 export async function checkActivation(
-    axios: AxiosInstance,
+    axiosFactory: AxiosFactory,
     protectionRequest: ProtectionRequest
 ): Promise<void> {
-    await _checkActivation(axios, {
-        requestId: protectionRequest.id,
-        userAddress: protectionRequest.requesterAddress,
-    });
+    const promises = protectionRequest.decisions.map(decision => _checkActivation(
+        axiosFactory(decision.legalOfficerAddress), {
+            requestId: decision.requestId!,
+            userAddress: protectionRequest.requesterAddress,
+        })
+    );
+    await Promise.all(promises);
 }
 
 export interface FindRequestParameters {

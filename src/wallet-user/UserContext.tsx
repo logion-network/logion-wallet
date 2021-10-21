@@ -1,17 +1,13 @@
 import React, { useContext, useEffect, useCallback, useReducer, Reducer } from "react";
 import { Option } from '@polkadot/types';
-import { AxiosInstance } from "axios";
 
 import { useLogionChain } from '../logion-chain';
 import { RecoveryConfig, getRecoveryConfig, getProxy } from '../logion-chain/Recovery';
 import { Children } from '../common/types/Helpers';
+import { AxiosFactory, fetchFromAvailableNodes } from '../common/api';
 
-import {
-    CreateTokenRequest,
-    createTokenRequest as modelCreateTokenRequest,
-} from "./Model";
-import { TokenizationRequest, ProtectionRequest } from "../common/types/ModelTypes";
-import { fetchRequests, fetchProtectionRequests } from "../common/Model";
+import { LegalOfficerDecision, ProtectionRequest } from "../common/types/ModelTypes";
+import { fetchProtectionRequests } from "../common/Model";
 import {
     CreateProtectionRequest,
     createProtectionRequest as modelCreateProtectionRequest,
@@ -21,11 +17,7 @@ import { DARK_MODE } from './Types';
 
 export interface UserContext {
     dataAddress: string | null,
-    createTokenRequest: ((request: CreateTokenRequest) => Promise<TokenizationRequest>) | null,
-    createdTokenRequest: TokenizationRequest | null,
     fetchForAddress: string | null,
-    pendingTokenizationRequests: TokenizationRequest[] | null,
-    tokenizationRequestsHistory: TokenizationRequest[] | null,
     refreshRequests: ((clearBeforeRefresh: boolean) => void) | null,
     createProtectionRequest: ((request: CreateProtectionRequest) => Promise<void>) | null,
     pendingProtectionRequests: ProtectionRequest[] | null,
@@ -36,17 +28,13 @@ export interface UserContext {
 }
 
 interface FullUserContext extends UserContext {
-    currentAxios?: AxiosInstance;
+    currentAxiosFactory?: AxiosFactory;
 }
 
 function initialContextValue(): FullUserContext {
     return {
         dataAddress: null,
-        createTokenRequest: null,
-        createdTokenRequest: null,
         fetchForAddress: null,
-        pendingTokenizationRequests: null,
-        tokenizationRequestsHistory: null,
         refreshRequests: null,
         createProtectionRequest: null,
         pendingProtectionRequests: null,
@@ -60,8 +48,6 @@ const UserContextObject: React.Context<FullUserContext> = React.createContext(in
 
 type ActionType = 'FETCH_IN_PROGRESS'
     | 'SET_DATA'
-    | 'SET_CREATE_TOKEN_REQUEST_FUNCTION'
-    | 'SET_CREATED_TOKEN_REQUEST'
     | 'SET_REFRESH_REQUESTS_FUNCTION'
     | 'SET_CREATE_PROTECTION_REQUEST_FUNCTION'
     | 'SET_CURRENT_AXIOS'
@@ -69,11 +55,7 @@ type ActionType = 'FETCH_IN_PROGRESS'
 
 interface Action {
     type: ActionType,
-    createTokenRequest?: (request: CreateTokenRequest) => Promise<TokenizationRequest>,
-    createdTokenRequest?: TokenizationRequest,
     dataAddress?: string,
-    pendingTokenizationRequests?: TokenizationRequest[],
-    tokenizationRequestsHistory?: TokenizationRequest[],
     pendingProtectionRequests?: ProtectionRequest[],
     acceptedProtectionRequests?: ProtectionRequest[],
     rejectedProtectionRequests?: ProtectionRequest[],
@@ -82,7 +64,7 @@ interface Action {
     createProtectionRequest?: (request: CreateProtectionRequest) => Promise<void>,
     clearBeforeRefresh?: boolean,
     recoveredAddress?: string | null,
-    axios?: AxiosInstance,
+    axiosFactory?: AxiosFactory,
 }
 
 const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, action: Action): FullUserContext => {
@@ -93,8 +75,6 @@ const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, actio
                 return {
                     ...state,
                     fetchForAddress: action.dataAddress!,
-                    pendingTokenizationRequests: null,
-                    tokenizationRequestsHistory: null,
                     pendingProtectionRequests: null,
                     acceptedProtectionRequests: null,
                     rejectedProtectionRequests: null,
@@ -114,8 +94,6 @@ const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, actio
                     ...state,
                     fetchForAddress: null,
                     dataAddress: action.dataAddress!,
-                    pendingTokenizationRequests: action.pendingTokenizationRequests!,
-                    tokenizationRequestsHistory: action.tokenizationRequestsHistory!,
                     pendingProtectionRequests: action.pendingProtectionRequests!,
                     acceptedProtectionRequests: action.acceptedProtectionRequests!,
                     rejectedProtectionRequests: action.rejectedProtectionRequests!,
@@ -126,16 +104,6 @@ const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, actio
                 console.log(`Skipping data because ${action.dataAddress} <> ${state.fetchForAddress}`);
                 return state;
             }
-        case 'SET_CREATE_TOKEN_REQUEST_FUNCTION':
-            return {
-                ...state,
-                createTokenRequest: action.createTokenRequest!
-            };
-        case 'SET_CREATED_TOKEN_REQUEST':
-            return {
-                ...state,
-                createdTokenRequest: action.createdTokenRequest!
-            };
         case "SET_REFRESH_REQUESTS_FUNCTION":
             return {
                 ...state,
@@ -149,7 +117,7 @@ const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, actio
         case "SET_CURRENT_AXIOS":
             return {
                 ...state,
-                currentAxios: action.axios!,
+                currentAxiosFactory: action.axiosFactory!,
             };
         default:
             /* istanbul ignore next */
@@ -162,26 +130,9 @@ export interface Props {
 }
 
 export function UserContextProvider(props: Props) {
-    const { accounts, colorTheme, setColorTheme, axios } = useCommonContext();
+    const { accounts, colorTheme, setColorTheme, axiosFactory } = useCommonContext();
     const { api, apiState } = useLogionChain();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
-
-    useEffect(() => {
-        if (contextValue.createTokenRequest === null || axios !== contextValue.currentAxios) {
-            const createTokenRequest = async (request: CreateTokenRequest): Promise<TokenizationRequest> => {
-                const createdTokenRequest = await modelCreateTokenRequest(axios!, request);
-                dispatch({
-                    type: "SET_CREATED_TOKEN_REQUEST",
-                    createdTokenRequest
-                });
-                return createdTokenRequest;
-            }
-            dispatch({
-                type: 'SET_CREATE_TOKEN_REQUEST_FUNCTION',
-                createTokenRequest
-            });
-        }
-    }, [ axios, contextValue, dispatch ]);
 
     useEffect(() => {
         if(colorTheme !== DARK_MODE && setColorTheme !== null) {
@@ -199,33 +150,26 @@ export function UserContextProvider(props: Props) {
             });
 
             (async function () {
-                const pendingTokenizationRequests = await fetchRequests(axios!, {
-                    requesterAddress: currentAddress,
-                    status: "PENDING",
-                });
-                const acceptedTokenizationRequests = await fetchRequests(axios!, {
-                    requesterAddress: currentAddress,
-                    status: "ACCEPTED",
-                });
-                const rejectedTokenizationRequests = await fetchRequests(axios!, {
-                    requesterAddress: currentAddress,
-                    status: "REJECTED",
-                });
-                const pendingProtectionRequests = await fetchProtectionRequests(axios!, {
+                const allPendingProtectionRequests = await fetchFromAvailableNodes(axiosFactory!, axios => fetchProtectionRequests(axios, {
                     requesterAddress: currentAddress,
                     decisionStatuses: [ "PENDING" ],
                     kind: "ANY",
-                });
-                const acceptedProtectionRequests = await fetchProtectionRequests(axios!, {
+                }));
+                const allAcceptedProtectionRequests = await fetchFromAvailableNodes(axiosFactory!, axios => fetchProtectionRequests(axios, {
                     requesterAddress: currentAddress,
                     decisionStatuses: [ "ACCEPTED" ],
                     kind: "ANY",
-                });
-                const rejectedProtectionRequests = await fetchProtectionRequests(axios!, {
+                }));
+                const allRejectedProtectionRequests = await fetchFromAvailableNodes(axiosFactory!, axios => fetchProtectionRequests(axios, {
                     requesterAddress: currentAddress,
                     decisionStatuses: [ "REJECTED" ],
                     kind: "ANY",
-                });
+                }));
+
+                const pendingProtectionRequests = mergePending(allPendingProtectionRequests, allAcceptedProtectionRequests, allRejectedProtectionRequests);
+                const acceptedProtectionRequests = mergeAccepted(allAcceptedProtectionRequests);
+                const rejectedProtectionRequests = mergeRejected(allPendingProtectionRequests, allRejectedProtectionRequests);
+
                 const recoveryConfig = await getRecoveryConfig({
                     api: api!,
                     accountId: currentAddress
@@ -247,8 +191,6 @@ export function UserContextProvider(props: Props) {
                 dispatch({
                     type: "SET_DATA",
                     dataAddress: currentAddress,
-                    pendingTokenizationRequests,
-                    tokenizationRequestsHistory: acceptedTokenizationRequests.concat(rejectedTokenizationRequests),
                     pendingProtectionRequests,
                     acceptedProtectionRequests,
                     rejectedProtectionRequests,
@@ -257,17 +199,18 @@ export function UserContextProvider(props: Props) {
                 });
             })();
         }
-    }, [ axios, api, dispatch, accounts ]);
+    }, [ axiosFactory, api, dispatch, accounts ]);
 
     useEffect(() => {
         if(apiState === "READY"
+                && axiosFactory !== undefined
                 && accounts !== null
                 && accounts.current !== undefined
                 && contextValue.dataAddress !== accounts.current.address
                 && contextValue.fetchForAddress !== accounts.current.address) {
             refreshRequests(true);
         }
-    }, [ apiState, contextValue, accounts, refreshRequests, dispatch ]);
+    }, [ apiState, axiosFactory, contextValue, accounts, refreshRequests, dispatch ]);
 
     useEffect(() => {
         if(contextValue.refreshRequests !== refreshRequests && apiState === "READY") {
@@ -279,28 +222,29 @@ export function UserContextProvider(props: Props) {
     }, [ apiState, refreshRequests, contextValue, dispatch ]);
 
     useEffect(() => {
-        if ((contextValue.createProtectionRequest === null
-                    || axios !== contextValue.currentAxios)
-                && apiState === "READY") {
+        if (axiosFactory !== undefined
+                && apiState === "READY"
+                && (contextValue.createProtectionRequest === null || axiosFactory !== contextValue.currentAxiosFactory)) {
             const createProtectionRequest = async (request: CreateProtectionRequest): Promise<void> => {
-                await modelCreateProtectionRequest(axios!, request);
+                const promises = request.legalOfficerAddresses.map(address => modelCreateProtectionRequest(axiosFactory(address)!, request));
+                await Promise.all(promises);
             }
             dispatch({
                 type: "SET_CREATE_PROTECTION_REQUEST_FUNCTION",
                 createProtectionRequest,
             });
         }
-    }, [ axios, apiState, contextValue, refreshRequests, dispatch ]);
+    }, [ axiosFactory, apiState, contextValue, refreshRequests, dispatch ]);
 
     useEffect(() => {
-        if(axios !== undefined
-                && contextValue.currentAxios !== axios) {
+        if(axiosFactory !== undefined
+                && contextValue.currentAxiosFactory !== axiosFactory) {
             dispatch({
                 type: "SET_CURRENT_AXIOS",
-                axios,
+                axiosFactory,
             });
         }
-    }, [ axios, contextValue, dispatch ]);
+    }, [ axiosFactory, contextValue, dispatch ]);
 
     return (
         <UserContextObject.Provider value={contextValue}>
@@ -311,4 +255,65 @@ export function UserContextProvider(props: Props) {
 
 export function useUserContext(): UserContext {
     return useContext(UserContextObject);
+}
+
+function mergePending(pendingProtectionRequests: ProtectionRequest[], acceptedProtectionRequests: ProtectionRequest[], rejectedProtectionRequests: ProtectionRequest[]): ProtectionRequest[] {
+    if(pendingProtectionRequests.length + acceptedProtectionRequests.length < 2
+        || pendingProtectionRequests.length === 0
+        || rejectedProtectionRequests.length > 0) {
+        return [];
+    }
+
+    const referenceRequest = pendingProtectionRequests[0];
+    const mergedRequest: ProtectionRequest = {
+        ...referenceRequest,
+        decisions: [ cloneWithRequestId(referenceRequest.decisions[0], referenceRequest.id) ]
+    };
+    if(pendingProtectionRequests.length > 1) {
+        mergeOtherRequest(mergedRequest, pendingProtectionRequests[1]);
+    } else if(acceptedProtectionRequests.length > 0) {
+        mergeOtherRequest(mergedRequest, acceptedProtectionRequests[0]);
+    }
+    return [ mergedRequest ];
+}
+
+function cloneWithRequestId(decision: LegalOfficerDecision, requestId: string): LegalOfficerDecision {
+    return {
+        ...decision,
+        requestId,
+    };
+}
+
+function mergeOtherRequest(mergedRequest: ProtectionRequest, otherRequest: ProtectionRequest) {
+    mergedRequest.decisions.push(cloneWithRequestId(otherRequest.decisions[0], otherRequest.id));
+}
+
+function mergeAccepted(acceptedProtectionRequests: ProtectionRequest[]): ProtectionRequest[] {
+    if(acceptedProtectionRequests.length < 2) {
+        return [];
+    }
+    const referenceRequest = acceptedProtectionRequests[0];
+    const mergedRequest: ProtectionRequest = {
+        ...referenceRequest,
+        decisions: [ cloneWithRequestId(referenceRequest.decisions[0], referenceRequest.id) ]
+    };
+    mergeOtherRequest(mergedRequest, acceptedProtectionRequests[1]);
+    return [ mergedRequest ];
+}
+
+function mergeRejected(pendingProtectionRequests: ProtectionRequest[], rejectedProtectionRequests: ProtectionRequest[]) {
+    if(rejectedProtectionRequests.length === 0) {
+        return [];
+    }
+    const referenceRequest = rejectedProtectionRequests[0];
+    const mergedRequest: ProtectionRequest = {
+        ...referenceRequest,
+        decisions: [ cloneWithRequestId(referenceRequest.decisions[0], referenceRequest.id) ]
+    };
+    if(pendingProtectionRequests.length > 0) {
+        mergeOtherRequest(mergedRequest, pendingProtectionRequests[0]);
+    } else if(rejectedProtectionRequests.length > 1) {
+        mergeOtherRequest(mergedRequest, rejectedProtectionRequests[1]);
+    }
+    return [ mergedRequest ];
 }

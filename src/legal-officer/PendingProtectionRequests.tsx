@@ -35,7 +35,7 @@ export interface Props {
 }
 
 export default function PendingProtectionRequests(props: Props) {
-    const { accounts, axios } = useCommonContext();
+    const { accounts, axiosFactory } = useCommonContext();
     const { pendingProtectionRequests, refreshRequests, pendingRecoveryRequests } = useLegalOfficerContext();
     const [ rejectReason, setRejectReason ] = useState<string>("");
     const [ reviewState, setReviewState ] = useState<ReviewState>(NO_REVIEW_STATE);
@@ -49,7 +49,7 @@ export default function PendingProtectionRequests(props: Props) {
         const currentAddress = accounts!.current!.address;
         (async function() {
             const requestId = reviewState.request!.id;
-            await rejectProtectionRequest(axios!, {
+            await rejectProtectionRequest(axiosFactory!(currentAddress)!, {
                 legalOfficerAddress: currentAddress,
                 requestId,
                 rejectReason,
@@ -57,20 +57,20 @@ export default function PendingProtectionRequests(props: Props) {
             setReviewState(NO_REVIEW_STATE);
             refreshRequests!(false);
         })();
-    }, [ axios, reviewState, accounts, rejectReason, setReviewState, refreshRequests ]);
+    }, [ axiosFactory, reviewState, accounts, rejectReason, setReviewState, refreshRequests ]);
 
     const acceptAndCloseModal = useCallback(() => {
         const currentAddress = accounts!.current!.address;
         (async function() {
             const requestId = reviewState.request!.id;
-            await acceptProtectionRequest(axios!, {
+            await acceptProtectionRequest(axiosFactory!(currentAddress)!, {
                 legalOfficerAddress: currentAddress,
                 requestId,
             });
             setReviewState(NO_REVIEW_STATE);
             refreshRequests!(false);
         })();
-    }, [ axios, reviewState, accounts, setReviewState, refreshRequests ]);
+    }, [ axiosFactory, reviewState, accounts, setReviewState, refreshRequests ]);
 
     if (pendingProtectionRequests === null || pendingRecoveryRequests === null) {
         return null;

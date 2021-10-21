@@ -8,7 +8,6 @@ import WarningDialog from '../common/WarningDialog';
 
 import UserRouter, {
     HOME_PATH,
-    TOKENS_PATH,
     TRUST_PROTECTION_PATH,
     SETTINGS_PATH,
     RECOVERY_PATH,
@@ -55,18 +54,6 @@ export default function ContextualizedWallet() {
                     icon: {
                         icon: {
                             id: 'wallet'
-                        },
-                        background: colorTheme.topMenuItems.iconGradient,
-                    },
-                },
-                {
-                    id: "tokens",
-                    text: "Tokens",
-                    to: TOKENS_PATH,
-                    exact: true,
-                    icon: {
-                        icon: {
-                            id: 'tokens'
                         },
                         background: colorTheme.topMenuItems.iconGradient,
                     },

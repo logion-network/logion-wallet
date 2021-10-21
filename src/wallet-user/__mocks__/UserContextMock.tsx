@@ -1,16 +1,10 @@
 import {DEFAULT_LEGAL_OFFICER} from "../../common/types/LegalOfficer";
 import { TEST_WALLET_USER } from '../TestData';
 import {ApiPromise} from '@polkadot/api';
-import {TokenizationRequest, ProtectionRequest} from "../../common/types/ModelTypes";
+import { ProtectionRequest } from "../../common/types/ModelTypes";
 import { DARK_MODE } from '../Types';
 
 export let createTokenRequest = () => null;
-
-export let createdTokenRequest: TokenizationRequest | null = null;
-
-export let pendingTokenizationRequests: TokenizationRequest[] | null = null;
-
-export let tokenizationRequestsHistory: TokenizationRequest[] | null = null;
 
 export let refreshRequests = jest.fn();
 
@@ -34,10 +28,6 @@ export function useUserContext() {
     return {
         legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
         userAddress,
-        createTokenRequest,
-        createdTokenRequest,
-        pendingTokenizationRequests,
-        tokenizationRequestsHistory,
         refreshRequests,
         createProtectionRequest,
         pendingProtectionRequests,
@@ -52,18 +42,6 @@ export function useUserContext() {
 
 export function setCreateTokenRequest(callback: any) {
     createTokenRequest = callback;
-}
-
-export function setCreatedTokenRequest(request: TokenizationRequest) {
-    createdTokenRequest = request;
-}
-
-export function setPendingRequests(requests: TokenizationRequest[]) {
-    pendingTokenizationRequests = requests;
-}
-
-export function setTokenizationRequestsHistory(requests: TokenizationRequest[]) {
-    tokenizationRequestsHistory = requests;
 }
 
 export function setRefreshRequests(func: any) {

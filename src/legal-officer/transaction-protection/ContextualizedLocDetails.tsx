@@ -20,6 +20,7 @@ import LocLinkButton from "./LocLinkButton";
 import { UUID } from "../../logion-chain/UUID";
 import { fetchLocRequest } from "../../common/Model";
 import { useEffect, useState } from "react";
+import { useLegalOfficerContext } from "../LegalOfficerContext";
 
 export interface Props {
     backPath: string,
@@ -28,9 +29,9 @@ export interface Props {
 
 export default function ContextualizedLocDetails(props: Props) {
     const { colorTheme } = useCommonContext();
+    const { axios } = useLegalOfficerContext();
     const history = useHistory();
     const { loc, locId, locRequest, linkLoc } = useLocContext();
-    const { axios } = useCommonContext()
     const [ otherLocAdded, setOtherLocAdded ] = useState<boolean>()
 
     useEffect(() => {

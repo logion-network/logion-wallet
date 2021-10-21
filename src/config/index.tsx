@@ -1,7 +1,9 @@
 export interface Node {
-    name: string,
-    socket: string,
-    peerId: string,
+    name: string;
+    socket: string;
+    peerId: string;
+    api: string;
+    owner: string;
 }
 
 export interface ConfigType {

@@ -4,11 +4,6 @@ exports[`renders 1`] = `
 <React.Fragment>
   <Switch>
     <Route
-      path="/legal-officer/tokenization"
-    >
-      <TokenizationRequests />
-    </Route>
-    <Route
       path="/legal-officer/protection"
     >
       <ProtectionRequests />

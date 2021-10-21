@@ -4,7 +4,6 @@ import { Switch, Route } from 'react-router-dom';
 import { USER_PATH } from '../RootPaths';
 
 import Home from "./Home";
-import Tokens from "./Tokens";
 import Settings from "../Settings";
 import TrustProtection from "./trust-protection/TrustProtection";
 import Recovery from "./trust-protection/Recovery";
@@ -13,7 +12,6 @@ import Transactions from "../common/Transactions";
 import TransactionProtection from "./transaction-protection/TransactionProtection";
 
 export const HOME_PATH = USER_PATH;
-export const TOKENS_PATH = USER_PATH + '/tokens';
 export const TRUST_PROTECTION_PATH = USER_PATH + '/protection';
 export const SETTINGS_PATH = USER_PATH + '/settings';
 export const RECOVERY_PATH = USER_PATH + '/recovery';
@@ -31,9 +29,6 @@ export default function UserRouter() {
     return (
         <>
             <Switch>
-                <Route path={ TOKENS_PATH }>
-                    <Tokens />
-                </Route>
                 <Route path={ TRUST_PROTECTION_PATH }>
                     <TrustProtection />
                 </Route>

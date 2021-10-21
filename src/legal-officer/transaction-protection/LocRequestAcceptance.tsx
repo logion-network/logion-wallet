@@ -33,7 +33,7 @@ export interface Props {
 
 export default function LocRequestAcceptance(props: Props) {
     const { api } = useLogionChain();
-    const { accounts, axios, refresh } = useCommonContext();
+    const { accounts, axiosFactory, refresh } = useCommonContext();
 
     const [ acceptState, setAcceptState ] = useState<AcceptState>({status: AcceptStatus.NONE});
 
@@ -48,11 +48,11 @@ export default function LocRequestAcceptance(props: Props) {
         if(acceptState.status === AcceptStatus.ACCEPTANCE_PENDING) {
             setStatus(AcceptStatus.ACCEPTING);
             (async function () {
-                await acceptLocRequest(axios!, { requestId: props.requestToAccept!.id });
+                await acceptLocRequest(axiosFactory!(props.requestToAccept!.ownerAddress)!, { requestId: props.requestToAccept!.id });
                 setStatus(AcceptStatus.ACCEPTED);
             })();
         }
-    }, [ axios, acceptState, props.requestToAccept, setStatus ]);
+    }, [ axiosFactory, acceptState, props.requestToAccept, setStatus ]);
 
     // LOC creation
     useEffect(() => {
@@ -72,7 +72,7 @@ export default function LocRequestAcceptance(props: Props) {
             proceed();
         }
     }, [
-        axios,
+        axiosFactory,
         acceptState,
         setStatus,
         setAcceptState,
