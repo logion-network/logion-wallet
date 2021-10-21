@@ -230,7 +230,12 @@ let timeout: NodeJS.Timeout | null = null;
 
 const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX.Element => {
     const [state, dispatch] = useReducer(reducer, initState());
-    state.selectedNode = config.availableNodes[0];
+    const host = window.location.host;
+    let servingNode = config.availableNodes.find(node => node.api.indexOf(host) !== -1);
+    if(servingNode === undefined) {
+        servingNode = config.availableNodes[0];
+    }
+    state.selectedNode = servingNode;
     state.connect = () => connect(state, dispatch);
 
     connect(state, dispatch);
