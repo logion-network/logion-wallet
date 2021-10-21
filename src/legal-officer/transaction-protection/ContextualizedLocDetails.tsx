@@ -13,37 +13,18 @@ import TwoSideButtonGroup from "../../common/TwoSideButtonGroup";
 import { POLKADOT } from "../../common/ColorTheme";
 import CloseLocButton from "./CloseLocButton";
 import LocPrivateFileButton from "./LocPrivateFileButton";
-
 import "./ContextualizedLocDetails.css";
 import Icon from "../../common/Icon";
 import LocLinkButton from "./LocLinkButton";
-import { UUID } from "../../logion-chain/UUID";
-import { fetchLocRequest } from "../../common/Model";
-import { useEffect, useState } from "react";
-import { useLegalOfficerContext } from "../LegalOfficerContext";
 
 export interface Props {
     backPath: string,
-    otherLocId?: UUID
 }
 
 export default function ContextualizedLocDetails(props: Props) {
     const { colorTheme } = useCommonContext();
-    const { axios } = useLegalOfficerContext();
     const history = useHistory();
-    const { loc, locId, locRequest, linkLoc } = useLocContext();
-    const [ otherLocAdded, setOtherLocAdded ] = useState<boolean>()
-
-    useEffect(() => {
-        const otherLocId = props.otherLocId;
-        if (linkLoc && axios && otherLocId && !otherLocAdded) {
-            setOtherLocAdded(true);
-            fetchLocRequest(axios, otherLocId.toString())
-                .then(otherLocRequest => {
-                    linkLoc(otherLocId, otherLocRequest.description)
-                })
-        }
-    }, [ linkLoc, axios, props.otherLocId, otherLocAdded, setOtherLocAdded ])
+    const { loc, locId, locRequest } = useLocContext();
 
     if (loc === null || locRequest === null) {
         return null;

@@ -2,12 +2,7 @@
 
 exports[`renders OPEN 1`] = `
 <StatusCell
-  color="#37ad4b"
-  icon={
-    Object {
-      "id": "activated",
-    }
-  }
+  color="#ff9b3f"
   text="Open"
 />
 `;

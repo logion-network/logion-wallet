@@ -18,8 +18,7 @@ export default function LocStatusCell(props: Props) {
         icon = { id: "pending" };
         text = "Pending";
     } else if(props.status === "OPEN") {
-        color = GREEN;
-        icon = { id: "activated" };
+        color = ORANGE;
         text = "Open";
     } else if(props.status === "REJECTED") {
         color = RED;
