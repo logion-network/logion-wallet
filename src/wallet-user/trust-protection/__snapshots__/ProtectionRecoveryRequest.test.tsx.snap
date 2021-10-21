@@ -49,7 +49,9 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
 Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
-France",
+France
+Tel: +33 4 78 52 87 56
+mail: g.grain@adrastee-lyon.fr",
           "name": "Guillaume Grain",
         }
       }
@@ -57,11 +59,13 @@ France",
       legalOfficer2={
         Object {
           "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-          "details": "Modero Bruxelles
-Central administration 
-Nijverheidslaan 1
-B - 1853 Grimbergen (Strombeek-Bever)
-Belgium",
+          "details": "MODERO
+Huissier de Justice Etterbeek
+Rue Beckers 17
+1040 Etterbeek
+Belgique
+Tel: +32 498 237 107
+mail: patrick@logion.network",
           "name": "Patrick Gielen",
         }
       }
@@ -70,11 +74,13 @@ Belgium",
         Array [
           Object {
             "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-            "details": "Modero Bruxelles
-Central administration 
-Nijverheidslaan 1
-B - 1853 Grimbergen (Strombeek-Bever)
-Belgium",
+            "details": "MODERO
+Huissier de Justice Etterbeek
+Rue Beckers 17
+1040 Etterbeek
+Belgique
+Tel: +32 498 237 107
+mail: patrick@logion.network",
             "name": "Patrick Gielen",
           },
           Object {
@@ -83,17 +89,21 @@ Belgium",
 Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
-France",
+France
+Tel: +33 4 78 52 87 56
+mail: g.grain@adrastee-lyon.fr",
             "name": "Guillaume Grain",
           },
           Object {
             "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-            "details": "Modero Bruxelles
-Central administration 
-Nijverheidslaan 1
-B - 1853 Grimbergen (Strombeek-Bever)
-Belgium",
-            "name": "Eline Duysens",
+            "details": "AUXILIA CONSEILS 18
+Huissiers de Justice associés
+7 rue Jean Francois Champollion Parc Comitec
+18000 Bourges
+France
+Tel: +33 2 48 67 50 50
+mail: alain.barland@auxilia-conseils.com",
+            "name": "Alain Barland",
           },
         ]
       }
@@ -157,7 +167,9 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
 Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
-France",
+France
+Tel: +33 4 78 52 87 56
+mail: g.grain@adrastee-lyon.fr",
           "name": "Guillaume Grain",
         }
       }
@@ -165,11 +177,13 @@ France",
       legalOfficer2={
         Object {
           "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-          "details": "Modero Bruxelles
-Central administration 
-Nijverheidslaan 1
-B - 1853 Grimbergen (Strombeek-Bever)
-Belgium",
+          "details": "MODERO
+Huissier de Justice Etterbeek
+Rue Beckers 17
+1040 Etterbeek
+Belgique
+Tel: +32 498 237 107
+mail: patrick@logion.network",
           "name": "Patrick Gielen",
         }
       }
@@ -178,11 +192,13 @@ Belgium",
         Array [
           Object {
             "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-            "details": "Modero Bruxelles
-Central administration 
-Nijverheidslaan 1
-B - 1853 Grimbergen (Strombeek-Bever)
-Belgium",
+            "details": "MODERO
+Huissier de Justice Etterbeek
+Rue Beckers 17
+1040 Etterbeek
+Belgique
+Tel: +32 498 237 107
+mail: patrick@logion.network",
             "name": "Patrick Gielen",
           },
           Object {
@@ -191,17 +207,21 @@ Belgium",
 Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
-France",
+France
+Tel: +33 4 78 52 87 56
+mail: g.grain@adrastee-lyon.fr",
             "name": "Guillaume Grain",
           },
           Object {
             "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-            "details": "Modero Bruxelles
-Central administration 
-Nijverheidslaan 1
-B - 1853 Grimbergen (Strombeek-Bever)
-Belgium",
-            "name": "Eline Duysens",
+            "details": "AUXILIA CONSEILS 18
+Huissiers de Justice associés
+7 rue Jean Francois Champollion Parc Comitec
+18000 Bourges
+France
+Tel: +33 2 48 67 50 50
+mail: alain.barland@auxilia-conseils.com",
+            "name": "Alain Barland",
           },
         ]
       }
@@ -256,7 +276,9 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
 Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
-France",
+France
+Tel: +33 4 78 52 87 56
+mail: g.grain@adrastee-lyon.fr",
           "name": "Guillaume Grain",
         }
       }
@@ -264,11 +286,13 @@ France",
       legalOfficer2={
         Object {
           "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-          "details": "Modero Bruxelles
-Central administration 
-Nijverheidslaan 1
-B - 1853 Grimbergen (Strombeek-Bever)
-Belgium",
+          "details": "MODERO
+Huissier de Justice Etterbeek
+Rue Beckers 17
+1040 Etterbeek
+Belgique
+Tel: +32 498 237 107
+mail: patrick@logion.network",
           "name": "Patrick Gielen",
         }
       }
@@ -277,11 +301,13 @@ Belgium",
         Array [
           Object {
             "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-            "details": "Modero Bruxelles
-Central administration 
-Nijverheidslaan 1
-B - 1853 Grimbergen (Strombeek-Bever)
-Belgium",
+            "details": "MODERO
+Huissier de Justice Etterbeek
+Rue Beckers 17
+1040 Etterbeek
+Belgique
+Tel: +32 498 237 107
+mail: patrick@logion.network",
             "name": "Patrick Gielen",
           },
           Object {
@@ -290,17 +316,21 @@ Belgium",
 Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
-France",
+France
+Tel: +33 4 78 52 87 56
+mail: g.grain@adrastee-lyon.fr",
             "name": "Guillaume Grain",
           },
           Object {
             "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-            "details": "Modero Bruxelles
-Central administration 
-Nijverheidslaan 1
-B - 1853 Grimbergen (Strombeek-Bever)
-Belgium",
-            "name": "Eline Duysens",
+            "details": "AUXILIA CONSEILS 18
+Huissiers de Justice associés
+7 rue Jean Francois Champollion Parc Comitec
+18000 Bourges
+France
+Tel: +33 2 48 67 50 50
+mail: alain.barland@auxilia-conseils.com",
+            "name": "Alain Barland",
           },
         ]
       }
@@ -371,7 +401,9 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
 Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
-France",
+France
+Tel: +33 4 78 52 87 56
+mail: g.grain@adrastee-lyon.fr",
           "name": "Guillaume Grain",
         }
       }
@@ -379,11 +411,13 @@ France",
       legalOfficer2={
         Object {
           "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-          "details": "Modero Bruxelles
-Central administration 
-Nijverheidslaan 1
-B - 1853 Grimbergen (Strombeek-Bever)
-Belgium",
+          "details": "MODERO
+Huissier de Justice Etterbeek
+Rue Beckers 17
+1040 Etterbeek
+Belgique
+Tel: +32 498 237 107
+mail: patrick@logion.network",
           "name": "Patrick Gielen",
         }
       }
@@ -392,11 +426,13 @@ Belgium",
         Array [
           Object {
             "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-            "details": "Modero Bruxelles
-Central administration 
-Nijverheidslaan 1
-B - 1853 Grimbergen (Strombeek-Bever)
-Belgium",
+            "details": "MODERO
+Huissier de Justice Etterbeek
+Rue Beckers 17
+1040 Etterbeek
+Belgique
+Tel: +32 498 237 107
+mail: patrick@logion.network",
             "name": "Patrick Gielen",
           },
           Object {
@@ -405,17 +441,21 @@ Belgium",
 Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
-France",
+France
+Tel: +33 4 78 52 87 56
+mail: g.grain@adrastee-lyon.fr",
             "name": "Guillaume Grain",
           },
           Object {
             "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-            "details": "Modero Bruxelles
-Central administration 
-Nijverheidslaan 1
-B - 1853 Grimbergen (Strombeek-Bever)
-Belgium",
-            "name": "Eline Duysens",
+            "details": "AUXILIA CONSEILS 18
+Huissiers de Justice associés
+7 rue Jean Francois Champollion Parc Comitec
+18000 Bourges
+France
+Tel: +33 2 48 67 50 50
+mail: alain.barland@auxilia-conseils.com",
+            "name": "Alain Barland",
           },
         ]
       }
@@ -464,7 +504,9 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
 Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
-France",
+France
+Tel: +33 4 78 52 87 56
+mail: g.grain@adrastee-lyon.fr",
           "name": "Guillaume Grain",
         }
       }
@@ -472,11 +514,13 @@ France",
       legalOfficer2={
         Object {
           "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-          "details": "Modero Bruxelles
-Central administration 
-Nijverheidslaan 1
-B - 1853 Grimbergen (Strombeek-Bever)
-Belgium",
+          "details": "MODERO
+Huissier de Justice Etterbeek
+Rue Beckers 17
+1040 Etterbeek
+Belgique
+Tel: +32 498 237 107
+mail: patrick@logion.network",
           "name": "Patrick Gielen",
         }
       }
@@ -485,11 +529,13 @@ Belgium",
         Array [
           Object {
             "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-            "details": "Modero Bruxelles
-Central administration 
-Nijverheidslaan 1
-B - 1853 Grimbergen (Strombeek-Bever)
-Belgium",
+            "details": "MODERO
+Huissier de Justice Etterbeek
+Rue Beckers 17
+1040 Etterbeek
+Belgique
+Tel: +32 498 237 107
+mail: patrick@logion.network",
             "name": "Patrick Gielen",
           },
           Object {
@@ -498,17 +544,21 @@ Belgium",
 Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
-France",
+France
+Tel: +33 4 78 52 87 56
+mail: g.grain@adrastee-lyon.fr",
             "name": "Guillaume Grain",
           },
           Object {
             "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-            "details": "Modero Bruxelles
-Central administration 
-Nijverheidslaan 1
-B - 1853 Grimbergen (Strombeek-Bever)
-Belgium",
-            "name": "Eline Duysens",
+            "details": "AUXILIA CONSEILS 18
+Huissiers de Justice associés
+7 rue Jean Francois Champollion Parc Comitec
+18000 Bourges
+France
+Tel: +33 2 48 67 50 50
+mail: alain.barland@auxilia-conseils.com",
+            "name": "Alain Barland",
           },
         ]
       }
@@ -560,7 +610,9 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
 Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
-France",
+France
+Tel: +33 4 78 52 87 56
+mail: g.grain@adrastee-lyon.fr",
           "name": "Guillaume Grain",
         }
       }
@@ -568,11 +620,13 @@ France",
       legalOfficer2={
         Object {
           "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-          "details": "Modero Bruxelles
-Central administration 
-Nijverheidslaan 1
-B - 1853 Grimbergen (Strombeek-Bever)
-Belgium",
+          "details": "MODERO
+Huissier de Justice Etterbeek
+Rue Beckers 17
+1040 Etterbeek
+Belgique
+Tel: +32 498 237 107
+mail: patrick@logion.network",
           "name": "Patrick Gielen",
         }
       }
@@ -581,11 +635,13 @@ Belgium",
         Array [
           Object {
             "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-            "details": "Modero Bruxelles
-Central administration 
-Nijverheidslaan 1
-B - 1853 Grimbergen (Strombeek-Bever)
-Belgium",
+            "details": "MODERO
+Huissier de Justice Etterbeek
+Rue Beckers 17
+1040 Etterbeek
+Belgique
+Tel: +32 498 237 107
+mail: patrick@logion.network",
             "name": "Patrick Gielen",
           },
           Object {
@@ -594,17 +650,21 @@ Belgium",
 Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
-France",
+France
+Tel: +33 4 78 52 87 56
+mail: g.grain@adrastee-lyon.fr",
             "name": "Guillaume Grain",
           },
           Object {
             "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-            "details": "Modero Bruxelles
-Central administration 
-Nijverheidslaan 1
-B - 1853 Grimbergen (Strombeek-Bever)
-Belgium",
-            "name": "Eline Duysens",
+            "details": "AUXILIA CONSEILS 18
+Huissiers de Justice associés
+7 rue Jean Francois Champollion Parc Comitec
+18000 Bourges
+France
+Tel: +33 2 48 67 50 50
+mail: alain.barland@auxilia-conseils.com",
+            "name": "Alain Barland",
           },
         ]
       }

@@ -25,7 +25,7 @@ export default function Login() {
     const history = useHistory();
     const { connectedNodeMetadata } = useLogionChain();
     const { accounts, setTokens, axiosFactory } = useCommonContext();
-    const [ selectedAddresses, setSelectedAddresses ] = useState<string[]>(location.state.selectedAddresses ? location.state.selectedAddresses : []);
+    const [ selectedAddresses, setSelectedAddresses ] = useState<string[]>(location.state && location.state.selectedAddresses ? location.state.selectedAddresses : []);
 
     const startLogin = useCallback(async () => {
         const tokens = await authenticate(axiosFactory!(), selectedAddresses);

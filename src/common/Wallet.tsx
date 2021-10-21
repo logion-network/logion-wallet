@@ -150,6 +150,8 @@ function NotAvailable() {
 function transactionAmount(transaction: Transaction): string {
     if(transaction.type === 'Received') {
         return transaction.transferValue;
+    } else if(transaction.type === 'Sent') {
+        return "-" + transaction.transferValue;
     } else {
         return transaction.total;
     }

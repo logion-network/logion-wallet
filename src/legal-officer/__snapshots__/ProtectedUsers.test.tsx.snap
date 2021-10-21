@@ -50,7 +50,9 @@ exports[`renders 2 rows 1`] = `
 Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
-France",
+France
+Tel: +33 4 78 52 87 56
+mail: g.grain@adrastee-lyon.fr",
                 "name": "Guillaume Grain",
               }
             }
@@ -89,7 +91,9 @@ France",
 Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
-France",
+France
+Tel: +33 4 78 52 87 56
+mail: g.grain@adrastee-lyon.fr",
                 "name": "Guillaume Grain",
               }
             }
@@ -151,7 +155,9 @@ exports[`renders one row 1`] = `
 Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
-France",
+France
+Tel: +33 4 78 52 87 56
+mail: g.grain@adrastee-lyon.fr",
                 "name": "Guillaume Grain",
               }
             }

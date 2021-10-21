@@ -1,7 +1,9 @@
 import { ApiPromise } from '@polkadot/api';
-import { PrefixedNumber, ScientificNumber, convertToPrefixed, NONE } from "./numbers";
+import { PrefixedNumber, ScientificNumber, convertToPrefixed, NONE, ATTO } from "./numbers";
+import { ExtrinsicSubmissionParameters, Unsubscriber, signAndSend } from './Signature';
 
 const LOG_DECIMALS = 18;
+export const LOG_SMALLEST_UNIT = ATTO;
 
 export interface GetAccountDataParameters {
     api: ApiPromise,
@@ -101,4 +103,27 @@ export function getCoin(coinId: string): Coin {
     } else {
         throw new Error(`Unsupported coin ${coinId}`);
     }
+}
+
+export interface TransferParameters extends ExtrinsicSubmissionParameters {
+    api: ApiPromise;
+    destination: string;
+    amount: PrefixedNumber;
+}
+
+export function transfer(parameters: TransferParameters): Unsubscriber {
+    const {
+        api,
+        signerId,
+        callback,
+        errorCallback,
+        destination,
+    } = parameters;
+
+    return signAndSend({
+        signerId,
+        submittable: api.tx.balances.transfer(destination, parameters.amount.convertTo(LOG_SMALLEST_UNIT).coefficient.unnormalize()),
+        callback,
+        errorCallback,
+    });
 }

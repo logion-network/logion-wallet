@@ -45,3 +45,14 @@
 .FormGroup .form-check-input:not(.is-invalid) ~ .form-check-label {
     padding-bottom: 20px;
 }
+
+.FormGroup .input-group .btn-primary,
+.FormGroup .input-group .btn-primary.dropdown-toggle {
+    background-color: transparent;
+    border: none;
+}
+
+.FormGroup .input-group .btn-primary:focus,
+.FormGroup .input-group .btn-primary.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0;
+}
