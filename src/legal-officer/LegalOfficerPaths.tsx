@@ -19,11 +19,6 @@ export function transactionsPath(coinId: string): string {
 
 export const LOC_REQUESTS_PATH = LEGAL_OFFICER_PATH + '/loc';
 export const LOC_DETAILS_PATH = LEGAL_OFFICER_PATH + '/loc-details/:locId';
-export function locDetailsPath(locId: string, otherLocId?: string) {
-    let path = LOC_DETAILS_PATH.replace(":locId", locId);
-    if (otherLocId) {
-        path = path + "?otherLocId=" + otherLocId
-    }
-    return path
-
+export function locDetailsPath(locId: string) {
+    return LOC_DETAILS_PATH.replace(":locId", locId)
 }

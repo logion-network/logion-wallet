@@ -2,10 +2,9 @@ import { Dropdown } from "react-bootstrap";
 import { useState, useCallback } from "react";
 import LocLinkExistingDialog from "./LocLinkExistingLocDialog";
 import LocCreationDialog from "./LocCreationDialog";
-import { locDetailsPath } from "../LegalOfficerPaths";
-import { useHistory } from "react-router-dom";
 import { useLocContext } from "./LocContext";
 import { UUID } from "../../logion-chain/UUID";
+import { LocRequest } from "../../common/types/ModelTypes";
 
 export const enum Visible {
     NONE,
@@ -19,13 +18,13 @@ export interface Props {
 
 export default function LocLinkButton(props: Props) {
     const [ visible, setVisible ] = useState<Visible>(props.visible ? props.visible : Visible.NONE);
-    const history = useHistory();
-    const { locId } = useLocContext();
+    const { linkLoc } = useLocContext();
 
-    const goToNewLoc = useCallback((newLocId: UUID) => {
-        history.push(locDetailsPath(newLocId.toString(), locId.toString()))
-        history.go(0)
-    }, [ history, locId ])
+    const linkNewLoc = useCallback((newLocRequest: LocRequest) => {
+        if (linkLoc !== null) {
+            linkLoc(new UUID(newLocRequest.id), newLocRequest.description)
+        }
+    }, [ linkLoc ])
 
     return (
         <>
@@ -47,7 +46,7 @@ export default function LocLinkButton(props: Props) {
             <LocCreationDialog
                 show={ visible === Visible.LINK_NEW }
                 exit={ () => setVisible(Visible.NONE) }
-                onSuccess={ goToNewLoc }
+                onSuccess={ linkNewLoc }
             />
         </>
     )

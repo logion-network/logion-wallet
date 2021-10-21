@@ -6,14 +6,13 @@ import Dialog from '../../common/Dialog';
 import LocCreationForm, { FormValues } from "./LocCreationForm";
 import { useLocContext } from "./LocContext";
 import { LocRequest } from "../../common/types/ModelTypes";
-import { UUID } from "../../logion-chain/UUID";
 import LocCreationSteps from "./LocCreationSteps";
 import { useLegalOfficerContext } from '../LegalOfficerContext';
 
 export interface Props {
     show: boolean,
     exit: () => void,
-    onSuccess: (newLocId: UUID) => void
+    onSuccess: (locRequest: LocRequest) => void
 }
 
 export default function LocCreationDialog(props: Props) {
@@ -78,7 +77,7 @@ export default function LocCreationDialog(props: Props) {
                         props.exit();
                         reset();
                     } }
-                    onSuccess={ () => props.onSuccess(new UUID(newLocRequest.id)) }
+                    onSuccess={ () => props.onSuccess(newLocRequest) }
                 />
                 }
             </Dialog>
