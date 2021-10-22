@@ -50,8 +50,8 @@ Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
 France
-Tel: +33 4 78 52 87 56
-mail: g.grain@adrastee-lyon.fr",
+Tel: +33 4 78 52 87 56",
+          "email": "g.grain@adrastee-lyon.fr",
           "name": "Guillaume Grain",
         }
       }
@@ -64,8 +64,8 @@ Huissier de Justice Etterbeek
 Rue Beckers 17
 1040 Etterbeek
 Belgique
-Tel: +32 498 237 107
-mail: patrick@logion.network",
+Tel: +32 498 237 107",
+          "email": "patrick@logion.network",
           "name": "Patrick Gielen",
         }
       }
@@ -79,8 +79,8 @@ Huissier de Justice Etterbeek
 Rue Beckers 17
 1040 Etterbeek
 Belgique
-Tel: +32 498 237 107
-mail: patrick@logion.network",
+Tel: +32 498 237 107",
+            "email": "patrick@logion.network",
             "name": "Patrick Gielen",
           },
           Object {
@@ -90,8 +90,8 @@ Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
 France
-Tel: +33 4 78 52 87 56
-mail: g.grain@adrastee-lyon.fr",
+Tel: +33 4 78 52 87 56",
+            "email": "g.grain@adrastee-lyon.fr",
             "name": "Guillaume Grain",
           },
           Object {
@@ -101,8 +101,8 @@ Huissiers de Justice associés
 7 rue Jean Francois Champollion Parc Comitec
 18000 Bourges
 France
-Tel: +33 2 48 67 50 50
-mail: alain.barland@auxilia-conseils.com",
+Tel: +33 2 48 67 50 50",
+            "email": "alain.barland@auxilia-conseils.com",
             "name": "Alain Barland",
           },
         ]
@@ -168,8 +168,8 @@ Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
 France
-Tel: +33 4 78 52 87 56
-mail: g.grain@adrastee-lyon.fr",
+Tel: +33 4 78 52 87 56",
+          "email": "g.grain@adrastee-lyon.fr",
           "name": "Guillaume Grain",
         }
       }
@@ -182,8 +182,8 @@ Huissier de Justice Etterbeek
 Rue Beckers 17
 1040 Etterbeek
 Belgique
-Tel: +32 498 237 107
-mail: patrick@logion.network",
+Tel: +32 498 237 107",
+          "email": "patrick@logion.network",
           "name": "Patrick Gielen",
         }
       }
@@ -197,8 +197,8 @@ Huissier de Justice Etterbeek
 Rue Beckers 17
 1040 Etterbeek
 Belgique
-Tel: +32 498 237 107
-mail: patrick@logion.network",
+Tel: +32 498 237 107",
+            "email": "patrick@logion.network",
             "name": "Patrick Gielen",
           },
           Object {
@@ -208,8 +208,8 @@ Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
 France
-Tel: +33 4 78 52 87 56
-mail: g.grain@adrastee-lyon.fr",
+Tel: +33 4 78 52 87 56",
+            "email": "g.grain@adrastee-lyon.fr",
             "name": "Guillaume Grain",
           },
           Object {
@@ -219,8 +219,8 @@ Huissiers de Justice associés
 7 rue Jean Francois Champollion Parc Comitec
 18000 Bourges
 France
-Tel: +33 2 48 67 50 50
-mail: alain.barland@auxilia-conseils.com",
+Tel: +33 2 48 67 50 50",
+            "email": "alain.barland@auxilia-conseils.com",
             "name": "Alain Barland",
           },
         ]
@@ -277,8 +277,8 @@ Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
 France
-Tel: +33 4 78 52 87 56
-mail: g.grain@adrastee-lyon.fr",
+Tel: +33 4 78 52 87 56",
+          "email": "g.grain@adrastee-lyon.fr",
           "name": "Guillaume Grain",
         }
       }
@@ -291,8 +291,8 @@ Huissier de Justice Etterbeek
 Rue Beckers 17
 1040 Etterbeek
 Belgique
-Tel: +32 498 237 107
-mail: patrick@logion.network",
+Tel: +32 498 237 107",
+          "email": "patrick@logion.network",
           "name": "Patrick Gielen",
         }
       }
@@ -306,8 +306,8 @@ Huissier de Justice Etterbeek
 Rue Beckers 17
 1040 Etterbeek
 Belgique
-Tel: +32 498 237 107
-mail: patrick@logion.network",
+Tel: +32 498 237 107",
+            "email": "patrick@logion.network",
             "name": "Patrick Gielen",
           },
           Object {
@@ -317,8 +317,8 @@ Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
 France
-Tel: +33 4 78 52 87 56
-mail: g.grain@adrastee-lyon.fr",
+Tel: +33 4 78 52 87 56",
+            "email": "g.grain@adrastee-lyon.fr",
             "name": "Guillaume Grain",
           },
           Object {
@@ -328,8 +328,8 @@ Huissiers de Justice associés
 7 rue Jean Francois Champollion Parc Comitec
 18000 Bourges
 France
-Tel: +33 2 48 67 50 50
-mail: alain.barland@auxilia-conseils.com",
+Tel: +33 2 48 67 50 50",
+            "email": "alain.barland@auxilia-conseils.com",
             "name": "Alain Barland",
           },
         ]
@@ -402,8 +402,8 @@ Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
 France
-Tel: +33 4 78 52 87 56
-mail: g.grain@adrastee-lyon.fr",
+Tel: +33 4 78 52 87 56",
+          "email": "g.grain@adrastee-lyon.fr",
           "name": "Guillaume Grain",
         }
       }
@@ -416,8 +416,8 @@ Huissier de Justice Etterbeek
 Rue Beckers 17
 1040 Etterbeek
 Belgique
-Tel: +32 498 237 107
-mail: patrick@logion.network",
+Tel: +32 498 237 107",
+          "email": "patrick@logion.network",
           "name": "Patrick Gielen",
         }
       }
@@ -431,8 +431,8 @@ Huissier de Justice Etterbeek
 Rue Beckers 17
 1040 Etterbeek
 Belgique
-Tel: +32 498 237 107
-mail: patrick@logion.network",
+Tel: +32 498 237 107",
+            "email": "patrick@logion.network",
             "name": "Patrick Gielen",
           },
           Object {
@@ -442,8 +442,8 @@ Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
 France
-Tel: +33 4 78 52 87 56
-mail: g.grain@adrastee-lyon.fr",
+Tel: +33 4 78 52 87 56",
+            "email": "g.grain@adrastee-lyon.fr",
             "name": "Guillaume Grain",
           },
           Object {
@@ -453,8 +453,8 @@ Huissiers de Justice associés
 7 rue Jean Francois Champollion Parc Comitec
 18000 Bourges
 France
-Tel: +33 2 48 67 50 50
-mail: alain.barland@auxilia-conseils.com",
+Tel: +33 2 48 67 50 50",
+            "email": "alain.barland@auxilia-conseils.com",
             "name": "Alain Barland",
           },
         ]
@@ -505,8 +505,8 @@ Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
 France
-Tel: +33 4 78 52 87 56
-mail: g.grain@adrastee-lyon.fr",
+Tel: +33 4 78 52 87 56",
+          "email": "g.grain@adrastee-lyon.fr",
           "name": "Guillaume Grain",
         }
       }
@@ -519,8 +519,8 @@ Huissier de Justice Etterbeek
 Rue Beckers 17
 1040 Etterbeek
 Belgique
-Tel: +32 498 237 107
-mail: patrick@logion.network",
+Tel: +32 498 237 107",
+          "email": "patrick@logion.network",
           "name": "Patrick Gielen",
         }
       }
@@ -534,8 +534,8 @@ Huissier de Justice Etterbeek
 Rue Beckers 17
 1040 Etterbeek
 Belgique
-Tel: +32 498 237 107
-mail: patrick@logion.network",
+Tel: +32 498 237 107",
+            "email": "patrick@logion.network",
             "name": "Patrick Gielen",
           },
           Object {
@@ -545,8 +545,8 @@ Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
 France
-Tel: +33 4 78 52 87 56
-mail: g.grain@adrastee-lyon.fr",
+Tel: +33 4 78 52 87 56",
+            "email": "g.grain@adrastee-lyon.fr",
             "name": "Guillaume Grain",
           },
           Object {
@@ -556,8 +556,8 @@ Huissiers de Justice associés
 7 rue Jean Francois Champollion Parc Comitec
 18000 Bourges
 France
-Tel: +33 2 48 67 50 50
-mail: alain.barland@auxilia-conseils.com",
+Tel: +33 2 48 67 50 50",
+            "email": "alain.barland@auxilia-conseils.com",
             "name": "Alain Barland",
           },
         ]
@@ -611,8 +611,8 @@ Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
 France
-Tel: +33 4 78 52 87 56
-mail: g.grain@adrastee-lyon.fr",
+Tel: +33 4 78 52 87 56",
+          "email": "g.grain@adrastee-lyon.fr",
           "name": "Guillaume Grain",
         }
       }
@@ -625,8 +625,8 @@ Huissier de Justice Etterbeek
 Rue Beckers 17
 1040 Etterbeek
 Belgique
-Tel: +32 498 237 107
-mail: patrick@logion.network",
+Tel: +32 498 237 107",
+          "email": "patrick@logion.network",
           "name": "Patrick Gielen",
         }
       }
@@ -640,8 +640,8 @@ Huissier de Justice Etterbeek
 Rue Beckers 17
 1040 Etterbeek
 Belgique
-Tel: +32 498 237 107
-mail: patrick@logion.network",
+Tel: +32 498 237 107",
+            "email": "patrick@logion.network",
             "name": "Patrick Gielen",
           },
           Object {
@@ -651,8 +651,8 @@ Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
 France
-Tel: +33 4 78 52 87 56
-mail: g.grain@adrastee-lyon.fr",
+Tel: +33 4 78 52 87 56",
+            "email": "g.grain@adrastee-lyon.fr",
             "name": "Guillaume Grain",
           },
           Object {
@@ -662,8 +662,8 @@ Huissiers de Justice associés
 7 rue Jean Francois Champollion Parc Comitec
 18000 Bourges
 France
-Tel: +33 2 48 67 50 50
-mail: alain.barland@auxilia-conseils.com",
+Tel: +33 2 48 67 50 50",
+            "email": "alain.barland@auxilia-conseils.com",
             "name": "Alain Barland",
           },
         ]
