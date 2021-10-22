@@ -27,7 +27,8 @@ exports[`renders and compares with different address 1`] = `
           <style>
             
     .FormGroup .form-control,
-    .FormGroup .form-control[readonly] {
+    .FormGroup .form-control[readonly],
+    .FormGroup .input-group .btn-primary {
         color: #000000;
     }
     
@@ -78,7 +79,8 @@ exports[`renders and compares with different address 1`] = `
           <style>
             
     .FormGroup .form-control,
-    .FormGroup .form-control[readonly] {
+    .FormGroup .form-control[readonly],
+    .FormGroup .input-group .btn-primary {
         color: #000000;
     }
     
@@ -129,7 +131,8 @@ exports[`renders and compares with different address 1`] = `
           <style>
             
     .FormGroup .form-control,
-    .FormGroup .form-control[readonly] {
+    .FormGroup .form-control[readonly],
+    .FormGroup .input-group .btn-primary {
         color: #000000;
     }
     
@@ -176,7 +179,8 @@ exports[`renders and compares with different address 1`] = `
           <style>
             
     .FormGroup .form-control,
-    .FormGroup .form-control[readonly] {
+    .FormGroup .form-control[readonly],
+    .FormGroup .input-group .btn-primary {
         color: #000000;
     }
     
@@ -227,7 +231,8 @@ exports[`renders and compares with different address 1`] = `
           <style>
             
     .FormGroup .form-control,
-    .FormGroup .form-control[readonly] {
+    .FormGroup .form-control[readonly],
+    .FormGroup .input-group .btn-primary {
         color: #000000;
     }
     
@@ -288,7 +293,8 @@ exports[`renders and compares with same address 1`] = `
           <style>
             
     .FormGroup .form-control,
-    .FormGroup .form-control[readonly] {
+    .FormGroup .form-control[readonly],
+    .FormGroup .input-group .btn-primary {
         color: #000000;
     }
     
@@ -339,7 +345,8 @@ exports[`renders and compares with same address 1`] = `
           <style>
             
     .FormGroup .form-control,
-    .FormGroup .form-control[readonly] {
+    .FormGroup .form-control[readonly],
+    .FormGroup .input-group .btn-primary {
         color: #000000;
     }
     
@@ -390,7 +397,8 @@ exports[`renders and compares with same address 1`] = `
           <style>
             
     .FormGroup .form-control,
-    .FormGroup .form-control[readonly] {
+    .FormGroup .form-control[readonly],
+    .FormGroup .input-group .btn-primary {
         color: #000000;
     }
     
@@ -437,7 +445,8 @@ exports[`renders and compares with same address 1`] = `
           <style>
             
     .FormGroup .form-control,
-    .FormGroup .form-control[readonly] {
+    .FormGroup .form-control[readonly],
+    .FormGroup .input-group .btn-primary {
         color: #000000;
     }
     
@@ -488,7 +497,8 @@ exports[`renders and compares with same address 1`] = `
           <style>
             
     .FormGroup .form-control,
-    .FormGroup .form-control[readonly] {
+    .FormGroup .form-control[readonly],
+    .FormGroup .input-group .btn-primary {
         color: #000000;
     }
     
@@ -549,7 +559,8 @@ exports[`renders without comparison 1`] = `
           <style>
             
     .FormGroup .form-control,
-    .FormGroup .form-control[readonly] {
+    .FormGroup .form-control[readonly],
+    .FormGroup .input-group .btn-primary {
         color: #000000;
     }
     
@@ -600,7 +611,8 @@ exports[`renders without comparison 1`] = `
           <style>
             
     .FormGroup .form-control,
-    .FormGroup .form-control[readonly] {
+    .FormGroup .form-control[readonly],
+    .FormGroup .input-group .btn-primary {
         color: #000000;
     }
     
@@ -651,7 +663,8 @@ exports[`renders without comparison 1`] = `
           <style>
             
     .FormGroup .form-control,
-    .FormGroup .form-control[readonly] {
+    .FormGroup .form-control[readonly],
+    .FormGroup .input-group .btn-primary {
         color: #000000;
     }
     
@@ -698,7 +711,8 @@ exports[`renders without comparison 1`] = `
           <style>
             
     .FormGroup .form-control,
-    .FormGroup .form-control[readonly] {
+    .FormGroup .form-control[readonly],
+    .FormGroup .input-group .btn-primary {
         color: #000000;
     }
     
@@ -749,7 +763,8 @@ exports[`renders without comparison 1`] = `
           <style>
             
     .FormGroup .form-control,
-    .FormGroup .form-control[readonly] {
+    .FormGroup .form-control[readonly],
+    .FormGroup .input-group .btn-primary {
         color: #000000;
     }
     

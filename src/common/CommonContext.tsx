@@ -32,7 +32,7 @@ export interface CommonContext {
     setTokens: (tokens: AccountTokens) => void;
     logout: () => void;
     axiosFactory?: AxiosFactory;
-    refresh: () => void;
+    refresh: (clearOnRefresh?: boolean) => void;
 }
 
 interface FullCommonContext extends CommonContext {
@@ -104,8 +104,9 @@ interface Action {
     openedLocRequests?: LocRequest[];
     closedLocRequests?: LocRequest[];
     rejectedLocRequests?: LocRequest[];
-    refresh?: () => void;
+    refresh?: (clearOnRefresh?: boolean) => void;
     refreshAddress?: string;
+    clearOnRefresh?: boolean;
 }
 
 const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, action: Action): FullCommonContext => {
@@ -134,8 +135,8 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
             return {
                 ...state,
                 fetchForAddress: action.dataAddress!,
-                balances: null,
-                transactions: null,
+                balances: action.clearOnRefresh ? null : state.balances,
+                transactions: action.clearOnRefresh ? null : state.transactions,
             };
         case 'SET_DATA':
             if(action.dataAddress === state.fetchForAddress) {
@@ -235,7 +236,7 @@ export function CommonContextProvider(props: Props) {
     const { apiState, api, injectedAccounts } = useLogionChain();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
-    const refreshRequests = useCallback(() => {
+    const refreshRequests = useCallback((clearOnRefresh?: boolean) => {
         if(api !== null && contextValue !== null
                 && contextValue.accounts !== null
                 && contextValue.accounts.current !== undefined) {
@@ -244,6 +245,7 @@ export function CommonContextProvider(props: Props) {
             dispatch({
                 type: "FETCH_IN_PROGRESS",
                 dataAddress: currentAddress,
+                clearOnRefresh: clearOnRefresh !== undefined ? clearOnRefresh : true
             });
 
             (async function () {

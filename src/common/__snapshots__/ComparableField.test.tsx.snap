@@ -15,7 +15,8 @@ Object {
           <style>
             
     .FormGroup .form-control,
-    .FormGroup .form-control[readonly] {
+    .FormGroup .form-control[readonly],
+    .FormGroup .input-group .btn-primary {
         color: #000000;
     }
     
@@ -55,7 +56,8 @@ Object {
         <style>
           
     .FormGroup .form-control,
-    .FormGroup .form-control[readonly] {
+    .FormGroup .form-control[readonly],
+    .FormGroup .input-group .btn-primary {
         color: #000000;
     }
     
@@ -152,7 +154,8 @@ Object {
           <style>
             
     .FormGroup .form-control,
-    .FormGroup .form-control[readonly] {
+    .FormGroup .form-control[readonly],
+    .FormGroup .input-group .btn-primary {
         color: #000000;
     }
     
@@ -192,7 +195,8 @@ Object {
         <style>
           
     .FormGroup .form-control,
-    .FormGroup .form-control[readonly] {
+    .FormGroup .form-control[readonly],
+    .FormGroup .input-group .btn-primary {
         color: #000000;
     }
     
@@ -289,7 +293,8 @@ Object {
           <style>
             
     .FormGroup .form-control,
-    .FormGroup .form-control[readonly] {
+    .FormGroup .form-control[readonly],
+    .FormGroup .input-group .btn-primary {
         color: #000000;
     }
     
@@ -329,7 +334,8 @@ Object {
         <style>
           
     .FormGroup .form-control,
-    .FormGroup .form-control[readonly] {
+    .FormGroup .form-control[readonly],
+    .FormGroup .input-group .btn-primary {
         color: #000000;
     }
     
