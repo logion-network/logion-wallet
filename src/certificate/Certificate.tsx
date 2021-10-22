@@ -18,6 +18,7 @@ import { LocRequest } from "../common/types/ModelTypes";
 import { fetchPublicLoc } from "../common/Model";
 import { useCommonContext } from "../common/CommonContext";
 import CertificateDateTimeCell from "./CertificateDateTimeCell";
+import { copyToClipBoard } from "../common/Tools";
 
 export default function Certificate() {
 
@@ -33,10 +34,12 @@ export default function Certificate() {
         if (loc === undefined) {
             (async function () {
                 const legalOfficerCase = await getLegalOfficerCase({ api: api!, locId });
-                setLoc(legalOfficerCase)
-                setLegalOfficer(getOfficer(legalOfficerCase!.owner))
-                fetchPublicLoc(axiosFactory!(), locId.toString())
-                    .then(setPublicLoc)
+                if (legalOfficerCase) {
+                    setLoc(legalOfficerCase)
+                    setLegalOfficer(getOfficer(legalOfficerCase!.owner))
+                    fetchPublicLoc(axiosFactory!(), locId.toString())
+                        .then(setPublicLoc)
+                }
             })()
         }
     }, [ api, locId, loc, setLoc, setLegalOfficer, setPublicLoc, axiosFactory ])
@@ -70,10 +73,6 @@ export default function Certificate() {
             result[row].push(elements[i])
         }
         return result;
-    }
-
-    const copyToClipBoard = async (data: string) => {
-        await navigator.clipboard.writeText(data);
     }
 
     let createdOn = undefined;
