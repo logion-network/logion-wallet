@@ -1,7 +1,7 @@
 import { UUID } from "../logion-chain/UUID";
 import { useParams } from "react-router";
 import { useLogionChain } from "../logion-chain";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { getLegalOfficerCase } from "../logion-chain/LogionLoc";
 import { LegalOfficerCase, MetadataItem } from "../logion-chain/Types";
 import { Row } from "../common/Grid";
@@ -21,7 +21,8 @@ import CertificateDateTimeCell from "./CertificateDateTimeCell";
 
 export default function Certificate() {
 
-    const locId: UUID = new UUID(useParams<{ locId: string }>().locId);
+    const locIdParam = useParams<{ locId: string }>().locId;
+    const locId: UUID = useMemo(() => new UUID(locIdParam), [ locIdParam ]);
     const { api } = useLogionChain();
     const [ loc, setLoc ] = useState<LegalOfficerCase | undefined>(undefined)
     const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer | null>(null)
