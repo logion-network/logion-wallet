@@ -11,3 +11,20 @@
     top: -55px;
     right: 20px;
 }
+
+.ContextualizedLocDetails .certificate-link {
+    margin-top: 30px;
+    border: 2px solid #e6007a;
+}
+
+.ContextualizedLocDetails .certificate-link .title {
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+.ContextualizedLocDetails .certificate-link .link {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+

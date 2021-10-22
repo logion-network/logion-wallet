@@ -16,6 +16,10 @@ import LocPrivateFileButton from "./LocPrivateFileButton";
 import "./ContextualizedLocDetails.css";
 import Icon from "../../common/Icon";
 import LocLinkButton from "./LocLinkButton";
+import Frame from "../../common/Frame";
+import { fullCertificateUrl } from "../../RootPaths";
+import Button from "../../common/Button";
+import { copyToClipBoard } from "../../common/Tools";
 
 export interface Props {
     backPath: string,
@@ -86,14 +90,20 @@ export default function ContextualizedLocDetails(props: Props) {
                         <>
                             <LocPublicDataButton />
                             <LocPrivateFileButton />
-                            <LocLinkButton/>
+                            <LocLinkButton />
                         </>
                     }
                     right={
-                        <CloseLocButton/>
+                        <CloseLocButton />
                     }
                 />
             }
+            <Frame className="certificate-link">
+                <p className="title">Public web address (URL) of this Legal Officer Case related Certificate:</p>
+                <p className="link">{ fullCertificateUrl(locId) }</p>
+                <Button onClick={ () => copyToClipBoard(fullCertificateUrl(locId)) }>Copy LOC Certificate URL to
+                    Clipboard</Button>
+            </Frame>
         </FullWidthPane>
     );
 }
