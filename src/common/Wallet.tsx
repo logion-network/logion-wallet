@@ -42,7 +42,7 @@ export default function Wallet(props: Props) {
 }
 
 export function Content(props: Props) {
-    const { balances, transactions, colorTheme } = useCommonContext();
+    const { balances, transactions } = useCommonContext();
     const history = useHistory();
 
     if(balances === null || transactions === null) {
@@ -56,12 +56,44 @@ export function Content(props: Props) {
             <Row>
                 <Col md={8}>
                     <Frame
-                        title="Balance per month"
+                        title="Asset balances"
+                        fillHeight
                     >
-                        <img
-                            className="fake-graph"
-                            src={ `${process.env.PUBLIC_URL}/assets/themes/${colorTheme.type}/fake_balance_history.png` }
-                            alt="Fake balance graph"
+                        <Table
+                            columns={[
+                                {
+                                    header: "Asset name",
+                                    render: balance => <AssetNameCell balance={ balance } />,
+                                    width: "180px",
+                                    align: 'left',
+                                },
+                                {
+                                    header: "Balance",
+                                    render: balance => <Cell content={ balance.balance.coefficient.toFixedPrecision(2) } />,
+                                    width: "150px",
+                                    align: 'right',
+                                },
+                                {
+                                    header: "Last transaction date",
+                                    render: balance => <DateCell dateTime={ balance.coin.id !== 'dot' && latestTransaction !== undefined ? latestTransaction.createdOn : null } />
+                                },
+                                {
+                                    header: "Last transaction type",
+                                    render: balance => <Cell content={ balance.coin.id !== 'dot' && latestTransaction !== undefined ? latestTransaction.type : "-" } />
+                                },
+                                {
+                                    header: "Last transaction amount",
+                                    render: balance => <Cell content={ balance.coin.id !== 'dot' && latestTransaction !== undefined ? prefixedLogBalance(transactionAmount(latestTransaction)).convertTo(balance.balance.prefix).coefficient.toFixedPrecision(2) : '-' } />,
+                                    align: 'right',
+                                },
+                                {
+                                    header: "",
+                                    render: balance => balance.coin.id !== 'dot' ? <ActionCell><Button onClick={() => history.push(props.transactionsPath(balance.coin.id))}>More</Button></ActionCell> : <NotAvailable/>,
+                                    width: "200px",
+                                }
+                            ]}
+                            data={ balances }
+                            renderEmpty={ () => <EmptyTableMessage>You have no asset yet</EmptyTableMessage> }
                         />
                     </Frame>
                 </Col>
@@ -79,47 +111,6 @@ export function Content(props: Props) {
                     </Frame>
                 </Col>
             </Row>
-            <Frame
-                className="assets"
-            >
-                <h2>Asset balances</h2>
-
-                <Table
-                    columns={[
-                        {
-                            header: "Asset name",
-                            render: balance => <AssetNameCell balance={ balance } />,
-                            align: 'left',
-                        },
-                        {
-                            header: "Balance",
-                            render: balance => <Cell content={ balance.balance.coefficient.toFixedPrecision(2) } />,
-                            width: "150px",
-                            align: 'right',
-                        },
-                        {
-                            header: "Last transaction date",
-                            render: balance => <DateCell dateTime={ balance.coin.id !== 'dot' && latestTransaction !== undefined ? latestTransaction.createdOn : null } />
-                        },
-                        {
-                            header: "Last transaction type",
-                            render: balance => <Cell content={ balance.coin.id !== 'dot' && latestTransaction !== undefined ? latestTransaction.type : "-" } />
-                        },
-                        {
-                            header: "Last transaction amount",
-                            render: balance => <Cell content={ balance.coin.id !== 'dot' && latestTransaction !== undefined ? prefixedLogBalance(transactionAmount(latestTransaction)).convertTo(balance.balance.prefix).coefficient.toFixedPrecision(2) : '-' } />,
-                            align: 'right',
-                        },
-                        {
-                            header: "",
-                            render: balance => balance.coin.id !== 'dot' ? <ActionCell><Button onClick={() => history.push(props.transactionsPath(balance.coin.id))}>More</Button></ActionCell> : <NotAvailable/>,
-                            width: "200px",
-                        }
-                    ]}
-                    data={ balances }
-                    renderEmpty={ () => <EmptyTableMessage>You have no asset yet</EmptyTableMessage> }
-                />
-            </Frame>
         </>
     );
 }

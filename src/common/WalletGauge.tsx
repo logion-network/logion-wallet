@@ -26,7 +26,6 @@ export interface Props {
 interface State {
     status: Status;
     minExpectedTransactions?: number;
-    interval?: number;
 }
 
 enum Status {
@@ -36,6 +35,9 @@ enum Status {
     WAITING_FOR_NEW_TRANSACTION
 }
 
+const MAX_REFRESH_COUNT = 12;
+const REFRESH_PERIOD_MS = 3000;
+
 export default function WalletGauge(props: Props) {
     const { colorTheme, accounts, refresh, transactions } = useCommonContext();
     const { api } = useLogionChain();
@@ -44,6 +46,9 @@ export default function WalletGauge(props: Props) {
     const [ unit, setUnit ] = useState(NONE);
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
     const [ state, setState ] = useState<State>({status: Status.IDLE});
+
+    const [ refreshCount, setRefreshCount ] = useState(0);
+    const [ refreshScheduled, setRefreshScheduled ] = useState(false);
 
     const transferCallback = useCallback(() => {
         const signAndSubmit: SignAndSubmit = (setResult, setError) => transfer({
@@ -57,46 +62,65 @@ export default function WalletGauge(props: Props) {
         setSignAndSubmit(() => signAndSubmit);
     }, [ accounts, amount, api, destination, unit ]);
 
-    const successCallback = useCallback(() => {
+    const clearFormCallback = useCallback(() => {
         setDestination("");
         setAmount("");
         setSignAndSubmit(null);
+    }, [ setDestination, setAmount, setSignAndSubmit ]);
 
+    const successCallback = useCallback(() => {
+        clearFormCallback();
         setState({
             status: Status.EXPECTING_NEW_TRANSACTION,
             minExpectedTransactions: transactions!.length + 1
         });
-    }, [ transactions, setState ]);
+    }, [ clearFormCallback, transactions, setState ]);
 
     const cancelCallback = useCallback(() => {
+        clearFormCallback();
         if(state.status === Status.WAITING_FOR_NEW_TRANSACTION) {
-            window.clearInterval(state.interval);
+            console.log("Cancelling polling");
+            setRefreshCount(MAX_REFRESH_COUNT);
         }
         setState({ status: Status.IDLE });
-    }, [ state, setState ]);
+    }, [ state, setState, clearFormCallback, setRefreshCount ]);
+
+    const scheduleRetryIfNoneInProgress = useCallback((refreshCount: number) => {
+        if(!refreshScheduled) {
+            setRefreshScheduled(true);
+            window.setTimeout(() => {
+                console.log(`Try #${refreshCount}...`);
+                setRefreshCount(refreshCount + 1);
+                setRefreshScheduled(false);
+                refresh(false);
+            }, REFRESH_PERIOD_MS);
+        }
+    }, [ refreshScheduled, setRefreshScheduled, setRefreshCount, refresh ]);
 
     useEffect(() => {
         if(state.status === Status.EXPECTING_NEW_TRANSACTION) {
-            const interval = window.setInterval(() => {
-                refresh(false);
-            }, 3000);
-
+            setRefreshCount(0);
+            scheduleRetryIfNoneInProgress(0);
             setState({
                 ...state,
                 status: Status.WAITING_FOR_NEW_TRANSACTION,
-                interval
             });
         }
-    }, [ state, setState, refresh ]);
+    }, [ state, setState, refresh, refreshCount, setRefreshCount, scheduleRetryIfNoneInProgress ]);
 
     useEffect(() => {
-        if(state.status === Status.WAITING_FOR_NEW_TRANSACTION
-                && transactions !== undefined
-                && transactions!.length >= state.minExpectedTransactions!) {
-            window.clearInterval(state.interval);
-            setState({status: Status.IDLE});
+        if(state.status === Status.WAITING_FOR_NEW_TRANSACTION) {
+            if(transactions !== undefined
+                    && (transactions!.length >= state.minExpectedTransactions!
+                        || refreshCount >= MAX_REFRESH_COUNT)) {
+                console.log(`Stopped polling after ${refreshCount} retries  (${transactions!.length} >= ${state.minExpectedTransactions!})`);
+                setState({status: Status.IDLE});
+            } else {
+                console.log(`Scheduling retry #${refreshCount} (${transactions!.length} < ${state.minExpectedTransactions!})...`);
+                scheduleRetryIfNoneInProgress(refreshCount);
+            }
         }
-    }, [ state, setState, transactions ]);
+    }, [ state, setState, transactions, refreshCount, scheduleRetryIfNoneInProgress ]);
 
     return (
         <div className={ "WalletGauge " + props.type }>
@@ -130,53 +154,58 @@ export default function WalletGauge(props: Props) {
                 size="lg"
             >
                 <h3>Transfer LOGs</h3>
-                <FormGroup
-                    id="destination"
-                    label="Destination"
-                    control={<Form.Control
-                        isInvalid={destination !== "" && (!isValidAccountId(api!, destination) || destination === accounts!.current!.address)}
-                        type="text"
-                        placeholder="The beneficiary's SS58 address"
-                        value={destination}
-                        onChange={value => setDestination(value.target.value)}
-                    />}
-                    colors={colorTheme.dialog}
-                />
-                <FormGroup
-                    id="amout"
-                    label="Amount"
-                    noFeedback={true}
-                    control={
-                        <InputGroup hasValidation>
-                            <Form.Control
-                                isInvalid={amount !== "" && isNaN(Number(amount))}
+                {
+                    state.status === Status.TRANSFERRING &&
+                    <>
+                        <FormGroup
+                            id="destination"
+                            label="Destination"
+                            control={<Form.Control
+                                isInvalid={destination !== "" && (!isValidAccountId(api!, destination) || destination === accounts!.current!.address)}
                                 type="text"
-                                placeholder="The amount to transfer"
-                                value={amount}
-                                onChange={value => setAmount(value.target.value)}
-                            />
-                            <DropdownButton
-                                as={InputGroup.Append}
-                                title={ `${unit.symbol}LOG` }
-                                id="input-group-dropdown-1"
-                            >{
-                                [
-                                    NONE,
-                                    MILLI,
-                                    MICRO,
-                                    NANO,
-                                    PICO,
-                                    FEMTO,
-                                    ATTO
-                                ].map(unit => <Dropdown.Item key={ unit.symbol } onClick={() => setUnit(unit)}>{ `${unit.symbol}LOG` }</Dropdown.Item>)
-                            }</DropdownButton>
-                            <Form.Control.Feedback type="invalid">
-                                Please choose a username.
-                            </Form.Control.Feedback>
-                        </InputGroup>
-                    }
-                    colors={colorTheme.dialog}
-                />
+                                placeholder="The beneficiary's SS58 address"
+                                value={destination}
+                                onChange={value => setDestination(value.target.value)}
+                            />}
+                            colors={colorTheme.dialog}
+                        />
+                        <FormGroup
+                            id="amout"
+                            label="Amount"
+                            noFeedback={true}
+                            control={
+                                <InputGroup hasValidation>
+                                    <Form.Control
+                                        isInvalid={amount !== "" && isNaN(Number(amount))}
+                                        type="text"
+                                        placeholder="The amount to transfer"
+                                        value={amount}
+                                        onChange={value => setAmount(value.target.value)}
+                                    />
+                                    <DropdownButton
+                                        as={InputGroup.Append}
+                                        title={ `${unit.symbol}LOG` }
+                                        id="input-group-dropdown-1"
+                                    >{
+                                        [
+                                            NONE,
+                                            MILLI,
+                                            MICRO,
+                                            NANO,
+                                            PICO,
+                                            FEMTO,
+                                            ATTO
+                                        ].map(unit => <Dropdown.Item key={ unit.symbol } onClick={() => setUnit(unit)}>{ `${unit.symbol}LOG` }</Dropdown.Item>)
+                                    }</DropdownButton>
+                                    <Form.Control.Feedback type="invalid">
+                                        Please choose a username.
+                                    </Form.Control.Feedback>
+                                </InputGroup>
+                            }
+                            colors={colorTheme.dialog}
+                        />
+                    </>
+                }
                 <ExtrinsicSubmitter
                     id="transferLogs"
                     successMessage="Transfer successful."
@@ -189,6 +218,7 @@ export default function WalletGauge(props: Props) {
                     <Alert variant="info">
                         <Spinner animation="border"/>
                         <p>Transfer successful, waiting for the transaction to be finalized.</p>
+                        <p>Note that this may take up to 30 seconds. If you want to proceed, you can safely click on cancel but your transaction may not show up yet.</p>
                     </Alert>
                 }
             </Dialog>
