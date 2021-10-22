@@ -87,11 +87,11 @@ export default function Certificate() {
             <div className="shield-icon">
                 <Icon icon={ { id: "shield", category: "certificate" } } />
             </div>
-            <div className="folder-icon">
-                <Icon icon={ { id: "folder", category: "certificate" } } />
-            </div>
             <div className="background-icon">
                 <Icon icon={ { id: "background", category: "certificate" } } />
+            </div>
+            <div className="folder-icon">
+                <Icon icon={ { id: "folder", category: "certificate" } } />
             </div>
             <Row className="header">
                 <Col md={ 2 }>
