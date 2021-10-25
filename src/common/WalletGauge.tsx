@@ -198,7 +198,7 @@ export default function WalletGauge(props: Props) {
                                         ].map(unit => <Dropdown.Item key={ unit.symbol } onClick={() => setUnit(unit)}>{ `${unit.symbol}LOG` }</Dropdown.Item>)
                                     }</DropdownButton>
                                     <Form.Control.Feedback type="invalid">
-                                        Please choose a username.
+                                        Please enter a valid amount.
                                     </Form.Control.Feedback>
                                 </InputGroup>
                             }
