@@ -17,9 +17,9 @@ import "./ContextualizedLocDetails.css";
 import Icon from "../../common/Icon";
 import LocLinkButton from "./LocLinkButton";
 import Frame from "../../common/Frame";
-import { fullCertificateUrl } from "../../RootPaths";
 import Button from "../../common/Button";
 import { copyToClipBoard } from "../../common/Tools";
+import { fullCertificateUrl } from "../../PublicPaths";
 
 export interface Props {
     backPath: string,
