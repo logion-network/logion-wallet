@@ -1,10 +1,14 @@
 import React from 'react';
 
 import { useCommonContext } from '../../common/CommonContext';
-import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../../common/Table';
+import Table, { Cell, EmptyTableMessage, DateTimeCell, ActionCell } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';
 import LocIdCell from '../../common/LocIdCell';
 import LegalOfficerName from '../../common/LegalOfficerNameCell';
+import ButtonGroup from "../../common/ButtonGroup";
+import Button from "../../common/Button";
+import { fullCertificateUrl } from "../../PublicPaths";
+import { UUID } from "../../logion-chain/UUID";
 
 export default function OpenedLocs() {
     const { openedLocRequests } = useCommonContext();
@@ -39,6 +43,18 @@ export default function OpenedLocs() {
                 {
                     "header": "Creation date",
                     render: request => <DateTimeCell dateTime={ request.createdOn || null } />,
+                    width: '200px',
+                    align: 'center',
+                },
+                {
+                    header: "Action",
+                    render: request =>
+                        <ActionCell>
+                            <ButtonGroup>
+                                <Button onClick={ () => window.open(fullCertificateUrl(new UUID(request.id))) }>View Certificate</Button>
+                            </ButtonGroup>
+                        </ActionCell>
+                    ,
                     width: '200px',
                     align: 'center',
                 },
