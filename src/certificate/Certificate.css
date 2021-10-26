@@ -1,5 +1,5 @@
 .Certificate {
-    height: 100%;
+    position: relative;
     margin: 70px;
     padding: 70px;
     font-size: 22px;
@@ -27,19 +27,19 @@
 
 .Certificate .background-icon {
     position: absolute;
-    bottom: -50px;
-    right: 90px;
+    bottom: 0;
+    right: 0;
 }
 
 .Certificate .folder-icon {
     position: absolute;
-    bottom: 10px;
-    right: 300px;
+    bottom: 60px;
+    right: 230px;
 }
 
 .Certificate .shield-icon {
     position: absolute;
-    top: 0;
+    top: -90px;
     right: 180px;
 }
 
