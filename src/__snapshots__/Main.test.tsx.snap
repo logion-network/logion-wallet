@@ -1,31 +1,66 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Given extension and loading accounts, when rendering, then show loader 1`] = `
-<Loader
-  text="Loading accounts from extension..."
-/>
+<BrowserRouter>
+  <Switch>
+    <Route
+      path="/public"
+    >
+      <PublicRouter />
+    </Route>
+    <AuthenticatedMain />
+  </Switch>
+</BrowserRouter>
 `;
 
 exports[`Given extension and no account, when rendering, then show create account 1`] = `
-<LandingPage
-  activeStep="create"
-/>
+<BrowserRouter>
+  <Switch>
+    <Route
+      path="/public"
+    >
+      <PublicRouter />
+    </Route>
+    <AuthenticatedMain />
+  </Switch>
+</BrowserRouter>
 `;
 
 exports[`Given extension and one account, when rendering, then show root router 1`] = `
-<CommonContextProvider>
-  <RootRouter />
-</CommonContextProvider>
+<BrowserRouter>
+  <Switch>
+    <Route
+      path="/public"
+    >
+      <PublicRouter />
+    </Route>
+    <AuthenticatedMain />
+  </Switch>
+</BrowserRouter>
 `;
 
 exports[`Given no enabled extension, when rendering, then show loader 1`] = `
-<Loader
-  text="Enabling extensions..."
-/>
+<BrowserRouter>
+  <Switch>
+    <Route
+      path="/public"
+    >
+      <PublicRouter />
+    </Route>
+    <AuthenticatedMain />
+  </Switch>
+</BrowserRouter>
 `;
 
 exports[`Given no extension, when rendering, then show install 1`] = `
-<LandingPage
-  activeStep="install"
-/>
+<BrowserRouter>
+  <Switch>
+    <Route
+      path="/public"
+    >
+      <PublicRouter />
+    </Route>
+    <AuthenticatedMain />
+  </Switch>
+</BrowserRouter>
 `;

@@ -6,14 +6,13 @@ import {
     Route,
 } from 'react-router-dom';
 
-import { LEGAL_OFFICER_PATH, USER_PATH, CERTIFICATE_PATH } from './RootPaths';
+import { LEGAL_OFFICER_PATH, USER_PATH } from './RootPaths';
 import { isLegalOfficer as isLegalOfficerFunction } from './common/types/LegalOfficer';
 import LegalOfficerMain from './legal-officer/Main';
 import UserMain from './wallet-user/Main';
 import { useCommonContext } from './common/CommonContext';
 import Login, { LOGIN_PATH } from './Login';
 import RenderOrRedirectToLogin from './RenderOrRedirectToLogin';
-import Certificate from "./certificate/Certificate";
 
 export default function RootRouter() {
     const { accounts } = useCommonContext();
@@ -41,9 +40,6 @@ export default function RootRouter() {
                 </Route>
                 <Route path={ LOGIN_PATH }>
                     <Login />
-                </Route>
-                <Route path={ CERTIFICATE_PATH }>
-                    <Certificate />
                 </Route>
                 <Route path="/">
                     <Redirect to={ redirectTo } />

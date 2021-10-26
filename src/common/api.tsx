@@ -37,6 +37,12 @@ export function buildAxiosFactory(accounts: Accounts): AxiosFactory {
     });
 }
 
+export function anonymousAxiosFactory(): AxiosFactory {
+    return (owner?: string) => axios.create({
+        baseURL: baseUrl(owner)
+    });
+}
+
 function baseUrl(owner?: string): string {
     if(owner === undefined) {
         return "";

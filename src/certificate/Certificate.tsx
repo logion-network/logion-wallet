@@ -16,33 +16,41 @@ import './Certificate.css'
 import Icon from "../common/Icon";
 import { LocRequest } from "../common/types/ModelTypes";
 import { fetchPublicLoc } from "../common/Model";
-import { useCommonContext } from "../common/CommonContext";
 import CertificateDateTimeCell from "./CertificateDateTimeCell";
 import { copyToClipBoard } from "../common/Tools";
+import { anonymousAxiosFactory } from "../common/api";
 
 export default function Certificate() {
 
     const locIdParam = useParams<{ locId: string }>().locId;
     const locId: UUID = useMemo(() => new UUID(locIdParam), [ locIdParam ]);
-    const { api } = useLogionChain();
+    const { api, apiState } = useLogionChain();
     const [ loc, setLoc ] = useState<LegalOfficerCase | undefined>(undefined)
     const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer | null>(null)
-    const { axiosFactory } = useCommonContext()
+    const axiosFactory = anonymousAxiosFactory();
     const [ publicLoc, setPublicLoc ] = useState<LocRequest>()
 
     useEffect(() => {
-        if (loc === undefined) {
+        if (api !== null && apiState === 'READY' && axiosFactory !== undefined && loc === undefined) {
             (async function () {
-                const legalOfficerCase = await getLegalOfficerCase({ api: api!, locId });
+                const legalOfficerCase = await getLegalOfficerCase({ api, locId });
                 if (legalOfficerCase) {
                     setLoc(legalOfficerCase)
-                    setLegalOfficer(getOfficer(legalOfficerCase!.owner))
-                    fetchPublicLoc(axiosFactory!(), locId.toString())
+                    setLegalOfficer(getOfficer(legalOfficerCase.owner))
+                    fetchPublicLoc(axiosFactory(legalOfficerCase.owner), locId.toString())
                         .then(setPublicLoc)
                 }
             })()
         }
-    }, [ api, locId, loc, setLoc, setLegalOfficer, setPublicLoc, axiosFactory ])
+    }, [ api, apiState, locId, loc, setLoc, setLegalOfficer, setPublicLoc, axiosFactory ])
+
+    if (apiState !== 'READY') {
+        return (
+            <div className="Certificate">
+                <p>Connecting to node... [{apiState}]</p>
+            </div>
+        )
+    }
 
     if (loc === undefined) {
         return (
