@@ -51,7 +51,7 @@ export default function OpenedLocs() {
                     render: request =>
                         <ActionCell>
                             <ButtonGroup>
-                                <Button onClick={ () => window.open(fullCertificateUrl(new UUID(request.id))) }>View Certificate</Button>
+                                <Button onClick={ () => window.open(fullCertificateUrl(new UUID(request.id))) }>Certificate</Button>
                             </ButtonGroup>
                         </ActionCell>
                     ,
