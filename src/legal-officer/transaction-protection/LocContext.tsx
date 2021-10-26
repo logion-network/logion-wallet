@@ -384,7 +384,7 @@ export function LocContextProvider(props: Props) {
     )
 
     useEffect(() => {
-        if (contextValue.loc !== null && contextValue.loc.owner !== null && contextValue.addMetadata === null) {
+        if (contextValue.loc && contextValue.loc.owner !== null && contextValue.addMetadata === null) {
             const submitter = contextValue.loc!.owner;
             const addMetadata = (name: string, value: string) => addLocItemFunction(
                 () => createDraftMetadataLocItem(name, value, submitter));
@@ -419,16 +419,18 @@ export function LocContextProvider(props: Props) {
             getLegalOfficerCase({ locId: contextValue.locId, api })
                 .then(loc => {
                     dispatch({ type: 'SET_LOC', loc })
-                    loc!.metadata.forEach(item => {
-                        const locItem = createPublishedMetadataLocItem(item, loc!.owner)
-                        dispatch({ type: 'ADD_ITEM', locItem })
-                        setRefreshCounter(MAX_REFRESH)
-                    })
-                    loc!.hashes.forEach(item => {
-                        const locItem = createPublishedFileLocItem(item, loc!.owner)
-                        dispatch({ type: 'ADD_ITEM', locItem })
-                        setRefreshCounter(MAX_REFRESH)
-                    })
+                    if (loc) {
+                        loc!.metadata.forEach(item => {
+                            const locItem = createPublishedMetadataLocItem(item, loc!.owner)
+                            dispatch({ type: 'ADD_ITEM', locItem })
+                            setRefreshCounter(MAX_REFRESH)
+                        })
+                        loc!.hashes.forEach(item => {
+                            const locItem = createPublishedFileLocItem(item, loc!.owner)
+                            dispatch({ type: 'ADD_ITEM', locItem })
+                            setRefreshCounter(MAX_REFRESH)
+                        })
+                    }
                 })
         }
     }, [ contextValue.loc, api, contextValue.locId, setRefreshCounter ])

@@ -42,7 +42,11 @@ exports[`renders 1`] = `
             ]
           }
         />
-        <LocCreation />
+        <div
+          className="action-bar"
+        >
+          <LocCreation />
+        </div>
       </Frame>
     </Col>
   </Row>

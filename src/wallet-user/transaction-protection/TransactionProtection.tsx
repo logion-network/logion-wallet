@@ -44,16 +44,18 @@ export default function TransactionProtection() {
                                 {
                                     key: "open",
                                     title: "Open",
-                                    render: () => <OpenedLocs/>
+                                    render: () => <OpenedLocs />
                                 },
                                 {
                                     key: "closed",
                                     title: "Closed",
-                                    render: () => <ClosedLocs/>
+                                    render: () => <ClosedLocs />
                                 }
-                            ]}
+                            ] }
                         />
-                        <LocCreation/>
+                        <div className="action-bar">
+                            <LocCreation />
+                        </div>
                     </Frame>
                 </Col>
             </Row>

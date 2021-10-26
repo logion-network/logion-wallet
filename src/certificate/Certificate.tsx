@@ -9,7 +9,6 @@ import CertificateCell from "./CertificateCell";
 import { LegalOfficer, getOfficer } from "../common/types/LegalOfficer";
 import Button from "../common/Button";
 import { Col } from "react-bootstrap";
-import { Link } from 'react-router-dom';
 import MailtoButton from "../common/MailtoButton";
 import { displayName } from "../legal-officer/transaction-protection/LocItemFactory";
 import './Certificate.css'
@@ -92,11 +91,11 @@ export default function Certificate() {
 
     return (
         <div className="Certificate">
-            <div className="shield-icon">
-                <Icon icon={ { id: "shield", category: "certificate" } } />
-            </div>
             <div className="background-icon">
                 <Icon icon={ { id: "background", category: "certificate" } } />
+            </div>
+            <div className="shield-icon">
+                <Icon icon={ { id: "shield", category: "certificate" } } />
             </div>
             <div className="folder-icon">
                 <Icon icon={ { id: "folder", category: "certificate" } } />
@@ -134,7 +133,7 @@ export default function Certificate() {
                     <Button onClick={ () => copyToClipBoard(window.location.href) }>Copy URL</Button>
                 </Col>
                 <Col md={ 2 }>
-                    <Link to="https://logion.network">logion.network</Link>
+                    <a href="https://logion.network" rel="noreferrer">logion.network</a>
                 </Col>
             </Row>
         </div>
