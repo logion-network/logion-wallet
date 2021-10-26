@@ -133,7 +133,7 @@ export default function Certificate() {
                     <Button onClick={ () => copyToClipBoard(window.location.href) }>Copy URL</Button>
                 </Col>
                 <Col md={ 2 }>
-                    <a href="https://logion.network" rel="noreferrer">logion.network</a>
+                    <a href="https://logion.network" target="_blank" rel="noreferrer">logion.network</a>
                 </Col>
             </Row>
         </div>
