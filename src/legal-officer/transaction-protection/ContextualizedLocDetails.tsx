@@ -46,64 +46,69 @@ export default function ContextualizedLocDetails(props: Props) {
             onBack={ () => history.push(props.backPath) }
             className="ContextualizedLocDetails"
         >
-            <Tabs
-                activeKey="details"
-                onSelect={ () => {
-                } }
-                tabs={ [ {
-                    key: "details",
-                    title: "Logion Officer Case",
-                    render: () => {
-                        const { date, time } = format(locRequest.createdOn)
-                        return <>
-                            <Row>
-                                <Col md={ 4 }>
-                                    <LocItemDetail label="LOC ID">{ locId.toDecimalString() }</LocItemDetail>
-                                    <LocItemDetail label="Creation date">{ date } / { time }</LocItemDetail>
-                                </Col>
-                                <Col md={ 4 }>
-                                    <LocItemDetail label="Description">{ locRequest?.description }</LocItemDetail>
-                                </Col>
+            { loc !== undefined &&
+            <>
+                <Tabs
+                    activeKey="details"
+                    onSelect={ () => {
+                    } }
+                    tabs={ [ {
+                        key: "details",
+                        title: "Logion Officer Case",
+                        render: () => {
+                            const { date, time } = format(locRequest.createdOn)
+                            return <>
+                                <Row>
+                                    <Col md={ 4 }>
+                                        <LocItemDetail label="LOC ID">{ locId.toDecimalString() }</LocItemDetail>
+                                        <LocItemDetail label="Creation date">{ date } / { time }</LocItemDetail>
+                                    </Col>
+                                    <Col md={ 4 }>
+                                        <LocItemDetail label="Description">{ locRequest?.description }</LocItemDetail>
+                                    </Col>
 
-                                <Col md={ 4 } className="closed-icon-container">
-                                    <LocItemDetail
-                                        label="Requested by">{ locRequest.userIdentity?.firstName || "" } { locRequest.userIdentity?.lastName || "" }<br />{ locRequest.requesterAddress }
-                                    </LocItemDetail>
-                                    {
-                                        loc.closed &&
-                                        <div className="closed-icon">
-                                            <Icon icon={ { id: "polkadot_shield" } } />
-                                        </div>
-                                    }
-                                </Col>
-                            </Row>
-                            <LocItems />
-                        </>
-                    }
-                } ] }
-                borderColor={ loc.closed ? POLKADOT : undefined }
-            />
-            {
-                !loc.closed &&
-                <TwoSideButtonGroup
-                    left={
-                        <>
-                            <LocPublicDataButton />
-                            <LocPrivateFileButton />
-                            <LocLinkButton />
-                        </>
-                    }
-                    right={
-                        <CloseLocButton />
-                    }
+                                    <Col md={ 4 } className="closed-icon-container">
+                                        <LocItemDetail
+                                            label="Requested by">{ locRequest.userIdentity?.firstName || "" } { locRequest.userIdentity?.lastName || "" }<br />{ locRequest.requesterAddress }
+                                        </LocItemDetail>
+                                        {
+                                            loc.closed &&
+                                            <div className="closed-icon">
+                                                <Icon icon={ { id: "polkadot_shield" } } />
+                                            </div>
+                                        }
+                                    </Col>
+                                </Row>
+                                <LocItems />
+                            </>
+                        }
+                    } ] }
+                    borderColor={ loc.closed ? POLKADOT : undefined }
                 />
+                {
+                    !loc.closed &&
+                    <TwoSideButtonGroup
+                        left={
+                            <>
+                                <LocPublicDataButton />
+                                <LocPrivateFileButton />
+                                <LocLinkButton />
+                            </>
+                        }
+                        right={
+                            <CloseLocButton />
+                        }
+                    />
+                }
+                <Frame className="certificate-link">
+                    <p className="title">Public web address (URL) of this Legal Officer Case related Certificate:</p>
+                    <p className="link">{ fullCertificateUrl(locId) }</p>
+                    <Button onClick={ () => copyToClipBoard(fullCertificateUrl(locId)) }>Copy LOC Certificate URL to
+                        Clipboard</Button>
+                </Frame>
+            </>
             }
-            <Frame className="certificate-link">
-                <p className="title">Public web address (URL) of this Legal Officer Case related Certificate:</p>
-                <p className="link">{ fullCertificateUrl(locId) }</p>
-                <Button onClick={ () => copyToClipBoard(fullCertificateUrl(locId)) }>Copy LOC Certificate URL to
-                    Clipboard</Button>
-            </Frame>
+            { loc === undefined && <p>LOC not found on chain</p> }
         </FullWidthPane>
     );
 }
