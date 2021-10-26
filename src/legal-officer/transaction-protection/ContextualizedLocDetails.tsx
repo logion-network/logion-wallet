@@ -34,6 +34,8 @@ export default function ContextualizedLocDetails(props: Props) {
         return null;
     }
 
+    const certificateUrl = fullCertificateUrl(locId);
+
     return (
         <FullWidthPane
             mainTitle="Transaction Protection Cases"
@@ -102,8 +104,10 @@ export default function ContextualizedLocDetails(props: Props) {
                 }
                 <Frame className="certificate-link">
                     <p className="title">Public web address (URL) of this Legal Officer Case related Certificate:</p>
-                    <p className="link">{ fullCertificateUrl(locId) }</p>
-                    <Button onClick={ () => copyToClipBoard(fullCertificateUrl(locId)) }>Copy LOC Certificate URL to
+                    <p className="link">
+                        <a href={ certificateUrl } target="_blank" rel="noreferrer">{ certificateUrl }</a>
+                    </p>
+                    <Button onClick={ () => copyToClipBoard(certificateUrl) }>Copy LOC Certificate URL to
                         Clipboard</Button>
                 </Frame>
             </>

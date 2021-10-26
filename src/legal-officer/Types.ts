@@ -31,7 +31,7 @@ export const LIGHT_MODE: ColorTheme = {
     frame: {
         background: '#ffffff',
         foreground: '#000000',
-        link: rgbaToHex('#3b6cf4', 0.15),
+        link: '#0d6efd',
         altBackground: '#eff3fe',
     },
     topMenuItems: {
