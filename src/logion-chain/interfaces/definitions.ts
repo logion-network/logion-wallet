@@ -32,11 +32,18 @@ export default {
             requester: "AccountId",
             metadata: "Vec<MetadataItem>",
             hashes: "Vec<Hash>",
-            closed: "bool"
+            closed: "bool",
+            loc_type: "LocType",
         },
         MetadataItem: {
             name: "Vec<u8>",
             value: "Vec<u8>"
+        },
+        LocType: {
+            _enum: [
+                "Transaction",
+                "Identity"
+            ]
         }
     }
 };

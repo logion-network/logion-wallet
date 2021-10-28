@@ -55,6 +55,7 @@ export default function LocCreationSteps(props: Props) {
                     errorCallback: setError,
                     locId: new UUID(requestToCreate!.id),
                     requester: requestToCreate!.requesterAddress,
+                    locType: 'Transaction',
                 });
                 setSignAndSubmit(() => signAndSubmit);
             };

@@ -141,6 +141,20 @@ declare module '@polkadot/api/types/errors' {
        **/
       [key: string]: AugmentedError<ApiType>;
     };
+    loAuthorityList: {
+      /**
+       * The LO is already in the list.
+       **/
+      AlreadyExists: AugmentedError<ApiType>;
+      /**
+       * The LO is not in the list.
+       **/
+      NotFound: AugmentedError<ApiType>;
+      /**
+       * Generic error
+       **/
+      [key: string]: AugmentedError<ApiType>;
+    };
     logionLoc: {
       /**
        * Occurs when trying to close an already closed LOC
@@ -414,6 +428,20 @@ declare module '@polkadot/api/types/errors' {
        * and the new runtime.
        **/
       SpecVersionNeedsToIncrease: AugmentedError<ApiType>;
+      /**
+       * Generic error
+       **/
+      [key: string]: AugmentedError<ApiType>;
+    };
+    verifiedRecovery: {
+      /**
+       * The set of legal officers is invalid (size <> from 2).
+       **/
+      InvalidLegalOfficers: AugmentedError<ApiType>;
+      /**
+       * One or both legal officers in the friends list did not yet close an Identity LOC for the account.
+       **/
+      MissingIdentityLoc: AugmentedError<ApiType>;
       /**
        * Generic error
        **/

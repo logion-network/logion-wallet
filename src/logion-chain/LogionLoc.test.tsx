@@ -19,6 +19,7 @@ describe("LogionLoc", () => {
         setSignAndSend(signAndSend);
 
         const requester = "requester";
+        const locType = 'Transaction';
 
         const locId = new UUID();
         createLoc({
@@ -28,6 +29,7 @@ describe("LogionLoc", () => {
             errorCallback,
             locId,
             requester,
+            locType,
         });
 
         expect(signAndSend).toBeCalledWith(
@@ -38,7 +40,7 @@ describe("LogionLoc", () => {
             }),
         );
 
-        expect(api.tx.logionLoc.createLoc).toBeCalledWith(locId.toHexString(), requester);
+        expect(api.tx.logionLoc.createLoc).toBeCalledWith(locId.toHexString(), requester, locType);
     });
 
     it("submits addMetadata extrinsic", () => {

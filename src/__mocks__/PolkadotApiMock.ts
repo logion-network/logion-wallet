@@ -42,6 +42,7 @@ export const DEFAULT_LOC = {
         "0x91820202c3d0fea0c494b53e3352f1934bc177484e3f41ca2c4bca4572d71cd2"
     ],
     closed: false,
+    locType: 'Transaction',
 }
 
 export class ApiPromise {
@@ -100,6 +101,10 @@ export class ApiPromise {
                     closed: {
                         isTrue: DEFAULT_LOC.closed,
                         isFalse: !DEFAULT_LOC.closed,
+                    },
+                    loc_type: {
+                        isTransaction: DEFAULT_LOC.locType === 'Transaction',
+                        isIdentity: DEFAULT_LOC.locType === 'Identity',
                     }
                 })
             })
@@ -129,14 +134,16 @@ export class ApiPromise {
             mint: () => {},
         },
         recovery: {
-            createRecovery: jest.fn().mockResolvedValue(() => {}),
             initiateRecovery: jest.fn().mockResolvedValue(() => {}),
         },
         logionLoc: {
             createLoc: jest.fn().mockResolvedValue(() => {}),
             addMetadata: jest.fn().mockResolvedValue(() => {}),
             addHash: jest.fn().mockResolvedValue(() => {}),
-        }
+        },
+        verifiedRecovery: {
+            createRecovery: jest.fn().mockResolvedValue(() => {}),
+        },
     }
 }
 

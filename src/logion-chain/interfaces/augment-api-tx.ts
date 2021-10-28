@@ -1,7 +1,7 @@
 // Auto-generated via `yarn polkadot-types-from-chain`, do not edit
 /* eslint-disable */
 
-import type { LocId, MetadataItem, PeerId } from '../interfaces/default';
+import type { LocId, LocType, MetadataItem, PeerId } from '../interfaces/default';
 import type { ApiTypes, SubmittableExtrinsic } from '@polkadot/api/types';
 import type { Bytes, Compact, Option, U8aFixed, Vec, bool, u16, u32, u64, u8 } from '@polkadot/types';
 import type { TAssetBalance } from '@polkadot/types/interfaces/assets';
@@ -406,6 +406,20 @@ declare module '@polkadot/api/types/submittable' {
        **/
       [key: string]: SubmittableExtrinsicFunction<ApiType>;
     };
+    loAuthorityList: {
+      /**
+       * Adds a new LO to the list
+       **/
+      addLegalOfficer: AugmentedSubmittable<(legalOfficerId: AccountId | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId]>;
+      /**
+       * Removes a LO from the list
+       **/
+      removeLegalOfficer: AugmentedSubmittable<(legalOfficerId: AccountId | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId]>;
+      /**
+       * Generic tx
+       **/
+      [key: string]: SubmittableExtrinsicFunction<ApiType>;
+    };
     logionLoc: {
       /**
        * Add hash to LOC
@@ -422,7 +436,7 @@ declare module '@polkadot/api/types/submittable' {
       /**
        * Creates a new LOC
        **/
-      createLoc: AugmentedSubmittable<(locId: Compact<LocId> | AnyNumber | Uint8Array, requester: AccountId | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<LocId>, AccountId]>;
+      createLoc: AugmentedSubmittable<(locId: Compact<LocId> | AnyNumber | Uint8Array, requester: AccountId | string | Uint8Array, locType: LocType | 'Transaction' | 'Identity' | number | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<LocId>, AccountId, LocType]>;
       /**
        * Generic tx
        **/
@@ -1240,6 +1254,16 @@ declare module '@polkadot/api/types/submittable' {
        * # </weight>
        **/
       set: AugmentedSubmittable<(now: Compact<Moment> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<Moment>]>;
+      /**
+       * Generic tx
+       **/
+      [key: string]: SubmittableExtrinsicFunction<ApiType>;
+    };
+    verifiedRecovery: {
+      /**
+       * Create a recovery configuration for your account. The legal officers must all have closed their Identity LOC.
+       **/
+      createRecovery: AugmentedSubmittable<(legalOfficers: Vec<AccountId> | (AccountId | string | Uint8Array)[]) => SubmittableExtrinsic<ApiType>, [Vec<AccountId>]>;
       /**
        * Generic tx
        **/

@@ -2,12 +2,13 @@ import { ApiPromise } from '@polkadot/api';
 import { stringToHex } from '@polkadot/util';
 import { ExtrinsicSubmissionParameters, signAndSend, Unsubscriber } from './Signature';
 import { UUID } from './UUID';
-import { LegalOfficerCase, MetadataItem } from './Types';
+import { LegalOfficerCase, MetadataItem, LocType } from './Types';
 
 export interface LocCreationParameters extends ExtrinsicSubmissionParameters {
     api: ApiPromise;
     locId: UUID;
     requester: string;
+    locType: LocType;
 }
 
 export function createLoc(parameters: LocCreationParameters): Unsubscriber {
@@ -18,11 +19,12 @@ export function createLoc(parameters: LocCreationParameters): Unsubscriber {
         errorCallback,
         locId,
         requester,
+        locType,
     } = parameters;
 
     return signAndSend({
         signerId,
-        submittable: api.tx.logionLoc.createLoc(locId.toHexString(), requester),
+        submittable: api.tx.logionLoc.createLoc(locId.toHexString(), requester, locType),
         callback,
         errorCallback,
     });
@@ -80,6 +82,7 @@ export async function getLegalOfficerCase(
             })),
             hashes: rawLoc.hashes.toArray().map(rawHash => rawHash.toHex()),
             closed: rawLoc.closed.isTrue,
+            locType: rawLoc.loc_type.isIdentity ? 'Identity' : 'Transaction',
         };
     } else {
         return undefined;

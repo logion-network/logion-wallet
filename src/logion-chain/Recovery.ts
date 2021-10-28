@@ -26,10 +26,10 @@ export function createRecovery(parameters: RecoveryCreationParameters): Unsubscr
         legalOfficers,
     } = parameters;
 
-    const sortedFriends = [ ...legalOfficers ].sort();
+    const sortedLegalOfficers = [ ...legalOfficers ].sort();
     return signAndSend({
         signerId,
-        submittable: api.tx.recovery.createRecovery(sortedFriends, 1, 0),
+        submittable: api.tx.verifiedRecovery.createRecovery(sortedLegalOfficers),
         callback,
         errorCallback,
     });
