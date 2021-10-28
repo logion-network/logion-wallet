@@ -1,7 +1,7 @@
 // Auto-generated via `yarn polkadot-types-from-defs`, do not edit
 /* eslint-disable */
 
-import type { Bytes, Struct, Vec, bool, u128, u32, u64, u8 } from '@polkadot/types';
+import type { Bytes, Enum, Struct, Vec, bool, u128, u32, u64, u8 } from '@polkadot/types';
 import type { AccountId, Balance, Hash, MultiAddress } from '@polkadot/types/interfaces/runtime';
 import type { AccountInfoWithDualRefCount } from '@polkadot/types/interfaces/system';
 import type { DepositBalance } from '@polkadot/types/interfaces/uniques';
@@ -45,10 +45,17 @@ export interface LegalOfficerCaseOf extends Struct {
   readonly metadata: Vec<MetadataItem>;
   readonly hashes: Vec<Hash>;
   readonly closed: bool;
+  readonly loc_type: LocType;
 }
 
 /** @name LocId */
 export interface LocId extends u128 {}
+
+/** @name LocType */
+export interface LocType extends Enum {
+  readonly isTransaction: boolean;
+  readonly isIdentity: boolean;
+}
 
 /** @name LookupSource */
 export interface LookupSource extends MultiAddress {}

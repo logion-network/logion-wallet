@@ -140,6 +140,20 @@ declare module '@polkadot/api/types/events' {
        **/
       [key: string]: AugmentedEvent<ApiType>;
     };
+    loAuthorityList: {
+      /**
+       * Issued when an LO is added to the list. [accountId]
+       **/
+      LoAdded: AugmentedEvent<ApiType, [AccountId]>;
+      /**
+       * Issued when an LO is removed from the list. [accountId]
+       **/
+      LoRemoved: AugmentedEvent<ApiType, [AccountId]>;
+      /**
+       * Generic event
+       **/
+      [key: string]: AugmentedEvent<ApiType>;
+    };
     logionLoc: {
       /**
        * Issued when LOC is closed. [locId]
@@ -312,6 +326,12 @@ declare module '@polkadot/api/types/events' {
        * A new \[account\] was created.
        **/
       NewAccount: AugmentedEvent<ApiType, [AccountId]>;
+      /**
+       * Generic event
+       **/
+      [key: string]: AugmentedEvent<ApiType>;
+    };
+    verifiedRecovery: {
       /**
        * Generic event
        **/

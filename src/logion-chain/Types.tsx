@@ -13,4 +13,7 @@ export interface LegalOfficerCase {
     metadata: MetadataItem[];
     hashes: string[];
     closed: boolean;
+    locType: LocType;
 }
+
+export type LocType = 'Transaction' | 'Identity';

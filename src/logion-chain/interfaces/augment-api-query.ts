@@ -97,7 +97,21 @@ declare module '@polkadot/api/types/storage' {
        **/
       [key: string]: QueryableStorageEntry<ApiType>;
     };
+    loAuthorityList: {
+      /**
+       * All LOs indexed by their account ID.
+       **/
+      legalOfficerSet: AugmentedQuery<ApiType, (arg: AccountId | string | Uint8Array) => Observable<Option<bool>>, [AccountId]> & QueryableStorageEntry<ApiType, [AccountId]>;
+      /**
+       * Generic query
+       **/
+      [key: string]: QueryableStorageEntry<ApiType>;
+    };
     logionLoc: {
+      /**
+       * Requested LOCs by account ID.
+       **/
+      accountLocsMap: AugmentedQuery<ApiType, (arg: AccountId | string | Uint8Array) => Observable<Option<Vec<LocId>>>, [AccountId]> & QueryableStorageEntry<ApiType, [AccountId]>;
       /**
        * All LOCs indexed by ID.
        **/
