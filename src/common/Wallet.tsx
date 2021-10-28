@@ -119,7 +119,7 @@ interface AssetNameCellProps {
     balance: CoinBalance,
 }
 
-function AssetNameCell(props: AssetNameCellProps) {
+export function AssetNameCell(props: AssetNameCellProps) {
 
     return (
         <div className="asset-name-cell">

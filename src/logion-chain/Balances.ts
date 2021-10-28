@@ -1,6 +1,8 @@
 import { ApiPromise } from '@polkadot/api';
 import { PrefixedNumber, ScientificNumber, convertToPrefixed, NONE, ATTO } from "./numbers";
 import { ExtrinsicSubmissionParameters, Unsubscriber, signAndSend } from './Signature';
+import { Call } from "@polkadot/types/interfaces";
+import { SubmittableExtrinsic } from "@polkadot/api/submittable/types";
 
 const LOG_DECIMALS = 18;
 export const LOG_SMALLEST_UNIT = ATTO;
@@ -105,25 +107,39 @@ export function getCoin(coinId: string): Coin {
     }
 }
 
-export interface TransferParameters extends ExtrinsicSubmissionParameters {
+export interface TransferParameters extends ExtrinsicSubmissionParameters, BuildTransferCallParameters {
+}
+
+export function transfer(parameters: TransferParameters): Unsubscriber {
+    const {
+        signerId,
+        callback,
+        errorCallback,
+    } = parameters;
+
+    return signAndSend({
+        signerId,
+        submittable: transferSubmittable(parameters),
+        callback,
+        errorCallback,
+    });
+}
+
+export interface BuildTransferCallParameters {
     api: ApiPromise;
     destination: string;
     amount: PrefixedNumber;
 }
 
-export function transfer(parameters: TransferParameters): Unsubscriber {
+function transferSubmittable(parameters: BuildTransferCallParameters): SubmittableExtrinsic<'promise'> {
     const {
         api,
-        signerId,
-        callback,
-        errorCallback,
         destination,
+        amount
     } = parameters;
+    return api.tx.balances.transfer(destination, amount.convertTo(LOG_SMALLEST_UNIT).coefficient.unnormalize())
+}
 
-    return signAndSend({
-        signerId,
-        submittable: api.tx.balances.transfer(destination, parameters.amount.convertTo(LOG_SMALLEST_UNIT).coefficient.unnormalize()),
-        callback,
-        errorCallback,
-    });
+export function buildTransferCall(parameters: BuildTransferCallParameters): Call {
+    return parameters.api.createType('Call', transferSubmittable(parameters))
 }
