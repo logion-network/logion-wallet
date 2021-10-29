@@ -143,3 +143,9 @@ function transferSubmittable(parameters: BuildTransferCallParameters): Submittab
 export function buildTransferCall(parameters: BuildTransferCallParameters): Call {
     return parameters.api.createType('Call', transferSubmittable(parameters))
 }
+
+export async function estimateFee(parameters: BuildTransferCallParameters): Promise<PrefixedNumber> {
+    const submittable = transferSubmittable(parameters);
+    const paymentInfo = await submittable.paymentInfo(parameters.destination);
+    return new PrefixedNumber(paymentInfo.partialFee.toString(), LOG_SMALLEST_UNIT);
+}
