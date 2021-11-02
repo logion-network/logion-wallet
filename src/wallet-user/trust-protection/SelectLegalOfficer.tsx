@@ -9,7 +9,7 @@ import Icon from "../../common/Icon";
 import FormGroup from '../../common/FormGroup';
 import { useCommonContext } from '../../common/CommonContext';
 
-import { LegalOfficerDecisionStatus, ProtectionRequestStatus } from "../../common/types/ModelTypes";
+import { ProtectionRequestStatus } from "../../common/types/ModelTypes";
 
 import Officer from './Officer';
 import './SelectLegalOfficer.css';
@@ -38,8 +38,7 @@ export interface Props {
     otherLegalOfficer: LegalOfficer | null,
     setLegalOfficer: (legalOfficer: LegalOfficer) => void,
     mode: Mode,
-    decision?: LegalOfficerDecisionStatus,
-    status: ProtectionRequestStatus | null,
+    status?: ProtectionRequestStatus,
 }
 
 export default function SelectLegalOfficer(props: Props) {
@@ -63,35 +62,33 @@ export default function SelectLegalOfficer(props: Props) {
     let icon;
     let status;
     let statusColor: string | undefined = undefined;
-    if(props.decision !== undefined) {
-        if(props.decision === "PENDING") {
-            statusColor = ORANGE;
-            icon = (<Icon
-                icon={{ id: "pending" }}
-            />);
-            status = <span style={{color: statusColor}}>Pending</span>;
-        } else if(props.decision === "ACCEPTED" && props.status === "ACTIVATED") {
-            statusColor = GREEN;
-            icon = (<Icon
-                icon={{ id: "activated" }}
-            />);
-            status = <span style={{color: statusColor}}>Accepted</span>;
-        } else if(props.decision === "ACCEPTED" && props.status === "PENDING") {
-            statusColor = YELLOW;
-            icon = (<Icon
-                icon={{ id: "accepted" }}
-            />);
-            status = <span style={{color: statusColor}}>Accepted</span>;
-        } else if(props.decision === "REJECTED") {
-            statusColor = RED;
-            icon = (<Icon
-                icon={{ id: "rejected" }}
-            />);
-            status = <span style={{color: statusColor}}>Rejected</span>;
-        } else {
-            icon = null;
-            status = null;
-        }
+    if(props.status === "PENDING") {
+        statusColor = ORANGE;
+        icon = (<Icon
+            icon={{ id: "pending" }}
+        />);
+        status = <span style={{color: statusColor}}>Pending</span>;
+    } else if(props.status === "ACTIVATED") {
+        statusColor = GREEN;
+        icon = (<Icon
+            icon={{ id: "activated" }}
+        />);
+        status = <span style={{color: statusColor}}>Accepted</span>;
+    } else if(props.status === "ACCEPTED") {
+        statusColor = YELLOW;
+        icon = (<Icon
+            icon={{ id: "accepted" }}
+        />);
+        status = <span style={{color: statusColor}}>Accepted</span>;
+    } else if(props.status === "REJECTED") {
+        statusColor = RED;
+        icon = (<Icon
+            icon={{ id: "rejected" }}
+        />);
+        status = <span style={{color: statusColor}}>Rejected</span>;
+    } else {
+        icon = null;
+        status = null;
     }
 
     return (

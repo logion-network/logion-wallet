@@ -1,6 +1,5 @@
 import { AxiosInstance } from 'axios';
 
-import { LegalOfficerDecision, } from '../common/types/ModelTypes';
 import { RecoveryInfo } from './Types';
 
 export interface RejectProtectionRequestParameters {
@@ -31,16 +30,6 @@ export async function acceptProtectionRequest(
     await axios.post(`/api/protection-request/${parameters.requestId}/accept`, {
         legalOfficerAddress: parameters.legalOfficerAddress,
     });
-}
-
-export function decision(legalOfficerAddress: string | undefined, decisions: LegalOfficerDecision[]): (LegalOfficerDecision | null) {
-    for(let i = 0; i < decisions.length; ++i) {
-        const decision = decisions[i];
-        if(decision.legalOfficerAddress === legalOfficerAddress) {
-            return decision;
-        }
-    }
-    return null;
 }
 
 export async function fetchRecoveryInfo(

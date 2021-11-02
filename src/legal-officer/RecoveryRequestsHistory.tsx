@@ -1,17 +1,11 @@
-import React from 'react';
-
 import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../common/Table';
 
-import { useCommonContext } from '../common/CommonContext';
-
 import { useLegalOfficerContext } from './LegalOfficerContext';
-import { decision } from './Model';
 import ProtectionRequestStatus from './ProtectionRequestStatus';
 import ProtectionRequestDetails from './ProtectionRequestDetails';
 
 
 export default function RecoveryRequestsHistory() {
-    const { accounts } = useCommonContext();
     const { recoveryRequestsHistory } = useLegalOfficerContext();
 
     if (recoveryRequestsHistory === null) {
@@ -37,10 +31,7 @@ export default function RecoveryRequestsHistory() {
                     },
                     {
                         header: "Status",
-                        render: request => <ProtectionRequestStatus
-                            decision={ decision(accounts?.current?.address, request.decisions)?.status }
-                            status={ request.status }
-                        />,
+                        render: request => <ProtectionRequestStatus status={ request.status } />,
                         width: "140px",
                         splitAfter: true,
                     },

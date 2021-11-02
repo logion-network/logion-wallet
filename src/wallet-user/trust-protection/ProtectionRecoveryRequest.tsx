@@ -16,22 +16,20 @@ import { useCommonContext } from '../../common/CommonContext';
 
 import { useUserContext } from '../UserContext';
 
-import { checkActivation } from "./Model";
 import LegalOfficers from './LegalOfficers';
 import './ProtectionRecoveryRequest.css';
 
 export type ProtectionRecoveryRequestStatus = 'pending' | 'accepted' | 'activated';
 
 export interface Props {
-    request: ProtectionRequest,
-    type: ProtectionRecoveryRequestStatus;
+    requests: ProtectionRequest[],
+    type: ProtectionRecoveryRequestStatus,
 }
 
 export default function ProtectionRecoveryRequest(props: Props) {
     const { api } = useLogionChain();
-    const { accounts, colorTheme, axiosFactory } = useCommonContext();
+    const { accounts, colorTheme } = useCommonContext();
     const { refreshRequests, recoveryConfig, recoveredAddress } = useUserContext();
-    const [ confirmButtonEnabled, setConfirmButtonEnabled ] = useState(props.request.status === "PENDING");
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
     const [ signAndSubmitClaim, setSignAndSubmitClaim ] = useState<SignAndSubmit>(null);
 
@@ -39,7 +37,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
         const signAndSubmit: SignAndSubmit = (setResult, setError) => createRecovery({
             api: api!,
             signerId: accounts!.current!.address,
-            legalOfficers: props.request.decisions.map(decision => decision.legalOfficerAddress),
+            legalOfficers: props.requests.map(request => request.legalOfficerAddress),
             callback: setResult,
             errorCallback: setError
         });
@@ -52,28 +50,30 @@ export default function ProtectionRecoveryRequest(props: Props) {
             signerId: accounts!.current!.address,
             callback: setResult,
             errorCallback: setError,
-            addressToRecover: props.request.addressToRecover!,
+            addressToRecover: props.requests[0].addressToRecover!,
         });
         setSignAndSubmitClaim(() => signAndSubmit);
     }, [ api, accounts, props, setSignAndSubmitClaim ]);
 
-    if(recoveryConfig === null || recoveredAddress === undefined) {
+    if(recoveryConfig === null || recoveredAddress === undefined || props.requests.length < 2) {
         return null;
     }
 
-    const legalOfficer1: LegalOfficer = legalOfficerByAddress(props.request.decisions[0].legalOfficerAddress);
-    const legalOfficer1Decision = props.request.decisions[0].status;
-    const legalOfficer2: LegalOfficer = legalOfficerByAddress(props.request.decisions[1].legalOfficerAddress);
-    const legalOfficer2Decision = props.request.decisions[1].status;
+    const request = props.requests[0];
 
-    const forAccount = props.request.addressToRecover !== null ? ` for account ${props.request.addressToRecover}` : "";
+    const legalOfficer1: LegalOfficer = legalOfficerByAddress(props.requests[0].legalOfficerAddress);
+    const legalOfficer1Status = props.requests[0].status;
+    const legalOfficer2: LegalOfficer = legalOfficerByAddress(props.requests[1].legalOfficerAddress);
+    const legalOfficer2Status = props.requests[1].status;
 
-    const mainTitle = props.request.isRecovery && props.request.status !== 'ACTIVATED' ? "Recovery" : "My Logion Protection";
+    const forAccount = request.addressToRecover !== null ? ` for account ${request.addressToRecover}` : "";
+
+    const mainTitle = request.isRecovery && request.status !== 'ACTIVATED' ? "Recovery" : "My Logion Protection";
     let subTitle;
     let alert = null;
     if(props.type === 'pending') {
-        subTitle = props.request.isRecovery ? "Recovery process status" : undefined;
-        if(props.request.isRecovery) {
+        subTitle = request.isRecovery ? "Recovery process status" : undefined;
+        if(request.isRecovery) {
             subTitle = "Recovery process status";
             alert = (
                 <Alert variant="info">
@@ -93,7 +93,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
             );
         }
     } else if(props.type === 'accepted') {
-        if(props.request.isRecovery) {
+        if(request.isRecovery) {
             subTitle = "My recovery request";
             alert = (
                 <Alert variant="info">
@@ -107,23 +107,16 @@ export default function ProtectionRecoveryRequest(props: Props) {
             alert = (
                 <Alert variant="info">
                     Your Logion Trust Protection request has been accepted by your
-                    Legal Officers. You may now activate your protection. This will require 2 signatures.
+                    Legal Officers. You may now activate your protection.
                 </Alert>
             );
         }
     } else if(props.type === 'activated') {
-        if(confirmButtonEnabled) {
-            alert = (
-                <Alert variant="warning">
-                    Mandatory: we detect that the Logion Application needs to be re-synchronized with the Logion
-                    Blockchain. To proceed, please click on the button and sign to confirm this operation.
-                </Alert>
-            );
-        } else if(props.request.isRecovery) {
+        if(request.isRecovery) {
             if(recoveredAddress === null) {
                 alert = (
                     <Alert variant="info">
-                        You are now ready to claim the access to address { props.request.addressToRecover }.
+                        You are now ready to claim the access to address { request.addressToRecover }.
                     </Alert>
                 );
             }
@@ -136,17 +129,17 @@ export default function ProtectionRecoveryRequest(props: Props) {
             subTitle={ subTitle }
             titleIcon={{
                 icon: {
-                    id: props.request.isRecovery && props.request.status !== 'ACTIVATED' ? 'recovery' : 'shield',
-                    hasVariants: props.request.isRecovery && props.request.status !== 'ACTIVATED' ? false : true,
+                    id: request.isRecovery && request.status !== 'ACTIVATED' ? 'recovery' : 'shield',
+                    hasVariants: request.isRecovery && request.status !== 'ACTIVATED' ? false : true,
                 },
-                background: props.request.isRecovery && props.request.status !== 'ACTIVATED' ? colorTheme.recoveryItems.iconGradient : undefined,
+                background: request.isRecovery && request.status !== 'ACTIVATED' ? colorTheme.recoveryItems.iconGradient : undefined,
             }}
         >
                 <Frame className="ProtectionRecoveryRequest">
                     { alert }
 
                     {
-                        props.type === 'activated' && !confirmButtonEnabled && (!props.request.isRecovery || recoveredAddress !== null) && 
+                        props.type === 'activated' && (!request.isRecovery || recoveredAddress !== null) && 
                         <div
                             className="alert-activated"
                             style={{
@@ -175,27 +168,12 @@ export default function ProtectionRecoveryRequest(props: Props) {
                         signAndSubmit={ signAndSubmit }
                         onSuccess={ () => {
                             setSignAndSubmit(null);
-                            checkActivation(axiosFactory!, props.request)
-                            .finally(() => refreshRequests!(true));
+                            refreshRequests!(true);
                         }}
                         onError={ () => {} }
                     />
                     {
-                        // This button is a safety net in case the same call at the previous step failed.
-                        // In most cases, it will not show
-                        props.type === 'activated' && confirmButtonEnabled &&
-                        <Button
-                            id="btnConfirmProtection"
-                            onClick={() => {
-                                checkActivation(axiosFactory!, props.request)
-                                .then(() => setConfirmButtonEnabled(false))
-                            }}
-                        >
-                            Re-Sync Confirmation
-                        </Button>
-                    }
-                    {
-                        props.type === 'activated' && props.request.isRecovery && recoveredAddress === null && signAndSubmitClaim === null &&
+                        props.type === 'activated' && request.isRecovery && recoveredAddress === null && signAndSubmitClaim === null &&
                         <Button
                             data-testid="btnClaim"
                             onClick={ doClaimRecovery }
@@ -204,7 +182,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
                         </Button>
                     }
                     {
-                        props.type === 'activated' && props.request.isRecovery && recoveredAddress === null &&
+                        props.type === 'activated' && request.isRecovery && recoveredAddress === null &&
                         <ExtrinsicSubmitter
                             id="initiateRecovery"
                             successMessage="Recovery successfully initiated."
@@ -218,12 +196,11 @@ export default function ProtectionRecoveryRequest(props: Props) {
                         legalOfficers={ legalOfficers }
                         legalOfficer1={ legalOfficer1 }
                         setLegalOfficer1={ () => {} }
-                        legalOfficer1Decision={ legalOfficer1Decision }
+                        legalOfficer1Status={ legalOfficer1Status }
                         legalOfficer2={ legalOfficer2 }
                         setLegalOfficer2={ () => {} }
-                        legalOfficer2Decision={ legalOfficer2Decision }
+                        legalOfficer2Status={ legalOfficer2Status }
                         mode="view"
-                        status={ props.request.status }
                     />
                 </Frame>
         </FullWidthPane>

@@ -1,8 +1,7 @@
 import React from 'react';
 
-import { useCommonContext } from "../../common/CommonContext";
 import { useUserContext } from "../UserContext";
-import { findRequest, isRecovery } from "./Model";
+import { isRecovery } from "./Model";
 
 import GoToTrustProtection from './GoToTrustProtection';
 import CreateProtectionRequestForm from "./CreateProtectionRequestForm";
@@ -10,7 +9,6 @@ import ProtectionRecoveryRequest from './ProtectionRecoveryRequest';
 import RecoveryProcess from './RecoveryProcess';
 
 export default function Recovery() {
-    const { accounts } = useCommonContext();
     const { pendingProtectionRequests, acceptedProtectionRequests, recoveryConfig, recoveredAddress } = useUserContext();
 
     if (pendingProtectionRequests === null || acceptedProtectionRequests === null || recoveryConfig === null
@@ -18,26 +16,21 @@ export default function Recovery() {
         return null;
     }
 
-    const pendingProtectionRequest = findRequest({
-        address: accounts!.current!.address,
-        requests: pendingProtectionRequests
-    });
-    const acceptedProtectionRequest = findRequest({
-        address: accounts!.current!.address,
-        requests: acceptedProtectionRequests
-    });
-    const goToTrustProtection = (pendingProtectionRequest !== null && !isRecovery(pendingProtectionRequest))
-        || (acceptedProtectionRequest !== null && !isRecovery(acceptedProtectionRequest));
+    const requests = pendingProtectionRequests.concat(acceptedProtectionRequests);
+    const goToTrustProtection = ((pendingProtectionRequests.length > 0) && !isRecovery(pendingProtectionRequests[0]))
+        || ((acceptedProtectionRequests.length > 0) && !isRecovery(acceptedProtectionRequests[0]));
 
     if(goToTrustProtection) {
+        console.log(pendingProtectionRequests);
+        console.log(acceptedProtectionRequests);
         return <GoToTrustProtection />;
-    } else if(pendingProtectionRequest !== null) {
-        return <ProtectionRecoveryRequest request={ pendingProtectionRequest } type='pending' />;
-    } else if(acceptedProtectionRequest !== null) {
+    } else if(pendingProtectionRequests.length > 0) {
+        return <ProtectionRecoveryRequest requests={ requests } type='pending' />;
+    } else if(acceptedProtectionRequests.length === 2) {
         if(recoveryConfig.isEmpty) {
-            return <ProtectionRecoveryRequest request={ acceptedProtectionRequest } type='accepted' />;
+            return <ProtectionRecoveryRequest requests={ requests } type='accepted' />;
         } else if(recoveryConfig.isSome && recoveredAddress === null) {
-            return <ProtectionRecoveryRequest request={ acceptedProtectionRequest } type='activated' />;
+            return <ProtectionRecoveryRequest requests={ requests } type='activated' />;
         } else {
             return <RecoveryProcess />;
         }

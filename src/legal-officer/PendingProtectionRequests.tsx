@@ -8,7 +8,7 @@ import Table, { Column, Cell, EmptyTableMessage, DateTimeCell } from '../common/
 import { useCommonContext } from '../common/CommonContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
-import { acceptProtectionRequest, rejectProtectionRequest, decision } from './Model';
+import { acceptProtectionRequest, rejectProtectionRequest } from './Model';
 import { ProtectionRequest } from '../common/types/ModelTypes';
 import ProcessStep from './ProcessStep';
 import ProtectionRequestStatus from './ProtectionRequestStatus';
@@ -96,10 +96,7 @@ export default function PendingProtectionRequests(props: Props) {
             },
             {
                 header: "Status",
-                render: request => <ProtectionRequestStatus
-                    decision={ decision(accounts?.current?.address, request.decisions)!.status}
-                    status={ request.status }
-                />,
+                render: request => <ProtectionRequestStatus status={ request.status } />,
                 width: "140px",
                 splitAfter: true,
             },
@@ -161,10 +158,7 @@ export default function PendingProtectionRequests(props: Props) {
             },
             {
                 header: "Status",
-                render: request => <ProtectionRequestStatus
-                    decision={ decision(accounts?.current?.address, request.decisions)!.status}
-                    status={ request.status }
-                />,
+                render: request => <ProtectionRequestStatus status={ request.status } />,
                 width: "140px",
                 splitAfter: true,
             },

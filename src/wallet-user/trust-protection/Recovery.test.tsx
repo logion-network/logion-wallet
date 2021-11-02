@@ -1,12 +1,9 @@
 jest.mock('../UserContext');
-jest.mock('../../common/CommonContext');
 
-import React from "react";
 import {shallowRender} from "../../tests";
 import Recovery from "./Recovery";
-import { ProtectionRequest } from "../../legal-officer/Types";
 import { setPendingProtectionRequests, setAcceptedProtectionRequests, setRecoveryConfig } from '../__mocks__/UserContextMock';
-import { RECOVERY_REQUEST } from "./TestData";
+import { PENDING_RECOVERY_REQUESTS, ACCEPTED_RECOVERY_REQUESTS, ACTIVATED_RECOVERY_REQUESTS } from "./TestData";
 
 test("renders", () => {
     const tree = shallowRender(<Recovery />)
@@ -14,10 +11,7 @@ test("renders", () => {
 });
 
 test("renders pending protection request", () => {
-    const requests: ProtectionRequest[] = [
-        RECOVERY_REQUEST
-    ];
-    setPendingProtectionRequests(requests);
+    setPendingProtectionRequests(PENDING_RECOVERY_REQUESTS);
     setAcceptedProtectionRequests([]);
     setRecoveryConfig({ isEmpty: true });
 
@@ -28,10 +22,7 @@ test("renders pending protection request", () => {
 
 test("renders accepted protection request", () => {
     setPendingProtectionRequests([]);
-    const requests: ProtectionRequest[] = [
-        RECOVERY_REQUEST
-    ];
-    setAcceptedProtectionRequests(requests);
+    setAcceptedProtectionRequests(ACCEPTED_RECOVERY_REQUESTS);
     setRecoveryConfig({ isEmpty: true });
 
     const tree = shallowRender(<Recovery />)
@@ -41,10 +32,7 @@ test("renders accepted protection request", () => {
 
 test("renders protected", () => {
     setPendingProtectionRequests([]);
-    const requests: ProtectionRequest[] = [
-        RECOVERY_REQUEST
-    ];
-    setAcceptedProtectionRequests(requests);
+    setAcceptedProtectionRequests(ACTIVATED_RECOVERY_REQUESTS);
     setRecoveryConfig({ isEmpty: false });
 
     const tree = shallowRender(<Recovery />)

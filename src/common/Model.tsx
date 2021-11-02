@@ -2,7 +2,6 @@ import { AxiosInstance } from 'axios';
 
 import {
     TransactionsSet,
-    LegalOfficerDecisionStatus,
     ProtectionRequestStatus,
     ProtectionRequest,
     Transaction,
@@ -15,11 +14,9 @@ import { UUID } from '../logion-chain/UUID';
 export type ProtectionRequestKind = 'RECOVERY' | 'PROTECTION_ONLY' | 'ANY';
 
 export interface FetchProtectionRequestSpecification {
-    legalOfficerAddress?: string,
     requesterAddress?: string,
-    decisionStatuses: LegalOfficerDecisionStatus[],
     kind: ProtectionRequestKind,
-    protectionRequestStatus?: ProtectionRequestStatus,
+    statuses?: ProtectionRequestStatus[],
 }
 
 export async function fetchProtectionRequests(

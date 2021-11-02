@@ -1,28 +1,26 @@
 import Identity from './Identity';
 import PostalAddress from './PostalAddress';
 
-export type LegalOfficerDecisionStatus = "PENDING" | "REJECTED" | "ACCEPTED";
-
-export type ProtectionRequestStatus = "PENDING" | "ACTIVATED";
+export type ProtectionRequestStatus = "PENDING" | "REJECTED" | "ACCEPTED" | "ACTIVATED";
 
 export interface LegalOfficerDecision {
-    legalOfficerAddress: string,
-    status: LegalOfficerDecisionStatus,
     rejectReason: string | null,
     decisionOn: string | null,
-    requestId?: string;
+    locId?: string | null,
 }
 
 export interface ProtectionRequest {
     id: string,
     requesterAddress: string,
-    decisions: LegalOfficerDecision[],
+    decision: LegalOfficerDecision,
     userIdentity: Identity,
     userPostalAddress: PostalAddress,
     createdOn: string,
     isRecovery: boolean,
     addressToRecover: string | null,
     status: ProtectionRequestStatus,
+    legalOfficerAddress: string,
+    otherLegalOfficerAddress: string,
 }
 
 export interface Transaction {

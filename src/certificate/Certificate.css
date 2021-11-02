@@ -21,7 +21,8 @@
     margin-bottom: 20px;
 }
 
-.Certificate .header h1,h2 {
+.Certificate .header h1,
+.Certificate .header h2 {
     text-align: center;
 }
 
