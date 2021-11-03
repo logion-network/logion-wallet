@@ -10,6 +10,7 @@ import {
 } from './types/ModelTypes';
 import Identity from './types/Identity';
 import { UUID } from '../logion-chain/UUID';
+import { LocType } from '../logion-chain/Types';
 
 export type ProtectionRequestKind = 'RECOVERY' | 'PROTECTION_ONLY' | 'ANY';
 
@@ -91,6 +92,7 @@ export interface FetchLocRequestSpecification {
     ownerAddress?: string,
     requesterAddress?: string,
     statuses: LocRequestStatus[],
+    locTypes: LocType[],
 }
 
 export async function fetchLocRequests(
@@ -118,9 +120,10 @@ export async function fetchPublicLoc(
 }
 
 export interface CreateLocRequest {
-    ownerAddress?: string;
-    requesterAddress?: string;
-    description?: string;
+    ownerAddress: string;
+    requesterAddress: string;
+    description: string;
+    locType: LocType;
     userIdentity?: Identity;
 }
 

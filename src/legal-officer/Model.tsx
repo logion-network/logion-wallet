@@ -1,4 +1,5 @@
 import { AxiosInstance } from 'axios';
+import { UUID } from '../logion-chain/UUID';
 
 import { RecoveryInfo } from './Types';
 
@@ -20,7 +21,7 @@ export async function rejectProtectionRequest(
 
 export interface AcceptProtectionRequestParameters {
     requestId: string,
-    legalOfficerAddress: string,
+    locId: UUID,
 }
 
 export async function acceptProtectionRequest(
@@ -28,7 +29,7 @@ export async function acceptProtectionRequest(
     parameters: AcceptProtectionRequestParameters
 ): Promise<void> {
     await axios.post(`/api/protection-request/${parameters.requestId}/accept`, {
-        legalOfficerAddress: parameters.legalOfficerAddress,
+        locId: parameters.locId.toString(),
     });
 }
 

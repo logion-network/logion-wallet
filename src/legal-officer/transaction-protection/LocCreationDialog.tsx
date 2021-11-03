@@ -4,15 +4,24 @@ import { useCommonContext } from '../../common/CommonContext';
 import { CreateLocRequest, createLocRequest } from '../../common/Model';
 import Dialog from '../../common/Dialog';
 import LocCreationForm, { FormValues } from "./LocCreationForm";
-import { useLocContext } from "./LocContext";
 import { LocRequest } from "../../common/types/ModelTypes";
 import LocCreationSteps from "./LocCreationSteps";
 import { useLegalOfficerContext } from '../LegalOfficerContext';
+import UserIdentity from '../../common/types/Identity';
+import { LocType } from '../../logion-chain/Types';
+import Alert from '../../common/Alert';
+
+export interface LocRequestFragment {
+    requesterAddress: string;
+    locType: LocType;
+    userIdentity?: UserIdentity;
+}
 
 export interface Props {
     show: boolean,
     exit: () => void,
-    onSuccess: (locRequest: LocRequest) => void
+    onSuccess: (locRequest: LocRequest) => void,
+    locRequest: LocRequestFragment;
 }
 
 export default function LocCreationDialog(props: Props) {
@@ -23,22 +32,22 @@ export default function LocCreationDialog(props: Props) {
             description: ""
         }
     });
-    const { locRequest } = useLocContext();
-    const [ newLocRequest, setNewLocRequest ] = useState<LocRequest | null>(null)
+    const [ newLocRequest, setNewLocRequest ] = useState<LocRequest | null>(null);
 
     const submit = useCallback((formValues: FormValues) => {
         (async function () {
             const currentAddress = accounts!.current!.address;
             const request: CreateLocRequest = {
                 ownerAddress: currentAddress,
-                requesterAddress: locRequest!.requesterAddress,
+                requesterAddress: props.locRequest.requesterAddress,
                 description: formValues.description,
-                userIdentity: locRequest!.userIdentity,
+                userIdentity: props.locRequest.userIdentity,
+                locType: props.locRequest.locType,
             }
             setNewLocRequest(await createLocRequest!(axios!, request));
             refresh()
         })();
-    }, [ axios, accounts, locRequest, refresh ]);
+    }, [ axios, accounts, props.locRequest, refresh ]);
 
     return (
         <>
@@ -64,6 +73,17 @@ export default function LocCreationDialog(props: Props) {
                 ] }
                 onSubmit={ handleSubmit(submit) }
             >
+                <h3>Create a new {props.locRequest.locType} LOC</h3>
+                {
+                    props.locRequest.locType === 'Identity' &&
+                    <Alert
+                        variant="info"
+                    >
+                        Important: use this specific type of LOC to authenticate the identity of a given person.
+                        This authentication must follow a proper due diligence using tools and processes defined by
+                        and under the responsibility of the Logion Officer.
+                    </Alert>
+                }
                 { newLocRequest === null &&
                 <LocCreationForm
                     control={ control }
@@ -74,6 +94,7 @@ export default function LocCreationDialog(props: Props) {
                 { newLocRequest !== null &&
                 <LocCreationSteps
                     requestToCreate={ newLocRequest }
+                    locType={ props.locRequest.locType }
                     exit={ () => {
                         props.exit();
                         reset();

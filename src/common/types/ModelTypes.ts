@@ -1,3 +1,4 @@
+import { LocType } from '../../logion-chain/Types';
 import Identity from './Identity';
 import PostalAddress from './PostalAddress';
 
@@ -57,6 +58,7 @@ export interface LocRequest {
     ownerAddress: string;
     requesterAddress: string;
     description: string;
+    locType: LocType;
     createdOn: string;
     decisionOn?: string;
     id: string;

@@ -12,6 +12,7 @@ import {
     SETTINGS_PATH,
     WALLET_PATH,
     LOC_REQUESTS_PATH,
+    IDENTITIES_PATH,
 } from './LegalOfficerPaths';
 
 export default function ContextualizedWallet() {
@@ -56,6 +57,18 @@ export default function ContextualizedWallet() {
                     icon: {
                         icon: {
                             id: 'loc'
+                        },
+                        background: colorTheme.topMenuItems.iconGradient,
+                    },
+                },
+                {
+                    id: "identity",
+                    text: "Identities",
+                    to: IDENTITIES_PATH,
+                    exact: true,
+                    icon: {
+                        icon: {
+                            id: 'identity'
                         },
                         background: colorTheme.topMenuItems.iconGradient,
                     },

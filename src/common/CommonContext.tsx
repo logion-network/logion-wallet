@@ -27,6 +27,8 @@ export interface CommonContext {
     rejectedLocRequests: LocRequest[] | null;
     openedLocRequests: LocRequest[] | null;
     closedLocRequests: LocRequest[] | null;
+    openedIdentityLocs: LocRequest[] | null;
+    closedIdentityLocs: LocRequest[] | null;
     colorTheme: ColorTheme;
     setColorTheme: ((colorTheme: ColorTheme) => void) | null;
     setTokens: (tokens: AccountTokens) => void;
@@ -55,6 +57,8 @@ function initialContextValue(): FullCommonContext {
         rejectedLocRequests: null,
         openedLocRequests: null,
         closedLocRequests: null,
+        openedIdentityLocs: null,
+        closedIdentityLocs: null,
         colorTheme: DEFAULT_COLOR_THEME,
         setColorTheme: null,
         tokens: loadTokens().refresh(moment()),
@@ -104,6 +108,8 @@ interface Action {
     openedLocRequests?: LocRequest[];
     closedLocRequests?: LocRequest[];
     rejectedLocRequests?: LocRequest[];
+    openedIdentityLocs?: LocRequest[];
+    closedIdentityLocs?: LocRequest[];
     refresh?: (clearOnRefresh?: boolean) => void;
     refreshAddress?: string;
     clearOnRefresh?: boolean;
@@ -150,6 +156,8 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                     openedLocRequests: action.openedLocRequests!,
                     closedLocRequests: action.closedLocRequests!,
                     rejectedLocRequests: action.rejectedLocRequests!,
+                    openedIdentityLocs: action.openedIdentityLocs!,
+                    closedIdentityLocs: action.closedIdentityLocs!,
                 };
             } else {
                 return state;
@@ -256,14 +264,18 @@ export function CommonContextProvider(props: Props) {
 
                 const transactions = await fetchTransactionsGivenAccount(contextValue.accounts!, contextValue.axiosFactory!);
 
-                let specificationFragment: any;
+                let specificationFragment: FetchLocRequestSpecification;
                 if(currentAccount.isLegalOfficer) {
                     specificationFragment = {
-                        ownerAddress: currentAddress
+                        ownerAddress: currentAddress,
+                        statuses: [],
+                        locTypes: []
                     }
                 } else {
                     specificationFragment = {
-                        requesterAddress: currentAddress
+                        requesterAddress: currentAddress,
+                        statuses: [],
+                        locTypes: []
                     }
                 }
 
@@ -274,17 +286,31 @@ export function CommonContextProvider(props: Props) {
 
                 const openedLocRequests = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
                     ...specificationFragment,
-                    statuses: ["OPEN"]
+                    statuses: ["OPEN"],
+                    locTypes: ['Transaction']
                 });
 
                 const closedLocRequests = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
                     ...specificationFragment,
-                    statuses: ["CLOSED"]
+                    statuses: ["CLOSED"],
+                    locTypes: ['Transaction']
                 });
 
                 const rejectedLocRequests = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
                     ...specificationFragment,
                     statuses: ["REJECTED"]
+                });
+
+                const openedIdentityLocs = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
+                    ...specificationFragment,
+                    statuses: ["OPEN"],
+                    locTypes: ['Identity']
+                });
+
+                const closedIdentityLocs = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
+                    ...specificationFragment,
+                    statuses: ["CLOSED"],
+                    locTypes: ['Identity']
                 });
 
                 dispatch({
@@ -296,6 +322,8 @@ export function CommonContextProvider(props: Props) {
                     openedLocRequests,
                     closedLocRequests,
                     rejectedLocRequests,
+                    openedIdentityLocs,
+                    closedIdentityLocs,
                 });
             })();
         }

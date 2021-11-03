@@ -14,13 +14,18 @@ import ProcessStep from './ProcessStep';
 import ProtectionRequestStatus from './ProtectionRequestStatus';
 import ProtectionRequestDetails from './ProtectionRequestDetails';
 import { useHistory } from "react-router-dom";
-import { recoveryDetailsPath } from "./LegalOfficerPaths";
+import { locDetailsPath, recoveryDetailsPath } from "./LegalOfficerPaths";
 import AccountInfo from "../common/AccountInfo";
+import LocIdFormGroup from './LocIdFormGroup';
+import { UUID } from '../logion-chain/UUID';
+import LocCreationDialog from './transaction-protection/LocCreationDialog';
 
 enum ReviewStatus {
     NONE,
     PENDING,
-    REJECTING
+    REJECTING,
+    ACCEPTING,
+    CREATE_NEW_LOC
 }
 
 interface ReviewState {
@@ -35,11 +40,12 @@ export interface Props {
 }
 
 export default function PendingProtectionRequests(props: Props) {
-    const { accounts, axiosFactory } = useCommonContext();
+    const { accounts, axiosFactory, colorTheme } = useCommonContext();
     const { pendingProtectionRequests, refreshRequests, pendingRecoveryRequests } = useLegalOfficerContext();
     const [ rejectReason, setRejectReason ] = useState<string>("");
     const [ reviewState, setReviewState ] = useState<ReviewState>(NO_REVIEW_STATE);
     const history = useHistory();
+    const [ locId, setLocId ] = useState<UUID | undefined>();
 
     const handleClose = useCallback(() => {
         setReviewState(NO_REVIEW_STATE);
@@ -64,13 +70,13 @@ export default function PendingProtectionRequests(props: Props) {
         (async function() {
             const requestId = reviewState.request!.id;
             await acceptProtectionRequest(axiosFactory!(currentAddress)!, {
-                legalOfficerAddress: currentAddress,
                 requestId,
+                locId: locId!
             });
             setReviewState(NO_REVIEW_STATE);
             refreshRequests!(false);
         })();
-    }, [ axiosFactory, reviewState, accounts, setReviewState, refreshRequests ]);
+    }, [ axiosFactory, reviewState, accounts, setReviewState, refreshRequests, locId ]);
 
     if (pendingProtectionRequests === null || pendingRecoveryRequests === null) {
         return null;
@@ -226,7 +232,7 @@ export default function PendingProtectionRequests(props: Props) {
                         },
                         {
                             id: "accept",
-                            callback: acceptAndCloseModal,
+                            callback: () => setReviewState({ ...reviewState, status: ReviewStatus.ACCEPTING }),
                             mayProceed: true,
                             buttonVariant: "success",
                             buttonText: "Yes",
@@ -289,6 +295,52 @@ export default function PendingProtectionRequests(props: Props) {
                         />
                     </Form.Group>
                 </ProcessStep>
+            }
+            {
+                reviewState.status === ReviewStatus.ACCEPTING &&
+                <ProcessStep
+                    active={ true }
+                    closeCallback={ handleClose }
+                    title={`Accepting ${reviewState.request!.id}`}
+                    mayProceed={ locId !== undefined }
+                    nextSteps={ [
+                        {
+                            id: "later",
+                            callback: handleClose,
+                            mayProceed: true,
+                            buttonVariant: "secondary",
+                            buttonText: "Later",
+                        },
+                        {
+                            id: "confirm",
+                            callback: acceptAndCloseModal,
+                            mayProceed: true,
+                            buttonVariant: "primary",
+                            buttonText: "Confirm",
+                            buttonTestId: `confirm-accept-${reviewState.request!.id}`
+                        }
+                    ] }
+                >
+                    <LocIdFormGroup
+                        colors={ colorTheme.dialog }
+                        expect={{closed: true, type: 'Identity'}}
+                        onChange={ setLocId }
+                        onNew={() => setReviewState({ ...reviewState, status: ReviewStatus.CREATE_NEW_LOC }) }
+                    />
+                </ProcessStep>
+            }
+            {
+                reviewState.request !== undefined &&
+                <LocCreationDialog
+                    show={ reviewState.status === ReviewStatus.CREATE_NEW_LOC }
+                    exit={ handleClose }
+                    onSuccess={ (newLoc) => history.push(locDetailsPath(newLoc.id)) }
+                    locRequest={{
+                        requesterAddress: reviewState.request!.requesterAddress,
+                        userIdentity: reviewState.request!.userIdentity,
+                        locType: 'Identity'
+                    }}
+                />
             }
         </>
     );

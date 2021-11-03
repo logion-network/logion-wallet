@@ -20,12 +20,9 @@ import Frame from "../../common/Frame";
 import Button from "../../common/Button";
 import { copyToClipBoard } from "../../common/Tools";
 import { fullCertificateUrl } from "../../PublicPaths";
+import { IDENTITIES_PATH, LOC_REQUESTS_PATH } from "../LegalOfficerPaths";
 
-export interface Props {
-    backPath: string,
-}
-
-export default function ContextualizedLocDetails(props: Props) {
+export default function ContextualizedLocDetails() {
     const { colorTheme } = useCommonContext();
     const history = useHistory();
     const { loc, locId, locRequest } = useLocContext();
@@ -35,17 +32,18 @@ export default function ContextualizedLocDetails(props: Props) {
     }
 
     const certificateUrl = fullCertificateUrl(locId);
+    const backPath = loc.locType === 'Transaction' ? LOC_REQUESTS_PATH : IDENTITIES_PATH;
 
     return (
         <FullWidthPane
-            mainTitle="Transaction Protection Cases"
+            mainTitle={ loc.locType === 'Transaction' ? "Transaction Protection Cases" : "Identity Case Management" }
             titleIcon={ {
                 icon: {
-                    id: 'loc'
+                    id: loc.locType === 'Transaction' ? 'loc' : 'identity'
                 },
                 background: colorTheme.topMenuItems.iconGradient,
             } }
-            onBack={ () => history.push(props.backPath) }
+            onBack={ () => history.push(backPath) }
             className="ContextualizedLocDetails"
         >
             { loc !== undefined &&
@@ -56,7 +54,7 @@ export default function ContextualizedLocDetails(props: Props) {
                     } }
                     tabs={ [ {
                         key: "details",
-                        title: "Logion Officer Case",
+                        title: loc.locType === 'Transaction' ? "Logion Officer Case - Transaction" : "Logion Officer Case - Identity",
                         render: () => {
                             const { date, time } = format(locRequest.createdOn)
                             return <>

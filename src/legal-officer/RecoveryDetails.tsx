@@ -1,12 +1,12 @@
+import React, { useEffect, useState, useCallback } from "react";
 import Form from 'react-bootstrap/Form';
 
 import { useCommonContext } from "../common/CommonContext";
 import { useLegalOfficerContext } from "./LegalOfficerContext";
 import { FullWidthPane } from "../common/Dashboard";
 import { useParams, useHistory } from 'react-router';
-import { RECOVERY_REQUESTS_PATH } from "./LegalOfficerPaths";
+import { locDetailsPath, RECOVERY_REQUESTS_PATH } from "./LegalOfficerPaths";
 import Button from "../common/Button";
-import React, { useEffect, useState, useCallback } from "react";
 import { Col, Row } from "react-bootstrap";
 import { acceptProtectionRequest, fetchRecoveryInfo, rejectProtectionRequest } from "./Model";
 import { RecoveryInfo } from "./Types";
@@ -21,18 +21,28 @@ import { useLogionChain } from '../logion-chain';
 import { vouchRecovery } from '../logion-chain/Recovery';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../ExtrinsicSubmitter';
 import ButtonGroup from "../common/ButtonGroup";
+import { UUID } from '../logion-chain/UUID';
+import LocIdFormGroup from "./LocIdFormGroup";
+import LocCreationDialog from "./transaction-protection/LocCreationDialog";
+
+enum Visible {
+    NONE,
+    APPROVE,
+    REJECT,
+    CREATE_NEW_LOC
+}
 
 export default function RecoveryDetails() {
-    const { accounts, axiosFactory } = useCommonContext();
+    const { accounts, axiosFactory, colorTheme } = useCommonContext();
     const { api } = useLogionChain();
     const { refreshRequests } = useLegalOfficerContext();
     const { requestId } = useParams<{ requestId: string }>();
     const [ recoveryInfo, setRecoveryInfo ] = useState<RecoveryInfo | null>(null);
-    const [ approve, setApprove ] = useState(false);
+    const [ visible, setVisible ] = useState(Visible.NONE);
     const history = useHistory();
-    const [ reject, setReject ] = useState(false);
     const [ rejectReason, setRejectReason ] = useState<string>("");
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
+    const [ locId, setLocId ] = useState<UUID | undefined>();
 
     useEffect(() => {
         if (recoveryInfo === null && axiosFactory !== undefined) {
@@ -46,8 +56,8 @@ export default function RecoveryDetails() {
         (async function() {
             const currentAddress = accounts!.current!.address;
             await acceptProtectionRequest(axiosFactory!(currentAddress)!, {
-                legalOfficerAddress: currentAddress,
                 requestId,
+                locId: locId!
             });
             const signAndSubmit: SignAndSubmit = (callback, errorCallback) => vouchRecovery({
                 api: api!,
@@ -59,7 +69,7 @@ export default function RecoveryDetails() {
             });
             setSignAndSubmit(() => signAndSubmit);
         })();
-    }, [ axiosFactory, requestId, accounts, api, recoveryInfo ]);
+    }, [ axiosFactory, requestId, accounts, api, recoveryInfo, locId ]);
 
     const doReject = useCallback(() => {
         (async function() {
@@ -128,8 +138,8 @@ export default function RecoveryDetails() {
                         <Button variant="outline-primary" onClick={ () => history.push(RECOVERY_REQUESTS_PATH) }>
                             Back to requests list
                         </Button>
-                        <Button variant="danger" onClick={ () => setReject(true) }>Refuse</Button>
-                        <Button variant="primary" onClick={ () => setApprove(true) }>Proceed</Button>
+                        <Button variant="danger" onClick={ () => setVisible(Visible.REJECT) }>Refuse</Button>
+                        <Button variant="primary" onClick={ () => setVisible(Visible.APPROVE) }>Proceed</Button>
                     </ButtonGroup>
                 </Row>
             </Frame>
@@ -139,7 +149,7 @@ export default function RecoveryDetails() {
                         id: 'back',
                         buttonText: 'Back',
                         buttonVariant: 'secondary',
-                        callback: () => setApprove(false),
+                        callback: () => setVisible(Visible.NONE),
                         disabled: signAndSubmit !== null
                     },
                     {
@@ -147,10 +157,10 @@ export default function RecoveryDetails() {
                         buttonText: 'Confirm and sign',
                         buttonVariant: 'primary',
                         callback: accept,
-                        disabled: signAndSubmit !== null
+                        disabled: signAndSubmit !== null || locId === undefined
                     }
                 ]}
-                show={ approve }
+                show={ visible === Visible.APPROVE }
                 size="lg"
             >
                 <p>
@@ -158,6 +168,12 @@ export default function RecoveryDetails() {
                     account { recoveryInfo.accountToRecover.requesterAddress } the right to transfer all assets
                     to the account { recoveryInfo.recoveryAccount.requesterAddress }.
                 </p>
+                <LocIdFormGroup
+                    colors={ colorTheme.dialog }
+                    expect={{closed: true, type: 'Identity'}}
+                    onChange={ setLocId }
+                    onNew={ () => setVisible(Visible.CREATE_NEW_LOC) }
+                />
                 <ExtrinsicSubmitter
                     id="vouch"
                     signAndSubmit={ signAndSubmit }
@@ -171,7 +187,7 @@ export default function RecoveryDetails() {
                         id: 'back',
                         buttonText: 'Back',
                         buttonVariant: 'secondary',
-                        callback: () => setReject(false)
+                        callback: () => setVisible(Visible.NONE),
                     },
                     {
                         id: 'reject',
@@ -180,7 +196,7 @@ export default function RecoveryDetails() {
                         callback: doReject
                     }
                 ]}
-                show={ reject }
+                show={ visible === Visible.REJECT }
                 size="lg"
             >
                 I did my due diligence and refuse to grant the
@@ -197,7 +213,16 @@ export default function RecoveryDetails() {
                     />
                 </Form.Group>
             </Dialog>
+            <LocCreationDialog
+                show={ visible === Visible.CREATE_NEW_LOC }
+                exit={ () => history.push(RECOVERY_REQUESTS_PATH) }
+                onSuccess={ (newLoc) => history.push(locDetailsPath(newLoc.id)) }
+                locRequest={{
+                    requesterAddress: recoveryInfo.recoveryAccount.requesterAddress,
+                    userIdentity: recoveryInfo.recoveryAccount.userIdentity,
+                    locType: 'Identity'
+                }}
+            />
         </FullWidthPane>
     );
 }
-

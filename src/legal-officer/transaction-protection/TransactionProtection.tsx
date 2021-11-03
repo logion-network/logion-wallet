@@ -12,7 +12,7 @@ import OpenedLocs from './OpenedLocs';
 import ClosedLocs from './ClosedLocs';
 import Frame from '../../common/Frame';
 
-export default function LocRequests() {
+export default function TransactionProtection() {
     const { colorTheme } = useCommonContext();
     const [ locTabKey, setLocTabKey ] = useState<string>('open');
     const [ requestTabKey, setRequestTabKey ] = useState<string>('pending');
@@ -39,12 +39,12 @@ export default function LocRequests() {
                                 {
                                     key: "open",
                                     title: "Open",
-                                    render: () => <OpenedLocs />
+                                    render: () => <OpenedLocs locType="Transaction" />
                                 },
                                 {
                                     key: "closed",
                                     title: "Closed",
-                                    render: () => <ClosedLocs />
+                                    render: () => <ClosedLocs locType="Transaction" />
                                 }
                             ]} />
                     </Frame>
