@@ -1,3 +1,5 @@
+import BN from "bn.js";
+
 export function amount(balance: string, decimals: number): string {
     const prefixed = new ScientificNumber(balance, 0);
     const converted = prefixed.convertTo(decimals);
@@ -163,7 +165,7 @@ export class ScientificNumber {
             if(positions > 0) {
                 let rightWithDot;
                 if(decimalPart.length <= positions) {
-                    rightWithDot = decimalPart.padEnd(decimalPart.length + positions, "0");
+                    rightWithDot = decimalPart.padEnd(positions, "0");
                     rightWithDot = rightWithDot + ".";
                 } else  { // rightPart.length > positions
                     const pivot = positions;
@@ -299,6 +301,17 @@ export class PrefixedNumber {
 
     isNegative() {
         return this.coefficient.isNegative();
+    }
+
+    add(other: PrefixedNumber): PrefixedNumber {
+        const left = this.convertTo(ATTO);
+        const right = other.convertTo(ATTO);
+        const sum = new BN(left._scientificNumber.normalized.unnormalize()).add(new BN(right._scientificNumber.normalized.unnormalize()))
+        return new PrefixedNumber(sum.toString(), ATTO).convertTo(this.prefix)
+    }
+
+    subtract(other: PrefixedNumber): PrefixedNumber {
+        return this.add(other.negate());
     }
 }
 

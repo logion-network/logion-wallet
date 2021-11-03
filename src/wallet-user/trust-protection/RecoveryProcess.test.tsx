@@ -1,39 +1,44 @@
 jest.mock('../../logion-chain');
-jest.mock('../../logion-chain/Assets');
+jest.mock('../../logion-chain/Balances');
 jest.mock('../../logion-chain/Signature');
 jest.mock('../../common/CommonContext');
 jest.mock('../UserContext');
 
+import { CoinBalance } from "../../logion-chain/Balances";
 import { render, screen, waitFor, getByRole } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import { setAccountBalance } from '../../logion-chain/__mocks__/AssetsMock';
-import { DEFAULT_LEGAL_OFFICER } from "../../common/types/LegalOfficer";
-import { setRecoveredAddress } from '../../wallet-user/__mocks__/UserContextMock';
+import { setGetBalances } from '../../logion-chain/__mocks__/BalancesMock';
+import { setRecoveredAddress } from '../__mocks__/UserContextMock';
 
 import RecoveryProcess from './RecoveryProcess';
+import { PrefixedNumber, MILLI } from "../../logion-chain/numbers";
 
 test("Recovered tokens can be transferred", async () => {
     const recoveredAccountId = "recoveredAccountId";
     setRecoveredAddress(recoveredAccountId);
-    const accountBalance = jest.fn().mockResolvedValue([
-        {
-            asset: {
-                metadata: {
-                    symbol: "TK1",
-                    name: "TOKEN1"
-                },
-                issuer: DEFAULT_LEGAL_OFFICER,
-            },
-            balance: "42"
-        }
+
+    const coinBalance:CoinBalance = {
+        coin: {
+            id: 'dot',
+            name: 'Polkadot',
+            iconId: 'dot',
+            iconType: 'png',
+            symbol: 'DOT',
+        },
+        balance: new PrefixedNumber("100", MILLI),
+        level: 1
+    }
+
+    const getBalances = jest.fn().mockResolvedValue([
+        coinBalance
     ]);
-    setAccountBalance(accountBalance);
+    setGetBalances(getBalances);
 
     render(<RecoveryProcess />);
 
-    expect(accountBalance).toBeCalledTimes(1);
-    expect(accountBalance).toBeCalledWith(expect.objectContaining({
+    expect(getBalances).toBeCalledTimes(1);
+    expect(getBalances).toBeCalledWith(expect.objectContaining({
         api: expect.anything(),
         accountId: recoveredAccountId
     }));
@@ -48,5 +53,5 @@ test("Recovered tokens can be transferred", async () => {
     await waitFor(() => confirmButton = getByRole(dialog, "button", {name: "Transfer"}));
     userEvent.click(confirmButton!);
 
-    await waitFor(() => expect(accountBalance).toBeCalledTimes(2));
+    await waitFor(() => expect(getBalances).toBeCalledTimes(2));
 });

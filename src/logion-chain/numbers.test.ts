@@ -8,7 +8,7 @@ import {
     KILO,
     ScientificNumber,
     MEGA,
-    ATTO,
+    ATTO, PICO,
 } from './numbers';
 
 test("amount given balance", () => {
@@ -208,3 +208,28 @@ test("negated zero remains zero", () => {
     const result = a.negate();
     expect(result.isNegative()).toBe(false);
 });
+
+test("convert PICO to ATTO", () => {
+    const result = new PrefixedNumber("125.000155", PICO).convertTo(ATTO)
+    expect(result.coefficient.toString()).toBe("125000155.");
+});
+
+test("convert MILLI to ATTO", () => {
+    const result = new PrefixedNumber("369", MILLI).convertTo(ATTO)
+    expect(result.coefficient.toString()).toBe("369000000000000000.");
+});
+
+test("subtract PICO", () => {
+    const left = new PrefixedNumber("369.0", MILLI)
+    const right = new PrefixedNumber("125.000155", PICO)
+    const result = left.subtract(right);
+    expect(result.coefficient.toNumber()).toBe(368.999999874999845)
+})
+
+test("subtract ATTO", () => {
+    const left = new PrefixedNumber("369.0", MILLI)
+    const right = new PrefixedNumber("125000155", ATTO)
+    const result = left.subtract(right);
+    expect(result.coefficient.toNumber()).toBe(368.999999874999845)
+})
+
