@@ -40,17 +40,6 @@ exports[`Renders pending requests 1`] = `
       },
     ]
   }
-  data={
-    Array [
-      Object {
-        "description": "LOC description",
-        "id": "1",
-        "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-        "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-        "status": "OPEN",
-      },
-    ]
-  }
   renderEmpty={[Function]}
 />
 `;

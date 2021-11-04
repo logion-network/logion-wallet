@@ -1,5 +1,6 @@
 jest.mock('./LegalOfficerContext');
 jest.mock('../logion-chain');
+jest.mock('../logion-chain/LogionLoc');
 jest.mock('../logion-chain/Signature');
 jest.mock('./Model');
 jest.mock('../common/CommonContext');
@@ -12,6 +13,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { PENDING_PROTECTION_REQUESTS } from './TestData';
 import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT, axiosMock } from '../common/__mocks__/CommonContextMock';
+import { CLOSED_IDENTITY_LOC_ID } from '../logion-chain/__mocks__/LogionLocMock';
 
 describe("PendingProtectionRequests", () => {
 
@@ -106,6 +108,15 @@ describe("PendingProtectionRequests", () => {
         userEvent.click(acceptButton!);
 
         await waitFor(() => expect(reviewModal).not.toBeInTheDocument());
+
+        let closedLocInput: HTMLElement;
+        await waitFor(() => closedLocInput = screen.getByRole("textbox", {name: "Closed Identity LOC ID"}));
+        userEvent.type(closedLocInput!, CLOSED_IDENTITY_LOC_ID);
+
+        let confirmButton: HTMLElement;
+        await waitFor(() => confirmButton = screen.getByRole("button", {name: "Confirm"}));
+        userEvent.click(confirmButton!);
+
         await waitFor(() => expect(acceptCallback).toBeCalledWith(
             axiosMock.object(),
             expect.objectContaining({
