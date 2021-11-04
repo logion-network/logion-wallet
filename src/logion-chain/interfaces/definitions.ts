@@ -31,9 +31,10 @@ export default {
             owner: "AccountId",
             requester: "AccountId",
             metadata: "Vec<MetadataItem>",
-            hashes: "Vec<Hash>",
+            files: "Vec<File>",
             closed: "bool",
             loc_type: "LocType",
+            links: "Vec<LocLink>"
         },
         MetadataItem: {
             name: "Vec<u8>",
@@ -44,6 +45,14 @@ export default {
                 "Transaction",
                 "Identity"
             ]
+        },
+        LocLink: {
+            id: "LocId",
+            nature: "Vec<u8>",
+        },
+        File: {
+            hash: "Hash",
+            nature: "Vec<u8>",
         }
     }
 };

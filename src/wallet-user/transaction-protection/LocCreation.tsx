@@ -14,12 +14,12 @@ import { RecoveryConfig } from '../../logion-chain/Recovery';
 import UserIdentity from '../../common/types/Identity';
 
 function shouldShowIdentityFields(
-    legalOfficer: string | null,
+    legalOfficer: string | undefined,
     recoveryConfig: Option<RecoveryConfig> | null
 ): boolean {
     if(recoveryConfig === null || recoveryConfig.isNone) {
         return true;
-    } else if(legalOfficer === null || legalOfficer === "") {
+    } else if(legalOfficer === undefined || legalOfficer === "") {
         return false;
     } else {
         return !recoveryConfig.unwrap().friends.toArray().map(accountId => accountId.toString()).includes(legalOfficer);
@@ -40,7 +40,7 @@ export default function LocCreation() {
             phone: ""
         }
     });
-    const [ selectedLegalOfficer, setSelectedLegalOfficer ] = useState<string | null>(null);
+    const [ selectedLegalOfficer, setSelectedLegalOfficer ] = useState<string | undefined>();
 
     const showIdentityFields = shouldShowIdentityFields(selectedLegalOfficer, recoveryConfig);
 
@@ -102,7 +102,7 @@ export default function LocCreation() {
                     control={ control }
                     errors={ errors }
                     colors={ colorTheme.dialog }
-                    legalOfficer={ selectedLegalOfficer }
+                    legalOfficer={ selectedLegalOfficer || null }
                     showIdentityFields={ showIdentityFields }
                 />
             </Dialog>

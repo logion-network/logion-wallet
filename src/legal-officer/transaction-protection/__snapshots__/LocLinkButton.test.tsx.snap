@@ -59,6 +59,7 @@ exports[`LocLinkButton renders 1`] = `
   />
   <LocCreationDialog
     exit={[Function]}
+    hasLinkNature={true}
     locRequest={
       Object {
         "locType": "Transaction",
@@ -136,6 +137,7 @@ exports[`LocLinkButton renders LINK_EXISTING 1`] = `
   />
   <LocCreationDialog
     exit={[Function]}
+    hasLinkNature={true}
     locRequest={
       Object {
         "locType": "Transaction",
@@ -213,6 +215,7 @@ exports[`LocLinkButton renders LINK_NEW_IDENTITY 1`] = `
   />
   <LocCreationDialog
     exit={[Function]}
+    hasLinkNature={true}
     locRequest={
       Object {
         "locType": "Identity",
@@ -290,6 +293,7 @@ exports[`LocLinkButton renders LINK_NEW_TRANSACTION 1`] = `
   />
   <LocCreationDialog
     exit={[Function]}
+    hasLinkNature={true}
     locRequest={
       Object {
         "locType": "Transaction",

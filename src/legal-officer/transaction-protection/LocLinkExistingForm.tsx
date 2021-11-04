@@ -6,6 +6,7 @@ import { useCommonContext } from "../../common/CommonContext";
 
 export interface FormValues {
     locId: string;
+    linkNature: string;
 }
 
 export interface Props {
@@ -46,7 +47,29 @@ export default function LocLinkExistingForm(props: Props) {
                     />
                 }
                 colors={ colorTheme.dialog }
-                feedback={ props.errors.locId?.message } />
+                feedback={ props.errors.locId?.message }
+            />
+            <FormGroup
+                id="linkNature"
+                label="Link nature"
+                control={
+                    <Controller
+                        name="linkNature"
+                        control={ props.control }
+                        defaultValue=""
+                        render={({ field }) => (
+                            <Form.Control
+                                isInvalid={!!props.errors.linkNature?.message}
+                                type="text" placeholder="e.g. XYZ"
+                                aria-describedby="linkNature"
+                                { ...field }
+                            />
+                        )}
+                      />
+                }
+                colors={ colorTheme.dialog }
+                feedback={ props.errors.linkNature?.message }
+            />
         </>
     )
 }

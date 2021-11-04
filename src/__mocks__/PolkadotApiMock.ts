@@ -1,3 +1,5 @@
+import { UUID } from "../logion-chain/UUID";
+
 export class WsProvider {
     constructor(socket: string) {
     }
@@ -38,8 +40,17 @@ export const DEFAULT_LOC = {
             value: "meta_value",
         }
     ],
-    hashes: [
-        "0x91820202c3d0fea0c494b53e3352f1934bc177484e3f41ca2c4bca4572d71cd2"
+    files: [
+        {
+            hash: "0x91820202c3d0fea0c494b53e3352f1934bc177484e3f41ca2c4bca4572d71cd2",
+            nature: "file-nature"
+        }
+    ],
+    links: [
+        {
+            id: new UUID("90fcde7e-a255-404e-8b15-32963a4e64c0"),
+            nature: "file-nature"
+        }
     ],
     closed: false,
     locType: 'Transaction',
@@ -93,9 +104,24 @@ export class ApiPromise {
                             }
                         }))
                     },
-                    hashes: {
-                        toArray: () => DEFAULT_LOC.hashes.map(hash => ({
-                            toHex: () => hash
+                    files: {
+                        toArray: () => DEFAULT_LOC.files.map(file => ({
+                            hash: {
+                                toHex: () => file.hash
+                            },
+                            nature: {
+                                toUtf8: () => file.nature
+                            }
+                        }))
+                    },
+                    links: {
+                        toArray: () => DEFAULT_LOC.links.map(link => ({
+                            id: {
+                                toString: () => link.id.toDecimalString()
+                            },
+                            nature: {
+                                toUtf8: () => link.nature
+                            }
                         }))
                     },
                     closed: {
@@ -139,7 +165,8 @@ export class ApiPromise {
         logionLoc: {
             createLoc: jest.fn().mockResolvedValue(() => {}),
             addMetadata: jest.fn().mockResolvedValue(() => {}),
-            addHash: jest.fn().mockResolvedValue(() => {}),
+            addFile: jest.fn().mockResolvedValue(() => {}),
+            addLink: jest.fn().mockResolvedValue(() => {}),
         },
         verifiedRecovery: {
             createRecovery: jest.fn().mockResolvedValue(() => {}),

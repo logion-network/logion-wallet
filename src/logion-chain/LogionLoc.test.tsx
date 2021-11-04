@@ -4,7 +4,7 @@ jest.mock('./Signature');
 import { stringToHex } from '@polkadot/util';
 import { setSignAndSend } from './__mocks__/SignatureMock';
 import { ApiPromise } from '@polkadot/api';
-import { createLoc, addMetadata, getLegalOfficerCase, addHash } from './LogionLoc';
+import { createLoc, addMetadata, getLegalOfficerCase, addFile } from './LogionLoc';
 import { UUID } from './UUID';
 import { DEFAULT_LOC } from '../__mocks__/PolkadotApiMock';
 
@@ -89,10 +89,19 @@ describe("LogionLoc", () => {
             locId
         });
 
-        expect(loc).toEqual(DEFAULT_LOC);
+        expect(loc!.owner).toEqual(DEFAULT_LOC.owner);
+        expect(loc!.requester).toEqual(DEFAULT_LOC.requester);
+        expect(loc!.metadata).toEqual(DEFAULT_LOC.metadata);
+        expect(loc!.files).toEqual(DEFAULT_LOC.files);
+        loc!.links.forEach((link, index) => {
+            expect(link.id.toString()).toBe(DEFAULT_LOC.links[index].id.toString());
+            expect(link.nature).toBe(DEFAULT_LOC.links[index].nature);
+        });
+        expect(loc!.closed).toEqual(DEFAULT_LOC.closed);
+        expect(loc!.locType).toEqual(DEFAULT_LOC.locType);
     });
 
-    it("submits addHash extrinsic", () => {
+    it("submits addFile extrinsic", () => {
         const api = new ApiPromise();
         const callback = jest.fn();
         const errorCallback = jest.fn();
@@ -101,15 +110,17 @@ describe("LogionLoc", () => {
         setSignAndSend(signAndSend);
 
         const hash = "0x91820202c3d0fea0c494b53e3352f1934bc177484e3f41ca2c4bca4572d71cd2";
+        const nature = "file-nature";
 
         const locId = new UUID();
-        addHash({
+        addFile({
             api,
             signerId: "signerId",
             callback,
             errorCallback,
             locId,
             hash,
+            nature,
         });
 
         expect(signAndSend).toBeCalledWith(
@@ -120,6 +131,9 @@ describe("LogionLoc", () => {
             }),
         );
 
-        expect(api.tx.logionLoc.addHash).toBeCalledWith(locId.toHexString(), hash);
+        expect(api.tx.logionLoc.addFile).toBeCalledWith(locId.toHexString(), {
+            hash,
+            nature: "0x66696c652d6e6174757265",
+        });
     });
 });

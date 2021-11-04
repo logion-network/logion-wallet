@@ -35,7 +35,7 @@ export default function LocLinkExistingDialog(props: Props) {
                 setError("locId", { type: "value", message: "LOC not found on chain" })
             } else {
                 const locRequest = await fetchLocRequest(axiosFactory!(loc.owner)!, locId.toString())
-                linkLoc!(locId, locRequest.description)
+                linkLoc!(locId, locRequest.description, formValues.linkNature)
                 reset();
                 props.exit();
             }

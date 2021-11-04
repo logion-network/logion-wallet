@@ -35,5 +35,24 @@ exports[`LocLinkExistingForm renders 1`] = `
     id="locLinkExistingLoc"
     label="Please set the LOC ID you would like to link with this LOC:"
   />
+  <FormGroup
+    colors={
+      Object {
+        "background": "#0c163d",
+        "borderColor": "#e6007a",
+        "foreground": "#ffffff",
+      }
+    }
+    control={
+      <Unknown
+        control={[Function]}
+        defaultValue=""
+        name="linkNature"
+        render={[Function]}
+      />
+    }
+    id="linkNature"
+    label="Link nature"
+  />
 </React.Fragment>
 `;

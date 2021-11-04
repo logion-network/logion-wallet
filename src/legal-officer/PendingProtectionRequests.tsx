@@ -352,6 +352,7 @@ export default function PendingProtectionRequests(props: Props) {
                         userIdentity: reviewState.request!.userIdentity,
                         locType: 'Identity'
                     }}
+                    hasLinkNature={ false }
                 />
             }
         </>
