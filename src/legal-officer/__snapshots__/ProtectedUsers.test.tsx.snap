@@ -21,7 +21,7 @@ exports[`renders 2 rows 1`] = `
       <tr>
         <td>
           <UserInfo
-            address="5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"
+            address="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
             postalAddress={
               Object {
                 "city": "Liège",
@@ -62,7 +62,7 @@ Tel: +33 4 78 52 87 56",
       <tr>
         <td>
           <UserInfo
-            address="5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"
+            address="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
             postalAddress={
               Object {
                 "city": "Liège",
@@ -126,7 +126,7 @@ exports[`renders one row 1`] = `
       <tr>
         <td>
           <UserInfo
-            address="5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"
+            address="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
             postalAddress={
               Object {
                 "city": "Liège",

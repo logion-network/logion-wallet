@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { toIsoString } from '../logion-chain/datetime';
 import { ProtectionRequest } from '../common/types/ModelTypes';
-import { DEFAULT_LEGAL_OFFICER } from '../common/types/LegalOfficer';
+import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from '../common/types/LegalOfficer';
 import { Account } from '../common/types/Accounts';
 
 export const DEFAULT_LEGAL_OFFICER_ADDRESS: Account = {
@@ -14,14 +14,12 @@ export const PENDING_PROTECTION_REQUESTS: ProtectionRequest[] = [
     {
         id: "1",
         requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-        decisions: [
-            {
-                legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
-                status: 'PENDING',
-                rejectReason: null,
-                decisionOn: null,
-            }
-        ],
+        legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
+        otherLegalOfficerAddress: ANOTHER_LEGAL_OFFICER,
+        decision: {
+            rejectReason: null,
+            decisionOn: null,
+        },
         userIdentity: {
             firstName: "John",
             lastName: "Doe",
@@ -46,14 +44,13 @@ export const PROTECTION_REQUESTS_HISTORY: ProtectionRequest[] = [
     {
         id: "1",
         requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-        decisions: [
-            {
-                legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
-                status: 'ACCEPTED',
+        legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
+        otherLegalOfficerAddress: ANOTHER_LEGAL_OFFICER,
+        decision: {
                 rejectReason: null,
-                decisionOn: toIsoString(moment('2021-06-10T11:40:00.000Z'))
-            }
-        ],
+                decisionOn: toIsoString(moment('2021-06-10T11:40:00.000Z')),
+                locId: "locId"
+        },
         userIdentity: {
             firstName: "John",
             lastName: "Doe",
@@ -78,14 +75,13 @@ export const RECOVERY_REQUESTS_HISTORY: ProtectionRequest[] = [
     {
         id: "1",
         requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-        decisions: [
-            {
-                legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
-                status: 'ACCEPTED',
-                rejectReason: null,
-                decisionOn: toIsoString(moment('2021-06-10T11:40:00.000Z'))
-            }
-        ],
+        legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
+        otherLegalOfficerAddress: ANOTHER_LEGAL_OFFICER,
+        decision: {
+            rejectReason: null,
+            decisionOn: toIsoString(moment('2021-06-10T11:40:00.000Z')),
+            locId: "locId"
+        },
         userIdentity: {
             firstName: "John",
             lastName: "Doe",

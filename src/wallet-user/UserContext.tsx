@@ -6,7 +6,7 @@ import { RecoveryConfig, getRecoveryConfig, getProxy } from '../logion-chain/Rec
 import { Children } from '../common/types/Helpers';
 import { AxiosFactory, fetchFromAvailableNodes } from '../common/api';
 
-import { LegalOfficerDecision, ProtectionRequest } from "../common/types/ModelTypes";
+import { ProtectionRequest } from "../common/types/ModelTypes";
 import { fetchProtectionRequests } from "../common/Model";
 import {
     CreateProtectionRequest,
@@ -19,7 +19,7 @@ export interface UserContext {
     dataAddress: string | null,
     fetchForAddress: string | null,
     refreshRequests: ((clearBeforeRefresh: boolean) => void) | null,
-    createProtectionRequest: ((request: CreateProtectionRequest) => Promise<void>) | null,
+    createProtectionRequest: ((legalOfficers: string[], requestFactory: (otherLegalOfficerAddress: string) => CreateProtectionRequest) => Promise<void>) | null,
     pendingProtectionRequests: ProtectionRequest[] | null,
     acceptedProtectionRequests: ProtectionRequest[] | null,
     rejectedProtectionRequests: ProtectionRequest[] | null,
@@ -61,7 +61,7 @@ interface Action {
     rejectedProtectionRequests?: ProtectionRequest[],
     recoveryConfig?: Option<RecoveryConfig>,
     refreshRequests?: (clearBeforeRefresh: boolean) => void,
-    createProtectionRequest?: (request: CreateProtectionRequest) => Promise<void>,
+    createProtectionRequest?: (legalOfficers: string[], requestFactory: (otherLegalOfficerAddress: string) => CreateProtectionRequest) => Promise<void>,
     clearBeforeRefresh?: boolean,
     recoveredAddress?: string | null,
     axiosFactory?: AxiosFactory,
@@ -150,25 +150,21 @@ export function UserContextProvider(props: Props) {
             });
 
             (async function () {
-                const allPendingProtectionRequests = await fetchFromAvailableNodes(axiosFactory!, axios => fetchProtectionRequests(axios, {
+                const pendingProtectionRequests = await fetchFromAvailableNodes(axiosFactory!, axios => fetchProtectionRequests(axios, {
                     requesterAddress: currentAddress,
-                    decisionStatuses: [ "PENDING" ],
+                    statuses: [ "PENDING" ],
                     kind: "ANY",
                 }));
-                const allAcceptedProtectionRequests = await fetchFromAvailableNodes(axiosFactory!, axios => fetchProtectionRequests(axios, {
+                const acceptedProtectionRequests = await fetchFromAvailableNodes(axiosFactory!, axios => fetchProtectionRequests(axios, {
                     requesterAddress: currentAddress,
-                    decisionStatuses: [ "ACCEPTED" ],
+                    statuses: [ "ACCEPTED", "ACTIVATED" ],
                     kind: "ANY",
                 }));
-                const allRejectedProtectionRequests = await fetchFromAvailableNodes(axiosFactory!, axios => fetchProtectionRequests(axios, {
+                const rejectedProtectionRequests = await fetchFromAvailableNodes(axiosFactory!, axios => fetchProtectionRequests(axios, {
                     requesterAddress: currentAddress,
-                    decisionStatuses: [ "REJECTED" ],
+                    statuses: [ "REJECTED" ],
                     kind: "ANY",
                 }));
-
-                const pendingProtectionRequests = mergePending(allPendingProtectionRequests, allAcceptedProtectionRequests, allRejectedProtectionRequests);
-                const acceptedProtectionRequests = mergeAccepted(allAcceptedProtectionRequests);
-                const rejectedProtectionRequests = mergeRejected(allPendingProtectionRequests, allRejectedProtectionRequests);
 
                 const recoveryConfig = await getRecoveryConfig({
                     api: api!,
@@ -225,8 +221,11 @@ export function UserContextProvider(props: Props) {
         if (axiosFactory !== undefined
                 && apiState === "READY"
                 && (contextValue.createProtectionRequest === null || axiosFactory !== contextValue.currentAxiosFactory)) {
-            const createProtectionRequest = async (request: CreateProtectionRequest): Promise<void> => {
-                const promises = request.legalOfficerAddresses.map(address => modelCreateProtectionRequest(axiosFactory(address)!, request));
+            const createProtectionRequest = async (legalOfficers: string[], requestFactory: (otherLegalOfficerAddress: string) => CreateProtectionRequest): Promise<void> => {
+                const promises = [
+                    modelCreateProtectionRequest(axiosFactory(legalOfficers[0])!, requestFactory(legalOfficers[1])),
+                    modelCreateProtectionRequest(axiosFactory(legalOfficers[1])!, requestFactory(legalOfficers[0]))
+                ]
                 await Promise.all(promises);
             }
             dispatch({
@@ -255,65 +254,4 @@ export function UserContextProvider(props: Props) {
 
 export function useUserContext(): UserContext {
     return useContext(UserContextObject);
-}
-
-function mergePending(pendingProtectionRequests: ProtectionRequest[], acceptedProtectionRequests: ProtectionRequest[], rejectedProtectionRequests: ProtectionRequest[]): ProtectionRequest[] {
-    if(pendingProtectionRequests.length + acceptedProtectionRequests.length < 2
-        || pendingProtectionRequests.length === 0
-        || rejectedProtectionRequests.length > 0) {
-        return [];
-    }
-
-    const referenceRequest = pendingProtectionRequests[0];
-    const mergedRequest: ProtectionRequest = {
-        ...referenceRequest,
-        decisions: [ cloneWithRequestId(referenceRequest.decisions[0], referenceRequest.id) ]
-    };
-    if(pendingProtectionRequests.length > 1) {
-        mergeOtherRequest(mergedRequest, pendingProtectionRequests[1]);
-    } else if(acceptedProtectionRequests.length > 0) {
-        mergeOtherRequest(mergedRequest, acceptedProtectionRequests[0]);
-    }
-    return [ mergedRequest ];
-}
-
-function cloneWithRequestId(decision: LegalOfficerDecision, requestId: string): LegalOfficerDecision {
-    return {
-        ...decision,
-        requestId,
-    };
-}
-
-function mergeOtherRequest(mergedRequest: ProtectionRequest, otherRequest: ProtectionRequest) {
-    mergedRequest.decisions.push(cloneWithRequestId(otherRequest.decisions[0], otherRequest.id));
-}
-
-function mergeAccepted(acceptedProtectionRequests: ProtectionRequest[]): ProtectionRequest[] {
-    if(acceptedProtectionRequests.length < 2) {
-        return [];
-    }
-    const referenceRequest = acceptedProtectionRequests[0];
-    const mergedRequest: ProtectionRequest = {
-        ...referenceRequest,
-        decisions: [ cloneWithRequestId(referenceRequest.decisions[0], referenceRequest.id) ]
-    };
-    mergeOtherRequest(mergedRequest, acceptedProtectionRequests[1]);
-    return [ mergedRequest ];
-}
-
-function mergeRejected(pendingProtectionRequests: ProtectionRequest[], rejectedProtectionRequests: ProtectionRequest[]) {
-    if(rejectedProtectionRequests.length === 0) {
-        return [];
-    }
-    const referenceRequest = rejectedProtectionRequests[0];
-    const mergedRequest: ProtectionRequest = {
-        ...referenceRequest,
-        decisions: [ cloneWithRequestId(referenceRequest.decisions[0], referenceRequest.id) ]
-    };
-    if(pendingProtectionRequests.length > 0) {
-        mergeOtherRequest(mergedRequest, pendingProtectionRequests[0]);
-    } else if(rejectedProtectionRequests.length > 1) {
-        mergeOtherRequest(mergedRequest, rejectedProtectionRequests[1]);
-    }
-    return [ mergedRequest ];
 }

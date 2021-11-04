@@ -2,6 +2,7 @@ jest.mock("../common/CommonContext");
 jest.mock("./Model");
 jest.mock("./LegalOfficerContext");
 jest.mock("../logion-chain");
+jest.mock('../logion-chain/LogionLoc');
 jest.mock('../logion-chain/Signature');
 jest.mock("../logion-chain/Recovery");
 
@@ -15,6 +16,7 @@ import { axiosMock, setAddresses } from '../common/__mocks__/CommonContextMock';
 import { setIsSuccessful } from '../logion-chain/__mocks__/SignatureMock';
 import { setParams, history } from '../__mocks__/ReactRouterMock';
 import { refreshRequests } from './__mocks__/LegalOfficerContextMock';
+import { CLOSED_IDENTITY_LOC_ID } from '../logion-chain/__mocks__/LogionLocMock';
 
 describe("RecoveryDetails", () => {
 
@@ -38,14 +40,20 @@ describe("RecoveryDetails", () => {
         await waitFor(() => processButton = screen.getByRole("button", {name: "Proceed"}));
         userEvent.click(processButton!);
 
+        let closedLocInput: HTMLElement;
+        await waitFor(() => closedLocInput = screen.getByRole("textbox", {name: "Closed Identity LOC ID"}));
+        userEvent.type(closedLocInput!, CLOSED_IDENTITY_LOC_ID);
+
         let confirmButton: HTMLElement;
         await waitFor(() => confirmButton = screen.getByRole("button", {name: "Confirm and sign"}));
         userEvent.click(confirmButton!);
 
-        await waitFor(() => expect(acceptProtectionRequest).toBeCalledWith(axiosMock.object(), expect.objectContaining({
-            legalOfficerAddress: DEFAULT_LEGAL_OFFICER_ADDRESS.address,
-            requestId: protectionRequest.id,
-        })));
+        await waitFor(() => expect(acceptProtectionRequest).toBeCalledWith(
+            axiosMock.object(),
+            expect.objectContaining({
+                requestId: protectionRequest.id,
+            })
+        ));
 
         await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent("Submitting..."));
     });

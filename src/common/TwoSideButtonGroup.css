@@ -14,12 +14,12 @@
     align-items: center;
 }
 
-.TwoSideButtonGroup .left *,
-.TwoSideButtonGroup .right * {
+.TwoSideButtonGroup .left > *,
+.TwoSideButtonGroup .right > * {
     margin-left: 20px;
 }
 
-.TwoSideButtonGroup .left *:first-child,
-.TwoSideButtonGroup .right *:first-child {
+.TwoSideButtonGroup .left > *:first-child,
+.TwoSideButtonGroup .right > *:first-child {
     margin-left: 0;
 }

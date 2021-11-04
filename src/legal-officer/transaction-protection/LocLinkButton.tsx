@@ -9,7 +9,8 @@ import { LocRequest } from "../../common/types/ModelTypes";
 export const enum Visible {
     NONE,
     LINK_EXISTING,
-    LINK_NEW
+    LINK_NEW_IDENTITY,
+    LINK_NEW_TRANSACTION
 }
 
 export interface Props {
@@ -18,7 +19,7 @@ export interface Props {
 
 export default function LocLinkButton(props: Props) {
     const [ visible, setVisible ] = useState<Visible>(props.visible ? props.visible : Visible.NONE);
-    const { linkLoc } = useLocContext();
+    const { linkLoc, locRequest } = useLocContext();
 
     const linkNewLoc = useCallback((newLocRequest: LocRequest) => {
         if (linkLoc !== null) {
@@ -34,8 +35,11 @@ export default function LocLinkButton(props: Props) {
                     <Dropdown.Item onClick={ () => setVisible(Visible.LINK_EXISTING) }>
                         Link to an existing LOC
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={ () => setVisible(Visible.LINK_NEW) }>
-                        Link to a new LOC
+                    <Dropdown.Item onClick={ () => setVisible(Visible.LINK_NEW_IDENTITY) }>
+                        Link to a new Identity LOC
+                    </Dropdown.Item>
+                    <Dropdown.Item onClick={ () => setVisible(Visible.LINK_NEW_TRANSACTION) }>
+                        Link to a new Transaction LOC
                     </Dropdown.Item>
                 </Dropdown.Menu>
             </Dropdown>
@@ -44,9 +48,14 @@ export default function LocLinkButton(props: Props) {
                 exit={ () => setVisible(Visible.NONE) }
             />
             <LocCreationDialog
-                show={ visible === Visible.LINK_NEW }
+                show={ visible === Visible.LINK_NEW_IDENTITY || visible === Visible.LINK_NEW_TRANSACTION }
                 exit={ () => setVisible(Visible.NONE) }
                 onSuccess={ linkNewLoc }
+                locRequest={{
+                    requesterAddress: locRequest!.requesterAddress,
+                    userIdentity: locRequest!.userIdentity,
+                    locType: visible === Visible.LINK_NEW_IDENTITY ? 'Identity' : 'Transaction'
+                }}
             />
         </>
     )

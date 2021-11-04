@@ -55,7 +55,6 @@ Tel: +33 2 48 67 50 50",
           mode="choose"
           setLegalOfficer1={[Function]}
           setLegalOfficer2={[Function]}
-          status={null}
         />
       </Frame>
     </React.Fragment>

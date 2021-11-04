@@ -3,12 +3,10 @@ import { Table } from "react-bootstrap";
 import { useLegalOfficerContext } from "./LegalOfficerContext";
 import UserInfo from "../common/UserInfo";
 import LegalOfficerInfo from "../common/LegalOfficerInfo";
-import { useCommonContext } from "../common/CommonContext";
 import { legalOfficerByAddress } from "../common/types/LegalOfficer";
 
 export default function ProtectedUsers() {
     const { activatedProtectionRequests } = useLegalOfficerContext();
-    const { accounts } = useCommonContext();
 
     return (
             <>
@@ -22,9 +20,7 @@ export default function ProtectedUsers() {
                     <tbody>
                     {
                         activatedProtectionRequests?.map(request => {
-                            const otherLegalOfficerAddress = request.decisions
-                                    .map(decision => decision.legalOfficerAddress)
-                                    .find(legalOfficerAddress => legalOfficerAddress !== accounts?.current?.address);
+                            const otherLegalOfficerAddress = request.otherLegalOfficerAddress;
                             return (
                                     <tr key={request.id}>
                                         <td>
@@ -34,10 +30,9 @@ export default function ProtectedUsers() {
                                                     postalAddress={request.userPostalAddress}/>
                                         </td>
                                         <td>
-                                            {otherLegalOfficerAddress !== undefined &&
                                             <LegalOfficerInfo
-                                                    legalOfficer={legalOfficerByAddress(otherLegalOfficerAddress)}/>
-                                            }
+                                                legalOfficer={legalOfficerByAddress(otherLegalOfficerAddress)}
+                                            />
                                         </td>
                                     </tr>
                             )

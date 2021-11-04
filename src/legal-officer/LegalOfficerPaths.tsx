@@ -22,3 +22,5 @@ export const LOC_DETAILS_PATH = LEGAL_OFFICER_PATH + '/loc-details/:locId';
 export function locDetailsPath(locId: string) {
     return LOC_DETAILS_PATH.replace(":locId", locId)
 }
+
+export const IDENTITIES_PATH = LEGAL_OFFICER_PATH + '/identities';

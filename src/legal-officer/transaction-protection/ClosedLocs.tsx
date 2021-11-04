@@ -9,14 +9,21 @@ import Button from "../../common/Button";
 import { useHistory } from "react-router-dom";
 import { locDetailsPath } from "../LegalOfficerPaths";
 import ButtonGroup from "../../common/ButtonGroup";
+import { LocType } from '../../logion-chain/Types';
 
-export default function OpenedLocs() {
-    const { closedLocRequests } = useCommonContext();
+export interface Props {
+    locType: LocType;
+}
+
+export default function OpenedLocs(props: Props) {
+    const { closedLocRequests, closedIdentityLocs } = useCommonContext();
     const history = useHistory();
 
-    if (closedLocRequests === null) {
+    if (closedLocRequests === null || closedIdentityLocs === null) {
         return null;
     }
+
+    const requests = props.locType === 'Transaction' ? closedLocRequests : closedIdentityLocs;
 
     return (
         <Table
@@ -66,7 +73,7 @@ export default function OpenedLocs() {
                     align: 'center',
                 }
             ] }
-            data={ closedLocRequests }
+            data={ requests }
             renderEmpty={ () => <EmptyTableMessage>No LOCs</EmptyTableMessage> }
         />
     );

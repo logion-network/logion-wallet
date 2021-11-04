@@ -154,30 +154,24 @@ function refreshRequestsFunction(clearBeforeRefresh: boolean, currentAddress: st
     (async function() {
         const axios = axiosFactory(currentAddress);
         const pendingProtectionRequests = await fetchProtectionRequests(axios, {
-            legalOfficerAddress: currentAddress,
-            decisionStatuses: ["PENDING"],
+            statuses: ["PENDING"],
             kind: 'PROTECTION_ONLY',
         });
         const activatedProtectionRequests = await fetchProtectionRequests(axios, {
-            legalOfficerAddress: currentAddress,
-            decisionStatuses: ["ACCEPTED"],
+            statuses: ["ACTIVATED"],
             kind: 'ANY',
-            protectionRequestStatus: "ACTIVATED"
         });
         const protectionRequestsHistory = await fetchProtectionRequests(axios, {
-            legalOfficerAddress: currentAddress,
-            decisionStatuses: ["ACCEPTED", "REJECTED"],
+            statuses: ["ACCEPTED", "REJECTED", "ACTIVATED"],
             kind: 'PROTECTION_ONLY',
         });
 
         const pendingRecoveryRequests = await fetchProtectionRequests(axios, {
-            legalOfficerAddress: currentAddress,
-            decisionStatuses: ["PENDING"],
+            statuses: ["PENDING"],
             kind: 'RECOVERY',
         });
         const recoveryRequestsHistory = await fetchProtectionRequests(axios, {
-            legalOfficerAddress: currentAddress,
-            decisionStatuses: ["ACCEPTED", "REJECTED"],
+            statuses: ["ACCEPTED", "REJECTED", "ACTIVATED"],
             kind: 'RECOVERY',
         });
 

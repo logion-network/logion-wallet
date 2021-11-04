@@ -61,6 +61,7 @@ export default function LocCreation() {
                 ownerAddress: formValues.legalOfficer,
                 requesterAddress: currentAddress,
                 description: formValues.description,
+                locType: 'Transaction',
                 userIdentity,
             }
             await createLocRequest!(axiosFactory!(formValues.legalOfficer), request);

@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
+import { UUID } from '../logion-chain/UUID';
 
-import { LegalOfficerDecision, } from '../common/types/ModelTypes';
 import { RecoveryInfo } from './Types';
 
 export interface RejectProtectionRequestParameters {
@@ -21,7 +21,7 @@ export async function rejectProtectionRequest(
 
 export interface AcceptProtectionRequestParameters {
     requestId: string,
-    legalOfficerAddress: string,
+    locId: UUID,
 }
 
 export async function acceptProtectionRequest(
@@ -29,18 +29,8 @@ export async function acceptProtectionRequest(
     parameters: AcceptProtectionRequestParameters
 ): Promise<void> {
     await axios.post(`/api/protection-request/${parameters.requestId}/accept`, {
-        legalOfficerAddress: parameters.legalOfficerAddress,
+        locId: parameters.locId.toString(),
     });
-}
-
-export function decision(legalOfficerAddress: string | undefined, decisions: LegalOfficerDecision[]): (LegalOfficerDecision | null) {
-    for(let i = 0; i < decisions.length; ++i) {
-        const decision = decisions[i];
-        if(decision.legalOfficerAddress === legalOfficerAddress) {
-            return decision;
-        }
-    }
-    return null;
 }
 
 export async function fetchRecoveryInfo(

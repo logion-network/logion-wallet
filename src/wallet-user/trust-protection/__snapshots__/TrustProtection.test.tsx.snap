@@ -2,44 +2,63 @@
 
 exports[`renders accepted protection request 1`] = `
 <ProtectionRecoveryRequest
-  request={
-    Object {
-      "addressToRecover": null,
-      "createdOn": "2021-06-10T13:48:00.000Z",
-      "decisions": Array [
-        Object {
-          "decisionOn": null,
-          "legalOfficerAddress": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+  requests={
+    Array [
+      Object {
+        "addressToRecover": null,
+        "createdOn": "2021-06-10T13:48:00.000Z",
+        "decision": Object {
+          "decisionOn": "2021-06-10T13:48:00.000Z",
           "rejectReason": null,
-          "requestId": "2eb5f71c-7f31-44b5-9390-c3bf56501880",
-          "status": "PENDING",
         },
-        Object {
-          "decisionOn": null,
-          "legalOfficerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "id": "request1",
+        "isRecovery": false,
+        "legalOfficerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "otherLegalOfficerAddress": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+        "requesterAddress": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+        "status": "ACCEPTED",
+        "userIdentity": Object {
+          "email": "john.doe@logion.network",
+          "firstName": "John",
+          "lastName": "Doe",
+          "phoneNumber": "+1234",
+        },
+        "userPostalAddress": Object {
+          "city": "Liège",
+          "country": "Belgium",
+          "line1": "Place de le République Française, 10",
+          "line2": "boite 15",
+          "postalCode": "4000",
+        },
+      },
+      Object {
+        "addressToRecover": null,
+        "createdOn": "2021-06-10T13:48:00.000Z",
+        "decision": Object {
+          "decisionOn": "2021-06-10T13:48:00.000Z",
           "rejectReason": null,
-          "requestId": "2eb5f71c-7f31-44b5-9390-c3bf56501880",
-          "status": "PENDING",
         },
-      ],
-      "id": "2eb5f71c-7f31-44b5-9390-c3bf56501880",
-      "isRecovery": false,
-      "requesterAddress": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-      "status": "ACTIVATED",
-      "userIdentity": Object {
-        "email": "john.doe@logion.network",
-        "firstName": "John",
-        "lastName": "Doe",
-        "phoneNumber": "+1234",
+        "id": "request2",
+        "isRecovery": false,
+        "legalOfficerAddress": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+        "otherLegalOfficerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "requesterAddress": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+        "status": "ACCEPTED",
+        "userIdentity": Object {
+          "email": "john.doe@logion.network",
+          "firstName": "John",
+          "lastName": "Doe",
+          "phoneNumber": "+1234",
+        },
+        "userPostalAddress": Object {
+          "city": "Liège",
+          "country": "Belgium",
+          "line1": "Place de le République Française, 10",
+          "line2": "boite 15",
+          "postalCode": "4000",
+        },
       },
-      "userPostalAddress": Object {
-        "city": "Liège",
-        "country": "Belgium",
-        "line1": "Place de le République Française, 10",
-        "line2": "boite 15",
-        "postalCode": "4000",
-      },
-    }
+    ]
   }
   type="accepted"
 />
@@ -49,44 +68,63 @@ exports[`renders empty 1`] = `null`;
 
 exports[`renders pending protection request 1`] = `
 <ProtectionRecoveryRequest
-  request={
-    Object {
-      "addressToRecover": null,
-      "createdOn": "2021-06-10T13:48:00.000Z",
-      "decisions": Array [
-        Object {
+  requests={
+    Array [
+      Object {
+        "addressToRecover": null,
+        "createdOn": "2021-06-10T13:48:00.000Z",
+        "decision": Object {
           "decisionOn": null,
-          "legalOfficerAddress": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
           "rejectReason": null,
-          "requestId": "2eb5f71c-7f31-44b5-9390-c3bf56501880",
-          "status": "PENDING",
         },
-        Object {
+        "id": "request1",
+        "isRecovery": false,
+        "legalOfficerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "otherLegalOfficerAddress": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+        "requesterAddress": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+        "status": "PENDING",
+        "userIdentity": Object {
+          "email": "john.doe@logion.network",
+          "firstName": "John",
+          "lastName": "Doe",
+          "phoneNumber": "+1234",
+        },
+        "userPostalAddress": Object {
+          "city": "Liège",
+          "country": "Belgium",
+          "line1": "Place de le République Française, 10",
+          "line2": "boite 15",
+          "postalCode": "4000",
+        },
+      },
+      Object {
+        "addressToRecover": null,
+        "createdOn": "2021-06-10T13:48:00.000Z",
+        "decision": Object {
           "decisionOn": null,
-          "legalOfficerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
           "rejectReason": null,
-          "requestId": "2eb5f71c-7f31-44b5-9390-c3bf56501880",
-          "status": "PENDING",
         },
-      ],
-      "id": "2eb5f71c-7f31-44b5-9390-c3bf56501880",
-      "isRecovery": false,
-      "requesterAddress": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-      "status": "ACTIVATED",
-      "userIdentity": Object {
-        "email": "john.doe@logion.network",
-        "firstName": "John",
-        "lastName": "Doe",
-        "phoneNumber": "+1234",
+        "id": "request2",
+        "isRecovery": false,
+        "legalOfficerAddress": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+        "otherLegalOfficerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "requesterAddress": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+        "status": "PENDING",
+        "userIdentity": Object {
+          "email": "john.doe@logion.network",
+          "firstName": "John",
+          "lastName": "Doe",
+          "phoneNumber": "+1234",
+        },
+        "userPostalAddress": Object {
+          "city": "Liège",
+          "country": "Belgium",
+          "line1": "Place de le République Française, 10",
+          "line2": "boite 15",
+          "postalCode": "4000",
+        },
       },
-      "userPostalAddress": Object {
-        "city": "Liège",
-        "country": "Belgium",
-        "line1": "Place de le République Française, 10",
-        "line2": "boite 15",
-        "postalCode": "4000",
-      },
-    }
+    ]
   }
   type="pending"
 />
@@ -94,44 +132,63 @@ exports[`renders pending protection request 1`] = `
 
 exports[`renders protected 1`] = `
 <ProtectionRecoveryRequest
-  request={
-    Object {
-      "addressToRecover": null,
-      "createdOn": "2021-06-10T13:48:00.000Z",
-      "decisions": Array [
-        Object {
-          "decisionOn": null,
-          "legalOfficerAddress": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+  requests={
+    Array [
+      Object {
+        "addressToRecover": null,
+        "createdOn": "2021-06-10T13:48:00.000Z",
+        "decision": Object {
+          "decisionOn": "2021-06-10T13:48:00.000Z",
           "rejectReason": null,
-          "requestId": "2eb5f71c-7f31-44b5-9390-c3bf56501880",
-          "status": "PENDING",
         },
-        Object {
-          "decisionOn": null,
-          "legalOfficerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "id": "request1",
+        "isRecovery": false,
+        "legalOfficerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "otherLegalOfficerAddress": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+        "requesterAddress": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+        "status": "ACTIVATED",
+        "userIdentity": Object {
+          "email": "john.doe@logion.network",
+          "firstName": "John",
+          "lastName": "Doe",
+          "phoneNumber": "+1234",
+        },
+        "userPostalAddress": Object {
+          "city": "Liège",
+          "country": "Belgium",
+          "line1": "Place de le République Française, 10",
+          "line2": "boite 15",
+          "postalCode": "4000",
+        },
+      },
+      Object {
+        "addressToRecover": null,
+        "createdOn": "2021-06-10T13:48:00.000Z",
+        "decision": Object {
+          "decisionOn": "2021-06-10T13:48:00.000Z",
           "rejectReason": null,
-          "requestId": "2eb5f71c-7f31-44b5-9390-c3bf56501880",
-          "status": "PENDING",
         },
-      ],
-      "id": "2eb5f71c-7f31-44b5-9390-c3bf56501880",
-      "isRecovery": false,
-      "requesterAddress": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
-      "status": "ACTIVATED",
-      "userIdentity": Object {
-        "email": "john.doe@logion.network",
-        "firstName": "John",
-        "lastName": "Doe",
-        "phoneNumber": "+1234",
+        "id": "request2",
+        "isRecovery": false,
+        "legalOfficerAddress": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+        "otherLegalOfficerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "requesterAddress": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+        "status": "ACTIVATED",
+        "userIdentity": Object {
+          "email": "john.doe@logion.network",
+          "firstName": "John",
+          "lastName": "Doe",
+          "phoneNumber": "+1234",
+        },
+        "userPostalAddress": Object {
+          "city": "Liège",
+          "country": "Belgium",
+          "line1": "Place de le République Française, 10",
+          "line2": "boite 15",
+          "postalCode": "4000",
+        },
       },
-      "userPostalAddress": Object {
-        "city": "Liège",
-        "country": "Belgium",
-        "line1": "Place de le République Française, 10",
-        "line2": "boite 15",
-        "postalCode": "4000",
-      },
-    }
+    ]
   }
   type="activated"
 />

@@ -1,41 +1,32 @@
 import React from 'react';
 
-import {useCommonContext} from "../../common/CommonContext";
 import {useUserContext} from "../UserContext";
-import { findRequest, isRecovery } from "./Model";
+import { isRecovery } from "./Model";
 
 import GoToRecovery from './GoToRecovery';
 import CreateProtectionRequestForm from "./CreateProtectionRequestForm";
 import ProtectionRecoveryRequest from './ProtectionRecoveryRequest';
 
 export default function TrustProtection() {
-    const { accounts } = useCommonContext();
     const { pendingProtectionRequests, acceptedProtectionRequests, recoveryConfig } = useUserContext();
 
     if (pendingProtectionRequests === null || acceptedProtectionRequests === null || recoveryConfig === null) {
         return null;
     }
 
-    const pendingProtectionRequest = findRequest({
-        address: accounts!.current!.address,
-        requests: pendingProtectionRequests
-    });
-    const acceptedProtectionRequest = findRequest({
-        address: accounts!.current!.address,
-        requests: acceptedProtectionRequests
-    });
-    const goToRecovery = (pendingProtectionRequest !== null && isRecovery(pendingProtectionRequest))
-        || (acceptedProtectionRequest !== null && isRecovery(acceptedProtectionRequest) && acceptedProtectionRequest.status !== 'ACTIVATED');
+    const requests = pendingProtectionRequests.concat(acceptedProtectionRequests);
+    const goToRecovery = (pendingProtectionRequests.length > 0 && isRecovery(pendingProtectionRequests[0]))
+        || (acceptedProtectionRequests.length > 0 && isRecovery(acceptedProtectionRequests[0]) && acceptedProtectionRequests[0].status !== 'ACTIVATED');
 
     if(goToRecovery) {
         return <GoToRecovery />;
-    } else if(pendingProtectionRequest !== null) {
-        return <ProtectionRecoveryRequest request={ pendingProtectionRequest } type='pending' />;
-    } else if(acceptedProtectionRequest !== null) {
+    } else if(pendingProtectionRequests.length > 0) {
+        return <ProtectionRecoveryRequest requests={ requests } type='pending' />;
+    } else if(acceptedProtectionRequests.length === 2) {
         if(recoveryConfig.isEmpty) {
-            return <ProtectionRecoveryRequest request={ acceptedProtectionRequest } type='accepted' />;
+            return <ProtectionRecoveryRequest requests={ requests } type='accepted' />;
         } else {
-            return <ProtectionRecoveryRequest request={ acceptedProtectionRequest } type='activated' />;
+            return <ProtectionRecoveryRequest requests={ requests } type='activated' />;
         }
     } else {
         return <CreateProtectionRequestForm isRecovery={ false } />;

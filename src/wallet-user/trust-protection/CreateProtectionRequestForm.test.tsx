@@ -83,23 +83,8 @@ describe("CreateProtectionRequestForm", () => {
         fireEvent.click(button);
 
         await waitFor(() => expect(createProtectionRequest).toBeCalledWith(
-            expect.objectContaining({
-                requesterAddress: TEST_WALLET_USER,
-                userIdentity: {
-                    firstName: "John",
-                    lastName: "Doe",
-                    email: "john.doe@logion.network",
-                    phoneNumber: "+1234"
-                },
-                userPostalAddress: {
-                    line1: "Place de le République Française, 10",
-                    line2: "boite 15",
-                    postalCode: "4000",
-                    city: "Liège",
-                    country: "Belgium"
-                },
-                legalOfficerAddresses: [DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER],
-            })
+            expect.arrayContaining([ DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER ]),
+            expect.anything()
         ));
     });
 
@@ -134,23 +119,8 @@ describe("CreateProtectionRequestForm", () => {
         fireEvent.click(button);
 
         await waitFor(() => expect(createProtectionRequest).toBeCalledWith(
-            expect.objectContaining({
-                requesterAddress: TEST_WALLET_USER,
-                userIdentity: {
-                    firstName: "John",
-                    lastName: "Doe",
-                    email: "john.doe@logion.network",
-                    phoneNumber: "+1234"
-                },
-                userPostalAddress: {
-                    line1: "Place de le République Française, 10",
-                    line2: "boite 15",
-                    postalCode: "4000",
-                    city: "Liège",
-                    country: "Belgium"
-                },
-                legalOfficerAddresses: [DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER],
-            })
+            expect.arrayContaining([ DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER ]),
+            expect.anything()
         ));
     });
 });

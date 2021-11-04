@@ -44,20 +44,6 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
     <LegalOfficers
       legalOfficer1={
         Object {
-          "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-          "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-          "email": "g.grain@adrastee-lyon.fr",
-          "name": "Guillaume Grain",
-        }
-      }
-      legalOfficer1Decision="PENDING"
-      legalOfficer2={
-        Object {
           "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
           "details": "MODERO
 Huissier de Justice Etterbeek
@@ -69,7 +55,21 @@ Tel: +32 498 237 107",
           "name": "Patrick Gielen",
         }
       }
-      legalOfficer2Decision="PENDING"
+      legalOfficer1Status="ACTIVATED"
+      legalOfficer2={
+        Object {
+          "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+          "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France
+Tel: +33 4 78 52 87 56",
+          "email": "g.grain@adrastee-lyon.fr",
+          "name": "Guillaume Grain",
+        }
+      }
+      legalOfficer2Status="ACTIVATED"
       legalOfficers={
         Array [
           Object {
@@ -110,7 +110,6 @@ Tel: +33 2 48 67 50 50",
       mode="view"
       setLegalOfficer1={[Function]}
       setLegalOfficer2={[Function]}
-      status="ACTIVATED"
     />
   </Frame>
 </FullWidthPane>
@@ -162,20 +161,6 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
     <LegalOfficers
       legalOfficer1={
         Object {
-          "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-          "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-          "email": "g.grain@adrastee-lyon.fr",
-          "name": "Guillaume Grain",
-        }
-      }
-      legalOfficer1Decision="PENDING"
-      legalOfficer2={
-        Object {
           "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
           "details": "MODERO
 Huissier de Justice Etterbeek
@@ -187,7 +172,21 @@ Tel: +32 498 237 107",
           "name": "Patrick Gielen",
         }
       }
-      legalOfficer2Decision="PENDING"
+      legalOfficer1Status="ACTIVATED"
+      legalOfficer2={
+        Object {
+          "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+          "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France
+Tel: +33 4 78 52 87 56",
+          "email": "g.grain@adrastee-lyon.fr",
+          "name": "Guillaume Grain",
+        }
+      }
+      legalOfficer2Status="ACTIVATED"
       legalOfficers={
         Array [
           Object {
@@ -228,7 +227,6 @@ Tel: +33 2 48 67 50 50",
       mode="view"
       setLegalOfficer1={[Function]}
       setLegalOfficer2={[Function]}
-      status="ACTIVATED"
     />
   </Frame>
 </FullWidthPane>
@@ -250,11 +248,24 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
   <Frame
     className="ProtectionRecoveryRequest"
   >
-    <Alert
-      variant="warning"
+    <div
+      className="alert-activated"
+      style={
+        Object {
+          "borderColor": "#37ad4b",
+          "color": "#37ad4b",
+        }
+      }
     >
-      Mandatory: we detect that the Logion Application needs to be re-synchronized with the Logion Blockchain. To proceed, please click on the button and sign to confirm this operation.
-    </Alert>
+      <Icon
+        icon={
+          Object {
+            "id": "activated",
+          }
+        }
+      />
+       Your Logion Trust Protection is active
+    </div>
     <ExtrinsicSubmitter
       id="activatedProtection"
       onError={[Function]}
@@ -262,28 +273,8 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
       signAndSubmit={null}
       successMessage="Protection successfully activated."
     />
-    <Button
-      id="btnConfirmProtection"
-      onClick={[Function]}
-    >
-      Re-Sync Confirmation
-    </Button>
     <LegalOfficers
       legalOfficer1={
-        Object {
-          "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-          "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-          "email": "g.grain@adrastee-lyon.fr",
-          "name": "Guillaume Grain",
-        }
-      }
-      legalOfficer1Decision="PENDING"
-      legalOfficer2={
         Object {
           "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
           "details": "MODERO
@@ -296,7 +287,21 @@ Tel: +32 498 237 107",
           "name": "Patrick Gielen",
         }
       }
-      legalOfficer2Decision="PENDING"
+      legalOfficer1Status="PENDING"
+      legalOfficer2={
+        Object {
+          "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+          "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France
+Tel: +33 4 78 52 87 56",
+          "email": "g.grain@adrastee-lyon.fr",
+          "name": "Guillaume Grain",
+        }
+      }
+      legalOfficer2Status="PENDING"
       legalOfficers={
         Array [
           Object {
@@ -337,7 +342,6 @@ Tel: +33 2 48 67 50 50",
       mode="view"
       setLegalOfficer1={[Function]}
       setLegalOfficer2={[Function]}
-      status="PENDING"
     />
   </Frame>
 </FullWidthPane>
@@ -363,9 +367,11 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
     className="ProtectionRecoveryRequest"
   >
     <Alert
-      variant="warning"
+      variant="info"
     >
-      Mandatory: we detect that the Logion Application needs to be re-synchronized with the Logion Blockchain. To proceed, please click on the button and sign to confirm this operation.
+      You are now ready to claim the access to address 
+      toRecover
+      .
     </Alert>
     <ExtrinsicSubmitter
       id="activatedProtection"
@@ -374,12 +380,6 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
       signAndSubmit={null}
       successMessage="Protection successfully activated."
     />
-    <Button
-      id="btnConfirmProtection"
-      onClick={[Function]}
-    >
-      Re-Sync Confirmation
-    </Button>
     <Button
       data-testid="btnClaim"
       onClick={[Function]}
@@ -396,20 +396,6 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
     <LegalOfficers
       legalOfficer1={
         Object {
-          "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-          "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-          "email": "g.grain@adrastee-lyon.fr",
-          "name": "Guillaume Grain",
-        }
-      }
-      legalOfficer1Decision="PENDING"
-      legalOfficer2={
-        Object {
           "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
           "details": "MODERO
 Huissier de Justice Etterbeek
@@ -421,7 +407,21 @@ Tel: +32 498 237 107",
           "name": "Patrick Gielen",
         }
       }
-      legalOfficer2Decision="PENDING"
+      legalOfficer1Status="PENDING"
+      legalOfficer2={
+        Object {
+          "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+          "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France
+Tel: +33 4 78 52 87 56",
+          "email": "g.grain@adrastee-lyon.fr",
+          "name": "Guillaume Grain",
+        }
+      }
+      legalOfficer2Status="PENDING"
       legalOfficers={
         Array [
           Object {
@@ -462,7 +462,6 @@ Tel: +33 2 48 67 50 50",
       mode="view"
       setLegalOfficer1={[Function]}
       setLegalOfficer2={[Function]}
-      status="PENDING"
     />
   </Frame>
 </FullWidthPane>
@@ -499,20 +498,6 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
     <LegalOfficers
       legalOfficer1={
         Object {
-          "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-          "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-          "email": "g.grain@adrastee-lyon.fr",
-          "name": "Guillaume Grain",
-        }
-      }
-      legalOfficer1Decision="PENDING"
-      legalOfficer2={
-        Object {
           "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
           "details": "MODERO
 Huissier de Justice Etterbeek
@@ -524,7 +509,21 @@ Tel: +32 498 237 107",
           "name": "Patrick Gielen",
         }
       }
-      legalOfficer2Decision="PENDING"
+      legalOfficer1Status="PENDING"
+      legalOfficer2={
+        Object {
+          "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+          "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France
+Tel: +33 4 78 52 87 56",
+          "email": "g.grain@adrastee-lyon.fr",
+          "name": "Guillaume Grain",
+        }
+      }
+      legalOfficer2Status="PENDING"
       legalOfficers={
         Array [
           Object {
@@ -565,7 +564,6 @@ Tel: +33 2 48 67 50 50",
       mode="view"
       setLegalOfficer1={[Function]}
       setLegalOfficer2={[Function]}
-      status="ACTIVATED"
     />
   </Frame>
 </FullWidthPane>
@@ -573,14 +571,17 @@ Tel: +33 2 48 67 50 50",
 
 exports[`ProtectionRecoveryRequest recovery request 1`] = `
 <FullWidthPane
-  mainTitle="My Logion Protection"
+  mainTitle="Recovery"
   subTitle="Recovery process status"
   titleIcon={
     Object {
-      "background": undefined,
+      "background": Object {
+        "from": "#7a90cb",
+        "to": "#3b6cf4",
+      },
       "icon": Object {
-        "hasVariants": true,
-        "id": "shield",
+        "hasVariants": false,
+        "id": "recovery",
       },
     }
   }
@@ -605,20 +606,6 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
     <LegalOfficers
       legalOfficer1={
         Object {
-          "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-          "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-          "email": "g.grain@adrastee-lyon.fr",
-          "name": "Guillaume Grain",
-        }
-      }
-      legalOfficer1Decision="PENDING"
-      legalOfficer2={
-        Object {
           "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
           "details": "MODERO
 Huissier de Justice Etterbeek
@@ -630,7 +617,21 @@ Tel: +32 498 237 107",
           "name": "Patrick Gielen",
         }
       }
-      legalOfficer2Decision="PENDING"
+      legalOfficer1Status="PENDING"
+      legalOfficer2={
+        Object {
+          "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+          "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France
+Tel: +33 4 78 52 87 56",
+          "email": "g.grain@adrastee-lyon.fr",
+          "name": "Guillaume Grain",
+        }
+      }
+      legalOfficer2Status="PENDING"
       legalOfficers={
         Array [
           Object {
@@ -671,7 +672,6 @@ Tel: +33 2 48 67 50 50",
       mode="view"
       setLegalOfficer1={[Function]}
       setLegalOfficer2={[Function]}
-      status="ACTIVATED"
     />
   </Frame>
 </FullWidthPane>

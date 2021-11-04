@@ -9,7 +9,6 @@ import Alert from "../../common/Alert";
 import Dialog from '../../common/Dialog';
 import FormGroup from '../../common/FormGroup';
 
-import { CreateProtectionRequest } from "./Model";
 import { useUserContext } from "../UserContext";
 import { useLogionChain, } from '../../logion-chain';
 import { getActiveRecovery, initiateRecovery } from '../../logion-chain/Recovery';
@@ -58,8 +57,10 @@ export default function CreateProtectionRequestForm(props: Props) {
             return;
         }
         const currentAddress = accounts!.current!.address;
-        const request: CreateProtectionRequest = {
+        const legalOfficers = [ legalOfficer1.address, legalOfficer2.address ];
+        await createProtectionRequest!(legalOfficers, (otherLegalOfficerAddress: string) => ({
             requesterAddress: currentAddress,
+            otherLegalOfficerAddress,
             userIdentity: {
                 firstName: formValues.firstName,
                 lastName: formValues.lastName,
@@ -76,8 +77,7 @@ export default function CreateProtectionRequestForm(props: Props) {
             legalOfficerAddresses: [ legalOfficer1.address, legalOfficer2.address ],
             isRecovery: props.isRecovery,
             addressToRecover: addressToRecover,
-        }
-        await createProtectionRequest!(request);
+        }));
         setRequestCreated(true);
     }
 
@@ -211,7 +211,6 @@ export default function CreateProtectionRequestForm(props: Props) {
                         legalOfficer2={ legalOfficer2 }
                         setLegalOfficer2={ setLegalOfficer2 }
                         mode={ props.isRecovery ? 'select' : 'choose' }
-                        status={ null }
                     />
                 </Frame>
                 </>

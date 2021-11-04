@@ -1,21 +1,20 @@
 import React from "react";
 import { LegalOfficer } from "../../common/types/LegalOfficer";
 
-import { LegalOfficerDecisionStatus, ProtectionRequestStatus } from "../../common/types/ModelTypes";
+import { ProtectionRequestStatus } from "../../common/types/ModelTypes";
 
 import SelectLegalOfficer, { Mode } from './SelectLegalOfficer';
 import './LegalOfficers.css';
 
 export interface Props {
     legalOfficers: LegalOfficer[],
+    mode: Mode,
     legalOfficer1: LegalOfficer | null,
     setLegalOfficer1: (legalOfficer: LegalOfficer) => void,
+    legalOfficer1Status?: ProtectionRequestStatus,
     legalOfficer2: LegalOfficer | null,
     setLegalOfficer2: (legalOfficer: LegalOfficer) => void,
-    mode: Mode,
-    legalOfficer1Decision?: LegalOfficerDecisionStatus,
-    legalOfficer2Decision?: LegalOfficerDecisionStatus,
-    status: ProtectionRequestStatus | null,
+    legalOfficer2Status?: ProtectionRequestStatus,
 }
 
 export default function LegalOfficers(props: Props) {
@@ -30,8 +29,7 @@ export default function LegalOfficers(props: Props) {
                     setLegalOfficer={ props.setLegalOfficer1 }
                     legalOfficers={ props.legalOfficers }
                     mode={ props.mode }
-                    decision={ props.legalOfficer1Decision }
-                    status={ props.status }
+                    status={ props.legalOfficer1Status }
                 />
             </div>
 
@@ -43,8 +41,7 @@ export default function LegalOfficers(props: Props) {
                     setLegalOfficer={ props.setLegalOfficer2 }
                     legalOfficers={ props.legalOfficers }
                     mode={ props.mode }
-                    decision={ props.legalOfficer2Decision }
-                    status={ props.status }
+                    status={ props.legalOfficer2Status }
                 />
             </div>
         </div>

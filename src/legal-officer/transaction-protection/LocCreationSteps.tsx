@@ -9,6 +9,7 @@ import { LocRequest } from '../../common/types/ModelTypes';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
 import ProcessStep from '../ProcessStep';
 import { useLegalOfficerContext } from '../LegalOfficerContext';
+import { LocType } from '../../logion-chain/Types';
 
 enum CreationStatus {
     NONE,
@@ -23,9 +24,10 @@ interface CreationState {
 }
 
 export interface Props {
-    requestToCreate: LocRequest | null
+    requestToCreate: LocRequest | null,
+    locType: LocType,
     exit: () => void,
-    onSuccess: () => void
+    onSuccess: () => void,
 }
 
 export default function LocCreationSteps(props: Props) {
@@ -55,7 +57,7 @@ export default function LocCreationSteps(props: Props) {
                     errorCallback: setError,
                     locId: new UUID(requestToCreate!.id),
                     requester: requestToCreate!.requesterAddress,
-                    locType: 'Transaction',
+                    locType: props.locType,
                 });
                 setSignAndSubmit(() => signAndSubmit);
             };
@@ -69,6 +71,7 @@ export default function LocCreationSteps(props: Props) {
         api,
         requestToCreate,
         accounts,
+        props.locType,
     ]);
 
     const cancel = useCallback(() => {
