@@ -287,7 +287,7 @@ Tel: +32 498 237 107",
           "name": "Patrick Gielen",
         }
       }
-      legalOfficer1Status="PENDING"
+      legalOfficer1Status="ACTIVATED"
       legalOfficer2={
         Object {
           "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
@@ -301,7 +301,7 @@ Tel: +33 4 78 52 87 56",
           "name": "Guillaume Grain",
         }
       }
-      legalOfficer2Status="PENDING"
+      legalOfficer2Status="ACTIVATED"
       legalOfficers={
         Array [
           Object {
@@ -407,7 +407,7 @@ Tel: +32 498 237 107",
           "name": "Patrick Gielen",
         }
       }
-      legalOfficer1Status="PENDING"
+      legalOfficer1Status="ACTIVATED"
       legalOfficer2={
         Object {
           "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
@@ -421,7 +421,7 @@ Tel: +33 4 78 52 87 56",
           "name": "Guillaume Grain",
         }
       }
-      legalOfficer2Status="PENDING"
+      legalOfficer2Status="ACTIVATED"
       legalOfficers={
         Array [
           Object {

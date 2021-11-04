@@ -5,6 +5,7 @@ import BootstrapButton, { ButtonType } from 'react-bootstrap/Button';
 import { Children } from './types/Helpers';
 import { useCommonContext } from './CommonContext';
 import { POLKADOT } from './ColorTheme';
+import MultiChoiceButton, { Choice } from './MultiChoiceButton';
 
 import './Button.css';
 
@@ -16,6 +17,7 @@ export interface Action {
     buttonText: Children,
     buttonTestId?: string,
     type?: ButtonType,
+    choices?: Choice[],
 }
 
 export interface Props {
@@ -29,6 +31,7 @@ export interface Props {
     id?: string,
     "data-testid"?: string,
     slim?: boolean,
+    choices?: Choice[],
 }
 
 export default function Button(props: Props) {
@@ -42,6 +45,7 @@ export default function Button(props: Props) {
     let children;
     let id;
     let type;
+    let choices;
     if(props.action !== undefined) {
         key = props.action.id;
         variant = props.action.buttonVariant;
@@ -50,6 +54,7 @@ export default function Button(props: Props) {
         testId = props.action.buttonTestId;
         children = props.action.buttonText;
         type = props.action.type;
+        choices = props.action.choices;
     } else {
         key = props.key;
         variant = props.variant;
@@ -59,6 +64,7 @@ export default function Button(props: Props) {
         children = props.children;
         id = props.id;
         type = props.type;
+        choices = props.choices;
     }
 
     let style: CSSProperties = {};
@@ -70,19 +76,29 @@ export default function Button(props: Props) {
         style.color = "white";
     }
 
-    return (
-        <BootstrapButton
-            id={ id }
-            key={ key }
-            variant={ variant }
-            disabled={ disabled }
-            onClick={ onClick }
-            data-testid={ testId }
-            className={ "Button" + ((props.slim !== undefined && props.slim) ? " slim" : "") }
-            style={ style }
-            type={ type }
-        >
-            { children }
-        </BootstrapButton>
-    );
+    if(choices === undefined) {
+        return (
+            <BootstrapButton
+                id={ id }
+                key={ key }
+                variant={ variant }
+                disabled={ disabled }
+                onClick={ onClick }
+                data-testid={ testId }
+                className={ "Button" + ((props.slim !== undefined && props.slim) ? " slim" : "") }
+                style={ style }
+                type={ type }
+            >
+                { children }
+            </BootstrapButton>
+        );
+    } else {
+        return (
+            <MultiChoiceButton
+                key={ key }
+                text={ children || "" }
+                choices={ choices }
+            />
+        );
+    }
 }

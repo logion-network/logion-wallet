@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { Form } from 'react-bootstrap';
+import Alert from '../common/Alert';
 
-import Button from '../common/Button';
 import { BackgroundAndForegroundColors } from '../common/ColorTheme';
 import FormGroup from '../common/FormGroup';
 
@@ -15,9 +15,9 @@ export interface Props {
     onChange: (locId: UUID) => void;
     expect: {
         closed: boolean,
-        type: LocType
+        type: LocType,
+        requester: string,
     };
-    onNew: () => void;
 }
 
 export default function LocIdFormGroup(props: Props) {
@@ -42,6 +42,8 @@ export default function LocIdFormGroup(props: Props) {
                     setInvalidLocIdFeedback("Given LOC has not expected type");
                 } else if(loc.closed !== props.expect.closed) {
                     setInvalidLocIdFeedback("Given LOC is not in expected state");
+                } else if(loc.requester !== props.expect.requester) {
+                    setInvalidLocIdFeedback("Given LOC has not expected requester");
                 } else {
                     setInvalidLocIdFeedback(undefined);
                     props.onChange(uuid);
@@ -64,7 +66,13 @@ export default function LocIdFormGroup(props: Props) {
     }
 
     return (
-        <div className="LocIdFormGroup">
+        <>
+            <Alert
+                variant="info"
+            >
+                In order to accept the request, you need to link it to a closed Identity LOC having the
+                protection requester as subject.
+            </Alert>
             <FormGroup
                 id="locId"
                 label={ label }
@@ -77,11 +85,6 @@ export default function LocIdFormGroup(props: Props) {
                 /> }
                 feedback={ invalidLocIdFeedback }
             />
-            <Button
-                onClick={ props.onNew }
-            >
-                Create a new LOC
-            </Button>
-        </div>
+        </>
     );
 }

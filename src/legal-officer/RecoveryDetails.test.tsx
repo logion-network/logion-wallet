@@ -40,6 +40,10 @@ describe("RecoveryDetails", () => {
         await waitFor(() => processButton = screen.getByRole("button", {name: "Proceed"}));
         userEvent.click(processButton!);
 
+        let linkButton: HTMLElement;
+        await waitFor(() => linkButton = screen.getByRole("button", {name: "Link to an existing Identity LOC"}));
+        userEvent.click(linkButton!);
+
         let closedLocInput: HTMLElement;
         await waitFor(() => closedLocInput = screen.getByRole("textbox", {name: "Closed Identity LOC ID"}));
         userEvent.type(closedLocInput!, CLOSED_IDENTITY_LOC_ID);
