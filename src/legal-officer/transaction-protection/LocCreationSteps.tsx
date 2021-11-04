@@ -35,7 +35,7 @@ export default function LocCreationSteps(props: Props) {
     const { accounts } = useCommonContext();
     const { axios } = useLegalOfficerContext();
 
-    const [ creationState, setCreationState ] = useState<CreationState>({ status: CreationStatus.NONE });
+    const [ creationState, setCreationState ] = useState<CreationState>({ status: CreationStatus.LOC_CREATION_PENDING });
 
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
 

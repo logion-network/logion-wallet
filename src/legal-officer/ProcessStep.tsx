@@ -3,14 +3,16 @@ import { ButtonVariant } from 'react-bootstrap/types';
 
 import Dialog from '../common/Dialog';
 import { Action } from '../common/Button';
+import { Choice } from '../common/MultiChoiceButton';
 
 export interface NextStep {
     id: string,
-    callback: () => void,
+    callback?: () => void,
     mayProceed: boolean,
     buttonVariant: ButtonVariant,
     buttonText: string,
     buttonTestId?: string,
+    choices?: Choice[],
 }
 
 export interface Props {
@@ -27,6 +29,9 @@ export interface Props {
 }
 
 function toAction(nextStep: NextStep): Action {
+    if(nextStep.callback === undefined && (nextStep.choices === undefined || nextStep.choices.length === 0)) {
+        throw new Error("The step does nothing");
+    }
     return {
         id: nextStep.id,
         callback: nextStep.callback,
@@ -34,6 +39,7 @@ function toAction(nextStep: NextStep): Action {
         buttonVariant: nextStep.buttonVariant,
         buttonText: nextStep.buttonText,
         buttonTestId: nextStep.buttonTestId,
+        choices: nextStep.choices
     };
 }
 

@@ -103,9 +103,13 @@ describe("PendingProtectionRequests", () => {
         userEvent.click(reviewButton);
 
         let acceptButton: HTMLElement;
-        await waitFor(() => acceptButton = screen.getByTestId("accept-1"));
+        await waitFor(() => acceptButton = screen.getByRole("button", {name: "Yes"}));
         const reviewModal = screen.getByTestId("modal-review-1");
         userEvent.click(acceptButton!);
+
+        let linkButton: HTMLElement;
+        await waitFor(() => linkButton = screen.getByRole("button", {name: "Link to an existing Identity LOC"}));
+        userEvent.click(linkButton!);
 
         await waitFor(() => expect(reviewModal).not.toBeInTheDocument());
 

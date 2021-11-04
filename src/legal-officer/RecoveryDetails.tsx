@@ -139,7 +139,20 @@ export default function RecoveryDetails() {
                             Back to requests list
                         </Button>
                         <Button variant="danger" onClick={ () => setVisible(Visible.REJECT) }>Refuse</Button>
-                        <Button variant="primary" onClick={ () => setVisible(Visible.APPROVE) }>Proceed</Button>
+                        <Button
+                            choices={[
+                                {
+                                    text: "Create the required Identity LOC",
+                                    onClick: () => setVisible(Visible.CREATE_NEW_LOC)
+                                },
+                                {
+                                    text: "Link to an existing Identity LOC",
+                                    onClick: () => setVisible(Visible.APPROVE)
+                                }
+                            ]}
+                        >
+                            Proceed
+                        </Button>
                     </ButtonGroup>
                 </Row>
             </Frame>
@@ -170,9 +183,12 @@ export default function RecoveryDetails() {
                 </p>
                 <LocIdFormGroup
                     colors={ colorTheme.dialog }
-                    expect={{closed: true, type: 'Identity'}}
+                    expect={{
+                        closed: true,
+                        type: 'Identity',
+                        requester: recoveryInfo.recoveryAccount.requesterAddress
+                    }}
                     onChange={ setLocId }
-                    onNew={ () => setVisible(Visible.CREATE_NEW_LOC) }
                 />
                 <ExtrinsicSubmitter
                     id="vouch"

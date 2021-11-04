@@ -8,6 +8,7 @@ export function createLoc(parameters: any) {
 export const CLOSED_IDENTITY_LOC_ID = "85833363768713528858922097642089825569";
 
 export const CLOSED_IDENTITY_LOC = {
+    requester: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
     locType: 'Identity',
     closed: true
 }

@@ -4,7 +4,7 @@ import { useLogionChain } from '../../logion-chain';
 import { createRecovery, claimRecovery } from '../../logion-chain/Recovery';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
 
-import { ProtectionRequest } from "../../common/types/ModelTypes";
+import { ProtectionRequest, ProtectionRequestStatus } from "../../common/types/ModelTypes";
 import { LegalOfficer, legalOfficerByAddress, legalOfficers } from '../../common/types/LegalOfficer';
 import { FullWidthPane } from "../../common/Dashboard";
 import Frame from "../../common/Frame";
@@ -62,9 +62,19 @@ export default function ProtectionRecoveryRequest(props: Props) {
     const request = props.requests[0];
 
     const legalOfficer1: LegalOfficer = legalOfficerByAddress(props.requests[0].legalOfficerAddress);
-    const legalOfficer1Status = props.requests[0].status;
     const legalOfficer2: LegalOfficer = legalOfficerByAddress(props.requests[1].legalOfficerAddress);
-    const legalOfficer2Status = props.requests[1].status;
+    let legalOfficer1Status: ProtectionRequestStatus;
+    let legalOfficer2Status: ProtectionRequestStatus;
+    if(props.type === 'pending') {
+        legalOfficer1Status = props.requests[0].status;
+        legalOfficer2Status = props.requests[1].status;
+    } else if(props.type === 'accepted') {
+        legalOfficer1Status = 'ACCEPTED';
+        legalOfficer2Status = 'ACCEPTED';
+    } else {
+        legalOfficer1Status = 'ACTIVATED';
+        legalOfficer2Status = 'ACTIVATED';
+    }
 
     const forAccount = request.addressToRecover !== null ? ` for account ${request.addressToRecover}` : "";
 

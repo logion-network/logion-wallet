@@ -232,11 +232,20 @@ export default function PendingProtectionRequests(props: Props) {
                         },
                         {
                             id: "accept",
-                            callback: () => setReviewState({ ...reviewState, status: ReviewStatus.ACCEPTING }),
                             mayProceed: true,
                             buttonVariant: "success",
                             buttonText: "Yes",
-                            buttonTestId: `accept-${reviewState.request!.id}`
+                            buttonTestId: `accept-${reviewState.request!.id}`,
+                            choices: [
+                                {
+                                    text: "Create the required Identity LOC",
+                                    onClick: () => setReviewState({ ...reviewState, status: ReviewStatus.CREATE_NEW_LOC })
+                                },
+                                {
+                                    text: "Link to an existing Identity LOC",
+                                    onClick: () => setReviewState({ ...reviewState, status: ReviewStatus.ACCEPTING })
+                                }
+                            ]
                         },
                         {
                             id: "reject",
@@ -301,15 +310,15 @@ export default function PendingProtectionRequests(props: Props) {
                 <ProcessStep
                     active={ true }
                     closeCallback={ handleClose }
-                    title={`Accepting ${reviewState.request!.id}`}
+                    title="Accept the protection request"
                     mayProceed={ locId !== undefined }
                     nextSteps={ [
                         {
-                            id: "later",
+                            id: "cancel",
                             callback: handleClose,
                             mayProceed: true,
                             buttonVariant: "secondary",
-                            buttonText: "Later",
+                            buttonText: "Cancel",
                         },
                         {
                             id: "confirm",
@@ -323,9 +332,12 @@ export default function PendingProtectionRequests(props: Props) {
                 >
                     <LocIdFormGroup
                         colors={ colorTheme.dialog }
-                        expect={{closed: true, type: 'Identity'}}
+                        expect={{
+                            closed: true,
+                            type: 'Identity',
+                            requester: reviewState.request!.requesterAddress
+                        }}
                         onChange={ setLocId }
-                        onNew={() => setReviewState({ ...reviewState, status: ReviewStatus.CREATE_NEW_LOC }) }
                     />
                 </ProcessStep>
             }
