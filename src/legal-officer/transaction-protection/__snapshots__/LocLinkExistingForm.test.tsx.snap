@@ -52,7 +52,7 @@ exports[`LocLinkExistingForm renders 1`] = `
       />
     }
     id="linkNature"
-    label="Link nature"
+    label="Link Public Description"
   />
 </React.Fragment>
 `;

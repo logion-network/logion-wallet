@@ -37,6 +37,11 @@ exports[`Renders requests history 1`] = `
           "header": "Account number",
           "render": [Function],
         },
+        Object {
+          "align": "left",
+          "header": "Identity LOC",
+          "render": [Function],
+        },
       ]
     }
     data={

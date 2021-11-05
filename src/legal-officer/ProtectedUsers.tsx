@@ -1,45 +1,38 @@
-import React from 'react';
-import { Table } from "react-bootstrap";
 import { useLegalOfficerContext } from "./LegalOfficerContext";
-import UserInfo from "../common/UserInfo";
-import LegalOfficerInfo from "../common/LegalOfficerInfo";
-import { legalOfficerByAddress } from "../common/types/LegalOfficer";
+import Table, { Cell, EmptyTableMessage } from '../common/Table';
+import LegalOfficerName from '../common/LegalOfficerNameCell';
+import ProtectedUserDetails from "./ProtectedUserDetails";
+import { UUID } from "../logion-chain/UUID";
 
 export default function ProtectedUsers() {
     const { activatedProtectionRequests } = useLegalOfficerContext();
 
+    if(activatedProtectionRequests === null) {
+        return null;
+    }
+
     return (
-            <>
-                <Table striped bordered responsive>
-                    <thead>
-                    <tr>
-                        <th>User</th>
-                        <th>Other Legal Officer</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {
-                        activatedProtectionRequests?.map(request => {
-                            const otherLegalOfficerAddress = request.otherLegalOfficerAddress;
-                            return (
-                                    <tr key={request.id}>
-                                        <td>
-                                            <UserInfo
-                                                    address={request.requesterAddress}
-                                                    userIdentity={request.userIdentity}
-                                                    postalAddress={request.userPostalAddress}/>
-                                        </td>
-                                        <td>
-                                            <LegalOfficerInfo
-                                                legalOfficer={legalOfficerByAddress(otherLegalOfficerAddress)}
-                                            />
-                                        </td>
-                                    </tr>
-                            )
-                        })
-                    }
-                    </tbody>
-                </Table>
-            </>
+        <Table
+            columns={[
+                {
+                    header: "User",
+                    render: request => <Cell content={ `${request.userIdentity.firstName} ${request.userIdentity.lastName}` }/>,
+                    align: 'left',
+                    renderDetails: request => <ProtectedUserDetails request={ request } />,
+                },
+                {
+                    header: "Other Legal Officer",
+                    render: request => <LegalOfficerName address={ request.otherLegalOfficerAddress }/>,
+                    align: 'left',
+                },
+                {
+                    header: "Identity LOC",
+                    render: request => <Cell content={ new UUID(request.decision.locId!).toDecimalString() }/>,
+                    align: 'left',
+                },
+            ]}
+            data={ activatedProtectionRequests }
+            renderEmpty={ () => <EmptyTableMessage>No user to display</EmptyTableMessage> }
+        />
     );
 }

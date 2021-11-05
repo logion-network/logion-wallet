@@ -46,7 +46,7 @@ export default function LocPrivateFileForm(props: Props) {
                 colors={ props.colors } />
             <FormGroup
                 id="locFileNature"
-                label="Document Nature"
+                label="Document Public Description"
                 control={
                     <Controller
                         name="nature"

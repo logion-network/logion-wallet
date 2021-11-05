@@ -19,7 +19,7 @@ export default function LocPublicDataDetails(props: Props) {
                 <LocItemDetail label={ props.label }>{ props.item.value }</LocItemDetail>
                 {
                     props.item.nature !== undefined &&
-                    <LocItemDetail label="Nature">{ props.item.nature }</LocItemDetail>
+                    <LocItemDetail label="Public Description">{ props.item.nature }</LocItemDetail>
                 }
             </div>
         </Col>
