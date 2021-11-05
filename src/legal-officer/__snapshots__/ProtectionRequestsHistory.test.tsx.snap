@@ -38,9 +38,10 @@ exports[`Renders requests history 1`] = `
           "render": [Function],
         },
         Object {
-          "align": "left",
-          "header": "Identity LOC",
+          "align": "center",
+          "header": "Action",
           "render": [Function],
+          "width": "180px",
         },
       ]
     }
