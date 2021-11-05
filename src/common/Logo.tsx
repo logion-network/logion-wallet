@@ -29,8 +29,8 @@ export default function Logo(props: Props) {
                 </div>
                 <div className="slogan">
                     <div className="text">
-                        One blockchain<br/>
-                        to trust them all
+                        Web3<br/>
+                        Legal Protection
                     </div>
                 </div>
             </div>

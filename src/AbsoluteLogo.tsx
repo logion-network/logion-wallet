@@ -31,7 +31,7 @@ export default function AbsoluteLogo(props: Props) {
             style={ style }
         >
             <img src={process.env.PUBLIC_URL + "/logo.png"} alt="logo" height="70" />
-            <p>One blockchain <br/>to trust them all</p>
+            <p>Web3<br/>Legal Protection</p>
         </div>
     );
 }
