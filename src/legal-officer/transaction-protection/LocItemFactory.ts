@@ -53,6 +53,7 @@ export function createDraftLinkedLocItem(link: Link, otherLocDescription: string
         type: 'Linked LOC',
         status: 'DRAFT',
         target: link.id,
+        nature: link.nature,
     };
 }
 

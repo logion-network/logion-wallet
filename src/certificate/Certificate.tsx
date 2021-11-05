@@ -167,7 +167,7 @@ function FileCellRow(props: { files: File[] }) {
     return (
         <Row>
             { props.files.map(
-                file => <CertificateCell md={ 6 } label="Document Hash">{ file.hash }</CertificateCell>) }
+                file => <CertificateCell md={ 6 } label={ `Document Hash (${file.nature})` }>{ file.hash }</CertificateCell>) }
         </Row>
     )
 }
@@ -176,7 +176,7 @@ function LinkCellRow(props: { links: Link[] }) {
     return (
         <Row>
             { props.links.map(
-                link => <CertificateCell md={ 6 } label="Linked LOC">{ link.id.toDecimalString() }</CertificateCell>) }
+                link => <CertificateCell md={ 6 } label={ `Linked LOC (${link.nature})` }>{ link.id.toDecimalString() }</CertificateCell>) }
         </Row>
     )
 }
