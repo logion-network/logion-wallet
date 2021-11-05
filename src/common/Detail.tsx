@@ -1,10 +1,11 @@
 import { useCommonContext } from './CommonContext';
 
 import './Detail.css';
+import { Children } from './types/Helpers';
 
 export interface Props {
     label: string,
-    value: string,
+    value: Children,
 }
 
 export default function Detail(props: Props) {

@@ -5,6 +5,7 @@ import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../common/Table';
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import ProtectionRequestStatus from './ProtectionRequestStatus';
 import ProtectionRequestDetails from './ProtectionRequestDetails';
+import { UUID } from '../logion-chain/UUID';
 
 export default function ProtectionRequestsHistory() {
     const { protectionRequestsHistory } = useLegalOfficerContext();
@@ -45,6 +46,11 @@ export default function ProtectionRequestsHistory() {
                     {
                         header: "Account number",
                         render: request => <Cell content={ request.requesterAddress } overflowing tooltipId={ `dest-${request.id}` } />,
+                        align: 'left',
+                    },
+                    {
+                        header: "Identity LOC",
+                        render: request => <Cell content={ request.decision.locId !== undefined ? new UUID(request.decision.locId!).toDecimalString() : "-" } />,
                         align: 'left',
                     },
                 ]}

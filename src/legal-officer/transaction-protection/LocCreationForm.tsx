@@ -23,7 +23,7 @@ export default function LocCreationForm(props: Props) {
         <>
             <FormGroup
                 id="locDescription"
-                label="Description"
+                label="LOC Private Description"
                 control={
                     <Controller
                         name="description"
@@ -57,7 +57,7 @@ export default function LocCreationForm(props: Props) {
             { props.hasLinkNature &&
             <FormGroup
                 id="linkNature"
-                label="Link nature"
+                label="Link Public Description"
                 control={
                     <Controller
                         name="linkNature"

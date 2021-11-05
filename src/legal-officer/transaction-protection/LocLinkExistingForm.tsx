@@ -51,7 +51,7 @@ export default function LocLinkExistingForm(props: Props) {
             />
             <FormGroup
                 id="linkNature"
-                label="Link nature"
+                label="Link Public Description"
                 control={
                     <Controller
                         name="linkNature"

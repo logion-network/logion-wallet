@@ -1,170 +1,142 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders 2 rows 1`] = `
-<React.Fragment>
-  <ForwardRef
-    bordered={true}
-    responsive={true}
-    striped={true}
-  >
-    <thead>
-      <tr>
-        <th>
-          User
-        </th>
-        <th>
-          Other Legal Officer
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <UserInfo
-            address="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
-            postalAddress={
-              Object {
-                "city": "Liège",
-                "country": "Belgium",
-                "line1": "Place de le République Française, 10",
-                "line2": "boite 15",
-                "postalCode": "4000",
-              }
-            }
-            userIdentity={
-              Object {
-                "email": "john.doe@logion.network",
-                "firstName": "John",
-                "lastName": "Doe",
-                "phoneNumber": "+1234",
-              }
-            }
-          />
-        </td>
-        <td>
-          <LegalOfficerInfo
-            legalOfficer={
-              Object {
-                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-                "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-                "email": "g.grain@adrastee-lyon.fr",
-                "name": "Guillaume Grain",
-              }
-            }
-          />
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <UserInfo
-            address="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
-            postalAddress={
-              Object {
-                "city": "Liège",
-                "country": "Belgium",
-                "line1": "Place de le République Française, 10",
-                "line2": "boite 15",
-                "postalCode": "4000",
-              }
-            }
-            userIdentity={
-              Object {
-                "email": "john.doe@logion.network",
-                "firstName": "John",
-                "lastName": "Doe",
-                "phoneNumber": "+1234",
-              }
-            }
-          />
-        </td>
-        <td>
-          <LegalOfficerInfo
-            legalOfficer={
-              Object {
-                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-                "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-                "email": "g.grain@adrastee-lyon.fr",
-                "name": "Guillaume Grain",
-              }
-            }
-          />
-        </td>
-      </tr>
-    </tbody>
-  </ForwardRef>
-</React.Fragment>
+<Table
+  columns={
+    Array [
+      Object {
+        "align": "left",
+        "header": "User",
+        "render": [Function],
+        "renderDetails": [Function],
+      },
+      Object {
+        "align": "left",
+        "header": "Other Legal Officer",
+        "render": [Function],
+      },
+      Object {
+        "align": "left",
+        "header": "Identity LOC",
+        "render": [Function],
+      },
+    ]
+  }
+  data={
+    Array [
+      Object {
+        "addressToRecover": null,
+        "createdOn": "2021-06-10T13:48:00.000Z",
+        "decision": Object {
+          "decisionOn": "2021-06-10T13:48:00.000Z",
+          "rejectReason": null,
+        },
+        "id": "request1",
+        "isRecovery": false,
+        "legalOfficerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "otherLegalOfficerAddress": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+        "requesterAddress": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+        "status": "ACTIVATED",
+        "userIdentity": Object {
+          "email": "john.doe@logion.network",
+          "firstName": "John",
+          "lastName": "Doe",
+          "phoneNumber": "+1234",
+        },
+        "userPostalAddress": Object {
+          "city": "Liège",
+          "country": "Belgium",
+          "line1": "Place de le République Française, 10",
+          "line2": "boite 15",
+          "postalCode": "4000",
+        },
+      },
+      Object {
+        "addressToRecover": null,
+        "createdOn": "2021-06-10T13:48:00.000Z",
+        "decision": Object {
+          "decisionOn": "2021-06-10T13:48:00.000Z",
+          "rejectReason": null,
+        },
+        "id": "request3",
+        "isRecovery": false,
+        "legalOfficerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "otherLegalOfficerAddress": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+        "requesterAddress": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+        "status": "ACTIVATED",
+        "userIdentity": Object {
+          "email": "john.doe@logion.network",
+          "firstName": "John",
+          "lastName": "Doe",
+          "phoneNumber": "+1234",
+        },
+        "userPostalAddress": Object {
+          "city": "Liège",
+          "country": "Belgium",
+          "line1": "Place de le République Française, 10",
+          "line2": "boite 15",
+          "postalCode": "4000",
+        },
+      },
+    ]
+  }
+  renderEmpty={[Function]}
+/>
 `;
 
 exports[`renders one row 1`] = `
-<React.Fragment>
-  <ForwardRef
-    bordered={true}
-    responsive={true}
-    striped={true}
-  >
-    <thead>
-      <tr>
-        <th>
-          User
-        </th>
-        <th>
-          Other Legal Officer
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-          <UserInfo
-            address="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
-            postalAddress={
-              Object {
-                "city": "Liège",
-                "country": "Belgium",
-                "line1": "Place de le République Française, 10",
-                "line2": "boite 15",
-                "postalCode": "4000",
-              }
-            }
-            userIdentity={
-              Object {
-                "email": "john.doe@logion.network",
-                "firstName": "John",
-                "lastName": "Doe",
-                "phoneNumber": "+1234",
-              }
-            }
-          />
-        </td>
-        <td>
-          <LegalOfficerInfo
-            legalOfficer={
-              Object {
-                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-                "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-                "email": "g.grain@adrastee-lyon.fr",
-                "name": "Guillaume Grain",
-              }
-            }
-          />
-        </td>
-      </tr>
-    </tbody>
-  </ForwardRef>
-</React.Fragment>
+<Table
+  columns={
+    Array [
+      Object {
+        "align": "left",
+        "header": "User",
+        "render": [Function],
+        "renderDetails": [Function],
+      },
+      Object {
+        "align": "left",
+        "header": "Other Legal Officer",
+        "render": [Function],
+      },
+      Object {
+        "align": "left",
+        "header": "Identity LOC",
+        "render": [Function],
+      },
+    ]
+  }
+  data={
+    Array [
+      Object {
+        "addressToRecover": null,
+        "createdOn": "2021-06-10T13:48:00.000Z",
+        "decision": Object {
+          "decisionOn": "2021-06-10T13:48:00.000Z",
+          "rejectReason": null,
+        },
+        "id": "request1",
+        "isRecovery": false,
+        "legalOfficerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "otherLegalOfficerAddress": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+        "requesterAddress": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+        "status": "ACTIVATED",
+        "userIdentity": Object {
+          "email": "john.doe@logion.network",
+          "firstName": "John",
+          "lastName": "Doe",
+          "phoneNumber": "+1234",
+        },
+        "userPostalAddress": Object {
+          "city": "Liège",
+          "country": "Belgium",
+          "line1": "Place de le République Française, 10",
+          "line2": "boite 15",
+          "postalCode": "4000",
+        },
+      },
+    ]
+  }
+  renderEmpty={[Function]}
+/>
 `;
