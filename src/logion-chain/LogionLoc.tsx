@@ -81,7 +81,7 @@ export async function getLegalOfficerCase(
                 value: rawItem.value.toUtf8(),
             })),
             files: rawLoc.files.toArray().map(rawFile => ({
-                hash: rawFile.hash.toHex(),
+                hash: rawFile.get('hash')!.toHex(),
                 nature: rawFile.nature.toUtf8()
             })),
             links: rawLoc.links.toArray().map(rawLink => ({

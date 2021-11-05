@@ -106,8 +106,10 @@ export class ApiPromise {
                     },
                     files: {
                         toArray: () => DEFAULT_LOC.files.map(file => ({
-                            hash: {
-                                toHex: () => file.hash
+                            get: (key: string) => {
+                                if(key === 'hash') {
+                                    return { toHex: () => file.hash }
+                                }
                             },
                             nature: {
                                 toUtf8: () => file.nature
