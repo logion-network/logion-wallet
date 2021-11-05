@@ -26,9 +26,9 @@ exports[`renders in dark mode 1`] = `
       <div
         className="text"
       >
-        One blockchain
+        Web3
         <br />
-        to trust them all
+        Legal Protection
       </div>
     </div>
   </div>
@@ -61,9 +61,9 @@ exports[`renders in light mode 1`] = `
       <div
         className="text"
       >
-        One blockchain
+        Web3
         <br />
-        to trust them all
+        Legal Protection
       </div>
     </div>
   </div>
