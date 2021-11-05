@@ -169,6 +169,10 @@ declare module '@polkadot/api/types/errors' {
        **/
       CannotMutate: AugmentedError<ApiType>;
       /**
+       * Occurs when trying to link to a non-existent LOC
+       **/
+      LinkedLocNotFound: AugmentedError<ApiType>;
+      /**
        * Target LOC does not exist
        **/
       NotFound: AugmentedError<ApiType>;

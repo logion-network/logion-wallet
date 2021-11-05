@@ -54,6 +54,11 @@ export interface LocMetadataItem {
     addedOn: string;
 }
 
+export interface LocLink {
+    target: string;
+    addedOn: string;
+}
+
 export interface LocRequest {
     ownerAddress: string;
     requesterAddress: string;
@@ -68,6 +73,7 @@ export interface LocRequest {
     closedOn?: string;
     files: LocFile[];
     metadata: LocMetadataItem[];
+    links: LocLink[];
 }
 
 export type LocRequestStatus = "OPEN" | "REQUESTED" | "REJECTED" | "CLOSED";

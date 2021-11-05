@@ -17,9 +17,11 @@ export default function LocPublicDataDetails(props: Props) {
                 <div className="frame-title">{ props.item.status === "DRAFT" ? "Data to be published" : "Published data" }</div>
                 <LocItemDetail label="Submitter ID">{ props.item.submitter }</LocItemDetail>
                 <LocItemDetail label={ props.label }>{ props.item.value }</LocItemDetail>
+                {
+                    props.item.nature !== undefined &&
+                    <LocItemDetail label="Nature">{ props.item.nature }</LocItemDetail>
+                }
             </div>
         </Col>
     )
 }
-
-

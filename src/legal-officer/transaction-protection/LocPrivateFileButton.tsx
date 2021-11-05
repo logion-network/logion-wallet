@@ -23,7 +23,7 @@ export default function LocPrivateFileButton() {
                 locId: locId.toString(),
                 fileName: formValues.fileName
             })
-            addFile!(formValues.fileName, response.hash);
+            addFile!(formValues.fileName, response.hash, formValues.nature);
             setVisible(false)
         }
     }, [ axiosFactory, loc, file, locId, addFile ])

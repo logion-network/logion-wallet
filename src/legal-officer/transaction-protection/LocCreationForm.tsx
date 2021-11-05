@@ -7,49 +7,76 @@ import FormGroup from '../../common/FormGroup';
 
 export interface FormValues {
     description: string;
+    linkNature: string;
 }
 
 export interface Props {
     control: Control<FormValues>;
     errors: FieldErrors<FormValues>;
     colors: BackgroundAndForegroundColors;
+    hasLinkNature: boolean;
 }
 
 export default function LocCreationForm(props: Props) {
 
     return (
-        <FormGroup
-            id="locDescription"
-            label="Description"
-            control={
-                <Controller
-                    name="description"
-                    control={ props.control }
-                    defaultValue=""
-                    rules={{
-                        required: 'The description is required',
-                        minLength: {
-                            value: 3,
-                            message: 'The description must contain at least 3 characters'
-                        },
-                        maxLength: {
-                            value: 40,
-                            message: 'The description must contain at most 40 characters'
-                        }
-                    }}
-                    render={({ field }) => (
-                        <Form.Control
-                            isInvalid={!!props.errors.description?.message}
-                            type="text" placeholder="e.g. XYZ"
-                            data-testid="description"
-                            aria-describedby="locDescription"
-                            { ...field }
-                        />
-                    )}
-                  />
+        <>
+            <FormGroup
+                id="locDescription"
+                label="Description"
+                control={
+                    <Controller
+                        name="description"
+                        control={ props.control }
+                        defaultValue=""
+                        rules={{
+                            required: 'The description is required',
+                            minLength: {
+                                value: 3,
+                                message: 'The description must contain at least 3 characters'
+                            },
+                            maxLength: {
+                                value: 40,
+                                message: 'The description must contain at most 40 characters'
+                            }
+                        }}
+                        render={({ field }) => (
+                            <Form.Control
+                                isInvalid={!!props.errors.description?.message}
+                                type="text" placeholder="e.g. XYZ"
+                                data-testid="description"
+                                aria-describedby="locDescription"
+                                { ...field }
+                            />
+                        )}
+                      />
+                }
+                colors={ props.colors }
+                feedback={ props.errors.description?.message }
+            />
+            { props.hasLinkNature &&
+            <FormGroup
+                id="linkNature"
+                label="Link nature"
+                control={
+                    <Controller
+                        name="linkNature"
+                        control={ props.control }
+                        defaultValue=""
+                        render={({ field }) => (
+                            <Form.Control
+                                isInvalid={!!props.errors.linkNature?.message}
+                                type="text" placeholder="e.g. XYZ"
+                                aria-describedby="linkNature"
+                                { ...field }
+                            />
+                        )}
+                      />
+                }
+                colors={ props.colors }
+                feedback={ props.errors.linkNature?.message }
+            />
             }
-            colors={ props.colors }
-            feedback={ props.errors.description?.message }
-        />
+        </>
     )
 }

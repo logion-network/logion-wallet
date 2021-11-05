@@ -1,14 +1,14 @@
 // Auto-generated via `yarn polkadot-types-from-chain`, do not edit
 /* eslint-disable */
 
-import type { LocId, LocType, MetadataItem, PeerId } from '../interfaces/default';
+import type { File, LocId, LocLink, LocType, MetadataItem, PeerId } from '../interfaces/default';
 import type { ApiTypes, SubmittableExtrinsic } from '@polkadot/api/types';
 import type { Bytes, Compact, Option, U8aFixed, Vec, bool, u16, u32, u64, u8 } from '@polkadot/types';
 import type { TAssetBalance } from '@polkadot/types/interfaces/assets';
 import type { Extrinsic } from '@polkadot/types/interfaces/extrinsics';
 import type { GrandpaEquivocationProof, KeyOwnerProof } from '@polkadot/types/interfaces/grandpa';
 import type { ProxyType } from '@polkadot/types/interfaces/proxy';
-import type { AccountId, AssetId, Balance, BlockNumber, Call, CallHashOf, ChangesTrieConfiguration, Hash, KeyValue, LookupSource, Moment, OpaqueCall, Perbill, Weight } from '@polkadot/types/interfaces/runtime';
+import type { AccountId, AssetId, Balance, BlockNumber, Call, CallHashOf, ChangesTrieConfiguration, KeyValue, LookupSource, Moment, OpaqueCall, Perbill, Weight } from '@polkadot/types/interfaces/runtime';
 import type { Key } from '@polkadot/types/interfaces/system';
 import type { Timepoint } from '@polkadot/types/interfaces/utility';
 import type { AnyNumber, ITuple } from '@polkadot/types/types';
@@ -422,9 +422,13 @@ declare module '@polkadot/api/types/submittable' {
     };
     logionLoc: {
       /**
-       * Add hash to LOC
+       * Add file to LOC
        **/
-      addHash: AugmentedSubmittable<(locId: Compact<LocId> | AnyNumber | Uint8Array, hash: Hash | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<LocId>, Hash]>;
+      addFile: AugmentedSubmittable<(locId: Compact<LocId> | AnyNumber | Uint8Array, file: File | { hash?: any; nature?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<LocId>, File]>;
+      /**
+       * Add a link to LOC
+       **/
+      addLink: AugmentedSubmittable<(locId: Compact<LocId> | AnyNumber | Uint8Array, link: LocLink | { id?: any; nature?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<LocId>, LocLink]>;
       /**
        * Add LOC metadata
        **/

@@ -20,8 +20,9 @@ export interface LocRequestFragment {
 export interface Props {
     show: boolean,
     exit: () => void,
-    onSuccess: (locRequest: LocRequest) => void,
+    onSuccess: (locRequest: LocRequest, nature?: string) => void,
     locRequest: LocRequestFragment;
+    hasLinkNature: boolean;
 }
 
 export default function LocCreationDialog(props: Props) {
@@ -33,6 +34,7 @@ export default function LocCreationDialog(props: Props) {
         }
     });
     const [ newLocRequest, setNewLocRequest ] = useState<LocRequest | null>(null);
+    const [ linkNature, setLinkNature ] = useState<string | undefined>();
 
     const submit = useCallback((formValues: FormValues) => {
         (async function () {
@@ -45,9 +47,12 @@ export default function LocCreationDialog(props: Props) {
                 locType: props.locRequest.locType,
             }
             setNewLocRequest(await createLocRequest!(axios!, request));
+            if(props.hasLinkNature) {
+                setLinkNature(formValues.linkNature);
+            }
             refresh()
         })();
-    }, [ axios, accounts, props.locRequest, refresh ]);
+    }, [ axios, accounts, props.locRequest, refresh, props.hasLinkNature ]);
 
     return (
         <>
@@ -89,6 +94,7 @@ export default function LocCreationDialog(props: Props) {
                     control={ control }
                     errors={ errors }
                     colors={ colorTheme.dialog }
+                    hasLinkNature={ props.hasLinkNature }
                 />
                 }
                 { newLocRequest !== null &&
@@ -99,7 +105,7 @@ export default function LocCreationDialog(props: Props) {
                         props.exit();
                         reset();
                     } }
-                    onSuccess={ () => props.onSuccess(newLocRequest) }
+                    onSuccess={ () => props.onSuccess(newLocRequest, linkNature) }
                 />
                 }
             </Dialog>

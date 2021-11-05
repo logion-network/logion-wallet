@@ -3,14 +3,13 @@ import { useParams } from "react-router";
 import { useLogionChain } from "../logion-chain";
 import { useEffect, useState, useMemo } from "react";
 import { getLegalOfficerCase } from "../logion-chain/LogionLoc";
-import { LegalOfficerCase, MetadataItem } from "../logion-chain/Types";
+import { File, LegalOfficerCase, Link, MetadataItem } from "../logion-chain/Types";
 import { Row } from "../common/Grid";
 import CertificateCell from "./CertificateCell";
 import { LegalOfficer, getOfficer } from "../common/types/LegalOfficer";
 import Button from "../common/Button";
 import { Col } from "react-bootstrap";
 import MailtoButton from "../common/MailtoButton";
-import { displayName } from "../legal-officer/transaction-protection/LocItemFactory";
 import './Certificate.css'
 import Icon from "../common/Icon";
 import { LocRequest } from "../common/types/ModelTypes";
@@ -121,8 +120,11 @@ export default function Certificate() {
             { matrix(loc.metadata, 2).map((items) => (
                 <MetadataItemCellRow items={ items } />
             )) }
-            { matrix(loc.hashes, 2).map((hashes) => (
-                <HashCellRow hashes={ hashes } />
+            { matrix(loc.files, 2).map((files) => (
+                <FileCellRow files={ files } />
+            )) }
+            { matrix(loc.links, 2).map((links) => (
+                <LinkCellRow links={ links } />
             )) }
             <LegalOfficerRow legalOfficer={ legalOfficer } />
             <Row>
@@ -156,16 +158,25 @@ function MetadataItemCellRow(props: { items: MetadataItem[] }) {
     return (
         <Row>
             { props.items.map(
-                item => <CertificateCell md={ 6 } label={ displayName(item) }>{ item.value }</CertificateCell>) }
+                item => <CertificateCell md={ 6 } label={ item.name }>{ item.value }</CertificateCell>) }
         </Row>
     )
 }
 
-function HashCellRow(props: { hashes: string[] }) {
+function FileCellRow(props: { files: File[] }) {
     return (
         <Row>
-            { props.hashes.map(
-                hash => <CertificateCell md={ 6 } label="Document Hash">{ hash }</CertificateCell>) }
+            { props.files.map(
+                file => <CertificateCell md={ 6 } label={ `Document Hash (${file.nature})` }>{ file.hash }</CertificateCell>) }
+        </Row>
+    )
+}
+
+function LinkCellRow(props: { links: Link[] }) {
+    return (
+        <Row>
+            { props.links.map(
+                link => <CertificateCell md={ 6 } label={ `Linked LOC (${link.nature})` }>{ link.id.toDecimalString() }</CertificateCell>) }
         </Row>
     )
 }

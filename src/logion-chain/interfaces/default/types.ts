@@ -38,18 +38,31 @@ export interface AssetMetadata extends Struct {
   readonly decimals: u8;
 }
 
+/** @name File */
+export interface File extends Struct {
+  readonly hash: Hash;
+  readonly nature: Bytes;
+}
+
 /** @name LegalOfficerCaseOf */
 export interface LegalOfficerCaseOf extends Struct {
   readonly owner: AccountId;
   readonly requester: AccountId;
   readonly metadata: Vec<MetadataItem>;
-  readonly hashes: Vec<Hash>;
+  readonly files: Vec<File>;
   readonly closed: bool;
   readonly loc_type: LocType;
+  readonly links: Vec<LocLink>;
 }
 
 /** @name LocId */
 export interface LocId extends u128 {}
+
+/** @name LocLink */
+export interface LocLink extends Struct {
+  readonly id: LocId;
+  readonly nature: Bytes;
+}
 
 /** @name LocType */
 export interface LocType extends Enum {

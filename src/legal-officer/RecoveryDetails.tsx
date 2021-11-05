@@ -238,6 +238,7 @@ export default function RecoveryDetails() {
                     userIdentity: recoveryInfo.recoveryAccount.userIdentity,
                     locType: 'Identity'
                 }}
+                hasLinkNature={ false }
             />
         </FullWidthPane>
     );

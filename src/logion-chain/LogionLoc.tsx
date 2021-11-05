@@ -80,7 +80,14 @@ export async function getLegalOfficerCase(
                 name: rawItem.name.toUtf8(),
                 value: rawItem.value.toUtf8(),
             })),
-            hashes: rawLoc.hashes.toArray().map(rawHash => rawHash.toHex()),
+            files: rawLoc.files.toArray().map(rawFile => ({
+                hash: rawFile.hash.toHex(),
+                nature: rawFile.nature.toUtf8()
+            })),
+            links: rawLoc.links.toArray().map(rawLink => ({
+                id: UUID.fromDecimalString(rawLink.id.toString())!,
+                nature: rawLink.nature.toUtf8()
+            })),
             closed: rawLoc.closed.isTrue,
             locType: rawLoc.loc_type.isIdentity ? 'Identity' : 'Transaction',
         };
@@ -89,13 +96,14 @@ export async function getLegalOfficerCase(
     }
 }
 
-export interface AddHashParameters extends ExtrinsicSubmissionParameters {
+export interface AddFileParameters extends ExtrinsicSubmissionParameters {
     api: ApiPromise;
     locId: UUID;
     hash: string;
+    nature: string;
 }
 
-export function addHash(parameters: AddHashParameters): Unsubscriber {
+export function addFile(parameters: AddFileParameters): Unsubscriber {
     const {
         api,
         signerId,
@@ -103,11 +111,15 @@ export function addHash(parameters: AddHashParameters): Unsubscriber {
         errorCallback,
         locId,
         hash,
+        nature
     } = parameters;
 
     return signAndSend({
         signerId,
-        submittable: api.tx.logionLoc.addHash(locId.toHexString(), hash),
+        submittable: api.tx.logionLoc.addFile(locId.toHexString(), {
+            hash,
+            nature: stringToHex(nature)
+        }),
         callback,
         errorCallback,
     });
@@ -130,6 +142,35 @@ export function closeLoc(parameters: CloseLocParameters): Unsubscriber {
     return signAndSend({
         signerId,
         submittable: api.tx.logionLoc.close(locId.toHexString()),
+        callback,
+        errorCallback,
+    });
+}
+
+export interface AddLinkParameters extends ExtrinsicSubmissionParameters {
+    api: ApiPromise;
+    locId: UUID;
+    target: UUID;
+    nature: string;
+}
+
+export function addLink(parameters: AddLinkParameters): Unsubscriber {
+    const {
+        api,
+        signerId,
+        callback,
+        errorCallback,
+        locId,
+        target,
+        nature,
+    } = parameters;
+
+    return signAndSend({
+        signerId,
+        submittable: api.tx.logionLoc.addLink(locId.toHexString(), {
+            id: target.toHexString(),
+            nature: stringToHex(nature)
+        }),
         callback,
         errorCallback,
     });

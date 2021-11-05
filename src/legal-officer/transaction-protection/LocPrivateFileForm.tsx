@@ -6,7 +6,8 @@ import Form from "react-bootstrap/Form";
 import { BackgroundAndForegroundColors } from "../../common/ColorTheme";
 
 export interface FormValues {
-    fileName: string
+    fileName: string;
+    nature: string;
 }
 
 export interface Props {
@@ -22,7 +23,7 @@ export default function LocPrivateFileForm(props: Props) {
         <>
             <h3>Add a confidential document</h3>
             <p>Important: after publication, the only data that will be publicly available on the blockchain will be the
-                HASH of the document</p>
+                HASH of the document and its nature (which can remain empty). The document name is not published.</p>
             <FormGroup
                 id="locFileName"
                 label="Document Name"
@@ -37,6 +38,25 @@ export default function LocPrivateFileForm(props: Props) {
                                 type="text" placeholder="e.g. XYZ"
                                 data-testid="locFileName"
                                 aria-describedby="locFileName"
+                                { ...field }
+                            />
+                        ) } />
+
+                }
+                colors={ props.colors } />
+            <FormGroup
+                id="locFileNature"
+                label="Document Nature"
+                control={
+                    <Controller
+                        name="nature"
+                        control={ props.control }
+                        defaultValue=""
+                        render={ ({ field }) => (
+                            <Form.Control
+                                isInvalid={ !!props.errors.nature?.message }
+                                type="text" placeholder="e.g. XYZ"
+                                aria-describedby="locFileNature"
                                 { ...field }
                             />
                         ) } />

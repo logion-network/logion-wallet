@@ -1,17 +1,26 @@
-export const enum ReservedName {
-    LinkedLocId = "_LINKED_LOC_ID"
-}
+import { UUID } from "./UUID";
 
 export interface MetadataItem {
     name: string;
     value: string;
 }
 
+export interface File {
+    hash: string;
+    nature: string;
+}
+
+export interface Link {
+    id: UUID;
+    nature: string;
+}
+
 export interface LegalOfficerCase {
     owner: string;
     requester: string;
     metadata: MetadataItem[];
-    hashes: string[];
+    files: File[];
+    links: Link[];
     closed: boolean;
     locType: LocType;
 }

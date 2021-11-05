@@ -16,6 +16,7 @@ export default function LocPrivateFileDetails(props: Props) {
                 <div className="frame-title">{ props.item.status === "DRAFT" ? "Document related data to be published" : "Published document related data" }</div>
                 <LocItemDetail label="Submitter ID">{ props.item.submitter }</LocItemDetail>
                 <LocItemDetail label="Document Hash">{ props.item.value }</LocItemDetail>
+                <LocItemDetail label="Document Nature">{ props.item.nature }</LocItemDetail>
             </div>
         </Col>
     )

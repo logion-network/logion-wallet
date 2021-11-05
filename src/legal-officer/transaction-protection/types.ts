@@ -1,3 +1,5 @@
+import { UUID } from "../../logion-chain/UUID"
+
 export type LocItemStatus = 'DRAFT' | 'PUBLISHED'
 
 export type LocItemType = 'Data' | 'Document' | 'Linked LOC'
@@ -8,5 +10,7 @@ export interface LocItem {
     timestamp: string | null,
     type: LocItemType,
     submitter: string,
-    status: LocItemStatus
+    status: LocItemStatus,
+    nature?: string,
+    target?: UUID,
 }

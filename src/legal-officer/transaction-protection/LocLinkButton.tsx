@@ -21,9 +21,9 @@ export default function LocLinkButton(props: Props) {
     const [ visible, setVisible ] = useState<Visible>(props.visible ? props.visible : Visible.NONE);
     const { linkLoc, locRequest } = useLocContext();
 
-    const linkNewLoc = useCallback((newLocRequest: LocRequest) => {
+    const linkNewLoc = useCallback((newLocRequest: LocRequest, nature: string) => {
         if (linkLoc !== null) {
-            linkLoc(new UUID(newLocRequest.id), newLocRequest.description)
+            linkLoc(new UUID(newLocRequest.id), newLocRequest.description, nature)
         }
     }, [ linkLoc ])
 
@@ -50,12 +50,13 @@ export default function LocLinkButton(props: Props) {
             <LocCreationDialog
                 show={ visible === Visible.LINK_NEW_IDENTITY || visible === Visible.LINK_NEW_TRANSACTION }
                 exit={ () => setVisible(Visible.NONE) }
-                onSuccess={ linkNewLoc }
+                onSuccess={ (newLocRequest) => linkNewLoc(newLocRequest, "") }
                 locRequest={{
                     requesterAddress: locRequest!.requesterAddress,
                     userIdentity: locRequest!.userIdentity,
                     locType: visible === Visible.LINK_NEW_IDENTITY ? 'Identity' : 'Transaction'
                 }}
+                hasLinkNature={ true }
             />
         </>
     )
