@@ -5,10 +5,13 @@ import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../common/Table';
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import ProtectionRequestStatus from './ProtectionRequestStatus';
 import ProtectionRequestDetails from './ProtectionRequestDetails';
-import { UUID } from '../logion-chain/UUID';
+import Button from "../common/Button";
+import { locDetailsPath } from "./LegalOfficerPaths";
+import { useHistory } from "react-router-dom";
 
 export default function ProtectionRequestsHistory() {
     const { protectionRequestsHistory } = useLegalOfficerContext();
+    const history = useHistory();
 
     if (protectionRequestsHistory === null) {
         return null;
@@ -49,9 +52,10 @@ export default function ProtectionRequestsHistory() {
                         align: 'left',
                     },
                     {
-                        header: "Identity LOC",
-                        render: request => <Cell content={ request.decision.locId !== undefined ? new UUID(request.decision.locId!).toDecimalString() : "-" } />,
-                        align: 'left',
+                        header: "Action",
+                        render: request => request.decision.locId ? <Button onClick={ () => history.push(locDetailsPath(request.decision.locId!)) }>Identity LOC</Button> : "" ,
+                        width: "180px",
+                        align: 'center',
                     },
                 ]}
                 data={ protectionRequestsHistory }

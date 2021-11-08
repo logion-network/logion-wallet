@@ -9,16 +9,19 @@ exports[`renders 2 rows 1`] = `
         "header": "User",
         "render": [Function],
         "renderDetails": [Function],
+        "width": "50%",
       },
       Object {
         "align": "left",
         "header": "Other Legal Officer",
         "render": [Function],
+        "width": "50%",
       },
       Object {
-        "align": "left",
-        "header": "Identity LOC",
+        "align": "center",
+        "header": "Action",
         "render": [Function],
+        "width": "200px",
       },
     ]
   }
@@ -93,16 +96,19 @@ exports[`renders one row 1`] = `
         "header": "User",
         "render": [Function],
         "renderDetails": [Function],
+        "width": "50%",
       },
       Object {
         "align": "left",
         "header": "Other Legal Officer",
         "render": [Function],
+        "width": "50%",
       },
       Object {
-        "align": "left",
-        "header": "Identity LOC",
+        "align": "center",
+        "header": "Action",
         "render": [Function],
+        "width": "200px",
       },
     ]
   }

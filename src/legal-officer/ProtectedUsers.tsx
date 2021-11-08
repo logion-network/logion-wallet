@@ -2,10 +2,14 @@ import { useLegalOfficerContext } from "./LegalOfficerContext";
 import Table, { Cell, EmptyTableMessage } from '../common/Table';
 import LegalOfficerName from '../common/LegalOfficerNameCell';
 import ProtectedUserDetails from "./ProtectedUserDetails";
-import { UUID } from "../logion-chain/UUID";
+import Button from "../common/Button";
+import { locDetailsPath } from "./LegalOfficerPaths";
+import React from "react";
+import { useHistory } from "react-router-dom";
 
 export default function ProtectedUsers() {
     const { activatedProtectionRequests } = useLegalOfficerContext();
+    const history = useHistory();
 
     if(activatedProtectionRequests === null) {
         return null;
@@ -18,17 +22,20 @@ export default function ProtectedUsers() {
                     header: "User",
                     render: request => <Cell content={ `${request.userIdentity.firstName} ${request.userIdentity.lastName}` }/>,
                     align: 'left',
+                    width: "50%",
                     renderDetails: request => <ProtectedUserDetails request={ request } />,
                 },
                 {
                     header: "Other Legal Officer",
                     render: request => <LegalOfficerName address={ request.otherLegalOfficerAddress }/>,
+                    width: "50%",
                     align: 'left',
                 },
                 {
-                    header: "Identity LOC",
-                    render: request => <Cell content={ new UUID(request.decision.locId!).toDecimalString() }/>,
-                    align: 'left',
+                    header: "Action",
+                    render: request => <Button onClick={ () => history.push(locDetailsPath(request.decision.locId!)) }>Identity LOC</Button>,
+                    width: "200px",
+                    align: 'center',
                 },
             ]}
             data={ activatedProtectionRequests }

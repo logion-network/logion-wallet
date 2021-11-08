@@ -69,6 +69,7 @@ export default function ProtectedUserDetails(props: Props) {
                     ))}
                 />
             </Col>
+            <Col style={{width: "200px"}}>&nbsp;</Col>
         </>
     );
 }
