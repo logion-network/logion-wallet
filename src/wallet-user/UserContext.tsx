@@ -172,16 +172,12 @@ export function UserContextProvider(props: Props) {
                 });
 
                 let recoveredAddress: string | null = null;
-                if(acceptedProtectionRequests.length === 1
-                    && acceptedProtectionRequests[0].isRecovery
-                    && acceptedProtectionRequests[0].status === "ACTIVATED") {
-                    const proxy = await getProxy({
-                        api: api!,
-                        currentAddress
-                    });
-                    if(proxy.isSome) {
-                        recoveredAddress = proxy.unwrap().toString();
-                    }
+                const proxy = await getProxy({
+                    api: api!,
+                    currentAddress
+                });
+                if(proxy.isSome) {
+                    recoveredAddress = proxy.unwrap().toString();
                 }
 
                 dispatch({
