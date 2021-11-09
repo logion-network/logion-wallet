@@ -3,7 +3,7 @@ jest.mock("../common/CommonContext");
 
 import React from 'react';
 import ContextualizedWallet from './ContextualizedWallet';
-import { DEFAULT_LEGAL_OFFICER } from '../common/types/LegalOfficer';
+import { DEFAULT_LEGAL_OFFICER } from "../common/TestData";
 import { shallowRender, mockAccount } from '../tests';
 import { setContextMock } from '../logion-chain/__mocks__/LogionChainMock';
 

@@ -7,7 +7,7 @@ import { shallowRender } from '../tests';
 import AddressSwitcher from './AddressSwitcher';
 import { setAddresses } from './__mocks__/CommonContextMock';
 import { TEST_WALLET_USER } from '../wallet-user/TestData';
-import { DEFAULT_LEGAL_OFFICER } from './types/LegalOfficer';
+import { DEFAULT_LEGAL_OFFICER } from "./TestData";
 import { authenticate } from './Authentication';
 
 jest.mock('./CommonContext');

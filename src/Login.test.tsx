@@ -6,9 +6,8 @@ import Accounts, { Account } from './common/types/Accounts';
 import { shallowRender } from './tests';
 import { setAddresses } from './common/__mocks__/CommonContextMock';
 import { TEST_WALLET_USER } from './wallet-user/TestData';
-import { DEFAULT_LEGAL_OFFICER } from './common/types/LegalOfficer';
+import { DEFAULT_LEGAL_OFFICER } from "./common/TestData";
 import { authenticate } from './common/Authentication';
-
 import Login from './Login';
 
 jest.mock('./logion-chain');

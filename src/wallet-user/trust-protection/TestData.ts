@@ -1,9 +1,8 @@
 import moment from 'moment';
 
 import { ProtectionRequest, ProtectionRequestStatus } from '../../common/types/ModelTypes';
-import { DEFAULT_IDENTITY, DEFAULT_ADDRESS } from '../../common/TestData';
+import { DEFAULT_IDENTITY, DEFAULT_ADDRESS, DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from '../../common/TestData';
 import { TEST_WALLET_USER } from '../TestData';
-import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from '../../common/types/LegalOfficer';
 
 export const ACTIVATED_PROTECTION_REQUEST1: ProtectionRequest = createProtectionRequest("request1", DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER, "ACTIVATED", false, null);
 

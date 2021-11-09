@@ -6,21 +6,29 @@ export interface Node {
     owner: string;
 }
 
+export interface LegalOfficer {
+    name: string,
+    address: string,
+    details: string,
+    email: string
+}
+
 export interface ConfigType {
     APP_NAME: string,
     DEVELOPMENT_KEYRING: boolean,
     PROVIDER_SOCKET?: string,
     RPC: object,
     availableNodes: Node[],
+    legalOfficers: LegalOfficer[],
 }
 
 export const DEFAULT_CONFIG: ConfigType = {
     APP_NAME: "Logion Wallet",
     DEVELOPMENT_KEYRING: true,
     RPC: {
-        
     },
-    availableNodes: []
+    availableNodes: [],
+    legalOfficers: []
 };
 
 export interface EnvConfigType extends Record<string, any> {
