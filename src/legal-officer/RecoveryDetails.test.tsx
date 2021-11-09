@@ -11,8 +11,8 @@ import userEvent from '@testing-library/user-event';
 import RecoveryDetails from './RecoveryDetails';
 import { RecoveryInfo } from './Types';
 import { setFetchRecoveryInfo, acceptProtectionRequest, rejectProtectionRequest } from './__mocks__/ModelMock';
-import { PROTECTION_REQUESTS_HISTORY, DEFAULT_LEGAL_OFFICER_ADDRESS } from './TestData';
-import { axiosMock, setAddresses } from '../common/__mocks__/CommonContextMock';
+import { PROTECTION_REQUESTS_HISTORY } from './TestData';
+import { axiosMock, setAddresses, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../common/__mocks__/CommonContextMock';
 import { setIsSuccessful } from '../logion-chain/__mocks__/SignatureMock';
 import { setParams, history } from '../__mocks__/ReactRouterMock';
 import { refreshRequests } from './__mocks__/LegalOfficerContextMock';
@@ -22,8 +22,8 @@ describe("RecoveryDetails", () => {
 
     it("Recovery requires acceptance and vouching", async () => {
         setAddresses({
-            current: DEFAULT_LEGAL_OFFICER_ADDRESS,
-            all: [ DEFAULT_LEGAL_OFFICER_ADDRESS],
+            current: DEFAULT_LEGAL_OFFICER_ACCOUNT,
+            all: [ DEFAULT_LEGAL_OFFICER_ACCOUNT],
         });
         const protectionRequest = PROTECTION_REQUESTS_HISTORY[0];
         const recoveryConfig: RecoveryInfo = {
@@ -64,8 +64,8 @@ describe("RecoveryDetails", () => {
 
     it("Recovery can be refused", async () => {
         setAddresses({
-            current: DEFAULT_LEGAL_OFFICER_ADDRESS,
-            all: [ DEFAULT_LEGAL_OFFICER_ADDRESS],
+            current: DEFAULT_LEGAL_OFFICER_ACCOUNT,
+            all: [ DEFAULT_LEGAL_OFFICER_ACCOUNT],
         });
         const protectionRequest = PROTECTION_REQUESTS_HISTORY[0];
         const recoveryConfig: RecoveryInfo = {
@@ -87,7 +87,7 @@ describe("RecoveryDetails", () => {
         userEvent.click(confirmButton!);
 
         await waitFor(() => expect(rejectProtectionRequest).toBeCalledWith(axiosMock.object(), expect.objectContaining({
-            legalOfficerAddress: DEFAULT_LEGAL_OFFICER_ADDRESS.address,
+            legalOfficerAddress: DEFAULT_LEGAL_OFFICER_ACCOUNT.address,
             requestId: protectionRequest.id,
         })));
         await waitFor(() => expect(refreshRequests).toBeCalled());

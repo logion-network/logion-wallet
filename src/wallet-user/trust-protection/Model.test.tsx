@@ -1,9 +1,7 @@
-import { It, Mock, Times } from "moq.ts";
+import { It, Mock } from "moq.ts";
 import { AxiosInstance, AxiosResponse } from "axios";
-
 import { TEST_WALLET_USER } from '../TestData';
-import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from "../../common/types/LegalOfficer";
-
+import { ANOTHER_LEGAL_OFFICER } from "../../common/TestData";
 import { CreateProtectionRequest, createProtectionRequest } from "./Model";
 
 jest.mock('../../logion-chain');

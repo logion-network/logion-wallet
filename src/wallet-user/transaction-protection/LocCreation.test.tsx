@@ -1,16 +1,15 @@
 jest.mock('../../common/CommonContext');
 jest.mock('../../common/Model');
 jest.mock('../../wallet-user/UserContext');
+jest.mock('../../common/types/LegalOfficer');
 
-import {fireEvent, render, screen, waitFor} from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
-
-import RequestedLocs from './RequestedLocs';
 import { axiosMock } from '../../common/__mocks__/CommonContextMock';
 import { createLocRequest } from '../../common/Model';
-import { DEFAULT_LEGAL_OFFICER } from '../../common/types/LegalOfficer';
+import { DEFAULT_LEGAL_OFFICER } from "../../common/TestData";
 import { TEST_WALLET_USER } from '../TestData';
-import { setRecoveryConfig } from '../../wallet-user/__mocks__/UserContextMock';
+import { setRecoveryConfig } from '../__mocks__/UserContextMock';
 
 import LocCreation from './LocCreation';
 

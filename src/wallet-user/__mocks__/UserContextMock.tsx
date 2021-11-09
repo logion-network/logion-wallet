@@ -1,4 +1,4 @@
-import {DEFAULT_LEGAL_OFFICER} from "../../common/types/LegalOfficer";
+import { DEFAULT_LEGAL_OFFICER } from "../../common/TestData";
 import { TEST_WALLET_USER } from '../TestData';
 import {ApiPromise} from '@polkadot/api';
 import { ProtectionRequest } from "../../common/types/ModelTypes";
@@ -66,7 +66,7 @@ export function setRecoveryConfig(config: any) {
 
 export function UserContextProvider() {
     return (
-        <div></div>
+        <div/>
     );
 }
 

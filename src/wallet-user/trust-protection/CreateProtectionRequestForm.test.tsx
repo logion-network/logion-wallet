@@ -2,9 +2,9 @@ jest.mock('../UserContext');
 jest.mock('../../logion-chain');
 jest.mock('../../logion-chain/Signature');
 jest.mock('../../common/CommonContext');
+jest.mock('../../common/types/LegalOfficer');
 
-import { TEST_WALLET_USER } from '../TestData';
-import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from "../../common/types/LegalOfficer";
+import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from "../../common/TestData";
 import { setCreateProtectionRequest } from "../__mocks__/UserContextMock";
 import { shallowRender } from "../../tests";
 import React from "react";

@@ -3,8 +3,7 @@ import { AxiosInstance } from 'axios';
 import moment from 'moment';
 
 import { TEST_WALLET_USER } from '../../wallet-user/TestData';
-import { DEFAULT_LEGAL_OFFICER } from '../types/LegalOfficer';
-import { COLOR_THEME } from '../TestData';
+import { COLOR_THEME, DEFAULT_LEGAL_OFFICER } from '../TestData';
 import Accounts, { Account } from '../types/Accounts';
 
 export let selectAddress = jest.fn();
