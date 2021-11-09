@@ -12,7 +12,7 @@ import Icon from '../../common/Icon';
 import Dialog from '../../common/Dialog';
 import { useUserContext } from '../UserContext';
 import './RecoveryProcess.css';
-import { CoinBalance, getBalances, buildTransferCall, estimateFee } from "../../logion-chain/Balances";
+import { CoinBalance, getBalances, buildTransferCall} from "../../logion-chain/Balances";
 import { AssetNameCell } from "../../common/Wallet";
 import { signAndSendAsRecovered } from "../../logion-chain/Recovery";
 import { PrefixedNumber, MILLI } from "../../logion-chain/numbers";
@@ -55,10 +55,7 @@ export default function RecoveryProcess() {
         }
     }, [ balances, setBalances, recoveredAddress, api ])
 
-    const recoverCoin = useCallback(async (balance: PrefixedNumber) => {
-
-        const fee = await estimateFee({ api: api!, amount: balance, destination: accounts!.current!.address });
-        const amount = balance.subtract(fee)
+    const recoverCoin = useCallback(async (amount: PrefixedNumber) => {
 
         const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSendAsRecovered({
             api: api!,
