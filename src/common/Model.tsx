@@ -27,13 +27,13 @@ export async function fetchProtectionRequests(
     return response.data.requests;
 }
 
-export interface FetchTransactionsSpecficication {
+export interface FetchTransactionsSpecification {
     address: string,
 }
 
 export async function getTransactions(
     axios: AxiosInstance,
-    request: FetchTransactionsSpecficication
+    request: FetchTransactionsSpecification
 ): Promise<TransactionsSet> {
     const response = await axios.put("/api/transaction", request);
     return {
@@ -49,7 +49,13 @@ function enrichTransaction(transaction: Transaction, address: string): Transacti
 }
 
 function transactionType(transaction: Transaction, address: string): string {
-    if(transaction.pallet === "recovery") {
+    if(transaction.pallet === "verifiedRecovery") {
+        if (transaction.method === "createRecovery") {
+            return "Recovery created";
+        } else {
+            return "Other";
+        }
+    } else if(transaction.pallet === "recovery") {
         if(transaction.method === "createRecovery") {
             return "Recovery created";
         } else if(transaction.method === "vouchRecovery") {
@@ -80,6 +86,20 @@ function transactionType(transaction: Transaction, address: string): string {
             return "Asset created";
         } else if(transaction.method === "setMetadata") {
             return "Asset metadata set";
+        } else {
+            return "Other";
+        }
+    } else if(transaction.pallet === "logionLoc") {
+        if(transaction.method === "addFile") {
+            return "File added to LOC";
+        } else if(transaction.method === "addLink") {
+            return "Link added to LOC";
+        } else if(transaction.method === "addMetadata") {
+            return "Metadata added to LOC";
+        } else if(transaction.method === "close") {
+            return "LOC closed";
+        } else if(transaction.method === "createLoc") {
+            return "LOC created";
         } else {
             return "Other";
         }
