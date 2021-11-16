@@ -50,7 +50,7 @@ export default function LocLinkButton(props: Props) {
             <LocCreationDialog
                 show={ visible === Visible.LINK_NEW_IDENTITY || visible === Visible.LINK_NEW_TRANSACTION }
                 exit={ () => setVisible(Visible.NONE) }
-                onSuccess={ (newLocRequest) => linkNewLoc(newLocRequest, "") }
+                onSuccess={ (newLocRequest, nature) => linkNewLoc(newLocRequest, nature!) }
                 locRequest={{
                     requesterAddress: locRequest!.requesterAddress,
                     userIdentity: locRequest!.userIdentity,
