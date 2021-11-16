@@ -113,9 +113,7 @@ exports[`renders loader with no data 1`] = `<Loader />`;
 
 exports[`renders with all data 1`] = `
 <React.Fragment>
-  <Row
-    noGutters={false}
-  >
+  <Row>
     <Col
       md={8}
     >

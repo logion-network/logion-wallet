@@ -1,9 +1,15 @@
 import Button from "./Button";
 import { ChangeEvent, useRef, useState } from "react";
 import { Form } from "react-bootstrap";
+import { Children } from "./types/Helpers";
+
+import './FileSelectorButton.css';
 
 export interface Props {
-    onFileSelected: (file: File) => void
+    onFileSelected: (file: File) => void;
+    disabled?: boolean;
+    buttonText?: Children;
+    onlyButton?: boolean;
 }
 
 export default function FileSelectorButton(props: Props) {
@@ -21,16 +27,23 @@ export default function FileSelectorButton(props: Props) {
         props.onFileSelected(file);
     }
 
+    let className = "FileSelectorButton";
+    if(props.onlyButton) {
+        className = className + " only-button";
+    }
+
     return (
-        <div>
+        <div className={ className }>
             <Form.Control value={ fileName } readOnly />
             <Button onClick={ () => fileSelector.current?.click() }>
-                Upload
+                { props.buttonText ? props.buttonText : "Upload"}
             </Button>
-            <Form.File.Input
+            <Form.Control
+                type="file"
                 ref={ fileSelector }
                 onChange={ handleSelection }
                 style={ { display: 'none' } }
+                disabled={ props.disabled }
             />
         </div>
     )

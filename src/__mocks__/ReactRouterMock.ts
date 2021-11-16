@@ -6,14 +6,12 @@ export function setParams(mock: object) {
     params = mock;
 }
 
-export let history: any = {
-    push: jest.fn(),
-};
+export let navigate = jest.fn();
 
-export let useHistory = () => history;
+export let useNavigate = () => navigate;
 
-export function setHistory(mock: object) {
-    history = mock;
+export function setNavigate(mock: any) {
+    navigate = mock;
 }
 
 export let location: any = {

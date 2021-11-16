@@ -10,9 +10,7 @@ exports[`renders 1`] = `
     <div
       className="ShellHeader"
     >
-      <Row
-        noGutters={false}
-      >
+      <Row>
         <Col>
           <Navbar
             collapseOnSelect={false}
@@ -31,9 +29,7 @@ exports[`renders 1`] = `
     <div
       className="ShellContent"
     >
-      <Row
-        noGutters={false}
-      >
+      <Row>
         <Col>
           <p>
             Some text
@@ -65,9 +61,7 @@ exports[`renders with custom background 1`] = `
     <div
       className="ShellHeader"
     >
-      <Row
-        noGutters={false}
-      >
+      <Row>
         <Col>
           <Navbar
             collapseOnSelect={false}
@@ -86,9 +80,7 @@ exports[`renders with custom background 1`] = `
     <div
       className="ShellContent"
     >
-      <Row
-        noGutters={false}
-      >
+      <Row>
         <Col>
           <p>
             Some text

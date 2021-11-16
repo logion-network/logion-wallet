@@ -112,7 +112,7 @@ function BasePane(props: BasePaneProps) {
 
     return (
         <Col md={ FULL_WIDTH - SIDEBAR_WIDTH }>
-            <Row noGutters>
+            <Row>
                 <Col md={ 8 }>
                     <Titles {...props} />
                 </Col>
@@ -124,7 +124,7 @@ function BasePane(props: BasePaneProps) {
                     </div>
                 </Col>
             </Row>
-            <Row noGutters className={ contentAreaClass }>
+            <Row className={ contentAreaClass }>
                 { props.children }
             </Row>
         </Col>
@@ -221,7 +221,7 @@ export default function Dashboard(props: Props) {
             <style>
             { inlineCss }
             </style>
-            <Row noGutters>
+            <Row>
                 <Col md={ SIDEBAR_WIDTH }>
                     <div className="Sidebar"
                         style={{

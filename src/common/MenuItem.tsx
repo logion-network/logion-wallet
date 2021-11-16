@@ -29,7 +29,7 @@ export default function MenuItem(props: Props) {
     return (
         <NavLink
             to={props.item.to}
-            exact={props.item.exact}
+            end={props.item.exact}
             className="MenuItem"
             style={customStyle}
         >

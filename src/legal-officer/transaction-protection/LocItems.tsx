@@ -17,7 +17,11 @@ import { getFile } from "../Model";
 import { LocItem } from "./types";
 import { UNKNOWN_NAME } from "./LocItemFactory";
 
-export default function LocItems() {
+export interface Props {
+    matchedHash?: string;
+}
+
+export default function LocItems(props: Props) {
 
     const { locId, locItems, removeItem } = useLocContext();
 
@@ -123,6 +127,8 @@ export default function LocItems() {
                 }
             ] }
             renderEmpty={ () => <EmptyTableMessage>No public data nor private documents
-                yet</EmptyTableMessage> } />
+                yet</EmptyTableMessage> }
+            rowStyle={ (item, index?) => (item.type === "Document" && item.value === props.matchedHash) ? "matched" : "" }
+        />
     )
 }

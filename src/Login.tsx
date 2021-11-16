@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 import Container from 'react-bootstrap/Container';
 
@@ -21,8 +21,8 @@ export interface LocationState {
 }
 
 export default function Login() {
-    const location = useLocation<LocationState>();
-    const history = useHistory();
+    const location = useLocation();
+    const navigate = useNavigate();
     const { connectedNodeMetadata } = useLogionChain();
     const { accounts, setTokens, axiosFactory } = useCommonContext();
     const [ selectedAddresses, setSelectedAddresses ] = useState<string[]>(location.state && location.state.selectedAddresses ? location.state.selectedAddresses : []);
@@ -32,11 +32,11 @@ export default function Login() {
         setTokens(tokens);
 
         if(location.state && location.state.referrer) {
-            history.push(location.state.referrer);
+            navigate(location.state.referrer);
         } else {
-            history.push("/");
+            navigate("/");
         }
-    }, [ axiosFactory, selectedAddresses, setTokens, history, location ]);
+    }, [ axiosFactory, selectedAddresses, setTokens, navigate, location ]);
 
     if(accounts === null || connectedNodeMetadata === null || axiosFactory === undefined) {
         return null;

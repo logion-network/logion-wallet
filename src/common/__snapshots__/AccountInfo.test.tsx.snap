@@ -40,7 +40,6 @@ exports[`renders and compares with different data 1`] = `
     
       </style>
       <div
-        className="form-group"
         data-testid="accountAddressGroup"
       >
         <label
@@ -93,7 +92,6 @@ exports[`renders and compares with different data 1`] = `
     
             </style>
             <div
-              className="form-group"
               data-testid="firstNameGroup"
             >
               <label
@@ -141,7 +139,6 @@ exports[`renders and compares with different data 1`] = `
     
             </style>
             <div
-              className="form-group"
               data-testid="lastNameGroup"
             >
               <label
@@ -193,7 +190,6 @@ exports[`renders and compares with different data 1`] = `
     
             </style>
             <div
-              className="form-group"
               data-testid="emailGroup"
             >
               <label
@@ -241,7 +237,6 @@ exports[`renders and compares with different data 1`] = `
     
             </style>
             <div
-              className="form-group"
               data-testid="phoneNumberGroup"
             >
               <label
@@ -300,7 +295,6 @@ exports[`renders and compares with different data 1`] = `
     
             </style>
             <div
-              className="form-group"
               data-testid="line1Group"
             >
               <label
@@ -352,7 +346,6 @@ exports[`renders and compares with different data 1`] = `
     
             </style>
             <div
-              className="form-group"
               data-testid="line2Group"
             >
               <label
@@ -404,7 +397,6 @@ exports[`renders and compares with different data 1`] = `
     
             </style>
             <div
-              className="form-group"
               data-testid="postalCodeGroup"
             >
               <label
@@ -452,7 +444,6 @@ exports[`renders and compares with different data 1`] = `
     
             </style>
             <div
-              className="form-group"
               data-testid="cityGroup"
             >
               <label
@@ -504,7 +495,6 @@ exports[`renders and compares with different data 1`] = `
     
             </style>
             <div
-              className="form-group"
               data-testid="countryGroup"
             >
               <label
@@ -573,7 +563,6 @@ exports[`renders and compares with same data 1`] = `
     
       </style>
       <div
-        className="form-group"
         data-testid="accountAddressGroup"
       >
         <label
@@ -626,7 +615,6 @@ exports[`renders and compares with same data 1`] = `
     
             </style>
             <div
-              className="form-group"
               data-testid="firstNameGroup"
             >
               <label
@@ -674,7 +662,6 @@ exports[`renders and compares with same data 1`] = `
     
             </style>
             <div
-              className="form-group"
               data-testid="lastNameGroup"
             >
               <label
@@ -726,7 +713,6 @@ exports[`renders and compares with same data 1`] = `
     
             </style>
             <div
-              className="form-group"
               data-testid="emailGroup"
             >
               <label
@@ -774,7 +760,6 @@ exports[`renders and compares with same data 1`] = `
     
             </style>
             <div
-              className="form-group"
               data-testid="phoneNumberGroup"
             >
               <label
@@ -833,7 +818,6 @@ exports[`renders and compares with same data 1`] = `
     
             </style>
             <div
-              className="form-group"
               data-testid="line1Group"
             >
               <label
@@ -885,7 +869,6 @@ exports[`renders and compares with same data 1`] = `
     
             </style>
             <div
-              className="form-group"
               data-testid="line2Group"
             >
               <label
@@ -937,7 +920,6 @@ exports[`renders and compares with same data 1`] = `
     
             </style>
             <div
-              className="form-group"
               data-testid="postalCodeGroup"
             >
               <label
@@ -985,7 +967,6 @@ exports[`renders and compares with same data 1`] = `
     
             </style>
             <div
-              className="form-group"
               data-testid="cityGroup"
             >
               <label
@@ -1037,7 +1018,6 @@ exports[`renders and compares with same data 1`] = `
     
             </style>
             <div
-              className="form-group"
               data-testid="countryGroup"
             >
               <label
@@ -1106,7 +1086,6 @@ exports[`renders without comparison 1`] = `
     
       </style>
       <div
-        className="form-group"
         data-testid="accountAddressGroup"
       >
         <label
@@ -1159,7 +1138,6 @@ exports[`renders without comparison 1`] = `
     
             </style>
             <div
-              className="form-group"
               data-testid="firstNameGroup"
             >
               <label
@@ -1207,7 +1185,6 @@ exports[`renders without comparison 1`] = `
     
             </style>
             <div
-              className="form-group"
               data-testid="lastNameGroup"
             >
               <label
@@ -1259,7 +1236,6 @@ exports[`renders without comparison 1`] = `
     
             </style>
             <div
-              className="form-group"
               data-testid="emailGroup"
             >
               <label
@@ -1307,7 +1283,6 @@ exports[`renders without comparison 1`] = `
     
             </style>
             <div
-              className="form-group"
               data-testid="phoneNumberGroup"
             >
               <label
@@ -1366,7 +1341,6 @@ exports[`renders without comparison 1`] = `
     
             </style>
             <div
-              className="form-group"
               data-testid="line1Group"
             >
               <label
@@ -1418,7 +1392,6 @@ exports[`renders without comparison 1`] = `
     
             </style>
             <div
-              className="form-group"
               data-testid="line2Group"
             >
               <label
@@ -1470,7 +1443,6 @@ exports[`renders without comparison 1`] = `
     
             </style>
             <div
-              className="form-group"
               data-testid="postalCodeGroup"
             >
               <label
@@ -1518,7 +1490,6 @@ exports[`renders without comparison 1`] = `
     
             </style>
             <div
-              className="form-group"
               data-testid="cityGroup"
             >
               <label
@@ -1570,7 +1541,6 @@ exports[`renders without comparison 1`] = `
     
             </style>
             <div
-              className="form-group"
               data-testid="countryGroup"
             >
               <label

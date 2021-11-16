@@ -22,7 +22,6 @@ Object {
     
           </style>
           <div
-            class="form-group"
             data-testid="testId3Group"
           >
             <label
@@ -63,7 +62,6 @@ Object {
     
         </style>
         <div
-          class="form-group"
           data-testid="testId3Group"
         >
           <label
@@ -161,7 +159,6 @@ Object {
     
           </style>
           <div
-            class="form-group"
             data-testid="testId2Group"
           >
             <label
@@ -202,7 +199,6 @@ Object {
     
         </style>
         <div
-          class="form-group"
           data-testid="testId2Group"
         >
           <label
@@ -300,7 +296,6 @@ Object {
     
           </style>
           <div
-            class="form-group"
             data-testid="testId1Group"
           >
             <label
@@ -341,7 +336,6 @@ Object {
     
         </style>
         <div
-          class="form-group"
           data-testid="testId1Group"
         >
           <label

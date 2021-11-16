@@ -14,7 +14,6 @@
 
 .ContextualizedLocDetails .certificate-link {
     margin-top: 30px;
-    border: 2px solid #e6007a;
 }
 
 .ContextualizedLocDetails .certificate-link .title {
@@ -28,3 +27,10 @@
     font-size: 18px;
 }
 
+.ContextualizedLocDetails .CheckFileFrame {
+    margin-top: 30px;
+}
+
+.ContextualizedLocDetails .Row.matched {
+    border: 2px dashed #e6007a;
+}

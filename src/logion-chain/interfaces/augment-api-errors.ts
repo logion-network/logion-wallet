@@ -397,6 +397,32 @@ declare module '@polkadot/api/types/errors' {
        **/
       [key: string]: AugmentedError<ApiType>;
     };
+    session: {
+      /**
+       * Registered duplicate key.
+       **/
+      DuplicatedKey: AugmentedError<ApiType>;
+      /**
+       * Invalid ownership proof.
+       **/
+      InvalidProof: AugmentedError<ApiType>;
+      /**
+       * Key setting account is not live, so it's impossible to associate keys.
+       **/
+      NoAccount: AugmentedError<ApiType>;
+      /**
+       * No associated validator ID for account.
+       **/
+      NoAssociatedValidatorId: AugmentedError<ApiType>;
+      /**
+       * No keys are associated with this account.
+       **/
+      NoKeys: AugmentedError<ApiType>;
+      /**
+       * Generic error
+       **/
+      [key: string]: AugmentedError<ApiType>;
+    };
     sudo: {
       /**
        * Sender must be the Sudo account
@@ -432,6 +458,13 @@ declare module '@polkadot/api/types/errors' {
        * and the new runtime.
        **/
       SpecVersionNeedsToIncrease: AugmentedError<ApiType>;
+      /**
+       * Generic error
+       **/
+      [key: string]: AugmentedError<ApiType>;
+    };
+    validatorSet: {
+      NoValidators: AugmentedError<ApiType>;
       /**
        * Generic error
        **/

@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import { useCommonContext } from "../common/CommonContext";
 import { useLegalOfficerContext } from "./LegalOfficerContext";
 import { FullWidthPane } from "../common/Dashboard";
-import { useParams, useHistory } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import { locDetailsPath, RECOVERY_REQUESTS_PATH } from "./LegalOfficerPaths";
 import Button from "../common/Button";
 import { Col, Row } from "react-bootstrap";
@@ -36,10 +36,10 @@ export default function RecoveryDetails() {
     const { accounts, axiosFactory, colorTheme } = useCommonContext();
     const { api } = useLogionChain();
     const { refreshRequests } = useLegalOfficerContext();
-    const { requestId } = useParams<{ requestId: string }>();
+    const { requestId } = useParams<"requestId">();
     const [ recoveryInfo, setRecoveryInfo ] = useState<RecoveryInfo | null>(null);
     const [ visible, setVisible ] = useState(Visible.NONE);
-    const history = useHistory();
+    const navigate = useNavigate();
     const [ rejectReason, setRejectReason ] = useState<string>("");
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
     const [ locId, setLocId ] = useState<UUID | undefined>();
@@ -47,7 +47,7 @@ export default function RecoveryDetails() {
     useEffect(() => {
         if (recoveryInfo === null && axiosFactory !== undefined) {
             const currentAddress = accounts!.current!.address;
-            fetchRecoveryInfo(axiosFactory(currentAddress)!, requestId)
+            fetchRecoveryInfo(axiosFactory(currentAddress)!, requestId!)
                 .then(recoveryInfo => setRecoveryInfo(recoveryInfo));
         }
     }, [ axiosFactory, accounts, recoveryInfo, setRecoveryInfo, requestId ]);
@@ -56,7 +56,7 @@ export default function RecoveryDetails() {
         (async function() {
             const currentAddress = accounts!.current!.address;
             await acceptProtectionRequest(axiosFactory!(currentAddress)!, {
-                requestId,
+                requestId: requestId!,
                 locId: locId!
             });
             const signAndSubmit: SignAndSubmit = (callback, errorCallback) => vouchRecovery({
@@ -76,13 +76,13 @@ export default function RecoveryDetails() {
             const currentAddress = accounts!.current!.address;
             await rejectProtectionRequest(axiosFactory!(currentAddress)!, {
                 legalOfficerAddress: currentAddress,
-                requestId,
+                requestId: requestId!,
                 rejectReason,
             });
             refreshRequests!(false);
-            history.push(RECOVERY_REQUESTS_PATH);
+            navigate(RECOVERY_REQUESTS_PATH);
         })();
-    }, [ axiosFactory, requestId, accounts, rejectReason, refreshRequests, history ]);
+    }, [ axiosFactory, requestId, accounts, rejectReason, refreshRequests, navigate ]);
 
     if (recoveryInfo === null) {
         return null;
@@ -135,7 +135,7 @@ export default function RecoveryDetails() {
                 </Row>
                 <Row>
                     <ButtonGroup aria-label="actions">
-                        <Button variant="outline-primary" onClick={ () => history.push(RECOVERY_REQUESTS_PATH) }>
+                        <Button variant="outline-primary" onClick={ () => navigate(RECOVERY_REQUESTS_PATH) }>
                             Back to requests list
                         </Button>
                         <Button variant="danger" onClick={ () => setVisible(Visible.REJECT) }>Refuse</Button>
@@ -193,7 +193,7 @@ export default function RecoveryDetails() {
                 <ExtrinsicSubmitter
                     id="vouch"
                     signAndSubmit={ signAndSubmit }
-                    onSuccess={ () => { setSignAndSubmit(null); refreshRequests!(false); history.push(RECOVERY_REQUESTS_PATH); } }
+                    onSuccess={ () => { setSignAndSubmit(null); refreshRequests!(false); navigate(RECOVERY_REQUESTS_PATH); } }
                     onError={ () => {} }
                 />
             </Dialog>
@@ -231,8 +231,8 @@ export default function RecoveryDetails() {
             </Dialog>
             <LocCreationDialog
                 show={ visible === Visible.CREATE_NEW_LOC }
-                exit={ () => history.push(RECOVERY_REQUESTS_PATH) }
-                onSuccess={ (newLoc) => history.push(locDetailsPath(newLoc.id)) }
+                exit={ () => navigate(RECOVERY_REQUESTS_PATH) }
+                onSuccess={ (newLoc) => navigate(locDetailsPath(newLoc.id)) }
                 locRequest={{
                     requesterAddress: recoveryInfo.recoveryAccount.requesterAddress,
                     userIdentity: recoveryInfo.recoveryAccount.userIdentity,

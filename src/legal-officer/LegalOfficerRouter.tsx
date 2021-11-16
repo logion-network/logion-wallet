@@ -1,15 +1,18 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import {
-    PROTECTION_REQUESTS_PATH,
-    RECOVERY_REQUESTS_PATH,
-    SETTINGS_PATH,
-    RECOVERY_DETAILS_PATH,
+    PROTECTION_REQUESTS_RELATIVE_PATH,
+    RECOVERY_REQUESTS_RELATIVE_PATH,
+    SETTINGS_RELATIVE_PATH,
+    RECOVERY_DETAILS_RELATIVE_PATH,
+    WALLET_RELATIVE_PATH,
     WALLET_PATH,
     transactionsPath,
-    TRANSACTIONS_PATH,
-    LOC_REQUESTS_PATH, LOC_DETAILS_PATH, IDENTITIES_PATH,
+    TRANSACTIONS_RELATIVE_PATH,
+    LOC_REQUESTS_RELATIVE_PATH,
+    LOC_DETAILS_RELATIVE_PATH,
+    IDENTITIES_RELATIVE_PATH,
 } from './LegalOfficerPaths';
 
 import Home from './Home';
@@ -26,43 +29,21 @@ import IdentityProtection from './transaction-protection/IdentityProtection';
 export default function LegalOfficerRouter() {
 
     return (
-        <>
-            <Switch>
-                <Route path={ PROTECTION_REQUESTS_PATH }>
-                    <ProtectionRequests />
-                </Route>
-                <Route path={ RECOVERY_REQUESTS_PATH }>
-                    <RecoveryRequests />
-                </Route>
-                <Route path={ RECOVERY_DETAILS_PATH }>
-                    <RecoveryDetails />
-                </Route>
-                <Route path={ SETTINGS_PATH }>
-                    <Settings />
-                </Route>
-                <Route path={ WALLET_PATH }>
-                    <Wallet
-                        transactionsPath={ transactionsPath }
-                    />
-                </Route>
-                <Route path={ TRANSACTIONS_PATH }>
-                    <Transactions
-                        backPath={ WALLET_PATH }
-                    />
-                </Route>
-                <Route path={ LOC_REQUESTS_PATH }>
-                    <TransactionProtection />
-                </Route>
-                <Route path={ LOC_DETAILS_PATH }>
-                    <LocDetails />
-                </Route>
-                <Route path={ IDENTITIES_PATH }>
-                    <IdentityProtection />
-                </Route>
-                <Route path="">
-                    <Home />
-                </Route>
-            </Switch>
-        </>
+        <Routes>
+            <Route path={ PROTECTION_REQUESTS_RELATIVE_PATH } element={ <ProtectionRequests /> } />
+            <Route path={ RECOVERY_REQUESTS_RELATIVE_PATH } element={ <RecoveryRequests /> } />
+            <Route path={ RECOVERY_DETAILS_RELATIVE_PATH } element={ <RecoveryDetails /> } />
+            <Route path={ SETTINGS_RELATIVE_PATH } element={ <Settings /> } />
+            <Route path={ WALLET_RELATIVE_PATH } element={ <Wallet
+                    transactionsPath={ transactionsPath }
+            />} />
+            <Route path={ TRANSACTIONS_RELATIVE_PATH } element={ <Transactions
+                    backPath={ WALLET_PATH }
+            /> } />
+            <Route path={ LOC_REQUESTS_RELATIVE_PATH } element={ <TransactionProtection /> } />
+            <Route path={ LOC_DETAILS_RELATIVE_PATH } element={ <LocDetails /> } />
+            <Route path={ IDENTITIES_RELATIVE_PATH } element={ <IdentityProtection /> } />
+            <Route path="" element={ <Home /> } />
+        </Routes>
     );
 }

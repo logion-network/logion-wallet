@@ -14,7 +14,7 @@ import { setFetchRecoveryInfo, acceptProtectionRequest, rejectProtectionRequest 
 import { PROTECTION_REQUESTS_HISTORY } from './TestData';
 import { axiosMock, setAddresses, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../common/__mocks__/CommonContextMock';
 import { setIsSuccessful } from '../logion-chain/__mocks__/SignatureMock';
-import { setParams, history } from '../__mocks__/ReactRouterMock';
+import { setParams, navigate } from '../__mocks__/ReactRouterMock';
 import { refreshRequests } from './__mocks__/LegalOfficerContextMock';
 import { CLOSED_IDENTITY_LOC_ID } from '../logion-chain/__mocks__/LogionLocMock';
 
@@ -79,11 +79,11 @@ describe("RecoveryDetails", () => {
         render(<RecoveryDetails />);
 
         let processButton: HTMLElement;
-        await waitFor(() => processButton = screen.getByRole("button", {name: "Refuse"}));
+        await waitFor(() => processButton = screen.getAllByRole("button", {name: "Refuse"})[0]);
         userEvent.click(processButton!);
 
         let confirmButton: HTMLElement;
-        await waitFor(() => confirmButton = screen.getByRole("button", {name: "Refuse"}));
+        await waitFor(() => confirmButton = screen.getAllByRole("button", {name: "Refuse"})[1]);
         userEvent.click(confirmButton!);
 
         await waitFor(() => expect(rejectProtectionRequest).toBeCalledWith(axiosMock.object(), expect.objectContaining({
@@ -91,6 +91,6 @@ describe("RecoveryDetails", () => {
             requestId: protectionRequest.id,
         })));
         await waitFor(() => expect(refreshRequests).toBeCalled());
-        await waitFor(() => expect(history.push).toBeCalledWith("/legal-officer/recovery"));
+        await waitFor(() => expect(navigate).toBeCalledWith("/legal-officer/recovery"));
     });
 });

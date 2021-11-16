@@ -9,8 +9,8 @@ import type { AccountData, BalanceLock } from '@polkadot/types/interfaces/balanc
 import type { SetId, StoredPendingChange, StoredState } from '@polkadot/types/interfaces/grandpa';
 import type { ProxyAnnouncement, ProxyDefinition } from '@polkadot/types/interfaces/proxy';
 import type { ActiveRecovery, RecoveryConfig } from '@polkadot/types/interfaces/recovery';
-import type { AccountId, AssetId, Balance, BalanceOf, BlockNumber, Hash, Moment, OpaqueCall, Releases } from '@polkadot/types/interfaces/runtime';
-import type { SessionIndex } from '@polkadot/types/interfaces/session';
+import type { AccountId, AssetId, Balance, BalanceOf, BlockNumber, Hash, KeyTypeId, Moment, OpaqueCall, Releases, ValidatorId } from '@polkadot/types/interfaces/runtime';
+import type { Keys, SessionIndex } from '@polkadot/types/interfaces/session';
 import type { AccountInfo, ConsumedWeight, DigestOf, EventIndex, EventRecord, LastRuntimeUpgradeInfo, Phase } from '@polkadot/types/interfaces/system';
 import type { Multiplier } from '@polkadot/types/interfaces/txpayment';
 import type { Multisig } from '@polkadot/types/interfaces/utility';
@@ -200,6 +200,44 @@ declare module '@polkadot/api/types/storage' {
        **/
       [key: string]: QueryableStorageEntry<ApiType>;
     };
+    session: {
+      /**
+       * Current index of the session.
+       **/
+      currentIndex: AugmentedQuery<ApiType, () => Observable<SessionIndex>, []> & QueryableStorageEntry<ApiType, []>;
+      /**
+       * Indices of disabled validators.
+       * 
+       * The set is cleared when `on_session_ending` returns a new set of identities.
+       **/
+      disabledValidators: AugmentedQuery<ApiType, () => Observable<Vec<u32>>, []> & QueryableStorageEntry<ApiType, []>;
+      /**
+       * The owner of a key. The key is the `KeyTypeId` + the encoded key.
+       **/
+      keyOwner: AugmentedQuery<ApiType, (arg: ITuple<[KeyTypeId, Bytes]> | [KeyTypeId | AnyNumber | Uint8Array, Bytes | string | Uint8Array]) => Observable<Option<ValidatorId>>, [ITuple<[KeyTypeId, Bytes]>]> & QueryableStorageEntry<ApiType, [ITuple<[KeyTypeId, Bytes]>]>;
+      /**
+       * The next session keys for a validator.
+       **/
+      nextKeys: AugmentedQuery<ApiType, (arg: ValidatorId | string | Uint8Array) => Observable<Option<Keys>>, [ValidatorId]> & QueryableStorageEntry<ApiType, [ValidatorId]>;
+      /**
+       * True if the underlying economic identities or weighting behind the validators
+       * has changed in the queued validator set.
+       **/
+      queuedChanged: AugmentedQuery<ApiType, () => Observable<bool>, []> & QueryableStorageEntry<ApiType, []>;
+      /**
+       * The queued keys for the next session. When the next session begins, these keys
+       * will be used to determine the validator's session keys.
+       **/
+      queuedKeys: AugmentedQuery<ApiType, () => Observable<Vec<ITuple<[ValidatorId, Keys]>>>, []> & QueryableStorageEntry<ApiType, []>;
+      /**
+       * The current set of validators.
+       **/
+      validators: AugmentedQuery<ApiType, () => Observable<Vec<ValidatorId>>, []> & QueryableStorageEntry<ApiType, []>;
+      /**
+       * Generic query
+       **/
+      [key: string]: QueryableStorageEntry<ApiType>;
+    };
     sudo: {
       /**
        * The `AccountId` of the sudo key.
@@ -307,6 +345,14 @@ declare module '@polkadot/api/types/storage' {
     transactionPayment: {
       nextFeeMultiplier: AugmentedQuery<ApiType, () => Observable<Multiplier>, []> & QueryableStorageEntry<ApiType, []>;
       storageVersion: AugmentedQuery<ApiType, () => Observable<Releases>, []> & QueryableStorageEntry<ApiType, []>;
+      /**
+       * Generic query
+       **/
+      [key: string]: QueryableStorageEntry<ApiType>;
+    };
+    validatorSet: {
+      flag: AugmentedQuery<ApiType, () => Observable<Option<bool>>, []> & QueryableStorageEntry<ApiType, []>;
+      validators: AugmentedQuery<ApiType, () => Observable<Option<Vec<AccountId>>>, []> & QueryableStorageEntry<ApiType, []>;
       /**
        * Generic query
        **/

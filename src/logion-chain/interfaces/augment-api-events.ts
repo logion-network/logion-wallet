@@ -9,6 +9,7 @@ import type { BalanceStatus } from '@polkadot/types/interfaces/balances';
 import type { AuthorityList } from '@polkadot/types/interfaces/grandpa';
 import type { ProxyType } from '@polkadot/types/interfaces/proxy';
 import type { AccountId, AssetId, Balance, CallHash, Hash } from '@polkadot/types/interfaces/runtime';
+import type { SessionIndex } from '@polkadot/types/interfaces/session';
 import type { DispatchError, DispatchInfo, DispatchResult } from '@polkadot/types/interfaces/system';
 import type { Timepoint } from '@polkadot/types/interfaces/utility';
 import type { ITuple } from '@polkadot/types/types';
@@ -287,6 +288,17 @@ declare module '@polkadot/api/types/events' {
        **/
       [key: string]: AugmentedEvent<ApiType>;
     };
+    session: {
+      /**
+       * New session has happened. Note that the argument is the \[session_index\], not the block
+       * number as the type might suggest.
+       **/
+      NewSession: AugmentedEvent<ApiType, [SessionIndex]>;
+      /**
+       * Generic event
+       **/
+      [key: string]: AugmentedEvent<ApiType>;
+    };
     sudo: {
       /**
        * The \[sudoer\] just switched identity; the old key is supplied.
@@ -326,6 +338,14 @@ declare module '@polkadot/api/types/events' {
        * A new \[account\] was created.
        **/
       NewAccount: AugmentedEvent<ApiType, [AccountId]>;
+      /**
+       * Generic event
+       **/
+      [key: string]: AugmentedEvent<ApiType>;
+    };
+    validatorSet: {
+      ValidatorAdded: AugmentedEvent<ApiType, [AccountId]>;
+      ValidatorRemoved: AugmentedEvent<ApiType, [AccountId]>;
       /**
        * Generic event
        **/

@@ -1,36 +1,36 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Given legal officer, when rendering, then render legal officer UI or redirect to login 1`] = `
-<BrowserRouter>
-  <Switch>
-    <Route
-      path="/legal-officer"
-    >
+<Routes>
+  <Route
+    element={
       <RenderOrRedirectToLogin
         render={[Function]}
       />
-    </Route>
-    <Route
-      path="/user"
-    >
-      <Redirect
+    }
+    path="/legal-officer/*"
+  />
+  <Route
+    element={
+      <Navigate
         to="/legal-officer"
       />
-    </Route>
-    <Route
-      path="/login"
-    >
-      <Login />
-    </Route>
-    <Route
-      path="/"
-    >
-      <Redirect
+    }
+    path="/user/*"
+  />
+  <Route
+    element={<Login />}
+    path="/login"
+  />
+  <Route
+    element={
+      <Navigate
         to="/legal-officer"
       />
-    </Route>
-  </Switch>
-</BrowserRouter>
+    }
+    path="/"
+  />
+</Routes>
 `;
 
 exports[`Given no addresses, when rendering, then null 1`] = `null`;
@@ -38,67 +38,67 @@ exports[`Given no addresses, when rendering, then null 1`] = `null`;
 exports[`Given null addresses, when rendering, then null 1`] = `null`;
 
 exports[`Given undefined current address, when rendering, then enable redirect to login via either legal officer or user route 1`] = `
-<BrowserRouter>
-  <Switch>
-    <Route
-      path="/legal-officer"
-    >
-      <Redirect
+<Routes>
+  <Route
+    element={
+      <Navigate
         to="/user"
       />
-    </Route>
-    <Route
-      path="/user"
-    >
+    }
+    path="/legal-officer/*"
+  />
+  <Route
+    element={
       <RenderOrRedirectToLogin
         render={[Function]}
       />
-    </Route>
-    <Route
-      path="/login"
-    >
-      <Login />
-    </Route>
-    <Route
-      path="/"
-    >
-      <Redirect
+    }
+    path="/user/*"
+  />
+  <Route
+    element={<Login />}
+    path="/login"
+  />
+  <Route
+    element={
+      <Navigate
         to="/user"
       />
-    </Route>
-  </Switch>
-</BrowserRouter>
+    }
+    path="/"
+  />
+</Routes>
 `;
 
 exports[`Given wallet user, when rendering, then render user UI or redirect to login 1`] = `
-<BrowserRouter>
-  <Switch>
-    <Route
-      path="/legal-officer"
-    >
-      <Redirect
+<Routes>
+  <Route
+    element={
+      <Navigate
         to="/user"
       />
-    </Route>
-    <Route
-      path="/user"
-    >
+    }
+    path="/legal-officer/*"
+  />
+  <Route
+    element={
       <RenderOrRedirectToLogin
         render={[Function]}
       />
-    </Route>
-    <Route
-      path="/login"
-    >
-      <Login />
-    </Route>
-    <Route
-      path="/"
-    >
-      <Redirect
+    }
+    path="/user/*"
+  />
+  <Route
+    element={<Login />}
+    path="/login"
+  />
+  <Route
+    element={
+      <Navigate
         to="/user"
       />
-    </Route>
-  </Switch>
-</BrowserRouter>
+    }
+    path="/"
+  />
+</Routes>
 `;

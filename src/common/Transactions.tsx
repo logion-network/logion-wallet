@@ -1,4 +1,4 @@
-import { useParams, useHistory } from 'react-router';
+import { useParams, useNavigate } from 'react-router';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
@@ -26,8 +26,8 @@ export interface Props {
 
 export default function Transactions(props: Props) {
     const { accounts, balances, transactions, colorTheme } = useCommonContext();
-    const { coinId } = useParams<{ coinId: string }>();
-    const history = useHistory();
+    const { coinId } = useParams<"coinId">();
+    const navigate = useNavigate();
 
     if(balances === null || transactions === null) {
         return null;
@@ -45,7 +45,7 @@ export default function Transactions(props: Props) {
                 },
                 background: colorTheme.topMenuItems.iconGradient,
             }}
-            onBack={ () => history.push(props.backPath) }
+            onBack={ () => navigate(props.backPath) }
         >
             <Row>
                 <Col>

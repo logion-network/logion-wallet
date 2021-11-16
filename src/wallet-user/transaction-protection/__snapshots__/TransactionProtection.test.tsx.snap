@@ -17,9 +17,7 @@ exports[`renders 1`] = `
     }
   }
 >
-  <Row
-    noGutters={false}
-  >
+  <Row>
     <Col>
       <Frame
         title="Transaction Protection Case(s)"
@@ -50,9 +48,7 @@ exports[`renders 1`] = `
       </Frame>
     </Col>
   </Row>
-  <Row
-    noGutters={false}
-  >
+  <Row>
     <Col>
       <Frame
         title="Transaction Protection Request(s)"

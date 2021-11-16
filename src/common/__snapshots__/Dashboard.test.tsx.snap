@@ -44,9 +44,7 @@ exports[`renders Dashboard 1`] = `
     }
     
   </style>
-  <Row
-    noGutters={true}
-  >
+  <Row>
     <Col
       md={2}
     >

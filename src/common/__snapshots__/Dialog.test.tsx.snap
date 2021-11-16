@@ -29,9 +29,7 @@ exports[`renders with custom space above 1`] = `
                 }
                 
   </style>
-  <Form
-    inline={false}
-  >
+  <Form>
     <ModalBody>
       Content
     </ModalBody>
@@ -80,9 +78,7 @@ exports[`renders with default space above 1`] = `
                 }
                 
   </style>
-  <Form
-    inline={false}
-  >
+  <Form>
     <ModalBody>
       Content
     </ModalBody>

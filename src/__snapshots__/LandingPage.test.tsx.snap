@@ -35,9 +35,7 @@ exports[`renders create 1`] = `
   <Container
     fluid={false}
   >
-    <Row
-      noGutters={true}
-    >
+    <Row>
       <Col
         className="step one"
       >
@@ -212,9 +210,7 @@ exports[`renders create 1`] = `
   <Container
     fluid={false}
   >
-    <Row
-      noGutters={false}
-    >
+    <Row>
       <Col
         className="what-section"
       >
@@ -241,9 +237,7 @@ exports[`renders create 1`] = `
   <Container
     fluid={false}
   >
-    <Row
-      noGutters={true}
-    >
+    <Row>
       <Col>
         <h1
           className="section-title"
@@ -264,9 +258,7 @@ exports[`renders create 1`] = `
     <Container
       fluid={false}
     >
-      <Row
-        noGutters={true}
-      >
+      <Row>
         <Col
           className="lost-password-container"
           md={3}
@@ -338,9 +330,7 @@ exports[`renders create 1`] = `
     <Container
       fluid={false}
     >
-      <Row
-        noGutters={true}
-      >
+      <Row>
         <Col>
           <h1
             className="section-title transaction-protection"
@@ -361,9 +351,7 @@ exports[`renders create 1`] = `
       <Container
         fluid={false}
       >
-        <Row
-          noGutters={true}
-        >
+        <Row>
           <Col
             md={7}
           >
@@ -456,9 +444,7 @@ exports[`renders create 1`] = `
       <Container
         fluid={false}
       >
-        <Row
-          noGutters={false}
-        >
+        <Row>
           <Col>
             <AbsoluteLogo
               position={
@@ -578,9 +564,7 @@ exports[`renders install 1`] = `
   <Container
     fluid={false}
   >
-    <Row
-      noGutters={true}
-    >
+    <Row>
       <Col
         className="step one active"
       >
@@ -755,9 +739,7 @@ exports[`renders install 1`] = `
   <Container
     fluid={false}
   >
-    <Row
-      noGutters={false}
-    >
+    <Row>
       <Col
         className="what-section"
       >
@@ -784,9 +766,7 @@ exports[`renders install 1`] = `
   <Container
     fluid={false}
   >
-    <Row
-      noGutters={true}
-    >
+    <Row>
       <Col>
         <h1
           className="section-title"
@@ -807,9 +787,7 @@ exports[`renders install 1`] = `
     <Container
       fluid={false}
     >
-      <Row
-        noGutters={true}
-      >
+      <Row>
         <Col
           className="lost-password-container"
           md={3}
@@ -881,9 +859,7 @@ exports[`renders install 1`] = `
     <Container
       fluid={false}
     >
-      <Row
-        noGutters={true}
-      >
+      <Row>
         <Col>
           <h1
             className="section-title transaction-protection"
@@ -904,9 +880,7 @@ exports[`renders install 1`] = `
       <Container
         fluid={false}
       >
-        <Row
-          noGutters={true}
-        >
+        <Row>
           <Col
             md={7}
           >
@@ -999,9 +973,7 @@ exports[`renders install 1`] = `
       <Container
         fluid={false}
       >
-        <Row
-          noGutters={false}
-        >
+        <Row>
           <Col>
             <AbsoluteLogo
               position={
