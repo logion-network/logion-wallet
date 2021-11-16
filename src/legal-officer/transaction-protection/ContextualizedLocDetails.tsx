@@ -1,4 +1,5 @@
-import { useHistory } from "react-router";
+import { useCallback, useState } from "react";
+import { useNavigate } from "react-router";
 import { useCommonContext } from "../../common/CommonContext";
 import { FullWidthPane } from "../../common/Dashboard";
 import Tabs from "../../common/Tabs";
@@ -16,16 +17,42 @@ import LocPrivateFileButton from "./LocPrivateFileButton";
 import "./ContextualizedLocDetails.css";
 import Icon from "../../common/Icon";
 import LocLinkButton from "./LocLinkButton";
-import Frame from "../../common/Frame";
 import Button from "../../common/Button";
 import { copyToClipBoard } from "../../common/Tools";
 import { fullCertificateUrl } from "../../PublicPaths";
 import { IDENTITIES_PATH, LOC_REQUESTS_PATH } from "../LegalOfficerPaths";
+import CheckFileFrame, { CheckResult } from './CheckFileFrame';
+import PolkadotFrame from "../../common/PolkadotFrame";
+
+interface DocumentCheckResult {
+    result: CheckResult;
+    hash?: string;
+}
 
 export default function ContextualizedLocDetails() {
     const { colorTheme } = useCommonContext();
-    const history = useHistory();
-    const { loc, locId, locRequest } = useLocContext();
+    const navigate = useNavigate();
+    const { loc, locId, locRequest, locItems } = useLocContext();
+    const [ checkResult, setCheckResult ] = useState<DocumentCheckResult>({result: "NONE"});
+
+    const checkHash = useCallback((hash: string) => {
+        for(let i = 0; i < locItems!.length; ++i) {
+            if(locItems[i].type === "Document") {
+                const file = locItems[i];
+                if(file.value === hash) {
+                    setCheckResult({
+                        result: "POSITIVE",
+                        hash
+                    });
+                    return;
+                }
+            }
+        }
+        setCheckResult({
+            result: "NEGATIVE",
+            hash
+        });
+    }, [ locItems, setCheckResult ]);
 
     if (loc === null || locRequest === null) {
         return null;
@@ -43,7 +70,7 @@ export default function ContextualizedLocDetails() {
                 },
                 background: colorTheme.topMenuItems.iconGradient,
             } }
-            onBack={ () => history.push(backPath) }
+            onBack={ () => navigate(backPath) }
             className="ContextualizedLocDetails"
         >
             { loc !== undefined &&
@@ -79,7 +106,7 @@ export default function ContextualizedLocDetails() {
                                         }
                                     </Col>
                                 </Row>
-                                <LocItems />
+                                <LocItems matchedHash={ checkResult.hash } />
                             </>
                         }
                     } ] }
@@ -100,14 +127,18 @@ export default function ContextualizedLocDetails() {
                         }
                     />
                 }
-                <Frame className="certificate-link">
+                <PolkadotFrame className="certificate-link">
                     <p className="title">Public web address (URL) of this Legal Officer Case related Certificate:</p>
                     <p className="link">
                         <a href={ certificateUrl } target="_blank" rel="noreferrer">{ certificateUrl }</a>
                     </p>
                     <Button onClick={ () => copyToClipBoard(certificateUrl) }>Copy LOC Certificate URL to
                         Clipboard</Button>
-                </Frame>
+                </PolkadotFrame>
+                <CheckFileFrame
+                    checkHash={ checkHash }
+                    checkResult={ checkResult.result }
+                />
             </>
             }
             { loc === undefined && <p>LOC not found on chain</p> }

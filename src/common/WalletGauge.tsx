@@ -183,7 +183,6 @@ export default function WalletGauge(props: Props) {
                                         onChange={value => setAmount(value.target.value)}
                                     />
                                     <DropdownButton
-                                        as={InputGroup.Append}
                                         title={ `${unit.symbol}LOG` }
                                         id="input-group-dropdown-1"
                                     >{

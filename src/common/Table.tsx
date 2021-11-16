@@ -102,6 +102,7 @@ export interface Props<T> {
     data: T[],
     columns: Column<T>[],
     renderEmpty: () => Children,
+    rowStyle?: (item: T, index?: number) => string;
 }
 
 function columnClassName<T>(column: Column<T>): (string | undefined) {
@@ -217,7 +218,7 @@ export default function Table<T>(props: Props<T>) {
                     props.data.map((item, itemIndex) => (
                         <>
                         <Row
-                            className={ renderDetails !== undefined ? "has-details" : "" }
+                            className={ (renderDetails !== undefined ? "has-details" : "") + (props.rowStyle !== undefined ? " " + props.rowStyle(item, itemIndex) : "") }
                             key={ itemIndex }
                             style={{
                                 color: colorTheme.table.row.foreground,

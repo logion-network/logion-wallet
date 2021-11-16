@@ -74,12 +74,9 @@ Tel: +33 2 48 67 50 50",
         This initial personal information sharing will start KYC process and will also be used in the context of a potential future recovery process.
       </Alert>
       <Form
-        inline={false}
         onSubmit={[Function]}
       >
-        <Row
-          noGutters={false}
-        >
+        <Row>
           <Col
             md={6}
           >
@@ -142,12 +139,6 @@ Tel: +33 2 48 67 50 50",
                       },
                       "_subjects": Object {
                         "array": Object {
-                          "next": [Function],
-                          "observers": Array [],
-                          "subscribe": [Function],
-                          "unsubscribe": [Function],
-                        },
-                        "control": Object {
                           "next": [Function],
                           "observers": Array [],
                           "subscribe": [Function],
@@ -257,12 +248,6 @@ Tel: +33 2 48 67 50 50",
                           "subscribe": [Function],
                           "unsubscribe": [Function],
                         },
-                        "control": Object {
-                          "next": [Function],
-                          "observers": Array [],
-                          "subscribe": [Function],
-                          "unsubscribe": [Function],
-                        },
                         "state": Object {
                           "next": [Function],
                           "observers": Array [
@@ -301,9 +286,7 @@ Tel: +33 2 48 67 50 50",
             />
           </Col>
         </Row>
-        <Row
-          noGutters={false}
-        >
+        <Row>
           <Col
             md={6}
           >
@@ -366,12 +349,6 @@ Tel: +33 2 48 67 50 50",
                       },
                       "_subjects": Object {
                         "array": Object {
-                          "next": [Function],
-                          "observers": Array [],
-                          "subscribe": [Function],
-                          "unsubscribe": [Function],
-                        },
-                        "control": Object {
                           "next": [Function],
                           "observers": Array [],
                           "subscribe": [Function],
@@ -476,12 +453,6 @@ Tel: +33 2 48 67 50 50",
                       },
                       "_subjects": Object {
                         "array": Object {
-                          "next": [Function],
-                          "observers": Array [],
-                          "subscribe": [Function],
-                          "unsubscribe": [Function],
-                        },
-                        "control": Object {
                           "next": [Function],
                           "observers": Array [],
                           "subscribe": [Function],
@@ -592,12 +563,6 @@ Tel: +33 2 48 67 50 50",
                       "subscribe": [Function],
                       "unsubscribe": [Function],
                     },
-                    "control": Object {
-                      "next": [Function],
-                      "observers": Array [],
-                      "subscribe": [Function],
-                      "unsubscribe": [Function],
-                    },
                     "state": Object {
                       "next": [Function],
                       "observers": Array [
@@ -698,12 +663,6 @@ Tel: +33 2 48 67 50 50",
                       "subscribe": [Function],
                       "unsubscribe": [Function],
                     },
-                    "control": Object {
-                      "next": [Function],
-                      "observers": Array [],
-                      "subscribe": [Function],
-                      "unsubscribe": [Function],
-                    },
                     "state": Object {
                       "next": [Function],
                       "observers": Array [
@@ -735,9 +694,7 @@ Tel: +33 2 48 67 50 50",
           id="line2"
           label="Line2"
         />
-        <Row
-          noGutters={false}
-        >
+        <Row>
           <Col
             md={4}
           >
@@ -800,12 +757,6 @@ Tel: +33 2 48 67 50 50",
                       },
                       "_subjects": Object {
                         "array": Object {
-                          "next": [Function],
-                          "observers": Array [],
-                          "subscribe": [Function],
-                          "unsubscribe": [Function],
-                        },
-                        "control": Object {
                           "next": [Function],
                           "observers": Array [],
                           "subscribe": [Function],
@@ -915,12 +866,6 @@ Tel: +33 2 48 67 50 50",
                           "subscribe": [Function],
                           "unsubscribe": [Function],
                         },
-                        "control": Object {
-                          "next": [Function],
-                          "observers": Array [],
-                          "subscribe": [Function],
-                          "unsubscribe": [Function],
-                        },
                         "state": Object {
                           "next": [Function],
                           "observers": Array [
@@ -1018,12 +963,6 @@ Tel: +33 2 48 67 50 50",
                   },
                   "_subjects": Object {
                     "array": Object {
-                      "next": [Function],
-                      "observers": Array [],
-                      "subscribe": [Function],
-                      "unsubscribe": [Function],
-                    },
-                    "control": Object {
                       "next": [Function],
                       "observers": Array [],
                       "subscribe": [Function],
@@ -1127,12 +1066,6 @@ Tel: +33 2 48 67 50 50",
                     },
                     "_subjects": Object {
                       "array": Object {
-                        "next": [Function],
-                        "observers": Array [],
-                        "subscribe": [Function],
-                        "unsubscribe": [Function],
-                      },
-                      "control": Object {
                         "next": [Function],
                         "observers": Array [],
                         "subscribe": [Function],

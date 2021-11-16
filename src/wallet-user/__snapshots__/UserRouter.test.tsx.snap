@@ -1,47 +1,42 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders 1`] = `
-<React.Fragment>
-  <Switch>
-    <Route
-      path="/user/protection"
-    >
-      <TrustProtection />
-    </Route>
-    <Route
-      path="/user/settings"
-    >
-      <Settings />
-    </Route>
-    <Route
-      path="/user/recovery"
-    >
-      <Recovery />
-    </Route>
-    <Route
-      path="/user/wallet"
-    >
+<Routes>
+  <Route
+    element={<TrustProtection />}
+    path="/protection"
+  />
+  <Route
+    element={<Settings />}
+    path="/settings"
+  />
+  <Route
+    element={<Recovery />}
+    path="/recovery"
+  />
+  <Route
+    element={
       <Wallet
         transactionsPath={[Function]}
       />
-    </Route>
-    <Route
-      path="/user/transactions/:coinId"
-    >
+    }
+    path="/wallet"
+  />
+  <Route
+    element={
       <Transactions
         backPath="/user/wallet"
       />
-    </Route>
-    <Route
-      path="/user/transaction-protection"
-    >
-      <TransactionProtection />
-    </Route>
-    <Route
-      path=""
-    >
-      <Account />
-    </Route>
-  </Switch>
-</React.Fragment>
+    }
+    path="/transactions/:coinId"
+  />
+  <Route
+    element={<TransactionProtection />}
+    path="/transaction-protection"
+  />
+  <Route
+    element={<Account />}
+    path="/"
+  />
+</Routes>
 `;

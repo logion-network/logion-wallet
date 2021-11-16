@@ -3,6 +3,8 @@
 exports[`LocLinkButton renders 1`] = `
 <React.Fragment>
   <Dropdown
+    align="start"
+    autoClose={true}
     navbar={false}
   >
     <DropdownToggle
@@ -11,42 +13,19 @@ exports[`LocLinkButton renders 1`] = `
       Link this LOC to another LOC
     </DropdownToggle>
     <DropdownMenu
-      align="left"
-      alignRight={false}
       flip={true}
     >
       <DropdownItem
-        as={
-          Object {
-            "$$typeof": Symbol(react.forward_ref),
-            "render": [Function],
-          }
-        }
-        disabled={false}
         onClick={[Function]}
       >
         Link to an existing LOC
       </DropdownItem>
       <DropdownItem
-        as={
-          Object {
-            "$$typeof": Symbol(react.forward_ref),
-            "render": [Function],
-          }
-        }
-        disabled={false}
         onClick={[Function]}
       >
         Link to a new Identity LOC
       </DropdownItem>
       <DropdownItem
-        as={
-          Object {
-            "$$typeof": Symbol(react.forward_ref),
-            "render": [Function],
-          }
-        }
-        disabled={false}
         onClick={[Function]}
       >
         Link to a new Transaction LOC
@@ -81,6 +60,8 @@ exports[`LocLinkButton renders 1`] = `
 exports[`LocLinkButton renders LINK_EXISTING 1`] = `
 <React.Fragment>
   <Dropdown
+    align="start"
+    autoClose={true}
     navbar={false}
   >
     <DropdownToggle
@@ -89,42 +70,19 @@ exports[`LocLinkButton renders LINK_EXISTING 1`] = `
       Link this LOC to another LOC
     </DropdownToggle>
     <DropdownMenu
-      align="left"
-      alignRight={false}
       flip={true}
     >
       <DropdownItem
-        as={
-          Object {
-            "$$typeof": Symbol(react.forward_ref),
-            "render": [Function],
-          }
-        }
-        disabled={false}
         onClick={[Function]}
       >
         Link to an existing LOC
       </DropdownItem>
       <DropdownItem
-        as={
-          Object {
-            "$$typeof": Symbol(react.forward_ref),
-            "render": [Function],
-          }
-        }
-        disabled={false}
         onClick={[Function]}
       >
         Link to a new Identity LOC
       </DropdownItem>
       <DropdownItem
-        as={
-          Object {
-            "$$typeof": Symbol(react.forward_ref),
-            "render": [Function],
-          }
-        }
-        disabled={false}
         onClick={[Function]}
       >
         Link to a new Transaction LOC
@@ -159,6 +117,8 @@ exports[`LocLinkButton renders LINK_EXISTING 1`] = `
 exports[`LocLinkButton renders LINK_NEW_IDENTITY 1`] = `
 <React.Fragment>
   <Dropdown
+    align="start"
+    autoClose={true}
     navbar={false}
   >
     <DropdownToggle
@@ -167,42 +127,19 @@ exports[`LocLinkButton renders LINK_NEW_IDENTITY 1`] = `
       Link this LOC to another LOC
     </DropdownToggle>
     <DropdownMenu
-      align="left"
-      alignRight={false}
       flip={true}
     >
       <DropdownItem
-        as={
-          Object {
-            "$$typeof": Symbol(react.forward_ref),
-            "render": [Function],
-          }
-        }
-        disabled={false}
         onClick={[Function]}
       >
         Link to an existing LOC
       </DropdownItem>
       <DropdownItem
-        as={
-          Object {
-            "$$typeof": Symbol(react.forward_ref),
-            "render": [Function],
-          }
-        }
-        disabled={false}
         onClick={[Function]}
       >
         Link to a new Identity LOC
       </DropdownItem>
       <DropdownItem
-        as={
-          Object {
-            "$$typeof": Symbol(react.forward_ref),
-            "render": [Function],
-          }
-        }
-        disabled={false}
         onClick={[Function]}
       >
         Link to a new Transaction LOC
@@ -237,6 +174,8 @@ exports[`LocLinkButton renders LINK_NEW_IDENTITY 1`] = `
 exports[`LocLinkButton renders LINK_NEW_TRANSACTION 1`] = `
 <React.Fragment>
   <Dropdown
+    align="start"
+    autoClose={true}
     navbar={false}
   >
     <DropdownToggle
@@ -245,42 +184,19 @@ exports[`LocLinkButton renders LINK_NEW_TRANSACTION 1`] = `
       Link this LOC to another LOC
     </DropdownToggle>
     <DropdownMenu
-      align="left"
-      alignRight={false}
       flip={true}
     >
       <DropdownItem
-        as={
-          Object {
-            "$$typeof": Symbol(react.forward_ref),
-            "render": [Function],
-          }
-        }
-        disabled={false}
         onClick={[Function]}
       >
         Link to an existing LOC
       </DropdownItem>
       <DropdownItem
-        as={
-          Object {
-            "$$typeof": Symbol(react.forward_ref),
-            "render": [Function],
-          }
-        }
-        disabled={false}
         onClick={[Function]}
       >
         Link to a new Identity LOC
       </DropdownItem>
       <DropdownItem
-        as={
-          Object {
-            "$$typeof": Symbol(react.forward_ref),
-            "render": [Function],
-          }
-        }
-        disabled={false}
         onClick={[Function]}
       >
         Link to a new Transaction LOC

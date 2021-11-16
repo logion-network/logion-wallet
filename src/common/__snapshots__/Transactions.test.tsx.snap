@@ -19,9 +19,7 @@ exports[`renders with all data 1`] = `
     }
   }
 >
-  <Row
-    noGutters={false}
-  >
+  <Row>
     <Col>
       <Frame
         title={
@@ -97,9 +95,7 @@ exports[`renders with all data 1`] = `
       </Frame>
     </Col>
   </Row>
-  <Row
-    noGutters={false}
-  >
+  <Row>
     <Col>
       <Frame
         title={

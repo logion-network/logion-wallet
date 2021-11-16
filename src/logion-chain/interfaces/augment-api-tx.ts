@@ -9,6 +9,7 @@ import type { Extrinsic } from '@polkadot/types/interfaces/extrinsics';
 import type { GrandpaEquivocationProof, KeyOwnerProof } from '@polkadot/types/interfaces/grandpa';
 import type { ProxyType } from '@polkadot/types/interfaces/proxy';
 import type { AccountId, AssetId, Balance, BlockNumber, Call, CallHashOf, ChangesTrieConfiguration, KeyValue, LookupSource, Moment, OpaqueCall, Perbill, Weight } from '@polkadot/types/interfaces/runtime';
+import type { Keys } from '@polkadot/types/interfaces/session';
 import type { Key } from '@polkadot/types/interfaces/system';
 import type { Timepoint } from '@polkadot/types/interfaces/utility';
 import type { AnyNumber, ITuple } from '@polkadot/types/types';
@@ -1077,6 +1078,44 @@ declare module '@polkadot/api/types/submittable' {
        **/
       [key: string]: SubmittableExtrinsicFunction<ApiType>;
     };
+    session: {
+      /**
+       * Removes any session key(s) of the function caller.
+       * This doesn't take effect until the next session.
+       * 
+       * The dispatch origin of this function must be signed.
+       * 
+       * # <weight>
+       * - Complexity: `O(1)` in number of key types.
+       * Actual cost depends on the number of length of `T::Keys::key_ids()` which is fixed.
+       * - DbReads: `T::ValidatorIdOf`, `NextKeys`, `origin account`
+       * - DbWrites: `NextKeys`, `origin account`
+       * - DbWrites per key id: `KeyOwnder`
+       * # </weight>
+       **/
+      purgeKeys: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
+      /**
+       * Sets the session key(s) of the function caller to `keys`.
+       * Allows an account to set its session key prior to becoming a validator.
+       * This doesn't take effect until the next session.
+       * 
+       * The dispatch origin of this function must be signed.
+       * 
+       * # <weight>
+       * - Complexity: `O(1)`
+       * Actual cost depends on the number of length of `T::Keys::key_ids()` which is fixed.
+       * - DbReads: `origin account`, `T::ValidatorIdOf`, `NextKeys`
+       * - DbWrites: `origin account`, `NextKeys`
+       * - DbReads per key id: `KeyOwner`
+       * - DbWrites per key id: `KeyOwner`
+       * # </weight>
+       **/
+      setKeys: AugmentedSubmittable<(keys: Keys | string | Uint8Array, proof: Bytes | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Keys, Bytes]>;
+      /**
+       * Generic tx
+       **/
+      [key: string]: SubmittableExtrinsicFunction<ApiType>;
+    };
     sudo: {
       /**
        * Authenticates the current sudo key and sets the given AccountId (`new`) as the new sudo key.
@@ -1258,6 +1297,32 @@ declare module '@polkadot/api/types/submittable' {
        * # </weight>
        **/
       set: AugmentedSubmittable<(now: Compact<Moment> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<Moment>]>;
+      /**
+       * Generic tx
+       **/
+      [key: string]: SubmittableExtrinsicFunction<ApiType>;
+    };
+    validatorSet: {
+      /**
+       * Add a new validator using elevated privileges.
+       * 
+       * New validator's session keys should be set in session module before calling this.
+       * 
+       * The origin can be configured using the `AddRemoveOrigin` type in the host runtime.
+       * Can also be set to sudo/root.
+       **/
+      addValidator: AugmentedSubmittable<(validatorId: AccountId | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId]>;
+      /**
+       * Force rotate session using elevated privileges.
+       **/
+      forceRotateSession: AugmentedSubmittable<() => SubmittableExtrinsic<ApiType>, []>;
+      /**
+       * Remove a validator using elevated privileges.
+       * 
+       * The origin can be configured using the `AddRemoveOrigin` type in the host runtime.
+       * Can also be set to sudo/root.
+       **/
+      removeValidator: AugmentedSubmittable<(validatorId: AccountId | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [AccountId]>;
       /**
        * Generic tx
        **/

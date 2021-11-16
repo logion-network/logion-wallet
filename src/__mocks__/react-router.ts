@@ -1,9 +1,9 @@
 import {
     useParams,
-    useHistory
+    useNavigate
 } from './ReactRouterMock';
 
 export {
     useParams,
-    useHistory,
+    useNavigate,
 };

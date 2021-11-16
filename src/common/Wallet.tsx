@@ -1,7 +1,7 @@
 import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { CoinBalance, prefixedLogBalance } from '../logion-chain/Balances';
 
@@ -43,7 +43,7 @@ export default function Wallet(props: Props) {
 
 export function Content(props: Props) {
     const { balances, transactions } = useCommonContext();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     if(balances === null || transactions === null) {
         return <Loader />;
@@ -88,7 +88,7 @@ export function Content(props: Props) {
                                 },
                                 {
                                     header: "",
-                                    render: balance => balance.coin.id !== 'dot' ? <ActionCell><Button onClick={() => history.push(props.transactionsPath(balance.coin.id))}>More</Button></ActionCell> : <NotAvailable/>,
+                                    render: balance => balance.coin.id !== 'dot' ? <ActionCell><Button onClick={() => navigate(props.transactionsPath(balance.coin.id))}>More</Button></ActionCell> : <NotAvailable/>,
                                     width: "200px",
                                 }
                             ]}

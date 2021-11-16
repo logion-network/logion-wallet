@@ -10,6 +10,8 @@ exports[`AddressSwitcher renders 1`] = `
   }
 >
   <Dropdown
+    align="start"
+    autoClose={true}
     navbar={false}
   >
     <DropdownToggle
@@ -36,8 +38,6 @@ exports[`AddressSwitcher renders 1`] = `
       </div>
     </DropdownToggle>
     <DropdownMenu
-      align="left"
-      alignRight={false}
       flip={true}
       style={
         Object {
@@ -48,13 +48,6 @@ exports[`AddressSwitcher renders 1`] = `
       }
     >
       <DropdownItem
-        as={
-          Object {
-            "$$typeof": Symbol(react.forward_ref),
-            "render": [Function],
-          }
-        }
-        disabled={false}
         onClick={[Function]}
       >
         <AccountAddress
@@ -70,14 +63,7 @@ exports[`AddressSwitcher renders 1`] = `
         />
       </DropdownItem>
       <DropdownItem
-        as={
-          Object {
-            "$$typeof": Symbol(react.forward_ref),
-            "render": [Function],
-          }
-        }
         className="logout"
-        disabled={false}
         onClick={[Function]}
         style={
           Object {

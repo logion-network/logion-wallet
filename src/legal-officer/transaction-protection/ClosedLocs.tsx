@@ -6,7 +6,7 @@ import LocStatusCell from '../../common/LocStatusCell';
 import LocIdCell from '../../common/LocIdCell';
 import UserIdentityNameCell from '../../common/UserIdentityNameCell';
 import Button from "../../common/Button";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { locDetailsPath } from "../LegalOfficerPaths";
 import ButtonGroup from "../../common/ButtonGroup";
 import { LocType } from '../../logion-chain/Types';
@@ -17,7 +17,7 @@ export interface Props {
 
 export default function OpenedLocs(props: Props) {
     const { closedLocRequests, closedIdentityLocs } = useCommonContext();
-    const history = useHistory();
+    const navigate = useNavigate();
 
     if (closedLocRequests === null || closedIdentityLocs === null) {
         return null;
@@ -65,7 +65,7 @@ export default function OpenedLocs(props: Props) {
                     render: request =>
                         <ActionCell>
                             <ButtonGroup>
-                                <Button onClick={ () => history.push(locDetailsPath(request.id)) }>View</Button>
+                                <Button onClick={ () => navigate(locDetailsPath(request.id)) }>View</Button>
                             </ButtonGroup>
                         </ActionCell>
                     ,

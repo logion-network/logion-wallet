@@ -1,4 +1,4 @@
-import ReactSelect, { ValueType, ActionMeta, StylesConfig, GroupTypeBase } from 'react-select';
+import ReactSelect, { OnChangeValue, ActionMeta, StylesConfig, GroupBase } from 'react-select';
 import { SelectColors, BLUE, RED } from './ColorTheme';
 import { useCommonContext } from './CommonContext';
 
@@ -17,7 +17,7 @@ export interface Props {
     name?: string | undefined;
 }
 
-function buildStyles(colors: SelectColors, statusColor?: string, isInvalid?: boolean): StylesConfig<OptionType, false, GroupTypeBase<OptionType>> {
+function buildStyles(colors: SelectColors, statusColor?: string, isInvalid?: boolean): StylesConfig<OptionType, false, GroupBase<OptionType>> {
     return {
         option: (provided, state) => {
             let backgroundColor = undefined;
@@ -69,7 +69,7 @@ function controlBackgroundColor(colors: SelectColors, statusColor?: string, isIn
 export default function Select(props: Props) {
     const { colorTheme } = useCommonContext();
 
-    const onChange = (value: ValueType<OptionType, false>, _: ActionMeta<OptionType>) => {
+    const onChange = (value: OnChangeValue<OptionType, false>, _: ActionMeta<OptionType>) => {
         props.onChange(value !== null ? value.value : null);
     };
 

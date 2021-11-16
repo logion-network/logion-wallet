@@ -1,14 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Given no logged account, when rendering, then redirecting to login with referrer 1`] = `
-<Redirect
-  to={
+<Navigate
+  state={
     Object {
-      "pathname": "/login",
-      "state": Object {
-        "referrer": "/path",
-      },
+      "referrer": "/path",
     }
   }
+  to="/login"
 />
 `;

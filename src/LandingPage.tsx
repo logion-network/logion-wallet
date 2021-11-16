@@ -47,7 +47,7 @@ export default function LandingPage(props: Props) {
                 </Container>
             </Container>
             <Container>
-                <Row noGutters>
+                <Row>
                     <Col className={ "step one" + (props.activeStep === 'install' ? " active" : "") }>
                         <div className="step-container">
                             <div className="step-header">
@@ -144,7 +144,7 @@ export default function LandingPage(props: Props) {
                 </Row>
             </Container>
             <Container>
-                <Row noGutters>
+                <Row>
                     <Col>
                         <h1 className="section-title"><span className="highlight">Digital Asset</span> protection</h1>
                     </Col>
@@ -152,7 +152,7 @@ export default function LandingPage(props: Props) {
             </Container>
             <div className="recovery-container">
                 <Container>
-                    <Row noGutters>
+                    <Row>
                         <Col md={3} className="lost-password-container">
                             <img className="lost-password" src={process.env.PUBLIC_URL + "/assets/landing/recovery1.svg"} alt="women lost password" />
                         </Col>
@@ -191,7 +191,7 @@ export default function LandingPage(props: Props) {
             </div>
             <div className="map-background">
                 <Container>
-                    <Row noGutters>
+                    <Row>
                         <Col>
                             <h1 className="section-title transaction-protection"><span className="highlight">Digital Transaction</span> protection</h1>
                         </Col>
@@ -199,7 +199,7 @@ export default function LandingPage(props: Props) {
                 </Container>
                 <div className="transaction-container">
                     <Container>
-                        <Row noGutters>
+                        <Row>
                             <Col md={7}>
                                 <div className="transaction-process">
                                     <p>

@@ -1,4 +1,4 @@
-import { Redirect, useLocation } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
 import { useCommonContext } from './common/CommonContext';
 
@@ -17,7 +17,7 @@ export default function RenderOrRedirectToLogin(props: Props) {
         const state: LocationState = {
             referrer: location.pathname
         };
-        return <Redirect to={{ pathname: LOGIN_PATH, state }} />;
+        return <Navigate to={ LOGIN_PATH } state={ state } />;
     } else {
         return props.render();
     }

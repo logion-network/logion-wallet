@@ -2,65 +2,75 @@
 
 exports[`Given extension and loading accounts, when rendering, then show loader 1`] = `
 <BrowserRouter>
-  <Switch>
+  <Routes>
     <Route
-      path="/public"
-    >
-      <PublicRouter />
-    </Route>
-    <AuthenticatedMain />
-  </Switch>
+      element={<PublicRouter />}
+      path="/public/*"
+    />
+    <Route
+      element={<AuthenticatedMain />}
+      path="/*"
+    />
+  </Routes>
 </BrowserRouter>
 `;
 
 exports[`Given extension and no account, when rendering, then show create account 1`] = `
 <BrowserRouter>
-  <Switch>
+  <Routes>
     <Route
-      path="/public"
-    >
-      <PublicRouter />
-    </Route>
-    <AuthenticatedMain />
-  </Switch>
+      element={<PublicRouter />}
+      path="/public/*"
+    />
+    <Route
+      element={<AuthenticatedMain />}
+      path="/*"
+    />
+  </Routes>
 </BrowserRouter>
 `;
 
 exports[`Given extension and one account, when rendering, then show root router 1`] = `
 <BrowserRouter>
-  <Switch>
+  <Routes>
     <Route
-      path="/public"
-    >
-      <PublicRouter />
-    </Route>
-    <AuthenticatedMain />
-  </Switch>
+      element={<PublicRouter />}
+      path="/public/*"
+    />
+    <Route
+      element={<AuthenticatedMain />}
+      path="/*"
+    />
+  </Routes>
 </BrowserRouter>
 `;
 
 exports[`Given no enabled extension, when rendering, then show loader 1`] = `
 <BrowserRouter>
-  <Switch>
+  <Routes>
     <Route
-      path="/public"
-    >
-      <PublicRouter />
-    </Route>
-    <AuthenticatedMain />
-  </Switch>
+      element={<PublicRouter />}
+      path="/public/*"
+    />
+    <Route
+      element={<AuthenticatedMain />}
+      path="/*"
+    />
+  </Routes>
 </BrowserRouter>
 `;
 
 exports[`Given no extension, when rendering, then show install 1`] = `
 <BrowserRouter>
-  <Switch>
+  <Routes>
     <Route
-      path="/public"
-    >
-      <PublicRouter />
-    </Route>
-    <AuthenticatedMain />
-  </Switch>
+      element={<PublicRouter />}
+      path="/public/*"
+    />
+    <Route
+      element={<AuthenticatedMain />}
+      path="/*"
+    />
+  </Routes>
 </BrowserRouter>
 `;

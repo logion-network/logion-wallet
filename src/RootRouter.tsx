@@ -1,8 +1,7 @@
 import React from 'react';
 import {
-    BrowserRouter as Router,
-    Redirect,
-    Switch,
+    Navigate,
+    Routes,
     Route,
 } from 'react-router-dom';
 
@@ -30,21 +29,20 @@ export default function RootRouter() {
     }
 
     return (
-        <Router>
-            <Switch>
-                <Route path={ LEGAL_OFFICER_PATH }>
-                    { isLegalOfficer ? <RenderOrRedirectToLogin render={ () => <LegalOfficerMain /> }/> : <Redirect to={ USER_PATH } /> }
-                </Route>
-                <Route path={ USER_PATH }>
-                    { !isLegalOfficer ? <RenderOrRedirectToLogin render={ () => <UserMain /> }/> : <Redirect to={ LEGAL_OFFICER_PATH } /> }
-                </Route>
-                <Route path={ LOGIN_PATH }>
-                    <Login />
-                </Route>
-                <Route path="/">
-                    <Redirect to={ redirectTo } />
-                </Route>
-            </Switch>
-        </Router>
+        <Routes>
+            <Route
+                path={ LEGAL_OFFICER_PATH + "/*" }
+                element={ isLegalOfficer ? <RenderOrRedirectToLogin render={ () => <LegalOfficerMain /> }/> : <Navigate to={ USER_PATH } /> }
+            />
+            <Route
+                path={ USER_PATH + "/*" }
+                element={ !isLegalOfficer ? <RenderOrRedirectToLogin render={ () => <UserMain /> }/> : <Navigate to={ LEGAL_OFFICER_PATH } /> }
+            />
+            <Route
+                path={ LOGIN_PATH }
+                element={ <Login /> }
+            />
+            <Route path="/" element={ <Navigate to={ redirectTo } /> } />
+        </Routes>
     );
 }

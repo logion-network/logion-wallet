@@ -13,7 +13,7 @@ import { ProtectionRequest } from '../common/types/ModelTypes';
 import ProcessStep from './ProcessStep';
 import ProtectionRequestStatus from './ProtectionRequestStatus';
 import ProtectionRequestDetails from './ProtectionRequestDetails';
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { locDetailsPath, recoveryDetailsPath } from "./LegalOfficerPaths";
 import AccountInfo from "../common/AccountInfo";
 import LocIdFormGroup from './LocIdFormGroup';
@@ -44,7 +44,7 @@ export default function PendingProtectionRequests(props: Props) {
     const { pendingProtectionRequests, refreshRequests, pendingRecoveryRequests } = useLegalOfficerContext();
     const [ rejectReason, setRejectReason ] = useState<string>("");
     const [ reviewState, setReviewState ] = useState<ReviewState>(NO_REVIEW_STATE);
-    const history = useHistory();
+    const navigate = useNavigate();
     const [ locId, setLocId ] = useState<UUID | undefined>();
 
     const handleClose = useCallback(() => {
@@ -137,7 +137,7 @@ export default function PendingProtectionRequests(props: Props) {
                         {props.recovery &&
                         <Button
                             variant="primary"
-                            onClick={ () => history.push(recoveryDetailsPath(request.id)) }
+                            onClick={ () => navigate(recoveryDetailsPath(request.id)) }
                         >
                             Review and proceed
                         </Button>
@@ -194,7 +194,7 @@ export default function PendingProtectionRequests(props: Props) {
                         {props.recovery &&
                         <Button
                             variant="primary"
-                            onClick={ () => history.push(recoveryDetailsPath(request.id)) }
+                            onClick={ () => navigate(recoveryDetailsPath(request.id)) }
                         >
                             Review and proceed
                         </Button>
@@ -346,7 +346,7 @@ export default function PendingProtectionRequests(props: Props) {
                 <LocCreationDialog
                     show={ reviewState.status === ReviewStatus.CREATE_NEW_LOC }
                     exit={ handleClose }
-                    onSuccess={ (newLoc) => history.push(locDetailsPath(newLoc.id)) }
+                    onSuccess={ (newLoc) => navigate(locDetailsPath(newLoc.id)) }
                     locRequest={{
                         requesterAddress: reviewState.request!.requesterAddress,
                         userIdentity: reviewState.request!.userIdentity,

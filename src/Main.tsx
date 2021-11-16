@@ -6,19 +6,17 @@ import RootRouter from './RootRouter';
 import Loader from './Loader';
 import LandingPage from './LandingPage';
 import { CommonContextProvider } from './common/CommonContext';
-import { Switch, BrowserRouter as Router, Route } from "react-router-dom";
+import { Routes, BrowserRouter as Router, Route } from "react-router-dom";
 import PublicRouter from "./PublicRouter";
 import { PUBLIC_PATH } from "./PublicPaths";
 
 export default function Main() {
     return (
         <Router>
-            <Switch>
-                <Route path={ PUBLIC_PATH }>
-                    <PublicRouter />
-                </Route>
-                <AuthenticatedMain />
-            </Switch>
+            <Routes>
+                <Route path={ PUBLIC_PATH + "/*" } element={ <PublicRouter /> } />
+                <Route path="/*" element={ <AuthenticatedMain /> } />
+            </Routes>
         </Router>
     )
 }
