@@ -3,7 +3,7 @@ import ReactTabs from 'react-bootstrap/Tabs';
 import ReactTab from 'react-bootstrap/Tab';
 
 import { useCommonContext } from './CommonContext';
-import { Children } from './types/Helpers';
+import { Children, customClassName } from './types/Helpers';
 import './Tabs.css';
 
 export interface Tab {
@@ -17,6 +17,7 @@ export interface Props {
     onSelect: (key: string) => void,
     tabs: Tab[],
     borderColor?: string,
+    className?: string;
 }
 
 export default function Tabs(props: Props) {
@@ -45,8 +46,10 @@ export default function Tabs(props: Props) {
     }
     `;
 
+    let className = customClassName("Tabs", props.className);
+
     return (
-        <div className="Tabs">
+        <div className={ className }>
             <style>
             { customCss }
             </style>

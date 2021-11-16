@@ -1,5 +1,4 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import { FullWidthPane } from '../../common/Dashboard';
 import Alert from '../../common/Alert';
@@ -8,6 +7,7 @@ import Button from '../../common/Button';
 import { RECOVERY_PATH } from '../UserRouter';
 
 export default function GoToTrustProtection() {
+    const navigate = useNavigate();
 
     return (
         <FullWidthPane
@@ -26,8 +26,9 @@ export default function GoToTrustProtection() {
 
             <Button
                 variant="primary"
+                onClick={ () => navigate(RECOVERY_PATH) }
             >
-                <Link to={ RECOVERY_PATH }>Go to Recovery</Link>
+                Go to Recovery
             </Button>
         </FullWidthPane>
     );

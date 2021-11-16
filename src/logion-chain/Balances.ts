@@ -6,6 +6,7 @@ import { SubmittableExtrinsic } from "@polkadot/api/submittable/types";
 
 const LOG_DECIMALS = 18;
 export const LOG_SMALLEST_UNIT = ATTO;
+export const SYMBOL = "LGNT";
 
 export interface GetAccountDataParameters {
     api: ApiPromise,
@@ -100,7 +101,7 @@ export function getCoin(coinId: string): Coin {
             name: 'Logion',
             iconId: 'log',
             iconType: 'png',
-            symbol: 'LOG',
+            symbol: 'LGNT',
         };
     } else {
         throw new Error(`Unsupported coin ${coinId}`);

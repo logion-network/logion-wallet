@@ -1,5 +1,4 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import { FullWidthPane } from '../../common/Dashboard';
 import Alert from '../../common/Alert';
@@ -10,6 +9,7 @@ import { TRUST_PROTECTION_PATH } from '../UserRouter';
 
 export default function GoToTrustProtection() {
     const { colorTheme } = useCommonContext();
+    const navigate = useNavigate();
 
     return (
         <FullWidthPane
@@ -30,8 +30,9 @@ export default function GoToTrustProtection() {
 
             <Button
                 variant="primary"
+                onClick={ () => navigate(TRUST_PROTECTION_PATH) }
             >
-                <Link to={ TRUST_PROTECTION_PATH }>Go to My Logion Protection</Link>
+                Go to My Logion Protection
             </Button>
         </FullWidthPane>
     );

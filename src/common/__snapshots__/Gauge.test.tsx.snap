@@ -33,7 +33,7 @@ exports[`renders arc 1`] = `
       <div
         className="unit"
       >
-        mLOG
+        mLGNT
       </div>
     </div>
   </div>
@@ -73,7 +73,7 @@ exports[`renders linear 1`] = `
       <div
         className="unit"
       >
-        mLOG
+        mLGNT
       </div>
     </div>
   </div>

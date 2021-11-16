@@ -1,4 +1,4 @@
-import { Coin, CoinBalance } from '../logion-chain/Balances';
+import { Coin, CoinBalance, SYMBOL } from '../logion-chain/Balances';
 import { PrefixedNumber, ATTO } from '../logion-chain/numbers';
 
 import Identity from './types/Identity';
@@ -116,7 +116,7 @@ export const DEFAULT_COIN: Coin = {
     iconId: 'log',
     iconType: 'png',
     name: "Logion",
-    symbol: "LOG"
+    symbol: SYMBOL
 };
 
 export const DEFAULT_COIN_BALANCE: CoinBalance = {

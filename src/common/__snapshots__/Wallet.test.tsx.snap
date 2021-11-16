@@ -17,93 +17,6 @@ exports[`renders content 1`] = `
   }
 >
   <Content
-    colorTheme={
-      Object {
-        "accounts": Object {
-          "background": "eff3fe",
-          "foreground": "#000000",
-          "hintColor": "#00000099",
-          "iconBackground": "#3b6cf4",
-          "legalOfficerIcon": Object {
-            "category": "legal-officer",
-            "id": "account-shield",
-          },
-        },
-        "bottomMenuItems": Object {
-          "iconGradient": Object {
-            "from": "#7a90cb",
-            "to": "#3b6cf4",
-          },
-        },
-        "buttons": Object {
-          "secondary": Object {
-            "background": "#eff3fe",
-            "foreground": "#000000",
-          },
-        },
-        "dashboard": Object {
-          "background": "#eff3fe",
-          "foreground": "#000000",
-        },
-        "dialog": Object {
-          "background": "#eff3fe",
-          "borderColor": "#e6007a",
-          "foreground": "#000000",
-        },
-        "frame": Object {
-          "altBackground": "#eff3fe",
-          "background": "#ffffff",
-          "foreground": "#000000",
-          "link": "#3b6cf426",
-        },
-        "recoveryItems": Object {
-          "iconGradient": Object {
-            "from": "#7a90cb",
-            "to": "#3b6cf4",
-          },
-        },
-        "select": Object {
-          "background": "#ffffff",
-          "foreground": "#000000",
-          "menuBackgroundColor": "#ffffff",
-          "selectedOptionBackgroundColor": "#ffffff",
-        },
-        "shadowColor": "#3b6cf41a",
-        "sidebar": Object {
-          "activeItemBackground": "#d8e2fd",
-          "background": "#ffffff",
-          "foreground": "#000000",
-        },
-        "table": Object {
-          "background": "#0c163d",
-          "foreground": "#ffffff",
-          "header": Object {
-            "background": "#0c163d",
-            "foreground": "#ffffff",
-          },
-          "row": Object {
-            "background": "#152665",
-            "foreground": "#ffffff",
-          },
-        },
-        "tabs": Object {
-          "background": "#0c163d",
-          "borderColor": "#3b6cf4",
-          "foreground": "#ffffff",
-          "inactiveTab": Object {
-            "background": "#d8e2fd",
-            "foreground": "#ffffff",
-          },
-        },
-        "topMenuItems": Object {
-          "iconGradient": Object {
-            "from": "#3b6cf4",
-            "to": "#6050dc",
-          },
-        },
-        "type": "light",
-      }
-    }
     transactionsPath={[Function]}
   />
 </FullWidthPane>
@@ -112,122 +25,120 @@ exports[`renders content 1`] = `
 exports[`renders loader with no data 1`] = `<Loader />`;
 
 exports[`renders with all data 1`] = `
-<React.Fragment>
-  <Row>
-    <Col
-      md={8}
+<Row>
+  <Col
+    md={8}
+  >
+    <Frame
+      fillHeight={true}
+      title="Asset balances"
     >
-      <Frame
-        fillHeight={true}
-        title="Asset balances"
-      >
-        <Table
-          columns={
-            Array [
-              Object {
-                "align": "left",
-                "header": "Asset name",
-                "render": [Function],
-                "width": "180px",
-              },
-              Object {
-                "align": "right",
-                "header": "Balance",
-                "render": [Function],
-                "width": "150px",
-              },
-              Object {
-                "header": "Last transaction date",
-                "render": [Function],
-              },
-              Object {
-                "header": "Last transaction type",
-                "render": [Function],
-              },
-              Object {
-                "align": "right",
-                "header": "Last transaction amount",
-                "render": [Function],
-              },
-              Object {
-                "header": "",
-                "render": [Function],
-                "width": "200px",
-              },
-            ]
-          }
-          data={
-            Array [
-              Object {
-                "balance": PrefixedNumber {
-                  "_prefix": Object {
-                    "symbol": "a",
-                    "tenExponent": -18,
-                  },
-                  "_scientificNumber": ScientificNumber {
-                    "_normalized": NormalizedNumber {
-                      "_decimalPart": "",
-                      "_integerPart": "42",
-                      "_negative": false,
-                      "_normalized": "42.",
-                    },
-                    "_tenExponent": -18,
-                  },
-                },
-                "coin": Object {
-                  "iconId": "log",
-                  "iconType": "png",
-                  "id": "log",
-                  "name": "Logion",
-                  "symbol": "LOG",
-                },
-                "level": 0.1,
-              },
-            ]
-          }
-          renderEmpty={[Function]}
-        />
-      </Frame>
-    </Col>
-    <Col
-      md={4}
-    >
-      <Frame
-        fillHeight={true}
-        title="Current LOG balance"
-      >
-        <WalletGauge
-          balance={
-            PrefixedNumber {
-              "_prefix": Object {
-                "symbol": "a",
-                "tenExponent": -18,
-              },
-              "_scientificNumber": ScientificNumber {
-                "_normalized": NormalizedNumber {
-                  "_decimalPart": "",
-                  "_integerPart": "42",
-                  "_negative": false,
-                  "_normalized": "42.",
-                },
-                "_tenExponent": -18,
-              },
-            }
-          }
-          coin={
+      <Table
+        columns={
+          Array [
             Object {
-              "iconId": "log",
-              "iconType": "png",
-              "id": "log",
-              "name": "Logion",
-              "symbol": "LOG",
-            }
+              "align": "left",
+              "header": "Asset name",
+              "render": [Function],
+              "width": "180px",
+            },
+            Object {
+              "align": "right",
+              "header": "Balance",
+              "render": [Function],
+              "width": "150px",
+            },
+            Object {
+              "header": "Last transaction date",
+              "render": [Function],
+            },
+            Object {
+              "header": "Last transaction type",
+              "render": [Function],
+            },
+            Object {
+              "align": "right",
+              "header": "Last transaction amount",
+              "render": [Function],
+            },
+            Object {
+              "header": "",
+              "render": [Function],
+              "width": "200px",
+            },
+          ]
+        }
+        data={
+          Array [
+            Object {
+              "balance": PrefixedNumber {
+                "_prefix": Object {
+                  "symbol": "a",
+                  "tenExponent": -18,
+                },
+                "_scientificNumber": ScientificNumber {
+                  "_normalized": NormalizedNumber {
+                    "_decimalPart": "",
+                    "_integerPart": "42",
+                    "_negative": false,
+                    "_normalized": "42.",
+                  },
+                  "_tenExponent": -18,
+                },
+              },
+              "coin": Object {
+                "iconId": "log",
+                "iconType": "png",
+                "id": "log",
+                "name": "Logion",
+                "symbol": "LGNT",
+              },
+              "level": 0.1,
+            },
+          ]
+        }
+        renderEmpty={[Function]}
+      />
+    </Frame>
+  </Col>
+  <Col
+    md={4}
+  >
+    <Frame
+      fillHeight={true}
+      title="Current LGNT balance"
+    >
+      <WalletGauge
+        balance={
+          PrefixedNumber {
+            "_prefix": Object {
+              "symbol": "a",
+              "tenExponent": -18,
+            },
+            "_scientificNumber": ScientificNumber {
+              "_normalized": NormalizedNumber {
+                "_decimalPart": "",
+                "_integerPart": "42",
+                "_negative": false,
+                "_normalized": "42.",
+              },
+              "_tenExponent": -18,
+            },
           }
-          level={0.1}
-          type="arc"
-        />
-      </Frame>
-    </Col>
-  </Row>
-</React.Fragment>
+        }
+        coin={
+          Object {
+            "iconId": "log",
+            "iconType": "png",
+            "id": "log",
+            "name": "Logion",
+            "symbol": "LGNT",
+          }
+        }
+        level={0.1}
+        type="arc"
+      />
+    </Frame>
+  </Col>
+</Row>
 `;

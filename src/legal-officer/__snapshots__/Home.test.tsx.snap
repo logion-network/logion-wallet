@@ -1,0 +1,180 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<FullWidthPane
+  className="Home"
+  mainTitle="Home"
+  titleIcon={
+    Object {
+      "background": Object {
+        "from": "#3b6cf4",
+        "to": "#6050dc",
+      },
+      "icon": Object {
+        "id": "tokens",
+      },
+    }
+  }
+>
+  <Row>
+    <Col>
+      <Frame
+        title="Last operation and balance"
+      >
+        <Row>
+          <Col>
+            <Table
+              columns={
+                Array [
+                  Object {
+                    "header": "Transaction date",
+                    "render": [Function],
+                    "width": "200px",
+                  },
+                  Object {
+                    "header": "Transaction type",
+                    "render": [Function],
+                  },
+                  Object {
+                    "align": "right",
+                    "header": "Amount",
+                    "render": [Function],
+                    "width": "120px",
+                  },
+                  Object {
+                    "align": "right",
+                    "header": "Paid fees",
+                    "render": [Function],
+                    "width": "120px",
+                  },
+                ]
+              }
+              data={
+                Array [
+                  Object {
+                    "createdOn": "2021-07-28T12:30:00.000",
+                    "fee": "125000",
+                    "from": "from",
+                    "method": "method",
+                    "pallet": "pallet",
+                    "reserved": "0",
+                    "tip": "0",
+                    "to": "to",
+                    "total": "125420",
+                    "transferValue": "420",
+                    "type": "Sent",
+                  },
+                ]
+              }
+              renderEmpty={[Function]}
+            />
+          </Col>
+          <Col>
+            <div
+              className="reading-container"
+            >
+              <Reading
+                level={0.1}
+                readingDecimalPart="00"
+                readingIntegerPart="42"
+                unit="aundefined"
+              />
+              <Button
+                onClick={[Function]}
+                slim={true}
+              >
+                <Icon
+                  icon={
+                    Object {
+                      "id": "wallet",
+                    }
+                  }
+                />
+                 Go to my wallet
+              </Button>
+            </div>
+          </Col>
+        </Row>
+      </Frame>
+      <Frame
+        className="transactions"
+      >
+        <Button
+          className="transactions-button"
+          onClick={[Function]}
+          slim={true}
+        >
+          <Icon
+            icon={
+              Object {
+                "id": "loc",
+              }
+            }
+          />
+           Go to transactions
+        </Button>
+        <Tabs
+          activeKey="open"
+          className="open-transactions"
+          onSelect={[Function]}
+          tabs={
+            Array [
+              Object {
+                "key": "open",
+                "render": [Function],
+                "title": "Three latest open Transaction Protection Case(s)",
+              },
+            ]
+          }
+        />
+        <Tabs
+          activeKey="pending"
+          className="pending-transactions"
+          onSelect={[Function]}
+          tabs={
+            Array [
+              Object {
+                "key": "pending",
+                "render": [Function],
+                "title": "Three latest pending Transaction Protection Case(s)",
+              },
+            ]
+          }
+        />
+      </Frame>
+      <Frame
+        className="identities"
+      >
+        <Button
+          className="identities-button"
+          onClick={[Function]}
+          slim={true}
+        >
+          <Icon
+            icon={
+              Object {
+                "id": "identity",
+              }
+            }
+          />
+           Go to identities
+        </Button>
+        <Tabs
+          activeKey="open"
+          className="open-identities"
+          onSelect={[Function]}
+          tabs={
+            Array [
+              Object {
+                "key": "open",
+                "render": [Function],
+                "title": "Three latest open Identity Protection Case(s)",
+              },
+            ]
+          }
+        />
+      </Frame>
+    </Col>
+  </Row>
+</FullWidthPane>
+`;

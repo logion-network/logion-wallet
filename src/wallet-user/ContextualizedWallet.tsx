@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
 
 import { useLogionChain } from '../logion-chain';
 
@@ -16,12 +15,14 @@ import UserRouter, {
 } from "./UserRouter";
 import { useUserContext } from "./UserContext";
 import { useCommonContext } from '../common/CommonContext';
+import { useNavigate } from 'react-router';
 
 export default function ContextualizedWallet() {
     const { apiState } = useLogionChain();
     const { selectAddress, accounts, colorTheme } = useCommonContext();
     const { pendingProtectionRequests, acceptedProtectionRequests } = useUserContext();
     const [ discardProtection, setDiscardProtection ] = useState<boolean>(false);
+    const navigate = useNavigate();
 
     if(selectAddress === null || accounts === null) {
         return null;
@@ -126,14 +127,14 @@ export default function ContextualizedWallet() {
                         buttonVariant: 'secondary'
                     },
                     {
-                        buttonText: <Link to={ TRUST_PROTECTION_PATH }>Activate the logion protection</Link>,
-                        callback: () => setDiscardProtection(true),
+                        buttonText: "Activate the logion protection",
+                        callback: () => { setDiscardProtection(true); navigate(TRUST_PROTECTION_PATH)},
                         id: "protection",
                         buttonVariant: 'primary'
                     },
                     {
-                        buttonText: <Link to={ RECOVERY_PATH }>Start a recovery process</Link>,
-                        callback: () => setDiscardProtection(true),
+                        buttonText: "Start a recovery process",
+                        callback: () => { setDiscardProtection(true); navigate(RECOVERY_PATH) },
                         id: "recovery",
                         buttonVariant: 'recovery'
                     }

@@ -115,21 +115,13 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
           "id": "discard",
         },
         Object {
-          "buttonText": <Link
-            to="/user/protection"
-          >
-            Activate the logion protection
-          </Link>,
+          "buttonText": "Activate the logion protection",
           "buttonVariant": "primary",
           "callback": [Function],
           "id": "protection",
         },
         Object {
-          "buttonText": <Link
-            to="/user/recovery"
-          >
-            Start a recovery process
-          </Link>,
+          "buttonText": "Start a recovery process",
           "buttonVariant": "recovery",
           "callback": [Function],
           "id": "recovery",
@@ -263,21 +255,13 @@ exports[`Given connected, when rendering, then show account, no connect button a
           "id": "discard",
         },
         Object {
-          "buttonText": <Link
-            to="/user/protection"
-          >
-            Activate the logion protection
-          </Link>,
+          "buttonText": "Activate the logion protection",
           "buttonVariant": "primary",
           "callback": [Function],
           "id": "protection",
         },
         Object {
-          "buttonText": <Link
-            to="/user/recovery"
-          >
-            Start a recovery process
-          </Link>,
+          "buttonText": "Start a recovery process",
           "buttonVariant": "recovery",
           "callback": [Function],
           "id": "recovery",
@@ -410,21 +394,13 @@ exports[`Given connecting, when rendering, then show account, no button, no node
           "id": "discard",
         },
         Object {
-          "buttonText": <Link
-            to="/user/protection"
-          >
-            Activate the logion protection
-          </Link>,
+          "buttonText": "Activate the logion protection",
           "buttonVariant": "primary",
           "callback": [Function],
           "id": "protection",
         },
         Object {
-          "buttonText": <Link
-            to="/user/recovery"
-          >
-            Start a recovery process
-          </Link>,
+          "buttonText": "Start a recovery process",
           "buttonVariant": "recovery",
           "callback": [Function],
           "id": "recovery",
@@ -557,21 +533,13 @@ exports[`Given connection error, when rendering, then show account, no button, n
           "id": "discard",
         },
         Object {
-          "buttonText": <Link
-            to="/user/protection"
-          >
-            Activate the logion protection
-          </Link>,
+          "buttonText": "Activate the logion protection",
           "buttonVariant": "primary",
           "callback": [Function],
           "id": "protection",
         },
         Object {
-          "buttonText": <Link
-            to="/user/recovery"
-          >
-            Start a recovery process
-          </Link>,
+          "buttonText": "Start a recovery process",
           "buttonVariant": "recovery",
           "callback": [Function],
           "id": "recovery",
@@ -704,21 +672,13 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
           "id": "discard",
         },
         Object {
-          "buttonText": <Link
-            to="/user/protection"
-          >
-            Activate the logion protection
-          </Link>,
+          "buttonText": "Activate the logion protection",
           "buttonVariant": "primary",
           "callback": [Function],
           "id": "protection",
         },
         Object {
-          "buttonText": <Link
-            to="/user/recovery"
-          >
-            Start a recovery process
-          </Link>,
+          "buttonText": "Start a recovery process",
           "buttonVariant": "recovery",
           "callback": [Function],
           "id": "recovery",
@@ -852,21 +812,13 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
           "id": "discard",
         },
         Object {
-          "buttonText": <Link
-            to="/user/protection"
-          >
-            Activate the logion protection
-          </Link>,
+          "buttonText": "Activate the logion protection",
           "buttonVariant": "primary",
           "callback": [Function],
           "id": "protection",
         },
         Object {
-          "buttonText": <Link
-            to="/user/recovery"
-          >
-            Start a recovery process
-          </Link>,
+          "buttonText": "Start a recovery process",
           "buttonVariant": "recovery",
           "callback": [Function],
           "id": "recovery",
