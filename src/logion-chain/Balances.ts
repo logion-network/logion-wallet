@@ -101,7 +101,7 @@ export function getCoin(coinId: string): Coin {
             name: 'Logion',
             iconId: 'log',
             iconType: 'png',
-            symbol: 'LGNT',
+            symbol: SYMBOL,
         };
     } else {
         throw new Error(`Unsupported coin ${coinId}`);

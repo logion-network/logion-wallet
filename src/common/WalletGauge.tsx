@@ -153,7 +153,7 @@ export default function WalletGauge(props: Props) {
                 ]}
                 size="lg"
             >
-                <h3>Transfer LGNTs</h3>
+                <h3>{ `Transfer ${SYMBOL}s` }</h3>
                 {
                     state.status === Status.TRANSFERRING &&
                     <>

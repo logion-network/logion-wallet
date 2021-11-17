@@ -3,7 +3,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useNavigate } from 'react-router-dom';
 
-import { CoinBalance, prefixedLogBalance } from '../logion-chain/Balances';
+import { CoinBalance, prefixedLogBalance, SYMBOL } from '../logion-chain/Balances';
 
 import { useCommonContext } from './CommonContext';
 
@@ -98,7 +98,7 @@ export function Content(props: Props) {
             </Col>
             <Col md={4}>
                 <Frame
-                    title="Current LGNT balance"
+                    title={`Current ${SYMBOL} balance`}
                     fillHeight
                 >
                     <WalletGauge
