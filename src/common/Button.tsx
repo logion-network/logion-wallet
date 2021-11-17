@@ -3,7 +3,7 @@ import { ButtonVariant } from 'react-bootstrap/types';
 import BootstrapButton from 'react-bootstrap/Button';
 import { ButtonType } from '@restart/ui/esm/Button';
 
-import { Children } from './types/Helpers';
+import { Children, customClassName } from './types/Helpers';
 import { useCommonContext } from './CommonContext';
 import { POLKADOT } from './ColorTheme';
 import MultiChoiceButton, { Choice } from './MultiChoiceButton';
@@ -33,6 +33,7 @@ export interface Props {
     "data-testid"?: string,
     slim?: boolean,
     choices?: Choice[],
+    className?: string,
 }
 
 export default function Button(props: Props) {
@@ -77,6 +78,12 @@ export default function Button(props: Props) {
         style.color = "white";
     }
 
+    const otherClassNames = [
+        (props.slim !== undefined && props.slim) ? "slim" : undefined,
+        props.className
+    ];
+    let className = customClassName("Button", ...otherClassNames);
+
     if(choices === undefined) {
         return (
             <BootstrapButton
@@ -86,7 +93,7 @@ export default function Button(props: Props) {
                 disabled={ disabled }
                 onClick={ onClick }
                 data-testid={ testId }
-                className={ "Button" + ((props.slim !== undefined && props.slim) ? " slim" : "") }
+                className={ className }
                 style={ style }
                 type={ type }
             >

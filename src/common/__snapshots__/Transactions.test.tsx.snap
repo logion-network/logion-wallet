@@ -30,7 +30,7 @@ exports[`renders with all data 1`] = `
                 "iconType": "png",
                 "id": "log",
                 "name": "Logion",
-                "symbol": "LOG",
+                "symbol": "LGNT",
               }
             }
           />
@@ -106,7 +106,7 @@ exports[`renders with all data 1`] = `
                 "iconType": "png",
                 "id": "log",
                 "name": "Logion",
-                "symbol": "LOG",
+                "symbol": "LGNT",
               }
             }
           />
@@ -136,7 +136,7 @@ exports[`renders with all data 1`] = `
               "iconType": "png",
               "id": "log",
               "name": "Logion",
-              "symbol": "LOG",
+              "symbol": "LGNT",
             }
           }
           level={0.1}

@@ -1,6 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { ATTO, FEMTO, MICRO, MILLI, NANO, NONE, PICO, PrefixedNumber } from '../logion-chain/numbers';
-import { Coin, transfer } from '../logion-chain/Balances';
+import { Coin, SYMBOL, transfer } from '../logion-chain/Balances';
 
 import Gauge from './Gauge';
 import Button from './Button';
@@ -127,7 +127,7 @@ export default function WalletGauge(props: Props) {
             <Gauge
                 readingIntegerPart={ props.balance.coefficient.toInteger() }
                 readingDecimalPart={ props.balance.coefficient.toFixedPrecisionDecimals(2) }
-                unit={ props.balance.prefix.symbol + "LOG" }
+                unit={ props.balance.prefix.symbol + SYMBOL }
                 level={ props.level }
                 type={ props.type }
             />
@@ -153,7 +153,7 @@ export default function WalletGauge(props: Props) {
                 ]}
                 size="lg"
             >
-                <h3>Transfer LOGs</h3>
+                <h3>{ `Transfer ${SYMBOL}s` }</h3>
                 {
                     state.status === Status.TRANSFERRING &&
                     <>
@@ -183,7 +183,7 @@ export default function WalletGauge(props: Props) {
                                         onChange={value => setAmount(value.target.value)}
                                     />
                                     <DropdownButton
-                                        title={ `${unit.symbol}LOG` }
+                                        title={ `${unit.symbol}${SYMBOL}` }
                                         id="input-group-dropdown-1"
                                     >{
                                         [
@@ -194,7 +194,7 @@ export default function WalletGauge(props: Props) {
                                             PICO,
                                             FEMTO,
                                             ATTO
-                                        ].map(unit => <Dropdown.Item key={ unit.symbol } onClick={() => setUnit(unit)}>{ `${unit.symbol}LOG` }</Dropdown.Item>)
+                                        ].map(unit => <Dropdown.Item key={ unit.symbol } onClick={() => setUnit(unit)}>{ `${unit.symbol}${SYMBOL}` }</Dropdown.Item>)
                                     }</DropdownButton>
                                     <Form.Control.Feedback type="invalid">
                                         Please enter a valid amount.

@@ -47,6 +47,7 @@
 .Button.btn.btn-warning a,
 .Button.btn.btn-recovery a {
     color: white;
+    text-decoration: none;
 }
 
 .Button.btn.btn-primary a:hover,

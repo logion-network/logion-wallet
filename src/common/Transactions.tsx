@@ -4,21 +4,20 @@ import Col from 'react-bootstrap/Col';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
-import { PrefixedNumber } from '../logion-chain/numbers';
 import { Coin, prefixedLogBalance } from '../logion-chain/Balances';
 
 import { FullWidthPane } from './Dashboard';
 import Frame from './Frame';
 import Icon from './Icon';
 import Table, { DateCell, Cell, EmptyTableMessage } from './Table';
-import { RED, GREEN } from './ColorTheme';
 
 import { useCommonContext } from './CommonContext';
 
 import WalletGauge from './WalletGauge';
 
 import './Transactions.css';
-import { Transaction } from './types/ModelTypes';
+import TransferAmountCell, { transferBalance } from './TransferAmountCell';
+import AmountCell from './AmountCell';
 
 export interface Props {
     backPath: string,
@@ -70,7 +69,7 @@ export default function Transactions(props: Props) {
                                 },
                                 {
                                     header: "Amount",
-                                    render: transaction => <TransferAmountCell amount={ transferBalance(transaction) } />,
+                                    render: transaction => <TransferAmountCell amount={ transferBalance(accounts!, transaction) } />,
                                     align: 'right',
                                     width: "120px",
                                 },
@@ -109,15 +108,6 @@ export default function Transactions(props: Props) {
             </Row>
         </FullWidthPane>
     );
-
-    function transferBalance(transaction: Transaction): PrefixedNumber {
-        const amount = prefixedLogBalance(transaction.transferValue);
-        if(transaction.from === accounts!.current!.address) {
-            return amount.negate();
-        } else {
-            return amount;
-        }
-    }
 }
 
 function TransactionsFrameTitle(props: {coin: Coin}) {
@@ -181,54 +171,4 @@ function FromToCell(props: FromToCellProps) {
             </OverlayTrigger>
         </div>
     );
-}
-
-export interface TransferAmountCellProps {
-    amount: PrefixedNumber | null,
-}
-
-function TransferAmountCell(props: TransferAmountCellProps) {
-    if(props.amount === null) {
-        return <Cell content="-" align="center" />;
-    } else if(props.amount.isNegative()) {
-        return (
-            <div className="amount-cell">
-                <Icon icon={{id: 'send_red'}} />
-                <span className="number" style={{color: RED}}>
-                    { props.amount.coefficient.toFixedPrecision(2) + " " + props.amount.prefix.symbol }
-                </span>
-            </div>
-        );
-    } else if(props.amount.coefficient.isZero()) {
-        return (
-            <div className="amount-cell" style={{justifyContent: 'flex-end'}}>
-                <span className="number">
-                    { props.amount.coefficient.toFixedPrecision(2) + " " + props.amount.prefix.symbol }
-                </span>
-            </div>
-        );
-    } else {
-        return (
-            <div className="amount-cell">
-                <Icon icon={{id: 'receive_green'}} />
-                <span className="number" style={{color: GREEN}}>
-                    { props.amount.coefficient.toFixedPrecision(2) + " " + props.amount.prefix.symbol }
-                </span>
-            </div>
-        );
-    }
-}
-
-export interface AmountCellProps {
-    amount: PrefixedNumber | null,
-}
-
-function AmountCell(props: AmountCellProps) {
-    if(props.amount === null) {
-        return <Cell content="-" align="right" />;
-    } else {
-        return (
-            <Cell content={ props.amount.coefficient.toFixedPrecision(2) + " " + props.amount.prefix.symbol } align="right" />
-        );
-    }
 }

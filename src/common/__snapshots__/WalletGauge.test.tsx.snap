@@ -9,7 +9,7 @@ exports[`renders arc 1`] = `
     readingDecimalPart="00"
     readingIntegerPart="20"
     type="arc"
-    unit="mLOG"
+    unit="mLGNT"
   />
   <div
     className="actions"
@@ -50,7 +50,7 @@ exports[`renders arc 1`] = `
     size="lg"
   >
     <h3>
-      Transfer LOGs
+      Transfer LGNTs
     </h3>
     <ExtrinsicSubmitter
       id="transferLogs"
@@ -72,7 +72,7 @@ exports[`renders linear 1`] = `
     readingDecimalPart="00"
     readingIntegerPart="20"
     type="linear"
-    unit="mLOG"
+    unit="mLGNT"
   />
   <div
     className="actions"
@@ -113,7 +113,7 @@ exports[`renders linear 1`] = `
     size="lg"
   >
     <h3>
-      Transfer LOGs
+      Transfer LGNTs
     </h3>
     <ExtrinsicSubmitter
       id="transferLogs"

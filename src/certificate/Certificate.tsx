@@ -21,7 +21,7 @@ import { anonymousAxiosFactory } from "../common/api";
 export default function Certificate() {
 
     const locIdParam = useParams<"locId">().locId!;
-    const locId: UUID = useMemo(() => new UUID(locIdParam), [ locIdParam ]);
+    const locId: UUID = useMemo(() => UUID.fromAnyString(locIdParam)!, [ locIdParam ]);
     const { api, apiState } = useLogionChain();
     const [ loc, setLoc ] = useState<LegalOfficerCase | undefined>(undefined)
     const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer | null>(null)

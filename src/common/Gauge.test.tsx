@@ -10,7 +10,7 @@ function testGauge(type: 'arc' | 'linear') {
     const result = shallowRender(<Gauge
         readingIntegerPart={ "99" }
         readingDecimalPart={ "00" }
-        unit={ "mLOG" }
+        unit={ "mLGNT" }
         level={ 0.5 }
         type={ type }
         colorThemeType="light"

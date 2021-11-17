@@ -3,7 +3,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useNavigate } from 'react-router-dom';
 
-import { CoinBalance, prefixedLogBalance } from '../logion-chain/Balances';
+import { CoinBalance, prefixedLogBalance, SYMBOL } from '../logion-chain/Balances';
 
 import { useCommonContext } from './CommonContext';
 
@@ -52,66 +52,64 @@ export function Content(props: Props) {
     const latestTransaction = transactions[0];
 
     return (
-        <>
-            <Row>
-                <Col md={8}>
-                    <Frame
-                        title="Asset balances"
-                        fillHeight
-                    >
-                        <Table
-                            columns={[
-                                {
-                                    header: "Asset name",
-                                    render: balance => <AssetNameCell balance={ balance } />,
-                                    width: "180px",
-                                    align: 'left',
-                                },
-                                {
-                                    header: "Balance",
-                                    render: balance => <Cell content={ balance.balance.coefficient.toFixedPrecision(2) } />,
-                                    width: "150px",
-                                    align: 'right',
-                                },
-                                {
-                                    header: "Last transaction date",
-                                    render: balance => <DateCell dateTime={ balance.coin.id !== 'dot' && latestTransaction !== undefined ? latestTransaction.createdOn : null } />
-                                },
-                                {
-                                    header: "Last transaction type",
-                                    render: balance => <Cell content={ balance.coin.id !== 'dot' && latestTransaction !== undefined ? latestTransaction.type : "-" } />
-                                },
-                                {
-                                    header: "Last transaction amount",
-                                    render: balance => <Cell content={ balance.coin.id !== 'dot' && latestTransaction !== undefined ? prefixedLogBalance(transactionAmount(latestTransaction)).convertTo(balance.balance.prefix).coefficient.toFixedPrecision(2) : '-' } />,
-                                    align: 'right',
-                                },
-                                {
-                                    header: "",
-                                    render: balance => balance.coin.id !== 'dot' ? <ActionCell><Button onClick={() => navigate(props.transactionsPath(balance.coin.id))}>More</Button></ActionCell> : <NotAvailable/>,
-                                    width: "200px",
-                                }
-                            ]}
-                            data={ balances }
-                            renderEmpty={ () => <EmptyTableMessage>You have no asset yet</EmptyTableMessage> }
-                        />
-                    </Frame>
-                </Col>
-                <Col md={4}>
-                    <Frame
-                        title="Current LOG balance"
-                        fillHeight
-                    >
-                        <WalletGauge
-                            coin={ balances[0].coin }
-                            balance={ balances[0].balance }
-                            level={ balances[0].level }
-                            type='arc'
-                        />
-                    </Frame>
-                </Col>
-            </Row>
-        </>
+        <Row>
+            <Col md={8}>
+                <Frame
+                    title="Asset balances"
+                    fillHeight
+                >
+                    <Table
+                        columns={[
+                            {
+                                header: "Asset name",
+                                render: balance => <AssetNameCell balance={ balance } />,
+                                width: "180px",
+                                align: 'left',
+                            },
+                            {
+                                header: "Balance",
+                                render: balance => <Cell content={ balance.balance.coefficient.toFixedPrecision(2) } />,
+                                width: "150px",
+                                align: 'right',
+                            },
+                            {
+                                header: "Last transaction date",
+                                render: balance => <DateCell dateTime={ balance.coin.id !== 'dot' && latestTransaction !== undefined ? latestTransaction.createdOn : null } />
+                            },
+                            {
+                                header: "Last transaction type",
+                                render: balance => <Cell content={ balance.coin.id !== 'dot' && latestTransaction !== undefined ? latestTransaction.type : "-" } />
+                            },
+                            {
+                                header: "Last transaction amount",
+                                render: balance => <Cell content={ balance.coin.id !== 'dot' && latestTransaction !== undefined ? prefixedLogBalance(transactionAmount(latestTransaction)).convertTo(balance.balance.prefix).coefficient.toFixedPrecision(2) : '-' } />,
+                                align: 'right',
+                            },
+                            {
+                                header: "",
+                                render: balance => balance.coin.id !== 'dot' ? <ActionCell><Button onClick={() => navigate(props.transactionsPath(balance.coin.id))}>More</Button></ActionCell> : <NotAvailable/>,
+                                width: "200px",
+                            }
+                        ]}
+                        data={ balances }
+                        renderEmpty={ () => <EmptyTableMessage>You have no asset yet</EmptyTableMessage> }
+                    />
+                </Frame>
+            </Col>
+            <Col md={4}>
+                <Frame
+                    title={`Current ${SYMBOL} balance`}
+                    fillHeight
+                >
+                    <WalletGauge
+                        coin={ balances[0].coin }
+                        balance={ balances[0].balance }
+                        level={ balances[0].level }
+                        type='arc'
+                    />
+                </Frame>
+            </Col>
+        </Row>
     );
 }
 

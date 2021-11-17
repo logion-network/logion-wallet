@@ -28,6 +28,7 @@ function PrimaryArea(props: PrimaryAreaProps) {
         <Col
             key="primary-area"
             md={ props.width }
+            className="primary-area-col"
         >
             <div className="PrimaryArea">
                 { props.children }
@@ -111,7 +112,7 @@ function BasePane(props: BasePaneProps) {
     }
 
     return (
-        <Col md={ FULL_WIDTH - SIDEBAR_WIDTH }>
+        <Col md={ FULL_WIDTH - SIDEBAR_WIDTH } className="BasePane">
             <Row>
                 <Col md={ 8 }>
                     <Titles {...props} />
