@@ -22,6 +22,7 @@ import { IDENTITIES_PATH, WALLET_PATH, locDetailsPath, LOC_REQUESTS_PATH } from 
 import './Home.css';
 import UserIdentityNameCell from '../common/UserIdentityNameCell';
 import LocRequestDetails from './transaction-protection/LocRequestDetails';
+import { TransactionStatusCell } from "../common/TransactionStatusCell";
 
 const MAX_OPEN_LOCS = 3;
 const MAX_PENDING_LOCS = 3;
@@ -54,6 +55,11 @@ export default function Account() {
                             <Col>
                                 <Table
                                     columns={[
+                                        {
+                                            header: "Status",
+                                            render: transaction => <TransactionStatusCell transaction={ transaction } />,
+                                            width: "100px",
+                                        },
                                         {
                                             header: "Transaction date",
                                             render: transaction => <DateCell dateTime={ transaction.createdOn } />,

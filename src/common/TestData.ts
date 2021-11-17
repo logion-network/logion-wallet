@@ -137,4 +137,16 @@ export const DEFAULT_TRANSACTION: Transaction = {
     total: "125420",
     createdOn: "2021-07-28T12:30:00.000",
     type: "Sent",
+    successful: true
 }
+
+export const DEFAULT_FAILED_TRANSACTION:Transaction = {
+    ...DEFAULT_TRANSACTION,
+    successful: false,
+    error: {
+        section: 'aSection',
+        name: 'aName',
+        details: 'someDetails'
+    }
+}
+

@@ -29,6 +29,11 @@ exports[`renders 1`] = `
               columns={
                 Array [
                   Object {
+                    "header": "Status",
+                    "render": [Function],
+                    "width": "100px",
+                  },
+                  Object {
                     "header": "Transaction date",
                     "render": [Function],
                     "width": "200px",
@@ -60,6 +65,7 @@ exports[`renders 1`] = `
                     "method": "method",
                     "pallet": "pallet",
                     "reserved": "0",
+                    "successful": true,
                     "tip": "0",
                     "to": "to",
                     "total": "125420",
