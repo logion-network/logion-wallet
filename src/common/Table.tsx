@@ -293,7 +293,7 @@ function ShowDetailsButton(props: ShowDetailsButtonProps) {
 
     return (
         <div className={"ShowDetailsButton" + (props.expanded ? " expanded" : "")} onClick={ props.onClick }>
-            <Icon icon={{id: "arrow-down"}} />
+            <Icon icon={ { id: "arrow-down", hasVariants: true } } />
         </div>
     );
 }
