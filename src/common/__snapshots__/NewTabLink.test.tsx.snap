@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders with icon 1`] = `
+<div
+  className="NewTabLink"
+>
+  <a
+    href="https://logion.network"
+    rel="noreferrer"
+    target="_blank"
+  >
+    Some text
+    <img
+      alt=""
+      src="/assets/loc.svg"
+    />
+  </a>
+</div>
+`;
+
+exports[`renders without icon 1`] = `
+<div
+  className="NewTabLink"
+>
+  <a
+    href="https://logion.network"
+    rel="noreferrer"
+    target="_blank"
+  >
+    Some text
+  </a>
+</div>
+`;

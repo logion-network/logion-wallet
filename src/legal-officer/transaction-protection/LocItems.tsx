@@ -16,6 +16,7 @@ import { AxiosInstance } from "axios";
 import { getFile } from "../Model";
 import { LocItem } from "./types";
 import { UNKNOWN_NAME } from "./LocItemFactory";
+import LocLinkDetails from "./LocLinkDetails";
 
 export interface Props {
     matchedHash?: string;
@@ -34,7 +35,7 @@ export default function LocItems(props: Props) {
             <>
                 { locItem.type === 'Data' && <LocPublicDataDetails item={ locItem } label={ locItem.name } /> }
                 { locItem.type === 'Document' && <LocPrivateFileDetails item={ locItem } /> }
-                { locItem.type === 'Linked LOC' && <LocPublicDataDetails item={ locItem } label={ locItem.type } /> }
+                { locItem.type === 'Linked LOC' && <LocLinkDetails item={ locItem } /> }
             </>
         )
     }

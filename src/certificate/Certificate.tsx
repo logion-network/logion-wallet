@@ -16,6 +16,8 @@ import { fetchPublicLoc } from "../common/Model";
 import CertificateDateTimeCell from "./CertificateDateTimeCell";
 import { copyToClipBoard } from "../common/Tools";
 import { anonymousAxiosFactory } from "../common/api";
+import { fullCertificateUrl } from "../PublicPaths";
+import NewTabLink from "../common/NewTabLink";
 
 export default function Certificate() {
 
@@ -178,7 +180,11 @@ function LinkCellRow(props: { links: Link[] }) {
     return (
         <Row>
             { props.links.map(
-                link => <CertificateCell md={ 6 } label={ `Linked LOC (${link.nature})` }>{ link.id.toDecimalString() }</CertificateCell>) }
+                link =>
+                    <CertificateCell md={ 6 } label={ `Linked LOC (${ link.nature })` }>
+                        <NewTabLink href={ fullCertificateUrl(link.id) } iconId="loc-link">{ link.id.toDecimalString() }</NewTabLink>
+                    </CertificateCell>)
+            }
         </Row>
     )
 }
