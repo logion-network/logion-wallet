@@ -10,7 +10,7 @@
 .Transactions .from-to-header .from,
 .Transactions .from-to-header .to {
     display: inline-block;
-    width: 300px;
+    width: 100px;
 }
 
 .Transactions .from-to-header .from {
@@ -34,7 +34,7 @@
 .Transactions .from-to-cell .from,
 .Transactions .from-to-cell .to {
     display: inline-block;
-    width: 200px;
+    width: calc(50% - 31px);
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: right;

@@ -4,11 +4,10 @@ import { useLogionChain } from "../logion-chain";
 import { useEffect, useState, useMemo } from "react";
 import { getLegalOfficerCase } from "../logion-chain/LogionLoc";
 import { File, LegalOfficerCase, Link, MetadataItem } from "../logion-chain/Types";
-import { Row } from "../common/Grid";
 import CertificateCell from "./CertificateCell";
 import { LegalOfficer, getOfficer } from "../common/types/LegalOfficer";
 import Button from "../common/Button";
-import { Col } from "react-bootstrap";
+import { Row, Col, Container } from "react-bootstrap";
 import MailtoButton from "../common/MailtoButton";
 import './Certificate.css'
 import Icon from "../common/Icon";
@@ -89,7 +88,9 @@ export default function Certificate() {
     }
 
     return (
-        <div className="Certificate">
+        <Container
+            className="Certificate"
+        >
             <div className="background-icon">
                 <Icon icon={ { id: "background", category: "certificate" } } />
             </div>
@@ -100,20 +101,21 @@ export default function Certificate() {
                 <Icon icon={ { id: "folder", category: "certificate" } } />
             </div>
             <Row className="header">
-                <Col md={ 2 }>
+                <Col md={ 2 } className="logo-container">
                     <img className="logo" src={ process.env.PUBLIC_URL + "/logo_black.png" } alt="logo" />
                 </Col>
                 <Col md={ 8 }>
                     <h2>Legal Officer Case</h2>
                     <h1>CERTIFICATE</h1>
+                    <p className="description">This Logion Legal Officer Case (LOC) certificate constitutes proof that a Logion Legal Officer, owner of that LOC and mentioned on this document, executed a verification process according to his/her professional standards at the requester demand with regards to data and document(s) listed below.</p>
                 </Col>
             </Row>
             <Row>
                 <CertificateCell md={ 5 } label="LOC ID">{ locId.toDecimalString() }</CertificateCell>
-                <CertificateDateTimeCell md={ 2 } label="Creation Date" dateTime={ createdOn } />
-                <CertificateDateTimeCell md={ 2 } label="Closing Date" dateTime={ closedOn } />
+                <CertificateDateTimeCell md={ 3 } label="Creation Date" dateTime={ createdOn } />
+                <CertificateDateTimeCell md={ 3 } label="Closing Date" dateTime={ closedOn } />
             </Row>
-            <Row>
+            <Row className="preamble-footer">
                 <CertificateCell md={ 6 } label="Owner">{ loc.owner }</CertificateCell>
                 <CertificateCell md={ 6 } label="Requester">{ loc.requester }</CertificateCell>
             </Row>
@@ -127,26 +129,26 @@ export default function Certificate() {
                 <LinkCellRow links={ links } />
             )) }
             <LegalOfficerRow legalOfficer={ legalOfficer } />
-            <Row>
-                <Col md={ 2 }>
+            <Row className="buttons">
+                <Col xl={ 2 } lg={4} md={4}>
                     <MailtoButton label="Contact" email={ legalOfficer.email } />
                 </Col>
-                <Col md={ 2 }>
+                <Col xl={ 2 } lg={4} md={4}>
                     <Button onClick={ () => copyToClipBoard(window.location.href) }>Copy URL</Button>
                 </Col>
-                <Col md={ 2 }>
+                <Col xl={ 2 } lg={4} md={4}>
                     <a href="https://logion.network" target="_blank" rel="noreferrer">logion.network</a>
                 </Col>
             </Row>
-        </div>
+        </Container>
     )
 }
 
 function LegalOfficerRow(props: { legalOfficer: LegalOfficer }) {
     return (
-        <Row>
-            <CertificateCell md={ 2 } label="Legal Officer">{ props.legalOfficer.name }</CertificateCell>
-            <CertificateCell md={ 4 } label="Address">
+        <Row className="legal-officer-row">
+            <CertificateCell xl={ 2 } md={ 6 } label="Legal Officer">{ props.legalOfficer.name }</CertificateCell>
+            <CertificateCell xl={ 4 } md={ 6 } label="Address">
                 { props.legalOfficer.details.split(/\n/).map((line, index) => (
                     <span key={ index }>{ line }<br /></span>)) }
             </CertificateCell>
