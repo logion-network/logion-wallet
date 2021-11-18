@@ -18,6 +18,7 @@ import WalletGauge from './WalletGauge';
 import './Transactions.css';
 import TransferAmountCell, { transferBalance } from './TransferAmountCell';
 import AmountCell from './AmountCell';
+import { TransactionStatusCell, TransactionStatusCellDetails } from "./TransactionStatusCell";
 
 export interface Props {
     backPath: string,
@@ -28,7 +29,7 @@ export default function Transactions(props: Props) {
     const { coinId } = useParams<"coinId">();
     const navigate = useNavigate();
 
-    if(balances === null || transactions === null) {
+    if (balances === null || transactions === null) {
         return null;
     }
 
@@ -38,12 +39,12 @@ export default function Transactions(props: Props) {
         <FullWidthPane
             className="Transactions"
             mainTitle="Wallet"
-            titleIcon={{
+            titleIcon={ {
                 icon: {
                     id: 'wallet'
                 },
                 background: colorTheme.topMenuItems.iconGradient,
-            }}
+            } }
             onBack={ () => navigate(props.backPath) }
         >
             <Row>
@@ -52,7 +53,13 @@ export default function Transactions(props: Props) {
                         title={ <TransactionsFrameTitle coin={ balance.coin } /> }
                     >
                         <Table
-                            columns={[
+                            columns={ [
+                                {
+                                    header: "Status",
+                                    render: transaction => <TransactionStatusCell transaction={ transaction } />,
+                                    renderDetails: transaction => <TransactionStatusCellDetails transaction={ transaction } />,
+                                    width: "100px",
+                                },
                                 {
                                     header: "Transaction date",
                                     render: transaction => <DateCell dateTime={ transaction.createdOn } />,
@@ -60,7 +67,8 @@ export default function Transactions(props: Props) {
                                 },
                                 {
                                     header: <FromToHeader />,
-                                    render: transaction => <FromToCell from={ transaction.from } to={ transaction.to } />,
+                                    render: transaction => <FromToCell from={ transaction.from }
+                                                                       to={ transaction.to } />,
                                     width: "692px",
                                 },
                                 {

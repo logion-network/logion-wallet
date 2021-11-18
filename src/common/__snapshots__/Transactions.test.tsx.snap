@@ -1,5 +1,163 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`renders failed transaction 1`] = `
+<FullWidthPane
+  className="Transactions"
+  mainTitle="Wallet"
+  onBack={[Function]}
+  titleIcon={
+    Object {
+      "background": Object {
+        "from": "#3b6cf4",
+        "to": "#6050dc",
+      },
+      "icon": Object {
+        "id": "wallet",
+      },
+    }
+  }
+>
+  <Row>
+    <Col>
+      <Frame
+        title={
+          <TransactionsFrameTitle
+            coin={
+              Object {
+                "iconId": "log",
+                "iconType": "png",
+                "id": "log",
+                "name": "Logion",
+                "symbol": "LGNT",
+              }
+            }
+          />
+        }
+      >
+        <Table
+          columns={
+            Array [
+              Object {
+                "header": "Status",
+                "render": [Function],
+                "renderDetails": [Function],
+                "width": "100px",
+              },
+              Object {
+                "header": "Transaction date",
+                "render": [Function],
+                "width": "200px",
+              },
+              Object {
+                "header": <FromToHeader />,
+                "render": [Function],
+                "width": "692px",
+              },
+              Object {
+                "header": "Transaction type",
+                "render": [Function],
+              },
+              Object {
+                "align": "right",
+                "header": "Amount",
+                "render": [Function],
+                "width": "120px",
+              },
+              Object {
+                "align": "right",
+                "header": "Paid fees",
+                "render": [Function],
+                "width": "120px",
+              },
+              Object {
+                "align": "right",
+                "header": "Deposit",
+                "render": [Function],
+                "width": "120px",
+              },
+            ]
+          }
+          data={
+            Array [
+              Object {
+                "createdOn": "2021-07-28T12:30:00.000",
+                "error": Object {
+                  "details": "someDetails",
+                  "name": "aName",
+                  "section": "aSection",
+                },
+                "fee": "125000",
+                "from": "from",
+                "method": "method",
+                "pallet": "pallet",
+                "reserved": "0",
+                "successful": false,
+                "tip": "0",
+                "to": "to",
+                "total": "125420",
+                "transferValue": "420",
+                "type": "Sent",
+              },
+            ]
+          }
+          renderEmpty={[Function]}
+        />
+      </Frame>
+    </Col>
+  </Row>
+  <Row>
+    <Col>
+      <Frame
+        title={
+          <BalanceFrameTitle
+            coin={
+              Object {
+                "iconId": "log",
+                "iconType": "png",
+                "id": "log",
+                "name": "Logion",
+                "symbol": "LGNT",
+              }
+            }
+          />
+        }
+      >
+        <WalletGauge
+          balance={
+            PrefixedNumber {
+              "_prefix": Object {
+                "symbol": "a",
+                "tenExponent": -18,
+              },
+              "_scientificNumber": ScientificNumber {
+                "_normalized": NormalizedNumber {
+                  "_decimalPart": "",
+                  "_integerPart": "42",
+                  "_negative": false,
+                  "_normalized": "42.",
+                },
+                "_tenExponent": -18,
+              },
+            }
+          }
+          coin={
+            Object {
+              "iconId": "log",
+              "iconType": "png",
+              "id": "log",
+              "name": "Logion",
+              "symbol": "LGNT",
+            }
+          }
+          level={0.1}
+          type="linear"
+        />
+      </Frame>
+    </Col>
+  </Row>
+</FullWidthPane>
+`;
+
 exports[`renders null with missing data 1`] = `null`;
 
 exports[`renders with all data 1`] = `
@@ -39,6 +197,12 @@ exports[`renders with all data 1`] = `
         <Table
           columns={
             Array [
+              Object {
+                "header": "Status",
+                "render": [Function],
+                "renderDetails": [Function],
+                "width": "100px",
+              },
               Object {
                 "header": "Transaction date",
                 "render": [Function],
@@ -82,6 +246,7 @@ exports[`renders with all data 1`] = `
                 "method": "method",
                 "pallet": "pallet",
                 "reserved": "0",
+                "successful": true,
                 "tip": "0",
                 "to": "to",
                 "total": "125420",

@@ -22,7 +22,7 @@ import { UUID } from '../logion-chain/UUID';
 import { fullCertificateUrl } from '../PublicPaths';
 
 import { TRANSACTION_PROTECTION_PATH, WALLET_PATH } from './UserRouter';
-
+import { TransactionStatusCell } from "../common/TransactionStatusCell";
 import './Home.css';
 
 const MAX_OPEN_LOCS = 3;
@@ -58,6 +58,11 @@ export default function Account() {
                             <Col>
                                 <Table
                                     columns={[
+                                        {
+                                            header: "Status",
+                                            render: transaction => <TransactionStatusCell transaction={ transaction } />,
+                                            width: "100px",
+                                        },
                                         {
                                             header: "Transaction date",
                                             render: transaction => <DateCell dateTime={ transaction.createdOn } />,

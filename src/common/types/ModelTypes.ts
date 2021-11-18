@@ -36,6 +36,14 @@ export interface Transaction {
     total: string,
     createdOn: string,
     type: string,
+    successful: boolean,
+    error?: TransactionError
+}
+
+export interface TransactionError {
+    section: string,
+    name: string,
+    details: string
 }
 
 export interface TransactionsSet {
