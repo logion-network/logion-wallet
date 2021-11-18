@@ -28,10 +28,10 @@ const MAX_OPEN_LOCS = 3;
 const MAX_PENDING_LOCS = 3;
 
 export default function Account() {
-    const { colorTheme, balances, accounts, transactions, openedLocRequests, pendingLocRequests } = useCommonContext();
+    const { colorTheme, balances, accounts, transactions, openedLocRequests, pendingLocRequests, openedIdentityLocs } = useCommonContext();
     const navigate = useNavigate();
 
-    if(balances === null || transactions === null || accounts === null || openedLocRequests === null || pendingLocRequests === null) {
+    if(balances === null || transactions === null || accounts === null || openedLocRequests === null || pendingLocRequests === null || openedIdentityLocs === null) {
         return <Loader />;
     }
 
@@ -197,7 +197,7 @@ export default function Account() {
                                                 align: 'center',
                                             }
                                         ]}
-                                        data={ pendingLocRequests.filter(request => request.locType === "Transaction").slice(0, MAX_PENDING_LOCS) }
+                                        data={ pendingLocRequests.slice(0, MAX_PENDING_LOCS) }
                                         renderEmpty={ () => <EmptyTableMessage>No requested LOC yet</EmptyTableMessage> }
                                     />
                                 }
@@ -256,7 +256,7 @@ export default function Account() {
                                                 align: 'center',
                                             }
                                         ]}
-                                        data={ openedLocRequests.filter(request => request.locType === "Identity").slice(0, MAX_OPEN_LOCS) }
+                                        data={ openedIdentityLocs.slice(0, MAX_OPEN_LOCS) }
                                         renderEmpty={ () => <EmptyTableMessage>No open LOC yet</EmptyTableMessage>}
                                     />
                                 }

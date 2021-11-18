@@ -18,7 +18,6 @@ enum AcceptStatus {
     ACCEPTED,
     LOC_CREATION_PENDING,
     CREATING_LOC,
-    LOC_CREATED,
     DONE
 }
 
@@ -38,21 +37,11 @@ export default function LocRequestAcceptance(props: Props) {
     const [ acceptState, setAcceptState ] = useState<AcceptState>({status: AcceptStatus.NONE});
 
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
+    const [ error, setError ] = useState<boolean>(false);
 
     const setStatus = useCallback((status: AcceptStatus) => {
         setAcceptState({...acceptState, status});
     }, [ acceptState, setAcceptState ]);
-
-    // Request acceptance (off-chain)
-    useEffect(() => {
-        if(acceptState.status === AcceptStatus.ACCEPTANCE_PENDING) {
-            setStatus(AcceptStatus.ACCEPTING);
-            (async function () {
-                await acceptLocRequest(axiosFactory!(props.requestToAccept!.ownerAddress)!, { requestId: props.requestToAccept!.id });
-                setStatus(AcceptStatus.ACCEPTED);
-            })();
-        }
-    }, [ axiosFactory, acceptState, props.requestToAccept, setStatus ]);
 
     // LOC creation
     useEffect(() => {
@@ -82,15 +71,26 @@ export default function LocRequestAcceptance(props: Props) {
         accounts,
     ]);
 
-    const closeAndRefresh = useCallback(() => {
-        refresh();
-        props.clearRequestToAccept();
-    }, [ refresh, props ]);
+    // Request acceptance (off-chain)
+    useEffect(() => {
+        if(acceptState.status === AcceptStatus.ACCEPTANCE_PENDING) {
+            setStatus(AcceptStatus.ACCEPTING);
+            (async function () {
+                await acceptLocRequest(axiosFactory!(props.requestToAccept!.ownerAddress)!, { requestId: props.requestToAccept!.id });
+                setStatus(AcceptStatus.ACCEPTED);
+            })();
+        }
+    }, [ axiosFactory, acceptState, props.requestToAccept, setStatus ]);
 
-    const cancel = useCallback(() => {
+    const close = useCallback(() => {
         setStatus(AcceptStatus.NONE);
         props.clearRequestToAccept();
     }, [ setStatus, props ]);
+
+    const closeAndRefresh = useCallback(() => {
+        close();
+        refresh();
+    }, [ refresh, close ]);
 
     if(props.requestToAccept === null) {
         return null;
@@ -99,45 +99,27 @@ export default function LocRequestAcceptance(props: Props) {
     return (
         <div>
             <ProcessStep
-                active={ acceptState.status === AcceptStatus.NONE
-                            || acceptState.status === AcceptStatus.ACCEPTANCE_PENDING
-                            || acceptState.status === AcceptStatus.ACCEPTING }
-                closeCallback={ cancel }
-                title={ `Accept LOC request ${props.requestToAccept.id}` }
+                active={ acceptState.status === AcceptStatus.NONE }
+                closeCallback={ close }
+                title="Accepting LOC request"
                 mayProceed={ acceptState.status === AcceptStatus.NONE }
-                proceedCallback={ () => setStatus(AcceptStatus.ACCEPTANCE_PENDING) }
+                proceedCallback={ () => setStatus(AcceptStatus.LOC_CREATION_PENDING) }
                 stepTestId={ `modal-accepting-${props.requestToAccept.id}` }
                 proceedButtonTestId={ `proceed-accept-${props.requestToAccept.id}` }
             >
                 <Alert variant="info">
-                    <p>You are about to execute the following steps:</p>
-                    <ol>
-                        <li>accept the request</li>
-                        <li>create the LOC</li>
-                    </ol>
-                    <p>The last step will require your signature and may take several seconds.</p>
-                </Alert>
-                <Alert variant="warning">
-                    <p>Once started, the process has to be completed with no interruption.</p>
+                    <p>You are about to create the LOC and accept the request</p>
+                    <p>The LOC's creation will require your signature and may take several seconds.</p>
                 </Alert>
             </ProcessStep>
             <ProcessStep
-                active={ acceptState.status === AcceptStatus.ACCEPTED }
-                title={ `Creation LOC for request ${props.requestToAccept.id}` }
-                mayProceed={ true }
-                proceedCallback={ () => setStatus(AcceptStatus.LOC_CREATION_PENDING) }
-                stepTestId={`modal-accepted-${props.requestToAccept.id}`}
-                proceedButtonTestId={`proceed-create-${props.requestToAccept.id}`}
-            >
-                <Alert variant="success">
-                    <p>Request successfully accepted, you may now proceed with creating the LOC.</p>
-                </Alert>
-            </ProcessStep>
-            <ProcessStep
-                active={ acceptState.status === AcceptStatus.CREATING_LOC || acceptState.status === AcceptStatus.LOC_CREATED }
-                title={ `Creating LOC for request ${props.requestToAccept.id}` }
-                mayProceed={ acceptState.status === AcceptStatus.LOC_CREATED }
-                proceedCallback={ () => setStatus(AcceptStatus.DONE) }
+                active={ acceptState.status === AcceptStatus.CREATING_LOC
+                        || acceptState.status === AcceptStatus.ACCEPTANCE_PENDING
+                        || acceptState.status === AcceptStatus.ACCEPTING
+                        || acceptState.status === AcceptStatus.ACCEPTED }
+                title="Creating LOC"
+                mayProceed={ acceptState.status === AcceptStatus.ACCEPTED || error }
+                proceedCallback={ () => error ? closeAndRefresh() : setStatus(AcceptStatus.DONE) }
                 stepTestId={ `modal-creating-${props.requestToAccept.id}` }
                 proceedButtonTestId={ `proceed-review-${props.requestToAccept.id}` }
             >
@@ -145,19 +127,19 @@ export default function LocRequestAcceptance(props: Props) {
                     id="metadata"
                     signAndSubmit={ signAndSubmit }
                     successMessage="LOC successfully created."
-                    onSuccess={ () => setStatus(AcceptStatus.LOC_CREATED) }
-                    onError={ () => {} }
+                    onSuccess={ () => setStatus(AcceptStatus.ACCEPTANCE_PENDING) }
+                    onError={ () => setError(true) }
                 />
             </ProcessStep>
             <ProcessStep
                 active={ acceptState.status === AcceptStatus.DONE }
                 closeCallback={ closeAndRefresh }
-                title={ `LOC request ${props.requestToAccept.id}`}
+                title="LOC opened"
                 stepTestId={ `modal-review-${props.requestToAccept.id}` }
                 closeButtonTestId={ `close-review-${props.requestToAccept.id}` }
             >
                 <div>
-                    <p>LOC was successfully created for request { props.requestToAccept.id }.</p>
+                    <p>A LOC was successfully opened for request { props.requestToAccept.id }.</p>
                 </div>
             </ProcessStep>
         </div>

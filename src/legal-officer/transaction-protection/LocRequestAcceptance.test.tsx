@@ -32,6 +32,10 @@ describe("TokenizationRequestAcceptance", () => {
         description: "LOC description",
         status: "REQUESTED",
         createdOn: "2021-09-20T15:52:00.000",
+        files: [],
+        links: [],
+        locType: 'Transaction',
+        metadata: []
     };
 
     it("Click on accept and proceed accepts request", async () => {
@@ -42,20 +46,18 @@ describe("TokenizationRequestAcceptance", () => {
         setAcceptLocRequest(jest.fn().mockResolvedValue({}));
         const acceptButton = screen.getByTestId(`proceed-accept-${REQUEST.id}`);
         userEvent.click(acceptButton);
+
+        // Create LOC
+        await waitFor(() => screen.getByTestId(`modal-creating-${REQUEST.id}`));
+        await waitFor(() => screen.getByText(/Submitting/));
+        act(finalizeSubmission);
+        await waitFor(() => screen.getByText(/LOC successfully created/));
         await waitFor(() => expect(acceptLocRequest).toBeCalledWith(
             axiosMock.object(),
             expect.objectContaining({
                 requestId: REQUEST.id
             })
         ));
-
-        // Create LOC
-        await waitFor(() => screen.getByTestId(`modal-accepted-${REQUEST.id}`));
-        const createButton = screen.getByTestId(`proceed-create-${REQUEST.id}`);
-        userEvent.click(createButton);
-        await waitFor(() => screen.getByText(/Submitting/));
-        act(finalizeSubmission);
-        await waitFor(() => screen.getByText(/LOC successfully created/));
 
         const proceedReviewButton = screen.getByTestId(`proceed-review-${REQUEST.id}`);
         userEvent.click(proceedReviewButton);
