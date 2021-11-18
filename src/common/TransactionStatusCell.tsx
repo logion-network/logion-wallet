@@ -1,8 +1,9 @@
 import { Transaction } from "./types/ModelTypes";
 import Icon from "./Icon";
-import { Col } from "./Grid";
 import Detail from "./Detail";
 import './TransactionStatusCell.css';
+import { Row, Col } from "./Grid";
+import Alert from "./Alert";
 
 export interface StatusCellProps {
     transaction: Transaction
@@ -30,14 +31,17 @@ export function TransactionStatusCellDetails(props: StatusCellProps) {
     const errorCode = error ? `${ error.section }.${ error.name }` : "unknown"
     const description = error ? error.details : "An unknown error occurred"
     return (
-        <>
-            <Col>
-                <Detail label="Error code" value={ errorCode } />
-            </Col>
-            <Col>
-                <Detail label="Description" value={ description } />
-            </Col>
-        </>
+        <div className="TransactionStatusCellDetails">
+            <Alert variant="warning">Warning, this transaction has NOT been executed for the following reason:</Alert>
+            <Row>
+                <Col>
+                    <Detail label="Error code" value={ errorCode } />
+                </Col>
+                <Col>
+                    <Detail label="Description" value={ description } />
+                </Col>
+            </Row>
+        </div>
     );
 }
 

@@ -1,54 +1,70 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders status details of failed transaction 1`] = `
-Array [
+<div
+  className="TransactionStatusCellDetails"
+>
   <div
-    className="Col"
+    className="Alert warning"
+    style={
+      Object {
+        "color": undefined,
+      }
+    }
+  >
+    Warning, this transaction has NOT been executed for the following reason:
+  </div>
+  <div
+    className="Row"
   >
     <div
-      className="Detail"
-      style={
-        Object {
-          "color": "#ffffff",
-        }
-      }
+      className="Col"
     >
       <div
-        className="label"
+        className="Detail"
+        style={
+          Object {
+            "color": "#ffffff",
+          }
+        }
       >
-        Error code
-      </div>
-      <div
-        className="value"
-      >
-        aSection.aName
+        <div
+          className="label"
+        >
+          Error code
+        </div>
+        <div
+          className="value"
+        >
+          aSection.aName
+        </div>
       </div>
     </div>
-  </div>,
-  <div
-    className="Col"
-  >
     <div
-      className="Detail"
-      style={
-        Object {
-          "color": "#ffffff",
-        }
-      }
+      className="Col"
     >
       <div
-        className="label"
+        className="Detail"
+        style={
+          Object {
+            "color": "#ffffff",
+          }
+        }
       >
-        Description
-      </div>
-      <div
-        className="value"
-      >
-        someDetails
+        <div
+          className="label"
+        >
+          Description
+        </div>
+        <div
+          className="value"
+        >
+          someDetails
+        </div>
       </div>
     </div>
-  </div>,
-]
+  </div>
+</div>
 `;
 
 exports[`renders status details of successful transaction 1`] = `
