@@ -1,4 +1,5 @@
-.CertificateCell {
+.CertificateCell:nth-child(n+2) {
+    padding-left: 30px;
 }
 
 .CertificateCell .label {
@@ -8,6 +9,6 @@
 }
 
 .CertificateCell .value {
-    overflow: hidden;
-    margin-bottom: 80px;
+    margin-bottom: 40px;
+    word-wrap: break-word;
 }
