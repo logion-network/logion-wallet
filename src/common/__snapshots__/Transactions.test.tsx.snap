@@ -46,16 +46,16 @@ exports[`renders failed transaction 1`] = `
               Object {
                 "header": "Transaction date",
                 "render": [Function],
-                "width": "200px",
+                "width": "150px",
               },
               Object {
                 "header": <FromToHeader />,
                 "render": [Function],
-                "width": "692px",
               },
               Object {
                 "header": "Transaction type",
                 "render": [Function],
+                "width": "200px",
               },
               Object {
                 "align": "right",
@@ -206,16 +206,16 @@ exports[`renders with all data 1`] = `
               Object {
                 "header": "Transaction date",
                 "render": [Function],
-                "width": "200px",
+                "width": "150px",
               },
               Object {
                 "header": <FromToHeader />,
                 "render": [Function],
-                "width": "692px",
               },
               Object {
                 "header": "Transaction type",
                 "render": [Function],
+                "width": "200px",
               },
               Object {
                 "align": "right",

@@ -63,17 +63,17 @@ export default function Transactions(props: Props) {
                                 {
                                     header: "Transaction date",
                                     render: transaction => <DateCell dateTime={ transaction.createdOn } />,
-                                    width: "200px",
+                                    width: "150px",
                                 },
                                 {
                                     header: <FromToHeader />,
                                     render: transaction => <FromToCell from={ transaction.from }
                                                                        to={ transaction.to } />,
-                                    width: "692px",
                                 },
                                 {
                                     header: "Transaction type",
-                                    render: transaction => <Cell content={ transaction.type } />
+                                    render: transaction => <Cell content={ transaction.type } />,
+                                    width: "200px",
                                 },
                                 {
                                     header: "Amount",
