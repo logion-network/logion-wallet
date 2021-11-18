@@ -41,7 +41,7 @@ export default function Account() {
             mainTitle="Home"
             titleIcon={{
                 icon: {
-                    id: 'tokens'
+                    id: 'home'
                 },
                 background: colorTheme.topMenuItems.iconGradient,
             }}
