@@ -32,7 +32,7 @@ export default function CheckFileFrame(props: Props) {
             && (hash === null || hash.file !== file)) {
             setHashing(true);
             (async function() {
-                const hash = "0x" + sha256Hex(file);
+                const hash = "0x" + await sha256Hex(file);
                 setHash({
                     file,
                     hash: hash
