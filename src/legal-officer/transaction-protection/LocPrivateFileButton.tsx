@@ -4,8 +4,10 @@ import Dialog from "../../common/Dialog";
 import LocPrivateFileForm, { FormValues } from "./LocPrivateFileForm";
 import { useForm } from "react-hook-form";
 import { useCommonContext } from "../../common/CommonContext";
+import { sha256Hex } from "../../common/hash";
 import { useLocContext } from "./LocContext";
 import { addFile as modelAddFile } from "../Model";
+import { LocItem } from "./types";
 
 export default function LocPrivateFileButton() {
 
@@ -14,19 +16,29 @@ export default function LocPrivateFileButton() {
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>();
     const [ file, setFile ] = useState<File | null>(null);
     const { axiosFactory } = useCommonContext();
-    const { loc, locId, addFile } = useLocContext();
+    const { loc, locId, addFile, locItems } = useLocContext();
+    const [ existingItem, setExistingItem ] = useState<LocItem | null>(null);
+    const [ duplicateHash, setDuplicateHash ] = useState<string | null>(null);
 
     const submit = useCallback(async (formValues: FormValues) => {
         if (file) {
-            const response = await modelAddFile(axiosFactory!(loc!.owner)!, {
-                file,
-                locId: locId.toString(),
-                fileName: formValues.fileName
-            })
-            addFile!(formValues.fileName, response.hash, formValues.nature);
-            setVisible(false)
+            const hash = "0x" + await sha256Hex(file);
+            const existingItem = locItems.find(item => item.type === "Document" && item.value === hash);
+            if(existingItem !== undefined) {
+                setVisible(false);
+                setExistingItem(existingItem);
+                setDuplicateHash(hash);
+            } else {
+                const response = await modelAddFile(axiosFactory!(loc!.owner)!, {
+                    file,
+                    locId: locId.toString(),
+                    fileName: formValues.fileName
+                })
+                addFile!(formValues.fileName, response.hash, formValues.nature);
+                setVisible(false);
+            }
         }
-    }, [ axiosFactory, loc, file, locId, addFile ])
+    }, [ axiosFactory, loc, file, locId, addFile, locItems, setExistingItem ])
 
     return (
         <>
@@ -61,6 +73,23 @@ export default function LocPrivateFileButton() {
                     colors={ colorTheme.dialog }
                     onFileSelected={ setFile }
                 />
+            </Dialog>
+            <Dialog
+                show={ duplicateHash !== null }
+                size={ "lg" }
+                actions={ [
+                    {
+                        id: "ok",
+                        callback: () => setDuplicateHash(null),
+                        buttonText: 'OK',
+                        buttonVariant: 'primary',
+                    }
+                ] }
+            >
+                <p>A document with hash</p>
+                <p>{duplicateHash}</p>
+                <p>already exists in this LOC:</p>
+                <p>{existingItem?.name}</p>
             </Dialog>
         </>
     )

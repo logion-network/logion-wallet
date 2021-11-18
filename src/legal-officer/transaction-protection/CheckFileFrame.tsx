@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import shajs from "sha.js";
 
 import FileSelectorButton from "../../common/FileSelectorButton";
 import Icon from "../../common/Icon";
 import PolkadotFrame from "../../common/PolkadotFrame";
+import { sha256Hex } from "../../common/hash";
 
 import CheckFileResult from "./CheckFileResult";
 
@@ -32,20 +32,12 @@ export default function CheckFileFrame(props: Props) {
             && (hash === null || hash.file !== file)) {
             setHashing(true);
             (async function() {
-                const unknownStream: any = file.stream();
-                const reader: ReadableStreamDefaultReader = unknownStream.getReader();
-                const hasher = shajs('sha256');
-                let chunk: {done: boolean, value?: Buffer} = await reader.read();
-                while(!chunk.done) {
-                    hasher.update(chunk.value!);
-                    chunk = await reader.read();
-                }
-                const hash = hasher.digest("hex");
+                const hash = "0x" + sha256Hex(file);
                 setHash({
                     file,
-                    hash: "0x" + hash
+                    hash: hash
                 });
-                checkHash("0x" + hash);
+                checkHash(hash);
                 setHashing(false);
             })();
         }
