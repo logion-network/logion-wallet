@@ -18,7 +18,7 @@ export default function LocLinkDetails(props: Props) {
             <div className="frame">
                 <div className="frame-title">{ props.item.status === "DRAFT" ? "Data to be published" : "Published data" }</div>
                 <LocItemDetail label="Submitter ID">{ props.item.submitter }</LocItemDetail>
-                <LocItemDetail label="Linked LOC">
+                <LocItemDetail label="Linked LOC" className="linked-loc">
                     <NewTabLink href={locDetailsPath(linkedLocId!.toString())} iconId="loc-link">{ props.item.value }</NewTabLink>
                 </LocItemDetail>
                 {

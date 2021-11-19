@@ -7,3 +7,7 @@
 .LocItemDetails .frame .frame-title {
     color: #e6007a;
 }
+
+.LocItemDetails .linked-loc .label,.LocItemDetails .linked-loc .value {
+    line-height: 32px;
+}
