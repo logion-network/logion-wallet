@@ -12,6 +12,7 @@ exports[`renders with icon 1`] = `
     Some text
     <img
       alt=""
+      height="30px"
       src="/assets/loc.svg"
     />
   </a>
