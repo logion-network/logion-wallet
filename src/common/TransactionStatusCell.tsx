@@ -22,7 +22,7 @@ export function TransactionStatusCellDetails(props: StatusCellProps) {
         return (
             <>
                 <Col>
-                    <Detail label="Description" value="Transaction OK" />
+                    <Detail label="Description" value="This transaction has been executed." />
                 </Col>
             </>
         );
