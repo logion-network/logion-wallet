@@ -87,7 +87,7 @@ exports[`renders status details of successful transaction 1`] = `
     <div
       className="value"
     >
-      Transaction OK
+      This transaction has been executed.
     </div>
   </div>
 </div>
