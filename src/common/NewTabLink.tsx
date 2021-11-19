@@ -13,7 +13,7 @@ export default function NewTabLink(props: Props) {
         <div className="NewTabLink">
             <a href={ props.href } target="_blank" rel="noreferrer">
                 { props.children }
-                { props.iconId && <Icon icon={ { id: props.iconId } } /> }
+                { props.iconId && <Icon icon={ { id: props.iconId } } height="30px" /> }
             </a>
         </div>
     )
