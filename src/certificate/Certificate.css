@@ -1,6 +1,6 @@
 .Certificate.container {
     position: relative;
-    margin-top: 70px;
+    margin-top: 50px;
     margin-bottom: 70px;
     padding: 70px;
     font-size: 16px;
@@ -9,10 +9,6 @@
 
 .Certificate .header {
     margin-bottom: 50px;
-}
-
-.Certificate .logo-container {
-    text-align: center;
 }
 
 .Certificate .logo {
@@ -59,8 +55,8 @@
 
 .Certificate .shield-icon {
     position: absolute;
-    top: -90px;
-    right: 180px;
+    top: -70px;
+    right: 70px;
 }
 
 .Certificate .shield-icon img {
@@ -104,6 +100,15 @@
     .Certificate .shield-icon img {
         height: 200px;
     }
+    .Certificate .shield-icon {
+        top: -60px;
+        right: 50px;
+    }
+    .Certificate.container {
+        margin-top: 40px;
+        padding: 50px;
+        padding-bottom: 350px;
+    }
 }
 
 @media screen and (max-width: 768px) {
@@ -132,24 +137,27 @@
     .Certificate .folder-icon img {
         width: 90%;
     }
-}
-
-@media screen and (max-width: 575px) {
-    .Certificate.container {
-        padding-left: 20px;
-        padding-right: 20px;
-        margin-top: 70px;
-        margin-bottom: 0;
-    }    
-}
-
-@media screen and (max-width: 485px) {
     .Certificate .header h2 {
         font-size: 20px;
     }
     .Certificate .header h1 {
         font-size: 40px;
     }
+}
+
+@media screen and (max-width: 575px) {
+    .Certificate.container {
+        padding-left: 20px;
+        padding-right: 20px;
+        margin-top: 40px;
+        margin-bottom: 0;
+    }
+    .Certificate .shield-icon {
+        right: 20px;
+    }
+}
+
+@media screen and (max-width: 485px) {
     .Certificate .shield-icon {
         display: none;
     }
@@ -164,6 +172,9 @@
     }
     .Certificate .background-icon {
         display: none;
+    }
+    .Certificate .logo-container {
+        text-align: center;
     }
 }
 
