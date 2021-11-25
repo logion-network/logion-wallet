@@ -67,7 +67,7 @@ export default function LocPublicDataForm(props: Props) {
                             },
                             maxLength: {
                                 value: 1000,
-                                message: 'The Data Name must contain at most 40 characters'
+                                message: 'The Data Name must contain at most 1000 characters'
                             }
                         }}
                         render={({ field }) => (
