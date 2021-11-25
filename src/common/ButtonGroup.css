@@ -1,6 +1,5 @@
 .ButtonGroup {
     width: 100%;
-    height: 80px;
     text-align: center;
 }
 
@@ -25,4 +24,8 @@
 .ButtonGroup .btn-group > .btn:not(:first-child),
 .btn-group > .btn-group:not(:first-child) {
     margin-left: 25px;
+}
+
+.ButtonGroup.left {
+    text-align: left;
 }

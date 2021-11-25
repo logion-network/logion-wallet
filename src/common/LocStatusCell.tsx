@@ -6,6 +6,7 @@ import StatusCell from "./StatusCell";
 
 export interface Props {
     status: LocRequestStatus;
+    voidLoc?: boolean;
 }
 
 export default function LocStatusCell(props: Props) {
@@ -13,7 +14,11 @@ export default function LocStatusCell(props: Props) {
     let icon;
     let text;
     let color;
-    if(props.status === "REQUESTED") {
+    if(props.voidLoc !== undefined && props.voidLoc) {
+        color = RED;
+        icon = { id: "void" };
+        text = "VOID";
+    } else if(props.status === "REQUESTED") {
         color = ORANGE;
         icon = { id: "pending" };
         text = "Pending";

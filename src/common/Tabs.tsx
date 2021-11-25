@@ -5,6 +5,7 @@ import ReactTab from 'react-bootstrap/Tab';
 import { useCommonContext } from './CommonContext';
 import { Children, customClassName } from './types/Helpers';
 import './Tabs.css';
+import { BackgroundAndForegroundColors } from './ColorTheme';
 
 export interface Tab {
     key: string,
@@ -18,6 +19,9 @@ export interface Props {
     tabs: Tab[],
     borderColor?: string,
     className?: string;
+    borderWidth?: string,
+    tabColors?: BackgroundAndForegroundColors,
+    inactiveTabColors?: BackgroundAndForegroundColors,
 }
 
 export default function Tabs(props: Props) {
@@ -28,21 +32,36 @@ export default function Tabs(props: Props) {
         borderColor = colorTheme.tabs.borderColor;
     }
 
+    let borderWidth = "1px";
+    if(props.borderWidth !== undefined) {
+        borderWidth = props.borderWidth;
+    }
+
+    let inactiveTabColors = colorTheme.tabs.inactiveTab;
+    if(props.inactiveTabColors !== undefined) {
+        inactiveTabColors = props.inactiveTabColors;
+    }
+
+    let tabColors: BackgroundAndForegroundColors = colorTheme.tabs;
+    if(props.tabColors !== undefined) {
+        tabColors = props.tabColors;
+    }
+
     const customCss = `
     .Tabs .nav-tabs .nav-link {
         border-color: ${borderColor};
-        color: ${colorTheme.tabs.inactiveTab.foreground};
-        background-color: ${colorTheme.tabs.inactiveTab.background};
+        color: ${inactiveTabColors.foreground};
+        background-color: ${inactiveTabColors.background};
     }
     .Tabs .nav-tabs .nav-link.active {
-        color: ${colorTheme.tabs.foreground};
-        background-color: ${colorTheme.tabs.background};
-        border-bottom-color: ${colorTheme.tabs.background};
+        color: ${tabColors.foreground};
+        background-color: ${tabColors.background};
+        border-bottom-color: ${tabColors.background};
     }
     .Tabs .tab-content {
         color: ${colorTheme.tabs.foreground};
         background-color: ${colorTheme.tabs.background};
-        border: 1px solid ${borderColor};
+        border: ${borderWidth} solid ${borderColor};
     }
     `;
 

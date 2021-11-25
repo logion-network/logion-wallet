@@ -11,6 +11,7 @@ import {
 import Identity from './types/Identity';
 import { UUID } from '../logion-chain/UUID';
 import { LocType } from '../logion-chain/Types';
+import moment from 'moment';
 
 export type ProtectionRequestKind = 'RECOVERY' | 'PROTECTION_ONLY' | 'ANY';
 
@@ -128,7 +129,11 @@ export async function fetchLocRequest(
     requestId: string
 ): Promise<LocRequest> {
     const response = await axios.get(`/api/loc-request/${ requestId }`);
-    return response.data;
+    // TODO remove fake voidedOn
+    return {
+        ...response.data,
+        voidedOn: moment().toISOString()
+    };
 }
 
 export async function fetchPublicLoc(
@@ -136,7 +141,11 @@ export async function fetchPublicLoc(
     requestId: string
 ): Promise<LocRequest> {
     const response = await axios.get(`/api/loc-request/${ requestId }/public`);
-    return response.data;
+    // TODO remove fake voidedOn
+    return {
+        ...response.data,
+        voidedOn: moment().toISOString()
+    };
 }
 
 export interface CreateLocRequest {
@@ -179,4 +188,13 @@ export async function preClose(
 ): Promise<void> {
     const requestId = locId.toString();
     await axios.post(`/api/loc-request/${requestId}/close`);
+}
+
+export async function preVoid(
+    axios: AxiosInstance,
+    locId: UUID,
+): Promise<void> {
+    const requestId = locId.toString();
+    //await axios.post(`/api/loc-request/${requestId}/void`); // TODO
+    return Promise.resolve();
 }

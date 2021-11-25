@@ -1,0 +1,125 @@
+import { useCallback, useState } from "react";
+import { Form } from "react-bootstrap";
+import Button from "../../common/Button";
+import { useCommonContext } from "../../common/CommonContext";
+import DangerDialog from "../../common/DangerDialog";
+import FormGroup from "../../common/FormGroup";
+import Icon from "../../common/Icon";
+import ExtrinsicSubmitter, { SignAndSubmit } from "../../ExtrinsicSubmitter";
+import { useLogionChain } from "../../logion-chain";
+import { getLegalOfficerCase } from "../../logion-chain/LogionLoc";
+import { VoidInfo } from "../../logion-chain/Types";
+import { UUID } from "../../logion-chain/UUID";
+import { useLocContext } from "./LocContext";
+
+export default function VoidLocReplaceExistingButton() {
+    const { colorTheme, refresh } = useCommonContext();
+    const { api } = useLogionChain();
+    const [ visible, setVisible ] = useState(false);
+    const { locRequest, voidLocExtrinsic, voidLoc } = useLocContext();
+    const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
+    const [ reason, setReason ] = useState<string>("");
+    const [ replacerLocId, setReplacerLocId ] = useState<string>("");
+    const [ replacerLocIdError, setReplacerLocIdError ] = useState<string | undefined>(undefined);
+    const [ voidInfo, setVoidInfo ] = useState<VoidInfo | null>(null);
+
+    const checkAndVoid = useCallback(async () => {
+        const locId = UUID.fromDecimalString(replacerLocId);
+        if (!locId) {
+            setReplacerLocIdError("Invalid LOC ID");
+        } else {
+            const loc = await getLegalOfficerCase({ locId, api: api! })
+            if (!loc) {
+                setReplacerLocIdError("LOC not found on chain");
+            } else {
+                setReplacerLocIdError(undefined);
+                const voidInfo = {
+                    reason,
+                    replacerLocId: locId
+                }
+                setVoidInfo(voidInfo);
+                setSignAndSubmit(() => voidLocExtrinsic!(voidInfo));
+            }
+        }
+    }, [ replacerLocId, setReplacerLocIdError, setSignAndSubmit, voidLocExtrinsic, setVoidInfo, api, reason ]);
+
+    const clearAndClose = useCallback(() => {
+        setReason("");
+        setReplacerLocId("");
+        setReplacerLocIdError(undefined);
+        setVisible(false);
+    }, [ setReason, setReplacerLocId, setReplacerLocIdError, setVisible ]);
+
+    if(locRequest === null) {
+        return null;
+    }
+
+    return (
+        <>
+            <Button variant="danger" onClick={ () => setVisible(true) }><Icon icon={{id: 'void_inv'}} /> Void and replace by an EXISTING LOC</Button>
+            <DangerDialog
+                show={ visible }
+                size="lg"
+                actions={[
+                    {
+                        id: "cancel",
+                        buttonText: "Cancel",
+                        buttonVariant: "danger-outline",
+                        callback: clearAndClose
+                    },
+                    {
+                        id: "void",
+                        buttonText: "Void and replace by a NEW LOC",
+                        buttonVariant: "danger",
+                        callback: checkAndVoid
+                    }
+                ]}
+            >
+                <h2><Icon icon={{id: 'void'}} height="64px" /> Void this LOC and replace it by a NEW LOC, you create now</h2>
+                <p>This action will invalidate the present LOC: the LOC status, its public certificate will show a "VOID" mention to warn people that
+                    the content of the LOC is not valid anymore. As you are about to set a replacing LOC, people will be automatically redirected to
+                    the replacing LOC when accessing to the void LOC URL and a mention of the fact that the replacing LOC supersedes the void LOC will
+                    be shared on both public certificates.
+                </p>
+                <p>As Legal Officer, you will still have access to the LOC, its data and confidential content.</p>
+                <p><strong>PLEASE USE CAREFULLY, THIS ACTION CANNOT BE REVERTED.</strong></p>
+                <FormGroup
+                    id="reason"
+                    label="Reason"
+                    control={ <Form.Control
+                        type="text"
+                        value={ reason }
+                        onChange={ (event) => setReason(event.target.value) }
+                    /> }
+                    colors={ colorTheme.dialog }
+                />
+                <FormGroup
+                    id="existingLocId"
+                    label="Existing LOC ID"
+                    control={ <Form.Control
+                        type="text"
+                        value={ replacerLocId }
+                        onChange={ (event) => { setReplacerLocIdError(undefined) ; setReplacerLocId(event.target.value) } }
+                        isInvalid={ replacerLocIdError !== undefined }
+                    /> }
+                    colors={ colorTheme.dialog }
+                    feedback={ replacerLocIdError }
+                />
+                {
+                    signAndSubmit !== null && voidInfo !== null &&
+                    <ExtrinsicSubmitter
+                        id="voidLocSubmitter"
+                        signAndSubmit={ signAndSubmit }
+                        successMessage="LOC successfully voided"
+                        onSuccess={ () => {
+                            setVisible(false);
+                            voidLoc!(voidInfo)
+                            refresh!()
+                        } }
+                        onError={ () => {} }
+                    />
+                }
+            </DangerDialog>
+        </>
+    );
+}

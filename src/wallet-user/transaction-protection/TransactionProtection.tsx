@@ -14,10 +14,11 @@ import LocCreation from './LocCreation';
 import ClosedLocs from './ClosedLocs';
 
 import './TransactionProtection.css';
+import VoidLocs from './VoidLocs';
 
 export default function TransactionProtection() {
     const { colorTheme } = useCommonContext();
-    const [ locTabKey, setLocTabKey ] = useState<string>('open');
+    const [ locTabKey, setLocTabKey ] = useState<string>('closed');
     const [ requestTabKey, setRequestTabKey ] = useState<string>('pending');
 
     return (
@@ -38,20 +39,32 @@ export default function TransactionProtection() {
                         title="Transaction Protection Case(s)"
                     >
                         <Tabs
-                            activeKey={ locTabKey }
-                            onSelect={ key => setLocTabKey(key || 'open') }
+                            activeKey={ 'open' }
+                            onSelect={ key => setLocTabKey('open') }
                             tabs={[
                                 {
                                     key: "open",
                                     title: "Open",
                                     render: () => <OpenedLocs />
-                                },
+                                }
+                            ] }
+                        />
+                        <Tabs
+                            activeKey={ locTabKey }
+                            onSelect={ key => setLocTabKey(key || 'closed') }
+                            tabs={[
                                 {
                                     key: "closed",
                                     title: "Closed",
                                     render: () => <ClosedLocs />
+                                },
+                                {
+                                    key: "void",
+                                    title: "Void",
+                                    render: () => <VoidLocs />
                                 }
                             ] }
+                            className="closed-void-locs"
                         />
                         <div className="action-bar">
                             <LocCreation />

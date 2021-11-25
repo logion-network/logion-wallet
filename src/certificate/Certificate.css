@@ -80,6 +80,31 @@
     font-family: "Montserrat", sans-serif;
 }
 
+.void-frame {
+    border: 2px solid #e11a25;
+    border-radius: 12px;
+    padding: 30px;
+    margin-top: 30px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.void-stamp {
+    position: fixed;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%, -50%);
+    opacity: 0.4;
+}
+
+.void-stamp img {
+    height: 80vh;
+}
+
+.VoidMessage.left p {
+    margin-left: 74px;
+}
+
 @media screen and (max-width: 1400px) {
     .Certificate .folder-icon img {
         width: 470px;

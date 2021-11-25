@@ -1,8 +1,9 @@
 import { ApiPromise } from '@polkadot/api';
 import { stringToHex } from '@polkadot/util';
-import { ExtrinsicSubmissionParameters, signAndSend, Unsubscriber } from './Signature';
+import { ExtrinsicSubmissionParameters, sign, signAndSend, SignedTransaction, Unsubscriber } from './Signature';
 import { UUID } from './UUID';
-import { LegalOfficerCase, MetadataItem, LocType } from './Types';
+import { LegalOfficerCase, MetadataItem, LocType, VoidInfo } from './Types';
+import moment from 'moment';
 
 export interface LocCreationParameters extends ExtrinsicSubmissionParameters {
     api: ApiPromise;
@@ -174,4 +175,90 @@ export function addLink(parameters: AddLinkParameters): Unsubscriber {
         callback,
         errorCallback,
     });
+}
+
+export interface VoidLocParameters extends ExtrinsicSubmissionParameters {
+    api: ApiPromise;
+    locId: UUID;
+    voidInfo: VoidInfo;
+}
+
+export function voidLoc(parameters: VoidLocParameters): Unsubscriber {
+    const {
+        api,
+        signerId,
+        callback,
+        errorCallback,
+        locId,
+        voidInfo,
+    } = parameters;
+
+    // TODO signAndSend
+
+    return sign({
+        attributes: [],
+        resource: "",
+        operation: "",
+        signerId,
+        signedOn: moment()
+    })
+    .then(() => {
+        voidMap[locId.toString()] = voidInfo;
+
+        const mockResult: unknown = {
+            isInBlock: true,
+            status: {
+                type: "InBlock"
+            }
+        };
+        const result = mockResult as SignedTransaction;
+        callback(result);
+        return Promise.resolve(() => {});
+    });
+}
+
+const voidMap: Record<string, VoidInfo> = {};
+
+export interface GetVoidInfoParameters {
+    api: ApiPromise;
+    locId: UUID;
+}
+
+export async function getVoidInfo(
+    parameters: GetVoidInfoParameters
+): Promise<VoidInfo | null> {
+    const {
+        api,
+        locId,
+    } = parameters;
+    const key = locId.toString();
+    if(key in voidMap) {
+        return Promise.resolve(voidMap[key]);
+    } else {
+        return Promise.resolve(null);
+    }
+}
+
+export interface GetVoidInfosParameters {
+    api: ApiPromise;
+    locIds: UUID[];
+}
+
+export async function getVoidInfos(
+    parameters: GetVoidInfosParameters
+): Promise<Record<string, VoidInfo>> {
+    const {
+        api,
+        locIds,
+    } = parameters;
+
+    let infos: Record<string, VoidInfo> = {};
+    for(let i = 0; i < locIds.length; ++i) {
+        const locId = locIds[i];
+        const key = locId.toString();
+        if(key in voidMap) {
+            infos[locId.toDecimalString()] = voidMap[key];
+        }
+    }
+    return Promise.resolve(infos);
 }

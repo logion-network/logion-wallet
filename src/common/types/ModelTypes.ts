@@ -82,6 +82,7 @@ export interface LocRequest {
     files: LocFile[];
     metadata: LocMetadataItem[];
     links: LocLink[];
+    voidedOn?: string;
 }
 
 export type LocRequestStatus = "OPEN" | "REQUESTED" | "REJECTED" | "CLOSED";

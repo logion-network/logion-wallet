@@ -2,8 +2,8 @@ import { UUID } from "../logion-chain/UUID";
 import { useParams } from "react-router";
 import { useLogionChain } from "../logion-chain";
 import { useEffect, useState, useMemo } from "react";
-import { getLegalOfficerCase } from "../logion-chain/LogionLoc";
-import { File, LegalOfficerCase, Link, MetadataItem } from "../logion-chain/Types";
+import { getLegalOfficerCase, getVoidInfo } from "../logion-chain/LogionLoc";
+import { File, LegalOfficerCase, Link, MetadataItem, VoidInfo } from "../logion-chain/Types";
 import CertificateCell from "./CertificateCell";
 import { LegalOfficer, getOfficer } from "../common/types/LegalOfficer";
 import Button from "../common/Button";
@@ -18,6 +18,9 @@ import { copyToClipBoard } from "../common/Tools";
 import { anonymousAxiosFactory } from "../common/api";
 import { fullCertificateUrl } from "../PublicPaths";
 import NewTabLink from "../common/NewTabLink";
+import DangerDialog from "../common/DangerDialog";
+import { LIGHT_MODE } from "../legal-officer/Types";
+import { RED } from "../common/ColorTheme";
 
 export default function Certificate() {
 
@@ -25,19 +28,26 @@ export default function Certificate() {
     const locId: UUID = useMemo(() => UUID.fromAnyString(locIdParam)!, [ locIdParam ]);
     const { api, apiState } = useLogionChain();
     const [ loc, setLoc ] = useState<LegalOfficerCase | undefined>(undefined)
+    const [ voidInfo, setVoidInfo ] = useState<VoidInfo | null | undefined>(undefined)
     const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer | null>(null)
     const axiosFactory = anonymousAxiosFactory();
     const [ publicLoc, setPublicLoc ] = useState<LocRequest>()
+    const [ voidWarningVisible, setVoidWarningVisible ] = useState<boolean>(false);
 
     useEffect(() => {
         if (api !== null && apiState === 'READY' && axiosFactory !== undefined && loc === undefined) {
             (async function () {
                 const legalOfficerCase = await getLegalOfficerCase({ api, locId });
+                const voidInfo = await getVoidInfo({api, locId });
+                setVoidInfo(voidInfo);
                 if (legalOfficerCase) {
                     setLoc(legalOfficerCase)
                     setLegalOfficer(getOfficer(legalOfficerCase.owner))
                     fetchPublicLoc(axiosFactory(legalOfficerCase.owner), locId.toString())
                         .then(setPublicLoc)
+                    if(voidInfo !== null) {
+                        setVoidWarningVisible(true);
+                    }
                 }
             })()
         }
@@ -89,60 +99,101 @@ export default function Certificate() {
         closedOn = publicLoc.closedOn;
     }
 
+    let certificateBorderColor = "#3b6cf4";
+    if(voidInfo !== null) {
+        certificateBorderColor = RED;
+    }
+
     return (
-        <Container
-            className="Certificate"
-        >
-            <div className="background-icon">
-                <Icon icon={ { id: "background", category: "certificate" } } />
-            </div>
-            <div className="shield-icon">
-                <Icon icon={ { id: "shield", category: "certificate" } } />
-            </div>
-            <div className="folder-icon">
-                <Icon icon={ { id: "folder", category: "certificate" } } />
-            </div>
-            <Row className="header">
-                <Col md={ 2 } className="logo-container">
-                    <img className="logo" src={ process.env.PUBLIC_URL + "/logo_black.png" } alt="logo" />
-                </Col>
-                <Col md={ 8 }>
-                    <h2>Legal Officer Case</h2>
-                    <h1>CERTIFICATE</h1>
-                    <p className="description">This Logion Legal Officer Case (LOC) certificate constitutes proof that a Logion Legal Officer, owner of that LOC and mentioned on this document, executed a verification process according to his/her professional standards at the requester demand with regards to data and document(s) listed below.</p>
-                </Col>
-            </Row>
-            <Row>
-                <CertificateCell md={ 5 } label="LOC ID">{ locId.toDecimalString() }</CertificateCell>
-                <CertificateDateTimeCell md={ 3 } label="Creation Date" dateTime={ createdOn } />
-                <CertificateDateTimeCell md={ 3 } label="Closing Date" dateTime={ closedOn } />
-            </Row>
-            <Row className="preamble-footer">
-                <CertificateCell md={ 6 } label="Owner">{ loc.owner }</CertificateCell>
-                <CertificateCell md={ 6 } label="Requester">{ loc.requester }</CertificateCell>
-            </Row>
-            { matrix(loc.metadata, 2).map((items) => (
-                <MetadataItemCellRow items={ items } />
-            )) }
-            { matrix(loc.files, 2).map((files) => (
-                <FileCellRow files={ files } />
-            )) }
-            { matrix(loc.links, 2).map((links) => (
-                <LinkCellRow links={ links } />
-            )) }
-            <LegalOfficerRow legalOfficer={ legalOfficer } />
-            <Row className="buttons">
-                <Col xl={ 2 } lg={4} md={4}>
-                    <MailtoButton label="Contact" email={ legalOfficer.email } />
-                </Col>
-                <Col xl={ 2 } lg={4} md={4}>
-                    <Button onClick={ () => copyToClipBoard(window.location.href) }>Copy URL</Button>
-                </Col>
-                <Col xl={ 2 } lg={4} md={4}>
-                    <a href="https://logion.network" target="_blank" rel="noreferrer">logion.network</a>
-                </Col>
-            </Row>
-        </Container>
+        <>
+            {
+                voidInfo !== null && voidInfo !== undefined &&
+                <Container>
+                    <div className="void-frame">
+                        <VoidMessage left={ true } locRequest={ publicLoc } voidInfo={ voidInfo } />
+                    </div>
+                    <div className="void-stamp">
+                        <Icon icon={{id: "void"}} />
+                    </div>
+                </Container>
+            }
+            <Container
+                className="Certificate"
+                style={{borderColor: certificateBorderColor}}
+            >
+                <div className="background-icon">
+                    <Icon icon={ { id: "background", category: "certificate" } } />
+                </div>
+                <div className="shield-icon">
+                    {
+                        voidInfo === null &&
+                        <Icon icon={ { id: "shield", category: "certificate" } } />
+                    }
+                    {
+                        voidInfo !== null &&
+                        <Icon icon={ { id: "void_shield", category: "certificate" } } />
+                    }
+                </div>
+                <div className="folder-icon">
+                    <Icon icon={ { id: "folder", category: "certificate" } } />
+                </div>
+                <Row className="header">
+                    <Col md={ 2 } className="logo-container">
+                        <img className="logo" src={ process.env.PUBLIC_URL + "/logo_black.png" } alt="logo" />
+                    </Col>
+                    <Col md={ 8 }>
+                        <h2>Legal Officer Case</h2>
+                        <h1>CERTIFICATE</h1>
+                        <p className="description">This Logion Legal Officer Case (LOC) certificate constitutes proof that a Logion Legal Officer, owner of that LOC and mentioned on this document, executed a verification process according to his/her professional standards at the requester demand with regards to data and document(s) listed below.</p>
+                    </Col>
+                </Row>
+                <Row>
+                    <CertificateCell md={ 5 } label="LOC ID">{ locId.toDecimalString() }</CertificateCell>
+                    <CertificateDateTimeCell md={ 3 } label="Creation Date" dateTime={ createdOn } />
+                    <CertificateDateTimeCell md={ 3 } label="Closing Date" dateTime={ closedOn } />
+                </Row>
+                <Row className="preamble-footer">
+                    <CertificateCell md={ 6 } label="Owner">{ loc.owner }</CertificateCell>
+                    <CertificateCell md={ 6 } label="Requester">{ loc.requester }</CertificateCell>
+                </Row>
+                { matrix(loc.metadata, 2).map((items) => (
+                    <MetadataItemCellRow items={ items } />
+                )) }
+                { matrix(loc.files, 2).map((files) => (
+                    <FileCellRow files={ files } />
+                )) }
+                { matrix(loc.links, 2).map((links) => (
+                    <LinkCellRow links={ links } />
+                )) }
+                <LegalOfficerRow legalOfficer={ legalOfficer } />
+                <Row className="buttons">
+                    <Col xl={ 2 } lg={4} md={4}>
+                        <MailtoButton label="Contact" email={ legalOfficer.email } />
+                    </Col>
+                    <Col xl={ 2 } lg={4} md={4}>
+                        <Button onClick={ () => copyToClipBoard(window.location.href) }>Copy URL</Button>
+                    </Col>
+                    <Col xl={ 2 } lg={4} md={4}>
+                        <a href="https://logion.network" target="_blank" rel="noreferrer">logion.network</a>
+                    </Col>
+                </Row>
+                <DangerDialog
+                    show={ voidWarningVisible }
+                    size="lg"
+                    actions={[
+                        {
+                            id: "cancel",
+                            buttonText: <span><Icon icon={{id: "view"}} /> View VOID LOC</span>,
+                            buttonVariant: "danger",
+                            callback: () => setVoidWarningVisible(false)
+                        }
+                    ]}
+                    colors={ LIGHT_MODE.dialog }
+                >
+                    <VoidMessage left={ false } locRequest={ publicLoc } voidInfo={ voidInfo! } />
+                </DangerDialog>
+            </Container>
+        </>
     )
 }
 
@@ -187,4 +238,25 @@ function LinkCellRow(props: { links: Link[] }) {
             }
         </Row>
     )
+}
+
+function VoidMessage(props: { locRequest: LocRequest | undefined, voidInfo: VoidInfo, left: boolean }) {
+    return (
+        <div className={ "VoidMessage" + (props.left ? " left": "") }>
+            <h2><Icon icon={{id: 'void'}} height="64px" /> This Logion Legal Officer Case (LOC) is VOID</h2>
+            <p><strong>This LOC and its content is VOID since the following date:</strong> { props.locRequest?.voidedOn || "-" }</p>
+            {
+                props.voidInfo.replacerLocId !== undefined &&
+                <p><strong>This VOID LOC has been replaced by the following LOC: </strong>
+                <NewTabLink
+                    href={fullCertificateUrl(props.voidInfo.replacerLocId)}
+                    iconId="loc-link"
+                    inline
+                >
+                    { props.voidInfo.replacerLocId.toDecimalString() }
+                </NewTabLink>
+                </p>
+            }
+        </div>
+    );
 }
