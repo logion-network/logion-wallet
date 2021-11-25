@@ -162,7 +162,7 @@ function MetadataItemCellRow(props: { items: MetadataItem[] }) {
     return (
         <Row>
             { props.items.map(
-                item => <CertificateCell md={ 6 } label={ item.name }>{ item.value }</CertificateCell>) }
+                item => <CertificateCell md={ 6 } label={ item.name }><pre>{ item.value }</pre></CertificateCell>) }
         </Row>
     )
 }

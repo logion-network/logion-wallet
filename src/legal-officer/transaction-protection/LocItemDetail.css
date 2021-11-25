@@ -6,9 +6,15 @@
     font-weight: bold;
     font-size: 14px;
     margin-right: 5px;
+    flex-shrink: 0;
 }
 
 .LocItemDetail .value {
     font-weight: normal;
     font-size: 14px;
+}
+
+.LocItemDetail .value pre {
+    font-size: 1em;
+    font-family: "Montserrat", sans-serif;
 }
