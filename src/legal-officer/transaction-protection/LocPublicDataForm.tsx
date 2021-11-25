@@ -66,16 +66,18 @@ export default function LocPublicDataForm(props: Props) {
                                 message: 'The Data must contain at least 1 character'
                             },
                             maxLength: {
-                                value: 40,
+                                value: 1000,
                                 message: 'The Data Name must contain at most 40 characters'
                             }
                         }}
                         render={({ field }) => (
                             <Form.Control
                                 isInvalid={!!props.errors.dataValue?.message}
-                                type="text" placeholder="e.g. XYZ"
+                                as="textarea"
+                                placeholder="e.g. XYZ"
                                 data-testid="dataValue"
                                 aria-describedby="locDataValue"
+                                style={{ height: '100px' }}
                                 { ...field }
                             />
                         )}                    />

@@ -75,6 +75,11 @@
     margin-top: 20px;
 }
 
+.Certificate pre {
+    font-size: 1em;
+    font-family: "Montserrat", sans-serif;
+}
+
 @media screen and (max-width: 1400px) {
     .Certificate .folder-icon img {
         width: 470px;
