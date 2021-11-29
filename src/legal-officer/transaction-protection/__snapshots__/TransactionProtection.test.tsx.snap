@@ -2,6 +2,7 @@
 
 exports[`renders 1`] = `
 <FullWidthPane
+  className="TransactionProtection"
   mainTitle="Transaction Protection Cases"
   titleIcon={
     Object {
@@ -30,10 +31,24 @@ exports[`renders 1`] = `
                 "render": [Function],
                 "title": "Open",
               },
+            ]
+          }
+        />
+        <Tabs
+          activeKey="closed"
+          className="void-locs"
+          onSelect={[Function]}
+          tabs={
+            Array [
               Object {
                 "key": "closed",
                 "render": [Function],
                 "title": "Closed",
+              },
+              Object {
+                "key": "void",
+                "render": [Function],
+                "title": "Void",
               },
             ]
           }
