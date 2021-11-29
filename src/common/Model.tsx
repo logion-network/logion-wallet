@@ -194,7 +194,7 @@ export async function preVoid(
     axios: AxiosInstance,
     locId: UUID,
 ): Promise<void> {
-    const requestId = locId.toString();
+    //const requestId = locId.toString();
     //await axios.post(`/api/loc-request/${requestId}/void`); // TODO
     return Promise.resolve();
 }

@@ -185,10 +185,10 @@ export interface VoidLocParameters extends ExtrinsicSubmissionParameters {
 
 export function voidLoc(parameters: VoidLocParameters): Unsubscriber {
     const {
-        api,
+        // api,
         signerId,
         callback,
-        errorCallback,
+        // errorCallback,
         locId,
         voidInfo,
     } = parameters;
@@ -228,7 +228,7 @@ export async function getVoidInfo(
     parameters: GetVoidInfoParameters
 ): Promise<VoidInfo | null> {
     const {
-        api,
+        // api,
         locId,
     } = parameters;
     const key = locId.toString();
@@ -248,7 +248,7 @@ export async function getVoidInfos(
     parameters: GetVoidInfosParameters
 ): Promise<Record<string, VoidInfo>> {
     const {
-        api,
+        // api,
         locIds,
     } = parameters;
 
