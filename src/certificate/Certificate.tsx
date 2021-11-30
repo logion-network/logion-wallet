@@ -2,7 +2,7 @@ import { UUID } from "../logion-chain/UUID";
 import { useParams } from "react-router";
 import { useLogionChain } from "../logion-chain";
 import { useEffect, useState, useMemo } from "react";
-import { getLegalOfficerCase, getVoidInfo } from "../logion-chain/LogionLoc";
+import { getLegalOfficerCase } from "../logion-chain/LogionLoc";
 import { File, LegalOfficerCase, Link, MetadataItem, VoidInfo } from "../logion-chain/Types";
 import CertificateCell from "./CertificateCell";
 import { LegalOfficer, getOfficer } from "../common/types/LegalOfficer";
@@ -28,7 +28,6 @@ export default function Certificate() {
     const locId: UUID = useMemo(() => UUID.fromAnyString(locIdParam)!, [ locIdParam ]);
     const { api, apiState } = useLogionChain();
     const [ loc, setLoc ] = useState<LegalOfficerCase | undefined>(undefined)
-    const [ voidInfo, setVoidInfo ] = useState<VoidInfo | null | undefined>(undefined)
     const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer | null>(null)
     const axiosFactory = anonymousAxiosFactory();
     const [ publicLoc, setPublicLoc ] = useState<LocRequest>()
@@ -38,14 +37,12 @@ export default function Certificate() {
         if (api !== null && apiState === 'READY' && axiosFactory !== undefined && loc === undefined) {
             (async function () {
                 const legalOfficerCase = await getLegalOfficerCase({ api, locId });
-                const voidInfo = await getVoidInfo({api, locId });
-                setVoidInfo(voidInfo);
                 if (legalOfficerCase) {
                     setLoc(legalOfficerCase)
                     setLegalOfficer(getOfficer(legalOfficerCase.owner))
                     fetchPublicLoc(axiosFactory(legalOfficerCase.owner), locId.toString())
                         .then(setPublicLoc)
-                    if(voidInfo !== null) {
+                    if(legalOfficerCase.voidInfo !== undefined) {
                         setVoidWarningVisible(true);
                     }
                 }
@@ -100,17 +97,17 @@ export default function Certificate() {
     }
 
     let certificateBorderColor = "#3b6cf4";
-    if(voidInfo !== null) {
+    if(loc !== null && loc.voidInfo !== undefined) {
         certificateBorderColor = RED;
     }
 
     return (
         <>
             {
-                voidInfo !== null && voidInfo !== undefined &&
+                loc.voidInfo !== undefined &&
                 <Container>
                     <div className="void-frame">
-                        <VoidMessage left={ true } locRequest={ publicLoc } voidInfo={ voidInfo } />
+                        <VoidMessage left={ true } locRequest={ publicLoc } voidInfo={ loc.voidInfo } />
                     </div>
                     <div className="void-stamp">
                         <Icon icon={{id: "void"}} />
@@ -126,11 +123,11 @@ export default function Certificate() {
                 </div>
                 <div className="shield-icon">
                     {
-                        voidInfo === null &&
+                        loc.voidInfo === undefined &&
                         <Icon icon={ { id: "shield", category: "certificate" } } />
                     }
                     {
-                        voidInfo !== null &&
+                        loc.voidInfo !== undefined &&
                         <Icon icon={ { id: "void_shield", category: "certificate" } } />
                     }
                 </div>
@@ -190,7 +187,7 @@ export default function Certificate() {
                     ]}
                     colors={ LIGHT_MODE.dialog }
                 >
-                    <VoidMessage left={ false } locRequest={ publicLoc } voidInfo={ voidInfo! } />
+                    <VoidMessage left={ false } locRequest={ publicLoc } voidInfo={ loc.voidInfo! } />
                 </DangerDialog>
             </Container>
         </>
@@ -244,16 +241,16 @@ function VoidMessage(props: { locRequest: LocRequest | undefined, voidInfo: Void
     return (
         <div className={ "VoidMessage" + (props.left ? " left": "") }>
             <h2><Icon icon={{id: 'void'}} height="64px" /> This Logion Legal Officer Case (LOC) is VOID</h2>
-            <p><strong>This LOC and its content is VOID since the following date:</strong> { props.locRequest?.voidedOn || "-" }</p>
+            <p><strong>This LOC and its content is VOID since the following date:</strong> { props.locRequest?.voidInfo?.voidedOn || "-" }</p>
             {
-                props.voidInfo.replacerLocId !== undefined &&
+                props.voidInfo.replacer !== undefined &&
                 <p><strong>This VOID LOC has been replaced by the following LOC: </strong>
                 <NewTabLink
-                    href={fullCertificateUrl(props.voidInfo.replacerLocId)}
+                    href={fullCertificateUrl(props.voidInfo.replacer)}
                     iconId="loc-link"
                     inline
                 >
-                    { props.voidInfo.replacerLocId.toDecimalString() }
+                    { props.voidInfo.replacer.toDecimalString() }
                 </NewTabLink>
                 </p>
             }

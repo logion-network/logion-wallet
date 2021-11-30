@@ -106,3 +106,7 @@
 .Button.btn.btn-danger-outline {
     border: 1px solid #e11a25;
 }
+
+.Button .text {
+    margin-left: 15px;
+}

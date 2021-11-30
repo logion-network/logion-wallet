@@ -6,19 +6,18 @@ import DangerDialog from "../../common/DangerDialog";
 import FormGroup from "../../common/FormGroup";
 import Icon from "../../common/Icon";
 import ExtrinsicSubmitter, { SignAndSubmit } from "../../ExtrinsicSubmitter";
-import { VoidInfo } from "../../logion-chain/Types";
-import { useLocContext } from "./LocContext";
+import { FullVoidInfo, useLocContext } from "./LocContext";
 
 export default function VoidLocButton() {
     const { colorTheme, refresh } = useCommonContext();
     const [ visible, setVisible ] = useState(false);
     const { voidLocExtrinsic, voidLoc } = useLocContext();
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
-    const [ voidInfo, setVoidInfo ] = useState<VoidInfo>({reason: ""});
+    const [ voidInfo, setVoidInfo ] = useState<FullVoidInfo>({reason: ""});
 
     return (
         <>
-            <Button variant="danger" onClick={ () => setVisible(true) }><Icon icon={{id: 'void_inv'}} /> Void LOC</Button>
+            <Button variant="danger" onClick={ () => setVisible(true) }>Void LOC</Button>
             <DangerDialog
                 show={ visible }
                 size="lg"
@@ -37,7 +36,8 @@ export default function VoidLocButton() {
                     }
                 ]}
             >
-                <h2><Icon icon={{id: 'void'}} height="64px" /> Void this LOC</h2>
+                <Icon icon={{id: 'void'}} width="31px" />
+                <h2>Void this LOC</h2>
                 <p>This action will invalidate the present LOC: the LOC status, its public certificate will show a "VOID" mention to warn people that
                     the content of the LOC is not valid anymore.
                 </p>
@@ -61,7 +61,7 @@ export default function VoidLocButton() {
                         successMessage="LOC successfully voided"
                         onSuccess={ () => {
                             setVisible(false);
-                            voidLoc!(voidInfo)
+                            voidLoc!(voidInfo);
                             refresh!()
                         } }
                         onError={ () => {} }

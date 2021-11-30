@@ -17,19 +17,16 @@ import LocPrivateFileButton from "./LocPrivateFileButton";
 import "./ContextualizedLocDetails.css";
 import Icon from "../../common/Icon";
 import LocLinkButton from "./LocLinkButton";
-import Button from "../../common/Button";
-import { copyToClipBoard } from "../../common/Tools";
-import { fullCertificateUrl, certificatePath } from "../../PublicPaths";
+import { fullCertificateUrl } from "../../PublicPaths";
 import { IDENTITIES_PATH, locDetailsPath, LOC_REQUESTS_PATH } from "../LegalOfficerPaths";
 import CheckFileFrame, { CheckResult } from './CheckFileFrame';
-import PolkadotFrame from "../../common/PolkadotFrame";
 import DangerFrame from "../../common/DangerFrame";
 import ButtonGroup from "../../common/ButtonGroup";
 import VoidLocButton from "./VoidLocButton";
-import { NavLink } from "react-router-dom";
 import VoidLocReplaceNewButton from "./VoidLocReplaceNewButton";
 import NewTabLink from "../../common/NewTabLink";
 import VoidLocReplaceExistingButton from "./VoidLocReplaceExistingButton";
+import CopyPasteButton from "../../common/CopyPasteButton";
 
 interface DocumentCheckResult {
     result: CheckResult;
@@ -39,7 +36,7 @@ interface DocumentCheckResult {
 export default function ContextualizedLocDetails() {
     const { colorTheme } = useCommonContext();
     const navigate = useNavigate();
-    const { loc, locId, locRequest, locItems, voidInfo } = useLocContext();
+    const { loc, locId, locRequest, locItems } = useLocContext();
     const [ checkResult, setCheckResult ] = useState<DocumentCheckResult>({result: "NONE"});
 
     const checkHash = useCallback((hash: string) => {
@@ -61,7 +58,7 @@ export default function ContextualizedLocDetails() {
         });
     }, [ locItems, setCheckResult ]);
 
-    if (loc === null || locRequest === null || voidInfo === undefined) {
+    if (loc === null || locRequest === null) {
         return null;
     }
 
@@ -69,19 +66,19 @@ export default function ContextualizedLocDetails() {
     const backPath = loc.locType === 'Transaction' ? LOC_REQUESTS_PATH : IDENTITIES_PATH;
 
     let locTabBorderColor = undefined;
-    if(loc.closed) {
-        locTabBorderColor = POLKADOT;
-    } else if(voidInfo !== null) {
+    if(loc.voidInfo !== undefined) {
         locTabBorderColor = RED;
+    } else if(loc.closed) {
+        locTabBorderColor = POLKADOT;
     }
 
     let locTabBorderWidth: string | undefined = undefined;
-    if(voidInfo !== null) {
+    if(loc.voidInfo !== undefined) {
         locTabBorderWidth = "2px";
     }
 
     let tabColors: BackgroundAndForegroundColors | undefined = undefined;
-    if(voidInfo !== null) {
+    if(loc.voidInfo !== undefined) {
         tabColors = {
             foreground: "white",
             background: RED
@@ -94,7 +91,7 @@ export default function ContextualizedLocDetails() {
     } else {
         locTabTitle = "Logion Officer Case - Identity";
     }
-    if(voidInfo !== null) {
+    if(loc.voidInfo !== undefined) {
         locTabTitle = "VOID " + locTabTitle;
     }
 
@@ -142,7 +139,7 @@ export default function ContextualizedLocDetails() {
                                             </div>
                                         }
                                         {
-                                            voidInfo !== null &&
+                                            loc.voidInfo !== undefined &&
                                             <div className="closed-icon">
                                                 <Icon icon={ { id: "void_shield" } } />
                                             </div>
@@ -150,6 +147,21 @@ export default function ContextualizedLocDetails() {
                                     </Col>
                                 </Row>
                                 <LocItems matchedHash={ checkResult.hash } />
+                                {
+                                    !loc.closed && loc.voidInfo === undefined &&
+                                    <TwoSideButtonGroup
+                                        left={
+                                            <>
+                                                <LocPublicDataButton />
+                                                <LocPrivateFileButton />
+                                                <LocLinkButton />
+                                            </>
+                                        }
+                                        right={
+                                            <CloseLocButton />
+                                        }
+                                    />
+                                }
                             </>
                         }
                     } ] }
@@ -158,46 +170,31 @@ export default function ContextualizedLocDetails() {
                     tabColors={ tabColors }
                 />
                 {
-                    !loc.closed && voidInfo === null &&
-                    <TwoSideButtonGroup
-                        left={
-                            <>
-                                <LocPublicDataButton />
-                                <LocPrivateFileButton />
-                                <LocLinkButton />
-                            </>
-                        }
-                        right={
-                            <CloseLocButton />
-                        }
-                    />
-                }
-                {
-                    voidInfo !== null &&
+                    loc.voidInfo !== undefined &&
                     <DangerFrame
                         className="loc-is-void"
-                        title={ <span><Icon icon={{id: 'void'}} height="64px" /> This LOC is VOID</span> }
+                        title={ <span><Icon icon={{id: 'void'}} width="31px" /> This LOC is VOID</span> }
                     >
-                        <p><strong>You have voided this LOC at the following date:</strong> { locRequest.voidedOn || "-" }</p>
-                        <p><strong>Reason:</strong> { voidInfo.reason }</p>
+                        <p><strong>You have voided this LOC at the following date:</strong> { locRequest.voidInfo?.voidedOn || "-" }</p>
+                        <p><strong>Reason:</strong> { locRequest.voidInfo?.reason || "-" }</p>
                         {
-                            voidInfo.replacerLocId !== undefined &&
+                            loc.voidInfo.replacer !== undefined &&
                             <p><strong>This VOID LOC has been replaced by the following LOC: </strong>
                             <NewTabLink
-                                href={locDetailsPath(voidInfo.replacerLocId.toString())}
+                                href={locDetailsPath(loc.voidInfo.replacer.toString())}
                                 iconId="loc-link"
                                 inline
                             >
-                                { voidInfo.replacerLocId.toDecimalString() }
+                                { loc.voidInfo.replacer.toDecimalString() }
                             </NewTabLink>
                             </p>
                         }
                         {
-                            voidInfo.replacerLocId === undefined &&
+                            loc.voidInfo.replacer === undefined &&
                             <p>Please note that its public certificate shows a "VOID" mention to warn people that the content of the LOC is not valid anymore.</p>
                         }
                         {
-                            voidInfo.replacerLocId !== undefined &&
+                            loc.voidInfo.replacer !== undefined &&
                             <p>Please note that its public certificate shows a "VOID" mention to warn people that the content of the LOC is not valid anymore.
                                 People will be automatically redirected to the replacing LOC when accessing to the void LOC URL and a mention of the fact that
                                 the replacing LOC supersedes the void LOC will be visible on both certificates.
@@ -205,26 +202,23 @@ export default function ContextualizedLocDetails() {
                         }
                     </DangerFrame>
                 }
-                <PolkadotFrame
+                <div
                     className="certificate-link"
-                    title="Public web address (URL) of this Legal Officer Case related Certificate:"
                 >
+                    <h2>Public web address (URL) of this Legal Officer Case related Certificate:</h2>
                     <p className="link">
-                        <a href={ certificateUrl } target="_blank" rel="noreferrer">{ certificateUrl }</a><br/>
-                        <NavLink to={ certificatePath(locId) }>{ certificateUrl }</NavLink>
+                        <a href={ certificateUrl } target="_blank" rel="noreferrer">{ certificateUrl }</a> <CopyPasteButton value={ certificateUrl } />
                     </p>
-                    <Button onClick={ () => copyToClipBoard(certificateUrl) }>Copy LOC Certificate URL to
-                        Clipboard</Button>
-                </PolkadotFrame>
+                </div>
                 <CheckFileFrame
                     checkHash={ checkHash }
                     checkResult={ checkResult.result }
                 />
                 {
-                    voidInfo === null &&
+                    loc.voidInfo === undefined &&
                     <DangerFrame
                         className="void-loc"
-                        title={ <span><Icon icon={{id: 'void'}} height="64px" /> Void this LOC</span> }
+                        title={ <span><Icon icon={{id: 'void'}} width="31px" /> Void this LOC</span> }
                     >
                         <p>
                             This action will invalidate the present LOC: the LOC status, its public certificate will show a "VOID" mention to warn people that

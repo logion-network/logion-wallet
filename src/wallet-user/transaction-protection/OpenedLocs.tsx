@@ -59,7 +59,7 @@ export default function OpenedLocs() {
                     align: 'center',
                 },
             ]}
-            data={ openedLocRequests }
+            data={ openedLocRequests.map(requestAndLoc => requestAndLoc.request) }
             renderEmpty={ () => <EmptyTableMessage>No LOCs</EmptyTableMessage>}
         />
     );

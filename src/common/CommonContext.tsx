@@ -13,15 +13,15 @@ import { Transaction, LocRequest } from './types/ModelTypes';
 import { getTransactions, FetchLocRequestSpecification, fetchLocRequests } from "./Model";
 import { ColorTheme, DEFAULT_COLOR_THEME } from "./ColorTheme";
 import { storeTokens, clearTokens, loadTokens } from './Storage';
-import { VoidInfo } from "../logion-chain/Types";
-import { getVoidInfos } from "../logion-chain/LogionLoc";
-import { UUID } from "../logion-chain/UUID";
+import { LegalOfficerCase } from "../logion-chain/Types";
+import { toDecimalString, UUID } from "../logion-chain/UUID";
+import { getLegalOfficerCasesMap } from "../logion-chain/LogionLoc";
 
 const DEFAULT_NOOP = () => {};
 
-export interface VoidLoc {
+export interface RequestAndLoc {
     request: LocRequest;
-    voidInfo: VoidInfo;
+    loc?: LegalOfficerCase;
 }
 
 export interface CommonContext {
@@ -33,18 +33,18 @@ export interface CommonContext {
     transactions: Transaction[] | null;
     pendingLocRequests: LocRequest[] | null;
     rejectedLocRequests: LocRequest[] | null;
-    openedLocRequests: LocRequest[] | null;
-    closedLocRequests: LocRequest[] | null;
-    openedIdentityLocs: LocRequest[] | null;
-    closedIdentityLocs: LocRequest[] | null;
+    openedLocRequests: RequestAndLoc[] | null;
+    closedLocRequests: RequestAndLoc[] | null;
+    openedIdentityLocs: RequestAndLoc[] | null;
+    closedIdentityLocs: RequestAndLoc[] | null;
     colorTheme: ColorTheme;
     setColorTheme: ((colorTheme: ColorTheme) => void) | null;
     setTokens: (tokens: AccountTokens) => void;
     logout: () => void;
     axiosFactory?: AxiosFactory;
     refresh: (clearOnRefresh?: boolean) => void;
-    voidTransactionLocs: VoidLoc[] | null;
-    voidIdentityLocs: VoidLoc[] | null;
+    voidTransactionLocs: RequestAndLoc[] | null;
+    voidIdentityLocs: RequestAndLoc[] | null;
 }
 
 interface FullCommonContext extends CommonContext {
@@ -117,16 +117,16 @@ interface Action {
     logout?: () => void,
     timer?: number;
     pendingLocRequests?: LocRequest[];
-    openedLocRequests?: LocRequest[];
-    closedLocRequests?: LocRequest[];
+    openedLocRequests?: RequestAndLoc[];
+    closedLocRequests?: RequestAndLoc[];
     rejectedLocRequests?: LocRequest[];
-    openedIdentityLocs?: LocRequest[];
-    closedIdentityLocs?: LocRequest[];
+    openedIdentityLocs?: RequestAndLoc[];
+    closedIdentityLocs?: RequestAndLoc[];
     refresh?: (clearOnRefresh?: boolean) => void;
     refreshAddress?: string;
     clearOnRefresh?: boolean;
-    voidTransactionLocs?: VoidLoc[];
-    voidIdentityLocs?: VoidLoc[];
+    voidTransactionLocs?: RequestAndLoc[];
+    voidIdentityLocs?: RequestAndLoc[];
 }
 
 const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, action: Action): FullCommonContext => {
@@ -300,13 +300,13 @@ export function CommonContextProvider(props: Props) {
                     statuses: ["REQUESTED"]
                 });
 
-                let openedLocRequests = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
+                const openedLocRequestsOnly = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
                     ...specificationFragment,
                     statuses: ["OPEN"],
                     locTypes: ['Transaction']
                 });
 
-                let closedLocRequests = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
+                const closedLocRequestsOnly = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
                     ...specificationFragment,
                     statuses: ["CLOSED"],
                     locTypes: ['Transaction']
@@ -317,49 +317,49 @@ export function CommonContextProvider(props: Props) {
                     statuses: ["REJECTED"]
                 });
 
-                let openedIdentityLocs = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
+                const openedIdentityLocsOnly = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
                     ...specificationFragment,
                     statuses: ["OPEN"],
                     locTypes: ['Identity']
                 });
 
-                let closedIdentityLocs = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
+                const closedIdentityLocsOnly = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
                     ...specificationFragment,
                     statuses: ["CLOSED"],
                     locTypes: ['Identity']
                 });
 
-                let locIds = openedLocRequests.map(loc => new UUID(loc.id));
-                locIds = locIds.concat(closedLocRequests.map(loc => new UUID(loc.id)));
-                locIds = locIds.concat(openedIdentityLocs.map(loc => new UUID(loc.id)));
-                locIds = locIds.concat(closedIdentityLocs.map(loc => new UUID(loc.id)));
-                const voidInfos = await getVoidInfos({
+                let locIds = openedLocRequestsOnly.map(loc => new UUID(loc.id));
+                locIds = locIds.concat(closedLocRequestsOnly.map(loc => new UUID(loc.id)));
+                locIds = locIds.concat(openedIdentityLocsOnly.map(loc => new UUID(loc.id)));
+                locIds = locIds.concat(closedIdentityLocsOnly.map(loc => new UUID(loc.id)));
+                const locs = await getLegalOfficerCasesMap({
                     api: api!,
                     locIds
                 });
 
-                let voidTransactionLocs = openedLocRequests.filter(request => new UUID(request.id).toDecimalString() in voidInfos).map(request => ({
-                    request,
-                    voidInfo: voidInfos[new UUID(request.id).toDecimalString()]
-                }));
-                voidTransactionLocs = voidTransactionLocs.concat(closedLocRequests.filter(request => new UUID(request.id).toDecimalString() in voidInfos).map(request => ({
-                    request,
-                    voidInfo: voidInfos[new UUID(request.id).toDecimalString()]
-                })));
+                let voidTransactionLocs = voidRequestsAndLocs(openedLocRequestsOnly, locs);
+                voidTransactionLocs = voidTransactionLocs.concat(voidRequestsAndLocs(closedLocRequestsOnly, locs));
 
-                let voidIdentityLocs = openedIdentityLocs.filter(request => new UUID(request.id).toDecimalString() in voidInfos).map(request => ({
-                    request,
-                    voidInfo: voidInfos[new UUID(request.id).toDecimalString()]
-                }));
-                voidIdentityLocs = voidIdentityLocs.concat(closedIdentityLocs.filter(request => new UUID(request.id).toDecimalString() in voidInfos).map(request => ({
-                    request,
-                    voidInfo: voidInfos[new UUID(request.id).toDecimalString()]
-                })));
+                let voidIdentityLocs = openedIdentityLocsOnly
+                    .map(request => ({request, loc: locs[toDecimalString((request.id))]}))
+                    .filter(requestAndLoc => requestAndLoc.loc !== undefined && requestAndLoc.loc.voidInfo !== undefined);
+                voidIdentityLocs = voidIdentityLocs.concat(closedIdentityLocsOnly
+                    .map(request => ({request, loc: locs[toDecimalString((request.id))]}))
+                    .filter(requestAndLoc => requestAndLoc.loc !== undefined && requestAndLoc.loc.voidInfo !== undefined));
 
-                openedLocRequests = openedLocRequests.filter(request => !(new UUID(request.id).toDecimalString() in voidInfos));
-                closedLocRequests = closedLocRequests.filter(request => !(new UUID(request.id).toDecimalString() in voidInfos));
-                openedIdentityLocs = openedIdentityLocs.filter(request => !(new UUID(request.id).toDecimalString() in voidInfos));
-                closedIdentityLocs = closedIdentityLocs.filter(request => !(new UUID(request.id).toDecimalString() in voidInfos));
+                const openedLocRequests = openedLocRequestsOnly
+                    .map(request => ({request, loc: locs[toDecimalString((request.id))]}))
+                    .filter(requestAndLoc => requestAndLoc.loc !== undefined && requestAndLoc.loc.voidInfo === undefined);
+                const closedLocRequests = closedLocRequestsOnly
+                    .map(request => ({request, loc: locs[toDecimalString((request.id))]}))
+                    .filter(requestAndLoc => requestAndLoc.loc !== undefined && requestAndLoc.loc.voidInfo === undefined);
+                const openedIdentityLocs = openedIdentityLocsOnly
+                    .map(request => ({request, loc: locs[toDecimalString((request.id))]}))
+                    .filter(requestAndLoc => requestAndLoc.loc !== undefined && requestAndLoc.loc.voidInfo === undefined);
+                const closedIdentityLocs = closedIdentityLocsOnly
+                    .map(request => ({request, loc: locs[toDecimalString((request.id))]}))
+                    .filter(requestAndLoc => requestAndLoc.loc !== undefined && requestAndLoc.loc.voidInfo === undefined);
 
                 dispatch({
                     type: "SET_DATA",
@@ -378,6 +378,12 @@ export function CommonContextProvider(props: Props) {
             })();
         }
     }, [ api, dispatch, contextValue ]);
+
+    function voidRequestsAndLocs(requests: LocRequest[], locs: Record<string, LegalOfficerCase>): RequestAndLoc[] {
+        return requests
+            .map(request => ({request, loc: locs[toDecimalString((request.id))]}))
+            .filter(requestAndLoc => requestAndLoc.loc !== undefined && requestAndLoc.loc.voidInfo !== undefined);
+    }
 
     useEffect(() => {
         if(apiState === "READY"

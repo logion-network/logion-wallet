@@ -23,11 +23,12 @@ export interface LegalOfficerCase {
     links: Link[];
     closed: boolean;
     locType: LocType;
+    voidInfo?: VoidInfo;
+    replacerOf?: UUID;
 }
 
 export type LocType = 'Transaction' | 'Identity';
 
 export interface VoidInfo {
-    reason: string;
-    replacerLocId?: UUID;
+    replacer?: UUID;
 }

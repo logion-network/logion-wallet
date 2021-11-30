@@ -8,6 +8,7 @@ import { sha256Hex } from "../../common/hash";
 import { useLocContext } from "./LocContext";
 import { addFile as modelAddFile } from "../Model";
 import { LocItem } from "./types";
+import Icon from "../../common/Icon";
 
 export default function LocPrivateFileButton() {
 
@@ -46,7 +47,7 @@ export default function LocPrivateFileButton() {
                 reset()
                 setVisible(true)
             } }>
-                Add a confidential document
+                <Icon icon={{id: "add"}} height="19px" /><span className="text">Add a confidential document</span>
             </Button>
             <Dialog
                 show={ visible }

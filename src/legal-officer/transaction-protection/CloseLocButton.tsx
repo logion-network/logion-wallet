@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../common/Button";
 import ProcessStep from "../ProcessStep";
 import Alert from "../../common/Alert";
@@ -6,6 +6,9 @@ import ExtrinsicSubmitter, { SignAndSubmit } from "../../ExtrinsicSubmitter";
 import { useCommonContext } from "../../common/CommonContext";
 
 import { useLocContext } from "./LocContext";
+import Icon from "../../common/Icon";
+
+import './CloseLocButton.css';
 
 enum CloseStatus {
     NONE,
@@ -19,7 +22,7 @@ interface CloseState {
     status: CloseStatus;
 }
 
-export default function LocPublicDataButton() {
+export default function CloseLocButton() {
     const { refresh } = useCommonContext();
     const { closeExtrinsic, close } = useLocContext();
     const [ closeState, setCloseState ] = useState<CloseState>({ status: CloseStatus.NONE });
@@ -34,11 +37,12 @@ export default function LocPublicDataButton() {
     }, [ closeExtrinsic, closeState, setCloseState ]);
 
     return (
-        <>
+        <div className="CloseLocButton">
             <Button
                 onClick={ () => setCloseState({ status: CloseStatus.START }) }
+                className="close"
             >
-                Close LOC
+                <Icon icon={{id: "lock"}} /><span className="text">Close LOC</span>
             </Button>
             <ProcessStep
                 active={ closeState.status === CloseStatus.START || closeState.status === CloseStatus.CLOSE_PENDING }
@@ -70,6 +74,6 @@ export default function LocPublicDataButton() {
                     onError={ () => {
                     } } />
             </ProcessStep>
-        </>
+        </div>
     )
 }
