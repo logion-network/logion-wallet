@@ -1,7 +1,7 @@
 // Auto-generated via `yarn polkadot-types-from-defs`, do not edit
 /* eslint-disable */
 
-import type { Bytes, Enum, Struct, Vec, bool, u128, u32, u64, u8 } from '@polkadot/types';
+import type { Bytes, Enum, Option, Struct, Vec, bool, u128, u32, u64, u8 } from '@polkadot/types';
 import type { AccountId, Balance, Hash, MultiAddress } from '@polkadot/types/interfaces/runtime';
 import type { AccountInfoWithDualRefCount } from '@polkadot/types/interfaces/system';
 import type { DepositBalance } from '@polkadot/types/interfaces/uniques';
@@ -53,6 +53,8 @@ export interface LegalOfficerCaseOf extends Struct {
   readonly closed: bool;
   readonly loc_type: LocType;
   readonly links: Vec<LocLink>;
+  readonly void_info: Option<LocVoidInfo>;
+  readonly replacer_of: Option<LocId>;
 }
 
 /** @name LocId */
@@ -70,6 +72,11 @@ export interface LocType extends Enum {
   readonly isIdentity: boolean;
 }
 
+/** @name LocVoidInfo */
+export interface LocVoidInfo extends Struct {
+  readonly replacer: Option<LocId>;
+}
+
 /** @name LookupSource */
 export interface LookupSource extends MultiAddress {}
 
@@ -81,6 +88,12 @@ export interface MetadataItem extends Struct {
 
 /** @name PeerId */
 export interface PeerId extends Bytes {}
+
+/** @name StorageVersion */
+export interface StorageVersion extends Enum {
+  readonly isV1: boolean;
+  readonly isV2MakeLocVoid: boolean;
+}
 
 /** @name TAssetBalance */
 export interface TAssetBalance extends u128 {}

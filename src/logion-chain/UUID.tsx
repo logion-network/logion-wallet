@@ -49,3 +49,7 @@ export class UUID {
         return new BN(hexString, 16).toString(10);
     }
 }
+
+export function toDecimalString(value: string): string {
+    return new UUID(value).toDecimalString();
+}

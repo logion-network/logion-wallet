@@ -165,9 +165,17 @@ declare module '@polkadot/api/types/errors' {
        **/
       AlreadyExists: AugmentedError<ApiType>;
       /**
+       * Occurs when trying to void a LOC already void
+       **/
+      AlreadyVoid: AugmentedError<ApiType>;
+      /**
        * Occurs when trying to mutate a closed LOC
        **/
       CannotMutate: AugmentedError<ApiType>;
+      /**
+       * Occurs when trying to mutate a void LOC
+       **/
+      CannotMutateVoid: AugmentedError<ApiType>;
       /**
        * Occurs when trying to link to a non-existent LOC
        **/
@@ -176,6 +184,18 @@ declare module '@polkadot/api/types/errors' {
        * Target LOC does not exist
        **/
       NotFound: AugmentedError<ApiType>;
+      /**
+       * Occurs when trying to void a LOC by replacing it with a LOC already replacing another LOC
+       **/
+      ReplacerLocAlreadyReplacing: AugmentedError<ApiType>;
+      /**
+       * Occurs when trying to void a LOC by replacing it with an already void LOC
+       **/
+      ReplacerLocAlreadyVoid: AugmentedError<ApiType>;
+      /**
+       * Occurs when trying to replace void LOC with a non-existent LOC
+       **/
+      ReplacerLocNotFound: AugmentedError<ApiType>;
       /**
        * Unauthorized LOC operation
        **/

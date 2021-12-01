@@ -1,7 +1,7 @@
 // Auto-generated via `yarn polkadot-types-from-chain`, do not edit
 /* eslint-disable */
 
-import type { LegalOfficerCaseOf, LocId, PeerId } from '../interfaces/default';
+import type { LegalOfficerCaseOf, LocId, PeerId, StorageVersion } from '../interfaces/default';
 import type { ApiTypes } from '@polkadot/api/types';
 import type { BTreeSet, Bytes, Option, U8aFixed, Vec, bool, u32 } from '@polkadot/types';
 import type { AssetBalance, AssetDetails, AssetMetadata } from '@polkadot/types/interfaces/assets';
@@ -116,6 +116,10 @@ declare module '@polkadot/api/types/storage' {
        * All LOCs indexed by ID.
        **/
       locMap: AugmentedQuery<ApiType, (arg: LocId | AnyNumber | Uint8Array) => Observable<Option<LegalOfficerCaseOf>>, [LocId]> & QueryableStorageEntry<ApiType, [LocId]>;
+      /**
+       * Storage version
+       **/
+      palletStorageVersion: AugmentedQuery<ApiType, () => Observable<StorageVersion>, []> & QueryableStorageEntry<ApiType, []>;
       /**
        * Generic query
        **/

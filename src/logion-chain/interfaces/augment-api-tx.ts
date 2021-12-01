@@ -443,6 +443,14 @@ declare module '@polkadot/api/types/submittable' {
        **/
       createLoc: AugmentedSubmittable<(locId: Compact<LocId> | AnyNumber | Uint8Array, requester: AccountId | string | Uint8Array, locType: LocType | 'Transaction' | 'Identity' | number | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<LocId>, AccountId, LocType]>;
       /**
+       * Make a LOC void.
+       **/
+      makeVoid: AugmentedSubmittable<(locId: Compact<LocId> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<LocId>]>;
+      /**
+       * Make a LOC void and provide a replacer.
+       **/
+      makeVoidAndReplace: AugmentedSubmittable<(locId: Compact<LocId> | AnyNumber | Uint8Array, replacerLocId: Compact<LocId> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<LocId>, Compact<LocId>]>;
+      /**
        * Generic tx
        **/
       [key: string]: SubmittableExtrinsicFunction<ApiType>;

@@ -161,7 +161,7 @@ export default function Account() {
                                                 align: 'center',
                                             },
                                         ]}
-                                        data={ openedLocRequests.slice(0, MAX_OPEN_LOCS) }
+                                        data={ openedLocRequests.map(requestAndLoc => requestAndLoc.request).slice(0, MAX_OPEN_LOCS) }
                                         renderEmpty={ () => <EmptyTableMessage>No open LOC yet</EmptyTableMessage>}
                                     />
                                 }

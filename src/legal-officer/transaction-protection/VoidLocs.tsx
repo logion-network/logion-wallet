@@ -28,42 +28,42 @@ export default function VoidLocs(props: Props) {
             columns={[
                 {
                     "header": "Requester",
-                    render: request => <UserIdentityNameCell userIdentity={ request.request.userIdentity }/>,
+                    render: requestAndLoc => <UserIdentityNameCell userIdentity={ requestAndLoc.request.userIdentity }/>,
                     align: 'left',
                 },
                 {
                     "header": "Description",
-                    render: request => <Cell content={ request.request.description } />,
+                    render: requestAndLoc => <Cell content={ requestAndLoc.request.description } />,
                     align: 'left',
                 },
                 {
                     header: "Status",
-                    render: request => <LocStatusCell status={ request.request.status } voidLoc={ true } />,
+                    render: requestAndLoc => <LocStatusCell status={ requestAndLoc.request.status } voidLoc={ true } />,
                     width: "140px",
                 },
                 {
                     header: "LOC ID",
-                    render: request => <LocIdCell status={ request.request.status } id={ request.request.id } />,
+                    render: requestAndLoc => <LocIdCell status={ requestAndLoc.request.status } id={ requestAndLoc.request.id } />,
                     align: "left",
                 },
                 {
                     header: "Creation date",
-                    render: request => <DateTimeCell dateTime={ request.request.createdOn || null } />,
+                    render: requestAndLoc => <DateTimeCell dateTime={ requestAndLoc.request.createdOn || null } />,
                     width: '200px',
                     align: 'center',
                 },
                 {
                     header: "Voiding date",
-                    render: request => <DateTimeCell dateTime={ request.request.voidedOn || null } />,
+                    render: requestAndLoc => <DateTimeCell dateTime={ requestAndLoc.request.voidInfo?.voidedOn || null } />,
                     width: '200px',
                     align: 'center',
                 },
                 {
                     header: "Action",
-                    render: request =>
+                    render: requestAndLoc =>
                         <ActionCell>
                             <ButtonGroup>
-                                <Button onClick={ () => navigate(locDetailsPath(request.request.id)) }>View</Button>
+                                <Button onClick={ () => navigate(locDetailsPath(requestAndLoc.request.id)) }>View</Button>
                             </ButtonGroup>
                         </ActionCell>
                     ,

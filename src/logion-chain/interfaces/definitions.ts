@@ -34,7 +34,9 @@ export default {
             files: "Vec<File>",
             closed: "bool",
             loc_type: "LocType",
-            links: "Vec<LocLink>"
+            links: "Vec<LocLink>",
+            void_info: "Option<LocVoidInfo<LocId>>",
+            replacer_of: "Option<LocId>"
         },
         MetadataItem: {
             name: "Vec<u8>",
@@ -53,6 +55,15 @@ export default {
         File: {
             hash: "Hash",
             nature: "Vec<u8>",
+        },
+        LocVoidInfo: {
+          "replacer": "Option<LocId>"
+        },
+        StorageVersion: {
+          "_enum": [
+            "V1",
+            "V2MakeLocVoid"
+          ]
         }
     }
 };

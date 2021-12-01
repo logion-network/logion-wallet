@@ -3,7 +3,7 @@ import React, { useContext, useReducer, Reducer, useEffect, useCallback, useStat
 import { LocRequest, LocFile, LocMetadataItem, LocLink } from "../../common/types/ModelTypes";
 import { confirmLocFile, deleteLocFile, preClose, fetchLocRequest, preVoid } from "../../common/Model";
 import { useCommonContext } from "../../common/CommonContext";
-import { getLegalOfficerCase, addMetadata, addFile, closeLoc, addLink, voidLoc, getVoidInfo } from "../../logion-chain/LogionLoc";
+import { getLegalOfficerCase, addMetadata, addFile, closeLoc, addLink, voidLoc } from "../../logion-chain/LogionLoc";
 import { LegalOfficerCase, VoidInfo } from "../../logion-chain/Types";
 import { useLogionChain } from "../../logion-chain";
 import { SignAndSubmit } from "../../ExtrinsicSubmitter";
@@ -19,11 +19,14 @@ import {
     createPublishedLinkedLocItem
 } from "./LocItemFactory";
 
+export interface FullVoidInfo extends VoidInfo {
+    reason: string;
+}
+
 export interface LocContext {
     locId: UUID
     locRequest: LocRequest | null
     loc: LegalOfficerCase | null
-    voidInfo?: VoidInfo | null
     locItems: LocItem[]
     addMetadata: ((name: string, value: string) => void) | null
     linkLoc: ((otherLocId: UUID, otherLocDescription: string, nature: string) => void) | null
@@ -37,8 +40,8 @@ export interface LocContext {
     closeExtrinsic: (() => SignAndSubmit) | null
     confirmFile: ((locItem: LocItem) => void) | null
     deleteFile: ((locItem: LocItem) => void) | null
-    voidLoc: ((voidInfo: VoidInfo) => void) | null
-    voidLocExtrinsic: ((voidInfo: VoidInfo) => SignAndSubmit) | null
+    voidLoc: ((voidInfo: FullVoidInfo) => void) | null
+    voidLocExtrinsic?: ((voidInfo: VoidInfo) => SignAndSubmit) | null
 }
 
 const MAX_REFRESH = 20;
@@ -78,7 +81,7 @@ type ActionType = 'SET_LOC_REQUEST'
     | 'UPDATE_ITEM_TIMESTAMP'
     | 'DELETE_ITEM'
     | 'CLOSE'
-    | 'SET_VOID_INFO'
+    | 'VOID'
 
 interface Action {
     type: ActionType,
@@ -100,8 +103,8 @@ interface Action {
     closeExtrinsic?: () => SignAndSubmit,
     confirmFile?: (locItem: LocItem) => void,
     deleteFile?: (locItem: LocItem) => void,
-    voidInfo?: VoidInfo | null,
-    voidLoc?: (voidInfo: VoidInfo) => void,
+    voidInfo?: FullVoidInfo,
+    voidLoc?: (voidInfo: FullVoidInfo) => void,
     voidLocExtrinsic?: (voidInfo: VoidInfo) => SignAndSubmit,
 }
 
@@ -157,8 +160,22 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
                     closed: true,
                 }
             }
-        case "SET_VOID_INFO":
-            return { ...state, voidInfo: action.voidInfo! }
+        case "VOID": 
+            return {
+                ...state,
+                loc: {
+                    ...state.loc!,
+                    voidInfo: {
+                        replacer: action.voidInfo!.replacer
+                    }
+                },
+                locRequest: {
+                    ...state.locRequest!,
+                    voidInfo: {
+                        reason: action.voidInfo!.reason
+                    }
+                }
+            }
         default:
             throw new Error(`Unknown type: ${ action.type }`);
     }
@@ -434,9 +451,9 @@ export function LocContextProvider(props: Props) {
         return signAndSubmit;
     }, [ api, contextValue.locId, contextValue.loc ])
 
-    const voidLocFunction = useCallback((voidInfo: VoidInfo) => {
-        preVoid(axiosFactory!(accounts!.current!.address)!, contextValue.locId)
-            .then(() => dispatch({ type: 'SET_VOID_INFO', voidInfo }));
+    const voidLocFunction = useCallback((voidInfo: FullVoidInfo) => {
+        preVoid(axiosFactory!(accounts!.current!.address)!, contextValue.locId, voidInfo.reason)
+            .then(() => dispatch({ type: 'VOID', voidInfo }));
     }, [ axiosFactory, accounts, contextValue.locId, dispatch ])
 
     useEffect(() => {
@@ -488,10 +505,6 @@ export function LocContextProvider(props: Props) {
                 .then(loc => {
                     dispatch({ type: 'SET_LOC', loc })
                     if (loc) {
-                        getVoidInfo({ locId: contextValue.locId, api })
-                            .then(voidInfo => {
-                                dispatch({ type: 'SET_VOID_INFO', voidInfo })
-                            });
                         loc!.metadata.forEach(item => {
                             const locItem = createPublishedMetadataLocItem(item, loc!.owner)
                             dispatch({ type: 'ADD_ITEM', locItem })

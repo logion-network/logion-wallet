@@ -165,6 +165,10 @@ declare module '@polkadot/api/types/events' {
        **/
       LocCreated: AugmentedEvent<ApiType, [LocId]>;
       /**
+       * Issued when LOC is made void. [locId]
+       **/
+      LocVoid: AugmentedEvent<ApiType, [LocId]>;
+      /**
        * Generic event
        **/
       [key: string]: AugmentedEvent<ApiType>;

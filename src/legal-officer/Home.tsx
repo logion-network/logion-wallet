@@ -126,31 +126,31 @@ export default function Account() {
                                         columns={[
                                             {
                                                 "header": "Requester",
-                                                render: request => <UserIdentityNameCell userIdentity={ request.userIdentity }/>,
+                                                render: requestAndLoc => <UserIdentityNameCell userIdentity={ requestAndLoc.request.userIdentity }/>,
                                                 align: 'left',
                                             },
                                             {
                                                 "header": "Description",
-                                                render: request => <Cell content={ request.description } />,
+                                                render: requestAndLoc => <Cell content={ requestAndLoc.request.description } />,
                                                 align: 'left',
                                             },
                                             {
                                                 header: "Status",
-                                                render: request => <LocStatusCell status={ request.status }/>,
+                                                render: requestAndLoc => <LocStatusCell status={ requestAndLoc.request.status }/>,
                                                 width: "140px",
                                             },
                                             {
                                                 "header": "Creation date",
-                                                render: request => <DateTimeCell dateTime={ request.createdOn || null } />,
+                                                render: requestAndLoc => <DateTimeCell dateTime={ requestAndLoc.request.createdOn || null } />,
                                                 width: '200px',
                                                 align: 'center',
                                             },
                                             {
                                                 header: "Action",
-                                                render: request =>
+                                                render: requestAndLoc =>
                                                     <ActionCell>
                                                         <ButtonGroup>
-                                                            <Button onClick={ () => navigate(locDetailsPath(request.id)) }>Manage LOC</Button>
+                                                            <Button onClick={ () => navigate(locDetailsPath(requestAndLoc.request.id)) }>Manage LOC</Button>
                                                         </ButtonGroup>
                                                     </ActionCell>
                                                 ,
@@ -158,7 +158,7 @@ export default function Account() {
                                                 align: 'center',
                                             }
                                         ]}
-                                        data={ openedLocRequests.filter(request => request.locType === "Transaction").slice(0, MAX_OPEN_LOCS) }
+                                        data={ openedLocRequests.filter(requestAndLoc => requestAndLoc.request.locType === "Transaction").slice(0, MAX_OPEN_LOCS) }
                                         renderEmpty={ () => <EmptyTableMessage>No open LOC yet</EmptyTableMessage>}
                                     />
                                 }
@@ -224,31 +224,31 @@ export default function Account() {
                                         columns={[
                                             {
                                                 "header": "Requester",
-                                                render: request => <UserIdentityNameCell userIdentity={ request.userIdentity }/>,
+                                                render: requestAndLoc => <UserIdentityNameCell userIdentity={ requestAndLoc.request.userIdentity }/>,
                                                 align: 'left',
                                             },
                                             {
                                                 "header": "Description",
-                                                render: request => <Cell content={ request.description } />,
+                                                render: requestAndLoc => <Cell content={ requestAndLoc.request.description } />,
                                                 align: 'left',
                                             },
                                             {
                                                 header: "Status",
-                                                render: request => <LocStatusCell status={ request.status }/>,
+                                                render: requestAndLoc => <LocStatusCell status={ requestAndLoc.request.status }/>,
                                                 width: "140px",
                                             },
                                             {
                                                 "header": "Creation date",
-                                                render: request => <DateTimeCell dateTime={ request.createdOn || null } />,
+                                                render: requestAndLoc => <DateTimeCell dateTime={ requestAndLoc.request.createdOn || null } />,
                                                 width: '200px',
                                                 align: 'center',
                                             },
                                             {
                                                 header: "Action",
-                                                render: request =>
+                                                render: requestAndLoc =>
                                                     <ActionCell>
                                                         <ButtonGroup>
-                                                            <Button onClick={ () => navigate(locDetailsPath(request.id)) }>Manage LOC</Button>
+                                                            <Button onClick={ () => navigate(locDetailsPath(requestAndLoc.request.id)) }>Manage LOC</Button>
                                                         </ButtonGroup>
                                                     </ActionCell>
                                                 ,

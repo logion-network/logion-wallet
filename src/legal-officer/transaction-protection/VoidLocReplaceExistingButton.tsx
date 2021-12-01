@@ -8,9 +8,8 @@ import Icon from "../../common/Icon";
 import ExtrinsicSubmitter, { SignAndSubmit } from "../../ExtrinsicSubmitter";
 import { useLogionChain } from "../../logion-chain";
 import { getLegalOfficerCase } from "../../logion-chain/LogionLoc";
-import { VoidInfo } from "../../logion-chain/Types";
 import { UUID } from "../../logion-chain/UUID";
-import { useLocContext } from "./LocContext";
+import { FullVoidInfo, useLocContext } from "./LocContext";
 
 export default function VoidLocReplaceExistingButton() {
     const { colorTheme, refresh } = useCommonContext();
@@ -21,7 +20,7 @@ export default function VoidLocReplaceExistingButton() {
     const [ reason, setReason ] = useState<string>("");
     const [ replacerLocId, setReplacerLocId ] = useState<string>("");
     const [ replacerLocIdError, setReplacerLocIdError ] = useState<string | undefined>(undefined);
-    const [ voidInfo, setVoidInfo ] = useState<VoidInfo | null>(null);
+    const [ voidInfo, setVoidInfo ] = useState<FullVoidInfo | null>(null);
 
     const checkAndVoid = useCallback(async () => {
         const locId = UUID.fromDecimalString(replacerLocId);
@@ -33,9 +32,9 @@ export default function VoidLocReplaceExistingButton() {
                 setReplacerLocIdError("LOC not found on chain");
             } else {
                 setReplacerLocIdError(undefined);
-                const voidInfo = {
+                const voidInfo: FullVoidInfo = {
                     reason,
-                    replacerLocId: locId
+                    replacer: locId
                 }
                 setVoidInfo(voidInfo);
                 setSignAndSubmit(() => voidLocExtrinsic!(voidInfo));
@@ -56,7 +55,7 @@ export default function VoidLocReplaceExistingButton() {
 
     return (
         <>
-            <Button variant="danger" onClick={ () => setVisible(true) }><Icon icon={{id: 'void_inv'}} /> Void and replace by an EXISTING LOC</Button>
+            <Button variant="danger" onClick={ () => setVisible(true) }>Void and replace by an EXISTING LOC</Button>
             <DangerDialog
                 show={ visible }
                 size="lg"
@@ -75,7 +74,8 @@ export default function VoidLocReplaceExistingButton() {
                     }
                 ]}
             >
-                <h2><Icon icon={{id: 'void'}} height="64px" /> Void this LOC and replace it by a NEW LOC, you create now</h2>
+                <Icon icon={{id: 'void'}} width="31px" />
+                <h2>Void this LOC and replace it by a NEW LOC, you create now</h2>
                 <p>This action will invalidate the present LOC: the LOC status, its public certificate will show a "VOID" mention to warn people that
                     the content of the LOC is not valid anymore. As you are about to set a replacing LOC, people will be automatically redirected to
                     the replacing LOC when accessing to the void LOC URL and a mention of the fact that the replacing LOC supersedes the void LOC will

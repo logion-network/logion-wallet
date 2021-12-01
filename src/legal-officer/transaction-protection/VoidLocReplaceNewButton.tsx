@@ -8,10 +8,9 @@ import Icon from "../../common/Icon";
 import { createLocRequest, CreateLocRequest } from "../../common/Model";
 import { LocRequest } from "../../common/types/ModelTypes";
 import ExtrinsicSubmitter, { SignAndSubmit } from "../../ExtrinsicSubmitter";
-import { VoidInfo } from "../../logion-chain/Types";
 import { UUID } from "../../logion-chain/UUID";
 import { useLegalOfficerContext } from "../LegalOfficerContext";
-import { useLocContext } from "./LocContext";
+import { FullVoidInfo, useLocContext } from "./LocContext";
 import LocCreationSteps from "./LocCreationSteps";
 
 export default function VoidLocReplaceNewButton() {
@@ -23,7 +22,7 @@ export default function VoidLocReplaceNewButton() {
     const [ reason, setReason ] = useState<string>("");
     const [ newLocDescription, setNewLocDescritpion ] = useState<string>("");
     const [ newLocRequest, setNewLocRequest ] = useState<LocRequest | null>(null);
-    const [ voidInfo, setVoidInfo ] = useState<VoidInfo | null>(null);
+    const [ voidInfo, setVoidInfo ] = useState<FullVoidInfo | null>(null);
 
     const createNewLocRequest = useCallback(() => {
         (async function () {
@@ -45,7 +44,7 @@ export default function VoidLocReplaceNewButton() {
 
     return (
         <>
-            <Button variant="danger" onClick={ () => setVisible(true) }><Icon icon={{id: 'void_inv'}} /> Void and replace by a NEW LOC</Button>
+            <Button variant="danger" onClick={ () => setVisible(true) }>Void and replace by a NEW LOC</Button>
             <DangerDialog
                 show={ visible }
                 size="lg"
@@ -64,7 +63,8 @@ export default function VoidLocReplaceNewButton() {
                     }
                 ]}
             >
-                <h2><Icon icon={{id: 'void'}} height="64px" /> Void this LOC and replace it by a NEW LOC, you create now</h2>
+                <Icon icon={{id: 'void'}} width="31px" />
+                <h2>Void this LOC and replace it by a NEW LOC, you create now</h2>
                 <p>This action will invalidate the present LOC: the LOC status, its public certificate will show a "VOID" mention to warn people that
                     the content of the LOC is not valid anymore. As you are about to set a replacing LOC, people will be automatically redirected to
                     the replacing LOC when accessing to the void LOC URL and a mention of the fact that the replacing LOC supersedes the void LOC will
@@ -101,7 +101,7 @@ export default function VoidLocReplaceNewButton() {
                         onSuccess={ () => {
                             const voidInfo = {
                                 reason,
-                                replacerLocId: new UUID(newLocRequest.id)
+                                replacer: new UUID(newLocRequest.id)
                             };
                             setVoidInfo(voidInfo);
                             setNewLocRequest(null);

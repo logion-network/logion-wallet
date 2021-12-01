@@ -1,5 +1,5 @@
 .ContextualizedLocDetails .TwoSideButtonGroup {
-    margin-top: 30px;
+    margin-top: 40px;
 }
 
 .ContextualizedLocDetails .closed-icon-container {
@@ -16,13 +16,13 @@
     margin-top: 30px;
 }
 
-.ContextualizedLocDetails .certificate-link .title {
-    margin-bottom: 10px;
+.Dashboard .ContextualizedLocDetails .certificate-link .link a {
+    margin-bottom: 18px;
+    color: #0d6efd;
 }
 
-.ContextualizedLocDetails .certificate-link .link {
-    margin-bottom: 18px;
-    font-size: 18px;
+.ContextualizedLocDetails .certificate-link .CopyPasteButton {
+    margin-left: 10px;
 }
 
 .ContextualizedLocDetails .CheckFileFrame {

@@ -5,6 +5,7 @@ import { useCommonContext } from "../../common/CommonContext";
 import { useForm } from "react-hook-form";
 import React, { useCallback, useState } from "react";
 import { useLocContext } from "./LocContext";
+import Icon from "../../common/Icon";
 
 export default function LocPublicDataButton() {
 
@@ -23,7 +24,7 @@ export default function LocPublicDataButton() {
             <Button onClick={ () => {
                 reset();
                 setVisible(true)
-            } }>Add a public data</Button>
+            } }><Icon icon={{id: "add"}} height="19px" /><span className="text">Add a public data</span></Button>
             <Dialog
                 show={ visible }
                 size={ "lg" }

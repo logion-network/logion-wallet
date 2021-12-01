@@ -1,9 +1,9 @@
 import { ApiPromise } from '@polkadot/api';
 import { stringToHex } from '@polkadot/util';
-import { ExtrinsicSubmissionParameters, sign, signAndSend, SignedTransaction, Unsubscriber } from './Signature';
+import { ExtrinsicSubmissionParameters, signAndSend, Unsubscriber } from './Signature';
 import { UUID } from './UUID';
 import { LegalOfficerCase, MetadataItem, LocType, VoidInfo } from './Types';
-import moment from 'moment';
+import { LegalOfficerCaseOf } from './interfaces';
 
 export interface LocCreationParameters extends ExtrinsicSubmissionParameters {
     api: ApiPromise;
@@ -73,28 +73,76 @@ export async function getLegalOfficerCase(
 
     const result = await api.query.logionLoc.locMap(locId.toHexString());
     if(result.isSome) {
-        const rawLoc = result.unwrap();
-        return {
-            owner: rawLoc.owner.toString(),
-            requester: rawLoc.requester.toString(),
-            metadata: rawLoc.metadata.toArray().map(rawItem => ({
-                name: rawItem.name.toUtf8(),
-                value: rawItem.value.toUtf8(),
-            })),
-            files: rawLoc.files.toArray().map(rawFile => ({
-                hash: rawFile.get('hash')!.toHex(),
-                nature: rawFile.nature.toUtf8()
-            })),
-            links: rawLoc.links.toArray().map(rawLink => ({
-                id: UUID.fromDecimalString(rawLink.id.toString())!,
-                nature: rawLink.nature.toUtf8()
-            })),
-            closed: rawLoc.closed.isTrue,
-            locType: rawLoc.loc_type.isIdentity ? 'Identity' : 'Transaction',
-        };
+        return toModel(result.unwrap());
     } else {
         return undefined;
     }
+}
+
+function toModel(rawLoc: LegalOfficerCaseOf): LegalOfficerCase {
+    return {
+        owner: rawLoc.owner.toString(),
+        requester: rawLoc.requester.toString(),
+        metadata: rawLoc.metadata.toArray().map(rawItem => ({
+            name: rawItem.name.toUtf8(),
+            value: rawItem.value.toUtf8(),
+        })),
+        files: rawLoc.files.toArray().map(rawFile => ({
+            hash: rawFile.get('hash')!.toHex(),
+            nature: rawFile.nature.toUtf8()
+        })),
+        links: rawLoc.links.toArray().map(rawLink => ({
+            id: UUID.fromDecimalString(rawLink.id.toString())!,
+            nature: rawLink.nature.toUtf8()
+        })),
+        closed: rawLoc.closed.isTrue,
+        locType: rawLoc.loc_type.isIdentity ? 'Identity' : 'Transaction',
+        voidInfo: rawLoc.void_info.isSome ? {
+            replacer: rawLoc.void_info.unwrap().replacer.isSome ? UUID.fromDecimalString(rawLoc.void_info.unwrap().replacer.toString()) : undefined
+        } : undefined,
+        replacerOf: rawLoc.replacer_of.isSome ? UUID.fromDecimalString(rawLoc.replacer_of.toString()) : undefined
+    };
+}
+
+export interface GetLegalOfficerCasesParameters {
+    api: ApiPromise;
+    locIds: UUID[];
+}
+
+export async function getLegalOfficerCases(
+    parameters: GetLegalOfficerCasesParameters
+): Promise<(LegalOfficerCase | undefined)[]> {
+    const {
+        api,
+        locIds,
+    } = parameters;
+
+    const result = await Promise.all(locIds.map(id => api.query.logionLoc.locMap(id.toHexString())));
+    const locs: (LegalOfficerCase | undefined)[] = [];
+    for(let i = 0; i < result.length; ++i) {
+        const option = result[i];
+        if(option.isSome) {
+            locs.push(toModel(option.unwrap()));
+        } else {
+            locs.push(undefined);
+        }
+    }
+    return locs;
+}
+
+export async function getLegalOfficerCasesMap(
+    parameters: GetLegalOfficerCasesParameters
+): Promise<Record<string, LegalOfficerCase>> {
+    const locs = await getLegalOfficerCases(parameters);
+    const map: Record<string, LegalOfficerCase> = {};
+    for(let i = 0; i < locs.length; ++i) {
+        const loc = locs[i];
+        const locId = parameters.locIds[i];
+        if(loc !== undefined) {
+            map[locId.toDecimalString()] = loc;
+        }
+    }
+    return map;
 }
 
 export interface AddFileParameters extends ExtrinsicSubmissionParameters {
@@ -185,80 +233,27 @@ export interface VoidLocParameters extends ExtrinsicSubmissionParameters {
 
 export function voidLoc(parameters: VoidLocParameters): Unsubscriber {
     const {
-        // api,
+        api,
         signerId,
         callback,
-        // errorCallback,
+        errorCallback,
         locId,
         voidInfo,
     } = parameters;
 
-    // TODO signAndSend
-
-    return sign({
-        attributes: [],
-        resource: "",
-        operation: "",
-        signerId,
-        signedOn: moment()
-    })
-    .then(() => {
-        voidMap[locId.toString()] = voidInfo;
-
-        const mockResult: unknown = {
-            isInBlock: true,
-            status: {
-                type: "InBlock"
-            }
-        };
-        const result = mockResult as SignedTransaction;
-        callback(result);
-        return Promise.resolve(() => {});
-    });
-}
-
-const voidMap: Record<string, VoidInfo> = {};
-
-export interface GetVoidInfoParameters {
-    api: ApiPromise;
-    locId: UUID;
-}
-
-export async function getVoidInfo(
-    parameters: GetVoidInfoParameters
-): Promise<VoidInfo | null> {
-    const {
-        // api,
-        locId,
-    } = parameters;
-    const key = locId.toString();
-    if(key in voidMap) {
-        return Promise.resolve(voidMap[key]);
+    if(voidInfo.replacer === undefined) {
+        return signAndSend({
+            signerId,
+            submittable: api.tx.logionLoc.makeVoid(locId.toHexString()),
+            callback,
+            errorCallback,
+        });
     } else {
-        return Promise.resolve(null);
+        return signAndSend({
+            signerId,
+            submittable: api.tx.logionLoc.makeVoidAndReplace(locId.toHexString(), voidInfo.replacer.toHexString()),
+            callback,
+            errorCallback,
+        });
     }
-}
-
-export interface GetVoidInfosParameters {
-    api: ApiPromise;
-    locIds: UUID[];
-}
-
-export async function getVoidInfos(
-    parameters: GetVoidInfosParameters
-): Promise<Record<string, VoidInfo>> {
-    const {
-        // api,
-        locIds,
-    } = parameters;
-
-    let infos: Record<string, VoidInfo> = {};
-    for(let i = 0; i < locIds.length; ++i) {
-        const locId = locIds[i];
-        const key = locId.toString();
-        if(key in voidMap) {
-            infos[locId.toDecimalString()] = voidMap[key];
-        }
-    }
-    return Promise.resolve(infos);
 }

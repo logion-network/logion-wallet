@@ -133,6 +133,12 @@ export class ApiPromise {
                     loc_type: {
                         isTransaction: DEFAULT_LOC.locType === 'Transaction',
                         isIdentity: DEFAULT_LOC.locType === 'Identity',
+                    },
+                    void_info: {
+                        isSome: false
+                    },
+                    replacer_of: {
+                        isSome: false
                     }
                 })
             })

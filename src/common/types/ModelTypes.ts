@@ -67,6 +67,11 @@ export interface LocLink {
     addedOn: string;
 }
 
+export interface LocRequestVoidInfo {
+    reason?: string; // undefined in public view
+    voidedOn?: string;
+}
+
 export interface LocRequest {
     ownerAddress: string;
     requesterAddress: string;
@@ -82,7 +87,7 @@ export interface LocRequest {
     files: LocFile[];
     metadata: LocMetadataItem[];
     links: LocLink[];
-    voidedOn?: string;
+    voidInfo?: LocRequestVoidInfo;
 }
 
 export type LocRequestStatus = "OPEN" | "REQUESTED" | "REJECTED" | "CLOSED";

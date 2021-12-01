@@ -22,42 +22,42 @@ export default function ClosedLocs() {
             columns={[
                 {
                     "header": "Legal Officer",
-                    render: request => <LegalOfficerName address={ request.ownerAddress } />,
+                    render: requestAndLoc => <LegalOfficerName address={ requestAndLoc.request.ownerAddress } />,
                     align: 'left',
                 },
                 {
                     "header": "Description",
-                    render: request => <Cell content={ request.description } />,
+                    render: requestAndLoc => <Cell content={ requestAndLoc.request.description } />,
                     align: 'left',
                 },
                 {
                     header: "Status",
-                    render: request => <LocStatusCell status={ request.status }/>,
+                    render: requestAndLoc => <LocStatusCell status={ requestAndLoc.request.status }/>,
                     width: "140px",
                 },
                 {
                     header: "LOC ID",
-                    render: request => <LocIdCell status={ request.status } id={ request.id }/>,
+                    render: requestAndLoc => <LocIdCell status={ requestAndLoc.request.status } id={ requestAndLoc.request.id }/>,
                     align: "left",
                 },
                 {
                     "header": "Creation date",
-                    render: request => <DateTimeCell dateTime={ request.createdOn || null } />,
+                    render: requestAndLoc => <DateTimeCell dateTime={ requestAndLoc.request.createdOn || null } />,
                     width: '200px',
                     align: 'center',
                 },
                 {
                     header: "Closing date",
-                    render: request => <DateTimeCell dateTime={ request.closedOn || null } />,
+                    render: requestAndLoc => <DateTimeCell dateTime={ requestAndLoc.request.closedOn || null } />,
                     width: '200px',
                     align: 'center',
                 },
                 {
                     header: "Action",
-                    render: request =>
+                    render: requestAndLoc =>
                         <ActionCell>
                             <ButtonGroup>
-                                <Button onClick={ () => window.open(fullCertificateUrl(new UUID(request.id))) }>Certificate</Button>
+                                <Button onClick={ () => window.open(fullCertificateUrl(new UUID(requestAndLoc.request.id))) }>Certificate</Button>
                             </ButtonGroup>
                         </ActionCell>
                     ,

@@ -17,7 +17,6 @@
     border-radius: 5px;
     border-style: solid;
     text-align: center;
-    font-weight: bold;
     border-color: #e6007a;
 }
 
@@ -35,4 +34,11 @@
 .Dialog .modal-footer > * {
     margin-left: 12px;
     margin-right: 12px;
+}
+
+.Dialog .modal-content h2 {
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
