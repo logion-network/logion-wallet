@@ -173,6 +173,10 @@ declare module '@polkadot/api/types/errors' {
        **/
       CannotMutate: AugmentedError<ApiType>;
       /**
+       * Occurs when trying to mutate a void LOC
+       **/
+      CannotMutateVoid: AugmentedError<ApiType>;
+      /**
        * Occurs when trying to link to a non-existent LOC
        **/
       LinkedLocNotFound: AugmentedError<ApiType>;
