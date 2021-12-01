@@ -1,10 +1,10 @@
 import { UUID } from "../../logion-chain/UUID";
 import React, { useContext, useReducer, Reducer, useEffect, useCallback, useState } from "react";
 import { LocRequest, LocFile, LocMetadataItem, LocLink } from "../../common/types/ModelTypes";
-import { confirmLocFile, deleteLocFile, preClose, fetchLocRequest } from "../../common/Model";
+import { confirmLocFile, deleteLocFile, preClose, fetchLocRequest, preVoid } from "../../common/Model";
 import { useCommonContext } from "../../common/CommonContext";
-import { getLegalOfficerCase, addMetadata, addFile, closeLoc, addLink } from "../../logion-chain/LogionLoc";
-import { LegalOfficerCase } from "../../logion-chain/Types";
+import { getLegalOfficerCase, addMetadata, addFile, closeLoc, addLink, voidLoc, getVoidInfo } from "../../logion-chain/LogionLoc";
+import { LegalOfficerCase, VoidInfo } from "../../logion-chain/Types";
 import { useLogionChain } from "../../logion-chain";
 import { SignAndSubmit } from "../../ExtrinsicSubmitter";
 import { SignAndSendCallback } from "../../logion-chain/Signature";
@@ -23,6 +23,7 @@ export interface LocContext {
     locId: UUID
     locRequest: LocRequest | null
     loc: LegalOfficerCase | null
+    voidInfo?: VoidInfo | null
     locItems: LocItem[]
     addMetadata: ((name: string, value: string) => void) | null
     linkLoc: ((otherLocId: UUID, otherLocDescription: string, nature: string) => void) | null
@@ -36,6 +37,8 @@ export interface LocContext {
     closeExtrinsic: (() => SignAndSubmit) | null
     confirmFile: ((locItem: LocItem) => void) | null
     deleteFile: ((locItem: LocItem) => void) | null
+    voidLoc: ((voidInfo: VoidInfo) => void) | null
+    voidLocExtrinsic: ((voidInfo: VoidInfo) => SignAndSubmit) | null
 }
 
 const MAX_REFRESH = 20;
@@ -59,6 +62,8 @@ function initialContextValue(locId: UUID): LocContext {
         closeExtrinsic: null,
         confirmFile: null,
         deleteFile: null,
+        voidLoc: null,
+        voidLocExtrinsic: null,
     }
 }
 
@@ -73,6 +78,7 @@ type ActionType = 'SET_LOC_REQUEST'
     | 'UPDATE_ITEM_TIMESTAMP'
     | 'DELETE_ITEM'
     | 'CLOSE'
+    | 'SET_VOID_INFO'
 
 interface Action {
     type: ActionType,
@@ -94,6 +100,9 @@ interface Action {
     closeExtrinsic?: () => SignAndSubmit,
     confirmFile?: (locItem: LocItem) => void,
     deleteFile?: (locItem: LocItem) => void,
+    voidInfo?: VoidInfo | null,
+    voidLoc?: (voidInfo: VoidInfo) => void,
+    voidLocExtrinsic?: (voidInfo: VoidInfo) => SignAndSubmit,
 }
 
 const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action): LocContext => {
@@ -119,6 +128,8 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
                 close: action.close!,
                 confirmFile: action.confirmFile!,
                 deleteFile: action.deleteFile!,
+                voidLoc: action.voidLoc!,
+                voidLocExtrinsic: action.voidLocExtrinsic!,
             }
         case "ADD_ITEM":
             if (itemExists(action.locItem!, state.locItems)) {
@@ -146,6 +157,8 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
                     closed: true,
                 }
             }
+        case "SET_VOID_INFO":
+            return { ...state, voidInfo: action.voidInfo! }
         default:
             throw new Error(`Unknown type: ${ action.type }`);
     }
@@ -404,6 +417,28 @@ export function LocContextProvider(props: Props) {
         }, [ axiosFactory, accounts, contextValue.locId ]
     )
 
+    const voidLocExtrinsicFunction = useCallback((voidInfo: VoidInfo) => {
+        const signAndSubmit: SignAndSubmit = (setResult, setError) => {
+            const callback: SignAndSendCallback = (signedTransaction) => {
+                setResult(signedTransaction)
+            };
+            return voidLoc({
+                locId: contextValue.locId,
+                api: api!,
+                signerId: contextValue.loc!.owner,
+                callback,
+                errorCallback: setError,
+                voidInfo
+            })
+        };
+        return signAndSubmit;
+    }, [ api, contextValue.locId, contextValue.loc ])
+
+    const voidLocFunction = useCallback((voidInfo: VoidInfo) => {
+        preVoid(axiosFactory!(accounts!.current!.address)!, contextValue.locId)
+            .then(() => dispatch({ type: 'SET_VOID_INFO', voidInfo }));
+    }, [ axiosFactory, accounts, contextValue.locId, dispatch ])
+
     useEffect(() => {
         if (contextValue.loc && contextValue.loc.owner !== null && contextValue.addMetadata === null) {
             const submitter = contextValue.loc!.owner;
@@ -438,12 +473,14 @@ export function LocContextProvider(props: Props) {
                 closeExtrinsic: closeExtrinsicFunction,
                 close: closeFunction,
                 confirmFile: confirmFileFunction,
-                deleteFile: deleteFileFunction
+                deleteFile: deleteFileFunction,
+                voidLoc: voidLocFunction,
+                voidLocExtrinsic: voidLocExtrinsicFunction,
             })
         }
     }, [ contextValue.loc, contextValue.addMetadata, addLocItemFunction, publishMetadataFunction,
         publishFileFunction, removeItemFunction, changeItemStatusFunction, closeFunction, closeExtrinsicFunction,
-        confirmFileFunction, deleteFileFunction, dispatch, publishLinkFunction ])
+        confirmFileFunction, deleteFileFunction, dispatch, publishLinkFunction, voidLocFunction, voidLocExtrinsicFunction, ])
 
     useEffect(() => {
         if (contextValue.loc === null && api !== null) {
@@ -451,6 +488,10 @@ export function LocContextProvider(props: Props) {
                 .then(loc => {
                     dispatch({ type: 'SET_LOC', loc })
                     if (loc) {
+                        getVoidInfo({ locId: contextValue.locId, api })
+                            .then(voidInfo => {
+                                dispatch({ type: 'SET_VOID_INFO', voidInfo })
+                            });
                         loc!.metadata.forEach(item => {
                             const locItem = createPublishedMetadataLocItem(item, loc!.owner)
                             dispatch({ type: 'ADD_ITEM', locItem })

@@ -12,9 +12,12 @@ import OpenedLocs from './OpenedLocs';
 import ClosedLocs from './ClosedLocs';
 import Frame from '../../common/Frame';
 
+import './TransactionProtection.css';
+import VoidLocs from './VoidLocs';
+
 export default function TransactionProtection() {
     const { colorTheme } = useCommonContext();
-    const [ locTabKey, setLocTabKey ] = useState<string>('open');
+    const [ locTabKey, setLocTabKey ] = useState<string>('closed');
     const [ requestTabKey, setRequestTabKey ] = useState<string>('pending');
 
     return (
@@ -26,6 +29,7 @@ export default function TransactionProtection() {
                 },
                 background: colorTheme.topMenuItems.iconGradient,
             } }
+            className="TransactionProtection"
         >
             <Row>
                 <Col>
@@ -33,20 +37,33 @@ export default function TransactionProtection() {
                         title="Transaction Protection Case(s)"
                     >
                         <Tabs
-                            activeKey={ locTabKey }
+                            activeKey={ 'open' }
                             onSelect={ key => setLocTabKey(key || 'open') }
                             tabs={[
                                 {
                                     key: "open",
                                     title: "Open",
                                     render: () => <OpenedLocs locType="Transaction" />
-                                },
+                                }
+                            ]}
+                        />
+                        <Tabs
+                            activeKey={ locTabKey }
+                            onSelect={ key => setLocTabKey(key || 'closed') }
+                            className="void-locs"
+                            tabs={[
                                 {
                                     key: "closed",
                                     title: "Closed",
                                     render: () => <ClosedLocs locType="Transaction" />
+                                },
+                                {
+                                    key: "void",
+                                    title: "Void",
+                                    render: () => <VoidLocs locType="Transaction" />
                                 }
-                            ]} />
+                            ]}
+                        />
                     </Frame>
                 </Col>
             </Row>

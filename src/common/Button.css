@@ -102,3 +102,7 @@
 .Button.btn.btn-salmon:hover {
     text-decoration: underline;
 }
+
+.Button.btn.btn-danger-outline {
+    border: 1px solid #e11a25;
+}

@@ -94,19 +94,19 @@ export default function LocCreationSteps(props: Props) {
             <ProcessStep
                 active={ creationState.status === CreationStatus.NONE }
                 closeCallback={ cancel }
-                title={ `Creation LOC for request ${ requestToCreate.id }` }
+                title={ `LOC creation` }
                 mayProceed={ true }
                 proceedCallback={ () => setStatus(CreationStatus.LOC_CREATION_PENDING) }
                 stepTestId={ `modal-accepted-${ requestToCreate.id }` }
                 proceedButtonTestId={ `proceed-create-${ requestToCreate.id }` }
             >
                 <Alert variant="success">
-                    <p>Request successfully accepted, you may now proceed with creating the LOC.</p>
+                    <p>You may now proceed with creating the LOC.</p>
                 </Alert>
             </ProcessStep>
             <ProcessStep
                 active={ creationState.status === CreationStatus.CREATING_LOC || creationState.status === CreationStatus.LOC_CREATED }
-                title={ `Creating LOC for request ${ requestToCreate.id }` }
+                title={ `LOC creation` }
                 mayProceed={ creationState.status === CreationStatus.LOC_CREATED }
                 proceedCallback={ () => setStatus(CreationStatus.DONE) }
                 stepTestId={ `modal-creating-${ requestToCreate.id }` }
@@ -124,7 +124,7 @@ export default function LocCreationSteps(props: Props) {
             <ProcessStep
                 active={ creationState.status === CreationStatus.DONE }
                 closeCallback={ close }
-                title={ `LOC request ${ requestToCreate.id }` }
+                title={ `LOC created` }
                 stepTestId={ `modal-review-${ requestToCreate.id }` }
                 closeButtonTestId={ `close-review-${ requestToCreate.id }` }
             >

@@ -22,10 +22,9 @@ exports[`renders with custom space above 1`] = `
   <style>
     
                 .Dialog .modal-dialog .modal-content {
-                    box-shadow: 0 0 25px #3b6cf433;
-                    border-color: #e6007a;
-                    color: #ffffff;
-                    background-color: #0c163d;
+                    box-shadow: 0 0 25px [object Object];
+                    color: undefined;
+                    background-color: undefined;
                 }
                 
   </style>
@@ -71,10 +70,9 @@ exports[`renders with default space above 1`] = `
   <style>
     
                 .Dialog .modal-dialog .modal-content {
-                    box-shadow: 0 0 25px #3b6cf433;
-                    border-color: #e6007a;
-                    color: #ffffff;
-                    background-color: #0c163d;
+                    box-shadow: 0 0 25px [object Object];
+                    color: undefined;
+                    background-color: undefined;
                 }
                 
   </style>

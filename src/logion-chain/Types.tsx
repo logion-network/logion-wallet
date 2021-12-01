@@ -26,3 +26,8 @@ export interface LegalOfficerCase {
 }
 
 export type LocType = 'Transaction' | 'Identity';
+
+export interface VoidInfo {
+    reason: string;
+    replacerLocId?: UUID;
+}

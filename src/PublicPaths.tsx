@@ -4,7 +4,7 @@ export const PUBLIC_PATH = "/public";
 export const CERTIFICATE_RELATIVE_PATH = "/certificate/:locId";
 export const CERTIFICATE_PATH = PUBLIC_PATH + CERTIFICATE_RELATIVE_PATH;
 
-function certificatePath(locId: UUID): string {
+export function certificatePath(locId: UUID): string {
     return CERTIFICATE_PATH.replace(":locId", locId.toDecimalString())
 }
 

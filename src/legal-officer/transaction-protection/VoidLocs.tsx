@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useCommonContext } from '../../common/CommonContext';
 import Table, { Cell, EmptyTableMessage, DateTimeCell, ActionCell } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';
@@ -15,48 +13,48 @@ export interface Props {
     locType: LocType;
 }
 
-export default function ClosedLocs(props: Props) {
-    const { closedLocRequests, closedIdentityLocs } = useCommonContext();
+export default function VoidLocs(props: Props) {
+    const { voidTransactionLocs, voidIdentityLocs } = useCommonContext();
     const navigate = useNavigate();
 
-    if (closedLocRequests === null || closedIdentityLocs === null) {
+    if (voidTransactionLocs === null || voidIdentityLocs === null) {
         return null;
     }
 
-    const requests = props.locType === 'Transaction' ? closedLocRequests : closedIdentityLocs;
+    let requests = props.locType === 'Transaction' ? voidTransactionLocs : voidIdentityLocs;
 
     return (
         <Table
             columns={[
                 {
                     "header": "Requester",
-                    render: request => <UserIdentityNameCell userIdentity={ request.userIdentity }/>,
+                    render: request => <UserIdentityNameCell userIdentity={ request.request.userIdentity }/>,
                     align: 'left',
                 },
                 {
                     "header": "Description",
-                    render: request => <Cell content={ request.description } />,
+                    render: request => <Cell content={ request.request.description } />,
                     align: 'left',
                 },
                 {
                     header: "Status",
-                    render: request => <LocStatusCell status={ request.status }/>,
+                    render: request => <LocStatusCell status={ request.request.status } voidLoc={ true } />,
                     width: "140px",
                 },
                 {
                     header: "LOC ID",
-                    render: request => <LocIdCell status={ request.status } id={ request.id } />,
+                    render: request => <LocIdCell status={ request.request.status } id={ request.request.id } />,
                     align: "left",
                 },
                 {
                     header: "Creation date",
-                    render: request => <DateTimeCell dateTime={ request.createdOn || null } />,
+                    render: request => <DateTimeCell dateTime={ request.request.createdOn || null } />,
                     width: '200px',
                     align: 'center',
                 },
                 {
-                    header: "Closing date",
-                    render: request => <DateTimeCell dateTime={ request.closedOn || null } />,
+                    header: "Voiding date",
+                    render: request => <DateTimeCell dateTime={ request.request.voidedOn || null } />,
                     width: '200px',
                     align: 'center',
                 },
@@ -65,7 +63,7 @@ export default function ClosedLocs(props: Props) {
                     render: request =>
                         <ActionCell>
                             <ButtonGroup>
-                                <Button onClick={ () => navigate(locDetailsPath(request.id)) }>View</Button>
+                                <Button onClick={ () => navigate(locDetailsPath(request.request.id)) }>View</Button>
                             </ButtonGroup>
                         </ActionCell>
                     ,

@@ -17,9 +17,7 @@
 }
 
 .ContextualizedLocDetails .certificate-link .title {
-    font-weight: bold;
     margin-bottom: 10px;
-    font-size: 18px;
 }
 
 .ContextualizedLocDetails .certificate-link .link {
@@ -33,4 +31,12 @@
 
 .ContextualizedLocDetails .Row.matched {
     border: 2px dashed #e6007a;
+}
+
+.ContextualizedLocDetails .void-loc {
+    margin-top: 30px;
+}
+
+.ContextualizedLocDetails .loc-is-void {
+    margin-top: 30px;
 }

@@ -13,8 +13,16 @@ import { Transaction, LocRequest } from './types/ModelTypes';
 import { getTransactions, FetchLocRequestSpecification, fetchLocRequests } from "./Model";
 import { ColorTheme, DEFAULT_COLOR_THEME } from "./ColorTheme";
 import { storeTokens, clearTokens, loadTokens } from './Storage';
+import { VoidInfo } from "../logion-chain/Types";
+import { getVoidInfos } from "../logion-chain/LogionLoc";
+import { UUID } from "../logion-chain/UUID";
 
 const DEFAULT_NOOP = () => {};
+
+export interface VoidLoc {
+    request: LocRequest;
+    voidInfo: VoidInfo;
+}
 
 export interface CommonContext {
     selectAddress: ((address: string) => void) | null;
@@ -35,6 +43,8 @@ export interface CommonContext {
     logout: () => void;
     axiosFactory?: AxiosFactory;
     refresh: (clearOnRefresh?: boolean) => void;
+    voidTransactionLocs: VoidLoc[] | null;
+    voidIdentityLocs: VoidLoc[] | null;
 }
 
 interface FullCommonContext extends CommonContext {
@@ -65,6 +75,8 @@ function initialContextValue(): FullCommonContext {
         setTokens: DEFAULT_NOOP,
         logout: DEFAULT_NOOP,
         refresh: DEFAULT_NOOP,
+        voidTransactionLocs: null,
+        voidIdentityLocs: null,
     }
 }
 
@@ -113,6 +125,8 @@ interface Action {
     refresh?: (clearOnRefresh?: boolean) => void;
     refreshAddress?: string;
     clearOnRefresh?: boolean;
+    voidTransactionLocs?: VoidLoc[];
+    voidIdentityLocs?: VoidLoc[];
 }
 
 const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, action: Action): FullCommonContext => {
@@ -158,6 +172,8 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                     rejectedLocRequests: action.rejectedLocRequests!,
                     openedIdentityLocs: action.openedIdentityLocs!,
                     closedIdentityLocs: action.closedIdentityLocs!,
+                    voidTransactionLocs: action.voidTransactionLocs!,
+                    voidIdentityLocs: action.voidIdentityLocs!,
                 };
             } else {
                 return state;
@@ -284,13 +300,13 @@ export function CommonContextProvider(props: Props) {
                     statuses: ["REQUESTED"]
                 });
 
-                const openedLocRequests = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
+                let openedLocRequests = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
                     ...specificationFragment,
                     statuses: ["OPEN"],
                     locTypes: ['Transaction']
                 });
 
-                const closedLocRequests = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
+                let closedLocRequests = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
                     ...specificationFragment,
                     statuses: ["CLOSED"],
                     locTypes: ['Transaction']
@@ -301,17 +317,49 @@ export function CommonContextProvider(props: Props) {
                     statuses: ["REJECTED"]
                 });
 
-                const openedIdentityLocs = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
+                let openedIdentityLocs = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
                     ...specificationFragment,
                     statuses: ["OPEN"],
                     locTypes: ['Identity']
                 });
 
-                const closedIdentityLocs = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
+                let closedIdentityLocs = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
                     ...specificationFragment,
                     statuses: ["CLOSED"],
                     locTypes: ['Identity']
                 });
+
+                let locIds = openedLocRequests.map(loc => new UUID(loc.id));
+                locIds = locIds.concat(closedLocRequests.map(loc => new UUID(loc.id)));
+                locIds = locIds.concat(openedIdentityLocs.map(loc => new UUID(loc.id)));
+                locIds = locIds.concat(closedIdentityLocs.map(loc => new UUID(loc.id)));
+                const voidInfos = await getVoidInfos({
+                    api: api!,
+                    locIds
+                });
+
+                let voidTransactionLocs = openedLocRequests.filter(request => new UUID(request.id).toDecimalString() in voidInfos).map(request => ({
+                    request,
+                    voidInfo: voidInfos[new UUID(request.id).toDecimalString()]
+                }));
+                voidTransactionLocs = voidTransactionLocs.concat(closedLocRequests.filter(request => new UUID(request.id).toDecimalString() in voidInfos).map(request => ({
+                    request,
+                    voidInfo: voidInfos[new UUID(request.id).toDecimalString()]
+                })));
+
+                let voidIdentityLocs = openedIdentityLocs.filter(request => new UUID(request.id).toDecimalString() in voidInfos).map(request => ({
+                    request,
+                    voidInfo: voidInfos[new UUID(request.id).toDecimalString()]
+                }));
+                voidIdentityLocs = voidIdentityLocs.concat(closedIdentityLocs.filter(request => new UUID(request.id).toDecimalString() in voidInfos).map(request => ({
+                    request,
+                    voidInfo: voidInfos[new UUID(request.id).toDecimalString()]
+                })));
+
+                openedLocRequests = openedLocRequests.filter(request => !(new UUID(request.id).toDecimalString() in voidInfos));
+                closedLocRequests = closedLocRequests.filter(request => !(new UUID(request.id).toDecimalString() in voidInfos));
+                openedIdentityLocs = openedIdentityLocs.filter(request => !(new UUID(request.id).toDecimalString() in voidInfos));
+                closedIdentityLocs = closedIdentityLocs.filter(request => !(new UUID(request.id).toDecimalString() in voidInfos));
 
                 dispatch({
                     type: "SET_DATA",
@@ -324,6 +372,8 @@ export function CommonContextProvider(props: Props) {
                     rejectedLocRequests,
                     openedIdentityLocs,
                     closedIdentityLocs,
+                    voidTransactionLocs,
+                    voidIdentityLocs,
                 });
             })();
         }
