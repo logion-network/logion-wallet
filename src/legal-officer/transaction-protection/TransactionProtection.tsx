@@ -12,12 +12,11 @@ import OpenedLocs from './OpenedLocs';
 import ClosedLocs from './ClosedLocs';
 import Frame from '../../common/Frame';
 
-import './TransactionProtection.css';
 import VoidLocs from './VoidLocs';
 
 export default function TransactionProtection() {
     const { colorTheme } = useCommonContext();
-    const [ locTabKey, setLocTabKey ] = useState<string>('closed');
+    const [ locTabKey, setLocTabKey ] = useState<string>('open');
     const [ requestTabKey, setRequestTabKey ] = useState<string>('pending');
 
     return (
@@ -37,21 +36,14 @@ export default function TransactionProtection() {
                         title="Transaction Protection Case(s)"
                     >
                         <Tabs
-                            activeKey={ 'open' }
+                            activeKey={ locTabKey }
                             onSelect={ key => setLocTabKey(key || 'open') }
                             tabs={[
                                 {
                                     key: "open",
                                     title: "Open",
                                     render: () => <OpenedLocs locType="Transaction" />
-                                }
-                            ]}
-                        />
-                        <Tabs
-                            activeKey={ locTabKey }
-                            onSelect={ key => setLocTabKey(key || 'closed') }
-                            className="void-locs"
-                            tabs={[
+                                },
                                 {
                                     key: "closed",
                                     title: "Closed",

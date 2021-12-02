@@ -27,6 +27,8 @@ export interface LocContext {
     locId: UUID
     locRequest: LocRequest | null
     loc: LegalOfficerCase | null
+    supersededLoc?: LegalOfficerCase
+    supersededLocRequest?: LocRequest
     locItems: LocItem[]
     addMetadata: ((name: string, value: string) => void) | null
     linkLoc: ((otherLocId: UUID, otherLocDescription: string, nature: string) => void) | null
@@ -87,6 +89,8 @@ interface Action {
     type: ActionType,
     locRequest?: LocRequest,
     loc?: LegalOfficerCase,
+    supersededLoc?: LegalOfficerCase,
+    supersededLocRequest?: LocRequest,
     locItem?: LocItem,
     status?: LocItemStatus,
     name?: string,
@@ -115,7 +119,7 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
         case "SET_LOC_REQUEST":
             return { ...state, locRequest: action.locRequest! }
         case "SET_LOC":
-            return { ...state, loc: action.loc! }
+            return { ...state, loc: action.loc!, supersededLoc: action.supersededLoc, supersededLocRequest: action.supersededLocRequest }
         case "SET_FUNCTIONS":
             return {
                 ...state,
@@ -158,6 +162,10 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
                 loc: {
                     ...state.loc!,
                     closed: true,
+                },
+                locRequest: {
+                    ...state.locRequest!,
+                    status: "CLOSED"
                 }
             }
         case "VOID": 
@@ -202,7 +210,7 @@ const enum NextRefresh {
 export function LocContextProvider(props: Props) {
 
     const { api } = useLogionChain();
-    const { axiosFactory, accounts } = useCommonContext();
+    const { axiosFactory, accounts, refresh } = useCommonContext();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue(props.locId));
     const [ refreshing, setRefreshing ] = useState<boolean>(false);
     const [ refreshCounter, setRefreshCounter ] = useState<number>(0);
@@ -232,7 +240,12 @@ export function LocContextProvider(props: Props) {
         }
 
         function allItemsOK(items: LocItem[]): boolean {
-            return items.find(item => item.status === "PUBLISHED" && (item.name === UNKNOWN_NAME || item.timestamp === null)) === undefined
+            return items.find(item => item.status === "PUBLISHED" && (item.name === UNKNOWN_NAME || item.timestamp === null)) === undefined;
+        }
+
+        function requestOK(locRequest: LocRequest): boolean {
+            return (locRequest.status !== "CLOSED" || locRequest.closedOn !== undefined)
+                && (locRequest.voidInfo === undefined || locRequest.voidInfo.voidedOn !== undefined);
         }
 
         function refreshDocumentNames(locRequest: LocRequest): boolean {
@@ -275,11 +288,26 @@ export function LocContextProvider(props: Props) {
             return refreshed;
         }
 
-        if (contextValue.loc === null || axiosFactory === undefined) {
+        function refreshRequestDates(locRequest: LocRequest): boolean {
+            let refreshed = false;
+            if(contextValue.locRequest?.closedOn === undefined && locRequest.closedOn !== undefined) {
+                refreshed = true;
+            }
+            if(contextValue.locRequest?.voidInfo?.voidedOn === undefined && locRequest.voidInfo?.voidedOn !== undefined) {
+                refreshed = true;
+            }
+            if(refreshed) {
+                dispatch({ type: 'SET_LOC_REQUEST', locRequest });
+            }
+            return refreshed;
+        }
+
+        if (contextValue.locRequest === null || contextValue.loc === null || axiosFactory === undefined) {
             return Promise.resolve(NextRefresh.SCHEDULE);
         }
 
-        if (allItemsOK(contextValue.locItems)) {
+        if (allItemsOK(contextValue.locItems) && requestOK(contextValue.locRequest)) {
+            refresh!();
             return Promise.resolve(NextRefresh.STOP);
         }
 
@@ -295,10 +323,13 @@ export function LocContextProvider(props: Props) {
             if (await refreshLinkedLocsDescription()) {
                 nextRefresh = NextRefresh.IMMEDIATE;
             }
+            if (refreshRequestDates(locRequest)) {
+                nextRefresh = NextRefresh.IMMEDIATE;
+            }
             return nextRefresh;
         }
         return proceed()
-    }, [ contextValue.loc, contextValue.locItems, contextValue.locId, axiosFactory, accounts ])
+    }, [ contextValue.loc, contextValue.locItems, contextValue.locId, axiosFactory, accounts, contextValue.locRequest, refresh ])
 
     useEffect(() => {
         if (refreshCounter > 0 && !refreshing) {
@@ -420,7 +451,10 @@ export function LocContextProvider(props: Props) {
 
     const closeFunction = useCallback(() => {
             preClose(axiosFactory!(accounts!.current!.address)!, contextValue.locId)
-                .then(() => dispatch({ type: 'CLOSE' }));
+            .then(() => {
+                dispatch({ type: 'CLOSE' });
+                setRefreshCounter(MAX_REFRESH);
+            });
         }, [ axiosFactory, accounts, contextValue.locId, dispatch ]
     )
 
@@ -453,7 +487,10 @@ export function LocContextProvider(props: Props) {
 
     const voidLocFunction = useCallback((voidInfo: FullVoidInfo) => {
         preVoid(axiosFactory!(accounts!.current!.address)!, contextValue.locId, voidInfo.reason)
-            .then(() => dispatch({ type: 'VOID', voidInfo }));
+        .then(() => {
+            dispatch({ type: 'VOID', voidInfo });
+            setRefreshCounter(MAX_REFRESH);
+        });
     }, [ axiosFactory, accounts, contextValue.locId, dispatch ])
 
     useEffect(() => {
@@ -501,32 +538,38 @@ export function LocContextProvider(props: Props) {
 
     useEffect(() => {
         if (contextValue.loc === null && api !== null) {
-            getLegalOfficerCase({ locId: contextValue.locId, api })
-                .then(loc => {
-                    dispatch({ type: 'SET_LOC', loc })
-                    if (loc) {
-                        loc!.metadata.forEach(item => {
-                            const locItem = createPublishedMetadataLocItem(item, loc!.owner)
-                            dispatch({ type: 'ADD_ITEM', locItem })
-                            setRefreshCounter(MAX_REFRESH)
+            (async function() {
+                const loc = await getLegalOfficerCase({ locId: contextValue.locId, api });
+                let supersededLoc: LegalOfficerCase | undefined;
+                let supersededLocRequest: LocRequest | undefined;
+                if(loc?.replacerOf !== undefined) {
+                    supersededLoc = await getLegalOfficerCase({ locId: loc.replacerOf, api });
+                    supersededLocRequest = await fetchLocRequest(axiosFactory!(accounts!.current!.address)!, loc.replacerOf.toString());
+                }
+                dispatch({ type: 'SET_LOC', loc, supersededLoc, supersededLocRequest });
+                if (loc) {
+                    loc!.metadata.forEach(item => {
+                        const locItem = createPublishedMetadataLocItem(item, loc!.owner)
+                        dispatch({ type: 'ADD_ITEM', locItem })
+                        setRefreshCounter(MAX_REFRESH)
+                    })
+                    loc!.files.forEach(file => {
+                        const locItem = createPublishedFileLocItem({
+                            file,
+                            submitter: loc!.owner
                         })
-                        loc!.files.forEach(file => {
-                            const locItem = createPublishedFileLocItem({
-                                file,
-                                submitter: loc!.owner
-                            })
-                            dispatch({ type: 'ADD_ITEM', locItem })
-                            setRefreshCounter(MAX_REFRESH)
-                        })
-                        loc!.links.forEach(item => {
-                            const locItem = createPublishedLinkedLocItem(item, loc!.owner)
-                            dispatch({ type: 'ADD_ITEM', locItem })
-                            setRefreshCounter(MAX_REFRESH)
-                        })
-                    }
-                })
+                        dispatch({ type: 'ADD_ITEM', locItem })
+                        setRefreshCounter(MAX_REFRESH)
+                    })
+                    loc!.links.forEach(item => {
+                        const locItem = createPublishedLinkedLocItem(item, loc!.owner)
+                        dispatch({ type: 'ADD_ITEM', locItem })
+                        setRefreshCounter(MAX_REFRESH)
+                    })
+                }
+            })();
         }
-    }, [ contextValue.loc, api, contextValue.locId, setRefreshCounter ])
+    }, [ contextValue.loc, api, contextValue.locId, setRefreshCounter, accounts, axiosFactory ])
 
     return (
         <LocContextObject.Provider value={ contextValue }>

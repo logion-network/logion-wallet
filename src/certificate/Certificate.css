@@ -85,8 +85,8 @@
     border-radius: 12px;
     padding: 30px;
     margin-top: 30px;
-    margin-left: 30px;
-    margin-right: 30px;
+    margin-left: -0.75rem;
+    margin-right: -0.75rem;
 }
 
 .void-stamp {
@@ -94,16 +94,43 @@
     left: 50%;
     top: 60%;
     transform: translate(-50%, -50%);
-    opacity: 0.4;
 }
 
 .void-stamp img {
     height: 80vh;
 }
 
-.VoidMessage.left p {
-    margin-left: 74px;
+.VoidMessage.left {
+    display: flex;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
 }
+
+.VoidMessage.left .text {
+    margin-left: 15px;
+}
+
+.supersede-frame {
+    border: 2px solid #3b6cf4;
+    border-radius: 12px;
+    padding: 30px;
+    margin-top: 30px;
+    margin-left: -0.75rem;
+    margin-right: -0.75rem;
+}
+
+.SupersedeMessage {
+    display: flex;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.SupersedeMessage .text {
+    margin-left: 15px;
+}
+
 
 @media screen and (max-width: 1400px) {
     .Certificate .folder-icon img {

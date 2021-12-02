@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { useCommonContext } from "../../common/CommonContext";
 import { FullWidthPane } from "../../common/Dashboard";
 import Tabs from "../../common/Tabs";
-import { Col } from "react-bootstrap";
+import { Col, Spinner } from "react-bootstrap";
 import { format } from "../../logion-chain/datetime";
 import LocPublicDataButton from "./LocPublicDataButton";
 import { useLocContext } from "./LocContext";
@@ -36,7 +36,7 @@ interface DocumentCheckResult {
 export default function ContextualizedLocDetails() {
     const { colorTheme } = useCommonContext();
     const navigate = useNavigate();
-    const { loc, locId, locRequest, locItems } = useLocContext();
+    const { loc, locId, locRequest, locItems, supersededLocRequest } = useLocContext();
     const [ checkResult, setCheckResult ] = useState<DocumentCheckResult>({result: "NONE"});
 
     const checkHash = useCallback((hash: string) => {
@@ -95,6 +95,22 @@ export default function ContextualizedLocDetails() {
         locTabTitle = "VOID " + locTabTitle;
     }
 
+    let voidedOn: string;
+    if(locRequest.voidInfo?.voidedOn !== undefined) {
+        const { date, time } = format(locRequest.voidInfo.voidedOn);
+        voidedOn = `${date} / ${time}`;
+    } else {
+        voidedOn = "-";
+    }
+
+    let supersededVoidedOn: string;
+    if(supersededLocRequest?.voidInfo?.voidedOn !== undefined) {
+        const { date, time } = format(supersededLocRequest.voidInfo.voidedOn);
+        supersededVoidedOn = `${date} / ${time}`;
+    } else {
+        supersededVoidedOn = "-";
+    }
+
     return (
         <FullWidthPane
             mainTitle={ loc.locType === 'Transaction' ? "Transaction Protection Cases" : "Identity Case Management" }
@@ -117,7 +133,14 @@ export default function ContextualizedLocDetails() {
                         key: "details",
                         title: locTabTitle,
                         render: () => {
-                            const { date, time } = format(locRequest.createdOn)
+                            const { date, time } = format(locRequest.createdOn);
+                            let closingDate: string;
+                            if(locRequest.closedOn !== undefined) {
+                                const { date, time } = format(locRequest.closedOn);
+                                closingDate = `${date} / ${time}`;
+                            } else {
+                                closingDate = "";
+                            }
                             return <>
                                 <Row>
                                     <Col md={ 4 }>
@@ -126,6 +149,10 @@ export default function ContextualizedLocDetails() {
                                     </Col>
                                     <Col md={ 4 }>
                                         <LocItemDetail label="Description">{ locRequest?.description }</LocItemDetail>
+                                        {
+                                            locRequest.status === 'CLOSED' &&
+                                            <LocItemDetail label="Closing date" spinner={ locRequest.closedOn === undefined }>{ closingDate }</LocItemDetail>
+                                        }
                                     </Col>
 
                                     <Col md={ 4 } className="closed-icon-container">
@@ -133,7 +160,7 @@ export default function ContextualizedLocDetails() {
                                             label="Requested by">{ locRequest.userIdentity?.firstName || "" } { locRequest.userIdentity?.lastName || "" }<br />{ locRequest.requesterAddress }
                                         </LocItemDetail>
                                         {
-                                            loc.closed &&
+                                            loc.closed && loc.voidInfo === undefined &&
                                             <div className="closed-icon">
                                                 <Icon icon={ { id: "polkadot_shield" } } />
                                             </div>
@@ -175,7 +202,7 @@ export default function ContextualizedLocDetails() {
                         className="loc-is-void"
                         title={ <span><Icon icon={{id: 'void'}} width="31px" /> This LOC is VOID</span> }
                     >
-                        <p><strong>You have voided this LOC at the following date:</strong> { locRequest.voidInfo?.voidedOn || "-" }</p>
+                        <p><strong>You have voided this LOC at the following date:</strong> { voidedOn !== "-" ? voidedOn : <Spinner animation="border" size="sm" /> }</p>
                         <p><strong>Reason:</strong> { locRequest.voidInfo?.reason || "-" }</p>
                         {
                             loc.voidInfo.replacer !== undefined &&
@@ -210,6 +237,24 @@ export default function ContextualizedLocDetails() {
                         <a href={ certificateUrl } target="_blank" rel="noreferrer">{ certificateUrl }</a> <CopyPasteButton value={ certificateUrl } />
                     </p>
                 </div>
+                {
+                    loc.replacerOf !== undefined &&
+                    <DangerFrame
+                        className="loc-is-void"
+                        title={ <span><Icon icon={{id: 'void_supersede'}} height="31px" /> IMPORTANT: this logion Legal Officer Case (LOC) supersedes a previous LOC (VOID)</span> }
+                    >
+                        <p><strong>This LOC supersedes a previous LOC (VOID) since the following date:</strong> { supersededVoidedOn !== "-" ? supersededVoidedOn : <Spinner animation="border" size="sm" /> }</p>
+                        <p><strong>For record purpose, this LOC supersedes the following LOC: </strong>
+                        <NewTabLink
+                            href={locDetailsPath(loc.replacerOf.toString())}
+                            iconId="loc-link"
+                            inline
+                        >
+                            { loc.replacerOf.toDecimalString() }
+                        </NewTabLink>
+                        </p>
+                    </DangerFrame>
+                }
                 <CheckFileFrame
                     checkHash={ checkHash }
                     checkResult={ checkResult.result }
