@@ -39,20 +39,14 @@ export default function TransactionProtection() {
                         title="Transaction Protection Case(s)"
                     >
                         <Tabs
-                            activeKey={ 'open' }
-                            onSelect={ key => setLocTabKey('open') }
+                            activeKey={ locTabKey }
+                            onSelect={ key => setLocTabKey(key || 'open') }
                             tabs={[
                                 {
                                     key: "open",
                                     title: "Open",
                                     render: () => <OpenedLocs />
-                                }
-                            ] }
-                        />
-                        <Tabs
-                            activeKey={ locTabKey }
-                            onSelect={ key => setLocTabKey(key || 'closed') }
-                            tabs={[
+                                },
                                 {
                                     key: "closed",
                                     title: "Closed",
@@ -64,7 +58,6 @@ export default function TransactionProtection() {
                                     render: () => <VoidLocs />
                                 }
                             ] }
-                            className="closed-void-locs"
                         />
                         <div className="action-bar">
                             <LocCreation />

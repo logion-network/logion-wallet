@@ -54,7 +54,7 @@ export default function VoidLocs(props: Props) {
                 },
                 {
                     header: "Voiding date",
-                    render: requestAndLoc => <DateTimeCell dateTime={ requestAndLoc.request.voidInfo?.voidedOn || null } />,
+                    render: requestAndLoc => <DateTimeCell dateTime={ requestAndLoc.request.voidInfo?.voidedOn || null } spinner={ true } />,
                     width: '200px',
                     align: 'center',
                 },

@@ -15,7 +15,7 @@ import VoidLocs from './VoidLocs';
 
 export default function IdentityProtection() {
     const { colorTheme } = useCommonContext();
-    const [ locTabKey, setLocTabKey ] = useState<string>('closed');
+    const [ locTabKey, setLocTabKey ] = useState<string>('open');
 
     return (
         <FullWidthPane
@@ -35,20 +35,14 @@ export default function IdentityProtection() {
                         fullHeight
                     >
                         <Tabs
-                            activeKey={ "open" }
-                            onSelect={ key => setLocTabKey('open') }
+                            activeKey={ locTabKey }
+                            onSelect={ key => setLocTabKey(key || 'open') }
                             tabs={[
                                 {
                                     key: "open",
                                     title: "Open",
                                     render: () => <OpenedLocs locType="Identity" />
-                                }
-                            ]}
-                        />
-                        <Tabs
-                            activeKey={ locTabKey }
-                            onSelect={ key => setLocTabKey(key || 'closed') }
-                            tabs={[
+                                },
                                 {
                                     key: "closed",
                                     title: "Closed",
@@ -60,7 +54,6 @@ export default function IdentityProtection() {
                                     render: () => <VoidLocs locType="Identity" />
                                 }
                             ]}
-                            className="void-locs"
                         />
                     </Frame>
                 </Col>

@@ -1,5 +1,6 @@
 import { UUID } from "../logion-chain/UUID";
 import { useParams } from "react-router";
+import { useSearchParams } from "react-router-dom";
 import { useLogionChain } from "../logion-chain";
 import { useEffect, useState, useMemo } from "react";
 import { getLegalOfficerCase } from "../logion-chain/LogionLoc";
@@ -21,13 +22,17 @@ import NewTabLink from "../common/NewTabLink";
 import DangerDialog from "../common/DangerDialog";
 import { LIGHT_MODE } from "../legal-officer/Types";
 import { RED } from "../common/ColorTheme";
+import { format } from "../logion-chain/datetime";
 
 export default function Certificate() {
 
     const locIdParam = useParams<"locId">().locId!;
+    const [ searchParams ] = useSearchParams();
     const locId: UUID = useMemo(() => UUID.fromAnyString(locIdParam)!, [ locIdParam ]);
     const { api, apiState } = useLogionChain();
     const [ loc, setLoc ] = useState<LegalOfficerCase | undefined>(undefined)
+    const [ supersededLoc, setSupersededLoc ] = useState<LegalOfficerCase | undefined>(undefined)
+    const [ supersededLocRequest, setSupersededLocRequest ] = useState<LocRequest | undefined>(undefined)
     const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer | null>(null)
     const axiosFactory = anonymousAxiosFactory();
     const [ publicLoc, setPublicLoc ] = useState<LocRequest>()
@@ -38,17 +43,25 @@ export default function Certificate() {
             (async function () {
                 const legalOfficerCase = await getLegalOfficerCase({ api, locId });
                 if (legalOfficerCase) {
-                    setLoc(legalOfficerCase)
-                    setLegalOfficer(getOfficer(legalOfficerCase.owner))
-                    fetchPublicLoc(axiosFactory(legalOfficerCase.owner), locId.toString())
-                        .then(setPublicLoc)
-                    if(legalOfficerCase.voidInfo !== undefined) {
-                        setVoidWarningVisible(true);
+                    if(legalOfficerCase.voidInfo?.replacer !== undefined && !searchParams.has("noredirect")) {
+                        window.location.href = fullCertificateUrl(legalOfficerCase.voidInfo.replacer, false, true);
+                    } else {
+                        setLoc(legalOfficerCase)
+                        setLegalOfficer(getOfficer(legalOfficerCase.owner))
+                        setPublicLoc(await fetchPublicLoc(axiosFactory(legalOfficerCase.owner), locId.toString()));
+                        if(legalOfficerCase.voidInfo !== undefined) {
+                            setVoidWarningVisible(true);
+                        }
+                        if(legalOfficerCase.replacerOf !== undefined) {
+                            const supersededLoc = await getLegalOfficerCase({ api, locId: legalOfficerCase.replacerOf });
+                            setSupersededLoc(supersededLoc);
+                            setSupersededLocRequest(await fetchPublicLoc(axiosFactory(legalOfficerCase.owner), legalOfficerCase.replacerOf.toString()));
+                        }
                     }
                 }
             })()
         }
-    }, [ api, apiState, locId, loc, setLoc, setLegalOfficer, setPublicLoc, axiosFactory ])
+    }, [ api, apiState, locId, loc, setLoc, setLegalOfficer, setPublicLoc, axiosFactory, searchParams ])
 
     if (apiState !== 'READY') {
         return (
@@ -110,7 +123,15 @@ export default function Certificate() {
                         <VoidMessage left={ true } locRequest={ publicLoc } voidInfo={ loc.voidInfo } />
                     </div>
                     <div className="void-stamp">
-                        <Icon icon={{id: "void"}} />
+                        <Icon icon={{id: "void_certificate_background"}} />
+                    </div>
+                </Container>
+            }
+            {
+                supersededLoc !== undefined && supersededLocRequest !== undefined &&
+                <Container>
+                    <div className="supersede-frame">
+                        <SupersedeMessage loc={ supersededLoc } supersededLocId={ loc.replacerOf! } supersededLoc={ supersededLocRequest } redirected={ searchParams.has("redirected") } />
                     </div>
                 </Container>
             }
@@ -240,20 +261,56 @@ function LinkCellRow(props: { links: Link[] }) {
 function VoidMessage(props: { locRequest: LocRequest | undefined, voidInfo: VoidInfo, left: boolean }) {
     return (
         <div className={ "VoidMessage" + (props.left ? " left": "") }>
-            <h2><Icon icon={{id: 'void'}} height="64px" /> This Logion Legal Officer Case (LOC) is VOID</h2>
-            <p><strong>This LOC and its content is VOID since the following date:</strong> { props.locRequest?.voidInfo?.voidedOn || "-" }</p>
-            {
-                props.voidInfo.replacer !== undefined &&
-                <p><strong>This VOID LOC has been replaced by the following LOC: </strong>
+            <div className="icon">
+                <Icon icon={{id: 'void'}} height="64px" />
+            </div>
+            <div className="text">
+                <h2>This Logion Legal Officer Case (LOC) is VOID</h2>
+                <p><strong>This LOC and its content is VOID since the following date:</strong> { props.locRequest?.voidInfo?.voidedOn !== undefined ? format(props.locRequest?.voidInfo?.voidedOn).date : "-" }</p>
+                {
+                    props.voidInfo.replacer !== undefined &&
+                    <p><strong>This VOID LOC has been replaced by the following LOC: </strong>
+                    <NewTabLink
+                        href={fullCertificateUrl(props.voidInfo.replacer)}
+                        iconId="loc-link"
+                        inline
+                    >
+                        { props.voidInfo.replacer.toDecimalString() }
+                    </NewTabLink>
+                    </p>
+                }
+            </div>
+        </div>
+    );
+}
+
+function SupersedeMessage(props: { loc: LegalOfficerCase, supersededLocId: UUID, supersededLoc: LocRequest, redirected: boolean }) {
+    return (
+        <div className="SupersedeMessage">
+            <div className="icon">
+                <Icon icon={{id: 'void_supersede'}} width="67px" />
+            </div>
+            <div className="text">
+                {
+                    props.redirected &&
+                    <div><strong>IMPORTANT:</strong> The Logion Legal Officer Case (LOC) you try to reach has been voided
+                    and superseded by the LOC below.</div>
+                }
+                {
+                    !props.redirected &&
+                    <div><strong>IMPORTANT:</strong> This Logion Legal Officer Case (LOC) supersedes a previous LOC (VOID).</div>
+                }
+                <p><strong>This LOC and its content is VOID since the following date:</strong> { props.supersededLoc?.voidInfo?.voidedOn !== undefined ? format(props.supersededLoc?.voidInfo?.voidedOn).date : "-" }</p>
+                <p><strong>For record purpose, the VOID LOC can be reached here: </strong>
                 <NewTabLink
-                    href={fullCertificateUrl(props.voidInfo.replacer)}
+                    href={fullCertificateUrl(props.supersededLocId, true)}
                     iconId="loc-link"
                     inline
                 >
-                    { props.voidInfo.replacer.toDecimalString() }
+                    { props.supersededLocId.toDecimalString() }
                 </NewTabLink>
                 </p>
-            }
+            </div>
         </div>
     );
 }

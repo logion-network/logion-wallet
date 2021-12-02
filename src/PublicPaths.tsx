@@ -8,6 +8,14 @@ export function certificatePath(locId: UUID): string {
     return CERTIFICATE_PATH.replace(":locId", locId.toDecimalString())
 }
 
-export function fullCertificateUrl(locId: UUID): string {
-    return `${window.location.protocol}//${window.location.host}${certificatePath(locId)}`
+export function fullCertificateUrl(locId: UUID, noRedirect?: boolean, redirected?: boolean): string {
+    const queries = [];
+    if(noRedirect) {
+        queries.push("noredirect=1");
+    }
+    if(redirected) {
+        queries.push("redirected=1");
+    }
+    const query = queries.length === 0 ? "" : "?" + queries.join('&');
+    return `${window.location.protocol}//${window.location.host}${certificatePath(locId)}${query}`;
 }

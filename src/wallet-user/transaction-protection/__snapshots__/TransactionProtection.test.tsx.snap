@@ -23,7 +23,7 @@ exports[`renders 1`] = `
         title="Transaction Protection Case(s)"
       >
         <Tabs
-          activeKey="open"
+          activeKey="closed"
           onSelect={[Function]}
           tabs={
             Array [
@@ -32,15 +32,6 @@ exports[`renders 1`] = `
                 "render": [Function],
                 "title": "Open",
               },
-            ]
-          }
-        />
-        <Tabs
-          activeKey="closed"
-          className="closed-void-locs"
-          onSelect={[Function]}
-          tabs={
-            Array [
               Object {
                 "key": "closed",
                 "render": [Function],

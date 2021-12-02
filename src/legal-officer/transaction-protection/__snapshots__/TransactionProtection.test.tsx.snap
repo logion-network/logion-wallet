@@ -31,15 +31,6 @@ exports[`renders 1`] = `
                 "render": [Function],
                 "title": "Open",
               },
-            ]
-          }
-        />
-        <Tabs
-          activeKey="closed"
-          className="void-locs"
-          onSelect={[Function]}
-          tabs={
-            Array [
               Object {
                 "key": "closed",
                 "render": [Function],
