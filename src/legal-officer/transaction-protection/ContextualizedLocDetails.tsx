@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { useCommonContext } from "../../common/CommonContext";
 import { FullWidthPane } from "../../common/Dashboard";
 import Tabs from "../../common/Tabs";
-import { Col, Spinner } from "react-bootstrap";
+import { Col } from "react-bootstrap";
 import { format } from "../../logion-chain/datetime";
 import LocPublicDataButton from "./LocPublicDataButton";
 import { useLocContext } from "./LocContext";
@@ -27,6 +27,7 @@ import VoidLocReplaceNewButton from "./VoidLocReplaceNewButton";
 import NewTabLink from "../../common/NewTabLink";
 import VoidLocReplaceExistingButton from "./VoidLocReplaceExistingButton";
 import CopyPasteButton from "../../common/CopyPasteButton";
+import InlineDateTime from "../../common/InlineDateTime";
 
 interface DocumentCheckResult {
     result: CheckResult;
@@ -93,22 +94,6 @@ export default function ContextualizedLocDetails() {
     }
     if(loc.voidInfo !== undefined) {
         locTabTitle = "VOID " + locTabTitle;
-    }
-
-    let voidedOn: string;
-    if(locRequest.voidInfo?.voidedOn !== undefined) {
-        const { date, time } = format(locRequest.voidInfo.voidedOn);
-        voidedOn = `${date} / ${time}`;
-    } else {
-        voidedOn = "-";
-    }
-
-    let supersededVoidedOn: string;
-    if(supersededLocRequest?.voidInfo?.voidedOn !== undefined) {
-        const { date, time } = format(supersededLocRequest.voidInfo.voidedOn);
-        supersededVoidedOn = `${date} / ${time}`;
-    } else {
-        supersededVoidedOn = "-";
     }
 
     return (
@@ -195,6 +180,7 @@ export default function ContextualizedLocDetails() {
                     borderColor={ locTabBorderColor }
                     borderWidth={ locTabBorderWidth }
                     tabColors={ tabColors }
+                    flatBottom={ loc.voidInfo !== undefined }
                 />
                 {
                     loc.voidInfo !== undefined &&
@@ -202,7 +188,7 @@ export default function ContextualizedLocDetails() {
                         className="loc-is-void"
                         title={ <span><Icon icon={{id: 'void'}} width="31px" /> This LOC is VOID</span> }
                     >
-                        <p><strong>You have voided this LOC at the following date:</strong> { voidedOn !== "-" ? voidedOn : <Spinner animation="border" size="sm" /> }</p>
+                        <p><strong>You have voided this LOC at the following date:</strong> <InlineDateTime dateTime={ locRequest?.voidInfo?.voidedOn } /></p>
                         <p><strong>Reason:</strong> { locRequest.voidInfo?.reason || "-" }</p>
                         {
                             loc.voidInfo.replacer !== undefined &&
@@ -240,10 +226,10 @@ export default function ContextualizedLocDetails() {
                 {
                     loc.replacerOf !== undefined &&
                     <DangerFrame
-                        className="loc-is-void"
+                        className="loc-supersedes"
                         title={ <span><Icon icon={{id: 'void_supersede'}} height="31px" /> IMPORTANT: this logion Legal Officer Case (LOC) supersedes a previous LOC (VOID)</span> }
                     >
-                        <p><strong>This LOC supersedes a previous LOC (VOID) since the following date:</strong> { supersededVoidedOn !== "-" ? supersededVoidedOn : <Spinner animation="border" size="sm" /> }</p>
+                        <p><strong>This LOC supersedes a previous LOC (VOID) since the following date:</strong> <InlineDateTime dateTime={ supersededLocRequest?.voidInfo?.voidedOn } /></p>
                         <p><strong>For record purpose, this LOC supersedes the following LOC: </strong>
                         <NewTabLink
                             href={locDetailsPath(loc.replacerOf.toString())}

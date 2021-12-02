@@ -39,3 +39,8 @@
     border-radius: 10px;
     border-top-left-radius: 0;
 }
+
+.Tabs.flat-bottom .tab-content {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}

@@ -22,6 +22,7 @@ export interface Props {
     borderWidth?: string,
     tabColors?: BackgroundAndForegroundColors,
     inactiveTabColors?: BackgroundAndForegroundColors,
+    flatBottom?: boolean,
 }
 
 export default function Tabs(props: Props) {
@@ -65,7 +66,7 @@ export default function Tabs(props: Props) {
     }
     `;
 
-    let className = customClassName("Tabs", props.className);
+    let className = customClassName("Tabs", props.className, props.flatBottom ? "flat-bottom" : undefined);
 
     return (
         <div className={ className }>

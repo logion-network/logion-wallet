@@ -22,7 +22,7 @@ import NewTabLink from "../common/NewTabLink";
 import DangerDialog from "../common/DangerDialog";
 import { LIGHT_MODE } from "../legal-officer/Types";
 import { RED } from "../common/ColorTheme";
-import { format } from "../logion-chain/datetime";
+import InlineDateTime from "../common/InlineDateTime";
 
 export default function Certificate() {
 
@@ -266,12 +266,12 @@ function VoidMessage(props: { locRequest: LocRequest | undefined, voidInfo: Void
             </div>
             <div className="text">
                 <h2>This Logion Legal Officer Case (LOC) is VOID</h2>
-                <p><strong>This LOC and its content is VOID since the following date:</strong> { props.locRequest?.voidInfo?.voidedOn !== undefined ? format(props.locRequest?.voidInfo?.voidedOn).date : "-" }</p>
+                <p><strong>This LOC and its content is VOID since the following date:</strong> <InlineDateTime dateTime={ props.locRequest?.voidInfo?.voidedOn } /></p>
                 {
                     props.voidInfo.replacer !== undefined &&
                     <p><strong>This VOID LOC has been replaced by the following LOC: </strong>
                     <NewTabLink
-                        href={fullCertificateUrl(props.voidInfo.replacer)}
+                        href={fullCertificateUrl(props.voidInfo.replacer, true)}
                         iconId="loc-link"
                         inline
                     >
@@ -300,8 +300,8 @@ function SupersedeMessage(props: { loc: LegalOfficerCase, supersededLocId: UUID,
                     !props.redirected &&
                     <div><strong>IMPORTANT:</strong> This Logion Legal Officer Case (LOC) supersedes a previous LOC (VOID).</div>
                 }
-                <p><strong>This LOC and its content is VOID since the following date:</strong> { props.supersededLoc?.voidInfo?.voidedOn !== undefined ? format(props.supersededLoc?.voidInfo?.voidedOn).date : "-" }</p>
-                <p><strong>For record purpose, the VOID LOC can be reached here: </strong>
+                <p><strong>This LOC supersedes a previous LOC (VOID) since the following date:</strong> <InlineDateTime dateTime={ props.supersededLoc.voidInfo?.voidedOn } /></p>
+                <p><strong>For record purpose, the previous VOID LOC can be reached here: </strong>
                 <NewTabLink
                     href={fullCertificateUrl(props.supersededLocId, true)}
                     iconId="loc-link"
