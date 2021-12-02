@@ -100,6 +100,10 @@ function transactionType(transaction: Transaction, address: string): string {
             return "LOC closed";
         } else if(transaction.method === "createLoc") {
             return "LOC created";
+        } else if(transaction.method === "makeVoid") {
+            return "LOC voided";
+        } else if(transaction.method === "makeVoidAndReplace") {
+            return "LOC voided and replaced";
         } else {
             return "Other";
         }

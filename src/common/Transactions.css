@@ -47,5 +47,5 @@
 
 .Transactions .Table .body {
     overflow-y: auto;
-    height: calc(100vh - 580px);
+    height: calc(100vh - 600px);
 }

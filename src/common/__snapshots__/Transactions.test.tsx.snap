@@ -55,7 +55,7 @@ exports[`renders failed transaction 1`] = `
               Object {
                 "header": "Transaction type",
                 "render": [Function],
-                "width": "200px",
+                "width": "250px",
               },
               Object {
                 "align": "right",
@@ -215,7 +215,7 @@ exports[`renders with all data 1`] = `
               Object {
                 "header": "Transaction type",
                 "render": [Function],
-                "width": "200px",
+                "width": "250px",
               },
               Object {
                 "align": "right",

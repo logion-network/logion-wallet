@@ -73,7 +73,7 @@ export default function Transactions(props: Props) {
                                 {
                                     header: "Transaction type",
                                     render: transaction => <Cell content={ transaction.type } />,
-                                    width: "200px",
+                                    width: "250px",
                                 },
                                 {
                                     header: "Amount",
