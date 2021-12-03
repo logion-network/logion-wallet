@@ -42,3 +42,8 @@
     border-top-right-radius: 0;
     margin-top: -1px;
 }
+
+.Dashboard .ContextualizedLocDetails .PrimaryArea p.frame-title {
+    font-size: 18px;
+    font-weight: bold;
+}

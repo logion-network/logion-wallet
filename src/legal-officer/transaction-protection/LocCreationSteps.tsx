@@ -16,6 +16,7 @@ enum CreationStatus {
     LOC_CREATION_PENDING,
     CREATING_LOC,
     LOC_CREATED,
+    LOC_CREATION_FAILED,
     DONE
 }
 
@@ -74,16 +75,16 @@ export default function LocCreationSteps(props: Props) {
         props.locType,
     ]);
 
-    const cancel = useCallback(() => {
+    const clear = useCallback(() => {
         setStatus(CreationStatus.NONE);
+        setSignAndSubmit(null);
         exit();
-    }, [ setStatus, exit ]);
+    }, [ setStatus, setSignAndSubmit, exit ]);
 
     const close = useCallback(() => {
-        setStatus(CreationStatus.NONE);
-        exit();
+        clear();
         onSuccess();
-    }, [ setStatus, exit, onSuccess ])
+    }, [ clear, onSuccess ])
 
     if (requestToCreate === null) {
         return null;
@@ -93,7 +94,7 @@ export default function LocCreationSteps(props: Props) {
         <div>
             <ProcessStep
                 active={ creationState.status === CreationStatus.NONE }
-                closeCallback={ cancel }
+                closeCallback={ clear }
                 title={ `LOC creation` }
                 mayProceed={ true }
                 proceedCallback={ () => setStatus(CreationStatus.LOC_CREATION_PENDING) }
@@ -105,20 +106,32 @@ export default function LocCreationSteps(props: Props) {
                 </Alert>
             </ProcessStep>
             <ProcessStep
-                active={ creationState.status === CreationStatus.CREATING_LOC || creationState.status === CreationStatus.LOC_CREATED }
+                active={ creationState.status === CreationStatus.CREATING_LOC || creationState.status === CreationStatus.LOC_CREATED || creationState.status === CreationStatus.LOC_CREATION_FAILED }
                 title={ `LOC creation` }
-                mayProceed={ creationState.status === CreationStatus.LOC_CREATED }
-                proceedCallback={ () => setStatus(CreationStatus.DONE) }
                 stepTestId={ `modal-creating-${ requestToCreate.id }` }
-                proceedButtonTestId={ `proceed-review-${ requestToCreate.id }` }
+                nextSteps={[
+                    {
+                        id: "cancel",
+                        buttonText: "Cancel",
+                        buttonVariant: "secondary",
+                        mayProceed: creationState.status === CreationStatus.LOC_CREATION_FAILED,
+                        callback: clear
+                    },
+                    {
+                        id: "proceed-review",
+                        buttonText: "Proceed",
+                        buttonVariant: "primary",
+                        mayProceed: creationState.status === CreationStatus.LOC_CREATED,
+                        callback: () => setStatus(CreationStatus.DONE)
+                    }
+                ]}
             >
                 <ExtrinsicSubmitter
                     id="metadata"
                     signAndSubmit={ signAndSubmit }
                     successMessage="LOC successfully created."
                     onSuccess={ () => setStatus(CreationStatus.LOC_CREATED) }
-                    onError={ () => {
-                    } }
+                    onError={ () => setStatus(CreationStatus.LOC_CREATION_FAILED) }
                 />
             </ProcessStep>
             <ProcessStep

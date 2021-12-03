@@ -57,3 +57,20 @@ export function loadTokens(): AccountTokens {
     });
     return new AccountTokens(tokens);
 }
+
+export function storeCurrentAddress(address: string) {
+    const storage = getStorage();
+    storage.setItem(CURRENT_ADDRESS_KEY, address);
+}
+
+const CURRENT_ADDRESS_KEY = "currentAddress";
+
+export function clearCurrentAddress() {
+    const storage = getStorage();
+    storage.removeItem(CURRENT_ADDRESS_KEY);
+}
+
+export function loadCurrentAddress(): string | null {
+    const storage = getStorage();
+    return storage.getItem(CURRENT_ADDRESS_KEY);
+}

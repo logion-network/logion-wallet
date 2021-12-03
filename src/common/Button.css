@@ -75,7 +75,7 @@
 }
 
 .Button.btn.btn-danger {
-    background-color: #e11a25;
+    background: linear-gradient(to bottom, #ea1f46, #9b0d28);
     border: none;
 }
 

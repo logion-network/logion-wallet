@@ -8,6 +8,7 @@ import { sha256Hex } from "../../common/hash";
 import CheckFileResult from "./CheckFileResult";
 
 import './CheckFileFrame.css';
+import IconTextRow from "../../common/IconTextRow";
 
 interface DocumentHash {
     file: File;
@@ -46,22 +47,29 @@ export default function CheckFileFrame(props: Props) {
     return (
         <PolkadotFrame
             className="CheckFileFrame"
-            title={ <span><Icon icon={{id: "polkadot_doc_check"}} /> Document conformity check tool</span> }
         >
-            <p>Upload a document to check its conformity with a confidential document referenced in this LOC. This tool will generate the “hash” - a digital fingerprint - of the submitted document, compare it with all document “hashes” referenced in the LOC above, and will highlight in it the line - if existing - where the related document has been identified. Otherwise, it will mean that the submitted file version is not part of this current transaction LOC.</p>
-            <FileSelectorButton
-                onFileSelected={ setFile }
-                disabled={ hashing }
-                buttonText="Upload a document"
-                onlyButton={ true }
+            <IconTextRow
+                icon={ <Icon icon={{id: "polkadot_doc_check"}} width="45px" /> }
+                text={
+                    <>
+                        <p className="text-title">Document conformity check tool</p>
+                        <p>Upload a document to check its conformity with a confidential document referenced in this LOC. This tool will generate the “hash” - a digital fingerprint - of the submitted document, compare it with all document “hashes” referenced in the LOC above, and will highlight in it the line - if existing - where the related document has been identified. Otherwise, it will mean that the submitted file version is not part of this current transaction LOC.</p>
+                        <FileSelectorButton
+                            onFileSelected={ setFile }
+                            disabled={ hashing }
+                            buttonText="Upload a document"
+                            onlyButton={ true }
+                        />
+                        {
+                            props.checkResult !== "NONE" &&
+                            <CheckFileResult
+                                type={ props.checkResult }
+                                hash={ hash!.hash }
+                            />
+                        }
+                    </>
+                }
             />
-            {
-                props.checkResult !== "NONE" &&
-                <CheckFileResult
-                    type={ props.checkResult }
-                    hash={ hash!.hash }
-                />
-            }
         </PolkadotFrame>
     )
 }
