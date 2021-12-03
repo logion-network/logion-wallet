@@ -18,7 +18,7 @@ import VoidLocs from './VoidLocs';
 
 export default function TransactionProtection() {
     const { colorTheme } = useCommonContext();
-    const [ locTabKey, setLocTabKey ] = useState<string>('closed');
+    const [ locTabKey, setLocTabKey ] = useState<string>('open');
     const [ requestTabKey, setRequestTabKey ] = useState<string>('pending');
 
     return (
