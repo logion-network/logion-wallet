@@ -27,9 +27,14 @@ export default function VoidLocReplaceExistingButton() {
         if (!locId) {
             setReplacerLocIdError("Invalid LOC ID");
         } else {
+            if(replacerLocId === new UUID(locRequest?.id).toDecimalString()) {
+                setReplacerLocIdError("Cannot replace with itself");
+            } else {
             const loc = await getLegalOfficerCase({ locId, api: api! })
             if (!loc) {
                 setReplacerLocIdError("LOC not found on chain");
+            } else if(loc.voidInfo !== undefined) {
+                setReplacerLocIdError("Cannot replace with a VOID LOC");
             } else {
                 setReplacerLocIdError(undefined);
                 const voidInfo: FullVoidInfo = {
@@ -40,7 +45,8 @@ export default function VoidLocReplaceExistingButton() {
                 setSignAndSubmit(() => voidLocExtrinsic!(voidInfo));
             }
         }
-    }, [ replacerLocId, setReplacerLocIdError, setSignAndSubmit, voidLocExtrinsic, setVoidInfo, api, reason ]);
+        }
+    }, [ replacerLocId, setReplacerLocIdError, setSignAndSubmit, voidLocExtrinsic, setVoidInfo, api, reason, locRequest ]);
 
     const clearAndClose = useCallback(() => {
         setReason("");
@@ -68,14 +74,14 @@ export default function VoidLocReplaceExistingButton() {
                     },
                     {
                         id: "void",
-                        buttonText: "Void and replace by a NEW LOC",
+                        buttonText: "Void and replace by an EXISTING LOC",
                         buttonVariant: "danger",
                         callback: checkAndVoid
                     }
                 ]}
             >
                 <Icon icon={{id: 'void'}} width="31px" />
-                <h2>Void this LOC and replace it by a NEW LOC, you create now</h2>
+                <h2>Void this LOC and replace it by an EXISTING LOC</h2>
                 <p>This action will invalidate the present LOC: the LOC status, its public certificate will show a "VOID" mention to warn people that
                     the content of the LOC is not valid anymore. As you are about to set a replacing LOC, people will be automatically redirected to
                     the replacing LOC when accessing to the void LOC URL and a mention of the fact that the replacing LOC supersedes the void LOC will
