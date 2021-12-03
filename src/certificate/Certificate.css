@@ -103,9 +103,14 @@
 
 .VoidMessage.left {
     display: flex;
-    width: 80%;
     margin-left: auto;
     margin-right: auto;
+}
+
+.VoidMessage.left .content {
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
 .VoidMessage.left .text {
@@ -123,9 +128,14 @@
 
 .SupersedeMessage {
     display: flex;
-    width: 80%;
     margin-left: auto;
     margin-right: auto;
+}
+
+.SupersedeMessage .content {
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
 
 .SupersedeMessage .text {

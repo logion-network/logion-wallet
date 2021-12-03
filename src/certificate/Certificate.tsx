@@ -261,24 +261,26 @@ function LinkCellRow(props: { links: Link[] }) {
 function VoidMessage(props: { locRequest: LocRequest | undefined, voidInfo: VoidInfo, left: boolean }) {
     return (
         <div className={ "VoidMessage" + (props.left ? " left": "") }>
-            <div className="icon">
-                <Icon icon={{id: 'void'}} height="64px" />
-            </div>
-            <div className="text">
-                <h2>This Logion Legal Officer Case (LOC) is VOID</h2>
-                <p><strong>This LOC and its content is VOID since the following date:</strong> <InlineDateTime dateTime={ props.locRequest?.voidInfo?.voidedOn } /></p>
-                {
-                    props.voidInfo.replacer !== undefined &&
-                    <p><strong>This VOID LOC has been replaced by the following LOC: </strong>
-                    <NewTabLink
-                        href={fullCertificateUrl(props.voidInfo.replacer, true)}
-                        iconId="loc-link"
-                        inline
-                    >
-                        { props.voidInfo.replacer.toDecimalString() }
-                    </NewTabLink>
-                    </p>
-                }
+            <div className="content">
+                <div className="icon">
+                    <Icon icon={{id: 'void'}} height="64px" />
+                </div>
+                <div className="text">
+                    <h2>This Logion Legal Officer Case (LOC) is VOID</h2>
+                    <p><strong>This LOC and its content is VOID since the following date:</strong> <InlineDateTime dateTime={ props.locRequest?.voidInfo?.voidedOn } /></p>
+                    {
+                        props.voidInfo.replacer !== undefined &&
+                        <p><strong>This VOID LOC has been replaced by the following LOC: </strong>
+                        <NewTabLink
+                            href={fullCertificateUrl(props.voidInfo.replacer, true)}
+                            iconId="loc-link"
+                            inline
+                        >
+                            { props.voidInfo.replacer.toDecimalString() }
+                        </NewTabLink>
+                        </p>
+                    }
+                </div>
             </div>
         </div>
     );
@@ -287,29 +289,31 @@ function VoidMessage(props: { locRequest: LocRequest | undefined, voidInfo: Void
 function SupersedeMessage(props: { loc: LegalOfficerCase, supersededLocId: UUID, supersededLoc: LocRequest, redirected: boolean }) {
     return (
         <div className="SupersedeMessage">
-            <div className="icon">
-                <Icon icon={{id: 'void_supersede'}} width="67px" />
-            </div>
-            <div className="text">
-                {
-                    props.redirected &&
-                    <div><strong>IMPORTANT:</strong> The Logion Legal Officer Case (LOC) you try to reach has been voided
-                    and superseded by the LOC below.</div>
-                }
-                {
-                    !props.redirected &&
-                    <div><strong>IMPORTANT:</strong> This Logion Legal Officer Case (LOC) supersedes a previous LOC (VOID).</div>
-                }
-                <p><strong>This LOC supersedes a previous LOC (VOID) since the following date:</strong> <InlineDateTime dateTime={ props.supersededLoc.voidInfo?.voidedOn } /></p>
-                <p><strong>For record purpose, the previous VOID LOC can be reached here: </strong>
-                <NewTabLink
-                    href={fullCertificateUrl(props.supersededLocId, true)}
-                    iconId="loc-link"
-                    inline
-                >
-                    { props.supersededLocId.toDecimalString() }
-                </NewTabLink>
-                </p>
+            <div className="content">
+                <div className="icon">
+                    <Icon icon={{id: 'void_supersede'}} width="80px" />
+                </div>
+                <div className="text">
+                    {
+                        props.redirected &&
+                        <p><strong>IMPORTANT:</strong> The Logion Legal Officer Case (LOC) you try to reach has been voided
+                        and superseded by the LOC below.</p>
+                    }
+                    {
+                        !props.redirected &&
+                        <p><strong>IMPORTANT:</strong> This Logion Legal Officer Case (LOC) supersedes a previous LOC (VOID).</p>
+                    }
+                    <p><strong>This LOC supersedes a previous LOC (VOID) since the following date:</strong> <InlineDateTime dateTime={ props.supersededLoc.voidInfo?.voidedOn } /></p>
+                    <p><strong>For record purpose, the previous VOID LOC can be reached here: </strong>
+                    <NewTabLink
+                        href={fullCertificateUrl(props.supersededLocId, true)}
+                        iconId="loc-link"
+                        inline
+                    >
+                        { props.supersededLocId.toDecimalString() }
+                    </NewTabLink>
+                    </p>
+                </div>
             </div>
         </div>
     );
