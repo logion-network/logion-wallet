@@ -12,7 +12,7 @@ import { Children } from './types/Helpers';
 import { Transaction, LocRequest } from './types/ModelTypes';
 import { getTransactions, FetchLocRequestSpecification, fetchLocRequests } from "./Model";
 import { ColorTheme, DEFAULT_COLOR_THEME } from "./ColorTheme";
-import { storeTokens, clearTokens, loadTokens } from './Storage';
+import { storeTokens, clearTokens, loadTokens, storeCurrentAddress, loadCurrentAddress, clearCurrentAddress } from './Storage';
 import { LegalOfficerCase } from "../logion-chain/Types";
 import { toDecimalString, UUID } from "../logion-chain/UUID";
 import { getLegalOfficerCasesMap } from "../logion-chain/LogionLoc";
@@ -55,6 +55,7 @@ interface FullCommonContext extends CommonContext {
 }
 
 function initialContextValue(): FullCommonContext {
+    const tokens = loadTokens().refresh(moment());
     return {
         selectAddress: null,
         accounts: null,
@@ -71,7 +72,7 @@ function initialContextValue(): FullCommonContext {
         closedIdentityLocs: null,
         colorTheme: DEFAULT_COLOR_THEME,
         setColorTheme: null,
-        tokens: loadTokens().refresh(moment()),
+        tokens,
         setTokens: DEFAULT_NOOP,
         logout: DEFAULT_NOOP,
         refresh: DEFAULT_NOOP,
@@ -138,6 +139,7 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
             };
         case 'SELECT_ADDRESS': {
             const accounts = buildAccounts(state.injectedAccounts!, action.newAddress!, state.tokens);
+            storeCurrentAddress(action.newAddress!);
             return {
                 ...state,
                 accounts,
@@ -211,6 +213,7 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
             };
         case 'LOGOUT': {
             clearTokens();
+            clearCurrentAddress();
             const tokens = new AccountTokens({});
             const accounts = buildAccounts(state.injectedAccounts!, undefined, tokens);
             clearInterval(state.timer!);
@@ -427,12 +430,15 @@ export function CommonContextProvider(props: Props) {
 
     useEffect(() => {
         if(contextValue.injectedAccounts !== injectedAccounts
-            && injectedAccounts !== null) {
-
+                && injectedAccounts !== null) {
+            let currentAddress: string | null | undefined = loadCurrentAddress();
+            if(currentAddress === null) {
+                currentAddress = contextValue.accounts?.current?.address;
+            }
             dispatch({
                 type: 'SET_ADDRESSES',
                 injectedAccounts,
-                accounts: buildAccounts(injectedAccounts, contextValue.accounts?.current?.address, contextValue.tokens)
+                accounts: buildAccounts(injectedAccounts, currentAddress, contextValue.tokens)
             });
         }
     }, [ injectedAccounts, contextValue ]);

@@ -28,6 +28,7 @@ import NewTabLink from "../../common/NewTabLink";
 import VoidLocReplaceExistingButton from "./VoidLocReplaceExistingButton";
 import CopyPasteButton from "../../common/CopyPasteButton";
 import InlineDateTime from "../../common/InlineDateTime";
+import IconTextRow from "../../common/IconTextRow";
 
 interface DocumentCheckResult {
     result: CheckResult;
@@ -186,7 +187,7 @@ export default function ContextualizedLocDetails() {
                     loc.voidInfo !== undefined &&
                     <DangerFrame
                         className="loc-is-void"
-                        title={ <span><Icon icon={{id: 'void'}} width="31px" /> This LOC is VOID</span> }
+                        title={ <span><Icon icon={{id: 'void'}} width="45px" /> This LOC is VOID</span> }
                     >
                         <p><strong>You have voided this LOC at the following date:</strong> <InlineDateTime dateTime={ locRequest?.voidInfo?.voidedOn } /></p>
                         <p><strong>Reason:</strong> { locRequest.voidInfo?.reason || "-" }</p>
@@ -227,18 +228,25 @@ export default function ContextualizedLocDetails() {
                     loc.replacerOf !== undefined &&
                     <DangerFrame
                         className="loc-supersedes"
-                        title={ <span><Icon icon={{id: 'void_supersede'}} height="31px" /> IMPORTANT: this logion Legal Officer Case (LOC) supersedes a previous LOC (VOID)</span> }
                     >
-                        <p><strong>This LOC supersedes a previous LOC (VOID) since the following date:</strong> <InlineDateTime dateTime={ supersededLocRequest?.voidInfo?.voidedOn } /></p>
-                        <p><strong>For record purpose, this LOC supersedes the following LOC: </strong>
-                        <NewTabLink
-                            href={locDetailsPath(loc.replacerOf.toString())}
-                            iconId="loc-link"
-                            inline
-                        >
-                            { loc.replacerOf.toDecimalString() }
-                        </NewTabLink>
-                        </p>
+                        <IconTextRow
+                            icon={ <Icon icon={{id: 'void_supersede'}} width="45px" /> }
+                            text={
+                                <>
+                                    <p className="frame-title">IMPORTANT: this logion Legal Officer Case (LOC) supersedes a previous LOC (VOID)</p>
+                                    <p><strong>This LOC supersedes a previous LOC (VOID) since the following date:</strong> <InlineDateTime dateTime={ supersededLocRequest?.voidInfo?.voidedOn } /></p>
+                                    <p><strong>For record purpose, this LOC supersedes the following LOC: </strong>
+                                    <NewTabLink
+                                        href={locDetailsPath(loc.replacerOf.toString())}
+                                        iconId="loc-link"
+                                        inline
+                                    >
+                                        { loc.replacerOf.toDecimalString() }
+                                    </NewTabLink>
+                                    </p>
+                                </>
+                            }
+                        />
                     </DangerFrame>
                 }
                 <CheckFileFrame
@@ -249,21 +257,28 @@ export default function ContextualizedLocDetails() {
                     loc.voidInfo === undefined &&
                     <DangerFrame
                         className="void-loc"
-                        title={ <span><Icon icon={{id: 'void'}} width="31px" /> Void this LOC</span> }
                     >
-                        <p>
-                            This action will invalidate the present LOC: the LOC status, its public certificate will show a "VOID" mention to warn people that
-                            the content of the LOC is not valid anymore. If another replacing LOC is set, people will be automatically redirected to
-                            the replacing LOC when accessing the void LOC URL and a mention of the fact that the replacing LOC <strong>supersedes</strong> the void
-                            LOC will be shared on both public certificates. <strong>PLEASE USE CAREFULLY.</strong>
-                        </p>
-                        <ButtonGroup
-                            align="left"
-                        >
-                            <VoidLocButton />
-                            <VoidLocReplaceNewButton />
-                            <VoidLocReplaceExistingButton />
-                        </ButtonGroup>
+                        <IconTextRow
+                            icon={ <Icon icon={{id: 'void'}} width="31px" /> }
+                            text={
+                                <>
+                                    <p className="frame-title"> Void this LOC</p>
+                                    <p>
+                                        This action will invalidate the present LOC: the LOC status, its public certificate will show a "VOID" mention to warn people that
+                                        the content of the LOC is not valid anymore. If another replacing LOC is set, people will be automatically redirected to
+                                        the replacing LOC when accessing the void LOC URL and a mention of the fact that the replacing LOC <strong>supersedes</strong> the void
+                                        LOC will be shared on both public certificates. <strong>PLEASE USE CAREFULLY.</strong>
+                                    </p>
+                                    <ButtonGroup
+                                        align="left"
+                                    >
+                                        <VoidLocButton />
+                                        <VoidLocReplaceNewButton />
+                                        <VoidLocReplaceExistingButton />
+                                    </ButtonGroup>
+                                </>
+                            }
+                        />
                     </DangerFrame>
                 }
             </>

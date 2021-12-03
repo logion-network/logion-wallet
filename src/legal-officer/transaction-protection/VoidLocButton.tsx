@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Form } from "react-bootstrap";
 import Button from "../../common/Button";
 import { useCommonContext } from "../../common/CommonContext";
@@ -13,7 +13,15 @@ export default function VoidLocButton() {
     const [ visible, setVisible ] = useState(false);
     const { voidLocExtrinsic, voidLoc } = useLocContext();
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
+    const [ submissionFailed, setSubmissionFailed ] = useState<boolean>(false);
     const [ voidInfo, setVoidInfo ] = useState<FullVoidInfo>({reason: ""});
+
+    const clearAndClose = useCallback(() => {
+        setVoidInfo({reason: ""});
+        setSignAndSubmit(null);
+        setSubmissionFailed(false);
+        setVisible(false)
+    }, [ setVoidInfo, setSignAndSubmit, setSubmissionFailed, setVisible ]);
 
     return (
         <>
@@ -26,13 +34,15 @@ export default function VoidLocButton() {
                         id: "cancel",
                         buttonText: "Cancel",
                         buttonVariant: "danger-outline",
-                        callback: () => setVisible(false)
+                        callback: clearAndClose,
+                        disabled: signAndSubmit !== null && !submissionFailed
                     },
                     {
                         id: "void",
                         buttonText: "Void LOC",
                         buttonVariant: "danger",
-                        callback: () => setSignAndSubmit(() => voidLocExtrinsic!(voidInfo))
+                        callback: () => { setSubmissionFailed(false); setSignAndSubmit(() => voidLocExtrinsic!(voidInfo)) },
+                        disabled: signAndSubmit !== null
                     }
                 ]}
             >
@@ -64,7 +74,7 @@ export default function VoidLocButton() {
                             voidLoc!(voidInfo);
                             refresh!()
                         } }
-                        onError={ () => {} }
+                        onError={ () => setSubmissionFailed(true) }
                     />
                 }
             </DangerDialog>

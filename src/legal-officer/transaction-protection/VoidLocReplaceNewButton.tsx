@@ -19,6 +19,7 @@ export default function VoidLocReplaceNewButton() {
     const [ visible, setVisible ] = useState(false);
     const { locRequest, voidLocExtrinsic, voidLoc } = useLocContext();
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
+    const [ submissionFailed, setSubmissionFailed ] = useState<boolean>(false);
     const [ reason, setReason ] = useState<string>("");
     const [ newLocDescription, setNewLocDescritpion ] = useState<string>("");
     const [ newLocRequest, setNewLocRequest ] = useState<LocRequest | null>(null);
@@ -38,6 +39,13 @@ export default function VoidLocReplaceNewButton() {
         })();
     }, [ axios, accounts, locRequest, newLocDescription ]);
 
+    const clearAndClose = useCallback(() => {
+        setVoidInfo({reason: ""});
+        setSignAndSubmit(null);
+        setSubmissionFailed(false);
+        setVisible(false)
+    }, [ setVoidInfo, setSignAndSubmit, setSubmissionFailed, setVisible ]);
+
     if(locRequest === null) {
         return null;
     }
@@ -53,13 +61,15 @@ export default function VoidLocReplaceNewButton() {
                         id: "cancel",
                         buttonText: "Cancel",
                         buttonVariant: "danger-outline",
-                        callback: () => setVisible(false)
+                        callback: clearAndClose,
+                        disabled: signAndSubmit !== null && !submissionFailed
                     },
                     {
                         id: "void",
                         buttonText: "Void and replace by a NEW LOC",
                         buttonVariant: "danger",
-                        callback: createNewLocRequest
+                        callback: createNewLocRequest,
+                        disabled: newLocRequest !== null || signAndSubmit !== null
                     }
                 ]}
             >
@@ -120,7 +130,7 @@ export default function VoidLocReplaceNewButton() {
                             voidLoc!(voidInfo)
                             refresh!()
                         } }
-                        onError={ () => {} }
+                        onError={ () => setSubmissionFailed(true) }
                     />
                 }
             </DangerDialog>
