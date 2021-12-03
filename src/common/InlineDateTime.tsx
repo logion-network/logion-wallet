@@ -5,14 +5,14 @@ export interface Props {
 }
 
 export default function InlineDateTime(props: Props) {
-    let voidedOn;
+    let formattedDateTime;
     if(props.dateTime !== undefined) {
         const {date, time} = format(props.dateTime);
-        voidedOn = `${date} / ${time}`;
+        formattedDateTime = `${date} / ${time}`;
     } else {
-        voidedOn = "-";
+        formattedDateTime = "-";
     }
     return (
-        <span>{ voidedOn }</span>
+        <span>{ formattedDateTime }</span>
     );
 }
