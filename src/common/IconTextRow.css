@@ -6,3 +6,8 @@
 .IconTextRow .text {
     margin-left: 15px;
 }
+
+.Dashboard .PrimaryArea .IconTextRow p.text-title {
+    font-size: 18px;
+    font-weight: bold;
+}

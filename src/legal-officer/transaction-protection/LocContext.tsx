@@ -81,6 +81,7 @@ type ActionType = 'SET_LOC_REQUEST'
     | 'UPDATE_ITEM_STATUS'
     | 'UPDATE_ITEM_NAME'
     | 'UPDATE_ITEM_TIMESTAMP'
+    | 'UPDATE_ITEM_TIMESTAMP_AND_NAME'
     | 'DELETE_ITEM'
     | 'CLOSE'
     | 'VOID'
@@ -116,10 +117,8 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
     const items = state.locItems.concat();
     const itemIndex = items.indexOf(action.locItem!);
     switch (action.type) {
-        case "SET_LOC_REQUEST":
-            return { ...state, locRequest: action.locRequest! }
         case "SET_LOC":
-            return { ...state, loc: action.loc!, supersededLoc: action.supersededLoc, supersededLocRequest: action.supersededLocRequest }
+            return { ...state, loc: action.loc!, supersededLoc: action.supersededLoc, supersededLocRequest: action.supersededLocRequest, locRequest: action.locRequest! }
         case "SET_FUNCTIONS":
             return {
                 ...state,
@@ -152,6 +151,9 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
             return { ...state, locItems: items }
         case "UPDATE_ITEM_TIMESTAMP":
             items[itemIndex] = { ...action.locItem!, timestamp: action.timestamp! }
+            return { ...state, locItems: items }
+        case "UPDATE_ITEM_TIMESTAMP_AND_NAME":
+            items[itemIndex] = { ...action.locItem!, timestamp: action.timestamp!, name: action.name! }
             return { ...state, locItems: items }
         case "DELETE_ITEM":
             items.splice(itemIndex, 1)
@@ -216,37 +218,63 @@ export function LocContextProvider(props: Props) {
     const [ refreshCounter, setRefreshCounter ] = useState<number>(0);
 
     useEffect(() => {
-        if (contextValue.locRequest === null && axiosFactory !== undefined) {
-            fetchLocRequest(axiosFactory(accounts!.current!.address)!, contextValue.locId.toString())
-                .then(locRequest => {
-                    dispatch({ type: 'SET_LOC_REQUEST', locRequest });
-                })
+        if (contextValue.locRequest === null && axiosFactory !== undefined && contextValue.loc === null && api !== null) {
+            (async function() {
+                const locRequest = await fetchLocRequest(axiosFactory(accounts!.current!.address)!, contextValue.locId.toString());
+                const loc = await getLegalOfficerCase({ locId: contextValue.locId, api });
+                let supersededLoc: LegalOfficerCase | undefined;
+                let supersededLocRequest: LocRequest | undefined;
+                if(loc?.replacerOf !== undefined) {
+                    supersededLoc = await getLegalOfficerCase({ locId: loc.replacerOf, api });
+                    supersededLocRequest = await fetchLocRequest(axiosFactory!(accounts!.current!.address)!, loc.replacerOf.toString());
+                }
+                dispatch({ type: 'SET_LOC', loc, supersededLoc, supersededLocRequest, locRequest });
+                if (loc) {
+                    let refreshNeeded = false;
+                    loc!.metadata.forEach(item => {
+                        const locItem = createPublishedMetadataLocItem(item, loc!.owner)
+                        dispatch({ type: 'ADD_ITEM', locItem })
+                        const data = findItem(locRequest, locItem);
+                        if (data && data.addedOn) {
+                            dispatch({ type: 'UPDATE_ITEM_TIMESTAMP', locItem, timestamp: data.addedOn })
+                        } else {
+                            refreshNeeded = true;
+                        }
+                    })
+                    loc!.files.forEach(file => {
+                        const locItem = createPublishedFileLocItem({
+                            file,
+                            submitter: loc!.owner
+                        })
+                        dispatch({ type: 'ADD_ITEM', locItem })
+                        const data = findFile(locRequest, locItem.value);
+                        if (data) {
+                            dispatch({ type: 'UPDATE_ITEM_TIMESTAMP_AND_NAME', locItem, timestamp: data.addedOn, name: data.name })
+                            if(!data.addedOn) {
+                                refreshNeeded = true;
+                            }
+                        } else {
+                            refreshNeeded = true;
+                        }
+                    })
+                    for(let i = 0; i < loc!.links.length; ++i) {
+                        const item = loc!.links[i];
+                        const locItem = createPublishedLinkedLocItem(item, loc!.owner)
+                        dispatch({ type: 'ADD_ITEM', locItem })
+
+                        const otherLocId = UUID.fromDecimalString(locItem.value);
+                        const otherLocRequest = await fetchLocRequest(axiosFactory!(accounts!.current!.address)!, otherLocId!.toString())
+                        dispatch({ type: 'UPDATE_ITEM_NAME', locItem, name: otherLocRequest.description })
+                    }
+                    if(refreshNeeded) {
+                        setRefreshCounter(MAX_REFRESH);
+                    }
+                }
+            })();
         }
-    }, [ contextValue.locRequest, contextValue.locId, axiosFactory, accounts ])
+    }, [ contextValue.locRequest, contextValue.locId, axiosFactory, accounts, api, contextValue.loc ])
 
     const refreshNameTimestamp = useCallback<() => Promise<NextRefresh>>(() => {
-        function findItem(locRequest: LocRequest, item: LocItem): LocMetadataItem | LocFile | LocLink | undefined {
-            if (item.type === 'Document') {
-                return findFile(locRequest, item.value)
-            } if (item.type === 'Linked LOC') {
-                return locRequest.links.find(link => UUID.fromAnyString(link.target)!.toString() === item.target!.toString())
-            } else {
-                return locRequest.metadata.find(metadata => metadata.name === item.name)
-            }
-        }
-
-        function findFile(locRequest: LocRequest, hash: string): LocFile | undefined {
-            return locRequest.files.find(file => file.hash === hash)
-        }
-
-        function allItemsOK(items: LocItem[]): boolean {
-            return items.find(item => item.status === "PUBLISHED" && (item.name === UNKNOWN_NAME || item.timestamp === null)) === undefined;
-        }
-
-        function requestOK(locRequest: LocRequest): boolean {
-            return (locRequest.status !== "CLOSED" || locRequest.closedOn !== undefined)
-                && (locRequest.voidInfo === undefined || locRequest.voidInfo.voidedOn !== undefined);
-        }
 
         function refreshDocumentNames(locRequest: LocRequest): boolean {
             let refreshed = false;
@@ -290,10 +318,10 @@ export function LocContextProvider(props: Props) {
 
         function refreshRequestDates(locRequest: LocRequest): boolean {
             let refreshed = false;
-            if(contextValue.locRequest?.closedOn === undefined && locRequest.closedOn !== undefined) {
+            if(contextValue.locRequest?.closedOn === undefined && locRequest.closedOn) {
                 refreshed = true;
             }
-            if(contextValue.locRequest?.voidInfo?.voidedOn === undefined && locRequest.voidInfo?.voidedOn !== undefined) {
+            if(contextValue.locRequest?.voidInfo?.voidedOn === undefined && locRequest.voidInfo?.voidedOn) {
                 refreshed = true;
             }
             if(refreshed) {
@@ -536,41 +564,6 @@ export function LocContextProvider(props: Props) {
         publishFileFunction, removeItemFunction, changeItemStatusFunction, closeFunction, closeExtrinsicFunction,
         confirmFileFunction, deleteFileFunction, dispatch, publishLinkFunction, voidLocFunction, voidLocExtrinsicFunction, ])
 
-    useEffect(() => {
-        if (contextValue.loc === null && api !== null) {
-            (async function() {
-                const loc = await getLegalOfficerCase({ locId: contextValue.locId, api });
-                let supersededLoc: LegalOfficerCase | undefined;
-                let supersededLocRequest: LocRequest | undefined;
-                if(loc?.replacerOf !== undefined) {
-                    supersededLoc = await getLegalOfficerCase({ locId: loc.replacerOf, api });
-                    supersededLocRequest = await fetchLocRequest(axiosFactory!(accounts!.current!.address)!, loc.replacerOf.toString());
-                }
-                dispatch({ type: 'SET_LOC', loc, supersededLoc, supersededLocRequest });
-                if (loc) {
-                    loc!.metadata.forEach(item => {
-                        const locItem = createPublishedMetadataLocItem(item, loc!.owner)
-                        dispatch({ type: 'ADD_ITEM', locItem })
-                        setRefreshCounter(MAX_REFRESH)
-                    })
-                    loc!.files.forEach(file => {
-                        const locItem = createPublishedFileLocItem({
-                            file,
-                            submitter: loc!.owner
-                        })
-                        dispatch({ type: 'ADD_ITEM', locItem })
-                        setRefreshCounter(MAX_REFRESH)
-                    })
-                    loc!.links.forEach(item => {
-                        const locItem = createPublishedLinkedLocItem(item, loc!.owner)
-                        dispatch({ type: 'ADD_ITEM', locItem })
-                        setRefreshCounter(MAX_REFRESH)
-                    })
-                }
-            })();
-        }
-    }, [ contextValue.loc, api, contextValue.locId, setRefreshCounter, accounts, axiosFactory ])
-
     return (
         <LocContextObject.Provider value={ contextValue }>
             { props.children }
@@ -580,4 +573,27 @@ export function LocContextProvider(props: Props) {
 
 export function useLocContext() {
     return useContext(LocContextObject)
+}
+
+function findItem(locRequest: LocRequest, item: LocItem): LocMetadataItem | LocFile | LocLink | undefined {
+    if (item.type === 'Document') {
+        return findFile(locRequest, item.value)
+    } if (item.type === 'Linked LOC') {
+        return locRequest.links.find(link => UUID.fromAnyString(link.target)!.toString() === item.target!.toString())
+    } else {
+        return locRequest.metadata.find(metadata => metadata.name === item.name)
+    }
+}
+
+function findFile(locRequest: LocRequest, hash: string): LocFile | undefined {
+    return locRequest.files.find(file => file.hash === hash)
+}
+
+function allItemsOK(items: LocItem[]): boolean {
+    return items.find(item => item.status === "PUBLISHED" && (item.name === UNKNOWN_NAME || item.timestamp === null)) === undefined;
+}
+
+function requestOK(locRequest: LocRequest): boolean {
+    return (locRequest.status !== "CLOSED" || locRequest.closedOn !== undefined)
+        && (locRequest.voidInfo === undefined || locRequest.voidInfo.voidedOn !== undefined);
 }
