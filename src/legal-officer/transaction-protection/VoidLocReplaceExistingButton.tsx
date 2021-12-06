@@ -28,13 +28,13 @@ export default function VoidLocReplaceExistingButton() {
             setReplacerLocIdError("Invalid LOC ID");
         } else {
             if(replacerLocId === new UUID(locRequest?.id).toDecimalString()) {
-                setReplacerLocIdError("Cannot replace with itself");
+                setReplacerLocIdError("Cannot be replaced by itself");
             } else {
             const loc = await getLegalOfficerCase({ locId, api: api! })
             if (!loc) {
                 setReplacerLocIdError("LOC not found on chain");
             } else if(loc.voidInfo !== undefined) {
-                setReplacerLocIdError("Cannot replace with a VOID LOC");
+                setReplacerLocIdError("Cannot be replaced by a VOID LOC");
             } else {
                 setReplacerLocIdError(undefined);
                 const voidInfo: FullVoidInfo = {

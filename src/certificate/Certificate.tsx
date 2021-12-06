@@ -267,7 +267,7 @@ function VoidMessage(props: { locRequest: LocRequest | undefined, voidInfo: Void
                 </div>
                 <div className="text">
                     <h2>This Logion Legal Officer Case (LOC) is VOID</h2>
-                    <p><strong>This LOC and its content is VOID since the following date:</strong> <InlineDateTime dateTime={ props.locRequest?.voidInfo?.voidedOn } /></p>
+                    <p><strong>This LOC and its content are VOID since the following date:</strong> <InlineDateTime dateTime={ props.locRequest?.voidInfo?.voidedOn } /></p>
                     {
                         props.voidInfo.replacer !== undefined &&
                         <p><strong>This VOID LOC has been replaced by the following LOC: </strong>
