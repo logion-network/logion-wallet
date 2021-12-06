@@ -80,7 +80,7 @@
 }
 
 .Button.btn.btn-danger:hover {
-    opacity: 0.9;
+    background: linear-gradient(to bottom, #9b0d28, #ea1f46);
 }
 
 .Button.btn.btn-recovery {
