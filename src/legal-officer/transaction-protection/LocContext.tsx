@@ -170,7 +170,7 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
                     status: "CLOSED"
                 }
             }
-        case "VOID": 
+        case "VOID":
             return {
                 ...state,
                 loc: {
@@ -264,7 +264,13 @@ export function LocContextProvider(props: Props) {
 
                         const otherLocId = UUID.fromDecimalString(locItem.value);
                         const otherLocRequest = await fetchLocRequest(axiosFactory!(accounts!.current!.address)!, otherLocId!.toString())
-                        dispatch({ type: 'UPDATE_ITEM_NAME', locItem, name: otherLocRequest.description })
+                        const data = findItem(locRequest, locItem);
+                        if (data && data.addedOn) {
+                            dispatch({ type: 'UPDATE_ITEM_TIMESTAMP_AND_NAME', locItem, timestamp: data.addedOn, name: otherLocRequest.description })
+                        }  else {
+                            dispatch({ type: 'UPDATE_ITEM_NAME', locItem, name: otherLocRequest.description })
+                            refreshNeeded = true;
+                        }
                     }
                     if(refreshNeeded) {
                         setRefreshCounter(MAX_REFRESH);
