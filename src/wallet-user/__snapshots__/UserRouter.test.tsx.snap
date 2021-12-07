@@ -38,14 +38,11 @@ exports[`renders 1`] = `
       />
     </Route>
     <Route
-      path="/user/transaction-protection"
-    >
-      <TransactionProtection />
-    </Route>
-    <Route
       path=""
     >
-      <Account />
+      <Wallet
+        transactionsPath={[Function]}
+      />
     </Route>
   </Switch>
 </React.Fragment>

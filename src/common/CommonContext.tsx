@@ -9,7 +9,7 @@ import { CoinBalance, getBalances } from '../logion-chain/Balances';
 import Accounts, { buildAccounts, AccountTokens } from './types/Accounts';
 import { Children } from './types/Helpers';
 import { Transaction, LocRequest } from './types/ModelTypes';
-import { getTransactions, fetchLocRequests } from "./Model";
+import { getTransactions } from "./Model";
 import { ColorTheme, DEFAULT_COLOR_THEME } from "./ColorTheme";
 import { storeTokens, clearTokens, loadTokens } from './Storage';
 
@@ -22,10 +22,6 @@ export interface CommonContext {
     dataAddress: string | null;
     balances: CoinBalance[] | null;
     transactions: Transaction[] | null;
-    pendingLocRequests: LocRequest[] | null;
-    rejectedLocRequests: LocRequest[] | null;
-    openedLocRequests: LocRequest[] | null;
-    closedLocRequests: LocRequest[] | null;
     colorTheme: ColorTheme;
     setColorTheme: ((colorTheme: ColorTheme) => void) | null;
     setTokens: (tokens: AccountTokens) => void;
@@ -50,10 +46,6 @@ function initialContextValue(): FullCommonContext {
         dataAddress: null,
         balances: null,
         transactions: null,
-        pendingLocRequests: null,
-        rejectedLocRequests: null,
-        openedLocRequests: null,
-        closedLocRequests: null,
         colorTheme: DEFAULT_COLOR_THEME,
         setColorTheme: null,
         tokens: loadTokens().refresh(moment()),
@@ -144,10 +136,6 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                     dataAddress: action.dataAddress!,
                     balances: action.balances!,
                     transactions: action.transactions!,
-                    pendingLocRequests: action.pendingLocRequests!,
-                    openedLocRequests: action.openedLocRequests!,
-                    closedLocRequests: action.closedLocRequests!,
-                    rejectedLocRequests: action.rejectedLocRequests!,
                 };
             } else {
                 return state;
@@ -268,46 +256,11 @@ export function CommonContextProvider(props: Props) {
                     address: currentAddress
                 });
 
-                let specificationFragment;
-                if(currentAccount.isLegalOfficer) {
-                    specificationFragment = {
-                        ownerAddress: currentAddress
-                    }
-                } else {
-                    specificationFragment = {
-                        requesterAddress: currentAddress
-                    }
-                }
-
-                const pendingLocRequests = await fetchLocRequests(contextValue.axios!, {
-                    ...specificationFragment,
-                    statuses: ["REQUESTED"]
-                });
-
-                const openedLocRequests = await fetchLocRequests(contextValue.axios!, {
-                    ...specificationFragment,
-                    statuses: ["OPEN"]
-                });
-
-                const closedLocRequests = await fetchLocRequests(contextValue.axios!, {
-                    ...specificationFragment,
-                    statuses: ["CLOSED"]
-                });
-
-                const rejectedLocRequests = await fetchLocRequests(contextValue.axios!, {
-                    ...specificationFragment,
-                    statuses: ["REJECTED"]
-                });
-
                 dispatch({
                     type: "SET_DATA",
                     dataAddress: currentAddress,
                     balances,
                     transactions: transactions.transactions,
-                    pendingLocRequests,
-                    openedLocRequests,
-                    closedLocRequests,
-                    rejectedLocRequests,
                 });
             })();
         }

@@ -1,10 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 
 import { useLogionChain } from '../../logion-chain';
-import { balanceFromAmount, accountBalance, buildTransferCall, AssetWithBalance } from '../../logion-chain/Assets';
-import { signAndSendAsRecovered } from '../../logion-chain/Recovery';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
-
 import { useCommonContext } from '../../common/CommonContext';
 import { FullWidthPane } from '../../common/Dashboard';
 import Tabs from '../../common/Tabs';
@@ -13,16 +10,12 @@ import { GREEN } from '../../common/ColorTheme';
 import Button from '../../common/Button';
 import Icon from '../../common/Icon';
 import Dialog from '../../common/Dialog';
-import { getOfficer } from "../../common/types/LegalOfficer";
-
 import { useUserContext } from '../UserContext';
-
 import './RecoveryProcess.css';
-
-interface Balances {
-    accountId: string,
-    balances?: AssetWithBalance[],
-}
+import { CoinBalance, getBalances, buildTransferCall} from "../../logion-chain/Balances";
+import { AssetNameCell } from "../../common/Wallet";
+import { signAndSendAsRecovered } from "../../logion-chain/Recovery";
+import { PrefixedNumber, MILLI } from "../../logion-chain/numbers";
 
 interface TabTitleProps {
     iconId: string,
@@ -45,35 +38,25 @@ export default function RecoveryProcess() {
     const { api } = useLogionChain();
     const { accounts, colorTheme } = useCommonContext();
     const { recoveredAddress } = useUserContext();
-    const [ tabKey, setTabKey ] = useState<string>('tokens');
-    const [ balances, setBalances ] = useState<Balances | null>(null);
-    const [ recoveredToken, setRecoveredToken ] = useState<AssetWithBalance | null>(null);
+    const [ tabKey, setTabKey ] = useState<string>('coinBalances');
+    const [ recoveredCoinBalance, setRecoveredCoinBalance ] = useState<CoinBalance | null>(null);
+    const [ balances, setBalances ] = useState<CoinBalance[] | null>(null)
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
     const [ signAndSubmitError, setSignAndSubmitError ] = useState<boolean>(false);
 
     useEffect(() => {
-        if(recoveredAddress !== null &&
-                (balances === null || balances.accountId !== recoveredAddress)) {
-
-            const accountId = recoveredAddress!;
-            setBalances({
-                accountId,
-            });
-            (async function() {
-                const balances = await accountBalance({
-                    api: api!,
-                    accountId,
-                });
-                setBalances({
-                    accountId,
-                    balances,
-                });
-            })();
+        if (balances === null && api !== null) {
+            if (recoveredAddress) {
+                getBalances({ api, accountId: recoveredAddress })
+                    .then(setBalances)
+            } else {
+                setBalances([])
+            }
         }
-    }, [ api, balances, recoveredAddress, setBalances ]);
+    }, [ balances, setBalances, recoveredAddress, api ])
 
-    const recoverToken = useCallback(() => {
-        const amount = balanceFromAmount(Number(recoveredToken!.balance), recoveredToken!.asset.metadata.decimals);
+    const recoverCoin = useCallback(async (amount: PrefixedNumber) => {
+
         const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSendAsRecovered({
             api: api!,
             signerId: accounts!.current!.address,
@@ -82,36 +65,37 @@ export default function RecoveryProcess() {
             recoveredAccountId: recoveredAddress!,
             call: buildTransferCall({
                 api: api!,
-                assetId: recoveredToken!.asset.assetId,
-                amount,
-                target: accounts!.current!.address,
+                amount: amount,
+                destination: accounts!.current!.address,
             }),
         });
         setSignAndSubmit(() => signAndSubmit);
-    }, [ api, accounts, recoveredToken, recoveredAddress ]);
+    }, [ api, accounts, recoveredAddress ]);
 
     const onTransferSuccess = useCallback(() => {
         setSignAndSubmit(null);
         setSignAndSubmitError(false);
-        setRecoveredToken(null);
+        setRecoveredCoinBalance(null);
         setBalances(null);
-    }, [ setSignAndSubmit, setRecoveredToken, setBalances ]);
+    }, [ setSignAndSubmit, setRecoveredCoinBalance, setBalances ]);
 
-    if(recoveredAddress === null) {
+    if (recoveredAddress === null) {
         return null;
     }
 
-    const tokens: AssetWithBalance[] = (balances !== null && balances.balances !== undefined) ? balances.balances.filter(token => Number(token.balance) > 0) : [];
+    const amountToRecover = recoveredCoinBalance?.balance ? recoveredCoinBalance?.balance : new PrefixedNumber("0", MILLI)
+
+    const coinBalances: CoinBalance[] = (balances !== null) ? balances.filter(coinBalance => Number(coinBalance.balance.toNumber()) > 0) : [];
     return (
         <FullWidthPane
             className="RecoveryProcess"
             mainTitle="Recovery Process"
-            titleIcon={{
+            titleIcon={ {
                 icon: {
                     id: 'recovery',
                 },
                 background: colorTheme.recoveryItems.iconGradient,
-            }}
+            } }
         >
             <>
                 <div
@@ -130,90 +114,89 @@ export default function RecoveryProcess() {
                     activeKey={ tabKey }
                     tabs={[
                         {
-                            key: "tokens",
+                            key: "coinBalances",
                             title: (
                                 <TabTitle
-                                    iconId="tokens"
-                                    title="Tokens"
-                                    size={ tokens.length }
+                                    iconId="wallet"
+                                    title="Coins"
+                                    size={ coinBalances.length }
                                 />
                             ),
                             render: () => (
-                                    <Table
-                                        columns={[
+                                <Table
+                                    columns={ [
+                                        {
+                                            header: "Name",
+                                            render: coinBalance => <AssetNameCell balance={ coinBalance } />,
+                                        },
+                                        {
+                                            header: "Balance",
+                                            render: coinBalance => <Cell
+                                                content={ coinBalance.balance.coefficient.toFixedPrecision(2) } />,
+                                            width: "300px",
+                                            align: 'right',
+                                        },
+                                        {
+                                            header: "Action",
+                                            render: coinBalance => <Button
+                                                variant="recovery"
+                                                onClick={ () => setRecoveredCoinBalance(coinBalance) }
+                                            >
+                                                Transfer
+                                            </Button>,
+                                            width: "300px",
+                                        }
+                                    ] }
+                                    data={ coinBalances }
+                                    renderEmpty={ () => (
+                                        <EmptyTableMessage>
                                             {
-                                                header: "Name",
-                                                render: token => <Cell content={ token.asset.metadata.symbol } />,
-                                                width: "150px",
-                                            },
-                                            {
-                                                header: "Description",
-                                                render: token => <Cell content={ token.asset.metadata.name } />,
-                                            },
-                                            {
-                                                header: "Balance",
-                                                render: token => <Cell content={ token.balance } />,
-                                                width: "200px",
-                                            },
-                                            {
-                                                header: "Legal officer",
-                                                render: token => <Cell content={ getOfficer(token.asset.issuer)!.name } />,
-                                                width: "150px",
-                                            },
-                                            {
-                                                header: "Action",
-                                                render: token => <Button
-                                                    variant="recovery"
-                                                    onClick={ () => setRecoveredToken(token) }
-                                                >
-                                                    Transfer
-                                                </Button>,
-                                                width: "150px",
+                                                (balances !== null) &&
+                                                "No coin to recover"
                                             }
-                                        ]}
-                                        data={ tokens }
-                                        renderEmpty={ () => (
-                                            <EmptyTableMessage>
-                                                {
-                                                    (balances !== null && balances.balances !== undefined) &&
-                                                    "No token to recover"
-                                                }
-                                                {
-                                                    (balances === null || balances.balances === undefined) &&
-                                                    "Fetching data..."
-                                                }
-                                            </EmptyTableMessage>
-                                        )}
-                                    />
+                                            {
+                                                (balances === null) &&
+                                                "Fetching data..."
+                                            }
+                                        </EmptyTableMessage>
+                                    ) }
+                                />
                             )
                         }
-                    ]}
-                    onSelect={ key => setTabKey(key || 'tokens') }
+                    ] }
+                    onSelect={ key => setTabKey(key || 'coinBalances') }
                 />
                 <Dialog
-                    show={ recoveredToken !== null }
+                    show={ recoveredCoinBalance !== null }
                     size="lg"
-                    actions={[
+                    actions={ [
                         {
                             id: "cancel",
                             buttonText: "Cancel",
                             buttonVariant: "secondary",
-                            callback: () => { setRecoveredToken(null); setSignAndSubmit(null); setSignAndSubmitError(false); },
+                            callback: () => {
+                                setRecoveredCoinBalance(null);
+                                setSignAndSubmit(null);
+                                setSignAndSubmitError(false);
+                            },
                             disabled: signAndSubmit !== null && !signAndSubmitError,
                         },
                         {
                             id: "transfer",
                             buttonText: "Transfer",
                             buttonVariant: "recovery",
-                            callback: recoverToken,
+                            callback: () => recoverCoin(amountToRecover),
                             disabled: signAndSubmit !== null,
                         }
                     ]}
                 >
                     <p>
-                        You are about to transfer { recoveredToken?.balance } units of
-                        token { recoveredToken?.asset.metadata.symbol } to
-                        account { accounts?.current?.address }.
+                        You are about to
+                        transfer { amountToRecover.coefficient.toFixedPrecision(2) }&nbsp;
+                        { amountToRecover.prefix.symbol }
+                        { recoveredCoinBalance?.coin.symbol }
+                        <br />from account { recoveredAddress }
+                        <br />to account { accounts?.current?.address }.
                     </p>
                     <ExtrinsicSubmitter
                         id="transfer"

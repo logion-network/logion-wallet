@@ -1,8 +1,7 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 import {
-    TOKENIZATION_REQUESTS_PATH,
     PROTECTION_REQUESTS_PATH,
     RECOVERY_REQUESTS_PATH,
     SETTINGS_PATH,
@@ -10,28 +9,20 @@ import {
     WALLET_PATH,
     transactionsPath,
     TRANSACTIONS_PATH,
-    LOC_REQUESTS_PATH, LOC_DETAILS_PATH,
 } from './LegalOfficerPaths';
 
-import Home from './Home';
-import TokenizationRequests from './TokenizationRequests';
 import ProtectionRequests from './ProtectionRequests';
 import RecoveryRequests from './RecoveryRequests';
 import Settings from '../Settings';
 import RecoveryDetails from "./RecoveryDetails";
 import Wallet from "../common/Wallet";
 import Transactions from "../common/Transactions";
-import TransactionProtection from './transaction-protection/TransactionProtection';
-import LocDetails from "./transaction-protection/LocDetails";
 
 export default function LegalOfficerRouter() {
 
     return (
         <>
             <Switch>
-                <Route path={ TOKENIZATION_REQUESTS_PATH }>
-                    <TokenizationRequests />
-                </Route>
                 <Route path={ PROTECTION_REQUESTS_PATH }>
                     <ProtectionRequests />
                 </Route>
@@ -54,16 +45,8 @@ export default function LegalOfficerRouter() {
                         backPath={ WALLET_PATH }
                     />
                 </Route>
-                <Route path={ LOC_REQUESTS_PATH }>
-                    <TransactionProtection />
-                </Route>
-                <Route path={ LOC_DETAILS_PATH }>
-                    <LocDetails
-                        backPath={ LOC_REQUESTS_PATH }
-                    />
-                </Route>
                 <Route path="">
-                    <Home />
+                    <Redirect to={ WALLET_PATH } />
                 </Route>
             </Switch>
         </>

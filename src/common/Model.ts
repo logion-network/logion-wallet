@@ -8,11 +8,7 @@ import {
     ProtectionRequestStatus,
     ProtectionRequest,
     Transaction,
-    LocRequest,
-    LocRequestStatus,
 } from './types/ModelTypes';
-import Identity from './types/Identity';
-import { UUID } from '../logion-chain/UUID';
 
 export interface FetchRequestSpecification {
     legalOfficerAddress?: string,
@@ -100,66 +96,4 @@ function transactionType(transaction: Transaction, address: string): string {
     } else {
         return 'Other';
     }
-}
-
-export interface FetchLocRequestSpecification {
-    ownerAddress?: string,
-    requesterAddress?: string,
-    statuses: LocRequestStatus[],
-}
-
-export async function fetchLocRequests(
-    axios: AxiosInstance,
-    specification: FetchLocRequestSpecification,
-): Promise<LocRequest[]> {
-    const response = await axios.put(`/api/loc-request`, specification);
-    return response.data.requests;
-}
-
-export async function fetchLocRequest(
-    axios: AxiosInstance,
-    requestId: string
-): Promise<LocRequest> {
-    const response = await axios.get(`/api/loc-request/${ requestId }`);
-    return response.data;
-}
-
-export interface CreateLocRequest {
-    ownerAddress?: string;
-    requesterAddress?: string;
-    description?: string;
-    userIdentity?: Identity;
-}
-
-export async function createLocRequest(
-    axios: AxiosInstance,
-    request: CreateLocRequest,
-): Promise<void> {
-    await axios.post(`/api/loc-request`, request);
-}
-
-export async function confirmLocFile(
-    axios: AxiosInstance,
-    locId: UUID,
-    hash: string
-): Promise<void> {
-    const requestId = locId.toString();
-    await axios.put(`/api/loc-request/${requestId}/files/${hash}/confirm`);
-}
-
-export async function deleteLocFile(
-    axios: AxiosInstance,
-    locId: UUID,
-    hash: string
-): Promise<void> {
-    const requestId = locId.toString();
-    await axios.delete(`/api/loc-request/${requestId}/files/${hash}`);
-}
-
-export async function preClose(
-    axios: AxiosInstance,
-    locId: UUID,
-): Promise<void> {
-    const requestId = locId.toString();
-    await axios.post(`/api/loc-request/${requestId}/close`);
 }

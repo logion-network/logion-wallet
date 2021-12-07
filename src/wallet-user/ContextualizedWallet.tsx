@@ -7,13 +7,10 @@ import Dashboard from '../common/Dashboard';
 import WarningDialog from '../common/WarningDialog';
 
 import UserRouter, {
-    HOME_PATH,
-    TOKENS_PATH,
     TRUST_PROTECTION_PATH,
     SETTINGS_PATH,
     RECOVERY_PATH,
     WALLET_PATH,
-    TRANSACTION_PROTECTION_PATH,
 } from "./UserRouter";
 import { useUserContext } from "./UserContext";
 import { useCommonContext } from '../common/CommonContext';
@@ -36,18 +33,6 @@ export default function ContextualizedWallet() {
         <Dashboard
             menuTop={[
                 {
-                    id: "home",
-                    text: "Home",
-                    to: HOME_PATH,
-                    exact: true,
-                    icon: {
-                        icon: {
-                            id: 'home'
-                        },
-                        background: colorTheme.topMenuItems.iconGradient,
-                    },
-                },
-                {
                     id: "wallet",
                     text: "Wallet",
                     to: WALLET_PATH,
@@ -55,30 +40,6 @@ export default function ContextualizedWallet() {
                     icon: {
                         icon: {
                             id: 'wallet'
-                        },
-                        background: colorTheme.topMenuItems.iconGradient,
-                    },
-                },
-                {
-                    id: "tokens",
-                    text: "Tokens",
-                    to: TOKENS_PATH,
-                    exact: true,
-                    icon: {
-                        icon: {
-                            id: 'tokens'
-                        },
-                        background: colorTheme.topMenuItems.iconGradient,
-                    },
-                },
-                {
-                    id: "loc",
-                    text: "Transactions",
-                    to: TRANSACTION_PROTECTION_PATH,
-                    exact: true,
-                    icon: {
-                        icon: {
-                            id: 'loc'
                         },
                         background: colorTheme.topMenuItems.iconGradient,
                     },

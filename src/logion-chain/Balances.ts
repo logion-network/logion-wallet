@@ -1,7 +1,12 @@
 import { ApiPromise } from '@polkadot/api';
-import { PrefixedNumber, ScientificNumber, convertToPrefixed, NONE } from "./numbers";
+import { PrefixedNumber, ScientificNumber, convertToPrefixed, NONE, ATTO } from "./numbers";
+import { ExtrinsicSubmissionParameters, Unsubscriber, signAndSend } from './Signature';
+import { Call } from "@polkadot/types/interfaces";
+import { SubmittableExtrinsic } from "@polkadot/api/submittable/types";
 
 const LOG_DECIMALS = 18;
+export const LOG_SMALLEST_UNIT = ATTO;
+export const SYMBOL = "LGNT";
 
 export interface GetAccountDataParameters {
     api: ApiPromise,
@@ -96,9 +101,52 @@ export function getCoin(coinId: string): Coin {
             name: 'Logion',
             iconId: 'log',
             iconType: 'png',
-            symbol: 'LOG',
+            symbol: SYMBOL,
         };
     } else {
         throw new Error(`Unsupported coin ${coinId}`);
     }
+}
+
+export interface TransferParameters extends ExtrinsicSubmissionParameters, BuildTransferCallParameters {
+}
+
+export function transfer(parameters: TransferParameters): Unsubscriber {
+    const {
+        signerId,
+        callback,
+        errorCallback,
+    } = parameters;
+
+    return signAndSend({
+        signerId,
+        submittable: transferSubmittable(parameters),
+        callback,
+        errorCallback,
+    });
+}
+
+export interface BuildTransferCallParameters {
+    api: ApiPromise;
+    destination: string;
+    amount: PrefixedNumber;
+}
+
+function transferSubmittable(parameters: BuildTransferCallParameters): SubmittableExtrinsic<'promise'> {
+    const {
+        api,
+        destination,
+        amount
+    } = parameters;
+    return api.tx.balances.transfer(destination, amount.convertTo(LOG_SMALLEST_UNIT).coefficient.unnormalize())
+}
+
+export function buildTransferCall(parameters: BuildTransferCallParameters): Call {
+    return parameters.api.createType('Call', transferSubmittable(parameters))
+}
+
+export async function estimateFee(parameters: BuildTransferCallParameters): Promise<PrefixedNumber> {
+    const submittable = transferSubmittable(parameters);
+    const paymentInfo = await submittable.paymentInfo(parameters.destination);
+    return new PrefixedNumber(paymentInfo.partialFee.toString(), LOG_SMALLEST_UNIT);
 }

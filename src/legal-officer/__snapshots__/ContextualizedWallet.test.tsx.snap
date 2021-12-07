@@ -63,21 +63,6 @@ exports[`renders 1`] = `
             "to": "#6050dc",
           },
           "icon": Object {
-            "id": "home",
-          },
-        },
-        "id": "home",
-        "text": "Home",
-        "to": "/legal-officer",
-      },
-      Object {
-        "exact": true,
-        "icon": Object {
-          "background": Object {
-            "from": "#3b6cf4",
-            "to": "#6050dc",
-          },
-          "icon": Object {
             "id": "wallet",
           },
         },
@@ -99,21 +84,6 @@ exports[`renders 1`] = `
         "id": "tokens",
         "text": "Tokens",
         "to": "/legal-officer/tokenization",
-      },
-      Object {
-        "exact": true,
-        "icon": Object {
-          "background": Object {
-            "from": "#3b6cf4",
-            "to": "#6050dc",
-          },
-          "icon": Object {
-            "id": "loc",
-          },
-        },
-        "id": "loc",
-        "text": "Transactions",
-        "to": "/legal-officer/loc",
       },
     ]
   }

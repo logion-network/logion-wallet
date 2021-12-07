@@ -43,21 +43,11 @@ exports[`renders 1`] = `
       />
     </Route>
     <Route
-      path="/legal-officer/loc"
-    >
-      <LocRequests />
-    </Route>
-    <Route
-      path="/legal-officer/loc-details/:locId"
-    >
-      <LocDetails
-        backPath="/legal-officer/loc"
-      />
-    </Route>
-    <Route
       path=""
     >
-      <Account />
+      <Wallet
+        transactionsPath={[Function]}
+      />
     </Route>
   </Switch>
 </React.Fragment>

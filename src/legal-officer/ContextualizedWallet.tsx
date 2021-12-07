@@ -6,13 +6,10 @@ import LegalOfficerRouter from './LegalOfficerRouter';
 import { useCommonContext } from '../common/CommonContext';
 
 import {
-    HOME_PATH,
-    TOKENIZATION_REQUESTS_PATH,
     PROTECTION_REQUESTS_PATH,
     RECOVERY_REQUESTS_PATH,
     SETTINGS_PATH,
     WALLET_PATH,
-    LOC_REQUESTS_PATH,
 } from './LegalOfficerPaths';
 
 export default function ContextualizedWallet() {
@@ -26,18 +23,6 @@ export default function ContextualizedWallet() {
         <Dashboard
             menuTop={[
                 {
-                    id: "home",
-                    text: "Home",
-                    to: HOME_PATH,
-                    exact: true,
-                    icon: {
-                        icon: {
-                            id: 'home'
-                        },
-                        background: colorTheme.topMenuItems.iconGradient,
-                    },
-                },
-                {
                     id: "wallet",
                     text: "Wallet",
                     to: WALLET_PATH,
@@ -45,30 +30,6 @@ export default function ContextualizedWallet() {
                     icon: {
                         icon: {
                             id: 'wallet'
-                        },
-                        background: colorTheme.topMenuItems.iconGradient,
-                    },
-                },
-                {
-                    id: "tokens",
-                    text: "Tokens",
-                    to: TOKENIZATION_REQUESTS_PATH,
-                    exact: true,
-                    icon: {
-                        icon: {
-                            id: 'tokens'
-                        },
-                        background: colorTheme.topMenuItems.iconGradient,
-                    },
-                },
-                {
-                    id: "loc",
-                    text: "Transactions",
-                    to: LOC_REQUESTS_PATH,
-                    exact: true,
-                    icon: {
-                        icon: {
-                            id: 'loc'
                         },
                         background: colorTheme.topMenuItems.iconGradient,
                     },
