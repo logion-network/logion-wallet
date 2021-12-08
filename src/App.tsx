@@ -1,12 +1,14 @@
-import React from 'react';
 import { LogionChainContextProvider } from './logion-chain';
+import { VersionContextProvider } from './version/VersionContext';
 
 import Main from './Main';
 
 export default function App() {
     return (
         <LogionChainContextProvider>
-            <Main/>
+            <VersionContextProvider>
+                <Main/>
+            </VersionContextProvider>
         </LogionChainContextProvider>
     );
 }

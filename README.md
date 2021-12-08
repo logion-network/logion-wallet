@@ -81,3 +81,14 @@ transactions, etc.). To do so:
 3. Run `yarn generate:defs-meta`
 
 You are then able to fix and/or enrich the logion-chain SDK.
+
+## Releasing
+
+Before releasing a new version of the frontend, the following command should be executed:
+
+```bash
+yarn pre-release '<p>Some release notes.</p>'
+```
+
+This will generate the files required by the new version detection mechanism. The script will automatically create a commit with the changes.
+The push remains manual. The local copy must be clean before executing the script.
