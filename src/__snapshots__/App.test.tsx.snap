@@ -2,6 +2,8 @@
 
 exports[`renders 1`] = `
 <LogionChainContextProvider>
-  <Main />
+  <VersionContextProvider>
+    <Main />
+  </VersionContextProvider>
 </LogionChainContextProvider>
 `;

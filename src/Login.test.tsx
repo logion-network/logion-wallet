@@ -13,6 +13,7 @@ import Login from './Login';
 jest.mock('./logion-chain');
 jest.mock('./common/CommonContext');
 jest.mock('./common/Authentication');
+jest.mock('./version/VersionContext');
 
 const AUTHENTICATED_ADDRESS: Account = {
     name: "name authenticated",
