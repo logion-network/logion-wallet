@@ -1,6 +1,7 @@
 import { LocType } from '../../logion-chain/Types';
 import Identity from './Identity';
 import PostalAddress from './PostalAddress';
+import { File } from '../../logion-chain/Types'
 
 export type ProtectionRequestStatus = "PENDING" | "REJECTED" | "ACCEPTED" | "ACTIVATED";
 
@@ -50,10 +51,15 @@ export interface TransactionsSet {
     transactions: Transaction[],
 }
 
-export interface LocFile {
-    name: string;
-    hash: string;
+export interface AddedOn {
     addedOn: string;
+}
+
+/**
+ * Blockchain File, extended with private attributes and timestamp.
+ */
+export interface LocFile extends File, AddedOn {
+    name: string;
 }
 
 export interface LocMetadataItem {

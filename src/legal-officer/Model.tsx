@@ -69,7 +69,8 @@ export async function acceptLocRequest(
 export interface AddFileParameters {
     locId: string,
     file: File,
-    fileName: string
+    fileName: string,
+    nature: string
 }
 
 export interface AddFileResult {
@@ -82,6 +83,7 @@ export async function addFile(
 ): Promise<AddFileResult> {
     const formData = new FormData();
     formData.append('file', parameters.file, parameters.fileName);
+    formData.append('nature', parameters.nature);
     const response = await axios.post(
         `/api/loc-request/${ parameters.locId }/files`,
         formData,

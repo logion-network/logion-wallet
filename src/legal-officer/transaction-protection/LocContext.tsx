@@ -4,19 +4,19 @@ import { LocRequest, LocFile, LocMetadataItem, LocLink } from "../../common/type
 import { confirmLocFile, deleteLocFile, preClose, fetchLocRequest, preVoid } from "../../common/Model";
 import { useCommonContext } from "../../common/CommonContext";
 import { getLegalOfficerCase, addMetadata, addFile, closeLoc, addLink, voidLoc } from "../../logion-chain/LogionLoc";
-import { LegalOfficerCase, VoidInfo } from "../../logion-chain/Types";
+import { LegalOfficerCase, VoidInfo, File } from "../../logion-chain/Types";
 import { useLogionChain } from "../../logion-chain";
 import { SignAndSubmit } from "../../ExtrinsicSubmitter";
 import { SignAndSendCallback } from "../../logion-chain/Signature";
 import { LocItemStatus, LocItem } from "./types";
 import {
     createPublishedMetadataLocItem,
-    createPublishedFileLocItem,
     createDraftFileLocItem,
     createDraftMetadataLocItem,
     createDraftLinkedLocItem,
     UNKNOWN_NAME,
-    createPublishedLinkedLocItem
+    createPublishedLinkedLocItem,
+    mergeLocFile
 } from "./LocItemFactory";
 
 export interface FullVoidInfo extends VoidInfo {
@@ -234,28 +234,18 @@ export function LocContextProvider(props: Props) {
                     loc!.metadata.forEach(item => {
                         const locItem = createPublishedMetadataLocItem(item, loc!.owner)
                         dispatch({ type: 'ADD_ITEM', locItem })
-                        const data = findItem(locRequest, locItem);
+                        const data = findItemInLocRequest(locRequest, locItem);
                         if (data && data.addedOn) {
                             dispatch({ type: 'UPDATE_ITEM_TIMESTAMP', locItem, timestamp: data.addedOn })
                         } else {
                             refreshNeeded = true;
                         }
                     })
-                    loc!.files.forEach(file => {
-                        const locItem = createPublishedFileLocItem({
-                            file,
-                            submitter: loc!.owner
-                        })
-                        dispatch({ type: 'ADD_ITEM', locItem })
-                        const data = findFile(locRequest, locItem.value);
-                        if (data) {
-                            dispatch({ type: 'UPDATE_ITEM_TIMESTAMP_AND_NAME', locItem, timestamp: data.addedOn, name: data.name })
-                            if(!data.addedOn) {
-                                refreshNeeded = true;
-                            }
-                        } else {
-                            refreshNeeded = true;
-                        }
+                    locRequest.files.forEach(locRequestFile => {
+                        const locFile = findFileInLoc(loc, locRequestFile)
+                        const result = mergeLocFile({ fileFromChain: locFile, fileFromBackend: locRequestFile, submitter: loc!.owner });
+                        dispatch({ type: 'ADD_ITEM', locItem: result.locItem })
+                        refreshNeeded = result.refreshNeeded;
                     })
                     for(let i = 0; i < loc!.links.length; ++i) {
                         const item = loc!.links[i];
@@ -264,7 +254,7 @@ export function LocContextProvider(props: Props) {
 
                         const otherLocId = UUID.fromDecimalString(locItem.value);
                         const otherLocRequest = await fetchLocRequest(axiosFactory!(accounts!.current!.address)!, otherLocId!.toString())
-                        const data = findItem(locRequest, locItem);
+                        const data = findItemInLocRequest(locRequest, locItem);
                         if (data && data.addedOn) {
                             dispatch({ type: 'UPDATE_ITEM_TIMESTAMP_AND_NAME', locItem, timestamp: data.addedOn, name: otherLocRequest.description })
                         }  else {
@@ -282,26 +272,12 @@ export function LocContextProvider(props: Props) {
 
     const refreshNameTimestamp = useCallback<() => Promise<NextRefresh>>(() => {
 
-        function refreshDocumentNames(locRequest: LocRequest): boolean {
-            let refreshed = false;
-            contextValue.locItems
-                .filter(locItem => locItem.type === 'Document' && locItem.name === UNKNOWN_NAME)
-                .forEach(locItem => {
-                    const locFile = findFile(locRequest, locItem.value)
-                    if (locFile && locFile.name) {
-                        refreshed = true;
-                        dispatch({ type: 'UPDATE_ITEM_NAME', locItem, name: locFile.name })
-                    }
-                })
-            return refreshed;
-        }
-
         function refreshTimestamps(locRequest: LocRequest): boolean {
             let refreshed = false;
             contextValue.locItems
                 .filter(locItem => locItem.timestamp === null)
                 .forEach(locItem => {
-                    const locFile = findItem(locRequest, locItem)
+                    const locFile = findItemInLocRequest(locRequest, locItem)
                     if (locFile && locFile.addedOn) {
                         refreshed = true;
                         dispatch({ type: 'UPDATE_ITEM_TIMESTAMP', locItem, timestamp: locFile.addedOn })
@@ -348,9 +324,6 @@ export function LocContextProvider(props: Props) {
         const proceed = async () => {
             let nextRefresh = NextRefresh.SCHEDULE;
             const locRequest = await fetchLocRequest(axiosFactory(accounts!.current!.address)!, contextValue.locId.toString());
-            if (refreshDocumentNames(locRequest)) {
-                nextRefresh = NextRefresh.IMMEDIATE;
-            }
             if (refreshTimestamps(locRequest)) {
                 nextRefresh = NextRefresh.IMMEDIATE;
             }
@@ -581,7 +554,11 @@ export function useLocContext() {
     return useContext(LocContextObject)
 }
 
-function findItem(locRequest: LocRequest, item: LocItem): LocMetadataItem | LocFile | LocLink | undefined {
+function findFileInLoc(loc: LegalOfficerCase, item:LocFile): File | undefined {
+    return loc.files.find(file => file.hash === item.hash)
+}
+
+function findItemInLocRequest(locRequest: LocRequest, item: LocItem): LocMetadataItem | LocFile | LocLink | undefined {
     if (item.type === 'Document') {
         return findFile(locRequest, item.value)
     } if (item.type === 'Linked LOC') {
