@@ -32,6 +32,7 @@ export default function LocPrivateFileForm(props: Props) {
                         name="fileName"
                         control={ props.control }
                         defaultValue=""
+                        rules={ { maxLength: 255 } }
                         render={ ({ field }) => (
                             <Form.Control
                                 isInvalid={ !!props.errors.fileName?.message }
@@ -52,6 +53,7 @@ export default function LocPrivateFileForm(props: Props) {
                         name="nature"
                         control={ props.control }
                         defaultValue=""
+                        rules={ { maxLength: 255 } }
                         render={ ({ field }) => (
                             <Form.Control
                                 isInvalid={ !!props.errors.nature?.message }

@@ -33,7 +33,8 @@ export default function LocPrivateFileButton() {
                 const response = await modelAddFile(axiosFactory!(loc!.owner)!, {
                     file,
                     locId: locId.toString(),
-                    fileName: formValues.fileName
+                    fileName: formValues.fileName,
+                    nature: formValues.nature
                 })
                 addFile!(formValues.fileName, response.hash, formValues.nature);
                 setVisible(false);
