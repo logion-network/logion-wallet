@@ -106,7 +106,7 @@ export interface Props {
 }
 
 export function LegalOfficerContextProvider(props: Props) {
-    const { accounts, colorTheme, setColorTheme, axiosFactory } = useCommonContext();
+    const { accounts, colorTheme, setColorTheme, axiosFactory, isCurrentAuthenticated } = useCommonContext();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
     useEffect(() => {
@@ -120,7 +120,8 @@ export function LegalOfficerContextProvider(props: Props) {
                 && axiosFactory !== undefined
                 && accounts.current !== undefined
                 && contextValue.dataAddress !== accounts.current.address
-                && contextValue.fetchForAddress !== accounts.current.address) {
+                && contextValue.fetchForAddress !== accounts.current.address
+                && isCurrentAuthenticated()) {
             const currentAccount = accounts!.current!.address;
             const refreshRequests = (clear: boolean) => refreshRequestsFunction(clear, currentAccount, dispatch, axiosFactory);
             dispatch({
@@ -131,7 +132,7 @@ export function LegalOfficerContextProvider(props: Props) {
             });
             refreshRequests(true);
         }
-    }, [ contextValue, axiosFactory, accounts ]);
+    }, [ contextValue, axiosFactory, accounts, isCurrentAuthenticated ]);
 
     return (
         <LegalOfficerContextObject.Provider value={contextValue}>

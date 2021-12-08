@@ -72,6 +72,18 @@ export class AccountTokens {
     get length(): number {
         return this.addresses.length;
     }
+
+    isAuthenticated(now: Moment, address: string | undefined): boolean {
+        if(address === undefined) {
+            return false;
+        }
+        const token = this.get(address);
+        if(token === undefined) {
+            return false;
+        } else {
+            return token.expirationDateTime.isAfter(now);
+        }
+    }
 }
 
 export function buildAccounts(
