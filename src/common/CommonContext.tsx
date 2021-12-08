@@ -45,6 +45,7 @@ export interface CommonContext {
     refresh: (clearOnRefresh?: boolean) => void;
     voidTransactionLocs: RequestAndLoc[] | null;
     voidIdentityLocs: RequestAndLoc[] | null;
+    isCurrentAuthenticated: () => boolean;
 }
 
 interface FullCommonContext extends CommonContext {
@@ -78,6 +79,7 @@ function initialContextValue(): FullCommonContext {
         refresh: DEFAULT_NOOP,
         voidTransactionLocs: null,
         voidIdentityLocs: null,
+        isCurrentAuthenticated: () => false,
     }
 }
 
@@ -144,14 +146,17 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                 ...state,
                 accounts,
                 axiosFactory: buildAxiosFactory(accounts),
+                isCurrentAuthenticated: () => state.tokens.isAuthenticated(moment(), accounts.current?.address),
             };
         }
         case 'SET_ADDRESSES':
+            const accounts = action.accounts!;
             return {
                 ...state,
                 injectedAccounts: action.injectedAccounts!,
-                accounts: action.accounts!,
-                axiosFactory: buildAxiosFactory(action.accounts!),
+                accounts,
+                axiosFactory: buildAxiosFactory(accounts),
+                isCurrentAuthenticated: () => state.tokens.isAuthenticated(moment(), accounts.current?.address),
             };
         case 'FETCH_IN_PROGRESS':
             return {
@@ -204,6 +209,7 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                 tokens,
                 accounts,
                 axiosFactory: buildAxiosFactory(accounts),
+                isCurrentAuthenticated: () => tokens.isAuthenticated(moment(), accounts.current?.address),
             };
         }
         case 'SET_LOGOUT':
@@ -222,6 +228,7 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                 tokens,
                 accounts,
                 axiosFactory: buildAxiosFactory(accounts),
+                isCurrentAuthenticated: () => false,
             };
         }
         case 'SCHEDULE_TOKEN_REFRESH':
@@ -242,7 +249,8 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                 return {
                     ...state,
                     tokens,
-                    accounts
+                    accounts,
+                    isCurrentAuthenticated: () => tokens.isAuthenticated(moment(), accounts.current?.address),
                 }
             } else {
                 return state;
@@ -264,9 +272,11 @@ export function CommonContextProvider(props: Props) {
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
     const refreshRequests = useCallback((clearOnRefresh?: boolean) => {
+        const now = moment();
         if(api !== null && contextValue !== null
                 && contextValue.accounts !== null
-                && contextValue.accounts.current !== undefined) {
+                && contextValue.accounts.current !== undefined
+                && contextValue.tokens.isAuthenticated(now, contextValue.accounts.current.address)) {
             const currentAccount = contextValue.accounts.current;
             const currentAddress = currentAccount.address;
             dispatch({
@@ -430,10 +440,12 @@ export function CommonContextProvider(props: Props) {
 
     useEffect(() => {
         if(contextValue.injectedAccounts !== injectedAccounts
-                && injectedAccounts !== null) {
+                && injectedAccounts !== null
+                && contextValue.accounts?.current === undefined) {
             let currentAddress: string | null | undefined = loadCurrentAddress();
-            if(currentAddress === null) {
-                currentAddress = contextValue.accounts?.current?.address;
+            const now = moment();
+            if(currentAddress === null || !contextValue.tokens.isAuthenticated(now, currentAddress)) {
+                currentAddress = undefined;
             }
             dispatch({
                 type: 'SET_ADDRESSES',

@@ -130,7 +130,7 @@ export interface Props {
 }
 
 export function UserContextProvider(props: Props) {
-    const { accounts, colorTheme, setColorTheme, axiosFactory } = useCommonContext();
+    const { accounts, colorTheme, setColorTheme, axiosFactory, isCurrentAuthenticated } = useCommonContext();
     const { api, apiState } = useLogionChain();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
@@ -199,10 +199,11 @@ export function UserContextProvider(props: Props) {
                 && accounts !== null
                 && accounts.current !== undefined
                 && contextValue.dataAddress !== accounts.current.address
-                && contextValue.fetchForAddress !== accounts.current.address) {
+                && contextValue.fetchForAddress !== accounts.current.address
+                && isCurrentAuthenticated()) {
             refreshRequests(true);
         }
-    }, [ apiState, axiosFactory, contextValue, accounts, refreshRequests, dispatch ]);
+    }, [ apiState, axiosFactory, contextValue, accounts, refreshRequests, dispatch, isCurrentAuthenticated ]);
 
     useEffect(() => {
         if(contextValue.refreshRequests !== refreshRequests && apiState === "READY") {
