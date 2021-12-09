@@ -55,24 +55,22 @@ export default function SettingsPane() {
             >
                 {
                     currentVersion !== latestVersion?.version &&
-                    <Alert
-                        variant="warning_color"
-                    >
-                        <p><strong>You are not using the latest version of logion.</strong></p>
+                    <>
+                        <p className="wrong-version"><strong>You are not using the latest version of logion: latest is {latestVersion?.version}, yours is { currentVersion }.</strong></p>
                         <p><strong>Please "hard-refresh" (i.e. clear your cache and refresh) the page now:</strong></p>
                         <ul>
                             <li>PC users: Ctrl-F5</li>
                             <li>Mac users: Cmd-Shift-R</li>
                         </ul>
                         <p><strong>You may also delete all app's data via the settings of your browser.</strong></p>
-                    </Alert>
+                    </>
                 }
                 {
                     currentVersion === latestVersion?.version &&
                     <Alert
                         variant="success"
                     >
-                        <p><strong>You are using the latest version of logion.</strong></p>
+                        <p><strong>You are using the latest version of logion: { currentVersion }.</strong></p>
                     </Alert>
                 }
             </Frame>
