@@ -15,7 +15,8 @@ import type { Timepoint } from '@polkadot/types/interfaces/utility';
 import type { AnyNumber, ITuple } from '@polkadot/types/types';
 
 declare module '@polkadot/api/types/submittable' {
-  export interface AugmentedSubmittables<ApiType> {
+
+  export interface AugmentedSubmittables<ApiType extends ApiTypes> {
     assets: {
       /**
        * Reduce the balance of `who` by as much as possible up to `amount` assets of `id`.
@@ -1346,10 +1347,11 @@ declare module '@polkadot/api/types/submittable' {
        **/
       [key: string]: SubmittableExtrinsicFunction<ApiType>;
     };
-  }
+  } // AugmentedSubmittables
 
   export interface SubmittableExtrinsics<ApiType extends ApiTypes> extends AugmentedSubmittables<ApiType> {
     (extrinsic: Call | Extrinsic | Uint8Array | string): SubmittableExtrinsic<ApiType>;
     [key: string]: SubmittableModuleExtrinsics<ApiType>;
-  }
-}
+  } // SubmittableExtrinsics
+
+} // declare module

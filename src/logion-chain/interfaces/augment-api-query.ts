@@ -17,7 +17,8 @@ import type { Multisig } from '@polkadot/types/interfaces/utility';
 import type { AnyNumber, ITuple, Observable } from '@polkadot/types/types';
 
 declare module '@polkadot/api/types/storage' {
-  export interface AugmentedQueries<ApiType> {
+
+  export interface AugmentedQueries<ApiType extends ApiTypes> {
     assets: {
       /**
        * The number of units of assets held by any given account.
@@ -362,9 +363,10 @@ declare module '@polkadot/api/types/storage' {
        **/
       [key: string]: QueryableStorageEntry<ApiType>;
     };
-  }
+  } // AugmentedQueries
 
   export interface QueryableStorage<ApiType extends ApiTypes> extends AugmentedQueries<ApiType> {
     [key: string]: QueryableModuleStorage<ApiType>;
-  }
-}
+  } // QueryableStorage
+
+} // declare module

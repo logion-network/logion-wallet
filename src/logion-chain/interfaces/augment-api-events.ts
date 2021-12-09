@@ -15,7 +15,8 @@ import type { Timepoint } from '@polkadot/types/interfaces/utility';
 import type { ITuple } from '@polkadot/types/types';
 
 declare module '@polkadot/api/types/events' {
-  export interface AugmentedEvents<ApiType> {
+
+  export interface AugmentedEvents<ApiType extends ApiTypes> {
     assets: {
       /**
        * Some asset `asset_id` was frozen. \[asset_id\]
@@ -361,9 +362,10 @@ declare module '@polkadot/api/types/events' {
        **/
       [key: string]: AugmentedEvent<ApiType>;
     };
-  }
+  } // AugmentedEvents
 
   export interface DecoratedEvents<ApiType extends ApiTypes> extends AugmentedEvents<ApiType> {
     [key: string]: ModuleEvents<ApiType>;
-  }
-}
+  } // DecoratedEvents
+
+} // declare module
