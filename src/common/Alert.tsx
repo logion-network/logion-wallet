@@ -16,7 +16,7 @@ export default function Alert(props: Props) {
     let color = undefined;
     if(props.variant === 'success') {
         color = GREEN;
-    } else if(props.variant === 'accepted') {
+    } else if(props.variant === 'accepted' || (props.variant === 'warning_color')) {
         color = YELLOW;
     }
 

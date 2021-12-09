@@ -94,56 +94,5 @@ exports[`Login renders 1`] = `
       src="/assets/login-right-character.svg"
     />
   </div>
-  <Dialog
-    actions={
-      Array [
-        Object {
-          "buttonText": "Ignore",
-          "buttonVariant": "secondary",
-          "callback": [Function],
-          "id": "ignore",
-        },
-      ]
-    }
-    show={false}
-    size="lg"
-  >
-    <h2>
-      Upgrade to the latest app version
-    </h2>
-    <p>
-      A new version of logion is available (
-      0
-      ) but your are currently using version 
-      0
-      .
-    </p>
-    <p>
-      In order to get the latest version, please request a "hard-refresh" (i.e. clear your cache and refresh) to your browser now:
-    </p>
-    <p>
-      <strong>
-        PC users: Ctrl-F5
-      </strong>
-    </p>
-    <p>
-      <strong>
-        Mac users: Cmd-Shift-R
-      </strong>
-    </p>
-    <p>
-      Staying up to date is important in order to benefit from functional and security fixes.
-    </p>
-    <p>
-      What changed since last version:
-    </p>
-    <div
-      dangerouslySetInnerHTML={
-        Object {
-          "__html": "",
-        }
-      }
-    />
-  </Dialog>
 </div>
 `;

@@ -12,8 +12,6 @@ import { authenticate } from './common/Authentication';
 import AbsoluteLogo from './AbsoluteLogo';
 
 import './Login.css';
-import { useVersionContext } from './version/VersionContext';
-import Dialog from './common/Dialog';
 
 export const LOGIN_PATH = "/login";
 
@@ -28,8 +26,6 @@ export default function Login() {
     const { connectedNodeMetadata } = useLogionChain();
     const { accounts, setTokens, axiosFactory } = useCommonContext();
     const [ selectedAddresses, setSelectedAddresses ] = useState<string[]>(location.state && location.state.selectedAddresses ? location.state.selectedAddresses : []);
-    const { currentVersion, latestVersion } = useVersionContext();
-    const [ ignoreUpgrade, setIgnoreUpgrade ] = useState(false);
 
     const startLogin = useCallback(async () => {
         const tokens = await authenticate(axiosFactory!(), selectedAddresses);
@@ -55,10 +51,6 @@ export default function Login() {
             newSet = selectedAddresses.filter(item => item !== address);
         }
         setSelectedAddresses(newSet);
-    }
-
-    if(latestVersion === undefined) {
-        return null;
     }
 
     return (
@@ -121,30 +113,6 @@ export default function Login() {
             <div className="right-character">
                 <img src={process.env.PUBLIC_URL + "/assets/login-right-character.svg"} alt="women holding a loc" />
             </div>
-            <Dialog
-                actions={[
-                    {
-                        id: "ignore",
-                        buttonText: "Ignore",
-                        buttonVariant: "secondary",
-                        callback: () => setIgnoreUpgrade(true)
-                    }
-                ]}
-                show={ currentVersion !== latestVersion.version && !ignoreUpgrade }
-                size="lg"
-            >
-                <h2>Upgrade to the latest app version</h2>
-                <p>A new version of logion is available ({ latestVersion.version }) but your are currently using version { currentVersion }.</p>
-                <p>In order to get the latest version, please request a "hard-refresh" (i.e. clear your cache and refresh) to your browser now:</p>
-                
-                <p><strong>PC users: Ctrl-F5</strong></p>
-                <p><strong>Mac users: Cmd-Shift-R</strong></p>
-
-                <p>Staying up to date is important in order to benefit from functional and security fixes.</p>
-
-                <p>What changed since last version:</p>
-                <div dangerouslySetInnerHTML={{ __html: latestVersion.releaseNotes }}></div>
-            </Dialog>
         </div>
     );
 }
