@@ -1,4 +1,4 @@
-import { LocType } from '../../logion-chain/Types';
+import { LocType, MetadataItem, Link } from '../../logion-chain/Types';
 import Identity from './Identity';
 import PostalAddress from './PostalAddress';
 import { File } from '../../logion-chain/Types'
@@ -62,15 +62,17 @@ export interface LocFile extends File, AddedOn {
     name: string;
 }
 
-export interface LocMetadataItem {
-    name: string;
-    value: string;
-    addedOn: string;
+/**
+ * Blockchain MetadataItem, extended with timestamp.
+ */
+export interface LocMetadataItem extends MetadataItem, AddedOn {
 }
 
-export interface LocLink {
-    target: string;
-    addedOn: string;
+/**
+ * Blockchain MetadataItem, extended with timestamp.
+ */
+export interface LocLink extends Link, AddedOn {
+    target: string; // is redundant with inherited "id: UUID"
 }
 
 export interface LocRequestVoidInfo {

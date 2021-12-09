@@ -15,8 +15,8 @@ import ViewFileButton from "../../common/ViewFileButton";
 import { AxiosInstance } from "axios";
 import { getFile } from "../Model";
 import { LocItem } from "./types";
-import { UNKNOWN_NAME } from "./LocItemFactory";
 import LocLinkDetails from "./LocLinkDetails";
+import LocPublishLinkButton from "./LocPublishLinkButton";
 
 export interface Props {
     matchedHash?: string;
@@ -24,11 +24,7 @@ export interface Props {
 
 export default function LocItems(props: Props) {
 
-    const { locId, locItems, removeItem } = useLocContext();
-
-    if (removeItem === null) {
-        return null;
-    }
+    const { locId, locItems, deleteMetadataItem, deleteLink, deleteFile } = useLocContext();
 
     function renderDetails(locItem: LocItem): Child {
         return (
@@ -40,26 +36,39 @@ export default function LocItems(props: Props) {
         )
     }
 
+    function deleteButton(locItem:LocItem, action:(locItem:LocItem) => void) {
+        return (
+            <Button
+                variant="danger"
+                onClick={ () => action(locItem) }
+                data-testid={ `remove-${ locItem.type }-${ locItem.name }` }
+            >
+                X
+            </Button>
+        );
+    }
+
     function renderActions(locItem: LocItem): Child {
+
         return (
             <ActionCell>
                 <ButtonGroup>
-                    { locItem.type === 'Data' && <LocPublishPublicDataButton
-                        locItem={ locItem }
-                        action={ (locContext, locItem) => locContext.publishMetadata!(locItem) }
-                    /> }
-                    { locItem.type === 'Linked LOC' && <LocPublishPublicDataButton
-                        locItem={ locItem }
-                        action={ (locContext, locItem) => locContext.publishLocLink!(locItem) }
-                    /> }
-                    { locItem.type === 'Document' && <LocPublishPrivateFileButton locItem={ locItem } /> }
-                    <Button
-                        variant="danger"
-                        onClick={ () => removeItem!(locItem) }
-                        data-testid={ `remove-${ locItem.name }` }
-                    >
-                        X
-                    </Button>
+                    { locItem.type === 'Data' && <>
+                        <LocPublishPublicDataButton
+                            locItem={ locItem }
+                        />
+                        { deleteButton(locItem, deleteMetadataItem!) }
+                    </> }
+                    { locItem.type === 'Linked LOC' && <>
+                        <LocPublishLinkButton
+                            locItem={ locItem }
+                        />
+                        { deleteButton(locItem, deleteLink!) }
+                    </> }
+                    { locItem.type === 'Document' && <>
+                        <LocPublishPrivateFileButton locItem={ locItem } />
+                        { deleteButton(locItem, deleteFile!) }
+                    </> }
                 </ButtonGroup>
             </ActionCell>)
     }
@@ -71,7 +80,7 @@ export default function LocItems(props: Props) {
                     <ActionCell>
                         <ViewFileButton
                             nodeOwner={ locItem.submitter }
-                            fileName={ locItem.name === UNKNOWN_NAME ? locItem.value : locItem.name }
+                            fileName={ locItem.name }
                             downloader={ (axios: AxiosInstance) => getFile(axios, {
                                 locId: locId.toString(),
                                 hash: locItem.value

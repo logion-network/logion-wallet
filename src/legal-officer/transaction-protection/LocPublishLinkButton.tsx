@@ -6,19 +6,19 @@ import ProcessStep from "../ProcessStep";
 import Alert from "../../common/Alert";
 import { PublishProps, PublishState, PublishStatus } from "./types";
 
-export default function LocPublishPublicDataButton(props: PublishProps) {
+export default function LocPublishLinkButton(props: PublishProps) {
 
     const [ publishState, setPublishState ] = useState<PublishState>({ status: PublishStatus.NONE });
-    const { publishMetadata, changeItemStatus, confirmMetadataItem } = useLocContext();
+    const { publishLocLink, changeItemStatus, confirmLink } = useLocContext();
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
 
     useEffect(() => {
-        if (publishMetadata !== null && publishState.status === PublishStatus.PUBLISH_PENDING) {
+        if (publishLocLink !== null && publishState.status === PublishStatus.PUBLISH_PENDING) {
             setPublishState({ status: PublishStatus.PUBLISHING });
-            const signAndSubmit: SignAndSubmit = publishMetadata(props.locItem)
+            const signAndSubmit: SignAndSubmit = publishLocLink(props.locItem)
             setSignAndSubmit(() => signAndSubmit);
         }
-    }, [ publishMetadata, publishState, setPublishState, props.locItem ])
+    }, [ publishLocLink, publishState, setPublishState, props.locItem ])
 
     return (
         <>
@@ -30,7 +30,7 @@ export default function LocPublishPublicDataButton(props: PublishProps) {
             </Button>
             <ProcessStep
                 active={ publishState.status === PublishStatus.START || publishState.status === PublishStatus.PUBLISH_PENDING }
-                title="Publish Data (1/2)"
+                title="Publish Link (1/2)"
                 mayProceed={ publishState.status === PublishStatus.START }
                 closeCallback={ () => setPublishState({ status: PublishStatus.NONE }) }
                 proceedCallback={ () => setPublishState({ status: PublishStatus.PUBLISH_PENDING }) }
@@ -42,7 +42,7 @@ export default function LocPublishPublicDataButton(props: PublishProps) {
             </ProcessStep>
             <ProcessStep
                 active={ publishState.status === PublishStatus.PUBLISHING || publishState.status === PublishStatus.PUBLISHED }
-                title="Publish Data (2/2)"
+                title="Publish Link (2/2)"
                 mayProceed={ publishState.status === PublishStatus.PUBLISHED }
                 proceedCallback={ () => setPublishState({ status: PublishStatus.NONE }) }
             >
@@ -51,7 +51,7 @@ export default function LocPublishPublicDataButton(props: PublishProps) {
                     signAndSubmit={ signAndSubmit }
                     successMessage="LOC public data successfully published"
                     onSuccess={ () => {
-                        confirmMetadataItem!(props.locItem)
+                        confirmLink!(props.locItem)
                         setPublishState({ status: PublishStatus.PUBLISHED })
                         changeItemStatus!(props.locItem, 'PUBLISHED')
                     } }

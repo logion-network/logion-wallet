@@ -14,3 +14,21 @@ export interface LocItem {
     nature?: string,
     target?: UUID,
 }
+
+export enum PublishStatus {
+    NONE,
+    START,
+    PUBLISH_PENDING,
+    PUBLISHING,
+    PUBLISHED
+}
+
+export interface PublishState {
+    status: PublishStatus;
+}
+
+export interface PublishProps {
+    locItem: LocItem
+}
+
+

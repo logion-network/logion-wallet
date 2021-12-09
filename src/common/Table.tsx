@@ -305,7 +305,7 @@ export interface DateTimeCellProps {
 
 export function DateTimeCell(props: DateTimeCellProps) {
 
-    if (props.dateTime === null) {
+    if (!props.dateTime) {
         if (props.spinner) {
             return <Spinner animation="border" />
         } else {

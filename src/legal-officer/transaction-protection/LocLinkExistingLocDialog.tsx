@@ -16,7 +16,7 @@ export interface Props {
 
 export default function LocLinkExistingDialog(props: Props) {
     const { api } = useLogionChain();
-    const { linkLoc } = useLocContext();
+    const { linkLoc, locItems } = useLocContext();
     const { axiosFactory } = useCommonContext();
     const { control, handleSubmit, setError, clearErrors, formState: { errors }, reset } = useForm<FormValues>({
         defaultValues: {
@@ -29,18 +29,23 @@ export default function LocLinkExistingDialog(props: Props) {
         const locId = UUID.fromAnyString(formValues.locId);
         if (!locId) {
             setError("locId", { type: "value", message: "Invalid LOC ID" })
-        } else {
-            const loc = await getLegalOfficerCase({ locId, api: api! })
-            if (!loc) {
-                setError("locId", { type: "value", message: "LOC not found on chain" })
-            } else {
-                const locRequest = await fetchLocRequest(axiosFactory!(loc.owner)!, locId.toString())
-                linkLoc!(locId, locRequest.description, formValues.linkNature)
-                reset();
-                props.exit();
-            }
+            return
         }
-    }, [ props, linkLoc, api, setError, clearErrors, reset, axiosFactory ])
+        const loc = await getLegalOfficerCase({ locId, api: api! })
+        if (!loc) {
+            setError("locId", { type: "value", message: "LOC not found on chain" })
+            return
+        }
+        const alreadyLinked = locItems.find(item => item.type === 'Linked LOC' && item.target?.toString() === locId.toString())
+        if (alreadyLinked) {
+            setError("locId", { type: "value", message: "LOC already linked" })
+            return
+        }
+        const locRequest = await fetchLocRequest(axiosFactory!(loc.owner)!, locId.toString())
+        linkLoc!(locId, locRequest.description, formValues.linkNature)
+        reset();
+        props.exit();
+    }, [ props, linkLoc, locItems, api, setError, clearErrors, reset, axiosFactory ])
 
     return (
         <>
