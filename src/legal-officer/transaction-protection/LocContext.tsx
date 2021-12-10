@@ -117,6 +117,8 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
     const items = state.locItems.concat();
     const itemIndex = items.indexOf(action.locItem!);
     switch (action.type) {
+        case "SET_LOC_REQUEST":
+            return { ...state, locRequest: action.locRequest! }
         case "SET_LOC":
             return { ...state, loc: action.loc!, supersededLoc: action.supersededLoc, supersededLocRequest: action.supersededLocRequest, locRequest: action.locRequest! }
         case "SET_FUNCTIONS":
