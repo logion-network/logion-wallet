@@ -1,4 +1,4 @@
-import config, { LegalOfficer } from "../../config";
+import config, { LegalOfficer, Node } from "../../config";
 
 export function isLegalOfficer(address: string | undefined): boolean {
     if(address === undefined) {
@@ -10,7 +10,12 @@ export function isLegalOfficer(address: string | undefined): boolean {
 
 export type { LegalOfficer } from "../../config"
 
-export const legalOfficers: LegalOfficer[] = config.legalOfficers;
+const allLegalOfficers: LegalOfficer[] = config.legalOfficers;
+
+export function legalOfficers(nodesDown: Node[]): LegalOfficer[] {
+    const unavailableLegalOfficers = new Set(nodesDown.map(node => node.owner));
+    return allLegalOfficers.filter(legalOfficer => !unavailableLegalOfficers.has(legalOfficer.address));
+}
 
 export function getOfficer(address: string | undefined): LegalOfficer | null {
     if(address === null) {

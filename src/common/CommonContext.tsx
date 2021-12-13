@@ -1,21 +1,22 @@
 import React, { useContext, useEffect, useReducer, Reducer, useCallback } from "react";
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
-import { AxiosInstance } from 'axios';
 import moment from 'moment';
 
 import { useLogionChain } from '../logion-chain';
 import { CoinBalance, getBalances } from '../logion-chain/Balances';
 
-import { AxiosFactory, buildAxiosFactory, fetchFromAvailableNodes, anyNodeAxios } from './api';
-import Accounts, { buildAccounts, AccountTokens, Account } from './types/Accounts';
+import config, { Node } from '../config';
+import { AxiosFactory, buildAxiosFactory, buildAxios, MultiSourceHttpClient, Endpoint, allUp, aggregateArrays, MultiResponse, AnySourceHttpClient } from './api';
+import Accounts, { buildAccounts, AccountTokens } from './types/Accounts';
 import { Children } from './types/Helpers';
-import { Transaction, LocRequest } from './types/ModelTypes';
+import { Transaction, LocRequest, TransactionsSet } from './types/ModelTypes';
 import { getTransactions, FetchLocRequestSpecification, fetchLocRequests } from "./Model";
 import { ColorTheme, DEFAULT_COLOR_THEME } from "./ColorTheme";
 import { storeTokens, clearTokens, loadTokens, storeCurrentAddress, loadCurrentAddress, clearCurrentAddress } from './Storage';
 import { LegalOfficerCase } from "../logion-chain/Types";
 import { toDecimalString, UUID } from "../logion-chain/UUID";
 import { getLegalOfficerCasesMap } from "../logion-chain/LogionLoc";
+import { authenticate } from "./Authentication";
 
 const DEFAULT_NOOP = () => {};
 
@@ -46,6 +47,9 @@ export interface CommonContext {
     voidTransactionLocs: RequestAndLoc[] | null;
     voidIdentityLocs: RequestAndLoc[] | null;
     isCurrentAuthenticated: () => boolean;
+    authenticate: (address: string[]) => Promise<void>;
+    nodesUp: Node[];
+    nodesDown: Node[];
 }
 
 interface FullCommonContext extends CommonContext {
@@ -80,6 +84,9 @@ function initialContextValue(): FullCommonContext {
         voidTransactionLocs: null,
         voidIdentityLocs: null,
         isCurrentAuthenticated: () => false,
+        authenticate: (_: string[]) => Promise.reject(),
+        nodesUp: config.availableNodes,
+        nodesDown: []
     }
 }
 
@@ -102,7 +109,8 @@ type ActionType = 'SET_SELECT_ADDRESS'
     | 'LOGOUT'
     | 'SCHEDULE_TOKEN_REFRESH'
     | 'REFRESH_TOKENS'
-    | 'SET_REFRESH';
+    | 'SET_REFRESH'
+    | 'SET_AUTHENTICATE';
 
 interface Action {
     type: ActionType,
@@ -130,6 +138,9 @@ interface Action {
     clearOnRefresh?: boolean;
     voidTransactionLocs?: RequestAndLoc[];
     voidIdentityLocs?: RequestAndLoc[];
+    authenticate?: (address: string[]) => Promise<void>;
+    nodesUp?: Node[];
+    nodesDown?: Node[];
 }
 
 const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, action: Action): FullCommonContext => {
@@ -181,6 +192,8 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                     closedIdentityLocs: action.closedIdentityLocs!,
                     voidTransactionLocs: action.voidTransactionLocs!,
                     voidIdentityLocs: action.voidIdentityLocs!,
+                    nodesUp: action.nodesUp!,
+                    nodesDown: action.nodesDown!,
                 };
             } else {
                 return state;
@@ -261,6 +274,11 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                 refresh: action.refresh!,
                 refreshAddress: action.refreshAddress!,
             };
+        case 'SET_AUTHENTICATE':
+            return {
+                ...state,
+                authenticate: action.authenticate!,
+            };
         default:
             /* istanbul ignore next */
             throw new Error(`Unknown type: ${action.type}`);
@@ -268,7 +286,7 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
 }
 
 export function CommonContextProvider(props: Props) {
-    const { apiState, api, injectedAccounts } = useLogionChain();
+    const { api, injectedAccounts } = useLogionChain();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
     const refreshRequests = useCallback((clearOnRefresh?: boolean) => {
@@ -291,8 +309,6 @@ export function CommonContextProvider(props: Props) {
                     accountId: currentAddress
                 });
 
-                const transactions = await fetchTransactionsGivenAccount(contextValue.accounts!, contextValue.axiosFactory!);
-
                 let specificationFragment: FetchLocRequestSpecification;
                 if(currentAccount.isLegalOfficer) {
                     specificationFragment = {
@@ -308,39 +324,63 @@ export function CommonContextProvider(props: Props) {
                     }
                 }
 
-                const pendingLocRequests = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
+                let initialState;
+                if(currentAccount.isLegalOfficer) {
+                    initialState = allUp<Endpoint>(config.availableNodes
+                        .filter(node => node.owner === currentAccount.address)
+                        .map(node => ({url: node.api})));
+                } else {
+                    initialState = allUp<Endpoint>(config.availableNodes.map(node => ({url: node.api})));
+                }
+
+                const anyClient = new AnySourceHttpClient<Endpoint, TransactionsSet>(initialState, currentAccount.token?.value);
+                const transactionsSet = await anyClient.fetch(axios => getTransactions(axios, {
+                    address: currentAccount.address
+                }));
+                const transactions = transactionsSet?.transactions || [];
+
+                const multiClient = new MultiSourceHttpClient<Endpoint, LocRequest[]>(anyClient.getState(), currentAccount.token?.value);
+                let result: MultiResponse<LocRequest[]>;
+
+                result = await multiClient.fetch(axios => fetchLocRequests(axios, {
                     ...specificationFragment,
                     statuses: ["REQUESTED"]
-                });
+                }));
+                const pendingLocRequests = aggregateArrays<LocRequest>(result);
 
-                const openedLocRequestsOnly = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
+                result = await multiClient.fetch(axios => fetchLocRequests(axios, {
                     ...specificationFragment,
                     statuses: ["OPEN"],
                     locTypes: ['Transaction']
-                });
+                }));
+                const openedLocRequestsOnly = aggregateArrays<LocRequest>(result);
 
-                const closedLocRequestsOnly = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
+                result = await multiClient.fetch(axios => fetchLocRequests(axios, {
                     ...specificationFragment,
                     statuses: ["CLOSED"],
                     locTypes: ['Transaction']
-                });
+                }));
+                const closedLocRequestsOnly = aggregateArrays<LocRequest>(result);
 
-                const rejectedLocRequests = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
+                result = await multiClient.fetch(axios => fetchLocRequests(axios, {
                     ...specificationFragment,
                     statuses: ["REJECTED"]
-                });
+                }));
+                const rejectedLocRequests = aggregateArrays<LocRequest>(result);
 
-                const openedIdentityLocsOnly = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
+                result = await multiClient.fetch(axios => fetchLocRequests(axios, {
                     ...specificationFragment,
                     statuses: ["OPEN"],
-                    locTypes: ['Identity']
-                });
+                        locTypes: ['Identity']
+                }));
+                const openedIdentityLocsOnly = aggregateArrays<LocRequest>(result);
 
-                const closedIdentityLocsOnly = await fetchLocRequestsGivenAccount(currentAccount, contextValue.axiosFactory!, {
+                result = await multiClient.fetch(axios => fetchLocRequests(axios, {
                     ...specificationFragment,
                     statuses: ["CLOSED"],
                     locTypes: ['Identity']
-                });
+                }));
+                const closedIdentityLocsOnly = aggregateArrays<LocRequest>(result);
 
                 let locIds = openedLocRequestsOnly.map(loc => new UUID(loc.id));
                 locIds = locIds.concat(closedLocRequestsOnly.map(loc => new UUID(loc.id)));
@@ -374,6 +414,12 @@ export function CommonContextProvider(props: Props) {
                     .map(request => ({request, loc: locs[toDecimalString((request.id))]}))
                     .filter(requestAndLoc => requestAndLoc.loc !== undefined && requestAndLoc.loc.voidInfo === undefined);
 
+                const resultingState = multiClient.getState();
+                const nodesUp = resultingState.nodesUp
+                    .map(endpoint => config.availableNodes.find(node => node.api === endpoint.url)!);
+                const nodesDown = resultingState.nodesDown
+                    .map(endpoint => config.availableNodes.find(node => node.api === endpoint.url)!);
+
                 dispatch({
                     type: "SET_DATA",
                     dataAddress: currentAddress,
@@ -387,6 +433,8 @@ export function CommonContextProvider(props: Props) {
                     closedIdentityLocs,
                     voidTransactionLocs,
                     voidIdentityLocs,
+                    nodesUp,
+                    nodesDown,
                 });
             })();
         }
@@ -398,15 +446,26 @@ export function CommonContextProvider(props: Props) {
             .filter(requestAndLoc => requestAndLoc.loc !== undefined && requestAndLoc.loc.voidInfo !== undefined);
     }
 
+    const authenticateCallback = useCallback(async (address: string[]) => {
+        for(let i = 0; i < config.availableNodes.length; ++i) {
+            const node = config.availableNodes[i];
+            try {
+                const tokens = await authenticate(buildAxios(contextValue.accounts!, node), address);
+                dispatch({type: 'SET_TOKENS', newTokens: tokens});
+                break;
+            } catch(error) {}
+        }
+    }, [ contextValue.accounts ]);
+
     useEffect(() => {
-        if(apiState === "READY"
+        if(api !== null
                 && contextValue.accounts !== null
                 && contextValue.accounts.current !== undefined
                 && contextValue.dataAddress !== contextValue.accounts.current.address
                 && contextValue.fetchForAddress !== contextValue.accounts.current.address) {
             refreshRequests();
         }
-    }, [ apiState, contextValue, refreshRequests, dispatch ]);
+    }, [ api, contextValue, refreshRequests, dispatch ]);
 
     useEffect(() => {
         if(contextValue.selectAddress === null) {
@@ -506,6 +565,15 @@ export function CommonContextProvider(props: Props) {
         }
     }, [ contextValue, refreshRequests, dispatch ]);
 
+    useEffect(() => {
+        if(contextValue.authenticate !== authenticateCallback) {
+            dispatch({
+                type: 'SET_AUTHENTICATE',
+                authenticate: authenticateCallback
+            });
+        }
+    }, [ contextValue.authenticate, authenticateCallback ]);
+
     return (
         <CommonContextObject.Provider value={contextValue}>
             {props.children}
@@ -515,29 +583,4 @@ export function CommonContextProvider(props: Props) {
 
 export function useCommonContext(): CommonContext {
     return useContext(CommonContextObject);
-}
-
-async function fetchLocRequestsGivenAccount(currentAccount: Account, axiosFactory: AxiosFactory, specification: FetchLocRequestSpecification): Promise<LocRequest[]> {
-        return fetchGivenAccount(currentAccount, axiosFactory, axios => fetchLocRequests(axios, specification));
-    }
-
-async function fetchGivenAccount<E>(currentAccount: Account, axiosFactory: AxiosFactory, query: (axios: AxiosInstance) => Promise<E[]>): Promise<E[]> {
-    if(currentAccount.isLegalOfficer) {
-        return await query(axiosFactory(currentAccount.address));
-    } else {
-        return await fetchFromAvailableNodes(axiosFactory, axios => query(axios));
-    }
-}
-
-async function fetchTransactionsGivenAccount(accounts: Accounts, axiosFactory: AxiosFactory): Promise<Transaction[]> {
-    const currentAccount = accounts.current!;
-    let axios;
-    if(currentAccount.isLegalOfficer) {
-        axios = axiosFactory(currentAccount.address);
-    } else {
-        axios = anyNodeAxios(accounts);
-    }
-    return (await getTransactions(axios, {
-        address: currentAccount.address
-    })).transactions;
 }

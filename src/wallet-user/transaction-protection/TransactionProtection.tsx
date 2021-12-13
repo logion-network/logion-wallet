@@ -15,9 +15,11 @@ import ClosedLocs from './ClosedLocs';
 
 import './TransactionProtection.css';
 import VoidLocs from './VoidLocs';
+import NetworkWarning from '../../common/NetworkWarning';
+import { SETTINGS_PATH } from '../UserRouter';
 
 export default function TransactionProtection() {
-    const { colorTheme } = useCommonContext();
+    const { colorTheme, nodesDown } = useCommonContext();
     const [ locTabKey, setLocTabKey ] = useState<string>('open');
     const [ requestTabKey, setRequestTabKey ] = useState<string>('pending');
 
@@ -33,6 +35,14 @@ export default function TransactionProtection() {
             }}
             className="TransactionProtection"
         >
+            {
+                nodesDown.length > 0 &&
+                <Row>
+                    <Col>
+                        <NetworkWarning settingsPath={ SETTINGS_PATH } />
+                    </Col>
+                </Row>
+            }
             <Row>
                 <Col>
                     <Frame

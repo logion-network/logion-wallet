@@ -17,6 +17,26 @@ import { useCommonContext } from './CommonContext';
 
 import './Dashboard.css';
 
+interface TopAreaProps {
+    children: Children,
+}
+
+function TopArea(props: TopAreaProps) {
+
+    return (
+        <Row>
+            <Col
+                key="top-area"
+                className="top-area-col"
+            >
+                <div className="TopArea">
+                    { props.children }
+                </div>
+            </Col>
+        </Row>
+    );
+}
+
 interface PrimaryAreaProps {
     children: Children,
     width: number,
@@ -57,6 +77,7 @@ function SecondaryArea(props: SecondaryAreaProps) {
 }
 
 export interface ContentPaneProps extends TitlesProps {
+    topAreaChildren?: Children,
     primaryAreaChildren: Children,
     secondaryAreaChildren: Children,
     primaryPaneWidth?: number,
@@ -101,6 +122,7 @@ function Titles(props: TitlesProps) {
 export interface BasePaneProps extends TitlesProps {
     children: Children,
     className?: string,
+    topAreaChildren?: Children,
 }
 
 function BasePane(props: BasePaneProps) {
@@ -125,6 +147,12 @@ function BasePane(props: BasePaneProps) {
                     </div>
                 </Col>
             </Row>
+            {
+                props.topAreaChildren &&
+                <TopArea>
+                    { props.topAreaChildren }
+                </TopArea>
+            }
             <Row className={ contentAreaClass }>
                 { props.children }
             </Row>
@@ -145,17 +173,18 @@ export function ContentPane(props: ContentPaneProps) {
             subTitle={ props.subTitle }
             titleIcon={ props.titleIcon }
             onBack={ props.onBack }
+            topAreaChildren={ props.topAreaChildren }
         >
-                <PrimaryArea
-                    width={ primaryPaneWidth }
-                >
-                    { props.primaryAreaChildren }
-                </PrimaryArea>
-                <SecondaryArea
-                    width={ FULL_WIDTH - primaryPaneWidth }
-                >
-                    { props.secondaryAreaChildren }
-                </SecondaryArea>
+            <PrimaryArea
+                width={ primaryPaneWidth }
+            >
+                { props.primaryAreaChildren }
+            </PrimaryArea>
+            <SecondaryArea
+                width={ FULL_WIDTH - primaryPaneWidth }
+            >
+                { props.secondaryAreaChildren }
+            </SecondaryArea>
         </BasePane>
     );
 }
@@ -174,6 +203,7 @@ export function FullWidthPane(props: FullWidthPaneProps) {
             subTitle={ props.subTitle }
             titleIcon={ props.titleIcon }
             onBack={ props.onBack }
+            topAreaChildren={ props.topAreaChildren }
         >
             <PrimaryArea width={ FULL_WIDTH }>
                 { props.children }

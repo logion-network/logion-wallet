@@ -1,10 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders 1`] = `
-<ContentPane
+<FullWidthPane
   mainTitle="My Logion Protection"
-  primaryAreaChildren={
-    <React.Fragment>
+  subTitle="Activate my Logion Protection"
+  titleIcon={
+    Object {
+      "background": undefined,
+      "icon": Object {
+        "hasVariants": true,
+        "id": "shield",
+      },
+    }
+  }
+>
+  <Row>
+    <Col
+      md={6}
+    >
       <Frame
         className="CreateProtectionRequestFormLegalOfficers"
         disabled={false}
@@ -57,920 +70,432 @@ Tel: +33 2 48 67 50 50",
           setLegalOfficer2={[Function]}
         />
       </Frame>
-    </React.Fragment>
-  }
-  primaryPaneWidth={6}
-  secondaryAreaChildren={
-    <Frame
-      className="CreateProtectionRequestFormOther"
-      disabled={true}
+    </Col>
+    <Col
+      md={6}
     >
-      <h3>
-        Fill in your personal information
-      </h3>
-      <Alert
-        variant="info"
+      <Frame
+        className="CreateProtectionRequestFormOther"
+        disabled={true}
       >
-        This initial personal information sharing will start KYC process and will also be used in the context of a potential future recovery process.
-      </Alert>
-      <Form
-        onSubmit={[Function]}
-      >
-        <Row>
-          <Col
-            md={6}
-          >
-            <FormGroup
-              colors={
-                Object {
-                  "altBackground": "#eff3fe",
-                  "background": "#ffffff",
-                  "foreground": "#000000",
-                  "link": "#3b6cf426",
-                }
-              }
-              control={
-                <Unknown
-                  control={
-                    Object {
-                      "_defaultValues": Object {},
-                      "_executeSchema": [Function],
-                      "_fields": Object {},
-                      "_formState": Object {
-                        "dirtyFields": Object {},
-                        "errors": Object {},
-                        "isDirty": false,
-                        "isSubmitSuccessful": false,
-                        "isSubmitted": false,
-                        "isSubmitting": false,
-                        "isValid": false,
-                        "isValidating": false,
-                        "submitCount": 0,
-                        "touchedFields": Object {},
-                      },
-                      "_formValues": Object {},
-                      "_getDirty": [Function],
-                      "_getFieldArray": [Function],
-                      "_getWatch": [Function],
-                      "_names": Object {
-                        "array": Set {},
-                        "mount": Set {},
-                        "unMount": Set {},
-                        "watch": Set {},
-                      },
-                      "_options": Object {
-                        "mode": "onSubmit",
-                        "reValidateMode": "onChange",
-                        "shouldFocusError": true,
-                      },
-                      "_proxyFormState": Object {
-                        "dirtyFields": false,
-                        "errors": "all",
-                        "isDirty": false,
-                        "isValid": false,
-                        "isValidating": false,
-                        "touchedFields": false,
-                      },
-                      "_removeUnmounted": [Function],
-                      "_stateFlags": Object {
-                        "action": false,
-                        "mount": false,
-                        "watch": false,
-                      },
-                      "_subjects": Object {
-                        "array": Object {
-                          "next": [Function],
-                          "observers": Array [],
-                          "subscribe": [Function],
-                          "unsubscribe": [Function],
-                        },
-                        "state": Object {
-                          "next": [Function],
-                          "observers": Array [],
-                          "subscribe": [Function],
-                          "unsubscribe": [Function],
-                        },
-                        "watch": Object {
-                          "next": [Function],
-                          "observers": Array [],
-                          "subscribe": [Function],
-                          "unsubscribe": [Function],
-                        },
-                      },
-                      "_updateFieldArray": [Function],
-                      "_updateValid": [Function],
-                      "register": [Function],
-                      "unregister": [Function],
-                    }
-                  }
-                  defaultValue=""
-                  name="firstName"
-                  render={[Function]}
-                  rules={
-                    Object {
-                      "required": "The first name is required",
-                    }
-                  }
-                />
-              }
-              id="firstName"
-              label="First Name"
-            />
-          </Col>
-          <Col
-            md={6}
-          >
-            <FormGroup
-              colors={
-                Object {
-                  "altBackground": "#eff3fe",
-                  "background": "#ffffff",
-                  "foreground": "#000000",
-                  "link": "#3b6cf426",
-                }
-              }
-              control={
-                <Unknown
-                  control={
-                    Object {
-                      "_defaultValues": Object {},
-                      "_executeSchema": [Function],
-                      "_fields": Object {},
-                      "_formState": Object {
-                        "dirtyFields": Object {},
-                        "errors": Object {},
-                        "isDirty": false,
-                        "isSubmitSuccessful": false,
-                        "isSubmitted": false,
-                        "isSubmitting": false,
-                        "isValid": false,
-                        "isValidating": false,
-                        "submitCount": 0,
-                        "touchedFields": Object {},
-                      },
-                      "_formValues": Object {},
-                      "_getDirty": [Function],
-                      "_getFieldArray": [Function],
-                      "_getWatch": [Function],
-                      "_names": Object {
-                        "array": Set {},
-                        "mount": Set {},
-                        "unMount": Set {},
-                        "watch": Set {},
-                      },
-                      "_options": Object {
-                        "mode": "onSubmit",
-                        "reValidateMode": "onChange",
-                        "shouldFocusError": true,
-                      },
-                      "_proxyFormState": Object {
-                        "dirtyFields": false,
-                        "errors": "all",
-                        "isDirty": false,
-                        "isValid": false,
-                        "isValidating": false,
-                        "touchedFields": false,
-                      },
-                      "_removeUnmounted": [Function],
-                      "_stateFlags": Object {
-                        "action": false,
-                        "mount": false,
-                        "watch": false,
-                      },
-                      "_subjects": Object {
-                        "array": Object {
-                          "next": [Function],
-                          "observers": Array [],
-                          "subscribe": [Function],
-                          "unsubscribe": [Function],
-                        },
-                        "state": Object {
-                          "next": [Function],
-                          "observers": Array [],
-                          "subscribe": [Function],
-                          "unsubscribe": [Function],
-                        },
-                        "watch": Object {
-                          "next": [Function],
-                          "observers": Array [],
-                          "subscribe": [Function],
-                          "unsubscribe": [Function],
-                        },
-                      },
-                      "_updateFieldArray": [Function],
-                      "_updateValid": [Function],
-                      "register": [Function],
-                      "unregister": [Function],
-                    }
-                  }
-                  defaultValue=""
-                  name="lastName"
-                  render={[Function]}
-                  rules={
-                    Object {
-                      "required": "The last name is required",
-                    }
-                  }
-                />
-              }
-              id="lastName"
-              label="Last Name"
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col
-            md={6}
-          >
-            <FormGroup
-              colors={
-                Object {
-                  "altBackground": "#eff3fe",
-                  "background": "#ffffff",
-                  "foreground": "#000000",
-                  "link": "#3b6cf426",
-                }
-              }
-              control={
-                <Unknown
-                  control={
-                    Object {
-                      "_defaultValues": Object {},
-                      "_executeSchema": [Function],
-                      "_fields": Object {},
-                      "_formState": Object {
-                        "dirtyFields": Object {},
-                        "errors": Object {},
-                        "isDirty": false,
-                        "isSubmitSuccessful": false,
-                        "isSubmitted": false,
-                        "isSubmitting": false,
-                        "isValid": false,
-                        "isValidating": false,
-                        "submitCount": 0,
-                        "touchedFields": Object {},
-                      },
-                      "_formValues": Object {},
-                      "_getDirty": [Function],
-                      "_getFieldArray": [Function],
-                      "_getWatch": [Function],
-                      "_names": Object {
-                        "array": Set {},
-                        "mount": Set {},
-                        "unMount": Set {},
-                        "watch": Set {},
-                      },
-                      "_options": Object {
-                        "mode": "onSubmit",
-                        "reValidateMode": "onChange",
-                        "shouldFocusError": true,
-                      },
-                      "_proxyFormState": Object {
-                        "dirtyFields": false,
-                        "errors": "all",
-                        "isDirty": false,
-                        "isValid": false,
-                        "isValidating": false,
-                        "touchedFields": false,
-                      },
-                      "_removeUnmounted": [Function],
-                      "_stateFlags": Object {
-                        "action": false,
-                        "mount": false,
-                        "watch": false,
-                      },
-                      "_subjects": Object {
-                        "array": Object {
-                          "next": [Function],
-                          "observers": Array [],
-                          "subscribe": [Function],
-                          "unsubscribe": [Function],
-                        },
-                        "state": Object {
-                          "next": [Function],
-                          "observers": Array [],
-                          "subscribe": [Function],
-                          "unsubscribe": [Function],
-                        },
-                        "watch": Object {
-                          "next": [Function],
-                          "observers": Array [],
-                          "subscribe": [Function],
-                          "unsubscribe": [Function],
-                        },
-                      },
-                      "_updateFieldArray": [Function],
-                      "_updateValid": [Function],
-                      "register": [Function],
-                      "unregister": [Function],
-                    }
-                  }
-                  defaultValue=""
-                  name="email"
-                  render={[Function]}
-                  rules={
-                    Object {
-                      "required": "The email is required",
-                    }
-                  }
-                />
-              }
-              id="email"
-              label="Email"
-            />
-          </Col>
-          <Col
-            md={6}
-          >
-            <FormGroup
-              colors={
-                Object {
-                  "altBackground": "#eff3fe",
-                  "background": "#ffffff",
-                  "foreground": "#000000",
-                  "link": "#3b6cf426",
-                }
-              }
-              control={
-                <Unknown
-                  control={
-                    Object {
-                      "_defaultValues": Object {},
-                      "_executeSchema": [Function],
-                      "_fields": Object {},
-                      "_formState": Object {
-                        "dirtyFields": Object {},
-                        "errors": Object {},
-                        "isDirty": false,
-                        "isSubmitSuccessful": false,
-                        "isSubmitted": false,
-                        "isSubmitting": false,
-                        "isValid": false,
-                        "isValidating": false,
-                        "submitCount": 0,
-                        "touchedFields": Object {},
-                      },
-                      "_formValues": Object {},
-                      "_getDirty": [Function],
-                      "_getFieldArray": [Function],
-                      "_getWatch": [Function],
-                      "_names": Object {
-                        "array": Set {},
-                        "mount": Set {},
-                        "unMount": Set {},
-                        "watch": Set {},
-                      },
-                      "_options": Object {
-                        "mode": "onSubmit",
-                        "reValidateMode": "onChange",
-                        "shouldFocusError": true,
-                      },
-                      "_proxyFormState": Object {
-                        "dirtyFields": false,
-                        "errors": "all",
-                        "isDirty": false,
-                        "isValid": false,
-                        "isValidating": false,
-                        "touchedFields": false,
-                      },
-                      "_removeUnmounted": [Function],
-                      "_stateFlags": Object {
-                        "action": false,
-                        "mount": false,
-                        "watch": false,
-                      },
-                      "_subjects": Object {
-                        "array": Object {
-                          "next": [Function],
-                          "observers": Array [],
-                          "subscribe": [Function],
-                          "unsubscribe": [Function],
-                        },
-                        "state": Object {
-                          "next": [Function],
-                          "observers": Array [],
-                          "subscribe": [Function],
-                          "unsubscribe": [Function],
-                        },
-                        "watch": Object {
-                          "next": [Function],
-                          "observers": Array [],
-                          "subscribe": [Function],
-                          "unsubscribe": [Function],
-                        },
-                      },
-                      "_updateFieldArray": [Function],
-                      "_updateValid": [Function],
-                      "register": [Function],
-                      "unregister": [Function],
-                    }
-                  }
-                  defaultValue=""
-                  name="phoneNumber"
-                  render={[Function]}
-                  rules={
-                    Object {
-                      "required": "The phone number is required",
-                    }
-                  }
-                />
-              }
-              id="phoneNumber"
-              label="Phone Number"
-            />
-          </Col>
-        </Row>
         <h3>
-          Address
+          Fill in your personal information
         </h3>
-        <FormGroup
-          colors={
-            Object {
-              "altBackground": "#eff3fe",
-              "background": "#ffffff",
-              "foreground": "#000000",
-              "link": "#3b6cf426",
-            }
-          }
-          control={
-            <Unknown
-              control={
-                Object {
-                  "_defaultValues": Object {},
-                  "_executeSchema": [Function],
-                  "_fields": Object {},
-                  "_formState": Object {
-                    "dirtyFields": Object {},
-                    "errors": Object {},
-                    "isDirty": false,
-                    "isSubmitSuccessful": false,
-                    "isSubmitted": false,
-                    "isSubmitting": false,
-                    "isValid": false,
-                    "isValidating": false,
-                    "submitCount": 0,
-                    "touchedFields": Object {},
-                  },
-                  "_formValues": Object {},
-                  "_getDirty": [Function],
-                  "_getFieldArray": [Function],
-                  "_getWatch": [Function],
-                  "_names": Object {
-                    "array": Set {},
-                    "mount": Set {},
-                    "unMount": Set {},
-                    "watch": Set {},
-                  },
-                  "_options": Object {
-                    "mode": "onSubmit",
-                    "reValidateMode": "onChange",
-                    "shouldFocusError": true,
-                  },
-                  "_proxyFormState": Object {
-                    "dirtyFields": false,
-                    "errors": "all",
-                    "isDirty": false,
-                    "isValid": false,
-                    "isValidating": false,
-                    "touchedFields": false,
-                  },
-                  "_removeUnmounted": [Function],
-                  "_stateFlags": Object {
-                    "action": false,
-                    "mount": false,
-                    "watch": false,
-                  },
-                  "_subjects": Object {
-                    "array": Object {
-                      "next": [Function],
-                      "observers": Array [],
-                      "subscribe": [Function],
-                      "unsubscribe": [Function],
-                    },
-                    "state": Object {
-                      "next": [Function],
-                      "observers": Array [],
-                      "subscribe": [Function],
-                      "unsubscribe": [Function],
-                    },
-                    "watch": Object {
-                      "next": [Function],
-                      "observers": Array [],
-                      "subscribe": [Function],
-                      "unsubscribe": [Function],
-                    },
-                  },
-                  "_updateFieldArray": [Function],
-                  "_updateValid": [Function],
-                  "register": [Function],
-                  "unregister": [Function],
-                }
-              }
-              defaultValue=""
-              name="line1"
-              render={[Function]}
-              rules={
-                Object {
-                  "required": "The line1 is required",
-                }
-              }
-            />
-          }
-          id="line1"
-          label="Line1"
-        />
-        <FormGroup
-          colors={
-            Object {
-              "altBackground": "#eff3fe",
-              "background": "#ffffff",
-              "foreground": "#000000",
-              "link": "#3b6cf426",
-            }
-          }
-          control={
-            <Unknown
-              control={
-                Object {
-                  "_defaultValues": Object {},
-                  "_executeSchema": [Function],
-                  "_fields": Object {},
-                  "_formState": Object {
-                    "dirtyFields": Object {},
-                    "errors": Object {},
-                    "isDirty": false,
-                    "isSubmitSuccessful": false,
-                    "isSubmitted": false,
-                    "isSubmitting": false,
-                    "isValid": false,
-                    "isValidating": false,
-                    "submitCount": 0,
-                    "touchedFields": Object {},
-                  },
-                  "_formValues": Object {},
-                  "_getDirty": [Function],
-                  "_getFieldArray": [Function],
-                  "_getWatch": [Function],
-                  "_names": Object {
-                    "array": Set {},
-                    "mount": Set {},
-                    "unMount": Set {},
-                    "watch": Set {},
-                  },
-                  "_options": Object {
-                    "mode": "onSubmit",
-                    "reValidateMode": "onChange",
-                    "shouldFocusError": true,
-                  },
-                  "_proxyFormState": Object {
-                    "dirtyFields": false,
-                    "errors": "all",
-                    "isDirty": false,
-                    "isValid": false,
-                    "isValidating": false,
-                    "touchedFields": false,
-                  },
-                  "_removeUnmounted": [Function],
-                  "_stateFlags": Object {
-                    "action": false,
-                    "mount": false,
-                    "watch": false,
-                  },
-                  "_subjects": Object {
-                    "array": Object {
-                      "next": [Function],
-                      "observers": Array [],
-                      "subscribe": [Function],
-                      "unsubscribe": [Function],
-                    },
-                    "state": Object {
-                      "next": [Function],
-                      "observers": Array [],
-                      "subscribe": [Function],
-                      "unsubscribe": [Function],
-                    },
-                    "watch": Object {
-                      "next": [Function],
-                      "observers": Array [],
-                      "subscribe": [Function],
-                      "unsubscribe": [Function],
-                    },
-                  },
-                  "_updateFieldArray": [Function],
-                  "_updateValid": [Function],
-                  "register": [Function],
-                  "unregister": [Function],
-                }
-              }
-              defaultValue=""
-              name="line2"
-              render={[Function]}
-            />
-          }
-          id="line2"
-          label="Line2"
-        />
-        <Row>
-          <Col
-            md={4}
-          >
-            <FormGroup
-              colors={
-                Object {
-                  "altBackground": "#eff3fe",
-                  "background": "#ffffff",
-                  "foreground": "#000000",
-                  "link": "#3b6cf426",
-                }
-              }
-              control={
-                <Unknown
-                  control={
-                    Object {
-                      "_defaultValues": Object {},
-                      "_executeSchema": [Function],
-                      "_fields": Object {},
-                      "_formState": Object {
-                        "dirtyFields": Object {},
-                        "errors": Object {},
-                        "isDirty": false,
-                        "isSubmitSuccessful": false,
-                        "isSubmitted": false,
-                        "isSubmitting": false,
-                        "isValid": false,
-                        "isValidating": false,
-                        "submitCount": 0,
-                        "touchedFields": Object {},
-                      },
-                      "_formValues": Object {},
-                      "_getDirty": [Function],
-                      "_getFieldArray": [Function],
-                      "_getWatch": [Function],
-                      "_names": Object {
-                        "array": Set {},
-                        "mount": Set {},
-                        "unMount": Set {},
-                        "watch": Set {},
-                      },
-                      "_options": Object {
-                        "mode": "onSubmit",
-                        "reValidateMode": "onChange",
-                        "shouldFocusError": true,
-                      },
-                      "_proxyFormState": Object {
-                        "dirtyFields": false,
-                        "errors": "all",
-                        "isDirty": false,
-                        "isValid": false,
-                        "isValidating": false,
-                        "touchedFields": false,
-                      },
-                      "_removeUnmounted": [Function],
-                      "_stateFlags": Object {
-                        "action": false,
-                        "mount": false,
-                        "watch": false,
-                      },
-                      "_subjects": Object {
-                        "array": Object {
-                          "next": [Function],
-                          "observers": Array [],
-                          "subscribe": [Function],
-                          "unsubscribe": [Function],
-                        },
-                        "state": Object {
-                          "next": [Function],
-                          "observers": Array [],
-                          "subscribe": [Function],
-                          "unsubscribe": [Function],
-                        },
-                        "watch": Object {
-                          "next": [Function],
-                          "observers": Array [],
-                          "subscribe": [Function],
-                          "unsubscribe": [Function],
-                        },
-                      },
-                      "_updateFieldArray": [Function],
-                      "_updateValid": [Function],
-                      "register": [Function],
-                      "unregister": [Function],
-                    }
-                  }
-                  defaultValue=""
-                  name="postalCode"
-                  render={[Function]}
-                  rules={
-                    Object {
-                      "required": "The postal code is required",
-                    }
-                  }
-                />
-              }
-              id="postalCode"
-              label="Postal Code"
-            />
-          </Col>
-          <Col
-            md={8}
-          >
-            <FormGroup
-              colors={
-                Object {
-                  "altBackground": "#eff3fe",
-                  "background": "#ffffff",
-                  "foreground": "#000000",
-                  "link": "#3b6cf426",
-                }
-              }
-              control={
-                <Unknown
-                  control={
-                    Object {
-                      "_defaultValues": Object {},
-                      "_executeSchema": [Function],
-                      "_fields": Object {},
-                      "_formState": Object {
-                        "dirtyFields": Object {},
-                        "errors": Object {},
-                        "isDirty": false,
-                        "isSubmitSuccessful": false,
-                        "isSubmitted": false,
-                        "isSubmitting": false,
-                        "isValid": false,
-                        "isValidating": false,
-                        "submitCount": 0,
-                        "touchedFields": Object {},
-                      },
-                      "_formValues": Object {},
-                      "_getDirty": [Function],
-                      "_getFieldArray": [Function],
-                      "_getWatch": [Function],
-                      "_names": Object {
-                        "array": Set {},
-                        "mount": Set {},
-                        "unMount": Set {},
-                        "watch": Set {},
-                      },
-                      "_options": Object {
-                        "mode": "onSubmit",
-                        "reValidateMode": "onChange",
-                        "shouldFocusError": true,
-                      },
-                      "_proxyFormState": Object {
-                        "dirtyFields": false,
-                        "errors": "all",
-                        "isDirty": false,
-                        "isValid": false,
-                        "isValidating": false,
-                        "touchedFields": false,
-                      },
-                      "_removeUnmounted": [Function],
-                      "_stateFlags": Object {
-                        "action": false,
-                        "mount": false,
-                        "watch": false,
-                      },
-                      "_subjects": Object {
-                        "array": Object {
-                          "next": [Function],
-                          "observers": Array [],
-                          "subscribe": [Function],
-                          "unsubscribe": [Function],
-                        },
-                        "state": Object {
-                          "next": [Function],
-                          "observers": Array [],
-                          "subscribe": [Function],
-                          "unsubscribe": [Function],
-                        },
-                        "watch": Object {
-                          "next": [Function],
-                          "observers": Array [],
-                          "subscribe": [Function],
-                          "unsubscribe": [Function],
-                        },
-                      },
-                      "_updateFieldArray": [Function],
-                      "_updateValid": [Function],
-                      "register": [Function],
-                      "unregister": [Function],
-                    }
-                  }
-                  defaultValue=""
-                  name="city"
-                  render={[Function]}
-                  rules={
-                    Object {
-                      "required": "The city is required",
-                    }
-                  }
-                />
-              }
-              id="city"
-              label="City"
-            />
-          </Col>
-        </Row>
-        <FormGroup
-          colors={
-            Object {
-              "altBackground": "#eff3fe",
-              "background": "#ffffff",
-              "foreground": "#000000",
-              "link": "#3b6cf426",
-            }
-          }
-          control={
-            <Unknown
-              control={
-                Object {
-                  "_defaultValues": Object {},
-                  "_executeSchema": [Function],
-                  "_fields": Object {},
-                  "_formState": Object {
-                    "dirtyFields": Object {},
-                    "errors": Object {},
-                    "isDirty": false,
-                    "isSubmitSuccessful": false,
-                    "isSubmitted": false,
-                    "isSubmitting": false,
-                    "isValid": false,
-                    "isValidating": false,
-                    "submitCount": 0,
-                    "touchedFields": Object {},
-                  },
-                  "_formValues": Object {},
-                  "_getDirty": [Function],
-                  "_getFieldArray": [Function],
-                  "_getWatch": [Function],
-                  "_names": Object {
-                    "array": Set {},
-                    "mount": Set {},
-                    "unMount": Set {},
-                    "watch": Set {},
-                  },
-                  "_options": Object {
-                    "mode": "onSubmit",
-                    "reValidateMode": "onChange",
-                    "shouldFocusError": true,
-                  },
-                  "_proxyFormState": Object {
-                    "dirtyFields": false,
-                    "errors": "all",
-                    "isDirty": false,
-                    "isValid": false,
-                    "isValidating": false,
-                    "touchedFields": false,
-                  },
-                  "_removeUnmounted": [Function],
-                  "_stateFlags": Object {
-                    "action": false,
-                    "mount": false,
-                    "watch": false,
-                  },
-                  "_subjects": Object {
-                    "array": Object {
-                      "next": [Function],
-                      "observers": Array [],
-                      "subscribe": [Function],
-                      "unsubscribe": [Function],
-                    },
-                    "state": Object {
-                      "next": [Function],
-                      "observers": Array [],
-                      "subscribe": [Function],
-                      "unsubscribe": [Function],
-                    },
-                    "watch": Object {
-                      "next": [Function],
-                      "observers": Array [],
-                      "subscribe": [Function],
-                      "unsubscribe": [Function],
-                    },
-                  },
-                  "_updateFieldArray": [Function],
-                  "_updateValid": [Function],
-                  "register": [Function],
-                  "unregister": [Function],
-                }
-              }
-              defaultValue=""
-              name="country"
-              render={[Function]}
-              rules={
-                Object {
-                  "required": "The country is required",
-                }
-              }
-            />
-          }
-          id="country"
-          label="Country"
-        />
-        <div
-          className="agree-submit"
+        <Alert
+          variant="info"
         >
+          This initial personal information sharing will start KYC process and will also be used in the context of a potential future recovery process.
+        </Alert>
+        <Form
+          onSubmit={[Function]}
+        >
+          <Row>
+            <Col
+              md={6}
+            >
+              <FormGroup
+                colors={
+                  Object {
+                    "altBackground": "#eff3fe",
+                    "background": "#ffffff",
+                    "foreground": "#000000",
+                    "link": "#3b6cf426",
+                  }
+                }
+                control={
+                  <Unknown
+                    control={
+                      Object {
+                        "_defaultValues": Object {},
+                        "_executeSchema": [Function],
+                        "_fields": Object {},
+                        "_formState": Object {
+                          "dirtyFields": Object {},
+                          "errors": Object {},
+                          "isDirty": false,
+                          "isSubmitSuccessful": false,
+                          "isSubmitted": false,
+                          "isSubmitting": false,
+                          "isValid": false,
+                          "isValidating": false,
+                          "submitCount": 0,
+                          "touchedFields": Object {},
+                        },
+                        "_formValues": Object {},
+                        "_getDirty": [Function],
+                        "_getFieldArray": [Function],
+                        "_getWatch": [Function],
+                        "_names": Object {
+                          "array": Set {},
+                          "mount": Set {},
+                          "unMount": Set {},
+                          "watch": Set {},
+                        },
+                        "_options": Object {
+                          "mode": "onSubmit",
+                          "reValidateMode": "onChange",
+                          "shouldFocusError": true,
+                        },
+                        "_proxyFormState": Object {
+                          "dirtyFields": false,
+                          "errors": "all",
+                          "isDirty": false,
+                          "isValid": false,
+                          "isValidating": false,
+                          "touchedFields": false,
+                        },
+                        "_removeUnmounted": [Function],
+                        "_stateFlags": Object {
+                          "action": false,
+                          "mount": false,
+                          "watch": false,
+                        },
+                        "_subjects": Object {
+                          "array": Object {
+                            "next": [Function],
+                            "observers": Array [],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                          },
+                          "state": Object {
+                            "next": [Function],
+                            "observers": Array [],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                          },
+                          "watch": Object {
+                            "next": [Function],
+                            "observers": Array [],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                          },
+                        },
+                        "_updateFieldArray": [Function],
+                        "_updateValid": [Function],
+                        "register": [Function],
+                        "unregister": [Function],
+                      }
+                    }
+                    defaultValue=""
+                    name="firstName"
+                    render={[Function]}
+                    rules={
+                      Object {
+                        "required": "The first name is required",
+                      }
+                    }
+                  />
+                }
+                id="firstName"
+                label="First Name"
+              />
+            </Col>
+            <Col
+              md={6}
+            >
+              <FormGroup
+                colors={
+                  Object {
+                    "altBackground": "#eff3fe",
+                    "background": "#ffffff",
+                    "foreground": "#000000",
+                    "link": "#3b6cf426",
+                  }
+                }
+                control={
+                  <Unknown
+                    control={
+                      Object {
+                        "_defaultValues": Object {},
+                        "_executeSchema": [Function],
+                        "_fields": Object {},
+                        "_formState": Object {
+                          "dirtyFields": Object {},
+                          "errors": Object {},
+                          "isDirty": false,
+                          "isSubmitSuccessful": false,
+                          "isSubmitted": false,
+                          "isSubmitting": false,
+                          "isValid": false,
+                          "isValidating": false,
+                          "submitCount": 0,
+                          "touchedFields": Object {},
+                        },
+                        "_formValues": Object {},
+                        "_getDirty": [Function],
+                        "_getFieldArray": [Function],
+                        "_getWatch": [Function],
+                        "_names": Object {
+                          "array": Set {},
+                          "mount": Set {},
+                          "unMount": Set {},
+                          "watch": Set {},
+                        },
+                        "_options": Object {
+                          "mode": "onSubmit",
+                          "reValidateMode": "onChange",
+                          "shouldFocusError": true,
+                        },
+                        "_proxyFormState": Object {
+                          "dirtyFields": false,
+                          "errors": "all",
+                          "isDirty": false,
+                          "isValid": false,
+                          "isValidating": false,
+                          "touchedFields": false,
+                        },
+                        "_removeUnmounted": [Function],
+                        "_stateFlags": Object {
+                          "action": false,
+                          "mount": false,
+                          "watch": false,
+                        },
+                        "_subjects": Object {
+                          "array": Object {
+                            "next": [Function],
+                            "observers": Array [],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                          },
+                          "state": Object {
+                            "next": [Function],
+                            "observers": Array [],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                          },
+                          "watch": Object {
+                            "next": [Function],
+                            "observers": Array [],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                          },
+                        },
+                        "_updateFieldArray": [Function],
+                        "_updateValid": [Function],
+                        "register": [Function],
+                        "unregister": [Function],
+                      }
+                    }
+                    defaultValue=""
+                    name="lastName"
+                    render={[Function]}
+                    rules={
+                      Object {
+                        "required": "The last name is required",
+                      }
+                    }
+                  />
+                }
+                id="lastName"
+                label="Last Name"
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col
+              md={6}
+            >
+              <FormGroup
+                colors={
+                  Object {
+                    "altBackground": "#eff3fe",
+                    "background": "#ffffff",
+                    "foreground": "#000000",
+                    "link": "#3b6cf426",
+                  }
+                }
+                control={
+                  <Unknown
+                    control={
+                      Object {
+                        "_defaultValues": Object {},
+                        "_executeSchema": [Function],
+                        "_fields": Object {},
+                        "_formState": Object {
+                          "dirtyFields": Object {},
+                          "errors": Object {},
+                          "isDirty": false,
+                          "isSubmitSuccessful": false,
+                          "isSubmitted": false,
+                          "isSubmitting": false,
+                          "isValid": false,
+                          "isValidating": false,
+                          "submitCount": 0,
+                          "touchedFields": Object {},
+                        },
+                        "_formValues": Object {},
+                        "_getDirty": [Function],
+                        "_getFieldArray": [Function],
+                        "_getWatch": [Function],
+                        "_names": Object {
+                          "array": Set {},
+                          "mount": Set {},
+                          "unMount": Set {},
+                          "watch": Set {},
+                        },
+                        "_options": Object {
+                          "mode": "onSubmit",
+                          "reValidateMode": "onChange",
+                          "shouldFocusError": true,
+                        },
+                        "_proxyFormState": Object {
+                          "dirtyFields": false,
+                          "errors": "all",
+                          "isDirty": false,
+                          "isValid": false,
+                          "isValidating": false,
+                          "touchedFields": false,
+                        },
+                        "_removeUnmounted": [Function],
+                        "_stateFlags": Object {
+                          "action": false,
+                          "mount": false,
+                          "watch": false,
+                        },
+                        "_subjects": Object {
+                          "array": Object {
+                            "next": [Function],
+                            "observers": Array [],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                          },
+                          "state": Object {
+                            "next": [Function],
+                            "observers": Array [],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                          },
+                          "watch": Object {
+                            "next": [Function],
+                            "observers": Array [],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                          },
+                        },
+                        "_updateFieldArray": [Function],
+                        "_updateValid": [Function],
+                        "register": [Function],
+                        "unregister": [Function],
+                      }
+                    }
+                    defaultValue=""
+                    name="email"
+                    render={[Function]}
+                    rules={
+                      Object {
+                        "required": "The email is required",
+                      }
+                    }
+                  />
+                }
+                id="email"
+                label="Email"
+              />
+            </Col>
+            <Col
+              md={6}
+            >
+              <FormGroup
+                colors={
+                  Object {
+                    "altBackground": "#eff3fe",
+                    "background": "#ffffff",
+                    "foreground": "#000000",
+                    "link": "#3b6cf426",
+                  }
+                }
+                control={
+                  <Unknown
+                    control={
+                      Object {
+                        "_defaultValues": Object {},
+                        "_executeSchema": [Function],
+                        "_fields": Object {},
+                        "_formState": Object {
+                          "dirtyFields": Object {},
+                          "errors": Object {},
+                          "isDirty": false,
+                          "isSubmitSuccessful": false,
+                          "isSubmitted": false,
+                          "isSubmitting": false,
+                          "isValid": false,
+                          "isValidating": false,
+                          "submitCount": 0,
+                          "touchedFields": Object {},
+                        },
+                        "_formValues": Object {},
+                        "_getDirty": [Function],
+                        "_getFieldArray": [Function],
+                        "_getWatch": [Function],
+                        "_names": Object {
+                          "array": Set {},
+                          "mount": Set {},
+                          "unMount": Set {},
+                          "watch": Set {},
+                        },
+                        "_options": Object {
+                          "mode": "onSubmit",
+                          "reValidateMode": "onChange",
+                          "shouldFocusError": true,
+                        },
+                        "_proxyFormState": Object {
+                          "dirtyFields": false,
+                          "errors": "all",
+                          "isDirty": false,
+                          "isValid": false,
+                          "isValidating": false,
+                          "touchedFields": false,
+                        },
+                        "_removeUnmounted": [Function],
+                        "_stateFlags": Object {
+                          "action": false,
+                          "mount": false,
+                          "watch": false,
+                        },
+                        "_subjects": Object {
+                          "array": Object {
+                            "next": [Function],
+                            "observers": Array [],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                          },
+                          "state": Object {
+                            "next": [Function],
+                            "observers": Array [],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                          },
+                          "watch": Object {
+                            "next": [Function],
+                            "observers": Array [],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                          },
+                        },
+                        "_updateFieldArray": [Function],
+                        "_updateValid": [Function],
+                        "register": [Function],
+                        "unregister": [Function],
+                      }
+                    }
+                    defaultValue=""
+                    name="phoneNumber"
+                    render={[Function]}
+                    rules={
+                      Object {
+                        "required": "The phone number is required",
+                      }
+                    }
+                  />
+                }
+                id="phoneNumber"
+                label="Phone Number"
+              />
+            </Col>
+          </Row>
+          <h3>
+            Address
+          </h3>
           <FormGroup
             colors={
               Object {
@@ -1055,60 +580,539 @@ Tel: +33 2 48 67 50 50",
                   }
                 }
                 defaultValue=""
-                name="agree"
+                name="line1"
                 render={[Function]}
                 rules={
                   Object {
-                    "required": "You must agree in order to proceed",
+                    "required": "The line1 is required",
                   }
                 }
               />
             }
-            id="agree"
-            noFeedback={true}
+            id="line1"
+            label="Line1"
           />
-          <Button
-            action={
+          <FormGroup
+            colors={
               Object {
-                "buttonTestId": "btnSubmit",
-                "buttonText": "Next",
-                "buttonVariant": "primary",
-                "id": "submit",
-                "type": "submit",
+                "altBackground": "#eff3fe",
+                "background": "#ffffff",
+                "foreground": "#000000",
+                "link": "#3b6cf426",
               }
             }
+            control={
+              <Unknown
+                control={
+                  Object {
+                    "_defaultValues": Object {},
+                    "_executeSchema": [Function],
+                    "_fields": Object {},
+                    "_formState": Object {
+                      "dirtyFields": Object {},
+                      "errors": Object {},
+                      "isDirty": false,
+                      "isSubmitSuccessful": false,
+                      "isSubmitted": false,
+                      "isSubmitting": false,
+                      "isValid": false,
+                      "isValidating": false,
+                      "submitCount": 0,
+                      "touchedFields": Object {},
+                    },
+                    "_formValues": Object {},
+                    "_getDirty": [Function],
+                    "_getFieldArray": [Function],
+                    "_getWatch": [Function],
+                    "_names": Object {
+                      "array": Set {},
+                      "mount": Set {},
+                      "unMount": Set {},
+                      "watch": Set {},
+                    },
+                    "_options": Object {
+                      "mode": "onSubmit",
+                      "reValidateMode": "onChange",
+                      "shouldFocusError": true,
+                    },
+                    "_proxyFormState": Object {
+                      "dirtyFields": false,
+                      "errors": "all",
+                      "isDirty": false,
+                      "isValid": false,
+                      "isValidating": false,
+                      "touchedFields": false,
+                    },
+                    "_removeUnmounted": [Function],
+                    "_stateFlags": Object {
+                      "action": false,
+                      "mount": false,
+                      "watch": false,
+                    },
+                    "_subjects": Object {
+                      "array": Object {
+                        "next": [Function],
+                        "observers": Array [],
+                        "subscribe": [Function],
+                        "unsubscribe": [Function],
+                      },
+                      "state": Object {
+                        "next": [Function],
+                        "observers": Array [],
+                        "subscribe": [Function],
+                        "unsubscribe": [Function],
+                      },
+                      "watch": Object {
+                        "next": [Function],
+                        "observers": Array [],
+                        "subscribe": [Function],
+                        "unsubscribe": [Function],
+                      },
+                    },
+                    "_updateFieldArray": [Function],
+                    "_updateValid": [Function],
+                    "register": [Function],
+                    "unregister": [Function],
+                  }
+                }
+                defaultValue=""
+                name="line2"
+                render={[Function]}
+              />
+            }
+            id="line2"
+            label="Line2"
           />
-        </div>
-      </Form>
-      <Dialog
-        actions={
-          Array [
-            Object {
-              "buttonText": "OK",
-              "buttonVariant": "primary",
-              "callback": [Function],
-              "id": "discard",
-            },
-          ]
-        }
-        show={false}
-        size="lg"
-      >
-        <React.Fragment>
-          The legal officers have been informed of your request.
-        </React.Fragment>
-      </Dialog>
-    </Frame>
-  }
-  subTitle="Activate my Logion Protection"
-  titleIcon={
-    Object {
-      "background": undefined,
-      "icon": Object {
-        "hasVariants": true,
-        "id": "shield",
-      },
-    }
-  }
-/>
+          <Row>
+            <Col
+              md={4}
+            >
+              <FormGroup
+                colors={
+                  Object {
+                    "altBackground": "#eff3fe",
+                    "background": "#ffffff",
+                    "foreground": "#000000",
+                    "link": "#3b6cf426",
+                  }
+                }
+                control={
+                  <Unknown
+                    control={
+                      Object {
+                        "_defaultValues": Object {},
+                        "_executeSchema": [Function],
+                        "_fields": Object {},
+                        "_formState": Object {
+                          "dirtyFields": Object {},
+                          "errors": Object {},
+                          "isDirty": false,
+                          "isSubmitSuccessful": false,
+                          "isSubmitted": false,
+                          "isSubmitting": false,
+                          "isValid": false,
+                          "isValidating": false,
+                          "submitCount": 0,
+                          "touchedFields": Object {},
+                        },
+                        "_formValues": Object {},
+                        "_getDirty": [Function],
+                        "_getFieldArray": [Function],
+                        "_getWatch": [Function],
+                        "_names": Object {
+                          "array": Set {},
+                          "mount": Set {},
+                          "unMount": Set {},
+                          "watch": Set {},
+                        },
+                        "_options": Object {
+                          "mode": "onSubmit",
+                          "reValidateMode": "onChange",
+                          "shouldFocusError": true,
+                        },
+                        "_proxyFormState": Object {
+                          "dirtyFields": false,
+                          "errors": "all",
+                          "isDirty": false,
+                          "isValid": false,
+                          "isValidating": false,
+                          "touchedFields": false,
+                        },
+                        "_removeUnmounted": [Function],
+                        "_stateFlags": Object {
+                          "action": false,
+                          "mount": false,
+                          "watch": false,
+                        },
+                        "_subjects": Object {
+                          "array": Object {
+                            "next": [Function],
+                            "observers": Array [],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                          },
+                          "state": Object {
+                            "next": [Function],
+                            "observers": Array [],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                          },
+                          "watch": Object {
+                            "next": [Function],
+                            "observers": Array [],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                          },
+                        },
+                        "_updateFieldArray": [Function],
+                        "_updateValid": [Function],
+                        "register": [Function],
+                        "unregister": [Function],
+                      }
+                    }
+                    defaultValue=""
+                    name="postalCode"
+                    render={[Function]}
+                    rules={
+                      Object {
+                        "required": "The postal code is required",
+                      }
+                    }
+                  />
+                }
+                id="postalCode"
+                label="Postal Code"
+              />
+            </Col>
+            <Col
+              md={8}
+            >
+              <FormGroup
+                colors={
+                  Object {
+                    "altBackground": "#eff3fe",
+                    "background": "#ffffff",
+                    "foreground": "#000000",
+                    "link": "#3b6cf426",
+                  }
+                }
+                control={
+                  <Unknown
+                    control={
+                      Object {
+                        "_defaultValues": Object {},
+                        "_executeSchema": [Function],
+                        "_fields": Object {},
+                        "_formState": Object {
+                          "dirtyFields": Object {},
+                          "errors": Object {},
+                          "isDirty": false,
+                          "isSubmitSuccessful": false,
+                          "isSubmitted": false,
+                          "isSubmitting": false,
+                          "isValid": false,
+                          "isValidating": false,
+                          "submitCount": 0,
+                          "touchedFields": Object {},
+                        },
+                        "_formValues": Object {},
+                        "_getDirty": [Function],
+                        "_getFieldArray": [Function],
+                        "_getWatch": [Function],
+                        "_names": Object {
+                          "array": Set {},
+                          "mount": Set {},
+                          "unMount": Set {},
+                          "watch": Set {},
+                        },
+                        "_options": Object {
+                          "mode": "onSubmit",
+                          "reValidateMode": "onChange",
+                          "shouldFocusError": true,
+                        },
+                        "_proxyFormState": Object {
+                          "dirtyFields": false,
+                          "errors": "all",
+                          "isDirty": false,
+                          "isValid": false,
+                          "isValidating": false,
+                          "touchedFields": false,
+                        },
+                        "_removeUnmounted": [Function],
+                        "_stateFlags": Object {
+                          "action": false,
+                          "mount": false,
+                          "watch": false,
+                        },
+                        "_subjects": Object {
+                          "array": Object {
+                            "next": [Function],
+                            "observers": Array [],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                          },
+                          "state": Object {
+                            "next": [Function],
+                            "observers": Array [],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                          },
+                          "watch": Object {
+                            "next": [Function],
+                            "observers": Array [],
+                            "subscribe": [Function],
+                            "unsubscribe": [Function],
+                          },
+                        },
+                        "_updateFieldArray": [Function],
+                        "_updateValid": [Function],
+                        "register": [Function],
+                        "unregister": [Function],
+                      }
+                    }
+                    defaultValue=""
+                    name="city"
+                    render={[Function]}
+                    rules={
+                      Object {
+                        "required": "The city is required",
+                      }
+                    }
+                  />
+                }
+                id="city"
+                label="City"
+              />
+            </Col>
+          </Row>
+          <FormGroup
+            colors={
+              Object {
+                "altBackground": "#eff3fe",
+                "background": "#ffffff",
+                "foreground": "#000000",
+                "link": "#3b6cf426",
+              }
+            }
+            control={
+              <Unknown
+                control={
+                  Object {
+                    "_defaultValues": Object {},
+                    "_executeSchema": [Function],
+                    "_fields": Object {},
+                    "_formState": Object {
+                      "dirtyFields": Object {},
+                      "errors": Object {},
+                      "isDirty": false,
+                      "isSubmitSuccessful": false,
+                      "isSubmitted": false,
+                      "isSubmitting": false,
+                      "isValid": false,
+                      "isValidating": false,
+                      "submitCount": 0,
+                      "touchedFields": Object {},
+                    },
+                    "_formValues": Object {},
+                    "_getDirty": [Function],
+                    "_getFieldArray": [Function],
+                    "_getWatch": [Function],
+                    "_names": Object {
+                      "array": Set {},
+                      "mount": Set {},
+                      "unMount": Set {},
+                      "watch": Set {},
+                    },
+                    "_options": Object {
+                      "mode": "onSubmit",
+                      "reValidateMode": "onChange",
+                      "shouldFocusError": true,
+                    },
+                    "_proxyFormState": Object {
+                      "dirtyFields": false,
+                      "errors": "all",
+                      "isDirty": false,
+                      "isValid": false,
+                      "isValidating": false,
+                      "touchedFields": false,
+                    },
+                    "_removeUnmounted": [Function],
+                    "_stateFlags": Object {
+                      "action": false,
+                      "mount": false,
+                      "watch": false,
+                    },
+                    "_subjects": Object {
+                      "array": Object {
+                        "next": [Function],
+                        "observers": Array [],
+                        "subscribe": [Function],
+                        "unsubscribe": [Function],
+                      },
+                      "state": Object {
+                        "next": [Function],
+                        "observers": Array [],
+                        "subscribe": [Function],
+                        "unsubscribe": [Function],
+                      },
+                      "watch": Object {
+                        "next": [Function],
+                        "observers": Array [],
+                        "subscribe": [Function],
+                        "unsubscribe": [Function],
+                      },
+                    },
+                    "_updateFieldArray": [Function],
+                    "_updateValid": [Function],
+                    "register": [Function],
+                    "unregister": [Function],
+                  }
+                }
+                defaultValue=""
+                name="country"
+                render={[Function]}
+                rules={
+                  Object {
+                    "required": "The country is required",
+                  }
+                }
+              />
+            }
+            id="country"
+            label="Country"
+          />
+          <div
+            className="agree-submit"
+          >
+            <FormGroup
+              colors={
+                Object {
+                  "altBackground": "#eff3fe",
+                  "background": "#ffffff",
+                  "foreground": "#000000",
+                  "link": "#3b6cf426",
+                }
+              }
+              control={
+                <Unknown
+                  control={
+                    Object {
+                      "_defaultValues": Object {},
+                      "_executeSchema": [Function],
+                      "_fields": Object {},
+                      "_formState": Object {
+                        "dirtyFields": Object {},
+                        "errors": Object {},
+                        "isDirty": false,
+                        "isSubmitSuccessful": false,
+                        "isSubmitted": false,
+                        "isSubmitting": false,
+                        "isValid": false,
+                        "isValidating": false,
+                        "submitCount": 0,
+                        "touchedFields": Object {},
+                      },
+                      "_formValues": Object {},
+                      "_getDirty": [Function],
+                      "_getFieldArray": [Function],
+                      "_getWatch": [Function],
+                      "_names": Object {
+                        "array": Set {},
+                        "mount": Set {},
+                        "unMount": Set {},
+                        "watch": Set {},
+                      },
+                      "_options": Object {
+                        "mode": "onSubmit",
+                        "reValidateMode": "onChange",
+                        "shouldFocusError": true,
+                      },
+                      "_proxyFormState": Object {
+                        "dirtyFields": false,
+                        "errors": "all",
+                        "isDirty": false,
+                        "isValid": false,
+                        "isValidating": false,
+                        "touchedFields": false,
+                      },
+                      "_removeUnmounted": [Function],
+                      "_stateFlags": Object {
+                        "action": false,
+                        "mount": false,
+                        "watch": false,
+                      },
+                      "_subjects": Object {
+                        "array": Object {
+                          "next": [Function],
+                          "observers": Array [],
+                          "subscribe": [Function],
+                          "unsubscribe": [Function],
+                        },
+                        "state": Object {
+                          "next": [Function],
+                          "observers": Array [],
+                          "subscribe": [Function],
+                          "unsubscribe": [Function],
+                        },
+                        "watch": Object {
+                          "next": [Function],
+                          "observers": Array [],
+                          "subscribe": [Function],
+                          "unsubscribe": [Function],
+                        },
+                      },
+                      "_updateFieldArray": [Function],
+                      "_updateValid": [Function],
+                      "register": [Function],
+                      "unregister": [Function],
+                    }
+                  }
+                  defaultValue=""
+                  name="agree"
+                  render={[Function]}
+                  rules={
+                    Object {
+                      "required": "You must agree in order to proceed",
+                    }
+                  }
+                />
+              }
+              id="agree"
+              noFeedback={true}
+            />
+            <Button
+              action={
+                Object {
+                  "buttonTestId": "btnSubmit",
+                  "buttonText": "Next",
+                  "buttonVariant": "primary",
+                  "id": "submit",
+                  "type": "submit",
+                }
+              }
+            />
+          </div>
+        </Form>
+        <Dialog
+          actions={
+            Array [
+              Object {
+                "buttonText": "OK",
+                "buttonVariant": "primary",
+                "callback": [Function],
+                "id": "discard",
+              },
+            ]
+          }
+          show={false}
+          size="lg"
+        >
+          <React.Fragment>
+            The legal officers have been informed of your request.
+          </React.Fragment>
+        </Dialog>
+      </Frame>
+    </Col>
+  </Row>
+</FullWidthPane>
 `;

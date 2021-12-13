@@ -4,10 +4,9 @@ import userEvent from "@testing-library/user-event";
 
 import Accounts, { Account } from './common/types/Accounts';
 import { shallowRender } from './tests';
-import { setAddresses } from './common/__mocks__/CommonContextMock';
+import { setAddresses, authenticate } from './common/__mocks__/CommonContextMock';
 import { TEST_WALLET_USER } from './wallet-user/TestData';
 import { DEFAULT_LEGAL_OFFICER } from "./common/TestData";
-import { authenticate } from './common/Authentication';
 import Login from './Login';
 
 jest.mock('./logion-chain');
@@ -54,6 +53,6 @@ describe("Login", () => {
         await waitFor(() => userEvent.click(screen.getByRole('checkbox')));
         await waitFor(() => userEvent.click(screen.getByRole('button', {name: "Log in"})));
 
-        await waitFor(() => expect(authenticate).toBeCalledWith(expect.anything(), [ DEFAULT_LEGAL_OFFICER ]));
+        await waitFor(() => expect(authenticate).toBeCalledWith([ DEFAULT_LEGAL_OFFICER ]));
     });
 });

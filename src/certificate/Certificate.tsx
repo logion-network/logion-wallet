@@ -23,13 +23,14 @@ import DangerDialog from "../common/DangerDialog";
 import { LIGHT_MODE } from "../legal-officer/Types";
 import { RED } from "../common/ColorTheme";
 import InlineDateTime from "../common/InlineDateTime";
+import IconTextRow from "../common/IconTextRow";
 
 export default function Certificate() {
 
     const locIdParam = useParams<"locId">().locId!;
     const [ searchParams ] = useSearchParams();
     const locId: UUID = useMemo(() => UUID.fromAnyString(locIdParam)!, [ locIdParam ]);
-    const { api, apiState } = useLogionChain();
+    const { api } = useLogionChain();
     const [ loc, setLoc ] = useState<LegalOfficerCase | undefined>(undefined)
     const [ supersededLoc, setSupersededLoc ] = useState<LegalOfficerCase | undefined>(undefined)
     const [ supersededLocRequest, setSupersededLocRequest ] = useState<LocRequest | undefined>(undefined)
@@ -37,9 +38,10 @@ export default function Certificate() {
     const axiosFactory = anonymousAxiosFactory();
     const [ publicLoc, setPublicLoc ] = useState<LocRequest>()
     const [ voidWarningVisible, setVoidWarningVisible ] = useState<boolean>(false);
+    const [ nodeDown, setNodeDown ] = useState(false);
 
     useEffect(() => {
-        if (api !== null && apiState === 'READY' && axiosFactory !== undefined && loc === undefined) {
+        if (api !== null && axiosFactory !== undefined && loc === undefined) {
             (async function () {
                 const legalOfficerCase = await getLegalOfficerCase({ api, locId });
                 if (legalOfficerCase) {
@@ -48,25 +50,33 @@ export default function Certificate() {
                     } else {
                         setLoc(legalOfficerCase)
                         setLegalOfficer(getOfficer(legalOfficerCase.owner))
-                        setPublicLoc(await fetchPublicLoc(axiosFactory(legalOfficerCase.owner), locId.toString()));
+                        try {
+                            setPublicLoc(await fetchPublicLoc(axiosFactory(legalOfficerCase.owner), locId.toString()));
+                        } catch(error) {
+                            setNodeDown(true);
+                        }
                         if(legalOfficerCase.voidInfo !== undefined) {
                             setVoidWarningVisible(true);
                         }
                         if(legalOfficerCase.replacerOf !== undefined) {
                             const supersededLoc = await getLegalOfficerCase({ api, locId: legalOfficerCase.replacerOf });
                             setSupersededLoc(supersededLoc);
-                            setSupersededLocRequest(await fetchPublicLoc(axiosFactory(legalOfficerCase.owner), legalOfficerCase.replacerOf.toString()));
+                            try {
+                                setSupersededLocRequest(await fetchPublicLoc(axiosFactory(legalOfficerCase.owner), legalOfficerCase.replacerOf.toString()));
+                            } catch(error) {
+                                setNodeDown(true);
+                            }
                         }
                     }
                 }
             })()
         }
-    }, [ api, apiState, locId, loc, setLoc, setLegalOfficer, setPublicLoc, axiosFactory, searchParams ])
+    }, [ api, locId, loc, setLoc, setLegalOfficer, setPublicLoc, axiosFactory, searchParams ])
 
-    if (apiState !== 'READY') {
+    if (api === null) {
         return (
             <div className="Certificate">
-                <p>Connecting to node... [{apiState}]</p>
+                <p>Connecting to node...</p>
             </div>
         )
     }
@@ -116,6 +126,20 @@ export default function Certificate() {
 
     return (
         <>
+            {
+                nodeDown &&
+                <Container>
+                    <div className="network-frame">
+                        <IconTextRow
+                            icon={ <Icon icon={{id: "ko"}} /> }
+                            text={
+                                <p>The logion network is partially unavailable. As a consequence, some data may be temporarily
+                                unavailable.</p>
+                            }
+                        />
+                    </div>
+                </Container>
+            }
             {
                 loc.voidInfo !== undefined &&
                 <Container>

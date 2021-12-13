@@ -40,6 +40,7 @@ export default function UserRouter() {
             <Route path={ RECOVERY_RELATIVE_PATH } element={ <Recovery /> } />
             <Route path={ WALLET_RELATIVE_PATH } element={ <Wallet
                     transactionsPath={ transactionsPath }
+                    settingsPath={ SETTINGS_PATH }
                 />
             } />
             <Route path={ TRANSACTIONS_RELATIVE_PATH } element={ <Transactions

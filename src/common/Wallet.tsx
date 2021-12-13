@@ -17,9 +17,11 @@ import Loader from './Loader';
 import { Transaction } from './types/ModelTypes';
 
 import './Wallet.css';
+import NetworkWarning from './NetworkWarning';
 
 export interface Props {
     transactionsPath: (coinId: string) => string,
+    settingsPath: string;
 }
 
 export default function Wallet(props: Props) {
@@ -42,7 +44,7 @@ export default function Wallet(props: Props) {
 }
 
 export function Content(props: Props) {
-    const { balances, transactions } = useCommonContext();
+    const { balances, transactions, nodesDown } = useCommonContext();
     const navigate = useNavigate();
 
     if(balances === null || transactions === null) {
@@ -52,6 +54,15 @@ export function Content(props: Props) {
     const latestTransaction = transactions[0];
 
     return (
+        <>
+        {
+            nodesDown.length > 0 &&
+            <Row>
+                <Col>
+                    <NetworkWarning settingsPath={ props.settingsPath } />
+                </Col>
+            </Row>
+        }
         <Row>
             <Col md={8}>
                 <Frame
@@ -110,6 +121,7 @@ export function Content(props: Props) {
                 </Frame>
             </Col>
         </Row>
+        </>
     );
 }
 

@@ -19,21 +19,19 @@ import './Transactions.css';
 import TransferAmountCell, { transferBalance } from './TransferAmountCell';
 import AmountCell from './AmountCell';
 import { TransactionStatusCell, TransactionStatusCellDetails } from "./TransactionStatusCell";
+import Loader from './Loader';
 
 export interface Props {
     backPath: string,
 }
 
 export default function Transactions(props: Props) {
-    const { accounts, balances, transactions, colorTheme } = useCommonContext();
-    const { coinId } = useParams<"coinId">();
+    const { balances, transactions, colorTheme } = useCommonContext();
     const navigate = useNavigate();
 
     if (balances === null || transactions === null) {
         return null;
     }
-
-    const balance = balances.filter(balance => balance.coin.id === coinId)[0];
 
     return (
         <FullWidthPane
@@ -47,6 +45,22 @@ export default function Transactions(props: Props) {
             } }
             onBack={ () => navigate(props.backPath) }
         >
+            <Content />
+        </FullWidthPane>
+    );
+}
+
+function Content() {
+    const { accounts, balances, transactions } = useCommonContext();
+    const { coinId } = useParams<"coinId">();
+
+    if (balances === null || transactions === null) {
+        return <Loader />;
+    }
+
+    const balance = balances.filter(balance => balance.coin.id === coinId)[0];
+    return (
+        <>
             <Row>
                 <Col>
                     <Frame
@@ -114,7 +128,7 @@ export default function Transactions(props: Props) {
                     </Frame>
                 </Col>
             </Row>
-        </FullWidthPane>
+        </>
     );
 }
 

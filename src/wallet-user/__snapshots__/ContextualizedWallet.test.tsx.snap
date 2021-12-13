@@ -384,6 +384,7 @@ exports[`Given connecting, when rendering, then show account, no button, no node
     ]
   }
 >
+  <UserRouter />
   <WarningDialog
     actions={
       Array [
@@ -523,6 +524,7 @@ exports[`Given connection error, when rendering, then show account, no button, n
     ]
   }
 >
+  <UserRouter />
   <WarningDialog
     actions={
       Array [
@@ -662,6 +664,7 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
     ]
   }
 >
+  <UserRouter />
   <WarningDialog
     actions={
       Array [

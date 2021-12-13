@@ -21,6 +21,7 @@ exports[`renders 1`] = `
   <Route
     element={
       <Wallet
+        settingsPath="/legal-officer/settings"
         transactionsPath={[Function]}
       />
     }

@@ -135,3 +135,12 @@
 .Dashboard .back-button img {
     margin-right: 10px;
 }
+
+.Dashboard .TopArea {
+    font-size: 14px;
+    overflow-x: hidden;
+    padding-top: 23px;
+    padding-left: 30px;
+    padding-right: 40px;
+    padding-bottom: 30px;
+}

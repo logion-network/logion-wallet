@@ -18,7 +18,7 @@ import { useCommonContext } from '../common/CommonContext';
 import { useNavigate } from 'react-router';
 
 export default function ContextualizedWallet() {
-    const { apiState } = useLogionChain();
+    const { api } = useLogionChain();
     const { selectAddress, accounts, colorTheme } = useCommonContext();
     const { pendingProtectionRequests, acceptedProtectionRequests } = useUserContext();
     const [ discardProtection, setDiscardProtection ] = useState<boolean>(false);
@@ -28,7 +28,7 @@ export default function ContextualizedWallet() {
         return null;
     }
 
-    const userContext = apiState === 'READY' ? <UserRouter /> : null;
+    const userContext = api !== null ? <UserRouter /> : null;
     const noProtection = (pendingProtectionRequests !== null && pendingProtectionRequests.length === 0)
         && (acceptedProtectionRequests !== null && acceptedProtectionRequests.length === 0);
 
