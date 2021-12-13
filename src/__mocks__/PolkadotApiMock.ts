@@ -59,15 +59,9 @@ export const DEFAULT_LOC = {
 export class ApiPromise {
     assetQueriesBeforeNone: number = 1;
 
-    constructor(_: ApiPromiseArgs) {
-
+    static create(): Promise<ApiPromise> {
+        return Promise.resolve(new ApiPromise());
     }
-
-    on(eventName: string, callback: () => void) {
-        apiCallbacks[eventName] = callback;
-    }
-
-    isReady = new Promise<ApiPromise>((resolve: ((api: ApiPromise) => void)) => isReadyResolve = () => resolve(this));
 
     query = {
         system: {
@@ -190,7 +184,7 @@ export const TOTAL_BLOCKS = 1000;
 
 export const chain = buildChain(TOTAL_BLOCKS);
 
-export const apiMock = new ApiPromise({provider: new WsProvider(""), types: null, rpc: null});
+export const apiMock = new ApiPromise();
 
 function buildChain(blocks: number): any[] {
     const chain: any[] = [];
@@ -289,11 +283,6 @@ export function mockCompact(number: number): any {
     return {
         toNumber: () => number
     };
-}
-
-export function connectedAndReady() {
-    triggerEvent("connected");
-    isReadyResolve!();
 }
 
 export function mockSigner(signRaw: (parameters: object) => Promise<string>) {

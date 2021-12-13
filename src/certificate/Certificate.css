@@ -80,7 +80,8 @@
     font-family: "Montserrat", sans-serif;
 }
 
-.void-frame {
+.void-frame,
+.network-frame {
     border: 2px solid #e11a25;
     border-radius: 12px;
     padding: 30px;

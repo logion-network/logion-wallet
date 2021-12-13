@@ -18,6 +18,8 @@ import { useUserContext } from '../UserContext';
 
 import LegalOfficers from './LegalOfficers';
 import './ProtectionRecoveryRequest.css';
+import NetworkWarning from '../../common/NetworkWarning';
+import { SETTINGS_PATH } from '../UserRouter';
 
 export type ProtectionRecoveryRequestStatus = 'pending' | 'accepted' | 'activated';
 
@@ -28,7 +30,7 @@ export interface Props {
 
 export default function ProtectionRecoveryRequest(props: Props) {
     const { api } = useLogionChain();
-    const { accounts, colorTheme } = useCommonContext();
+    const { accounts, colorTheme, nodesDown } = useCommonContext();
     const { refreshRequests, recoveryConfig, recoveredAddress } = useUserContext();
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
     const [ signAndSubmitClaim, setSignAndSubmitClaim ] = useState<SignAndSubmit>(null);
@@ -145,6 +147,10 @@ export default function ProtectionRecoveryRequest(props: Props) {
                 background: request.isRecovery && request.status !== 'ACTIVATED' ? colorTheme.recoveryItems.iconGradient : undefined,
             }}
         >
+                {
+                    nodesDown.length > 0 &&
+                    <NetworkWarning settingsPath={ SETTINGS_PATH } />
+                }
                 <Frame className="ProtectionRecoveryRequest">
                     { alert }
 
@@ -203,7 +209,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
                     }
 
                     <LegalOfficers
-                        legalOfficers={ legalOfficers }
+                        legalOfficers={ legalOfficers(nodesDown) }
                         legalOfficer1={ legalOfficer1 }
                         setLegalOfficer1={ () => {} }
                         legalOfficer1Status={ legalOfficer1Status }

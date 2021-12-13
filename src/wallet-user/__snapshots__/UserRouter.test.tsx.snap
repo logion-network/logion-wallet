@@ -17,6 +17,7 @@ exports[`renders 1`] = `
   <Route
     element={
       <Wallet
+        settingsPath="/user/settings"
         transactionsPath={[Function]}
       />
     }

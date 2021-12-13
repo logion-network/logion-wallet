@@ -5,7 +5,9 @@ import {
 } from "./LegalOfficerMock";
 import { LegalOfficer } from "../../../config";
 
-export const legalOfficers = legalOfficersMock
+export function legalOfficers() {
+    return legalOfficersMock;
+}
 
 export function legalOfficerByAddress(address: string): LegalOfficer {
     return legalOfficerByAddressMock(address);
@@ -14,4 +16,3 @@ export function legalOfficerByAddress(address: string): LegalOfficer {
 export function isLegalOfficer(address: string | undefined): boolean {
     return isLegalOfficerMock(address)
 }
-

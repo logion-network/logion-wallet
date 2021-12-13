@@ -9,12 +9,13 @@ import ButtonGroup from "../../common/ButtonGroup";
 import Button from "../../common/Button";
 import { fullCertificateUrl } from "../../PublicPaths";
 import { UUID } from "../../logion-chain/UUID";
+import Loader from '../../common/Loader';
 
 export default function VoidLocs() {
     const { voidTransactionLocs } = useCommonContext();
 
     if (voidTransactionLocs === null) {
-        return null;
+        return <Loader />;
     }
 
     return (

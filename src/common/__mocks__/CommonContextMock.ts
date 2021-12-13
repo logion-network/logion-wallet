@@ -51,6 +51,8 @@ export let closedLocRequests: any[] | null = null;
 
 export let refresh = jest.fn();
 
+export let authenticate = jest.fn();
+
 export function useCommonContext() {
     return {
         selectAddress,
@@ -66,6 +68,9 @@ export function useCommonContext() {
         openedLocRequests,
         closedLocRequests,
         refresh,
+        authenticate,
+        nodesUp: [],
+        nodesDown: []
     };
 }
 

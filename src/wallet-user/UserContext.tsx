@@ -4,7 +4,7 @@ import { Option } from '@polkadot/types';
 import { useLogionChain } from '../logion-chain';
 import { RecoveryConfig, getRecoveryConfig, getProxy } from '../logion-chain/Recovery';
 import { Children } from '../common/types/Helpers';
-import { AxiosFactory, fetchFromAvailableNodes } from '../common/api';
+import { aggregateArrays, AxiosFactory, Endpoint, MultiResponse, MultiSourceHttpClient, MultiSourceHttpClientState } from '../common/api';
 
 import { ProtectionRequest } from "../common/types/ModelTypes";
 import { fetchProtectionRequests } from "../common/Model";
@@ -130,8 +130,8 @@ export interface Props {
 }
 
 export function UserContextProvider(props: Props) {
-    const { accounts, colorTheme, setColorTheme, axiosFactory, isCurrentAuthenticated } = useCommonContext();
-    const { api, apiState } = useLogionChain();
+    const { accounts, colorTheme, setColorTheme, axiosFactory, isCurrentAuthenticated, nodesUp, nodesDown } = useCommonContext();
+    const { api } = useLogionChain();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
     useEffect(() => {
@@ -150,21 +150,33 @@ export function UserContextProvider(props: Props) {
             });
 
             (async function () {
-                const pendingProtectionRequests = await fetchFromAvailableNodes(axiosFactory!, axios => fetchProtectionRequests(axios, {
+                const initialState: MultiSourceHttpClientState<Endpoint> = {
+                    nodesUp: nodesUp.map(node => ({ url: node.api })),
+                    nodesDown: nodesDown.map(node => ({ url: node.api })),
+                }
+                const multiClient = new MultiSourceHttpClient<Endpoint, ProtectionRequest[]>(initialState, accounts!.current!.token!.value);
+                let result: MultiResponse<ProtectionRequest[]>;
+
+                result = await multiClient.fetch(axios => fetchProtectionRequests(axios, {
                     requesterAddress: currentAddress,
                     statuses: [ "PENDING" ],
                     kind: "ANY",
                 }));
-                const acceptedProtectionRequests = await fetchFromAvailableNodes(axiosFactory!, axios => fetchProtectionRequests(axios, {
+                const pendingProtectionRequests = aggregateArrays(result);
+
+                result = await multiClient.fetch(axios => fetchProtectionRequests(axios, {
                     requesterAddress: currentAddress,
                     statuses: [ "ACCEPTED", "ACTIVATED" ],
                     kind: "ANY",
                 }));
-                const rejectedProtectionRequests = await fetchFromAvailableNodes(axiosFactory!, axios => fetchProtectionRequests(axios, {
+                const acceptedProtectionRequests = aggregateArrays(result);
+
+                result = await multiClient.fetch(axios => fetchProtectionRequests(axios, {
                     requesterAddress: currentAddress,
                     statuses: [ "REJECTED" ],
                     kind: "ANY",
                 }));
+                const rejectedProtectionRequests = aggregateArrays(result);
 
                 const recoveryConfig = await getRecoveryConfig({
                     api: api!,
@@ -191,10 +203,10 @@ export function UserContextProvider(props: Props) {
                 });
             })();
         }
-    }, [ axiosFactory, api, dispatch, accounts ]);
+    }, [ api, dispatch, accounts, nodesUp, nodesDown ]);
 
     useEffect(() => {
-        if(apiState === "READY"
+        if(api !== null
                 && axiosFactory !== undefined
                 && accounts !== null
                 && accounts.current !== undefined
@@ -203,20 +215,20 @@ export function UserContextProvider(props: Props) {
                 && isCurrentAuthenticated()) {
             refreshRequests(true);
         }
-    }, [ apiState, axiosFactory, contextValue, accounts, refreshRequests, dispatch, isCurrentAuthenticated ]);
+    }, [ api, axiosFactory, contextValue, accounts, refreshRequests, dispatch, isCurrentAuthenticated ]);
 
     useEffect(() => {
-        if(contextValue.refreshRequests !== refreshRequests && apiState === "READY") {
+        if(contextValue.refreshRequests !== refreshRequests && api !== null) {
             dispatch({
                 type: "SET_REFRESH_REQUESTS_FUNCTION",
                 refreshRequests,
             });
         }
-    }, [ apiState, refreshRequests, contextValue, dispatch ]);
+    }, [ api, refreshRequests, contextValue, dispatch ]);
 
     useEffect(() => {
         if (axiosFactory !== undefined
-                && apiState === "READY"
+                && api !== null
                 && (contextValue.createProtectionRequest === null || axiosFactory !== contextValue.currentAxiosFactory)) {
             const createProtectionRequest = async (legalOfficers: string[], requestFactory: (otherLegalOfficerAddress: string) => CreateProtectionRequest): Promise<void> => {
                 const promises = [
@@ -230,7 +242,7 @@ export function UserContextProvider(props: Props) {
                 createProtectionRequest,
             });
         }
-    }, [ axiosFactory, apiState, contextValue, refreshRequests, dispatch ]);
+    }, [ axiosFactory, api, contextValue, refreshRequests, dispatch ]);
 
     useEffect(() => {
         if(axiosFactory !== undefined

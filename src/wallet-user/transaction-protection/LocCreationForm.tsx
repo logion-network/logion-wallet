@@ -8,6 +8,7 @@ import Select from '../../common/Select';
 
 import { legalOfficers } from '../../common/types/LegalOfficer';
 import { buildOptions } from '../trust-protection/SelectLegalOfficer';
+import { useCommonContext } from '../../common/CommonContext';
 
 export interface FormValues {
     description: string;
@@ -27,6 +28,7 @@ export interface Props {
 }
 
 export default function LocCreationForm(props: Props) {
+    const { nodesDown } = useCommonContext();
 
     return (
         <>
@@ -83,7 +85,7 @@ export default function LocCreationForm(props: Props) {
                         render={({ field }) => (
                             <Select
                                 isInvalid={ !!props.errors.legalOfficer?.message }
-                                options={ buildOptions(legalOfficers) }
+                                options={ buildOptions(legalOfficers(nodesDown)) }
                                 { ...field }
                             />
                         )}

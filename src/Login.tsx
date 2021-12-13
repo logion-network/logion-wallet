@@ -7,7 +7,6 @@ import { useCommonContext } from './common/CommonContext';
 import { useLogionChain } from './logion-chain';
 import Button from './common/Button';
 import Checkbox from './common/Checkbox';
-import { authenticate } from './common/Authentication';
 
 import AbsoluteLogo from './AbsoluteLogo';
 
@@ -24,19 +23,18 @@ export default function Login() {
     const location = useLocation();
     const navigate = useNavigate();
     const { connectedNodeMetadata } = useLogionChain();
-    const { accounts, setTokens, axiosFactory } = useCommonContext();
+    const { accounts, axiosFactory, authenticate } = useCommonContext();
     const [ selectedAddresses, setSelectedAddresses ] = useState<string[]>(location.state && location.state.selectedAddresses ? location.state.selectedAddresses : []);
 
     const startLogin = useCallback(async () => {
-        const tokens = await authenticate(axiosFactory!(), selectedAddresses);
-        setTokens(tokens);
+        await authenticate(selectedAddresses);
 
         if(location.state && location.state.referrer) {
             navigate(location.state.referrer);
         } else {
             navigate("/");
         }
-    }, [ axiosFactory, selectedAddresses, setTokens, navigate, location ]);
+    }, [ selectedAddresses, navigate, location, authenticate ]);
 
     if(accounts === null || connectedNodeMetadata === null || axiosFactory === undefined) {
         return null;

@@ -1,11 +1,10 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 import './AddressSwitcher.css';
 import AccountAddress from './AccountAddress';
 import { useCommonContext } from './CommonContext';
 import Button from './Button';
-import { authenticate } from './Authentication';
 import Dialog from './Dialog';
 
 export interface Props {
@@ -13,15 +12,8 @@ export interface Props {
 }
 
 export default function AddressSwitcher(props: Props) {
-    const { colorTheme, logout, axiosFactory, setTokens, accounts } = useCommonContext();
+    const { colorTheme, logout, accounts, authenticate } = useCommonContext();
     const [ confirm, setConfirm ] = useState<boolean>(false);
-
-    const login = useCallback((address: string) => {
-        (async function() {
-            const tokens = await authenticate(axiosFactory!(), [address]);
-            setTokens(tokens);
-        })();
-    }, [ axiosFactory, setTokens ]);
 
     if(accounts === null || props.selectAddress === null || accounts.current === undefined) {
         return null;
@@ -62,7 +54,7 @@ export default function AddressSwitcher(props: Props) {
                                 <AccountAddress
                                     address={ address }
                                     disabled={ address.token === undefined }
-                                    login={ () => login(address.address) }
+                                    login={ () => authenticate([ address.address ]) }
                                 />
                             </Dropdown.Item>
                         ))
