@@ -17,23 +17,22 @@ export default function Recovery() {
     }
 
     const requests = pendingProtectionRequests.concat(acceptedProtectionRequests);
-    const goToTrustProtection = ((pendingProtectionRequests.length > 0) && !isRecovery(pendingProtectionRequests[0]))
-        || ((acceptedProtectionRequests.length > 0) && !isRecovery(acceptedProtectionRequests[0]));
+    const goToTrustProtection = (recoveredAddress === null)
+        && (((pendingProtectionRequests.length > 0) && !isRecovery(pendingProtectionRequests[0]))
+        || ((acceptedProtectionRequests.length > 0) && !isRecovery(acceptedProtectionRequests[0])));
 
     if(goToTrustProtection) {
-        console.log(pendingProtectionRequests);
-        console.log(acceptedProtectionRequests);
         return <GoToTrustProtection />;
-    } else if(pendingProtectionRequests.length > 0) {
-        return <ProtectionRecoveryRequest requests={ requests } type='pending' />;
-    } else if(acceptedProtectionRequests.length === 2) {
-        if(recoveryConfig.isEmpty) {
-            return <ProtectionRecoveryRequest requests={ requests } type='accepted' />;
-        } else if(recoveryConfig.isSome && recoveredAddress === null) {
-            return <ProtectionRecoveryRequest requests={ requests } type='activated' />;
-        } else {
+    } else if(recoveryConfig.isSome) {
+        if(recoveredAddress !== null) {
             return <RecoveryProcess />;
+        } else {
+            return <ProtectionRecoveryRequest requests={ requests } type='activated' />;
         }
+    } else if(acceptedProtectionRequests.length === 2) {
+        return <ProtectionRecoveryRequest requests={ requests } type='accepted' />;
+    } else if(requests.length > 0 && pendingProtectionRequests.length > 0) {
+        return <ProtectionRecoveryRequest requests={ requests } type='pending' />;
     } else {
         return <CreateProtectionRequestForm isRecovery={ true } />;
     }

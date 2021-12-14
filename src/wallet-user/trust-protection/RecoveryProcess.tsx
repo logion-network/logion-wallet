@@ -16,6 +16,8 @@ import { CoinBalance, getBalances, buildTransferCall} from "../../logion-chain/B
 import { AssetNameCell } from "../../common/Wallet";
 import { signAndSendAsRecovered } from "../../logion-chain/Recovery";
 import { PrefixedNumber, MILLI } from "../../logion-chain/numbers";
+import NetworkWarning from '../../common/NetworkWarning';
+import { SETTINGS_PATH } from '../UserRouter';
 
 interface TabTitleProps {
     iconId: string,
@@ -36,7 +38,7 @@ function TabTitle(props: TabTitleProps) {
 
 export default function RecoveryProcess() {
     const { api } = useLogionChain();
-    const { accounts, colorTheme } = useCommonContext();
+    const { accounts, colorTheme, nodesDown } = useCommonContext();
     const { recoveredAddress } = useUserContext();
     const [ tabKey, setTabKey ] = useState<string>('coinBalances');
     const [ recoveredCoinBalance, setRecoveredCoinBalance ] = useState<CoinBalance | null>(null);
@@ -98,6 +100,10 @@ export default function RecoveryProcess() {
             } }
         >
             <>
+                {
+                        nodesDown.length > 0 &&
+                        <NetworkWarning settingsPath={ SETTINGS_PATH } />
+                }
                 <div
                     className="alert-activated"
                     style={{

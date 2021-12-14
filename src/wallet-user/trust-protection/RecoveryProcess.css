@@ -27,3 +27,7 @@
     text-align: center;
     line-height: 20px;
 }
+
+.RecoveryProcess .NetworkWarning+.alert-activated {
+    margin-top: 30px;
+}

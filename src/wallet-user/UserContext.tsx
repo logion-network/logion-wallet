@@ -150,14 +150,10 @@ export function UserContextProvider(props: Props) {
             });
 
             (async function () {
-                console.log("refreshUser")
-                console.log(nodesUp);
-                console.log(nodesDown);
                 const initialState: MultiSourceHttpClientState<Endpoint> = {
                     nodesUp: nodesUp.map(node => ({ url: node.api })),
                     nodesDown: nodesDown.map(node => ({ url: node.api })),
                 }
-                console.log(initialState);
                 const multiClient = new MultiSourceHttpClient<Endpoint, ProtectionRequest[]>(initialState, accounts!.current!.token!.value);
                 let result: MultiResponse<ProtectionRequest[]>;
 

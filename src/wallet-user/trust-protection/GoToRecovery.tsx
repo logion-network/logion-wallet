@@ -6,7 +6,7 @@ import Button from '../../common/Button';
 
 import { RECOVERY_PATH } from '../UserRouter';
 
-export default function GoToTrustProtection() {
+export default function GoToRecovery() {
     const navigate = useNavigate();
 
     return (

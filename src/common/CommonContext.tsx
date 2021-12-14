@@ -426,10 +426,6 @@ export function CommonContextProvider(props: Props) {
                         .map(endpoint => config.availableNodes.find(node => node.api === endpoint.url)!);
                 }
 
-                console.log("refreshCommon")
-                console.log(nodesUp);
-                console.log(nodesDown);
-
                 dispatch({
                     type: "SET_DATA",
                     dataAddress: currentAddress,

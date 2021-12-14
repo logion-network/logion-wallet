@@ -6,3 +6,11 @@
     text-align: center;
     width: 500px;
 }
+
+.NetworkWarning+.ProtectionRecoveryRequest {
+    margin-top: 30px;
+}
+
+.ProtectionRecoveryRequest.network-warning p {
+    margin-top: 30px;
+}
