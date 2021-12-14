@@ -27,6 +27,7 @@ export default function TrustProtection() {
     }
 
     const requests = pendingProtectionRequests.concat(acceptedProtectionRequests);
+    console.log(requests);
 
     if(recoveryConfig.isEmpty) {
         const goToRecovery = (pendingProtectionRequests.length > 0 && isRecovery(pendingProtectionRequests[0]))
