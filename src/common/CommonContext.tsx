@@ -178,6 +178,8 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
             };
         case 'SET_DATA':
             if(action.dataAddress === state.fetchForAddress) {
+                const nodesUp = action.nodesUp !== undefined ? action.nodesUp : state.nodesUp;
+                const nodesDown = action.nodesDown !== undefined ? action.nodesDown : state.nodesDown;
                 return {
                     ...state,
                     fetchForAddress: null,
@@ -192,8 +194,8 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                     closedIdentityLocs: action.closedIdentityLocs!,
                     voidTransactionLocs: action.voidTransactionLocs!,
                     voidIdentityLocs: action.voidIdentityLocs!,
-                    nodesUp: action.nodesUp!,
-                    nodesDown: action.nodesDown!,
+                    nodesUp,
+                    nodesDown,
                 };
             } else {
                 return state;
@@ -414,11 +416,15 @@ export function CommonContextProvider(props: Props) {
                     .map(request => ({request, loc: locs[toDecimalString((request.id))]}))
                     .filter(requestAndLoc => requestAndLoc.loc !== undefined && requestAndLoc.loc.voidInfo === undefined);
 
-                const resultingState = multiClient.getState();
-                const nodesUp = resultingState.nodesUp
-                    .map(endpoint => config.availableNodes.find(node => node.api === endpoint.url)!);
-                const nodesDown = resultingState.nodesDown
-                    .map(endpoint => config.availableNodes.find(node => node.api === endpoint.url)!);
+                let nodesUp: Node[] | undefined;
+                let nodesDown: Node[] | undefined;
+                if(!currentAccount.isLegalOfficer) {
+                    const resultingState = multiClient.getState();
+                    nodesUp = resultingState.nodesUp
+                        .map(endpoint => config.availableNodes.find(node => node.api === endpoint.url)!);
+                    nodesDown = resultingState.nodesDown
+                        .map(endpoint => config.availableNodes.find(node => node.api === endpoint.url)!);
+                }
 
                 dispatch({
                     type: "SET_DATA",

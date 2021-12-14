@@ -19,8 +19,8 @@ import { useNavigate } from 'react-router';
 
 export default function ContextualizedWallet() {
     const { api } = useLogionChain();
-    const { selectAddress, accounts, colorTheme } = useCommonContext();
-    const { pendingProtectionRequests, acceptedProtectionRequests } = useUserContext();
+    const { selectAddress, accounts, colorTheme, nodesDown } = useCommonContext();
+    const { pendingProtectionRequests, acceptedProtectionRequests, recoveryConfig } = useUserContext();
     const [ discardProtection, setDiscardProtection ] = useState<boolean>(false);
     const navigate = useNavigate();
 
@@ -30,7 +30,8 @@ export default function ContextualizedWallet() {
 
     const userContext = api !== null ? <UserRouter /> : null;
     const noProtection = (pendingProtectionRequests !== null && pendingProtectionRequests.length === 0)
-        && (acceptedProtectionRequests !== null && acceptedProtectionRequests.length === 0);
+        && (acceptedProtectionRequests !== null && acceptedProtectionRequests.length === 0)
+        && (recoveryConfig !== null && recoveryConfig.isEmpty);
 
     return (
         <Dashboard
@@ -117,7 +118,7 @@ export default function ContextualizedWallet() {
         >
             {userContext}
             <WarningDialog
-                show={noProtection && !discardProtection}
+                show={ noProtection && !discardProtection && nodesDown.length === 0 }
                 size='lg'
                 actions={[
                     {

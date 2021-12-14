@@ -8,9 +8,9 @@ import Loader from '../../common/Loader';
 import { FullWidthPane } from '../../common/Dashboard';
 
 export default function TrustProtection() {
-    const { pendingProtectionRequests, acceptedProtectionRequests, recoveryConfig } = useUserContext();
+    const { pendingProtectionRequests, acceptedProtectionRequests, recoveryConfig, recoveredAddress } = useUserContext();
 
-    if (pendingProtectionRequests === null || acceptedProtectionRequests === null || recoveryConfig === null) {
+    if (pendingProtectionRequests === null || acceptedProtectionRequests === null || recoveryConfig === null || recoveredAddress === undefined) {
         return (
             <FullWidthPane
                 mainTitle="My Logion Protection"
@@ -29,12 +29,12 @@ export default function TrustProtection() {
     const requests = pendingProtectionRequests.concat(acceptedProtectionRequests);
 
     if(recoveryConfig.isEmpty) {
-        const goToRecovery = (pendingProtectionRequests.length > 0 && isRecovery(pendingProtectionRequests[0]))
+        const goToRecovery = recoveredAddress !== null || (pendingProtectionRequests.length > 0 && isRecovery(pendingProtectionRequests[0]))
             || (acceptedProtectionRequests.length > 0 && isRecovery(acceptedProtectionRequests[0]) && acceptedProtectionRequests[0].status !== 'ACTIVATED');
 
         if(goToRecovery) {
             return <GoToRecovery />;
-        } else if(pendingProtectionRequests.length > 0) {
+        } else if(requests.length > 0 && pendingProtectionRequests.length > 0) {
             return <ProtectionRecoveryRequest requests={ requests } type='pending' />;
         } else if(acceptedProtectionRequests.length === 2) {
             return <ProtectionRecoveryRequest requests={ requests } type='accepted' />;
