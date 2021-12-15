@@ -16,7 +16,7 @@ export interface Props {
 
 export default function LocLinkExistingDialog(props: Props) {
     const { api } = useLogionChain();
-    const { linkLoc, locItems } = useLocContext();
+    const { addLink, locItems } = useLocContext();
     const { axiosFactory } = useCommonContext();
     const { control, handleSubmit, setError, clearErrors, formState: { errors }, reset } = useForm<FormValues>({
         defaultValues: {
@@ -42,10 +42,10 @@ export default function LocLinkExistingDialog(props: Props) {
             return
         }
         const locRequest = await fetchLocRequest(axiosFactory!(loc.owner)!, locId.toString())
-        linkLoc!(locId, locRequest.description, formValues.linkNature)
+        addLink!(locId, locRequest.description, formValues.linkNature)
         reset();
         props.exit();
-    }, [ props, linkLoc, locItems, api, setError, clearErrors, reset, axiosFactory ])
+    }, [ props, addLink, locItems, api, setError, clearErrors, reset, axiosFactory ])
 
     return (
         <>

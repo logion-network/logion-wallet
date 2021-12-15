@@ -9,16 +9,16 @@ import { PublishProps, PublishState, PublishStatus } from "./types";
 export default function LocPublishLinkButton(props: PublishProps) {
 
     const [ publishState, setPublishState ] = useState<PublishState>({ status: PublishStatus.NONE });
-    const { publishLocLink, changeItemStatus, confirmLink } = useLocContext();
+    const { publishLink, confirmLink } = useLocContext();
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
 
     useEffect(() => {
-        if (publishLocLink !== null && publishState.status === PublishStatus.PUBLISH_PENDING) {
+        if (publishLink !== null && publishState.status === PublishStatus.PUBLISH_PENDING) {
             setPublishState({ status: PublishStatus.PUBLISHING });
-            const signAndSubmit: SignAndSubmit = publishLocLink(props.locItem)
+            const signAndSubmit: SignAndSubmit = publishLink(props.locItem)
             setSignAndSubmit(() => signAndSubmit);
         }
-    }, [ publishLocLink, publishState, setPublishState, props.locItem ])
+    }, [ publishLink, publishState, setPublishState, props.locItem ])
 
     return (
         <>
@@ -53,7 +53,6 @@ export default function LocPublishLinkButton(props: PublishProps) {
                     onSuccess={ () => {
                         confirmLink!(props.locItem)
                         setPublishState({ status: PublishStatus.PUBLISHED })
-                        changeItemStatus!(props.locItem, 'PUBLISHED')
                     } }
                     onError={ () => {
                     } } />

@@ -24,7 +24,7 @@ export interface Props {
 
 export default function LocItems(props: Props) {
 
-    const { locId, locItems, deleteMetadataItem, deleteLink, deleteFile } = useLocContext();
+    const { locId, locItems, deleteMetadata, deleteLink, deleteFile } = useLocContext();
 
     function renderDetails(locItem: LocItem): Child {
         return (
@@ -36,7 +36,13 @@ export default function LocItems(props: Props) {
         )
     }
 
-    function deleteButton(locItem:LocItem, action:(locItem:LocItem) => void) {
+    interface DeleteButtonProps {
+        locItem:LocItem
+        action: (locItem:LocItem) => void
+    }
+
+    function DeleteButton(props: DeleteButtonProps) {
+        const { locItem, action } = props
         return (
             <Button
                 variant="danger"
@@ -52,24 +58,18 @@ export default function LocItems(props: Props) {
 
         return (
             <ActionCell>
-                <ButtonGroup>
-                    { locItem.type === 'Data' && <>
-                        <LocPublishPublicDataButton
-                            locItem={ locItem }
-                        />
-                        { deleteButton(locItem, deleteMetadataItem!) }
-                    </> }
-                    { locItem.type === 'Linked LOC' && <>
-                        <LocPublishLinkButton
-                            locItem={ locItem }
-                        />
-                        { deleteButton(locItem, deleteLink!) }
-                    </> }
-                    { locItem.type === 'Document' && <>
-                        <LocPublishPrivateFileButton locItem={ locItem } />
-                        { deleteButton(locItem, deleteFile!) }
-                    </> }
-                </ButtonGroup>
+                { locItem.type === 'Data' && <ButtonGroup>
+                    <LocPublishPublicDataButton locItem={ locItem } />
+                    <DeleteButton locItem={ locItem } action={ deleteMetadata! } />
+                </ButtonGroup> }
+                { locItem.type === 'Linked LOC' && <ButtonGroup>
+                    <LocPublishLinkButton locItem={ locItem } />
+                    <DeleteButton locItem={ locItem } action={ deleteLink! } />
+                </ButtonGroup> }
+                { locItem.type === 'Document' && <ButtonGroup>
+                    <LocPublishPrivateFileButton locItem={ locItem } />
+                    <DeleteButton locItem={ locItem } action={ deleteFile! } />
+                </ButtonGroup> }
             </ActionCell>)
     }
 

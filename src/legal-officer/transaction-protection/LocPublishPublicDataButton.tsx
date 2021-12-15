@@ -9,7 +9,7 @@ import { PublishProps, PublishState, PublishStatus } from "./types";
 export default function LocPublishPublicDataButton(props: PublishProps) {
 
     const [ publishState, setPublishState ] = useState<PublishState>({ status: PublishStatus.NONE });
-    const { publishMetadata, changeItemStatus, confirmMetadataItem } = useLocContext();
+    const { publishMetadata, confirmMetadata } = useLocContext();
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
 
     useEffect(() => {
@@ -51,9 +51,8 @@ export default function LocPublishPublicDataButton(props: PublishProps) {
                     signAndSubmit={ signAndSubmit }
                     successMessage="LOC public data successfully published"
                     onSuccess={ () => {
-                        confirmMetadataItem!(props.locItem)
+                        confirmMetadata!(props.locItem)
                         setPublishState({ status: PublishStatus.PUBLISHED })
-                        changeItemStatus!(props.locItem, 'PUBLISHED')
                     } }
                     onError={ () => {
                     } } />

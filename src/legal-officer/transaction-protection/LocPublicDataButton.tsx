@@ -5,7 +5,6 @@ import { useCommonContext } from "../../common/CommonContext";
 import { useForm } from "react-hook-form";
 import React, { useCallback, useState } from "react";
 import { useLocContext } from "./LocContext";
-import { addMetadata as modelAddMetadata } from "../Model";
 import Icon from "../../common/Icon";
 import { LocItem } from "./types";
 
@@ -14,8 +13,7 @@ export default function LocPublicDataButton() {
     const { colorTheme } = useCommonContext();
     const [ visible, setVisible ] = useState(false);
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>();
-    const { axiosFactory } = useCommonContext();
-    const { loc, locId, addMetadata, locItems } = useLocContext();
+    const { addMetadata, locItems } = useLocContext();
     const [ existingItem, setExistingItem ] = useState<LocItem | undefined>(undefined);
 
     const submit = useCallback(async (formValues: FormValues) => {
@@ -24,15 +22,10 @@ export default function LocPublicDataButton() {
             setVisible(false)
             setExistingItem(existingItem)
         } else {
-            await modelAddMetadata(axiosFactory!(loc!.owner), {
-                locId: locId.toString(),
-                name: formValues.dataName,
-                value: formValues.dataValue
-            })
             addMetadata!(formValues.dataName, formValues.dataValue)
             setVisible(false)
         }
-    }, [ axiosFactory, loc, locId, addMetadata, locItems, setVisible ]);
+    }, [ addMetadata, locItems, setVisible ]);
 
     return (
         <>

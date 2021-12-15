@@ -9,7 +9,7 @@ import { PublishProps, PublishState, PublishStatus } from "./types";
 export default function LocPublishPrivateFileButton(props: PublishProps) {
 
     const [ publishState, setPublishState ] = useState<PublishState>({ status: PublishStatus.NONE });
-    const { publishFile, changeItemStatus, confirmFile } = useLocContext();
+    const { publishFile, confirmFile } = useLocContext();
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
 
     useEffect(() => {
@@ -53,7 +53,6 @@ export default function LocPublishPrivateFileButton(props: PublishProps) {
                     onSuccess={ () => {
                         confirmFile!(props.locItem)
                         setPublishState({ status: PublishStatus.PUBLISHED })
-                        changeItemStatus!(props.locItem, 'PUBLISHED')
                     } }
                     onError={ () => {
                     } } />

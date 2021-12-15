@@ -180,18 +180,20 @@ export async function deleteLocFile(
 export async function confirmLocLink(
     axios: AxiosInstance,
     locId: UUID,
-    target: string
+    targetId: UUID
 ): Promise<void> {
     const requestId = locId.toString();
+    const target = targetId.toString();
     await axios.put(`/api/loc-request/${requestId}/links/${target}/confirm`);
 }
 
 export async function deleteLocLink(
     axios: AxiosInstance,
     locId: UUID,
-    target: string
+    targetId: UUID
 ): Promise<void> {
     const requestId = locId.toString();
+    const target = targetId.toString();
     await axios.delete(`/api/loc-request/${requestId}/links/${target}`);
 }
 
