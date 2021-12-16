@@ -16,7 +16,7 @@ export default function LocPublicDataButton() {
     const { addMetadata, locItems } = useLocContext();
     const [ existingItem, setExistingItem ] = useState<LocItem | undefined>(undefined);
 
-    const submit = useCallback(async (formValues: FormValues) => {
+    const submit = useCallback((formValues: FormValues) => {
         const existingItem = locItems.find(item => item.type === "Data" && item.name === formValues.dataName);
         if (existingItem) {
             setVisible(false)
