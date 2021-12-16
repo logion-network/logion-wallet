@@ -2,7 +2,7 @@ import React from 'react';
 
 import { UUID } from '../logion-chain/UUID';
 
-import { Cell } from './Table';
+import { CopyPasteCell } from './Table';
 import { LocRequestStatus } from './types/ModelTypes';
 
 export interface Props {
@@ -20,7 +20,7 @@ export default function LocIdCell(props: Props) {
     }
 
     return (
-        <Cell
+        <CopyPasteCell
             overflowing
             tooltipId={ `locId-${ props.id }` }
             content={ content }

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../common/Table';
+import Table, { Cell, EmptyTableMessage, DateTimeCell, CopyPasteCell } from '../common/Table';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import ProtectionRequestStatus from './ProtectionRequestStatus';
@@ -48,7 +48,7 @@ export default function ProtectionRequestsHistory() {
                     },
                     {
                         header: "Account number",
-                        render: request => <Cell content={ request.requesterAddress } overflowing tooltipId={ `dest-${request.id}` } />,
+                        render: request => <CopyPasteCell content={ request.requesterAddress } overflowing tooltipId={ `dest-${request.id}` } />,
                         align: 'left',
                     },
                     {

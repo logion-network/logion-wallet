@@ -11,6 +11,7 @@ import { useCommonContext } from './CommonContext';
 import './Table.css';
 import Icon from './Icon';
 import Spinner from "react-bootstrap/Spinner";
+import CopyPasteButton from "./CopyPasteButton";
 
 
 export interface CellProps {
@@ -347,4 +348,11 @@ export function ActionCell(props: ActionCellProps) {
             { props.children }
         </div>
     );
+}
+
+export function CopyPasteCell(props: CellProps) {
+    return <Row>
+        <Cell { ...props } />
+        { props.content !== null && <CopyPasteButton value={ props.content.toString() } className="medium" /> }
+    </Row>
 }

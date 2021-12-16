@@ -4,7 +4,7 @@ import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Form from 'react-bootstrap/Form';
 
 import Button from '../common/Button';
-import Table, { Column, Cell, EmptyTableMessage, DateTimeCell } from '../common/Table';
+import Table, { Column, Cell, EmptyTableMessage, DateTimeCell, CopyPasteCell } from '../common/Table';
 import { useCommonContext } from '../common/CommonContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
@@ -113,12 +113,12 @@ export default function PendingProtectionRequests(props: Props) {
             },
             {
                 header: "Account number",
-                render: request => <Cell content={ request.requesterAddress } overflowing tooltipId={ `dest-${request.id}` } />,
+                render: request => <CopyPasteCell content={ request.requesterAddress } overflowing tooltipId={ `dest-${request.id}` } />,
                 align: 'left',
             },
             {
                 header: "Account to recover",
-                render: request => <Cell content={ request.addressToRecover } overflowing tooltipId={ `src-${request.id}` } />,
+                render: request => <CopyPasteCell content={ request.addressToRecover } overflowing tooltipId={ `src-${request.id}` } />,
                 align: 'left',
             },
             {
@@ -175,7 +175,7 @@ export default function PendingProtectionRequests(props: Props) {
             },
             {
                 header: "Account number",
-                render: request => <Cell content={ request.requesterAddress } overflowing tooltipId={ `dest-${request.id}` } />,
+                render: request => <CopyPasteCell content={ request.requesterAddress } overflowing tooltipId={ `dest-${request.id}` } />,
                 align: 'left',
             },
             {
