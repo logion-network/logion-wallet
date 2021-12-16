@@ -1,12 +1,7 @@
-.Home .character-container {
-    position: relative;
-    min-height: calc(100vh - 210px);
-}
-
 .Home .character-container img {
-    position: absolute;
-    bottom: -30px;
-    right: -16px;
+    position: fixed;
+    right: 10px;
+    bottom: 0;
 }
 
 .Home .reading-container .Reading,

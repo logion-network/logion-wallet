@@ -418,12 +418,17 @@ export function CommonContextProvider(props: Props) {
 
                 let nodesUp: Node[] | undefined;
                 let nodesDown: Node[] | undefined;
+                const resultingState = multiClient.getState();
                 if(!currentAccount.isLegalOfficer) {
-                    const resultingState = multiClient.getState();
                     nodesUp = resultingState.nodesUp
                         .map(endpoint => config.availableNodes.find(node => node.api === endpoint.url)!);
                     nodesDown = resultingState.nodesDown
                         .map(endpoint => config.availableNodes.find(node => node.api === endpoint.url)!);
+                } else if(resultingState.nodesDown.length > 0) {
+                    const legalOfficerNode = resultingState.nodesDown[0];
+                    nodesUp = config.availableNodes
+                        .filter(node => node.api !== legalOfficerNode.url);
+                    nodesDown = [ config.availableNodes.find(node => node.api === legalOfficerNode.url)! ];
                 }
 
                 dispatch({
