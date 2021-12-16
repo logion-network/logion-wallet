@@ -177,6 +177,44 @@ export async function deleteLocFile(
     await axios.delete(`/api/loc-request/${requestId}/files/${hash}`);
 }
 
+export async function confirmLocLink(
+    axios: AxiosInstance,
+    locId: UUID,
+    targetId: UUID
+): Promise<void> {
+    const requestId = locId.toString();
+    const target = targetId.toString();
+    await axios.put(`/api/loc-request/${requestId}/links/${target}/confirm`);
+}
+
+export async function deleteLocLink(
+    axios: AxiosInstance,
+    locId: UUID,
+    targetId: UUID
+): Promise<void> {
+    const requestId = locId.toString();
+    const target = targetId.toString();
+    await axios.delete(`/api/loc-request/${requestId}/links/${target}`);
+}
+
+export async function confirmLocMetadataItem(
+    axios: AxiosInstance,
+    locId: UUID,
+    name: string
+): Promise<void> {
+    const requestId = locId.toString();
+    await axios.put(`/api/loc-request/${requestId}/metadata/${(encodeURIComponent(name))}/confirm`);
+}
+
+export async function deleteLocMetadataItem(
+    axios: AxiosInstance,
+    locId: UUID,
+    name: string
+): Promise<void> {
+    const requestId = locId.toString();
+    await axios.delete(`/api/loc-request/${requestId}/metadata/${(encodeURIComponent(name))}`);
+}
+
 export async function preClose(
     axios: AxiosInstance,
     locId: UUID,

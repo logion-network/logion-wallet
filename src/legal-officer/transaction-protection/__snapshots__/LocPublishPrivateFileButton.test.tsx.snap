@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LocPublishPrivateFileButton renders 1`] = `
+<React.Fragment>
+  <Button
+    onClick={[Function]}
+    variant="polkadot"
+  >
+    Publish to the blockchain
+  </Button>
+  <ProcessStep
+    active={false}
+    closeCallback={[Function]}
+    mayProceed={false}
+    proceedCallback={[Function]}
+    title="Publish Document related Data (1/2)"
+  >
+    <Alert
+      variant="info"
+    >
+      <p>
+        Warning: after processing and blockchain publication, these document related data - but not the document itself - will be definitely and publicly available on the blockchain.
+      </p>
+    </Alert>
+  </ProcessStep>
+  <ProcessStep
+    active={false}
+    mayProceed={false}
+    proceedCallback={[Function]}
+    title="Publish Document related Data (2/2)"
+  >
+    <ExtrinsicSubmitter
+      id="publishFile"
+      onError={[Function]}
+      onSuccess={[Function]}
+      signAndSubmit={null}
+      successMessage="LOC document related data successfully published"
+    />
+  </ProcessStep>
+</React.Fragment>
+`;

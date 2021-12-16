@@ -91,6 +91,34 @@ export async function addFile(
     return response.data;
 }
 
+export interface AddLinkParameters {
+    locId: string,
+    target: string,
+    nature: string
+}
+
+export async function addLink(
+    axios: AxiosInstance,
+    parameters: AddLinkParameters
+): Promise<void> {
+    const { target, nature } = parameters;
+    await axios.post(`/api/loc-request/${ parameters.locId }/links`, { target, nature })
+}
+
+export interface AddMetadataParameters {
+    locId: string,
+    name: string,
+    value: string
+}
+
+export async function addMetadata(
+    axios: AxiosInstance,
+    parameters: AddMetadataParameters
+): Promise<void> {
+    const { name, value } = parameters;
+    await axios.post(`/api/loc-request/${ parameters.locId }/metadata`, { name, value })
+}
+
 export interface GetFileParameters {
     locId: string,
     hash: string

@@ -6,7 +6,6 @@ import { useForm } from "react-hook-form";
 import { useCommonContext } from "../../common/CommonContext";
 import { sha256Hex } from "../../common/hash";
 import { useLocContext } from "./LocContext";
-import { addFile as modelAddFile } from "../Model";
 import { LocItem } from "./types";
 import Icon from "../../common/Icon";
 
@@ -16,8 +15,7 @@ export default function LocPrivateFileButton() {
     const [ visible, setVisible ] = useState(false);
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>();
     const [ file, setFile ] = useState<File | null>(null);
-    const { axiosFactory } = useCommonContext();
-    const { loc, locId, addFile, locItems } = useLocContext();
+    const { addFile, locItems } = useLocContext();
     const [ existingItem, setExistingItem ] = useState<LocItem | null>(null);
     const [ duplicateHash, setDuplicateHash ] = useState<string | null>(null);
 
@@ -30,17 +28,11 @@ export default function LocPrivateFileButton() {
                 setExistingItem(existingItem);
                 setDuplicateHash(hash);
             } else {
-                const response = await modelAddFile(axiosFactory!(loc!.owner)!, {
-                    file,
-                    locId: locId.toString(),
-                    fileName: formValues.fileName,
-                    nature: formValues.nature
-                })
-                addFile!(formValues.fileName, response.hash, formValues.nature);
+                addFile!(formValues.fileName, file, formValues.nature);
                 setVisible(false);
             }
         }
-    }, [ axiosFactory, loc, file, locId, addFile, locItems, setExistingItem ])
+    }, [ file, addFile, locItems, setExistingItem ])
 
     return (
         <>

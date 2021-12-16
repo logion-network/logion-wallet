@@ -19,13 +19,13 @@ export interface Props {
 
 export default function LocLinkButton(props: Props) {
     const [ visible, setVisible ] = useState<Visible>(props.visible ? props.visible : Visible.NONE);
-    const { linkLoc, locRequest } = useLocContext();
+    const { addLink, locRequest } = useLocContext();
 
     const linkNewLoc = useCallback((newLocRequest: LocRequest, nature: string) => {
-        if (linkLoc !== null) {
-            linkLoc(new UUID(newLocRequest.id), newLocRequest.description, nature)
+        if (addLink !== null) {
+            addLink(new UUID(newLocRequest.id), newLocRequest.description, nature)
         }
-    }, [ linkLoc ])
+    }, [ addLink ])
 
     return (
         <>

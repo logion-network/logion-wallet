@@ -4,28 +4,12 @@ import { useLocContext } from "./LocContext";
 import ExtrinsicSubmitter, { SignAndSubmit } from "../../ExtrinsicSubmitter";
 import ProcessStep from "../ProcessStep";
 import Alert from "../../common/Alert";
-import { LocItem } from "./types";
+import { PublishProps, PublishState, PublishStatus } from "./types";
 
-enum PublishStatus {
-    NONE,
-    START,
-    PUBLISH_PENDING,
-    PUBLISHING,
-    PUBLISHED
-}
-
-interface PublishState {
-    status: PublishStatus;
-}
-
-export interface Props {
-    locItem: LocItem
-}
-
-export default function LocPublishPrivateFileButton(props: Props) {
+export default function LocPublishPrivateFileButton(props: PublishProps) {
 
     const [ publishState, setPublishState ] = useState<PublishState>({ status: PublishStatus.NONE });
-    const { publishFile, changeItemStatus, confirmFile } = useLocContext();
+    const { publishFile, confirmFile } = useLocContext();
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
 
     useEffect(() => {
@@ -69,7 +53,6 @@ export default function LocPublishPrivateFileButton(props: Props) {
                     onSuccess={ () => {
                         confirmFile!(props.locItem)
                         setPublishState({ status: PublishStatus.PUBLISHED })
-                        changeItemStatus!(props.locItem, 'PUBLISHED')
                     } }
                     onError={ () => {
                     } } />

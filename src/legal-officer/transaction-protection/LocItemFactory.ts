@@ -1,8 +1,7 @@
-import { LocItem, LocItemStatus, LocItemType } from "./types";
+import { LocItem } from "./types";
 import { File, Link, MetadataItem } from "../../logion-chain/Types";
-import { LocFile } from "../../common/types/ModelTypes";
-
-export const UNKNOWN_NAME = "-";
+import { LocFile, LocMetadataItem, LocLink } from "../../common/types/ModelTypes";
+import { UUID } from "../../logion-chain/UUID";
 
 export interface MergeLocFileParameters {
     fileFromBackend: LocFile,
@@ -18,14 +17,12 @@ export interface MergeResult {
 export function mergeLocFile(parameters: MergeLocFileParameters): MergeResult {
     const { fileFromBackend, fileFromChain, submitter } = parameters;
     if (fileFromChain) {
-        const refreshNeeded = !fileFromBackend.addedOn
-        const locItem = createPublishedFileLocItem({
+        return createPublishedFileLocItem({
             name: fileFromBackend.name,
             timestamp: fileFromBackend.addedOn,
             file: fileFromChain,
             submitter
-        });
-        return { locItem, refreshNeeded }
+        })
     } else {
         const locItem = createDraftFileLocItem({
             name: fileFromBackend.name,
@@ -46,20 +43,8 @@ interface Timestamp {
     timestamp: string | null
 }
 
-function createPublishedFileLocItem(parameters: CreateFileLocItemParameters & Timestamp): LocItem {
-    return {
-        name: parameters.name,
-        value: parameters.file.hash,
-        nature: parameters.file.nature,
-        submitter: parameters.submitter,
-        timestamp: parameters.timestamp,
-        type: 'Document',
-        status: 'PUBLISHED',
-    };
-}
-
-export function createPublishedMetadataLocItem(item: MetadataItem, submitter: string): LocItem {
-    return createItem(item.name, item.value, submitter, 'Data', 'PUBLISHED')
+function createPublishedFileLocItem(parameters: CreateFileLocItemParameters & Timestamp): MergeResult {
+    return publish(createDraftFileLocItem(parameters), parameters.timestamp)
 }
 
 export function createDraftFileLocItem(parameters: CreateFileLocItemParameters): LocItem {
@@ -74,11 +59,85 @@ export function createDraftFileLocItem(parameters: CreateFileLocItemParameters):
     };
 }
 
-export function createDraftMetadataLocItem(name: string, value: string, submitter: string): LocItem {
-    return createItem(name, value, submitter, 'Data', 'DRAFT')
+export interface MergeLocMetadataItemParameters {
+    itemFromBackend: LocMetadataItem,
+    itemFromChain?: MetadataItem,
+    submitter: string
 }
 
-export function createDraftLinkedLocItem(link: Link, otherLocDescription: string, submitter:string): LocItem {
+export function mergeLocMetadataItem(parameters: MergeLocMetadataItemParameters): MergeResult {
+    const { itemFromBackend, itemFromChain, submitter } = parameters;
+    if (itemFromChain) {
+        return createPublishedMetadataLocItem({
+            metadataItem: itemFromChain,
+            timestamp: itemFromBackend.addedOn,
+            submitter
+        });
+    } else {
+        const locItem = createDraftMetadataLocItem({
+            metadataItem: itemFromBackend,
+            submitter
+        })
+        return { locItem, refreshNeeded: false }
+    }
+}
+
+export interface CreateLocMetadataItemParameters {
+    metadataItem: MetadataItem,
+    submitter: string,
+}
+
+function createPublishedMetadataLocItem(parameters: CreateLocMetadataItemParameters & Timestamp): MergeResult {
+    return publish(createDraftMetadataLocItem(parameters), parameters.timestamp)
+}
+
+export function createDraftMetadataLocItem(parameters: CreateLocMetadataItemParameters): LocItem {
+    const { metadataItem, submitter } = parameters;
+    return {
+        name: metadataItem.name,
+        value: metadataItem.value,
+        submitter,
+        timestamp: null,
+        type: 'Data',
+        status: 'DRAFT'
+    }
+}
+
+export interface MergeLocLinkItemParameters {
+    linkFromBackend: LocLink,
+    linkFromChain?: Link,
+    otherLocDescription: string,
+    submitter: string
+}
+
+export function mergeLocLinkItem(parameters: MergeLocLinkItemParameters): MergeResult {
+    const { linkFromBackend, linkFromChain, otherLocDescription, submitter } = parameters;
+    if (linkFromChain) {
+        return createPublishedLinkedLocItem({
+            link: linkFromChain,
+            otherLocDescription,
+            submitter,
+            timestamp: linkFromBackend.addedOn
+        });
+    } else {
+        const link: LocLink = { ...linkFromBackend, id: new UUID(linkFromBackend.target) }
+        const locItem = createDraftLinkedLocItem({
+            link,
+            otherLocDescription,
+            submitter,
+        })
+        return { locItem, refreshNeeded: false }
+    }
+}
+
+export interface CreateLocLinkedLocItemParameters {
+    link: Link,
+    otherLocDescription: string,
+    submitter: string,
+}
+
+export function createDraftLinkedLocItem(parameters: CreateLocLinkedLocItemParameters): LocItem {
+    const { link, otherLocDescription, submitter } = parameters;
     return {
         name: otherLocDescription,
         value: link.id.toDecimalString(),
@@ -91,26 +150,11 @@ export function createDraftLinkedLocItem(link: Link, otherLocDescription: string
     };
 }
 
-export function createPublishedLinkedLocItem(link: Link, submitter: string): LocItem {
-    return {
-        name: UNKNOWN_NAME,
-        value: link.id.toDecimalString(),
-        submitter,
-        timestamp: null,
-        type: 'Linked LOC',
-        status: 'PUBLISHED',
-        target: link.id,
-        nature: link.nature,
-    };
+function publish(locItem: LocItem, timestamp: string | null): MergeResult {
+    const publishedLocItem: LocItem = { ...locItem, status: 'PUBLISHED', timestamp };
+    return { locItem: publishedLocItem, refreshNeeded: !locItem.timestamp };
 }
 
-function createItem(name: string, value: string, submitter: string, type: LocItemType, status: LocItemStatus): LocItem {
-    return {
-        name,
-        value,
-        submitter,
-        timestamp: null,
-        type,
-        status
-    };
+function createPublishedLinkedLocItem(parameters: CreateLocLinkedLocItemParameters & Timestamp): MergeResult {
+    return publish(createDraftLinkedLocItem(parameters), parameters.timestamp);
 }
