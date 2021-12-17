@@ -3,6 +3,7 @@ jest.mock('@polkadot/ui-keyring');
 jest.mock('@polkadot/api');
 jest.mock('./Codec');
 
+import { ISubmittableResult } from '@polkadot/types/types';
 import {
     createHash,
     SignAndSendCallback,

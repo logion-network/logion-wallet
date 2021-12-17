@@ -2,9 +2,9 @@
 /* eslint-disable */
 
 import type { Bytes, Enum, Option, Struct, Vec, bool, u128, u32, u64, u8 } from '@polkadot/types';
-  import type { AccountId, Balance, Hash, MultiAddress } from '@polkadot/types/interfaces/runtime';
-  import type { AccountInfoWithDualRefCount } from '@polkadot/types/interfaces/system';
-  import type { DepositBalance } from '@polkadot/types/interfaces/uniques';
+import type { AccountId, Balance, Hash, MultiAddress } from '@polkadot/types/interfaces/runtime';
+import type { AccountInfoWithDualRefCount } from '@polkadot/types/interfaces/system';
+import type { DepositBalance } from '@polkadot/types/interfaces/uniques';
 
 /** @name AccountInfo */
 export interface AccountInfo extends AccountInfoWithDualRefCount {}
@@ -70,6 +70,7 @@ export interface LocLink extends Struct {
 export interface LocType extends Enum {
   readonly isTransaction: boolean;
   readonly isIdentity: boolean;
+  readonly type: 'Transaction' | 'Identity';
 }
 
 /** @name LocVoidInfo */
@@ -93,6 +94,7 @@ export interface PeerId extends Bytes {}
 export interface StorageVersion extends Enum {
   readonly isV1: boolean;
   readonly isV2MakeLocVoid: boolean;
+  readonly type: 'V1' | 'V2MakeLocVoid';
 }
 
 /** @name TAssetBalance */

@@ -184,7 +184,7 @@ export const TOTAL_BLOCKS = 1000;
 
 export const chain = buildChain(TOTAL_BLOCKS);
 
-export const apiMock = new ApiPromise();
+export const apiMock: unknown = new ApiPromise();
 
 function buildChain(blocks: number): any[] {
     const chain: any[] = [];
@@ -227,7 +227,7 @@ function buildBlockMock(blockNumber: number, blockTime: number): object {
     return block;
 }
 
-export function hashMock(blockNumber: number): object {
+export function hashMock(blockNumber: number): unknown {
     return {
         value: blockNumber,
         toString: () => blockNumber.toString()

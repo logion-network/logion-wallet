@@ -1,7 +1,6 @@
 import { shallowRender } from '../tests';
 
 import Tabs from './Tabs';
-import { COLOR_THEME } from './TestData';
 
 test("renders", () => {
     const activeKey = "key1";
@@ -23,7 +22,6 @@ test("renders", () => {
             activeKey={ activeKey }
             onSelect={ onSelect }
             tabs={ tabs }
-            colors={ COLOR_THEME.tabs }
         />
     );
     expect(result).toMatchSnapshot();

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders with custom space above 1`] = `
+exports[`renders 1`] = `
 <Modal
   animation={true}
   autoFocus={true}
@@ -23,56 +23,8 @@ exports[`renders with custom space above 1`] = `
     
                 .Dialog .modal-dialog .modal-content {
                     box-shadow: 0 0 25px [object Object];
-                    color: undefined;
-                    background-color: undefined;
-                }
-                
-  </style>
-  <Form>
-    <ModalBody>
-      Content
-    </ModalBody>
-    <ModalFooter>
-      <Button
-        action={
-          Object {
-            "buttonText": "Text",
-            "buttonVariant": "primary",
-            "callback": [MockFunction],
-            "id": "button",
-          }
-        }
-      />
-    </ModalFooter>
-  </Form>
-</Modal>
-`;
-
-exports[`renders with default space above 1`] = `
-<Modal
-  animation={true}
-  autoFocus={true}
-  backdrop="static"
-  centered={true}
-  className="Dialog"
-  dialogAs={
-    Object {
-      "$$typeof": Symbol(react.forward_ref),
-      "render": [Function],
-    }
-  }
-  enforceFocus={true}
-  keyboard={false}
-  restoreFocus={true}
-  show={true}
-  size="lg"
->
-  <style>
-    
-                .Dialog .modal-dialog .modal-content {
-                    box-shadow: 0 0 25px [object Object];
-                    color: undefined;
-                    background-color: undefined;
+                    color: #ffffff;
+                    background-color: #0c163d;
                 }
                 
   </style>

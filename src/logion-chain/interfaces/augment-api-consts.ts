@@ -1,14 +1,15 @@
 // Auto-generated via `yarn polkadot-types-from-chain`, do not edit
 /* eslint-disable */
 
+import type { ApiTypes, AugmentedConst, QueryableModuleConsts } from '@polkadot/api/types';
+import type { Vec, u16, u32, u8 } from '@polkadot/types';
+import type { Balance, BalanceOf, BlockNumber, Moment, RuntimeDbWeight } from '@polkadot/types/interfaces/runtime';
+import type { RuntimeVersion } from '@polkadot/types/interfaces/state';
+import type { WeightToFeeCoefficient } from '@polkadot/types/interfaces/support';
+import type { BlockLength, BlockWeights } from '@polkadot/types/interfaces/system';
+import type { Codec } from '@polkadot/types/types';
+
 declare module '@polkadot/api/types/consts' {
-  import type { ApiTypes, AugmentedConst, QueryableModuleConsts } from '@polkadot/api/types';
-  import type { Vec, u16, u32, u8 } from '@polkadot/types';
-  import type { Balance, BalanceOf, BlockNumber, Moment, RuntimeDbWeight } from '@polkadot/types/interfaces/runtime';
-  import type { RuntimeVersion } from '@polkadot/types/interfaces/state';
-  import type { WeightToFeeCoefficient } from '@polkadot/types/interfaces/support';
-  import type { BlockLength, BlockWeights } from '@polkadot/types/interfaces/system';
-  import type { Codec } from '@polkadot/types/types';
 
   export interface AugmentedConsts<ApiType  extends ApiTypes> {
     balances: {

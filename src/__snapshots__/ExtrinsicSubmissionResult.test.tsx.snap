@@ -71,7 +71,7 @@ exports[`Non-finalized result, no error 1`] = `
     className="spinner-border"
   />
   <p>
-    Current status: type
+    Current status: Ready
   </p>
 </div>
 `;

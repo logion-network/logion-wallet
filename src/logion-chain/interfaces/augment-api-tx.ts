@@ -1,8 +1,7 @@
 // Auto-generated via `yarn polkadot-types-from-chain`, do not edit
 /* eslint-disable */
 
-import type { File, LocId, LocLink, LocType, MetadataItem, PeerId } from '../interfaces/default';
-import type { ApiTypes, SubmittableExtrinsic } from '@polkadot/api/types';
+import type { ApiTypes, AugmentedSubmittable, SubmittableExtrinsic, SubmittableExtrinsicFunction, SubmittableModuleExtrinsics } from '@polkadot/api/types';
 import type { Bytes, Compact, Option, U8aFixed, Vec, bool, u16, u32, u64, u8 } from '@polkadot/types';
 import type { TAssetBalance } from '@polkadot/types/interfaces/assets';
 import type { Extrinsic } from '@polkadot/types/interfaces/extrinsics';
@@ -13,6 +12,8 @@ import type { Keys } from '@polkadot/types/interfaces/session';
 import type { Key } from '@polkadot/types/interfaces/system';
 import type { Timepoint } from '@polkadot/types/interfaces/utility';
 import type { AnyNumber, ITuple } from '@polkadot/types/types';
+
+import type { File, LocId, LocLink, LocType, MetadataItem, PeerId } from '../interfaces/default';
 
 declare module '@polkadot/api/types/submittable' {
 

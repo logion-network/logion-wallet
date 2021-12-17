@@ -9,7 +9,6 @@ test("renders", () => {
             callback: jest.fn(),
             buttonVariant: 'primary',
         }}
-        backgroundColor="white"
     />);
     expect(result).toMatchSnapshot();
 });

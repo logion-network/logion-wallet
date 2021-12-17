@@ -1,36 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders with custom space above 1`] = `
-<Dialog
-  actions={
-    Array [
-      Object {
-        "buttonText": "Text",
-        "buttonVariant": "primary",
-        "callback": [MockFunction],
-        "id": "button",
-      },
-    ]
-  }
-  show={true}
-  size="lg"
->
-  <Icon
-    icon={
-      Object {
-        "id": "warning",
-      }
-    }
-  />
-  <p
-    className="dialog-text"
-  >
-    Content
-  </p>
-</Dialog>
-`;
-
-exports[`renders with default space above 1`] = `
+exports[`renders 1`] = `
 <Dialog
   actions={
     Array [
