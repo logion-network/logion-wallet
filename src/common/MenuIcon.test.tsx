@@ -5,7 +5,6 @@ import MenuIcon from './MenuIcon';
 test("renders with icon and background", () => {
     const result = shallowRender(
         <MenuIcon
-            colorThemeType="dark"
             icon={{
                 id: "iconId"
             }}
@@ -21,7 +20,6 @@ test("renders with icon and background", () => {
 test("renders with icon and custom size", () => {
     const result = shallowRender(
         <MenuIcon
-            colorThemeType="dark"
             icon={{
                 id: "iconId"
             }}

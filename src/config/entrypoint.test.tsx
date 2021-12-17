@@ -1,3 +1,5 @@
+import 'moment';
+
 const OLD_ENV = process.env;
 
 beforeEach(() => {

@@ -1,6 +1,8 @@
 jest.mock('@polkadot/api');
 
-import { apiMock, hashMock, TOTAL_BLOCKS, blockMock, extrinsicsMock } from '../__mocks__/PolkadotApiMock';
+import { ApiPromise } from '@polkadot/api';
+import { Block, Hash } from '@polkadot/types/interfaces';
+import { apiMock, hashMock, TOTAL_BLOCKS, blockMock, extrinsicsMock, ApiPromise as ApiPromiseMock } from '../__mocks__/PolkadotApiMock';
 import {
     fetchExtrinsics,
     BlockAggregatingVisitor,
@@ -11,73 +13,73 @@ import {
     walkChain,
     isLimitReached,
     hashEquals,
+    ExtrinsicFetchSpecification,
 } from './Blocks';
-import { Extrinsic } from '@polkadot/types/interfaces';
 
 test("Fetch at most 10 extrinsics", async () => {
-    const specification = {
-        head: apiMock.chain.head.hash,
+    const specification: unknown = {
+        head: (apiMock as ApiPromiseMock).chain.head.hash,
         api: apiMock,
         maxResults: 10,
         matcher: () => true
     };
-    const result = await fetchExtrinsics(specification);
+    const result = await fetchExtrinsics(specification as ExtrinsicFetchSpecification);
     expect(result.extrinsics.length).toBe(10);
 });
 
 test("Fetch matching extrinsics", async () => {
-    const specification = {
-        head: apiMock.chain.head.hash,
+    const specification: unknown = {
+        head: (apiMock as ApiPromiseMock).chain.head.hash,
         api: apiMock,
         maxResults: 10,
         matcher: (extrinsic: any) => extrinsic.method.section === "balances"
     };
-    const result = await fetchExtrinsics(specification);
+    const result = await fetchExtrinsics(specification as ExtrinsicFetchSpecification);
     expect(result.extrinsics.length).toBe(10);
     result.extrinsics.forEach(extrinsic => expect(extrinsic.method.section).toBe("balances"));
 });
 
 test("Fetch extrinsics since hash and none", async () => {
-    const specification = {
-        head: apiMock.chain.head.hash,
+    const specification: unknown = {
+        head: (apiMock as ApiPromiseMock).chain.head.hash,
         api: apiMock,
         maxResults: 10,
         matcher: (extrinsic: any) => extrinsic.method.section === "timestamp",
         since: {head: hashMock(TOTAL_BLOCKS - 3), extrinsics: []}
     };
-    const result = await fetchExtrinsics(specification);
+    const result = await fetchExtrinsics(specification as ExtrinsicFetchSpecification);
     expect(result.extrinsics.length).toBe(2);
 });
 
 test("Fetch extrinsics after hash", async () => {
-    const specification = {
-        head: apiMock.chain.head.hash,
+    const specification: unknown = {
+        head: (apiMock as ApiPromiseMock).chain.head.hash,
         api: apiMock,
         maxResults: 10,
         matcher: (extrinsic: any) => extrinsic.method.section === "timestamp",
         after: hashMock(TOTAL_BLOCKS - 3),
     };
-    const result = await fetchExtrinsics(specification);
+    const result = await fetchExtrinsics(specification as ExtrinsicFetchSpecification);
     expect(result.extrinsics.length).toBe(2);
 });
 
 test("Fetch extrinsics after date", async () => {
     const afterDate = new Date(new Date().valueOf() - 6000);
-    const specification = {
-        head: apiMock.chain.head.hash,
+    const specification: unknown = {
+        head: (apiMock as ApiPromiseMock).chain.head.hash,
         api: apiMock,
         maxResults: 10,
         matcher: (extrinsic: any) => extrinsic.method.section === "timestamp",
         after: afterDate,
     };
-    const result = await fetchExtrinsics(specification);
+    const result = await fetchExtrinsics(specification as ExtrinsicFetchSpecification);
     expect(result.extrinsics.length).toBe(1);
 });
 
 test("chain aggregator", async () => {
     const specification: AggregateChainSpecification = {
-        head: apiMock.chain.head.hash,
-        api: apiMock,
+        head: (apiMock as ApiPromiseMock).chain.head.hash,
+        api: apiMock as ApiPromise,
         maxResults: 10,
     };
     const visitor: BlockAggregatingVisitor<number> = {
@@ -93,8 +95,8 @@ test("chain aggregator", async () => {
 
 test("chain walk", async () => {
     const specification: WalkChainSpecification = {
-        head: apiMock.chain.head.hash,
-        api: apiMock,
+        head: (apiMock as ApiPromiseMock).chain.head.hash,
+        api: apiMock as ApiPromise,
     };
     const blockNumbers: number[] = [];
     const visitor: BlockVisitor = {
@@ -109,25 +111,25 @@ test("chain walk", async () => {
 });
 
 test("Limit reached if date and block without timestamp", () => {
-    const block = blockMock({
+    const block: unknown = blockMock({
         extrinsics: []
     });
     const limit = new Date();
-    const result = isLimitReached(block, limit);
+    const result = isLimitReached(block as Block, limit);
     expect(result).toBe(true);
 });
 
 test("Given h1 null and h2 not, when testing equality, then false", () => {
     const h1 = null;
-    const h2 = hashMock("h2");
-    const result = hashEquals(h1, h2);
+    const h2 = hashMock(2);
+    const result = hashEquals(h1, h2 as Hash);
     expect(result).toBe(false);
 });
 
 test("Given h2 null and h1 not, when testing equality, then false", () => {
-    const h1 = hashMock("h1");
+    const h1 = hashMock(1);
     const h2 = null;
-    const result = hashEquals(h1, h2);
+    const result = hashEquals(h1 as Hash, h2);
     expect(result).toBe(false);
 });
 
@@ -140,8 +142,8 @@ test("Given h1 null and h1 null, when testing equality, then true", () => {
 
 test("Given no stop, when chain walk, the down to genesis", async () => {
     const specification: WalkChainSpecification = {
-        head: apiMock.chain.head,
-        api: apiMock,
+        head: (apiMock as ApiPromiseMock).chain.head,
+        api: apiMock as ApiPromise,
     };
     const blockNumbers: number[] = [];
     const visitor: BlockVisitor = {
@@ -154,16 +156,16 @@ test("Given no stop, when chain walk, the down to genesis", async () => {
 });
 
 test("Fetch extrinsics since block and list", async () => {
-    const specification = {
-        head: apiMock.chain.head,
+    const specification: unknown = {
+        head: (apiMock as ApiPromiseMock).chain.head,
         api: apiMock,
         maxResults: 10,
         matcher: (extrinsic: any) => extrinsic.method.section === "timestamp",
         since: {
-            head: apiMock.chain.chain[TOTAL_BLOCKS - 3].hash,
+            head: (apiMock as ApiPromiseMock).chain.chain[TOTAL_BLOCKS - 3].hash,
             extrinsics: extrinsicsMock(10)
         }
     };
-    const result = await fetchExtrinsics(specification);
+    const result = await fetchExtrinsics(specification as ExtrinsicFetchSpecification);
     expect(result.extrinsics.length).toBe(10);
 });

@@ -6,7 +6,6 @@ import { useLogionChain, LogionChainContextProvider } from './LogionChainContext
 import { render, waitFor, RenderResult } from '@testing-library/react';
 
 import {
-    connectedAndReady,
     teardown as teardownApi,
 } from '../__mocks__/PolkadotApiMock';
 import { updateInjectedAccounts, teardown as teardownExtensionDapp } from '../__mocks__/PolkadotExtensionDappMock';

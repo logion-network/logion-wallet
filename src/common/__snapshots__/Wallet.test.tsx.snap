@@ -17,6 +17,7 @@ exports[`renders content 1`] = `
   }
 >
   <Content
+    settingsPath=""
     transactionsPath={[Function]}
   />
 </FullWidthPane>

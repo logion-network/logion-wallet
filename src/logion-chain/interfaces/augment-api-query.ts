@@ -1,8 +1,7 @@
 // Auto-generated via `yarn polkadot-types-from-chain`, do not edit
 /* eslint-disable */
 
-import type { LegalOfficerCaseOf, LocId, PeerId, StorageVersion } from '../interfaces/default';
-import type { ApiTypes } from '@polkadot/api/types';
+import type { ApiTypes, AugmentedQuery, QueryableModuleStorage, QueryableStorageEntry } from '@polkadot/api/types';
 import type { BTreeSet, Bytes, Option, U8aFixed, Vec, bool, u32 } from '@polkadot/types';
 import type { AssetBalance, AssetDetails, AssetMetadata } from '@polkadot/types/interfaces/assets';
 import type { AccountData, BalanceLock } from '@polkadot/types/interfaces/balances';
@@ -15,6 +14,8 @@ import type { AccountInfo, ConsumedWeight, DigestOf, EventIndex, EventRecord, La
 import type { Multiplier } from '@polkadot/types/interfaces/txpayment';
 import type { Multisig } from '@polkadot/types/interfaces/utility';
 import type { AnyNumber, ITuple, Observable } from '@polkadot/types/types';
+
+import type { LegalOfficerCaseOf, LocId, PeerId, StorageVersion } from '../interfaces/default';
 
 declare module '@polkadot/api/types/storage' {
 

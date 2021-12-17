@@ -1,3 +1,5 @@
+import { ISubmittableResult } from '@polkadot/types/types';
+
 import { toIsoString } from '../datetime';
 
 export let signAndSend = (parameters: any) => {
@@ -21,13 +23,13 @@ export function setSignAndSend(fn: any) {
     signAndSend = fn;
 }
 
-export function mockSubmittableResult(isInBlock: boolean, statusType?: string) {
+export function mockSubmittableResult(isInBlock: boolean, statusType?: string): ISubmittableResult {
     return {
         isInBlock,
         status: {
             type: statusType
         }
-    };
+    } as ISubmittableResult;
 }
 
 export function unsubscribe() {

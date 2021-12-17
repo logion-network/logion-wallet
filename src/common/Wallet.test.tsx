@@ -9,6 +9,7 @@ import { DEFAULT_COIN_BALANCE, DEFAULT_TRANSACTION } from './TestData';
 test('renders content', () => {
     const result = shallowRender(<Wallet
         transactionsPath={ coindId => coindId }
+        settingsPath=''
     />);
     expect(result).toMatchSnapshot();
 });
@@ -16,6 +17,7 @@ test('renders content', () => {
 test('renders loader with no data', () => {
     const result = shallowRender(<Content
         transactionsPath={ coindId => coindId }
+        settingsPath=''
     />);
     expect(result).toMatchSnapshot();
 });
@@ -25,6 +27,7 @@ test('renders with all data', () => {
     setTransactions([ DEFAULT_TRANSACTION ]);
     const result = shallowRender(<Content
         transactionsPath={ coindId => coindId }
+        settingsPath=''
     />);
     expect(result).toMatchSnapshot();
 });

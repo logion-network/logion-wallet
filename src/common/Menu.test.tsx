@@ -5,7 +5,6 @@ import Menu from './Menu';
 test("renders", () => {
     const result = shallowRender(
         <Menu
-            colorThemeType="dark"
             items={[
                 {
                     id: "item1",

@@ -1,7 +1,6 @@
 import { shallowRender } from '../tests';
 
-import Table, { Cell } from './Table';
-import { COLOR_THEME } from './TestData';
+import Table, { Cell, Column } from './Table';
 
 interface Record {
     id: string,
@@ -9,7 +8,7 @@ interface Record {
 }
 
 test("renders", () => {
-    const columns = [
+    const columns: Column<Record>[] = [
         {
             header: "Column 1",
             render: (value: Record) => <Cell content={ value.id }/>,
@@ -35,10 +34,10 @@ test("renders", () => {
             value: "Value 2",
         }
     ];
-    const result = shallowRender(<Table
+    const result = shallowRender(<Table<Record>
         columns={ columns }
         data={ data }
-        colorTheme={ COLOR_THEME }
+        renderEmpty={() => null}
     />);
     expect(result).toMatchSnapshot();
 });

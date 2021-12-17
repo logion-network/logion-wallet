@@ -53,6 +53,7 @@ test("Trap detection", () => {
             active={ true }
             title="Title"
             mayProceed={ false }
-        />
+        >
+        </ProcessStep>
     )).toThrowError();
 });

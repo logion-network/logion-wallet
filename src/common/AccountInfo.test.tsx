@@ -27,7 +27,6 @@ test("renders without comparison", () => {
             address={ TEST_WALLET_USER }
             identity={ DEFAULT_IDENTITY }
             postalAddress={ DEFAULT_ADDRESS }
-            colorTheme={ COLOR_THEME }
         />
     );
     expect(tree).toMatchSnapshot();
@@ -42,7 +41,6 @@ test("renders and compares with same data", () => {
             otherIdentity={ DEFAULT_IDENTITY }
             postalAddress={ DEFAULT_ADDRESS }
             otherPostalAddress={ DEFAULT_ADDRESS }
-            colorTheme={ COLOR_THEME }
         />
     );
     expect(tree).toMatchSnapshot();
@@ -57,7 +55,6 @@ test("renders and compares with different data", () => {
             otherIdentity={ DIFFERENT_IDENTITY }
             postalAddress={ DEFAULT_ADDRESS }
             otherPostalAddress={ DIFFERENT_ADDRESS }
-            colorTheme={ COLOR_THEME }
         />
     );
     expect(tree).toMatchSnapshot();

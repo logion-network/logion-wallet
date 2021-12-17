@@ -13,7 +13,6 @@ function testGauge(type: 'arc' | 'linear') {
         unit={ "mLGNT" }
         level={ 0.5 }
         type={ type }
-        colorThemeType="light"
     />);
     expect(result).toMatchSnapshot();
 }
