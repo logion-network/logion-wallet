@@ -24,9 +24,10 @@ interface CloseState {
 
 export default function CloseLocButton() {
     const { refresh } = useCommonContext();
-    const { closeExtrinsic, close } = useLocContext();
+    const { closeExtrinsic, close, locItems } = useLocContext();
     const [ closeState, setCloseState ] = useState<CloseState>({ status: CloseStatus.NONE });
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
+    const [ disabled, setDisabled ] = useState<boolean>(false)
 
     useEffect(() => {
         if (closeState.status === CloseStatus.CLOSE_PENDING) {
@@ -36,11 +37,20 @@ export default function CloseLocButton() {
         }
     }, [ closeExtrinsic, closeState, setCloseState ]);
 
+    useEffect(() => {
+        if (locItems.findIndex(locItem => locItem.status === "DRAFT") < 0) {
+            setDisabled(false)
+        } else {
+            setDisabled(true)
+        }
+    }, [ locItems, setDisabled ])
+
     return (
         <div className="CloseLocButton">
             <Button
                 onClick={ () => setCloseState({ status: CloseStatus.START }) }
                 className="close"
+                disabled={ disabled }
             >
                 <Icon icon={{id: "lock"}} /><span className="text">Close LOC</span>
             </Button>
