@@ -22,13 +22,13 @@ export default function ProtectedUsers() {
                     header: "User",
                     render: request => <Cell content={ `${request.userIdentity.firstName} ${request.userIdentity.lastName}` }/>,
                     align: 'left',
-                    width: "50%",
+                    width: "55%",
                     renderDetails: request => <ProtectedUserDetails request={ request } />,
                 },
                 {
                     header: "Other Legal Officer",
                     render: request => <LegalOfficerName address={ request.otherLegalOfficerAddress }/>,
-                    width: "50%",
+                    width: "45%",
                     align: 'left',
                 },
                 {

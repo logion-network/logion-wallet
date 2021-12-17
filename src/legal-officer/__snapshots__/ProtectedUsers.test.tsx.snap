@@ -9,13 +9,13 @@ exports[`renders 2 rows 1`] = `
         "header": "User",
         "render": [Function],
         "renderDetails": [Function],
-        "width": "50%",
+        "width": "55%",
       },
       Object {
         "align": "left",
         "header": "Other Legal Officer",
         "render": [Function],
-        "width": "50%",
+        "width": "45%",
       },
       Object {
         "align": "center",
@@ -96,13 +96,13 @@ exports[`renders one row 1`] = `
         "header": "User",
         "render": [Function],
         "renderDetails": [Function],
-        "width": "50%",
+        "width": "55%",
       },
       Object {
         "align": "left",
         "header": "Other Legal Officer",
         "render": [Function],
-        "width": "50%",
+        "width": "45%",
       },
       Object {
         "align": "center",

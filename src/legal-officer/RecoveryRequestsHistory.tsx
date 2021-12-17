@@ -1,4 +1,4 @@
-import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../common/Table';
+import Table, { Cell, EmptyTableMessage, DateTimeCell, CopyPasteCell } from '../common/Table';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import ProtectionRequestStatus from './ProtectionRequestStatus';
@@ -43,12 +43,12 @@ export default function RecoveryRequestsHistory() {
                     },
                     {
                         header: "Account number",
-                        render: request => <Cell content={ request.requesterAddress } overflowing tooltipId={ `dest-${request.id}` } />,
+                        render: request => <CopyPasteCell content={ request.requesterAddress } overflowing tooltipId={ `dest-${request.id}` } />,
                         align: 'left',
                     },
                     {
                         header: "Account to recover",
-                        render: request => <Cell content={ request.addressToRecover } overflowing tooltipId={ `src-${request.id}` } />,
+                        render: request => <CopyPasteCell content={ request.addressToRecover } overflowing tooltipId={ `src-${request.id}` } />,
                         align: 'left',
                     }
                 ]}

@@ -5,6 +5,7 @@ import Detail from "../common/Detail";
 
 import { ProtectionRequest } from "../common/types/ModelTypes";
 import { getOfficer } from "../common/types/LegalOfficer";
+import CopyPasteButton from "../common/CopyPasteButton";
 
 export interface Props {
     request : ProtectionRequest,
@@ -21,15 +22,20 @@ export default function ProtectedUserDetails(props: Props) {
         userAddress = <span>{ props.request.userPostalAddress.line1 }<br/>{ props.request.userPostalAddress.line2 }</span>
     }
 
+    const polkadotAddress = (address: string) => <Detail
+        label="Polkadot Address"
+        value={ <>
+            { address }
+            <CopyPasteButton value={ address } className="medium" />
+        </> }
+    />;
+
     return (
         <>
             <Col
-                style={{width: "25%"}}
+                style={ { width: "30%" } }
             >
-                <Detail
-                    label="Polkadot Address"
-                    value={ props.request.requesterAddress }
-                />
+                { polkadotAddress(props.request.requesterAddress) }
                 <Detail
                     label="Email"
                     value={ props.request.userIdentity.email }
@@ -40,7 +46,7 @@ export default function ProtectedUserDetails(props: Props) {
                 />
             </Col>
             <Col
-                style={{width: "25%"}}
+                style={ { width: "25%" } }
             >
                 <Detail
                     label="Postal Address"
@@ -56,20 +62,17 @@ export default function ProtectedUserDetails(props: Props) {
                 />
             </Col>
             <Col
-                style={{width: "50%"}}
+                style={ { width: "45%" } }
             >
-                <Detail
-                    label="Polkadot Address"
-                    value={ props.request.otherLegalOfficerAddress }
-                />
+                { polkadotAddress(props.request.otherLegalOfficerAddress) }
                 <Detail
                     label="Details"
                     value={ legalOfficer!.details.split(/\n/).map((line, index) => (
-                        <span key={ index } >{line}<br/></span>
-                    ))}
+                        <span key={ index }>{ line }<br /></span>
+                    )) }
                 />
             </Col>
-            <Col style={{width: "200px"}}>&nbsp;</Col>
+            <Col style={ { width: "200px" } }>&nbsp;</Col>
         </>
     );
 }

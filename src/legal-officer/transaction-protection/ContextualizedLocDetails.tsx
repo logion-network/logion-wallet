@@ -109,8 +109,7 @@ export default function ContextualizedLocDetails() {
             onBack={ () => navigate(backPath) }
             className="ContextualizedLocDetails"
         >
-            { loc !== undefined &&
-            <>
+            { <>
                 <Tabs
                     activeKey="details"
                     onSelect={ () => {
@@ -121,16 +120,18 @@ export default function ContextualizedLocDetails() {
                         render: () => {
                             const { date, time } = format(locRequest.createdOn);
                             let closingDate: string;
-                            if(locRequest.closedOn !== undefined) {
+                            if (locRequest.closedOn !== undefined) {
                                 const { date, time } = format(locRequest.closedOn);
-                                closingDate = `${date} / ${time}`;
+                                closingDate = `${ date } / ${ time }`;
                             } else {
                                 closingDate = "";
                             }
                             return <>
                                 <Row>
                                     <Col md={ 4 }>
-                                        <LocItemDetail label="LOC ID">{ locId.toDecimalString() }</LocItemDetail>
+                                        <LocItemDetail label="LOC ID" copyButtonText={ locId.toDecimalString() } >
+                                            { locId.toDecimalString() }
+                                        </LocItemDetail>
                                         <LocItemDetail label="Creation date">{ date } / { time }</LocItemDetail>
                                     </Col>
                                     <Col md={ 4 }>
@@ -187,20 +188,20 @@ export default function ContextualizedLocDetails() {
                     loc.voidInfo !== undefined &&
                     <DangerFrame
                         className="loc-is-void"
-                        title={ <span><Icon icon={{id: 'void'}} width="45px" /> This LOC is VOID</span> }
+                        title={ <span><Icon icon={ { id: 'void' } } width="45px" /> This LOC is VOID</span> }
                     >
                         <p><strong>You have voided this LOC at the following date:</strong> <InlineDateTime dateTime={ locRequest?.voidInfo?.voidedOn } /></p>
                         <p><strong>Reason:</strong> { locRequest.voidInfo?.reason || "-" }</p>
                         {
                             loc.voidInfo.replacer !== undefined &&
                             <p><strong>This VOID LOC has been replaced by the following LOC: </strong>
-                            <NewTabLink
-                                href={locDetailsPath(loc.voidInfo.replacer.toString())}
-                                iconId="loc-link"
-                                inline
-                            >
-                                { loc.voidInfo.replacer.toDecimalString() }
-                            </NewTabLink>
+                                <NewTabLink
+                                    href={ locDetailsPath(loc.voidInfo.replacer.toString()) }
+                                    iconId="loc-link"
+                                    inline
+                                >
+                                    { loc.voidInfo.replacer.toDecimalString() }
+                                </NewTabLink>
                             </p>
                         }
                         {
@@ -230,19 +231,19 @@ export default function ContextualizedLocDetails() {
                         className="loc-supersedes"
                     >
                         <IconTextRow
-                            icon={ <Icon icon={{id: 'void_supersede'}} width="45px" /> }
+                            icon={ <Icon icon={ { id: 'void_supersede' } } width="45px" /> }
                             text={
                                 <>
                                     <p className="frame-title">IMPORTANT: this logion Legal Officer Case (LOC) supersedes a previous LOC (VOID)</p>
                                     <p><strong>This LOC supersedes a previous LOC (VOID) since the following date:</strong> <InlineDateTime dateTime={ supersededLocRequest?.voidInfo?.voidedOn } /></p>
                                     <p><strong>For record purpose, this LOC supersedes the following LOC: </strong>
-                                    <NewTabLink
-                                        href={locDetailsPath(loc.replacerOf.toString())}
-                                        iconId="loc-link"
-                                        inline
-                                    >
-                                        { loc.replacerOf.toDecimalString() }
-                                    </NewTabLink>
+                                        <NewTabLink
+                                            href={ locDetailsPath(loc.replacerOf.toString()) }
+                                            iconId="loc-link"
+                                            inline
+                                        >
+                                            { loc.replacerOf.toDecimalString() }
+                                        </NewTabLink>
                                     </p>
                                 </>
                             }
@@ -259,7 +260,7 @@ export default function ContextualizedLocDetails() {
                         className="void-loc"
                     >
                         <IconTextRow
-                            icon={ <Icon icon={{id: 'void'}} width="31px" /> }
+                            icon={ <Icon icon={ { id: 'void' } } width="31px" /> }
                             text={
                                 <>
                                     <p className="frame-title"> Void this LOC</p>
@@ -283,7 +284,6 @@ export default function ContextualizedLocDetails() {
                 }
             </>
             }
-            { loc === undefined && <p>LOC not found on chain</p> }
         </FullWidthPane>
     );
 }

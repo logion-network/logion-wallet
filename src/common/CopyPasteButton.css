@@ -1,5 +1,36 @@
-.CopyPasteButton.Button.btn {
+.CopyPasteButton.Button.btn.big {
     padding: 4px;
     padding-right: 5px;
     padding-left: 5px;
+}
+
+.CopyPasteButton.Button.btn.small {
+    margin-left: 15px;
+    margin-right: 10px;
+    height: 21px;
+    width: 21px;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-right: 1px;
+    padding-left: 2px;
+}
+
+.CopyPasteButton.Button.btn.small img {
+    margin-top: -4px;
+    height: 14px;
+}
+
+.CopyPasteButton.Button.btn.medium {
+    margin-top: 5px;
+    margin-left: 15px;
+    height: 24px;
+    width: 24px;
+    padding-top: 0;
+    padding-right: 4px;
+    padding-left: 4px;
+}
+
+.CopyPasteButton.Button.btn.medium img {
+    margin-top: -1px;
+    height: 16px;
 }
