@@ -26,3 +26,11 @@ export let useLocation = () => location;
 export function setLocation(mock: object) {
     location = mock;
 }
+
+let searchParams = {};
+
+export let useSearchParams = () => [ searchParams ];
+
+export function setSearchParams(mock: object) {
+    searchParams = mock;
+}

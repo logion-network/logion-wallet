@@ -1,29 +1,33 @@
-import { UUID } from "../logion-chain/UUID";
+import { useEffect, useState, useMemo } from "react";
+import { Row, Col, Container } from "react-bootstrap";
 import { useParams } from "react-router";
 import { useSearchParams } from "react-router-dom";
+
+import { UUID } from "../logion-chain/UUID";
 import { useLogionChain } from "../logion-chain";
-import { useEffect, useState, useMemo } from "react";
 import { getLegalOfficerCase } from "../logion-chain/LogionLoc";
 import { File, LegalOfficerCase, Link, MetadataItem, VoidInfo } from "../logion-chain/Types";
-import CertificateCell from "./CertificateCell";
+
 import { LegalOfficer, getOfficer } from "../common/types/LegalOfficer";
 import Button from "../common/Button";
-import { Row, Col, Container } from "react-bootstrap";
 import MailtoButton from "../common/MailtoButton";
-import './Certificate.css'
 import Icon from "../common/Icon";
 import { LocRequest } from "../common/types/ModelTypes";
 import { fetchPublicLoc } from "../common/Model";
 import CertificateDateTimeCell from "./CertificateDateTimeCell";
 import { copyToClipBoard } from "../common/Tools";
 import { anonymousAxiosFactory } from "../common/api";
-import { fullCertificateUrl } from "../PublicPaths";
 import NewTabLink from "../common/NewTabLink";
 import DangerDialog from "../common/DangerDialog";
 import { LIGHT_MODE } from "../legal-officer/Types";
 import { RED } from "../common/ColorTheme";
 import InlineDateTime from "../common/InlineDateTime";
 import IconTextRow from "../common/IconTextRow";
+import { fullCertificateUrl } from "../PublicPaths";
+
+
+import CertificateCell from "./CertificateCell";
+import './Certificate.css'
 
 export default function Certificate() {
 
