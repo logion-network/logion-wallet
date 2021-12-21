@@ -29,6 +29,8 @@ export interface LegalOfficerCase {
 
 export type LocType = 'Transaction' | 'Identity';
 
+export type IdentityLocType = 'Polkadot' | 'Logion';
+
 export interface VoidInfo {
     replacer?: UUID;
 }

@@ -202,6 +202,10 @@ declare module '@polkadot/api/types/errors' {
        **/
       Unauthorized: AugmentedError<ApiType>;
       /**
+       * Unexpected requester given LOC type
+       **/
+      UnexpectedRequester: AugmentedError<ApiType>;
+      /**
        * Generic error
        **/
       [key: string]: AugmentedError<ApiType>;

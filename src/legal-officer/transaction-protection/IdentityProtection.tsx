@@ -31,8 +31,7 @@ export default function IdentityProtection() {
             <Row>
                 <Col>
                     <Frame
-                        title="Identity Case(s)"
-                        fullHeight
+                        title="Polkadot Identity LOC"
                     >
                         <Tabs
                             activeKey={ locTabKey }
@@ -41,17 +40,46 @@ export default function IdentityProtection() {
                                 {
                                     key: "open",
                                     title: "Open",
-                                    render: () => <OpenedLocs locType="Identity" />
+                                    render: () => <OpenedLocs locType="Identity" identityLocType="Polkadot" />
                                 },
                                 {
                                     key: "closed",
                                     title: "Closed",
-                                    render: () => <ClosedLocs locType="Identity" />
+                                    render: () => <ClosedLocs locType="Identity" identityLocType="Polkadot" />
                                 },
                                 {
                                     key: "void",
                                     title: "Void",
-                                    render: () => <VoidLocs locType="Identity" />
+                                    render: () => <VoidLocs locType="Identity" identityLocType="Polkadot" />
+                                }
+                            ]}
+                        />
+                    </Frame>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <Frame
+                        title="Logion Identity LOC"
+                    >
+                        <Tabs
+                            activeKey={ locTabKey }
+                            onSelect={ key => setLocTabKey(key || 'open') }
+                            tabs={[
+                                {
+                                    key: "open",
+                                    title: "Open",
+                                    render: () => <OpenedLocs locType="Identity" identityLocType="Logion" />
+                                },
+                                {
+                                    key: "closed",
+                                    title: "Closed",
+                                    render: () => <ClosedLocs locType="Identity" identityLocType="Logion" />
+                                },
+                                {
+                                    key: "void",
+                                    title: "Void",
+                                    render: () => <VoidLocs locType="Identity" identityLocType="Logion" />
                                 }
                             ]}
                         />

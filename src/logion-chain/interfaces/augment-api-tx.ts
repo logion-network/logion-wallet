@@ -13,7 +13,7 @@ import type { Key } from '@polkadot/types/interfaces/system';
 import type { Timepoint } from '@polkadot/types/interfaces/utility';
 import type { AnyNumber, ITuple } from '@polkadot/types/types';
 
-import type { File, LocId, LocLink, LocType, MetadataItem, PeerId } from '../interfaces/default';
+import type { File, LocId, LocLink, MetadataItem, PeerId } from '../interfaces/default';
 
 declare module '@polkadot/api/types/submittable' {
 
@@ -441,9 +441,21 @@ declare module '@polkadot/api/types/submittable' {
        **/
       close: AugmentedSubmittable<(locId: Compact<LocId> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<LocId>]>;
       /**
-       * Creates a new LOC
+       * Creates a new logion Identity LOC i.e. a LOC describing a real identity not yet linked to an AccountId
        **/
-      createLoc: AugmentedSubmittable<(locId: Compact<LocId> | AnyNumber | Uint8Array, requester: AccountId | string | Uint8Array, locType: LocType | 'Transaction' | 'Identity' | number | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<LocId>, AccountId, LocType]>;
+      createLogionIdentityLoc: AugmentedSubmittable<(locId: Compact<LocId> | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<LocId>]>;
+      /**
+       * Creates a new logion Transaction LOC i.e. a LOC requested with a logion Identity LOC
+       **/
+      createLogionTransactionLoc: AugmentedSubmittable<(locId: Compact<LocId> | AnyNumber | Uint8Array, requesterLocId: LocId | AnyNumber | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<LocId>, LocId]>;
+      /**
+       * Creates a new Polkadot Identity LOC i.e. a LOC linking a real identity to an AccountId.
+       **/
+      createPolkadotIdentityLoc: AugmentedSubmittable<(locId: Compact<LocId> | AnyNumber | Uint8Array, requesterAccountId: AccountId | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<LocId>, AccountId]>;
+      /**
+       * Creates a new Polkadot Transaction LOC i.e. a LOC requested with an AccountId
+       **/
+      createPolkadotTransactionLoc: AugmentedSubmittable<(locId: Compact<LocId> | AnyNumber | Uint8Array, requesterAccountId: AccountId | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<LocId>, AccountId]>;
       /**
        * Make a LOC void.
        **/

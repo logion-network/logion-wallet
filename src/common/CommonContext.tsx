@@ -6,14 +6,30 @@ import { useLogionChain } from '../logion-chain';
 import { CoinBalance, getBalances } from '../logion-chain/Balances';
 
 import config, { Node } from '../config';
-import { AxiosFactory, buildAxiosFactory, buildAxios, MultiSourceHttpClient, Endpoint, allUp, aggregateArrays, MultiResponse, AnySourceHttpClient } from './api';
+import {
+    AxiosFactory,
+    buildAxiosFactory,
+    buildAxios,
+    MultiSourceHttpClient,
+    Endpoint,
+    allUp,
+    aggregateArrays,
+    AnySourceHttpClient
+} from './api';
 import Accounts, { buildAccounts, AccountTokens } from './types/Accounts';
 import { Children } from './types/Helpers';
 import { Transaction, LocRequest, TransactionsSet } from './types/ModelTypes';
 import { getTransactions, FetchLocRequestSpecification, fetchLocRequests } from "./Model";
 import { ColorTheme, DEFAULT_COLOR_THEME } from "./ColorTheme";
-import { storeTokens, clearTokens, loadTokens, storeCurrentAddress, loadCurrentAddress, clearCurrentAddress } from './Storage';
-import { LegalOfficerCase } from "../logion-chain/Types";
+import {
+    storeTokens,
+    clearTokens,
+    loadTokens,
+    storeCurrentAddress,
+    loadCurrentAddress,
+    clearCurrentAddress
+} from './Storage';
+import { LegalOfficerCase, IdentityLocType } from "../logion-chain/Types";
 import { toDecimalString, UUID } from "../logion-chain/UUID";
 import { getLegalOfficerCasesMap } from "../logion-chain/LogionLoc";
 import { authenticate } from "./Authentication";
@@ -37,7 +53,8 @@ export interface CommonContext {
     openedLocRequests: RequestAndLoc[] | null;
     closedLocRequests: RequestAndLoc[] | null;
     openedIdentityLocs: RequestAndLoc[] | null;
-    closedIdentityLocs: RequestAndLoc[] | null;
+    openedIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null;
+    closedIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null;
     colorTheme: ColorTheme;
     setColorTheme: ((colorTheme: ColorTheme) => void) | null;
     setTokens: (tokens: AccountTokens) => void;
@@ -45,7 +62,7 @@ export interface CommonContext {
     axiosFactory?: AxiosFactory;
     refresh: (clearOnRefresh?: boolean) => void;
     voidTransactionLocs: RequestAndLoc[] | null;
-    voidIdentityLocs: RequestAndLoc[] | null;
+    voidIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null;
     isCurrentAuthenticated: () => boolean;
     authenticate: (address: string[]) => Promise<void>;
     nodesUp: Node[];
@@ -74,7 +91,8 @@ function initialContextValue(): FullCommonContext {
         openedLocRequests: null,
         closedLocRequests: null,
         openedIdentityLocs: null,
-        closedIdentityLocs: null,
+        openedIdentityLocsByType: null,
+        closedIdentityLocsByType: null,
         colorTheme: DEFAULT_COLOR_THEME,
         setColorTheme: null,
         tokens,
@@ -82,7 +100,7 @@ function initialContextValue(): FullCommonContext {
         logout: DEFAULT_NOOP,
         refresh: DEFAULT_NOOP,
         voidTransactionLocs: null,
-        voidIdentityLocs: null,
+        voidIdentityLocsByType: null,
         isCurrentAuthenticated: () => false,
         authenticate: (_: string[]) => Promise.reject(),
         nodesUp: config.availableNodes,
@@ -132,12 +150,13 @@ interface Action {
     closedLocRequests?: RequestAndLoc[];
     rejectedLocRequests?: LocRequest[];
     openedIdentityLocs?: RequestAndLoc[];
-    closedIdentityLocs?: RequestAndLoc[];
+    openedIdentityLocsByType?: Record<IdentityLocType, RequestAndLoc[]>;
+    closedIdentityLocsByType?: Record<IdentityLocType, RequestAndLoc[]>;
     refresh?: (clearOnRefresh?: boolean) => void;
     refreshAddress?: string;
     clearOnRefresh?: boolean;
     voidTransactionLocs?: RequestAndLoc[];
-    voidIdentityLocs?: RequestAndLoc[];
+    voidIdentityLocsByType?: Record<IdentityLocType, RequestAndLoc[]>;
     authenticate?: (address: string[]) => Promise<void>;
     nodesUp?: Node[];
     nodesDown?: Node[];
@@ -191,9 +210,10 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                     closedLocRequests: action.closedLocRequests!,
                     rejectedLocRequests: action.rejectedLocRequests!,
                     openedIdentityLocs: action.openedIdentityLocs!,
-                    closedIdentityLocs: action.closedIdentityLocs!,
+                    openedIdentityLocsByType: action.openedIdentityLocsByType!,
+                    closedIdentityLocsByType: action.closedIdentityLocsByType!,
                     voidTransactionLocs: action.voidTransactionLocs!,
-                    voidIdentityLocs: action.voidIdentityLocs!,
+                    voidIdentityLocsByType: action.voidIdentityLocsByType!,
                     nodesUp,
                     nodesDown,
                 };
@@ -342,80 +362,83 @@ export function CommonContextProvider(props: Props) {
                 const transactions = transactionsSet?.transactions || [];
 
                 const multiClient = new MultiSourceHttpClient<Endpoint, LocRequest[]>(anyClient.getState(), currentAccount.token?.value);
-                let result: MultiResponse<LocRequest[]>;
 
-                result = await multiClient.fetch(axios => fetchLocRequests(axios, {
-                    ...specificationFragment,
-                    statuses: ["REQUESTED"]
-                }));
-                const pendingLocRequests = aggregateArrays<LocRequest>(result);
+                const fetchAndAggregate = async (specification: Partial<FetchLocRequestSpecification>) => {
+                    const result = await multiClient.fetch(axios => fetchLocRequests(axios, {
+                        ...specificationFragment,
+                        ...specification
+                    }));
+                    return aggregateArrays<LocRequest>(result);
+                }
 
-                result = await multiClient.fetch(axios => fetchLocRequests(axios, {
-                    ...specificationFragment,
-                    statuses: ["OPEN"],
-                    locTypes: ['Transaction']
-                }));
-                const openedLocRequestsOnly = aggregateArrays<LocRequest>(result);
-
-                result = await multiClient.fetch(axios => fetchLocRequests(axios, {
-                    ...specificationFragment,
-                    statuses: ["CLOSED"],
-                    locTypes: ['Transaction']
-                }));
-                const closedLocRequestsOnly = aggregateArrays<LocRequest>(result);
-
-                result = await multiClient.fetch(axios => fetchLocRequests(axios, {
-                    ...specificationFragment,
-                    statuses: ["REJECTED"]
-                }));
-                const rejectedLocRequests = aggregateArrays<LocRequest>(result);
-
-                result = await multiClient.fetch(axios => fetchLocRequests(axios, {
-                    ...specificationFragment,
-                    statuses: ["OPEN"],
-                        locTypes: ['Identity']
-                }));
-                const openedIdentityLocsOnly = aggregateArrays<LocRequest>(result);
-
-                result = await multiClient.fetch(axios => fetchLocRequests(axios, {
-                    ...specificationFragment,
-                    statuses: ["CLOSED"],
-                    locTypes: ['Identity']
-                }));
-                const closedIdentityLocsOnly = aggregateArrays<LocRequest>(result);
+                const pendingLocRequests = await fetchAndAggregate({ statuses: [ "REQUESTED" ] })
+                const openedLocRequestsOnly = await fetchAndAggregate({
+                    statuses: [ "OPEN" ],
+                    locTypes: [ 'Transaction' ]
+                })
+                const closedLocRequestsOnly = await fetchAndAggregate({
+                    statuses: [ "CLOSED" ],
+                    locTypes: [ 'Transaction' ]
+                })
+                const rejectedLocRequests = await fetchAndAggregate({ statuses: [ "REJECTED" ] })
+                const openedIdentityLocsOnly = await fetchAndAggregate({
+                    statuses: [ "OPEN" ],
+                    locTypes: [ 'Identity' ]
+                })
+                const openedIdentityLocsOnlyPolkadot = await fetchAndAggregate({
+                    statuses: [ "OPEN" ],
+                    locTypes: [ 'Identity' ],
+                    identityLocType: 'Polkadot'
+                })
+                const closedIdentityLocsOnlyPolkadot = await fetchAndAggregate({
+                    statuses: [ "CLOSED" ],
+                    locTypes: [ 'Identity' ],
+                    identityLocType: 'Polkadot'
+                })
+                const openedIdentityLocsOnlyLogion = await fetchAndAggregate({
+                    statuses: [ "OPEN" ],
+                    locTypes: [ 'Identity' ],
+                    identityLocType: 'Logion'
+                })
+                const closedIdentityLocsOnlyLogion = await fetchAndAggregate({
+                    statuses: [ "CLOSED" ],
+                    locTypes: [ 'Identity' ],
+                    identityLocType: 'Logion'
+                })
 
                 let locIds = openedLocRequestsOnly.map(loc => new UUID(loc.id));
                 locIds = locIds.concat(closedLocRequestsOnly.map(loc => new UUID(loc.id)));
                 locIds = locIds.concat(openedIdentityLocsOnly.map(loc => new UUID(loc.id)));
-                locIds = locIds.concat(closedIdentityLocsOnly.map(loc => new UUID(loc.id)));
+                locIds = locIds.concat(closedIdentityLocsOnlyPolkadot.map(loc => new UUID(loc.id)));
+                locIds = locIds.concat(closedIdentityLocsOnlyLogion.map(loc => new UUID(loc.id)));
                 const locs = await getLegalOfficerCasesMap({
                     api: api!,
                     locIds
                 });
 
-                let voidTransactionLocs = voidRequestsAndLocs(openedLocRequestsOnly, locs);
-                voidTransactionLocs = voidTransactionLocs.concat(voidRequestsAndLocs(closedLocRequestsOnly, locs));
+                // Transaction
+                const openedLocRequests = notVoidRequestsAndLocs(openedLocRequestsOnly, locs);
+                const closedLocRequests = notVoidRequestsAndLocs(closedLocRequestsOnly, locs);
+                const voidTransactionLocs = voidRequestsAndLocs(openedLocRequestsOnly, locs)
+                    .concat(voidRequestsAndLocs(closedLocRequestsOnly, locs));
 
-                let voidIdentityLocs = openedIdentityLocsOnly
-                    .map(request => ({request, loc: locs[toDecimalString((request.id))]}))
-                    .filter(requestAndLoc => requestAndLoc.loc !== undefined && requestAndLoc.loc.voidInfo !== undefined);
-                voidIdentityLocs = voidIdentityLocs.concat(closedIdentityLocsOnly
-                    .map(request => ({request, loc: locs[toDecimalString((request.id))]}))
-                    .filter(requestAndLoc => requestAndLoc.loc !== undefined && requestAndLoc.loc.voidInfo !== undefined));
+                // Identity
+                const openedIdentityLocs = notVoidRequestsAndLocs(openedIdentityLocsOnly, locs);
 
-                const openedLocRequests = openedLocRequestsOnly
-                    .map(request => ({request, loc: locs[toDecimalString((request.id))]}))
-                    .filter(requestAndLoc => requestAndLoc.loc !== undefined && requestAndLoc.loc.voidInfo === undefined);
-                const closedLocRequests = closedLocRequestsOnly
-                    .map(request => ({request, loc: locs[toDecimalString((request.id))]}))
-                    .filter(requestAndLoc => requestAndLoc.loc !== undefined && requestAndLoc.loc.voidInfo === undefined);
-                const openedIdentityLocs = openedIdentityLocsOnly
-                    .map(request => ({request, loc: locs[toDecimalString((request.id))]}))
-                    .filter(requestAndLoc => requestAndLoc.loc !== undefined && requestAndLoc.loc.voidInfo === undefined);
-                const closedIdentityLocs = closedIdentityLocsOnly
-                    .map(request => ({request, loc: locs[toDecimalString((request.id))]}))
-                    .filter(requestAndLoc => requestAndLoc.loc !== undefined && requestAndLoc.loc.voidInfo === undefined);
-
+                const openedIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> = {
+                    'Polkadot': notVoidRequestsAndLocs(openedIdentityLocsOnlyPolkadot, locs),
+                    'Logion': notVoidRequestsAndLocs(openedIdentityLocsOnlyLogion, locs)
+                };
+                const closedIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> = {
+                    'Polkadot': notVoidRequestsAndLocs(closedIdentityLocsOnlyPolkadot, locs),
+                    'Logion': notVoidRequestsAndLocs(closedIdentityLocsOnlyLogion, locs)
+                }
+                const voidIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> = {
+                    'Polkadot': voidRequestsAndLocs(openedIdentityLocsOnlyPolkadot, locs)
+                        .concat(voidRequestsAndLocs(closedIdentityLocsOnlyPolkadot, locs)),
+                    'Logion': voidRequestsAndLocs(openedIdentityLocsOnlyLogion, locs)
+                        .concat(voidRequestsAndLocs(closedIdentityLocsOnlyLogion, locs))
+                }
                 let nodesUp: Node[] | undefined;
                 let nodesDown: Node[] | undefined;
                 const resultingState = multiClient.getState();
@@ -441,9 +464,10 @@ export function CommonContextProvider(props: Props) {
                     closedLocRequests,
                     rejectedLocRequests,
                     openedIdentityLocs,
-                    closedIdentityLocs,
+                    openedIdentityLocsByType,
+                    closedIdentityLocsByType,
                     voidTransactionLocs,
-                    voidIdentityLocs,
+                    voidIdentityLocsByType,
                     nodesUp,
                     nodesDown,
                 });
@@ -453,8 +477,14 @@ export function CommonContextProvider(props: Props) {
 
     function voidRequestsAndLocs(requests: LocRequest[], locs: Record<string, LegalOfficerCase>): RequestAndLoc[] {
         return requests
-            .map(request => ({request, loc: locs[toDecimalString((request.id))]}))
+            .map(request => ({request, loc: locs[toDecimalString(request.id)]}))
             .filter(requestAndLoc => requestAndLoc.loc !== undefined && requestAndLoc.loc.voidInfo !== undefined);
+    }
+
+    function notVoidRequestsAndLocs(requests: LocRequest[], locs: Record<string, LegalOfficerCase>): RequestAndLoc[] {
+        return requests
+            .map(request => ({request, loc: locs[toDecimalString(request.id)]}))
+            .filter(requestAndLoc => requestAndLoc.loc !== undefined && requestAndLoc.loc.voidInfo === undefined);
     }
 
     const authenticateCallback = useCallback(async (address: string[]) => {
