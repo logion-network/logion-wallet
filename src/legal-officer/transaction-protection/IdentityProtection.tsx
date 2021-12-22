@@ -15,7 +15,8 @@ import VoidLocs from './VoidLocs';
 
 export default function IdentityProtection() {
     const { colorTheme } = useCommonContext();
-    const [ locTabKey, setLocTabKey ] = useState<string>('open');
+    const [ polkadotTabKey, setPolkadotTabKey ] = useState<string>('open');
+    const [ logionTabKey, setLogionTabKey ] = useState<string>('open');
 
     return (
         <FullWidthPane
@@ -34,8 +35,8 @@ export default function IdentityProtection() {
                         title="Polkadot Identity LOC"
                     >
                         <Tabs
-                            activeKey={ locTabKey }
-                            onSelect={ key => setLocTabKey(key || 'open') }
+                            activeKey={ polkadotTabKey }
+                            onSelect={ key => setPolkadotTabKey(key || 'open') }
                             tabs={[
                                 {
                                     key: "open",
@@ -63,8 +64,8 @@ export default function IdentityProtection() {
                         title="Logion Identity LOC"
                     >
                         <Tabs
-                            activeKey={ locTabKey }
-                            onSelect={ key => setLocTabKey(key || 'open') }
+                            activeKey={ logionTabKey }
+                            onSelect={ key => setLogionTabKey(key || 'open') }
                             tabs={[
                                 {
                                     key: "open",

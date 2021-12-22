@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Renders Closed Logion Identity LOCs 1`] = `
+exports[`Renders Void Logion Identity LOCs 1`] = `
 <div
   className="Table"
 >
@@ -87,7 +87,7 @@ exports[`Renders Closed Logion Identity LOCs 1`] = `
           }
         }
       >
-        Closing date
+        Voiding date
       </div>
       <div
         className="Col"
@@ -164,25 +164,25 @@ exports[`Renders Closed Logion Identity LOCs 1`] = `
           className="StatusCell"
           style={
             Object {
-              "borderColor": "#37ad4b",
+              "borderColor": "#e11a25",
             }
           }
         >
           <img
             alt=""
             height="14px"
-            src="/assets/activated.svg"
+            src="/assets/void.svg"
           />
            
           <span
             style={
               Object {
-                "color": "#37ad4b",
+                "color": "#e11a25",
                 "textTransform": undefined,
               }
             }
           >
-            Closed
+            VOID
           </span>
         </span>
       </div>
@@ -261,15 +261,8 @@ exports[`Renders Closed Logion Identity LOCs 1`] = `
         }
       >
         <div
-          className="regular-cell"
-          style={
-            Object {
-              "textAlign": "center",
-            }
-          }
-        >
-          -
-        </div>
+          className="spinner-border"
+        />
       </div>
       <div
         className="Col"
@@ -310,7 +303,7 @@ exports[`Renders Closed Logion Identity LOCs 1`] = `
 </div>
 `;
 
-exports[`Renders Closed Polkadot Identity LOCs 1`] = `
+exports[`Renders Void Polkadot Identity LOCs 1`] = `
 <div
   className="Table"
 >
@@ -397,7 +390,7 @@ exports[`Renders Closed Polkadot Identity LOCs 1`] = `
           }
         }
       >
-        Closing date
+        Voiding date
       </div>
       <div
         className="Col"
@@ -474,25 +467,25 @@ exports[`Renders Closed Polkadot Identity LOCs 1`] = `
           className="StatusCell"
           style={
             Object {
-              "borderColor": "#37ad4b",
+              "borderColor": "#e11a25",
             }
           }
         >
           <img
             alt=""
             height="14px"
-            src="/assets/activated.svg"
+            src="/assets/void.svg"
           />
            
           <span
             style={
               Object {
-                "color": "#37ad4b",
+                "color": "#e11a25",
                 "textTransform": undefined,
               }
             }
           >
-            Closed
+            VOID
           </span>
         </span>
       </div>
@@ -571,15 +564,8 @@ exports[`Renders Closed Polkadot Identity LOCs 1`] = `
         }
       >
         <div
-          className="regular-cell"
-          style={
-            Object {
-              "textAlign": "center",
-            }
-          }
-        >
-          -
-        </div>
+          className="spinner-border"
+        />
       </div>
       <div
         className="Col"
@@ -621,5 +607,3 @@ exports[`Renders Closed Polkadot Identity LOCs 1`] = `
 `;
 
 exports[`Renders null with no data 1`] = `null`;
-
-exports[`Renders pending requests 1`] = `null`;
