@@ -200,7 +200,7 @@ export default function Certificate() {
                 </Row>
                 <Row className="preamble-footer">
                     <CertificateCell md={ 6 } label="Owner">{ loc.owner }</CertificateCell>
-                    <CertificateCell md={ 6 } label="Requester">{ loc.requester }</CertificateCell>
+                    <CertificateCell md={ 6 } label="Requester">{ loc.requesterAddress }</CertificateCell>
                 </Row>
                 { matrix(loc.metadata, 2).map((items) => (
                     <MetadataItemCellRow items={ items } />

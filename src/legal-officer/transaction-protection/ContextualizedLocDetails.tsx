@@ -29,6 +29,8 @@ import VoidLocReplaceExistingButton from "./VoidLocReplaceExistingButton";
 import CopyPasteButton from "../../common/CopyPasteButton";
 import InlineDateTime from "../../common/InlineDateTime";
 import IconTextRow from "../../common/IconTextRow";
+import Button from "../../common/Button";
+import LocCreationDialog from "./LocCreationDialog";
 
 interface DocumentCheckResult {
     result: CheckResult;
@@ -40,6 +42,7 @@ export default function ContextualizedLocDetails() {
     const navigate = useNavigate();
     const { loc, locId, locRequest, locItems, supersededLocRequest } = useLocContext();
     const [ checkResult, setCheckResult ] = useState<DocumentCheckResult>({result: "NONE"});
+    const [ createLoc, setCreateLoc ] = useState(false);
 
     const checkHash = useCallback((hash: string) => {
         for(let i = 0; i < locItems!.length; ++i) {
@@ -144,7 +147,8 @@ export default function ContextualizedLocDetails() {
 
                                     <Col md={ 4 } className="closed-icon-container">
                                         <LocItemDetail
-                                            label="Requested by">{ locRequest.userIdentity?.firstName || "" } { locRequest.userIdentity?.lastName || "" }<br />{ locRequest.requesterAddress }
+                                            label="Requested by">{ locRequest.userIdentity?.firstName || "" } { locRequest.userIdentity?.lastName || "" }<br />
+                                            { locRequest.requesterAddress || "-" }
                                         </LocItemDetail>
                                         {
                                             loc.closed && loc.voidInfo === undefined &&
@@ -224,6 +228,24 @@ export default function ContextualizedLocDetails() {
                     <p className="link">
                         <a href={ certificateUrl } target="_blank" rel="noreferrer">{ certificateUrl }</a> <CopyPasteButton value={ certificateUrl } />
                     </p>
+                    {
+                        (!loc.requesterAddress && !loc.requesterLocId && loc.closed) &&
+                        <Button
+                            onClick={ () => setCreateLoc(true) }
+                        >
+                            <Icon icon={{id: "add"}}/> Create Logion Transaction LOC
+                        </Button>
+                    }
+                    <LocCreationDialog
+                        show={ createLoc }
+                        exit={ () => setCreateLoc(false) }
+                        onSuccess={ request => navigate(locDetailsPath(request.id)) }
+                        locRequest={{
+                            requesterIdentityLoc: locRequest.id,
+                            locType: 'Transaction'
+                        }}
+                        hasLinkNature={ false }
+                    />
                 </div>
                 {
                     loc.replacerOf !== undefined &&

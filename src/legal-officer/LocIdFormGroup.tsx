@@ -42,7 +42,7 @@ export default function LocIdFormGroup(props: Props) {
                     setInvalidLocIdFeedback("Given LOC has not expected type");
                 } else if(loc.closed !== props.expect.closed) {
                     setInvalidLocIdFeedback("Given LOC is not in expected state");
-                } else if(loc.requester !== props.expect.requester) {
+                } else if(loc.requesterAddress !== props.expect.requester) {
                     setInvalidLocIdFeedback("Given LOC has not expected requester");
                 } else {
                     setInvalidLocIdFeedback(undefined);

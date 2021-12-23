@@ -87,7 +87,16 @@ export class ApiPromise {
                 isSome: true,
                 unwrap: () => ({
                     owner: DEFAULT_LOC.owner,
-                    requester: DEFAULT_LOC.requester,
+                    requester: {
+                        isAccount: true,
+                        isLoc: false,
+                        asAccount: {
+                            toString: () => DEFAULT_LOC.requester
+                        },
+                        asLoc: {
+                            toString: () => undefined
+                        }
+                    },
                     metadata: {
                         toArray: () => DEFAULT_LOC.metadata.map(item => ({
                             name: {
@@ -165,7 +174,10 @@ export class ApiPromise {
             initiateRecovery: jest.fn().mockResolvedValue(() => {}),
         },
         logionLoc: {
-            createLoc: jest.fn().mockResolvedValue(() => {}),
+            createPolkadotTransactionLoc: jest.fn().mockResolvedValue(() => {}),
+            createPolkadotIdentityLoc: jest.fn().mockResolvedValue(() => {}),
+            createLogionTransactionLoc: jest.fn().mockResolvedValue(() => {}),
+            createLogionIdentityLoc: jest.fn().mockResolvedValue(() => {}),
             addMetadata: jest.fn().mockResolvedValue(() => {}),
             addFile: jest.fn().mockResolvedValue(() => {}),
             addLink: jest.fn().mockResolvedValue(() => {}),

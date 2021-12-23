@@ -30,7 +30,7 @@ export default function VoidLocReplaceNewButton() {
             const currentAddress = accounts!.current!.address;
             const request: CreateLocRequest = {
                 ownerAddress: currentAddress,
-                requesterAddress: locRequest!.requesterAddress,
+                requesterAddress: locRequest!.requesterAddress ? locRequest!.requesterAddress : undefined,
                 description: newLocDescription,
                 userIdentity: locRequest!.userIdentity,
                 locType: locRequest!.locType,
@@ -106,7 +106,6 @@ export default function VoidLocReplaceNewButton() {
                     newLocRequest !== null &&
                     <LocCreationSteps
                         requestToCreate={ newLocRequest }
-                        locType={ locRequest.locType }
                         exit={ () => { setNewLocRequest(null); } }
                         onSuccess={ () => {
                             const voidInfo = {

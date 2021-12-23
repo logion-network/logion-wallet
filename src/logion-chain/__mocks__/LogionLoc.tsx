@@ -1,9 +1,15 @@
 import {
-    createLoc,
+    createLogionIdentityLoc,
+    createLogionTransactionLoc,
+    createPolkadotIdentityLoc,
+    createPolkadotTransactionLoc,
     getLegalOfficerCase,
 } from './LogionLocMock';
 
 export {
-    createLoc,
+    createLogionIdentityLoc,
+    createLogionTransactionLoc,
+    createPolkadotIdentityLoc,
+    createPolkadotTransactionLoc,
     getLegalOfficerCase,
 }
