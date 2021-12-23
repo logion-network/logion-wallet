@@ -82,7 +82,8 @@ export interface LocRequestVoidInfo {
 
 export interface LocRequest {
     ownerAddress: string;
-    requesterAddress: string;
+    requesterAddress?: string | null;
+    requesterLocId?: string | null;
     description: string;
     locType: LocType;
     createdOn: string;

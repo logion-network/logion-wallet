@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+ import React, { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCommonContext } from '../../common/CommonContext';
 import { CreateLocRequest, createLocRequest } from '../../common/Model';
@@ -12,7 +12,8 @@ import { LocType } from '../../logion-chain/Types';
 import Alert from '../../common/Alert';
 
 export interface LocRequestFragment {
-    requesterAddress: string;
+    requesterAddress?: string | null;
+    requesterIdentityLoc?: string | null;
     locType: LocType;
     userIdentity?: UserIdentity;
 }
@@ -41,12 +42,13 @@ export default function LocCreationDialog(props: Props) {
             const currentAddress = accounts!.current!.address;
             const request: CreateLocRequest = {
                 ownerAddress: currentAddress,
-                requesterAddress: props.locRequest.requesterAddress,
+                requesterAddress: props.locRequest.requesterAddress ? props.locRequest.requesterAddress : undefined,
+                requesterIdentityLoc: props.locRequest.requesterIdentityLoc ? props.locRequest.requesterIdentityLoc : undefined,
                 description: formValues.description,
                 userIdentity: props.locRequest.userIdentity,
                 locType: props.locRequest.locType,
             }
-            setNewLocRequest(await createLocRequest!(axios!, request));
+            setNewLocRequest(await createLocRequest(axios!, request));
             if(props.hasLinkNature) {
                 setLinkNature(formValues.linkNature);
             }
@@ -78,7 +80,7 @@ export default function LocCreationDialog(props: Props) {
                 ] }
                 onSubmit={ handleSubmit(submit) }
             >
-                <h3>Create a new {props.locRequest.locType} LOC</h3>
+                <h3>Create a new {props.locRequest.requesterAddress !== undefined ? 'Polkadot' : 'Logion'} {props.locRequest.locType} LOC</h3>
                 {
                     props.locRequest.locType === 'Identity' &&
                     <Alert
@@ -100,7 +102,6 @@ export default function LocCreationDialog(props: Props) {
                 { newLocRequest !== null &&
                 <LocCreationSteps
                     requestToCreate={ newLocRequest }
-                    locType={ props.locRequest.locType }
                     exit={ () => {
                         props.exit();
                         reset();

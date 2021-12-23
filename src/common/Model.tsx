@@ -146,7 +146,8 @@ export async function fetchPublicLoc(
 
 export interface CreateLocRequest {
     ownerAddress: string;
-    requesterAddress: string;
+    requesterAddress?: string;
+    requesterIdentityLoc?: string;
     description: string;
     locType: LocType;
     userIdentity?: Identity;

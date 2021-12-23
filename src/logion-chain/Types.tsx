@@ -17,7 +17,8 @@ export interface Link {
 
 export interface LegalOfficerCase {
     owner: string;
-    requester: string;
+    requesterAddress?: string;
+    requesterLocId?: UUID;
     metadata: MetadataItem[];
     files: File[];
     links: Link[];

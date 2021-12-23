@@ -12,11 +12,20 @@ import Frame from '../../common/Frame';
 
 import './IdentityProtection.css';
 import VoidLocs from './VoidLocs';
+import Icon from '../../common/Icon';
+import Button from '../../common/Button';
+
+import './IdentityProtection.css';
+import LocCreationDialog from './LocCreationDialog';
+import { useNavigate } from 'react-router-dom';
+import { locDetailsPath } from '../LegalOfficerPaths';
 
 export default function IdentityProtection() {
     const { colorTheme } = useCommonContext();
-    const [ polkadotTabKey, setPolkadotTabKey ] = useState<string>('open');
-    const [ logionTabKey, setLogionTabKey ] = useState<string>('open');
+    const [ polkadotLocTabKey, setPolkadotLocTabKey ] = useState('open');
+    const [ logionLocTabKey, setLogionLocTabKey ] = useState('open');
+    const [ createLoc, setCreateLoc ] = useState(false);
+    const navigate = useNavigate();
 
     return (
         <FullWidthPane
@@ -35,8 +44,8 @@ export default function IdentityProtection() {
                         title="Polkadot Identity LOC"
                     >
                         <Tabs
-                            activeKey={ polkadotTabKey }
-                            onSelect={ key => setPolkadotTabKey(key || 'open') }
+                            activeKey={ polkadotLocTabKey }
+                            onSelect={ key => setPolkadotLocTabKey(key || 'open') }
                             tabs={[
                                 {
                                     key: "open",
@@ -63,9 +72,15 @@ export default function IdentityProtection() {
                     <Frame
                         title="Logion Identity LOC"
                     >
+                        <Button
+                            onClick={ () => setCreateLoc(true) }
+                            className="add-identity-loc-button"
+                        >
+                            <Icon icon={{id: "add"}}/> Create a Logion ID
+                        </Button>
                         <Tabs
-                            activeKey={ logionTabKey }
-                            onSelect={ key => setLogionTabKey(key || 'open') }
+                            activeKey={ logionLocTabKey }
+                            onSelect={ key => setLogionLocTabKey(key || 'open') }
                             tabs={[
                                 {
                                     key: "open",
@@ -83,6 +98,15 @@ export default function IdentityProtection() {
                                     render: () => <VoidLocs locType="Identity" identityLocType="Logion" />
                                 }
                             ]}
+                        />
+                        <LocCreationDialog
+                            show={ createLoc }
+                            exit={ () => setCreateLoc(false) }
+                            onSuccess={ request => navigate(locDetailsPath(request.id)) }
+                            locRequest={{
+                                locType: 'Identity'
+                            }}
+                            hasLinkNature={ false }
                         />
                     </Frame>
                 </Col>
