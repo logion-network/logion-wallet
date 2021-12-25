@@ -4,13 +4,13 @@ jest.mock('./Signature');
 import { stringToHex } from '@polkadot/util';
 import { setSignAndSend } from './__mocks__/SignatureMock';
 import { ApiPromise } from '@polkadot/api';
-import { createLoc, addMetadata, getLegalOfficerCase, addFile } from './LogionLoc';
+import { createPolkadotTransactionLoc, addMetadata, getLegalOfficerCase, addFile } from './LogionLoc';
 import { UUID } from './UUID';
 import { DEFAULT_LOC } from '../__mocks__/PolkadotApiMock';
 
 describe("LogionLoc", () => {
 
-    it("submits createLoc extrinsic", () => {
+    it("submits createPolkadotTransactionLoc extrinsic", () => {
         const api = new ApiPromise();
         const callback = jest.fn();
         const errorCallback = jest.fn();
@@ -19,17 +19,15 @@ describe("LogionLoc", () => {
         setSignAndSend(signAndSend);
 
         const requester = "requester";
-        const locType = 'Transaction';
 
         const locId = new UUID();
-        createLoc({
+        createPolkadotTransactionLoc({
             api,
             signerId: "signerId",
             callback,
             errorCallback,
             locId,
             requester,
-            locType,
         });
 
         expect(signAndSend).toBeCalledWith(
@@ -40,7 +38,7 @@ describe("LogionLoc", () => {
             }),
         );
 
-        expect(api.tx.logionLoc.createLoc).toBeCalledWith(locId.toHexString(), requester, locType);
+        expect(api.tx.logionLoc.createPolkadotTransactionLoc).toBeCalledWith(locId.toHexString(), requester);
     });
 
     it("submits addMetadata extrinsic", () => {
@@ -90,7 +88,7 @@ describe("LogionLoc", () => {
         });
 
         expect(loc!.owner).toEqual(DEFAULT_LOC.owner);
-        expect(loc!.requester).toEqual(DEFAULT_LOC.requester);
+        expect(loc!.requesterAddress).toEqual(DEFAULT_LOC.requester);
         expect(loc!.metadata).toEqual(DEFAULT_LOC.metadata);
         expect(loc!.files).toEqual(DEFAULT_LOC.files);
         loc!.links.forEach((link, index) => {

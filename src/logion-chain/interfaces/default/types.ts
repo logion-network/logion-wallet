@@ -47,7 +47,7 @@ export interface File extends Struct {
 /** @name LegalOfficerCaseOf */
 export interface LegalOfficerCaseOf extends Struct {
   readonly owner: AccountId;
-  readonly requester: AccountId;
+  readonly requester: Requester;
   readonly metadata: Vec<MetadataItem>;
   readonly files: Vec<File>;
   readonly closed: bool;
@@ -90,11 +90,22 @@ export interface MetadataItem extends Struct {
 /** @name PeerId */
 export interface PeerId extends Bytes {}
 
+/** @name Requester */
+export interface Requester extends Enum {
+  readonly isNone: boolean;
+  readonly isAccount: boolean;
+  readonly asAccount: AccountId;
+  readonly isLoc: boolean;
+  readonly asLoc: LocId;
+  readonly type: 'None' | 'Account' | 'Loc';
+}
+
 /** @name StorageVersion */
 export interface StorageVersion extends Enum {
   readonly isV1: boolean;
   readonly isV2MakeLocVoid: boolean;
-  readonly type: 'V1' | 'V2MakeLocVoid';
+  readonly isV3RequesterEnum: boolean;
+  readonly type: 'V1' | 'V2MakeLocVoid' | 'V3RequesterEnum';
 }
 
 /** @name TAssetBalance */

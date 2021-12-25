@@ -2,17 +2,62 @@ import { ApiPromise } from '@polkadot/api';
 import { stringToHex } from '@polkadot/util';
 import { ExtrinsicSubmissionParameters, signAndSend, Unsubscriber } from './Signature';
 import { UUID } from './UUID';
-import { LegalOfficerCase, MetadataItem, LocType, VoidInfo } from './Types';
+import { LegalOfficerCase, MetadataItem, VoidInfo } from './Types';
 import { LegalOfficerCaseOf } from './interfaces';
 
-export interface LocCreationParameters extends ExtrinsicSubmissionParameters {
+export interface LogionIdentityLocCreationParameters extends ExtrinsicSubmissionParameters {
+    api: ApiPromise;
+    locId: UUID;
+}
+
+export function createLogionIdentityLoc(parameters: LogionIdentityLocCreationParameters): Unsubscriber {
+    const {
+        api,
+        signerId,
+        callback,
+        errorCallback,
+        locId,
+    } = parameters;
+
+    return signAndSend({
+        signerId,
+        submittable: api.tx.logionLoc.createLogionIdentityLoc(locId.toHexString()),
+        callback,
+        errorCallback,
+    });
+}
+
+export interface LogionTransactionLocCreationParameters extends ExtrinsicSubmissionParameters {
+    api: ApiPromise;
+    locId: UUID;
+    requesterLocId: UUID;
+}
+
+export function createLogionTransactionLoc(parameters: LogionTransactionLocCreationParameters): Unsubscriber {
+    const {
+        api,
+        signerId,
+        callback,
+        errorCallback,
+        locId,
+        requesterLocId,
+    } = parameters;
+
+    return signAndSend({
+        signerId,
+        submittable: api.tx.logionLoc.createLogionTransactionLoc(locId.toHexString(), requesterLocId.toHexString()),
+        callback,
+        errorCallback,
+    });
+}
+
+export interface PolkadotIdentityLocCreationParameters extends ExtrinsicSubmissionParameters {
     api: ApiPromise;
     locId: UUID;
     requester: string;
-    locType: LocType;
 }
 
-export function createLoc(parameters: LocCreationParameters): Unsubscriber {
+export function createPolkadotIdentityLoc(parameters: PolkadotIdentityLocCreationParameters): Unsubscriber {
     const {
         api,
         signerId,
@@ -20,12 +65,35 @@ export function createLoc(parameters: LocCreationParameters): Unsubscriber {
         errorCallback,
         locId,
         requester,
-        locType,
     } = parameters;
 
     return signAndSend({
         signerId,
-        submittable: api.tx.logionLoc.createLoc(locId.toHexString(), requester, locType),
+        submittable: api.tx.logionLoc.createPolkadotIdentityLoc(locId.toHexString(), requester),
+        callback,
+        errorCallback,
+    });
+}
+
+export interface PolkadotTransactionLocCreationParameters extends ExtrinsicSubmissionParameters {
+    api: ApiPromise;
+    locId: UUID;
+    requester: string;
+}
+
+export function createPolkadotTransactionLoc(parameters: PolkadotTransactionLocCreationParameters): Unsubscriber {
+    const {
+        api,
+        signerId,
+        callback,
+        errorCallback,
+        locId,
+        requester,
+    } = parameters;
+
+    return signAndSend({
+        signerId,
+        submittable: api.tx.logionLoc.createPolkadotTransactionLoc(locId.toHexString(), requester),
         callback,
         errorCallback,
     });
@@ -82,7 +150,8 @@ export async function getLegalOfficerCase(
 function toModel(rawLoc: LegalOfficerCaseOf): LegalOfficerCase {
     return {
         owner: rawLoc.owner.toString(),
-        requester: rawLoc.requester.toString(),
+        requesterAddress: rawLoc.requester.isAccount ? rawLoc.requester.asAccount.toString() : undefined,
+        requesterLocId: rawLoc.requester.isLoc ? UUID.fromDecimalString(rawLoc.requester.asLoc.toString()) : undefined,
         metadata: rawLoc.metadata.toArray().map(rawItem => ({
             name: rawItem.name.toUtf8(),
             value: rawItem.value.toUtf8(),

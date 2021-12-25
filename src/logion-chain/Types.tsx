@@ -17,7 +17,8 @@ export interface Link {
 
 export interface LegalOfficerCase {
     owner: string;
-    requester: string;
+    requesterAddress?: string;
+    requesterLocId?: UUID;
     metadata: MetadataItem[];
     files: File[];
     links: Link[];
@@ -29,6 +30,16 @@ export interface LegalOfficerCase {
 
 export type LocType = 'Transaction' | 'Identity';
 
+export type IdentityLocType = 'Polkadot' | 'Logion';
+
 export interface VoidInfo {
     replacer?: UUID;
+}
+
+export function isLogionIdentityLoc(loc: LegalOfficerCase): boolean {
+    return loc.locType === 'Identity' && !loc.requesterAddress && !loc.requesterLocId;
+}
+
+export function isLogionTransactionLoc(loc: LegalOfficerCase): boolean {
+    return loc.locType === 'Transaction' && (loc.requesterLocId !== undefined && loc.requesterLocId !== null);
 }

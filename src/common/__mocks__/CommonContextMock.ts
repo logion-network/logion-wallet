@@ -5,6 +5,8 @@ import moment from 'moment';
 import { TEST_WALLET_USER } from '../../wallet-user/TestData';
 import { COLOR_THEME, DEFAULT_LEGAL_OFFICER } from '../TestData';
 import Accounts, { Account } from '../types/Accounts';
+import { CommonContext, RequestAndLoc } from "../CommonContext";
+import { IdentityLocType } from "../../logion-chain/Types";
 
 export let selectAddress = jest.fn();
 
@@ -53,8 +55,14 @@ export let refresh = jest.fn();
 
 export let authenticate = jest.fn();
 
+let openedIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null = null;
+
+let closedIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null = null;
+
+let voidIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null = null;
+
 export function useCommonContext() {
-    return {
+    const commonContext:Partial<CommonContext> = {
         selectAddress,
         accounts,
         balances,
@@ -70,8 +78,12 @@ export function useCommonContext() {
         refresh,
         authenticate,
         nodesUp: [],
-        nodesDown: []
+        nodesDown: [],
+        openedIdentityLocsByType,
+        closedIdentityLocsByType,
+        voidIdentityLocsByType,
     };
+    return commonContext;
 }
 
 export function setCurrentAddress(value: Account | undefined) {
@@ -114,4 +126,16 @@ export function setPendingLocRequests(requests: any[]) {
 
 export function setClosedLocRequests(requests: any[]) {
     closedLocRequests = requests;
+}
+
+export function setOpenedIdentityLocsByType(locs: Record<IdentityLocType, RequestAndLoc[]>) {
+    openedIdentityLocsByType = locs;
+}
+
+export function setClosedIdentityLocsByType(locs: Record<IdentityLocType, RequestAndLoc[]>) {
+    closedIdentityLocsByType = locs;
+}
+
+export function setVoidedIdentityLocsByType(locs: Record<IdentityLocType, RequestAndLoc[]>) {
+    voidIdentityLocsByType = locs;
 }

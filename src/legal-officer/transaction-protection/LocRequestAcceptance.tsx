@@ -3,7 +3,7 @@ import Alert from 'react-bootstrap/Alert';
 
 import { useLogionChain } from '../../logion-chain';
 import { UUID } from '../../logion-chain/UUID';
-import { createLoc } from '../../logion-chain/LogionLoc';
+import { createPolkadotTransactionLoc } from '../../logion-chain/LogionLoc';
 import { useCommonContext } from '../../common/CommonContext';
 import { LocRequest } from '../../common/types/ModelTypes';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
@@ -48,14 +48,13 @@ export default function LocRequestAcceptance(props: Props) {
         if(acceptState.status === AcceptStatus.LOC_CREATION_PENDING) {
             setStatus(AcceptStatus.CREATING_LOC);
             const proceed = async () => {
-                const signAndSubmit: SignAndSubmit = (setResult, setError) => createLoc({
+                const signAndSubmit: SignAndSubmit = (setResult, setError) => createPolkadotTransactionLoc({
                     api: api!,
                     signerId: accounts!.current!.address,
                     callback: setResult,
                     errorCallback: setError,
                     locId: new UUID(props.requestToAccept!.id),
-                    requester: props.requestToAccept!.requesterAddress,
-                    locType: 'Transaction',
+                    requester: props.requestToAccept!.requesterAddress!,
                 });
                 setSignAndSubmit(() => signAndSubmit);
             };

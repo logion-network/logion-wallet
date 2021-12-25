@@ -2,6 +2,7 @@ import { LocType, MetadataItem, Link } from '../../logion-chain/Types';
 import Identity from './Identity';
 import PostalAddress from './PostalAddress';
 import { File } from '../../logion-chain/Types'
+import UserIdentity from './Identity';
 
 export type ProtectionRequestStatus = "PENDING" | "REJECTED" | "ACCEPTED" | "ACTIVATED";
 
@@ -82,7 +83,8 @@ export interface LocRequestVoidInfo {
 
 export interface LocRequest {
     ownerAddress: string;
-    requesterAddress: string;
+    requesterAddress?: string | null;
+    requesterIdentityLoc?: string | null;
     description: string;
     locType: LocType;
     createdOn: string;
@@ -99,3 +101,18 @@ export interface LocRequest {
 }
 
 export type LocRequestStatus = "OPEN" | "REQUESTED" | "REJECTED" | "CLOSED";
+
+export interface LocRequestFragment {
+    requesterAddress?: string | null;
+    requesterIdentityLoc?: string | null;
+    locType: LocType;
+    userIdentity?: UserIdentity;
+}
+
+export function isLogionIdentityLoc(loc: LocRequestFragment): boolean {
+    return loc.locType === 'Identity' && !loc.requesterAddress && !loc.requesterIdentityLoc;
+}
+
+export function isLogionTransactionLoc(loc: LocRequestFragment): boolean {
+    return loc.locType === 'Transaction' && (loc.requesterIdentityLoc !== undefined && loc.requesterIdentityLoc !== null);
+}

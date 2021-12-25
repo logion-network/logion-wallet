@@ -115,6 +115,10 @@ declare module '@polkadot/api/types/storage' {
        **/
       accountLocsMap: AugmentedQuery<ApiType, (arg: AccountId | string | Uint8Array) => Observable<Option<Vec<LocId>>>, [AccountId]> & QueryableStorageEntry<ApiType, [AccountId]>;
       /**
+       * Requested LOCs by logion Identity LOC.
+       **/
+      identityLocLocsMap: AugmentedQuery<ApiType, (arg: LocId | AnyNumber | Uint8Array) => Observable<Option<Vec<LocId>>>, [LocId]> & QueryableStorageEntry<ApiType, [LocId]>;
+      /**
        * All LOCs indexed by ID.
        **/
       locMap: AugmentedQuery<ApiType, (arg: LocId | AnyNumber | Uint8Array) => Observable<Option<LegalOfficerCaseOf>>, [LocId]> & QueryableStorageEntry<ApiType, [LocId]>;

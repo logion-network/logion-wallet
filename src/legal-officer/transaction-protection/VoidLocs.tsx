@@ -7,21 +7,22 @@ import Button from "../../common/Button";
 import { useNavigate } from "react-router-dom";
 import { locDetailsPath } from "../LegalOfficerPaths";
 import ButtonGroup from "../../common/ButtonGroup";
-import { LocType } from '../../logion-chain/Types';
+import { LocType, IdentityLocType } from '../../logion-chain/Types';
 
 export interface Props {
     locType: LocType;
+    identityLocType?: IdentityLocType;
 }
 
 export default function VoidLocs(props: Props) {
-    const { voidTransactionLocs, voidIdentityLocs } = useCommonContext();
+    const { voidTransactionLocs, voidIdentityLocsByType } = useCommonContext();
     const navigate = useNavigate();
 
-    if (voidTransactionLocs === null || voidIdentityLocs === null) {
+    if (voidTransactionLocs === null || voidIdentityLocsByType === null) {
         return null;
     }
 
-    let requests = props.locType === 'Transaction' ? voidTransactionLocs : voidIdentityLocs;
+    let requests = props.locType === 'Transaction' ? voidTransactionLocs : voidIdentityLocsByType[props.identityLocType!]
 
     return (
         <Table

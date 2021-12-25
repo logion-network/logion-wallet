@@ -29,7 +29,7 @@ export default {
         LocId: "u128",
         LegalOfficerCaseOf: {
             owner: "AccountId",
-            requester: "AccountId",
+            requester: "Requester",
             metadata: "Vec<MetadataItem>",
             files: "Vec<File>",
             closed: "bool",
@@ -62,8 +62,16 @@ export default {
         StorageVersion: {
           "_enum": [
             "V1",
-            "V2MakeLocVoid"
+            "V2MakeLocVoid",
+            "V3RequesterEnum",
           ]
+        },
+        Requester: {
+            "_enum": {
+                "None": null,
+                "Account": "AccountId",
+                "Loc": "LocId"
+            }
         }
     }
 };
