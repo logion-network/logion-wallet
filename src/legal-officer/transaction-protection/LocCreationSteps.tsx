@@ -69,16 +69,16 @@ export default function LocCreationSteps(props: Props) {
                         locId: new UUID(requestToCreate!.id),
                         requester: requestToCreate!.requesterAddress!,
                     });
-                } else if(requestToCreate!.requesterLocId && requestToCreate!.locType === 'Transaction') {
+                } else if(requestToCreate!.requesterIdentityLoc && requestToCreate!.locType === 'Transaction') {
                     signAndSubmit = (setResult, setError) => createLogionTransactionLoc({
                         api: api!,
                         signerId: accounts!.current!.address,
                         callback: setResult,
                         errorCallback: setError,
                         locId: new UUID(requestToCreate!.id),
-                        requesterLocId: UUID.fromAnyString(requestToCreate!.requesterLocId!)!,
+                        requesterLocId: UUID.fromAnyString(requestToCreate!.requesterIdentityLoc!)!,
                     });
-                } else if(!requestToCreate!.requesterAddress && !requestToCreate!.requesterLocId && requestToCreate!.locType === 'Identity') {
+                } else if(!requestToCreate!.requesterAddress && !requestToCreate!.requesterIdentityLoc && requestToCreate!.locType === 'Identity') {
                     signAndSubmit = (setResult, setError) => createLogionIdentityLoc({
                         api: api!,
                         signerId: accounts!.current!.address,

@@ -1,3 +1,7 @@
+.ContextualizedLocDetails .logion-loc-tip {
+    margin-bottom: 30px;
+}
+
 .ContextualizedLocDetails .TwoSideButtonGroup {
     margin-top: 40px;
 }
@@ -13,6 +17,7 @@
 }
 
 .ContextualizedLocDetails .certificate-link {
+    position: relative;
     margin-top: 30px;
 }
 
@@ -23,6 +28,12 @@
 
 .ContextualizedLocDetails .certificate-link .CopyPasteButton {
     margin-left: 10px;
+}
+
+.ContextualizedLocDetails .certificate-link .create-logion-transaction-loc-button {
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 .ContextualizedLocDetails .CheckFileFrame {

@@ -4,19 +4,10 @@ import { useCommonContext } from '../../common/CommonContext';
 import { CreateLocRequest, createLocRequest } from '../../common/Model';
 import Dialog from '../../common/Dialog';
 import LocCreationForm, { FormValues } from "./LocCreationForm";
-import { LocRequest } from "../../common/types/ModelTypes";
+import { isLogionIdentityLoc, LocRequest, LocRequestFragment } from "../../common/types/ModelTypes";
 import LocCreationSteps from "./LocCreationSteps";
 import { useLegalOfficerContext } from '../LegalOfficerContext';
-import UserIdentity from '../../common/types/Identity';
-import { LocType } from '../../logion-chain/Types';
 import Alert from '../../common/Alert';
-
-export interface LocRequestFragment {
-    requesterAddress?: string | null;
-    requesterIdentityLoc?: string | null;
-    locType: LocType;
-    userIdentity?: UserIdentity;
-}
 
 export interface Props {
     show: boolean,
@@ -38,15 +29,24 @@ export default function LocCreationDialog(props: Props) {
     const [ linkNature, setLinkNature ] = useState<string | undefined>();
 
     const submit = useCallback((formValues: FormValues) => {
+        let userIdentity = props.locRequest.userIdentity;
+        if(!userIdentity) {
+            userIdentity = {
+                firstName: formValues.firstName!,
+                lastName: formValues.lastName!,
+                email: formValues.email!,
+                phoneNumber: formValues.phone!,
+            }
+        }
         (async function () {
             const currentAddress = accounts!.current!.address;
             const request: CreateLocRequest = {
                 ownerAddress: currentAddress,
                 requesterAddress: props.locRequest.requesterAddress ? props.locRequest.requesterAddress : undefined,
                 requesterIdentityLoc: props.locRequest.requesterIdentityLoc ? props.locRequest.requesterIdentityLoc : undefined,
-                description: formValues.description,
-                userIdentity: props.locRequest.userIdentity,
                 locType: props.locRequest.locType,
+                description: formValues.description,
+                userIdentity: userIdentity,
             }
             setNewLocRequest(await createLocRequest(axios!, request));
             if(props.hasLinkNature) {
@@ -82,7 +82,7 @@ export default function LocCreationDialog(props: Props) {
             >
                 <h3>Create a new {props.locRequest.requesterAddress !== undefined ? 'Polkadot' : 'Logion'} {props.locRequest.locType} LOC</h3>
                 {
-                    props.locRequest.locType === 'Identity' &&
+                    props.locRequest.locType === 'Identity' && !isLogionIdentityLoc(props.locRequest) &&
                     <Alert
                         variant="info"
                     >
@@ -91,12 +91,21 @@ export default function LocCreationDialog(props: Props) {
                         and under the responsibility of the Logion Officer.
                     </Alert>
                 }
+                {
+                    isLogionIdentityLoc(props.locRequest) &&
+                    <Alert
+                        variant="info"
+                    >
+                        A logion Identity LOC must be used when your client cannot have a Polkadot account to request your services. Once closed after a proper identity check, you are able to initiate legal services requests ON BEHALF of this Logion Identity LOC, representing - on the blockchain-, by extension, the client it refers.
+                    </Alert>
+                }
                 { newLocRequest === null &&
                 <LocCreationForm
                     control={ control }
                     errors={ errors }
                     colors={ colorTheme.dialog }
                     hasLinkNature={ props.hasLinkNature }
+                    showIdentityFields={ !props.locRequest.userIdentity }
                 />
                 }
                 { newLocRequest !== null &&

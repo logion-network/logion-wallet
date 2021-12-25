@@ -1,14 +1,16 @@
 import './IconTextRow.css';
-import { Children } from './types/Helpers';
+import { Children, customClassName } from './types/Helpers';
 
 export interface Props {
     icon: Children;
     text: Children;
+    className?: string;
 }
 
 export default function IconTextRow(props: Props) {
+    const className = customClassName("IconTextRow", props.className);
     return (
-        <div className="IconTextRow">
+        <div className={ className }>
             <div className="icon">
                 { props.icon }
             </div>

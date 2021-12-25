@@ -31,6 +31,7 @@ import InlineDateTime from "../../common/InlineDateTime";
 import IconTextRow from "../../common/IconTextRow";
 import Button from "../../common/Button";
 import LocCreationDialog from "./LocCreationDialog";
+import { isLogionIdentityLoc } from "../../logion-chain/Types";
 
 interface DocumentCheckResult {
     result: CheckResult;
@@ -112,199 +113,208 @@ export default function ContextualizedLocDetails() {
             onBack={ () => navigate(backPath) }
             className="ContextualizedLocDetails"
         >
-            { <>
-                <Tabs
-                    activeKey="details"
-                    onSelect={ () => {
-                    } }
-                    tabs={ [ {
-                        key: "details",
-                        title: locTabTitle,
-                        render: () => {
-                            const { date, time } = format(locRequest.createdOn);
-                            let closingDate: string;
-                            if (locRequest.closedOn !== undefined) {
-                                const { date, time } = format(locRequest.closedOn);
-                                closingDate = `${ date } / ${ time }`;
-                            } else {
-                                closingDate = "";
-                            }
-                            return <>
-                                <Row>
-                                    <Col md={ 4 }>
-                                        <LocItemDetail label="LOC ID" copyButtonText={ locId.toDecimalString() } >
-                                            { locId.toDecimalString() }
-                                        </LocItemDetail>
-                                        <LocItemDetail label="Creation date">{ date } / { time }</LocItemDetail>
-                                    </Col>
-                                    <Col md={ 4 }>
-                                        <LocItemDetail label="Description">{ locRequest?.description }</LocItemDetail>
-                                        {
-                                            locRequest.status === 'CLOSED' &&
-                                            <LocItemDetail label="Closing date" spinner={ locRequest.closedOn === undefined }>{ closingDate }</LocItemDetail>
-                                        }
-                                    </Col>
+            {
+                isLogionIdentityLoc(loc) &&
+                <IconTextRow
+                    icon={<Icon icon={{id: "tip"}} width="45px" />}
+                    text={
+                        <p><strong>Logion Identity LOC:</strong> must be used when your client cannot have a Polkadot account to request your services. Once closed after a proper identity check, you are able to initiate legal services requests ON BEHALF of this Logion Identity LOC, representing - on the blockchain-, by extension, the client it refers.</p>
+                    }
+                    className="logion-loc-tip"
+                />
+            }
+            <Tabs
+                activeKey="details"
+                onSelect={ () => {
+                } }
+                tabs={ [ {
+                    key: "details",
+                    title: locTabTitle,
+                    render: () => {
+                        const { date, time } = format(locRequest.createdOn);
+                        let closingDate: string;
+                        if (locRequest.closedOn !== undefined) {
+                            const { date, time } = format(locRequest.closedOn);
+                            closingDate = `${ date } / ${ time }`;
+                        } else {
+                            closingDate = "";
+                        }
+                        return <>
+                            <Row>
+                                <Col md={ 4 }>
+                                    <LocItemDetail label="LOC ID" copyButtonText={ locId.toDecimalString() } >
+                                        { locId.toDecimalString() }
+                                    </LocItemDetail>
+                                    <LocItemDetail label="Creation date">{ date } / { time }</LocItemDetail>
+                                </Col>
+                                <Col md={ 4 }>
+                                    <LocItemDetail label="Description">{ locRequest?.description }</LocItemDetail>
+                                    {
+                                        locRequest.status === 'CLOSED' &&
+                                        <LocItemDetail label="Closing date" spinner={ locRequest.closedOn === undefined }>{ closingDate }</LocItemDetail>
+                                    }
+                                </Col>
 
-                                    <Col md={ 4 } className="closed-icon-container">
-                                        <LocItemDetail
-                                            label="Requested by">{ locRequest.userIdentity?.firstName || "" } { locRequest.userIdentity?.lastName || "" }<br />
-                                            { locRequest.requesterAddress || "-" }
-                                        </LocItemDetail>
-                                        {
-                                            loc.closed && loc.voidInfo === undefined &&
-                                            <div className="closed-icon">
-                                                <Icon icon={ { id: "polkadot_shield" } } />
-                                            </div>
-                                        }
-                                        {
-                                            loc.voidInfo !== undefined &&
-                                            <div className="closed-icon">
-                                                <Icon icon={ { id: "void_shield" } } />
-                                            </div>
-                                        }
-                                    </Col>
-                                </Row>
-                                <LocItems matchedHash={ checkResult.hash } />
-                                {
-                                    !loc.closed && loc.voidInfo === undefined &&
-                                    <TwoSideButtonGroup
-                                        left={
-                                            <>
-                                                <LocPublicDataButton />
-                                                <LocPrivateFileButton />
-                                                <LocLinkButton />
-                                            </>
-                                        }
-                                        right={
-                                            <CloseLocButton />
-                                        }
-                                    />
-                                }
+                                <Col md={ 4 } className="closed-icon-container">
+                                    <LocItemDetail
+                                        label="Requested by">{ locRequest.userIdentity?.firstName || "" } { locRequest.userIdentity?.lastName || "" }<br />
+                                        { locRequest.requesterAddress || "-" }
+                                    </LocItemDetail>
+                                    {
+                                        loc.closed && loc.voidInfo === undefined &&
+                                        <div className="closed-icon">
+                                            <Icon icon={ { id: "polkadot_shield" } } />
+                                        </div>
+                                    }
+                                    {
+                                        loc.voidInfo !== undefined &&
+                                        <div className="closed-icon">
+                                            <Icon icon={ { id: "void_shield" } } />
+                                        </div>
+                                    }
+                                </Col>
+                            </Row>
+                            <LocItems matchedHash={ checkResult.hash } />
+                            {
+                                !loc.closed && loc.voidInfo === undefined &&
+                                <TwoSideButtonGroup
+                                    left={
+                                        <>
+                                            <LocPublicDataButton />
+                                            <LocPrivateFileButton />
+                                            <LocLinkButton />
+                                        </>
+                                    }
+                                    right={
+                                        <CloseLocButton />
+                                    }
+                                />
+                            }
+                        </>
+                    }
+                } ] }
+                borderColor={ locTabBorderColor }
+                borderWidth={ locTabBorderWidth }
+                tabColors={ tabColors }
+                flatBottom={ loc.voidInfo !== undefined }
+            />
+            {
+                loc.voidInfo !== undefined &&
+                <DangerFrame
+                    className="loc-is-void"
+                    title={ <span><Icon icon={ { id: 'void' } } width="45px" /> This LOC is VOID</span> }
+                >
+                    <p><strong>You have voided this LOC at the following date:</strong> <InlineDateTime dateTime={ locRequest?.voidInfo?.voidedOn } /></p>
+                    <p><strong>Reason:</strong> { locRequest.voidInfo?.reason || "-" }</p>
+                    {
+                        loc.voidInfo.replacer !== undefined &&
+                        <p><strong>This VOID LOC has been replaced by the following LOC: </strong>
+                            <NewTabLink
+                                href={ locDetailsPath(loc.voidInfo.replacer.toString()) }
+                                iconId="loc-link"
+                                inline
+                            >
+                                { loc.voidInfo.replacer.toDecimalString() }
+                            </NewTabLink>
+                        </p>
+                    }
+                    {
+                        loc.voidInfo.replacer === undefined &&
+                        <p>Please note that its public certificate shows a "VOID" mention to warn people that the content of the LOC is not valid anymore.</p>
+                    }
+                    {
+                        loc.voidInfo.replacer !== undefined &&
+                        <p>Please note that its public certificate shows a "VOID" mention to warn people that the content of the LOC is not valid anymore.
+                            People will be automatically redirected to the replacing LOC when accessing to the void LOC URL and a mention of the fact that
+                            the replacing LOC supersedes the void LOC will be visible on both certificates.
+                        </p>
+                    }
+                </DangerFrame>
+            }
+            <div
+                className="certificate-link"
+            >
+                <h2>Public web address (URL) of this Legal Officer Case related Certificate:</h2>
+                <p className="link">
+                    <a href={ certificateUrl } target="_blank" rel="noreferrer">{ certificateUrl }</a> <CopyPasteButton value={ certificateUrl } />
+                </p>
+                {
+                    (!loc.requesterAddress && !loc.requesterLocId && loc.closed) &&
+                    <Button
+                        onClick={ () => setCreateLoc(true) }
+                        className="create-logion-transaction-loc-button"
+                    >
+                        <Icon icon={{id: "add"}}/> Create Logion Transaction LOC
+                    </Button>
+                }
+                <LocCreationDialog
+                    show={ createLoc }
+                    exit={ () => setCreateLoc(false) }
+                    onSuccess={ request => navigate(locDetailsPath(request.id)) }
+                    locRequest={{
+                        requesterIdentityLoc: locRequest.id,
+                        locType: 'Transaction',
+                        userIdentity: locRequest.userIdentity,
+                    }}
+                    hasLinkNature={ false }
+                />
+            </div>
+            {
+                loc.replacerOf !== undefined &&
+                <DangerFrame
+                    className="loc-supersedes"
+                >
+                    <IconTextRow
+                        icon={ <Icon icon={ { id: 'void_supersede' } } width="45px" /> }
+                        text={
+                            <>
+                                <p className="frame-title">IMPORTANT: this logion Legal Officer Case (LOC) supersedes a previous LOC (VOID)</p>
+                                <p><strong>This LOC supersedes a previous LOC (VOID) since the following date:</strong> <InlineDateTime dateTime={ supersededLocRequest?.voidInfo?.voidedOn } /></p>
+                                <p><strong>For record purpose, this LOC supersedes the following LOC: </strong>
+                                    <NewTabLink
+                                        href={ locDetailsPath(loc.replacerOf.toString()) }
+                                        iconId="loc-link"
+                                        inline
+                                    >
+                                        { loc.replacerOf.toDecimalString() }
+                                    </NewTabLink>
+                                </p>
                             </>
                         }
-                    } ] }
-                    borderColor={ locTabBorderColor }
-                    borderWidth={ locTabBorderWidth }
-                    tabColors={ tabColors }
-                    flatBottom={ loc.voidInfo !== undefined }
-                />
-                {
-                    loc.voidInfo !== undefined &&
-                    <DangerFrame
-                        className="loc-is-void"
-                        title={ <span><Icon icon={ { id: 'void' } } width="45px" /> This LOC is VOID</span> }
-                    >
-                        <p><strong>You have voided this LOC at the following date:</strong> <InlineDateTime dateTime={ locRequest?.voidInfo?.voidedOn } /></p>
-                        <p><strong>Reason:</strong> { locRequest.voidInfo?.reason || "-" }</p>
-                        {
-                            loc.voidInfo.replacer !== undefined &&
-                            <p><strong>This VOID LOC has been replaced by the following LOC: </strong>
-                                <NewTabLink
-                                    href={ locDetailsPath(loc.voidInfo.replacer.toString()) }
-                                    iconId="loc-link"
-                                    inline
-                                >
-                                    { loc.voidInfo.replacer.toDecimalString() }
-                                </NewTabLink>
-                            </p>
-                        }
-                        {
-                            loc.voidInfo.replacer === undefined &&
-                            <p>Please note that its public certificate shows a "VOID" mention to warn people that the content of the LOC is not valid anymore.</p>
-                        }
-                        {
-                            loc.voidInfo.replacer !== undefined &&
-                            <p>Please note that its public certificate shows a "VOID" mention to warn people that the content of the LOC is not valid anymore.
-                                People will be automatically redirected to the replacing LOC when accessing to the void LOC URL and a mention of the fact that
-                                the replacing LOC supersedes the void LOC will be visible on both certificates.
-                            </p>
-                        }
-                    </DangerFrame>
-                }
-                <div
-                    className="certificate-link"
-                >
-                    <h2>Public web address (URL) of this Legal Officer Case related Certificate:</h2>
-                    <p className="link">
-                        <a href={ certificateUrl } target="_blank" rel="noreferrer">{ certificateUrl }</a> <CopyPasteButton value={ certificateUrl } />
-                    </p>
-                    {
-                        (!loc.requesterAddress && !loc.requesterLocId && loc.closed) &&
-                        <Button
-                            onClick={ () => setCreateLoc(true) }
-                        >
-                            <Icon icon={{id: "add"}}/> Create Logion Transaction LOC
-                        </Button>
-                    }
-                    <LocCreationDialog
-                        show={ createLoc }
-                        exit={ () => setCreateLoc(false) }
-                        onSuccess={ request => navigate(locDetailsPath(request.id)) }
-                        locRequest={{
-                            requesterIdentityLoc: locRequest.id,
-                            locType: 'Transaction'
-                        }}
-                        hasLinkNature={ false }
                     />
-                </div>
-                {
-                    loc.replacerOf !== undefined &&
-                    <DangerFrame
-                        className="loc-supersedes"
-                    >
-                        <IconTextRow
-                            icon={ <Icon icon={ { id: 'void_supersede' } } width="45px" /> }
-                            text={
-                                <>
-                                    <p className="frame-title">IMPORTANT: this logion Legal Officer Case (LOC) supersedes a previous LOC (VOID)</p>
-                                    <p><strong>This LOC supersedes a previous LOC (VOID) since the following date:</strong> <InlineDateTime dateTime={ supersededLocRequest?.voidInfo?.voidedOn } /></p>
-                                    <p><strong>For record purpose, this LOC supersedes the following LOC: </strong>
-                                        <NewTabLink
-                                            href={ locDetailsPath(loc.replacerOf.toString()) }
-                                            iconId="loc-link"
-                                            inline
-                                        >
-                                            { loc.replacerOf.toDecimalString() }
-                                        </NewTabLink>
-                                    </p>
-                                </>
-                            }
-                        />
-                    </DangerFrame>
-                }
-                <CheckFileFrame
-                    checkHash={ checkHash }
-                    checkResult={ checkResult.result }
-                />
-                {
-                    loc.voidInfo === undefined &&
-                    <DangerFrame
-                        className="void-loc"
-                    >
-                        <IconTextRow
-                            icon={ <Icon icon={ { id: 'void' } } width="31px" /> }
-                            text={
-                                <>
-                                    <p className="frame-title"> Void this LOC</p>
-                                    <p>
-                                        This action will invalidate the present LOC: the LOC status, its public certificate will show a "VOID" mention to warn people that
-                                        the content of the LOC is not valid anymore. If another replacing LOC is set, people will be automatically redirected to
-                                        the replacing LOC when accessing the void LOC URL and a mention of the fact that the replacing LOC <strong>supersedes</strong> the void
-                                        LOC will be shared on both public certificates. <strong>PLEASE USE CAREFULLY.</strong>
-                                    </p>
-                                    <ButtonGroup
-                                        align="left"
-                                    >
-                                        <VoidLocButton />
-                                        <VoidLocReplaceNewButton />
-                                        <VoidLocReplaceExistingButton />
-                                    </ButtonGroup>
-                                </>
-                            }
-                        />
-                    </DangerFrame>
-                }
-            </>
+                </DangerFrame>
+            }
+            <CheckFileFrame
+                checkHash={ checkHash }
+                checkResult={ checkResult.result }
+            />
+            {
+                loc.voidInfo === undefined &&
+                <DangerFrame
+                    className="void-loc"
+                >
+                    <IconTextRow
+                        icon={ <Icon icon={ { id: 'void' } } width="31px" /> }
+                        text={
+                            <>
+                                <p className="frame-title"> Void this LOC</p>
+                                <p>
+                                    This action will invalidate the present LOC: the LOC status, its public certificate will show a "VOID" mention to warn people that
+                                    the content of the LOC is not valid anymore. If another replacing LOC is set, people will be automatically redirected to
+                                    the replacing LOC when accessing the void LOC URL and a mention of the fact that the replacing LOC <strong>supersedes</strong> the void
+                                    LOC will be shared on both public certificates. <strong>PLEASE USE CAREFULLY.</strong>
+                                </p>
+                                <ButtonGroup
+                                    align="left"
+                                >
+                                    <VoidLocButton />
+                                    <VoidLocReplaceNewButton />
+                                    <VoidLocReplaceExistingButton />
+                                </ButtonGroup>
+                            </>
+                        }
+                    />
+                </DangerFrame>
             }
         </FullWidthPane>
     );

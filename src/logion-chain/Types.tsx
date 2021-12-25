@@ -35,3 +35,11 @@ export type IdentityLocType = 'Polkadot' | 'Logion';
 export interface VoidInfo {
     replacer?: UUID;
 }
+
+export function isLogionIdentityLoc(loc: LegalOfficerCase): boolean {
+    return loc.locType === 'Identity' && !loc.requesterAddress && !loc.requesterLocId;
+}
+
+export function isLogionTransactionLoc(loc: LegalOfficerCase): boolean {
+    return loc.locType === 'Transaction' && (loc.requesterLocId !== undefined && loc.requesterLocId !== null);
+}
