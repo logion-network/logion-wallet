@@ -97,9 +97,11 @@ type ActionType = 'SET_LOC_REQUEST'
     | 'DELETE_ITEM'
     | 'CLOSE'
     | 'VOID'
+    | 'RESET'
 
 interface Action {
     type: ActionType,
+    locId?: UUID,
     locRequest?: LocRequest,
     loc?: LegalOfficerCase,
     supersededLoc?: LegalOfficerCase,
@@ -131,6 +133,8 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
     const items = state.locItems.concat();
     const itemIndex = items.indexOf(action.locItem!);
     switch (action.type) {
+        case "RESET":
+            return initialContextValue(action.locId!)
         case "SET_LOC_REQUEST":
             return { ...state, locRequest: action.locRequest! }
         case "SET_LOC":
@@ -228,6 +232,12 @@ export function LocContextProvider(props: Props) {
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue(props.locId));
     const [ refreshing, setRefreshing ] = useState<boolean>(false);
     const [ refreshCounter, setRefreshCounter ] = useState<number>(0);
+
+    useEffect(() => {
+        if (props.locId.toString() !== contextValue.locId.toString()) {
+            dispatch({ type: 'RESET', locId: props.locId })
+        }
+    }, [ contextValue.locId, props.locId ])
 
     useEffect(() => {
         if (contextValue.locRequest === null && axiosFactory !== undefined && contextValue.loc === null && api !== null) {
