@@ -6,7 +6,7 @@ import { useSearchParams } from "react-router-dom";
 import { UUID } from "../logion-chain/UUID";
 import { useLogionChain } from "../logion-chain";
 import { getLegalOfficerCase } from "../logion-chain/LogionLoc";
-import { File, LegalOfficerCase, Link, MetadataItem, VoidInfo } from "../logion-chain/Types";
+import { File, LegalOfficerCase, Link, MetadataItem, VoidInfo, isLogionIdentityLoc } from "../logion-chain/Types";
 
 import { LegalOfficer, getOfficer } from "../common/types/LegalOfficer";
 import Button from "../common/Button";
@@ -190,7 +190,23 @@ export default function Certificate() {
                     <Col md={ 8 }>
                         <h2>Legal Officer Case</h2>
                         <h1>CERTIFICATE</h1>
-                        <p className="description">This Logion Legal Officer Case (LOC) certificate constitutes proof that a Logion Legal Officer, owner of that LOC and mentioned on this document, executed a verification process according to his/her professional standards at the requester demand with regards to data and document(s) listed below.</p>
+                        { isLogionIdentityLoc(loc) ?
+                            <div className="description">
+                                <p >This specific Logion Legal Officer Case (LOC) certificate,
+                                    known as “<strong>Logion Identity LOC</strong>”, constitutes proof that a Logion
+                                    Legal Officer, owner of that LOC and mentioned on this document, executed an
+                                    Identity verification process according to his/her professional standards at the
+                                    requester demand with regards to data and document(s) listed below.</p>
+                                <p >This Identity LOC ID ({ locId.toDecimalString() }) is used
+                                    when a Legal Officer client cannot use a polkadot account to request Legal Officer
+                                    services. The Legal Officer is able to initiate legal services requests ON BEHALF of
+                                    this Logion Identity LOC, representing - on the blockchain-, by extension, the
+                                    client it refers.</p>
+                            </div> :
+                            <p className="description">This Logion Legal Officer Case (LOC) certificate constitutes
+                                proof that a Logion Legal Officer, owner of that LOC and mentioned on this document,
+                                executed a verification process according to his/her professional standards at the
+                                requester demand with regards to data and document(s) listed below.</p> }
                     </Col>
                 </Row>
                 <Row>
@@ -200,7 +216,17 @@ export default function Certificate() {
                 </Row>
                 <Row className="preamble-footer">
                     <CertificateCell md={ 6 } label="Owner">{ loc.owner }</CertificateCell>
-                    <CertificateCell md={ 6 } label="Requester">{ loc.requesterAddress }</CertificateCell>
+
+                    { loc.requesterAddress && <CertificateCell md={ 6 } label="Requester">
+                        { loc.requesterAddress }
+                    </CertificateCell> }
+                    { loc.requesterLocId && <CertificateCell md={ 6 } label="Requester">
+                        <NewTabLink href={ fullCertificateUrl(loc.requesterLocId) }
+                                    iconId="loc-link">{ loc.requesterLocId.toDecimalString() }</NewTabLink>
+                        <p>Important note: this requester ID is not a standard public key but a Logion Identity LOC
+                            established by the same Logion Officer mentioned in this certificate.</p>
+                    </CertificateCell> }
+
                 </Row>
                 { matrix(loc.metadata, 2).map((items) => (
                     <MetadataItemCellRow items={ items } />
