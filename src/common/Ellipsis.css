@@ -1,0 +1,5 @@
+.Ellipsis {
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

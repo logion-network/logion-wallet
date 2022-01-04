@@ -31,7 +31,9 @@ import InlineDateTime from "../../common/InlineDateTime";
 import IconTextRow from "../../common/IconTextRow";
 import Button from "../../common/Button";
 import LocCreationDialog from "./LocCreationDialog";
-import { isLogionIdentityLoc } from "../../logion-chain/Types";
+import { isLogionIdentityLoc, isLogionTransactionLoc } from "../../logion-chain/Types";
+import { UUID } from "../../logion-chain/UUID";
+import Ellipsis from "../../common/Ellipsis";
 
 interface DocumentCheckResult {
     result: CheckResult;
@@ -123,6 +125,16 @@ export default function ContextualizedLocDetails() {
                     className="logion-loc-tip"
                 />
             }
+            {
+                isLogionTransactionLoc(loc) &&
+                <IconTextRow
+                    icon={<Icon icon={{id: "tip"}} width="45px" />}
+                    text={
+                        <p><strong>Logion Transaction LOC:</strong> must be used when your client cannot have a Polkadot account to request your services. You are able to initiate legal services requests ON BEHALF of the Logion Identity LOC, representing - on the blockchain-, by extension, the client it refers.</p>
+                    }
+                    className="logion-loc-tip"
+                />
+            }
             <Tabs
                 activeKey="details"
                 onSelect={ () => {
@@ -157,8 +169,25 @@ export default function ContextualizedLocDetails() {
 
                                 <Col md={ 4 } className="closed-icon-container">
                                     <LocItemDetail
-                                        label="Requested by">{ locRequest.userIdentity?.firstName || "" } { locRequest.userIdentity?.lastName || "" }<br />
-                                        { locRequest.requesterAddress || "-" }
+                                        label="Requested by"
+                                    >
+                                        { locRequest.userIdentity?.firstName || "" } { locRequest.userIdentity?.lastName || "" }
+                                        {
+                                            locRequest.requesterAddress !== null && locRequest.requesterAddress !== undefined &&
+                                            <span><br /> { locRequest.requesterAddress }</span>
+                                        }
+                                        {
+                                            locRequest.requesterIdentityLoc !== null && locRequest.requesterIdentityLoc !== undefined &&
+                                            <span><br />
+                                            <NewTabLink
+                                                href={locDetailsPath(locRequest.requesterIdentityLoc)}
+                                                iconId="loc-link"
+                                                inline
+                                            >
+                                                <Ellipsis maxWidth="250px">{ new UUID(locRequest.requesterIdentityLoc).toDecimalString() }</Ellipsis>
+                                            </NewTabLink>
+                                        </span>
+                                        }
                                     </LocItemDetail>
                                     {
                                         loc.closed && loc.voidInfo === undefined &&
