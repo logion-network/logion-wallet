@@ -6,13 +6,12 @@ import { useCommonContext } from '../../common/CommonContext';
 import { FullWidthPane } from '../../common/Dashboard';
 import Tabs from '../../common/Tabs';
 import Table, { Cell, EmptyTableMessage } from '../../common/Table';
-import { GREEN } from '../../common/ColorTheme';
 import Button from '../../common/Button';
 import Icon from '../../common/Icon';
 import Dialog from '../../common/Dialog';
 import { useUserContext } from '../UserContext';
 import './RecoveryProcess.css';
-import { CoinBalance, getBalances, buildTransferCall} from "../../logion-chain/Balances";
+import { CoinBalance, getBalances, buildTransferCall } from "../../logion-chain/Balances";
 import { AssetNameCell } from "../../common/Wallet";
 import { signAndSendAsRecovered } from "../../logion-chain/Recovery";
 import { PrefixedNumber, MILLI } from "../../logion-chain/numbers";
@@ -104,18 +103,6 @@ export default function RecoveryProcess() {
                         nodesDown.length > 0 &&
                         <NetworkWarning settingsPath={ SETTINGS_PATH } />
                 }
-                <div
-                    className="alert-activated"
-                    style={{
-                        color: GREEN,
-                        borderColor: GREEN,
-                    }}
-                >
-                    <Icon
-                        icon={{id: 'activated'}}
-                    /> You are now ready to transfer assets
-                    from recovered address { recoveredAddress }.
-                </div>
                 <Tabs
                     activeKey={ tabKey }
                     tabs={[
@@ -129,44 +116,53 @@ export default function RecoveryProcess() {
                                 />
                             ),
                             render: () => (
-                                <Table
-                                    columns={ [
-                                        {
-                                            header: "Name",
-                                            render: coinBalance => <AssetNameCell balance={ coinBalance } />,
-                                        },
-                                        {
-                                            header: "Balance",
-                                            render: coinBalance => <Cell
-                                                content={ coinBalance.balance.coefficient.toFixedPrecision(2) } />,
-                                            width: "300px",
-                                            align: 'right',
-                                        },
-                                        {
-                                            header: "Action",
-                                            render: coinBalance => <Button
-                                                variant="recovery"
-                                                onClick={ () => setRecoveredCoinBalance(coinBalance) }
-                                            >
-                                                Transfer
-                                            </Button>,
-                                            width: "300px",
-                                        }
-                                    ] }
-                                    data={ coinBalances }
-                                    renderEmpty={ () => (
-                                        <EmptyTableMessage>
-                                            {
-                                                (balances !== null) &&
-                                                "No coin to recover"
-                                            }
-                                            {
-                                                (balances === null) &&
-                                                "Fetching data..."
-                                            }
-                                        </EmptyTableMessage>
-                                    ) }
-                                />
+                                <>
+                                    <div className="content">
+                                        <Table
+                                            columns={ [
+                                                {
+                                                    header: "Name",
+                                                    render: coinBalance => <AssetNameCell balance={ coinBalance } />,
+                                                },
+                                                {
+                                                    header: "Balance",
+                                                    render: coinBalance => <Cell
+                                                        content={ coinBalance.balance.coefficient.toFixedPrecision(2) } />,
+                                                    width: "300px",
+                                                    align: 'right',
+                                                },
+                                                {
+                                                    header: "Action",
+                                                    render: coinBalance => <Button
+                                                        variant="recovery"
+                                                        onClick={ () => setRecoveredCoinBalance(coinBalance) }
+                                                    >
+                                                        Transfer
+                                                    </Button>,
+                                                    width: "300px",
+                                                }
+                                            ] }
+                                            data={ coinBalances }
+                                            renderEmpty={ () => (
+                                                <EmptyTableMessage>
+                                                    {
+                                                        (balances !== null) &&
+                                                        "No coin to recover"
+                                                    }
+                                                    {
+                                                        (balances === null) &&
+                                                        "Fetching data..."
+                                                    }
+                                                </EmptyTableMessage>
+                                            ) }
+                                        />
+                                    </div>
+                                    <div className="recovery-process-footer">
+                                        <img className="recovery-process-footer-image"
+                                             src={ process.env.PUBLIC_URL + "/assets/recovery-process.png" }
+                                             alt="legal officer giving key" />
+                                    </div>
+                                </>
                             )
                         }
                     ] }

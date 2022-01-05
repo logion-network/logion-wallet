@@ -31,3 +31,31 @@
 .RecoveryProcess .NetworkWarning+.alert-activated {
     margin-top: 30px;
 }
+
+.RecoveryProcess .tab-content {
+    padding: 0;
+}
+
+.RecoveryProcess .content {
+    padding: 20px;
+}
+
+.RecoveryProcess .Table .body {
+    overflow-y: auto;
+    height: calc(100vh - 575px);
+}
+
+.RecoveryProcess .recovery-process-footer {
+    background: linear-gradient(to top, #e95b5b7f, #152665 50%);
+    position: relative;
+    height: 230px;
+    border-radius: 9px;
+}
+
+.RecoveryProcess .recovery-process-footer-image {
+    position: absolute;
+    display: block;
+    bottom: 0;
+    right: 30px;
+}
+
