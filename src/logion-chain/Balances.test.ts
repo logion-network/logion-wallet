@@ -6,7 +6,7 @@ import {
     getAccountData,
     getBalances,
 } from './Balances';
-import { PrefixedNumber, ATTO, NONE } from '../logion-chain/numbers';
+import { PrefixedNumber, ATTO, NONE } from './numbers';
 
 test("Getting account data", async () => {
     const api = new ApiPromise();
@@ -31,7 +31,7 @@ test("Getting balances", async () => {
     });
 
     expect(data[0].balance).toStrictEqual(new PrefixedNumber("42", ATTO));
-    expect(data[0].coin.id).toBe("log");
+    expect(data[0].coin.id).toBe("lgnt");
     expect(data[0].level).toBe(0.42000000000000004);
 
     expect(data[1].balance).toStrictEqual(new PrefixedNumber("0", NONE));

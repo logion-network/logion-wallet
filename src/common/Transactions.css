@@ -1,6 +1,7 @@
 .Transactions .frame-title img {
     margin-left: 20px;
     margin-right: 10px;
+    height: 36px;
 }
 
 .Transactions .WalletGauge {

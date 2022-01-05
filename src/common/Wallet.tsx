@@ -74,13 +74,13 @@ export function Content(props: Props) {
                             {
                                 header: "Asset name",
                                 render: balance => <AssetNameCell balance={ balance } />,
-                                width: "180px",
+                                width: "190px",
                                 align: 'left',
                             },
                             {
                                 header: "Balance",
                                 render: balance => <Cell content={ balance.balance.coefficient.toFixedPrecision(2) } />,
-                                width: "150px",
+                                width: "140px",
                                 align: 'right',
                             },
                             {

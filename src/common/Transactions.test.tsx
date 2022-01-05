@@ -16,7 +16,7 @@ test('renders null with missing data', () => {
 });
 
 test('renders with all data', () => {
-    setParams({coinId: 'log'});
+    setParams({coinId: 'lgnt'});
     setBalances([ DEFAULT_COIN_BALANCE ]);
     setTransactions([ DEFAULT_TRANSACTION ]);
     const result = shallowRender(<Transactions
@@ -26,7 +26,7 @@ test('renders with all data', () => {
 });
 
 test('renders failed transaction', () => {
-    setParams({coinId: 'log'});
+    setParams({coinId: 'lgnt'});
     setBalances([ DEFAULT_COIN_BALANCE ]);
     setTransactions([ DEFAULT_FAILED_TRANSACTION ]);
     const result = shallowRender(<Transactions
