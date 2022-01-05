@@ -16,24 +16,11 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
   <Frame
     className="ProtectionRecoveryRequest"
   >
-    <div
-      className="alert-activated"
-      style={
-        Object {
-          "borderColor": "#37ad4b",
-          "color": "#37ad4b",
-        }
-      }
-    >
-      <Icon
-        icon={
-          Object {
-            "id": "activated",
-          }
-        }
-      />
-       Your Logion Trust Protection is active
-    </div>
+    <Header
+      color="#37ad4b"
+      icon="activated"
+      text="Your Logion Trust Protection is active"
+    />
     <ExtrinsicSubmitter
       id="activatedProtection"
       onError={[Function]}
@@ -41,76 +28,205 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
       signAndSubmit={null}
       successMessage="Protection successfully activated."
     />
-    <LegalOfficers
-      legalOfficer1={
-        Object {
-          "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-          "details": "MODERO
+    <Row
+      className="legal-officers"
+    >
+      <Col
+        md={6}
+      >
+        <SelectLegalOfficer
+          legalOfficer={
+            Object {
+              "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "details": "MODERO
 Huissier de Justice Etterbeek
 Rue Beckers 17
 1040 Etterbeek
 Belgique
 Tel: +32 498 237 107",
-          "email": "patrick@logion.network",
-          "name": "Patrick Gielen",
-        }
-      }
-      legalOfficer1Status="ACTIVATED"
-      legalOfficer2={
-        Object {
-          "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-          "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-          "email": "g.grain@adrastee-lyon.fr",
-          "name": "Guillaume Grain",
-        }
-      }
-      legalOfficer2Status="ACTIVATED"
-      legalOfficers={
-        Array [
-          Object {
-            "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-            "details": "MODERO
+              "email": "patrick@logion.network",
+              "name": "Patrick Gielen",
+            }
+          }
+          legalOfficerNumber={1}
+          legalOfficers={
+            Array [
+              Object {
+                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "details": "MODERO
 Huissier de Justice Etterbeek
 Rue Beckers 17
 1040 Etterbeek
 Belgique
 Tel: +32 498 237 107",
-            "email": "patrick@logion.network",
-            "name": "Patrick Gielen",
-          },
-          Object {
-            "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-            "details": "SELARL ADRASTEE
+                "email": "patrick@logion.network",
+                "name": "Patrick Gielen",
+              },
+              Object {
+                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "details": "SELARL ADRASTEE
 Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
 France
 Tel: +33 4 78 52 87 56",
-            "email": "g.grain@adrastee-lyon.fr",
-            "name": "Guillaume Grain",
-          },
-          Object {
-            "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-            "details": "AUXILIA CONSEILS 18
+                "email": "g.grain@adrastee-lyon.fr",
+                "name": "Guillaume Grain",
+              },
+              Object {
+                "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+                "details": "AUXILIA CONSEILS 18
 Huissiers de Justice associés
 7 rue Jean Francois Champollion Parc Comitec
 18000 Bourges
 France
 Tel: +33 2 48 67 50 50",
-            "email": "alain.barland@auxilia-conseils.com",
-            "name": "Alain Barland",
-          },
-        ]
-      }
-      mode="view"
-      setLegalOfficer1={[Function]}
-      setLegalOfficer2={[Function]}
-    />
+                "email": "alain.barland@auxilia-conseils.com",
+                "name": "Alain Barland",
+              },
+            ]
+          }
+          mode="view"
+          otherLegalOfficer={
+            Object {
+              "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+              "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France
+Tel: +33 4 78 52 87 56",
+              "email": "g.grain@adrastee-lyon.fr",
+              "name": "Guillaume Grain",
+            }
+          }
+          status="ACTIVATED"
+        />
+      </Col>
+      <Col
+        md={6}
+      >
+        <SelectLegalOfficer
+          legalOfficer={
+            Object {
+              "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+              "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France
+Tel: +33 4 78 52 87 56",
+              "email": "g.grain@adrastee-lyon.fr",
+              "name": "Guillaume Grain",
+            }
+          }
+          legalOfficerNumber={2}
+          legalOfficers={
+            Array [
+              Object {
+                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "details": "MODERO
+Huissier de Justice Etterbeek
+Rue Beckers 17
+1040 Etterbeek
+Belgique
+Tel: +32 498 237 107",
+                "email": "patrick@logion.network",
+                "name": "Patrick Gielen",
+              },
+              Object {
+                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France
+Tel: +33 4 78 52 87 56",
+                "email": "g.grain@adrastee-lyon.fr",
+                "name": "Guillaume Grain",
+              },
+              Object {
+                "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+                "details": "AUXILIA CONSEILS 18
+Huissiers de Justice associés
+7 rue Jean Francois Champollion Parc Comitec
+18000 Bourges
+France
+Tel: +33 2 48 67 50 50",
+                "email": "alain.barland@auxilia-conseils.com",
+                "name": "Alain Barland",
+              },
+            ]
+          }
+          mode="view"
+          otherLegalOfficer={
+            Object {
+              "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "details": "MODERO
+Huissier de Justice Etterbeek
+Rue Beckers 17
+1040 Etterbeek
+Belgique
+Tel: +32 498 237 107",
+              "email": "patrick@logion.network",
+              "name": "Patrick Gielen",
+            }
+          }
+          status="ACTIVATED"
+        />
+      </Col>
+    </Row>
+    <Row
+      className="footer"
+    >
+      <Col
+        className="legal-officers-images"
+        md={4}
+      >
+        <img
+          alt="male legal officer"
+          className="legal-officer-male-image"
+          src="/assets/landing/protection_male.svg"
+        />
+        <img
+          alt="female legal officer"
+          className="legal-officer-female-image"
+          src="/assets/landing/protection_female.svg"
+        />
+      </Col>
+      <Col
+        className="legal-officers-text"
+        md={8}
+      >
+        <p
+          className="foundation"
+        >
+          <strong>
+            The foundation of
+          </strong>
+           your protection
+        </p>
+        <p>
+          In charge of a 
+          <strong>
+            public office
+          </strong>
+          , Logion Legal Officers are 
+          <strong>
+            identified Judicial Officers
+          </strong>
+          ,
+          <br />
+          who apply a strict code of ethics and are 
+          <strong>
+            legaly responsible
+          </strong>
+           for their actions
+          <br />
+          while legally securing your digital assets and digital transactions.
+        </p>
+      </Col>
+    </Row>
   </Frame>
 </FullWidthPane>
 `;
@@ -131,13 +247,11 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
   <Frame
     className="ProtectionRecoveryRequest"
   >
-    <Alert
-      variant="info"
-    >
-      You are now ready to claim the access to address 
-      toRecover
-      .
-    </Alert>
+    <Header
+      color="#37ad4b"
+      icon="activated"
+      text="You are now ready to claim the access to address toRecover."
+    />
     <ExtrinsicSubmitter
       id="activatedProtection"
       onError={[Function]}
@@ -158,76 +272,205 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
       signAndSubmit={null}
       successMessage="Recovery successfully initiated."
     />
-    <LegalOfficers
-      legalOfficer1={
-        Object {
-          "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-          "details": "MODERO
+    <Row
+      className="legal-officers"
+    >
+      <Col
+        md={6}
+      >
+        <SelectLegalOfficer
+          legalOfficer={
+            Object {
+              "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "details": "MODERO
 Huissier de Justice Etterbeek
 Rue Beckers 17
 1040 Etterbeek
 Belgique
 Tel: +32 498 237 107",
-          "email": "patrick@logion.network",
-          "name": "Patrick Gielen",
-        }
-      }
-      legalOfficer1Status="ACTIVATED"
-      legalOfficer2={
-        Object {
-          "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-          "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-          "email": "g.grain@adrastee-lyon.fr",
-          "name": "Guillaume Grain",
-        }
-      }
-      legalOfficer2Status="ACTIVATED"
-      legalOfficers={
-        Array [
-          Object {
-            "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-            "details": "MODERO
+              "email": "patrick@logion.network",
+              "name": "Patrick Gielen",
+            }
+          }
+          legalOfficerNumber={1}
+          legalOfficers={
+            Array [
+              Object {
+                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "details": "MODERO
 Huissier de Justice Etterbeek
 Rue Beckers 17
 1040 Etterbeek
 Belgique
 Tel: +32 498 237 107",
-            "email": "patrick@logion.network",
-            "name": "Patrick Gielen",
-          },
-          Object {
-            "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-            "details": "SELARL ADRASTEE
+                "email": "patrick@logion.network",
+                "name": "Patrick Gielen",
+              },
+              Object {
+                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "details": "SELARL ADRASTEE
 Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
 France
 Tel: +33 4 78 52 87 56",
-            "email": "g.grain@adrastee-lyon.fr",
-            "name": "Guillaume Grain",
-          },
-          Object {
-            "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-            "details": "AUXILIA CONSEILS 18
+                "email": "g.grain@adrastee-lyon.fr",
+                "name": "Guillaume Grain",
+              },
+              Object {
+                "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+                "details": "AUXILIA CONSEILS 18
 Huissiers de Justice associés
 7 rue Jean Francois Champollion Parc Comitec
 18000 Bourges
 France
 Tel: +33 2 48 67 50 50",
-            "email": "alain.barland@auxilia-conseils.com",
-            "name": "Alain Barland",
-          },
-        ]
-      }
-      mode="view"
-      setLegalOfficer1={[Function]}
-      setLegalOfficer2={[Function]}
-    />
+                "email": "alain.barland@auxilia-conseils.com",
+                "name": "Alain Barland",
+              },
+            ]
+          }
+          mode="view"
+          otherLegalOfficer={
+            Object {
+              "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+              "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France
+Tel: +33 4 78 52 87 56",
+              "email": "g.grain@adrastee-lyon.fr",
+              "name": "Guillaume Grain",
+            }
+          }
+          status="ACTIVATED"
+        />
+      </Col>
+      <Col
+        md={6}
+      >
+        <SelectLegalOfficer
+          legalOfficer={
+            Object {
+              "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+              "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France
+Tel: +33 4 78 52 87 56",
+              "email": "g.grain@adrastee-lyon.fr",
+              "name": "Guillaume Grain",
+            }
+          }
+          legalOfficerNumber={2}
+          legalOfficers={
+            Array [
+              Object {
+                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "details": "MODERO
+Huissier de Justice Etterbeek
+Rue Beckers 17
+1040 Etterbeek
+Belgique
+Tel: +32 498 237 107",
+                "email": "patrick@logion.network",
+                "name": "Patrick Gielen",
+              },
+              Object {
+                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France
+Tel: +33 4 78 52 87 56",
+                "email": "g.grain@adrastee-lyon.fr",
+                "name": "Guillaume Grain",
+              },
+              Object {
+                "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+                "details": "AUXILIA CONSEILS 18
+Huissiers de Justice associés
+7 rue Jean Francois Champollion Parc Comitec
+18000 Bourges
+France
+Tel: +33 2 48 67 50 50",
+                "email": "alain.barland@auxilia-conseils.com",
+                "name": "Alain Barland",
+              },
+            ]
+          }
+          mode="view"
+          otherLegalOfficer={
+            Object {
+              "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "details": "MODERO
+Huissier de Justice Etterbeek
+Rue Beckers 17
+1040 Etterbeek
+Belgique
+Tel: +32 498 237 107",
+              "email": "patrick@logion.network",
+              "name": "Patrick Gielen",
+            }
+          }
+          status="ACTIVATED"
+        />
+      </Col>
+    </Row>
+    <Row
+      className="footer"
+    >
+      <Col
+        className="legal-officers-images"
+        md={4}
+      >
+        <img
+          alt="male legal officer"
+          className="legal-officer-male-image"
+          src="/assets/landing/protection_male.svg"
+        />
+        <img
+          alt="female legal officer"
+          className="legal-officer-female-image"
+          src="/assets/landing/protection_female.svg"
+        />
+      </Col>
+      <Col
+        className="legal-officers-text"
+        md={8}
+      >
+        <p
+          className="foundation"
+        >
+          <strong>
+            The foundation of
+          </strong>
+           your protection
+        </p>
+        <p>
+          In charge of a 
+          <strong>
+            public office
+          </strong>
+          , Logion Legal Officers are 
+          <strong>
+            identified Judicial Officers
+          </strong>
+          ,
+          <br />
+          who apply a strict code of ethics and are 
+          <strong>
+            legaly responsible
+          </strong>
+           for their actions
+          <br />
+          while legally securing your digital assets and digital transactions.
+        </p>
+      </Col>
+    </Row>
   </Frame>
 </FullWidthPane>
 `;
@@ -248,24 +491,11 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
   <Frame
     className="ProtectionRecoveryRequest"
   >
-    <div
-      className="alert-activated"
-      style={
-        Object {
-          "borderColor": "#37ad4b",
-          "color": "#37ad4b",
-        }
-      }
-    >
-      <Icon
-        icon={
-          Object {
-            "id": "activated",
-          }
-        }
-      />
-       Your Logion Trust Protection is active
-    </div>
+    <Header
+      color="#37ad4b"
+      icon="activated"
+      text="Your Logion Trust Protection is active"
+    />
     <ExtrinsicSubmitter
       id="activatedProtection"
       onError={[Function]}
@@ -273,76 +503,205 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
       signAndSubmit={null}
       successMessage="Protection successfully activated."
     />
-    <LegalOfficers
-      legalOfficer1={
-        Object {
-          "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-          "details": "MODERO
+    <Row
+      className="legal-officers"
+    >
+      <Col
+        md={6}
+      >
+        <SelectLegalOfficer
+          legalOfficer={
+            Object {
+              "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "details": "MODERO
 Huissier de Justice Etterbeek
 Rue Beckers 17
 1040 Etterbeek
 Belgique
 Tel: +32 498 237 107",
-          "email": "patrick@logion.network",
-          "name": "Patrick Gielen",
-        }
-      }
-      legalOfficer1Status="ACTIVATED"
-      legalOfficer2={
-        Object {
-          "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-          "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-          "email": "g.grain@adrastee-lyon.fr",
-          "name": "Guillaume Grain",
-        }
-      }
-      legalOfficer2Status="ACTIVATED"
-      legalOfficers={
-        Array [
-          Object {
-            "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-            "details": "MODERO
+              "email": "patrick@logion.network",
+              "name": "Patrick Gielen",
+            }
+          }
+          legalOfficerNumber={1}
+          legalOfficers={
+            Array [
+              Object {
+                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "details": "MODERO
 Huissier de Justice Etterbeek
 Rue Beckers 17
 1040 Etterbeek
 Belgique
 Tel: +32 498 237 107",
-            "email": "patrick@logion.network",
-            "name": "Patrick Gielen",
-          },
-          Object {
-            "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-            "details": "SELARL ADRASTEE
+                "email": "patrick@logion.network",
+                "name": "Patrick Gielen",
+              },
+              Object {
+                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "details": "SELARL ADRASTEE
 Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
 France
 Tel: +33 4 78 52 87 56",
-            "email": "g.grain@adrastee-lyon.fr",
-            "name": "Guillaume Grain",
-          },
-          Object {
-            "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-            "details": "AUXILIA CONSEILS 18
+                "email": "g.grain@adrastee-lyon.fr",
+                "name": "Guillaume Grain",
+              },
+              Object {
+                "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+                "details": "AUXILIA CONSEILS 18
 Huissiers de Justice associés
 7 rue Jean Francois Champollion Parc Comitec
 18000 Bourges
 France
 Tel: +33 2 48 67 50 50",
-            "email": "alain.barland@auxilia-conseils.com",
-            "name": "Alain Barland",
-          },
-        ]
-      }
-      mode="view"
-      setLegalOfficer1={[Function]}
-      setLegalOfficer2={[Function]}
-    />
+                "email": "alain.barland@auxilia-conseils.com",
+                "name": "Alain Barland",
+              },
+            ]
+          }
+          mode="view"
+          otherLegalOfficer={
+            Object {
+              "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+              "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France
+Tel: +33 4 78 52 87 56",
+              "email": "g.grain@adrastee-lyon.fr",
+              "name": "Guillaume Grain",
+            }
+          }
+          status="ACTIVATED"
+        />
+      </Col>
+      <Col
+        md={6}
+      >
+        <SelectLegalOfficer
+          legalOfficer={
+            Object {
+              "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+              "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France
+Tel: +33 4 78 52 87 56",
+              "email": "g.grain@adrastee-lyon.fr",
+              "name": "Guillaume Grain",
+            }
+          }
+          legalOfficerNumber={2}
+          legalOfficers={
+            Array [
+              Object {
+                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "details": "MODERO
+Huissier de Justice Etterbeek
+Rue Beckers 17
+1040 Etterbeek
+Belgique
+Tel: +32 498 237 107",
+                "email": "patrick@logion.network",
+                "name": "Patrick Gielen",
+              },
+              Object {
+                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France
+Tel: +33 4 78 52 87 56",
+                "email": "g.grain@adrastee-lyon.fr",
+                "name": "Guillaume Grain",
+              },
+              Object {
+                "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+                "details": "AUXILIA CONSEILS 18
+Huissiers de Justice associés
+7 rue Jean Francois Champollion Parc Comitec
+18000 Bourges
+France
+Tel: +33 2 48 67 50 50",
+                "email": "alain.barland@auxilia-conseils.com",
+                "name": "Alain Barland",
+              },
+            ]
+          }
+          mode="view"
+          otherLegalOfficer={
+            Object {
+              "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "details": "MODERO
+Huissier de Justice Etterbeek
+Rue Beckers 17
+1040 Etterbeek
+Belgique
+Tel: +32 498 237 107",
+              "email": "patrick@logion.network",
+              "name": "Patrick Gielen",
+            }
+          }
+          status="ACTIVATED"
+        />
+      </Col>
+    </Row>
+    <Row
+      className="footer"
+    >
+      <Col
+        className="legal-officers-images"
+        md={4}
+      >
+        <img
+          alt="male legal officer"
+          className="legal-officer-male-image"
+          src="/assets/landing/protection_male.svg"
+        />
+        <img
+          alt="female legal officer"
+          className="legal-officer-female-image"
+          src="/assets/landing/protection_female.svg"
+        />
+      </Col>
+      <Col
+        className="legal-officers-text"
+        md={8}
+      >
+        <p
+          className="foundation"
+        >
+          <strong>
+            The foundation of
+          </strong>
+           your protection
+        </p>
+        <p>
+          In charge of a 
+          <strong>
+            public office
+          </strong>
+          , Logion Legal Officers are 
+          <strong>
+            identified Judicial Officers
+          </strong>
+          ,
+          <br />
+          who apply a strict code of ethics and are 
+          <strong>
+            legaly responsible
+          </strong>
+           for their actions
+          <br />
+          while legally securing your digital assets and digital transactions.
+        </p>
+      </Col>
+    </Row>
   </Frame>
 </FullWidthPane>
 `;
@@ -366,13 +725,11 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
   <Frame
     className="ProtectionRecoveryRequest"
   >
-    <Alert
-      variant="info"
-    >
-      You are now ready to claim the access to address 
-      toRecover
-      .
-    </Alert>
+    <Header
+      color="#37ad4b"
+      icon="activated"
+      text="You are now ready to claim the access to address toRecover."
+    />
     <ExtrinsicSubmitter
       id="activatedProtection"
       onError={[Function]}
@@ -393,76 +750,205 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
       signAndSubmit={null}
       successMessage="Recovery successfully initiated."
     />
-    <LegalOfficers
-      legalOfficer1={
-        Object {
-          "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-          "details": "MODERO
+    <Row
+      className="legal-officers"
+    >
+      <Col
+        md={6}
+      >
+        <SelectLegalOfficer
+          legalOfficer={
+            Object {
+              "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "details": "MODERO
 Huissier de Justice Etterbeek
 Rue Beckers 17
 1040 Etterbeek
 Belgique
 Tel: +32 498 237 107",
-          "email": "patrick@logion.network",
-          "name": "Patrick Gielen",
-        }
-      }
-      legalOfficer1Status="ACTIVATED"
-      legalOfficer2={
-        Object {
-          "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-          "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-          "email": "g.grain@adrastee-lyon.fr",
-          "name": "Guillaume Grain",
-        }
-      }
-      legalOfficer2Status="ACTIVATED"
-      legalOfficers={
-        Array [
-          Object {
-            "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-            "details": "MODERO
+              "email": "patrick@logion.network",
+              "name": "Patrick Gielen",
+            }
+          }
+          legalOfficerNumber={1}
+          legalOfficers={
+            Array [
+              Object {
+                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "details": "MODERO
 Huissier de Justice Etterbeek
 Rue Beckers 17
 1040 Etterbeek
 Belgique
 Tel: +32 498 237 107",
-            "email": "patrick@logion.network",
-            "name": "Patrick Gielen",
-          },
-          Object {
-            "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-            "details": "SELARL ADRASTEE
+                "email": "patrick@logion.network",
+                "name": "Patrick Gielen",
+              },
+              Object {
+                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "details": "SELARL ADRASTEE
 Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
 France
 Tel: +33 4 78 52 87 56",
-            "email": "g.grain@adrastee-lyon.fr",
-            "name": "Guillaume Grain",
-          },
-          Object {
-            "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-            "details": "AUXILIA CONSEILS 18
+                "email": "g.grain@adrastee-lyon.fr",
+                "name": "Guillaume Grain",
+              },
+              Object {
+                "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+                "details": "AUXILIA CONSEILS 18
 Huissiers de Justice associés
 7 rue Jean Francois Champollion Parc Comitec
 18000 Bourges
 France
 Tel: +33 2 48 67 50 50",
-            "email": "alain.barland@auxilia-conseils.com",
-            "name": "Alain Barland",
-          },
-        ]
-      }
-      mode="view"
-      setLegalOfficer1={[Function]}
-      setLegalOfficer2={[Function]}
-    />
+                "email": "alain.barland@auxilia-conseils.com",
+                "name": "Alain Barland",
+              },
+            ]
+          }
+          mode="view"
+          otherLegalOfficer={
+            Object {
+              "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+              "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France
+Tel: +33 4 78 52 87 56",
+              "email": "g.grain@adrastee-lyon.fr",
+              "name": "Guillaume Grain",
+            }
+          }
+          status="ACTIVATED"
+        />
+      </Col>
+      <Col
+        md={6}
+      >
+        <SelectLegalOfficer
+          legalOfficer={
+            Object {
+              "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+              "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France
+Tel: +33 4 78 52 87 56",
+              "email": "g.grain@adrastee-lyon.fr",
+              "name": "Guillaume Grain",
+            }
+          }
+          legalOfficerNumber={2}
+          legalOfficers={
+            Array [
+              Object {
+                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "details": "MODERO
+Huissier de Justice Etterbeek
+Rue Beckers 17
+1040 Etterbeek
+Belgique
+Tel: +32 498 237 107",
+                "email": "patrick@logion.network",
+                "name": "Patrick Gielen",
+              },
+              Object {
+                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France
+Tel: +33 4 78 52 87 56",
+                "email": "g.grain@adrastee-lyon.fr",
+                "name": "Guillaume Grain",
+              },
+              Object {
+                "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+                "details": "AUXILIA CONSEILS 18
+Huissiers de Justice associés
+7 rue Jean Francois Champollion Parc Comitec
+18000 Bourges
+France
+Tel: +33 2 48 67 50 50",
+                "email": "alain.barland@auxilia-conseils.com",
+                "name": "Alain Barland",
+              },
+            ]
+          }
+          mode="view"
+          otherLegalOfficer={
+            Object {
+              "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "details": "MODERO
+Huissier de Justice Etterbeek
+Rue Beckers 17
+1040 Etterbeek
+Belgique
+Tel: +32 498 237 107",
+              "email": "patrick@logion.network",
+              "name": "Patrick Gielen",
+            }
+          }
+          status="ACTIVATED"
+        />
+      </Col>
+    </Row>
+    <Row
+      className="footer"
+    >
+      <Col
+        className="legal-officers-images"
+        md={4}
+      >
+        <img
+          alt="male legal officer"
+          className="legal-officer-male-image"
+          src="/assets/landing/protection_male.svg"
+        />
+        <img
+          alt="female legal officer"
+          className="legal-officer-female-image"
+          src="/assets/landing/protection_female.svg"
+        />
+      </Col>
+      <Col
+        className="legal-officers-text"
+        md={8}
+      >
+        <p
+          className="foundation"
+        >
+          <strong>
+            The foundation of
+          </strong>
+           your protection
+        </p>
+        <p>
+          In charge of a 
+          <strong>
+            public office
+          </strong>
+          , Logion Legal Officers are 
+          <strong>
+            identified Judicial Officers
+          </strong>
+          ,
+          <br />
+          who apply a strict code of ethics and are 
+          <strong>
+            legaly responsible
+          </strong>
+           for their actions
+          <br />
+          while legally securing your digital assets and digital transactions.
+        </p>
+      </Col>
+    </Row>
   </Frame>
 </FullWidthPane>
 `;
@@ -483,11 +969,14 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
   <Frame
     className="ProtectionRecoveryRequest"
   >
-    <Alert
-      variant="info"
-    >
-      Your Logion Trust Protection request has been submitted. Your Legal Officers will contact you as soon as possible to finalize the KYC process. Please note that, after the successful completion of one of your Legal Officer approval processes, you will be able to use all features provided by your logion account dashboard.
-    </Alert>
+    <Header
+      color="#ff9b3f"
+      icon="pending"
+      text="Your Logion Trust Protection request has been submitted. Your Legal Officers
+                        will contact you as soon as possible to finalize the KYC process. Please note that, after the successful
+                        completion of one of your Legal Officer approval processes, you will be able to use all features
+                        provided by your logion account dashboard."
+    />
     <ExtrinsicSubmitter
       id="activatedProtection"
       onError={[Function]}
@@ -495,76 +984,205 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
       signAndSubmit={null}
       successMessage="Protection successfully activated."
     />
-    <LegalOfficers
-      legalOfficer1={
-        Object {
-          "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-          "details": "MODERO
+    <Row
+      className="legal-officers"
+    >
+      <Col
+        md={6}
+      >
+        <SelectLegalOfficer
+          legalOfficer={
+            Object {
+              "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "details": "MODERO
 Huissier de Justice Etterbeek
 Rue Beckers 17
 1040 Etterbeek
 Belgique
 Tel: +32 498 237 107",
-          "email": "patrick@logion.network",
-          "name": "Patrick Gielen",
-        }
-      }
-      legalOfficer1Status="PENDING"
-      legalOfficer2={
-        Object {
-          "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-          "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-          "email": "g.grain@adrastee-lyon.fr",
-          "name": "Guillaume Grain",
-        }
-      }
-      legalOfficer2Status="PENDING"
-      legalOfficers={
-        Array [
-          Object {
-            "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-            "details": "MODERO
+              "email": "patrick@logion.network",
+              "name": "Patrick Gielen",
+            }
+          }
+          legalOfficerNumber={1}
+          legalOfficers={
+            Array [
+              Object {
+                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "details": "MODERO
 Huissier de Justice Etterbeek
 Rue Beckers 17
 1040 Etterbeek
 Belgique
 Tel: +32 498 237 107",
-            "email": "patrick@logion.network",
-            "name": "Patrick Gielen",
-          },
-          Object {
-            "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-            "details": "SELARL ADRASTEE
+                "email": "patrick@logion.network",
+                "name": "Patrick Gielen",
+              },
+              Object {
+                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "details": "SELARL ADRASTEE
 Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
 France
 Tel: +33 4 78 52 87 56",
-            "email": "g.grain@adrastee-lyon.fr",
-            "name": "Guillaume Grain",
-          },
-          Object {
-            "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-            "details": "AUXILIA CONSEILS 18
+                "email": "g.grain@adrastee-lyon.fr",
+                "name": "Guillaume Grain",
+              },
+              Object {
+                "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+                "details": "AUXILIA CONSEILS 18
 Huissiers de Justice associés
 7 rue Jean Francois Champollion Parc Comitec
 18000 Bourges
 France
 Tel: +33 2 48 67 50 50",
-            "email": "alain.barland@auxilia-conseils.com",
-            "name": "Alain Barland",
-          },
-        ]
-      }
-      mode="view"
-      setLegalOfficer1={[Function]}
-      setLegalOfficer2={[Function]}
-    />
+                "email": "alain.barland@auxilia-conseils.com",
+                "name": "Alain Barland",
+              },
+            ]
+          }
+          mode="view"
+          otherLegalOfficer={
+            Object {
+              "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+              "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France
+Tel: +33 4 78 52 87 56",
+              "email": "g.grain@adrastee-lyon.fr",
+              "name": "Guillaume Grain",
+            }
+          }
+          status="PENDING"
+        />
+      </Col>
+      <Col
+        md={6}
+      >
+        <SelectLegalOfficer
+          legalOfficer={
+            Object {
+              "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+              "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France
+Tel: +33 4 78 52 87 56",
+              "email": "g.grain@adrastee-lyon.fr",
+              "name": "Guillaume Grain",
+            }
+          }
+          legalOfficerNumber={2}
+          legalOfficers={
+            Array [
+              Object {
+                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "details": "MODERO
+Huissier de Justice Etterbeek
+Rue Beckers 17
+1040 Etterbeek
+Belgique
+Tel: +32 498 237 107",
+                "email": "patrick@logion.network",
+                "name": "Patrick Gielen",
+              },
+              Object {
+                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France
+Tel: +33 4 78 52 87 56",
+                "email": "g.grain@adrastee-lyon.fr",
+                "name": "Guillaume Grain",
+              },
+              Object {
+                "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+                "details": "AUXILIA CONSEILS 18
+Huissiers de Justice associés
+7 rue Jean Francois Champollion Parc Comitec
+18000 Bourges
+France
+Tel: +33 2 48 67 50 50",
+                "email": "alain.barland@auxilia-conseils.com",
+                "name": "Alain Barland",
+              },
+            ]
+          }
+          mode="view"
+          otherLegalOfficer={
+            Object {
+              "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "details": "MODERO
+Huissier de Justice Etterbeek
+Rue Beckers 17
+1040 Etterbeek
+Belgique
+Tel: +32 498 237 107",
+              "email": "patrick@logion.network",
+              "name": "Patrick Gielen",
+            }
+          }
+          status="PENDING"
+        />
+      </Col>
+    </Row>
+    <Row
+      className="footer"
+    >
+      <Col
+        className="legal-officers-images"
+        md={4}
+      >
+        <img
+          alt="male legal officer"
+          className="legal-officer-male-image"
+          src="/assets/landing/protection_male.svg"
+        />
+        <img
+          alt="female legal officer"
+          className="legal-officer-female-image"
+          src="/assets/landing/protection_female.svg"
+        />
+      </Col>
+      <Col
+        className="legal-officers-text"
+        md={8}
+      >
+        <p
+          className="foundation"
+        >
+          <strong>
+            The foundation of
+          </strong>
+           your protection
+        </p>
+        <p>
+          In charge of a 
+          <strong>
+            public office
+          </strong>
+          , Logion Legal Officers are 
+          <strong>
+            identified Judicial Officers
+          </strong>
+          ,
+          <br />
+          who apply a strict code of ethics and are 
+          <strong>
+            legaly responsible
+          </strong>
+           for their actions
+          <br />
+          while legally securing your digital assets and digital transactions.
+        </p>
+      </Col>
+    </Row>
   </Frame>
 </FullWidthPane>
 `;
@@ -589,13 +1207,12 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
   <Frame
     className="ProtectionRecoveryRequest"
   >
-    <Alert
-      variant="info"
-    >
-      Your Logion Recovery request
-       for account toRecover
-       has been submitted. Your Legal Officers will contact you as soon as possible to finalize the KYC process.
-    </Alert>
+    <Header
+      color="#ff9b3f"
+      icon="pending"
+      text="Your Logion Recovery request  for account toRecover has been submitted. Your Legal Officers will contact you
+                        as soon as possible to finalize the KYC process."
+    />
     <ExtrinsicSubmitter
       id="activatedProtection"
       onError={[Function]}
@@ -603,76 +1220,205 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
       signAndSubmit={null}
       successMessage="Protection successfully activated."
     />
-    <LegalOfficers
-      legalOfficer1={
-        Object {
-          "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-          "details": "MODERO
+    <Row
+      className="legal-officers"
+    >
+      <Col
+        md={6}
+      >
+        <SelectLegalOfficer
+          legalOfficer={
+            Object {
+              "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "details": "MODERO
 Huissier de Justice Etterbeek
 Rue Beckers 17
 1040 Etterbeek
 Belgique
 Tel: +32 498 237 107",
-          "email": "patrick@logion.network",
-          "name": "Patrick Gielen",
-        }
-      }
-      legalOfficer1Status="PENDING"
-      legalOfficer2={
-        Object {
-          "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-          "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-          "email": "g.grain@adrastee-lyon.fr",
-          "name": "Guillaume Grain",
-        }
-      }
-      legalOfficer2Status="PENDING"
-      legalOfficers={
-        Array [
-          Object {
-            "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-            "details": "MODERO
+              "email": "patrick@logion.network",
+              "name": "Patrick Gielen",
+            }
+          }
+          legalOfficerNumber={1}
+          legalOfficers={
+            Array [
+              Object {
+                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "details": "MODERO
 Huissier de Justice Etterbeek
 Rue Beckers 17
 1040 Etterbeek
 Belgique
 Tel: +32 498 237 107",
-            "email": "patrick@logion.network",
-            "name": "Patrick Gielen",
-          },
-          Object {
-            "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-            "details": "SELARL ADRASTEE
+                "email": "patrick@logion.network",
+                "name": "Patrick Gielen",
+              },
+              Object {
+                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "details": "SELARL ADRASTEE
 Gare des Brotteaux
 14, place Jules Ferry
 69006 LYON
 France
 Tel: +33 4 78 52 87 56",
-            "email": "g.grain@adrastee-lyon.fr",
-            "name": "Guillaume Grain",
-          },
-          Object {
-            "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-            "details": "AUXILIA CONSEILS 18
+                "email": "g.grain@adrastee-lyon.fr",
+                "name": "Guillaume Grain",
+              },
+              Object {
+                "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+                "details": "AUXILIA CONSEILS 18
 Huissiers de Justice associés
 7 rue Jean Francois Champollion Parc Comitec
 18000 Bourges
 France
 Tel: +33 2 48 67 50 50",
-            "email": "alain.barland@auxilia-conseils.com",
-            "name": "Alain Barland",
-          },
-        ]
-      }
-      mode="view"
-      setLegalOfficer1={[Function]}
-      setLegalOfficer2={[Function]}
-    />
+                "email": "alain.barland@auxilia-conseils.com",
+                "name": "Alain Barland",
+              },
+            ]
+          }
+          mode="view"
+          otherLegalOfficer={
+            Object {
+              "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+              "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France
+Tel: +33 4 78 52 87 56",
+              "email": "g.grain@adrastee-lyon.fr",
+              "name": "Guillaume Grain",
+            }
+          }
+          status="PENDING"
+        />
+      </Col>
+      <Col
+        md={6}
+      >
+        <SelectLegalOfficer
+          legalOfficer={
+            Object {
+              "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+              "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France
+Tel: +33 4 78 52 87 56",
+              "email": "g.grain@adrastee-lyon.fr",
+              "name": "Guillaume Grain",
+            }
+          }
+          legalOfficerNumber={2}
+          legalOfficers={
+            Array [
+              Object {
+                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "details": "MODERO
+Huissier de Justice Etterbeek
+Rue Beckers 17
+1040 Etterbeek
+Belgique
+Tel: +32 498 237 107",
+                "email": "patrick@logion.network",
+                "name": "Patrick Gielen",
+              },
+              Object {
+                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "details": "SELARL ADRASTEE
+Gare des Brotteaux
+14, place Jules Ferry
+69006 LYON
+France
+Tel: +33 4 78 52 87 56",
+                "email": "g.grain@adrastee-lyon.fr",
+                "name": "Guillaume Grain",
+              },
+              Object {
+                "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+                "details": "AUXILIA CONSEILS 18
+Huissiers de Justice associés
+7 rue Jean Francois Champollion Parc Comitec
+18000 Bourges
+France
+Tel: +33 2 48 67 50 50",
+                "email": "alain.barland@auxilia-conseils.com",
+                "name": "Alain Barland",
+              },
+            ]
+          }
+          mode="view"
+          otherLegalOfficer={
+            Object {
+              "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "details": "MODERO
+Huissier de Justice Etterbeek
+Rue Beckers 17
+1040 Etterbeek
+Belgique
+Tel: +32 498 237 107",
+              "email": "patrick@logion.network",
+              "name": "Patrick Gielen",
+            }
+          }
+          status="PENDING"
+        />
+      </Col>
+    </Row>
+    <Row
+      className="footer"
+    >
+      <Col
+        className="legal-officers-images"
+        md={4}
+      >
+        <img
+          alt="male legal officer"
+          className="legal-officer-male-image"
+          src="/assets/landing/protection_male.svg"
+        />
+        <img
+          alt="female legal officer"
+          className="legal-officer-female-image"
+          src="/assets/landing/protection_female.svg"
+        />
+      </Col>
+      <Col
+        className="legal-officers-text"
+        md={8}
+      >
+        <p
+          className="foundation"
+        >
+          <strong>
+            The foundation of
+          </strong>
+           your protection
+        </p>
+        <p>
+          In charge of a 
+          <strong>
+            public office
+          </strong>
+          , Logion Legal Officers are 
+          <strong>
+            identified Judicial Officers
+          </strong>
+          ,
+          <br />
+          who apply a strict code of ethics and are 
+          <strong>
+            legaly responsible
+          </strong>
+           for their actions
+          <br />
+          while legally securing your digital assets and digital transactions.
+        </p>
+      </Col>
+    </Row>
   </Frame>
 </FullWidthPane>
 `;

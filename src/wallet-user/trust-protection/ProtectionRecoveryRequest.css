@@ -14,3 +14,64 @@
 .ProtectionRecoveryRequest.network-warning p {
     margin-top: 30px;
 }
+
+.ProtectionRecoveryRequest .header {
+    text-align: center;
+}
+
+.ProtectionRecoveryRequest .header img {
+    height: 36px;
+    margin-bottom: 30px;
+}
+
+.ProtectionRecoveryRequest .header p {
+    display: inline-block;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    padding: 10px;
+}
+
+.ProtectionRecoveryRequest .legal-officers {
+    margin-top: 50px;
+}
+
+.ProtectionRecoveryRequest .footer {
+    margin-top: 50px;
+}
+
+.ProtectionRecoveryRequest .legal-officers-images {
+    display: flex;
+    align-items: flex-end;
+}
+
+.ProtectionRecoveryRequest .legal-officers-images img {
+    display: block;
+}
+
+.ProtectionRecoveryRequest .legal-officers-images .legal-officer-male-image {
+    width: 40%;
+}
+
+.ProtectionRecoveryRequest .legal-officers-images .legal-officer-female-image {
+    width: 32%;
+}
+
+.ProtectionRecoveryRequest .legal-officers-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.ProtectionRecoveryRequest .legal-officers-text p {
+    display: block;
+    font-size: 1rem;
+}
+
+.ProtectionRecoveryRequest .legal-officers-text .foundation {
+    text-transform: uppercase;
+    font-size: 1.2rem;
+}
+
+.ProtectionRecoveryRequest .legal-officers-text p:last-child {
+    margin-bottom: 0;
+}
