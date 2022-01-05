@@ -188,8 +188,8 @@
 }
 
 .LandingPage .step.one .step-content .button-container {
-    bottom: 67px;
-    left: 115px;
+    bottom: 71px;
+    left: 106px;
 }
 
 .LandingPage .step.two .step-content .button-container {
@@ -378,7 +378,7 @@
 .LandingPage .transaction-container .transaction-protection {
     position: absolute;
     display: block;
-    top: -39px;
+    top: -58px;
     right: 0;
 }
 
