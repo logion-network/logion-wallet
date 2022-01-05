@@ -9,3 +9,7 @@
 .SelectLegalOfficer .icon-status {
     margin-top: 40px;
 }
+
+.Dashboard .ContentArea .SelectLegalOfficer > .row {
+    margin-bottom: 0;
+}

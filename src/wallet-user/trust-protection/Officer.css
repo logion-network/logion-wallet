@@ -4,3 +4,7 @@
     border-radius: 6px;
     overflow: hidden;
 }
+
+.Officer .address {
+    font-weight: bold;
+}

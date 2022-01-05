@@ -98,7 +98,7 @@ export default function Login() {
                 </div>
 
                 <div className="node-info">
-                    <p className="name">You are currently connected to the following logion node: "{connectedNodeMetadata.name}"</p>
+                    <p className="name">You are currently connected to the following logion node:</p>
                     <p className="peer-id">
                         <img src={process.env.PUBLIC_URL + "/assets/node.svg"} alt="node icon" />
                         Peer ID: {connectedNodeMetadata.peerId}

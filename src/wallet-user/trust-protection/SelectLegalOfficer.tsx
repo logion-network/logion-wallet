@@ -36,7 +36,7 @@ export interface Props {
     legalOfficers: LegalOfficer[],
     legalOfficer: LegalOfficer | null,
     otherLegalOfficer: LegalOfficer | null,
-    setLegalOfficer: (legalOfficer: LegalOfficer) => void,
+    setLegalOfficer?: (legalOfficer: LegalOfficer) => void,
     mode: Mode,
     status?: ProtectionRequestStatus,
 }
@@ -103,7 +103,7 @@ export default function SelectLegalOfficer(props: Props) {
                                 isInvalid={ props.legalOfficer === null || (props.otherLegalOfficer !== null && props.legalOfficer.address === props.otherLegalOfficer.address) }
                                 options={ legalOfficersOptions }
                                 value={ props.legalOfficer !== null ? props.legalOfficer.address : null}
-                                onChange={ value => props.setLegalOfficer(legalOfficersByAddress[value!] || null) }
+                                onChange={ value => props.setLegalOfficer!(legalOfficersByAddress[value!] || null) }
                                 disabled={ props.mode === "view" }
                                 statusColor={ statusColor }
                             />

@@ -5,21 +5,21 @@ import { createRecovery, claimRecovery } from '../../logion-chain/Recovery';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
 
 import { ProtectionRequest, ProtectionRequestStatus } from "../../common/types/ModelTypes";
-import { LegalOfficer, legalOfficerByAddress, legalOfficers } from '../../common/types/LegalOfficer';
+import { LegalOfficer, legalOfficerByAddress, legalOfficers as legalOfficersFunction } from '../../common/types/LegalOfficer';
 import { FullWidthPane } from "../../common/Dashboard";
 import Frame from "../../common/Frame";
-import Alert from '../../common/Alert';
 import Button from '../../common/Button';
 import Icon from '../../common/Icon';
-import { GREEN } from '../../common/ColorTheme';
+import { GREEN, ORANGE, rgbaToHex, YELLOW } from '../../common/ColorTheme';
 import { useCommonContext } from '../../common/CommonContext';
 
 import { useUserContext } from '../UserContext';
 
-import LegalOfficers from './LegalOfficers';
 import './ProtectionRecoveryRequest.css';
 import NetworkWarning from '../../common/NetworkWarning';
 import { SETTINGS_PATH } from '../UserRouter';
+import SelectLegalOfficer from './SelectLegalOfficer';
+import { Col, Row } from 'react-bootstrap';
 
 export type ProtectionRecoveryRequestStatus = 'pending' | 'accepted' | 'activated';
 
@@ -66,6 +66,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
     if(props.requests.length >= 2) {
         const request = props.requests[0];
 
+        const legalOfficers = legalOfficersFunction(nodesDown);
         const legalOfficer1: LegalOfficer = legalOfficerByAddress(props.requests[0].legalOfficerAddress);
         const legalOfficer2: LegalOfficer = legalOfficerByAddress(props.requests[1].legalOfficerAddress);
         let legalOfficer1Status: ProtectionRequestStatus;
@@ -85,56 +86,71 @@ export default function ProtectionRecoveryRequest(props: Props) {
 
         const mainTitle = isRecovery && request.status !== 'ACTIVATED' ? "Recovery" : "My Logion Protection";
         let subTitle;
-        let alert = null;
+        let header = null;
         if(props.type === 'pending') {
             subTitle = isRecovery ? "Recovery process status" : undefined;
             if(isRecovery) {
                 subTitle = "Recovery process status";
-                alert = (
-                    <Alert variant="info">
-                        Your Logion Recovery request
-                        { forAccount } has been submitted. Your Legal Officers
-                        will contact you as soon as possible to finalize the KYC process.
-                    </Alert>
+                header = (
+                    <Header
+                        icon="pending"
+                        color={ ORANGE }
+                        text={`Your Logion Recovery request ${forAccount} has been submitted. Your Legal Officers will contact you
+                        as soon as possible to finalize the KYC process.`}
+                    />
                 );
             } else {
-                alert = (
-                    <Alert variant="info">
-                        Your Logion Trust Protection request has been submitted. Your Legal Officers
+                header = (
+                    <Header
+                        icon="pending"
+                        color={ ORANGE }
+                        text={`Your Logion Trust Protection request has been submitted. Your Legal Officers
                         will contact you as soon as possible to finalize the KYC process. Please note that, after the successful
                         completion of one of your Legal Officer approval processes, you will be able to use all features
-                        provided by your logion account dashboard.
-                    </Alert>
+                        provided by your logion account dashboard.`}
+                    />
                 );
             }
         } else if(props.type === 'accepted') {
             if(isRecovery) {
                 subTitle = "My recovery request";
-                alert = (
-                    <Alert variant="info">
-                        Your recovery request has been accepted by your Legal Officers.
+                header = (
+                    <Header
+                        icon="accepted"
+                        color={ YELLOW }
+                        text={`Your recovery request has been accepted by your Legal Officers.
                         You may now activate your protection. This will require 2 signatures.
-                        After that, you'll be able to initiate the actual recovery.
-                    </Alert>
+                        After that, you'll be able to initiate the actual recovery.`}
+                    />
                 );
             } else {
                 subTitle = "My Logion protection request";
-                alert = (
-                    <Alert variant="info">
-                        Your Logion Trust Protection request has been accepted by your
-                        Legal Officers. You may now activate your protection.
-                    </Alert>
+                header = (
+                    <Header
+                        icon="accepted"
+                        color={ YELLOW }
+                        text={`Your Logion Trust Protection request has been accepted by your
+                        Legal Officers. You may now activate your protection.`}
+                    />
                 );
             }
         } else if(props.type === 'activated') {
-            if(isRecovery) {
-                if(recoveredAddress === null) {
-                    alert = (
-                        <Alert variant="info">
-                            You are now ready to claim the access to address { request.addressToRecover }.
-                        </Alert>
-                    );
-                }
+            if(isRecovery && recoveredAddress === null) {
+                header = (
+                    <Header
+                        icon="activated"
+                        color={ GREEN }
+                        text={`You are now ready to claim the access to address ${request.addressToRecover}.`}
+                    />
+                );
+            } else {
+                header = (
+                    <Header
+                        icon="activated"
+                        color={ GREEN }
+                        text={`Your Logion Trust Protection is active`}
+                    />
+                );
             }
         }
 
@@ -155,22 +171,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
                         <NetworkWarning settingsPath={ SETTINGS_PATH } />
                     }
                     <Frame className="ProtectionRecoveryRequest">
-                        { alert }
-
-                        {
-                            props.type === 'activated' && (!isRecovery || recoveredAddress !== null) && 
-                            <div
-                                className="alert-activated"
-                                style={{
-                                    color: GREEN,
-                                    borderColor: GREEN,
-                                }}
-                            >
-                                <Icon
-                                    icon={{id: 'activated'}}
-                                /> Your Logion Trust Protection is active
-                            </div>
-                        }
+                        { header }
 
                         {
                             props.type === 'accepted' && recoveryConfig?.isEmpty && signAndSubmit === null &&
@@ -211,16 +212,43 @@ export default function ProtectionRecoveryRequest(props: Props) {
                             />
                         }
 
-                        <LegalOfficers
-                            legalOfficers={ legalOfficers(nodesDown) }
-                            legalOfficer1={ legalOfficer1 }
-                            setLegalOfficer1={ () => {} }
-                            legalOfficer1Status={ legalOfficer1Status }
-                            legalOfficer2={ legalOfficer2 }
-                            setLegalOfficer2={ () => {} }
-                            legalOfficer2Status={ legalOfficer2Status }
-                            mode="view"
-                        />
+                        <Row className="legal-officers">
+                            <Col md={6}>
+                                <SelectLegalOfficer
+                                    legalOfficerNumber={ 1 }
+                                    legalOfficer={ legalOfficer1 }
+                                    otherLegalOfficer={ legalOfficer2 }
+                                    legalOfficers={ legalOfficers }
+                                    mode="view"
+                                    status={ legalOfficer1Status }
+                                />
+                            </Col>
+                            <Col md={6}>
+                                <SelectLegalOfficer
+                                    legalOfficerNumber={ 2 }
+                                    legalOfficer={ legalOfficer2 }
+                                    otherLegalOfficer={ legalOfficer1 }
+                                    legalOfficers={ legalOfficers }
+                                    mode="view"
+                                    status={ legalOfficer2Status }
+                                />
+                            </Col>
+                        </Row>
+
+                        <Row className="footer">
+                            <Col md={4} className="legal-officers-images">
+                                <img className="legal-officer-male-image" alt="male legal officer" src={process.env.PUBLIC_URL + "/assets/landing/protection_male.svg"}/>
+                                <img className="legal-officer-female-image" alt="female legal officer" src={process.env.PUBLIC_URL + "/assets/landing/protection_female.svg"}/>
+                            </Col>
+                            <Col md={8} className="legal-officers-text">
+                                <p className="foundation"><strong>The foundation of</strong> your protection</p>
+                                <p>
+                                    In charge of a <strong>public office</strong>, Logion Legal Officers are <strong>identified Judicial Officers</strong>,<br/>who apply a
+                                    strict code of ethics and are <strong>legaly responsible</strong> for their actions<br/>
+                                    while legally securing your digital assets and digital transactions.
+                                </p>
+                            </Col>
+                        </Row>
                     </Frame>
             </FullWidthPane>
         );
@@ -263,4 +291,34 @@ export default function ProtectionRecoveryRequest(props: Props) {
             </FullWidthPane>
         );
     }
+}
+
+interface HeaderProps {
+    color: string;
+    icon: string;
+    text: string;
+}
+
+function Header(props: HeaderProps) {
+    const backgroundColor = rgbaToHex(props.color, 0.2);
+    return (
+        <div
+            className="header"
+        >
+            <Icon
+                icon={{id: props.icon}}
+            />
+            <br/>
+            <p
+                className="text"
+                style={{
+                    color: props.color,
+                    borderColor: props.color,
+                    backgroundColor: backgroundColor,
+                }}
+            >
+                { props.text }
+            </p>
+        </div>
+    );
 }
