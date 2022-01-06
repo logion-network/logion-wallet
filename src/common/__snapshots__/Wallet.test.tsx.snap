@@ -108,22 +108,28 @@ exports[`renders with all data 1`] = `
     >
       <Frame
         fillHeight={true}
-        title="Current LGNT balance"
-      >
-        <div
-          className="gauge-coin-icon"
-        >
-          <Icon
-            height="108px"
-            icon={
-              Object {
-                "id": "lgnt",
+        title={
+          <div
+            className="gauge-title"
+          >
+            <Icon
+              height="72px"
+              icon={
+                Object {
+                  "id": "lgnt",
+                }
               }
-            }
-            type="svg"
-            width="auto"
-          />
-        </div>
+              type="svg"
+              width="auto"
+            />
+            <span>
+              Current 
+              LGNT
+               balance
+            </span>
+          </div>
+        }
+      >
         <WalletGauge
           balance={
             PrefixedNumber {
