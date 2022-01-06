@@ -3,17 +3,20 @@ import LocItemDetail from "./LocItemDetail";
 
 import './LocItemDetails.css'
 import { LocItem } from "./types";
-import { locDetailsPath } from "../LegalOfficerPaths";
+import { transactionLocDetailsPath, identityLocDetailsPath } from "../LegalOfficerPaths";
 import { UUID } from "../../logion-chain/UUID";
 import NewTabLink from "../../common/NewTabLink";
 import CopyPasteButton from "../../common/CopyPasteButton";
+import { LocType } from "../../logion-chain/Types";
 
 export interface Props {
-    item: LocItem
+    locType: LocType;
+    item: LocItem;
 }
 
 export default function LocLinkDetails(props: Props) {
     const linkedLocId = UUID.fromDecimalString(props.item.value);
+    const detailsPath = props.locType === 'Transaction' ? transactionLocDetailsPath(linkedLocId!.toString()) : identityLocDetailsPath(linkedLocId!.toString()) ;
     return (
         <Col className="LocItemDetails" style={ { width: "100%" } }>
             <div className="frame">
@@ -23,7 +26,7 @@ export default function LocLinkDetails(props: Props) {
                 </LocItemDetail>
                 <LocItemDetail label="Linked LOC" className="linked-loc">
                     <Row>
-                    <NewTabLink href={locDetailsPath(linkedLocId!.toString())} iconId="loc-link">{ props.item.value }</NewTabLink>
+                    <NewTabLink href={ detailsPath } iconId="loc-link">{ props.item.value }</NewTabLink>
                     <CopyPasteButton value={ props.item.value } className="medium"/>
                     </Row>
                 </LocItemDetail>

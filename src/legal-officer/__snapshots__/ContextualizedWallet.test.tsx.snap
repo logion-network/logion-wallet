@@ -71,7 +71,7 @@ exports[`renders 1`] = `
         "to": "/legal-officer",
       },
       Object {
-        "exact": true,
+        "exact": false,
         "icon": Object {
           "background": Object {
             "from": "#3b6cf4",
@@ -86,7 +86,7 @@ exports[`renders 1`] = `
         "to": "/legal-officer/wallet",
       },
       Object {
-        "exact": true,
+        "exact": false,
         "icon": Object {
           "background": Object {
             "from": "#3b6cf4",
@@ -101,7 +101,7 @@ exports[`renders 1`] = `
         "to": "/legal-officer/loc",
       },
       Object {
-        "exact": true,
+        "exact": false,
         "icon": Object {
           "background": Object {
             "from": "#3b6cf4",

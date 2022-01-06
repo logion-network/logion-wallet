@@ -11,7 +11,7 @@ import Alert from './common/Alert';
 
 function status(metadata: NodeMetadata | null): string {
     if(metadata !== null) {
-        return `connected to node "${metadata.name}" (Peer ID: ${metadata.peerId})`;
+        return `connected to node ${metadata.peerId}`;
     } else {
         return "connecting";
     }

@@ -1,23 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders ContentPane 1`] = `
-<BasePane
-  mainTitle=""
-  titleIcon={Object {}}
->
-  <PrimaryArea
-    width={6}
-  />
-  <SecondaryArea
-    width={6}
-  />
-</BasePane>
-`;
-
 exports[`renders Dashboard 1`] = `
-<Container
+<div
   className="Dashboard"
-  fluid={true}
   style={
     Object {
       "backgroundColor": "#0c163d",
@@ -44,40 +29,34 @@ exports[`renders Dashboard 1`] = `
     }
     
   </style>
-  <Row>
-    <Col
-      md={2}
+  <div
+    className="Sidebar"
+    style={
+      Object {
+        "backgroundColor": "#152665",
+        "boxShadow": "0 0 25px #3b6cf433",
+        "color": "#ffffff",
+      }
+    }
+  >
+    <Logo
+      shadowColor="#3b6cf433"
+    />
+    <div
+      className="MenuArea"
     >
-      <div
-        className="Sidebar"
-        style={
-          Object {
-            "backgroundColor": "#152665",
-            "boxShadow": "0 0 25px #3b6cf433",
-            "color": "#ffffff",
-          }
-        }
-      >
-        <Logo
-          shadowColor="#3b6cf433"
-        />
-        <div
-          className="MenuArea"
-        >
-          <Menu
-            items={Array []}
-          />
-          <MainMenu
-            items={Array []}
-          />
-          <Menu
-            items={Array []}
-          />
-        </div>
-      </div>
-    </Col>
-  </Row>
-</Container>
+      <Menu
+        items={Array []}
+      />
+      <MainMenu
+        items={Array []}
+      />
+      <Menu
+        items={Array []}
+      />
+    </div>
+  </div>
+</div>
 `;
 
 exports[`renders FullWidthPane 1`] = `
@@ -85,8 +64,6 @@ exports[`renders FullWidthPane 1`] = `
   mainTitle=""
   titleIcon={Object {}}
 >
-  <PrimaryArea
-    width={12}
-  />
+  <PrimaryArea />
 </BasePane>
 `;

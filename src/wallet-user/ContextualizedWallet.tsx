@@ -52,7 +52,7 @@ export default function ContextualizedWallet() {
                     id: "wallet",
                     text: "Wallet",
                     to: WALLET_PATH,
-                    exact: true,
+                    exact: false,
                     icon: {
                         icon: {
                             id: 'wallet'

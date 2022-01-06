@@ -33,7 +33,7 @@ export default function LocItems(props: Props) {
             <>
                 { locItem.type === 'Data' && <LocPublicDataDetails item={ locItem } label={ locItem.name } /> }
                 { locItem.type === 'Document' && <LocPrivateFileDetails item={ locItem } /> }
-                { locItem.type === 'Linked LOC' && <LocLinkDetails item={ locItem } /> }
+                { locItem.type === 'Linked LOC' && <LocLinkDetails item={ locItem } locType={ loc!.locType } /> }
             </>
         )
     }

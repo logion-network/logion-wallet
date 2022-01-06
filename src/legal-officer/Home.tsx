@@ -17,7 +17,7 @@ import ButtonGroup from '../common/ButtonGroup';
 
 import { prefixedLogBalance, SYMBOL } from '../logion-chain/Balances';
 
-import { IDENTITIES_PATH, WALLET_PATH, locDetailsPath, LOC_REQUESTS_PATH } from './LegalOfficerPaths';
+import { IDENTITIES_PATH, WALLET_PATH, transactionLocDetailsPath, LOC_REQUESTS_PATH, identityLocDetailsPath } from './LegalOfficerPaths';
 
 import './Home.css';
 import UserIdentityNameCell from '../common/UserIdentityNameCell';
@@ -150,7 +150,7 @@ export default function Account() {
                                                 render: requestAndLoc =>
                                                     <ActionCell>
                                                         <ButtonGroup>
-                                                            <Button onClick={ () => navigate(locDetailsPath(requestAndLoc.request.id)) }>Manage LOC</Button>
+                                                            <Button onClick={ () => navigate(transactionLocDetailsPath(requestAndLoc.request.id)) }>Manage LOC</Button>
                                                         </ButtonGroup>
                                                     </ActionCell>
                                                 ,
@@ -248,7 +248,7 @@ export default function Account() {
                                                 render: requestAndLoc =>
                                                     <ActionCell>
                                                         <ButtonGroup>
-                                                            <Button onClick={ () => navigate(locDetailsPath(requestAndLoc.request.id)) }>Manage LOC</Button>
+                                                            <Button onClick={ () => navigate(identityLocDetailsPath(requestAndLoc.request.id)) }>Manage LOC</Button>
                                                         </ButtonGroup>
                                                     </ActionCell>
                                                 ,

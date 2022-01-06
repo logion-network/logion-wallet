@@ -3,8 +3,7 @@ import Table, { Cell, EmptyTableMessage } from '../common/Table';
 import LegalOfficerName from '../common/LegalOfficerNameCell';
 import ProtectedUserDetails from "./ProtectedUserDetails";
 import Button from "../common/Button";
-import { locDetailsPath } from "./LegalOfficerPaths";
-import React from "react";
+import { identityLocDetailsPath } from "./LegalOfficerPaths";
 import { useNavigate } from "react-router-dom";
 
 export default function ProtectedUsers() {
@@ -33,7 +32,7 @@ export default function ProtectedUsers() {
                 },
                 {
                     header: "Action",
-                    render: request => <Button onClick={ () => navigate(locDetailsPath(request.decision.locId!)) }>Identity LOC</Button>,
+                    render: request => <Button onClick={ () => navigate(identityLocDetailsPath(request.decision.locId!)) }>Identity LOC</Button>,
                     width: "200px",
                     align: 'center',
                 },

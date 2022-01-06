@@ -5,7 +5,7 @@ import { useCommonContext } from "../common/CommonContext";
 import { useLegalOfficerContext } from "./LegalOfficerContext";
 import { FullWidthPane } from "../common/Dashboard";
 import { useParams, useNavigate } from 'react-router';
-import { locDetailsPath, RECOVERY_REQUESTS_PATH } from "./LegalOfficerPaths";
+import { identityLocDetailsPath, RECOVERY_REQUESTS_PATH } from "./LegalOfficerPaths";
 import Button from "../common/Button";
 import { Col, Row } from "react-bootstrap";
 import { acceptProtectionRequest, fetchRecoveryInfo, rejectProtectionRequest } from "./Model";
@@ -241,7 +241,7 @@ export default function RecoveryDetails() {
             <LocCreationDialog
                 show={ visible === Visible.CREATE_NEW_LOC }
                 exit={ () => navigate(RECOVERY_REQUESTS_PATH) }
-                onSuccess={ (newLoc) => navigate(locDetailsPath(newLoc.id)) }
+                onSuccess={ (newLoc) => navigate(identityLocDetailsPath(newLoc.id)) }
                 locRequest={{
                     requesterAddress: recoveryInfo.recoveryAccount.requesterAddress,
                     userIdentity: recoveryInfo.recoveryAccount.userIdentity,

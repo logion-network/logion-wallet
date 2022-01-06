@@ -1,6 +1,6 @@
 import { shallowRender } from '../tests';
 
-import Dashboard, { ContentPane, FullWidthPane } from './Dashboard';
+import Dashboard, { FullWidthPane } from './Dashboard';
 
 test("renders Dashboard", () => {
     const result = shallowRender(
@@ -10,18 +10,6 @@ test("renders Dashboard", () => {
             menuMiddle={ [] }
         >
         </Dashboard>
-    );
-    expect(result).toMatchSnapshot();
-});
-
-test("renders ContentPane", () => {
-    const result = shallowRender(
-        <ContentPane
-            primaryAreaChildren={ null }
-            secondaryAreaChildren={ null }
-            mainTitle=""
-            titleIcon={{ }}
-        />
     );
     expect(result).toMatchSnapshot();
 });
