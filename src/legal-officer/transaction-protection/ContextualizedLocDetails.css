@@ -66,3 +66,16 @@
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
+.ContextualizedLocDetails .upper-action-bar {
+    margin: 20px;
+    width: 450px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+.ContextualizedLocDetails .upper-action-bar .create-logion-transaction-loc-button {
+    height: 42px;
+}
+

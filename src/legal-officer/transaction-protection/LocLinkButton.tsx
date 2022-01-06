@@ -14,6 +14,7 @@ export const enum Visible {
 }
 
 export interface Props {
+    excludeNewIdentity: boolean
     visible?: Visible
 }
 
@@ -35,9 +36,11 @@ export default function LocLinkButton(props: Props) {
                     <Dropdown.Item onClick={ () => setVisible(Visible.LINK_EXISTING) }>
                         Link to an existing LOC
                     </Dropdown.Item>
-                    <Dropdown.Item onClick={ () => setVisible(Visible.LINK_NEW_IDENTITY) }>
-                        Link to a new Identity LOC
-                    </Dropdown.Item>
+                    { !props.excludeNewIdentity &&
+                        <Dropdown.Item onClick={ () => setVisible(Visible.LINK_NEW_IDENTITY) }>
+                            Link to a new Identity LOC
+                        </Dropdown.Item>
+                    }
                     <Dropdown.Item onClick={ () => setVisible(Visible.LINK_NEW_TRANSACTION) }>
                         Link to a new Transaction LOC
                     </Dropdown.Item>

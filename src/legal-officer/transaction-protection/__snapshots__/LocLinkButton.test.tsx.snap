@@ -227,3 +227,55 @@ exports[`LocLinkButton renders LINK_NEW_TRANSACTION 1`] = `
   />
 </React.Fragment>
 `;
+
+exports[`LocLinkButton renders and excludes new identity 1`] = `
+<React.Fragment>
+  <Dropdown
+    align="start"
+    autoClose={true}
+    navbar={false}
+  >
+    <DropdownToggle
+      className="Button"
+    >
+      Link this LOC to another LOC
+    </DropdownToggle>
+    <DropdownMenu
+      flip={true}
+    >
+      <DropdownItem
+        onClick={[Function]}
+      >
+        Link to an existing LOC
+      </DropdownItem>
+      <DropdownItem
+        onClick={[Function]}
+      >
+        Link to a new Transaction LOC
+      </DropdownItem>
+    </DropdownMenu>
+  </Dropdown>
+  <LocLinkExistingDialog
+    exit={[Function]}
+    show={false}
+  />
+  <LocCreationDialog
+    exit={[Function]}
+    hasLinkNature={true}
+    locRequest={
+      Object {
+        "locType": "Transaction",
+        "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "userIdentity": Object {
+          "email": "john.doe@logion.network",
+          "firstName": "John",
+          "lastName": "Doe",
+          "phoneNumber": "+1234",
+        },
+      }
+    }
+    onSuccess={[Function]}
+    show={false}
+  />
+</React.Fragment>
+`;
