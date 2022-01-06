@@ -138,7 +138,6 @@ export function AssetNameCell(props: AssetNameCellProps) {
 
     return (
         <div className="asset-name-cell">
-            <Icon icon={{id: props.balance.coin.iconId}} type={ props.balance.coin.iconType } height="36px" width="auto" />
             <span className="name">{ props.balance.coin.name } ({ props.balance.balance.prefix.symbol }{ props.balance.coin.symbol })</span>
         </div>
     );

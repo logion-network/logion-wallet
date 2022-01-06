@@ -10,7 +10,7 @@ exports[`renders with text transform 1`] = `
   }
 >
   <Icon
-    height="14px"
+    height="20px"
     icon={
       Object {
         "id": "icon-id",
@@ -41,7 +41,7 @@ exports[`renders with undefined text transform 1`] = `
   }
 >
   <Icon
-    height="14px"
+    height="20px"
     icon={
       Object {
         "id": "icon-id",

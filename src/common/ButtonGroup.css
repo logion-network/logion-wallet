@@ -22,7 +22,8 @@
 }
 
 .ButtonGroup .btn-group > .btn:not(:first-child),
-.btn-group > .btn-group:not(:first-child) {
+.btn-group > .btn-group:not(:first-child),
+.ButtonGroup .btn-group > .dropdown:not(:first-child) {
     margin-left: 25px;
 }
 

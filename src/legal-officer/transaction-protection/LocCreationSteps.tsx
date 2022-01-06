@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import Alert from 'react-bootstrap/Alert';
 
 import { useLogionChain } from '../../logion-chain';
 import { UUID } from '../../logion-chain/UUID';
@@ -9,6 +8,7 @@ import { LocRequest } from '../../common/types/ModelTypes';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
 import ProcessStep from '../ProcessStep';
 import { useLegalOfficerContext } from '../LegalOfficerContext';
+import Alert from '../../common/Alert';
 
 enum CreationStatus {
     NONE,
@@ -110,9 +110,12 @@ export default function LocCreationSteps(props: Props) {
     }, [ setStatus, setSignAndSubmit, exit ]);
 
     const close = useCallback(() => {
+        const success = creationState.status === CreationStatus.LOC_CREATED;
         clear();
-        onSuccess();
-    }, [ clear, onSuccess ])
+        if(success) {
+            onSuccess();
+        }
+    }, [ creationState, clear, onSuccess ])
 
     if (requestToCreate === null) {
         return null;
@@ -134,18 +137,11 @@ export default function LocCreationSteps(props: Props) {
                 </Alert>
             </ProcessStep>
             <ProcessStep
-                active={ creationState.status === CreationStatus.CREATING_LOC || creationState.status === CreationStatus.LOC_CREATED || creationState.status === CreationStatus.LOC_CREATION_FAILED }
+                active={ creationState.status === CreationStatus.CREATING_LOC }
                 title={ `LOC creation` }
                 stepTestId={ `modal-creating-${ requestToCreate.id }` }
-                nextSteps={[
-                    {
-                        id: "proceed-review",
-                        buttonText: "Proceed",
-                        buttonVariant: "primary",
-                        mayProceed: creationState.status === CreationStatus.LOC_CREATED,
-                        callback: close
-                    }
-                ]}
+                nextSteps={[]}
+                hasSideEffect
             >
                 <ExtrinsicSubmitter
                     id="metadata"
@@ -154,6 +150,33 @@ export default function LocCreationSteps(props: Props) {
                     onSuccess={ () => setStatus(CreationStatus.LOC_CREATED) }
                     onError={ () => setStatus(CreationStatus.LOC_CREATION_FAILED) }
                 />
+            </ProcessStep>
+            <ProcessStep
+                active={ creationState.status === CreationStatus.LOC_CREATED || creationState.status === CreationStatus.LOC_CREATION_FAILED }
+                title={ `LOC creation` }
+                stepTestId={ `modal-creating-${ requestToCreate.id }` }
+                nextSteps={[
+                    {
+                        id: "ok",
+                        buttonText: "OK",
+                        buttonVariant: "primary",
+                        mayProceed: true,
+                        callback: close
+                    }
+                ]}
+            >
+                {
+                    creationState.status === CreationStatus.LOC_CREATED &&
+                    <Alert variant='polkadot'>
+                        LOC successfully created.
+                    </Alert>
+                }
+                {
+                    creationState.status === CreationStatus.LOC_CREATION_FAILED &&
+                    <Alert variant='danger'>
+                        LOC creation failed.
+                    </Alert>
+                }
             </ProcessStep>
         </div>
     );

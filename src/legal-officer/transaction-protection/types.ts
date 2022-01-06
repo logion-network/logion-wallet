@@ -1,3 +1,4 @@
+import { SignAndSubmit } from "../../ExtrinsicSubmitter"
 import { UUID } from "../../logion-chain/UUID"
 
 export type LocItemStatus = 'DRAFT' | 'PUBLISHED'
@@ -21,7 +22,8 @@ export enum PublishStatus {
     START,
     PUBLISH_PENDING,
     PUBLISHING,
-    PUBLISHED
+    PUBLISHED,
+    ERROR
 }
 
 export interface PublishState {
@@ -29,5 +31,8 @@ export interface PublishState {
 }
 
 export interface PublishProps {
-    locItem: LocItem
+    locItem: LocItem;
+    itemType: 'Public Data' | 'Document' | 'Link';
+    signAndSubmitFactory: ((item: LocItem) => SignAndSubmit) | null;
+    confirm: ((item: LocItem) => void) | null;
 }

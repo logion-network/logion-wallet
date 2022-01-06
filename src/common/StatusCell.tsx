@@ -17,7 +17,7 @@ export default function StatusCell(props: Props) {
 
     let icon;
     if(props.icon !== undefined) {
-        icon = <Icon icon={ props.icon } height="14px" />;
+        icon = <Icon icon={ props.icon } height="20px" />;
     } else {
         icon = null;
     }

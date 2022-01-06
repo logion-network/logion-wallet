@@ -4,6 +4,7 @@ import { ButtonVariant } from 'react-bootstrap/types';
 import Dialog from '../common/Dialog';
 import { Action } from '../common/Button';
 import { Choice } from '../common/MultiChoiceButton';
+import { Children } from '../common/types/Helpers';
 
 export interface NextStep {
     id: string,
@@ -19,13 +20,14 @@ export interface Props {
     active: boolean,
     closeCallback?: () => void,
     title: string,
-    children: JSX.Element | JSX.Element[] | null,
+    children: Children,
     mayProceed?: boolean,
     proceedCallback?: () => void,
     stepTestId?: string,
     proceedButtonTestId?: string,
     closeButtonTestId?: string,
     nextSteps?: NextStep[],
+    hasSideEffect?: boolean,
 }
 
 function toAction(nextStep: NextStep): Action {
@@ -84,7 +86,7 @@ export default function ProcessStep(props: Props) {
         }
     }
 
-    if(nextSteps.length === 0) {
+    if(nextSteps.length === 0 && (props.hasSideEffect === undefined || !props.hasSideEffect)) {
         throw new Error("This process step is a trap");
     }
 
