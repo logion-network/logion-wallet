@@ -51,10 +51,18 @@
 .ContextualizedLocDetails .loc-is-void {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    margin-top: -1px;
+    margin-top: -2px;
 }
 
 .Dashboard .ContextualizedLocDetails .PrimaryArea p.frame-title {
     font-size: 18px;
     font-weight: bold;
+}
+
+.ContextualizedLocDetails .separator {
+    height: 1px;
+    width: calc(100% + 40px);
+    margin-left: -20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }

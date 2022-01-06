@@ -26,6 +26,7 @@ test("renders without comparison", () => {
             field={ data => data.attribute }
             colors={ COLOR_THEME.dashboard }
             label="attribute"
+            squeeze={ true }
         />);
     expect(tree).toMatchSnapshot();
     expect(screen.getByTestId("testId1")).not.toHaveClass("is-invalid")
@@ -40,6 +41,7 @@ test("renders with same data", () => {
             field={ data => data.attribute }
             colors={ COLOR_THEME.dashboard }
             label="attribute"
+            squeeze={ true }
         />);
     expect(tree).toMatchSnapshot();
     expect(screen.getByTestId("testId2")).not.toHaveClass("is-invalid")
@@ -55,6 +57,7 @@ test("renders with different data", () => {
             field={ data => data.attribute }
             colors={ COLOR_THEME.dashboard }
             label="attribute"
+            squeeze={ true }
         />);
     expect(tree).toMatchSnapshot();
     expect(screen.getByTestId("testId3")).toHaveClass("is-invalid")

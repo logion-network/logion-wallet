@@ -36,7 +36,7 @@ export default function ClosedLocs(props: Props) {
                 },
                 {
                     "header": "Description",
-                    render: request => <Cell content={ request.description } />,
+                    render: request => <Cell content={ request.description } overflowing tooltipId='description-tooltip' />,
                     align: 'left',
                 },
                 {

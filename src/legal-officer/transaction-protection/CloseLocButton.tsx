@@ -57,9 +57,22 @@ export default function CloseLocButton() {
             <ProcessStep
                 active={ closeState.status === CloseStatus.START || closeState.status === CloseStatus.CLOSE_PENDING }
                 title="Close this Case (1/2)"
-                mayProceed={ closeState.status === CloseStatus.START }
-                closeCallback={ () => setCloseState({ status: CloseStatus.NONE }) }
-                proceedCallback={ () => setCloseState({ status: CloseStatus.CLOSE_PENDING }) }
+                nextSteps={[
+                    {
+                        id: 'cancel',
+                        buttonText: 'Cancel',
+                        buttonVariant: 'secondary-polkadot',
+                        mayProceed: true,
+                        callback: () => setCloseState({ status: CloseStatus.NONE })
+                    },
+                    {
+                        id: 'cancel',
+                        buttonText: 'Proceed',
+                        buttonVariant: 'polkadot',
+                        mayProceed: closeState.status === CloseStatus.START,
+                        callback: () => setCloseState({ status: CloseStatus.CLOSE_PENDING })
+                    }
+                ]}
             >
                 <Alert variant="info">
                     <p>Warning: after processing and blockchain publication, this case cannot be opened again and therefore
@@ -69,8 +82,15 @@ export default function CloseLocButton() {
             <ProcessStep
                 active={ closeState.status === CloseStatus.CLOSING || closeState.status === CloseStatus.CLOSED }
                 title="Close this Case (2/2)"
-                mayProceed={ closeState.status === CloseStatus.CLOSED }
-                proceedCallback={ () => setCloseState({ status: CloseStatus.NONE }) }
+                nextSteps={[
+                    {
+                        id: 'ok',
+                        buttonText: 'OK',
+                        buttonVariant: 'primary',
+                        mayProceed: closeState.status === CloseStatus.CLOSED,
+                        callback: () => setCloseState({ status: CloseStatus.NONE })
+                    }
+                ]}
             >
                 <ExtrinsicSubmitter
                     id="publishMetadata"

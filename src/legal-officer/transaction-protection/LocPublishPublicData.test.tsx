@@ -13,7 +13,8 @@ describe("LocPublishPublicData", () => {
         submitter: "data-submitter",
         value: "data-value",
         nature: "data-nature",
-        timestamp: null
+        timestamp: null,
+        newItem: false,
     }
 
     it("renders", () => {

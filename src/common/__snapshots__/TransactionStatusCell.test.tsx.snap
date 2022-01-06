@@ -8,6 +8,7 @@ exports[`renders status details of failed transaction 1`] = `
     className="Alert warning"
     style={
       Object {
+        "backgroundColor": undefined,
         "color": undefined,
       }
     }

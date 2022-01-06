@@ -4,7 +4,6 @@ import LegalOfficerName from "../../common/LegalOfficerNameCell";
 import { useLocContext } from "./LocContext";
 import ButtonGroup from "../../common/ButtonGroup";
 import Button from "../../common/Button";
-import React from "react";
 import LocPublicDataDetails from "./LocPublicDataDetails";
 import LocPublishPublicDataButton from "./LocPublishPublicDataButton";
 import { POLKADOT } from "../../common/ColorTheme";
@@ -18,13 +17,16 @@ import { LocItem } from "./types";
 import LocLinkDetails from "./LocLinkDetails";
 import LocPublishLinkButton from "./LocPublishLinkButton";
 
+import './LocItems.css';
+import Icon from "../../common/Icon";
+
 export interface Props {
     matchedHash?: string;
 }
 
 export default function LocItems(props: Props) {
 
-    const { locId, locItems, deleteMetadata, deleteLink, deleteFile } = useLocContext();
+    const { locId, loc, locItems, deleteMetadata, deleteLink, deleteFile } = useLocContext();
 
     function renderDetails(locItem: LocItem): Child {
         return (
@@ -45,11 +47,11 @@ export default function LocItems(props: Props) {
         const { locItem, action } = props
         return (
             <Button
-                variant="danger"
+                variant="danger-flat"
                 onClick={ () => action(locItem) }
                 data-testid={ `remove-${ locItem.type }-${ locItem.name }` }
             >
-                X
+                <Icon icon={{id: 'trash'}} />
             </Button>
         );
     }
@@ -73,72 +75,70 @@ export default function LocItems(props: Props) {
             </ActionCell>)
     }
 
-    function renderViewButton(locItem: LocItem): Child {
-        if (locItem.type === 'Document') {
-            return (
-                <>
-                    <ActionCell>
-                        <ViewFileButton
-                            nodeOwner={ locItem.submitter }
-                            fileName={ locItem.name }
-                            downloader={ (axios: AxiosInstance) => getFile(axios, {
-                                locId: locId.toString(),
-                                hash: locItem.value
-                            }) } />
-                    </ActionCell>
-                </>
-            )
-        } else {
-            return null
-        }
-    }
-
-    return (
-        <Table
-            data={ locItems }
-            columns={ [
-                {
-                    header: "Name",
-                    render: locItem => <Cell content={ locItem.name } />,
-                    renderDetails: locItem => renderDetails(locItem),
-                    align: "left",
-                    width: "250px"
-                },
-                {
-                    header: "Timestamp",
-                    render: locItem => <DateTimeCell
-                        dateTime={ locItem.timestamp }
-                        spinner={ locItem.status === 'PUBLISHED' } />,
-                    width: "200px"
-                },
-                {
-                    header: "Type",
-                    render: locItem => <Cell content={ locItem.type } />,
-                    width: "150px"
-                },
-                {
-                    header: "Submitted by",
-                    render: locItem => <LegalOfficerName address={ locItem.submitter } />
-                },
-                {
-                    header: "",
-                    render: locItem => renderViewButton(locItem),
-                    width: "150px"
-                },
-                {
-                    header: "",
-                    render: locItem => {
-                        if (locItem.status === 'DRAFT') {
-                            return renderActions(locItem)
-                        } else {
-                            return (<StatusCell text={ locItem.status } color={ POLKADOT } />)
+    if(locItems.length <= 0 && !loc?.closed) {
+        return (
+            <div className="LocItems empty-loc">
+                <img alt="empty loc" src={ process.env.PUBLIC_URL + "/assets/empty-loc.svg" } />
+                <p className="primary">This LOC is empty.</p>
+                <p className="secondary">You can add public data and/or confidential documents.</p>
+            </div>
+        );
+    } else {
+        return (
+            <Table
+                data={ locItems }
+                columns={ [
+                    {
+                        header: "Name",
+                        render: locItem => <Cell content={ locItem.name } />,
+                        renderDetails: locItem => renderDetails(locItem),
+                        detailsExpanded: locItem => locItem.newItem,
+                        align: "left",
+                        width: "250px"
+                    },
+                    {
+                        header: "Timestamp",
+                        render: locItem => <DateTimeCell
+                            dateTime={ locItem.timestamp }
+                            spinner={ locItem.status === 'PUBLISHED' } />,
+                        width: "200px"
+                    },
+                    {
+                        header: "Type",
+                        render: locItem => <Cell content={
+                        <>
+                            { locItem.type } {
+                                locItem.type === 'Document' &&
+                                <ViewFileButton
+                                    nodeOwner={ locItem.submitter }
+                                    fileName={ locItem.name }
+                                    downloader={ (axios: AxiosInstance) => getFile(axios, {
+                                        locId: locId.toString(),
+                                        hash: locItem.value
+                                    }) }
+                                />
+                            }
+                        </> } />,
+                        width: "150px"
+                    },
+                    {
+                        header: "Submitted by",
+                        render: locItem => <LegalOfficerName address={ locItem.submitter } />
+                    },
+                    {
+                        header: "",
+                        render: locItem => {
+                            if (locItem.status === 'DRAFT') {
+                                return renderActions(locItem)
+                            } else {
+                                return (<StatusCell icon={{ id: 'published' }} text="Published" color={ POLKADOT } />)
+                            }
                         }
                     }
-                }
-            ] }
-            renderEmpty={ () => <EmptyTableMessage>No public data nor private documents
-                yet</EmptyTableMessage> }
-            rowStyle={ (item, index?) => (item.type === "Document" && item.value === props.matchedHash) ? "matched" : "" }
-        />
-    )
+                ] }
+                renderEmpty={ () => <EmptyTableMessage>No public data nor private documents</EmptyTableMessage> }
+                rowStyle={ (item, index?) => (item.type === "Document" && item.value === props.matchedHash) ? "matched" : "" }
+            />
+        );
+    }
 }

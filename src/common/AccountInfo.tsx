@@ -2,11 +2,9 @@ import PostalAddressType from "./types/PostalAddress";
 import IdentityType from "./types/Identity";
 import Identity from "./Identity";
 import PostalAddress from "./PostalAddress";
-import Frame from "./Frame";
-import React from "react";
 import './AccountInfo.css';
-import { useCommonContext } from "./CommonContext";
 import ComparableField from "./ComparableField";
+import { BackgroundAndForegroundColors } from "./ColorTheme";
 
 export interface Props {
     label: string
@@ -15,30 +13,33 @@ export interface Props {
     postalAddress: PostalAddressType
     otherIdentity?: IdentityType
     otherPostalAddress?: PostalAddressType
+    colors: BackgroundAndForegroundColors
+    squeeze: boolean
 }
 
 export default function AccountInfo(props: Props) {
-    const { colorTheme } = useCommonContext();
-
     return (
-        <Frame className="AccountInfo" altColors={ true }>
+        <div className="AccountInfo">
             <ComparableField
                 id="accountAddress"
                 label={ props.label }
                 data={ props }
                 field={ props => props.address }
-                colors={ colorTheme.dashboard }
+                colors={ props.colors }
+                squeeze={ props.squeeze }
             />
             <Identity
                 identity={ props.identity }
                 otherIdentity={ props.otherIdentity }
-                colors={ colorTheme.dashboard }
+                colors={ props.colors }
+                squeeze={ props.squeeze }
             />
             <PostalAddress
                 postalAddress={ props.postalAddress }
                 otherPostalAddress={ props.otherPostalAddress }
-                colors={ colorTheme.dashboard }
+                colors={ props.colors }
+                squeeze={ props.squeeze }
             />
-        </Frame>
+        </div>
     )
 }

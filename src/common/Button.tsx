@@ -71,11 +71,17 @@ export default function Button(props: Props) {
 
     let style: CSSProperties = {};
     if(variant === 'secondary') {
-        style.backgroundColor = colorTheme.buttons.secondary.background;
+        style.background = colorTheme.buttons.secondary.background;
         style.color = colorTheme.buttons.secondary.foreground;
     } else if(variant === 'polkadot') {
         style.backgroundColor = POLKADOT;
         style.color = "white";
+    } else if(variant === 'secondary-polkadot') {
+        style.backgroundColor = colorTheme.buttons.secondary.background;
+        style.color = colorTheme.buttons.secondary.foreground;
+        style.border = `1px solid ${POLKADOT}`;
+    } else if(variant === 'link') {
+        style.color = colorTheme.dashboard.foreground;
     }
 
     const otherClassNames = [

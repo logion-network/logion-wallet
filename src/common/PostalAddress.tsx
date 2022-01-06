@@ -9,6 +9,7 @@ export interface Props {
     postalAddress: PostalAddressType
     otherPostalAddress?: PostalAddressType
     colors: BackgroundAndForegroundColors
+    squeeze: boolean
 }
 
 export default function PostalAddress(props: Props) {
@@ -28,7 +29,9 @@ export default function PostalAddress(props: Props) {
                 data={ props.postalAddress }
                 otherData={ props.otherPostalAddress }
                 field={ fieldProps.field }
-                colors={ props.colors } />
+                colors={ props.colors }
+                squeeze={ props.squeeze }
+            />
         );
     }
 

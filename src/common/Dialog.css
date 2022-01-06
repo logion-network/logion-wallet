@@ -42,3 +42,14 @@
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+.Dialog .modal-content h3 {
+    font-weight: bold;
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.Dialog.content-hidden .modal-content {
+    display: none;
+}

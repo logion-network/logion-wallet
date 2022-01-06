@@ -48,7 +48,7 @@ export default function LocCreationForm(props: Props) {
                         render={({ field }) => (
                             <Form.Control
                                 isInvalid={!!props.errors.description?.message}
-                                type="text" placeholder="e.g. XYZ"
+                                type="text"
                                 data-testid="description"
                                 aria-describedby="locDescription"
                                 { ...field }

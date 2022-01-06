@@ -56,26 +56,33 @@ export default function LocCreationDialog(props: Props) {
         })();
     }, [ axios, accounts, props.locRequest, refresh, props.hasLinkNature ]);
 
+    const clear = useCallback(() => {
+        reset();
+        setNewLocRequest(null);
+        setLinkNature(undefined);
+    }, [ reset, setNewLocRequest, setLinkNature ]);
+
     return (
         <>
             <Dialog
                 show={ props.show }
+                contentVisible={ newLocRequest === null }
                 size="lg"
                 actions={ [
                     {
-                        id: "submit",
-                        buttonText: 'Submit',
-                        buttonVariant: 'primary',
-                        type: 'submit',
-                    },
-                    {
                         id: "cancel",
                         callback: () => {
-                            reset();
+                            clear();
                             props.exit();
                         },
                         buttonText: 'Cancel',
-                        buttonVariant: 'secondary',
+                        buttonVariant: 'secondary-polkadot',
+                    },
+                    {
+                        id: "submit",
+                        buttonText: 'Submit',
+                        buttonVariant: 'polkadot',
+                        type: 'submit',
                     }
                 ] }
                 onSubmit={ handleSubmit(submit) }
@@ -111,11 +118,8 @@ export default function LocCreationDialog(props: Props) {
                 { newLocRequest !== null &&
                 <LocCreationSteps
                     requestToCreate={ newLocRequest }
-                    exit={ () => {
-                        props.exit();
-                        reset();
-                    } }
-                    onSuccess={ () => props.onSuccess(newLocRequest, linkNature) }
+                    exit={ () => { clear() ; props.exit() } }
+                    onSuccess={ () => { props.onSuccess(newLocRequest, linkNature); clear() } }
                 />
                 }
             </Dialog>

@@ -13,6 +13,7 @@ export interface LocItem {
     status: LocItemStatus,
     nature?: string,
     target?: UUID,
+    newItem: boolean,
 }
 
 export enum PublishStatus {
@@ -30,5 +31,3 @@ export interface PublishState {
 export interface PublishProps {
     locItem: LocItem
 }
-
-

@@ -1,4 +1,4 @@
-import React, { CSSProperties, useState, useCallback } from 'react';
+import React, { CSSProperties, useState, useCallback, useEffect } from 'react';
 import * as Css from 'csstype';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
@@ -15,7 +15,7 @@ import CopyPasteButton from "./CopyPasteButton";
 
 
 export interface CellProps {
-    content: string | number | null,
+    content: Children,
     smallText?: boolean,
     wordBreak?: Css.Property.WordBreak,
     overflowing?: boolean,
@@ -51,7 +51,7 @@ export function Cell(props: CellProps) {
                 style={ style }
             >
                 <OverlayTrigger
-                      placement="bottom"
+                      placement="bottom-start"
                       delay={ 500 }
                       overlay={
                         <Tooltip id={ props.tooltipId }>
@@ -89,6 +89,7 @@ export interface Column<T> {
     splitAfter?: boolean,
     renderDetails?: (element: T) => Child,
     align?: Css.Property.TextAlign,
+    detailsExpanded?: (element: T) => boolean,
 }
 
 function fontSize<T>(column: Column<T>): (string | undefined) {
@@ -114,10 +115,23 @@ function columnClassName<T>(column: Column<T>): (string | undefined) {
     }
 }
 
-function initialDetailsExpanded<T>(data: T[]): boolean[] {
+function initialDetailsExpanded<T>(data: T[], columns: Column<T>[]): boolean[] {
+    let detailsExpandedFunction: ((element: T) => boolean) | undefined = undefined;
+    for(let i = 0; i < columns.length; ++i) {
+        const column = columns[i];
+        if(column.detailsExpanded !== undefined) {
+            detailsExpandedFunction = column.detailsExpanded;
+            break;
+        }
+    }
+
     const detailsExpanded = new Array<boolean>(data.length);
-    for(let i = 0; i < detailsExpanded.length; ++i) {
-        detailsExpanded[i] = false;
+    for(let i = 0; i < data.length; ++i) {
+        if(detailsExpandedFunction) {
+            detailsExpanded[i] = detailsExpandedFunction(data[i]);
+        } else {
+            detailsExpanded[i] = false;
+        }
     }
     return detailsExpanded;
 }
@@ -160,7 +174,8 @@ function computeColumnWidths<T>(columns: Column<T>[], header: boolean): string[]
 
 export default function Table<T>(props: Props<T>) {
     const { colorTheme } = useCommonContext();
-    const [ detailsExpanded, setDetailsExpanded ] = useState<boolean[]>(initialDetailsExpanded(props.data));
+    const [ detailsExpanded, setDetailsExpanded ] = useState<boolean[]>(initialDetailsExpanded(props.data, props.columns));
+    const [ data, setData ] = useState<T[]>(props.data);
 
     let renderDetails: ((element: T) => Children) | undefined = undefined;
     for(let i = 0; i < props.columns.length; ++i) {
@@ -179,6 +194,13 @@ export default function Table<T>(props: Props<T>) {
         newDetailsExpanded[itemIndex] = !newDetailsExpanded[itemIndex];
         setDetailsExpanded(newDetailsExpanded);
     }, [ detailsExpanded, setDetailsExpanded ]);
+
+    useEffect(() => {
+        if(data !== props.data) {
+            setDetailsExpanded(initialDetailsExpanded(props.data, props.columns));
+            setData(props.data);
+        }
+    }, [ props, data, setDetailsExpanded, setData ]);
 
     return (
         <div className="Table">

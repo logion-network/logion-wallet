@@ -12,23 +12,6 @@
     padding: 0 20px;
 }
 
-.Button.btn.btn-secondary {
-    position: relative;
-    background: black;
-    background-clip: padding-box;
-    border: solid 1px transparent;
-}
-
-.Button.btn.btn-secondary:before {
-    content: '';
-    position: absolute;
-    top: 0; right: 0; bottom: 0; left: 0;
-    margin: -1px;
-    border-radius: inherit;
-    z-index: -1;
-    background: linear-gradient(to bottom, #3b6cf4, #6050dc);
-}
-
 .Button.btn.btn-secondary:hover:before {
     background: linear-gradient(to top, #3b6cf4, #6050dc);
 }
@@ -109,4 +92,18 @@
 
 .Button .text {
     margin-left: 15px;
+}
+
+.Button.btn.btn-danger-flat {
+    background-color: #ea1f46;
+    border: none;
+}
+
+.Button.btn.btn-danger-flat:hover {
+    opacity: 0.9;
+}
+
+.Button.btn.btn-none {
+    margin: 0;
+    padding: 0;
 }

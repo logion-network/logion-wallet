@@ -54,12 +54,6 @@ export default function LocLinkExistingDialog(props: Props) {
                 size={ "lg" }
                 actions={ [
                     {
-                        id: "submit",
-                        buttonText: 'Submit',
-                        buttonVariant: 'primary',
-                        type: 'submit',
-                    },
-                    {
                         id: "cancel",
                         callback: () => {
                             reset();
@@ -67,6 +61,12 @@ export default function LocLinkExistingDialog(props: Props) {
                         },
                         buttonText: 'Cancel',
                         buttonVariant: 'secondary',
+                    },
+                    {
+                        id: "submit",
+                        buttonText: 'Submit',
+                        buttonVariant: 'primary',
+                        type: 'submit',
                     }
                 ] }
                 onSubmit={ handleSubmit(submit) }

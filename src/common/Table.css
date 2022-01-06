@@ -79,6 +79,7 @@
 
 .Table .regular-cell.overflowing {
     text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .Table .date-cell {
