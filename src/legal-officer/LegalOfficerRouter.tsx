@@ -11,9 +11,10 @@ import {
     transactionsPath,
     TRANSACTIONS_RELATIVE_PATH,
     LOC_REQUESTS_RELATIVE_PATH,
-    LOC_DETAILS_RELATIVE_PATH,
     IDENTITIES_RELATIVE_PATH,
     SETTINGS_PATH,
+    TRANSACTION_LOC_DETAILS_RELATIVE_PATH,
+    IDENTITY_LOC_DETAILS_RELATIVE_PATH,
 } from './LegalOfficerPaths';
 
 import Home from './Home';
@@ -67,8 +68,9 @@ export default function LegalOfficerRouter() {
                     backPath={ WALLET_PATH }
             /> } />
             <Route path={ LOC_REQUESTS_RELATIVE_PATH } element={ <TransactionProtection /> } />
-            <Route path={ LOC_DETAILS_RELATIVE_PATH } element={ <LocDetails /> } />
+            <Route path={ TRANSACTION_LOC_DETAILS_RELATIVE_PATH } element={ <LocDetails /> } />
             <Route path={ IDENTITIES_RELATIVE_PATH } element={ <IdentityProtection /> } />
+            <Route path={ IDENTITY_LOC_DETAILS_RELATIVE_PATH } element={ <LocDetails /> } />
             <Route path="" element={ <Home /> } />
         </Routes>
     );

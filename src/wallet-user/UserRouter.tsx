@@ -22,7 +22,7 @@ export const RECOVERY_PATH = USER_PATH + RECOVERY_RELATIVE_PATH;
 export const WALLET_RELATIVE_PATH = '/wallet';
 export const WALLET_PATH = USER_PATH + WALLET_RELATIVE_PATH;
 
-export const TRANSACTIONS_RELATIVE_PATH = '/transactions/:coinId';
+export const TRANSACTIONS_RELATIVE_PATH = WALLET_RELATIVE_PATH + '/:coinId';
 const TRANSACTIONS_PATH = USER_PATH + TRANSACTIONS_RELATIVE_PATH;
 export function transactionsPath(coinId: string): string {
     return TRANSACTIONS_PATH.replace(":coinId", coinId);

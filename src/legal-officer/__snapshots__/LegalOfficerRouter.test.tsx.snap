@@ -33,7 +33,7 @@ exports[`renders 1`] = `
         backPath="/legal-officer/wallet"
       />
     }
-    path="/transactions/:coinId"
+    path="/wallet/transactions/:coinId"
   />
   <Route
     element={<TransactionProtection />}
@@ -41,11 +41,15 @@ exports[`renders 1`] = `
   />
   <Route
     element={<LocDetails />}
-    path="/loc-details/:locId"
+    path="/loc/:locId"
   />
   <Route
     element={<IdentityProtection />}
     path="/identities"
+  />
+  <Route
+    element={<LocDetails />}
+    path="/identities/:locId"
   />
   <Route
     element={<Account />}

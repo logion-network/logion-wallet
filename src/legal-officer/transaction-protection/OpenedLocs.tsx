@@ -7,7 +7,7 @@ import LocIdCell from '../../common/LocIdCell';
 import UserIdentityNameCell from '../../common/UserIdentityNameCell';
 import Button from "../../common/Button";
 import { useNavigate } from "react-router-dom";
-import { locDetailsPath } from "../LegalOfficerPaths";
+import { identityLocDetailsPath, transactionLocDetailsPath } from "../LegalOfficerPaths";
 import ButtonGroup from "../../common/ButtonGroup";
 import { LocType, IdentityLocType } from '../../logion-chain/Types';
 
@@ -60,7 +60,9 @@ export default function OpenedLocs(props: Props) {
                     render: request =>
                         <ActionCell>
                             <ButtonGroup>
-                                <Button onClick={ () => navigate(locDetailsPath(request.id)) }>Manage LOC</Button>
+                            <Button onClick={ () => navigate(
+                                    props.locType === 'Transaction' ? transactionLocDetailsPath(request.id) : identityLocDetailsPath(request.id)
+                                ) }>Manage LOC</Button>
                             </ButtonGroup>
                         </ActionCell>
                     ,

@@ -15,7 +15,7 @@ import VoidLocs from './VoidLocs';
 import Button from '../../common/Button';
 import LocCreationDialog from './LocCreationDialog';
 import { useNavigate } from 'react-router-dom';
-import { locDetailsPath } from '../LegalOfficerPaths';
+import { identityLocDetailsPath } from '../LegalOfficerPaths';
 
 export default function IdentityProtection() {
     const { colorTheme } = useCommonContext();
@@ -99,7 +99,7 @@ export default function IdentityProtection() {
                         <LocCreationDialog
                             show={ createLoc }
                             exit={ () => setCreateLoc(false) }
-                            onSuccess={ request => navigate(locDetailsPath(request.id)) }
+                            onSuccess={ request => navigate(identityLocDetailsPath(request.id)) }
                             locRequest={{
                                 locType: 'Identity'
                             }}

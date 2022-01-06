@@ -29,7 +29,7 @@ exports[`renders 1`] = `
         backPath="/user/wallet"
       />
     }
-    path="/transactions/:coinId"
+    path="/wallet/:coinId"
   />
   <Route
     element={<TransactionProtection />}

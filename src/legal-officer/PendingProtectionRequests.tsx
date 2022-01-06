@@ -14,7 +14,7 @@ import ProcessStep from './ProcessStep';
 import ProtectionRequestStatus from './ProtectionRequestStatus';
 import ProtectionRequestDetails from './ProtectionRequestDetails';
 import { useNavigate } from "react-router-dom";
-import { locDetailsPath, recoveryDetailsPath } from "./LegalOfficerPaths";
+import { recoveryDetailsPath, identityLocDetailsPath } from "./LegalOfficerPaths";
 import AccountInfo from "../common/AccountInfo";
 import LocIdFormGroup from './LocIdFormGroup';
 import { UUID } from '../logion-chain/UUID';
@@ -348,7 +348,7 @@ export default function PendingProtectionRequests(props: Props) {
                 <LocCreationDialog
                     show={ reviewState.status === ReviewStatus.CREATE_NEW_LOC }
                     exit={ handleClose }
-                    onSuccess={ (newLoc) => navigate(locDetailsPath(newLoc.id)) }
+                    onSuccess={ (newLoc) => navigate(identityLocDetailsPath(newLoc.id)) }
                     locRequest={{
                         requesterAddress: reviewState.request!.requesterAddress,
                         userIdentity: reviewState.request!.userIdentity,

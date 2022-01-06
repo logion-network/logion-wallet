@@ -18,7 +18,7 @@ import "./ContextualizedLocDetails.css";
 import Icon from "../../common/Icon";
 import LocLinkButton from "./LocLinkButton";
 import { fullCertificateUrl } from "../../PublicPaths";
-import { IDENTITIES_PATH, locDetailsPath, LOC_REQUESTS_PATH } from "../LegalOfficerPaths";
+import { IDENTITIES_PATH, identityLocDetailsPath, LOC_REQUESTS_PATH, transactionLocDetailsPath } from "../LegalOfficerPaths";
 import CheckFileFrame, { CheckResult } from './CheckFileFrame';
 import DangerFrame from "../../common/DangerFrame";
 import ButtonGroup from "../../common/ButtonGroup";
@@ -190,7 +190,7 @@ export default function ContextualizedLocDetails() {
                                             locRequest.requesterIdentityLoc !== null && locRequest.requesterIdentityLoc !== undefined &&
                                             <span><br />
                                             <NewTabLink
-                                                href={locDetailsPath(locRequest.requesterIdentityLoc)}
+                                                href={identityLocDetailsPath(locRequest.requesterIdentityLoc)}
                                                 iconId="loc-link"
                                                 inline
                                             >
@@ -250,7 +250,7 @@ export default function ContextualizedLocDetails() {
                         loc.voidInfo.replacer !== undefined &&
                         <p><strong>This VOID LOC has been replaced by the following LOC: </strong>
                             <NewTabLink
-                                href={ locDetailsPath(loc.voidInfo.replacer.toString()) }
+                                href={ loc.locType === 'Transaction' ? transactionLocDetailsPath(loc.voidInfo.replacer.toString()) : identityLocDetailsPath(loc.voidInfo.replacer.toString()) }
                                 iconId="loc-link"
                                 inline
                             >
@@ -281,7 +281,7 @@ export default function ContextualizedLocDetails() {
                 <LocCreationDialog
                     show={ createLoc }
                     exit={ () => setCreateLoc(false) }
-                    onSuccess={ request => navigate(locDetailsPath(request.id)) }
+                    onSuccess={ request => navigate(transactionLocDetailsPath(request.id)) }
                     locRequest={{
                         requesterIdentityLoc: locRequest.id,
                         locType: 'Transaction',
@@ -303,7 +303,7 @@ export default function ContextualizedLocDetails() {
                                 <p><strong>This LOC supersedes a previous LOC (VOID) since the following date:</strong> <InlineDateTime dateTime={ supersededLocRequest?.voidInfo?.voidedOn } /></p>
                                 <p><strong>For record purpose, this LOC supersedes the following LOC: </strong>
                                     <NewTabLink
-                                        href={ locDetailsPath(loc.replacerOf.toString()) }
+                                        href={ loc.locType === 'Transaction' ? transactionLocDetailsPath(loc.replacerOf.toString()) : identityLocDetailsPath(loc.replacerOf.toString()) }
                                         iconId="loc-link"
                                         inline
                                     >

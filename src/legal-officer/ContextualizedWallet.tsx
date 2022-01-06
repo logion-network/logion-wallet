@@ -41,7 +41,7 @@ export default function ContextualizedWallet() {
                     id: "wallet",
                     text: "Wallet",
                     to: WALLET_PATH,
-                    exact: true,
+                    exact: false,
                     icon: {
                         icon: {
                             id: 'wallet'
@@ -53,7 +53,7 @@ export default function ContextualizedWallet() {
                     id: "loc",
                     text: "Transactions",
                     to: LOC_REQUESTS_PATH,
-                    exact: true,
+                    exact: false,
                     icon: {
                         icon: {
                             id: 'loc'
@@ -65,7 +65,7 @@ export default function ContextualizedWallet() {
                     id: "identity",
                     text: "Identities",
                     to: IDENTITIES_PATH,
-                    exact: true,
+                    exact: false,
                     icon: {
                         icon: {
                             id: 'identity'

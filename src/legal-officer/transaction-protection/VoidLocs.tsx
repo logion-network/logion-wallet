@@ -5,7 +5,7 @@ import LocIdCell from '../../common/LocIdCell';
 import UserIdentityNameCell from '../../common/UserIdentityNameCell';
 import Button from "../../common/Button";
 import { useNavigate } from "react-router-dom";
-import { locDetailsPath } from "../LegalOfficerPaths";
+import { transactionLocDetailsPath, identityLocDetailsPath } from "../LegalOfficerPaths";
 import ButtonGroup from "../../common/ButtonGroup";
 import { LocType, IdentityLocType } from '../../logion-chain/Types';
 
@@ -64,7 +64,9 @@ export default function VoidLocs(props: Props) {
                     render: requestAndLoc =>
                         <ActionCell>
                             <ButtonGroup>
-                                <Button onClick={ () => navigate(locDetailsPath(requestAndLoc.request.id)) }>View</Button>
+                                <Button onClick={ () => navigate(
+                                    props.locType === 'Transaction' ? transactionLocDetailsPath(requestAndLoc.request.id) : identityLocDetailsPath(requestAndLoc.request.id)
+                                ) }>View</Button>
                             </ButtonGroup>
                         </ActionCell>
                     ,

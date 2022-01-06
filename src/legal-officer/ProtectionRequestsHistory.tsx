@@ -6,7 +6,7 @@ import { useLegalOfficerContext } from './LegalOfficerContext';
 import ProtectionRequestStatus from './ProtectionRequestStatus';
 import ProtectionRequestDetails from './ProtectionRequestDetails';
 import Button from "../common/Button";
-import { locDetailsPath } from "./LegalOfficerPaths";
+import { identityLocDetailsPath } from "./LegalOfficerPaths";
 import { useNavigate } from "react-router-dom";
 
 export default function ProtectionRequestsHistory() {
@@ -53,7 +53,7 @@ export default function ProtectionRequestsHistory() {
                     },
                     {
                         header: "Action",
-                        render: request => request.decision.locId ? <Button onClick={ () => navigate(locDetailsPath(request.decision.locId!)) }>Identity LOC</Button> : "" ,
+                        render: request => request.decision.locId ? <Button onClick={ () => navigate(identityLocDetailsPath(request.decision.locId!)) }>Identity LOC</Button> : "" ,
                         width: "180px",
                         align: 'center',
                     },
