@@ -53,6 +53,7 @@ export function Content(props: Props) {
 
     const latestTransaction = transactions[0];
 
+    const gaugeCoin = balances[0].coin;
     return (
         <>
         {
@@ -112,8 +113,11 @@ export function Content(props: Props) {
                     title={`Current ${SYMBOL} balance`}
                     fillHeight
                 >
+                    <div className="gauge-coin-icon">
+                        <Icon icon={ { id: gaugeCoin.iconId } } type={ gaugeCoin.iconType } height="108px" width="auto" />
+                    </div>
                     <WalletGauge
-                        coin={ balances[0].coin }
+                        coin={ gaugeCoin }
                         balance={ balances[0].balance }
                         level={ balances[0].level }
                         type='arc'
