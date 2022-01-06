@@ -1,6 +1,7 @@
 .Dashboard {
     min-height: 100%;
     position: relative;
+    display: flex;
 }
 
 .Dashboard .Sidebar {
@@ -8,7 +9,7 @@
     flex-direction: column;
     min-height: 100vh;
     height: 100%;
-    margin-left: -12px;
+    width: 300px;
 }
 
 .Dashboard .Sidebar .MenuArea {
@@ -24,6 +25,7 @@
     padding-left: 0;
     padding-right: 10px;
     overflow-x: hidden;
+    width: calc(100% - 300px);
 }
 
 .Dashboard .ContentArea {

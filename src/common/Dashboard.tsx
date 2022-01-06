@@ -1,5 +1,4 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
@@ -39,7 +38,6 @@ function TopArea(props: TopAreaProps) {
 
 interface PrimaryAreaProps {
     children: Children,
-    width: number,
 }
 
 function PrimaryArea(props: PrimaryAreaProps) {
@@ -47,29 +45,10 @@ function PrimaryArea(props: PrimaryAreaProps) {
     return (
         <Col
             key="primary-area"
-            md={ props.width }
+            md={ 12 }
             className="primary-area-col"
         >
             <div className="PrimaryArea">
-                { props.children }
-            </div>
-        </Col>
-    );
-}
-
-interface SecondaryAreaProps {
-    children?: Children,
-    width: number,
-}
-
-function SecondaryArea(props: SecondaryAreaProps) {
-
-    return (
-        <Col
-            key="secondary-area"
-            md={ props.width }
-        >
-            <div className="SecondaryArea">
                 { props.children }
             </div>
         </Col>
@@ -80,11 +59,7 @@ export interface ContentPaneProps extends TitlesProps {
     topAreaChildren?: Children,
     primaryAreaChildren: Children,
     secondaryAreaChildren: Children,
-    primaryPaneWidth?: number,
 }
-
-const FULL_WIDTH = 12;
-const SIDEBAR_WIDTH = 2;
 
 interface TitlesProps {
     mainTitle: string,
@@ -134,7 +109,7 @@ function BasePane(props: BasePaneProps) {
     }
 
     return (
-        <Col md={ FULL_WIDTH - SIDEBAR_WIDTH } className="BasePane">
+        <div className="BasePane">
             <Row>
                 <Col md={ 8 }>
                     <Titles {...props} />
@@ -156,36 +131,7 @@ function BasePane(props: BasePaneProps) {
             <Row className={ contentAreaClass }>
                 { props.children }
             </Row>
-        </Col>
-    );
-}
-
-export function ContentPane(props: ContentPaneProps) {
-
-    let primaryPaneWidth: number = 6;
-    if(props.primaryPaneWidth !== undefined) {
-        primaryPaneWidth = props.primaryPaneWidth;
-    }
-
-    return (
-        <BasePane
-            mainTitle={ props.mainTitle }
-            subTitle={ props.subTitle }
-            titleIcon={ props.titleIcon }
-            onBack={ props.onBack }
-            topAreaChildren={ props.topAreaChildren }
-        >
-            <PrimaryArea
-                width={ primaryPaneWidth }
-            >
-                { props.primaryAreaChildren }
-            </PrimaryArea>
-            <SecondaryArea
-                width={ FULL_WIDTH - primaryPaneWidth }
-            >
-                { props.secondaryAreaChildren }
-            </SecondaryArea>
-        </BasePane>
+        </div>
     );
 }
 
@@ -205,7 +151,7 @@ export function FullWidthPane(props: FullWidthPaneProps) {
             onBack={ props.onBack }
             topAreaChildren={ props.topAreaChildren }
         >
-            <PrimaryArea width={ FULL_WIDTH }>
+            <PrimaryArea>
                 { props.children }
             </PrimaryArea>
         </BasePane>
@@ -241,9 +187,8 @@ export default function Dashboard(props: Props) {
     `;
 
     return (
-        <Container
+        <div
             className="Dashboard"
-            fluid
             style={{
                 backgroundColor: colorTheme.dashboard.background,
                 color: colorTheme.dashboard.foreground,
@@ -252,35 +197,31 @@ export default function Dashboard(props: Props) {
             <style>
             { inlineCss }
             </style>
-            <Row>
-                <Col md={ SIDEBAR_WIDTH }>
-                    <div className="Sidebar"
-                        style={{
-                            backgroundColor: colorTheme.sidebar.background,
-                            color: colorTheme.sidebar.foreground,
-                            boxShadow: `0 0 25px ${colorTheme.shadowColor}`,
-                        }}
-                    >
-                        <Logo
-                            shadowColor={ colorTheme.shadowColor }
-                        />
-                        <div
-                            className="MenuArea"
-                        >
-                            <Menu
-                                items={ props.menuTop }
-                            />
-                            <MainMenu
-                                items={ props.menuMiddle }
-                            />
-                            <Menu
-                                items={ props.menuBottom }
-                            />
-                        </div>
-                    </div>
-                </Col>
-                { props.children }
-            </Row>
-        </Container>
+            <div className="Sidebar"
+                style={{
+                    backgroundColor: colorTheme.sidebar.background,
+                    color: colorTheme.sidebar.foreground,
+                    boxShadow: `0 0 25px ${colorTheme.shadowColor}`,
+                }}
+            >
+                <Logo
+                    shadowColor={ colorTheme.shadowColor }
+                />
+                <div
+                    className="MenuArea"
+                >
+                    <Menu
+                        items={ props.menuTop }
+                    />
+                    <MainMenu
+                        items={ props.menuMiddle }
+                    />
+                    <Menu
+                        items={ props.menuBottom }
+                    />
+                </div>
+            </div>
+            { props.children }
+        </div>
     );
 }
