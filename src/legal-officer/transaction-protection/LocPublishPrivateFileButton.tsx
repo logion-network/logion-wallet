@@ -5,6 +5,7 @@ import ExtrinsicSubmitter, { SignAndSubmit } from "../../ExtrinsicSubmitter";
 import ProcessStep from "../ProcessStep";
 import Alert from "../../common/Alert";
 import { PublishProps, PublishState, PublishStatus } from "./types";
+import Icon from "../../common/Icon";
 
 export default function LocPublishPrivateFileButton(props: PublishProps) {
 
@@ -26,14 +27,27 @@ export default function LocPublishPrivateFileButton(props: PublishProps) {
                 onClick={ () => setPublishState({ status: PublishStatus.START }) }
                 variant="polkadot"
             >
-                Publish to the blockchain
+                <Icon icon={{ id:"publish" }} /> Publish to the blockchain
             </Button>
             <ProcessStep
                 active={ publishState.status === PublishStatus.START || publishState.status === PublishStatus.PUBLISH_PENDING }
                 title="Publish Document related Data (1/2)"
-                mayProceed={ publishState.status === PublishStatus.START }
-                closeCallback={ () => setPublishState({ status: PublishStatus.NONE }) }
-                proceedCallback={ () => setPublishState({ status: PublishStatus.PUBLISH_PENDING }) }
+                nextSteps={[
+                    {
+                        buttonText: 'Cancel',
+                        buttonVariant: 'secondary-polkadot',
+                        id: 'cancel',
+                        mayProceed: true,
+                        callback: () => setPublishState({ status: PublishStatus.NONE })
+                    },
+                    {
+                        buttonText: 'Publish',
+                        buttonVariant: 'polkadot',
+                        id: 'publish',
+                        mayProceed: publishState.status === PublishStatus.START,
+                        callback: () => setPublishState({ status: PublishStatus.PUBLISH_PENDING })
+                    }
+                ]}
             >
                 <Alert variant="info">
                     <p>Warning: after processing and blockchain publication, these document related data - but not the
@@ -43,8 +57,15 @@ export default function LocPublishPrivateFileButton(props: PublishProps) {
             <ProcessStep
                 active={ publishState.status === PublishStatus.PUBLISHING || publishState.status === PublishStatus.PUBLISHED }
                 title="Publish Document related Data (2/2)"
-                mayProceed={ publishState.status === PublishStatus.PUBLISHED }
-                proceedCallback={ () => setPublishState({ status: PublishStatus.NONE }) }
+                nextSteps={[
+                    {
+                        buttonText: 'OK',
+                        buttonVariant: 'primary',
+                        id: 'ok',
+                        mayProceed: publishState.status === PublishStatus.PUBLISHED,
+                        callback: () => setPublishState({ status: PublishStatus.NONE })
+                    }
+                ]}
             >
                 <ExtrinsicSubmitter
                     id="publishFile"

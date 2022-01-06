@@ -1,3 +1,10 @@
 .FileSelectorButton.only-button input {
     display: none;
 }
+
+.FileSelectorButton .Button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+}

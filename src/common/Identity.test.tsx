@@ -15,6 +15,7 @@ test("renders without comparison", () => {
         <Identity
             identity={ DEFAULT_IDENTITY }
             colors={ COLOR_THEME.dashboard }
+            squeeze={ true }
         />
     );
     expect(tree).toMatchSnapshot();
@@ -26,6 +27,7 @@ test("renders and compares with same identity", () => {
             identity={ DEFAULT_IDENTITY }
             otherIdentity={ DEFAULT_IDENTITY }
             colors={ COLOR_THEME.dashboard }
+            squeeze={ true }
         />
     );
     expect(tree).toMatchSnapshot();
@@ -37,6 +39,7 @@ test("renders and compares with different identity", () => {
             identity={ DEFAULT_IDENTITY }
             otherIdentity={ DIFFERENT_IDENTITY }
             colors={ COLOR_THEME.dashboard }
+            squeeze={ true }
         />
     );
     expect(tree).toMatchSnapshot();

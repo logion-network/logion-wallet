@@ -9,6 +9,7 @@ export interface Props {
     identity: IdentityType
     otherIdentity?: IdentityType
     colors: BackgroundAndForegroundColors
+    squeeze: boolean
 }
 
 export default function Identity(props: Props) {
@@ -27,7 +28,9 @@ export default function Identity(props: Props) {
                 data={ props.identity }
                 otherData={ props.otherIdentity }
                 field={ fieldProps.field }
-                colors={ props.colors } />
+                colors={ props.colors }
+                squeeze={ props.squeeze }
+            />
         );
     }
 

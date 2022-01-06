@@ -1,6 +1,6 @@
 import React from 'react';
-import Alert from 'react-bootstrap/Alert';
 import Spinner from 'react-bootstrap/Spinner';
+import Alert from './common/Alert';
 
 import { SignedTransaction, isSuccessful } from './logion-chain/Signature';
 
@@ -18,20 +18,20 @@ export default function ExtrinsicSubmissionResult(props: Props) {
     if(error === null) {
         if(result === null) {
             return (
-                <Alert variant="info">
+                <Alert variant="polkadot">
                     <p>Submitting...</p>
                 </Alert>
             );
         } else if(!isSuccessful(result)) {
             return (
-                <Alert variant="info">
+                <Alert variant="polkadot">
                     <Spinner animation="border"/>
                     <p>{`Current status: ${result?.status.type}`}</p>
                 </Alert>
             );
         } else {
             return (
-                <Alert variant="success">
+                <Alert variant="polkadot">
                 {
                     props.successMessage === undefined &&
                     <p>Submission successful.</p>

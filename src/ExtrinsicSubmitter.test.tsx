@@ -38,7 +38,7 @@ test("Submitter initially showing submitting", async () => {
         onError={ onError }
     />);
 
-    await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent("Submitting..."));
+    await waitFor(() => expect(screen.getByText("Submitting...")).toBeInTheDocument());
     expect(onSuccess).not.toBeCalled();
     expect(onError).not.toBeCalled();
 });
@@ -79,7 +79,7 @@ test("Submitter shows error and calls onError", async () => {
     await waitFor(() => expect(result.setError).not.toBeNull());
     act(() => result.setError!("error"));
 
-    await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent("Submission failed"));
+    await waitFor(() => expect(screen.getByText("Submission failed: error")).toBeInTheDocument());
     expect(onSuccess).not.toBeCalled();
     expect(onError).toBeCalled();
 });
@@ -100,7 +100,7 @@ test("Submitter shows progress", async () => {
     await waitFor(() => expect(result.setResult).not.toBeNull());
     act(() => result.setResult!(mockSubmittableResult(false)));
 
-    await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent("Current status"));
+    await waitFor(() => expect(screen.getByText("Current status: undefined")).toBeInTheDocument());
     expect(onSuccess).not.toBeCalled();
     expect(onError).not.toBeCalled();
 });
@@ -121,7 +121,7 @@ test("Submitter shows success and calls onSuccess", async () => {
     await waitFor(() => expect(result.setResult).not.toBeNull());
     act(() => result.setResult!(mockSubmittableResult(true)));
 
-    await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent("Submission successful"));
+    await waitFor(() => expect(screen.getByText("Submission successful.")).toBeInTheDocument());
     expect(onSuccess).toBeCalledWith("extrinsicId");
     expect(onError).not.toBeCalled();
 });

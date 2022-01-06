@@ -1,0 +1,21 @@
+.LocItems.empty-loc {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 50px;
+}
+
+.LocItems.empty-loc img {
+    padding-left: 110px;
+}
+
+.LocItems.empty-loc .primary {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-top: 40px;
+    margin-bottom: 0;
+}
+
+.LocItems.empty-loc .secondary {
+    font-size: 1rem;
+    font-weight: bold;
+}

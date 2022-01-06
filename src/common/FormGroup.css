@@ -1,3 +1,7 @@
+.FormGroup {
+    text-align: left;
+}
+
 .FormGroup .form-control {
     border: none;
     border-bottom: 1px solid #3b6cf4;

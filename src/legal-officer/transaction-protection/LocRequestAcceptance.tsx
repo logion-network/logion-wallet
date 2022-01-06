@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import Alert from 'react-bootstrap/Alert';
 
 import { useLogionChain } from '../../logion-chain';
 import { UUID } from '../../logion-chain/UUID';
@@ -99,17 +98,26 @@ export default function LocRequestAcceptance(props: Props) {
         <div>
             <ProcessStep
                 active={ acceptState.status === AcceptStatus.NONE }
-                closeCallback={ close }
                 title="Accepting LOC request"
-                mayProceed={ acceptState.status === AcceptStatus.NONE }
-                proceedCallback={ () => setStatus(AcceptStatus.LOC_CREATION_PENDING) }
-                stepTestId={ `modal-accepting-${props.requestToAccept.id}` }
-                proceedButtonTestId={ `proceed-accept-${props.requestToAccept.id}` }
+                nextSteps={[
+                    {
+                        id: 'cancel',
+                        buttonText: 'Cancel',
+                        buttonVariant: 'secondary-polkadot',
+                        mayProceed: true,
+                        callback: close,
+                    },
+                    {
+                        id: 'reject',
+                        buttonText: 'Proceed',
+                        buttonVariant: 'polkadot',
+                        mayProceed: acceptState.status === AcceptStatus.NONE,
+                        callback: () => setStatus(AcceptStatus.LOC_CREATION_PENDING),
+                    }
+                ]}
             >
-                <Alert variant="info">
-                    <p>You are about to create the LOC and accept the request</p>
-                    <p>The LOC's creation will require your signature and may take several seconds.</p>
-                </Alert>
+                <p>You are about to create the LOC and accept the request</p>
+                <p>The LOC's creation will require your signature and may take several seconds.</p>
             </ProcessStep>
             <ProcessStep
                 active={ acceptState.status === AcceptStatus.CREATING_LOC
@@ -117,10 +125,16 @@ export default function LocRequestAcceptance(props: Props) {
                         || acceptState.status === AcceptStatus.ACCEPTING
                         || acceptState.status === AcceptStatus.ACCEPTED }
                 title="Creating LOC"
-                mayProceed={ acceptState.status === AcceptStatus.ACCEPTED || error }
-                proceedCallback={ () => error ? closeAndRefresh() : setStatus(AcceptStatus.DONE) }
                 stepTestId={ `modal-creating-${props.requestToAccept.id}` }
-                proceedButtonTestId={ `proceed-review-${props.requestToAccept.id}` }
+                nextSteps={[
+                    {
+                        id: 'close',
+                        buttonText: 'Close',
+                        buttonVariant: 'primary',
+                        mayProceed: acceptState.status === AcceptStatus.ACCEPTED || error,
+                        callback: () => { closeAndRefresh() ; setStatus(AcceptStatus.DONE) },
+                    }
+                ]}
             >
                 <ExtrinsicSubmitter
                     id="metadata"
@@ -129,17 +143,6 @@ export default function LocRequestAcceptance(props: Props) {
                     onSuccess={ () => setStatus(AcceptStatus.ACCEPTANCE_PENDING) }
                     onError={ () => setError(true) }
                 />
-            </ProcessStep>
-            <ProcessStep
-                active={ acceptState.status === AcceptStatus.DONE }
-                closeCallback={ closeAndRefresh }
-                title="LOC opened"
-                stepTestId={ `modal-review-${props.requestToAccept.id}` }
-                closeButtonTestId={ `close-review-${props.requestToAccept.id}` }
-            >
-                <div>
-                    <p>A LOC was successfully opened for request { props.requestToAccept.id }.</p>
-                </div>
             </ProcessStep>
         </div>
     );

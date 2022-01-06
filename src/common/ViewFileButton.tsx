@@ -4,6 +4,9 @@ import { useCommonContext } from "./CommonContext";
 import Button from "./Button";
 
 import { TypedFile } from "../legal-officer/Model";
+import Icon from "./Icon";
+
+import './ViewFileButton.css';
 
 export interface Props {
     nodeOwner: string;
@@ -28,8 +31,8 @@ export default function ViewFileButton(props: Props) {
         return null;
     }
     return (
-        <Button onClick={ () => openFile(axiosFactory(props.nodeOwner)!, props) }>
-            View
+        <Button onClick={ () => openFile(axiosFactory(props.nodeOwner)!, props) } className="ViewFileButton">
+            <Icon icon={{id: 'view'}} />
         </Button>
     )
 }

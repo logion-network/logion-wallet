@@ -28,8 +28,8 @@ export function mergeLocFile(parameters: MergeLocFileParameters): MergeResult {
             name: fileFromBackend.name,
             file: fileFromBackend,
             submitter
-        })
-        return { locItem, refreshNeeded: false }
+        }, false);
+        return { locItem, refreshNeeded: false };
     }
 }
 
@@ -44,10 +44,10 @@ interface Timestamp {
 }
 
 function createPublishedFileLocItem(parameters: CreateFileLocItemParameters & Timestamp): MergeResult {
-    return publish(createDraftFileLocItem(parameters), parameters.timestamp)
+    return publish(createDraftFileLocItem(parameters, false), parameters.timestamp)
 }
 
-export function createDraftFileLocItem(parameters: CreateFileLocItemParameters): LocItem {
+export function createDraftFileLocItem(parameters: CreateFileLocItemParameters, newItem: boolean): LocItem {
     return {
         name: parameters.name,
         value: parameters.file.hash,
@@ -56,6 +56,7 @@ export function createDraftFileLocItem(parameters: CreateFileLocItemParameters):
         timestamp: null,
         type: 'Document',
         status: 'DRAFT',
+        newItem,
     };
 }
 
@@ -77,8 +78,8 @@ export function mergeLocMetadataItem(parameters: MergeLocMetadataItemParameters)
         const locItem = createDraftMetadataLocItem({
             metadataItem: itemFromBackend,
             submitter
-        })
-        return { locItem, refreshNeeded: false }
+        }, false);
+        return { locItem, refreshNeeded: false };
     }
 }
 
@@ -88,10 +89,10 @@ export interface CreateLocMetadataItemParameters {
 }
 
 function createPublishedMetadataLocItem(parameters: CreateLocMetadataItemParameters & Timestamp): MergeResult {
-    return publish(createDraftMetadataLocItem(parameters), parameters.timestamp)
+    return publish(createDraftMetadataLocItem(parameters, false), parameters.timestamp)
 }
 
-export function createDraftMetadataLocItem(parameters: CreateLocMetadataItemParameters): LocItem {
+export function createDraftMetadataLocItem(parameters: CreateLocMetadataItemParameters, newItem: boolean): LocItem {
     const { metadataItem, submitter } = parameters;
     return {
         name: metadataItem.name,
@@ -99,7 +100,8 @@ export function createDraftMetadataLocItem(parameters: CreateLocMetadataItemPara
         submitter,
         timestamp: null,
         type: 'Data',
-        status: 'DRAFT'
+        status: 'DRAFT',
+        newItem
     }
 }
 
@@ -125,8 +127,8 @@ export function mergeLocLinkItem(parameters: MergeLocLinkItemParameters): MergeR
             link,
             otherLocDescription,
             submitter,
-        })
-        return { locItem, refreshNeeded: false }
+        }, false);
+        return { locItem, refreshNeeded: false };
     }
 }
 
@@ -136,7 +138,7 @@ export interface CreateLocLinkedLocItemParameters {
     submitter: string,
 }
 
-export function createDraftLinkedLocItem(parameters: CreateLocLinkedLocItemParameters): LocItem {
+export function createDraftLinkedLocItem(parameters: CreateLocLinkedLocItemParameters, newItem: boolean): LocItem {
     const { link, otherLocDescription, submitter } = parameters;
     return {
         name: otherLocDescription,
@@ -147,6 +149,7 @@ export function createDraftLinkedLocItem(parameters: CreateLocLinkedLocItemParam
         status: 'DRAFT',
         target: link.id,
         nature: link.nature,
+        newItem,
     };
 }
 
@@ -156,5 +159,5 @@ function publish(locItem: LocItem, timestamp: string | null): MergeResult {
 }
 
 function createPublishedLinkedLocItem(parameters: CreateLocLinkedLocItemParameters & Timestamp): MergeResult {
-    return publish(createDraftLinkedLocItem(parameters), parameters.timestamp);
+    return publish(createDraftLinkedLocItem(parameters, false), parameters.timestamp);
 }

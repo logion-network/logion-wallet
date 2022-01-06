@@ -15,6 +15,7 @@ import { rejectLocRequest } from '../Model';
 
 import LocRequestAcceptance from './LocRequestAcceptance';
 import LocRequestDetails from './LocRequestDetails';
+import Icon from '../../common/Icon';
 
 export default function PendingLocRequests() {
     const { pendingLocRequests, axiosFactory, refresh, accounts } = useCommonContext();
@@ -78,18 +79,18 @@ export default function PendingLocRequests() {
                         render: request => (
                             <ButtonGroup aria-label="actions">
                                 <Button
-                                    onClick={() => setRequestToAccept(getLocRequest(request.id))}
-                                    data-testid={`accept-${request.id}`}
-                                    variant="success"
-                                >
-                                    V
-                                </Button>
-                                <Button
                                     onClick={() => setRequestToReject(request.id)}
                                     data-testid={`reject-${request.id}`}
-                                    variant="danger"
+                                    variant="none"
                                 >
-                                    X
+                                    <Icon icon={{id: "ko"}} height='40px' />
+                                </Button>
+                                <Button
+                                    onClick={() => setRequestToAccept(getLocRequest(request.id))}
+                                    data-testid={`accept-${request.id}`}
+                                    variant="none"
+                                >
+                                    <Icon icon={{id: "ok"}} height='40px' />
                                 </Button>
                             </ButtonGroup>
                         ),
@@ -105,11 +106,23 @@ export default function PendingLocRequests() {
                 <ProcessStep
                     active={ requestToReject !== null }
                     closeCallback={ handleClose }
-                    title={`Rejecting ${requestToReject}`}
-                    mayProceed={ true }
-                    proceedCallback={ rejectAndCloseModal }
-                    stepTestId={`modal-reject-${requestToReject}`}
-                    proceedButtonTestId={`confirm-reject-${requestToReject}`}
+                    title={`Reject LOC request`}
+                    nextSteps={[
+                        {
+                            id: 'cancel',
+                            buttonText: 'Cancel',
+                            buttonVariant: 'secondary',
+                            mayProceed: true,
+                            callback: handleClose,
+                        },
+                        {
+                            id: 'reject',
+                            buttonText: 'Proceed',
+                            buttonVariant: 'primary',
+                            mayProceed: true,
+                            callback: rejectAndCloseModal,
+                        }
+                    ]}  
                 >
                     <Form.Group>
                         <Form.Label>Reason</Form.Label>

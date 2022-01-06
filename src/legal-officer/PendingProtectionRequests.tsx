@@ -218,7 +218,7 @@ export default function PendingProtectionRequests(props: Props) {
                 <ProcessStep
                     active={ true }
                     closeCallback={ handleClose }
-                    title={`Review ${reviewState.request!.id}`}
+                    title={`Review of protection request`}
                     mayProceed={ true }
                     stepTestId={`modal-review-${reviewState.request!.id}`}
                     nextSteps={ [
@@ -226,9 +226,17 @@ export default function PendingProtectionRequests(props: Props) {
                             id: "later",
                             callback: handleClose,
                             mayProceed: true,
-                            buttonVariant: "secondary",
+                            buttonVariant: "link",
                             buttonText: "Later",
                             buttonTestId: `later-${reviewState.request!.id}`
+                        },
+                        {
+                            id: "reject",
+                            callback: () => setReviewState({ ...reviewState, status: ReviewStatus.REJECTING }),
+                            mayProceed: true,
+                            buttonVariant: "secondary",
+                            buttonText: "No",
+                            buttonTestId: `reject-${reviewState.request!.id}`
                         },
                         {
                             id: "accept",
@@ -246,14 +254,6 @@ export default function PendingProtectionRequests(props: Props) {
                                     onClick: () => setReviewState({ ...reviewState, status: ReviewStatus.ACCEPTING })
                                 }
                             ]
-                        },
-                        {
-                            id: "reject",
-                            callback: () => setReviewState({ ...reviewState, status: ReviewStatus.REJECTING }),
-                            mayProceed: true,
-                            buttonVariant: "danger",
-                            buttonText: "No",
-                            buttonTestId: `reject-${reviewState.request!.id}`
                         }
                     ] }
                 >
@@ -262,6 +262,8 @@ export default function PendingProtectionRequests(props: Props) {
                         address={ reviewState.request!.requesterAddress }
                         identity={ reviewState.request!.userIdentity }
                         postalAddress={ reviewState.request!.userPostalAddress }
+                        colors={ colorTheme.dialog }
+                        squeeze={ false }
                     />
                     <p>I executed my due diligence and accept to be the Legal Officer of this user</p>
                 </ProcessStep>
@@ -271,7 +273,7 @@ export default function PendingProtectionRequests(props: Props) {
                 <ProcessStep
                     active={ true }
                     closeCallback={ handleClose }
-                    title={`Rejecting ${reviewState.request!.id}`}
+                    title={`Reject protection request`}
                     mayProceed={ true }
                     stepTestId={`modal-review-${reviewState.request!.id}`}
                     nextSteps={ [
@@ -280,7 +282,7 @@ export default function PendingProtectionRequests(props: Props) {
                             callback: handleClose,
                             mayProceed: true,
                             buttonVariant: "secondary",
-                            buttonText: "Later",
+                            buttonText: "Cancel",
                             buttonTestId: `later-${reviewState.request!.id}`
                         },
                         {

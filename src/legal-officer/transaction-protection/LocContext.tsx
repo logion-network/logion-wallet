@@ -166,10 +166,10 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
                 return { ...state, locItems: state.locItems.concat(action.locItem!) }
             }
         case "UPDATE_ITEM_STATUS":
-            items[itemIndex] = { ...action.locItem!, status: action.status! }
+            items[itemIndex] = { ...action.locItem!, status: action.status!, newItem: false }
             return { ...state, locItems: items }
         case "UPDATE_ITEM_TIMESTAMP":
-            items[itemIndex] = { ...action.locItem!, timestamp: action.timestamp! }
+            items[itemIndex] = { ...action.locItem!, timestamp: action.timestamp!, newItem: false }
             return { ...state, locItems: items }
         case "DELETE_ITEM":
             items.splice(itemIndex, 1)
@@ -533,7 +533,7 @@ export function LocContextProvider(props: Props) {
             link: { id: otherLocId, nature },
             otherLocDescription,
             submitter: contextValue.loc!.owner
-        }))
+        }, true))
     }, [ axiosFactory, accounts, contextValue.loc, contextValue.locId, addLocItemFunction ])
 
     const addMetadataFunction = useCallback(async (name: string, value: string) => {
@@ -546,7 +546,7 @@ export function LocContextProvider(props: Props) {
             {
                 metadataItem: { name, value },
                 submitter: contextValue.loc!.owner
-            }))
+            }, true))
     }, [ axiosFactory, accounts, contextValue.loc, contextValue.locId, addLocItemFunction ])
 
     const addFileFunction = useCallback(async (name: string, file: File, nature: string) => {
@@ -564,7 +564,7 @@ export function LocContextProvider(props: Props) {
                 },
                 submitter: contextValue.loc!.owner,
                 name
-            }))
+            }, true))
     }, [ axiosFactory, accounts, contextValue.loc, contextValue.locId, addLocItemFunction ])
 
     useEffect(() => {

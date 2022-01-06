@@ -20,6 +20,7 @@ export interface Props {
     onSubmit?: () => {},
     className?: string,
     colors?: DialogColors;
+    contentVisible?: boolean;
 }
 
 export default function Dialog(props: Props) {
@@ -29,7 +30,7 @@ export default function Dialog(props: Props) {
         throw new Error("There is no way for this dialog to be closed");
     }
 
-    const className = customClassName("Dialog", props.className);
+    const className = customClassName("Dialog", props.className, ((props.contentVisible !== undefined && !props.contentVisible) ? "content-hidden" : undefined));
     let colors = props.colors;
     if(colors === undefined) {
         colors = colorTheme.dialog;

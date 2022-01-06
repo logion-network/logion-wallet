@@ -1,7 +1,6 @@
 import FormGroup from "./FormGroup";
 import { Controller, useForm } from "react-hook-form";
 import Form from "react-bootstrap/Form";
-import React from "react";
 import { BackgroundAndForegroundColors } from "./ColorTheme";
 import "./ComparableField.css";
 
@@ -12,6 +11,7 @@ export interface ComparableFieldProps<T> {
     otherData?: T
     field: (value: T) => string
     colors: BackgroundAndForegroundColors
+    squeeze: boolean
 }
 
 export default function ComparableField<T>(props: ComparableFieldProps<T>) {
@@ -47,7 +47,7 @@ export default function ComparableField<T>(props: ComparableFieldProps<T>) {
                         ) }
                     />
                 }
-                noFeedback
+                noFeedback={ props.squeeze }
                 colors={ props.colors }
             />
         </div>)

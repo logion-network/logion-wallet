@@ -15,7 +15,8 @@ describe("LocPublishLinkButton", () => {
         value: "link-value",
         target: new UUID(),
         nature: "link-nature",
-        timestamp: null
+        timestamp: null,
+        newItem: false,
     }
 
     it("renders", () => {

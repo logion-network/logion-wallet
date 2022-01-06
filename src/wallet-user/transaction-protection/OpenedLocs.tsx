@@ -28,7 +28,7 @@ export default function OpenedLocs() {
                 },
                 {
                     "header": "Description",
-                    render: request => <Cell content={ request.description } />,
+                    render: request => <Cell content={ request.description } overflowing tooltipId='description-tooltip' />,
                     align: 'left',
                 },
                 {

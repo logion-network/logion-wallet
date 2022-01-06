@@ -14,7 +14,8 @@ describe("LocPublishPrivateFileButton", () => {
         submitter: "file-submitter",
         value: "file-value",
         nature: "file-nature",
-        timestamp: null
+        timestamp: null,
+        newItem: false,
     }
 
     it("renders", () => {

@@ -139,18 +139,11 @@ export default function LocCreationSteps(props: Props) {
                 stepTestId={ `modal-creating-${ requestToCreate.id }` }
                 nextSteps={[
                     {
-                        id: "cancel",
-                        buttonText: "Cancel",
-                        buttonVariant: "secondary",
-                        mayProceed: creationState.status === CreationStatus.LOC_CREATION_FAILED,
-                        callback: clear
-                    },
-                    {
                         id: "proceed-review",
                         buttonText: "Proceed",
                         buttonVariant: "primary",
                         mayProceed: creationState.status === CreationStatus.LOC_CREATED,
-                        callback: () => setStatus(CreationStatus.DONE)
+                        callback: close
                     }
                 ]}
             >
@@ -161,17 +154,6 @@ export default function LocCreationSteps(props: Props) {
                     onSuccess={ () => setStatus(CreationStatus.LOC_CREATED) }
                     onError={ () => setStatus(CreationStatus.LOC_CREATION_FAILED) }
                 />
-            </ProcessStep>
-            <ProcessStep
-                active={ creationState.status === CreationStatus.DONE }
-                closeCallback={ close }
-                title={ `LOC created` }
-                stepTestId={ `modal-review-${ requestToCreate.id }` }
-                closeButtonTestId={ `close-review-${ requestToCreate.id }` }
-            >
-                <div>
-                    <p>LOC was successfully created for request { requestToCreate.id }.</p>
-                </div>
             </ProcessStep>
         </div>
     );

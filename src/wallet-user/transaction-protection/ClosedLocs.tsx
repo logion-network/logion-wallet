@@ -28,7 +28,7 @@ export default function ClosedLocs() {
                 },
                 {
                     "header": "Description",
-                    render: requestAndLoc => <Cell content={ requestAndLoc.request.description } />,
+                    render: requestAndLoc => <Cell content={ requestAndLoc.request.description } overflowing tooltipId='description-tooltip' />,
                     align: 'left',
                 },
                 {

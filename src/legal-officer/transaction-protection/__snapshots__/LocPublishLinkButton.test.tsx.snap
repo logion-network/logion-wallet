@@ -6,13 +6,35 @@ exports[`LocPublishLinkButton renders 1`] = `
     onClick={[Function]}
     variant="polkadot"
   >
-    Publish to the blockchain
+    <Icon
+      icon={
+        Object {
+          "id": "publish",
+        }
+      }
+    />
+     Publish to the blockchain
   </Button>
   <ProcessStep
     active={false}
-    closeCallback={[Function]}
-    mayProceed={false}
-    proceedCallback={[Function]}
+    nextSteps={
+      Array [
+        Object {
+          "buttonText": "Cancel",
+          "buttonVariant": "secondary-polkadot",
+          "callback": [Function],
+          "id": "cancel",
+          "mayProceed": true,
+        },
+        Object {
+          "buttonText": "Publish",
+          "buttonVariant": "polkadot",
+          "callback": [Function],
+          "id": "publish",
+          "mayProceed": false,
+        },
+      ]
+    }
     title="Publish Link (1/2)"
   >
     <Alert
@@ -25,8 +47,17 @@ exports[`LocPublishLinkButton renders 1`] = `
   </ProcessStep>
   <ProcessStep
     active={false}
-    mayProceed={false}
-    proceedCallback={[Function]}
+    nextSteps={
+      Array [
+        Object {
+          "buttonText": "OK",
+          "buttonVariant": "primary",
+          "callback": [Function],
+          "id": "ok",
+          "mayProceed": false,
+        },
+      ]
+    }
     title="Publish Link (2/2)"
   >
     <ExtrinsicSubmitter

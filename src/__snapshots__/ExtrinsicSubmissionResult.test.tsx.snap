@@ -2,8 +2,13 @@
 
 exports[`Finalized result, no error 1`] = `
 <div
-  className="fade alert alert-success show"
-  role="alert"
+  className="Alert polkadot"
+  style={
+    Object {
+      "backgroundColor": "#e6007a",
+      "color": "white",
+    }
+  }
 >
   <p>
     Submission successful.
@@ -13,8 +18,13 @@ exports[`Finalized result, no error 1`] = `
 
 exports[`Finalized result, no error, custom message 1`] = `
 <div
-  className="fade alert alert-success show"
-  role="alert"
+  className="Alert polkadot"
+  style={
+    Object {
+      "backgroundColor": "#e6007a",
+      "color": "white",
+    }
+  }
 >
   Success
 </div>
@@ -22,8 +32,13 @@ exports[`Finalized result, no error, custom message 1`] = `
 
 exports[`No result, error 1`] = `
 <div
-  className="fade alert alert-danger show"
-  role="alert"
+  className="Alert danger"
+  style={
+    Object {
+      "backgroundColor": undefined,
+      "color": "#e11a25",
+    }
+  }
 >
   <p>
     Submission failed: error
@@ -33,8 +48,13 @@ exports[`No result, error 1`] = `
 
 exports[`No result, error, custom message 1`] = `
 <div
-  className="fade alert alert-danger show"
-  role="alert"
+  className="Alert danger"
+  style={
+    Object {
+      "backgroundColor": undefined,
+      "color": "#e11a25",
+    }
+  }
 >
   Error
 </div>
@@ -42,8 +62,13 @@ exports[`No result, error, custom message 1`] = `
 
 exports[`No result, no error 1`] = `
 <div
-  className="fade alert alert-info show"
-  role="alert"
+  className="Alert polkadot"
+  style={
+    Object {
+      "backgroundColor": "#e6007a",
+      "color": "white",
+    }
+  }
 >
   <p>
     Submitting...
@@ -53,8 +78,13 @@ exports[`No result, no error 1`] = `
 
 exports[`Non-finalized result, error 1`] = `
 <div
-  className="fade alert alert-danger show"
-  role="alert"
+  className="Alert danger"
+  style={
+    Object {
+      "backgroundColor": undefined,
+      "color": "#e11a25",
+    }
+  }
 >
   <p>
     Submission failed: error
@@ -64,8 +94,13 @@ exports[`Non-finalized result, error 1`] = `
 
 exports[`Non-finalized result, no error 1`] = `
 <div
-  className="fade alert alert-info show"
-  role="alert"
+  className="Alert polkadot"
+  style={
+    Object {
+      "backgroundColor": "#e6007a",
+      "color": "white",
+    }
+  }
 >
   <div
     className="spinner-border"

@@ -112,25 +112,33 @@ export default function RecoveryDetails() {
                     </Spacer>
                     <Col className="AccountInfoFrom">
                         <h3>From</h3>
-                        <AccountInfo
-                            label="Account address, subject of the recovery"
-                            address={ recoveryInfo.accountToRecover.requesterAddress }
-                            identity={ recoveryInfo.accountToRecover.userIdentity }
-                            postalAddress={ recoveryInfo.accountToRecover.userPostalAddress }
-                            otherIdentity={ recoveryInfo.recoveryAccount.userIdentity }
-                            otherPostalAddress={ recoveryInfo.recoveryAccount.userPostalAddress }
-                        />
+                        <Frame altColors={ true }>
+                            <AccountInfo
+                                label="Account address, subject of the recovery"
+                                address={ recoveryInfo.accountToRecover.requesterAddress }
+                                identity={ recoveryInfo.accountToRecover.userIdentity }
+                                postalAddress={ recoveryInfo.accountToRecover.userPostalAddress }
+                                otherIdentity={ recoveryInfo.recoveryAccount.userIdentity }
+                                otherPostalAddress={ recoveryInfo.recoveryAccount.userPostalAddress }
+                                colors={ colorTheme.dashboard }
+                                squeeze={ true }
+                            />
+                        </Frame>
                     </Col>
                     <Col className="AccountInfoTo">
                         <h3>To</h3>
-                        <AccountInfo
-                            label="Account address where all assets will be transferred"
-                            address={ recoveryInfo.recoveryAccount.requesterAddress }
-                            identity={ recoveryInfo.recoveryAccount.userIdentity }
-                            postalAddress={ recoveryInfo.recoveryAccount.userPostalAddress }
-                            otherIdentity={ recoveryInfo.accountToRecover.userIdentity }
-                            otherPostalAddress={ recoveryInfo.accountToRecover.userPostalAddress }
-                        />
+                        <Frame altColors={ true }>
+                            <AccountInfo
+                                label="Account address where all assets will be transferred"
+                                address={ recoveryInfo.recoveryAccount.requesterAddress }
+                                identity={ recoveryInfo.recoveryAccount.userIdentity }
+                                postalAddress={ recoveryInfo.recoveryAccount.userPostalAddress }
+                                otherIdentity={ recoveryInfo.accountToRecover.userIdentity }
+                                otherPostalAddress={ recoveryInfo.accountToRecover.userPostalAddress }
+                                colors={ colorTheme.dashboard }
+                                squeeze={ true }
+                            />
+                        </Frame>
                     </Col>
                 </Row>
                 <Row>

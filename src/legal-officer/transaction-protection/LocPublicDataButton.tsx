@@ -38,16 +38,16 @@ export default function LocPublicDataButton() {
                 size={ "lg" }
                 actions={ [
                     {
-                        id: "submit",
-                        buttonText: 'Submit',
-                        buttonVariant: 'primary',
-                        type: 'submit',
-                    },
-                    {
                         id: "cancel",
                         callback: () => setVisible(false),
                         buttonText: 'Cancel',
                         buttonVariant: 'secondary',
+                    },
+                    {
+                        id: "submit",
+                        buttonText: 'Submit',
+                        buttonVariant: 'primary',
+                        type: 'submit',
                     }
                 ] }
                 onSubmit={ handleSubmit(submit) }

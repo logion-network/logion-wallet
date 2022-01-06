@@ -11,7 +11,7 @@ import LocItems from "./LocItems";
 import LocItemDetail from "./LocItemDetail";
 import { Row } from "../../common/Grid";
 import TwoSideButtonGroup from "../../common/TwoSideButtonGroup";
-import { POLKADOT, RED, BackgroundAndForegroundColors } from "../../common/ColorTheme";
+import { POLKADOT, RED, BackgroundAndForegroundColors, BLUE } from "../../common/ColorTheme";
 import CloseLocButton from "./CloseLocButton";
 import LocPrivateFileButton from "./LocPrivateFileButton";
 import "./ContextualizedLocDetails.css";
@@ -73,7 +73,7 @@ export default function ContextualizedLocDetails() {
     const certificateUrl = fullCertificateUrl(locId);
     const backPath = loc.locType === 'Transaction' ? LOC_REQUESTS_PATH : IDENTITIES_PATH;
 
-    let locTabBorderColor = undefined;
+    let locTabBorderColor = BLUE;
     if(loc.voidInfo !== undefined) {
         locTabBorderColor = RED;
     } else if(loc.closed) {
@@ -203,6 +203,7 @@ export default function ContextualizedLocDetails() {
                                     }
                                 </Col>
                             </Row>
+                            <div className="separator" style={{ backgroundColor: locTabBorderColor }} />
                             <LocItems matchedHash={ checkResult.hash } />
                             {
                                 !loc.closed && loc.voidInfo === undefined &&

@@ -84,16 +84,16 @@ export default function LocCreation() {
                 size="lg"
                 actions={[
                     {
-                        id: "submit",
-                        buttonText: 'Submit',
-                        buttonVariant: 'primary',
-                        type: 'submit',
-                    },
-                    {
                         id: "cancel",
                         callback: () => { reset() ; setRequestLoc(false) },
                         buttonText: 'Cancel',
                         buttonVariant: 'secondary',
+                    },
+                    {
+                        id: "submit",
+                        buttonText: 'Submit',
+                        buttonVariant: 'primary',
+                        type: 'submit',
                     }
                 ]}
                 onSubmit={handleSubmit(submit)}
