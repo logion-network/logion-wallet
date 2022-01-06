@@ -143,11 +143,12 @@ export default function RecoveryDetails() {
                 </Row>
                 <Row>
                     <ButtonGroup aria-label="actions">
-                        <Button variant="outline-primary" onClick={ () => navigate(RECOVERY_REQUESTS_PATH) }>
+                        <Button variant="link" onClick={ () => navigate(RECOVERY_REQUESTS_PATH) }>
                             Back to requests list
                         </Button>
-                        <Button variant="danger" onClick={ () => setVisible(Visible.REJECT) }>Refuse</Button>
+                        <Button variant="secondary" onClick={ () => setVisible(Visible.REJECT) }>Refuse</Button>
                         <Button
+                            variant="primary"
                             choices={[
                                 {
                                     text: "Create the required Identity LOC",

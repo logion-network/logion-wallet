@@ -13,7 +13,7 @@ describe("LocPublishLinkButton", () => {
         status: "DRAFT",
         submitter: "link-submitter",
         value: "link-value",
-        target: new UUID(),
+        target: new UUID("94cec06d-dca4-4a62-83f4-a82c5425d94e"),
         nature: "link-nature",
         timestamp: null,
         newItem: false,

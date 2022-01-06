@@ -26,10 +26,6 @@ export interface Props {
 export default function Dialog(props: Props) {
     const { colorTheme } = useCommonContext();
 
-    if(props.actions.length === 0) {
-        throw new Error("There is no way for this dialog to be closed");
-    }
-
     const className = customClassName("Dialog", props.className, ((props.contentVisible !== undefined && !props.contentVisible) ? "content-hidden" : undefined));
     let colors = props.colors;
     if(colors === undefined) {

@@ -104,7 +104,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
                     <Header
                         icon="pending"
                         color={ ORANGE }
-                        text={`Your Logion Trust Protection request has been submitted. Your Legal Officers
+                        text={`Your Logion Protection request has been submitted. Your Legal Officers
                         will contact you as soon as possible to finalize the KYC process. Please note that, after the successful
                         completion of one of your Legal Officer approval processes, you will be able to use all features
                         provided by your logion account dashboard.`}
@@ -129,7 +129,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
                     <Header
                         icon="accepted"
                         color={ YELLOW }
-                        text={`Your Logion Trust Protection request has been accepted by your
+                        text={`Your Logion Protection request has been accepted by your
                         Legal Officers. You may now activate your protection.`}
                     />
                 );
@@ -148,7 +148,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
                     <Header
                         icon="activated"
                         color={ GREEN }
-                        text={`Your Logion Trust Protection is active`}
+                        text={`Your Logion Protection is active`}
                     />
                 );
             }

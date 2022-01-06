@@ -19,7 +19,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
     <Header
       color="#37ad4b"
       icon="activated"
-      text="Your Logion Trust Protection is active"
+      text="Your Logion Protection is active"
     />
     <ExtrinsicSubmitter
       id="activatedProtection"
@@ -494,7 +494,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
     <Header
       color="#37ad4b"
       icon="activated"
-      text="Your Logion Trust Protection is active"
+      text="Your Logion Protection is active"
     />
     <ExtrinsicSubmitter
       id="activatedProtection"
@@ -972,7 +972,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
     <Header
       color="#ff9b3f"
       icon="pending"
-      text="Your Logion Trust Protection request has been submitted. Your Legal Officers
+      text="Your Logion Protection request has been submitted. Your Legal Officers
                         will contact you as soon as possible to finalize the KYC process. Please note that, after the successful
                         completion of one of your Legal Officer approval processes, you will be able to use all features
                         provided by your logion account dashboard."

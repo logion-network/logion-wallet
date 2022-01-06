@@ -177,7 +177,7 @@ exports[`Renders Closed Logion Identity LOCs 1`] = `
         >
           <img
             alt=""
-            height="14px"
+            height="20px"
             src="/assets/activated.svg"
           />
            
@@ -494,7 +494,7 @@ exports[`Renders Closed Polkadot Identity LOCs 1`] = `
         >
           <img
             alt=""
-            height="14px"
+            height="20px"
             src="/assets/activated.svg"
           />
            

@@ -121,8 +121,14 @@ export default function RecoveryProcess() {
                                         <Table
                                             columns={ [
                                                 {
+                                                    header: "",
+                                                    render: coinBalance => <Icon icon={{id: coinBalance.coin.iconId}} type={ coinBalance.coin.iconType } height="36px" width="auto" />,
+                                                    width: "150px",
+                                                },
+                                                {
                                                     header: "Name",
                                                     render: coinBalance => <AssetNameCell balance={ coinBalance } />,
+                                                    align: "left"
                                                 },
                                                 {
                                                     header: "Balance",

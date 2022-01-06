@@ -1,72 +1,39 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LocPublishLinkButton renders 1`] = `
-<React.Fragment>
-  <Button
-    onClick={[Function]}
-    variant="polkadot"
-  >
-    <Icon
-      icon={
-        Object {
-          "id": "publish",
-        }
-      }
-    />
-     Publish to the blockchain
-  </Button>
-  <ProcessStep
-    active={false}
-    nextSteps={
-      Array [
-        Object {
-          "buttonText": "Cancel",
-          "buttonVariant": "secondary-polkadot",
-          "callback": [Function],
-          "id": "cancel",
-          "mayProceed": true,
-        },
-        Object {
-          "buttonText": "Publish",
-          "buttonVariant": "polkadot",
-          "callback": [Function],
-          "id": "publish",
-          "mayProceed": false,
-        },
-      ]
+<LocPublishButton
+  itemType="Link"
+  locItem={
+    Object {
+      "name": "link-name",
+      "nature": "link-nature",
+      "newItem": false,
+      "status": "DRAFT",
+      "submitter": "link-submitter",
+      "target": UUID {
+        "bytes": Uint8Array [
+          148,
+          206,
+          192,
+          109,
+          220,
+          164,
+          74,
+          98,
+          131,
+          244,
+          168,
+          44,
+          84,
+          37,
+          217,
+          78,
+        ],
+      },
+      "timestamp": null,
+      "type": "Linked LOC",
+      "value": "link-value",
     }
-    title="Publish Link (1/2)"
-  >
-    <Alert
-      variant="info"
-    >
-      <p>
-        Warning: after processing and blockchain publication, these data will be definitely and publicly available on the blockchain.
-      </p>
-    </Alert>
-  </ProcessStep>
-  <ProcessStep
-    active={false}
-    nextSteps={
-      Array [
-        Object {
-          "buttonText": "OK",
-          "buttonVariant": "primary",
-          "callback": [Function],
-          "id": "ok",
-          "mayProceed": false,
-        },
-      ]
-    }
-    title="Publish Link (2/2)"
-  >
-    <ExtrinsicSubmitter
-      id="publishMetadata"
-      onError={[Function]}
-      onSuccess={[Function]}
-      signAndSubmit={null}
-      successMessage="LOC public data successfully published"
-    />
-  </ProcessStep>
-</React.Fragment>
+  }
+/>
 `;

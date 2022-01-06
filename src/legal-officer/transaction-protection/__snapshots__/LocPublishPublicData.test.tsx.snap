@@ -1,72 +1,19 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LocPublishPublicData renders 1`] = `
-<React.Fragment>
-  <Button
-    onClick={[Function]}
-    variant="polkadot"
-  >
-    <Icon
-      icon={
-        Object {
-          "id": "publish",
-        }
-      }
-    />
-     Publish to the blockchain
-  </Button>
-  <ProcessStep
-    active={false}
-    nextSteps={
-      Array [
-        Object {
-          "buttonText": "Cancel",
-          "buttonVariant": "secondary-polkadot",
-          "callback": [Function],
-          "id": "cancel",
-          "mayProceed": true,
-        },
-        Object {
-          "buttonText": "Publish",
-          "buttonVariant": "polkadot",
-          "callback": [Function],
-          "id": "publish",
-          "mayProceed": false,
-        },
-      ]
+<LocPublishButton
+  itemType="Public Data"
+  locItem={
+    Object {
+      "name": "data-name",
+      "nature": "data-nature",
+      "newItem": false,
+      "status": "DRAFT",
+      "submitter": "data-submitter",
+      "timestamp": null,
+      "type": "Data",
+      "value": "data-value",
     }
-    title="Publish Data (1/2)"
-  >
-    <Alert
-      variant="info"
-    >
-      <p>
-        Warning: after processing and blockchain publication, these data will be definitely and publicly available on the blockchain.
-      </p>
-    </Alert>
-  </ProcessStep>
-  <ProcessStep
-    active={false}
-    nextSteps={
-      Array [
-        Object {
-          "buttonText": "OK",
-          "buttonVariant": "primary",
-          "callback": [Function],
-          "id": "ok",
-          "mayProceed": false,
-        },
-      ]
-    }
-    title="Publish Data (2/2)"
-  >
-    <ExtrinsicSubmitter
-      id="publishMetadata"
-      onError={[Function]}
-      onSuccess={[Function]}
-      signAndSubmit={null}
-      successMessage="LOC public data successfully published"
-    />
-  </ProcessStep>
-</React.Fragment>
+  }
+/>
 `;
