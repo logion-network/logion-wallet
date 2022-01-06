@@ -109,13 +109,14 @@ export function Content(props: Props) {
                 </Frame>
             </Col>
             <Col md={4}>
-                <Frame
-                    title={`Current ${SYMBOL} balance`}
-                    fillHeight
-                >
-                    <div className="gauge-coin-icon">
-                        <Icon icon={ { id: gaugeCoin.iconId } } type={ gaugeCoin.iconType } height="108px" width="auto" />
-                    </div>
+                <Frame fillHeight
+                       title={
+                           <div className="gauge-title">
+                               <Icon icon={ { id: gaugeCoin.iconId } } type={ gaugeCoin.iconType } height="72px"
+                                     width="auto" />
+                               <span>Current { SYMBOL } balance</span>
+                           </div>
+                       }>
                     <WalletGauge
                         coin={ gaugeCoin }
                         balance={ balances[0].balance }
