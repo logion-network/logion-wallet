@@ -10,7 +10,7 @@ test("renders arc", () => {
 
 function testWalletGauge(type: 'arc' | 'linear') {
     const result = shallowRender(<WalletGauge
-        coin={ getCoin('log') }
+        coin={ getCoin('lgnt') }
         balance={ new PrefixedNumber("20.00", MILLI) }
         level={ 0.5 }
         type={ type }

@@ -15,3 +15,9 @@
     border-radius: 6px;
     padding: 9px 20px;
 }
+
+.Wallet .gauge-coin-icon {
+    display:flex;
+    justify-content: center;
+    margin-bottom: 40px;
+}

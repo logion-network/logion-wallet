@@ -4,8 +4,8 @@ import { ExtrinsicSubmissionParameters, Unsubscriber, signAndSend } from './Sign
 import { Call } from "@polkadot/types/interfaces";
 import { SubmittableExtrinsic } from "@polkadot/api/submittable/types";
 
-const LOG_DECIMALS = 18;
-export const LOG_SMALLEST_UNIT = ATTO;
+const LGNT_DECIMALS = 18;
+export const LGNT_SMALLEST_UNIT = ATTO;
 export const SYMBOL = "LGNT";
 
 export interface GetAccountDataParameters {
@@ -61,13 +61,13 @@ export async function getBalances(parameters: GetAccountDataParameters): Promise
     const logLevel = logAvailable.divideBy(ARTIFICIAL_MAX_BALANCE).toNumber();
 
     return [
-        buildCoinBalance('log', logPrefixedAvailable, logLevel),
+        buildCoinBalance('lgnt', logPrefixedAvailable, logLevel),
         buildCoinBalance('dot', new PrefixedNumber("0", NONE), 1)
     ];
 }
 
 export function scientificLogBalance(tokens: string): ScientificNumber {
-    return new ScientificNumber(tokens, -LOG_DECIMALS).optimizeScale(3);
+    return new ScientificNumber(tokens, -LGNT_DECIMALS).optimizeScale(3);
 }
 
 export function prefixedLogBalance(tokens: string): PrefixedNumber {
@@ -95,12 +95,12 @@ export function getCoin(coinId: string): Coin {
             iconType: 'png',
             symbol: 'DOT',
         };
-    } else if(coinId === "log") {
+    } else if(coinId === "lgnt") {
         return {
-            id: 'log',
+            id: 'lgnt',
             name: 'Logion',
-            iconId: 'log',
-            iconType: 'png',
+            iconId: 'lgnt',
+            iconType: 'svg',
             symbol: SYMBOL,
         };
     } else {
@@ -138,7 +138,7 @@ function transferSubmittable(parameters: BuildTransferCallParameters): Submittab
         destination,
         amount
     } = parameters;
-    return api.tx.balances.transfer(destination, amount.convertTo(LOG_SMALLEST_UNIT).coefficient.unnormalize())
+    return api.tx.balances.transfer(destination, amount.convertTo(LGNT_SMALLEST_UNIT).coefficient.unnormalize())
 }
 
 export function buildTransferCall(parameters: BuildTransferCallParameters): Call {
@@ -148,5 +148,5 @@ export function buildTransferCall(parameters: BuildTransferCallParameters): Call
 export async function estimateFee(parameters: BuildTransferCallParameters): Promise<PrefixedNumber> {
     const submittable = transferSubmittable(parameters);
     const paymentInfo = await submittable.paymentInfo(parameters.destination);
-    return new PrefixedNumber(paymentInfo.partialFee.toString(), LOG_SMALLEST_UNIT);
+    return new PrefixedNumber(paymentInfo.partialFee.toString(), LGNT_SMALLEST_UNIT);
 }

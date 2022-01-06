@@ -42,13 +42,13 @@ exports[`renders with all data 1`] = `
                 "align": "left",
                 "header": "Asset name",
                 "render": [Function],
-                "width": "180px",
+                "width": "190px",
               },
               Object {
                 "align": "right",
                 "header": "Balance",
                 "render": [Function],
-                "width": "150px",
+                "width": "140px",
               },
               Object {
                 "header": "Last transaction date",
@@ -89,9 +89,9 @@ exports[`renders with all data 1`] = `
                   },
                 },
                 "coin": Object {
-                  "iconId": "log",
-                  "iconType": "png",
-                  "id": "log",
+                  "iconId": "lgnt",
+                  "iconType": "svg",
+                  "id": "lgnt",
                   "name": "Logion",
                   "symbol": "LGNT",
                 },
@@ -110,6 +110,20 @@ exports[`renders with all data 1`] = `
         fillHeight={true}
         title="Current LGNT balance"
       >
+        <div
+          className="gauge-coin-icon"
+        >
+          <Icon
+            height="108px"
+            icon={
+              Object {
+                "id": "lgnt",
+              }
+            }
+            type="svg"
+            width="auto"
+          />
+        </div>
         <WalletGauge
           balance={
             PrefixedNumber {
@@ -130,9 +144,9 @@ exports[`renders with all data 1`] = `
           }
           coin={
             Object {
-              "iconId": "log",
-              "iconType": "png",
-              "id": "log",
+              "iconId": "lgnt",
+              "iconType": "svg",
+              "id": "lgnt",
               "name": "Logion",
               "symbol": "LGNT",
             }

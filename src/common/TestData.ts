@@ -112,9 +112,9 @@ export const COLOR_THEME: ColorTheme = {
 };
 
 export const DEFAULT_COIN: Coin = {
-    id: 'log',
-    iconId: 'log',
-    iconType: 'png',
+    id: 'lgnt',
+    iconId: 'lgnt',
+    iconType: 'svg',
     name: "Logion",
     symbol: SYMBOL
 };
