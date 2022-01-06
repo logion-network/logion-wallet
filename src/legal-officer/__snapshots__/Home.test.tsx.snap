@@ -174,7 +174,7 @@ exports[`renders 1`] = `
               Object {
                 "key": "open",
                 "render": [Function],
-                "title": "Three latest open Identity Protection Case(s)",
+                "title": "Three latest open Identity Case(s)",
               },
             ]
           }

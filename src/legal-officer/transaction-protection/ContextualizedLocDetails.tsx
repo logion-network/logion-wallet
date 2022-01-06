@@ -97,7 +97,11 @@ export default function ContextualizedLocDetails() {
     if(loc.locType === 'Transaction') {
         locTabTitle = "Logion Officer Case - Transaction";
     } else {
-        locTabTitle = "Logion Officer Case - Identity";
+        if (isLogionIdentityLoc(loc)) {
+            locTabTitle = "Logion Officer Case - Logion Identity";
+        } else {
+            locTabTitle = "Logion Officer Case - Identity";
+        }
     }
     if(loc.voidInfo !== undefined) {
         locTabTitle = "VOID " + locTabTitle;
@@ -117,23 +121,29 @@ export default function ContextualizedLocDetails() {
         >
             {
                 isLogionIdentityLoc(loc) &&
-                <IconTextRow
-                    icon={<Icon icon={{id: "tip"}} width="45px" />}
-                    text={
-                        <p><strong>Logion Identity LOC:</strong> must be used when your client cannot have a Polkadot account to request your services. Once closed after a proper identity check, you are able to initiate legal services requests ON BEHALF of this Logion Identity LOC, representing - on the blockchain-, by extension, the client it refers.</p>
-                    }
-                    className="logion-loc-tip"
-                />
-            }
-            {
-                isLogionTransactionLoc(loc) &&
-                <IconTextRow
-                    icon={<Icon icon={{id: "tip"}} width="45px" />}
-                    text={
-                        <p><strong>Logion Transaction LOC:</strong> must be used when your client cannot have a Polkadot account to request your services. You are able to initiate legal services requests ON BEHALF of the Logion Identity LOC, representing - on the blockchain-, by extension, the client it refers.</p>
-                    }
-                    className="logion-loc-tip"
-                />
+                <Row>
+                    <IconTextRow
+                        icon={ <Icon icon={ { id: "tip" } } width="45px" /> }
+                        text={
+                            <p><strong>Logion Identity LOC:</strong> must be used when your client cannot have a
+                                Polkadot account to request your services. Once closed after a proper identity check,
+                                you are able to initiate legal services requests ON BEHALF of this Logion Identity LOC,
+                                representing - on the blockchain-, by extension, the client it refers.</p>
+                        }
+                        className="logion-loc-tip"
+                    />
+                    <div className="upper-action-bar" >
+                        { loc.closed && loc.voidInfo === undefined &&
+                            <Button
+                                onClick={ () => setCreateLoc(true) }
+                                slim={ true }
+                                className="create-logion-transaction-loc-button"
+                            >
+                                <Icon icon={ { id: "loc" } } /> Create a Transaction LOC
+                            </Button>
+                        }
+                    </div>
+                </Row>
             }
             <Tabs
                 activeKey="details"
@@ -212,7 +222,7 @@ export default function ContextualizedLocDetails() {
                                         <>
                                             <LocPublicDataButton />
                                             <LocPrivateFileButton />
-                                            <LocLinkButton />
+                                            <LocLinkButton excludeNewIdentity={ isLogionTransactionLoc(loc) } />
                                         </>
                                     }
                                     right={
@@ -268,15 +278,6 @@ export default function ContextualizedLocDetails() {
                 <p className="link">
                     <a href={ certificateUrl } target="_blank" rel="noreferrer">{ certificateUrl }</a> <CopyPasteButton value={ certificateUrl } />
                 </p>
-                {
-                    (!loc.requesterAddress && !loc.requesterLocId && loc.closed) &&
-                    <Button
-                        onClick={ () => setCreateLoc(true) }
-                        className="create-logion-transaction-loc-button"
-                    >
-                        <Icon icon={{id: "add"}}/> Create Logion Transaction LOC
-                    </Button>
-                }
                 <LocCreationDialog
                     show={ createLoc }
                     exit={ () => setCreateLoc(false) }

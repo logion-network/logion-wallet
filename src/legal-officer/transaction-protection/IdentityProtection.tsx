@@ -12,10 +12,7 @@ import Frame from '../../common/Frame';
 
 import './IdentityProtection.css';
 import VoidLocs from './VoidLocs';
-import Icon from '../../common/Icon';
 import Button from '../../common/Button';
-
-import './IdentityProtection.css';
 import LocCreationDialog from './LocCreationDialog';
 import { useNavigate } from 'react-router-dom';
 import { locDetailsPath } from '../LegalOfficerPaths';
@@ -76,7 +73,7 @@ export default function IdentityProtection() {
                             onClick={ () => setCreateLoc(true) }
                             className="add-identity-loc-button"
                         >
-                            <Icon icon={{id: "add"}}/> Create a Logion ID
+                            Create a Logion ID
                         </Button>
                         <Tabs
                             activeKey={ logionLocTabKey }

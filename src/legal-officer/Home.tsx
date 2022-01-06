@@ -219,7 +219,7 @@ export default function Account() {
                             tabs={[
                                 {
                                     key: "open",
-                                    title: "Three latest open Identity Protection Case(s)",
+                                    title: "Three latest open Identity Case(s)",
                                     render: () => <Table
                                         columns={[
                                             {
