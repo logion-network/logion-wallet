@@ -18,7 +18,7 @@ import "./ContextualizedLocDetails.css";
 import Icon from "../../common/Icon";
 import LocLinkButton from "./LocLinkButton";
 import { fullCertificateUrl } from "../../PublicPaths";
-import { IDENTITIES_PATH, identityLocDetailsPath, LOC_REQUESTS_PATH, transactionLocDetailsPath } from "../LegalOfficerPaths";
+import { IDENTITIES_PATH, identityLocDetailsPath, locDetailsPath, LOC_REQUESTS_PATH, transactionLocDetailsPath } from "../LegalOfficerPaths";
 import CheckFileFrame, { CheckResult } from './CheckFileFrame';
 import DangerFrame from "../../common/DangerFrame";
 import ButtonGroup from "../../common/ButtonGroup";
@@ -250,7 +250,7 @@ export default function ContextualizedLocDetails() {
                         loc.voidInfo.replacer !== undefined &&
                         <p><strong>This VOID LOC has been replaced by the following LOC: </strong>
                             <NewTabLink
-                                href={ loc.locType === 'Transaction' ? transactionLocDetailsPath(loc.voidInfo.replacer.toString()) : identityLocDetailsPath(loc.voidInfo.replacer.toString()) }
+                                href={ locDetailsPath(loc.voidInfo.replacer.toString(), loc.locType) }
                                 iconId="loc-link"
                                 inline
                             >
@@ -303,7 +303,7 @@ export default function ContextualizedLocDetails() {
                                 <p><strong>This LOC supersedes a previous LOC (VOID) since the following date:</strong> <InlineDateTime dateTime={ supersededLocRequest?.voidInfo?.voidedOn } /></p>
                                 <p><strong>For record purpose, this LOC supersedes the following LOC: </strong>
                                     <NewTabLink
-                                        href={ loc.locType === 'Transaction' ? transactionLocDetailsPath(loc.replacerOf.toString()) : identityLocDetailsPath(loc.replacerOf.toString()) }
+                                        href={ locDetailsPath(loc.replacerOf.toString(), loc.locType) }
                                         iconId="loc-link"
                                         inline
                                     >

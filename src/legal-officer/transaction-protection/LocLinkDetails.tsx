@@ -3,7 +3,7 @@ import LocItemDetail from "./LocItemDetail";
 
 import './LocItemDetails.css'
 import { LocItem } from "./types";
-import { transactionLocDetailsPath, identityLocDetailsPath } from "../LegalOfficerPaths";
+import { locDetailsPath } from "../LegalOfficerPaths";
 import { UUID } from "../../logion-chain/UUID";
 import NewTabLink from "../../common/NewTabLink";
 import CopyPasteButton from "../../common/CopyPasteButton";
@@ -16,7 +16,7 @@ export interface Props {
 
 export default function LocLinkDetails(props: Props) {
     const linkedLocId = UUID.fromDecimalString(props.item.value);
-    const detailsPath = props.locType === 'Transaction' ? transactionLocDetailsPath(linkedLocId!.toString()) : identityLocDetailsPath(linkedLocId!.toString()) ;
+    const detailsPath = locDetailsPath(linkedLocId!.toString(), props.locType);
     return (
         <Col className="LocItemDetails" style={ { width: "100%" } }>
             <div className="frame">
