@@ -20,47 +20,47 @@ import { CLOSED_IDENTITY_LOC_ID } from '../logion-chain/__mocks__/LogionLocMock'
 
 describe("RecoveryDetails", () => {
 
-    // it("Recovery requires acceptance and vouching", async () => {
-    //     setAddresses({
-    //         current: DEFAULT_LEGAL_OFFICER_ACCOUNT,
-    //         all: [ DEFAULT_LEGAL_OFFICER_ACCOUNT],
-    //     });
-    //     const protectionRequest = PROTECTION_REQUESTS_HISTORY[0];
-    //     const recoveryConfig: RecoveryInfo = {
-    //         accountToRecover: protectionRequest,
-    //         recoveryAccount: protectionRequest,
-    //     };
-    //     setFetchRecoveryInfo(jest.fn().mockResolvedValue(recoveryConfig));
-    //     setIsSuccessful(false);
-    //     setParams({ requestId: protectionRequest.id });
+    it("Recovery requires acceptance and vouching", async () => {
+        setAddresses({
+            current: DEFAULT_LEGAL_OFFICER_ACCOUNT,
+            all: [ DEFAULT_LEGAL_OFFICER_ACCOUNT],
+        });
+        const protectionRequest = PROTECTION_REQUESTS_HISTORY[0];
+        const recoveryConfig: RecoveryInfo = {
+            accountToRecover: protectionRequest,
+            recoveryAccount: protectionRequest,
+        };
+        setFetchRecoveryInfo(jest.fn().mockResolvedValue(recoveryConfig));
+        setIsSuccessful(false);
+        setParams({ requestId: protectionRequest.id });
 
-    //     render(<RecoveryDetails />);
+        render(<RecoveryDetails />);
 
-    //     let processButton: HTMLElement;
-    //     await waitFor(() => processButton = screen.getByRole("button", {name: "Proceed"}));
-    //     userEvent.click(processButton!);
+        let processButton: HTMLElement;
+        await waitFor(() => processButton = screen.getByRole("button", {name: "Proceed"}));
+        userEvent.click(processButton!);
 
-    //     let linkButton: HTMLElement;
-    //     await waitFor(() => linkButton = screen.getByRole("button", {name: "Link to an existing Identity LOC"}));
-    //     userEvent.click(linkButton!);
+        let linkButton: HTMLElement;
+        await waitFor(() => linkButton = screen.getByRole("button", {name: "Link to an existing Identity LOC"}));
+        userEvent.click(linkButton!);
 
-    //     let closedLocInput: HTMLElement;
-    //     await waitFor(() => closedLocInput = screen.getByRole("textbox", {name: "Closed Identity LOC ID"}));
-    //     userEvent.type(closedLocInput!, CLOSED_IDENTITY_LOC_ID);
+        let closedLocInput: HTMLElement;
+        await waitFor(() => closedLocInput = screen.getByRole("textbox", {name: "Closed Identity LOC ID"}));
+        userEvent.type(closedLocInput!, CLOSED_IDENTITY_LOC_ID);
 
-    //     let confirmButton: HTMLElement;
-    //     await waitFor(() => confirmButton = screen.getByRole("button", {name: "Confirm and sign"}));
-    //     userEvent.click(confirmButton!);
+        let confirmButton: HTMLElement;
+        await waitFor(() => confirmButton = screen.getByRole("button", {name: "Confirm and sign"}));
+        userEvent.click(confirmButton!);
 
-    //     await waitFor(() => expect(acceptProtectionRequest).toBeCalledWith(
-    //         axiosMock.object(),
-    //         expect.objectContaining({
-    //             requestId: protectionRequest.id,
-    //         })
-    //     ));
+        await waitFor(() => expect(acceptProtectionRequest).toBeCalledWith(
+            axiosMock.object(),
+            expect.objectContaining({
+                requestId: protectionRequest.id,
+            })
+        ));
 
-    //     await waitFor(() => expect(screen.getByRole('alert')).toHaveTextContent("Submitting..."));
-    // });
+        await waitFor(() => expect(screen.getByText('Submitting...')).toBeInTheDocument());
+    });
 
     it("Recovery can be refused", async () => {
         setAddresses({

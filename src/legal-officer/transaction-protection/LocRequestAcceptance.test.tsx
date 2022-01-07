@@ -38,31 +38,28 @@ describe("TokenizationRequestAcceptance", () => {
         metadata: []
     };
 
-    // it("Click on accept and proceed accepts request", async () => {
-    //     setCurrentAddress(DEFAULT_LEGAL_OFFICER_ACCOUNT);
-    //     render(<LocRequestAcceptance requestToAccept={REQUEST} clearRequestToAccept={jest.fn()} />);
+    it("Click on accept and proceed accepts request", async () => {
+        setCurrentAddress(DEFAULT_LEGAL_OFFICER_ACCOUNT);
+        render(<LocRequestAcceptance requestToAccept={REQUEST} clearRequestToAccept={jest.fn()} />);
 
-    //     // Accept request
-    //     setAcceptLocRequest(jest.fn().mockResolvedValue({}));
-    //     const acceptButton = screen.getByTestId(`proceed-accept-${REQUEST.id}`);
-    //     userEvent.click(acceptButton);
+        // Accept request
+        setAcceptLocRequest(jest.fn().mockResolvedValue({}));
+        const acceptButton = screen.getByRole('button', {name: 'Proceed'});
+        userEvent.click(acceptButton);
 
-    //     // Create LOC
-    //     await waitFor(() => screen.getByTestId(`modal-creating-${REQUEST.id}`));
-    //     await waitFor(() => screen.getByText(/Submitting/));
-    //     act(finalizeSubmission);
-    //     await waitFor(() => screen.getByText(/LOC successfully created/));
-    //     await waitFor(() => expect(acceptLocRequest).toBeCalledWith(
-    //         axiosMock.object(),
-    //         expect.objectContaining({
-    //             requestId: REQUEST.id
-    //         })
-    //     ));
+        // Create LOC
+        await waitFor(() => screen.getByTestId(`modal-creating-${REQUEST.id}`));
+        await waitFor(() => screen.getByText(/Submitting/));
+        act(finalizeSubmission);
+        await waitFor(() => screen.getByText(/LOC successfully created/));
+        await waitFor(() => expect(acceptLocRequest).toBeCalledWith(
+            axiosMock.object(),
+            expect.objectContaining({
+                requestId: REQUEST.id
+            })
+        ));
 
-    //     const proceedReviewButton = screen.getByTestId(`proceed-review-${REQUEST.id}`);
-    //     userEvent.click(proceedReviewButton);
-
-    //     const closeReviewButton = await screen.findByTestId(`close-review-${REQUEST.id}`);
-    //     userEvent.click(closeReviewButton);
-    // });
+        const proceedReviewButton = screen.getByRole('button', {name: 'Close'});
+        userEvent.click(proceedReviewButton);
+    });
 });
