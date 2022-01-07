@@ -39,10 +39,15 @@ exports[`renders with all data 1`] = `
           columns={
             Array [
               Object {
+                "header": "",
+                "render": [Function],
+                "width": "70px",
+              },
+              Object {
                 "align": "left",
                 "header": "Asset name",
                 "render": [Function],
-                "width": "190px",
+                "width": "200px",
               },
               Object {
                 "align": "right",

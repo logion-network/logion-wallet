@@ -1,0 +1,14 @@
+.GoToTrustProtection .recovery-process-footer {
+    background: linear-gradient(to top, #e95b5b7f, #152665 50%);
+    position: absolute;
+    height: 230px;
+    border-radius: 9px;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    text-align: right;
+}
+
+.GoToTrustProtection .recovery-process-footer-image {
+    margin-right: 30px;
+}

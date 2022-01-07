@@ -15,7 +15,7 @@
 }
 
 .Frame.full-height {
-    min-height: calc(100vh - 210px);
+    min-height: calc(100vh - 200px);
 }
 
 .Frame .title {
