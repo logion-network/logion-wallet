@@ -15,7 +15,7 @@ export default function VoidLocReplaceExistingButton() {
     const { colorTheme, refresh } = useCommonContext();
     const { api } = useLogionChain();
     const [ visible, setVisible ] = useState(false);
-    const { locRequest, voidLocExtrinsic, voidLoc } = useLocContext();
+    const { locRequest, voidLocExtrinsic, voidLoc, loc } = useLocContext();
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
     const [ reason, setReason ] = useState<string>("");
     const [ replacerLocId, setReplacerLocId ] = useState<string>("");
@@ -30,11 +30,13 @@ export default function VoidLocReplaceExistingButton() {
             if(replacerLocId === new UUID(locRequest?.id).toDecimalString()) {
                 setReplacerLocIdError("Cannot be replaced by itself");
             } else {
-            const loc = await getLegalOfficerCase({ locId, api: api! })
-            if (!loc) {
+            const replacerLoc = await getLegalOfficerCase({ locId, api: api! })
+            if (!replacerLoc) {
                 setReplacerLocIdError("LOC not found on chain");
-            } else if(loc.voidInfo !== undefined) {
+            } else if(replacerLoc.voidInfo !== undefined) {
                 setReplacerLocIdError("Cannot be replaced by a VOID LOC");
+            } else if(replacerLoc.locType !== loc?.locType) {
+                setReplacerLocIdError(`Cannot be replaced by a LOC of type: ${replacerLoc.locType}`);
             } else {
                 setReplacerLocIdError(undefined);
                 const voidInfo: FullVoidInfo = {
@@ -46,7 +48,7 @@ export default function VoidLocReplaceExistingButton() {
             }
         }
         }
-    }, [ replacerLocId, setReplacerLocIdError, setSignAndSubmit, voidLocExtrinsic, setVoidInfo, api, reason, locRequest ]);
+    }, [ replacerLocId, setReplacerLocIdError, setSignAndSubmit, voidLocExtrinsic, setVoidInfo, api, reason, locRequest, loc ]);
 
     const clearAndClose = useCallback(() => {
         setReason("");
