@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import Form from "react-bootstrap/Form";
 
@@ -11,7 +11,7 @@ import FormGroup from '../../common/FormGroup';
 
 import { useUserContext } from "../UserContext";
 import { useLogionChain, } from '../../logion-chain';
-import { getActiveRecovery, initiateRecovery } from '../../logion-chain/Recovery';
+import { getActiveRecovery, initiateRecovery, getRecoveryConfig } from '../../logion-chain/Recovery';
 import { Row, Col } from "react-bootstrap";
 import { useCommonContext } from "../../common/CommonContext";
 import LegalOfficers from './LegalOfficers';
@@ -48,6 +48,7 @@ export default function CreateProtectionRequestForm(props: Props) {
     const [ legalOfficer1, setLegalOfficer1 ] = useState<LegalOfficer | null>(null);
     const [ legalOfficer2, setLegalOfficer2 ] = useState<LegalOfficer | null>(null);
     const [ addressToRecover, setAddressToRecover ] = useState<string>("");
+    const [ addressToRecoverError, setAddressToRecoverError ] = useState<string | undefined>("");
     const [ requestCreated, setRequestCreated ] = useState<boolean>(false);
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
     const [ activeRecovery, setActiveRecovery ] = useState<boolean>(false);
@@ -119,6 +120,22 @@ export default function CreateProtectionRequestForm(props: Props) {
         })();
     }, [ api, accounts, addressToRecover, setSignAndSubmit ]);
 
+    useEffect(() => {
+        if (isValidAccountId(api!, addressToRecover)) {
+            setAddressToRecoverError("Checking recovery config...")
+            getRecoveryConfig({ api: api!, accountId: addressToRecover })
+                .then(recoveryConfig => {
+                    if (recoveryConfig.isEmpty) {
+                        setAddressToRecoverError("This SS58 address is not set up for recovery")
+                    } else {
+                        setAddressToRecoverError(undefined)
+                    }
+                })
+        } else {
+            setAddressToRecoverError("A valid SS58 address is required")
+        }
+    }, [ api, addressToRecover ])
+
     let legalOfficersTitle;
     if(props.isRecovery) {
         legalOfficersTitle = "Select your Legal Officers";
@@ -162,21 +179,21 @@ export default function CreateProtectionRequestForm(props: Props) {
                                         label="Address to Recover"
                                         control={
                                             <Form.Control
-                                                isInvalid={ !isValidAccountId(api!, addressToRecover) }
+                                                isInvalid={ addressToRecoverError !== undefined }
                                                 type="text"
                                                 data-testid="addressToRecover"
                                                 value={ addressToRecover }
                                                 onChange={ event => setAddressToRecover(event.target.value) }
                                             />
                                         }
-                                        feedback={ "A valid SS58 address is required" }
+                                        feedback={ addressToRecoverError || "" }
                                         colors={ colorTheme.frame }
                                     />
                                     {
                                         signAndSubmit === null &&
                                         <Button
                                             onClick={ initiateRecoveryOnClick }
-                                            disabled={ !isValidAccountId(api!, addressToRecover) }
+                                            disabled={ addressToRecoverError !== undefined }
                                         >
                                             Initiate recovery
                                         </Button>
