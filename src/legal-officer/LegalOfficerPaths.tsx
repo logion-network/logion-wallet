@@ -1,3 +1,4 @@
+import { LocType } from '../logion-chain/Types';
 import { LEGAL_OFFICER_PATH } from '../RootPaths';
 
 export const HOME_PATH = LEGAL_OFFICER_PATH;
@@ -42,4 +43,8 @@ export const IDENTITY_LOC_DETAILS_RELATIVE_PATH = IDENTITIES_RELATIVE_PATH + '/:
 export const IDENTITY_LOC_TRANSACTION_DETAILS_PATH = LEGAL_OFFICER_PATH + IDENTITY_LOC_DETAILS_RELATIVE_PATH;
 export function identityLocDetailsPath(locId: string) {
     return IDENTITY_LOC_TRANSACTION_DETAILS_PATH.replace(":locId", locId)
+}
+
+export function locDetailsPath(locId: string, locType: LocType) {
+    return locType === 'Transaction' ? transactionLocDetailsPath(locId) : identityLocDetailsPath(locId);
 }

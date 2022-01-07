@@ -540,13 +540,18 @@ export function CommonContextProvider(props: Props) {
 
     useEffect(() => {
         if(contextValue.injectedAccounts !== injectedAccounts
-                && injectedAccounts !== null
-                && contextValue.accounts?.current === undefined) {
-            let currentAddress: string | null | undefined = loadCurrentAddress();
+                && injectedAccounts !== null) {
+
+            let currentAddress: string | null | undefined = contextValue.accounts?.current?.address;
+            if(currentAddress === undefined) {
+                currentAddress = loadCurrentAddress();
+            }
+
             const now = moment();
             if(currentAddress === null || !contextValue.tokens.isAuthenticated(now, currentAddress)) {
                 currentAddress = undefined;
             }
+
             dispatch({
                 type: 'SET_ADDRESSES',
                 injectedAccounts,
