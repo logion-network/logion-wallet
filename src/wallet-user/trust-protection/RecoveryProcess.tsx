@@ -123,7 +123,7 @@ export default function RecoveryProcess() {
                                                 {
                                                     header: "",
                                                     render: coinBalance => <Icon icon={{id: coinBalance.coin.iconId}} type={ coinBalance.coin.iconType } height="36px" width="auto" />,
-                                                    width: "150px",
+                                                    width: "70px",
                                                 },
                                                 {
                                                     header: "Name",

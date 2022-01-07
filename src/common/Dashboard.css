@@ -29,7 +29,7 @@
 }
 
 .Dashboard .ContentArea {
-    height: calc(100vh - 155px);
+    height: calc(100vh - 160px);
     overflow-y: auto;
 }
 
@@ -104,6 +104,7 @@
 
 .Dashboard .TitlesArea {
     padding-left: 40px;
+    height: 160px;
 }
 
 .Dashboard .TitlesArea h1 {

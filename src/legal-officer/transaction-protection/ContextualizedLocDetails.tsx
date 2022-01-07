@@ -95,12 +95,12 @@ export default function ContextualizedLocDetails() {
 
     let locTabTitle: string;
     if(loc.locType === 'Transaction') {
-        locTabTitle = "Logion Officer Case - Transaction";
+        locTabTitle = "Legal Officer Case - Transaction";
     } else {
         if (isLogionIdentityLoc(loc)) {
-            locTabTitle = "Logion Officer Case - Logion Identity";
+            locTabTitle = "Legal Officer Case - Logion Identity";
         } else {
-            locTabTitle = "Logion Officer Case - Identity";
+            locTabTitle = "Legal Officer Case - Identity";
         }
     }
     if(loc.voidInfo !== undefined) {

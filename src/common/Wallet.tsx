@@ -73,9 +73,14 @@ export function Content(props: Props) {
                     <Table
                         columns={[
                             {
+                                header: "",
+                                render: coinBalance => <Icon icon={{id: coinBalance.coin.iconId}} type={ coinBalance.coin.iconType } height="36px" width="auto" />,
+                                width: "70px",
+                            },
+                            {
                                 header: "Asset name",
                                 render: balance => <AssetNameCell balance={ balance } />,
-                                width: "190px",
+                                width: "200px",
                                 align: 'left',
                             },
                             {
