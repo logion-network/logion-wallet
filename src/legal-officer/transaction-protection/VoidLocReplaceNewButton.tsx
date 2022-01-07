@@ -21,7 +21,7 @@ export default function VoidLocReplaceNewButton() {
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
     const [ submissionFailed, setSubmissionFailed ] = useState<boolean>(false);
     const [ reason, setReason ] = useState<string>("");
-    const [ newLocDescription, setNewLocDescritpion ] = useState<string>("");
+    const [ newLocDescription, setNewLocDescription ] = useState<string>("");
     const [ newLocRequest, setNewLocRequest ] = useState<LocRequest | null>(null);
     const [ voidInfo, setVoidInfo ] = useState<FullVoidInfo | null>(null);
 
@@ -98,7 +98,7 @@ export default function VoidLocReplaceNewButton() {
                     control={ <Form.Control
                         type="text"
                         value={ newLocDescription }
-                        onChange={ (event) => setNewLocDescritpion(event.target.value) }
+                        onChange={ (event) => setNewLocDescription(event.target.value) }
                     /> }
                     colors={ colorTheme.dialog }
                 />
