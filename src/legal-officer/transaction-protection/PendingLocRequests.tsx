@@ -105,7 +105,6 @@ export default function PendingLocRequests() {
                 requestToReject !== null &&
                 <ProcessStep
                     active={ requestToReject !== null }
-                    closeCallback={ handleClose }
                     title={`Reject LOC request`}
                     nextSteps={[
                         {

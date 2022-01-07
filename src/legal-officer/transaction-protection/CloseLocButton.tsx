@@ -15,7 +15,7 @@ enum CloseStatus {
     START,
     CLOSE_PENDING,
     CLOSING,
-    CLOSED
+    ERROR
 }
 
 interface CloseState {
@@ -80,29 +80,39 @@ export default function CloseLocButton() {
                 </Alert>
             </ProcessStep>
             <ProcessStep
-                active={ closeState.status === CloseStatus.CLOSING || closeState.status === CloseStatus.CLOSED }
+                active={ closeState.status === CloseStatus.CLOSING }
                 title="Close this Case (2/2)"
-                nextSteps={[
-                    {
-                        id: 'ok',
-                        buttonText: 'OK',
-                        buttonVariant: 'primary',
-                        mayProceed: closeState.status === CloseStatus.CLOSED,
-                        callback: () => setCloseState({ status: CloseStatus.NONE })
-                    }
-                ]}
+                nextSteps={[]}
+                hasSideEffect
             >
                 <ExtrinsicSubmitter
                     id="publishMetadata"
                     signAndSubmit={ signAndSubmit }
                     successMessage="LOC public data successfully published"
                     onSuccess={ () => {
-                        setCloseState({ status: CloseStatus.CLOSED })
+                        setCloseState({ status: CloseStatus.NONE })
                         close!()
                         refresh!()
                     } }
-                    onError={ () => {
-                    } } />
+                    onError={ () => setCloseState({ status: CloseStatus.ERROR }) }
+                />
+            </ProcessStep>
+            <ProcessStep
+                active={ closeState.status === CloseStatus.ERROR }
+                title="Close this Case (2/2)"
+                nextSteps={[
+                    {
+                        id: 'ok',
+                        buttonText: 'OK',
+                        buttonVariant: 'primary',
+                        mayProceed: true,
+                        callback: () => setCloseState({ status: CloseStatus.NONE })
+                    }
+                ]}
+            >
+                <Alert variant="danger">
+                    Could not close LOC.
+                </Alert>
             </ProcessStep>
         </div>
     )

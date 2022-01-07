@@ -52,7 +52,7 @@ export default function SettingsPane() {
                 className="app"
             >
                 {
-                    currentVersion !== latestVersion?.version &&
+                    latestVersion !== undefined && currentVersion !== latestVersion?.version &&
                     <>
                         <p className="wrong-version"><strong>You are not using the latest version of logion: latest is {latestVersion?.version}, yours is { currentVersion }.</strong></p>
                         <p><strong>Please "hard-refresh" (i.e. clear your cache and refresh) the page now:</strong></p>

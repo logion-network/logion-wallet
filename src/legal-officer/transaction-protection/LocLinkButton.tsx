@@ -56,6 +56,7 @@ export default function LocLinkButton(props: Props) {
                 onSuccess={ (newLocRequest, nature) => linkNewLoc(newLocRequest, nature!) }
                 locRequest={{
                     requesterAddress: locRequest!.requesterAddress,
+                    requesterIdentityLoc: locRequest!.requesterIdentityLoc,
                     userIdentity: locRequest!.userIdentity,
                     locType: visible === Visible.LINK_NEW_IDENTITY ? 'Identity' : 'Transaction'
                 }}

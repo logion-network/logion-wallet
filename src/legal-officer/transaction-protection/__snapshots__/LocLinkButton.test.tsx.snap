@@ -43,6 +43,7 @@ exports[`LocLinkButton renders 1`] = `
       Object {
         "locType": "Transaction",
         "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "requesterIdentityLoc": undefined,
         "userIdentity": Object {
           "email": "john.doe@logion.network",
           "firstName": "John",
@@ -100,6 +101,7 @@ exports[`LocLinkButton renders LINK_EXISTING 1`] = `
       Object {
         "locType": "Transaction",
         "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "requesterIdentityLoc": undefined,
         "userIdentity": Object {
           "email": "john.doe@logion.network",
           "firstName": "John",
@@ -157,6 +159,7 @@ exports[`LocLinkButton renders LINK_NEW_IDENTITY 1`] = `
       Object {
         "locType": "Identity",
         "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "requesterIdentityLoc": undefined,
         "userIdentity": Object {
           "email": "john.doe@logion.network",
           "firstName": "John",
@@ -214,6 +217,7 @@ exports[`LocLinkButton renders LINK_NEW_TRANSACTION 1`] = `
       Object {
         "locType": "Transaction",
         "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "requesterIdentityLoc": undefined,
         "userIdentity": Object {
           "email": "john.doe@logion.network",
           "firstName": "John",
@@ -266,6 +270,7 @@ exports[`LocLinkButton renders and excludes new identity 1`] = `
       Object {
         "locType": "Transaction",
         "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "requesterIdentityLoc": undefined,
         "userIdentity": Object {
           "email": "john.doe@logion.network",
           "firstName": "John",

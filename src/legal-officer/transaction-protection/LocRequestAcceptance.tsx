@@ -125,7 +125,6 @@ export default function LocRequestAcceptance(props: Props) {
                         || acceptState.status === AcceptStatus.ACCEPTING
                         || acceptState.status === AcceptStatus.ACCEPTED }
                 title="Creating LOC"
-                stepTestId={ `modal-creating-${props.requestToAccept.id}` }
                 nextSteps={[
                     {
                         id: 'close',

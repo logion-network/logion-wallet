@@ -8,8 +8,15 @@ test("Rendering inactive step", () => {
         <ProcessStep
             active={ false }
             title="Title"
-            mayProceed={ true }
-            proceedCallback={ proceedCallback }
+            nextSteps={[
+                {
+                    id: "proceed",
+                    buttonText: "Proceed",
+                    buttonVariant: "primary",
+                    mayProceed: true,
+                    callback: proceedCallback
+                }
+            ]}
         >
             <p>Content</p>
         </ProcessStep>
@@ -23,8 +30,15 @@ test("Rendering non-closable active step, may proceed", () => {
         <ProcessStep
             active={ true }
             title="Title"
-            mayProceed={ true }
-            proceedCallback={ proceedCallback }
+            nextSteps={[
+                {
+                    id: "proceed",
+                    buttonText: "Proceed",
+                    buttonVariant: "primary",
+                    mayProceed: true,
+                    callback: proceedCallback
+                }
+            ]}
         >
             <p>Content</p>
         </ProcessStep>
@@ -38,8 +52,15 @@ test("Rendering non-closable active step, may not proceed", () => {
         <ProcessStep
             active={ true }
             title="Title"
-            mayProceed={ false }
-            proceedCallback={ proceedCallback }
+            nextSteps={[
+                {
+                    id: "proceed",
+                    buttonText: "Proceed",
+                    buttonVariant: "primary",
+                    mayProceed: false,
+                    callback: proceedCallback
+                }
+            ]}
         >
             <p>Content</p>
         </ProcessStep>
@@ -52,7 +73,7 @@ test("Trap detection", () => {
         <ProcessStep
             active={ true }
             title="Title"
-            mayProceed={ false }
+            nextSteps={[]}
         >
         </ProcessStep>
     )).toThrowError();

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import { useLogionChain } from '../../logion-chain';
 import { UUID } from '../../logion-chain/UUID';
@@ -124,22 +124,8 @@ export default function LocCreationSteps(props: Props) {
     return (
         <div>
             <ProcessStep
-                active={ creationState.status === CreationStatus.NONE }
-                closeCallback={ clear }
-                title={ `LOC creation` }
-                mayProceed={ true }
-                proceedCallback={ () => setStatus(CreationStatus.LOC_CREATION_PENDING) }
-                stepTestId={ `modal-accepted-${ requestToCreate.id }` }
-                proceedButtonTestId={ `proceed-create-${ requestToCreate.id }` }
-            >
-                <Alert variant="success">
-                    <p>You may now proceed with creating the LOC.</p>
-                </Alert>
-            </ProcessStep>
-            <ProcessStep
                 active={ creationState.status === CreationStatus.CREATING_LOC }
                 title={ `LOC creation` }
-                stepTestId={ `modal-creating-${ requestToCreate.id }` }
                 nextSteps={[]}
                 hasSideEffect
             >
@@ -154,7 +140,6 @@ export default function LocCreationSteps(props: Props) {
             <ProcessStep
                 active={ creationState.status === CreationStatus.LOC_CREATED || creationState.status === CreationStatus.LOC_CREATION_FAILED }
                 title={ `LOC creation` }
-                stepTestId={ `modal-creating-${ requestToCreate.id }` }
                 nextSteps={[
                     {
                         id: "ok",
