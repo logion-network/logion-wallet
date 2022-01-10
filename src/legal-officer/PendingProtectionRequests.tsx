@@ -186,7 +186,6 @@ export default function PendingProtectionRequests(props: Props) {
                         <Button
                             variant="primary"
                             onClick={() => setReviewState({status: ReviewStatus.PENDING, request: request}) }
-                            data-testid={`review-${request.id}`}
                         >
                             Review and proceed
                         </Button>
@@ -217,10 +216,7 @@ export default function PendingProtectionRequests(props: Props) {
                 reviewState.status === ReviewStatus.PENDING &&
                 <ProcessStep
                     active={ true }
-                    closeCallback={ handleClose }
                     title={`Review of protection request`}
-                    mayProceed={ true }
-                    stepTestId={`modal-review-${reviewState.request!.id}`}
                     nextSteps={ [
                         {
                             id: "later",
@@ -228,7 +224,6 @@ export default function PendingProtectionRequests(props: Props) {
                             mayProceed: true,
                             buttonVariant: "link",
                             buttonText: "Later",
-                            buttonTestId: `later-${reviewState.request!.id}`
                         },
                         {
                             id: "reject",
@@ -236,14 +231,12 @@ export default function PendingProtectionRequests(props: Props) {
                             mayProceed: true,
                             buttonVariant: "secondary",
                             buttonText: "No",
-                            buttonTestId: `reject-${reviewState.request!.id}`
                         },
                         {
                             id: "accept",
                             mayProceed: true,
                             buttonVariant: "success",
                             buttonText: "Yes",
-                            buttonTestId: `accept-${reviewState.request!.id}`,
                             choices: [
                                 {
                                     text: "Create the required Identity LOC",
@@ -272,10 +265,7 @@ export default function PendingProtectionRequests(props: Props) {
                 reviewState.status === ReviewStatus.REJECTING &&
                 <ProcessStep
                     active={ true }
-                    closeCallback={ handleClose }
                     title={`Reject protection request`}
-                    mayProceed={ true }
-                    stepTestId={`modal-review-${reviewState.request!.id}`}
                     nextSteps={ [
                         {
                             id: "later",
@@ -283,7 +273,6 @@ export default function PendingProtectionRequests(props: Props) {
                             mayProceed: true,
                             buttonVariant: "secondary",
                             buttonText: "Cancel",
-                            buttonTestId: `later-${reviewState.request!.id}`
                         },
                         {
                             id: "confirm",
@@ -291,11 +280,10 @@ export default function PendingProtectionRequests(props: Props) {
                             mayProceed: true,
                             buttonVariant: "primary",
                             buttonText: "Confirm",
-                            buttonTestId: `confirm-reject-${reviewState.request!.id}`
                         }
                     ] }
                 >
-                    <Form.Group>
+                    <Form.Group controlId='reason'>
                         <Form.Label>Reason</Form.Label>
                         <Form.Control
                             as="textarea"
@@ -311,9 +299,7 @@ export default function PendingProtectionRequests(props: Props) {
                 reviewState.status === ReviewStatus.ACCEPTING &&
                 <ProcessStep
                     active={ true }
-                    closeCallback={ handleClose }
                     title="Accept the protection request"
-                    mayProceed={ locId !== undefined }
                     nextSteps={ [
                         {
                             id: "cancel",
@@ -325,10 +311,9 @@ export default function PendingProtectionRequests(props: Props) {
                         {
                             id: "confirm",
                             callback: acceptAndCloseModal,
-                            mayProceed: true,
+                            mayProceed: locId !== undefined,
                             buttonVariant: "primary",
                             buttonText: "Confirm",
-                            buttonTestId: `confirm-accept-${reviewState.request!.id}`
                         }
                     ] }
                 >

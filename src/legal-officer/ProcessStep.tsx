@@ -1,4 +1,3 @@
-import React from 'react';
 import { ButtonVariant } from 'react-bootstrap/types';
 
 import Dialog from '../common/Dialog';
@@ -12,20 +11,13 @@ export interface NextStep {
     mayProceed: boolean,
     buttonVariant: ButtonVariant,
     buttonText: string,
-    buttonTestId?: string,
     choices?: Choice[],
 }
 
 export interface Props {
     active: boolean,
-    closeCallback?: () => void,
     title: string,
     children: Children,
-    mayProceed?: boolean,
-    proceedCallback?: () => void,
-    stepTestId?: string,
-    proceedButtonTestId?: string,
-    closeButtonTestId?: string,
     nextSteps?: NextStep[],
     hasSideEffect?: boolean,
 }
@@ -40,7 +32,6 @@ function toAction(nextStep: NextStep): Action {
         disabled: !nextStep.mayProceed,
         buttonVariant: nextStep.buttonVariant,
         buttonText: nextStep.buttonText,
-        buttonTestId: nextStep.buttonTestId,
         choices: nextStep.choices
     };
 }
@@ -51,41 +42,7 @@ export default function ProcessStep(props: Props) {
         return null;
     }
 
-    const closable = props.closeCallback !== undefined;
-    const hasNext = props.proceedCallback !== undefined;
-
-    if(hasNext && props.nextSteps !== undefined) {
-        throw new Error("Cannot define both proceedCallback and nextSteps attributes");
-    }
-
-    let nextSteps: NextStep[];
-    if(props.nextSteps !== undefined) {
-        nextSteps = props.nextSteps;
-    } else {
-        nextSteps = [];
-        if(closable) {
-            nextSteps.push({
-                id: "close",
-                callback: props.closeCallback!,
-                mayProceed: true,
-                buttonVariant: hasNext ? "secondary" : "primary",
-                buttonText: "Close",
-                buttonTestId: props.closeButtonTestId
-            });
-        }
-
-        if(hasNext) {
-            nextSteps.push({
-                id: "proceed",
-                callback: props.proceedCallback!,
-                mayProceed: props.mayProceed ? props.mayProceed : false,
-                buttonVariant: "primary",
-                buttonText: "Proceed",
-                buttonTestId: props.proceedButtonTestId
-            });
-        }
-    }
-
+    let nextSteps: NextStep[] = props.nextSteps || [];
     if(nextSteps.length === 0 && (props.hasSideEffect === undefined || !props.hasSideEffect)) {
         throw new Error("This process step is a trap");
     }
@@ -94,7 +51,6 @@ export default function ProcessStep(props: Props) {
         <Dialog
             show={ props.active }
             size="lg"
-            data-testid={ props.stepTestId }
             actions={ nextSteps.map(nextStep => toAction(nextStep)) }
         >
             <>

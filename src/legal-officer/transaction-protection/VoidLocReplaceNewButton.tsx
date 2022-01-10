@@ -31,6 +31,7 @@ export default function VoidLocReplaceNewButton() {
             const request: CreateLocRequest = {
                 ownerAddress: currentAddress,
                 requesterAddress: locRequest!.requesterAddress ? locRequest!.requesterAddress : undefined,
+                requesterIdentityLoc: locRequest!.requesterIdentityLoc ? locRequest!.requesterIdentityLoc : undefined,
                 description: newLocDescription,
                 userIdentity: locRequest!.userIdentity,
                 locType: locRequest!.locType,

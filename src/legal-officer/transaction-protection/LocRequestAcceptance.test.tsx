@@ -18,7 +18,7 @@ import { setAcceptLocRequest, acceptLocRequest } from '../__mocks__/ModelMock';
 
 import LocRequestAcceptance from './LocRequestAcceptance';
 
-describe("TokenizationRequestAcceptance", () => {
+describe("LocRequestAcceptance", () => {
 
     it("Renders null with no data", () => {
         const tree = shallowRender(<LocRequestAcceptance requestToAccept={null} clearRequestToAccept={jest.fn()} />);
@@ -48,7 +48,7 @@ describe("TokenizationRequestAcceptance", () => {
         userEvent.click(acceptButton);
 
         // Create LOC
-        await waitFor(() => screen.getByTestId(`modal-creating-${REQUEST.id}`));
+        await waitFor(() => screen.getByRole("dialog"));
         await waitFor(() => screen.getByText(/Submitting/));
         act(finalizeSubmission);
         await waitFor(() => screen.getByText(/LOC successfully created/));

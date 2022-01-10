@@ -7,7 +7,6 @@ exports[`Rendering non-closable active step, may not proceed 1`] = `
   actions={
     Array [
       Object {
-        "buttonTestId": undefined,
         "buttonText": "Proceed",
         "buttonVariant": "primary",
         "callback": [MockFunction],
@@ -36,7 +35,6 @@ exports[`Rendering non-closable active step, may proceed 1`] = `
   actions={
     Array [
       Object {
-        "buttonTestId": undefined,
         "buttonText": "Proceed",
         "buttonVariant": "primary",
         "callback": [MockFunction],
