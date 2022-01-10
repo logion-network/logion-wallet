@@ -1,7 +1,7 @@
 jest.mock('../../logion-chain');
 jest.mock('../../common/CommonContext');
 jest.mock('../LegalOfficerContext');
-jest.mock('../Model');
+jest.mock('../../loc/Model');
 
 import { render, screen, waitFor, getByText } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -11,7 +11,7 @@ import { shallowRender } from '../../tests';
 import { axiosMock, setPendingLocRequests } from '../../common/__mocks__/CommonContextMock';
 import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../../common/__mocks__/CommonContextMock';
 
-import { setRejectLocRequest } from '../__mocks__/ModelMock';
+import { setRejectLocRequest } from '../../loc/__mocks__/ModelMock';
 
 import PendingLocRequests from './PendingLocRequests';
 

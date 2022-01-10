@@ -1,4 +1,3 @@
-import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 import { USER_PATH } from '../RootPaths';
@@ -10,6 +9,8 @@ import Recovery from "./trust-protection/Recovery";
 import Wallet from "../common/Wallet";
 import Transactions from "../common/Transactions";
 import TransactionProtection from "./transaction-protection/TransactionProtection";
+import { UUID } from '../logion-chain/UUID';
+import LocDetails from '../loc/LocDetails';
 
 export const HOME_PATH = USER_PATH;
 
@@ -31,6 +32,22 @@ export function transactionsPath(coinId: string): string {
 export const TRANSACTION_PROTECTION_RELATIVE_PATH = "/transaction-protection";
 export const TRANSACTION_PROTECTION_PATH = USER_PATH + TRANSACTION_PROTECTION_RELATIVE_PATH;
 
+export const TRANSACTION_LOC_DETAILS_RELATIVE_PATH = TRANSACTION_PROTECTION_RELATIVE_PATH + '/:locId';
+export const TRANSACTION_LOC_DETAILS_PATH = USER_PATH + TRANSACTION_LOC_DETAILS_RELATIVE_PATH;
+export function transactionLocDetailsPath(locId: string) {
+    return TRANSACTION_LOC_DETAILS_PATH.replace(":locId", locId)
+}
+
+export function locDetailsPath(locId: string | UUID) {
+    let stringId;
+    if(locId instanceof UUID) {
+        stringId = locId.toString();
+    } else {
+        stringId = locId;
+    }
+    return transactionLocDetailsPath(stringId);
+}
+
 export default function UserRouter() {
 
     return (
@@ -48,6 +65,13 @@ export default function UserRouter() {
                 />
             } />
             <Route path={ TRANSACTION_PROTECTION_RELATIVE_PATH } element={ <TransactionProtection/> } />
+            <Route path={ TRANSACTION_LOC_DETAILS_RELATIVE_PATH } element={
+                <LocDetails
+                    backPath={ TRANSACTION_PROTECTION_PATH }
+                    detailsPath={ locDetailsPath }
+                    viewer='User'
+                />
+            } />
             <Route path="/" element={ <Home /> } />
         </Routes>
     );

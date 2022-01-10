@@ -13,7 +13,7 @@ import Frame from '../../common/Frame';
 import './IdentityProtection.css';
 import VoidLocs from './VoidLocs';
 import Button from '../../common/Button';
-import LocCreationDialog from './LocCreationDialog';
+import LocCreationDialog from '../../loc/LocCreationDialog';
 import { useNavigate } from 'react-router-dom';
 import { identityLocDetailsPath } from '../LegalOfficerPaths';
 

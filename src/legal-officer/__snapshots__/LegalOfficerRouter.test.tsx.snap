@@ -40,7 +40,13 @@ exports[`renders 1`] = `
     path="/loc"
   />
   <Route
-    element={<LocDetails />}
+    element={
+      <LocDetails
+        backPath="/legal-officer/loc"
+        detailsPath={[Function]}
+        viewer="LegalOfficer"
+      />
+    }
     path="/loc/:locId"
   />
   <Route
@@ -48,7 +54,13 @@ exports[`renders 1`] = `
     path="/identities"
   />
   <Route
-    element={<LocDetails />}
+    element={
+      <LocDetails
+        backPath="/legal-officer/identities"
+        detailsPath={[Function]}
+        viewer="LegalOfficer"
+      />
+    }
     path="/identities/:locId"
   />
   <Route

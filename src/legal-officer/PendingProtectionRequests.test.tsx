@@ -2,13 +2,13 @@ jest.mock('./LegalOfficerContext');
 jest.mock('../logion-chain');
 jest.mock('../logion-chain/LogionLoc');
 jest.mock('../logion-chain/Signature');
-jest.mock('./Model');
+jest.mock('../loc/Model');
 jest.mock('../common/CommonContext');
 
 import { shallowRender } from '../tests';
 import PendingProtectionRequests from './PendingProtectionRequests';
 import { setPendingProtectionRequests } from './__mocks__/LegalOfficerContextMock';
-import { setAcceptProtectionRequest, setRejectProtectionRequest } from './__mocks__/ModelMock';
+import { setAcceptProtectionRequest, setRejectProtectionRequest } from '../loc/__mocks__/ModelMock';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { PENDING_PROTECTION_REQUESTS } from './TestData';

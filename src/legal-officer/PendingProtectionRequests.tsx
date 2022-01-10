@@ -8,7 +8,7 @@ import Table, { Column, Cell, EmptyTableMessage, DateTimeCell, CopyPasteCell } f
 import { useCommonContext } from '../common/CommonContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
-import { acceptProtectionRequest, rejectProtectionRequest } from './Model';
+import { acceptProtectionRequest, rejectProtectionRequest } from '../loc/Model';
 import { ProtectionRequest } from '../common/types/ModelTypes';
 import ProcessStep from './ProcessStep';
 import ProtectionRequestStatus from './ProtectionRequestStatus';
@@ -18,7 +18,7 @@ import { recoveryDetailsPath, identityLocDetailsPath } from "./LegalOfficerPaths
 import AccountInfo from "../common/AccountInfo";
 import LocIdFormGroup from './LocIdFormGroup';
 import { UUID } from '../logion-chain/UUID';
-import LocCreationDialog from './transaction-protection/LocCreationDialog';
+import LocCreationDialog from '../loc/LocCreationDialog';
 
 enum ReviewStatus {
     NONE,

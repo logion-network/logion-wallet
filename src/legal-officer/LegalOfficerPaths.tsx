@@ -1,4 +1,5 @@
 import { LocType } from '../logion-chain/Types';
+import { UUID } from '../logion-chain/UUID';
 import { LEGAL_OFFICER_PATH } from '../RootPaths';
 
 export const HOME_PATH = LEGAL_OFFICER_PATH;
@@ -45,6 +46,12 @@ export function identityLocDetailsPath(locId: string) {
     return IDENTITY_LOC_TRANSACTION_DETAILS_PATH.replace(":locId", locId)
 }
 
-export function locDetailsPath(locId: string, locType: LocType) {
-    return locType === 'Transaction' ? transactionLocDetailsPath(locId) : identityLocDetailsPath(locId);
+export function locDetailsPath(locId: string | UUID, locType: LocType) {
+    let stringId;
+    if(locId instanceof UUID) {
+        stringId = locId.toString();
+    } else {
+        stringId = locId;
+    }
+    return locType === 'Transaction' ? transactionLocDetailsPath(stringId) : identityLocDetailsPath(stringId);
 }

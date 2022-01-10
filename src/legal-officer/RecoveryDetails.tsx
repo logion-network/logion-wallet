@@ -8,7 +8,8 @@ import { useParams, useNavigate } from 'react-router';
 import { identityLocDetailsPath, RECOVERY_REQUESTS_PATH } from "./LegalOfficerPaths";
 import Button from "../common/Button";
 import { Col, Row } from "react-bootstrap";
-import { acceptProtectionRequest, fetchRecoveryInfo, rejectProtectionRequest } from "./Model";
+import { acceptProtectionRequest, rejectProtectionRequest } from "../loc/Model";
+import { fetchRecoveryInfo } from "./Model";
 import { RecoveryInfo } from "./Types";
 import AccountInfo from "../common/AccountInfo";
 import Alert from "../common/Alert";
@@ -23,7 +24,7 @@ import ExtrinsicSubmitter, { SignAndSubmit } from '../ExtrinsicSubmitter';
 import ButtonGroup from "../common/ButtonGroup";
 import { UUID } from '../logion-chain/UUID';
 import LocIdFormGroup from "./LocIdFormGroup";
-import LocCreationDialog from "./transaction-protection/LocCreationDialog";
+import LocCreationDialog from "../loc/LocCreationDialog";
 
 enum Visible {
     NONE,

@@ -36,6 +36,16 @@ exports[`renders 1`] = `
     path="/transaction-protection"
   />
   <Route
+    element={
+      <LocDetails
+        backPath="/user/transaction-protection"
+        detailsPath={[Function]}
+        viewer="User"
+      />
+    }
+    path="/transaction-protection/:locId"
+  />
+  <Route
     element={<Account />}
     path="/"
   />
