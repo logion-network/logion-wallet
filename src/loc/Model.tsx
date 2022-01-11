@@ -60,7 +60,8 @@ export interface AddFileParameters {
     locId: string,
     file: File,
     fileName: string,
-    nature: string
+    nature: string,
+    submitter: string,
 }
 
 export interface AddFileResult {
@@ -98,7 +99,8 @@ export async function addLink(
 export interface AddMetadataParameters {
     locId: string,
     name: string,
-    value: string
+    value: string,
+    submitter: string,
 }
 
 export async function addMetadata(

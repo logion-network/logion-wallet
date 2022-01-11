@@ -262,7 +262,7 @@ export function LocContextProvider(props: Props) {
                     const submitter = loc.owner;
                     locRequest.metadata.forEach(itemFromBackend => {
                         const itemFromChain = findMetadataItemInLoc(loc, itemFromBackend)
-                        const result = mergeLocMetadataItem({ itemFromChain, itemFromBackend, submitter })
+                        const result = mergeLocMetadataItem({ itemFromChain, itemFromBackend })
                         dispatch({ type: 'ADD_ITEM', locItem: result.locItem })
                         if (result.refreshNeeded) {
                             refreshNeeded = true;
@@ -270,7 +270,7 @@ export function LocContextProvider(props: Props) {
                     })
                     locRequest.files.forEach(fileFromBackend => {
                         const fileFromChain = findFileInLoc(loc, fileFromBackend)
-                        const result = mergeLocFile({ fileFromChain, fileFromBackend, submitter });
+                        const result = mergeLocFile({ fileFromChain, fileFromBackend });
                         dispatch({ type: 'ADD_ITEM', locItem: result.locItem })
                         if (result.refreshNeeded) {
                             refreshNeeded = true;
@@ -386,7 +386,7 @@ export function LocContextProvider(props: Props) {
                     locId: contextValue.locId,
                     api: api!,
                     signerId: item.submitter,
-                    item: { name: item.name, value: item.value },
+                    item: { name: item.name, value: item.value, submitter: item.submitter },
                     callback,
                     errorCallback: setError
                 })
@@ -412,6 +412,7 @@ export function LocContextProvider(props: Props) {
                 signerId: item.submitter,
                     hash: item.value,
                     nature: item.nature || "",
+                    submitter: item.submitter,
                     callback,
                     errorCallback: setError
                 })
@@ -546,35 +547,38 @@ export function LocContextProvider(props: Props) {
     }, [ axiosFactory, accounts, contextValue, addLocItemFunction ])
 
     const addMetadataFunction = useCallback(async (name: string, value: string) => {
-        await modelAddMetadata(axiosFactory!(accounts!.current!.address), {
+        const submitter = accounts!.current!.address;
+        await modelAddMetadata(axiosFactory!(submitter), {
             locId: contextValue.locId.toString(),
             name,
-            value
+            value,
+            submitter,
         })
         addLocItemFunction(() => createDraftMetadataLocItem(
             {
-                metadataItem: { name, value },
-                submitter: contextValue.loc!.owner
+                metadataItem: { name, value, submitter },
             }, true))
-    }, [ axiosFactory, accounts, contextValue.loc, contextValue.locId, addLocItemFunction ])
+    }, [ axiosFactory, accounts, contextValue.locId, addLocItemFunction ])
 
     const addFileFunction = useCallback(async (name: string, file: File, nature: string) => {
-        const { hash } = await modelAddFile(axiosFactory!(accounts!.current!.address)!, {
+        const submitter = accounts!.current!.address;
+        const { hash } = await modelAddFile(axiosFactory!(submitter)!, {
             file,
             locId: contextValue.locId.toString(),
             fileName: name,
-            nature
+            nature,
+            submitter,
         })
         addLocItemFunction(
             () => createDraftFileLocItem({
                 file: {
                     hash,
-                    nature
+                    nature,
+                    submitter
                 },
-                submitter: contextValue.loc!.owner,
                 name
             }, true))
-    }, [ axiosFactory, accounts, contextValue.loc, contextValue.locId, addLocItemFunction ])
+    }, [ axiosFactory, accounts, contextValue.locId, addLocItemFunction ])
 
     useEffect(() => {
         if (contextValue.loc && contextValue.loc.owner !== null && contextValue.addMetadata === null) {

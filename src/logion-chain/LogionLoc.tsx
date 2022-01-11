@@ -119,7 +119,8 @@ export function addMetadata(parameters: AddMetadataParameters): Unsubscriber {
         signerId,
         submittable: api.tx.logionLoc.addMetadata(locId.toHexString(), {
             name: stringToHex(item.name),
-            value: stringToHex(item.value)
+            value: stringToHex(item.value),
+            submitter: item.submitter,
         }),
         callback,
         errorCallback,
@@ -155,10 +156,12 @@ function toModel(rawLoc: LegalOfficerCaseOf): LegalOfficerCase {
         metadata: rawLoc.metadata.toArray().map(rawItem => ({
             name: rawItem.name.toUtf8(),
             value: rawItem.value.toUtf8(),
+            submitter: rawItem.submitter.toString(),
         })),
         files: rawLoc.files.toArray().map(rawFile => ({
             hash: rawFile.get('hash')!.toHex(),
-            nature: rawFile.nature.toUtf8()
+            nature: rawFile.nature.toUtf8(),
+            submitter: rawFile.submitter.toString(),
         })),
         links: rawLoc.links.toArray().map(rawLink => ({
             id: UUID.fromDecimalString(rawLink.id.toString())!,
@@ -219,6 +222,7 @@ export interface AddFileParameters extends ExtrinsicSubmissionParameters {
     locId: UUID;
     hash: string;
     nature: string;
+    submitter: string;
 }
 
 export function addFile(parameters: AddFileParameters): Unsubscriber {
@@ -229,14 +233,16 @@ export function addFile(parameters: AddFileParameters): Unsubscriber {
         errorCallback,
         locId,
         hash,
-        nature
+        nature,
+        submitter,
     } = parameters;
 
     return signAndSend({
         signerId,
         submittable: api.tx.logionLoc.addFile(locId.toHexString(), {
             hash,
-            nature: stringToHex(nature)
+            nature: stringToHex(nature),
+            submitter
         }),
         callback,
         errorCallback,

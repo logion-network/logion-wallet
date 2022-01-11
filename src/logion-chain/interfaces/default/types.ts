@@ -42,6 +42,7 @@ export interface AssetMetadata extends Struct {
 export interface File extends Struct {
   readonly hash: Hash;
   readonly nature: Bytes;
+  readonly submitter: AccountId;
 }
 
 /** @name LegalOfficerCaseOf */
@@ -85,6 +86,7 @@ export interface LookupSource extends MultiAddress {}
 export interface MetadataItem extends Struct {
   readonly name: Bytes;
   readonly value: Bytes;
+  readonly submitter: AccountId;
 }
 
 /** @name PeerId */
@@ -105,7 +107,8 @@ export interface StorageVersion extends Enum {
   readonly isV1: boolean;
   readonly isV2MakeLocVoid: boolean;
   readonly isV3RequesterEnum: boolean;
-  readonly type: 'V1' | 'V2MakeLocVoid' | 'V3RequesterEnum';
+  readonly isV4ItemSubmitter: boolean;
+  readonly type: 'V1' | 'V2MakeLocVoid' | 'V3RequesterEnum' | 'V4ItemSubmitter';
 }
 
 /** @name TAssetBalance */

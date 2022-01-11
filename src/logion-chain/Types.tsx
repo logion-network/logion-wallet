@@ -3,11 +3,13 @@ import { UUID } from "./UUID";
 export interface MetadataItem {
     name: string;
     value: string;
+    submitter: string;
 }
 
 export interface File {
     hash: string;
     nature: string;
+    submitter: string;
 }
 
 export interface Link {

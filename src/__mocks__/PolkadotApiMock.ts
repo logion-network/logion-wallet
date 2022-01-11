@@ -38,12 +38,14 @@ export const DEFAULT_LOC = {
         {
             name: "meta_name",
             value: "meta_value",
+            submitter: "owner",
         }
     ],
     files: [
         {
             hash: "0x91820202c3d0fea0c494b53e3352f1934bc177484e3f41ca2c4bca4572d71cd2",
-            nature: "file-nature"
+            nature: "file-nature",
+            submitter: "owner",
         }
     ],
     links: [
@@ -104,6 +106,9 @@ export class ApiPromise {
                             },
                             value: {
                                 toUtf8: () => item.value
+                            },
+                            submitter: {
+                                toString: () => item.submitter
                             }
                         }))
                     },
@@ -116,6 +121,9 @@ export class ApiPromise {
                             },
                             nature: {
                                 toUtf8: () => file.nature
+                            },
+                            submitter: {
+                                toString: () => file.submitter
                             }
                         }))
                     },

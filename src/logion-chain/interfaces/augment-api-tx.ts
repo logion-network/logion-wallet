@@ -1,6 +1,7 @@
 // Auto-generated via `yarn polkadot-types-from-chain`, do not edit
 /* eslint-disable */
 
+import type { File, LocId, LocLink, MetadataItem, PeerId } from '../interfaces/default';
 import type { ApiTypes, AugmentedSubmittable, SubmittableExtrinsic, SubmittableExtrinsicFunction, SubmittableModuleExtrinsics } from '@polkadot/api/types';
 import type { Bytes, Compact, Option, U8aFixed, Vec, bool, u16, u32, u64, u8 } from '@polkadot/types';
 import type { TAssetBalance } from '@polkadot/types/interfaces/assets';
@@ -12,8 +13,6 @@ import type { Keys } from '@polkadot/types/interfaces/session';
 import type { Key } from '@polkadot/types/interfaces/system';
 import type { Timepoint } from '@polkadot/types/interfaces/utility';
 import type { AnyNumber, ITuple } from '@polkadot/types/types';
-
-import type { File, LocId, LocLink, MetadataItem, PeerId } from '../interfaces/default';
 
 declare module '@polkadot/api/types/submittable' {
 
@@ -427,7 +426,7 @@ declare module '@polkadot/api/types/submittable' {
       /**
        * Add file to LOC
        **/
-      addFile: AugmentedSubmittable<(locId: Compact<LocId> | AnyNumber | Uint8Array, file: File | { hash?: any; nature?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<LocId>, File]>;
+      addFile: AugmentedSubmittable<(locId: Compact<LocId> | AnyNumber | Uint8Array, file: File | { hash?: any; nature?: any; submitter?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<LocId>, File]>;
       /**
        * Add a link to LOC
        **/
@@ -435,7 +434,7 @@ declare module '@polkadot/api/types/submittable' {
       /**
        * Add LOC metadata
        **/
-      addMetadata: AugmentedSubmittable<(locId: Compact<LocId> | AnyNumber | Uint8Array, item: MetadataItem | { name?: any; value?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<LocId>, MetadataItem]>;
+      addMetadata: AugmentedSubmittable<(locId: Compact<LocId> | AnyNumber | Uint8Array, item: MetadataItem | { name?: any; value?: any; submitter?: any } | string | Uint8Array) => SubmittableExtrinsic<ApiType>, [Compact<LocId>, MetadataItem]>;
       /**
        * Close LOC.
        **/
