@@ -83,8 +83,9 @@ exports[`renders create 1`] = `
                 },
               ]
             }
+            onHide={[Function]}
             show={false}
-            size="lg"
+            size="xl"
           >
             <InstallExtension />
           </Dialog>
@@ -157,8 +158,9 @@ exports[`renders create 1`] = `
                 },
               ]
             }
+            onHide={[Function]}
             show={false}
-            size="lg"
+            size="xl"
           >
             <CreateWallet />
           </Dialog>
@@ -632,8 +634,9 @@ exports[`renders install 1`] = `
                 },
               ]
             }
+            onHide={[Function]}
             show={false}
-            size="lg"
+            size="xl"
           >
             <InstallExtension />
           </Dialog>
@@ -686,8 +689,9 @@ exports[`renders install 1`] = `
                 },
               ]
             }
+            onHide={[Function]}
             show={false}
-            size="lg"
+            size="xl"
           >
             <CreateWallet />
           </Dialog>

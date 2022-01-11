@@ -1,10 +1,9 @@
-import React from 'react';
 import { useLogionChain } from './logion-chain';
 import { isExtensionAvailable } from './logion-chain/Keys';
 
 import RootRouter from './RootRouter';
 import Loader from './Loader';
-import LandingPage from './LandingPage';
+import LandingPage from './landing/LandingPage';
 import { CommonContextProvider } from './common/CommonContext';
 import { Routes, BrowserRouter as Router, Route } from "react-router-dom";
 import PublicRouter from "./PublicRouter";
