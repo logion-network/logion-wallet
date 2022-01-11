@@ -41,7 +41,7 @@
 
 .LandingPage .dark-waves {
     position: relative;
-    background-image: url("./img/dark_waves.png");
+    background-image: url("../img/dark_waves.png");
     height: 170px;
     margin-top: -170px;
     background-size: cover;
@@ -95,15 +95,15 @@
 }
 
 .LandingPage .step.one .step-container:before {
-    background-image: url("./img/step1-waves.svg");
+    background-image: url("../img/step1-waves.svg");
 }
 
 .LandingPage .step.two .step-container:before {
-    background-image: url("./img/step2-waves.svg");
+    background-image: url("../img/step2-waves.svg");
 }
 
 .LandingPage .step.three .step-container:before {
-    background-image: url("./img/step3-waves.svg");
+    background-image: url("../img/step3-waves.svg");
 }
 
 .LandingPage .step-header {
@@ -229,7 +229,7 @@
     width: 100%;
     top: 0;
     left: 0;
-    background-image: url("./img/recovery-waves.svg");
+    background-image: url("../img/recovery-waves.svg");
 }
 
 .LandingPage .recovery-container .lost-password-container {
@@ -406,6 +406,6 @@
     position: absolute;
     height: 100%;
     width: 100%;
-    background-image: url("./img/protection_map.svg");
+    background-image: url("../img/protection_map.svg");
     background-size: cover;
 }

@@ -1,4 +1,4 @@
-import { shallowRender } from './tests';
+import { shallowRender } from '../tests';
 
 import LandingPage from './LandingPage';
 

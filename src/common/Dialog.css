@@ -36,6 +36,13 @@
     margin-right: 12px;
 }
 
+.Dialog .modal-content h1 {
+    font-weight: bold;
+    font-size: 28px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 .Dialog .modal-content h2 {
     font-weight: bold;
     font-size: 20px;

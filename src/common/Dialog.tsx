@@ -17,10 +17,11 @@ export interface Props {
     "data-testid"?: string,
     actions: Action[],
     size: ModalSize,
-    onSubmit?: () => {},
+    onSubmit?: () => void,
     className?: string,
     colors?: DialogColors;
     contentVisible?: boolean;
+    onHide?: () => void;
 }
 
 export default function Dialog(props: Props) {
@@ -32,15 +33,18 @@ export default function Dialog(props: Props) {
         colors = colorTheme.dialog;
     }
 
+    const dismissable = props.onHide !== undefined;
+
     return (
         <Modal
             show={ props.show }
-            backdrop="static"
-            keyboard={ false }
+            backdrop={ dismissable ? true : "static" }
+            keyboard={ dismissable }
             size={ props.size }
             data-testid={ props["data-testid"] }
             className={ className }
             centered
+            onHide={ props.onHide }
         >
             <style>
                 {
