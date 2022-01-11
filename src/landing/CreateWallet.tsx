@@ -9,7 +9,7 @@ export function CreateWallet() {
 
             <p>This tutorial will help you to execute the installation of the authentification system used by logion.</p>
 
-            <h2>Polkadot account creation</h2>
+            <h2>A - Polkadot account creation</h2>
 
             <p>To create a Polkadot account, please :</p>
 
@@ -41,7 +41,7 @@ export function CreateWallet() {
 
             <img src={`${process.env.PUBLIC_URL}/assets/landing/logion-step2.gif`} style={{maxWidth: "100%"}} alt="step 2 animation"/>
 
-            <h2>D - logion application first access</h2>
+            <h2>B - logion application first access</h2>
 
             <p>Your account is now created, you are ready to use logion:</p>
 
