@@ -15,6 +15,9 @@ import {
     SETTINGS_PATH,
     TRANSACTION_LOC_DETAILS_RELATIVE_PATH,
     IDENTITY_LOC_DETAILS_RELATIVE_PATH,
+    locDetailsPath,
+    LOC_REQUESTS_PATH,
+    IDENTITIES_PATH,
 } from './LegalOfficerPaths';
 
 import Home from './Home';
@@ -25,7 +28,7 @@ import RecoveryDetails from "./RecoveryDetails";
 import Wallet from "../common/Wallet";
 import Transactions from "../common/Transactions";
 import TransactionProtection from './transaction-protection/TransactionProtection';
-import LocDetails from "./transaction-protection/LocDetails";
+import LocDetails from "../loc/LocDetails";
 import IdentityProtection from './transaction-protection/IdentityProtection';
 import { useCommonContext } from '../common/CommonContext';
 import { FullWidthPane } from '../common/Dashboard';
@@ -68,9 +71,21 @@ export default function LegalOfficerRouter() {
                     backPath={ WALLET_PATH }
             /> } />
             <Route path={ LOC_REQUESTS_RELATIVE_PATH } element={ <TransactionProtection /> } />
-            <Route path={ TRANSACTION_LOC_DETAILS_RELATIVE_PATH } element={ <LocDetails /> } />
+            <Route path={ TRANSACTION_LOC_DETAILS_RELATIVE_PATH } element={
+                <LocDetails
+                    backPath={ LOC_REQUESTS_PATH }
+                    detailsPath={ locDetailsPath }
+                    viewer='LegalOfficer'
+                />
+            } />
             <Route path={ IDENTITIES_RELATIVE_PATH } element={ <IdentityProtection /> } />
-            <Route path={ IDENTITY_LOC_DETAILS_RELATIVE_PATH } element={ <LocDetails /> } />
+            <Route path={ IDENTITY_LOC_DETAILS_RELATIVE_PATH } element={
+                <LocDetails
+                    backPath={ IDENTITIES_PATH }
+                    detailsPath={ locDetailsPath }
+                    viewer='LegalOfficer'
+                />
+            } />
             <Route path="" element={ <Home /> } />
         </Routes>
     );

@@ -3,7 +3,7 @@ jest.mock('../LegalOfficerContext');
 jest.mock('../../logion-chain');
 jest.mock('../../logion-chain/LogionLoc');
 jest.mock('../../logion-chain/Signature');
-jest.mock('../Model');
+jest.mock('../../loc/Model');
 
 import { render, screen, act, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -14,7 +14,7 @@ import { LocRequest } from '../../common/types/ModelTypes';
 import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT, axiosMock } from '../../common/__mocks__/CommonContextMock';
 import { UUID } from '../../logion-chain/UUID';
 
-import { setAcceptLocRequest, acceptLocRequest } from '../__mocks__/ModelMock';
+import { setAcceptLocRequest, acceptLocRequest } from '../../loc/__mocks__/ModelMock';
 
 import LocRequestAcceptance from './LocRequestAcceptance';
 

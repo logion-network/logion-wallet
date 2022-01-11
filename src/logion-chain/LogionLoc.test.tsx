@@ -52,6 +52,7 @@ describe("LogionLoc", () => {
         const item = {
             name: "a_name",
             value: "a_value",
+            submitter: "owner",
         };
 
         const locId = new UUID();
@@ -109,6 +110,7 @@ describe("LogionLoc", () => {
 
         const hash = "0x91820202c3d0fea0c494b53e3352f1934bc177484e3f41ca2c4bca4572d71cd2";
         const nature = "file-nature";
+        const submitter = "submitter";
 
         const locId = new UUID();
         addFile({
@@ -119,6 +121,7 @@ describe("LogionLoc", () => {
             locId,
             hash,
             nature,
+            submitter,
         });
 
         expect(signAndSend).toBeCalledWith(
@@ -132,6 +135,7 @@ describe("LogionLoc", () => {
         expect(api.tx.logionLoc.addFile).toBeCalledWith(locId.toHexString(), {
             hash,
             nature: "0x66696c652d6e6174757265",
+            submitter,
         });
     });
 });

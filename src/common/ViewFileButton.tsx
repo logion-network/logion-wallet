@@ -3,7 +3,7 @@ import { AxiosInstance } from "axios";
 import { useCommonContext } from "./CommonContext";
 import Button from "./Button";
 
-import { TypedFile } from "../legal-officer/Model";
+import { TypedFile } from "../loc/Model";
 import Icon from "./Icon";
 
 import './ViewFileButton.css';

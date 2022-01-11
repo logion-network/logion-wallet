@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useCommonContext } from '../../common/CommonContext';
 import Table, { Cell, EmptyTableMessage, DateTimeCell, ActionCell } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';
@@ -7,12 +5,13 @@ import LocIdCell from '../../common/LocIdCell';
 import LegalOfficerName from '../../common/LegalOfficerNameCell';
 import ButtonGroup from "../../common/ButtonGroup";
 import Button from "../../common/Button";
-import { fullCertificateUrl } from "../../PublicPaths";
-import { UUID } from "../../logion-chain/UUID";
 import Loader from '../../common/Loader';
+import { locDetailsPath } from '../UserRouter';
+import { useNavigate } from 'react-router-dom';
 
 export default function VoidLocs() {
     const { voidTransactionLocs } = useCommonContext();
+    const navigate = useNavigate();
 
     if (voidTransactionLocs === null) {
         return <Loader />;
@@ -55,10 +54,10 @@ export default function VoidLocs() {
                 },
                 {
                     header: "Action",
-                    render: requestAndLoc =>
+                    render: request =>
                         <ActionCell>
                             <ButtonGroup>
-                                <Button onClick={ () => window.open(fullCertificateUrl(new UUID(requestAndLoc.request.id))) }>Certificate</Button>
+                                <Button onClick={ () => navigate(locDetailsPath(request.request.id)) }>View</Button>
                             </ButtonGroup>
                         </ActionCell>
                     ,

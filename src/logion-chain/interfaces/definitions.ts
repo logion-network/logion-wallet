@@ -40,7 +40,8 @@ export default {
         },
         MetadataItem: {
             name: "Vec<u8>",
-            value: "Vec<u8>"
+            value: "Vec<u8>",
+            submitter: "AccountId"
         },
         LocType: {
             _enum: [
@@ -55,15 +56,17 @@ export default {
         File: {
             hash: "Hash",
             nature: "Vec<u8>",
+            submitter: "AccountId"
         },
         LocVoidInfo: {
-          "replacer": "Option<LocId>"
+          replacer: "Option<LocId>"
         },
         StorageVersion: {
           "_enum": [
             "V1",
             "V2MakeLocVoid",
             "V3RequesterEnum",
+            "V4ItemSubmitter"
           ]
         },
         Requester: {

@@ -1,4 +1,5 @@
 jest.mock("../common/CommonContext");
+jest.mock("../loc/Model");
 jest.mock("./Model");
 jest.mock("./LegalOfficerContext");
 jest.mock("../logion-chain");
@@ -10,7 +11,8 @@ import { render, waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import RecoveryDetails from './RecoveryDetails';
 import { RecoveryInfo } from './Types';
-import { setFetchRecoveryInfo, acceptProtectionRequest, rejectProtectionRequest } from './__mocks__/ModelMock';
+import { acceptProtectionRequest, rejectProtectionRequest } from '../loc/__mocks__/ModelMock';
+import { setFetchRecoveryInfo } from './__mocks__/ModelMock';
 import { PROTECTION_REQUESTS_HISTORY } from './TestData';
 import { axiosMock, setAddresses, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../common/__mocks__/CommonContextMock';
 import { setIsSuccessful } from '../logion-chain/__mocks__/SignatureMock';

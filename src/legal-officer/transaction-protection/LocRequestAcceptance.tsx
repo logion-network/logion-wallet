@@ -7,7 +7,7 @@ import { useCommonContext } from '../../common/CommonContext';
 import { LocRequest } from '../../common/types/ModelTypes';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
 
-import { acceptLocRequest } from '../Model';
+import { acceptLocRequest } from '../../loc/Model';
 import ProcessStep from '../ProcessStep';
 
 enum AcceptStatus {

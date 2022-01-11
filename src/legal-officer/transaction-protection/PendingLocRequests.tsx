@@ -11,7 +11,7 @@ import ButtonGroup from "../../common/ButtonGroup";
 import UserIdentityNameCell from '../../common/UserIdentityNameCell';
 
 import ProcessStep from '../ProcessStep';
-import { rejectLocRequest } from '../Model';
+import { rejectLocRequest } from '../../loc/Model';
 
 import LocRequestAcceptance from './LocRequestAcceptance';
 import LocRequestDetails from './LocRequestDetails';

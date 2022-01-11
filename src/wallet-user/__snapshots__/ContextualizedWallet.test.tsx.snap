@@ -87,7 +87,7 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
         "to": "/user/wallet",
       },
       Object {
-        "exact": true,
+        "exact": false,
         "icon": Object {
           "background": Object {
             "from": "#3b6cf4",
@@ -227,7 +227,7 @@ exports[`Given connected, when rendering, then show account, no connect button a
         "to": "/user/wallet",
       },
       Object {
-        "exact": true,
+        "exact": false,
         "icon": Object {
           "background": Object {
             "from": "#3b6cf4",
@@ -367,7 +367,7 @@ exports[`Given connecting, when rendering, then show account, no button, no node
         "to": "/user/wallet",
       },
       Object {
-        "exact": true,
+        "exact": false,
         "icon": Object {
           "background": Object {
             "from": "#3b6cf4",
@@ -507,7 +507,7 @@ exports[`Given connection error, when rendering, then show account, no button, n
         "to": "/user/wallet",
       },
       Object {
-        "exact": true,
+        "exact": false,
         "icon": Object {
           "background": Object {
             "from": "#3b6cf4",
@@ -647,7 +647,7 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
         "to": "/user/wallet",
       },
       Object {
-        "exact": true,
+        "exact": false,
         "icon": Object {
           "background": Object {
             "from": "#3b6cf4",
@@ -787,7 +787,7 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
         "to": "/user/wallet",
       },
       Object {
-        "exact": true,
+        "exact": false,
         "icon": Object {
           "background": Object {
             "from": "#3b6cf4",

@@ -17,11 +17,8 @@ import LocStatusCell from '../common/LocStatusCell';
 import ButtonGroup from '../common/ButtonGroup';
 
 import { prefixedLogBalance, SYMBOL } from '../logion-chain/Balances';
-import { UUID } from '../logion-chain/UUID';
 
-import { fullCertificateUrl } from '../PublicPaths';
-
-import { SETTINGS_PATH, TRANSACTION_PROTECTION_PATH, WALLET_PATH } from './UserRouter';
+import { locDetailsPath, SETTINGS_PATH, TRANSACTION_PROTECTION_PATH, WALLET_PATH } from './UserRouter';
 import { TransactionStatusCell } from "../common/TransactionStatusCell";
 import './Home.css';
 import NetworkWarning from '../common/NetworkWarning';
@@ -172,7 +169,7 @@ export function Content() {
                                             render: request =>
                                                 <ActionCell>
                                                     <ButtonGroup>
-                                                        <Button onClick={ () => window.open(fullCertificateUrl(new UUID(request.id))) }>Certificate</Button>
+                                                        <Button onClick={ () => navigate(locDetailsPath(request.id)) }>View</Button>
                                                     </ButtonGroup>
                                                 </ActionCell>
                                             ,
