@@ -8,6 +8,7 @@ import Button from "../../common/Button";
 import Loader from '../../common/Loader';
 import { locDetailsPath } from '../UserRouter';
 import { useNavigate } from 'react-router-dom';
+import { responsiveWidth } from '../../common/Responsive';
 
 export default function VoidLocs() {
     const { voidTransactionLocs } = useCommonContext();
@@ -43,13 +44,19 @@ export default function VoidLocs() {
                 {
                     "header": "Creation date",
                     render: requestAndLoc => <DateTimeCell dateTime={ requestAndLoc.request.createdOn || null } />,
-                    width: '200px',
+                    width: responsiveWidth({
+                        "max-width: 1350px": "120px",
+                        default: "200px"
+                    }),
                     align: 'center',
                 },
                 {
                     header: "Voiding date",
                     render: requestAndLoc => <DateTimeCell dateTime={ requestAndLoc.request.voidInfo?.voidedOn || null } />,
-                    width: '200px',
+                    width: responsiveWidth({
+                        "max-width: 1350px": "120px",
+                        default: "200px"
+                    }),
                     align: 'center',
                 },
                 {
@@ -61,7 +68,10 @@ export default function VoidLocs() {
                             </ButtonGroup>
                         </ActionCell>
                     ,
-                    width: '200px',
+                    width: responsiveWidth({
+                        "max-width: 1350px": "100px",
+                        default: "200px"
+                    }),
                     align: 'center',
                 },
             ]}

@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { locDetailsPath } from "../LegalOfficerPaths";
 import ButtonGroup from "../../common/ButtonGroup";
 import { LocType, IdentityLocType } from '../../logion-chain/Types';
+import { responsiveWidth } from '../../common/Responsive';
 
 export interface Props {
     locType: LocType;
@@ -42,7 +43,10 @@ export default function ClosedLocs(props: Props) {
                 {
                     header: "Status",
                     render: request => <LocStatusCell status={ request.status }/>,
-                    width: "140px",
+                    width: responsiveWidth({
+                        "max-width: 1350px": '120px',
+                        default: '140px'
+                    }),
                 },
                 {
                     header: "LOC ID",
@@ -52,13 +56,19 @@ export default function ClosedLocs(props: Props) {
                 {
                     header: "Creation date",
                     render: request => <DateTimeCell dateTime={ request.createdOn || null } />,
-                    width: '200px',
+                    width: responsiveWidth({
+                        "max-width: 1350px": '100px',
+                        default: '200px'
+                    }),
                     align: 'center',
                 },
                 {
                     header: "Closing date",
                     render: request => <DateTimeCell dateTime={ request.closedOn || null } />,
-                    width: '200px',
+                    width: responsiveWidth({
+                        "max-width: 1350px": '100px',
+                        default: '200px'
+                    }),
                     align: 'center',
                 },
                 {
@@ -70,7 +80,10 @@ export default function ClosedLocs(props: Props) {
                             </ButtonGroup>
                         </ActionCell>
                     ,
-                    width: '200px',
+                    width: responsiveWidth({
+                        "max-width: 1350px": '150px',
+                        default: '200px'
+                    }),
                     align: 'center',
                 }
             ] }

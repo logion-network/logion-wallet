@@ -22,6 +22,7 @@ import { locDetailsPath, SETTINGS_PATH, TRANSACTION_PROTECTION_PATH, WALLET_PATH
 import { TransactionStatusCell } from "../common/TransactionStatusCell";
 import './Home.css';
 import NetworkWarning from '../common/NetworkWarning';
+import { responsiveWidth } from '../common/Responsive';
 
 const MAX_OPEN_LOCS = 3;
 const MAX_PENDING_LOCS = 3;
@@ -161,7 +162,10 @@ export function Content() {
                                         {
                                             "header": "Creation date",
                                             render: request => <DateTimeCell dateTime={ request.createdOn || null } />,
-                                            width: '200px',
+                                            width: responsiveWidth({
+                                                "max-width: 1350px": "150px",
+                                                default: "200px"
+                                            }),
                                             align: 'center',
                                         },
                                         {
@@ -173,7 +177,10 @@ export function Content() {
                                                     </ButtonGroup>
                                                 </ActionCell>
                                             ,
-                                            width: '200px',
+                                            width: responsiveWidth({
+                                                "max-width: 1350px": "100px",
+                                                default: "200px"
+                                            }),
                                             align: 'center',
                                         },
                                     ]}

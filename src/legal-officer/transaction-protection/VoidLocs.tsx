@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { locDetailsPath } from "../LegalOfficerPaths";
 import ButtonGroup from "../../common/ButtonGroup";
 import { LocType, IdentityLocType } from '../../logion-chain/Types';
+import { responsiveWidth } from '../../common/Responsive';
 
 export interface Props {
     locType: LocType;
@@ -40,7 +41,10 @@ export default function VoidLocs(props: Props) {
                 {
                     header: "Status",
                     render: requestAndLoc => <LocStatusCell status={ requestAndLoc.request.status } voidLoc={ true } />,
-                    width: "140px",
+                    width: responsiveWidth({
+                        "max-width: 1350px": '100px',
+                        default: '140px'
+                    }),
                 },
                 {
                     header: "LOC ID",
@@ -50,13 +54,19 @@ export default function VoidLocs(props: Props) {
                 {
                     header: "Creation date",
                     render: requestAndLoc => <DateTimeCell dateTime={ requestAndLoc.request.createdOn || null } />,
-                    width: '200px',
+                    width: responsiveWidth({
+                        "max-width: 1350px": '100px',
+                        default: '200px'
+                    }),
                     align: 'center',
                 },
                 {
                     header: "Voiding date",
                     render: requestAndLoc => <DateTimeCell dateTime={ requestAndLoc.request.voidInfo?.voidedOn || null } spinner={ true } />,
-                    width: '200px',
+                    width: responsiveWidth({
+                        "max-width: 1350px": '100px',
+                        default: '200px'
+                    }),
                     align: 'center',
                 },
                 {
@@ -68,7 +78,10 @@ export default function VoidLocs(props: Props) {
                             </ButtonGroup>
                         </ActionCell>
                     ,
-                    width: '200px',
+                    width: responsiveWidth({
+                        "max-width: 1350px": '150px',
+                        default: '200px'
+                    }),
                     align: 'center',
                 }
             ] }

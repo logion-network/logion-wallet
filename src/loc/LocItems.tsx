@@ -19,6 +19,7 @@ import LocPublishLinkButton from "./LocPublishLinkButton";
 
 import './LocItems.css';
 import Icon from "../common/Icon";
+import { responsiveWidth } from "../common/Responsive";
 
 export interface Props {
     matchedHash?: string;
@@ -96,14 +97,20 @@ export default function LocItems(props: Props) {
                             renderDetails: locItem => renderDetails(locItem),
                             detailsExpanded: locItem => locItem.newItem,
                             align: "left",
-                            width: "250px"
+                            width: responsiveWidth({
+                                "max-width: 1350px": '150px',
+                                default: '250px'
+                            }),
                         },
                         {
                             header: "Timestamp",
                             render: locItem => <DateTimeCell
                                 dateTime={ locItem.timestamp }
                                 spinner={ locItem.status === 'PUBLISHED' } />,
-                            width: "200px"
+                                width: responsiveWidth({
+                                    "max-width: 1350px": '100px',
+                                    default: '200px'
+                                }),
                         },
                         {
                             header: "Type",
@@ -121,7 +128,10 @@ export default function LocItems(props: Props) {
                                     />
                                 }
                             </> } />,
-                            width: "160px",
+                            width: responsiveWidth({
+                                "max-width: 1350px": '145px',
+                                default: '160px'
+                            }),
                             align: "left"
                         },
                         {
@@ -136,7 +146,11 @@ export default function LocItems(props: Props) {
                                 } else {
                                     return (<StatusCell icon={{ id: 'published' }} text="Published" color={ POLKADOT } />)
                                 }
-                            }
+                            },
+                            width: responsiveWidth({
+                                "max-width: 1350px": '345px',
+                                default: '400px'
+                            }),
                         }
                     ] }
                     renderEmpty={ () => <EmptyTableMessage>No public data nor private documents</EmptyTableMessage> }
