@@ -1,37 +1,47 @@
-.Home .character-container img {
+.UserHome .character-container img {
     position: fixed;
     right: 10px;
     bottom: 0;
 }
 
-.Home .reading-container .Reading,
-.Home .reading-container button {
+.UserHome .reading-container .Reading,
+.UserHome .reading-container button {
     margin-left: auto;
     margin-right: auto;
 }
 
-.Home .reading-container .Reading {
+.UserHome .reading-container .Reading {
     margin-top: -60px;
 }
 
-.Home .reading-container button {
+.UserHome .reading-container button {
     display: block;
 }
 
-.Home .transactions {
+.UserHome .transactions {
     margin-top: 30px;
 }
 
-.Home .my-transactions {
+.UserHome .my-transactions {
     position: absolute;
     top: 25px;
     right: 25px;
 }
 
-.Home .open-transactions {
+.UserHome .open-transactions {
     margin-top: 30px;
 }
 
-.Home .pending-transactions {
+.UserHome .pending-transactions {
     margin-top: 30px;
+}
+
+@media (max-width: 1350px) {
+    .UserHome .reading-container .Reading {
+        margin-top: 0;
+    }
+
+    .UserHome .character-container img {
+        width: 150px;
+    }
 }

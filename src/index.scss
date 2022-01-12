@@ -11,7 +11,17 @@ body, html {
     width: 100%;
 }
 
+html {
+    font-size: 16px;
+}
+
 #root {
     height: 100%;
     width: 100%;
+}
+
+@media (max-width: 1350px) {
+    html {
+        font-size: 14px;
+    }
 }

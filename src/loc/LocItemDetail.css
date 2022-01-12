@@ -4,17 +4,25 @@
 
 .LocItemDetail .label {
     font-weight: bold;
-    font-size: 14px;
+    font-size: 0.9rem;
     margin-right: 5px;
     flex-shrink: 0;
 }
 
 .LocItemDetail .value {
     font-weight: normal;
-    font-size: 14px;
+    font-size: 0.9rem;
 }
 
 .LocItemDetail .value pre {
-    font-size: 1em;
+    font-size: 1rem;
     font-family: "Montserrat", sans-serif;
+}
+
+.LocItemDetail .value-container {
+    text-overflow: ellipsis;
+}
+
+.LocItemDetail .copy-paste-container {
+    flex-shrink: 0;
 }

@@ -24,14 +24,14 @@
 }
 
 .Login h1 {
-    font-size: 38px;
+    font-size: 2.1rem;
     font-weight: bold;
     margin-top: 30px;
     text-align: center;
 }
 
 .Login h2 {
-    font-size: 22px;
+    font-size: 1.7rem;
     font-weight: bold;
     margin-bottom: 25px;
 }
@@ -59,12 +59,12 @@
 }
 
 .Login .node-info .name {
-    font-size: 22px;
+    font-size: 1.7rem;
     font-weight: bold;
 }
 
 .Login .node-info .peer-id {
-    font-size: 14px;
+    font-size: 0.9rem;
     font-weight: bold;
 }
 
@@ -117,9 +117,9 @@
 }
 
 .Login .account .name {
-    font-size: 22px;
+    font-size: 1.7rem;
 }
 
 .Login .account .address {
-    font-size: 14px;
+    font-size: 0.9rem;
 }

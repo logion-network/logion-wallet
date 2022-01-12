@@ -7,11 +7,6 @@
     border: none;
 }
 
-.Dialog.modal.show .modal-dialog {
-    margin-top: 0;
-    margin-bottom: 0;
-}
-
 .Dialog .modal-content {
     border: none;
     border-radius: 5px;

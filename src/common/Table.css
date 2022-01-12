@@ -1,6 +1,6 @@
 .Table .header {
     text-transform: uppercase;
-    font-size: 11px;
+    font-size: 0.7rem;
 }
 
 .Table .header .Col {
@@ -8,7 +8,7 @@
 }
 
 .Table .body .Row {
-    font-size: 14px;
+    font-size: 0.9rem;
     padding: 0;
     font-weight: bold;
     margin-bottom: 10px;
@@ -63,13 +63,13 @@
 }
 
 .Table .regular-cell {
-    font-size: 14px;
+    font-size: 0.9rem;
     line-height: 40px;
     overflow: hidden;
 }
 
 .Table .regular-cell.small-text {
-    font-size: 10px;
+    font-size: 0.7rem;
     line-height: 40px;
 }
 
@@ -83,7 +83,7 @@
 }
 
 .Table .date-cell {
-    font-size: 14px;
+    font-size: 0.9rem;
     line-height: 20px;
     overflow: hidden;
     padding-left: 10px;

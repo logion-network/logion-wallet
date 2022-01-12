@@ -38,7 +38,7 @@ export default function Officer(props: Props) {
              } }
         >
             <Row className="address">
-                { polkadotAddress }
+                <span className="text">{ polkadotAddress }</span>
                 <CopyPasteButton value={ polkadotAddress } className="medium" />
             </Row>
             <div className="details">{ props.officer?.details.split(/\n/).map((line, index) => (

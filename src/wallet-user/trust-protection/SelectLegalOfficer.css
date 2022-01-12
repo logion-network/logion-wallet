@@ -1,5 +1,6 @@
 .SelectLegalOfficer {
     width: 520px;
+    max-width: 100%;
 }
 
 .SelectLegalOfficer .form-group {
