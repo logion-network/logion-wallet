@@ -74,3 +74,9 @@
 .Gauge.linear .reading .value-unit {
     padding-top: 0;
 }
+
+@media (max-width: 1385px) {
+    .Gauge.linear:before {
+        width: 400px;
+    }
+}

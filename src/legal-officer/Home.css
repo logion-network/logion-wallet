@@ -1,46 +1,52 @@
-.Home .reading-container .Reading,
-.Home .reading-container button {
+.LegalOfficerHome .reading-container .Reading,
+.LegalOfficerHome .reading-container button {
     margin-left: auto;
     margin-right: auto;
 }
 
-.Home .reading-container .Reading {
+.LegalOfficerHome .reading-container .Reading {
     margin-top: -60px;
 }
 
-.Home .reading-container button {
+.LegalOfficerHome .reading-container button {
     display: block;
 }
 
-.Home .transactions {
+.LegalOfficerHome .transactions {
     margin-top: 30px;
 }
 
-.Home .transactions-button {
+.LegalOfficerHome .transactions-button {
     position: absolute;
     top: 25px;
     right: 25px;
 }
 
-.Home .open-transactions {
+.LegalOfficerHome .open-transactions {
     margin-top: 30px;
 }
 
-.Home .pending-transactions {
+.LegalOfficerHome .pending-transactions {
     margin-top: 30px;
 }
 
-.Home .identities {
+.LegalOfficerHome .identities {
     position: relative;
     margin-top: 60px;
 }
 
-.Home .identities-button {
+.LegalOfficerHome .identities-button {
     position: absolute;
     top: 25px;
     right: 25px;
 }
 
-.Home .open-identities {
+.LegalOfficerHome .open-identities {
     margin-top: 30px;
+}
+
+@media (max-width: 1350px) {
+    .LegalOfficerHome .reading-container .Reading {
+        margin-top: 0;
+    }
 }

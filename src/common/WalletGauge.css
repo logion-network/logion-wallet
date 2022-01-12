@@ -21,4 +21,5 @@
 
 .WalletGauge.linear .actions {
     margin-bottom: 10px;
+    flex-shrink: 0;
 }

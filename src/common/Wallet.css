@@ -27,3 +27,8 @@
     margin-right: 10px;
 }
 
+@media (max-width: 1400px) {
+    .Wallet .gauge-container {
+        margin-top: 30px;
+    }
+}

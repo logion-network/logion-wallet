@@ -25,11 +25,11 @@ export default function LocItemDetail(props: DetailProps) {
     return (
         <Row className={ className }>
             <Col className="label">{ props.label }: </Col>
-            <Col>
+            <Col className="value-container">
                 { value }
             </Col>
             { props.copyButtonText !== undefined &&
-                <Col>
+                <Col className="copy-paste-container">
                     <CopyPasteButton value={ props.copyButtonText } className="small" />
                 </Col> }
         </Row>

@@ -3,7 +3,7 @@
     margin-top: 50px;
     margin-bottom: 70px;
     padding: 70px;
-    font-size: 16px;
+    font-size: 1rem;
     border: 20px solid #3b6cf4;
 }
 
@@ -16,12 +16,12 @@
 }
 
 .Certificate .header h1 {
-    font-size: 60px;
+    font-size: 4rem;
     font-weight: 600;
 }
 
 .Certificate .header h2 {
-    font-size: 36px;
+    font-size: 3.6rem;
     margin-top: 20px;
     margin-bottom: 20px;
 }
@@ -76,7 +76,7 @@
 }
 
 .Certificate pre {
-    font-size: 1em;
+    font-size: 1rem;
     font-family: "Montserrat", sans-serif;
 }
 

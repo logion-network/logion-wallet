@@ -1,7 +1,7 @@
 .MenuItem {
     display: block;
     height: 56px;
-    font-size: 18px;
+    font-size: 1rem;
     font-weight: bold;
     padding-left: 40px;
     padding-right: 40px;

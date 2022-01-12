@@ -71,7 +71,7 @@ interface TitlesProps {
 function Titles(props: TitlesProps) {
 
     return (
-        <div className="TitlesArea">
+        <div className="Titles">
             <h1>
                 <MenuIcon
                     { ...props.titleIcon }
@@ -110,18 +110,16 @@ function BasePane(props: BasePaneProps) {
 
     return (
         <div className="BasePane">
-            <Row>
-                <Col md={ 8 }>
+            <div className="BasePaneHeader">
+                <div className="TitleArea">
                     <Titles {...props} />
-                </Col>
-                <Col md={ 4 }>
-                    <div className="AddressSwitcherArea">
-                        <AddressSwitcher
-                            selectAddress={ selectAddress }
-                        />
-                    </div>
-                </Col>
-            </Row>
+                </div>
+                <div className="AddressSwitcherArea">
+                    <AddressSwitcher
+                        selectAddress={ selectAddress }
+                    />
+                </div>
+            </div>
             {
                 props.topAreaChildren &&
                 <TopArea>

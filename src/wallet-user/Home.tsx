@@ -38,7 +38,7 @@ export default function Account() {
                 },
                 background: colorTheme.topMenuItems.iconGradient,
             }}
-            className="Home"
+            className="UserHome"
         >
             <Content />
         </FullWidthPane>

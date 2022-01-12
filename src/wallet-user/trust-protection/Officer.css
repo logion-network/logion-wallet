@@ -8,3 +8,9 @@
 .Officer .address {
     font-weight: bold;
 }
+
+.Officer .address .text {
+    width: calc(100% - 30px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

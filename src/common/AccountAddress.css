@@ -22,7 +22,7 @@
     flex-direction: column;
     justify-content: space-between;
     height: 75px;
-    width: calc(100% - 170px);
+    width: calc(100% - 180px);
 }
 
 .AccountAddress.disabled {
@@ -35,7 +35,7 @@
 }
 
 .AccountAddress .text .hint {
-    font-size: 9px;
+    font-size: 0.7rem;
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -43,7 +43,7 @@
 }
 
 .AccountAddress .text .name {
-    font-size: 18px;
+    font-size: 1.1rem;
     font-weight: bold;
     max-width: 100%;
     overflow: hidden;
@@ -51,7 +51,7 @@
 }
 
 .AccountAddress .text .address {
-    font-size: 14px;
+    font-size: 0.9rem;
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;

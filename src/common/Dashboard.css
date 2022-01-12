@@ -9,7 +9,7 @@
     flex-direction: column;
     min-height: 100vh;
     height: 100%;
-    width: 300px;
+    width: 280px;
 }
 
 .Dashboard .Sidebar .MenuArea {
@@ -25,7 +25,7 @@
     padding-left: 0;
     padding-right: 10px;
     overflow-x: hidden;
-    width: calc(100% - 300px);
+    width: calc(100% - 280px);
 }
 
 .Dashboard .ContentArea {
@@ -41,17 +41,13 @@
     margin-bottom: 0;
 }
 
-.Dashboard .ContentArea [class*="col-"]:nth-child(n+2) {
-    padding-left: 30px;
-}
-
 .Dashboard .primary-area-col {
     padding-left: 0;
     padding-right: 0;
 }
 
 .Dashboard .PrimaryArea {
-    font-size: 14px;
+    font-size: 0.9rem;
     overflow-x: hidden;
     padding-left: 40px;
     padding-right: 40px;
@@ -59,7 +55,7 @@
 }
 
 .Dashboard .SecondaryArea {
-    font-size: 14px;
+    font-size: 0.9rem;
     overflow-x: hidden;
     padding-top: 23px;
     padding-left: 20px;
@@ -67,7 +63,15 @@
     padding-bottom: 30px;
 }
 
-.Dashboard .AddressSwitcherArea {
+.Dashboard .BasePaneHeader {
+    display: flex;
+}
+
+.Dashboard .BasePaneHeader .TitleArea {
+    width: calc(100% - 400px);
+}
+
+.Dashboard .BasePaneHeader .AddressSwitcherArea {
     display: flex;
     justify-content: flex-end;
     padding-top: 30px;
@@ -78,7 +82,7 @@
 
 .Dashboard .PrimaryArea h1,
 .Dashboard .SecondaryArea h1 {
-    font-size: 36px;
+    font-size: 1.2rem;
     font-weight: bold;
     padding-top: 30px;
     padding-bottom: 60px;
@@ -86,46 +90,52 @@
 
 .Dashboard .PrimaryArea h2,
 .Dashboard .SecondaryArea h2 {
-    font-size: 18px;
+    font-size: 1.1rem;
     font-weight: bold;
 }
 
 .Dashboard .PrimaryArea h3,
 .Dashboard .SecondaryArea h3 {
-    font-size: 18px;
+    font-size: 1rem;
     padding-bottom: 20px;
 }
 
 .Dashboard .PrimaryArea p,
 .Dashboard .SecondaryArea p {
-    font-size: 14px;
+    font-size: 0.9rem;
     font-weight: normal;
 }
 
-.Dashboard .TitlesArea {
+.Dashboard .Titles {
     padding-left: 40px;
     height: 160px;
 }
 
-.Dashboard .TitlesArea h1 {
-    font-size: 36px;
+.Dashboard .Titles h1 {
+    font-size: 1.5rem;
     font-weight: bold;
     padding-top: 30px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.Dashboard .TitlesArea h1 .MenuIcon {
+.Dashboard .Titles h1 .MenuIcon {
     display: inline-block;
 }
 
-.Dashboard .TitlesArea h1 .MenuIcon img {
+.Dashboard .Titles h1 .MenuIcon img {
     vertical-align: top;
     max-height: 36px;
 }
 
-.Dashboard .TitlesArea h2 {
-    font-size: 22px;
+.Dashboard .Titles h2 {
+    font-size: 1.2rem;
     padding-top: 20px;
     margin-left: 60px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .Dashboard .back-button {
@@ -139,10 +149,19 @@
 }
 
 .Dashboard .TopArea {
-    font-size: 14px;
+    font-size: 0.9rem;
     overflow-x: hidden;
     padding-top: 23px;
     padding-left: 30px;
     padding-right: 40px;
     padding-bottom: 30px;
+}
+
+@media (max-width: 1350px) {
+    .Dashboard .Sidebar {
+        width: 240px;
+    }
+    .Dashboard .BasePane {
+        width: calc(100% - 240px);
+    }    
 }

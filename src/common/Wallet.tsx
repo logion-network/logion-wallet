@@ -65,7 +65,7 @@ export function Content(props: Props) {
             </Row>
         }
         <Row>
-            <Col md={8}>
+            <Col xxl={8}>
                 <Frame
                     title="Asset balances"
                     fillHeight
@@ -105,7 +105,7 @@ export function Content(props: Props) {
                             {
                                 header: "",
                                 render: balance => balance.coin.id !== 'dot' ? <ActionCell><Button onClick={() => navigate(props.transactionsPath(balance.coin.id))}>More</Button></ActionCell> : <NotAvailable/>,
-                                width: "200px",
+                                width: "201px",
                             }
                         ]}
                         data={ balances }
@@ -113,15 +113,18 @@ export function Content(props: Props) {
                     />
                 </Frame>
             </Col>
-            <Col md={4}>
-                <Frame fillHeight
-                       title={
-                           <div className="gauge-title">
-                               <Icon icon={ { id: gaugeCoin.iconId } } type={ gaugeCoin.iconType } height="72px"
-                                     width="auto" />
-                               <span>Current { SYMBOL } balance</span>
-                           </div>
-                       }>
+            <Col xxl={4}>
+                <Frame
+                    fillHeight
+                    title={
+                        <div className="gauge-title">
+                            <Icon icon={ { id: gaugeCoin.iconId } } type={ gaugeCoin.iconType } height="72px"
+                                    width="auto" />
+                            <span>Current { SYMBOL } balance</span>
+                        </div>
+                    }
+                    className="gauge-container"
+                >
                     <WalletGauge
                         coin={ gaugeCoin }
                         balance={ balances[0].balance }

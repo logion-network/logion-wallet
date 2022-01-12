@@ -44,7 +44,7 @@ export default function Account() {
                 },
                 background: colorTheme.topMenuItems.iconGradient,
             }}
-            className="Home"
+            className="LegalOfficerHome"
         >
             <Row>
                 <Col>
