@@ -20,6 +20,7 @@ import LocPublishLinkButton from "./LocPublishLinkButton";
 import './LocItems.css';
 import Icon from "../common/Icon";
 import { useResponsiveContext } from "../common/Responsive";
+import SubmitterName from "../common/SubmitterName";
 
 export interface Props {
     matchedHash?: string;
@@ -27,7 +28,7 @@ export interface Props {
 }
 
 export default function LocItems(props: Props) {
-    const { locId, loc, locItems, deleteMetadata, deleteLink, deleteFile } = useLocContext();
+    const { locId, loc, locItems, deleteMetadata, deleteLink, deleteFile, locRequest } = useLocContext();
     const { width } = useResponsiveContext();
 
     function renderDetails(locItem: LocItem): Child {
@@ -136,7 +137,13 @@ export default function LocItems(props: Props) {
                         },
                         {
                             header: "Submitted by",
-                            render: locItem => <LegalOfficerName address={ locItem.submitter } />
+                            render: locItem =>
+                                <>
+                                    { locItem.submitter === loc?.owner ?
+                                        <LegalOfficerName address={ locItem.submitter } /> :
+                                        <SubmitterName identity={ locRequest?.userIdentity }/>
+                                    }
+                                </>
                         },
                         {
                             header: "",
@@ -148,7 +155,7 @@ export default function LocItems(props: Props) {
                                 }
                             },
                             width: width({
-                                onSmallScreen: '345px',
+                                onSmallScreen: props.viewer === "LegalOfficer" ? '345px' : '145px',
                                 otherwise: '400px'
                             }),
                         }
