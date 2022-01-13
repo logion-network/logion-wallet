@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { locDetailsPath } from "../LegalOfficerPaths";
 import ButtonGroup from "../../common/ButtonGroup";
 import { LocType, IdentityLocType } from '../../logion-chain/Types';
+import { useResponsiveContext } from '../../common/Responsive';
 
 export interface Props {
     locType: LocType;
@@ -19,6 +20,7 @@ export interface Props {
 export default function OpenedLocs(props: Props) {
     const { openedLocRequests, openedIdentityLocsByType } = useCommonContext();
     const navigate = useNavigate();
+    const { width } = useResponsiveContext();
 
     if (openedLocRequests === null || openedIdentityLocsByType === null) {
         return null;
@@ -42,7 +44,10 @@ export default function OpenedLocs(props: Props) {
                 {
                     header: "Status",
                     render: request => <LocStatusCell status={ request.status }/>,
-                    width: "140px",
+                    width: width({
+                        onSmallScreen: '100px',
+                        otherwise: '140px'
+                    }),
                 },
                 {
                     header: "LOC ID",
@@ -52,7 +57,10 @@ export default function OpenedLocs(props: Props) {
                 {
                     header: "Creation date",
                     render: request => <DateTimeCell dateTime={ request.createdOn || null } />,
-                    width: '200px',
+                    width: width({
+                        onSmallScreen: '100px',
+                        otherwise: '200px'
+                    }),
                     align: 'center',
                 },
                 {
@@ -64,7 +72,10 @@ export default function OpenedLocs(props: Props) {
                             </ButtonGroup>
                         </ActionCell>
                     ,
-                    width: '200px',
+                    width: width({
+                        onSmallScreen: '150px',
+                        otherwise: '200px'
+                    }),
                     align: 'center',
                 }
             ] }

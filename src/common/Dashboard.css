@@ -159,9 +159,9 @@
 
 @media (max-width: 1350px) {
     .Dashboard .Sidebar {
-        width: 240px;
+        width: 260px;
     }
     .Dashboard .BasePane {
-        width: calc(100% - 240px);
+        width: calc(100% - 260px);
     }    
 }

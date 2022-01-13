@@ -32,7 +32,7 @@ export default function ViewFileButton(props: Props) {
     }
     return (
         <Button onClick={ () => openFile(axiosFactory(props.nodeOwner)!, props) } className="ViewFileButton">
-            <Icon icon={{id: 'view'}} height="16px" />
+            <Icon icon={{id: 'view'}} />
         </Button>
     )
 }

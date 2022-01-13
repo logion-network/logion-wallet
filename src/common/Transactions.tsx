@@ -20,6 +20,7 @@ import TransferAmountCell, { transferBalance } from './TransferAmountCell';
 import AmountCell from './AmountCell';
 import { TransactionStatusCell, TransactionStatusCellDetails } from "./TransactionStatusCell";
 import Loader from './Loader';
+import { useResponsiveContext } from './Responsive';
 
 export interface Props {
     backPath: string,
@@ -53,6 +54,7 @@ export default function Transactions(props: Props) {
 function Content() {
     const { accounts, balances, transactions } = useCommonContext();
     const { coinId } = useParams<"coinId">();
+    const { width } = useResponsiveContext();
 
     if (balances === null || transactions === null) {
         return <Loader />;
@@ -72,12 +74,18 @@ function Content() {
                                     header: "Status",
                                     render: transaction => <TransactionStatusCell transaction={ transaction } />,
                                     renderDetails: transaction => <TransactionStatusCellDetails transaction={ transaction } />,
-                                    width: "100px",
+                                    width: width({
+                                        onSmallScreen: "80px",
+                                        otherwise: "100px"
+                                    }),
                                 },
                                 {
                                     header: "Transaction date",
                                     render: transaction => <DateCell dateTime={ transaction.createdOn } />,
-                                    width: "150px",
+                                    width: width({
+                                        onSmallScreen: "100px",
+                                        otherwise: "150px"
+                                    }),
                                 },
                                 {
                                     header: <FromToHeader />,
@@ -87,25 +95,37 @@ function Content() {
                                 {
                                     header: "Transaction type",
                                     render: transaction => <Cell content={ transaction.type } />,
-                                    width: "250px",
+                                    width: width({
+                                        onSmallScreen: "180px",
+                                        otherwise: "250px"
+                                    }),
                                 },
                                 {
                                     header: "Amount",
                                     render: transaction => <TransferAmountCell amount={ transferBalance(accounts!, transaction) } />,
                                     align: 'right',
-                                    width: "120px",
+                                    width: width({
+                                        onSmallScreen: "100px",
+                                        otherwise: "120px"
+                                    }),
                                 },
                                 {
                                     header: "Paid fees",
                                     render: transaction => <AmountCell amount={ prefixedLogBalance(transaction.fee) } />,
                                     align: 'right',
-                                    width: "120px",
+                                    width: width({
+                                        onSmallScreen: "80px",
+                                        otherwise: "120px"
+                                    }),
                                 },
                                 {
                                     header: "Deposit",
                                     render: transaction => <AmountCell amount={ prefixedLogBalance(transaction.reserved) } />,
                                     align: 'right',
-                                    width: "120px",
+                                    width: width({
+                                        onSmallScreen: "80px",
+                                        otherwise: "120px"
+                                    }),
                                 }
                             ]}
                             data={ transactions }

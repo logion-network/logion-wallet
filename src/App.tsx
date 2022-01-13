@@ -2,13 +2,16 @@ import { LogionChainContextProvider } from './logion-chain';
 import { VersionContextProvider } from './version/VersionContext';
 
 import Main from './Main';
+import { ResponsiveProvider } from './common/Responsive';
 
 export default function App() {
     return (
-        <LogionChainContextProvider>
-            <VersionContextProvider>
-                <Main/>
-            </VersionContextProvider>
-        </LogionChainContextProvider>
+        <ResponsiveProvider>
+            <LogionChainContextProvider>
+                <VersionContextProvider>
+                    <Main />
+                </VersionContextProvider>
+            </LogionChainContextProvider>
+        </ResponsiveProvider>
     );
 }

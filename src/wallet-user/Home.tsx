@@ -22,6 +22,7 @@ import { locDetailsPath, SETTINGS_PATH, TRANSACTION_PROTECTION_PATH, WALLET_PATH
 import { TransactionStatusCell } from "../common/TransactionStatusCell";
 import './Home.css';
 import NetworkWarning from '../common/NetworkWarning';
+import { useResponsiveContext } from '../common/Responsive';
 
 const MAX_OPEN_LOCS = 3;
 const MAX_PENDING_LOCS = 3;
@@ -48,6 +49,7 @@ export default function Account() {
 export function Content() {
     const { balances, accounts, transactions, openedLocRequests, pendingLocRequests, nodesDown } = useCommonContext();
     const navigate = useNavigate();
+    const { width } = useResponsiveContext();
 
     if(balances === null || transactions === null || accounts === null || openedLocRequests === null || pendingLocRequests === null) {
         return <Loader />;
@@ -161,7 +163,10 @@ export function Content() {
                                         {
                                             "header": "Creation date",
                                             render: request => <DateTimeCell dateTime={ request.createdOn || null } />,
-                                            width: '200px',
+                                            width: width({
+                                                onSmallScreen: "150px",
+                                                otherwise: "200px"
+                                            }),
                                             align: 'center',
                                         },
                                         {
@@ -173,7 +178,10 @@ export function Content() {
                                                     </ButtonGroup>
                                                 </ActionCell>
                                             ,
-                                            width: '200px',
+                                            width: width({
+                                                onSmallScreen: "100px",
+                                                otherwise: "200px"
+                                            }),
                                             align: 'center',
                                         },
                                     ]}

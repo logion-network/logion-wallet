@@ -8,10 +8,12 @@ import Button from "../../common/Button";
 import Loader from '../../common/Loader';
 import { locDetailsPath } from '../UserRouter';
 import { useNavigate } from 'react-router-dom';
+import { useResponsiveContext } from '../../common/Responsive';
 
 export default function OpenedLocs() {
     const { openedLocRequests } = useCommonContext();
     const navigate = useNavigate();
+    const { width } = useResponsiveContext();
 
     if(openedLocRequests === null) {
         return <Loader />;
@@ -43,7 +45,10 @@ export default function OpenedLocs() {
                 {
                     "header": "Creation date",
                     render: request => <DateTimeCell dateTime={ request.createdOn || null } />,
-                    width: '200px',
+                    width: width({
+                        onSmallScreen: "150px",
+                        otherwise: "200px"
+                    }),
                     align: 'center',
                 },
                 {
@@ -55,7 +60,10 @@ export default function OpenedLocs() {
                             </ButtonGroup>
                         </ActionCell>
                     ,
-                    width: '200px',
+                    width: width({
+                        onSmallScreen: "100px",
+                        otherwise: "200px"
+                    }),
                     align: 'center',
                 },
             ]}
