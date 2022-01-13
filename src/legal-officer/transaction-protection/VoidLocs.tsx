@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { locDetailsPath } from "../LegalOfficerPaths";
 import ButtonGroup from "../../common/ButtonGroup";
 import { LocType, IdentityLocType } from '../../logion-chain/Types';
-import { responsiveWidth } from '../../common/Responsive';
+import { useResponsiveContext } from '../../common/Responsive';
 
 export interface Props {
     locType: LocType;
@@ -18,6 +18,7 @@ export interface Props {
 export default function VoidLocs(props: Props) {
     const { voidTransactionLocs, voidIdentityLocsByType } = useCommonContext();
     const navigate = useNavigate();
+    const { width } = useResponsiveContext();
 
     if (voidTransactionLocs === null || voidIdentityLocsByType === null) {
         return null;
@@ -41,9 +42,9 @@ export default function VoidLocs(props: Props) {
                 {
                     header: "Status",
                     render: requestAndLoc => <LocStatusCell status={ requestAndLoc.request.status } voidLoc={ true } />,
-                    width: responsiveWidth({
-                        "max-width: 1350px": '100px',
-                        default: '140px'
+                    width: width({
+                        onSmallScreen: '100px',
+                        otherwise: '140px'
                     }),
                 },
                 {
@@ -54,18 +55,18 @@ export default function VoidLocs(props: Props) {
                 {
                     header: "Creation date",
                     render: requestAndLoc => <DateTimeCell dateTime={ requestAndLoc.request.createdOn || null } />,
-                    width: responsiveWidth({
-                        "max-width: 1350px": '100px',
-                        default: '200px'
+                    width: width({
+                        onSmallScreen: '100px',
+                        otherwise: '200px'
                     }),
                     align: 'center',
                 },
                 {
                     header: "Voiding date",
                     render: requestAndLoc => <DateTimeCell dateTime={ requestAndLoc.request.voidInfo?.voidedOn || null } spinner={ true } />,
-                    width: responsiveWidth({
-                        "max-width: 1350px": '100px',
-                        default: '200px'
+                    width: width({
+                        onSmallScreen: '100px',
+                        otherwise: '200px'
                     }),
                     align: 'center',
                 },
@@ -78,9 +79,9 @@ export default function VoidLocs(props: Props) {
                             </ButtonGroup>
                         </ActionCell>
                     ,
-                    width: responsiveWidth({
-                        "max-width: 1350px": '150px',
-                        default: '200px'
+                    width: width({
+                        onSmallScreen: '150px',
+                        otherwise: '200px'
                     }),
                     align: 'center',
                 }

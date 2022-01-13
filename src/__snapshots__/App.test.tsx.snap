@@ -1,9 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders 1`] = `
-<LogionChainContextProvider>
-  <VersionContextProvider>
-    <Main />
-  </VersionContextProvider>
-</LogionChainContextProvider>
+<ResponsiveProvider>
+  <LogionChainContextProvider>
+    <VersionContextProvider>
+      <Main />
+    </VersionContextProvider>
+  </LogionChainContextProvider>
+</ResponsiveProvider>
 `;

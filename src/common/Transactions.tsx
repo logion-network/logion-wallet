@@ -20,7 +20,7 @@ import TransferAmountCell, { transferBalance } from './TransferAmountCell';
 import AmountCell from './AmountCell';
 import { TransactionStatusCell, TransactionStatusCellDetails } from "./TransactionStatusCell";
 import Loader from './Loader';
-import { responsiveWidth } from './Responsive';
+import { useResponsiveContext } from './Responsive';
 
 export interface Props {
     backPath: string,
@@ -54,6 +54,7 @@ export default function Transactions(props: Props) {
 function Content() {
     const { accounts, balances, transactions } = useCommonContext();
     const { coinId } = useParams<"coinId">();
+    const { width } = useResponsiveContext();
 
     if (balances === null || transactions === null) {
         return <Loader />;
@@ -73,17 +74,17 @@ function Content() {
                                     header: "Status",
                                     render: transaction => <TransactionStatusCell transaction={ transaction } />,
                                     renderDetails: transaction => <TransactionStatusCellDetails transaction={ transaction } />,
-                                    width: responsiveWidth({
-                                        "max-width: 1350px": "80px",
-                                        default: "100px"
+                                    width: width({
+                                        onSmallScreen: "80px",
+                                        otherwise: "100px"
                                     }),
                                 },
                                 {
                                     header: "Transaction date",
                                     render: transaction => <DateCell dateTime={ transaction.createdOn } />,
-                                    width: responsiveWidth({
-                                        "max-width: 1350px": "100px",
-                                        default: "150px"
+                                    width: width({
+                                        onSmallScreen: "100px",
+                                        otherwise: "150px"
                                     }),
                                 },
                                 {
@@ -94,36 +95,36 @@ function Content() {
                                 {
                                     header: "Transaction type",
                                     render: transaction => <Cell content={ transaction.type } />,
-                                    width: responsiveWidth({
-                                        "max-width: 1350px": "180px",
-                                        default: "250px"
+                                    width: width({
+                                        onSmallScreen: "180px",
+                                        otherwise: "250px"
                                     }),
                                 },
                                 {
                                     header: "Amount",
                                     render: transaction => <TransferAmountCell amount={ transferBalance(accounts!, transaction) } />,
                                     align: 'right',
-                                    width: responsiveWidth({
-                                        "max-width: 1350px": "100px",
-                                        default: "120px"
+                                    width: width({
+                                        onSmallScreen: "100px",
+                                        otherwise: "120px"
                                     }),
                                 },
                                 {
                                     header: "Paid fees",
                                     render: transaction => <AmountCell amount={ prefixedLogBalance(transaction.fee) } />,
                                     align: 'right',
-                                    width: responsiveWidth({
-                                        "max-width: 1350px": "80px",
-                                        default: "120px"
+                                    width: width({
+                                        onSmallScreen: "80px",
+                                        otherwise: "120px"
                                     }),
                                 },
                                 {
                                     header: "Deposit",
                                     render: transaction => <AmountCell amount={ prefixedLogBalance(transaction.reserved) } />,
                                     align: 'right',
-                                    width: responsiveWidth({
-                                        "max-width: 1350px": "80px",
-                                        default: "120px"
+                                    width: width({
+                                        onSmallScreen: "80px",
+                                        otherwise: "120px"
                                     }),
                                 }
                             ]}

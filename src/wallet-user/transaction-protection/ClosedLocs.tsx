@@ -8,11 +8,12 @@ import Button from "../../common/Button";
 import Loader from '../../common/Loader';
 import { locDetailsPath } from '../UserRouter';
 import { useNavigate } from 'react-router-dom';
-import { responsiveWidth } from '../../common/Responsive';
+import { useResponsiveContext } from '../../common/Responsive';
 
 export default function ClosedLocs() {
     const { closedLocRequests } = useCommonContext();
     const navigate = useNavigate();
+    const { width } = useResponsiveContext();
 
     if(closedLocRequests === null) {
         return <Loader />;
@@ -44,18 +45,18 @@ export default function ClosedLocs() {
                 {
                     "header": "Creation date",
                     render: requestAndLoc => <DateTimeCell dateTime={ requestAndLoc.request.createdOn || null } />,
-                    width: responsiveWidth({
-                        "max-width: 1350px": "120px",
-                        default: "200px"
+                    width: width({
+                        onSmallScreen: "120px",
+                        otherwise: "200px"
                     }),
                     align: 'center',
                 },
                 {
                     header: "Closing date",
                     render: requestAndLoc => <DateTimeCell dateTime={ requestAndLoc.request.closedOn || null } />,
-                    width: responsiveWidth({
-                        "max-width: 1350px": "120px",
-                        default: "200px"
+                    width: width({
+                        onSmallScreen: "120px",
+                        otherwise: "200px"
                     }),
                     align: 'center',
                 },
@@ -68,9 +69,9 @@ export default function ClosedLocs() {
                             </ButtonGroup>
                         </ActionCell>
                     ,
-                    width: responsiveWidth({
-                        "max-width: 1350px": "100px",
-                        default: "200px"
+                    width: width({
+                        onSmallScreen: "100px",
+                        otherwise: "200px"
                     }),
                     align: 'center',
                 },

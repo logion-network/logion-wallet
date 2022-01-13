@@ -19,7 +19,7 @@ import LocPublishLinkButton from "./LocPublishLinkButton";
 
 import './LocItems.css';
 import Icon from "../common/Icon";
-import { responsiveWidth } from "../common/Responsive";
+import { useResponsiveContext } from "../common/Responsive";
 
 export interface Props {
     matchedHash?: string;
@@ -27,8 +27,8 @@ export interface Props {
 }
 
 export default function LocItems(props: Props) {
-
     const { locId, loc, locItems, deleteMetadata, deleteLink, deleteFile } = useLocContext();
+    const { width } = useResponsiveContext();
 
     function renderDetails(locItem: LocItem): Child {
         return (
@@ -97,9 +97,9 @@ export default function LocItems(props: Props) {
                             renderDetails: locItem => renderDetails(locItem),
                             detailsExpanded: locItem => locItem.newItem,
                             align: "left",
-                            width: responsiveWidth({
-                                "max-width: 1350px": '150px',
-                                default: '250px'
+                            width: width({
+                                onSmallScreen: '150px',
+                                otherwise: '250px'
                             }),
                         },
                         {
@@ -107,9 +107,9 @@ export default function LocItems(props: Props) {
                             render: locItem => <DateTimeCell
                                 dateTime={ locItem.timestamp }
                                 spinner={ locItem.status === 'PUBLISHED' } />,
-                                width: responsiveWidth({
-                                    "max-width: 1350px": '100px',
-                                    default: '200px'
+                                width: width({
+                                    onSmallScreen: '100px',
+                                    otherwise: '200px'
                                 }),
                         },
                         {
@@ -128,9 +128,9 @@ export default function LocItems(props: Props) {
                                     />
                                 }
                             </> } />,
-                            width: responsiveWidth({
-                                "max-width: 1350px": '145px',
-                                default: '160px'
+                            width: width({
+                                onSmallScreen: '145px',
+                                otherwise: '160px'
                             }),
                             align: "left"
                         },
@@ -147,9 +147,9 @@ export default function LocItems(props: Props) {
                                     return (<StatusCell icon={{ id: 'published' }} text="Published" color={ POLKADOT } />)
                                 }
                             },
-                            width: responsiveWidth({
-                                "max-width: 1350px": '345px',
-                                default: '400px'
+                            width: width({
+                                onSmallScreen: '345px',
+                                otherwise: '400px'
                             }),
                         }
                     ] }

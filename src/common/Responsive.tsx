@@ -1,31 +1,61 @@
-export interface ResponsiveWidthParameters extends Record<string, string> {
-    default: string;
+import { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { useMediaQuery } from 'react-responsive';
+
+export interface Rules {
+    onSmallScreen: string;
+    otherwise: string;
 }
 
-export function responsiveWidth(parameters: ResponsiveWidthParameters): string {
-    for(const key in parameters) {
-        if(isActiveMaxWidthRule(key)) {
-            return parameters[key];
-        }
-    }
-    const defaultWidth = parameters["default"];
-    if(defaultWidth === undefined)  {
-        throw new Error("No matching rule found");
-    } else {
-        return defaultWidth;
-    }
+export interface ResponsiveContext {
+    width: (rule: Rules) => string;
 }
 
-function isActiveMaxWidthRule(rule: string): boolean {
-    if(rule.startsWith("max-width:")) {
-        let maxWidthString = rule.substring("max-width:".length).trim();
-        if(maxWidthString.endsWith("px")) {
-            maxWidthString = maxWidthString.substring(0, maxWidthString.length - 2).trim();
+export interface FullResponsiveContext extends ResponsiveContext {
+    isSmallScreen: boolean;
+    initialized: boolean;
+}
+
+const DEFAULT_CONTEXT_STATE: FullResponsiveContext = {
+    isSmallScreen: false,
+    width: (rules: Rules) => rules.otherwise,
+    initialized: false,
+}
+
+const ResponsiveContextObject: React.Context<ResponsiveContext> = createContext<ResponsiveContext>(DEFAULT_CONTEXT_STATE);
+
+export interface Props {
+    children: ReactNode;
+}
+
+export function ResponsiveProvider(props: Props) {
+    const isSmallScreen = useMediaQuery({ maxWidth: 1350 });
+    const [ state, setState ] = useState<FullResponsiveContext>(DEFAULT_CONTEXT_STATE);
+
+    useEffect(() => {
+        if(!state.initialized || state.isSmallScreen !== isSmallScreen) {
+            setState({
+                isSmallScreen,
+                initialized: true,
+                width: (rules) => widthFunction(isSmallScreen, rules)
+            });
         }
-        const maxWidth = Number(maxWidthString);
-        const screenWidth = window.screen.availWidth;
-        return screenWidth <= maxWidth;
+    }, [ state, isSmallScreen, setState ]);
+
+    return (
+        <ResponsiveContextObject.Provider value={ state }>
+            { props.children }
+        </ResponsiveContextObject.Provider>
+    )
+}
+
+export function useResponsiveContext() {
+    return useContext(ResponsiveContextObject)
+}
+
+function widthFunction(isSmallScreen: boolean, rules: Rules): string {
+    if(isSmallScreen) {
+        return rules.onSmallScreen;
     } else {
-        return false;
+        return rules.otherwise;
     }
 }

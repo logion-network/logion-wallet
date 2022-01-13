@@ -30,19 +30,19 @@ exports[`Renders pending requests 1`] = `
         "align": "center",
         "header": "Creation date",
         "render": [Function],
-        "width": "120px",
+        "width": "200px",
       },
       Object {
         "align": "center",
         "header": "Closing date",
         "render": [Function],
-        "width": "120px",
+        "width": "200px",
       },
       Object {
         "align": "center",
         "header": "Action",
         "render": [Function],
-        "width": "100px",
+        "width": "200px",
       },
     ]
   }

@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { locDetailsPath } from "../LegalOfficerPaths";
 import ButtonGroup from "../../common/ButtonGroup";
 import { LocType, IdentityLocType } from '../../logion-chain/Types';
-import { responsiveWidth } from '../../common/Responsive';
+import { useResponsiveContext } from '../../common/Responsive';
 
 export interface Props {
     locType: LocType;
@@ -20,6 +20,7 @@ export interface Props {
 export default function ClosedLocs(props: Props) {
     const { closedLocRequests, closedIdentityLocsByType } = useCommonContext();
     const navigate = useNavigate();
+    const { width } = useResponsiveContext();
 
     if (closedLocRequests === null || closedIdentityLocsByType === null) {
         return null;
@@ -43,9 +44,9 @@ export default function ClosedLocs(props: Props) {
                 {
                     header: "Status",
                     render: request => <LocStatusCell status={ request.status }/>,
-                    width: responsiveWidth({
-                        "max-width: 1350px": '120px',
-                        default: '140px'
+                    width: width({
+                        onSmallScreen: '120px',
+                        otherwise: '140px'
                     }),
                 },
                 {
@@ -56,18 +57,18 @@ export default function ClosedLocs(props: Props) {
                 {
                     header: "Creation date",
                     render: request => <DateTimeCell dateTime={ request.createdOn || null } />,
-                    width: responsiveWidth({
-                        "max-width: 1350px": '100px',
-                        default: '200px'
+                    width: width({
+                        onSmallScreen: '100px',
+                        otherwise: '200px'
                     }),
                     align: 'center',
                 },
                 {
                     header: "Closing date",
                     render: request => <DateTimeCell dateTime={ request.closedOn || null } />,
-                    width: responsiveWidth({
-                        "max-width: 1350px": '100px',
-                        default: '200px'
+                    width: width({
+                        onSmallScreen: '100px',
+                        otherwise: '200px'
                     }),
                     align: 'center',
                 },
@@ -80,9 +81,9 @@ export default function ClosedLocs(props: Props) {
                             </ButtonGroup>
                         </ActionCell>
                     ,
-                    width: responsiveWidth({
-                        "max-width: 1350px": '150px',
-                        default: '200px'
+                    width: width({
+                        onSmallScreen: '150px',
+                        otherwise: '200px'
                     }),
                     align: 'center',
                 }
