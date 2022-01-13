@@ -9,7 +9,7 @@
 
 .LandingPage header .call {
     text-align: center;
-    padding-top: 70px;
+    padding-top: 100px;
     padding-bottom: 70px;
 }
 
@@ -23,10 +23,6 @@
     display: block;
     font-family: "Montserrat", sans-serif;
     font-size: 38px;
-}
-
-.LandingPage .step {
-    margin-right: 25px;
 }
 
 .LandingPage .step:last-child {
@@ -230,6 +226,12 @@
     top: 0;
     left: 0;
     background-image: url("../img/recovery-waves.svg");
+    z-index: 0;
+}
+
+.LandingPage .recovery-container > .container {
+    position: relative;
+    z-index: 1;
 }
 
 .LandingPage .recovery-container .lost-password-container {
@@ -251,7 +253,7 @@
 .LandingPage .recovery-container .recovered-password {
     position: absolute;
     display: block;
-    top: -70px;
+    top: -87px;
     right: 0;
 }
 
