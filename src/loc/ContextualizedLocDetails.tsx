@@ -10,7 +10,6 @@ import { useLocContext } from "./LocContext";
 import LocItems from "./LocItems";
 import LocItemDetail from "./LocItemDetail";
 import { Row } from "../common/Grid";
-import TwoSideButtonGroup from "../common/TwoSideButtonGroup";
 import { POLKADOT, RED, BackgroundAndForegroundColors, BLUE } from "../common/ColorTheme";
 import CloseLocButton from "./CloseLocButton";
 import LocPrivateFileButton from "./LocPrivateFileButton";
@@ -124,7 +123,7 @@ export default function ContextualizedLocDetails(props: Props) {
         >
             {
                 isLogionIdentityLoc(loc) &&
-                <Row>
+                <Row className="logion-loc-tip-container">
                     <IconTextRow
                         icon={ <Icon icon={ { id: "tip" } } width="45px" /> }
                         text={
@@ -220,18 +219,18 @@ export default function ContextualizedLocDetails(props: Props) {
                             <LocItems matchedHash={ checkResult.hash } viewer={ props.viewer } />
                             {
                                 !loc.closed && loc.voidInfo === undefined &&
-                                <TwoSideButtonGroup
-                                    left={
-                                        <>
-                                            <LocPublicDataButton />
-                                            <LocPrivateFileButton />
-                                            { props.viewer === 'LegalOfficer' && <LocLinkButton excludeNewIdentity={ isLogionTransactionLoc(loc) } /> }
-                                        </>
-                                    }
-                                    right={
-                                        props.viewer === 'LegalOfficer' && <CloseLocButton />
-                                    }
-                                />
+                                <Row>
+                                    <Col className="add-buttons-container" xxl={5} xl={4}>
+                                        <LocPublicDataButton />
+                                        <LocPrivateFileButton />
+                                    </Col>
+                                    <Col className="link-button-container" xxl={4} xl={4}>
+                                        { props.viewer === 'LegalOfficer' && <LocLinkButton excludeNewIdentity={ isLogionTransactionLoc(loc) } /> }
+                                    </Col>
+                                    <Col className="close-button-container" xxl={3} xl={4}>
+                                        { props.viewer === 'LegalOfficer' && <CloseLocButton /> }
+                                    </Col>
+                                </Row>
                             }
                         </>
                     }

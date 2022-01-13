@@ -22,6 +22,11 @@
     text-align: left;
 }
 
+.Transactions .from-to-header .from,
+.Transactions .from-to-header .to {
+    width: calc(50% - 31px);
+}
+
 .Transactions .from-to-header .separator {
     display: inline-block;
     width: 62px;

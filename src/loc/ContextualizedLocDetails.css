@@ -1,9 +1,5 @@
-.ContextualizedLocDetails .logion-loc-tip {
+.ContextualizedLocDetails .logion-loc-tip-container {
     margin-bottom: 30px;
-}
-
-.ContextualizedLocDetails .TwoSideButtonGroup {
-    margin-top: 40px;
 }
 
 .ContextualizedLocDetails .closed-icon-container {
@@ -68,29 +64,39 @@
 }
 
 .ContextualizedLocDetails .upper-action-bar {
-    margin: 20px;
+    margin-left: 20px;
     width: 450px;
     align-items: center;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
 }
 
 .ContextualizedLocDetails .upper-action-bar .create-logion-transaction-loc-button {
     height: 42px;
 }
 
+.ContextualizedLocDetails .add-buttons-container .btn:nth-child(n+2) {
+    margin-left: 20px;
+}
+
+.ContextualizedLocDetails .link-button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.ContextualizedLocDetails .close-button-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
 @media (max-width: 1360px) {
-    .ContextualizedLocDetails .TwoSideButtonGroup {
-        height: auto;
-    }
 
-    .ContextualizedLocDetails .TwoSideButtonGroup .left {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .ContextualizedLocDetails .TwoSideButtonGroup .left > * {
+    .ContextualizedLocDetails .add-buttons-container .btn:nth-child(n+2) {
         margin-left: 0;
-        margin-top: 20px;
+        margin-top: 10px;
+    }
+
+    .ContextualizedLocDetails .link-button-container {
+        justify-content: flex-end;
     }
 }
