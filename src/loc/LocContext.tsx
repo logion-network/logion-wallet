@@ -385,14 +385,14 @@ export function LocContextProvider(props: Props) {
                 return addMetadata({
                     locId: contextValue.locId,
                     api: api!,
-                    signerId: item.submitter,
+                    signerId: contextValue.loc!.owner,
                     item: { name: item.name, value: item.value, submitter: item.submitter },
                     callback,
                     errorCallback: setError
                 })
             };
             return signAndSubmit;
-        }, [ api, contextValue.locId ]
+        }, [ api, contextValue.locId, contextValue.loc ]
     )
 
     const addLocItemFunction = useCallback((locItemCreator: () => LocItem) => {
@@ -409,16 +409,16 @@ export function LocContextProvider(props: Props) {
             return addFile({
                 locId: contextValue.locId,
                 api: api!,
-                signerId: item.submitter,
-                    hash: item.value,
-                    nature: item.nature || "",
-                    submitter: item.submitter,
-                    callback,
-                    errorCallback: setError
-                })
-            };
+                signerId: contextValue.loc!.owner,
+                hash: item.value,
+                nature: item.nature || "",
+                submitter: item.submitter,
+                callback,
+                errorCallback: setError
+            })
+        };
             return signAndSubmit;
-        }, [ api, contextValue.locId ]
+        }, [ api, contextValue.locId, contextValue.loc ]
     )
 
     const publishLinkFunction = useCallback((item: LocItem) => {
@@ -429,7 +429,7 @@ export function LocContextProvider(props: Props) {
             return addLink({
                 locId: contextValue.locId,
                 api: api!,
-                signerId: item.submitter,
+                signerId: contextValue.loc!.owner,
                 target: item.target!,
                 nature: item.nature || "",
                 callback,
@@ -437,7 +437,7 @@ export function LocContextProvider(props: Props) {
             })
         };
         return signAndSubmit;
-    }, [ api, contextValue.locId ])
+    }, [ api, contextValue.locId, contextValue.loc ])
 
     const closeExtrinsicFunction = useCallback(() => {
             const signAndSubmit: SignAndSubmit = (setResult, setError) => {
