@@ -18,6 +18,7 @@ import { Transaction } from './types/ModelTypes';
 
 import './Wallet.css';
 import NetworkWarning from './NetworkWarning';
+import { useResponsiveContext } from './Responsive';
 
 export interface Props {
     transactionsPath: (coinId: string) => string,
@@ -46,6 +47,7 @@ export default function Wallet(props: Props) {
 export function Content(props: Props) {
     const { balances, transactions, nodesDown } = useCommonContext();
     const navigate = useNavigate();
+    const { width } = useResponsiveContext();
 
     if(balances === null || transactions === null) {
         return <Loader />;
@@ -80,13 +82,19 @@ export function Content(props: Props) {
                             {
                                 header: "Asset name",
                                 render: balance => <AssetNameCell balance={ balance } />,
-                                width: "200px",
+                                width: width({
+                                    onSmallScreen: "180px",
+                                    otherwise: "200px"
+                                }),
                                 align: 'left',
                             },
                             {
                                 header: "Balance",
                                 render: balance => <Cell content={ balance.balance.coefficient.toFixedPrecision(2) } />,
-                                width: "140px",
+                                width: width({
+                                    onSmallScreen: "120px",
+                                    otherwise: "140px"
+                                }),
                                 align: 'right',
                             },
                             {
@@ -105,7 +113,10 @@ export function Content(props: Props) {
                             {
                                 header: "",
                                 render: balance => balance.coin.id !== 'dot' ? <ActionCell><Button onClick={() => navigate(props.transactionsPath(balance.coin.id))}>More</Button></ActionCell> : <NotAvailable/>,
-                                width: "201px",
+                                width: width({
+                                    onSmallScreen: "184px",
+                                    otherwise: "201px"
+                                }),
                             }
                         ]}
                         data={ balances }
