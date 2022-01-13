@@ -38,6 +38,7 @@ exports[`renders create 1`] = `
     <Row>
       <Col
         className="step one"
+        xl={4}
       >
         <div
           className="step-container"
@@ -87,12 +88,15 @@ exports[`renders create 1`] = `
             show={false}
             size="xl"
           >
-            <InstallExtension />
+            <Tutorial
+              skipInstall={false}
+            />
           </Dialog>
         </div>
       </Col>
       <Col
         className="step two active"
+        xl={4}
       >
         <div
           className="step-container"
@@ -162,12 +166,15 @@ exports[`renders create 1`] = `
             show={false}
             size="xl"
           >
-            <CreateWallet />
+            <Tutorial
+              skipInstall={true}
+            />
           </Dialog>
         </div>
       </Col>
       <Col
         className="step three"
+        xl={4}
       >
         <div
           className="step-container"
@@ -569,6 +576,7 @@ exports[`renders install 1`] = `
     <Row>
       <Col
         className="step one active"
+        xl={4}
       >
         <div
           className="step-container"
@@ -638,12 +646,15 @@ exports[`renders install 1`] = `
             show={false}
             size="xl"
           >
-            <InstallExtension />
+            <Tutorial
+              skipInstall={false}
+            />
           </Dialog>
         </div>
       </Col>
       <Col
         className="step two"
+        xl={4}
       >
         <div
           className="step-container"
@@ -693,12 +704,15 @@ exports[`renders install 1`] = `
             show={false}
             size="xl"
           >
-            <CreateWallet />
+            <Tutorial
+              skipInstall={true}
+            />
           </Dialog>
         </div>
       </Col>
       <Col
         className="step three"
+        xl={4}
       >
         <div
           className="step-container"

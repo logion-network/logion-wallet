@@ -10,8 +10,7 @@ import Icon from '../common/Icon';
 import AbsoluteLogo from '../AbsoluteLogo';
 
 import './LandingPage.css';
-import { CreateWallet } from './CreateWallet';
-import { InstallExtension } from './InstallExtension';
+import { Tutorial } from './Tutorial';
 
 export interface Props {
     activeStep: Step,
@@ -48,7 +47,7 @@ export default function LandingPage(props: Props) {
             </Container>
             <Container>
                 <Row>
-                    <Col className={ "step one" + (props.activeStep === 'install' ? " active" : "") }>
+                    <Col className={ "step one" + (props.activeStep === 'install' ? " active" : "") } xl={4}>
                         <div className="step-container">
                             <div className="step-header">
                                 <div className="number">01.</div>
@@ -80,11 +79,11 @@ export default function LandingPage(props: Props) {
                                 size="xl"
                                 onHide={ () => setShowDialog(null) }
                             >
-                                <InstallExtension/>
+                                <Tutorial skipInstall={ false }/>
                             </Dialog>
                         </div>
                     </Col>
-                    <Col className={ "step two" + (props.activeStep === 'create' ? " active" : "") }>
+                    <Col className={ "step two" + (props.activeStep === 'create' ? " active" : "") } xl={4}>
                         <div className="step-container">
                             <div className="step-header">
                                 <div className="number">02.</div>
@@ -116,11 +115,11 @@ export default function LandingPage(props: Props) {
                                 size="xl"
                                 onHide={ () => setShowDialog(null) }
                             >
-                                <CreateWallet/>
+                                <Tutorial skipInstall={ true } />
                             </Dialog>
                         </div>
                     </Col>
-                    <Col className="step three">
+                    <Col className="step three" xl={4}>
                         <div className="step-container">
                             <div className="step-header">
                                 <div className="number">03.</div>

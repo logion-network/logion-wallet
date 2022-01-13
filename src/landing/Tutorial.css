@@ -1,0 +1,20 @@
+.Tutorial {
+    text-align: left;
+}
+
+.Tutorial h1, .Tutorial h2, .Tutorial h3 {
+    text-align: center;
+}
+
+.Tutorial p,
+.Tutorial ul {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.Tutorial img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 40px;
+}

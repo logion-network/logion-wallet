@@ -1,10 +1,25 @@
 import { recommendedExtension } from "../logion-chain/Keys";
 
-export function InstallExtension() {
+import './Tutorial.css';
+
+export interface Props {
+    skipInstall: boolean;
+}
+
+export function Tutorial(props: Props) {
     const extension = recommendedExtension();
+
+    const sectionLetter = (letterIfSkipInstall: string, letterOtherwise: string): string => {
+        if(props.skipInstall) {
+            return letterIfSkipInstall;
+        } else {
+            return letterOtherwise;
+        }
+    }
+
     if(extension !== null) {
         return (
-            <>
+            <div className="Tutorial">
                 <h1>logion authentification system installation tutorial</h1>
 
                 <p>To access logion legal protection services, you just have to create a Polkadot account.</p>
@@ -15,35 +30,40 @@ export function InstallExtension() {
 
                 <p>Each step is followed by a small animation that visually shows what you have to do, going through each related bullet point.</p>
 
-                <h2>A - Find the polkadot.js extension in your browser Appstore</h2>
+                {
+                    !props.skipInstall &&
+                    <>
+                        <h2>A - Find the polkadot.js extension in your browser Appstore</h2>
 
-                <p>Go to the official polkadot.org extension website and select the right extension considering the browser you want to use while accessing the logion platform:<br/>
-                <a href="https://polkadot.js.org/extension/" target="_blank" rel="noreferrer">https://polkadot.js.org/extension/</a></p>
+                        <p>Go to the official polkadot.org extension website and select the right extension considering the browser you want to use while accessing the logion platform:<br/>
+                        <a href="https://polkadot.js.org/extension/" target="_blank" rel="noreferrer">https://polkadot.js.org/extension/</a></p>
 
-                <img src={`${process.env.PUBLIC_URL}/assets/landing/extension-selection.png`} style={{maxWidth: "100%"}} alt="polkadot extension page"/>
+                        <img src={`${process.env.PUBLIC_URL}/assets/landing/extension-selection.png`} style={{maxWidth: "100%"}} alt="polkadot extension page"/>
 
-                <h2>B - Polkadot extension installation</h2>
+                        <h2>B - Polkadot extension installation</h2>
 
-                <p>Install the polkadot.js extension to your browser by clicking on the related button (here for firefox but it’s exactly similar on Chrome):</p>
+                        <p>Install the polkadot.js extension to your browser by clicking on the related button (here for firefox but it’s exactly similar on Chrome):</p>
 
-                <ul>
-                    <li>Click on “Add to Firefox”</li>
-                    <li>Click on “Add”</li>
-                    <li>Click on “Okay”</li>
-                </ul>
+                        <ul>
+                            <li>Click on “Add to Firefox”</li>
+                            <li>Click on “Add”</li>
+                            <li>Click on “Okay”</li>
+                        </ul>
 
-                <p>Finally:</p>
+                        <p>Finally:</p>
 
-                <ul>
-                    <li>Click on the Polkadot extension orange logo</li>
-                    <li>Click on the “Understood, let me continue” orange button</li>
-                </ul>
+                        <ul>
+                            <li>Click on the Polkadot extension orange logo</li>
+                            <li>Click on the “Understood, let me continue” orange button</li>
+                        </ul>
 
-                <p>You are ready to create your first Polkadot account.</p>
+                        <p>You are ready to create your first Polkadot account.</p>
 
-                <img src={`${process.env.PUBLIC_URL}/assets/landing/logion-step0.gif`} style={{maxWidth: "100%"}} alt="step 0 animation"/>
+                        <img src={`${process.env.PUBLIC_URL}/assets/landing/logion-step0.gif`} style={{maxWidth: "100%"}} alt="step 0 animation"/>
+                    </>   
+                }
 
-                <h2>C - Polkadot account creation</h2>
+                <h2>{ sectionLetter("A", "C") } - Polkadot account creation</h2>
 
                 <p>To create a Polkadot account, please :</p>
 
@@ -75,7 +95,7 @@ export function InstallExtension() {
 
                 <img src={`${process.env.PUBLIC_URL}/assets/landing/logion-step2.gif`} style={{maxWidth: "100%"}} alt="step 2 animation"/>
 
-                <h2>D - logion application first access</h2>
+                <h2>{ sectionLetter("B", "D") } - logion application first access</h2>
 
                 <p>Your account is now created, you are ready to use logion:</p>
 
@@ -92,7 +112,7 @@ export function InstallExtension() {
                 <p>We strongly recommend setting your legal protection as advised by the related message.</p>
 
                 <img src={`${process.env.PUBLIC_URL}/assets/landing/logion-step3.gif`} style={{maxWidth: "100%"}} alt="step 3 animation"/>
-            </>
+            </div>
         );
     } else {
         return (
