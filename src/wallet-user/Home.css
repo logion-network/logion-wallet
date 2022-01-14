@@ -37,11 +37,13 @@
 }
 
 @media (max-width: 1350px) {
-    .UserHome .reading-container .Reading {
-        margin-top: 0;
-    }
-
     .UserHome .character-container img {
         width: 150px;
+    }
+}
+
+@media (max-width: 1558px) {
+    .UserHome .reading-container .Reading {
+        margin-top: 0;
     }
 }
