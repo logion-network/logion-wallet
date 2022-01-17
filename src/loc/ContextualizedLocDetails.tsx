@@ -17,7 +17,7 @@ import "./ContextualizedLocDetails.css";
 import Icon from "../common/Icon";
 import LocLinkButton from "./LocLinkButton";
 import { fullCertificateUrl } from "../PublicPaths";
-import CheckFileFrame, { CheckResult } from './CheckFileFrame';
+import CheckFileFrame, { DocumentCheckResult } from './CheckFileFrame';
 import DangerFrame from "../common/DangerFrame";
 import ButtonGroup from "../common/ButtonGroup";
 import VoidLocButton from "./VoidLocButton";
@@ -34,11 +34,6 @@ import { UUID } from "../logion-chain/UUID";
 import Ellipsis from "../common/Ellipsis";
 import { Viewer } from "./types";
 import Tooltip from 'react-bootstrap/Tooltip';
-
-interface DocumentCheckResult {
-    result: CheckResult;
-    hash?: string;
-}
 
 export interface Props {
     viewer: Viewer;

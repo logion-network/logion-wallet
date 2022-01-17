@@ -22,6 +22,11 @@ export interface Props {
     checkResult: CheckResult;
 }
 
+export interface DocumentCheckResult {
+    result: CheckResult;
+    hash?: string;
+}
+
 export default function CheckFileFrame(props: Props) {
     const { checkHash } = props;
     const [ file, setFile ] = useState<File | null>(null);
