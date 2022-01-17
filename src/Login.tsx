@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Location } from 'react-router-dom';
 
 import Container from 'react-bootstrap/Container';
 
@@ -19,21 +19,34 @@ export interface LocationState {
     selectedAddresses?: string[];
 }
 
+function getSelectedAddresses(location: Location): string[] {
+    const state = location.state as any;
+    if(state && state.selectedAddresses) {
+        return state.selectedAddresses;
+    } else {
+        return [];
+    }
+}
+
+function referrer(location: Location): string {
+    const state = location.state as any;
+    if(state && state.referrer) {
+        return state.referrer;
+    } else {
+        return "/";
+    }
+}
+
 export default function Login() {
     const location = useLocation();
     const navigate = useNavigate();
     const { connectedNodeMetadata } = useLogionChain();
     const { accounts, axiosFactory, authenticate } = useCommonContext();
-    const [ selectedAddresses, setSelectedAddresses ] = useState<string[]>(location.state && location.state.selectedAddresses ? location.state.selectedAddresses : []);
+    const [ selectedAddresses, setSelectedAddresses ] = useState<string[]>(getSelectedAddresses(location));
 
     const startLogin = useCallback(async () => {
         await authenticate(selectedAddresses);
-
-        if(location.state && location.state.referrer) {
-            navigate(location.state.referrer);
-        } else {
-            navigate("/");
-        }
+        navigate(referrer(location));
     }, [ selectedAddresses, navigate, location, authenticate ]);
 
     if(accounts === null || connectedNodeMetadata === null || axiosFactory === undefined) {
