@@ -291,10 +291,11 @@ export default function Certificate() {
                     <VoidMessage left={ false } locRequest={ publicLoc } voidInfo={ loc.voidInfo! } />
                 </DangerDialog>
             </Container>
-            <Container>
+            <Container className="CertificateCheck">
                 <CheckFileFrame
                     checkHash={ checkHash }
                     checkResult={ checkResult.result }
+                    colorTheme={ LIGHT_MODE }
                 />
             </Container>
         </>
