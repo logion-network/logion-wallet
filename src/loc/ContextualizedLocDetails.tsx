@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import { useCommonContext } from "../common/CommonContext";
 import { FullWidthPane } from "../common/Dashboard";
 import Tabs from "../common/Tabs";
-import { Col } from "react-bootstrap";
+import { Col, OverlayTrigger } from "react-bootstrap";
 import { format } from "../logion-chain/datetime";
 import LocPublicDataButton from "./LocPublicDataButton";
 import { useLocContext } from "./LocContext";
@@ -33,6 +33,7 @@ import { isLogionIdentityLoc, isLogionTransactionLoc } from "../logion-chain/Typ
 import { UUID } from "../logion-chain/UUID";
 import Ellipsis from "../common/Ellipsis";
 import { Viewer } from "./types";
+import Tooltip from 'react-bootstrap/Tooltip';
 
 interface DocumentCheckResult {
     result: CheckResult;
@@ -167,7 +168,13 @@ export default function ContextualizedLocDetails(props: Props) {
                             <Row>
                                 <Col md={ 4 }>
                                     <LocItemDetail label="LOC ID" copyButtonText={ locId.toDecimalString() } >
-                                        { locId.toDecimalString() }
+                                        <OverlayTrigger
+                                            placement="top"
+                                            delay={ 500 }
+                                            overlay={
+                                                <Tooltip id={ locId.toDecimalString() }>{ locId.toDecimalString() }</Tooltip> }>
+                                            <span>{ locId.toDecimalString() }</span>
+                                        </OverlayTrigger>
                                     </LocItemDetail>
                                     <LocItemDetail label="Creation date">{ date } / { time }</LocItemDetail>
                                 </Col>
@@ -186,7 +193,15 @@ export default function ContextualizedLocDetails(props: Props) {
                                         { locRequest.userIdentity?.firstName || "" } { locRequest.userIdentity?.lastName || "" }
                                         {
                                             locRequest.requesterAddress !== null && locRequest.requesterAddress !== undefined &&
-                                            <span><br /> { locRequest.requesterAddress }</span>
+                                            <>
+                                                <OverlayTrigger
+                                                    placement="top"
+                                                    delay={ 500 }
+                                                    overlay={
+                                                        <Tooltip id={ locRequest.requesterAddress }>{ locRequest.requesterAddress }</Tooltip> }>
+                                                    <span><br /> { locRequest.requesterAddress }</span>
+                                                </OverlayTrigger>
+                                            </>
                                         }
                                         {
                                             locRequest.requesterIdentityLoc !== null && locRequest.requesterIdentityLoc !== undefined &&

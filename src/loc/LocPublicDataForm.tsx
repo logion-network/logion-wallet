@@ -19,10 +19,11 @@ export default function LocPublicDataForm(props: Props) {
     return (
         <>
             <h3>Add a public data</h3>
-            <p>Important: after publication, these data will be publicly available on the blockchain.</p>
+            <p>IMPORTANT: DO NOT SUBMIT CONFIDENTIAL OR PERSONAL INFORMATION (such as name, email, phone number, social
+                security number, etc.) AS IT WILL IRREVOCABLY and PUBLICLY PUBLISHED ON THE LOGION BLOCKCHAIN.</p>
             <FormGroup
                 id="locDataName"
-                label="Data Name"
+                label="Data Name (No confidential or personal information)"
                 control={
                     <Controller
                         name="dataName"
@@ -53,7 +54,7 @@ export default function LocPublicDataForm(props: Props) {
                 colors={ props.colors } />
             <FormGroup
                 id="locDataValue"
-                label="Data"
+                label="Data (No confidential or personal information)"
                 control={
                     <Controller
                         name="dataValue"
