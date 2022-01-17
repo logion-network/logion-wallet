@@ -2,8 +2,9 @@
 /* eslint-disable */
 
 import type { LocId, PeerId } from '../interfaces/default';
-import type { ApiTypes, AugmentedEvent, ModuleEvents } from '@polkadot/api/types';
-import type { Bytes, Vec, u16, u32, u8 } from '@polkadot/types';
+import type { ApiTypes } from '@polkadot/api-base/types';
+import type { Bytes, Vec, u16, u32, u8 } from '@polkadot/types-codec';
+import type { ITuple } from '@polkadot/types-codec/types';
 import type { TAssetBalance } from '@polkadot/types/interfaces/assets';
 import type { BalanceStatus } from '@polkadot/types/interfaces/balances';
 import type { AuthorityList } from '@polkadot/types/interfaces/grandpa';
@@ -12,10 +13,8 @@ import type { AccountId, AssetId, Balance, CallHash, Hash } from '@polkadot/type
 import type { SessionIndex } from '@polkadot/types/interfaces/session';
 import type { DispatchError, DispatchInfo, DispatchResult } from '@polkadot/types/interfaces/system';
 import type { Timepoint } from '@polkadot/types/interfaces/utility';
-import type { ITuple } from '@polkadot/types/types';
 
-declare module '@polkadot/api/types/events' {
-
+declare module '@polkadot/api-base/types/events' {
   export interface AugmentedEvents<ApiType extends ApiTypes> {
     assets: {
       /**
@@ -363,9 +362,4 @@ declare module '@polkadot/api/types/events' {
       [key: string]: AugmentedEvent<ApiType>;
     };
   } // AugmentedEvents
-
-  export interface DecoratedEvents<ApiType extends ApiTypes> extends AugmentedEvents<ApiType> {
-    [key: string]: ModuleEvents<ApiType>;
-  } // DecoratedEvents
-
 } // declare module

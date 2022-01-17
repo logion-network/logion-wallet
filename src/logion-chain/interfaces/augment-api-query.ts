@@ -2,8 +2,9 @@
 /* eslint-disable */
 
 import type { LegalOfficerCaseOf, LocId, PeerId, StorageVersion } from '../interfaces/default';
-import type { ApiTypes, AugmentedQuery, QueryableModuleStorage, QueryableStorageEntry } from '@polkadot/api/types';
-import type { BTreeSet, Bytes, Option, U8aFixed, Vec, bool, u32 } from '@polkadot/types';
+import type { ApiTypes } from '@polkadot/api-base/types';
+import type { BTreeSet, Bytes, Option, U8aFixed, Vec, bool, u32 } from '@polkadot/types-codec';
+import type { AnyNumber, ITuple } from '@polkadot/types-codec/types';
 import type { AssetBalance, AssetDetails, AssetMetadata } from '@polkadot/types/interfaces/assets';
 import type { AccountData, BalanceLock } from '@polkadot/types/interfaces/balances';
 import type { SetId, StoredPendingChange, StoredState } from '@polkadot/types/interfaces/grandpa';
@@ -14,10 +15,9 @@ import type { Keys, SessionIndex } from '@polkadot/types/interfaces/session';
 import type { AccountInfo, ConsumedWeight, DigestOf, EventIndex, EventRecord, LastRuntimeUpgradeInfo, Phase } from '@polkadot/types/interfaces/system';
 import type { Multiplier } from '@polkadot/types/interfaces/txpayment';
 import type { Multisig } from '@polkadot/types/interfaces/utility';
-import type { AnyNumber, ITuple, Observable } from '@polkadot/types/types';
+import type { Observable } from '@polkadot/types/types';
 
-declare module '@polkadot/api/types/storage' {
-
+declare module '@polkadot/api-base/types/storage' {
   export interface AugmentedQueries<ApiType extends ApiTypes> {
     assets: {
       /**
@@ -368,9 +368,4 @@ declare module '@polkadot/api/types/storage' {
       [key: string]: QueryableStorageEntry<ApiType>;
     };
   } // AugmentedQueries
-
-  export interface QueryableStorage<ApiType extends ApiTypes> extends AugmentedQueries<ApiType> {
-    [key: string]: QueryableModuleStorage<ApiType>;
-  } // QueryableStorage
-
 } // declare module

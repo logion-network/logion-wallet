@@ -1,10 +1,9 @@
 // Auto-generated via `yarn polkadot-types-from-chain`, do not edit
 /* eslint-disable */
 
-import type { ApiTypes, AugmentedError, ModuleErrors } from '@polkadot/api/types';
+import type { ApiTypes } from '@polkadot/api-base/types';
 
-declare module '@polkadot/api/types/errors' {
-
+declare module '@polkadot/api-base/types/errors' {
   export interface AugmentedErrors<ApiType extends ApiTypes> {
     assets: {
       /**
@@ -178,6 +177,10 @@ declare module '@polkadot/api/types/errors' {
        **/
       CannotMutateVoid: AugmentedError<ApiType>;
       /**
+       * Submitter must be either LOC owner, either LOC requester (only when requester is a Polkadot account)
+       **/
+      InvalidSubmitter: AugmentedError<ApiType>;
+      /**
        * Occurs when trying to link to a non-existent LOC
        **/
       LinkedLocNotFound: AugmentedError<ApiType>;
@@ -197,6 +200,10 @@ declare module '@polkadot/api/types/errors' {
        * Occurs when trying to replace void LOC with a non-existent LOC
        **/
       ReplacerLocNotFound: AugmentedError<ApiType>;
+      /**
+       * Occurs when trying to void a LOC by replacing it with a LOC of a different type
+       **/
+      ReplacerLocWrongType: AugmentedError<ApiType>;
       /**
        * Unauthorized LOC operation
        **/
@@ -510,9 +517,4 @@ declare module '@polkadot/api/types/errors' {
       [key: string]: AugmentedError<ApiType>;
     };
   } // AugmentedErrors
-
-  export interface DecoratedErrors<ApiType extends ApiTypes> extends AugmentedErrors<ApiType> {
-    [key: string]: ModuleErrors<ApiType>;
-  } // DecoratedErrors
-
 } // declare module
