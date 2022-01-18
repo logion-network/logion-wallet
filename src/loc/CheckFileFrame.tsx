@@ -61,11 +61,17 @@ export default function CheckFileFrame(props: Props) {
                 text={
                     <>
                         <p className="text-title">Document conformity check tool</p>
-                        <p>Upload a document to check its conformity with a confidential document referenced in this LOC. This tool will generate the “hash” - a digital fingerprint - of the submitted document, compare it with all document “hashes” referenced in the LOC above, and will highlight in it the line - if existing - where the related document has been identified. Otherwise, it will mean that the submitted file version is not part of this current transaction LOC.</p>
+                        <p>Check a document to verify its conformity with a confidential document referenced in this
+                            LOC. This tool will generate the “hash” - a digital fingerprint - of the submitted document,
+                            compare it with all document “hashes” referenced in the LOC above, and will highlight
+                            (dotted square) above - if existing - the identified document. Otherwise, it will mean that
+                            the submitted file version is not part of this current transaction LOC.</p>
+                        <p>Important: the document you submit is NOT uploaded to a server as the test is done by your
+                            browser.</p>
                         <FileSelectorButton
                             onFileSelected={ setFile }
                             disabled={ hashing }
-                            buttonText="Upload a document"
+                            buttonText="Check a document"
                             onlyButton={ true }
                         />
                         {
