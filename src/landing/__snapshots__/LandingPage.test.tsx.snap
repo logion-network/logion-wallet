@@ -89,7 +89,7 @@ exports[`renders create 1`] = `
             size="xl"
           >
             <Tutorial
-              skipInstall={false}
+              type="install"
             />
           </Dialog>
         </div>
@@ -167,7 +167,7 @@ exports[`renders create 1`] = `
             size="xl"
           >
             <Tutorial
-              skipInstall={true}
+              type="create"
             />
           </Dialog>
         </div>
@@ -309,14 +309,9 @@ exports[`renders create 1`] = `
               show={false}
               size="lg"
             >
-              <ol>
-                <li>
-                  Follow the steps at the top of the page (install the extension, then create a new account)
-                </li>
-                <li>
-                  Once you access your dashboard, start a recovery with your new account
-                </li>
-              </ol>
+              <Tutorial
+                type="recover"
+              />
             </Dialog>
           </div>
         </Col>
@@ -647,7 +642,7 @@ exports[`renders install 1`] = `
             size="xl"
           >
             <Tutorial
-              skipInstall={false}
+              type="install"
             />
           </Dialog>
         </div>
@@ -705,7 +700,7 @@ exports[`renders install 1`] = `
             size="xl"
           >
             <Tutorial
-              skipInstall={true}
+              type="create"
             />
           </Dialog>
         </div>
@@ -847,14 +842,9 @@ exports[`renders install 1`] = `
               show={false}
               size="lg"
             >
-              <ol>
-                <li>
-                  Follow the steps at the top of the page (install the extension, then create a new account)
-                </li>
-                <li>
-                  Once you access your dashboard, start a recovery with your new account
-                </li>
-              </ol>
+              <Tutorial
+                type="recover"
+              />
             </Dialog>
           </div>
         </Col>
