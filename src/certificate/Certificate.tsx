@@ -150,7 +150,7 @@ export default function Certificate() {
     }
 
     return (
-        <>
+        <div className="CertificateBox">
             {
                 nodeDown &&
                 <Container>
@@ -298,7 +298,7 @@ export default function Certificate() {
                     colorTheme={ LIGHT_MODE }
                 />
             </Container>
-        </>
+        </div>
     )
 }
 

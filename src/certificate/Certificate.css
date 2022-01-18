@@ -1,7 +1,7 @@
 .Certificate.container {
     position: relative;
     margin-top: 50px;
-    margin-bottom: 70px;
+    margin-bottom: 40px;
     padding: 70px;
     font-size: 1rem;
     border: 20px solid #3b6cf4;
@@ -260,6 +260,6 @@
     font-weight: bold;
 }
 
-.CertificateCheck {
-    margin-bottom: 70px;
+.CertificateBox {
+    padding-bottom: 200px;
 }
