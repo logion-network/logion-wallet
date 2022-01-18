@@ -260,6 +260,15 @@
     font-weight: bold;
 }
 
+.CertificateCheck .CheckFileFrame .IconTextRow .text {
+    margin-left: 23px;
+}
+
+.CertificateCheck.container {
+    padding-left: 0;
+    padding-right: 0;
+}
+
 .CertificateBox {
     padding-bottom: 200px;
 }
