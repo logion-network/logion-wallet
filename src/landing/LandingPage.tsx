@@ -79,7 +79,7 @@ export default function LandingPage(props: Props) {
                                 size="xl"
                                 onHide={ () => setShowDialog(null) }
                             >
-                                <Tutorial skipInstall={ false }/>
+                                <Tutorial type='install' />
                             </Dialog>
                         </div>
                     </Col>
@@ -115,7 +115,7 @@ export default function LandingPage(props: Props) {
                                 size="xl"
                                 onHide={ () => setShowDialog(null) }
                             >
-                                <Tutorial skipInstall={ true } />
+                                <Tutorial type='create' />
                             </Dialog>
                         </div>
                     </Col>
@@ -176,11 +176,7 @@ export default function LandingPage(props: Props) {
                                     show={ showDialog === 'recover' }
                                     size="lg"
                                 >
-                                    <ol>
-                                        <li>Follow the steps at the top
-                                        of the page (install the extension, then create a new account)</li>
-                                        <li>Once you access your dashboard, start a recovery with your new account</li>
-                                    </ol>
+                                    <Tutorial type='recover' />
                                 </Dialog>
                             </div>
                         </Col>
