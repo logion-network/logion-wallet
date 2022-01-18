@@ -2,6 +2,7 @@ import { Children } from './types/Helpers';
 import { useCommonContext } from './CommonContext';
 
 import './Frame.css';
+import { ColorTheme } from "./ColorTheme";
 
 export interface Props {
     children: Children,
@@ -11,10 +12,17 @@ export interface Props {
     altColors?: boolean,
     title?: Children,
     fillHeight?: boolean,
+    colorTheme?: ColorTheme
 }
 
 export default function Frame(props: Props) {
-    const { colorTheme } = useCommonContext();
+    let colorTheme: ColorTheme;
+    const commonContext = useCommonContext();
+    if (props.colorTheme) {
+        colorTheme = props.colorTheme;
+    } else {
+        colorTheme = commonContext.colorTheme;
+    }
 
     const backgroundColor =
         (props.altColors !== undefined && props.altColors) ?

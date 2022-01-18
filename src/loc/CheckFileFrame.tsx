@@ -9,6 +9,7 @@ import CheckFileResult from "./CheckFileResult";
 
 import './CheckFileFrame.css';
 import IconTextRow from "../common/IconTextRow";
+import { ColorTheme } from "../common/ColorTheme";
 
 interface DocumentHash {
     file: File;
@@ -20,6 +21,12 @@ export type CheckResult = 'NONE' | 'POSITIVE' | 'NEGATIVE';
 export interface Props {
     checkHash: (hash: string) => void;
     checkResult: CheckResult;
+    colorTheme?: ColorTheme
+}
+
+export interface DocumentCheckResult {
+    result: CheckResult;
+    hash?: string;
 }
 
 export default function CheckFileFrame(props: Props) {
@@ -47,6 +54,7 @@ export default function CheckFileFrame(props: Props) {
     return (
         <PolkadotFrame
             className="CheckFileFrame"
+            colorTheme={ props.colorTheme }
         >
             <IconTextRow
                 icon={ <Icon icon={{id: "polkadot_doc_check"}} width="45px" /> }

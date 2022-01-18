@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { Row, Col, Container } from "react-bootstrap";
 import { useParams } from "react-router";
 import { useSearchParams } from "react-router-dom";
@@ -28,6 +28,7 @@ import { fullCertificateUrl } from "../PublicPaths";
 
 import CertificateCell from "./CertificateCell";
 import './Certificate.css'
+import CheckFileFrame, { DocumentCheckResult } from "../loc/CheckFileFrame";
 
 export default function Certificate() {
 
@@ -43,6 +44,26 @@ export default function Certificate() {
     const [ publicLoc, setPublicLoc ] = useState<LocRequest>()
     const [ voidWarningVisible, setVoidWarningVisible ] = useState<boolean>(false);
     const [ nodeDown, setNodeDown ] = useState(false);
+    const [ checkResult, setCheckResult ] = useState<DocumentCheckResult>({result: "NONE"});
+
+    const checkHash = useCallback((hash: string) => {
+        if (loc) {
+            for (let i = 0; i < loc.files!.length; ++i) {
+                const file = loc.files[i]
+                if (file?.hash === hash) {
+                    setCheckResult({
+                        result: "POSITIVE",
+                        hash
+                    });
+                    return;
+                }
+            }
+            setCheckResult({
+                result: "NEGATIVE",
+                hash
+            });
+        }
+    }, [ loc, setCheckResult ]);
 
     useEffect(() => {
         if (api !== null && axiosFactory !== undefined && loc === undefined) {
@@ -237,7 +258,7 @@ export default function Certificate() {
                     <MetadataItemCellRow items={ items } />
                 )) }
                 { matrix(loc.files, 2).map((files) => (
-                    <FileCellRow files={ files } />
+                    <FileCellRow files={ files } checkResult={ checkResult } />
                 )) }
                 { matrix(loc.links, 2).map((links) => (
                     <LinkCellRow links={ links } />
@@ -270,6 +291,13 @@ export default function Certificate() {
                     <VoidMessage left={ false } locRequest={ publicLoc } voidInfo={ loc.voidInfo! } />
                 </DangerDialog>
             </Container>
+            <Container className="CertificateCheck">
+                <CheckFileFrame
+                    checkHash={ checkHash }
+                    checkResult={ checkResult.result }
+                    colorTheme={ LIGHT_MODE }
+                />
+            </Container>
         </>
     )
 }
@@ -295,11 +323,11 @@ function MetadataItemCellRow(props: { items: MetadataItem[] }) {
     )
 }
 
-function FileCellRow(props: { files: File[] }) {
+function FileCellRow(props: { files: File[], checkResult: DocumentCheckResult }) {
     return (
         <Row>
             { props.files.map(
-                file => <CertificateCell md={ 6 } label={ `Document Hash (${file.nature})` }>{ file.hash }</CertificateCell>) }
+                file => <CertificateCell md={ 6 } label={ `Document Hash (${file.nature})` } matched = { props.checkResult.hash === file.hash } >{ file.hash }</CertificateCell>) }
         </Row>
     )
 }
