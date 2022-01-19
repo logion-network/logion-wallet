@@ -28,8 +28,8 @@ exports[`renders loader with no data 1`] = `<Loader />`;
 exports[`renders with all data 1`] = `
 <React.Fragment>
   <Row>
-    <Col
-      xxl={8}
+    <div
+      className="col-xxxl-8"
     >
       <Frame
         fillHeight={true}
@@ -107,9 +107,9 @@ exports[`renders with all data 1`] = `
           renderEmpty={[Function]}
         />
       </Frame>
-    </Col>
-    <Col
-      xxl={4}
+    </div>
+    <div
+      className="col-xxxl-4"
     >
       <Frame
         className="gauge-container"
@@ -167,7 +167,7 @@ exports[`renders with all data 1`] = `
           type="arc"
         />
       </Frame>
-    </Col>
+    </div>
   </Row>
 </React.Fragment>
 `;

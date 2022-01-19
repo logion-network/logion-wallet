@@ -67,7 +67,7 @@ export function Content(props: Props) {
             </Row>
         }
         <Row>
-            <Col xxl={8}>
+            <div className="col-xxxl-8">
                 <Frame
                     title="Asset balances"
                     fillHeight
@@ -123,8 +123,8 @@ export function Content(props: Props) {
                         renderEmpty={ () => <EmptyTableMessage>You have no asset yet</EmptyTableMessage> }
                     />
                 </Frame>
-            </Col>
-            <Col xxl={4}>
+            </div>
+            <div className="col-xxxl-4">
                 <Frame
                     fillHeight
                     title={
@@ -143,7 +143,7 @@ export function Content(props: Props) {
                         type='arc'
                     />
                 </Frame>
-            </Col>
+            </div>
         </Row>
         </>
     );

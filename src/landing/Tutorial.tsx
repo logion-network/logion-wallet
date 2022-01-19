@@ -91,7 +91,7 @@ function InstallOrCreate(props: Props) {
                     <li>Click on the “Polkadot.js extension” orange logo</li>
                     <li>Select “Pop up” in the “Notification" dropdown menu</li>
                     <li>Select “open extension in new window” at the bottom of the extension: the extension will open itself in a new tab</li>
-                    <li>Click anywhere in the underlying tab, outside of the Polkadot extension popup to make it disappeared</li>
+                    <li>Click anywhere in the underlying tab, outside of the Polkadot extension popup to make it disappear</li>
                 </ul>
 
                 <img src={`${process.env.PUBLIC_URL}/assets/landing/logion-step1.gif`} style={{maxWidth: "100%"}} alt="step 1 animation"/>
