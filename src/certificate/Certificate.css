@@ -143,6 +143,14 @@
     margin-left: 15px;
 }
 
+.CertificateCheck.container {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.CertificateBox {
+    padding-bottom: 200px;
+}
 
 @media screen and (max-width: 1400px) {
     .Certificate .folder-icon img {
@@ -254,21 +262,4 @@
     .Certificate .header h1 {
         font-size: 30px;
     }
-}
-
-.CertificateCheck .CheckFileFrame .IconTextRow p.text-title {
-    font-weight: bold;
-}
-
-.CertificateCheck .CheckFileFrame .IconTextRow .text {
-    margin-left: 23px;
-}
-
-.CertificateCheck.container {
-    padding-left: 0;
-    padding-right: 0;
-}
-
-.CertificateBox {
-    padding-bottom: 200px;
 }

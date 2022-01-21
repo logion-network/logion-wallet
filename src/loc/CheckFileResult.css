@@ -3,10 +3,14 @@
     border-top: 2px solid #e6007a;
     margin-top: 30px;
     padding-top: 30px;
-    margin-left: -20px;
+    margin-left: -82px;
     padding-left: 20px;
     margin-right: -20px;
     padding-right: 20px;
+}
+
+.CheckFileResult p {
+    margin-left: 62px;
 }
 
 .CheckFileResult img {
