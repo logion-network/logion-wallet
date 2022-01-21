@@ -254,14 +254,14 @@ export default function Certificate() {
                     </CertificateCell> }
 
                 </Row>
-                { matrix(loc.metadata, 2).map((items) => (
-                    <MetadataItemCellRow items={ items } />
+                { matrix(loc.metadata, 2).map((items, index) => (
+                    <MetadataItemCellRow key={ index } items={ items } />
                 )) }
-                { matrix(loc.files, 2).map((files) => (
-                    <FileCellRow files={ files } checkResult={ checkResult } />
+                { matrix(loc.files, 2).map((files, index) => (
+                    <FileCellRow key={ index } files={ files } checkResult={ checkResult } />
                 )) }
-                { matrix(loc.links, 2).map((links) => (
-                    <LinkCellRow links={ links } />
+                { matrix(loc.links, 2).map((links, index) => (
+                    <LinkCellRow key={ index } links={ links } />
                 )) }
                 <LegalOfficerRow legalOfficer={ legalOfficer } />
                 <Row className="buttons">
@@ -318,7 +318,7 @@ function MetadataItemCellRow(props: { items: MetadataItem[] }) {
     return (
         <Row>
             { props.items.map(
-                item => <CertificateCell md={ 6 } label={ item.name }><pre>{ item.value }</pre></CertificateCell>) }
+                item => <CertificateCell key={ item.name } md={ 6 } label={ item.name }><pre>{ item.value }</pre></CertificateCell>) }
         </Row>
     )
 }
@@ -327,7 +327,7 @@ function FileCellRow(props: { files: File[], checkResult: DocumentCheckResult })
     return (
         <Row>
             { props.files.map(
-                file => <CertificateCell md={ 6 } label={ `Document Hash (${file.nature})` } matched = { props.checkResult.hash === file.hash } >{ file.hash }</CertificateCell>) }
+                file => <CertificateCell key={ file.hash } md={ 6 } label={ `Document Hash (${file.nature})` } matched={ props.checkResult.hash === file.hash } >{ file.hash }</CertificateCell>) }
         </Row>
     )
 }
@@ -337,7 +337,7 @@ function LinkCellRow(props: { links: Link[] }) {
         <Row>
             { props.links.map(
                 link =>
-                    <CertificateCell md={ 6 } label={ `Linked LOC (${ link.nature })` }>
+                    <CertificateCell key={ link.id.toString() } md={ 6 } label={ `Linked LOC (${ link.nature })` }>
                         <NewTabLink href={ fullCertificateUrl(link.id) } iconId="loc-link">{ link.id.toDecimalString() }</NewTabLink>
                     </CertificateCell>)
             }

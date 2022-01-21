@@ -239,7 +239,7 @@ export default function Table<T>(props: Props<T>) {
                 {
                     props.data.length > 0 &&
                     props.data.map((item, itemIndex) => (
-                        <>
+                        <div key={itemIndex}>
                         <Row
                             className={ (renderDetails !== undefined ? "has-details" : "") + (props.rowStyle !== undefined ? " " + props.rowStyle(item, itemIndex) : "") }
                             key={ itemIndex }
@@ -287,7 +287,7 @@ export default function Table<T>(props: Props<T>) {
                                 { renderDetails(item) }
                             </Row>
                         }
-                        </>
+                        </div>
                     ))
                 }
                 {

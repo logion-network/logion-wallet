@@ -1,16 +1,20 @@
 jest.mock('../UserContext');
 jest.mock('../../logion-chain');
+jest.mock('../../logion-chain/Accounts');
+jest.mock('../../logion-chain/Recovery');
 jest.mock('../../logion-chain/Signature');
 jest.mock('../../common/CommonContext');
 jest.mock('../../common/types/LegalOfficer');
 
 import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from "../../common/TestData";
 import { setCreateProtectionRequest } from "../__mocks__/UserContextMock";
-import { shallowRender } from "../../tests";
-import React from "react";
+import { clickByName, shallowRender } from "../../tests";
 import CreateProtectionRequestForm from "./CreateProtectionRequestForm";
-import { render, screen, fireEvent, waitFor, getByText } from "@testing-library/react";
+import { render, screen, waitFor, getByText, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { setActiveRecoveryInProgress } from "../../logion-chain/__mocks__/RecoveryMock";
+import { finalizeSubmission, resetSubmitting, submitting } from "../../logion-chain/__mocks__/SignatureMock";
+import { TEST_WALLET_USER2 } from "../TestData";
 
 test("renders", () => {
     const tree = shallowRender(<CreateProtectionRequestForm isRecovery={ false } />)
@@ -28,8 +32,8 @@ describe("CreateProtectionRequestForm", () => {
 
     it("should display messages when an empty form is submitted", async () => {
         render(<CreateProtectionRequestForm isRecovery={ false } />);
-        const button = screen.getByTestId("btnSubmit");
-        fireEvent.click(button)
+
+        await clickByName("Next");
 
         await waitFor(() => {
             expect(screen.getByTestId("firstNameMessage").innerHTML)
@@ -58,29 +62,10 @@ describe("CreateProtectionRequestForm", () => {
     it("should call submit when form is correctly filled", async  () => {
         render(<CreateProtectionRequestForm isRecovery={ false } />);
 
-        const legalOfficer1Select = screen.getByTestId('legalOfficer1Group');
-        userEvent.click(getByText(legalOfficer1Select, "Select..."));
-        await waitFor(() => userEvent.click(getByText(legalOfficer1Select, "Patrick Gielen")));
+        await selectLegalOfficers();
+        fillInForm();
 
-        const legalOfficer2Select = screen.getByTestId('legalOfficer2Group');
-        userEvent.click(getByText(legalOfficer2Select, "Select..."));
-        await waitFor(() => userEvent.click(getByText(legalOfficer2Select, "Guillaume Grain")));
-
-        fireEvent.input(screen.getByTestId("firstName"), {target: {value: 'John'}})
-        fireEvent.input(screen.getByTestId("lastName"), {target: {value: 'Doe'}})
-        fireEvent.input(screen.getByTestId("email"), {target: {value: 'john.doe@logion.network'}})
-        fireEvent.input(screen.getByTestId("phoneNumber"), {target: {value: '+1234'}})
-
-        fireEvent.input(screen.getByTestId("line1"), {target: {value: 'Place de le République Française, 10'}})
-        fireEvent.input(screen.getByTestId("line2"), {target: {value: 'boite 15'}})
-        fireEvent.input(screen.getByTestId("postalCode"), {target: {value: '4000'}})
-        fireEvent.input(screen.getByTestId("city"), {target: {value: 'Liège'}})
-        fireEvent.input(screen.getByTestId("country"), {target: {value: 'Belgium'}})
-
-        userEvent.click(screen.getByRole('checkbox'));
-
-        const button = screen.getByTestId("btnSubmit");
-        fireEvent.click(button);
+        await clickByName("Next");
 
         await waitFor(() => expect(createProtectionRequest).toBeCalledWith(
             expect.arrayContaining([ DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER ]),
@@ -88,39 +73,79 @@ describe("CreateProtectionRequestForm", () => {
         ));
     });
 
-    it("should call submit when form is correctly filled for recovery", async  () => {
+    it("should call submit when form is correctly filled for recovery and recovery already in progress", async  () => {
+        setActiveRecoveryInProgress(true);
+
         render(<CreateProtectionRequestForm isRecovery={ true } />);
 
-        userEvent.type(screen.getByTestId("addressToRecover"), 'toRecover');
-        userEvent.click(screen.getByRole('button', {name: "Initiate recovery"}));
+        userEvent.type(screen.getByLabelText("Address to Recover"), 'toRecover');
+        const initiateButton = screen.getByRole('button', {name: "Initiate recovery"});
+        await waitFor(() => expect(initiateButton).not.toBeDisabled());
+        userEvent.click(initiateButton);
+        await waitFor(() => screen.getByText(/The recovery has been successfully initiated/));
 
-        const legalOfficer1Select = screen.getByTestId('legalOfficer1Group');
-        userEvent.click(getByText(legalOfficer1Select, "Select..."));
-        await waitFor(() => userEvent.click(getByText(legalOfficer1Select, "Patrick Gielen")));
+        await selectLegalOfficers();
+        fillInForm();
 
-        const legalOfficer2Select = screen.getByTestId('legalOfficer2Group');
-        userEvent.click(getByText(legalOfficer2Select, "Select..."));
-        await waitFor(() => userEvent.click(getByText(legalOfficer2Select, "Guillaume Grain")));
-
-        fireEvent.input(screen.getByTestId("firstName"), {target: {value: 'John'}})
-        fireEvent.input(screen.getByTestId("lastName"), {target: {value: 'Doe'}})
-        fireEvent.input(screen.getByTestId("email"), {target: {value: 'john.doe@logion.network'}})
-        fireEvent.input(screen.getByTestId("phoneNumber"), {target: {value: '+1234'}})
-
-        fireEvent.input(screen.getByTestId("line1"), {target: {value: 'Place de le République Française, 10'}})
-        fireEvent.input(screen.getByTestId("line2"), {target: {value: 'boite 15'}})
-        fireEvent.input(screen.getByTestId("postalCode"), {target: {value: '4000'}})
-        fireEvent.input(screen.getByTestId("city"), {target: {value: 'Liège'}})
-        fireEvent.input(screen.getByTestId("country"), {target: {value: 'Belgium'}})
-
-        userEvent.click(screen.getByRole('checkbox'));
-
-        const button = screen.getByTestId("btnSubmit");
-        fireEvent.click(button);
+        await clickByName("Next");
 
         await waitFor(() => expect(createProtectionRequest).toBeCalledWith(
             expect.arrayContaining([ DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER ]),
             expect.anything()
         ));
     });
+
+    it("should call submit when form is correctly filled for recovery and no recovery already in progress", async  () => {
+        setActiveRecoveryInProgress(false);
+        resetSubmitting();
+
+        render(<CreateProtectionRequestForm isRecovery={ true } />);
+
+        userEvent.type(screen.getByLabelText("Address to Recover"), TEST_WALLET_USER2);
+        const initiateButton = screen.getByRole('button', {name: "Initiate recovery"});
+        await waitFor(() => expect(initiateButton).not.toBeDisabled());
+        userEvent.click(initiateButton);
+        await waitFor(() => expect(submitting()).toBe(true));
+        act(() => finalizeSubmission());
+        await waitFor(() => screen.getByText(/The recovery has been successfully initiated/));
+
+        await selectLegalOfficers();
+        fillInForm();
+
+        await clickByName("Next");
+
+        let dialog: HTMLElement;
+        await waitFor(() => dialog = screen.getByRole("dialog"));
+        await clickByName("OK");
+
+        expect(createProtectionRequest).toBeCalledWith(
+            expect.arrayContaining([ DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER ]),
+            expect.anything()
+        );
+    });
 });
+
+function fillInForm() {
+    userEvent.type(screen.getByTestId("firstName"), 'John');
+    userEvent.type(screen.getByTestId("lastName"), 'Doe')
+    userEvent.type(screen.getByTestId("email"), 'john.doe@logion.network')
+    userEvent.type(screen.getByTestId("phoneNumber"), '+1234')
+
+    userEvent.type(screen.getByTestId("line1"), 'Place de le République Française, 10')
+    userEvent.type(screen.getByTestId("line2"), 'boite 15')
+    userEvent.type(screen.getByTestId("postalCode"), '4000')
+    userEvent.type(screen.getByTestId("city"), 'Liège')
+    userEvent.type(screen.getByTestId("country"), 'Belgium')
+
+    userEvent.click(screen.getByRole('checkbox'));
+}
+
+async function selectLegalOfficers() {
+    const legalOfficer1Select = screen.getByTestId('legalOfficer1Group');
+    userEvent.click(getByText(legalOfficer1Select, "Select..."));
+    await waitFor(() => userEvent.click(getByText(legalOfficer1Select, "Patrick Gielen")));
+
+    const legalOfficer2Select = screen.getByTestId('legalOfficer2Group');
+    userEvent.click(getByText(legalOfficer2Select, "Select..."));
+    await waitFor(() => userEvent.click(getByText(legalOfficer2Select, "Guillaume Grain")));
+}

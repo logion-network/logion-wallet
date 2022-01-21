@@ -144,6 +144,7 @@ export default function ContextualizedLocDetails(props: Props) {
                 </Row>
             }
             <Tabs
+                id="loc-content"
                 activeKey="details"
                 onSelect={ () => {
                 } }

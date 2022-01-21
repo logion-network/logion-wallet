@@ -94,102 +94,43 @@ exports[`Renders Open Logion Identity LOCs 1`] = `
   <div
     className="body"
   >
-    <div
-      className="Row "
-      style={
-        Object {
-          "color": "#ffffff",
-        }
-      }
-    >
+    <div>
       <div
-        className="Col"
+        className="Row "
         style={
           Object {
-            "backgroundColor": "#152665",
-            "fontSize": undefined,
-            "textAlign": "left",
-            "width": "calc(( 100% - 540px ) / 3)",
+            "color": "#ffffff",
           }
         }
       >
         <div
-          className="regular-cell"
-          style={Object {}}
-        >
-          Scott Tiger
-        </div>
-      </div>
-      <div
-        className="Col"
-        style={
-          Object {
-            "backgroundColor": "#152665",
-            "fontSize": undefined,
-            "textAlign": "left",
-            "width": "calc(( 100% - 540px ) / 3)",
-          }
-        }
-      >
-        <div
-          className="regular-cell overflowing"
-          style={Object {}}
-        >
-          <span
-            onBlur={[Function]}
-            onFocus={[Function]}
-            onMouseOut={[Function]}
-            onMouseOver={[Function]}
-          >
-            LOC description
-          </span>
-        </div>
-      </div>
-      <div
-        className="Col"
-        style={
-          Object {
-            "backgroundColor": "#152665",
-            "fontSize": undefined,
-            "textAlign": "center",
-            "width": "140px",
-          }
-        }
-      >
-        <span
-          className="StatusCell"
+          className="Col"
           style={
             Object {
-              "borderColor": "#ff9b3f",
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+              "textAlign": "left",
+              "width": "calc(( 100% - 540px ) / 3)",
             }
           }
         >
-           
-          <span
-            style={
-              Object {
-                "color": "#ff9b3f",
-                "textTransform": undefined,
-              }
-            }
+          <div
+            className="regular-cell"
+            style={Object {}}
           >
-            Open
-          </span>
-        </span>
-      </div>
-      <div
-        className="Col"
-        style={
-          Object {
-            "backgroundColor": "#152665",
-            "fontSize": undefined,
-            "textAlign": "left",
-            "width": "calc(( 100% - 540px ) / 3)",
-          }
-        }
-      >
+            Scott Tiger
+          </div>
+        </div>
         <div
-          className="Row"
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+              "textAlign": "left",
+              "width": "calc(( 100% - 540px ) / 3)",
+            }
+          }
         >
           <div
             className="regular-cell overflowing"
@@ -201,75 +142,136 @@ exports[`Renders Open Logion Identity LOCs 1`] = `
               onMouseOut={[Function]}
               onMouseOver={[Function]}
             >
-              113562046143451386440596991937339789764
+              LOC description
             </span>
           </div>
-          <button
-            className="Button CopyPasteButton medium btn btn-primary"
-            disabled={false}
-            onClick={[Function]}
-            style={Object {}}
-            type="button"
-          >
-            <img
-              alt=""
-              src="/assets/copy_paste.svg"
-            />
-          </button>
         </div>
-      </div>
-      <div
-        className="Col"
-        style={
-          Object {
-            "backgroundColor": "#152665",
-            "fontSize": undefined,
-            "textAlign": "center",
-            "width": "200px",
-          }
-        }
-      >
         <div
-          className="regular-cell"
+          className="Col"
           style={
             Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
               "textAlign": "center",
+              "width": "140px",
             }
           }
         >
-          -
+          <span
+            className="StatusCell"
+            style={
+              Object {
+                "borderColor": "#ff9b3f",
+              }
+            }
+          >
+             
+            <span
+              style={
+                Object {
+                  "color": "#ff9b3f",
+                  "textTransform": undefined,
+                }
+              }
+            >
+              Open
+            </span>
+          </span>
         </div>
-      </div>
-      <div
-        className="Col"
-        style={
-          Object {
-            "backgroundColor": "#152665",
-            "fontSize": undefined,
-            "textAlign": "center",
-            "width": "200px",
-          }
-        }
-      >
         <div
-          className="action-cell"
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+              "textAlign": "left",
+              "width": "calc(( 100% - 540px ) / 3)",
+            }
+          }
         >
           <div
-            className="ButtonGroup"
+            className="Row"
           >
             <div
-              className="btn-group"
-              role="group"
+              className="regular-cell overflowing"
+              style={Object {}}
             >
-              <button
-                className="Button btn btn-primary"
-                disabled={false}
-                onClick={[Function]}
-                style={Object {}}
-                type="button"
+              <span
+                onBlur={[Function]}
+                onFocus={[Function]}
+                onMouseOut={[Function]}
+                onMouseOver={[Function]}
               >
-                Manage LOC
-              </button>
+                113562046143451386440596991937339789764
+              </span>
+            </div>
+            <button
+              className="Button CopyPasteButton medium btn btn-primary"
+              disabled={false}
+              onClick={[Function]}
+              style={Object {}}
+              type="button"
+            >
+              <img
+                alt=""
+                src="/assets/copy_paste.svg"
+              />
+            </button>
+          </div>
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+              "textAlign": "center",
+              "width": "200px",
+            }
+          }
+        >
+          <div
+            className="regular-cell"
+            style={
+              Object {
+                "textAlign": "center",
+              }
+            }
+          >
+            -
+          </div>
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+              "textAlign": "center",
+              "width": "200px",
+            }
+          }
+        >
+          <div
+            className="action-cell"
+          >
+            <div
+              className="ButtonGroup"
+            >
+              <div
+                className="btn-group"
+                role="group"
+              >
+                <button
+                  className="Button btn btn-primary"
+                  disabled={false}
+                  onClick={[Function]}
+                  style={Object {}}
+                  type="button"
+                >
+                  Manage LOC
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -373,102 +375,43 @@ exports[`Renders Open Polkadot Identity LOCs 1`] = `
   <div
     className="body"
   >
-    <div
-      className="Row "
-      style={
-        Object {
-          "color": "#ffffff",
-        }
-      }
-    >
+    <div>
       <div
-        className="Col"
+        className="Row "
         style={
           Object {
-            "backgroundColor": "#152665",
-            "fontSize": undefined,
-            "textAlign": "left",
-            "width": "calc(( 100% - 540px ) / 3)",
+            "color": "#ffffff",
           }
         }
       >
         <div
-          className="regular-cell"
-          style={Object {}}
-        >
-          John Doe
-        </div>
-      </div>
-      <div
-        className="Col"
-        style={
-          Object {
-            "backgroundColor": "#152665",
-            "fontSize": undefined,
-            "textAlign": "left",
-            "width": "calc(( 100% - 540px ) / 3)",
-          }
-        }
-      >
-        <div
-          className="regular-cell overflowing"
-          style={Object {}}
-        >
-          <span
-            onBlur={[Function]}
-            onFocus={[Function]}
-            onMouseOut={[Function]}
-            onMouseOver={[Function]}
-          >
-            LOC description
-          </span>
-        </div>
-      </div>
-      <div
-        className="Col"
-        style={
-          Object {
-            "backgroundColor": "#152665",
-            "fontSize": undefined,
-            "textAlign": "center",
-            "width": "140px",
-          }
-        }
-      >
-        <span
-          className="StatusCell"
+          className="Col"
           style={
             Object {
-              "borderColor": "#ff9b3f",
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+              "textAlign": "left",
+              "width": "calc(( 100% - 540px ) / 3)",
             }
           }
         >
-           
-          <span
-            style={
-              Object {
-                "color": "#ff9b3f",
-                "textTransform": undefined,
-              }
-            }
+          <div
+            className="regular-cell"
+            style={Object {}}
           >
-            Open
-          </span>
-        </span>
-      </div>
-      <div
-        className="Col"
-        style={
-          Object {
-            "backgroundColor": "#152665",
-            "fontSize": undefined,
-            "textAlign": "left",
-            "width": "calc(( 100% - 540px ) / 3)",
-          }
-        }
-      >
+            John Doe
+          </div>
+        </div>
         <div
-          className="Row"
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+              "textAlign": "left",
+              "width": "calc(( 100% - 540px ) / 3)",
+            }
+          }
         >
           <div
             className="regular-cell overflowing"
@@ -480,75 +423,136 @@ exports[`Renders Open Polkadot Identity LOCs 1`] = `
               onMouseOut={[Function]}
               onMouseOver={[Function]}
             >
-              113562046143451386440596991937339789764
+              LOC description
             </span>
           </div>
-          <button
-            className="Button CopyPasteButton medium btn btn-primary"
-            disabled={false}
-            onClick={[Function]}
-            style={Object {}}
-            type="button"
-          >
-            <img
-              alt=""
-              src="/assets/copy_paste.svg"
-            />
-          </button>
         </div>
-      </div>
-      <div
-        className="Col"
-        style={
-          Object {
-            "backgroundColor": "#152665",
-            "fontSize": undefined,
-            "textAlign": "center",
-            "width": "200px",
-          }
-        }
-      >
         <div
-          className="regular-cell"
+          className="Col"
           style={
             Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
               "textAlign": "center",
+              "width": "140px",
             }
           }
         >
-          -
+          <span
+            className="StatusCell"
+            style={
+              Object {
+                "borderColor": "#ff9b3f",
+              }
+            }
+          >
+             
+            <span
+              style={
+                Object {
+                  "color": "#ff9b3f",
+                  "textTransform": undefined,
+                }
+              }
+            >
+              Open
+            </span>
+          </span>
         </div>
-      </div>
-      <div
-        className="Col"
-        style={
-          Object {
-            "backgroundColor": "#152665",
-            "fontSize": undefined,
-            "textAlign": "center",
-            "width": "200px",
-          }
-        }
-      >
         <div
-          className="action-cell"
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+              "textAlign": "left",
+              "width": "calc(( 100% - 540px ) / 3)",
+            }
+          }
         >
           <div
-            className="ButtonGroup"
+            className="Row"
           >
             <div
-              className="btn-group"
-              role="group"
+              className="regular-cell overflowing"
+              style={Object {}}
             >
-              <button
-                className="Button btn btn-primary"
-                disabled={false}
-                onClick={[Function]}
-                style={Object {}}
-                type="button"
+              <span
+                onBlur={[Function]}
+                onFocus={[Function]}
+                onMouseOut={[Function]}
+                onMouseOver={[Function]}
               >
-                Manage LOC
-              </button>
+                113562046143451386440596991937339789764
+              </span>
+            </div>
+            <button
+              className="Button CopyPasteButton medium btn btn-primary"
+              disabled={false}
+              onClick={[Function]}
+              style={Object {}}
+              type="button"
+            >
+              <img
+                alt=""
+                src="/assets/copy_paste.svg"
+              />
+            </button>
+          </div>
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+              "textAlign": "center",
+              "width": "200px",
+            }
+          }
+        >
+          <div
+            className="regular-cell"
+            style={
+              Object {
+                "textAlign": "center",
+              }
+            }
+          >
+            -
+          </div>
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+              "textAlign": "center",
+              "width": "200px",
+            }
+          }
+        >
+          <div
+            className="action-cell"
+          >
+            <div
+              className="ButtonGroup"
+            >
+              <div
+                className="btn-group"
+                role="group"
+              >
+                <button
+                  className="Button btn btn-primary"
+                  disabled={false}
+                  onClick={[Function]}
+                  style={Object {}}
+                  type="button"
+                >
+                  Manage LOC
+                </button>
+              </div>
             </div>
           </div>
         </div>

@@ -4,6 +4,11 @@ import {
     createPolkadotIdentityLoc,
     createPolkadotTransactionLoc,
     getLegalOfficerCase,
+    addMetadata,
+    addFile,
+    addLink,
+    closeLoc,
+    voidLoc,
 } from './LogionLocMock';
 
 export {
@@ -12,4 +17,9 @@ export {
     createPolkadotIdentityLoc,
     createPolkadotTransactionLoc,
     getLegalOfficerCase,
+    addMetadata,
+    addFile,
+    addLink,
+    closeLoc,
+    voidLoc,
 }

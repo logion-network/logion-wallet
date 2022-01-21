@@ -86,7 +86,8 @@ export default function LocCreationForm(props: Props) {
                             <Select
                                 isInvalid={ !!props.errors.legalOfficer?.message }
                                 options={ buildOptions(legalOfficers(nodesDown)) }
-                                { ...field }
+                                value={ field.value }
+                                onChange={ field.onChange }
                             />
                         )}
                       />

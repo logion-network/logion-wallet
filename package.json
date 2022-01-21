@@ -36,13 +36,12 @@
         "web-vitals": "^2.1.0"
     },
     "scripts": {
-        "start": "yarn remove:conflicts && react-scripts start",
-        "build": "yarn remove:conflicts && react-scripts build",
-        "test": "yarn remove:conflicts && react-scripts test --transformIgnorePatterns \"/node_modules/(?!(@polkadot|@babel)/).*\"",
-        "test-report-coverage": "yarn remove:conflicts && react-scripts test --transformIgnorePatterns \"/node_modules/(?!(@polkadot|@babel)/).*\" --coverage --watchAll",
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "test": "react-scripts test --transformIgnorePatterns \"/node_modules/(?!(@polkadot|@babel)/).*\"",
+        "report-test-coverage": "react-scripts test --transformIgnorePatterns \"/node_modules/(?!(@polkadot|@babel)/).*\" --coverage --watchAll",
         "eject": "react-scripts eject",
         "generate:defs-meta": "yarn generate:defs && yarn generate:meta",
-        "remove:conflicts": "rimraf ./node_modules/@polkadot/api/augment/*.d.ts",
         "generate:defs": "ts-node --skip-project node_modules/.bin/polkadot-types-from-defs --input ./src/logion-chain/interfaces/ --package ../interfaces",
         "generate:meta": "ts-node --skip-project node_modules/.bin/polkadot-types-from-chain --endpoint ws://localhost:9944 --output src/logion-chain/interfaces/ --package ../interfaces",
         "pre-release": "scripty"

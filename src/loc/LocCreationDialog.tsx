@@ -1,4 +1,4 @@
- import React, { useCallback, useState } from 'react';
+ import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { useCommonContext } from '../common/CommonContext';
 import { CreateLocRequest, createLocRequest } from '../common/Model';

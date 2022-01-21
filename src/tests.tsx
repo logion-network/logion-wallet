@@ -1,6 +1,8 @@
 import { ReactElement } from 'react';
 import { createRenderer } from 'react-test-renderer/shallow';
 import reactRenderer, { ReactTestRenderer, ReactTestRendererJSON, act as reactAct } from 'react-test-renderer';
+import { screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 
 export function render(element: ReactElement): null | ReactTestRendererJSON | ReactTestRendererJSON[] {
     const component = reactRenderer.create(element);
@@ -27,3 +29,15 @@ export function mockAccount(address: string, name: string) {
 }
 
 export { reactAct as act };
+
+export async function clickByName(name: string) {
+    let button: HTMLElement;
+    await waitFor(() => button = screen.getByRole("button", { name }));
+    userEvent.click(button!);
+}
+
+export async function typeByLabel(label: string, value: string) {
+    let input: HTMLElement;
+    await waitFor(() => input = screen.getByLabelText(label));
+    userEvent.type(input!, value);
+}

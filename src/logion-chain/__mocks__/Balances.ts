@@ -1,3 +1,9 @@
-import { getBalances } from './BalancesMock'
+import {
+    getBalances,
+    buildTransferCall
+} from './BalancesMock'
 
-export { getBalances }
+export {
+    getBalances,
+    buildTransferCall
+}

@@ -41,3 +41,7 @@ export let rejectLocRequest = jest.fn();
 export function setRejectLocRequest(mockFn: any) {
     rejectLocRequest = mockFn;
 }
+
+export let addMetadata = jest.fn();
+export let addFile = jest.fn();
+export let addLink = jest.fn();

@@ -8,6 +8,9 @@ import {
     fetchRecoveryInfo,
     acceptLocRequest,
     rejectLocRequest,
+    addMetadata,
+    addFile,
+    addLink,
 } from './ModelMock';
 
 export {
@@ -20,4 +23,7 @@ export {
     fetchRecoveryInfo,
     acceptLocRequest,
     rejectLocRequest,
+    addMetadata,
+    addFile,
+    addLink,
 };
