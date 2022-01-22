@@ -248,13 +248,15 @@ export function LocContextProvider(props: Props) {
     useEffect(() => {
         if (contextValue.locRequest === null && axiosFactory !== undefined && contextValue.loc === null && api !== null) {
             (async function() {
-                const locRequest = await fetchLocRequest(axiosFactory(accounts!.current!.address)!, contextValue.locId.toString());
                 const loc = await getLegalOfficerCase({ locId: contextValue.locId, api });
+                const locOwner = loc!.owner;
+                const locRequest = await fetchLocRequest(axiosFactory(locOwner)!, contextValue.locId.toString());
                 let supersededLoc: LegalOfficerCase | undefined;
                 let supersededLocRequest: LocRequest | undefined;
                 if(loc?.replacerOf !== undefined) {
                     supersededLoc = await getLegalOfficerCase({ locId: loc.replacerOf, api });
-                    supersededLocRequest = await fetchLocRequest(axiosFactory!(accounts!.current!.address)!, loc.replacerOf.toString());
+                    const supersededLocOwner = loc!.owner;
+                    supersededLocRequest = await fetchLocRequest(axiosFactory!(supersededLocOwner)!, loc.replacerOf.toString());
                 }
                 dispatch({ type: 'SET_LOC', loc, supersededLoc, supersededLocRequest, locRequest });
                 if (loc) {
@@ -278,7 +280,8 @@ export function LocContextProvider(props: Props) {
                     })
                     for (let i = 0; i < locRequest.links.length; ++i) {
                         const linkFromBackend = locRequest.links[i];
-                        const otherLocRequest = await fetchLocRequest(axiosFactory!(accounts!.current!.address)!, linkFromBackend.target)
+                        const linkedLoc = await getLegalOfficerCase({ locId: linkFromBackend.id, api });
+                        const otherLocRequest = await fetchLocRequest(axiosFactory!(linkedLoc!.owner)!, linkFromBackend.target);
                         const linkFromChain = findLinkInLoc(loc, linkFromBackend);
                         const result = mergeLocLinkItem({
                             linkFromChain,
