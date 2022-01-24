@@ -1,11 +1,11 @@
 jest.mock('../../common/CommonContext');
 
-import { shallowRender } from '../../tests';
+import { render } from '../../tests';
 import RejectedLocs from './RejectedLocs';
 import { setRejectedLocRequests } from '../../common/__mocks__/CommonContextMock';
 
 test("Renders null with no data", () => {
-    const tree = shallowRender(<RejectedLocs />);
+    const tree = render(<RejectedLocs />);
     expect(tree).toMatchSnapshot();
 });
 
@@ -19,6 +19,6 @@ test("Renders pending requests", () => {
             status: "OPEN"
         }
     ]);
-    const tree = shallowRender(<RejectedLocs/>);
+    const tree = render(<RejectedLocs/>);
     expect(tree).toMatchSnapshot();
 });

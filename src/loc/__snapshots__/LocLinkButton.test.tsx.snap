@@ -9,6 +9,7 @@ exports[`LocLinkButton renders 1`] = `
   >
     <DropdownToggle
       className="Button"
+      id="LocLinkButton-dropdown-toggle"
     >
       Link this LOC to another LOC
     </DropdownToggle>
@@ -67,6 +68,7 @@ exports[`LocLinkButton renders LINK_EXISTING 1`] = `
   >
     <DropdownToggle
       className="Button"
+      id="LocLinkButton-dropdown-toggle"
     >
       Link this LOC to another LOC
     </DropdownToggle>
@@ -125,6 +127,7 @@ exports[`LocLinkButton renders LINK_NEW_IDENTITY 1`] = `
   >
     <DropdownToggle
       className="Button"
+      id="LocLinkButton-dropdown-toggle"
     >
       Link this LOC to another LOC
     </DropdownToggle>
@@ -183,6 +186,7 @@ exports[`LocLinkButton renders LINK_NEW_TRANSACTION 1`] = `
   >
     <DropdownToggle
       className="Button"
+      id="LocLinkButton-dropdown-toggle"
     >
       Link this LOC to another LOC
     </DropdownToggle>
@@ -241,6 +245,7 @@ exports[`LocLinkButton renders and excludes new identity 1`] = `
   >
     <DropdownToggle
       className="Button"
+      id="LocLinkButton-dropdown-toggle"
     >
       Link this LOC to another LOC
     </DropdownToggle>

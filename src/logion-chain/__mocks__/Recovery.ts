@@ -1,2 +1,15 @@
-export let createRecovery = jest.fn().mockResolvedValue(() => {});
-export let vouchRecovery = jest.fn().mockResolvedValue(() => {});
+import {
+    createRecovery,
+    vouchRecovery,
+    getRecoveryConfig,
+    getActiveRecovery,
+    initiateRecovery,
+} from './RecoveryMock';
+
+export {
+    createRecovery,
+    vouchRecovery,
+    getRecoveryConfig,
+    getActiveRecovery,
+    initiateRecovery,
+}

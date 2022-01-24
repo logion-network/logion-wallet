@@ -44,7 +44,7 @@ export default function LocCreation() {
 
     const showIdentityFields = shouldShowIdentityFields(selectedLegalOfficer, recoveryConfig);
 
-    const submit = useCallback((formValues: FormValues) => {
+    const submit = useCallback(async (formValues: FormValues) => {
         let userIdentity: UserIdentity | undefined;
         if(showIdentityFields) {
             userIdentity = {
@@ -55,20 +55,19 @@ export default function LocCreation() {
             }
         }
 
-        (async function() {
-            const currentAddress = accounts!.current!.address;
-            const request: CreateLocRequest = {
-                ownerAddress: formValues.legalOfficer,
-                requesterAddress: currentAddress,
-                description: formValues.description,
-                locType: 'Transaction',
-                userIdentity,
-            }
-            await createLocRequest!(axiosFactory!(formValues.legalOfficer), request);
-            setRequestLoc(false);
-            reset();
-            refresh!();
-        })();
+        const currentAddress = accounts!.current!.address;
+        const request: CreateLocRequest = {
+            ownerAddress: formValues.legalOfficer,
+            requesterAddress: currentAddress,
+            description: formValues.description,
+            locType: 'Transaction',
+            userIdentity,
+        }
+        await createLocRequest!(axiosFactory!(formValues.legalOfficer), request);
+
+        reset();
+        refresh!();
+        setRequestLoc(false);
     }, [ axiosFactory, accounts, setRequestLoc, refresh, reset, showIdentityFields ]);
 
     useEffect(() => {

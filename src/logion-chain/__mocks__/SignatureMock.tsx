@@ -4,19 +4,28 @@ import { toIsoString } from '../datetime';
 
 export let signAndSend = (parameters: any) => {
     signAndSendCallback = parameters.callback;
+    signAndSendErrorCallback = parameters.errorCallback;
     return Promise.resolve(() => {});
 }
 
 let signAndSendCallback: any = null;
+let signAndSendErrorCallback: any = null;
+
+export function submitting(): boolean {
+    return signAndSendCallback !== null;
+}
+
+export function resetSubmitting() {
+    signAndSendCallback = null;
+    signAndSendErrorCallback = null;
+}
 
 export function finalizeSubmission() {
-    signAndSendCallback!({
-        isFinalized: true,
-        status: {
-            type: "finalized",
-            asFinalized: "finalized",
-        }
-    });
+    signAndSendCallback!(mockSubmittableResult(true, "finalized"));
+}
+
+export function failSubmission() {
+    signAndSendErrorCallback!(new Error());
 }
 
 export function setSignAndSend(fn: any) {
@@ -47,10 +56,14 @@ export function sign(parameters: any) {
     return Promise.resolve(attributes.toString());
 }
 
-export let _isSuccessful = true;
+export let _isSuccessful: boolean | undefined = undefined;
 
 export function isSuccessful(result: any) {
-    return _isSuccessful;
+    if(_isSuccessful === undefined) {
+        return result !== null && result.isInBlock;
+    } else {
+        return _isSuccessful;
+    }
 }
 
 export function setIsSuccessful(value: boolean) {

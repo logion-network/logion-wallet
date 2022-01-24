@@ -66,7 +66,7 @@ export default function CloseLocButton() {
                         callback: () => setCloseState({ status: CloseStatus.NONE })
                     },
                     {
-                        id: 'cancel',
+                        id: 'proceed',
                         buttonText: 'Proceed',
                         buttonVariant: 'polkadot',
                         mayProceed: closeState.status === CloseStatus.START,
@@ -88,7 +88,6 @@ export default function CloseLocButton() {
                 <ExtrinsicSubmitter
                     id="publishMetadata"
                     signAndSubmit={ signAndSubmit }
-                    successMessage="LOC public data successfully published"
                     onSuccess={ () => {
                         setCloseState({ status: CloseStatus.NONE })
                         close!()

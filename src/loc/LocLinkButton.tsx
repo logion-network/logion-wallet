@@ -30,7 +30,7 @@ export default function LocLinkButton(props: Props) {
     return (
         <>
             <Dropdown>
-                <Dropdown.Toggle className="Button">Link this LOC to another LOC</Dropdown.Toggle>
+                <Dropdown.Toggle className="Button" id="LocLinkButton-dropdown-toggle">Link this LOC to another LOC</Dropdown.Toggle>
                 <Dropdown.Menu>
                     <Dropdown.Item onClick={ () => setVisible(Visible.LINK_EXISTING) }>
                         Link to an existing LOC

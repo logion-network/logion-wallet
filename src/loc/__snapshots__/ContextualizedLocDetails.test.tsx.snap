@@ -1,0 +1,1172 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ContextualizedLocDetails renders for LO 1`] = `
+<div
+  className="BasePane"
+>
+  <div
+    className="BasePaneHeader"
+  >
+    <div
+      className="TitleArea"
+    >
+      <div
+        className="Titles"
+      >
+        <h1>
+          <div
+            className="MenuIcon"
+            style={
+              Object {
+                "background": "linear-gradient(180deg, #3b6cf4 0%, #6050dc 100%)",
+                "height": "36px",
+                "width": "36px",
+              }
+            }
+          >
+            <img
+              alt=""
+              src="/assets/identity.svg"
+            />
+          </div>
+          Identity Case Management
+        </h1>
+        <div
+          className="back-button"
+        >
+          <div
+            className="Clickable"
+            onClick={[Function]}
+          >
+            <img
+              alt=""
+              src="/assets/themes/light/back.svg"
+            />
+             Back
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="AddressSwitcherArea"
+    >
+      <div
+        className="AddressSwitcher light"
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+      >
+        <div
+          className="dropdown"
+        >
+          <button
+            aria-expanded={false}
+            className="dropdown-toggle btn btn-primary"
+            disabled={false}
+            id="address-switcher-toggle"
+            onClick={[Function]}
+            type="button"
+          >
+            <div
+              className="address-data"
+            >
+              <div
+                className="AccountAddress"
+              >
+                <div
+                  className="icon"
+                  style={
+                    Object {
+                      "backgroundColor": "#3b6cf4",
+                    }
+                  }
+                >
+                  N
+                </div>
+                <div
+                  className="text"
+                  style={
+                    Object {
+                      "justifyContent": "space-between",
+                    }
+                  }
+                >
+                  <div
+                    className="hint"
+                    style={
+                      Object {
+                        "color": "#00000099",
+                      }
+                    }
+                  >
+                    Click to select another address
+                  </div>
+                  <div
+                    className="name"
+                    style={
+                      Object {
+                        "color": "#000000",
+                      }
+                    }
+                  >
+                    name
+                  </div>
+                  <div
+                    className="address"
+                    style={
+                      Object {
+                        "color": "#000000",
+                      }
+                    }
+                  >
+                    <span
+                      onBlur={[Function]}
+                      onFocus={[Function]}
+                      onMouseOut={[Function]}
+                      onMouseOver={[Function]}
+                    >
+                      5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="ContentArea ContextualizedLocDetails row"
+  >
+    <div
+      className="primary-area-col col-md-12"
+    >
+      <div
+        className="PrimaryArea"
+      >
+        <div
+          className="Tabs"
+        >
+          <style>
+            
+    .Tabs .nav-tabs .nav-link {
+        border-color: #3b6cf4;
+        color: #ffffff;
+        background-color: #d8e2fd;
+    }
+    .Tabs .nav-tabs .nav-link.active {
+        color: #ffffff;
+        background-color: #0c163d;
+        border-bottom-color: #0c163d;
+    }
+    .Tabs .tab-content {
+        color: #ffffff;
+        background-color: #0c163d;
+        border: 1px solid #3b6cf4;
+    }
+    
+          </style>
+          <ul
+            className="nav nav-tabs"
+            onKeyDown={[Function]}
+            role="tablist"
+          >
+            <li
+              className="nav-item"
+              role="presentation"
+            >
+              <button
+                aria-controls="loc-content-tabpane-details"
+                aria-selected={true}
+                className="nav-link active"
+                data-rr-ui-event-key="details"
+                disabled={false}
+                id="loc-content-tab-details"
+                onClick={[Function]}
+                role="tab"
+                type="button"
+              >
+                Legal Officer Case - Identity
+              </button>
+            </li>
+          </ul>
+          <div
+            className="tab-content"
+          >
+            <div
+              aria-labelledby="loc-content-tab-details"
+              className="tab-pane active"
+              id="loc-content-tabpane-details"
+            >
+              <div
+                className="Row"
+              >
+                <div
+                  className="col-md-4"
+                >
+                  <div
+                    className="Row LocItemDetail"
+                  >
+                    <div
+                      className="Col label"
+                    >
+                      LOC ID
+                      : 
+                    </div>
+                    <div
+                      className="Col value-container"
+                    >
+                      <span
+                        className="value"
+                      >
+                        <span
+                          onBlur={[Function]}
+                          onFocus={[Function]}
+                          onMouseOut={[Function]}
+                          onMouseOver={[Function]}
+                        >
+                          195914524858768213081425411950368569411
+                        </span>
+                      </span>
+                    </div>
+                    <div
+                      className="Col copy-paste-container"
+                    >
+                      <button
+                        className="Button CopyPasteButton small btn btn-primary"
+                        disabled={false}
+                        onClick={[Function]}
+                        style={Object {}}
+                        type="button"
+                      >
+                        <img
+                          alt=""
+                          src="/assets/copy_paste.svg"
+                        />
+                      </button>
+                    </div>
+                  </div>
+                  <div
+                    className="Row LocItemDetail"
+                  >
+                    <div
+                      className="Col label"
+                    >
+                      Creation date
+                      : 
+                    </div>
+                    <div
+                      className="Col value-container"
+                    >
+                      <span
+                        className="value"
+                      >
+                        Invalid date
+                         / 
+                        Invalid date
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="col-md-4"
+                >
+                  <div
+                    className="Row LocItemDetail"
+                  >
+                    <div
+                      className="Col label"
+                    >
+                      Description
+                      : 
+                    </div>
+                    <div
+                      className="Col value-container"
+                    >
+                      <span
+                        className="value"
+                      >
+                        Description
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="closed-icon-container col-md-4"
+                >
+                  <div
+                    className="Row LocItemDetail"
+                  >
+                    <div
+                      className="Col label"
+                    >
+                      Requested by
+                      : 
+                    </div>
+                    <div
+                      className="Col value-container"
+                    >
+                      <span
+                        className="value"
+                      >
+                        
+                         
+                        
+                        <span
+                          onBlur={[Function]}
+                          onFocus={[Function]}
+                          onMouseOut={[Function]}
+                          onMouseOver={[Function]}
+                        >
+                          <br />
+                           
+                          5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="separator"
+                style={
+                  Object {
+                    "backgroundColor": "#3b6cf4",
+                  }
+                }
+              />
+              <div
+                className="LocItems empty-loc"
+              >
+                <img
+                  alt="empty loc"
+                  src="/assets/empty-loc.svg"
+                />
+                <p
+                  className="primary"
+                >
+                  This LOC is empty.
+                </p>
+                <p
+                  className="secondary"
+                >
+                  You can add public data and/or confidential documents.
+                </p>
+              </div>
+              <div
+                className="Row"
+              >
+                <div
+                  className="add-buttons-container col-xxl-5 col-xl-4"
+                >
+                  <button
+                    className="Button btn btn-primary"
+                    disabled={false}
+                    onClick={[Function]}
+                    style={Object {}}
+                    type="button"
+                  >
+                    <img
+                      alt=""
+                      height="19px"
+                      src="/assets/add.svg"
+                    />
+                    <span
+                      className="text"
+                    >
+                      Add a public data
+                    </span>
+                  </button>
+                  <button
+                    className="Button btn btn-primary"
+                    disabled={false}
+                    onClick={[Function]}
+                    style={Object {}}
+                    type="button"
+                  >
+                    <img
+                      alt=""
+                      height="19px"
+                      src="/assets/add.svg"
+                    />
+                    <span
+                      className="text"
+                    >
+                      Add a confidential document
+                    </span>
+                  </button>
+                </div>
+                <div
+                  className="link-button-container col-xxl-4 col-xl-4"
+                >
+                  <div
+                    className="dropdown"
+                  >
+                    <button
+                      aria-expanded={false}
+                      className="Button dropdown-toggle btn btn-primary"
+                      disabled={false}
+                      id="LocLinkButton-dropdown-toggle"
+                      onClick={[Function]}
+                      type="button"
+                    >
+                      Link this LOC to another LOC
+                    </button>
+                  </div>
+                </div>
+                <div
+                  className="close-button-container col-xxl-3 col-xl-4"
+                >
+                  <div
+                    className="CloseLocButton"
+                  >
+                    <button
+                      className="Button close btn btn-primary"
+                      disabled={false}
+                      onClick={[Function]}
+                      style={Object {}}
+                      type="button"
+                    >
+                      <img
+                        alt=""
+                        src="/assets/lock.svg"
+                      />
+                      <span
+                        className="text"
+                      >
+                        Close LOC
+                      </span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="certificate-link"
+        >
+          <h2>
+            Public web address (URL) of this Legal Officer Case related Certificate:
+          </h2>
+          <p
+            className="link"
+          >
+            <a
+              href="http://localhost/public/certificate/195914524858768213081425411950368569411"
+              rel="noreferrer"
+              target="_blank"
+            >
+              http://localhost/public/certificate/195914524858768213081425411950368569411
+            </a>
+             
+            <button
+              className="Button CopyPasteButton big btn btn-primary"
+              disabled={false}
+              onClick={[Function]}
+              style={Object {}}
+              type="button"
+            >
+              <img
+                alt=""
+                src="/assets/copy_paste.svg"
+              />
+            </button>
+          </p>
+        </div>
+        <div
+          className="Frame PolkadotFrame CheckFileFrame"
+          style={
+            Object {
+              "backgroundColor": "#ffffff",
+              "boxShadow": "0 0 25px #3b6cf41a",
+              "color": "#000000",
+            }
+          }
+        >
+          <style>
+            
+    .Frame a,
+    .Frame .btn-link {
+        color: #3b6cf426
+    }
+    
+          </style>
+          <div
+            className="IconTextRow"
+          >
+            <div
+              className="icon"
+            >
+              <img
+                alt=""
+                src="/assets/polkadot_doc_check.svg"
+                width="45px"
+              />
+            </div>
+            <div
+              className="text"
+            >
+              <p
+                className="text-title"
+              >
+                Document conformity check tool
+              </p>
+              <p>
+                Check a document to verify its conformity with a confidential document referenced in this LOC. This tool will generate the “hash” - a digital fingerprint - of the submitted document, compare it with all document “hashes” referenced in the LOC above, and will highlight (dotted square) above - if existing - the identified document. Otherwise, it will mean that the submitted file version is not part of this current transaction LOC.
+              </p>
+              <p>
+                Important: the document you submit is NOT uploaded to a server as the test is done by your browser.
+              </p>
+              <div
+                className="FileSelectorButton only-button"
+              >
+                <input
+                  className="form-control"
+                  readOnly={true}
+                  value=""
+                />
+                <button
+                  className="Button btn btn-primary"
+                  disabled={false}
+                  onClick={[Function]}
+                  style={Object {}}
+                  type="button"
+                >
+                  Check a document
+                </button>
+                <input
+                  className="form-control"
+                  data-testid="FileSelectorButtonHiddenInput"
+                  disabled={false}
+                  onChange={[Function]}
+                  style={
+                    Object {
+                      "display": "none",
+                    }
+                  }
+                  type="file"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="Frame DangerFrame void-loc"
+          style={
+            Object {
+              "backgroundColor": "#ffffff",
+              "boxShadow": "0 0 25px #3b6cf41a",
+              "color": "#000000",
+            }
+          }
+        >
+          <style>
+            
+    .Frame a,
+    .Frame .btn-link {
+        color: #3b6cf426
+    }
+    
+          </style>
+          <div
+            className="IconTextRow"
+          >
+            <div
+              className="icon"
+            >
+              <img
+                alt=""
+                src="/assets/void.svg"
+                width="31px"
+              />
+            </div>
+            <div
+              className="text"
+            >
+              <p
+                className="frame-title"
+              >
+                 Void this LOC
+              </p>
+              <p>
+                This action will invalidate the present LOC: the LOC status, its public certificate will show a "VOID" mention to warn people that the content of the LOC is not valid anymore. If another replacing LOC is set, people will be automatically redirected to the replacing LOC when accessing the void LOC URL and a mention of the fact that the replacing LOC 
+                <strong>
+                  supersedes
+                </strong>
+                 the void LOC will be shared on both public certificates. 
+                <strong>
+                  PLEASE USE CAREFULLY.
+                </strong>
+              </p>
+              <div
+                className="ButtonGroup left"
+              >
+                <div
+                  align="left"
+                  className="btn-group"
+                  role="group"
+                >
+                  <button
+                    className="Button btn btn-danger"
+                    disabled={false}
+                    onClick={[Function]}
+                    style={Object {}}
+                    type="button"
+                  >
+                    Void LOC
+                  </button>
+                  <button
+                    className="Button btn btn-danger"
+                    disabled={false}
+                    onClick={[Function]}
+                    style={Object {}}
+                    type="button"
+                  >
+                    Void and replace by a NEW LOC
+                  </button>
+                  <button
+                    className="Button btn btn-danger"
+                    disabled={false}
+                    onClick={[Function]}
+                    style={Object {}}
+                    type="button"
+                  >
+                    Void and replace by an EXISTING LOC
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ContextualizedLocDetails renders for wallet user 1`] = `
+<div
+  className="BasePane"
+>
+  <div
+    className="BasePaneHeader"
+  >
+    <div
+      className="TitleArea"
+    >
+      <div
+        className="Titles"
+      >
+        <h1>
+          <div
+            className="MenuIcon"
+            style={
+              Object {
+                "background": "linear-gradient(180deg, #3b6cf4 0%, #6050dc 100%)",
+                "height": "36px",
+                "width": "36px",
+              }
+            }
+          >
+            <img
+              alt=""
+              src="/assets/identity.svg"
+            />
+          </div>
+          Identity Case Management
+        </h1>
+        <div
+          className="back-button"
+        >
+          <div
+            className="Clickable"
+            onClick={[Function]}
+          >
+            <img
+              alt=""
+              src="/assets/themes/light/back.svg"
+            />
+             Back
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      className="AddressSwitcherArea"
+    >
+      <div
+        className="AddressSwitcher light"
+        style={
+          Object {
+            "color": "#000000",
+          }
+        }
+      >
+        <div
+          className="dropdown"
+        >
+          <button
+            aria-expanded={false}
+            className="dropdown-toggle btn btn-primary"
+            disabled={false}
+            id="address-switcher-toggle"
+            onClick={[Function]}
+            type="button"
+          >
+            <div
+              className="address-data"
+            >
+              <div
+                className="AccountAddress"
+              >
+                <div
+                  className="icon"
+                  style={
+                    Object {
+                      "backgroundColor": "#3b6cf4",
+                    }
+                  }
+                >
+                  N
+                </div>
+                <div
+                  className="text"
+                  style={
+                    Object {
+                      "justifyContent": "space-between",
+                    }
+                  }
+                >
+                  <div
+                    className="hint"
+                    style={
+                      Object {
+                        "color": "#00000099",
+                      }
+                    }
+                  >
+                    Click to select another address
+                  </div>
+                  <div
+                    className="name"
+                    style={
+                      Object {
+                        "color": "#000000",
+                      }
+                    }
+                  >
+                    name
+                  </div>
+                  <div
+                    className="address"
+                    style={
+                      Object {
+                        "color": "#000000",
+                      }
+                    }
+                  >
+                    <span
+                      onBlur={[Function]}
+                      onFocus={[Function]}
+                      onMouseOut={[Function]}
+                      onMouseOver={[Function]}
+                    >
+                      5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="ContentArea ContextualizedLocDetails row"
+  >
+    <div
+      className="primary-area-col col-md-12"
+    >
+      <div
+        className="PrimaryArea"
+      >
+        <div
+          className="Tabs"
+        >
+          <style>
+            
+    .Tabs .nav-tabs .nav-link {
+        border-color: #3b6cf4;
+        color: #ffffff;
+        background-color: #d8e2fd;
+    }
+    .Tabs .nav-tabs .nav-link.active {
+        color: #ffffff;
+        background-color: #0c163d;
+        border-bottom-color: #0c163d;
+    }
+    .Tabs .tab-content {
+        color: #ffffff;
+        background-color: #0c163d;
+        border: 1px solid #3b6cf4;
+    }
+    
+          </style>
+          <ul
+            className="nav nav-tabs"
+            onKeyDown={[Function]}
+            role="tablist"
+          >
+            <li
+              className="nav-item"
+              role="presentation"
+            >
+              <button
+                aria-controls="loc-content-tabpane-details"
+                aria-selected={true}
+                className="nav-link active"
+                data-rr-ui-event-key="details"
+                disabled={false}
+                id="loc-content-tab-details"
+                onClick={[Function]}
+                role="tab"
+                type="button"
+              >
+                Legal Officer Case - Identity
+              </button>
+            </li>
+          </ul>
+          <div
+            className="tab-content"
+          >
+            <div
+              aria-labelledby="loc-content-tab-details"
+              className="tab-pane active"
+              id="loc-content-tabpane-details"
+            >
+              <div
+                className="Row"
+              >
+                <div
+                  className="col-md-4"
+                >
+                  <div
+                    className="Row LocItemDetail"
+                  >
+                    <div
+                      className="Col label"
+                    >
+                      LOC ID
+                      : 
+                    </div>
+                    <div
+                      className="Col value-container"
+                    >
+                      <span
+                        className="value"
+                      >
+                        <span
+                          onBlur={[Function]}
+                          onFocus={[Function]}
+                          onMouseOut={[Function]}
+                          onMouseOver={[Function]}
+                        >
+                          195914524858768213081425411950368569411
+                        </span>
+                      </span>
+                    </div>
+                    <div
+                      className="Col copy-paste-container"
+                    >
+                      <button
+                        className="Button CopyPasteButton small btn btn-primary"
+                        disabled={false}
+                        onClick={[Function]}
+                        style={Object {}}
+                        type="button"
+                      >
+                        <img
+                          alt=""
+                          src="/assets/copy_paste.svg"
+                        />
+                      </button>
+                    </div>
+                  </div>
+                  <div
+                    className="Row LocItemDetail"
+                  >
+                    <div
+                      className="Col label"
+                    >
+                      Creation date
+                      : 
+                    </div>
+                    <div
+                      className="Col value-container"
+                    >
+                      <span
+                        className="value"
+                      >
+                        Invalid date
+                         / 
+                        Invalid date
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="col-md-4"
+                >
+                  <div
+                    className="Row LocItemDetail"
+                  >
+                    <div
+                      className="Col label"
+                    >
+                      Description
+                      : 
+                    </div>
+                    <div
+                      className="Col value-container"
+                    >
+                      <span
+                        className="value"
+                      >
+                        Description
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  className="closed-icon-container col-md-4"
+                >
+                  <div
+                    className="Row LocItemDetail"
+                  >
+                    <div
+                      className="Col label"
+                    >
+                      Requested by
+                      : 
+                    </div>
+                    <div
+                      className="Col value-container"
+                    >
+                      <span
+                        className="value"
+                      >
+                        
+                         
+                        
+                        <span
+                          onBlur={[Function]}
+                          onFocus={[Function]}
+                          onMouseOut={[Function]}
+                          onMouseOver={[Function]}
+                        >
+                          <br />
+                           
+                          5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="separator"
+                style={
+                  Object {
+                    "backgroundColor": "#3b6cf4",
+                  }
+                }
+              />
+              <div
+                className="LocItems empty-loc"
+              >
+                <img
+                  alt="empty loc"
+                  src="/assets/empty-loc.svg"
+                />
+                <p
+                  className="primary"
+                >
+                  This LOC is empty.
+                </p>
+                <p
+                  className="secondary"
+                >
+                  You can add public data and/or confidential documents.
+                </p>
+              </div>
+              <div
+                className="Row"
+              >
+                <div
+                  className="add-buttons-container col-xxl-5 col-xl-4"
+                >
+                  <button
+                    className="Button btn btn-primary"
+                    disabled={false}
+                    onClick={[Function]}
+                    style={Object {}}
+                    type="button"
+                  >
+                    <img
+                      alt=""
+                      height="19px"
+                      src="/assets/add.svg"
+                    />
+                    <span
+                      className="text"
+                    >
+                      Add a public data
+                    </span>
+                  </button>
+                  <button
+                    className="Button btn btn-primary"
+                    disabled={false}
+                    onClick={[Function]}
+                    style={Object {}}
+                    type="button"
+                  >
+                    <img
+                      alt=""
+                      height="19px"
+                      src="/assets/add.svg"
+                    />
+                    <span
+                      className="text"
+                    >
+                      Add a confidential document
+                    </span>
+                  </button>
+                </div>
+                <div
+                  className="link-button-container col-xxl-4 col-xl-4"
+                />
+                <div
+                  className="close-button-container col-xxl-3 col-xl-4"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="certificate-link"
+        >
+          <h2>
+            Public web address (URL) of this Legal Officer Case related Certificate:
+          </h2>
+          <p
+            className="link"
+          >
+            <a
+              href="http://localhost/public/certificate/195914524858768213081425411950368569411"
+              rel="noreferrer"
+              target="_blank"
+            >
+              http://localhost/public/certificate/195914524858768213081425411950368569411
+            </a>
+             
+            <button
+              className="Button CopyPasteButton big btn btn-primary"
+              disabled={false}
+              onClick={[Function]}
+              style={Object {}}
+              type="button"
+            >
+              <img
+                alt=""
+                src="/assets/copy_paste.svg"
+              />
+            </button>
+          </p>
+        </div>
+        <div
+          className="Frame PolkadotFrame CheckFileFrame"
+          style={
+            Object {
+              "backgroundColor": "#ffffff",
+              "boxShadow": "0 0 25px #3b6cf41a",
+              "color": "#000000",
+            }
+          }
+        >
+          <style>
+            
+    .Frame a,
+    .Frame .btn-link {
+        color: #3b6cf426
+    }
+    
+          </style>
+          <div
+            className="IconTextRow"
+          >
+            <div
+              className="icon"
+            >
+              <img
+                alt=""
+                src="/assets/polkadot_doc_check.svg"
+                width="45px"
+              />
+            </div>
+            <div
+              className="text"
+            >
+              <p
+                className="text-title"
+              >
+                Document conformity check tool
+              </p>
+              <p>
+                Check a document to verify its conformity with a confidential document referenced in this LOC. This tool will generate the “hash” - a digital fingerprint - of the submitted document, compare it with all document “hashes” referenced in the LOC above, and will highlight (dotted square) above - if existing - the identified document. Otherwise, it will mean that the submitted file version is not part of this current transaction LOC.
+              </p>
+              <p>
+                Important: the document you submit is NOT uploaded to a server as the test is done by your browser.
+              </p>
+              <div
+                className="FileSelectorButton only-button"
+              >
+                <input
+                  className="form-control"
+                  readOnly={true}
+                  value=""
+                />
+                <button
+                  className="Button btn btn-primary"
+                  disabled={false}
+                  onClick={[Function]}
+                  style={Object {}}
+                  type="button"
+                >
+                  Check a document
+                </button>
+                <input
+                  className="form-control"
+                  data-testid="FileSelectorButtonHiddenInput"
+                  disabled={false}
+                  onChange={[Function]}
+                  style={
+                    Object {
+                      "display": "none",
+                    }
+                  }
+                  type="file"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

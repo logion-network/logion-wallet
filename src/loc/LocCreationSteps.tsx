@@ -60,7 +60,6 @@ export default function LocCreationSteps(props: Props) {
                         requester: requestToCreate!.requesterAddress!,
                     });
                 } else if(requestToCreate!.requesterAddress && requestToCreate!.locType === 'Identity') {
-                    console.log(requestToCreate);
                     signAndSubmit = (setResult, setError) => createPolkadotIdentityLoc({
                         api: api!,
                         signerId: accounts!.current!.address,

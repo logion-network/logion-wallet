@@ -13,6 +13,7 @@ import { setRecoveredAddress } from '../__mocks__/UserContextMock';
 
 import RecoveryProcess from './RecoveryProcess';
 import { PrefixedNumber, MILLI } from "../../logion-chain/numbers";
+import { finalizeSubmission } from "../../logion-chain/__mocks__/SignatureMock";
 
 test("Recovered tokens can be transferred", async () => {
     const recoveredAccountId = "recoveredAccountId";
@@ -52,6 +53,7 @@ test("Recovered tokens can be transferred", async () => {
     let confirmButton: HTMLElement;
     await waitFor(() => confirmButton = getByRole(dialog, "button", {name: "Transfer"}));
     userEvent.click(confirmButton!);
+    await waitFor(() => finalizeSubmission());
 
     await waitFor(() => expect(getBalances).toBeCalledTimes(2));
 });

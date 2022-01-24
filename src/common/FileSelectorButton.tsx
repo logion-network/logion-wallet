@@ -44,6 +44,7 @@ export default function FileSelectorButton(props: Props) {
                 onChange={ handleSelection }
                 style={ { display: 'none' } }
                 disabled={ props.disabled }
+                data-testid="FileSelectorButtonHiddenInput"
             />
         </div>
     )

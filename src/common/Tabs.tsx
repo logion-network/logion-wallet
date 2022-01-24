@@ -14,6 +14,7 @@ export interface Tab {
 }
 
 export interface Props {
+    id?: string,
     activeKey: string,
     onSelect: (key: string) => void,
     tabs: Tab[],
@@ -74,6 +75,7 @@ export default function Tabs(props: Props) {
             { customCss }
             </style>
             <ReactTabs
+                id={ props.id }
                 activeKey={ props.activeKey }
                 onSelect={ key => props.onSelect(key || "") }
             >

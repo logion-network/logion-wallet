@@ -1,56 +1,288 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Renders null with no data 1`] = `<Loader />`;
+exports[`Renders null with no data 1`] = `
+<div
+  className="spinner-border"
+/>
+`;
 
 exports[`Renders pending requests 1`] = `
-<Table
-  columns={
-    Array [
+<div
+  className="Table"
+>
+  <style>
+    
+            .Table .body .Row .Col.split-after::before {
+                background-color: #152665;
+            }
+            
+  </style>
+  <div
+    className="header"
+    style={
       Object {
-        "align": "left",
-        "header": "Legal Officer",
-        "render": [Function],
-      },
-      Object {
-        "align": "left",
-        "header": "Description",
-        "render": [Function],
-      },
-      Object {
-        "header": "Status",
-        "render": [Function],
-        "width": "140px",
-      },
-      Object {
-        "align": "left",
-        "header": "LOC ID",
-        "render": [Function],
-      },
-      Object {
-        "align": "center",
-        "header": "Creation date",
-        "render": [Function],
-        "width": "200px",
-      },
-      Object {
-        "align": "center",
-        "header": "Action",
-        "render": [Function],
-        "width": "200px",
-      },
-    ]
-  }
-  data={
-    Array [
-      Object {
-        "description": "LOC description",
-        "id": "1",
-        "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-        "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-        "status": "OPEN",
-      },
-    ]
-  }
-  renderEmpty={[Function]}
-/>
+        "backgroundColor": "#0c163d",
+        "color": "#ffffff",
+      }
+    }
+  >
+    <div
+      className="Row"
+    >
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "left",
+            "width": "calc(( 100% - 540px ) / 3)",
+          }
+        }
+      >
+        Legal Officer
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "left",
+            "width": "calc(( 100% - 540px ) / 3)",
+          }
+        }
+      >
+        Description
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "center",
+            "width": "140px",
+          }
+        }
+      >
+        Status
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "left",
+            "width": "calc(( 100% - 540px ) / 3)",
+          }
+        }
+      >
+        LOC ID
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "center",
+            "width": "200px",
+          }
+        }
+      >
+        Creation date
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "center",
+            "width": "200px",
+          }
+        }
+      >
+        Action
+      </div>
+    </div>
+  </div>
+  <div
+    className="body"
+  >
+    <div>
+      <div
+        className="Row "
+        style={
+          Object {
+            "color": "#ffffff",
+          }
+        }
+      >
+        <div
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+              "textAlign": "left",
+              "width": "calc(( 100% - 540px ) / 3)",
+            }
+          }
+        >
+          <div
+            className="regular-cell"
+            style={Object {}}
+          >
+            Patrick Gielen
+          </div>
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+              "textAlign": "left",
+              "width": "calc(( 100% - 540px ) / 3)",
+            }
+          }
+        >
+          <div
+            className="regular-cell overflowing"
+            style={Object {}}
+          >
+            <span
+              onBlur={[Function]}
+              onFocus={[Function]}
+              onMouseOut={[Function]}
+              onMouseOver={[Function]}
+            >
+              LOC description
+            </span>
+          </div>
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+              "textAlign": "center",
+              "width": "140px",
+            }
+          }
+        >
+          <span
+            className="StatusCell"
+            style={
+              Object {
+                "borderColor": "#ff9b3f",
+              }
+            }
+          >
+             
+            <span
+              style={
+                Object {
+                  "color": "#ff9b3f",
+                  "textTransform": undefined,
+                }
+              }
+            >
+              Open
+            </span>
+          </span>
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+              "textAlign": "left",
+              "width": "calc(( 100% - 540px ) / 3)",
+            }
+          }
+        >
+          <div
+            className="Row"
+          >
+            <div
+              className="regular-cell overflowing"
+              style={Object {}}
+            >
+              <span
+                onBlur={[Function]}
+                onFocus={[Function]}
+                onMouseOut={[Function]}
+                onMouseOver={[Function]}
+              >
+                132220282317401326589608735112778827114
+              </span>
+            </div>
+            <button
+              className="Button CopyPasteButton medium btn btn-primary"
+              disabled={false}
+              onClick={[Function]}
+              style={Object {}}
+              type="button"
+            >
+              <img
+                alt=""
+                src="/assets/copy_paste.svg"
+              />
+            </button>
+          </div>
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+              "textAlign": "center",
+              "width": "200px",
+            }
+          }
+        >
+          <div
+            className="regular-cell"
+            style={
+              Object {
+                "textAlign": "center",
+              }
+            }
+          >
+            -
+          </div>
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+              "textAlign": "center",
+              "width": "200px",
+            }
+          }
+        >
+          <div
+            className="action-cell"
+          >
+            <div
+              className="ButtonGroup"
+            >
+              <div
+                className="btn-group"
+                role="group"
+              >
+                <button
+                  className="Button btn btn-primary"
+                  disabled={false}
+                  onClick={[Function]}
+                  style={Object {}}
+                  type="button"
+                >
+                  View
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 `;
