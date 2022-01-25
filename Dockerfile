@@ -8,7 +8,7 @@ RUN yarn install --frozen-lockfile
 RUN yarn build
 
 # Deployment image
-FROM jonasal/nginx-certbot:latest
+FROM jonasal/nginx-certbot:3
 COPY --from=build /tmp/logion-wallet/build /usr/share/nginx/html
 
 COPY ./docker /usr/docker
