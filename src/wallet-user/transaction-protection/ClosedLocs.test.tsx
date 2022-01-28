@@ -1,4 +1,5 @@
 jest.mock('../../common/CommonContext');
+jest.mock('../../directory/DirectoryContext');
 
 import { render } from '../../tests';
 import ClosedLocs from './ClosedLocs';

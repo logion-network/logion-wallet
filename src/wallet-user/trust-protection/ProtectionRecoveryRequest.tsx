@@ -5,7 +5,6 @@ import { createRecovery, claimRecovery } from '../../logion-chain/Recovery';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
 
 import { ProtectionRequest, ProtectionRequestStatus } from "../../common/types/ModelTypes";
-import { LegalOfficer, legalOfficerByAddress, legalOfficers as legalOfficersFunction } from '../../common/types/LegalOfficer';
 import { FullWidthPane } from "../../common/Dashboard";
 import Frame from "../../common/Frame";
 import Button from '../../common/Button';
@@ -20,6 +19,8 @@ import NetworkWarning from '../../common/NetworkWarning';
 import { SETTINGS_PATH } from '../UserRouter';
 import SelectLegalOfficer from './SelectLegalOfficer';
 import { Col, Row } from 'react-bootstrap';
+import { useDirectoryContext } from '../../directory/DirectoryContext';
+import { LegalOfficer } from '../../directory/DirectoryApi';
 
 export type ProtectionRecoveryRequestStatus = 'pending' | 'accepted' | 'activated';
 
@@ -30,7 +31,8 @@ export interface Props {
 
 export default function ProtectionRecoveryRequest(props: Props) {
     const { api } = useLogionChain();
-    const { accounts, colorTheme, nodesDown } = useCommonContext();
+    const { accounts, colorTheme, nodesDown, availableLegalOfficers } = useCommonContext();
+    const { getOfficer } = useDirectoryContext();
     const { refreshRequests, recoveryConfig, recoveredAddress } = useUserContext();
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
     const [ signAndSubmitClaim, setSignAndSubmitClaim ] = useState<SignAndSubmit>(null);
@@ -66,9 +68,8 @@ export default function ProtectionRecoveryRequest(props: Props) {
     if(props.requests.length >= 2) {
         const request = props.requests[0];
 
-        const legalOfficers = legalOfficersFunction(nodesDown);
-        const legalOfficer1: LegalOfficer = legalOfficerByAddress(props.requests[0].legalOfficerAddress);
-        const legalOfficer2: LegalOfficer = legalOfficerByAddress(props.requests[1].legalOfficerAddress);
+        const legalOfficer1: LegalOfficer = getOfficer(props.requests[0].legalOfficerAddress)!;
+        const legalOfficer2: LegalOfficer = getOfficer(props.requests[1].legalOfficerAddress)!;
         let legalOfficer1Status: ProtectionRequestStatus;
         let legalOfficer2Status: ProtectionRequestStatus;
         if(props.type === 'pending') {
@@ -218,7 +219,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
                                     legalOfficerNumber={ 1 }
                                     legalOfficer={ legalOfficer1 }
                                     otherLegalOfficer={ legalOfficer2 }
-                                    legalOfficers={ legalOfficers }
+                                    legalOfficers={ availableLegalOfficers }
                                     mode="view"
                                     status={ legalOfficer1Status }
                                 />
@@ -228,7 +229,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
                                     legalOfficerNumber={ 2 }
                                     legalOfficer={ legalOfficer2 }
                                     otherLegalOfficer={ legalOfficer1 }
-                                    legalOfficers={ legalOfficers }
+                                    legalOfficers={ availableLegalOfficers }
                                     mode="view"
                                     status={ legalOfficer2Status }
                                 />

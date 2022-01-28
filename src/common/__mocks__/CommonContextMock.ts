@@ -7,6 +7,7 @@ import { COLOR_THEME, DEFAULT_LEGAL_OFFICER } from '../TestData';
 import Accounts, { Account } from '../types/Accounts';
 import { CommonContext, RequestAndLoc } from "../CommonContext";
 import { IdentityLocType } from "../../logion-chain/Types";
+import { legalOfficers } from '../../directory/DirectoryContextMock';
 
 export let selectAddress = jest.fn();
 
@@ -82,6 +83,7 @@ export function useCommonContext() {
         openedIdentityLocsByType,
         closedIdentityLocsByType,
         voidIdentityLocsByType,
+        availableLegalOfficers: legalOfficers
     };
     return commonContext;
 }

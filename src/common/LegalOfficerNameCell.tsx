@@ -1,13 +1,14 @@
 import React from 'react';
+import { useDirectoryContext } from '../directory/DirectoryContext';
 
 import { Cell } from './Table';
-import { getOfficer } from './types/LegalOfficer';
 
 export interface Props {
     address: string;
 }
 
 export default function LegalOfficerName(props: Props) {
+    const { getOfficer } = useDirectoryContext();
 
     const legalOfficer = getOfficer(props.address);
     let content: string;

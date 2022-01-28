@@ -8,7 +8,6 @@ import { useLogionChain } from "../logion-chain";
 import { getLegalOfficerCase } from "../logion-chain/LogionLoc";
 import { File, LegalOfficerCase, Link, MetadataItem, VoidInfo, isLogionIdentityLoc } from "../logion-chain/Types";
 
-import { LegalOfficer, getOfficer } from "../common/types/LegalOfficer";
 import Button from "../common/Button";
 import MailtoButton from "../common/MailtoButton";
 import Icon from "../common/Icon";
@@ -29,6 +28,9 @@ import { fullCertificateUrl } from "../PublicPaths";
 import CertificateCell from "./CertificateCell";
 import './Certificate.css'
 import CheckFileFrame, { DocumentCheckResult } from "../loc/CheckFileFrame";
+import { LegalOfficer } from "../directory/DirectoryApi";
+import { useDirectoryContext } from "../directory/DirectoryContext";
+import { LegalOfficerPostalAddress } from "../common/LegalOfficerPostalAddress";
 
 export default function Certificate() {
 
@@ -40,11 +42,11 @@ export default function Certificate() {
     const [ supersededLoc, setSupersededLoc ] = useState<LegalOfficerCase | undefined>(undefined)
     const [ supersededLocRequest, setSupersededLocRequest ] = useState<LocRequest | undefined>(undefined)
     const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer | null>(null)
-    const axiosFactory = anonymousAxiosFactory();
     const [ publicLoc, setPublicLoc ] = useState<LocRequest>()
     const [ voidWarningVisible, setVoidWarningVisible ] = useState<boolean>(false);
     const [ nodeDown, setNodeDown ] = useState(false);
     const [ checkResult, setCheckResult ] = useState<DocumentCheckResult>({result: "NONE"});
+    const { legalOfficers, getOfficer } = useDirectoryContext();
 
     const checkHash = useCallback((hash: string) => {
         if (loc) {
@@ -66,8 +68,9 @@ export default function Certificate() {
     }, [ loc, setCheckResult ]);
 
     useEffect(() => {
-        if (api !== null && axiosFactory !== undefined && loc === undefined) {
+        if (api !== null && loc === undefined) {
             (async function () {
+                const axiosFactory = anonymousAxiosFactory(legalOfficers);
                 const legalOfficerCase = await getLegalOfficerCase({ api, locId });
                 if (legalOfficerCase) {
                     if(legalOfficerCase.voidInfo?.replacer !== undefined && !searchParams.has("noredirect")) {
@@ -96,7 +99,7 @@ export default function Certificate() {
                 }
             })()
         }
-    }, [ api, locId, loc, setLoc, setLegalOfficer, setPublicLoc, axiosFactory, searchParams ])
+    }, [ api, locId, loc, setLoc, setLegalOfficer, setPublicLoc, legalOfficers, getOfficer, searchParams ])
 
     if (api === null) {
         return (
@@ -266,7 +269,7 @@ export default function Certificate() {
                 <LegalOfficerRow legalOfficer={ legalOfficer } />
                 <Row className="buttons">
                     <Col xl={ 2 } lg={4} md={4}>
-                        <MailtoButton label="Contact" email={ legalOfficer.email } />
+                        <MailtoButton label="Contact" email={ legalOfficer.userIdentity.email } />
                     </Col>
                     <Col xl={ 2 } lg={4} md={4}>
                         <Button onClick={ () => copyToClipBoard(window.location.href) }>Copy URL</Button>
@@ -307,8 +310,7 @@ function LegalOfficerRow(props: { legalOfficer: LegalOfficer }) {
         <Row className="legal-officer-row">
             <CertificateCell xl={ 2 } md={ 6 } label="Legal Officer">{ props.legalOfficer.name }</CertificateCell>
             <CertificateCell xl={ 4 } md={ 6 } label="Address">
-                { props.legalOfficer.details.split(/\n/).map((line, index) => (
-                    <span key={ index }>{ line }<br /></span>)) }
+                <LegalOfficerPostalAddress address={ props.legalOfficer.postalAddress } />
             </CertificateCell>
         </Row>
     )

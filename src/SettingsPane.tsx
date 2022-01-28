@@ -8,6 +8,7 @@ import { useVersionContext } from './version/VersionContext';
 
 import './SettingsPane.css';
 import Alert from './common/Alert';
+import { useDirectoryContext } from './directory/DirectoryContext';
 
 function status(metadata: NodeMetadata | null): string {
     if(metadata !== null) {
@@ -21,6 +22,7 @@ export default function SettingsPane() {
     const { connectedNodeMetadata } = useLogionChain();
     const { colorTheme, nodesDown } = useCommonContext();
     const { currentVersion, latestVersion } = useVersionContext();
+    const { getOfficer } = useDirectoryContext();
 
     return (
         <FullWidthPane
@@ -42,7 +44,11 @@ export default function SettingsPane() {
                     <>
                         <p className="wrong-version">The following logion nodes are temporarily unavailable:</p>
                         <ul className="wrong-version">
-                        { nodesDown.map(node => <li key={ node.peerId }>{ node.name }</li>) }
+                        {
+                            nodesDown.map(endpoint => getOfficer(endpoint.url)).filter(legalOfficer => legalOfficer !== null).map(legalOfficer =>
+                                <li key={ legalOfficer!.address }>{ legalOfficer!.name }</li>
+                            )
+                        }
                         </ul>
                     </>
                 }

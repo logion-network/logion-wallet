@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
+import { LegalOfficer } from '../directory/DirectoryApi';
 
-import config, { Node } from '../config';
 import Accounts, { Account } from './types/Accounts';
 
 export interface Endpoint {
@@ -116,17 +116,17 @@ export function aggregateArrays<E>(response: MultiResponse<E[]>): E[] {
 
 export type AxiosFactory = (owner?: string) => AxiosInstance;
 
-export function buildAxiosFactory(accounts: Accounts): AxiosFactory {
-    return (owner?: string) => buildAxios(accounts, node(owner));
+export function buildAxiosFactory(accounts: Accounts, legalOfficers: LegalOfficer[]): AxiosFactory {
+    return (owner?: string) => buildAxios(accounts, node(legalOfficers, owner));
 }
 
-export function buildAxios(accounts: Accounts, node: Node | undefined): AxiosInstance {
+export function buildAxios(accounts: Accounts, node: Endpoint | undefined): AxiosInstance {
     const currentAddress = accounts.current;
     return buildAxiosForAccount(currentAddress, node);
 }
 
-export function buildAxiosForAccount(currentAddress: Account | undefined, node: Node | undefined): AxiosInstance {
-    return buildAuthenticatedAxios(node?.api || "", currentAddress?.token?.value);
+export function buildAxiosForAccount(currentAddress: Account | undefined, node: Endpoint | undefined): AxiosInstance {
+    return buildAuthenticatedAxios(node?.url || "", currentAddress?.token?.value);
 }
 
 export function buildAuthenticatedAxios(endpoint: string, token?: string) {
@@ -142,20 +142,27 @@ export function buildAuthenticatedAxios(endpoint: string, token?: string) {
     });
 }
 
-export function anonymousAxiosFactory(): AxiosFactory {
+export function anonymousAxiosFactory(legalOfficers: LegalOfficer[]): AxiosFactory {
     return (owner?: string) => axios.create({
-        baseURL: baseUrl(owner)
+        baseURL: baseUrl(legalOfficers, owner)
     });
 }
 
-function baseUrl(owner?: string): string {
-    return node(owner)?.api || "";
+function baseUrl(legalOfficers: LegalOfficer[], owner?: string): string {
+    return node(legalOfficers, owner)?.url || "";
 }
 
-function node(owner?: string): Node | undefined {
+function node(legalOfficers: LegalOfficer[], owner?: string): Endpoint | undefined {
     if(owner === undefined) {
         return undefined;
     } else {
-        return config.availableNodes.find(node => node.owner === owner);
+        const legalOfficer = legalOfficers.find(legalOfficer => legalOfficer.address === owner);
+        if(legalOfficer) {
+            return {
+                url: legalOfficer.node
+            };
+        } else {
+            return undefined;
+        }
     }
 }

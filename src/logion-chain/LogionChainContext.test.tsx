@@ -31,7 +31,6 @@ function LogionContextInspector() {
     } = useLogionChain();
     return (
         <div>
-            <p data-testid="connectedNodeMetadata.name">{connectedNodeMetadata ? connectedNodeMetadata.name : ""}</p>
             <p data-testid="connectedNodeMetadata.peerId">{connectedNodeMetadata ? connectedNodeMetadata.peerId : ""}</p>
             <p data-testid="injectedAccountsConsumptionState">{injectedAccountsConsumptionState}</p>
             <p data-testid="injectedAccounts.length">{injectedAccounts !== null ? injectedAccounts.length : -1}</p>
@@ -40,7 +39,6 @@ function LogionContextInspector() {
 }
 
 function expectConnectedAndReadyState(result: RenderResult) {
-    expect(result.getByTestId("connectedNodeMetadata.name")).toHaveTextContent("UNKOWN NODE");
     expect(result.getByTestId("connectedNodeMetadata.peerId")).toHaveTextContent("Mock peer ID");
 }
 

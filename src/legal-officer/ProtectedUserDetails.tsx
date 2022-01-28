@@ -4,14 +4,16 @@ import { Col } from '../common/Grid';
 import Detail from "../common/Detail";
 
 import { ProtectionRequest } from "../common/types/ModelTypes";
-import { getOfficer } from "../common/types/LegalOfficer";
 import CopyPasteButton from "../common/CopyPasteButton";
+import { useDirectoryContext } from "../directory/DirectoryContext";
+import { LegalOfficerPostalAddress } from "../common/LegalOfficerPostalAddress";
 
 export interface Props {
     request : ProtectionRequest,
 }
 
 export default function ProtectedUserDetails(props: Props) {
+    const { getOfficer } = useDirectoryContext();
 
     const legalOfficer = getOfficer(props.request.otherLegalOfficerAddress);
 
@@ -67,9 +69,7 @@ export default function ProtectedUserDetails(props: Props) {
                 { polkadotAddress(props.request.otherLegalOfficerAddress) }
                 <Detail
                     label="Details"
-                    value={ legalOfficer!.details.split(/\n/).map((line, index) => (
-                        <span key={ index }>{ line }<br /></span>
-                    )) }
+                    value={ <LegalOfficerPostalAddress address={ legalOfficer!.postalAddress } /> }
                 />
             </Col>
             <Col style={ { width: "200px" } }>&nbsp;</Col>

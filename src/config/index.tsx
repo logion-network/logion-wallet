@@ -1,16 +1,6 @@
 export interface Node {
-    name: string;
     socket: string;
     peerId: string;
-    api: string;
-    owner: string;
-}
-
-export interface LegalOfficer {
-    name: string,
-    address: string,
-    details: string,
-    email: string
 }
 
 export interface ConfigType {
@@ -18,8 +8,8 @@ export interface ConfigType {
     DEVELOPMENT_KEYRING: boolean,
     PROVIDER_SOCKET?: string,
     RPC: object,
-    availableNodes: Node[],
-    legalOfficers: LegalOfficer[],
+    directory: string,
+    edgeNodes: Node[],
 }
 
 export const DEFAULT_CONFIG: ConfigType = {
@@ -27,8 +17,8 @@ export const DEFAULT_CONFIG: ConfigType = {
     DEVELOPMENT_KEYRING: true,
     RPC: {
     },
-    availableNodes: [],
-    legalOfficers: []
+    directory: "",
+    edgeNodes: []
 };
 
 export interface EnvConfigType extends Record<string, any> {

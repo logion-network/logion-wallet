@@ -1,12 +1,13 @@
 import React from 'react';
 import * as css from 'csstype';
 
-import { LegalOfficer } from '../../config';
 import { BackgroundAndForegroundColors } from '../../common/ColorTheme';
 
 import './Officer.css';
 import CopyPasteButton from "../../common/CopyPasteButton";
 import { Row } from "../../common/Grid";
+import { LegalOfficer } from '../../directory/DirectoryApi';
+import { LegalOfficerPostalAddress } from '../../common/LegalOfficerPostalAddress';
 
 export interface Props {
     officer: LegalOfficer | null,
@@ -41,9 +42,8 @@ export default function Officer(props: Props) {
                 <span className="text">{ polkadotAddress }</span>
                 <CopyPasteButton value={ polkadotAddress } className="medium" />
             </Row>
-            <div className="details">{ props.officer?.details.split(/\n/).map((line, index) => (
-                <span key={ index }>{ line }<br /></span>
-            )) }
+            <div className="details">
+                { props.officer && <LegalOfficerPostalAddress address={ props.officer.postalAddress } /> }
             </div>
         </div>
     );

@@ -37,67 +37,112 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
         <SelectLegalOfficer
           legalOfficer={
             Object {
+              "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-              "details": "MODERO
-Huissier de Justice Etterbeek
-Rue Beckers 17
-1040 Etterbeek
-Belgique
-Tel: +32 498 237 107",
-              "email": "patrick@logion.network",
               "name": "Patrick Gielen",
+              "node": "http://logion.patrick.com",
+              "postalAddress": Object {
+                "city": "Etterbeek",
+                "company": "MODERO",
+                "country": "Belgique",
+                "line1": "Huissier de Justice Etterbeek",
+                "line2": "Rue Beckers 17",
+                "postalCode": "1040",
+              },
+              "userIdentity": Object {
+                "email": "patrick@logion.network",
+                "firstName": "Patrick",
+                "lastName": "Gielen",
+                "phoneNumber": "+32 498 237 107",
+              },
             }
           }
           legalOfficerNumber={1}
           legalOfficers={
             Array [
               Object {
+                "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-                "details": "MODERO
-Huissier de Justice Etterbeek
-Rue Beckers 17
-1040 Etterbeek
-Belgique
-Tel: +32 498 237 107",
-                "email": "patrick@logion.network",
                 "name": "Patrick Gielen",
+                "node": "http://logion.patrick.com",
+                "postalAddress": Object {
+                  "city": "Etterbeek",
+                  "company": "MODERO",
+                  "country": "Belgique",
+                  "line1": "Huissier de Justice Etterbeek",
+                  "line2": "Rue Beckers 17",
+                  "postalCode": "1040",
+                },
+                "userIdentity": Object {
+                  "email": "patrick@logion.network",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+32 498 237 107",
+                },
               },
               Object {
+                "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-                "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-                "email": "g.grain@adrastee-lyon.fr",
                 "name": "Guillaume Grain",
+                "node": "http://logion.guillaume.com",
+                "postalAddress": Object {
+                  "city": "LYON",
+                  "company": "SELARL ADRASTEE",
+                  "country": "France",
+                  "line1": "Gare des Brotteaux",
+                  "line2": "14, place Jules Ferry",
+                  "postalCode": "69006",
+                },
+                "userIdentity": Object {
+                  "email": "g.grain@adrastee-lyon.fr",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+33 4 78 52 87 56",
+                },
               },
               Object {
+                "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-                "details": "AUXILIA CONSEILS 18
-Huissiers de Justice associés
-7 rue Jean Francois Champollion Parc Comitec
-18000 Bourges
-France
-Tel: +33 2 48 67 50 50",
-                "email": "alain.barland@auxilia-conseils.com",
                 "name": "Alain Barland",
+                "node": "http://logion.alain.com",
+                "postalAddress": Object {
+                  "city": "Bourges",
+                  "company": "AUXILIA CONSEILS 18",
+                  "country": "France",
+                  "line1": "Huissiers de Justice associés",
+                  "line2": "7 rue Jean Francois Champollion Parc Comitec",
+                  "postalCode": "18000",
+                },
+                "userIdentity": Object {
+                  "email": "alain.barland@auxilia-conseils.com",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+33 2 48 67 50 50",
+                },
               },
             ]
           }
           mode="view"
           otherLegalOfficer={
             Object {
+              "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-              "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-              "email": "g.grain@adrastee-lyon.fr",
               "name": "Guillaume Grain",
+              "node": "http://logion.guillaume.com",
+              "postalAddress": Object {
+                "city": "LYON",
+                "company": "SELARL ADRASTEE",
+                "country": "France",
+                "line1": "Gare des Brotteaux",
+                "line2": "14, place Jules Ferry",
+                "postalCode": "69006",
+              },
+              "userIdentity": Object {
+                "email": "g.grain@adrastee-lyon.fr",
+                "firstName": "Patrick",
+                "lastName": "Gielen",
+                "phoneNumber": "+33 4 78 52 87 56",
+              },
             }
           }
           status="ACTIVATED"
@@ -109,67 +154,112 @@ Tel: +33 4 78 52 87 56",
         <SelectLegalOfficer
           legalOfficer={
             Object {
+              "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-              "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-              "email": "g.grain@adrastee-lyon.fr",
               "name": "Guillaume Grain",
+              "node": "http://logion.guillaume.com",
+              "postalAddress": Object {
+                "city": "LYON",
+                "company": "SELARL ADRASTEE",
+                "country": "France",
+                "line1": "Gare des Brotteaux",
+                "line2": "14, place Jules Ferry",
+                "postalCode": "69006",
+              },
+              "userIdentity": Object {
+                "email": "g.grain@adrastee-lyon.fr",
+                "firstName": "Patrick",
+                "lastName": "Gielen",
+                "phoneNumber": "+33 4 78 52 87 56",
+              },
             }
           }
           legalOfficerNumber={2}
           legalOfficers={
             Array [
               Object {
+                "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-                "details": "MODERO
-Huissier de Justice Etterbeek
-Rue Beckers 17
-1040 Etterbeek
-Belgique
-Tel: +32 498 237 107",
-                "email": "patrick@logion.network",
                 "name": "Patrick Gielen",
+                "node": "http://logion.patrick.com",
+                "postalAddress": Object {
+                  "city": "Etterbeek",
+                  "company": "MODERO",
+                  "country": "Belgique",
+                  "line1": "Huissier de Justice Etterbeek",
+                  "line2": "Rue Beckers 17",
+                  "postalCode": "1040",
+                },
+                "userIdentity": Object {
+                  "email": "patrick@logion.network",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+32 498 237 107",
+                },
               },
               Object {
+                "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-                "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-                "email": "g.grain@adrastee-lyon.fr",
                 "name": "Guillaume Grain",
+                "node": "http://logion.guillaume.com",
+                "postalAddress": Object {
+                  "city": "LYON",
+                  "company": "SELARL ADRASTEE",
+                  "country": "France",
+                  "line1": "Gare des Brotteaux",
+                  "line2": "14, place Jules Ferry",
+                  "postalCode": "69006",
+                },
+                "userIdentity": Object {
+                  "email": "g.grain@adrastee-lyon.fr",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+33 4 78 52 87 56",
+                },
               },
               Object {
+                "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-                "details": "AUXILIA CONSEILS 18
-Huissiers de Justice associés
-7 rue Jean Francois Champollion Parc Comitec
-18000 Bourges
-France
-Tel: +33 2 48 67 50 50",
-                "email": "alain.barland@auxilia-conseils.com",
                 "name": "Alain Barland",
+                "node": "http://logion.alain.com",
+                "postalAddress": Object {
+                  "city": "Bourges",
+                  "company": "AUXILIA CONSEILS 18",
+                  "country": "France",
+                  "line1": "Huissiers de Justice associés",
+                  "line2": "7 rue Jean Francois Champollion Parc Comitec",
+                  "postalCode": "18000",
+                },
+                "userIdentity": Object {
+                  "email": "alain.barland@auxilia-conseils.com",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+33 2 48 67 50 50",
+                },
               },
             ]
           }
           mode="view"
           otherLegalOfficer={
             Object {
+              "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-              "details": "MODERO
-Huissier de Justice Etterbeek
-Rue Beckers 17
-1040 Etterbeek
-Belgique
-Tel: +32 498 237 107",
-              "email": "patrick@logion.network",
               "name": "Patrick Gielen",
+              "node": "http://logion.patrick.com",
+              "postalAddress": Object {
+                "city": "Etterbeek",
+                "company": "MODERO",
+                "country": "Belgique",
+                "line1": "Huissier de Justice Etterbeek",
+                "line2": "Rue Beckers 17",
+                "postalCode": "1040",
+              },
+              "userIdentity": Object {
+                "email": "patrick@logion.network",
+                "firstName": "Patrick",
+                "lastName": "Gielen",
+                "phoneNumber": "+32 498 237 107",
+              },
             }
           }
           status="ACTIVATED"
@@ -281,67 +371,112 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
         <SelectLegalOfficer
           legalOfficer={
             Object {
+              "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-              "details": "MODERO
-Huissier de Justice Etterbeek
-Rue Beckers 17
-1040 Etterbeek
-Belgique
-Tel: +32 498 237 107",
-              "email": "patrick@logion.network",
               "name": "Patrick Gielen",
+              "node": "http://logion.patrick.com",
+              "postalAddress": Object {
+                "city": "Etterbeek",
+                "company": "MODERO",
+                "country": "Belgique",
+                "line1": "Huissier de Justice Etterbeek",
+                "line2": "Rue Beckers 17",
+                "postalCode": "1040",
+              },
+              "userIdentity": Object {
+                "email": "patrick@logion.network",
+                "firstName": "Patrick",
+                "lastName": "Gielen",
+                "phoneNumber": "+32 498 237 107",
+              },
             }
           }
           legalOfficerNumber={1}
           legalOfficers={
             Array [
               Object {
+                "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-                "details": "MODERO
-Huissier de Justice Etterbeek
-Rue Beckers 17
-1040 Etterbeek
-Belgique
-Tel: +32 498 237 107",
-                "email": "patrick@logion.network",
                 "name": "Patrick Gielen",
+                "node": "http://logion.patrick.com",
+                "postalAddress": Object {
+                  "city": "Etterbeek",
+                  "company": "MODERO",
+                  "country": "Belgique",
+                  "line1": "Huissier de Justice Etterbeek",
+                  "line2": "Rue Beckers 17",
+                  "postalCode": "1040",
+                },
+                "userIdentity": Object {
+                  "email": "patrick@logion.network",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+32 498 237 107",
+                },
               },
               Object {
+                "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-                "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-                "email": "g.grain@adrastee-lyon.fr",
                 "name": "Guillaume Grain",
+                "node": "http://logion.guillaume.com",
+                "postalAddress": Object {
+                  "city": "LYON",
+                  "company": "SELARL ADRASTEE",
+                  "country": "France",
+                  "line1": "Gare des Brotteaux",
+                  "line2": "14, place Jules Ferry",
+                  "postalCode": "69006",
+                },
+                "userIdentity": Object {
+                  "email": "g.grain@adrastee-lyon.fr",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+33 4 78 52 87 56",
+                },
               },
               Object {
+                "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-                "details": "AUXILIA CONSEILS 18
-Huissiers de Justice associés
-7 rue Jean Francois Champollion Parc Comitec
-18000 Bourges
-France
-Tel: +33 2 48 67 50 50",
-                "email": "alain.barland@auxilia-conseils.com",
                 "name": "Alain Barland",
+                "node": "http://logion.alain.com",
+                "postalAddress": Object {
+                  "city": "Bourges",
+                  "company": "AUXILIA CONSEILS 18",
+                  "country": "France",
+                  "line1": "Huissiers de Justice associés",
+                  "line2": "7 rue Jean Francois Champollion Parc Comitec",
+                  "postalCode": "18000",
+                },
+                "userIdentity": Object {
+                  "email": "alain.barland@auxilia-conseils.com",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+33 2 48 67 50 50",
+                },
               },
             ]
           }
           mode="view"
           otherLegalOfficer={
             Object {
+              "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-              "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-              "email": "g.grain@adrastee-lyon.fr",
               "name": "Guillaume Grain",
+              "node": "http://logion.guillaume.com",
+              "postalAddress": Object {
+                "city": "LYON",
+                "company": "SELARL ADRASTEE",
+                "country": "France",
+                "line1": "Gare des Brotteaux",
+                "line2": "14, place Jules Ferry",
+                "postalCode": "69006",
+              },
+              "userIdentity": Object {
+                "email": "g.grain@adrastee-lyon.fr",
+                "firstName": "Patrick",
+                "lastName": "Gielen",
+                "phoneNumber": "+33 4 78 52 87 56",
+              },
             }
           }
           status="ACTIVATED"
@@ -353,67 +488,112 @@ Tel: +33 4 78 52 87 56",
         <SelectLegalOfficer
           legalOfficer={
             Object {
+              "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-              "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-              "email": "g.grain@adrastee-lyon.fr",
               "name": "Guillaume Grain",
+              "node": "http://logion.guillaume.com",
+              "postalAddress": Object {
+                "city": "LYON",
+                "company": "SELARL ADRASTEE",
+                "country": "France",
+                "line1": "Gare des Brotteaux",
+                "line2": "14, place Jules Ferry",
+                "postalCode": "69006",
+              },
+              "userIdentity": Object {
+                "email": "g.grain@adrastee-lyon.fr",
+                "firstName": "Patrick",
+                "lastName": "Gielen",
+                "phoneNumber": "+33 4 78 52 87 56",
+              },
             }
           }
           legalOfficerNumber={2}
           legalOfficers={
             Array [
               Object {
+                "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-                "details": "MODERO
-Huissier de Justice Etterbeek
-Rue Beckers 17
-1040 Etterbeek
-Belgique
-Tel: +32 498 237 107",
-                "email": "patrick@logion.network",
                 "name": "Patrick Gielen",
+                "node": "http://logion.patrick.com",
+                "postalAddress": Object {
+                  "city": "Etterbeek",
+                  "company": "MODERO",
+                  "country": "Belgique",
+                  "line1": "Huissier de Justice Etterbeek",
+                  "line2": "Rue Beckers 17",
+                  "postalCode": "1040",
+                },
+                "userIdentity": Object {
+                  "email": "patrick@logion.network",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+32 498 237 107",
+                },
               },
               Object {
+                "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-                "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-                "email": "g.grain@adrastee-lyon.fr",
                 "name": "Guillaume Grain",
+                "node": "http://logion.guillaume.com",
+                "postalAddress": Object {
+                  "city": "LYON",
+                  "company": "SELARL ADRASTEE",
+                  "country": "France",
+                  "line1": "Gare des Brotteaux",
+                  "line2": "14, place Jules Ferry",
+                  "postalCode": "69006",
+                },
+                "userIdentity": Object {
+                  "email": "g.grain@adrastee-lyon.fr",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+33 4 78 52 87 56",
+                },
               },
               Object {
+                "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-                "details": "AUXILIA CONSEILS 18
-Huissiers de Justice associés
-7 rue Jean Francois Champollion Parc Comitec
-18000 Bourges
-France
-Tel: +33 2 48 67 50 50",
-                "email": "alain.barland@auxilia-conseils.com",
                 "name": "Alain Barland",
+                "node": "http://logion.alain.com",
+                "postalAddress": Object {
+                  "city": "Bourges",
+                  "company": "AUXILIA CONSEILS 18",
+                  "country": "France",
+                  "line1": "Huissiers de Justice associés",
+                  "line2": "7 rue Jean Francois Champollion Parc Comitec",
+                  "postalCode": "18000",
+                },
+                "userIdentity": Object {
+                  "email": "alain.barland@auxilia-conseils.com",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+33 2 48 67 50 50",
+                },
               },
             ]
           }
           mode="view"
           otherLegalOfficer={
             Object {
+              "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-              "details": "MODERO
-Huissier de Justice Etterbeek
-Rue Beckers 17
-1040 Etterbeek
-Belgique
-Tel: +32 498 237 107",
-              "email": "patrick@logion.network",
               "name": "Patrick Gielen",
+              "node": "http://logion.patrick.com",
+              "postalAddress": Object {
+                "city": "Etterbeek",
+                "company": "MODERO",
+                "country": "Belgique",
+                "line1": "Huissier de Justice Etterbeek",
+                "line2": "Rue Beckers 17",
+                "postalCode": "1040",
+              },
+              "userIdentity": Object {
+                "email": "patrick@logion.network",
+                "firstName": "Patrick",
+                "lastName": "Gielen",
+                "phoneNumber": "+32 498 237 107",
+              },
             }
           }
           status="ACTIVATED"
@@ -512,67 +692,112 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
         <SelectLegalOfficer
           legalOfficer={
             Object {
+              "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-              "details": "MODERO
-Huissier de Justice Etterbeek
-Rue Beckers 17
-1040 Etterbeek
-Belgique
-Tel: +32 498 237 107",
-              "email": "patrick@logion.network",
               "name": "Patrick Gielen",
+              "node": "http://logion.patrick.com",
+              "postalAddress": Object {
+                "city": "Etterbeek",
+                "company": "MODERO",
+                "country": "Belgique",
+                "line1": "Huissier de Justice Etterbeek",
+                "line2": "Rue Beckers 17",
+                "postalCode": "1040",
+              },
+              "userIdentity": Object {
+                "email": "patrick@logion.network",
+                "firstName": "Patrick",
+                "lastName": "Gielen",
+                "phoneNumber": "+32 498 237 107",
+              },
             }
           }
           legalOfficerNumber={1}
           legalOfficers={
             Array [
               Object {
+                "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-                "details": "MODERO
-Huissier de Justice Etterbeek
-Rue Beckers 17
-1040 Etterbeek
-Belgique
-Tel: +32 498 237 107",
-                "email": "patrick@logion.network",
                 "name": "Patrick Gielen",
+                "node": "http://logion.patrick.com",
+                "postalAddress": Object {
+                  "city": "Etterbeek",
+                  "company": "MODERO",
+                  "country": "Belgique",
+                  "line1": "Huissier de Justice Etterbeek",
+                  "line2": "Rue Beckers 17",
+                  "postalCode": "1040",
+                },
+                "userIdentity": Object {
+                  "email": "patrick@logion.network",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+32 498 237 107",
+                },
               },
               Object {
+                "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-                "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-                "email": "g.grain@adrastee-lyon.fr",
                 "name": "Guillaume Grain",
+                "node": "http://logion.guillaume.com",
+                "postalAddress": Object {
+                  "city": "LYON",
+                  "company": "SELARL ADRASTEE",
+                  "country": "France",
+                  "line1": "Gare des Brotteaux",
+                  "line2": "14, place Jules Ferry",
+                  "postalCode": "69006",
+                },
+                "userIdentity": Object {
+                  "email": "g.grain@adrastee-lyon.fr",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+33 4 78 52 87 56",
+                },
               },
               Object {
+                "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-                "details": "AUXILIA CONSEILS 18
-Huissiers de Justice associés
-7 rue Jean Francois Champollion Parc Comitec
-18000 Bourges
-France
-Tel: +33 2 48 67 50 50",
-                "email": "alain.barland@auxilia-conseils.com",
                 "name": "Alain Barland",
+                "node": "http://logion.alain.com",
+                "postalAddress": Object {
+                  "city": "Bourges",
+                  "company": "AUXILIA CONSEILS 18",
+                  "country": "France",
+                  "line1": "Huissiers de Justice associés",
+                  "line2": "7 rue Jean Francois Champollion Parc Comitec",
+                  "postalCode": "18000",
+                },
+                "userIdentity": Object {
+                  "email": "alain.barland@auxilia-conseils.com",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+33 2 48 67 50 50",
+                },
               },
             ]
           }
           mode="view"
           otherLegalOfficer={
             Object {
+              "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-              "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-              "email": "g.grain@adrastee-lyon.fr",
               "name": "Guillaume Grain",
+              "node": "http://logion.guillaume.com",
+              "postalAddress": Object {
+                "city": "LYON",
+                "company": "SELARL ADRASTEE",
+                "country": "France",
+                "line1": "Gare des Brotteaux",
+                "line2": "14, place Jules Ferry",
+                "postalCode": "69006",
+              },
+              "userIdentity": Object {
+                "email": "g.grain@adrastee-lyon.fr",
+                "firstName": "Patrick",
+                "lastName": "Gielen",
+                "phoneNumber": "+33 4 78 52 87 56",
+              },
             }
           }
           status="ACTIVATED"
@@ -584,67 +809,112 @@ Tel: +33 4 78 52 87 56",
         <SelectLegalOfficer
           legalOfficer={
             Object {
+              "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-              "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-              "email": "g.grain@adrastee-lyon.fr",
               "name": "Guillaume Grain",
+              "node": "http://logion.guillaume.com",
+              "postalAddress": Object {
+                "city": "LYON",
+                "company": "SELARL ADRASTEE",
+                "country": "France",
+                "line1": "Gare des Brotteaux",
+                "line2": "14, place Jules Ferry",
+                "postalCode": "69006",
+              },
+              "userIdentity": Object {
+                "email": "g.grain@adrastee-lyon.fr",
+                "firstName": "Patrick",
+                "lastName": "Gielen",
+                "phoneNumber": "+33 4 78 52 87 56",
+              },
             }
           }
           legalOfficerNumber={2}
           legalOfficers={
             Array [
               Object {
+                "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-                "details": "MODERO
-Huissier de Justice Etterbeek
-Rue Beckers 17
-1040 Etterbeek
-Belgique
-Tel: +32 498 237 107",
-                "email": "patrick@logion.network",
                 "name": "Patrick Gielen",
+                "node": "http://logion.patrick.com",
+                "postalAddress": Object {
+                  "city": "Etterbeek",
+                  "company": "MODERO",
+                  "country": "Belgique",
+                  "line1": "Huissier de Justice Etterbeek",
+                  "line2": "Rue Beckers 17",
+                  "postalCode": "1040",
+                },
+                "userIdentity": Object {
+                  "email": "patrick@logion.network",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+32 498 237 107",
+                },
               },
               Object {
+                "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-                "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-                "email": "g.grain@adrastee-lyon.fr",
                 "name": "Guillaume Grain",
+                "node": "http://logion.guillaume.com",
+                "postalAddress": Object {
+                  "city": "LYON",
+                  "company": "SELARL ADRASTEE",
+                  "country": "France",
+                  "line1": "Gare des Brotteaux",
+                  "line2": "14, place Jules Ferry",
+                  "postalCode": "69006",
+                },
+                "userIdentity": Object {
+                  "email": "g.grain@adrastee-lyon.fr",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+33 4 78 52 87 56",
+                },
               },
               Object {
+                "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-                "details": "AUXILIA CONSEILS 18
-Huissiers de Justice associés
-7 rue Jean Francois Champollion Parc Comitec
-18000 Bourges
-France
-Tel: +33 2 48 67 50 50",
-                "email": "alain.barland@auxilia-conseils.com",
                 "name": "Alain Barland",
+                "node": "http://logion.alain.com",
+                "postalAddress": Object {
+                  "city": "Bourges",
+                  "company": "AUXILIA CONSEILS 18",
+                  "country": "France",
+                  "line1": "Huissiers de Justice associés",
+                  "line2": "7 rue Jean Francois Champollion Parc Comitec",
+                  "postalCode": "18000",
+                },
+                "userIdentity": Object {
+                  "email": "alain.barland@auxilia-conseils.com",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+33 2 48 67 50 50",
+                },
               },
             ]
           }
           mode="view"
           otherLegalOfficer={
             Object {
+              "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-              "details": "MODERO
-Huissier de Justice Etterbeek
-Rue Beckers 17
-1040 Etterbeek
-Belgique
-Tel: +32 498 237 107",
-              "email": "patrick@logion.network",
               "name": "Patrick Gielen",
+              "node": "http://logion.patrick.com",
+              "postalAddress": Object {
+                "city": "Etterbeek",
+                "company": "MODERO",
+                "country": "Belgique",
+                "line1": "Huissier de Justice Etterbeek",
+                "line2": "Rue Beckers 17",
+                "postalCode": "1040",
+              },
+              "userIdentity": Object {
+                "email": "patrick@logion.network",
+                "firstName": "Patrick",
+                "lastName": "Gielen",
+                "phoneNumber": "+32 498 237 107",
+              },
             }
           }
           status="ACTIVATED"
@@ -759,67 +1029,112 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
         <SelectLegalOfficer
           legalOfficer={
             Object {
+              "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-              "details": "MODERO
-Huissier de Justice Etterbeek
-Rue Beckers 17
-1040 Etterbeek
-Belgique
-Tel: +32 498 237 107",
-              "email": "patrick@logion.network",
               "name": "Patrick Gielen",
+              "node": "http://logion.patrick.com",
+              "postalAddress": Object {
+                "city": "Etterbeek",
+                "company": "MODERO",
+                "country": "Belgique",
+                "line1": "Huissier de Justice Etterbeek",
+                "line2": "Rue Beckers 17",
+                "postalCode": "1040",
+              },
+              "userIdentity": Object {
+                "email": "patrick@logion.network",
+                "firstName": "Patrick",
+                "lastName": "Gielen",
+                "phoneNumber": "+32 498 237 107",
+              },
             }
           }
           legalOfficerNumber={1}
           legalOfficers={
             Array [
               Object {
+                "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-                "details": "MODERO
-Huissier de Justice Etterbeek
-Rue Beckers 17
-1040 Etterbeek
-Belgique
-Tel: +32 498 237 107",
-                "email": "patrick@logion.network",
                 "name": "Patrick Gielen",
+                "node": "http://logion.patrick.com",
+                "postalAddress": Object {
+                  "city": "Etterbeek",
+                  "company": "MODERO",
+                  "country": "Belgique",
+                  "line1": "Huissier de Justice Etterbeek",
+                  "line2": "Rue Beckers 17",
+                  "postalCode": "1040",
+                },
+                "userIdentity": Object {
+                  "email": "patrick@logion.network",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+32 498 237 107",
+                },
               },
               Object {
+                "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-                "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-                "email": "g.grain@adrastee-lyon.fr",
                 "name": "Guillaume Grain",
+                "node": "http://logion.guillaume.com",
+                "postalAddress": Object {
+                  "city": "LYON",
+                  "company": "SELARL ADRASTEE",
+                  "country": "France",
+                  "line1": "Gare des Brotteaux",
+                  "line2": "14, place Jules Ferry",
+                  "postalCode": "69006",
+                },
+                "userIdentity": Object {
+                  "email": "g.grain@adrastee-lyon.fr",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+33 4 78 52 87 56",
+                },
               },
               Object {
+                "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-                "details": "AUXILIA CONSEILS 18
-Huissiers de Justice associés
-7 rue Jean Francois Champollion Parc Comitec
-18000 Bourges
-France
-Tel: +33 2 48 67 50 50",
-                "email": "alain.barland@auxilia-conseils.com",
                 "name": "Alain Barland",
+                "node": "http://logion.alain.com",
+                "postalAddress": Object {
+                  "city": "Bourges",
+                  "company": "AUXILIA CONSEILS 18",
+                  "country": "France",
+                  "line1": "Huissiers de Justice associés",
+                  "line2": "7 rue Jean Francois Champollion Parc Comitec",
+                  "postalCode": "18000",
+                },
+                "userIdentity": Object {
+                  "email": "alain.barland@auxilia-conseils.com",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+33 2 48 67 50 50",
+                },
               },
             ]
           }
           mode="view"
           otherLegalOfficer={
             Object {
+              "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-              "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-              "email": "g.grain@adrastee-lyon.fr",
               "name": "Guillaume Grain",
+              "node": "http://logion.guillaume.com",
+              "postalAddress": Object {
+                "city": "LYON",
+                "company": "SELARL ADRASTEE",
+                "country": "France",
+                "line1": "Gare des Brotteaux",
+                "line2": "14, place Jules Ferry",
+                "postalCode": "69006",
+              },
+              "userIdentity": Object {
+                "email": "g.grain@adrastee-lyon.fr",
+                "firstName": "Patrick",
+                "lastName": "Gielen",
+                "phoneNumber": "+33 4 78 52 87 56",
+              },
             }
           }
           status="ACTIVATED"
@@ -831,67 +1146,112 @@ Tel: +33 4 78 52 87 56",
         <SelectLegalOfficer
           legalOfficer={
             Object {
+              "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-              "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-              "email": "g.grain@adrastee-lyon.fr",
               "name": "Guillaume Grain",
+              "node": "http://logion.guillaume.com",
+              "postalAddress": Object {
+                "city": "LYON",
+                "company": "SELARL ADRASTEE",
+                "country": "France",
+                "line1": "Gare des Brotteaux",
+                "line2": "14, place Jules Ferry",
+                "postalCode": "69006",
+              },
+              "userIdentity": Object {
+                "email": "g.grain@adrastee-lyon.fr",
+                "firstName": "Patrick",
+                "lastName": "Gielen",
+                "phoneNumber": "+33 4 78 52 87 56",
+              },
             }
           }
           legalOfficerNumber={2}
           legalOfficers={
             Array [
               Object {
+                "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-                "details": "MODERO
-Huissier de Justice Etterbeek
-Rue Beckers 17
-1040 Etterbeek
-Belgique
-Tel: +32 498 237 107",
-                "email": "patrick@logion.network",
                 "name": "Patrick Gielen",
+                "node": "http://logion.patrick.com",
+                "postalAddress": Object {
+                  "city": "Etterbeek",
+                  "company": "MODERO",
+                  "country": "Belgique",
+                  "line1": "Huissier de Justice Etterbeek",
+                  "line2": "Rue Beckers 17",
+                  "postalCode": "1040",
+                },
+                "userIdentity": Object {
+                  "email": "patrick@logion.network",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+32 498 237 107",
+                },
               },
               Object {
+                "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-                "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-                "email": "g.grain@adrastee-lyon.fr",
                 "name": "Guillaume Grain",
+                "node": "http://logion.guillaume.com",
+                "postalAddress": Object {
+                  "city": "LYON",
+                  "company": "SELARL ADRASTEE",
+                  "country": "France",
+                  "line1": "Gare des Brotteaux",
+                  "line2": "14, place Jules Ferry",
+                  "postalCode": "69006",
+                },
+                "userIdentity": Object {
+                  "email": "g.grain@adrastee-lyon.fr",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+33 4 78 52 87 56",
+                },
               },
               Object {
+                "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-                "details": "AUXILIA CONSEILS 18
-Huissiers de Justice associés
-7 rue Jean Francois Champollion Parc Comitec
-18000 Bourges
-France
-Tel: +33 2 48 67 50 50",
-                "email": "alain.barland@auxilia-conseils.com",
                 "name": "Alain Barland",
+                "node": "http://logion.alain.com",
+                "postalAddress": Object {
+                  "city": "Bourges",
+                  "company": "AUXILIA CONSEILS 18",
+                  "country": "France",
+                  "line1": "Huissiers de Justice associés",
+                  "line2": "7 rue Jean Francois Champollion Parc Comitec",
+                  "postalCode": "18000",
+                },
+                "userIdentity": Object {
+                  "email": "alain.barland@auxilia-conseils.com",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+33 2 48 67 50 50",
+                },
               },
             ]
           }
           mode="view"
           otherLegalOfficer={
             Object {
+              "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-              "details": "MODERO
-Huissier de Justice Etterbeek
-Rue Beckers 17
-1040 Etterbeek
-Belgique
-Tel: +32 498 237 107",
-              "email": "patrick@logion.network",
               "name": "Patrick Gielen",
+              "node": "http://logion.patrick.com",
+              "postalAddress": Object {
+                "city": "Etterbeek",
+                "company": "MODERO",
+                "country": "Belgique",
+                "line1": "Huissier de Justice Etterbeek",
+                "line2": "Rue Beckers 17",
+                "postalCode": "1040",
+              },
+              "userIdentity": Object {
+                "email": "patrick@logion.network",
+                "firstName": "Patrick",
+                "lastName": "Gielen",
+                "phoneNumber": "+32 498 237 107",
+              },
             }
           }
           status="ACTIVATED"
@@ -993,67 +1353,112 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
         <SelectLegalOfficer
           legalOfficer={
             Object {
+              "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-              "details": "MODERO
-Huissier de Justice Etterbeek
-Rue Beckers 17
-1040 Etterbeek
-Belgique
-Tel: +32 498 237 107",
-              "email": "patrick@logion.network",
               "name": "Patrick Gielen",
+              "node": "http://logion.patrick.com",
+              "postalAddress": Object {
+                "city": "Etterbeek",
+                "company": "MODERO",
+                "country": "Belgique",
+                "line1": "Huissier de Justice Etterbeek",
+                "line2": "Rue Beckers 17",
+                "postalCode": "1040",
+              },
+              "userIdentity": Object {
+                "email": "patrick@logion.network",
+                "firstName": "Patrick",
+                "lastName": "Gielen",
+                "phoneNumber": "+32 498 237 107",
+              },
             }
           }
           legalOfficerNumber={1}
           legalOfficers={
             Array [
               Object {
+                "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-                "details": "MODERO
-Huissier de Justice Etterbeek
-Rue Beckers 17
-1040 Etterbeek
-Belgique
-Tel: +32 498 237 107",
-                "email": "patrick@logion.network",
                 "name": "Patrick Gielen",
+                "node": "http://logion.patrick.com",
+                "postalAddress": Object {
+                  "city": "Etterbeek",
+                  "company": "MODERO",
+                  "country": "Belgique",
+                  "line1": "Huissier de Justice Etterbeek",
+                  "line2": "Rue Beckers 17",
+                  "postalCode": "1040",
+                },
+                "userIdentity": Object {
+                  "email": "patrick@logion.network",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+32 498 237 107",
+                },
               },
               Object {
+                "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-                "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-                "email": "g.grain@adrastee-lyon.fr",
                 "name": "Guillaume Grain",
+                "node": "http://logion.guillaume.com",
+                "postalAddress": Object {
+                  "city": "LYON",
+                  "company": "SELARL ADRASTEE",
+                  "country": "France",
+                  "line1": "Gare des Brotteaux",
+                  "line2": "14, place Jules Ferry",
+                  "postalCode": "69006",
+                },
+                "userIdentity": Object {
+                  "email": "g.grain@adrastee-lyon.fr",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+33 4 78 52 87 56",
+                },
               },
               Object {
+                "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-                "details": "AUXILIA CONSEILS 18
-Huissiers de Justice associés
-7 rue Jean Francois Champollion Parc Comitec
-18000 Bourges
-France
-Tel: +33 2 48 67 50 50",
-                "email": "alain.barland@auxilia-conseils.com",
                 "name": "Alain Barland",
+                "node": "http://logion.alain.com",
+                "postalAddress": Object {
+                  "city": "Bourges",
+                  "company": "AUXILIA CONSEILS 18",
+                  "country": "France",
+                  "line1": "Huissiers de Justice associés",
+                  "line2": "7 rue Jean Francois Champollion Parc Comitec",
+                  "postalCode": "18000",
+                },
+                "userIdentity": Object {
+                  "email": "alain.barland@auxilia-conseils.com",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+33 2 48 67 50 50",
+                },
               },
             ]
           }
           mode="view"
           otherLegalOfficer={
             Object {
+              "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-              "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-              "email": "g.grain@adrastee-lyon.fr",
               "name": "Guillaume Grain",
+              "node": "http://logion.guillaume.com",
+              "postalAddress": Object {
+                "city": "LYON",
+                "company": "SELARL ADRASTEE",
+                "country": "France",
+                "line1": "Gare des Brotteaux",
+                "line2": "14, place Jules Ferry",
+                "postalCode": "69006",
+              },
+              "userIdentity": Object {
+                "email": "g.grain@adrastee-lyon.fr",
+                "firstName": "Patrick",
+                "lastName": "Gielen",
+                "phoneNumber": "+33 4 78 52 87 56",
+              },
             }
           }
           status="PENDING"
@@ -1065,67 +1470,112 @@ Tel: +33 4 78 52 87 56",
         <SelectLegalOfficer
           legalOfficer={
             Object {
+              "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-              "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-              "email": "g.grain@adrastee-lyon.fr",
               "name": "Guillaume Grain",
+              "node": "http://logion.guillaume.com",
+              "postalAddress": Object {
+                "city": "LYON",
+                "company": "SELARL ADRASTEE",
+                "country": "France",
+                "line1": "Gare des Brotteaux",
+                "line2": "14, place Jules Ferry",
+                "postalCode": "69006",
+              },
+              "userIdentity": Object {
+                "email": "g.grain@adrastee-lyon.fr",
+                "firstName": "Patrick",
+                "lastName": "Gielen",
+                "phoneNumber": "+33 4 78 52 87 56",
+              },
             }
           }
           legalOfficerNumber={2}
           legalOfficers={
             Array [
               Object {
+                "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-                "details": "MODERO
-Huissier de Justice Etterbeek
-Rue Beckers 17
-1040 Etterbeek
-Belgique
-Tel: +32 498 237 107",
-                "email": "patrick@logion.network",
                 "name": "Patrick Gielen",
+                "node": "http://logion.patrick.com",
+                "postalAddress": Object {
+                  "city": "Etterbeek",
+                  "company": "MODERO",
+                  "country": "Belgique",
+                  "line1": "Huissier de Justice Etterbeek",
+                  "line2": "Rue Beckers 17",
+                  "postalCode": "1040",
+                },
+                "userIdentity": Object {
+                  "email": "patrick@logion.network",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+32 498 237 107",
+                },
               },
               Object {
+                "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-                "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-                "email": "g.grain@adrastee-lyon.fr",
                 "name": "Guillaume Grain",
+                "node": "http://logion.guillaume.com",
+                "postalAddress": Object {
+                  "city": "LYON",
+                  "company": "SELARL ADRASTEE",
+                  "country": "France",
+                  "line1": "Gare des Brotteaux",
+                  "line2": "14, place Jules Ferry",
+                  "postalCode": "69006",
+                },
+                "userIdentity": Object {
+                  "email": "g.grain@adrastee-lyon.fr",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+33 4 78 52 87 56",
+                },
               },
               Object {
+                "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-                "details": "AUXILIA CONSEILS 18
-Huissiers de Justice associés
-7 rue Jean Francois Champollion Parc Comitec
-18000 Bourges
-France
-Tel: +33 2 48 67 50 50",
-                "email": "alain.barland@auxilia-conseils.com",
                 "name": "Alain Barland",
+                "node": "http://logion.alain.com",
+                "postalAddress": Object {
+                  "city": "Bourges",
+                  "company": "AUXILIA CONSEILS 18",
+                  "country": "France",
+                  "line1": "Huissiers de Justice associés",
+                  "line2": "7 rue Jean Francois Champollion Parc Comitec",
+                  "postalCode": "18000",
+                },
+                "userIdentity": Object {
+                  "email": "alain.barland@auxilia-conseils.com",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+33 2 48 67 50 50",
+                },
               },
             ]
           }
           mode="view"
           otherLegalOfficer={
             Object {
+              "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-              "details": "MODERO
-Huissier de Justice Etterbeek
-Rue Beckers 17
-1040 Etterbeek
-Belgique
-Tel: +32 498 237 107",
-              "email": "patrick@logion.network",
               "name": "Patrick Gielen",
+              "node": "http://logion.patrick.com",
+              "postalAddress": Object {
+                "city": "Etterbeek",
+                "company": "MODERO",
+                "country": "Belgique",
+                "line1": "Huissier de Justice Etterbeek",
+                "line2": "Rue Beckers 17",
+                "postalCode": "1040",
+              },
+              "userIdentity": Object {
+                "email": "patrick@logion.network",
+                "firstName": "Patrick",
+                "lastName": "Gielen",
+                "phoneNumber": "+32 498 237 107",
+              },
             }
           }
           status="PENDING"
@@ -1229,67 +1679,112 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
         <SelectLegalOfficer
           legalOfficer={
             Object {
+              "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-              "details": "MODERO
-Huissier de Justice Etterbeek
-Rue Beckers 17
-1040 Etterbeek
-Belgique
-Tel: +32 498 237 107",
-              "email": "patrick@logion.network",
               "name": "Patrick Gielen",
+              "node": "http://logion.patrick.com",
+              "postalAddress": Object {
+                "city": "Etterbeek",
+                "company": "MODERO",
+                "country": "Belgique",
+                "line1": "Huissier de Justice Etterbeek",
+                "line2": "Rue Beckers 17",
+                "postalCode": "1040",
+              },
+              "userIdentity": Object {
+                "email": "patrick@logion.network",
+                "firstName": "Patrick",
+                "lastName": "Gielen",
+                "phoneNumber": "+32 498 237 107",
+              },
             }
           }
           legalOfficerNumber={1}
           legalOfficers={
             Array [
               Object {
+                "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-                "details": "MODERO
-Huissier de Justice Etterbeek
-Rue Beckers 17
-1040 Etterbeek
-Belgique
-Tel: +32 498 237 107",
-                "email": "patrick@logion.network",
                 "name": "Patrick Gielen",
+                "node": "http://logion.patrick.com",
+                "postalAddress": Object {
+                  "city": "Etterbeek",
+                  "company": "MODERO",
+                  "country": "Belgique",
+                  "line1": "Huissier de Justice Etterbeek",
+                  "line2": "Rue Beckers 17",
+                  "postalCode": "1040",
+                },
+                "userIdentity": Object {
+                  "email": "patrick@logion.network",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+32 498 237 107",
+                },
               },
               Object {
+                "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-                "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-                "email": "g.grain@adrastee-lyon.fr",
                 "name": "Guillaume Grain",
+                "node": "http://logion.guillaume.com",
+                "postalAddress": Object {
+                  "city": "LYON",
+                  "company": "SELARL ADRASTEE",
+                  "country": "France",
+                  "line1": "Gare des Brotteaux",
+                  "line2": "14, place Jules Ferry",
+                  "postalCode": "69006",
+                },
+                "userIdentity": Object {
+                  "email": "g.grain@adrastee-lyon.fr",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+33 4 78 52 87 56",
+                },
               },
               Object {
+                "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-                "details": "AUXILIA CONSEILS 18
-Huissiers de Justice associés
-7 rue Jean Francois Champollion Parc Comitec
-18000 Bourges
-France
-Tel: +33 2 48 67 50 50",
-                "email": "alain.barland@auxilia-conseils.com",
                 "name": "Alain Barland",
+                "node": "http://logion.alain.com",
+                "postalAddress": Object {
+                  "city": "Bourges",
+                  "company": "AUXILIA CONSEILS 18",
+                  "country": "France",
+                  "line1": "Huissiers de Justice associés",
+                  "line2": "7 rue Jean Francois Champollion Parc Comitec",
+                  "postalCode": "18000",
+                },
+                "userIdentity": Object {
+                  "email": "alain.barland@auxilia-conseils.com",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+33 2 48 67 50 50",
+                },
               },
             ]
           }
           mode="view"
           otherLegalOfficer={
             Object {
+              "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-              "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-              "email": "g.grain@adrastee-lyon.fr",
               "name": "Guillaume Grain",
+              "node": "http://logion.guillaume.com",
+              "postalAddress": Object {
+                "city": "LYON",
+                "company": "SELARL ADRASTEE",
+                "country": "France",
+                "line1": "Gare des Brotteaux",
+                "line2": "14, place Jules Ferry",
+                "postalCode": "69006",
+              },
+              "userIdentity": Object {
+                "email": "g.grain@adrastee-lyon.fr",
+                "firstName": "Patrick",
+                "lastName": "Gielen",
+                "phoneNumber": "+33 4 78 52 87 56",
+              },
             }
           }
           status="PENDING"
@@ -1301,67 +1796,112 @@ Tel: +33 4 78 52 87 56",
         <SelectLegalOfficer
           legalOfficer={
             Object {
+              "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-              "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-              "email": "g.grain@adrastee-lyon.fr",
               "name": "Guillaume Grain",
+              "node": "http://logion.guillaume.com",
+              "postalAddress": Object {
+                "city": "LYON",
+                "company": "SELARL ADRASTEE",
+                "country": "France",
+                "line1": "Gare des Brotteaux",
+                "line2": "14, place Jules Ferry",
+                "postalCode": "69006",
+              },
+              "userIdentity": Object {
+                "email": "g.grain@adrastee-lyon.fr",
+                "firstName": "Patrick",
+                "lastName": "Gielen",
+                "phoneNumber": "+33 4 78 52 87 56",
+              },
             }
           }
           legalOfficerNumber={2}
           legalOfficers={
             Array [
               Object {
+                "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-                "details": "MODERO
-Huissier de Justice Etterbeek
-Rue Beckers 17
-1040 Etterbeek
-Belgique
-Tel: +32 498 237 107",
-                "email": "patrick@logion.network",
                 "name": "Patrick Gielen",
+                "node": "http://logion.patrick.com",
+                "postalAddress": Object {
+                  "city": "Etterbeek",
+                  "company": "MODERO",
+                  "country": "Belgique",
+                  "line1": "Huissier de Justice Etterbeek",
+                  "line2": "Rue Beckers 17",
+                  "postalCode": "1040",
+                },
+                "userIdentity": Object {
+                  "email": "patrick@logion.network",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+32 498 237 107",
+                },
               },
               Object {
+                "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-                "details": "SELARL ADRASTEE
-Gare des Brotteaux
-14, place Jules Ferry
-69006 LYON
-France
-Tel: +33 4 78 52 87 56",
-                "email": "g.grain@adrastee-lyon.fr",
                 "name": "Guillaume Grain",
+                "node": "http://logion.guillaume.com",
+                "postalAddress": Object {
+                  "city": "LYON",
+                  "company": "SELARL ADRASTEE",
+                  "country": "France",
+                  "line1": "Gare des Brotteaux",
+                  "line2": "14, place Jules Ferry",
+                  "postalCode": "69006",
+                },
+                "userIdentity": Object {
+                  "email": "g.grain@adrastee-lyon.fr",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+33 4 78 52 87 56",
+                },
               },
               Object {
+                "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
-                "details": "AUXILIA CONSEILS 18
-Huissiers de Justice associés
-7 rue Jean Francois Champollion Parc Comitec
-18000 Bourges
-France
-Tel: +33 2 48 67 50 50",
-                "email": "alain.barland@auxilia-conseils.com",
                 "name": "Alain Barland",
+                "node": "http://logion.alain.com",
+                "postalAddress": Object {
+                  "city": "Bourges",
+                  "company": "AUXILIA CONSEILS 18",
+                  "country": "France",
+                  "line1": "Huissiers de Justice associés",
+                  "line2": "7 rue Jean Francois Champollion Parc Comitec",
+                  "postalCode": "18000",
+                },
+                "userIdentity": Object {
+                  "email": "alain.barland@auxilia-conseils.com",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+33 2 48 67 50 50",
+                },
               },
             ]
           }
           mode="view"
           otherLegalOfficer={
             Object {
+              "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-              "details": "MODERO
-Huissier de Justice Etterbeek
-Rue Beckers 17
-1040 Etterbeek
-Belgique
-Tel: +32 498 237 107",
-              "email": "patrick@logion.network",
               "name": "Patrick Gielen",
+              "node": "http://logion.patrick.com",
+              "postalAddress": Object {
+                "city": "Etterbeek",
+                "company": "MODERO",
+                "country": "Belgique",
+                "line1": "Huissier de Justice Etterbeek",
+                "line2": "Rue Beckers 17",
+                "postalCode": "1040",
+              },
+              "userIdentity": Object {
+                "email": "patrick@logion.network",
+                "firstName": "Patrick",
+                "lastName": "Gielen",
+                "phoneNumber": "+32 498 237 107",
+              },
             }
           }
           status="PENDING"
