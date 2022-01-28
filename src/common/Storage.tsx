@@ -1,4 +1,5 @@
 import moment from 'moment';
+import { LegalOfficer } from '../directory/DirectoryApi';
 import { AccountTokens, Token } from "./types/Accounts";
 
 export function storeTokens(tokens: AccountTokens) {
@@ -73,4 +74,28 @@ export function clearCurrentAddress() {
 export function loadCurrentAddress(): string | null {
     const storage = getStorage();
     return storage.getItem(CURRENT_ADDRESS_KEY);
+}
+
+export function storeLegalOfficers(legalOfficers: LegalOfficer[]) {
+    const storage = getStorage();
+    storage.setItem(LEGAL_OFFICERS_KEY, JSON.stringify(legalOfficers));
+}
+
+const LEGAL_OFFICERS_KEY = "legalOfficers";
+
+export function loadLegalOfficers(): LegalOfficer[] {
+    const storage = getStorage();
+    try {
+        const item = storage.getItem(LEGAL_OFFICERS_KEY);
+        let legalOfficers: LegalOfficer[];
+        if(!item) {
+            legalOfficers = [];
+        } else {
+            legalOfficers = JSON.parse(item);
+        }
+        return legalOfficers;
+    } catch(e) {
+        console.log("Unable to read legal officers from storage");
+        return [];
+    }
 }
