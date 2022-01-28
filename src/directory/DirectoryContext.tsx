@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { loadLegalOfficers, storeLegalOfficers } from "../common/Storage";
 import { Children } from "../common/types/Helpers";
 import { DirectoryApi, LegalOfficer } from "./DirectoryApi";
 
@@ -6,6 +7,7 @@ export interface DirectoryContext {
     legalOfficers: LegalOfficer[];
     isLegalOfficer: (address: string | undefined) => boolean;
     getOfficer: (address: string | undefined) => LegalOfficer | null;
+    directoryFailure: boolean;
 }
 
 const DirectoryContextObject: React.Context<DirectoryContext> = React.createContext(initialContextValue());
@@ -15,6 +17,7 @@ function initialContextValue(): DirectoryContext {
         legalOfficers: [],
         isLegalOfficer: () => false,
         getOfficer: () => null,
+        directoryFailure: false,
     };
 }
 
@@ -31,7 +34,17 @@ export function DirectoryContextProvider(props: Props) {
             setFetched(true);
             (async function() {
                 const api = new DirectoryApi();
-                const legalOfficers = await api.getLegalOfficers();
+                let legalOfficers: LegalOfficer[];
+                let directoryFailure: boolean;
+                try {
+                    legalOfficers = await api.getLegalOfficers();
+                    storeLegalOfficers(legalOfficers);
+                    directoryFailure = false;
+                } catch(error) {
+                    console.log("Directory unreachable, using stored data.");
+                    legalOfficers = loadLegalOfficers();
+                    directoryFailure = true;
+                }
 
                 const isLegalOfficer = (address: string | undefined): boolean => {
                     if(address === undefined) {
@@ -59,6 +72,7 @@ export function DirectoryContextProvider(props: Props) {
                     legalOfficers,
                     isLegalOfficer,
                     getOfficer,
+                    directoryFailure,
                 });
             })();
         }
