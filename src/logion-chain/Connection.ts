@@ -5,7 +5,6 @@ import config from '../config';
 import * as definitions from './interfaces/definitions';
 
 export interface NodeMetadata {
-    name: string,
     peerId: string
 }
 
@@ -20,7 +19,7 @@ function buildProvider(providerSocket?: string): WsProvider {
     if(providerSocket !== undefined) {
         return new WsProvider(providerSocket);
     } else {
-        const sockets = config.availableNodes.map(node => node.socket);
+        const sockets = config.edgeNodes.map(node => node.socket);
         sockets.sort(() => Math.random() - 0.5);
         return new WsProvider(sockets, 100);
     }

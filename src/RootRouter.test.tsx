@@ -1,6 +1,6 @@
 jest.mock('./logion-chain');
 jest.mock('./common/CommonContext');
-jest.mock('./common/types/LegalOfficer');
+jest.mock('./directory/DirectoryContext');
 
 import { shallowRender } from './tests';
 

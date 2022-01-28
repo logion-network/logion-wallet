@@ -27,7 +27,7 @@ export interface LogionChainContextType {
     api: ApiPromise | null,
     injectedAccountsConsumptionState: ConsumptionStatus
     injectedAccounts: InjectedAccountWithMeta[] | null,
-    availableNodes: Node[],
+    edgeNodes: Node[],
     connectedNodeMetadata: NodeMetadata | null,
     extensionsEnabled: boolean,
 }
@@ -40,7 +40,7 @@ const initState = (): FullLogionChainContextType => ({
     api: null,
     injectedAccountsConsumptionState: 'PENDING',
     injectedAccounts: null,
-    availableNodes: config.availableNodes,
+    edgeNodes: config.edgeNodes,
     connectedNodeMetadata: null,
     extensionsEnabled: false,
     connecting: false,
@@ -106,9 +106,7 @@ const connect = (state: FullLogionChainContextType, dispatch: React.Dispatch<Act
         const api = await buildApi();
         dispatch({ type: 'CONNECT_SUCCESS', api });
         const peerId = await api.rpc.system.localPeerId();
-        const node = config.availableNodes.find(node => node.peerId === peerId.toString());
         dispatch({type: 'SET_NODE_METADATA', connectedNodeMetadata: {
-            name: node?.name || "UNKOWN NODE",
             peerId : peerId.toString()
         }})
     })();

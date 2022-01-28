@@ -1,10 +1,10 @@
 import React from "react";
-import { LegalOfficer } from "../../common/types/LegalOfficer";
 
 import { ProtectionRequestStatus } from "../../common/types/ModelTypes";
 
 import SelectLegalOfficer, { Mode } from './SelectLegalOfficer';
 import './LegalOfficers.css';
+import { LegalOfficer } from "../../directory/DirectoryApi";
 
 export interface Props {
     legalOfficers: LegalOfficer[],

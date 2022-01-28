@@ -1,10 +1,10 @@
 jest.mock('../UserContext');
 jest.mock('../../logion-chain');
 jest.mock('../../common/CommonContext');
+jest.mock('../../directory/DirectoryContext');
 jest.mock('../../logion-chain/Signature');
 jest.mock('../../logion-chain/Recovery');
 jest.mock('./Model');
-jest.mock('../../common/types/LegalOfficer');
 
 import { render, waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';

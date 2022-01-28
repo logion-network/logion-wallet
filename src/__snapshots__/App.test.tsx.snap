@@ -4,7 +4,9 @@ exports[`renders 1`] = `
 <ResponsiveProvider>
   <LogionChainContextProvider>
     <VersionContextProvider>
-      <Main />
+      <DirectoryContextProvider>
+        <Main />
+      </DirectoryContextProvider>
     </VersionContextProvider>
   </LogionChainContextProvider>
 </ResponsiveProvider>

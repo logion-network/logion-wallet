@@ -1,6 +1,5 @@
 import moment, { Moment } from 'moment';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
-import { isLegalOfficer } from './LegalOfficer';
 
 export interface Token {
     readonly value: string;
@@ -89,7 +88,8 @@ export class AccountTokens {
 export function buildAccounts(
     injectedAccounts: InjectedAccountWithMeta[],
     userAddress: string | undefined,
-    tokens: AccountTokens
+    tokens: AccountTokens,
+    isLegalOfficer: (address: string) => boolean,
 ): Accounts {
     const selectedAddress = currentOrDefaultAddress(injectedAccounts, userAddress, tokens);
 

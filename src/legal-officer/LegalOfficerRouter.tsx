@@ -37,9 +37,9 @@ import DangerFrame from '../common/DangerFrame';
 import './LegalOfficerRouter.css';
 
 export default function LegalOfficerRouter() {
-    const { accounts, nodesDown } = useCommonContext();
+    const { accounts, availableLegalOfficers } = useCommonContext();
 
-    if(nodesDown.length > 0 && (nodesDown.find(node => node.owner === accounts?.current?.address) !== undefined)) {
+    if(availableLegalOfficers.find(node => node.address === accounts?.current?.address) === undefined) {
         return (
             <FullWidthPane
                 className="node-unreacheable"

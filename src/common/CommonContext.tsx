@@ -5,7 +5,7 @@ import moment from 'moment';
 import { useLogionChain } from '../logion-chain';
 import { CoinBalance, getBalances } from '../logion-chain/Balances';
 
-import config, { Node } from '../config';
+import { LegalOfficer } from '../directory/DirectoryApi';
 import {
     AxiosFactory,
     buildAxiosFactory,
@@ -33,6 +33,7 @@ import { LegalOfficerCase, IdentityLocType } from "../logion-chain/Types";
 import { toDecimalString, UUID } from "../logion-chain/UUID";
 import { getLegalOfficerCasesMap } from "../logion-chain/LogionLoc";
 import { authenticate } from "./Authentication";
+import { DirectoryContext, useDirectoryContext } from "../directory/DirectoryContext";
 
 const DEFAULT_NOOP = () => {};
 
@@ -65,8 +66,9 @@ export interface CommonContext {
     voidIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null;
     isCurrentAuthenticated: () => boolean;
     authenticate: (address: string[]) => Promise<void>;
-    nodesUp: Node[];
-    nodesDown: Node[];
+    nodesUp: Endpoint[];
+    nodesDown: Endpoint[];
+    availableLegalOfficers: LegalOfficer[];
 }
 
 interface FullCommonContext extends CommonContext {
@@ -103,8 +105,9 @@ function initialContextValue(): FullCommonContext {
         voidIdentityLocsByType: null,
         isCurrentAuthenticated: () => false,
         authenticate: (_: string[]) => Promise.reject(),
-        nodesUp: config.availableNodes,
-        nodesDown: []
+        nodesUp: [],
+        nodesDown: [],
+        availableLegalOfficers: [],
     }
 }
 
@@ -158,8 +161,10 @@ interface Action {
     voidTransactionLocs?: RequestAndLoc[];
     voidIdentityLocsByType?: Record<IdentityLocType, RequestAndLoc[]>;
     authenticate?: (address: string[]) => Promise<void>;
-    nodesUp?: Node[];
-    nodesDown?: Node[];
+    nodesUp?: Endpoint[];
+    nodesDown?: Endpoint[];
+    directoryContext?: DirectoryContext;
+    availableLegalOfficers?: LegalOfficer[];
 }
 
 const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, action: Action): FullCommonContext => {
@@ -170,12 +175,12 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                 selectAddress: action.selectAddress!
             };
         case 'SELECT_ADDRESS': {
-            const accounts = buildAccounts(state.injectedAccounts!, action.newAddress!, state.tokens);
+            const accounts = buildAccounts(state.injectedAccounts!, action.newAddress!, state.tokens, action.directoryContext!.isLegalOfficer);
             storeCurrentAddress(action.newAddress!);
             return {
                 ...state,
                 accounts,
-                axiosFactory: buildAxiosFactory(accounts),
+                axiosFactory: buildAxiosFactory(accounts, action.directoryContext!.legalOfficers!),
                 isCurrentAuthenticated: () => state.tokens.isAuthenticated(moment(), accounts.current?.address),
             };
         }
@@ -185,7 +190,7 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                 ...state,
                 injectedAccounts: action.injectedAccounts!,
                 accounts,
-                axiosFactory: buildAxiosFactory(accounts),
+                axiosFactory: buildAxiosFactory(accounts, action.directoryContext!.legalOfficers!),
                 isCurrentAuthenticated: () => state.tokens.isAuthenticated(moment(), accounts.current?.address),
             };
         case 'FETCH_IN_PROGRESS':
@@ -214,6 +219,7 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                     closedIdentityLocsByType: action.closedIdentityLocsByType!,
                     voidTransactionLocs: action.voidTransactionLocs!,
                     voidIdentityLocsByType: action.voidIdentityLocsByType!,
+                    availableLegalOfficers: action.availableLegalOfficers!,
                     nodesUp,
                     nodesDown,
                 };
@@ -238,12 +244,12 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
         case 'SET_TOKENS': {
             const tokens = state.tokens.merge(action.newTokens!);
             storeTokens(tokens);
-            const accounts = buildAccounts(state.injectedAccounts!, state.accounts?.current?.address, tokens);
+            const accounts = buildAccounts(state.injectedAccounts!, state.accounts?.current?.address, tokens, action.directoryContext!.isLegalOfficer);
             return {
                 ...state,
                 tokens,
                 accounts,
-                axiosFactory: buildAxiosFactory(accounts),
+                axiosFactory: buildAxiosFactory(accounts, action.directoryContext!.legalOfficers!),
                 isCurrentAuthenticated: () => tokens.isAuthenticated(moment(), accounts.current?.address),
             };
         }
@@ -256,13 +262,13 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
             clearTokens();
             clearCurrentAddress();
             const tokens = new AccountTokens({});
-            const accounts = buildAccounts(state.injectedAccounts!, undefined, tokens);
+            const accounts = buildAccounts(state.injectedAccounts!, undefined, tokens, action.directoryContext!.isLegalOfficer);
             clearInterval(state.timer!);
             return {
                 ...state,
                 tokens,
                 accounts,
-                axiosFactory: buildAxiosFactory(accounts),
+                axiosFactory: buildAxiosFactory(accounts, action.directoryContext!.legalOfficers!),
                 isCurrentAuthenticated: () => false,
             };
         }
@@ -280,7 +286,7 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
             const tokens = state.tokens.refresh(moment());
             if(!tokens.equals(state.tokens)) {
                 storeTokens(tokens);
-                const accounts = buildAccounts(state.injectedAccounts!, state.accounts?.current?.address, tokens);
+                const accounts = buildAccounts(state.injectedAccounts!, state.accounts?.current?.address, tokens, action.directoryContext!.isLegalOfficer);
                 return {
                     ...state,
                     tokens,
@@ -310,6 +316,7 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
 export function CommonContextProvider(props: Props) {
     const { api, injectedAccounts } = useLogionChain();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
+    const directoryContext = useDirectoryContext();
 
     const refreshRequests = useCallback((clearOnRefresh?: boolean) => {
         const now = moment();
@@ -348,11 +355,11 @@ export function CommonContextProvider(props: Props) {
 
                 let initialState;
                 if(currentAccount.isLegalOfficer) {
-                    initialState = allUp<Endpoint>(config.availableNodes
-                        .filter(node => node.owner === currentAccount.address)
-                        .map(node => ({url: node.api})));
+                    initialState = allUp<Endpoint>(directoryContext.legalOfficers
+                        .filter(legalOfficer => legalOfficer.address === currentAccount.address)
+                        .map(legalOfficer => ({url: legalOfficer.node})));
                 } else {
-                    initialState = allUp<Endpoint>(config.availableNodes.map(node => ({url: node.api})));
+                    initialState = allUp<Endpoint>(directoryContext.legalOfficers.map(legalOfficer => ({url: legalOfficer.node})));
                 }
 
                 const anyClient = new AnySourceHttpClient<Endpoint, TransactionsSet>(initialState, currentAccount.token?.value);
@@ -439,19 +446,27 @@ export function CommonContextProvider(props: Props) {
                     'Logion': voidRequestsAndLocs(openedIdentityLocsOnlyLogion, locs)
                         .concat(voidRequestsAndLocs(closedIdentityLocsOnlyLogion, locs))
                 }
-                let nodesUp: Node[] | undefined;
-                let nodesDown: Node[] | undefined;
+
+                let nodesUp: Endpoint[] | undefined;
+                let nodesDown: Endpoint[] | undefined;
                 const resultingState = multiClient.getState();
                 if(!currentAccount.isLegalOfficer) {
-                    nodesUp = resultingState.nodesUp
-                        .map(endpoint => config.availableNodes.find(node => node.api === endpoint.url)!);
-                    nodesDown = resultingState.nodesDown
-                        .map(endpoint => config.availableNodes.find(node => node.api === endpoint.url)!);
+                    nodesUp = resultingState.nodesUp;
+                    nodesDown = resultingState.nodesDown;
                 } else if(resultingState.nodesDown.length > 0) {
-                    const legalOfficerNode = resultingState.nodesDown[0];
-                    nodesUp = config.availableNodes
-                        .filter(node => node.api !== legalOfficerNode.url);
-                    nodesDown = [ config.availableNodes.find(node => node.api === legalOfficerNode.url)! ];
+                    nodesDown = resultingState.nodesDown;
+                    const legalOfficerNode = nodesDown[0];
+                    nodesUp = directoryContext.legalOfficers
+                        .filter(legalOfficer => legalOfficer.node !== legalOfficerNode.url)
+                        .map(legalOfficer => ({url: legalOfficer.node}));
+                }
+
+                let availableLegalOfficers: LegalOfficer[];
+                if(nodesDown) {
+                    const unavailableNodesSet = new Set(nodesDown.map(endpoint => endpoint.url));
+                    availableLegalOfficers = directoryContext.legalOfficers.filter(legalOfficer => !unavailableNodesSet.has(legalOfficer.node));
+                } else {
+                    availableLegalOfficers = directoryContext.legalOfficers;
                 }
 
                 dispatch({
@@ -470,10 +485,12 @@ export function CommonContextProvider(props: Props) {
                     voidIdentityLocsByType,
                     nodesUp,
                     nodesDown,
+                    availableLegalOfficers,
+                    directoryContext,
                 });
             })();
         }
-    }, [ api, dispatch, contextValue ]);
+    }, [ api, dispatch, contextValue, directoryContext ]);
 
     function voidRequestsAndLocs(requests: LocRequest[], locs: Record<string, LegalOfficerCase>): RequestAndLoc[] {
         return requests
@@ -488,15 +505,24 @@ export function CommonContextProvider(props: Props) {
     }
 
     const authenticateCallback = useCallback(async (address: string[]) => {
-        for(let i = 0; i < config.availableNodes.length; ++i) {
-            const node = config.availableNodes[i];
+        for(let i = 0; i < directoryContext.legalOfficers.length; ++i) {
+            const legalOfficer = directoryContext.legalOfficers[i];
             try {
-                const tokens = await authenticate(buildAxios(contextValue.accounts!, node), address);
-                dispatch({type: 'SET_TOKENS', newTokens: tokens});
+                const tokens = await authenticate(buildAxios(contextValue.accounts!, {url: legalOfficer.node}), address);
+                dispatch({
+                    type: 'SET_TOKENS',
+                    newTokens: tokens,
+                    directoryContext,
+                });
                 break;
             } catch(error) {}
         }
-    }, [ contextValue.accounts ]);
+    }, [ contextValue.accounts, directoryContext ]);
+
+    const logout = useCallback(() => dispatch({
+        type: 'LOGOUT',
+        directoryContext,
+    }), [ directoryContext ]);
 
     useEffect(() => {
         if(api !== null
@@ -514,14 +540,16 @@ export function CommonContextProvider(props: Props) {
                 dispatch({
                     type: 'SELECT_ADDRESS',
                     newAddress: address,
+                    directoryContext,
                 })
             }
             dispatch({
                 type: 'SET_SELECT_ADDRESS',
                 selectAddress,
+                directoryContext,
             });
         }
-    }, [ contextValue ]);
+    }, [ contextValue, directoryContext ]);
 
     useEffect(() => {
         if(contextValue.setColorTheme === null) {
@@ -555,10 +583,11 @@ export function CommonContextProvider(props: Props) {
             dispatch({
                 type: 'SET_ADDRESSES',
                 injectedAccounts,
-                accounts: buildAccounts(injectedAccounts, currentAddress, contextValue.tokens)
+                accounts: buildAccounts(injectedAccounts, currentAddress, contextValue.tokens, directoryContext.isLegalOfficer),
+                directoryContext,
             });
         }
-    }, [ injectedAccounts, contextValue ]);
+    }, [ injectedAccounts, contextValue, directoryContext ]);
 
     useEffect(() => {
         if(contextValue.setTokens === DEFAULT_NOOP) {
@@ -576,14 +605,13 @@ export function CommonContextProvider(props: Props) {
     }, [ contextValue ]);
 
     useEffect(() => {
-        if(contextValue.logout === DEFAULT_NOOP) {
-            const logout = () => dispatch({ type: 'LOGOUT' });
+        if(contextValue.logout !== logout) {
             dispatch({
                 type: 'SET_LOGOUT',
                 logout,
             });
         }
-    }, [ contextValue ]);
+    }, [ contextValue, logout ]);
 
     useEffect(() => {
         if(contextValue.timer === undefined) {

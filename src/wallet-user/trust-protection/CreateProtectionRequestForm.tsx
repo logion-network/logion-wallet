@@ -17,11 +17,11 @@ import { useCommonContext } from "../../common/CommonContext";
 import LegalOfficers from './LegalOfficers';
 
 import './CreateProtectionRequestForm.css';
-import { LegalOfficer, legalOfficers } from '../../common/types/LegalOfficer';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
 import { isValidAccountId } from '../../logion-chain/Accounts';
 import NetworkWarning from '../../common/NetworkWarning';
 import { SETTINGS_PATH } from '../UserRouter';
+import { LegalOfficer } from '../../directory/DirectoryApi';
 
 export interface Props {
     isRecovery: boolean,
@@ -43,7 +43,7 @@ interface FormValues {
 export default function CreateProtectionRequestForm(props: Props) {
     const { api } = useLogionChain();
     const { control, handleSubmit, formState: {errors} } = useForm<FormValues>();
-    const { accounts, colorTheme, nodesDown } = useCommonContext();
+    const { accounts, colorTheme, nodesDown, availableLegalOfficers } = useCommonContext();
     const { createProtectionRequest, refreshRequests } = useUserContext();
     const [ legalOfficer1, setLegalOfficer1 ] = useState<LegalOfficer | null>(null);
     const [ legalOfficer2, setLegalOfficer2 ] = useState<LegalOfficer | null>(null);
@@ -232,7 +232,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                         }
 
                         <LegalOfficers
-                            legalOfficers={ legalOfficers(nodesDown) }
+                            legalOfficers={ availableLegalOfficers }
                             legalOfficer1={ legalOfficer1 }
                             setLegalOfficer1={ setLegalOfficer1 }
                             legalOfficer2={ legalOfficer2 }

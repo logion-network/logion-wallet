@@ -151,8 +151,8 @@ export function UserContextProvider(props: Props) {
 
             (async function () {
                 const initialState: MultiSourceHttpClientState<Endpoint> = {
-                    nodesUp: nodesUp.map(node => ({ url: node.api })),
-                    nodesDown: nodesDown.map(node => ({ url: node.api })),
+                    nodesUp,
+                    nodesDown,
                 }
                 const multiClient = new MultiSourceHttpClient<Endpoint, ProtectionRequest[]>(initialState, accounts!.current!.token!.value);
                 let result: MultiResponse<ProtectionRequest[]>;
@@ -212,10 +212,11 @@ export function UserContextProvider(props: Props) {
                 && accounts.current !== undefined
                 && contextValue.dataAddress !== accounts.current.address
                 && contextValue.fetchForAddress !== accounts.current.address
-                && isCurrentAuthenticated()) {
+                && isCurrentAuthenticated()
+                && nodesUp.length > 0) {
             refreshRequests(true);
         }
-    }, [ api, axiosFactory, contextValue, accounts, refreshRequests, dispatch, isCurrentAuthenticated ]);
+    }, [ api, axiosFactory, contextValue, accounts, refreshRequests, dispatch, isCurrentAuthenticated, nodesUp ]);
 
     useEffect(() => {
         if(contextValue.refreshRequests !== refreshRequests && api !== null) {

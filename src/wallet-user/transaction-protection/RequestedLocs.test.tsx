@@ -1,6 +1,7 @@
 jest.mock('../../common/CommonContext');
 jest.mock('../../common/Model');
 jest.mock('../../wallet-user/UserContext');
+jest.mock('../../directory/DirectoryContext');
 
 import { render } from '../../tests';
 import RequestedLocs from './RequestedLocs';
