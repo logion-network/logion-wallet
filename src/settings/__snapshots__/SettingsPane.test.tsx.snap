@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SettingsPane renders for legal officer 1`] = `
+<FullWidthPane
+  className="SettingsPane"
+  mainTitle="Settings"
+  titleIcon={
+    Object {
+      "background": Object {
+        "from": "#7a90cb",
+        "to": "#3b6cf4",
+      },
+      "icon": Object {
+        "id": "settings",
+      },
+    }
+  }
+>
+  <Row>
+    <Col>
+      <Frame
+        title="Directory data"
+      >
+        <DirectoryData />
+      </Frame>
+    </Col>
+  </Row>
+  <Row>
+    <Col>
+      <Frame
+        title="Connection status"
+      >
+        <p>
+          You are currently 
+          connected to node undefined
+        </p>
+      </Frame>
+    </Col>
+  </Row>
+  <Row>
+    <Col>
+      <Frame
+        className="app"
+        title="App version"
+      >
+        <Alert
+          variant="success"
+        >
+          <p>
+            <strong>
+              You are using the latest version of logion: 
+              0
+              .
+            </strong>
+          </p>
+        </Alert>
+      </Frame>
+    </Col>
+  </Row>
+</FullWidthPane>
+`;
+
+exports[`SettingsPane renders for user 1`] = `
+<FullWidthPane
+  className="SettingsPane"
+  mainTitle="Settings"
+  titleIcon={
+    Object {
+      "background": Object {
+        "from": "#7a90cb",
+        "to": "#3b6cf4",
+      },
+      "icon": Object {
+        "id": "settings",
+      },
+    }
+  }
+>
+  <Row>
+    <Col>
+      <Frame
+        title="Connection status"
+      >
+        <p>
+          You are currently 
+          connected to node undefined
+        </p>
+      </Frame>
+    </Col>
+  </Row>
+  <Row>
+    <Col>
+      <Frame
+        className="app"
+        title="App version"
+      >
+        <Alert
+          variant="success"
+        >
+          <p>
+            <strong>
+              You are using the latest version of logion: 
+              0
+              .
+            </strong>
+          </p>
+        </Alert>
+      </Frame>
+    </Col>
+  </Row>
+</FullWidthPane>
+`;

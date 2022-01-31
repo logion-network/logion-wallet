@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import { USER_PATH } from '../RootPaths';
 
 import Home from "./Home";
-import Settings from "../Settings";
+import Settings from "../settings/Settings";
 import TrustProtection from "./trust-protection/TrustProtection";
 import Recovery from "./trust-protection/Recovery";
 import Wallet from "../common/Wallet";
@@ -53,7 +53,7 @@ export default function UserRouter() {
     return (
         <Routes>
             <Route path={ TRUST_PROTECTION_RELATIVE_PATH } element={ <TrustProtection />} />
-            <Route path={ SETTINGS_RELATIVE_PATH } element={ <Settings /> } />
+            <Route path={ SETTINGS_RELATIVE_PATH } element={ <Settings showContactInformation={ false } /> } />
             <Route path={ RECOVERY_RELATIVE_PATH } element={ <Recovery /> } />
             <Route path={ WALLET_RELATIVE_PATH } element={ <Wallet
                     transactionsPath={ transactionsPath }

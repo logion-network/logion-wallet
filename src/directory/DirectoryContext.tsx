@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { loadLegalOfficers, storeLegalOfficers } from "../common/Storage";
+import { loadLegalOfficers, loadTokens, storeLegalOfficers } from "../common/Storage";
 import { Children } from "../common/types/Helpers";
 import { DirectoryApi, LegalOfficer } from "./DirectoryApi";
 
@@ -8,6 +8,7 @@ export interface DirectoryContext {
     isLegalOfficer: (address: string | undefined) => boolean;
     getOfficer: (address: string | undefined) => LegalOfficer | null;
     directoryFailure: boolean;
+    saveOfficer: (legalOfficer: LegalOfficer) => Promise<void>;
 }
 
 const DirectoryContextObject: React.Context<DirectoryContext> = React.createContext(initialContextValue());
@@ -18,6 +19,7 @@ function initialContextValue(): DirectoryContext {
         isLegalOfficer: () => false,
         getOfficer: () => null,
         directoryFailure: false,
+        saveOfficer: () => Promise.resolve()
     };
 }
 
@@ -66,13 +68,20 @@ export function DirectoryContextProvider(props: Props) {
                         }
                     }
                     return null;
-                }
+                };
+
+                const saveOfficer = async (legalOfficer: LegalOfficer): Promise<void> => {
+                    const tokens = loadTokens();
+                    const api = new DirectoryApi(tokens.get(legalOfficer.address)?.value);
+                    await api.createOrUpdate(legalOfficer);
+                };
 
                 setContextValue({
                     legalOfficers,
                     isLegalOfficer,
                     getOfficer,
                     directoryFailure,
+                    saveOfficer
                 });
             })();
         }
