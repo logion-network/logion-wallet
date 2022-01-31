@@ -33,11 +33,11 @@
     overflow-y: auto;
 }
 
-.Dashboard .ContentArea [class*="row"] {
+.Dashboard .PrimaryArea > [class*="row"] {
     margin-bottom: 40px;
 }
 
-.Dashboard .ContentArea [class*="row"]:last-child {
+.Dashboard .PrimaryArea > [class*="row"]:last-child {
     margin-bottom: 0;
 }
 

@@ -23,7 +23,7 @@ import {
 import Home from './Home';
 import ProtectionRequests from './ProtectionRequests';
 import RecoveryRequests from './RecoveryRequests';
-import Settings from '../Settings';
+import Settings from '../settings/Settings';
 import RecoveryDetails from "./RecoveryDetails";
 import Wallet from "../common/Wallet";
 import Transactions from "../common/Transactions";
@@ -62,7 +62,7 @@ export default function LegalOfficerRouter() {
             <Route path={ PROTECTION_REQUESTS_RELATIVE_PATH } element={ <ProtectionRequests /> } />
             <Route path={ RECOVERY_REQUESTS_RELATIVE_PATH } element={ <RecoveryRequests /> } />
             <Route path={ RECOVERY_DETAILS_RELATIVE_PATH } element={ <RecoveryDetails /> } />
-            <Route path={ SETTINGS_RELATIVE_PATH } element={ <Settings /> } />
+            <Route path={ SETTINGS_RELATIVE_PATH } element={ <Settings showContactInformation={ true } /> } />
             <Route path={ WALLET_RELATIVE_PATH } element={ <Wallet
                 transactionsPath={ transactionsPath }
                 settingsPath={ SETTINGS_PATH }

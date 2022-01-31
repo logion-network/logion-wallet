@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from "axios";
+import { buildAuthenticatedAxios } from "../common/api";
 import UserIdentity from "../common/types/Identity";
 import PostalAddress from "../common/types/PostalAddress";
 import config from "../config";
@@ -14,18 +15,26 @@ export interface LegalOfficer {
 
 export class DirectoryApi {
 
-    constructor() {
-        this.axios = axios.create();
+    constructor(token?: string) {
+        if(token) {
+            this.axios = buildAuthenticatedAxios(config.directory, token);
+        } else {
+            this.axios = axios.create({ baseURL: config.directory });
+        }
     }
 
     private axios: AxiosInstance;
 
     async getLegalOfficers(): Promise<LegalOfficer[]> {
-        const legalOfficers = (await this.axios.get(config.directory + "/legal-officer")
+        const legalOfficers = (await this.axios.get("/legal-officer")
             .then(response => response.data.legalOfficers)) as LegalOfficer[];
         return legalOfficers.filter(legalOfficer => legalOfficer.node).map(data => ({
                 ...data,
                 name: `${data.userIdentity.firstName} ${data.userIdentity.lastName}`
             }));
+    }
+
+    async createOrUpdate(legalOfficer: LegalOfficer) {
+        await this.axios.put('/legal-officer', legalOfficer);
     }
 }
