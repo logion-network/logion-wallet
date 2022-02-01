@@ -1,3 +1,5 @@
+import './interfaces/augment-api';
+import './interfaces/augment-types';
 import { ApiPromise, WsProvider } from '@polkadot/api';
 import jsonrpc from '@polkadot/types/interfaces/jsonrpc';
 import config from '../config';
