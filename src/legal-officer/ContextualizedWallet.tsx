@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import Dashboard from '../common/Dashboard';
 
@@ -14,9 +14,16 @@ import {
     LOC_REQUESTS_PATH,
     IDENTITIES_PATH,
 } from './LegalOfficerPaths';
+import { useLegalOfficerContext } from './LegalOfficerContext';
 
 export default function ContextualizedWallet() {
-    const { selectAddress, accounts, colorTheme } = useCommonContext();
+    const { selectAddress, accounts, colorTheme, refresh } = useCommonContext();
+    const { refreshRequests } = useLegalOfficerContext();
+
+    const refreshAll = useCallback(() => {
+        refresh(false);
+        refreshRequests!(false);
+    }, [ refresh, refreshRequests ]);
 
     if(accounts === null || selectAddress === null) {
         return null;
@@ -36,6 +43,7 @@ export default function ContextualizedWallet() {
                         },
                         background: colorTheme.topMenuItems.iconGradient,
                     },
+                    onClick: refreshAll,
                 },
                 {
                     id: "wallet",
@@ -48,6 +56,7 @@ export default function ContextualizedWallet() {
                         },
                         background: colorTheme.topMenuItems.iconGradient,
                     },
+                    onClick: refreshAll,
                 },
                 {
                     id: "loc",
@@ -60,6 +69,7 @@ export default function ContextualizedWallet() {
                         },
                         background: colorTheme.topMenuItems.iconGradient,
                     },
+                    onClick: refreshAll,
                 },
                 {
                     id: "identity",
@@ -72,6 +82,7 @@ export default function ContextualizedWallet() {
                         },
                         background: colorTheme.topMenuItems.iconGradient,
                     },
+                    onClick: refreshAll,
                 }
             ]}
             menuMiddle={[
@@ -87,7 +98,8 @@ export default function ContextualizedWallet() {
                         },
                         height: 'auto',
                         width: '60px',
-                    }
+                    },
+                    onClick: refreshAll,
                 },
                 {
                     id: "recovery",
@@ -101,7 +113,8 @@ export default function ContextualizedWallet() {
                         },
                         height: 'auto',
                         width: '60px',
-                    }
+                    },
+                    onClick: refreshAll,
                 }
             ]}
             menuBottom={[
@@ -116,6 +129,7 @@ export default function ContextualizedWallet() {
                         },
                         background: colorTheme.bottomMenuItems.iconGradient,
                     },
+                    onClick: refreshAll,
                 }
             ]}
         >
