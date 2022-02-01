@@ -226,7 +226,6 @@ exports[`Renders Closed Logion Identity LOCs 1`] = `
               disabled={false}
               onClick={[Function]}
               style={Object {}}
-              type="button"
             >
               <img
                 alt=""
@@ -305,7 +304,6 @@ exports[`Renders Closed Logion Identity LOCs 1`] = `
                   disabled={false}
                   onClick={[Function]}
                   style={Object {}}
-                  type="button"
                 >
                   View
                 </button>
@@ -545,7 +543,6 @@ exports[`Renders Closed Polkadot Identity LOCs 1`] = `
               disabled={false}
               onClick={[Function]}
               style={Object {}}
-              type="button"
             >
               <img
                 alt=""
@@ -624,7 +621,6 @@ exports[`Renders Closed Polkadot Identity LOCs 1`] = `
                   disabled={false}
                   onClick={[Function]}
                   style={Object {}}
-                  type="button"
                 >
                   View
                 </button>

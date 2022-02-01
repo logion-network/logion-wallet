@@ -232,7 +232,6 @@ exports[`Renders pending requests 1`] = `
               disabled={false}
               onClick={[Function]}
               style={Object {}}
-              type="button"
             >
               <img
                 alt=""
@@ -311,7 +310,6 @@ exports[`Renders pending requests 1`] = `
                   disabled={false}
                   onClick={[Function]}
                   style={Object {}}
-                  type="button"
                 >
                   View
                 </button>
