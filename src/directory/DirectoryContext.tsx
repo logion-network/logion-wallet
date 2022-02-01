@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { Reducer, useCallback, useContext, useEffect, useReducer, useState } from "react";
 import { loadLegalOfficers, loadTokens, storeLegalOfficers } from "../common/Storage";
 import { Children } from "../common/types/Helpers";
 import { DirectoryApi, LegalOfficer } from "./DirectoryApi";
@@ -27,65 +27,121 @@ export interface Props {
     children?: Children;
 }
 
+interface FetchResult {
+    directoryFailure: boolean;
+    legalOfficers: LegalOfficer[];
+    isLegalOfficer: (address: string | undefined) => boolean;
+    getOfficer: (address: string | undefined) => LegalOfficer | null;
+}
+
+async function fetchLegalOfficers(): Promise<FetchResult> {
+    const api = new DirectoryApi();
+    let legalOfficers: LegalOfficer[];
+    let directoryFailure: boolean;
+    try {
+        legalOfficers = await api.getLegalOfficers();
+        storeLegalOfficers(legalOfficers);
+        directoryFailure = false;
+    } catch(error) {
+        console.log("Directory unreachable, using stored data.");
+        legalOfficers = loadLegalOfficers();
+        directoryFailure = true;
+    }
+
+    const isLegalOfficer = (address: string | undefined): boolean => {
+        if(address === undefined) {
+            return false;
+        } else {
+            return legalOfficers.map(lo => lo.address).includes(address);
+        }
+    };
+
+    const getOfficer = (address: string | undefined): LegalOfficer | null => {
+        if(address === null) {
+            return null;
+        }
+    
+        for(let i = 0; i < legalOfficers.length; ++i) {
+            const legalOfficer = legalOfficers[i];
+            if(legalOfficer.address === address) {
+                return legalOfficer;
+            }
+        }
+        return null;
+    };
+
+    return {
+        directoryFailure,
+        legalOfficers,
+        isLegalOfficer,
+        getOfficer
+    };
+}
+
+type ActionType = 'SET_SAVE_OFFICER'
+    | 'SET_DATA'
+;
+
+interface Action {
+    type: ActionType;
+    saveOfficer?: (legalOfficer: LegalOfficer) => Promise<void>;
+    fetchResult?: FetchResult;
+}
+
+const reducer: Reducer<DirectoryContext, Action> = (state: DirectoryContext, action: Action): DirectoryContext => {
+    switch(action.type) {
+        case 'SET_SAVE_OFFICER': {
+            return {
+                ...state,
+                saveOfficer: action.saveOfficer!,
+            }
+        }
+        case 'SET_DATA': {
+            return {
+                ...state,
+                ...action.fetchResult!,
+            }
+        }
+        default:
+            /* istanbul ignore next */
+            throw new Error(`Unknown type: ${action.type}`);
+    }
+}
+
 export function DirectoryContextProvider(props: Props) {
-    const [ contextValue, setContextValue ] = useState<DirectoryContext>(initialContextValue());
+    const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
     const [ fetched, setFetched ] = useState(false);
+
+    const refresh = useCallback(async () => {
+        const fetchResult = await fetchLegalOfficers();
+        dispatch({
+            type: "SET_DATA",
+            fetchResult,
+        })
+    }, [ dispatch ]);
+
+    const saveOfficer = useCallback(async (legalOfficer: LegalOfficer) => {
+        const tokens = loadTokens();
+        const api = new DirectoryApi(tokens.get(legalOfficer.address)?.value);
+        await api.createOrUpdate(legalOfficer);
+        await refresh();
+    }, [ refresh ]);
+
+    useEffect(() => {
+        if(contextValue.saveOfficer !== saveOfficer) {
+            dispatch({
+                type: "SET_SAVE_OFFICER",
+                saveOfficer
+            })
+        }
+    }, [ contextValue, saveOfficer, dispatch ]);
 
     useEffect(() => {
         if(!fetched) {
             setFetched(true);
-            (async function() {
-                const api = new DirectoryApi();
-                let legalOfficers: LegalOfficer[];
-                let directoryFailure: boolean;
-                try {
-                    legalOfficers = await api.getLegalOfficers();
-                    storeLegalOfficers(legalOfficers);
-                    directoryFailure = false;
-                } catch(error) {
-                    console.log("Directory unreachable, using stored data.");
-                    legalOfficers = loadLegalOfficers();
-                    directoryFailure = true;
-                }
-
-                const isLegalOfficer = (address: string | undefined): boolean => {
-                    if(address === undefined) {
-                        return false;
-                    } else {
-                        return legalOfficers.map(lo => lo.address).includes(address);
-                    }
-                };
-
-                const getOfficer = (address: string | undefined): LegalOfficer | null => {
-                    if(address === null) {
-                        return null;
-                    }
-                
-                    for(let i = 0; i < legalOfficers.length; ++i) {
-                        const legalOfficer = legalOfficers[i];
-                        if(legalOfficer.address === address) {
-                            return legalOfficer;
-                        }
-                    }
-                    return null;
-                };
-
-                const saveOfficer = async (legalOfficer: LegalOfficer): Promise<void> => {
-                    const tokens = loadTokens();
-                    const api = new DirectoryApi(tokens.get(legalOfficer.address)?.value);
-                    await api.createOrUpdate(legalOfficer);
-                };
-
-                setContextValue({
-                    legalOfficers,
-                    isLegalOfficer,
-                    getOfficer,
-                    directoryFailure,
-                    saveOfficer
-                });
-            })();
+            refresh();
         }
-    }, [ fetched, setFetched, contextValue, setContextValue ]);
+    }, [ fetched, setFetched, refresh ]);
 
     return (
         <DirectoryContextObject.Provider value={contextValue}>
