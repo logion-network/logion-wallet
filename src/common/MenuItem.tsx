@@ -12,6 +12,7 @@ export interface MenuItemData {
     to: string,
     exact: boolean,
     icon?: ColorThemeMenuIcon,
+    onClick?: () => void,
 }
 
 export interface Props {
@@ -32,6 +33,7 @@ export default function MenuItem(props: Props) {
             end={props.item.exact}
             className="MenuItem"
             style={customStyle}
+            onClick={ props.item.onClick }
         >
             <span className="text-wrapper">
                 {

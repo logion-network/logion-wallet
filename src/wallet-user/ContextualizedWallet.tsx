@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { useLogionChain } from '../logion-chain';
 
@@ -19,10 +19,15 @@ import { useNavigate } from 'react-router';
 
 export default function ContextualizedWallet() {
     const { api } = useLogionChain();
-    const { selectAddress, accounts, colorTheme, nodesDown } = useCommonContext();
-    const { pendingProtectionRequests, acceptedProtectionRequests, recoveryConfig } = useUserContext();
+    const { selectAddress, accounts, colorTheme, nodesDown, refresh } = useCommonContext();
+    const { pendingProtectionRequests, acceptedProtectionRequests, recoveryConfig, refreshRequests } = useUserContext();
     const [ discardProtection, setDiscardProtection ] = useState<boolean>(false);
     const navigate = useNavigate();
+
+    const refreshAll = useCallback(() => {
+        refresh(false);
+        refreshRequests!(false);
+    }, [ refresh, refreshRequests ]);
 
     if(selectAddress === null || accounts === null) {
         return null;
@@ -47,6 +52,7 @@ export default function ContextualizedWallet() {
                         },
                         background: colorTheme.topMenuItems.iconGradient,
                     },
+                    onClick: refreshAll,
                 },
                 {
                     id: "wallet",
@@ -59,6 +65,7 @@ export default function ContextualizedWallet() {
                         },
                         background: colorTheme.topMenuItems.iconGradient,
                     },
+                    onClick: refreshAll,
                 },
                 {
                     id: "loc",
@@ -71,6 +78,7 @@ export default function ContextualizedWallet() {
                         },
                         background: colorTheme.topMenuItems.iconGradient,
                     },
+                    onClick: refreshAll,
                 }
             ]}
             menuMiddle={[
@@ -86,7 +94,8 @@ export default function ContextualizedWallet() {
                         },
                         height: 'auto',
                         width: 'auto',
-                    }
+                    },
+                    onClick: refreshAll,
                 }
             ]}
             menuBottom={[
@@ -113,6 +122,7 @@ export default function ContextualizedWallet() {
                         },
                         background: colorTheme.recoveryItems.iconGradient,
                     },
+                    onClick: refreshAll,
                 }
             ]}
         >
