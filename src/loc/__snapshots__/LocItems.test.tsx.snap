@@ -237,6 +237,7 @@ exports[`LocItems renders with single draft item 1`] = `
                         "color": "white",
                       }
                     }
+                    type="button"
                   >
                     <img
                       alt=""
@@ -251,6 +252,7 @@ exports[`LocItems renders with single draft item 1`] = `
                     disabled={false}
                     onClick={[Function]}
                     style={Object {}}
+                    type="button"
                   >
                     <img
                       alt=""
@@ -313,6 +315,7 @@ exports[`LocItems renders with single draft item 1`] = `
                     disabled={false}
                     onClick={[Function]}
                     style={Object {}}
+                    type="button"
                   >
                     <img
                       alt=""

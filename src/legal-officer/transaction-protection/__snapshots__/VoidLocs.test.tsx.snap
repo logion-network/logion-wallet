@@ -226,6 +226,7 @@ exports[`Renders Void Logion Identity LOCs 1`] = `
               disabled={false}
               onClick={[Function]}
               style={Object {}}
+              type="button"
             >
               <img
                 alt=""
@@ -297,6 +298,7 @@ exports[`Renders Void Logion Identity LOCs 1`] = `
                   disabled={false}
                   onClick={[Function]}
                   style={Object {}}
+                  type="button"
                 >
                   View
                 </button>
@@ -536,6 +538,7 @@ exports[`Renders Void Polkadot Identity LOCs 1`] = `
               disabled={false}
               onClick={[Function]}
               style={Object {}}
+              type="button"
             >
               <img
                 alt=""
@@ -607,6 +610,7 @@ exports[`Renders Void Polkadot Identity LOCs 1`] = `
                   disabled={false}
                   onClick={[Function]}
                   style={Object {}}
+                  type="button"
                 >
                   View
                 </button>

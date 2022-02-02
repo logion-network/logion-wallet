@@ -241,6 +241,7 @@ exports[`ContextualizedLocDetails renders for LO 1`] = `
                         disabled={false}
                         onClick={[Function]}
                         style={Object {}}
+                        type="button"
                       >
                         <img
                           alt=""
@@ -367,6 +368,7 @@ exports[`ContextualizedLocDetails renders for LO 1`] = `
                     disabled={false}
                     onClick={[Function]}
                     style={Object {}}
+                    type="button"
                   >
                     <img
                       alt=""
@@ -384,6 +386,7 @@ exports[`ContextualizedLocDetails renders for LO 1`] = `
                     disabled={false}
                     onClick={[Function]}
                     style={Object {}}
+                    type="button"
                   >
                     <img
                       alt=""
@@ -426,6 +429,7 @@ exports[`ContextualizedLocDetails renders for LO 1`] = `
                       disabled={false}
                       onClick={[Function]}
                       style={Object {}}
+                      type="button"
                     >
                       <img
                         alt=""
@@ -465,6 +469,7 @@ exports[`ContextualizedLocDetails renders for LO 1`] = `
               disabled={false}
               onClick={[Function]}
               style={Object {}}
+              type="button"
             >
               <img
                 alt=""
@@ -530,6 +535,7 @@ exports[`ContextualizedLocDetails renders for LO 1`] = `
                   disabled={false}
                   onClick={[Function]}
                   style={Object {}}
+                  type="button"
                 >
                   Check a document
                 </button>
@@ -610,6 +616,7 @@ exports[`ContextualizedLocDetails renders for LO 1`] = `
                     disabled={false}
                     onClick={[Function]}
                     style={Object {}}
+                    type="button"
                   >
                     Void LOC
                   </button>
@@ -618,6 +625,7 @@ exports[`ContextualizedLocDetails renders for LO 1`] = `
                     disabled={false}
                     onClick={[Function]}
                     style={Object {}}
+                    type="button"
                   >
                     Void and replace by a NEW LOC
                   </button>
@@ -626,6 +634,7 @@ exports[`ContextualizedLocDetails renders for LO 1`] = `
                     disabled={false}
                     onClick={[Function]}
                     style={Object {}}
+                    type="button"
                   >
                     Void and replace by an EXISTING LOC
                   </button>
@@ -881,6 +890,7 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
                         disabled={false}
                         onClick={[Function]}
                         style={Object {}}
+                        type="button"
                       >
                         <img
                           alt=""
@@ -1007,6 +1017,7 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
                     disabled={false}
                     onClick={[Function]}
                     style={Object {}}
+                    type="button"
                   >
                     <img
                       alt=""
@@ -1024,6 +1035,7 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
                     disabled={false}
                     onClick={[Function]}
                     style={Object {}}
+                    type="button"
                   >
                     <img
                       alt=""
@@ -1069,6 +1081,7 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
               disabled={false}
               onClick={[Function]}
               style={Object {}}
+              type="button"
             >
               <img
                 alt=""
@@ -1134,6 +1147,7 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
                   disabled={false}
                   onClick={[Function]}
                   style={Object {}}
+                  type="button"
                 >
                   Check a document
                 </button>

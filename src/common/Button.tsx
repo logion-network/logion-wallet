@@ -46,7 +46,7 @@ export default function Button(props: Props) {
     let testId;
     let children;
     let id;
-    let type;
+    let type: ButtonType | undefined;
     let choices;
     if(props.action !== undefined) {
         key = props.action.id;
@@ -67,6 +67,10 @@ export default function Button(props: Props) {
         id = props.id;
         type = props.type;
         choices = props.choices;
+    }
+
+    if(!type) {
+        type = "button";
     }
 
     let style: CSSProperties = {};
