@@ -1,21 +1,75 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders 1`] = `
-<FullWidthPane
-  className="node-unreacheable"
-  mainTitle="Node unreachable"
-  titleIcon={
-    Object {
-      "icon": Object {
-        "id": "ko",
-      },
+<Routes>
+  <Route
+    element={<ProtectionRequests />}
+    path="/protection"
+  />
+  <Route
+    element={<RecoveryRequests />}
+    path="/recovery"
+  />
+  <Route
+    element={<RecoveryDetails />}
+    path="/recovery-details/:requestId"
+  />
+  <Route
+    element={
+      <Settings
+        showContactInformation={true}
+      />
     }
-  }
->
-  <DangerFrame>
-    <h1>
-      Your node is currently unreachable. Please take action in order to recover.
-    </h1>
-  </DangerFrame>
-</FullWidthPane>
+    path="/settings"
+  />
+  <Route
+    element={
+      <Wallet
+        settingsPath="/legal-officer/settings"
+        transactionsPath={[Function]}
+      />
+    }
+    path="/wallet"
+  />
+  <Route
+    element={
+      <Transactions
+        backPath="/legal-officer/wallet"
+      />
+    }
+    path="/wallet/transactions/:coinId"
+  />
+  <Route
+    element={<TransactionProtection />}
+    path="/loc"
+  />
+  <Route
+    element={
+      <LocDetails
+        backPath="/legal-officer/loc"
+        detailsPath={[Function]}
+        viewer="LegalOfficer"
+      />
+    }
+    path="/loc/:locId"
+  />
+  <Route
+    element={<IdentityProtection />}
+    path="/identities"
+  />
+  <Route
+    element={
+      <LocDetails
+        backPath="/legal-officer/identities"
+        detailsPath={[Function]}
+        viewer="LegalOfficer"
+      />
+    }
+    path="/identities/:locId"
+  />
+  <Route
+    element={<Account />}
+    path=""
+  />
+</Routes>
 `;
