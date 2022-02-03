@@ -10,7 +10,7 @@ import {
     deleteLocMetadataItem,
     preClose,
     preVoid,
-
+    isGrantedAccess,
 } from './ModelMock';
 
 export {
@@ -25,4 +25,5 @@ export {
     deleteLocMetadataItem,
     preClose,
     preVoid,
+    isGrantedAccess,
 };

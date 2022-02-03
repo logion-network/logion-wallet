@@ -1,5 +1,5 @@
 import { render, screen, waitFor } from "@testing-library/react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { act } from "react-dom/test-utils";
 import { LocRequest } from "../common/types/ModelTypes";
 import { fetchLocRequest, resetDefaultMocks } from "../common/__mocks__/ModelMock";
