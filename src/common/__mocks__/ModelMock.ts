@@ -41,3 +41,7 @@ export function resetDefaultMocks() {
     preVoid.mockResolvedValue(undefined);
     preClose.mockResolvedValue(undefined);
 }
+
+export function isGrantedAccess() {
+    return true;
+}

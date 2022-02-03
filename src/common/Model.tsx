@@ -10,7 +10,7 @@ import {
 } from './types/ModelTypes';
 import Identity from './types/Identity';
 import { UUID } from '../logion-chain/UUID';
-import { LocType, IdentityLocType } from '../logion-chain/Types';
+import { LocType, IdentityLocType, LegalOfficerCase } from '../logion-chain/Types';
 
 export type ProtectionRequestKind = 'RECOVERY' | 'PROTECTION_ONLY' | 'ANY';
 
@@ -234,4 +234,8 @@ export async function preVoid(
     await axios.post(`/api/loc-request/${requestId}/void`, {
         reason
     });
+}
+
+export function isGrantedAccess(address: string | undefined, loc: LegalOfficerCase): boolean {
+    return loc.owner === address || loc.requesterAddress === address;
 }

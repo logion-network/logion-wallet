@@ -10,7 +10,8 @@ import {
     deleteLocLink,
     confirmLocLink,
     confirmLocMetadataItem,
-    deleteLocMetadataItem
+    deleteLocMetadataItem,
+    isGrantedAccess
 } from "../common/Model";
 import { useCommonContext } from "../common/CommonContext";
 import { getLegalOfficerCase, addMetadata, addFile, closeLoc, addLink, voidLoc } from "../logion-chain/LogionLoc";
@@ -28,6 +29,7 @@ import {
     mergeLocLinkItem
 } from "./LocItemFactory";
 import { addLink as modelAddLink, addMetadata as modelAddMetadata, addFile as modelAddFile } from "./Model"
+import { fullCertificateUrl } from "../PublicPaths";
 
 export interface FullVoidInfo extends VoidInfo {
     reason: string;
@@ -280,15 +282,23 @@ export function LocContextProvider(props: Props) {
                     })
                     for (let i = 0; i < locRequest.links.length; ++i) {
                         const linkFromBackend = locRequest.links[i];
-                        const linkedLoc = await getLegalOfficerCase({ locId: linkFromBackend.id, api });
-                        const otherLocRequest = await fetchLocRequest(axiosFactory!(linkedLoc!.owner)!, linkFromBackend.target);
+                        const linkedLocId = new UUID(linkFromBackend.target);
+                        const linkedLoc = await getLegalOfficerCase({ locId: linkedLocId, api });
+                        let otherLocRequest: LocRequest | undefined;
+                        let linkDetailsPath: string;
+                        if(isGrantedAccess(accounts?.current?.address, linkedLoc!)) {
+                            otherLocRequest = await fetchLocRequest(axiosFactory!(linkedLoc!.owner)!, linkFromBackend.target);
+                            linkDetailsPath = contextValue.detailsPath(linkedLocId, linkedLoc!.locType);
+                        } else {
+                            linkDetailsPath = fullCertificateUrl(linkedLocId);
+                        }
                         const linkFromChain = findLinkInLoc(loc, linkFromBackend);
                         const result = mergeLocLinkItem({
                             linkFromChain,
                             linkFromBackend,
-                            otherLocDescription: otherLocRequest.description,
+                            otherLocDescription: otherLocRequest?.description || "- Confidential -",
                             submitter,
-                            linkDetailsPath: contextValue.detailsPath(new UUID(otherLocRequest.id), otherLocRequest.locType)
+                            linkDetailsPath,
                         })
                         dispatch({ type: 'ADD_ITEM', locItem: result.locItem })
                         if (result.refreshNeeded) {
