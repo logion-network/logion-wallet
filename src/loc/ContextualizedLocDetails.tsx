@@ -93,12 +93,12 @@ export default function ContextualizedLocDetails(props: Props) {
 
     let locTabTitle: string;
     if(loc.locType === 'Transaction') {
-        locTabTitle = "Legal Officer Case - Transaction";
+        locTabTitle = "Legal Officer Case (LOC) - Transaction";
     } else {
         if (isLogionIdentityLoc(loc)) {
-            locTabTitle = "Legal Officer Case - Logion Identity";
+            locTabTitle = "Legal Officer Case (LOC) - Logion Identity";
         } else {
-            locTabTitle = "Legal Officer Case - Identity";
+            locTabTitle = "Legal Officer Case (LOC) - Polkadot Identity";
         }
     }
     if(loc.voidInfo !== undefined) {
@@ -107,7 +107,7 @@ export default function ContextualizedLocDetails(props: Props) {
 
     return (
         <FullWidthPane
-            mainTitle={ loc.locType === 'Transaction' ? "Transaction Protection Cases" : "Identity Case Management" }
+            mainTitle={ loc.locType === 'Transaction' ? "Transaction Protection Case" : "Identity Case" }
             titleIcon={ {
                 icon: {
                     id: loc.locType === 'Transaction' ? 'loc' : 'identity'
@@ -123,7 +123,7 @@ export default function ContextualizedLocDetails(props: Props) {
                     <IconTextRow
                         icon={ <Icon icon={ { id: "tip" } } width="45px" /> }
                         text={
-                            <p><strong>Logion Identity LOC:</strong> must be used when your client cannot have a
+                            <p><strong>Identity Case:</strong> must be used when your client cannot have a
                                 Polkadot account to request your services. Once closed after a proper identity check,
                                 you are able to initiate legal services requests ON BEHALF of this Logion Identity LOC,
                                 representing - on the blockchain-, by extension, the client it refers.</p>
