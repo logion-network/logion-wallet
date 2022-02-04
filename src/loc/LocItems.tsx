@@ -21,6 +21,8 @@ import './LocItems.css';
 import Icon from "../common/Icon";
 import { useResponsiveContext } from "../common/Responsive";
 import SubmitterName from "../common/SubmitterName";
+import { useCommonContext } from "../common/CommonContext";
+import { LegalOfficerCase } from "../logion-chain/Types";
 
 export interface Props {
     matchedHash?: string;
@@ -28,6 +30,7 @@ export interface Props {
 }
 
 export default function LocItems(props: Props) {
+    const { accounts } = useCommonContext();
     const { locId, loc, locItems, deleteMetadata, deleteLink, deleteFile, locRequest } = useLocContext();
     const { width } = useResponsiveContext();
 
@@ -65,15 +68,15 @@ export default function LocItems(props: Props) {
             <ActionCell>
                 { locItem.type === 'Data' && <ButtonGroup>
                     { props.viewer === 'LegalOfficer' && <LocPublishPublicDataButton locItem={ locItem } /> }
-                    <DeleteButton locItem={ locItem } action={ deleteMetadata! } />
+                    { canDelete(accounts?.current?.address, locItem, loc) && <DeleteButton locItem={ locItem } action={ deleteMetadata! } /> }
                 </ButtonGroup> }
                 { locItem.type === 'Linked LOC' && <ButtonGroup>
                     { props.viewer === 'LegalOfficer' && <LocPublishLinkButton locItem={ locItem } /> }
-                    <DeleteButton locItem={ locItem } action={ deleteLink! } />
+                    { canDelete(accounts?.current?.address, locItem, loc) && <DeleteButton locItem={ locItem } action={ deleteLink! } /> }
                 </ButtonGroup> }
                 { locItem.type === 'Document' && <ButtonGroup>
                     { props.viewer === 'LegalOfficer' && <LocPublishPrivateFileButton locItem={ locItem } /> }
-                    <DeleteButton locItem={ locItem } action={ deleteFile! } />
+                    { canDelete(accounts?.current?.address, locItem, loc) && <DeleteButton locItem={ locItem } action={ deleteFile! } /> }
                 </ButtonGroup> }
             </ActionCell>)
     }
@@ -165,5 +168,17 @@ export default function LocItems(props: Props) {
                 />
             </div>
         );
+    }
+}
+
+function canDelete(address: string | undefined, item: LocItem, loc: LegalOfficerCase | null): boolean {
+    if(!address) {
+        return false;
+    }
+
+    if(item.type === "Linked LOC") {
+        return address === loc?.owner;
+    } else {
+        return address === loc?.owner || address === item.submitter;
     }
 }
