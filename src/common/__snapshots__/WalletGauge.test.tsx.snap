@@ -1,127 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders arc 1`] = `
-<div
-  className="WalletGauge arc"
+<TransactionConfirmation
+  clearFormCallback={[Function]}
 >
-  <Gauge
-    level={0.5}
-    readingDecimalPart="00"
-    readingIntegerPart="20"
-    type="arc"
-    unit="mLGNT"
-  />
-  <div
-    className="actions"
-  >
-    <Button
-      onClick={[Function]}
-      slim={true}
-    >
-      <Icon
-        icon={
-          Object {
-            "id": "send",
-          }
-        }
-      />
-       Send
-    </Button>
-  </div>
-  <Dialog
-    actions={
-      Array [
-        Object {
-          "buttonText": "Cancel",
-          "buttonVariant": "secondary",
-          "callback": [Function],
-          "id": "cancel",
-        },
-        Object {
-          "buttonText": "Transfer",
-          "buttonVariant": "primary",
-          "callback": [Function],
-          "disabled": true,
-          "id": "transfer",
-        },
-      ]
-    }
-    show={false}
-    size="lg"
-  >
-    <h3>
-      Transfer LGNTs
-    </h3>
-    <ExtrinsicSubmitter
-      id="transferLogs"
-      onError={[Function]}
-      onSuccess={[Function]}
-      signAndSubmit={null}
-      successMessage="Transfer successful."
-    />
-  </Dialog>
-</div>
+  [Function]
+</TransactionConfirmation>
 `;
 
 exports[`renders linear 1`] = `
-<div
-  className="WalletGauge linear"
+<TransactionConfirmation
+  clearFormCallback={[Function]}
 >
-  <Gauge
-    level={0.5}
-    readingDecimalPart="00"
-    readingIntegerPart="20"
-    type="linear"
-    unit="mLGNT"
-  />
-  <div
-    className="actions"
-  >
-    <Button
-      onClick={[Function]}
-      slim={true}
-    >
-      <Icon
-        icon={
-          Object {
-            "id": "send",
-          }
-        }
-      />
-       Send
-    </Button>
-  </div>
-  <Dialog
-    actions={
-      Array [
-        Object {
-          "buttonText": "Cancel",
-          "buttonVariant": "secondary",
-          "callback": [Function],
-          "id": "cancel",
-        },
-        Object {
-          "buttonText": "Transfer",
-          "buttonVariant": "primary",
-          "callback": [Function],
-          "disabled": true,
-          "id": "transfer",
-        },
-      ]
-    }
-    show={false}
-    size="lg"
-  >
-    <h3>
-      Transfer LGNTs
-    </h3>
-    <ExtrinsicSubmitter
-      id="transferLogs"
-      onError={[Function]}
-      onSuccess={[Function]}
-      signAndSubmit={null}
-      successMessage="Transfer successful."
-    />
-  </Dialog>
-</div>
+  [Function]
+</TransactionConfirmation>
 `;

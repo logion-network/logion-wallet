@@ -17,6 +17,9 @@ import { signAndSendAsRecovered } from "../../logion-chain/Recovery";
 import { PrefixedNumber, MILLI } from "../../logion-chain/numbers";
 import NetworkWarning from '../../common/NetworkWarning';
 import { SETTINGS_PATH } from '../UserRouter';
+import TransactionConfirmation, { Status } from "../../common/TransactionConfirmation";
+import Alert from "../../common/Alert";
+import { Spinner } from "react-bootstrap";
 
 interface TabTitleProps {
     iconId: string,
@@ -73,12 +76,16 @@ export default function RecoveryProcess() {
         setSignAndSubmit(() => signAndSubmit);
     }, [ api, accounts, recoveredAddress ]);
 
-    const onTransferSuccess = useCallback(() => {
+    const clearFormCallback = useCallback(() => {
+        setRecoveredCoinBalance(null);
         setSignAndSubmit(null);
         setSignAndSubmitError(false);
-        setRecoveredCoinBalance(null);
+    }, [ setRecoveredCoinBalance, setSignAndSubmit, setSignAndSubmitError ])
+
+    const onTransferSuccess = useCallback(() => {
+        clearFormCallback();
         setBalances(null);
-    }, [ setSignAndSubmit, setRecoveredCoinBalance, setBalances ]);
+    }, [ setBalances, clearFormCallback ]);
 
     if (recoveredAddress === null) {
         return null;
@@ -103,6 +110,11 @@ export default function RecoveryProcess() {
                         nodesDown.length > 0 &&
                         <NetworkWarning settingsPath={ SETTINGS_PATH } />
                 }
+
+                <TransactionConfirmation
+                    clearFormCallback={ clearFormCallback }
+                    children={ (status, startTransferringCallback, cancelCallback, successCallback) => {
+                        return (<>
                 <Tabs
                     activeKey={ tabKey }
                     tabs={[
@@ -141,7 +153,10 @@ export default function RecoveryProcess() {
                                                     header: "Action",
                                                     render: coinBalance => <Button
                                                         variant="recovery"
-                                                        onClick={ () => setRecoveredCoinBalance(coinBalance) }
+                                                        onClick={ () => {
+                                                            setRecoveredCoinBalance(coinBalance);
+                                                            startTransferringCallback()
+                                                        } }
                                                     >
                                                         Transfer
                                                     </Button>,
@@ -175,18 +190,14 @@ export default function RecoveryProcess() {
                     onSelect={ key => setTabKey(key || 'coinBalances') }
                 />
                 <Dialog
-                    show={ recoveredCoinBalance !== null }
+                    show={ status !== Status.IDLE }
                     size="lg"
                     actions={ [
                         {
                             id: "cancel",
                             buttonText: "Cancel",
                             buttonVariant: "secondary",
-                            callback: () => {
-                                setRecoveredCoinBalance(null);
-                                setSignAndSubmit(null);
-                                setSignAndSubmitError(false);
-                            },
+                            callback: cancelCallback,
                             disabled: signAndSubmit !== null && !signAndSubmitError,
                         },
                         {
@@ -194,25 +205,37 @@ export default function RecoveryProcess() {
                             buttonText: "Transfer",
                             buttonVariant: "recovery",
                             callback: () => recoverCoin(amountToRecover),
-                            disabled: signAndSubmit !== null,
+                            disabled: status !== Status.TRANSFERRING || signAndSubmit !== null,
                         }
                     ]}
                 >
-                    <p>
-                        You are about to
-                        transfer { amountToRecover.coefficient.toFixedPrecision(2) }&nbsp;
-                        { amountToRecover.prefix.symbol }
-                        { recoveredCoinBalance?.coin.symbol }
-                        <br />from account { recoveredAddress }
-                        <br />to account { accounts?.current?.address }.
-                    </p>
+                    { status === Status.TRANSFERRING &&
+                        <p>
+                            You are about to
+                            transfer { amountToRecover.coefficient.toFixedPrecision(2) }&nbsp;
+                            { amountToRecover.prefix.symbol }
+                            { recoveredCoinBalance?.coin.symbol }
+                            <br />from account { recoveredAddress }
+                            <br />to account { accounts?.current?.address }.
+                        </p>
+                    }
                     <ExtrinsicSubmitter
                         id="transfer"
                         signAndSubmit={ signAndSubmit }
-                        onSuccess={ onTransferSuccess }
+                        onSuccess={ () => { onTransferSuccess(); successCallback() } }
                         onError={ () => setSignAndSubmitError(true) }
                     />
+                    { (status === Status.EXPECTING_NEW_TRANSACTION || status === Status.WAITING_FOR_NEW_TRANSACTION) &&
+                        <Alert variant="info">
+                            <Spinner animation="border" />
+                            <p>Transfer successful, waiting for the transaction to be finalized.</p>
+                            <p>Note that this may take up to 30 seconds. If you want to proceed, you can safely
+                                click on cancel but your transaction may not show up yet.</p>
+                        </Alert>
+                    }
                 </Dialog>
+                            </>)
+                            }}/>
             </>
         </FullWidthPane>
     );
