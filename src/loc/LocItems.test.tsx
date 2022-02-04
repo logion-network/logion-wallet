@@ -6,6 +6,7 @@ import LocItems from "./LocItems";
 import { buildLocRequest } from "./TestData";
 import { setLoc, setLocId, setLocItems, setLocRequest } from "./__mocks__/LocContextMock";
 
+jest.mock("../common/CommonContext");
 jest.mock("./LocContext");
 
 describe("LocItems", () => {
