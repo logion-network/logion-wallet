@@ -6,6 +6,9 @@ import AccountAddress from './AccountAddress';
 import { useCommonContext } from './CommonContext';
 import Button from './Button';
 import Dialog from './Dialog';
+import { useNavigate } from "react-router";
+import { Account } from "./types/Accounts";
+import { LEGAL_OFFICER_PATH, USER_PATH } from "../RootPaths";
 
 export interface Props {
     selectAddress: ((userAddress: string) => void) | null,
@@ -14,9 +17,21 @@ export interface Props {
 export default function AddressSwitcher(props: Props) {
     const { colorTheme, logout, accounts, authenticate } = useCommonContext();
     const [ confirm, setConfirm ] = useState<boolean>(false);
+    const navigate = useNavigate();
 
     if(accounts === null || props.selectAddress === null || accounts.current === undefined) {
         return null;
+    }
+
+    function selectAddress(address: Account) {
+        if (address.token !== undefined) {
+            props.selectAddress!(address.address)
+            if (address.isLegalOfficer) {
+                navigate(LEGAL_OFFICER_PATH)
+            } else {
+                navigate(USER_PATH)
+            }
+        }
     }
 
     return (
@@ -49,7 +64,7 @@ export default function AddressSwitcher(props: Props) {
                             .map(address => (
                             <Dropdown.Item
                                 key={ address.address }
-                                onClick={ () => address.token !== undefined && props.selectAddress!(address.address) }
+                                onClick={ () => selectAddress(address) }
                             >
                                 <AccountAddress
                                     address={ address }
