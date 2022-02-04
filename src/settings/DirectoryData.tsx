@@ -190,7 +190,7 @@ export default function DirectoryData() {
                             as="textarea"
                             style={{ height: '100px' }}
                             value={ legalOfficer?.additionalDetails }
-                            onChange={ event => ({
+                            onChange={ event => setLegalOfficer({
                                 ...legalOfficer!,
                                 additionalDetails: event.target.value
                             }) }

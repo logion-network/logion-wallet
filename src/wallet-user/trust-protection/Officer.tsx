@@ -8,6 +8,7 @@ import CopyPasteButton from "../../common/CopyPasteButton";
 import { Row } from "../../common/Grid";
 import { LegalOfficer } from '../../directory/DirectoryApi';
 import { LegalOfficerPostalAddress } from '../../common/LegalOfficerPostalAddress';
+import LegalOfficerAdditionalDetails from '../../common/LegalOfficerAdditionalDetails';
 
 export interface Props {
     officer: LegalOfficer | null,
@@ -44,6 +45,7 @@ export default function Officer(props: Props) {
             </Row>
             <div className="details">
                 { props.officer && <LegalOfficerPostalAddress address={ props.officer.postalAddress } /> }
+                { props.officer && <LegalOfficerAdditionalDetails additionalDetails={ props.officer.additionalDetails } /> }
             </div>
         </div>
     );

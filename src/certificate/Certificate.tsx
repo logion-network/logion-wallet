@@ -31,6 +31,7 @@ import CheckFileFrame, { DocumentCheckResult } from "../loc/CheckFileFrame";
 import { LegalOfficer } from "../directory/DirectoryApi";
 import { useDirectoryContext } from "../directory/DirectoryContext";
 import { LegalOfficerPostalAddress } from "../common/LegalOfficerPostalAddress";
+import LegalOfficerAdditionalDetails from "../common/LegalOfficerAdditionalDetails";
 
 export default function Certificate() {
 
@@ -311,6 +312,7 @@ function LegalOfficerRow(props: { legalOfficer: LegalOfficer }) {
             <CertificateCell xl={ 2 } md={ 6 } label="Legal Officer">{ props.legalOfficer.name }</CertificateCell>
             <CertificateCell xl={ 4 } md={ 6 } label="Address">
                 <LegalOfficerPostalAddress address={ props.legalOfficer.postalAddress } />
+                <LegalOfficerAdditionalDetails additionalDetails={ props.legalOfficer.additionalDetails } />
             </CertificateCell>
         </Row>
     )
