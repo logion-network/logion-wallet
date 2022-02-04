@@ -25,8 +25,7 @@ export default function TransactionProtection() {
 
     return (
         <FullWidthPane
-            mainTitle="Transaction Protection"
-            subTitle="Logion Officer Cases"
+            mainTitle="Transaction Protection Management"
             titleIcon={{
                 icon: {
                     id: 'loc'

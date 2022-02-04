@@ -29,7 +29,7 @@ exports[`ContextualizedLocDetails renders for LO 1`] = `
               src="/assets/identity.svg"
             />
           </div>
-          Identity Case Management
+          Identity Case
         </h1>
         <div
           className="back-button"
@@ -189,7 +189,7 @@ exports[`ContextualizedLocDetails renders for LO 1`] = `
                 role="tab"
                 type="button"
               >
-                Legal Officer Case - Identity
+                Legal Officer Case (LOC) - Polkadot Identity
               </button>
             </li>
           </ul>
@@ -678,7 +678,7 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
               src="/assets/identity.svg"
             />
           </div>
-          Identity Case Management
+          Identity Case
         </h1>
         <div
           className="back-button"
@@ -838,7 +838,7 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
                 role="tab"
                 type="button"
               >
-                Legal Officer Case - Identity
+                Legal Officer Case (LOC) - Polkadot Identity
               </button>
             </li>
           </ul>

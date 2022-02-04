@@ -3,8 +3,7 @@
 exports[`renders 1`] = `
 <FullWidthPane
   className="TransactionProtection"
-  mainTitle="Transaction Protection"
-  subTitle="Logion Officer Cases"
+  mainTitle="Transaction Protection Management"
   titleIcon={
     Object {
       "background": Object {

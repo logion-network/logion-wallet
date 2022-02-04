@@ -22,7 +22,7 @@ exports[`Renders null with no data 1`] = `
           "header": "Status",
           "render": [Function],
           "splitAfter": true,
-          "width": "140px",
+          "width": "150px",
         },
         Object {
           "header": "Submission date",
@@ -69,7 +69,7 @@ exports[`Renders requests history 1`] = `
           "header": "Status",
           "render": [Function],
           "splitAfter": true,
-          "width": "140px",
+          "width": "150px",
         },
         Object {
           "header": "Submission date",
