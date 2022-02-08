@@ -57,6 +57,12 @@ export default function LocLinkExistingForm(props: Props) {
                         name="linkNature"
                         control={ props.control }
                         defaultValue=""
+                        rules={{
+                            maxLength: {
+                                value: 255,
+                                message: 'The description must contain at most 255 characters'
+                            }
+                        }}
                         render={({ field }) => (
                             <Form.Control
                                 isInvalid={!!props.errors.linkNature?.message}
