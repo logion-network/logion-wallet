@@ -9,11 +9,17 @@ import Loader from '../../common/Loader';
 import { locDetailsPath } from '../UserRouter';
 import { useNavigate } from 'react-router-dom';
 import { useResponsiveContext } from '../../common/Responsive';
+import { DataLocType } from "../../logion-chain/Types";
 
-export default function VoidLocs() {
+export interface Props {
+    locType: DataLocType
+}
+
+export default function VoidLocs(props: Props) {
     const { voidTransactionLocs } = useCommonContext();
     const navigate = useNavigate();
     const { width } = useResponsiveContext();
+    const { locType } = props
 
     if (voidTransactionLocs === null) {
         return <Loader />;
@@ -65,7 +71,7 @@ export default function VoidLocs() {
                     render: request =>
                         <ActionCell>
                             <ButtonGroup>
-                                <Button onClick={ () => navigate(locDetailsPath(request.request.id)) }>View</Button>
+                                <Button onClick={ () => navigate(locDetailsPath(request.request.id, request.request.locType)) }>View</Button>
                             </ButtonGroup>
                         </ActionCell>
                     ,
@@ -76,7 +82,7 @@ export default function VoidLocs() {
                     align: 'center',
                 },
             ]}
-            data={ voidTransactionLocs }
+            data={ voidTransactionLocs[locType] }
             renderEmpty={ () => <EmptyTableMessage>No LOCs</EmptyTableMessage>}
         />
     );

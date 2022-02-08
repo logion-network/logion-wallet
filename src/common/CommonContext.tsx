@@ -29,7 +29,7 @@ import {
     loadCurrentAddress,
     clearCurrentAddress
 } from './Storage';
-import { LegalOfficerCase, IdentityLocType } from "../logion-chain/Types";
+import { LegalOfficerCase, IdentityLocType, LocType, DataLocType } from "../logion-chain/Types";
 import { toDecimalString, UUID } from "../logion-chain/UUID";
 import { getLegalOfficerCasesMap } from "../logion-chain/LogionLoc";
 import { authenticate } from "./Authentication";
@@ -49,10 +49,10 @@ export interface CommonContext {
     dataAddress: string | null;
     balances: CoinBalance[] | null;
     transactions: Transaction[] | null;
-    pendingLocRequests: LocRequest[] | null;
-    rejectedLocRequests: LocRequest[] | null;
-    openedLocRequests: RequestAndLoc[] | null;
-    closedLocRequests: RequestAndLoc[] | null;
+    pendingLocRequests: Record<DataLocType, LocRequest[]> | null;
+    rejectedLocRequests: Record<DataLocType, LocRequest[]> | null;
+    openedLocRequests: Record<DataLocType, RequestAndLoc[]> | null;
+    closedLocRequests: Record<DataLocType, RequestAndLoc[]> | null;
     openedIdentityLocs: RequestAndLoc[] | null;
     openedIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null;
     closedIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null;
@@ -62,7 +62,7 @@ export interface CommonContext {
     logout: () => void;
     axiosFactory?: AxiosFactory;
     refresh: (clearOnRefresh?: boolean) => void;
-    voidTransactionLocs: RequestAndLoc[] | null;
+    voidTransactionLocs: Record<DataLocType, RequestAndLoc[]> | null;
     voidIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null;
     isCurrentAuthenticated: () => boolean;
     authenticate: (address: string[]) => Promise<void>;
@@ -148,17 +148,17 @@ interface Action {
     newTokens?: AccountTokens,
     logout?: () => void,
     timer?: number;
-    pendingLocRequests?: LocRequest[];
-    openedLocRequests?: RequestAndLoc[];
-    closedLocRequests?: RequestAndLoc[];
-    rejectedLocRequests?: LocRequest[];
+    pendingLocRequests?: Record<DataLocType, LocRequest[]>;
+    openedLocRequests?: Record<DataLocType, RequestAndLoc[]>;
+    closedLocRequests?: Record<DataLocType, RequestAndLoc[]>;
+    rejectedLocRequests?: Record<DataLocType, LocRequest[]>;
     openedIdentityLocs?: RequestAndLoc[];
     openedIdentityLocsByType?: Record<IdentityLocType, RequestAndLoc[]>;
     closedIdentityLocsByType?: Record<IdentityLocType, RequestAndLoc[]>;
     refresh?: (clearOnRefresh?: boolean) => void;
     refreshAddress?: string;
     clearOnRefresh?: boolean;
-    voidTransactionLocs?: RequestAndLoc[];
+    voidTransactionLocs?: Record<DataLocType, RequestAndLoc[]>;
     voidIdentityLocsByType?: Record<IdentityLocType, RequestAndLoc[]>;
     authenticate?: (address: string[]) => Promise<void>;
     nodesUp?: Endpoint[];
@@ -378,16 +378,38 @@ export function CommonContextProvider(props: Props) {
                     return aggregateArrays<LocRequest>(result);
                 }
 
-                const pendingLocRequests = await fetchAndAggregate({ statuses: [ "REQUESTED" ] })
-                const openedLocRequestsOnly = await fetchAndAggregate({
-                    statuses: [ "OPEN" ],
-                    locTypes: [ 'Transaction' ]
-                })
-                const closedLocRequestsOnly = await fetchAndAggregate({
-                    statuses: [ "CLOSED" ],
-                    locTypes: [ 'Transaction' ]
-                })
-                const rejectedLocRequests = await fetchAndAggregate({ statuses: [ "REJECTED" ] })
+                interface RequestsByType {
+                    pending: LocRequest[],
+                    rejected: LocRequest[],
+                    opened: LocRequest[],
+                    closed: LocRequest[],
+                    locIds: UUID[]
+                }
+
+                async function fetchRequests(locType: LocType): Promise<RequestsByType> {
+                    const pending = await fetchAndAggregate({
+                        statuses: [ "REQUESTED" ],
+                        locTypes: [ locType ]
+                    })
+                    const opened = await fetchAndAggregate({
+                        statuses: [ "OPEN" ],
+                        locTypes: [ locType ]
+                    })
+                    const closed = await fetchAndAggregate({
+                        statuses: [ "CLOSED" ],
+                        locTypes: [ locType ]
+                    })
+                    const rejected = await fetchAndAggregate({
+                        statuses: [ "REJECTED" ],
+                        locTypes: [ locType ]
+                    })
+
+                    let locIds = opened.map(loc => new UUID(loc.id))
+                    locIds = locIds.concat(closed.map(loc => new UUID(loc.id)));
+
+                    return { pending, rejected, opened, closed, locIds }
+                }
+
                 const openedIdentityLocsOnly = await fetchAndAggregate({
                     statuses: [ "OPEN" ],
                     locTypes: [ 'Identity' ]
@@ -413,21 +435,41 @@ export function CommonContextProvider(props: Props) {
                     identityLocType: 'Logion'
                 })
 
-                let locIds = openedLocRequestsOnly.map(loc => new UUID(loc.id));
-                locIds = locIds.concat(closedLocRequestsOnly.map(loc => new UUID(loc.id)));
-                locIds = locIds.concat(openedIdentityLocsOnly.map(loc => new UUID(loc.id)));
-                locIds = locIds.concat(closedIdentityLocsOnlyPolkadot.map(loc => new UUID(loc.id)));
-                locIds = locIds.concat(closedIdentityLocsOnlyLogion.map(loc => new UUID(loc.id)));
+                const transactionLocs = await fetchRequests('Transaction');
+                const collectionLocs = await fetchRequests('Collection');
+
+                let locIds = transactionLocs.locIds
+                    .concat(collectionLocs.locIds)
+                    .concat(openedIdentityLocsOnly.map(loc => new UUID(loc.id)))
+                    .concat(closedIdentityLocsOnlyPolkadot.map(loc => new UUID(loc.id)))
+                    .concat(closedIdentityLocsOnlyLogion.map(loc => new UUID(loc.id)));
                 const locs = await getLegalOfficerCasesMap({
                     api: api!,
                     locIds
                 });
 
-                // Transaction
-                const openedLocRequests = notVoidRequestsAndLocs(openedLocRequestsOnly, locs);
-                const closedLocRequests = notVoidRequestsAndLocs(closedLocRequestsOnly, locs);
-                const voidTransactionLocs = voidRequestsAndLocs(openedLocRequestsOnly, locs)
-                    .concat(voidRequestsAndLocs(closedLocRequestsOnly, locs));
+                const pendingLocRequests: Record<DataLocType, LocRequest[]> = {
+                    'Transaction': transactionLocs.pending,
+                    'Collection': collectionLocs.pending
+                }
+                const rejectedLocRequests: Record<DataLocType, LocRequest[]> = {
+                    'Transaction': transactionLocs.rejected,
+                    'Collection': collectionLocs.rejected
+                }
+                const openedLocRequests: Record<DataLocType, RequestAndLoc[]> = {
+                    'Transaction': notVoidRequestsAndLocs(transactionLocs.opened, locs),
+                    'Collection': notVoidRequestsAndLocs(collectionLocs.opened, locs)
+                }
+                const closedLocRequests: Record<DataLocType, RequestAndLoc[]> = {
+                    'Transaction': notVoidRequestsAndLocs(transactionLocs.closed, locs),
+                    'Collection': notVoidRequestsAndLocs(collectionLocs.closed, locs)
+                }
+                const voidTransactionLocs: Record<DataLocType, RequestAndLoc[]> = {
+                    'Transaction': voidRequestsAndLocs(transactionLocs.opened, locs)
+                        .concat(voidRequestsAndLocs(transactionLocs.closed, locs)),
+                    'Collection': voidRequestsAndLocs(collectionLocs.opened, locs)
+                        .concat(voidRequestsAndLocs(collectionLocs.closed, locs))
+                }
 
                 // Identity
                 const openedIdentityLocs = notVoidRequestsAndLocs(openedIdentityLocsOnly, locs);

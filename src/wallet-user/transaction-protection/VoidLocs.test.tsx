@@ -5,7 +5,7 @@ import ClosedLocs from './ClosedLocs';
 import { setClosedLocRequests } from '../../common/__mocks__/CommonContextMock';
 
 test("Renders null with no data", () => {
-    const tree = shallowRender(<ClosedLocs />);
+    const tree = shallowRender(<ClosedLocs locType="Transaction" />);
     expect(tree).toMatchSnapshot();
 });
 
@@ -19,6 +19,6 @@ test("Renders pending requests", () => {
             status: "CLOSED"
         }
     ]);
-    const tree = shallowRender(<ClosedLocs/>);
+    const tree = shallowRender(<ClosedLocs locType="Transaction" />);
     expect(tree).toMatchSnapshot();
 });

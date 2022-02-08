@@ -10,14 +10,12 @@ import {
     WALLET_PATH,
     transactionsPath,
     TRANSACTIONS_RELATIVE_PATH,
-    LOC_REQUESTS_RELATIVE_PATH,
     IDENTITIES_RELATIVE_PATH,
     SETTINGS_PATH,
-    TRANSACTION_LOC_DETAILS_RELATIVE_PATH,
     IDENTITY_LOC_DETAILS_RELATIVE_PATH,
     locDetailsPath,
-    LOC_REQUESTS_PATH,
     IDENTITIES_PATH,
+    locRequestsPath,
 } from './LegalOfficerPaths';
 
 import Home from './Home';
@@ -35,6 +33,7 @@ import { FullWidthPane } from '../common/Dashboard';
 import DangerFrame from '../common/DangerFrame';
 
 import './LegalOfficerRouter.css';
+import { locRequestsRelativePath, dataLocDetailsRelativePath } from "../RootPaths";
 
 export default function LegalOfficerRouter() {
     const { accounts, nodesDown, availableLegalOfficers } = useCommonContext();
@@ -70,10 +69,36 @@ export default function LegalOfficerRouter() {
             <Route path={ TRANSACTIONS_RELATIVE_PATH } element={ <Transactions
                     backPath={ WALLET_PATH }
             /> } />
-            <Route path={ LOC_REQUESTS_RELATIVE_PATH } element={ <TransactionProtection /> } />
-            <Route path={ TRANSACTION_LOC_DETAILS_RELATIVE_PATH } element={
+            <Route path={ locRequestsRelativePath('Transaction') }
+                   element={ <TransactionProtection
+                       locType='Transaction'
+                       titles={ {
+                           main: "Transaction Case Management",
+                           loc: "Transaction Protection Case(s)",
+                           request: "Transaction Protection Case Request(s)"
+                       } }
+                       iconId="loc"
+                   /> } />
+            <Route path={ locRequestsRelativePath('Collection') }
+                   element={ <TransactionProtection
+                       locType='Collection'
+                       titles={{
+                           main: "Collection Protection Management",
+                           loc: "Collection Protection Case(s)",
+                           request: "Collection Protection Request(s)"
+                       }}
+                       iconId="collection"
+                   /> } />
+            <Route path={ dataLocDetailsRelativePath('Transaction') } element={
                 <LocDetails
-                    backPath={ LOC_REQUESTS_PATH }
+                    backPath={ locRequestsPath('Transaction') }
+                    detailsPath={ locDetailsPath }
+                    viewer='LegalOfficer'
+                />
+            } />
+            <Route path={ dataLocDetailsRelativePath('Collection') } element={
+                <LocDetails
+                    backPath={ locRequestsPath('Collection') }
                     detailsPath={ locDetailsPath }
                     viewer='LegalOfficer'
                 />

@@ -21,12 +21,13 @@ export default function OpenedLocs(props: Props) {
     const { openedLocRequests, openedIdentityLocsByType } = useCommonContext();
     const navigate = useNavigate();
     const { width } = useResponsiveContext();
+    const { locType, identityLocType } = props
 
     if (openedLocRequests === null || openedIdentityLocsByType === null) {
         return null;
     }
 
-    const requests = props.locType === 'Transaction' ? openedLocRequests : openedIdentityLocsByType[props.identityLocType!];
+    const requests = locType === 'Identity' ? openedIdentityLocsByType[identityLocType!] : openedLocRequests[locType];
 
     return (
         <Table

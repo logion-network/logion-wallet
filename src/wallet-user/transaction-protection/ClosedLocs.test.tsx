@@ -6,7 +6,7 @@ import ClosedLocs from './ClosedLocs';
 import { setClosedLocRequests } from '../../common/__mocks__/CommonContextMock';
 
 test("Renders null with no data", () => {
-    const tree = render(<ClosedLocs />);
+    const tree = render(<ClosedLocs locType="Transaction" />);
     expect(tree).toMatchSnapshot();
 });
 
@@ -22,6 +22,6 @@ test("Renders pending requests", () => {
             }
         }
     ]);
-    const tree = render(<ClosedLocs/>);
+    const tree = render(<ClosedLocs locType="Transaction" />);
     expect(tree).toMatchSnapshot();
 });

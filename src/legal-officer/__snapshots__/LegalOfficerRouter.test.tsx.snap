@@ -40,18 +40,56 @@ exports[`renders 1`] = `
     path="/wallet/transactions/:coinId"
   />
   <Route
-    element={<TransactionProtection />}
-    path="/loc"
+    element={
+      <TransactionProtection
+        iconId="loc"
+        locType="Transaction"
+        titles={
+          Object {
+            "loc": "Transaction Protection Case(s)",
+            "main": "Transaction Case Management",
+            "request": "Transaction Protection Case Request(s)",
+          }
+        }
+      />
+    }
+    path="/loc/transaction"
+  />
+  <Route
+    element={
+      <TransactionProtection
+        iconId="collection"
+        locType="Collection"
+        titles={
+          Object {
+            "loc": "Collection Protection Case(s)",
+            "main": "Collection Protection Management",
+            "request": "Collection Protection Request(s)",
+          }
+        }
+      />
+    }
+    path="/loc/collection"
   />
   <Route
     element={
       <LocDetails
-        backPath="/legal-officer/loc"
+        backPath="/legal-officer/loc/transaction"
         detailsPath={[Function]}
         viewer="LegalOfficer"
       />
     }
-    path="/loc/:locId"
+    path="/loc/transaction/:locId"
+  />
+  <Route
+    element={
+      <LocDetails
+        backPath="/legal-officer/loc/collection"
+        detailsPath={[Function]}
+        viewer="LegalOfficer"
+      />
+    }
+    path="/loc/collection/:locId"
   />
   <Route
     element={<IdentityProtection />}

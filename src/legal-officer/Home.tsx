@@ -17,7 +17,13 @@ import ButtonGroup from '../common/ButtonGroup';
 
 import { prefixedLogBalance, SYMBOL } from '../logion-chain/Balances';
 
-import { IDENTITIES_PATH, WALLET_PATH, transactionLocDetailsPath, LOC_REQUESTS_PATH, identityLocDetailsPath } from './LegalOfficerPaths';
+import {
+    IDENTITIES_PATH,
+    WALLET_PATH,
+    dataLocDetailsPath,
+    identityLocDetailsPath,
+    locRequestsPath
+} from './LegalOfficerPaths';
 
 import './Home.css';
 import UserIdentityNameCell from '../common/UserIdentityNameCell';
@@ -109,7 +115,7 @@ export default function Account() {
                         className="transactions"
                     >
                         <Button
-                            onClick={ () => navigate(LOC_REQUESTS_PATH) }
+                            onClick={ () => navigate(locRequestsPath('Transaction')) }
                             slim={true}
                             className="transactions-button"
                         >
@@ -150,7 +156,7 @@ export default function Account() {
                                                 render: requestAndLoc =>
                                                     <ActionCell>
                                                         <ButtonGroup>
-                                                            <Button onClick={ () => navigate(transactionLocDetailsPath(requestAndLoc.request.id)) }>Manage LOC</Button>
+                                                            <Button onClick={ () => navigate(dataLocDetailsPath(requestAndLoc.request.locType, requestAndLoc.request.id)) }>Manage LOC</Button>
                                                         </ButtonGroup>
                                                     </ActionCell>
                                                 ,
@@ -158,7 +164,7 @@ export default function Account() {
                                                 align: 'center',
                                             }
                                         ]}
-                                        data={ openedLocRequests.filter(requestAndLoc => requestAndLoc.request.locType === "Transaction").slice(0, MAX_OPEN_LOCS) }
+                                        data={ openedLocRequests['Transaction'].filter(requestAndLoc => requestAndLoc.request.locType === "Transaction").slice(0, MAX_OPEN_LOCS) }
                                         renderEmpty={ () => <EmptyTableMessage>No open LOC yet</EmptyTableMessage>}
                                     />
                                 }
@@ -197,7 +203,7 @@ export default function Account() {
                                                 align: 'center',
                                             }
                                         ]}
-                                        data={ pendingLocRequests.slice(0, MAX_PENDING_LOCS) }
+                                        data={ pendingLocRequests['Transaction'].slice(0, MAX_PENDING_LOCS) }
                                         renderEmpty={ () => <EmptyTableMessage>No requested LOC yet</EmptyTableMessage> }
                                     />
                                 }

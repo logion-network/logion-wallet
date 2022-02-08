@@ -6,8 +6,13 @@ import { useCommonContext } from '../../common/CommonContext';
 import UserIdentityNameCell from '../../common/UserIdentityNameCell';
 
 import LocRequestDetails from './LocRequestDetails';
+import { DataLocType } from "../../logion-chain/Types";
 
-export default function LocRequestsHistory() {
+export interface Props {
+    locType: DataLocType;
+}
+
+export default function RejectedLocRequests(props: Props) {
     const { rejectedLocRequests } = useCommonContext();
 
     if(rejectedLocRequests === null) {
@@ -45,7 +50,7 @@ export default function LocRequestsHistory() {
                     align: 'center',
                 },
             ]}
-            data={ rejectedLocRequests }
+            data={ rejectedLocRequests[props.locType] }
             renderEmpty={() => <EmptyTableMessage>No LOC request history</EmptyTableMessage>}
         />
     );

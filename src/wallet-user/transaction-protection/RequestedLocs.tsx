@@ -5,9 +5,15 @@ import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../../common/Table
 import LocStatusCell from '../../common/LocStatusCell';
 import LegalOfficerName from '../../common/LegalOfficerNameCell';
 import Loader from '../../common/Loader';
+import { DataLocType } from "../../logion-chain/Types";
 
-export default function RequestedLocs() {
+export interface Props {
+    locType: DataLocType
+}
+
+export default function RequestedLocs(props: Props) {
     const { pendingLocRequests } = useCommonContext();
+    const { locType } = props
 
     if(pendingLocRequests === null) {
         return <Loader />;
@@ -38,7 +44,7 @@ export default function RequestedLocs() {
                     align: 'center',
                 }
             ]}
-            data={ pendingLocRequests }
+            data={ pendingLocRequests[locType] }
             renderEmpty={ () => <EmptyTableMessage>No requested LOCs</EmptyTableMessage> }
         />
     );

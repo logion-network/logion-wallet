@@ -9,11 +9,17 @@ import Loader from '../../common/Loader';
 import { locDetailsPath } from '../UserRouter';
 import { useNavigate } from 'react-router-dom';
 import { useResponsiveContext } from '../../common/Responsive';
+import { DataLocType } from "../../logion-chain/Types";
 
-export default function ClosedLocs() {
+export interface Props {
+    locType: DataLocType
+}
+
+export default function ClosedLocs(props: Props) {
     const { closedLocRequests } = useCommonContext();
     const navigate = useNavigate();
     const { width } = useResponsiveContext();
+    const { locType } = props
 
     if(closedLocRequests === null) {
         return <Loader />;
@@ -65,7 +71,7 @@ export default function ClosedLocs() {
                     render: request =>
                         <ActionCell>
                             <ButtonGroup>
-                                <Button onClick={ () => navigate(locDetailsPath(request.request.id)) }>View</Button>
+                                <Button onClick={ () => navigate(locDetailsPath(request.request.id, request.request.locType)) }>View</Button>
                             </ButtonGroup>
                         </ActionCell>
                     ,
@@ -76,7 +82,7 @@ export default function ClosedLocs() {
                     align: 'center',
                 },
             ]}
-            data={ closedLocRequests }
+            data={ closedLocRequests[locType] }
             renderEmpty={ () => <EmptyTableMessage>No LOCs</EmptyTableMessage>}
         />
     );
