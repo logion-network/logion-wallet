@@ -28,14 +28,15 @@ function shouldShowIdentityFields(
 }
 
 export interface Props {
-    locType: DataLocType
+    locType: DataLocType,
+    requestButtonLabel: string
 }
 
 export default function LocCreation(props: Props) {
     const { colorTheme, accounts, refresh, axiosFactory } = useCommonContext();
     const { recoveryConfig } = useUserContext();
     const [ requestLoc, setRequestLoc ] = useState(false);
-    const { locType } = props;
+    const { locType, requestButtonLabel } = props;
     const { control, handleSubmit, formState: { errors }, reset, watch } = useForm<FormValues>({
         defaultValues: {
             description: "",
@@ -83,7 +84,7 @@ export default function LocCreation(props: Props) {
 
     return (
         <>
-            <Button onClick={() => setRequestLoc(true)}>Request a Transaction Protection</Button>
+            <Button onClick={ () => setRequestLoc(true) }>{ requestButtonLabel }</Button>
             <Dialog
                 show={ requestLoc }
                 size="lg"

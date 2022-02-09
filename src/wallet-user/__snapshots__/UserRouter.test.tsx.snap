@@ -40,6 +40,7 @@ exports[`renders 1`] = `
       <TransactionProtection
         iconId="loc"
         locType="Transaction"
+        requestButtonLabel="Request a Transaction Protection"
         titles={
           Object {
             "loc": "Transaction Protection Case(s)",
@@ -56,6 +57,7 @@ exports[`renders 1`] = `
       <TransactionProtection
         iconId="collection"
         locType="Collection"
+        requestButtonLabel="Request a Collection Protection"
         titles={
           Object {
             "loc": "Collection Protection Case(s)",

@@ -22,14 +22,15 @@ import { DataLocType } from "../../logion-chain/Types";
 export interface Props {
     locType: DataLocType,
     titles: { main: string, loc: string, request: string },
-    iconId: string
+    iconId: string,
+    requestButtonLabel: string
 }
 
 export default function TransactionProtection(props: Props) {
     const { colorTheme, nodesDown } = useCommonContext();
     const [ locTabKey, setLocTabKey ] = useState<string>('open');
     const [ requestTabKey, setRequestTabKey ] = useState<string>('pending');
-    const { locType, titles, iconId } = props;
+    const { locType, titles, iconId, requestButtonLabel } = props;
 
     return (
         <FullWidthPane
@@ -77,7 +78,7 @@ export default function TransactionProtection(props: Props) {
                             ] }
                         />
                         <div className="action-bar">
-                            <LocCreation locType={ locType } />
+                            <LocCreation locType={ locType } requestButtonLabel={ requestButtonLabel } />
                         </div>
                     </Frame>
                 </Col>
