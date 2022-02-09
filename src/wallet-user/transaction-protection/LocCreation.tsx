@@ -74,7 +74,7 @@ export default function LocCreation(props: Props) {
         reset();
         refresh!();
         setRequestLoc(false);
-    }, [ axiosFactory, accounts, setRequestLoc, refresh, reset, showIdentityFields ]);
+    }, [ axiosFactory, accounts, setRequestLoc, refresh, reset, showIdentityFields, locType ]);
 
     useEffect(() => {
         const subscription = watch(({ legalOfficer }) => setSelectedLegalOfficer(legalOfficer));
