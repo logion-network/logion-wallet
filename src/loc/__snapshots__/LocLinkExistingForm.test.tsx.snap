@@ -49,6 +49,14 @@ exports[`LocLinkExistingForm renders 1`] = `
         defaultValue=""
         name="linkNature"
         render={[Function]}
+        rules={
+          Object {
+            "maxLength": Object {
+              "message": "The description must contain at most 255 characters",
+              "value": 255,
+            },
+          }
+        }
       />
     }
     id="linkNature"

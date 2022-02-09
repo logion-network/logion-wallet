@@ -18,7 +18,7 @@ import ButtonGroup from '../common/ButtonGroup';
 
 import { prefixedLogBalance, SYMBOL } from '../logion-chain/Balances';
 
-import { locDetailsPath, SETTINGS_PATH, TRANSACTION_PROTECTION_PATH, WALLET_PATH } from './UserRouter';
+import { SETTINGS_PATH, WALLET_PATH, dataLocDetailsPath, locRequestsPath } from './UserRouter';
 import { TransactionStatusCell } from "../common/TransactionStatusCell";
 import './Home.css';
 import NetworkWarning from '../common/NetworkWarning';
@@ -130,7 +130,7 @@ export function Content() {
                     className="transactions"
                 >
                     <Button
-                        onClick={ () => navigate(TRANSACTION_PROTECTION_PATH) }
+                        onClick={ () => navigate(locRequestsPath('Transaction')) }
                         slim={true}
                         className="my-transactions"
                     >
@@ -174,7 +174,7 @@ export function Content() {
                                             render: request =>
                                                 <ActionCell>
                                                     <ButtonGroup>
-                                                        <Button onClick={ () => navigate(locDetailsPath(request.id)) }>View</Button>
+                                                        <Button onClick={ () => navigate(dataLocDetailsPath(request.locType, request.id)) }>View</Button>
                                                     </ButtonGroup>
                                                 </ActionCell>
                                             ,
@@ -185,7 +185,7 @@ export function Content() {
                                             align: 'center',
                                         },
                                     ]}
-                                    data={ openedLocRequests.map(requestAndLoc => requestAndLoc.request).slice(0, MAX_OPEN_LOCS) }
+                                    data={ openedLocRequests['Transaction'].map(requestAndLoc => requestAndLoc.request).slice(0, MAX_OPEN_LOCS) }
                                     renderEmpty={ () => <EmptyTableMessage>No open LOC yet</EmptyTableMessage>}
                                 />
                             }
@@ -223,7 +223,7 @@ export function Content() {
                                             align: 'center',
                                         }
                                     ]}
-                                    data={ pendingLocRequests.slice(0, MAX_PENDING_LOCS) }
+                                    data={ pendingLocRequests['Transaction'].slice(0, MAX_PENDING_LOCS) }
                                     renderEmpty={ () => <EmptyTableMessage>No requested LOC yet</EmptyTableMessage> }
                                 />
                             }

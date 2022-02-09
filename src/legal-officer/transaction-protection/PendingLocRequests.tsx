@@ -16,13 +16,18 @@ import { rejectLocRequest } from '../../loc/Model';
 import LocRequestAcceptance from './LocRequestAcceptance';
 import LocRequestDetails from './LocRequestDetails';
 import Icon from '../../common/Icon';
+import { DataLocType } from "../../logion-chain/Types";
 
-export default function PendingLocRequests() {
+export interface Props {
+    locType: DataLocType;
+}
+
+export default function PendingLocRequests(props: Props) {
     const { pendingLocRequests, axiosFactory, refresh, accounts } = useCommonContext();
     const [ requestToReject, setRequestToReject ] = useState<string | null>(null);
     const [ reason, setReason ] = useState<string>("");
     const [ requestToAccept, setRequestToAccept ] = useState<LocRequest | null>(null);
-
+    const { locType } = props;
     const handleClose = () => setRequestToReject(null);
 
     if (pendingLocRequests === null || axiosFactory === undefined) {
@@ -39,8 +44,8 @@ export default function PendingLocRequests() {
     };
 
     const getLocRequest = (requestId: string): (LocRequest | null) => {
-        for(let i = 0; i < pendingLocRequests!.length; ++i) {
-            const request = pendingLocRequests![i];
+        for(let i = 0; i < pendingLocRequests![locType].length; ++i) {
+            const request = pendingLocRequests![locType][i];
             if(request.id === requestId) {
                 return request;
             }
@@ -97,7 +102,7 @@ export default function PendingLocRequests() {
                         width: "200px",
                     }
                 ]}
-                data={ pendingLocRequests }
+                data={ pendingLocRequests[locType] }
                 renderEmpty={ () => <EmptyTableMessage>No pending LOC request</EmptyTableMessage> }
             />
 
@@ -121,7 +126,7 @@ export default function PendingLocRequests() {
                             mayProceed: true,
                             callback: rejectAndCloseModal,
                         }
-                    ]}  
+                    ]}
                 >
                     <Form.Group>
                         <Form.Label>Reason</Form.Label>

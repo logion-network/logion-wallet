@@ -12,6 +12,7 @@ import { useUserContext } from '../UserContext';
 import LocCreationForm, { FormValues } from './LocCreationForm';
 import { RecoveryConfig } from '../../logion-chain/Recovery';
 import UserIdentity from '../../common/types/Identity';
+import { DataLocType } from "../../logion-chain/Types";
 
 function shouldShowIdentityFields(
     legalOfficer: string | undefined,
@@ -26,10 +27,15 @@ function shouldShowIdentityFields(
     }
 }
 
-export default function LocCreation() {
+export interface Props {
+    locType: DataLocType
+}
+
+export default function LocCreation(props: Props) {
     const { colorTheme, accounts, refresh, axiosFactory } = useCommonContext();
     const { recoveryConfig } = useUserContext();
     const [ requestLoc, setRequestLoc ] = useState(false);
+    const { locType } = props;
     const { control, handleSubmit, formState: { errors }, reset, watch } = useForm<FormValues>({
         defaultValues: {
             description: "",
@@ -60,7 +66,7 @@ export default function LocCreation() {
             ownerAddress: formValues.legalOfficer,
             requesterAddress: currentAddress,
             description: formValues.description,
-            locType: 'Transaction',
+            locType,
             userIdentity,
         }
         await createLocRequest!(axiosFactory!(formValues.legalOfficer), request);
@@ -68,7 +74,7 @@ export default function LocCreation() {
         reset();
         refresh!();
         setRequestLoc(false);
-    }, [ axiosFactory, accounts, setRequestLoc, refresh, reset, showIdentityFields ]);
+    }, [ axiosFactory, accounts, setRequestLoc, refresh, reset, showIdentityFields, locType ]);
 
     useEffect(() => {
         const subscription = watch(({ legalOfficer }) => setSelectedLegalOfficer(legalOfficer));

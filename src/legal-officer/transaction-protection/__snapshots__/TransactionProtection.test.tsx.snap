@@ -3,7 +3,7 @@
 exports[`renders 1`] = `
 <FullWidthPane
   className="TransactionProtection"
-  mainTitle="Transaction Case Management"
+  mainTitle="main"
   titleIcon={
     Object {
       "background": Object {
@@ -19,7 +19,7 @@ exports[`renders 1`] = `
   <Row>
     <Col>
       <Frame
-        title="Transaction Protection Case(s)"
+        title="loc"
       >
         <Tabs
           activeKey="open"
@@ -50,7 +50,7 @@ exports[`renders 1`] = `
   <Row>
     <Col>
       <Frame
-        title="Transaction Protection Case Request(s)"
+        title="request"
       >
         <Tabs
           activeKey="pending"

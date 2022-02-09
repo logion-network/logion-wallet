@@ -8,7 +8,7 @@ import RequestedLocs from './RequestedLocs';
 import { setPendingLocRequests } from '../../common/__mocks__/CommonContextMock';
 
 it("Renders null with no data", () => {
-    const tree = render(<RequestedLocs />);
+    const tree = render(<RequestedLocs locType="Transaction" />);
     expect(tree).toMatchSnapshot();
 });
 
@@ -22,6 +22,6 @@ it("Renders pending requests", () => {
             status: "REQUESTED"
         }
     ]);
-    const tree = render(<RequestedLocs/>);
+    const tree = render(<RequestedLocs locType="Transaction" />);
     expect(tree).toMatchSnapshot();
 });

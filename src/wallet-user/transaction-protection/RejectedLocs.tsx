@@ -5,9 +5,15 @@ import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../../common/Table
 import LocStatusCell from '../../common/LocStatusCell';
 import LegalOfficerName from '../../common/LegalOfficerNameCell';
 import Loader from '../../common/Loader';
+import { DataLocType } from "../../logion-chain/Types";
 
-export default function RejectedLocs() {
+export interface Props {
+    locType: DataLocType
+}
+
+export default function RejectedLocs(props: Props) {
     const { rejectedLocRequests } = useCommonContext();
+    const { locType } = props
 
     if(rejectedLocRequests === null) {
         return <Loader />;
@@ -43,7 +49,7 @@ export default function RejectedLocs() {
                     align: 'center',
                 },
             ]}
-            data={ rejectedLocRequests }
+            data={ rejectedLocRequests[locType] }
             renderEmpty={ () => <EmptyTableMessage>No LOCs</EmptyTableMessage>}
         />
     );

@@ -6,7 +6,7 @@ import { TEST_WALLET_USER } from '../../wallet-user/TestData';
 import { COLOR_THEME, DEFAULT_LEGAL_OFFICER } from '../TestData';
 import Accounts, { Account } from '../types/Accounts';
 import { CommonContext, RequestAndLoc } from "../CommonContext";
-import { IdentityLocType } from "../../logion-chain/Types";
+import { IdentityLocType, DataLocType } from "../../logion-chain/Types";
 import { legalOfficers } from '../../directory/DirectoryContextMock';
 
 export let selectAddress = jest.fn();
@@ -44,13 +44,13 @@ export let setColorTheme = jest.fn();
 
 export let axiosMock = new Mock<AxiosInstance>();
 
-export let pendingLocRequests: any[] | null = null;
+export let pendingLocRequests: Record<DataLocType, any[]> | null = null;
 
-export let rejectedLocRequests: any[] | null = null;
+export let rejectedLocRequests: Record<DataLocType, any[]> | null = null;
 
-export let openedLocRequests: any[] | null = null;
+export let openedLocRequests: Record<DataLocType, any[]> | null = null;
 
-export let closedLocRequests: any[] | null = null;
+export let closedLocRequests: Record<DataLocType, any[]> | null = null;
 
 export let refresh = jest.fn();
 
@@ -115,19 +115,19 @@ export function setTransactions(value: any) {
 }
 
 export function setRejectedLocRequests(requests: any[]) {
-    rejectedLocRequests = requests;
+    rejectedLocRequests = { Collection: [], Transaction: requests };
 }
 
 export function setOpenedLocRequests(requests: any[]) {
-    openedLocRequests = requests;
+    openedLocRequests = { Collection: [], Transaction: requests };
 }
 
 export function setPendingLocRequests(requests: any[]) {
-    pendingLocRequests = requests;
+    pendingLocRequests = { Collection: [], Transaction: requests };
 }
 
 export function setClosedLocRequests(requests: any[]) {
-    closedLocRequests = requests;
+    closedLocRequests = { Collection: [], Transaction: requests };
 }
 
 export function setOpenedIdentityLocsByType(locs: Record<IdentityLocType, RequestAndLoc[]>) {

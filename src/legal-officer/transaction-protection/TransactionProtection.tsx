@@ -13,18 +13,26 @@ import ClosedLocs from './ClosedLocs';
 import Frame from '../../common/Frame';
 
 import VoidLocs from './VoidLocs';
+import { DataLocType } from "../../logion-chain/Types";
 
-export default function TransactionProtection() {
+export interface Props {
+    locType: DataLocType,
+    titles: { main: string, loc: string, request: string },
+    iconId: string
+}
+
+export default function TransactionProtection(props: Props) {
     const { colorTheme } = useCommonContext();
     const [ locTabKey, setLocTabKey ] = useState<string>('open');
     const [ requestTabKey, setRequestTabKey ] = useState<string>('pending');
+    const { locType, titles, iconId } = props;
 
     return (
         <FullWidthPane
-            mainTitle="Transaction Case Management"
+            mainTitle={ titles.main }
             titleIcon={ {
                 icon: {
-                    id: 'loc'
+                    id: iconId
                 },
                 background: colorTheme.topMenuItems.iconGradient,
             } }
@@ -33,7 +41,7 @@ export default function TransactionProtection() {
             <Row>
                 <Col>
                     <Frame
-                        title="Transaction Protection Case(s)"
+                        title={ titles.loc }
                     >
                         <Tabs
                             activeKey={ locTabKey }
@@ -42,17 +50,17 @@ export default function TransactionProtection() {
                                 {
                                     key: "open",
                                     title: "Open",
-                                    render: () => <OpenedLocs locType="Transaction" />
+                                    render: () => <OpenedLocs locType={ locType } />
                                 },
                                 {
                                     key: "closed",
                                     title: "Closed",
-                                    render: () => <ClosedLocs locType="Transaction" />
+                                    render: () => <ClosedLocs locType={ locType } />
                                 },
                                 {
                                     key: "void",
                                     title: "Void",
-                                    render: () => <VoidLocs locType="Transaction" />
+                                    render: () => <VoidLocs locType={ locType } />
                                 }
                             ]}
                         />
@@ -62,7 +70,7 @@ export default function TransactionProtection() {
             <Row>
                 <Col>
                     <Frame
-                        title="Transaction Protection Case Request(s)"
+                        title={ titles.request }
                     >
                         <Tabs
                             activeKey={ requestTabKey }
@@ -71,12 +79,12 @@ export default function TransactionProtection() {
                                 {
                                     key: "pending",
                                     title: "Pending",
-                                    render: () => <PendingLocRequests />
+                                    render: () => <PendingLocRequests locType={ locType } />
                                 },
                                 {
                                     key: "rejected",
                                     title: "Rejected",
-                                    render: () => <RejectedLocRequests />
+                                    render: () => <RejectedLocRequests locType={ locType } />
                                 }
                             ]}
                         />

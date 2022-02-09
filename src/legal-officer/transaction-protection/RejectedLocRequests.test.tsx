@@ -6,7 +6,7 @@ import { setRejectedLocRequests } from '../../common/__mocks__/CommonContextMock
 import RejectedLocRequests from './RejectedLocRequests';
 
 test("Renders null with no data", () => {
-    const tree = shallowRender(<RejectedLocRequests />);
+    const tree = shallowRender(<RejectedLocRequests locType="Transaction" />);
     expect(tree).toMatchSnapshot();
 });
 
@@ -21,6 +21,6 @@ test("Renders rejected requests", () => {
             status: "REJECTED"
         }
     ]);
-    const tree = shallowRender(<RejectedLocRequests />);
+    const tree = shallowRender(<RejectedLocRequests locType="Transaction" />);
     expect(tree).toMatchSnapshot();
 });

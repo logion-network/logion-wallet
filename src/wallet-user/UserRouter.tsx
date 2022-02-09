@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 
-import { USER_PATH } from '../RootPaths';
+import { USER_PATH, locRequestsRelativePath, dataLocDetailsRelativePath } from '../RootPaths';
 
 import Home from "./Home";
 import Settings from "../settings/Settings";
@@ -11,6 +11,8 @@ import Transactions from "../common/Transactions";
 import TransactionProtection from "./transaction-protection/TransactionProtection";
 import { UUID } from '../logion-chain/UUID';
 import LocDetails from '../loc/LocDetails';
+import { LocType } from "../logion-chain/Types";
+import React from "react";
 
 export const HOME_PATH = USER_PATH;
 
@@ -29,23 +31,23 @@ export function transactionsPath(coinId: string): string {
     return TRANSACTIONS_PATH.replace(":coinId", coinId);
 }
 
-export const TRANSACTION_PROTECTION_RELATIVE_PATH = "/transaction-protection";
-export const TRANSACTION_PROTECTION_PATH = USER_PATH + TRANSACTION_PROTECTION_RELATIVE_PATH;
-
-export const TRANSACTION_LOC_DETAILS_RELATIVE_PATH = TRANSACTION_PROTECTION_RELATIVE_PATH + '/:locId';
-export const TRANSACTION_LOC_DETAILS_PATH = USER_PATH + TRANSACTION_LOC_DETAILS_RELATIVE_PATH;
-export function transactionLocDetailsPath(locId: string) {
-    return TRANSACTION_LOC_DETAILS_PATH.replace(":locId", locId)
+export function dataLocDetailsPath(locType: LocType, locId: string) {
+    return USER_PATH + dataLocDetailsRelativePath(locType)
+        .replace(":locId", locId)
 }
 
-export function locDetailsPath(locId: string | UUID) {
+export function locRequestsPath(locType: LocType) {
+    return USER_PATH + locRequestsRelativePath(locType)
+}
+
+export function locDetailsPath(locId: string | UUID, locType: LocType) {
     let stringId;
     if(locId instanceof UUID) {
         stringId = locId.toString();
     } else {
         stringId = locId;
     }
-    return transactionLocDetailsPath(stringId);
+    return dataLocDetailsPath(locType, stringId);
 }
 
 export default function UserRouter() {
@@ -64,10 +66,36 @@ export default function UserRouter() {
                     backPath={ WALLET_PATH }
                 />
             } />
-            <Route path={ TRANSACTION_PROTECTION_RELATIVE_PATH } element={ <TransactionProtection/> } />
-            <Route path={ TRANSACTION_LOC_DETAILS_RELATIVE_PATH } element={
+            <Route path={ locRequestsRelativePath('Transaction') }
+                   element={ <TransactionProtection
+                       locType='Transaction'
+                       titles={ {
+                           main: "Transaction Case Management",
+                           loc: "Transaction Protection Case(s)",
+                           request: "Transaction Protection Case Request(s)"
+                       } }
+                       iconId="loc"
+                   /> } />
+            <Route path={ locRequestsRelativePath('Collection') }
+                   element={ <TransactionProtection
+                       locType='Collection'
+                       titles={{
+                           main: "Collection Protection Management",
+                           loc: "Collection Protection Case(s)",
+                           request: "Collection Protection Request(s)"
+                       }}
+                       iconId="collection"
+                   /> } />
+            <Route path={ dataLocDetailsRelativePath('Transaction') } element={
                 <LocDetails
-                    backPath={ TRANSACTION_PROTECTION_PATH }
+                    backPath={ locRequestsPath('Transaction') }
+                    detailsPath={ locDetailsPath }
+                    viewer='User'
+                />
+            } />
+            <Route path={ dataLocDetailsRelativePath('Collection') } element={
+                <LocDetails
+                    backPath={ locRequestsPath('Collection') }
                     detailsPath={ locDetailsPath }
                     viewer='User'
                 />

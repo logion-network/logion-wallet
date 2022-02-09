@@ -30,7 +30,9 @@ export interface LegalOfficerCase {
     replacerOf?: UUID;
 }
 
-export type LocType = 'Transaction' | 'Identity';
+export type DataLocType = 'Transaction' | 'Collection';
+
+export type LocType = DataLocType | 'Identity';
 
 export type IdentityLocType = 'Polkadot' | 'Logion';
 
@@ -42,6 +44,6 @@ export function isLogionIdentityLoc(loc: LegalOfficerCase): boolean {
     return loc.locType === 'Identity' && !loc.requesterAddress && !loc.requesterLocId;
 }
 
-export function isLogionTransactionLoc(loc: LegalOfficerCase): boolean {
-    return loc.locType === 'Transaction' && (loc.requesterLocId !== undefined && loc.requesterLocId !== null);
+export function isLogionDataLoc(loc: LegalOfficerCase): boolean {
+    return loc.locType !== 'Identity' && (loc.requesterLocId !== undefined && loc.requesterLocId !== null);
 }

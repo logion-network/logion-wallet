@@ -20,7 +20,7 @@ beforeEach(() => {
 });
 
 test("Renders null with no data", () => {
-    const tree = shallowRender(<PendingLocRequests />);
+    const tree = shallowRender(<PendingLocRequests locType="Transaction" />);
     expect(tree).toMatchSnapshot();
 });
 
@@ -33,7 +33,7 @@ test("Renders pending requests", () => {
             status: "REQUESTED"
         }
     ]);
-    const tree = shallowRender(<PendingLocRequests />);
+    const tree = shallowRender(<PendingLocRequests locType="Transaction" />);
     expect(tree).toMatchSnapshot();
 });
 
@@ -49,7 +49,7 @@ test("Click on reject and confirm rejects request", async () => {
     const rejectCallback = jest.fn();
     setRejectLocRequest(rejectCallback);
 
-    render(<PendingLocRequests />);
+    render(<PendingLocRequests locType="Transaction" />);
     const rejectButton = screen.getByTestId("reject-1");
     userEvent.click(rejectButton);
 
@@ -83,7 +83,7 @@ test("Click on accept opens acceptance process", () => {
         }
     ]);
 
-    const tree = render(<PendingLocRequests />);
+    const tree = render(<PendingLocRequests locType="Transaction" />);
 
     const acceptButton = tree.getByTestId("accept-1");
     userEvent.click(acceptButton);

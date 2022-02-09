@@ -11,7 +11,7 @@ import UserRouter, {
     SETTINGS_PATH,
     RECOVERY_PATH,
     WALLET_PATH,
-    TRANSACTION_PROTECTION_PATH,
+    locRequestsPath,
 } from "./UserRouter";
 import { useUserContext } from "./UserContext";
 import { useCommonContext } from '../common/CommonContext';
@@ -68,9 +68,22 @@ export default function ContextualizedWallet() {
                     onClick: refreshAll,
                 },
                 {
-                    id: "loc",
+                    id: "loc-collection",
+                    text: "Collections",
+                    to: locRequestsPath('Collection'),
+                    exact: false,
+                    icon: {
+                        icon: {
+                            id: 'collection'
+                        },
+                        background: colorTheme.topMenuItems.iconGradient,
+                    },
+                    onClick: refreshAll,
+                },
+                {
+                    id: "loc-transaction",
                     text: "Transactions",
-                    to: TRANSACTION_PROTECTION_PATH,
+                    to: locRequestsPath('Transaction'),
                     exact: false,
                     icon: {
                         icon: {

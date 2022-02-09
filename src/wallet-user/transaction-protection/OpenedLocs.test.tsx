@@ -6,7 +6,7 @@ import OpenedLocs from './OpenedLocs';
 import { setOpenedLocRequests } from '../../common/__mocks__/CommonContextMock';
 
 test("Renders null with no data", () => {
-    const tree = render(<OpenedLocs />);
+    const tree = render(<OpenedLocs locType="Transaction" />);
     expect(tree).toMatchSnapshot();
 });
 
@@ -22,6 +22,6 @@ test("Renders pending requests", () => {
             }
         }
     ]);
-    const tree = render(<OpenedLocs/>);
+    const tree = render(<OpenedLocs locType="Transaction" />);
     expect(tree).toMatchSnapshot();
 });

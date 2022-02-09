@@ -98,13 +98,29 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
             "to": "#6050dc",
           },
           "icon": Object {
+            "id": "collection",
+          },
+        },
+        "id": "loc-collection",
+        "onClick": [Function],
+        "text": "Collections",
+        "to": "/user/loc/collection",
+      },
+      Object {
+        "exact": false,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
             "id": "loc",
           },
         },
-        "id": "loc",
+        "id": "loc-transaction",
         "onClick": [Function],
         "text": "Transactions",
-        "to": "/user/transaction-protection",
+        "to": "/user/loc/transaction",
       },
     ]
   }
@@ -243,13 +259,29 @@ exports[`Given connected, when rendering, then show account, no connect button a
             "to": "#6050dc",
           },
           "icon": Object {
+            "id": "collection",
+          },
+        },
+        "id": "loc-collection",
+        "onClick": [Function],
+        "text": "Collections",
+        "to": "/user/loc/collection",
+      },
+      Object {
+        "exact": false,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
             "id": "loc",
           },
         },
-        "id": "loc",
+        "id": "loc-transaction",
         "onClick": [Function],
         "text": "Transactions",
-        "to": "/user/transaction-protection",
+        "to": "/user/loc/transaction",
       },
     ]
   }
@@ -388,13 +420,29 @@ exports[`Given connecting, when rendering, then show account, no button, no node
             "to": "#6050dc",
           },
           "icon": Object {
+            "id": "collection",
+          },
+        },
+        "id": "loc-collection",
+        "onClick": [Function],
+        "text": "Collections",
+        "to": "/user/loc/collection",
+      },
+      Object {
+        "exact": false,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
             "id": "loc",
           },
         },
-        "id": "loc",
+        "id": "loc-transaction",
         "onClick": [Function],
         "text": "Transactions",
-        "to": "/user/transaction-protection",
+        "to": "/user/loc/transaction",
       },
     ]
   }
@@ -533,13 +581,29 @@ exports[`Given connection error, when rendering, then show account, no button, n
             "to": "#6050dc",
           },
           "icon": Object {
+            "id": "collection",
+          },
+        },
+        "id": "loc-collection",
+        "onClick": [Function],
+        "text": "Collections",
+        "to": "/user/loc/collection",
+      },
+      Object {
+        "exact": false,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
             "id": "loc",
           },
         },
-        "id": "loc",
+        "id": "loc-transaction",
         "onClick": [Function],
         "text": "Transactions",
-        "to": "/user/transaction-protection",
+        "to": "/user/loc/transaction",
       },
     ]
   }
@@ -678,13 +742,29 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
             "to": "#6050dc",
           },
           "icon": Object {
+            "id": "collection",
+          },
+        },
+        "id": "loc-collection",
+        "onClick": [Function],
+        "text": "Collections",
+        "to": "/user/loc/collection",
+      },
+      Object {
+        "exact": false,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
             "id": "loc",
           },
         },
-        "id": "loc",
+        "id": "loc-transaction",
         "onClick": [Function],
         "text": "Transactions",
-        "to": "/user/transaction-protection",
+        "to": "/user/loc/transaction",
       },
     ]
   }
@@ -823,13 +903,29 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
             "to": "#6050dc",
           },
           "icon": Object {
+            "id": "collection",
+          },
+        },
+        "id": "loc-collection",
+        "onClick": [Function],
+        "text": "Collections",
+        "to": "/user/loc/collection",
+      },
+      Object {
+        "exact": false,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
             "id": "loc",
           },
         },
-        "id": "loc",
+        "id": "loc-transaction",
         "onClick": [Function],
         "text": "Transactions",
-        "to": "/user/transaction-protection",
+        "to": "/user/loc/transaction",
       },
     ]
   }

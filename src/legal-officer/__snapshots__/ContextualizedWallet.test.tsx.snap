@@ -98,13 +98,29 @@ exports[`renders 1`] = `
             "to": "#6050dc",
           },
           "icon": Object {
+            "id": "collection",
+          },
+        },
+        "id": "loc-collection",
+        "onClick": [Function],
+        "text": "Collections",
+        "to": "/legal-officer/loc/collection",
+      },
+      Object {
+        "exact": false,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
             "id": "loc",
           },
         },
-        "id": "loc",
+        "id": "loc-transaction",
         "onClick": [Function],
         "text": "Transactions",
-        "to": "/legal-officer/loc",
+        "to": "/legal-officer/loc/transaction",
       },
       Object {
         "exact": false,

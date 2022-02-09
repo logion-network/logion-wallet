@@ -19,12 +19,13 @@ export default function VoidLocs(props: Props) {
     const { voidTransactionLocs, voidIdentityLocsByType } = useCommonContext();
     const navigate = useNavigate();
     const { width } = useResponsiveContext();
+    const { locType, identityLocType } = props
 
     if (voidTransactionLocs === null || voidIdentityLocsByType === null) {
         return null;
     }
 
-    let requests = props.locType === 'Transaction' ? voidTransactionLocs : voidIdentityLocsByType[props.identityLocType!]
+    const requests = locType === 'Identity' ? voidIdentityLocsByType[identityLocType!] : voidTransactionLocs[locType];
 
     return (
         <Table

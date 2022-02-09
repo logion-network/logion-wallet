@@ -11,8 +11,7 @@ import {
     RECOVERY_REQUESTS_PATH,
     SETTINGS_PATH,
     WALLET_PATH,
-    LOC_REQUESTS_PATH,
-    IDENTITIES_PATH,
+    IDENTITIES_PATH, locRequestsPath,
 } from './LegalOfficerPaths';
 import { useLegalOfficerContext } from './LegalOfficerContext';
 
@@ -59,9 +58,22 @@ export default function ContextualizedWallet() {
                     onClick: refreshAll,
                 },
                 {
-                    id: "loc",
+                    id: "loc-collection",
+                    text: "Collections",
+                    to: locRequestsPath('Collection'),
+                    exact: false,
+                    icon: {
+                        icon: {
+                            id: 'collection'
+                        },
+                        background: colorTheme.topMenuItems.iconGradient,
+                    },
+                    onClick: refreshAll,
+                },
+                {
+                    id: "loc-transaction",
                     text: "Transactions",
-                    to: LOC_REQUESTS_PATH,
+                    to: locRequestsPath('Transaction'),
                     exact: false,
                     icon: {
                         icon: {

@@ -29,7 +29,7 @@ import InlineDateTime from "../common/InlineDateTime";
 import IconTextRow from "../common/IconTextRow";
 import Button from "../common/Button";
 import LocCreationDialog from "./LocCreationDialog";
-import { isLogionIdentityLoc, isLogionTransactionLoc } from "../logion-chain/Types";
+import { isLogionIdentityLoc, isLogionDataLoc } from "../logion-chain/Types";
 import { UUID } from "../logion-chain/UUID";
 import Ellipsis from "../common/Ellipsis";
 import { Viewer } from "./types";
@@ -236,7 +236,7 @@ export default function ContextualizedLocDetails(props: Props) {
                                         <LocPrivateFileButton />
                                     </Col>
                                     <Col className="link-button-container" xxl={4} xl={4}>
-                                        { props.viewer === 'LegalOfficer' && <LocLinkButton excludeNewIdentity={ isLogionTransactionLoc(loc) } /> }
+                                        { props.viewer === 'LegalOfficer' && <LocLinkButton excludeNewIdentity={ isLogionDataLoc(loc) } /> }
                                     </Col>
                                     <Col className="close-button-container" xxl={3} xl={4}>
                                         { props.viewer === 'LegalOfficer' && <CloseLocButton /> }

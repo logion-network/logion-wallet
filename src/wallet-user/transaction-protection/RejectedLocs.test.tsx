@@ -6,7 +6,7 @@ import RejectedLocs from './RejectedLocs';
 import { setRejectedLocRequests } from '../../common/__mocks__/CommonContextMock';
 
 test("Renders null with no data", () => {
-    const tree = render(<RejectedLocs />);
+    const tree = render(<RejectedLocs locType="Transaction" />);
     expect(tree).toMatchSnapshot();
 });
 
@@ -20,6 +20,6 @@ test("Renders pending requests", () => {
             status: "OPEN"
         }
     ]);
-    const tree = render(<RejectedLocs/>);
+    const tree = render(<RejectedLocs locType="Transaction" />);
     expect(tree).toMatchSnapshot();
 });

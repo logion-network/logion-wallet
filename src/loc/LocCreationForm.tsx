@@ -41,8 +41,8 @@ export default function LocCreationForm(props: Props) {
                                 message: 'The description must contain at least 3 characters'
                             },
                             maxLength: {
-                                value: 40,
-                                message: 'The description must contain at most 40 characters'
+                                value: 255,
+                                message: 'The description must contain at most 255 characters'
                             }
                         }}
                         render={({ field }) => (
@@ -68,6 +68,12 @@ export default function LocCreationForm(props: Props) {
                         name="linkNature"
                         control={ props.control }
                         defaultValue=""
+                        rules={{
+                            maxLength: {
+                                value: 255,
+                                message: 'The description must contain at most 255 characters'
+                            }
+                        }}
                         render={({ field }) => (
                             <Form.Control
                                 isInvalid={!!props.errors.linkNature?.message}
