@@ -14,7 +14,7 @@ jest.mock('../../wallet-user/UserContext');
 describe("LocCreation", () => {
 
     it("should display messages when an empty form is submitted", async () => {
-        render(<LocCreation locType="Transaction" />);
+        render(<LocCreation locType="Transaction" requestButtonLabel="Request a Transaction Protection" />);
 
         await clickByName("Request a Transaction Protection");
         await clickByName("Submit");
@@ -37,7 +37,7 @@ describe("LocCreation", () => {
     })
 
     it("should close dialog and not create token when cancel is pressed", async () => {
-        render(<LocCreation locType="Transaction" />);
+        render(<LocCreation locType="Transaction" requestButtonLabel="Request a Transaction Protection" />);
 
         await clickByName("Request a Transaction Protection");
         const dialog = screen.getByRole("dialog");
@@ -61,7 +61,7 @@ describe("LocCreation", () => {
 })
 
 async function itCreatesLoc(fillIdentityInfo: boolean) {
-    render(<LocCreation locType="Transaction" />);
+    render(<LocCreation locType="Transaction" requestButtonLabel="Request a Transaction Protection"/>);
 
     await clickByName("Request a Transaction Protection");
 

@@ -75,6 +75,7 @@ export default function UserRouter() {
                            request: "Transaction Protection Case Request(s)"
                        } }
                        iconId="loc"
+                       requestButtonLabel="Request a Transaction Protection"
                    /> } />
             <Route path={ locRequestsRelativePath('Collection') }
                    element={ <TransactionProtection
@@ -85,6 +86,7 @@ export default function UserRouter() {
                            request: "Collection Protection Request(s)"
                        }}
                        iconId="collection"
+                       requestButtonLabel="Request a Collection Protection"
                    /> } />
             <Route path={ dataLocDetailsRelativePath('Transaction') } element={
                 <LocDetails

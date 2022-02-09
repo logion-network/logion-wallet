@@ -6,6 +6,7 @@ import TransactionProtection from './TransactionProtection';
 test("renders", () => {
     const tree = shallowRender(<TransactionProtection locType="Transaction"
                                                       titles={ { main: "main", loc: "loc", request: "request" } }
-                                                      iconId="loc" />);
+                                                      iconId="loc"
+                                                      requestButtonLabel="Request a Transaction Protection" />);
     expect(tree).toMatchSnapshot();
 });

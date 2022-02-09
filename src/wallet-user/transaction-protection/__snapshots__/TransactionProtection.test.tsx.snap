@@ -49,6 +49,7 @@ exports[`renders 1`] = `
         >
           <LocCreation
             locType="Transaction"
+            requestButtonLabel="Request a Transaction Protection"
           />
         </div>
       </Frame>
