@@ -2,7 +2,7 @@ import { ApiPromise } from '@polkadot/api';
 import { stringToHex } from '@polkadot/util';
 import { ExtrinsicSubmissionParameters, signAndSend, Unsubscriber } from './Signature';
 import { UUID } from './UUID';
-import { LegalOfficerCase, MetadataItem, VoidInfo } from './Types';
+import { LegalOfficerCase, LocType, MetadataItem, VoidInfo } from './Types';
 import { LegalOfficerCaseOf } from './interfaces';
 
 export interface LogionIdentityLocCreationParameters extends ExtrinsicSubmissionParameters {
@@ -99,6 +99,34 @@ export function createPolkadotTransactionLoc(parameters: PolkadotTransactionLocC
     });
 }
 
+export interface CollectionLocCreationParameters extends ExtrinsicSubmissionParameters {
+    api: ApiPromise;
+    locId: UUID;
+    requester: string;
+    lastBlock?: string;
+    maxSize?: string;
+}
+
+export function createCollectionLoc(parameters: CollectionLocCreationParameters): Unsubscriber {
+    const {
+        api,
+        signerId,
+        callback,
+        errorCallback,
+        locId,
+        requester,
+        lastBlock,
+        maxSize
+    } = parameters;
+
+    return signAndSend({
+        signerId,
+        submittable: api.tx.logionLoc.createCollectionLoc(locId.toHexString(), requester, lastBlock || null, maxSize || null),
+        callback,
+        errorCallback,
+    });
+}
+
 export interface AddMetadataParameters extends ExtrinsicSubmissionParameters {
     api: ApiPromise;
     locId: UUID;
@@ -168,7 +196,7 @@ function toModel(rawLoc: LegalOfficerCaseOf): LegalOfficerCase {
             nature: rawLink.nature.toUtf8()
         })),
         closed: rawLoc.closed.isTrue,
-        locType: rawLoc.loc_type.isIdentity ? 'Identity' : 'Transaction',
+        locType: rawLoc.loc_type.toString() as LocType,
         voidInfo: rawLoc.void_info.isSome ? {
             replacer: rawLoc.void_info.unwrap().replacer.isSome ? UUID.fromDecimalString(rawLoc.void_info.unwrap().replacer.toString()) : undefined
         } : undefined,

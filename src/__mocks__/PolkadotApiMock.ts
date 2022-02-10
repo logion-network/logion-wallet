@@ -58,11 +58,31 @@ export const DEFAULT_LOC = {
     locType: 'Transaction',
 }
 
+export const CURRENT_BLOCK_NUMBER = {
+    toBigInt: () => BigInt(42)
+};
+
+export const CURRENT_BLOCK = {
+    block: {
+        header: {
+            number: CURRENT_BLOCK_NUMBER
+        }
+    }
+};
+
 export class ApiPromise {
     assetQueriesBeforeNone: number = 1;
 
     static create(): Promise<ApiPromise> {
         return Promise.resolve(new ApiPromise());
+    }
+
+    consts = {
+        timestamp: {
+            minimumPeriod: {
+                toBigInt: () => BigInt(3000)
+            }
+        }
     }
 
     query = {
@@ -144,6 +164,7 @@ export class ApiPromise {
                     loc_type: {
                         isTransaction: DEFAULT_LOC.locType === 'Transaction',
                         isIdentity: DEFAULT_LOC.locType === 'Identity',
+                        toString: () => DEFAULT_LOC.locType,
                     },
                     void_info: {
                         isSome: false
@@ -159,7 +180,13 @@ export class ApiPromise {
     rpc = {
         chain: {
             subscribeNewHeads: (callback: ((lastHeader: any) => void)) => newHeadsCallback = callback,
-            getBlock: (hash: any) => { return { block: chain[hash.value] } }
+            getBlock: (hash?: any) => {
+                if(hash === undefined) {
+                    return CURRENT_BLOCK;
+                } else {
+                    return { block: chain[hash.value] }
+                }
+            }
         },
         system: {
             name: () => Promise.resolve("Mock node"),

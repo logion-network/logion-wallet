@@ -79,7 +79,8 @@ test("Click on accept opens acceptance process", () => {
             requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
             requestedTokenName: "TOKEN1",
             bars: 1,
-            status: "PENDING"
+            status: "PENDING",
+            locType: "Transaction"
         }
     ]);
 
@@ -89,6 +90,6 @@ test("Click on accept opens acceptance process", () => {
     userEvent.click(acceptButton);
 
     const acceptingModal = tree.getByRole('dialog');
-    expect(getByText(acceptingModal, "Accepting LOC request")).toBeInTheDocument();
+    expect(getByText(acceptingModal, "Accepting Transaction Protection Request")).toBeInTheDocument();
     expect(acceptingModal).toBeInTheDocument();
 });
