@@ -1,7 +1,7 @@
 import React from 'react';
 import Form from "react-bootstrap/Form";
 
-import { Children } from './types/Helpers';
+import { Children, customClassName } from './types/Helpers';
 import { BackgroundAndForegroundColors } from './ColorTheme';
 import './FormGroup.css';
 
@@ -12,6 +12,7 @@ export interface Props {
     feedback?: string,
     colors: BackgroundAndForegroundColors,
     noFeedback?: boolean,
+    className?: string,
 }
 
 export default function FormGroup(props: Props) {
@@ -24,8 +25,11 @@ export default function FormGroup(props: Props) {
     }
     `;
 
+    const className = customClassName("FormGroup", props.className);
+
     return (
-        <div className="FormGroup"
+        <div
+            className={ className }
             style={{
                 backgroundColor: props.colors.background
             }}

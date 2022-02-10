@@ -94,6 +94,8 @@ export default function ContextualizedLocDetails(props: Props) {
     let locTabTitle: string;
     if(loc.locType === 'Transaction') {
         locTabTitle = "Legal Officer Case (LOC) - Transaction";
+    } else if(loc.locType === 'Collection') {
+        locTabTitle = "Legal Officer Case (LOC) - Collection";
     } else {
         if (isLogionIdentityLoc(loc)) {
             locTabTitle = "Legal Officer Case (LOC) - Logion Identity";

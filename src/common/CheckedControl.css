@@ -1,0 +1,13 @@
+.CheckedControl {
+    display: flex;
+}
+
+.CheckedControl .FormGroup:first-child {
+    display: flex;
+    align-items: center;
+    padding-right: 20px;
+}
+
+.CheckedControl .value-group {
+    flex-grow: 1;
+}

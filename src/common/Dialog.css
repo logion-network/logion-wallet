@@ -55,3 +55,8 @@
 .Dialog.content-hidden .modal-content {
     display: none;
 }
+
+.Dialog .modal-body .row {
+    margin-left: 0;
+    margin-right: 0;
+}
