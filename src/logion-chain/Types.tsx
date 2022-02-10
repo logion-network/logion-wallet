@@ -40,6 +40,11 @@ export interface VoidInfo {
     replacer?: UUID;
 }
 
+export interface CollectionItem {
+    id: string,
+    description: string
+}
+
 export function isLogionIdentityLoc(loc: LegalOfficerCase): boolean {
     return loc.locType === 'Identity' && !loc.requesterAddress && !loc.requesterLocId;
 }

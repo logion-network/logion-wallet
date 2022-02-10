@@ -5,7 +5,10 @@ import { CERTIFICATE_RELATIVE_PATH } from "./PublicPaths";
 export default function PublicRouter() {
     return (
         <Routes>
-            <Route path={ CERTIFICATE_RELATIVE_PATH } element={ <Certificate /> } />
+            <Route path={ CERTIFICATE_RELATIVE_PATH } >
+                <Route path="" element={ <Certificate /> } />
+                <Route path=":collectionItemId" element={ <Certificate /> } />
+            </Route>
         </Routes>
     )
 }
