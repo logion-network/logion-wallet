@@ -41,7 +41,7 @@ Extrinsic: logionLoc.addCollectionItem(collectionLocId, itemId, itemDescription)
 Arguments:
     - collectionLocId: ${props.locId.toDecimalString()}
     - itemId: a "0x" prefixed HEX string representation of 32 bytes uniquely identifying the item in this collection; the identifier may for instance be a SHA256 hash.
-    - itemDescription: a "0x" prefixed HEX string of at most 4096 bytes describing the item; this is generally the HEX representation of a UTF-8 string`;
+    - itemDescription: a UTF-8 encoded string of at most 4096 bytes`;
 
     return (
         <div
