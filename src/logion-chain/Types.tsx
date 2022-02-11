@@ -28,6 +28,8 @@ export interface LegalOfficerCase {
     locType: LocType;
     voidInfo?: VoidInfo;
     replacerOf?: UUID;
+    collectionLastBlockSubmission?: bigint;
+    collectionMaxSize?: number;
 }
 
 export type DataLocType = 'Transaction' | 'Collection';

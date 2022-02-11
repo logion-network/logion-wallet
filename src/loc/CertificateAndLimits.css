@@ -1,0 +1,39 @@
+.CertificateAndLimits {
+    margin-top: 30px;
+}
+
+.Dashboard .CertificateAndLimits a {
+    margin-bottom: 18px;
+    color: #0d6efd;
+}
+
+.CertificateAndLimits .CopyPasteButton {
+    margin-left: 10px;
+}
+
+.CertificateAndLimits .limits {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.CertificateAndLimits .limits div:first-child {
+    margin-bottom: 20px;
+}
+
+.CertificateAndLimits .api-settings {
+    text-align: right;
+}
+
+.CertificateAndLimits .copy-paste-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+@media screen and (max-width: 1600px) {
+    .CertificateAndLimits .limits,
+    .CertificateAndLimits .api-settings {
+        margin-top: 20px;
+    }
+}
