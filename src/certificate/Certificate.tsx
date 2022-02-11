@@ -5,8 +5,8 @@ import { useSearchParams } from "react-router-dom";
 
 import { UUID } from "../logion-chain/UUID";
 import { useLogionChain } from "../logion-chain";
-import { getLegalOfficerCase } from "../logion-chain/LogionLoc";
-import { File, LegalOfficerCase, Link, MetadataItem, VoidInfo, isLogionIdentityLoc } from "../logion-chain/Types";
+import { getLegalOfficerCase, getCollectionItem } from "../logion-chain/LogionLoc";
+import { File, LegalOfficerCase, Link, MetadataItem, VoidInfo, CollectionItem } from "../logion-chain/Types";
 
 import Button from "../common/Button";
 import MailtoButton from "../common/MailtoButton";
@@ -30,12 +30,14 @@ import './Certificate.css'
 import CheckFileFrame, { DocumentCheckResult } from "../loc/CheckFileFrame";
 import { LegalOfficer } from "../directory/DirectoryApi";
 import { useDirectoryContext } from "../directory/DirectoryContext";
-import { LegalOfficerPostalAddress } from "../common/LegalOfficerPostalAddress";
-import LegalOfficerAdditionalDetails from "../common/LegalOfficerAdditionalDetails";
+import CollectionItemCellRow from "./CollectionItemCellRow";
+import IntroductionText from "./IntroductionText";
+import LegalOfficerRow from "./LegalOfficerRow";
 
 export default function Certificate() {
 
     const locIdParam = useParams<"locId">().locId!;
+    const collectionItemIdParam = useParams<"collectionItemId">().collectionItemId;
     const [ searchParams ] = useSearchParams();
     const locId: UUID = useMemo(() => UUID.fromAnyString(locIdParam)!, [ locIdParam ]);
     const { api } = useLogionChain();
@@ -48,6 +50,7 @@ export default function Certificate() {
     const [ nodeDown, setNodeDown ] = useState(false);
     const [ checkResult, setCheckResult ] = useState<DocumentCheckResult>({result: "NONE"});
     const { legalOfficers, getOfficer } = useDirectoryContext();
+    const [ collectionItem, setCollectionItem ] = useState<CollectionItem | undefined>(undefined);
 
     const checkHash = useCallback((hash: string) => {
         if (loc) {
@@ -96,11 +99,15 @@ export default function Certificate() {
                                 setNodeDown(true);
                             }
                         }
+                        if (collectionItemIdParam) {
+                            const collectionItem = await getCollectionItem({api,  locId, itemId: collectionItemIdParam})
+                            setCollectionItem(collectionItem)
+                        }
                     }
                 }
             })()
         }
-    }, [ api, locId, loc, setLoc, setLegalOfficer, setPublicLoc, legalOfficers, getOfficer, searchParams ])
+    }, [ api, locId, loc, setLoc, setLegalOfficer, setPublicLoc, legalOfficers, getOfficer, searchParams, collectionItemIdParam ])
 
     if (api === null) {
         return (
@@ -215,28 +222,7 @@ export default function Certificate() {
                     <Col md={ 8 }>
                         <h2>Legal Officer Case</h2>
                         <h1>CERTIFICATE</h1>
-                        { isLogionIdentityLoc(loc) ?
-                            <div className="description">
-                                <p >This specific Logion Legal Officer Case (LOC) certificate,
-                                    known as “<strong>Logion Identity LOC</strong>”, constitutes proof that a Logion
-                                    Legal Officer, owner of that LOC and mentioned on this document, executed an
-                                    Identity verification process according to his/her professional standards at the
-                                    requester demand with regards to data and document(s) listed below.</p>
-                                <p >This Identity LOC ID ({ locId.toDecimalString() }) is used
-                                    when a Legal Officer client cannot use a polkadot account to request Legal Officer
-                                    services. The Legal Officer is able to initiate legal services requests ON BEHALF of
-                                    this Logion Identity LOC, representing - on the blockchain-, by extension, the
-                                    client it refers.</p>
-                                <p>This Certificate is only valid when generated online by accessing its URL. A PDF or print of this certificate is NOT valid.</p>
-                            </div> :
-                            <div className="description">
-                                <p>This Logion Legal Officer Case (LOC) certificate constitutes
-                                    proof that a Logion Legal Officer, owner of that LOC and mentioned on this document,
-                                    executed a verification process according to his/her professional standards at the
-                                    requester demand with regards to data and document(s) listed below.</p>
-                                <p>This Certificate is only valid when generated online by accessing its URL. A PDF or print of this certificate is NOT valid.</p>
-                            </div>
-                        }
+                        <IntroductionText locId={ locId } loc={ loc } />
                     </Col>
                 </Row>
                 <Row>
@@ -245,8 +231,6 @@ export default function Certificate() {
                     <CertificateDateTimeCell md={ 3 } label="Closing Date" dateTime={ closedOn } />
                 </Row>
                 <Row className="preamble-footer">
-                    <CertificateCell md={ 6 } label="Owner">{ loc.owner }</CertificateCell>
-
                     { loc.requesterAddress && <CertificateCell md={ 6 } label="Requester">
                         { loc.requesterAddress }
                     </CertificateCell> }
@@ -267,7 +251,10 @@ export default function Certificate() {
                 { matrix(loc.links, 2).map((links, index) => (
                     <LinkCellRow key={ index } links={ links } />
                 )) }
-                <LegalOfficerRow legalOfficer={ legalOfficer } />
+                { collectionItem !== undefined &&
+                    <CollectionItemCellRow item={ collectionItem } />
+                }
+                <LegalOfficerRow legalOfficer={ legalOfficer } loc={ loc } />
                 <Row className="buttons">
                     <Col xl={ 2 } lg={4} md={4}>
                         <MailtoButton label="Contact" email={ legalOfficer.userIdentity.email } />
@@ -303,18 +290,6 @@ export default function Certificate() {
                 />
             </Container>
         </div>
-    )
-}
-
-function LegalOfficerRow(props: { legalOfficer: LegalOfficer }) {
-    return (
-        <Row className="legal-officer-row">
-            <CertificateCell xl={ 2 } md={ 6 } label="Legal Officer">{ props.legalOfficer.name }</CertificateCell>
-            <CertificateCell xl={ 4 } md={ 6 } label="Address">
-                <LegalOfficerPostalAddress address={ props.legalOfficer.postalAddress } />
-                <LegalOfficerAdditionalDetails additionalDetails={ props.legalOfficer.additionalDetails } />
-            </CertificateCell>
-        </Row>
     )
 }
 
