@@ -200,7 +200,9 @@ function toModel(rawLoc: LegalOfficerCaseOf): LegalOfficerCase {
         voidInfo: rawLoc.void_info.isSome ? {
             replacer: rawLoc.void_info.unwrap().replacer.isSome ? UUID.fromDecimalString(rawLoc.void_info.unwrap().replacer.toString()) : undefined
         } : undefined,
-        replacerOf: rawLoc.replacer_of.isSome ? UUID.fromDecimalString(rawLoc.replacer_of.toString()) : undefined
+        replacerOf: rawLoc.replacer_of.isSome ? UUID.fromDecimalString(rawLoc.replacer_of.toString()) : undefined,
+        collectionLastBlockSubmission: rawLoc.collection_last_block_submission.isSome ? rawLoc.collection_last_block_submission.unwrap().toBigInt() : undefined,
+        collectionMaxSize: rawLoc.collection_max_size.isSome ? rawLoc.collection_max_size.unwrap().toNumber() : undefined,
     };
 }
 

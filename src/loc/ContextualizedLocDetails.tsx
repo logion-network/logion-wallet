@@ -16,7 +16,6 @@ import LocPrivateFileButton from "./LocPrivateFileButton";
 import "./ContextualizedLocDetails.css";
 import Icon from "../common/Icon";
 import LocLinkButton from "./LocLinkButton";
-import { fullCertificateUrl } from "../PublicPaths";
 import CheckFileFrame, { DocumentCheckResult } from './CheckFileFrame';
 import DangerFrame from "../common/DangerFrame";
 import ButtonGroup from "../common/ButtonGroup";
@@ -24,7 +23,6 @@ import VoidLocButton from "./VoidLocButton";
 import VoidLocReplaceNewButton from "./VoidLocReplaceNewButton";
 import NewTabLink from "../common/NewTabLink";
 import VoidLocReplaceExistingButton from "./VoidLocReplaceExistingButton";
-import CopyPasteButton from "../common/CopyPasteButton";
 import InlineDateTime from "../common/InlineDateTime";
 import IconTextRow from "../common/IconTextRow";
 import Button from "../common/Button";
@@ -34,6 +32,7 @@ import { UUID } from "../logion-chain/UUID";
 import Ellipsis from "../common/Ellipsis";
 import { Viewer } from "./types";
 import Tooltip from 'react-bootstrap/Tooltip';
+import CertificateAndLimits from "./CertificateAndLimits";
 
 export interface Props {
     viewer: Viewer;
@@ -68,8 +67,6 @@ export default function ContextualizedLocDetails(props: Props) {
     if (loc === null || locRequest === null) {
         return null;
     }
-
-    const certificateUrl = fullCertificateUrl(locId);
 
     let locTabBorderColor = BLUE;
     if(loc.voidInfo !== undefined) {
@@ -286,25 +283,10 @@ export default function ContextualizedLocDetails(props: Props) {
                     }
                 </DangerFrame>
             }
-            <div
-                className="certificate-link"
-            >
-                <h2>Public web address (URL) of this Legal Officer Case related Certificate:</h2>
-                <p className="link">
-                    <a href={ certificateUrl } target="_blank" rel="noreferrer">{ certificateUrl }</a> <CopyPasteButton value={ certificateUrl } />
-                </p>
-                <LocCreationDialog
-                    show={ createLoc }
-                    exit={ () => setCreateLoc(false) }
-                    onSuccess={ request => navigate(detailsPath(UUID.fromAnyString(request.id)!, 'Transaction')) }
-                    locRequest={{
-                        requesterIdentityLoc: locRequest.id,
-                        locType: 'Transaction',
-                        userIdentity: locRequest.userIdentity,
-                    }}
-                    hasLinkNature={ false }
-                />
-            </div>
+            <CertificateAndLimits
+                locId={ locId }
+                loc={ loc }
+            />
             {
                 loc.replacerOf !== undefined &&
                 <DangerFrame
@@ -362,6 +344,18 @@ export default function ContextualizedLocDetails(props: Props) {
                     />
                 </DangerFrame>
             }
+
+            <LocCreationDialog
+                show={ createLoc }
+                exit={ () => setCreateLoc(false) }
+                onSuccess={ request => navigate(detailsPath(UUID.fromAnyString(request.id)!, 'Transaction')) }
+                locRequest={{
+                    requesterIdentityLoc: locRequest.id,
+                    locType: 'Transaction',
+                    userIdentity: locRequest.userIdentity,
+                }}
+                hasLinkNature={ false }
+            />
         </FullWidthPane>
     );
 }

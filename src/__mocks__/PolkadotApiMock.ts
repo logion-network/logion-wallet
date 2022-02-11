@@ -56,6 +56,8 @@ export const DEFAULT_LOC = {
     ],
     closed: false,
     locType: 'Transaction',
+    collectionLastBlockSubmission: undefined,
+    collectionMaxSize: undefined,
 }
 
 export const CURRENT_BLOCK_NUMBER = {
@@ -170,6 +172,12 @@ export class ApiPromise {
                         isSome: false
                     },
                     replacer_of: {
+                        isSome: false
+                    },
+                    collection_last_block_submission: {
+                        isSome: false
+                    },
+                    collection_max_size: {
                         isSome: false
                     }
                 })

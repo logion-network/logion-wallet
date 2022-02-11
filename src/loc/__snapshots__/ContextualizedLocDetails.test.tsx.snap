@@ -448,35 +448,43 @@ exports[`ContextualizedLocDetails renders for LO 1`] = `
           </div>
         </div>
         <div
-          className="certificate-link"
+          className="CertificateAndLimits"
         >
-          <h2>
-            Public web address (URL) of this Legal Officer Case related Certificate:
-          </h2>
-          <p
-            className="link"
+          <div
+            className="row"
           >
-            <a
-              href="http://localhost/public/certificate/195914524858768213081425411950368569411"
-              rel="noreferrer"
-              target="_blank"
+            <div
+              className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12 col"
             >
-              http://localhost/public/certificate/195914524858768213081425411950368569411
-            </a>
-             
-            <button
-              className="Button CopyPasteButton big btn btn-primary"
-              disabled={false}
-              onClick={[Function]}
-              style={Object {}}
-              type="button"
-            >
-              <img
-                alt=""
-                src="/assets/copy_paste.svg"
-              />
-            </button>
-          </p>
+              <div
+                className="certificate"
+              >
+                <h2>
+                  Public web address (URL) of this Legal Officer Case related Certificate:
+                </h2>
+                <a
+                  href="http://localhost/public/certificate/195914524858768213081425411950368569411"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  http://localhost/public/certificate/195914524858768213081425411950368569411
+                </a>
+                 
+                <button
+                  className="Button CopyPasteButton big btn btn-primary"
+                  disabled={false}
+                  onClick={[Function]}
+                  style={Object {}}
+                  type="button"
+                >
+                  <img
+                    alt=""
+                    src="/assets/copy_paste.svg"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
         <div
           className="Frame PolkadotFrame CheckFileFrame"
@@ -1060,35 +1068,43 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
           </div>
         </div>
         <div
-          className="certificate-link"
+          className="CertificateAndLimits"
         >
-          <h2>
-            Public web address (URL) of this Legal Officer Case related Certificate:
-          </h2>
-          <p
-            className="link"
+          <div
+            className="row"
           >
-            <a
-              href="http://localhost/public/certificate/195914524858768213081425411950368569411"
-              rel="noreferrer"
-              target="_blank"
+            <div
+              className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12 col"
             >
-              http://localhost/public/certificate/195914524858768213081425411950368569411
-            </a>
-             
-            <button
-              className="Button CopyPasteButton big btn btn-primary"
-              disabled={false}
-              onClick={[Function]}
-              style={Object {}}
-              type="button"
-            >
-              <img
-                alt=""
-                src="/assets/copy_paste.svg"
-              />
-            </button>
-          </p>
+              <div
+                className="certificate"
+              >
+                <h2>
+                  Public web address (URL) of this Legal Officer Case related Certificate:
+                </h2>
+                <a
+                  href="http://localhost/public/certificate/195914524858768213081425411950368569411"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  http://localhost/public/certificate/195914524858768213081425411950368569411
+                </a>
+                 
+                <button
+                  className="Button CopyPasteButton big btn btn-primary"
+                  disabled={false}
+                  onClick={[Function]}
+                  style={Object {}}
+                  type="button"
+                >
+                  <img
+                    alt=""
+                    src="/assets/copy_paste.svg"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
         <div
           className="Frame PolkadotFrame CheckFileFrame"
