@@ -26,7 +26,7 @@ exports[`renders in dark mode 1`] = `
       <div
         className="text"
       >
-        Multichain 360°
+        Multi Chain 360°
         <br />
         Asset Protection
       </div>
@@ -61,7 +61,7 @@ exports[`renders in light mode 1`] = `
       <div
         className="text"
       >
-        Multichain 360°
+        Multi Chain 360°
         <br />
         Asset Protection
       </div>

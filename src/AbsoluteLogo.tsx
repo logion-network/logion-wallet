@@ -31,7 +31,10 @@ export default function AbsoluteLogo(props: Props) {
             style={ style }
         >
             <img src={process.env.PUBLIC_URL + "/logo.png"} alt="logo" height="70" />
-            <p>Multichain 360°<br/>Asset Protection</p>
+            <p>
+                Multi Chain 360°<br/>
+                Asset Protection
+            </p>
         </div>
     );
 }
