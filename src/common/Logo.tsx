@@ -29,7 +29,8 @@ export default function Logo(props: Props) {
                 </div>
                 <div className="slogan">
                     <div className="text">
-                        Multichain 360°<br/>Asset Protection
+                        Multi Chain 360°<br/>
+                        Asset Protection
                     </div>
                 </div>
             </div>

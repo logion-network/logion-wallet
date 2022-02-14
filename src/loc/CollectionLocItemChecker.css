@@ -1,0 +1,39 @@
+.CollectionLocItemChecker {
+    margin-top: 20px;
+}
+
+.CollectionLocItemChecker .Button {
+    margin-left: 20px;
+}
+
+.CollectionLocItemChecker .IconTextRow .text {
+    width: calc(100% - 50px);
+}
+
+.CollectionLocItemChecker .CheckResultFeedback {
+    margin-top: 20px;
+}
+
+.CollectionLocItemChecker .CheckResultFeedback .label-positive {
+    color: #37ad4b;
+    font-weight: bold;
+}
+
+.CollectionLocItemChecker .CheckResultFeedback .label-negative {
+    color: #ea1f46;
+    font-weight: bold;
+}
+
+.CollectionLocItemChecker .CheckResultFeedback .Col {
+    padding-right: 20px;
+    min-width: 65px;
+}
+
+.CollectionLocItemChecker .CheckResultFeedback .url-header {
+    font-weight: bold;
+}
+
+.CollectionLocItemChecker div.IconTextRow div.text div.FormGroup div div.Row div.Col {
+    width: 50rem;
+}
+

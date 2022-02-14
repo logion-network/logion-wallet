@@ -1,0 +1,238 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CollectionLocItemChecker renders 1`] = `
+Object {
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="Frame PolkadotFrame CollectionLocItemChecker"
+        style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); box-shadow: 0 0 25px #3b6cf41a;"
+      >
+        <style>
+          
+    .Frame a,
+    .Frame .btn-link {
+        color: #3b6cf426
+    }
+    
+        </style>
+        <div
+          class="IconTextRow"
+        >
+          <div
+            class="icon"
+          >
+            <img
+              alt=""
+              src="/assets/polkadot_collection.svg"
+              width="45px"
+            />
+          </div>
+          <div
+            class="text"
+          >
+            <p
+              class="text-title"
+            >
+              Number of Collection-related data recorded on logion blockchain: 
+            </p>
+            <p>
+              The Collection LOC material listed above benefits all data imported through the logion API by an external application approved between the Legal Officer and its client under a process validated by the Legal Officer of the present LOC.
+            </p>
+            <p>
+              To check if a data is covered by this Collection LOC and get its online public certificate, just submit the related data in the input field below:
+            </p>
+            <div
+              class="FormGroup"
+              style="background-color: rgb(239, 243, 254);"
+            >
+              <style>
+                
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly],
+    .FormGroup .input-group .btn-primary {
+        color: #000000;
+    }
+    
+              </style>
+              <div
+                data-testid="itemIdGroup"
+              >
+                <div
+                  class="Row"
+                >
+                  <div
+                    class="Col"
+                  >
+                    <input
+                      class="form-control"
+                      id="itemId"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="Col"
+                  >
+                    <button
+                      class="Button btn btn-primary"
+                      type="button"
+                    >
+                      Check data
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="Row CheckResultFeedback result-none"
+              id="feedback-NONE"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="Frame PolkadotFrame CollectionLocItemChecker"
+      style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); box-shadow: 0 0 25px #3b6cf41a;"
+    >
+      <style>
+        
+    .Frame a,
+    .Frame .btn-link {
+        color: #3b6cf426
+    }
+    
+      </style>
+      <div
+        class="IconTextRow"
+      >
+        <div
+          class="icon"
+        >
+          <img
+            alt=""
+            src="/assets/polkadot_collection.svg"
+            width="45px"
+          />
+        </div>
+        <div
+          class="text"
+        >
+          <p
+            class="text-title"
+          >
+            Number of Collection-related data recorded on logion blockchain: 
+          </p>
+          <p>
+            The Collection LOC material listed above benefits all data imported through the logion API by an external application approved between the Legal Officer and its client under a process validated by the Legal Officer of the present LOC.
+          </p>
+          <p>
+            To check if a data is covered by this Collection LOC and get its online public certificate, just submit the related data in the input field below:
+          </p>
+          <div
+            class="FormGroup"
+            style="background-color: rgb(239, 243, 254);"
+          >
+            <style>
+              
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly],
+    .FormGroup .input-group .btn-primary {
+        color: #000000;
+    }
+    
+            </style>
+            <div
+              data-testid="itemIdGroup"
+            >
+              <div
+                class="Row"
+              >
+                <div
+                  class="Col"
+                >
+                  <input
+                    class="form-control"
+                    id="itemId"
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <div
+                  class="Col"
+                >
+                  <button
+                    class="Button btn btn-primary"
+                    type="button"
+                  >
+                    Check data
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="Row CheckResultFeedback result-none"
+            id="feedback-NONE"
+          />
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;

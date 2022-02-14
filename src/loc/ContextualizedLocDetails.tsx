@@ -33,6 +33,7 @@ import Ellipsis from "../common/Ellipsis";
 import { Viewer } from "./types";
 import Tooltip from 'react-bootstrap/Tooltip';
 import CertificateAndLimits from "./CertificateAndLimits";
+import CollectionLocItemChecker from "./CollectionLocItemChecker";
 
 export interface Props {
     viewer: Viewer;
@@ -287,6 +288,9 @@ export default function ContextualizedLocDetails(props: Props) {
                 locId={ locId }
                 loc={ loc }
             />
+            { loc.locType === 'Collection' && loc.closed &&
+                <CollectionLocItemChecker locId={ locId } />
+            }
             {
                 loc.replacerOf !== undefined &&
                 <DangerFrame

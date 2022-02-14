@@ -1,4 +1,6 @@
 import BN from 'bn.js'
+import { UUID } from "../UUID";
+import { mockCompact } from "../../__mocks__/PolkadotApiMock";
 
 export const LogionChainContextProvider = (props: any) => null;
 
@@ -12,6 +14,26 @@ const DEFAULT_RECOVERY_CONFIG = {
 const DEFAULT_ACTIVE_RECOVERY = {
     isSome: true,
     unwrap: () => {}
+}
+
+const DEFAULT_COLLECTION_ITEM = {
+    isSome: true,
+    unwrap: () => {
+        return {
+            description: {
+                toUtf8: () => {
+                    return "something"
+                }
+            }
+        }
+    }
+}
+
+const DEFAULT_COLLECTION_SIZE = {
+    isSome: true,
+    unwrap: () => {
+        return mockCompact(1)
+    }
 }
 
 const api = {
@@ -39,6 +61,14 @@ const api = {
                 return Promise.resolve(DEFAULT_ACTIVE_RECOVERY);
             },
         },
+        logionLoc: {
+            collectionSizeMap: (locId: UUID) => {
+                return Promise.resolve(DEFAULT_COLLECTION_SIZE)
+            },
+            collectionItemsMap: (locId: UUID, itemId: string) => {
+                return Promise.resolve(DEFAULT_COLLECTION_ITEM)
+            }
+        }
     }
 };
 
@@ -47,7 +77,7 @@ let context = {
     injectedAccounts: null,
     api,
     connectedNodeMetadata: {
-        
+
     }
 };
 

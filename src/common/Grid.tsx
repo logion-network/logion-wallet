@@ -8,6 +8,7 @@ export interface RowProps {
     children: Children,
     className?: string,
     style?: CSSProperties,
+    id?: string,
 }
 
 export function Row(props: RowProps) {
@@ -16,6 +17,7 @@ export function Row(props: RowProps) {
         <div
             className={ "Row" + (props.className !== undefined ? " " + props.className : "") }
             style={ props.style }
+            id = { props.id }
         >
             { props.children }
         </div>
