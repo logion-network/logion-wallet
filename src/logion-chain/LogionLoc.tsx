@@ -3,7 +3,8 @@ import { stringToHex } from '@polkadot/util';
 import { ExtrinsicSubmissionParameters, signAndSend, Unsubscriber } from './Signature';
 import { UUID } from './UUID';
 import { LegalOfficerCase, LocType, MetadataItem, VoidInfo, CollectionItem } from './Types';
-import { LegalOfficerCaseOf } from './interfaces';
+import { LegalOfficerCaseOf, CollectionSize } from './interfaces';
+import { Option } from "@polkadot/types-codec";
 
 export interface LogionIdentityLocCreationParameters extends ExtrinsicSubmissionParameters {
     api: ApiPromise;
@@ -379,9 +380,30 @@ export async function getCollectionItem(
     } = parameters;
 
     const result = await api.query.logionLoc.collectionItemsMap(locId.toHexString(), itemId);
-    if(result.isSome) {
+    if (result.isSome) {
         const description = result.unwrap().description.toUtf8();
         return { id: itemId, description }
+    } else {
+        return undefined;
+    }
+}
+
+export interface GetCollectionSizeParameters {
+    api: ApiPromise;
+    locId: UUID;
+}
+
+export async function getCollectionSize(
+    parameters: GetCollectionSizeParameters
+): Promise<number | undefined> {
+    const {
+        api,
+        locId
+    } = parameters;
+
+    const result: Option<CollectionSize> = await api.query.logionLoc.collectionSizeMap(locId.toHexString());
+    if (result.isSome) {
+        return result.unwrap().toNumber();
     } else {
         return undefined;
     }

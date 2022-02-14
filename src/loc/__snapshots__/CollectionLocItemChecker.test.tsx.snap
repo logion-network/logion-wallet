@@ -1,0 +1,107 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CollectionLocItemChecker renders 1`] = `
+<div
+  className="Frame PolkadotFrame CollectionLocItemChecker"
+  style={
+    Object {
+      "backgroundColor": "#ffffff",
+      "boxShadow": "0 0 25px #3b6cf41a",
+      "color": "#000000",
+    }
+  }
+>
+  <style>
+    
+    .Frame a,
+    .Frame .btn-link {
+        color: #3b6cf426
+    }
+    
+  </style>
+  <div
+    className="IconTextRow"
+  >
+    <div
+      className="icon"
+    >
+      <img
+        alt=""
+        src="/assets/polkadot_collection.svg"
+        width="45px"
+      />
+    </div>
+    <div
+      className="text"
+    >
+      <p
+        className="text-title"
+      >
+        Number of Collection-related data recorded on logion blockchain: 
+      </p>
+      <p>
+        The Collection LOC material listed above benefits all data imported through the logion API by an external application approved between the Legal Officer and its client under a process validated by the Legal Officer of the present LOC.
+      </p>
+      <p>
+        To check if a data is covered by this Collection LOC and get its online public certificate, just submit the related data in the input field below:
+      </p>
+      <div
+        className="FormGroup"
+        style={
+          Object {
+            "backgroundColor": "#eff3fe",
+          }
+        }
+      >
+        <style>
+          
+    .FormGroup .form-control,
+    .FormGroup .form-control[readonly],
+    .FormGroup .input-group .btn-primary {
+        color: #000000;
+    }
+    
+        </style>
+        <div
+          data-testid="itemIdGroup"
+        >
+          <div
+            className="Row"
+          >
+            <div
+              className="Col"
+            >
+              <input
+                className="form-control"
+                id="itemId"
+                onChange={[Function]}
+                type="text"
+                value=""
+              />
+            </div>
+            <div
+              className="Col"
+            >
+              <button
+                className="Button btn btn-primary"
+                disabled={false}
+                onClick={[Function]}
+                style={Object {}}
+                type="button"
+              >
+                Check data
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="Row CheckResultFeedback result-none"
+        data-testid="feedback-NONE"
+      >
+        
+      </div>
+    </div>
+  </div>
+</div>
+`;
