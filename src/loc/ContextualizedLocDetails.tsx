@@ -288,7 +288,7 @@ export default function ContextualizedLocDetails(props: Props) {
                 locId={ locId }
                 loc={ loc }
             />
-            { loc.locType === 'Collection' &&
+            { loc.locType === 'Collection' && loc.closed &&
                 <CollectionLocItemChecker locId={ locId } />
             }
             {

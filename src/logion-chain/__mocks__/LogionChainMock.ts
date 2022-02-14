@@ -45,7 +45,6 @@ const api = {
             asRecovered: () => {},
         }
     },
-    //     const result = await api.query.logionLoc.collectionItemsMap(locId.toHexString(), itemId);
     query: {
         assets: {
             account: (assetId: any, account: any) => {

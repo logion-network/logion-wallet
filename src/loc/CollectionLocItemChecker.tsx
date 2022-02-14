@@ -103,7 +103,7 @@ function CheckResultFeedback(props: CheckResultProps) {
         case "POSITIVE":
             const certificateUrl = fullCollectionItemCertificate(locId, itemId)
             return (
-                <Row className="CheckResultFeedback result-positive" dataTestId={ `feedback-${ state }` }>
+                <Row className="CheckResultFeedback result-positive" id={ `feedback-${ state }` }>
                     <Col>
                         <p>
                             Check result: <span className="label-positive">positive</span><br />
@@ -115,7 +115,7 @@ function CheckResultFeedback(props: CheckResultProps) {
                     </Col>
                     <Col>
                         <p>
-                            <span className="url-header">Certificate Public web address (URL) for the data covered by this Collection LOC:</span><br />
+                            <span id="url-header" className="url-header">Certificate Public web address (URL) for the data covered by this Collection LOC:</span><br />
                             <a href={ certificateUrl } target="_blank" rel="noreferrer">{ certificateUrl }</a>
                             <CopyPasteButton value={ certificateUrl } />
                         </p>
@@ -124,7 +124,7 @@ function CheckResultFeedback(props: CheckResultProps) {
             )
         case "NEGATIVE":
             return (
-                <Row className="CheckResultFeedback result-negative" dataTestId={ `feedback-${ state }` }>
+                <Row className="CheckResultFeedback result-negative" id={ `feedback-${ state }` }>
                     <Col>
                         <p>
                             Check result: <span className="label-negative">negative</span><br />
@@ -139,7 +139,7 @@ function CheckResultFeedback(props: CheckResultProps) {
             )
         case "NONE":
             return (
-                <Row className="CheckResultFeedback result-none" children="" dataTestId={ `feedback-${ state }` } />
+                <Row className="CheckResultFeedback result-none" children="" id={ `feedback-${ state }` } />
             )
     }
 }
