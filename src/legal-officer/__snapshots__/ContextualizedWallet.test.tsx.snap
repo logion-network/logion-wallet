@@ -25,6 +25,7 @@ exports[`renders 1`] = `
   menuMiddle={
     Array [
       Object {
+        "disabled": false,
         "exact": true,
         "icon": Object {
           "height": "auto",
@@ -40,6 +41,7 @@ exports[`renders 1`] = `
         "to": "/legal-officer/protection",
       },
       Object {
+        "disabled": false,
         "exact": true,
         "icon": Object {
           "height": "auto",
@@ -59,6 +61,7 @@ exports[`renders 1`] = `
   menuTop={
     Array [
       Object {
+        "disabled": false,
         "exact": true,
         "icon": Object {
           "background": Object {
@@ -75,6 +78,7 @@ exports[`renders 1`] = `
         "to": "/legal-officer",
       },
       Object {
+        "disabled": false,
         "exact": false,
         "icon": Object {
           "background": Object {
@@ -91,6 +95,7 @@ exports[`renders 1`] = `
         "to": "/legal-officer/wallet",
       },
       Object {
+        "disabled": false,
         "exact": false,
         "icon": Object {
           "background": Object {
@@ -107,6 +112,7 @@ exports[`renders 1`] = `
         "to": "/legal-officer/loc/collection",
       },
       Object {
+        "disabled": false,
         "exact": false,
         "icon": Object {
           "background": Object {
@@ -123,6 +129,7 @@ exports[`renders 1`] = `
         "to": "/legal-officer/loc/transaction",
       },
       Object {
+        "disabled": false,
         "exact": false,
         "icon": Object {
           "background": Object {

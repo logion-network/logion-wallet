@@ -16,15 +16,18 @@ export default function DirectoryData() {
     const { getOfficer, saveOfficer } = useDirectoryContext();
     const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer | undefined>();
     const [ saveStatus, setSaveStatus ] = useState<SaveStatus>();
+    const [ previousNode, setPreviousNode ] = useState<string>("");
+    const [ shouldRefresh, setShouldRefresh ] = useState(false);
 
     useEffect(() => {
         if(!legalOfficer || legalOfficer.address !== accounts?.current?.address) {
             const legalOfficerFromDirectory = getOfficer(accounts?.current?.address);
             if(legalOfficerFromDirectory) {
                 setLegalOfficer(legalOfficerFromDirectory);
+                setPreviousNode(legalOfficerFromDirectory.node);
             }
         }
-    }, [ accounts, legalOfficer, getOfficer ]);
+    }, [ accounts, legalOfficer, getOfficer, setPreviousNode ]);
 
     const save = useCallback(async () => {
         setSaveStatus('NONE');
@@ -32,13 +35,15 @@ export default function DirectoryData() {
             try {
                 await saveOfficer(legalOfficer);
                 setSaveStatus('SUCCESS');
+                setShouldRefresh(legalOfficer.node !== previousNode);
+                setPreviousNode(legalOfficer.node);
             } catch(e) {
                 setSaveStatus('ERROR');
             }
         } else {
             setSaveStatus('ERROR');
         }
-    }, [ saveOfficer, legalOfficer, setSaveStatus ]);
+    }, [ saveOfficer, legalOfficer, setSaveStatus, setShouldRefresh, previousNode ]);
 
     if(!legalOfficer || !accounts || !accounts.current || !accounts.current.isLegalOfficer) {
         return null;
@@ -207,7 +212,7 @@ export default function DirectoryData() {
                         control={ <Form.Control
                             type="text"
                             value={ legalOfficer?.node }
-                            onChange={ event => ({
+                            onChange={ event => setLegalOfficer({
                                 ...legalOfficer!,
                                 node: event.target.value
                             }) }
@@ -221,6 +226,8 @@ export default function DirectoryData() {
             </Button>
             { saveStatus === "SUCCESS" && <span style={{marginLeft: "20px", color: GREEN, fontWeight: "bold"}}>Data were saved successfully</span> }
             { saveStatus === "ERROR" && <span style={{marginLeft: "20px", color: RED, fontWeight: "bold"}}>Data were not saved successfully</span> }
+            { shouldRefresh && <p>Please refresh the page in order to fully apply the changes.</p> }
+            { shouldRefresh && <Button onClick={ () => window.location.reload() }>Refresh</Button> }
         </div>
     );
 

@@ -26,15 +26,15 @@ export class DirectoryApi {
     private axios: AxiosInstance;
 
     async getLegalOfficers(): Promise<LegalOfficer[]> {
-        const legalOfficers = (await this.axios.get("/legal-officer")
+        const legalOfficers = (await this.axios.get("/api/legal-officer")
             .then(response => response.data.legalOfficers)) as LegalOfficer[];
-        return legalOfficers.filter(legalOfficer => legalOfficer.node).map(data => ({
+        return legalOfficers.map(data => ({
                 ...data,
                 name: `${data.userIdentity.firstName} ${data.userIdentity.lastName}`
             }));
     }
 
     async createOrUpdate(legalOfficer: LegalOfficer) {
-        await this.axios.put('/legal-officer', legalOfficer);
+        await this.axios.put('/api/legal-officer', legalOfficer);
     }
 }
