@@ -27,6 +27,7 @@
         "react": "^17.0.2",
         "react-bootstrap": "^2.1.2",
         "react-collapsible": "^2.8.3",
+        "react-date-picker": "^8.4.0",
         "react-dom": "^17.0.2",
         "react-hook-form": "^7.25.3",
         "react-responsive": "^9.0.0-beta.6",
@@ -39,8 +40,8 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "test": "react-scripts test --transformIgnorePatterns \"/node_modules/(?!(@polkadot|@babel)/).*\"",
-        "report-test-coverage": "react-scripts test --transformIgnorePatterns \"/node_modules/(?!(@polkadot|@babel)/).*\" --coverage --watchAll",
+        "test": "react-scripts test --transformIgnorePatterns \"/node_modules/(?!(@polkadot|@babel|react-calendar|react-date-picker)/).*\"",
+        "report-test-coverage": "react-scripts test --transformIgnorePatterns \"/node_modules/(?!(@polkadot|@babel|react-calendar|react-date-picker)/).*\" --coverage --watchAll",
         "eject": "react-scripts eject",
         "generate:defs-meta": "yarn generate:defs && yarn generate:meta",
         "generate:defs": "ts-node --skip-project node_modules/.bin/polkadot-types-from-defs --input ./src/logion-chain/interfaces/ --package ../interfaces",

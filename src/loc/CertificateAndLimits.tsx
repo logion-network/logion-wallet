@@ -64,7 +64,7 @@ Arguments:
                     </Col>
                 }
                 {
-                    props.loc.locType === 'Collection' &&
+                    props.loc.locType === 'Collection' && props.loc.closed &&
                     <Col className="col-xxxl-3 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6">
                         <div className="api-settings">
                             <Button onClick={ () => setShowSettings(true) }><Icon icon={{id: "cog"}}/> Get API settings</Button>

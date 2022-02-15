@@ -1,0 +1,16 @@
+.DatePicker {
+    padding: 0.375rem 0.75rem;
+    border: none;
+    border-bottom: 1px solid #3b6cf4;
+    font-weight: bold;
+    border-radius: 0;
+    background-color: transparent;
+}
+
+.DatePicker .react-date-picker__wrapper {
+    border: none;
+}
+
+.DatePicker .react-calendar {
+    font-family: inherit;
+}

@@ -1,6 +1,8 @@
 import { Form } from "react-bootstrap";
+
 import { BackgroundAndForegroundColors } from "./ColorTheme";
 import FormGroup from "./FormGroup";
+import { Children } from "./types/Helpers";
 
 import './CheckedControl.css';
 
@@ -8,8 +10,7 @@ export interface Props {
     baseId: string;
     checked: boolean;
     onChangeChecked: (value: boolean) => void;
-    value: string;
-    onChangeValue: (value: string) => void;
+    valueControl: Children,
     label: string;
     type: string;
     colors: BackgroundAndForegroundColors;
@@ -34,13 +35,7 @@ export default function CheckedControl(props: Props) {
                 id={`${props.baseId}Value`}
                 className="value-group"
                 label={ props.label }
-                control={
-                    <Form.Control
-                        type={ props.type }
-                        value={ props.value }
-                        onChange={ e => props.onChangeValue(e.target.value) }
-                    />
-                }
+                control={ props.valueControl }
                 colors={ props.colors }
             />
             {

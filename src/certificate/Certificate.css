@@ -78,6 +78,8 @@
 .Certificate pre {
     font-size: 1rem;
     font-family: "Montserrat", sans-serif;
+    line-break: anywhere;
+    white-space: break-spaces;
 }
 
 .void-frame,
