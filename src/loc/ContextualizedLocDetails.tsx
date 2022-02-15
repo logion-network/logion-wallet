@@ -89,6 +89,19 @@ export default function ContextualizedLocDetails(props: Props) {
         };
     }
 
+    let paneTitle: string = "";
+    let paneIcon: string = "";
+    if(loc.locType === 'Transaction') {
+        paneTitle = "Transaction Protection Case";
+        paneIcon = 'loc';
+    } else if(loc.locType === 'Identity') {
+        paneTitle = "Identity Case";
+        paneIcon = 'identity';
+    } else if(loc.locType === 'Collection') {
+        paneTitle = "Collection Protection Case";
+        paneIcon = 'collection';
+    }
+
     let locTabTitle: string;
     if(loc.locType === 'Transaction') {
         locTabTitle = "Legal Officer Case (LOC) - Transaction";
@@ -107,10 +120,10 @@ export default function ContextualizedLocDetails(props: Props) {
 
     return (
         <FullWidthPane
-            mainTitle={ loc.locType === 'Transaction' ? "Transaction Protection Case" : "Identity Case" }
+            mainTitle={ paneTitle }
             titleIcon={ {
                 icon: {
-                    id: loc.locType === 'Transaction' ? 'loc' : 'identity'
+                    id: paneIcon
                 },
                 background: colorTheme.topMenuItems.iconGradient,
             } }

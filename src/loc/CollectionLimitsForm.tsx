@@ -1,7 +1,7 @@
-import { Col, Row } from 'react-bootstrap';
+import { Col, Form, Row } from 'react-bootstrap';
 import CheckedControl from '../common/CheckedControl';
 import { BackgroundAndForegroundColors } from '../common/ColorTheme';
-import Icon from '../common/Icon';
+import DatePicker from '../common/DatePicker';
 
 import './CollectionLimitsForm.css'
 
@@ -9,18 +9,18 @@ export class CollectionLimits {
 
     constructor(args: {
         hasDateLimit?: boolean,
-        dateLimit?: string,
+        dateLimit?: Date | null,
         hasDataNumberLimit?: boolean,
         dataNumberLimit?: string,
     }) {
         this.hasDateLimit = args.hasDateLimit || false;
-        this.dateLimit = args.dateLimit || "";
+        this.dateLimit = args.dateLimit || null;
         this.hasDataNumberLimit = args.hasDataNumberLimit || false;
         this.dataNumberLimit = args.dataNumberLimit || "";
     }
 
     readonly hasDateLimit: boolean;
-    readonly dateLimit: string;
+    readonly dateLimit: Date | null;
     readonly hasDataNumberLimit: boolean;
     readonly dataNumberLimit: string;
 
@@ -52,13 +52,17 @@ export default function CollectionLimitsForm(props: Props) {
                             ...props.value,
                             hasDateLimit: !props.value.hasDateLimit
                         })) }
-                        value={ props.value.dateLimit }
-                        onChangeValue={ value => props.onChange(new CollectionLimits({
-                            ...props.value,
-                            dateLimit: value
-                        })) }
+                        valueControl={
+                            <DatePicker
+                                value={ props.value.dateLimit }
+                                onChange={ (value: Date) => props.onChange(new CollectionLimits({
+                                    ...props.value,
+                                    dateLimit: value
+                                })) }
+                                minDate={ new Date(Date.now() + (1000 * 3600 * 24)) }
+                            />
+                        }
                         colors={ props.colors }
-                        append={ <Icon icon={{id: 'calendar'}} /> }
                     />
                 </div>
             </Col>
@@ -73,11 +77,15 @@ export default function CollectionLimitsForm(props: Props) {
                             ...props.value,
                             hasDataNumberLimit: !props.value.hasDataNumberLimit
                         })) }
-                        value={ props.value.dataNumberLimit }
-                        onChangeValue={ value => props.onChange(new CollectionLimits({
-                            ...props.value,
-                            dataNumberLimit: value
-                        })) }
+                        valueControl={
+                            <Form.Control
+                                value={ props.value.dataNumberLimit }
+                                onChange={ e => props.onChange(new CollectionLimits({
+                                    ...props.value,
+                                    dataNumberLimit: e.target.value
+                                })) }
+                            />
+                        }
                         colors={ props.colors }
                     />
                 </div>

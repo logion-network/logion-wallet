@@ -67,7 +67,7 @@ export default function LocRequestAcceptance(props: Props) {
                     let lastBlock: string | undefined;
                     if(limits.hasDateLimit) {
                         const now = await ChainTime.now(api!);
-                        const atDateLimit = await now.atDate(new Date(limits.dateLimit));
+                        const atDateLimit = await now.atDate(limits.dateLimit!);
                         lastBlock = atDateLimit.currentBlock.toString();
                     }
 
