@@ -72,7 +72,7 @@ async function fetchLegalOfficers(): Promise<FetchResult> {
 
     return {
         directoryFailure,
-        legalOfficers,
+        legalOfficers: legalOfficers.filter(officer => officer.node),
         isLegalOfficer,
         getOfficer
     };

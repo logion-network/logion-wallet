@@ -1,6 +1,6 @@
 {
     "APP_NAME": "Logion Wallet DEV",
-    "directory": "http://localhost:8090/api",
+    "directory": "http://localhost:8090",
     "edgeNodes": [
         {
             "peerId": "12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2",

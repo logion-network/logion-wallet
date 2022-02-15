@@ -34,6 +34,7 @@ import { toDecimalString, UUID } from "../logion-chain/UUID";
 import { getLegalOfficerCasesMap } from "../logion-chain/LogionLoc";
 import { authenticate } from "./Authentication";
 import { DirectoryContext, useDirectoryContext } from "../directory/DirectoryContext";
+import config from "../config";
 
 const DEFAULT_NOOP = () => {};
 
@@ -506,7 +507,7 @@ export function CommonContextProvider(props: Props) {
                 let availableLegalOfficers: LegalOfficer[];
                 if(nodesDown) {
                     const unavailableNodesSet = new Set(nodesDown.map(endpoint => endpoint.url));
-                    availableLegalOfficers = directoryContext.legalOfficers.filter(legalOfficer => !unavailableNodesSet.has(legalOfficer.node));
+                    availableLegalOfficers = directoryContext.legalOfficers.filter(legalOfficer => legalOfficer.node && !unavailableNodesSet.has(legalOfficer.node));
                 } else {
                     availableLegalOfficers = directoryContext.legalOfficers;
                 }
@@ -547,17 +548,26 @@ export function CommonContextProvider(props: Props) {
     }
 
     const authenticateCallback = useCallback(async (address: string[]) => {
-        for(let i = 0; i < directoryContext.legalOfficers.length; ++i) {
-            const legalOfficer = directoryContext.legalOfficers[i];
-            try {
-                const tokens = await authenticate(buildAxios(contextValue.accounts!, {url: legalOfficer.node}), address);
-                dispatch({
-                    type: 'SET_TOKENS',
-                    newTokens: tokens,
-                    directoryContext,
-                });
-                break;
-            } catch(error) {}
+        if(directoryContext.legalOfficers.length === 0) {
+            const tokens = await authenticate(buildAxios(contextValue.accounts!, {url: config.directory}), address);
+            dispatch({
+                type: 'SET_TOKENS',
+                newTokens: tokens,
+                directoryContext,
+            });
+        } else {
+            for(let i = 0; i < directoryContext.legalOfficers.length; ++i) {
+                const legalOfficer = directoryContext.legalOfficers[i];
+                try {
+                    const tokens = await authenticate(buildAxios(contextValue.accounts!, {url: legalOfficer.node}), address);
+                    dispatch({
+                        type: 'SET_TOKENS',
+                        newTokens: tokens,
+                        directoryContext,
+                    });
+                    break;
+                } catch(error) {}
+            }
         }
     }, [ contextValue.accounts, directoryContext ]);
 

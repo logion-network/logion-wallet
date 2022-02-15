@@ -13,6 +13,7 @@ export interface MenuItemData {
     exact: boolean,
     icon?: ColorThemeMenuIcon,
     onClick?: () => void,
+    disabled?: boolean,
 }
 
 export interface Props {
@@ -25,6 +26,11 @@ export default function MenuItem(props: Props) {
     let customStyle: CSSProperties = {};
     if(props.height !== undefined) {
         customStyle['height'] = props.height;
+    }
+    if(props.item.disabled) {
+        customStyle['opacity'] = 0.7;
+        customStyle['cursor'] = 'default';
+        customStyle['pointerEvents'] = 'none';
     }
 
     return (

@@ -16,7 +16,7 @@ import {
 import { useLegalOfficerContext } from './LegalOfficerContext';
 
 export default function ContextualizedWallet() {
-    const { selectAddress, accounts, colorTheme, refresh } = useCommonContext();
+    const { selectAddress, accounts, colorTheme, refresh, availableLegalOfficers } = useCommonContext();
     const { refreshRequests } = useLegalOfficerContext();
 
     const refreshAll = useCallback(() => {
@@ -27,6 +27,8 @@ export default function ContextualizedWallet() {
     if(accounts === null || selectAddress === null) {
         return null;
     }
+
+    const currentLegalOfficerUnavailable = availableLegalOfficers.find(node => node.address === accounts?.current?.address) === undefined;
 
     return (
         <Dashboard
@@ -43,6 +45,7 @@ export default function ContextualizedWallet() {
                         background: colorTheme.topMenuItems.iconGradient,
                     },
                     onClick: refreshAll,
+                    disabled: currentLegalOfficerUnavailable,
                 },
                 {
                     id: "wallet",
@@ -56,6 +59,7 @@ export default function ContextualizedWallet() {
                         background: colorTheme.topMenuItems.iconGradient,
                     },
                     onClick: refreshAll,
+                    disabled: currentLegalOfficerUnavailable,
                 },
                 {
                     id: "loc-collection",
@@ -69,6 +73,7 @@ export default function ContextualizedWallet() {
                         background: colorTheme.topMenuItems.iconGradient,
                     },
                     onClick: refreshAll,
+                    disabled: currentLegalOfficerUnavailable,
                 },
                 {
                     id: "loc-transaction",
@@ -82,6 +87,7 @@ export default function ContextualizedWallet() {
                         background: colorTheme.topMenuItems.iconGradient,
                     },
                     onClick: refreshAll,
+                    disabled: currentLegalOfficerUnavailable,
                 },
                 {
                     id: "identity",
@@ -95,6 +101,7 @@ export default function ContextualizedWallet() {
                         background: colorTheme.topMenuItems.iconGradient,
                     },
                     onClick: refreshAll,
+                    disabled: currentLegalOfficerUnavailable,
                 }
             ]}
             menuMiddle={[
@@ -112,6 +119,7 @@ export default function ContextualizedWallet() {
                         width: '60px',
                     },
                     onClick: refreshAll,
+                    disabled: currentLegalOfficerUnavailable,
                 },
                 {
                     id: "recovery",
@@ -127,6 +135,7 @@ export default function ContextualizedWallet() {
                         width: '60px',
                     },
                     onClick: refreshAll,
+                    disabled: currentLegalOfficerUnavailable,
                 }
             ]}
             menuBottom={[

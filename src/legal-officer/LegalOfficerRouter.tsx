@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 
 import {
     PROTECTION_REQUESTS_RELATIVE_PATH,
@@ -38,7 +38,8 @@ import { locRequestsRelativePath, dataLocDetailsRelativePath } from "../RootPath
 export default function LegalOfficerRouter() {
     const { accounts, nodesDown, availableLegalOfficers } = useCommonContext();
 
-    if(nodesDown.length > 0 && availableLegalOfficers.find(node => node.address === accounts?.current?.address) === undefined) {
+    const currentLegalOfficerUnavailable = availableLegalOfficers.find(node => node.address === accounts?.current?.address) === undefined;
+    if(nodesDown.length > 0 && currentLegalOfficerUnavailable) {
         return (
             <FullWidthPane
                 className="node-unreacheable"
@@ -111,7 +112,7 @@ export default function LegalOfficerRouter() {
                     viewer='LegalOfficer'
                 />
             } />
-            <Route path="" element={ <Home /> } />
+            <Route path="" element={ currentLegalOfficerUnavailable ? <Navigate to={ SETTINGS_PATH }/> : <Home /> } />
         </Routes>
     );
 }
