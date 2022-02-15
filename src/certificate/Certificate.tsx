@@ -50,7 +50,7 @@ export default function Certificate() {
     const [ nodeDown, setNodeDown ] = useState(false);
     const [ checkResult, setCheckResult ] = useState<DocumentCheckResult>({result: "NONE"});
     const { legalOfficers, getOfficer } = useDirectoryContext();
-    const [ collectionItem, setCollectionItem ] = useState<CollectionItem | undefined>(undefined);
+    const [ collectionItem, setCollectionItem ] = useState<CollectionItem | undefined | null>(null);
 
     const checkHash = useCallback((hash: string) => {
         if (loc) {
@@ -72,7 +72,7 @@ export default function Certificate() {
     }, [ loc, setCheckResult ]);
 
     useEffect(() => {
-        if (api !== null && loc === undefined) {
+        if (api !== null && loc === undefined && locId !== undefined) {
             (async function () {
                 const axiosFactory = anonymousAxiosFactory(legalOfficers);
                 const legalOfficerCase = await getLegalOfficerCase({ api, locId });
@@ -100,8 +100,16 @@ export default function Certificate() {
                             }
                         }
                         if (collectionItemIdParam) {
-                            const collectionItem = await getCollectionItem({api,  locId, itemId: collectionItemIdParam})
-                            setCollectionItem(collectionItem)
+                            try {
+                                const collectionItem = await getCollectionItem({
+                                    api,
+                                    locId,
+                                    itemId: collectionItemIdParam
+                                })
+                                setCollectionItem(collectionItem)
+                            } catch (e) {
+                                setCollectionItem(undefined)
+                            }
                         }
                     }
                 }
@@ -119,8 +127,26 @@ export default function Certificate() {
 
     if (loc === undefined) {
         return (
-            <div className="Certificate">
-                <CertificateCell md={ 4 } label="LOC NOT FOUND">{ locId.toDecimalString() }</CertificateCell>
+            <div className="CertificateBox">
+                <Container>
+                    <div className="Certificate">
+                        <CertificateCell md={ 4 } label="LOC NOT FOUND">{ locIdParam }</CertificateCell>
+                    </div>
+                </Container>
+            </div>
+        )
+    }
+
+    if (collectionItemIdParam && collectionItem === undefined) {
+        return (
+            <div className="CertificateBox">
+                <Container>
+                    <Row>
+                        <CertificateCell md={ 4 } label="LOC ID">{ locId.toDecimalString() }</CertificateCell>
+                        <CertificateCell md={ 4 }
+                                         label="COLLECTION ITEM NOT FOUND">{ collectionItemIdParam }</CertificateCell>
+                    </Row>
+                </Container>
             </div>
         )
     }
@@ -251,8 +277,8 @@ export default function Certificate() {
                 { matrix(loc.links, 2).map((links, index) => (
                     <LinkCellRow key={ index } links={ links } />
                 )) }
-                { collectionItem !== undefined &&
-                    <CollectionItemCellRow item={ collectionItem } />
+                { collectionItem !== null &&
+                    <CollectionItemCellRow item={ collectionItem! } />
                 }
                 <LegalOfficerRow legalOfficer={ legalOfficer } loc={ loc } />
                 <Row className="buttons">

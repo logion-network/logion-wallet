@@ -2,13 +2,21 @@
 
 exports[`Certificate renders LOC not found 1`] = `
 <div
-  className="Certificate"
+  className="CertificateBox"
 >
-  <CertificateCell
-    label="LOC NOT FOUND"
-    md={4}
+  <Container
+    fluid={false}
   >
-    95306891657235687884416897796814545554
-  </CertificateCell>
+    <div
+      className="Certificate"
+    >
+      <CertificateCell
+        label="LOC NOT FOUND"
+        md={4}
+      >
+        95306891657235687884416897796814545554
+      </CertificateCell>
+    </div>
+  </Container>
 </div>
 `;
