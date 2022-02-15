@@ -26,8 +26,9 @@ export default function IntroductionText(props: Props) {
         </div>
     } else if (loc.locType === 'Collection') {
         return <div className="description">
-            <p>This Logion Legal Officer Case (LOC) certificate is delivered for a COLLECTION and its related COLLECTION
-                ITEMS. Thus, the collection item identified below benefits from the scope of this LOC.</p>
+            <p>This Logion Legal Officer Case (LOC) certificate is delivered for a <strong>COLLECTION</strong> and its
+                related <strong>COLLECTION ITEMS</strong>. Thus, the collection item identified below benefits from the
+                scope of this LOC.</p>
             <p>This Certificate constitutes proof that a Logion Legal Officer, owner of that LOC and mentioned on this
                 document, executed a verification process according to his/her professional standards at the requester
                 demand with regards to data and document(s) listed below.</p>
