@@ -1,0 +1,15 @@
+.CollectionItemCellRow {
+    border: 2px solid #3b6cf4;
+    padding: 20px 30px;
+}
+
+.CollectionItemCellRow .MenuIcon {
+    display: inline-block;
+    font-size: 1rem;
+    vertical-align: bottom;
+}
+
+.CollectionItemCellRow h2 {
+    font-weight: bold;
+    margin-bottom: 1rem;
+}

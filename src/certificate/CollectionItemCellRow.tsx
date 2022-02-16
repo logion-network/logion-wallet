@@ -2,6 +2,11 @@ import { CollectionItem } from "../logion-chain/Types";
 import CertificateCell from "./CertificateCell";
 import { Row } from "../common/Grid";
 
+import './CollectionItemCellRow.css';
+import { Col } from "react-bootstrap";
+import MenuIcon from "../common/MenuIcon";
+import { LIGHT_MODE } from "../legal-officer/Types";
+
 export interface Props {
     item: CollectionItem
 }
@@ -9,10 +14,13 @@ export interface Props {
 export default function CollectionItemCellRow(props: Props) {
     const { id, description } = props.item
     return (
-        <div className="CollectionItem">
+        <div className="CollectionItemCellRow">
             <Row>
-                <p>This collection item identified hereafter with the
-                    following data<br/>benefits from the present Collection LOC scope:</p>
+                <Col>
+                    <h2><MenuIcon icon={{id:"collection"}} background={ LIGHT_MODE.topMenuItems.iconGradient }/> Collection Item</h2>
+                    <p>This collection item identified hereafter with the
+                        following data benefits from the present Collection LOC scope:</p>
+                </Col>
             </Row>
             <Row>
                 <CertificateCell md={ 12 } label="Collection item identification:">

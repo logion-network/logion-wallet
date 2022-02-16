@@ -74,14 +74,13 @@ export default function Certificate() {
     useEffect(() => {
         if (api !== null && loc === undefined && locId !== undefined) {
             (async function () {
-                const axiosFactory = anonymousAxiosFactory(legalOfficers);
                 const legalOfficerCase = await getLegalOfficerCase({ api, locId });
                 if (legalOfficerCase) {
                     if(legalOfficerCase.voidInfo?.replacer !== undefined && !searchParams.has("noredirect")) {
                         window.location.href = fullCertificateUrl(legalOfficerCase.voidInfo.replacer, false, true);
                     } else {
                         setLoc(legalOfficerCase)
-                        setLegalOfficer(getOfficer(legalOfficerCase.owner))
+                        const axiosFactory = anonymousAxiosFactory(legalOfficers);
                         try {
                             setPublicLoc(await fetchPublicLoc(axiosFactory(legalOfficerCase.owner), locId.toString()));
                         } catch(error) {
@@ -115,7 +114,16 @@ export default function Certificate() {
                 }
             })()
         }
-    }, [ api, locId, loc, setLoc, setLegalOfficer, setPublicLoc, legalOfficers, getOfficer, searchParams, collectionItemIdParam ])
+    }, [ api, locId, loc, setLoc, setPublicLoc, legalOfficers, searchParams, collectionItemIdParam ])
+
+    useEffect(() => {
+        if (api !== null && legalOfficer === null && loc !== undefined) {
+            const owner = getOfficer(loc.owner);
+            if(owner !== null) {
+                setLegalOfficer(owner);
+            }
+        }
+    }, [ api, legalOfficer, loc, getOfficer, setLegalOfficer ])
 
     if (api === null) {
         return (
