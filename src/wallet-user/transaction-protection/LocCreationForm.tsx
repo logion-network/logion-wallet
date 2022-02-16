@@ -29,6 +29,10 @@ export interface Props {
 export default function LocCreationForm(props: Props) {
     const { availableLegalOfficers } = useCommonContext();
 
+    if(availableLegalOfficers === undefined) {
+        return null;
+    }
+
     return (
         <>
             <FormGroup

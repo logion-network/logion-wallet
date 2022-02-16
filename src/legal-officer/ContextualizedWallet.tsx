@@ -24,7 +24,7 @@ export default function ContextualizedWallet() {
         refreshRequests!(false);
     }, [ refresh, refreshRequests ]);
 
-    if(accounts === null || selectAddress === null) {
+    if(accounts === null || selectAddress === null || availableLegalOfficers === undefined) {
         return null;
     }
 

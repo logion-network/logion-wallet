@@ -59,7 +59,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
         setSignAndSubmitClaim(() => signAndSubmit);
     }, [ api, accounts, props, setSignAndSubmitClaim ]);
 
-    if(recoveryConfig === null || recoveredAddress === undefined) {
+    if(recoveryConfig === null || recoveredAddress === undefined || availableLegalOfficers === undefined) {
         return null;
     }
 

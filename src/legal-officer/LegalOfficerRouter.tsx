@@ -38,6 +38,10 @@ import { locRequestsRelativePath, dataLocDetailsRelativePath } from "../RootPath
 export default function LegalOfficerRouter() {
     const { accounts, nodesDown, availableLegalOfficers } = useCommonContext();
 
+    if(availableLegalOfficers === undefined) {
+        return null;
+    }
+
     const currentLegalOfficerUnavailable = availableLegalOfficers.find(node => node.address === accounts?.current?.address) === undefined;
     if(nodesDown.length > 0 && currentLegalOfficerUnavailable) {
         return (
