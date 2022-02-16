@@ -69,7 +69,7 @@ export interface CommonContext {
     authenticate: (address: string[]) => Promise<void>;
     nodesUp: Endpoint[];
     nodesDown: Endpoint[];
-    availableLegalOfficers: LegalOfficer[];
+    availableLegalOfficers: LegalOfficer[] | undefined;
 }
 
 interface FullCommonContext extends CommonContext {
@@ -108,7 +108,7 @@ function initialContextValue(): FullCommonContext {
         authenticate: (_: string[]) => Promise.reject(),
         nodesUp: [],
         nodesDown: [],
-        availableLegalOfficers: [],
+        availableLegalOfficers: undefined,
     }
 }
 

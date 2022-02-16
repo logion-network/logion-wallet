@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Col, Form, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import Button from '../common/Button';
 import CopyPasteButton from '../common/CopyPasteButton';
 import Dialog from '../common/Dialog';
@@ -12,6 +12,9 @@ import { UUID } from '../logion-chain/UUID';
 import { fullCertificateUrl } from '../PublicPaths';
 import './CertificateAndLimits.css';
 import config from '../config';
+import FormGroup from '../common/FormGroup';
+import { useCommonContext } from '../common/CommonContext';
+import NewTabLink from '../common/NewTabLink';
 
 export interface Props {
     locId: UUID;
@@ -20,6 +23,7 @@ export interface Props {
 
 export default function CertificateAndLimits(props: Props) {
     const { api } = useLogionChain();
+    const { colorTheme } = useCommonContext();
     const [ dateLimit, setDateLimit ] = useState("-");
     const [ showSettings, setShowSettings ] = useState(false);
 
@@ -33,15 +37,6 @@ export default function CertificateAndLimits(props: Props) {
             })();
         }
     }, [ api, props.locId, props.loc.collectionLastBlockSubmission ]);
-
-    const settings = `Polkadot SDK documentation: https://polkadot.js.org/docs/api
-Logion endpoint: ${config.edgeNodes[0].socket}
-Signer: ${props.loc.requesterAddress}
-Extrinsic: logionLoc.addCollectionItem(collectionLocId, itemId, itemDescription)
-Arguments:
-    - collectionLocId: ${props.locId.toDecimalString()}
-    - itemId: a "0x" prefixed HEX string representation of 32 bytes uniquely identifying the item in this collection; the identifier may for instance be a SHA256 hash.
-    - itemDescription: a UTF-8 encoded string of at most 4096 bytes`;
 
     return (
         <div
@@ -67,7 +62,7 @@ Arguments:
                     props.loc.locType === 'Collection' && props.loc.closed &&
                     <Col className="col-xxxl-3 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6">
                         <div className="api-settings">
-                            <Button onClick={ () => setShowSettings(true) }><Icon icon={{id: "cog"}}/> Get API settings</Button>
+                            <Button onClick={ () => setShowSettings(true) }><Icon icon={{id: "cog"}}/> Get dev settings</Button>
                         </div>
                     </Col>
                 }
@@ -85,22 +80,63 @@ Arguments:
                 show={ showSettings }
                 size="xl"
             >
-                <h2>Get API settings for the requester application</h2>
+                <h2>Get developper settings for the requester application</h2>
                 <p>Settings available below must be communicated to the developer of the application that will send data using logion API to record it according to the current Collection LOC scope.</p>
-                <Row>
-                    <Col md={11}>
-                        <Form.Control
-                            as="textarea"
-                            value={ settings }
-                            style={{ height: "300px" }}
-                        />
-                    </Col>
-                    <Col md={1}>
-                        <div className="copy-paste-container">
-                            <CopyPasteButton value={ settings } />
-                        </div>
-                    </Col>
-                </Row>
+                <FormGroup
+                    id="documentation"
+                    label='Documentation'
+                    control={
+                        <NewTabLink
+                            href="https://github.com/logion-network/logion-collection-item-submitter#logion-collection-item-submitter"
+                        >
+                            https://github.com/logion-network/logion-collection-item-submitter
+                        </NewTabLink>
+                    }
+                    colors={ colorTheme.dialog }
+                />
+
+                <FormGroup
+                    id="endpoint"
+                    label='Logion endpoint'
+                    control={
+                        <p>{ config.edgeNodes[0].socket }</p>
+                    }
+                    colors={ colorTheme.dialog }
+                />
+
+                <FormGroup
+                    id="signer"
+                    label='Signature will be executed by the following public key'
+                    control={
+                        <p>{ props.loc.requesterAddress }</p>
+                    }
+                    colors={ colorTheme.dialog }
+                />
+
+                <FormGroup
+                    id="extrinsic"
+                    label='Extrinsic'
+                    control={
+                        <p>logionLoc.addCollectionItem(collectionLocId, itemId, itemDescription)</p>
+                    }
+                    colors={ colorTheme.dialog }
+                />
+
+                <div className="arguments">
+                    <p>Arguments</p>
+                    <ul>
+                        <li>collectionLocId: <strong>{ props.locId.toDecimalString() }</strong></li>
+                        <li>itemId: <strong>a "0x" prefixed HEX string representation of 32 bytes uniquely identifying the item in this collection.</strong> For instance, the identifier may be a SHA256 hash.</li>
+                        <li>itemDescription: <strong>a UTF-8 encoded string of at most 4096 bytes</strong></li>
+                    </ul>
+                </div>
+                <div className="limits">
+                    <p>Collection limits</p>
+                    <ul>
+                        <li>Date limit: <strong>{ dateLimit }</strong></li>
+                        <li>Item number limit: <strong>{ itemLimit(props.loc) }</strong></li>
+                    </ul>
+                </div>
             </Dialog>
         </div>
     );

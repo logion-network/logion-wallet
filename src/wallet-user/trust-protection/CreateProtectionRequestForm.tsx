@@ -143,6 +143,10 @@ export default function CreateProtectionRequestForm(props: Props) {
         legalOfficersTitle = "Choose your Legal Officers";
     }
 
+    if(availableLegalOfficers === undefined) {
+        return null;
+    }
+
     return (
         <FullWidthPane
             mainTitle={ mainTitle }

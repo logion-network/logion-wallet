@@ -72,3 +72,10 @@
     border-left: 2px solid #3b6cf4;
     border-top: 2px solid #3b6cf4;
 }
+
+.FormGroup p {
+    font-weight: bold;
+    border-bottom: 1px solid #3b6cf4;
+    padding: 0.375rem 0.75rem;
+    margin: 0;
+}
