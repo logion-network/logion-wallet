@@ -61,8 +61,7 @@ export default function CollectionLocItemChecker(props: Props) {
                     <p>The Collection LOC material listed above benefits all data imported through the logion API by an
                         external application approved between the Legal Officer and its client under a process validated
                         by the Legal Officer of the present LOC.</p>
-                    <p>To check if a data is covered by this Collection LOC and get its online public certificate, just
-                        submit the related data in the input field below:</p>
+                    <p>To check if a Collection Item is covered by this Collection LOC and get its online public certificate, just submit the related Collection Item ID in the input field below:</p>
                     <FormGroup
                         id="itemId"
                         noFeedback={ true }
@@ -83,7 +82,7 @@ export default function CollectionLocItemChecker(props: Props) {
                                 </Col>
                             </Row>
                         }
-                        colors={ colorTheme.dialog }
+                        colors={ colorTheme.frame }
                     />
                     <CheckResultFeedback locId={ locId } itemId={ itemId } state={ state } />
                 </>
@@ -107,7 +106,7 @@ function CheckResultFeedback(props: CheckResultProps) {
                     <Col>
                         <p>
                             Check result: <span className="label-positive">positive</span><br />
-                            The data you uploaded is covered by the current Collection LOC.
+                            The Collection Item - defined by the ID you submitted - is covered by the current Collection LOC.
                         </p>
                     </Col>
                     <Col>
@@ -128,7 +127,7 @@ function CheckResultFeedback(props: CheckResultProps) {
                     <Col>
                         <p>
                             Check result: <span className="label-negative">negative</span><br />
-                            The data you uploaded has no match and is NOT covered by the current<br />
+                            The Collection Item - defined by the ID you submitted - has no match and is NOT covered by the current<br />
                             Collection LOC. Please be careful and execute a deeper due diligence.
                         </p>
                     </Col>

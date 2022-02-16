@@ -41,11 +41,11 @@ Object {
               The Collection LOC material listed above benefits all data imported through the logion API by an external application approved between the Legal Officer and its client under a process validated by the Legal Officer of the present LOC.
             </p>
             <p>
-              To check if a data is covered by this Collection LOC and get its online public certificate, just submit the related data in the input field below:
+              To check if a Collection Item is covered by this Collection LOC and get its online public certificate, just submit the related Collection Item ID in the input field below:
             </p>
             <div
               class="FormGroup"
-              style="background-color: rgb(239, 243, 254);"
+              style="background-color: rgb(255, 255, 255);"
             >
               <style>
                 
@@ -131,11 +131,11 @@ Object {
             The Collection LOC material listed above benefits all data imported through the logion API by an external application approved between the Legal Officer and its client under a process validated by the Legal Officer of the present LOC.
           </p>
           <p>
-            To check if a data is covered by this Collection LOC and get its online public certificate, just submit the related data in the input field below:
+            To check if a Collection Item is covered by this Collection LOC and get its online public certificate, just submit the related Collection Item ID in the input field below:
           </p>
           <div
             class="FormGroup"
-            style="background-color: rgb(239, 243, 254);"
+            style="background-color: rgb(255, 255, 255);"
           >
             <style>
               
