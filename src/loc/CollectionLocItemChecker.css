@@ -31,9 +31,24 @@
 
 .CollectionLocItemChecker .CheckResultFeedback .url-header {
     font-weight: bold;
+    margin-bottom: 0.5rem;
 }
 
 .CollectionLocItemChecker div.IconTextRow div.text div.FormGroup div div.Row div.Col {
     width: 50rem;
 }
 
+.CollectionLocItemChecker .url-copy-paste-container {
+    display: flex;
+}
+
+.CollectionLocItemChecker .url-copy-paste-container .url-container {
+    width: calc(100% - 20px);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.CollectionLocItemChecker .url-copy-paste-container button {
+    flex-shrink: 0;
+}
