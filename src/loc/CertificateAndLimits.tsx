@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
+
 import Button from '../common/Button';
 import CopyPasteButton from '../common/CopyPasteButton';
 import Dialog from '../common/Dialog';
@@ -10,11 +11,11 @@ import { format } from '../logion-chain/datetime';
 import { LegalOfficerCase } from '../logion-chain/Types';
 import { UUID } from '../logion-chain/UUID';
 import { fullCertificateUrl } from '../PublicPaths';
-import './CertificateAndLimits.css';
 import config from '../config';
-import FormGroup from '../common/FormGroup';
-import { useCommonContext } from '../common/CommonContext';
 import NewTabLink from '../common/NewTabLink';
+import StaticLabelValue from '../common/StaticLabelValue';
+
+import './CertificateAndLimits.css';
 
 export interface Props {
     locId: UUID;
@@ -23,7 +24,6 @@ export interface Props {
 
 export default function CertificateAndLimits(props: Props) {
     const { api } = useLogionChain();
-    const { colorTheme } = useCommonContext();
     const [ dateLimit, setDateLimit ] = useState("-");
     const [ showSettings, setShowSettings ] = useState(false);
 
@@ -82,59 +82,52 @@ export default function CertificateAndLimits(props: Props) {
             >
                 <h2>Get developper settings for the requester application</h2>
                 <p>Settings available below must be communicated to the developer of the application that will send data using logion API to record it according to the current Collection LOC scope.</p>
-                <FormGroup
-                    id="documentation"
+
+                <StaticLabelValue
                     label='Documentation'
-                    control={
+                    value={
                         <NewTabLink
                             href="https://github.com/logion-network/logion-collection-item-submitter#logion-collection-item-submitter"
                         >
                             https://github.com/logion-network/logion-collection-item-submitter
                         </NewTabLink>
                     }
-                    colors={ colorTheme.dialog }
                 />
 
-                <FormGroup
-                    id="endpoint"
+                <StaticLabelValue
                     label='Logion endpoint'
-                    control={
+                    value={
                         <p>{ config.edgeNodes[0].socket }</p>
                     }
-                    colors={ colorTheme.dialog }
                 />
 
-                <FormGroup
-                    id="signer"
+                <StaticLabelValue
                     label='Signature will be executed by the following public key'
-                    control={
+                    value={
                         <p>{ props.loc.requesterAddress }</p>
                     }
-                    colors={ colorTheme.dialog }
                 />
 
-                <FormGroup
-                    id="extrinsic"
+                <StaticLabelValue
                     label='Extrinsic'
-                    control={
+                    value={
                         <p>logionLoc.addCollectionItem(collectionLocId, itemId, itemDescription)</p>
                     }
-                    colors={ colorTheme.dialog }
                 />
 
                 <div className="arguments">
-                    <p>Arguments</p>
+                    <h3>Arguments</h3>
                     <ul>
-                        <li>collectionLocId: <strong>{ props.locId.toDecimalString() }</strong></li>
-                        <li>itemId: <strong>a "0x" prefixed HEX string representation of 32 bytes uniquely identifying the item in this collection.</strong> For instance, the identifier may be a SHA256 hash.</li>
-                        <li>itemDescription: <strong>a UTF-8 encoded string of at most 4096 bytes</strong></li>
+                        <li><strong>collectionLocId:</strong> { props.locId.toDecimalString() }</li>
+                        <li><strong>itemId:</strong> a "0x" prefixed HEX string representation of 32 bytes uniquely identifying the item in this collection. For instance, the identifier may be a SHA256 hash.</li>
+                        <li><strong>itemDescription:</strong> a UTF-8 encoded string of at most 4096 bytes</li>
                     </ul>
                 </div>
                 <div className="limits">
-                    <p>Collection limits</p>
+                    <h3>Collection limits</h3>
                     <ul>
-                        <li>Date limit: <strong>{ dateLimit }</strong></li>
-                        <li>Item number limit: <strong>{ itemLimit(props.loc) }</strong></li>
+                        <li><strong>Date limit:</strong> { dateLimit }</li>
+                        <li><strong>Item number limit:</strong> { itemLimit(props.loc) }</li>
                     </ul>
                 </div>
             </Dialog>
