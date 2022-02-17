@@ -106,13 +106,19 @@ export default function Certificate() {
                                     itemId: collectionItemIdParam
                                 })
                                 if (collectionItem) {
-                                    const locCollectionItem = await fetchPublicCollectionItem(
-                                        axiosFactory(legalOfficerCase.owner),
-                                        locId.toString(),
-                                        collectionItemIdParam);
+                                    let addedOn = undefined;
+                                    try {
+                                        const locCollectionItem = await fetchPublicCollectionItem(
+                                            axiosFactory(legalOfficerCase.owner),
+                                            locId.toString(),
+                                            collectionItemIdParam);
+                                        addedOn = locCollectionItem.addedOn;
+                                    } catch (e) {
+                                        // ignored
+                                    }
                                     const mergedCollectionItem: MergedCollectionItem = {
                                         ...collectionItem,
-                                        addedOn: locCollectionItem.addedOn
+                                        addedOn
                                     }
                                     setCollectionItem(mergedCollectionItem)
                                 } else {
