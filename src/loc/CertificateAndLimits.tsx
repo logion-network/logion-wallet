@@ -46,7 +46,12 @@ export default function CertificateAndLimits(props: Props) {
                 <Col className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12">
                     <div className="certificate">
                         <h2>Public web address (URL) of this Legal Officer Case related Certificate:</h2>
-                        <a href={ certificateUrl } target="_blank" rel="noreferrer">{ certificateUrl }</a> <CopyPasteButton value={ certificateUrl } />
+                        <div className="url-copy-paste-container">
+                            <div className="url-container">
+                                <a href={ certificateUrl } target="_blank" rel="noreferrer">{ certificateUrl }</a>
+                            </div>
+                            <CopyPasteButton value={ certificateUrl } />
+                        </div>
                     </div>
                 </Col>
                 {
