@@ -2,6 +2,21 @@
     margin-top: 30px;
 }
 
+.CertificateAndLimits .url-copy-paste-container {
+    display: flex;
+}
+
+.CertificateAndLimits .url-copy-paste-container .url-container {
+    max-width: calc(100% - 20px);
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.CertificateAndLimits .url-copy-paste-container button {
+    flex-shrink: 0;
+}
+
 .Dashboard .CertificateAndLimits a {
     margin-bottom: 18px;
     color: #0d6efd;

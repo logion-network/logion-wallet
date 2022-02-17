@@ -462,26 +462,33 @@ exports[`ContextualizedLocDetails renders for LO 1`] = `
                 <h2>
                   Public web address (URL) of this Legal Officer Case related Certificate:
                 </h2>
-                <a
-                  href="http://localhost/public/certificate/195914524858768213081425411950368569411"
-                  rel="noreferrer"
-                  target="_blank"
+                <div
+                  className="url-copy-paste-container"
                 >
-                  http://localhost/public/certificate/195914524858768213081425411950368569411
-                </a>
-                 
-                <button
-                  className="Button CopyPasteButton big btn btn-primary"
-                  disabled={false}
-                  onClick={[Function]}
-                  style={Object {}}
-                  type="button"
-                >
-                  <img
-                    alt=""
-                    src="/assets/copy_paste.svg"
-                  />
-                </button>
+                  <div
+                    className="url-container"
+                  >
+                    <a
+                      href="http://localhost/public/certificate/195914524858768213081425411950368569411"
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      http://localhost/public/certificate/195914524858768213081425411950368569411
+                    </a>
+                  </div>
+                  <button
+                    className="Button CopyPasteButton big btn btn-primary"
+                    disabled={false}
+                    onClick={[Function]}
+                    style={Object {}}
+                    type="button"
+                  >
+                    <img
+                      alt=""
+                      src="/assets/copy_paste.svg"
+                    />
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -1082,26 +1089,33 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
                 <h2>
                   Public web address (URL) of this Legal Officer Case related Certificate:
                 </h2>
-                <a
-                  href="http://localhost/public/certificate/195914524858768213081425411950368569411"
-                  rel="noreferrer"
-                  target="_blank"
+                <div
+                  className="url-copy-paste-container"
                 >
-                  http://localhost/public/certificate/195914524858768213081425411950368569411
-                </a>
-                 
-                <button
-                  className="Button CopyPasteButton big btn btn-primary"
-                  disabled={false}
-                  onClick={[Function]}
-                  style={Object {}}
-                  type="button"
-                >
-                  <img
-                    alt=""
-                    src="/assets/copy_paste.svg"
-                  />
-                </button>
+                  <div
+                    className="url-container"
+                  >
+                    <a
+                      href="http://localhost/public/certificate/195914524858768213081425411950368569411"
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      http://localhost/public/certificate/195914524858768213081425411950368569411
+                    </a>
+                  </div>
+                  <button
+                    className="Button CopyPasteButton big btn btn-primary"
+                    disabled={false}
+                    onClick={[Function]}
+                    style={Object {}}
+                    type="button"
+                  >
+                    <img
+                      alt=""
+                      src="/assets/copy_paste.svg"
+                    />
+                  </button>
+                </div>
               </div>
             </div>
           </div>

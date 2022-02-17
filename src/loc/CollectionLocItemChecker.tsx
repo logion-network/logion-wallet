@@ -1,6 +1,4 @@
 import { useState, useCallback, useEffect } from "react";
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
-import Tooltip from 'react-bootstrap/Tooltip';
 
 import { UUID } from "../logion-chain/UUID";
 import { useLogionChain } from "../logion-chain";
@@ -41,7 +39,7 @@ export default function CollectionLocItemChecker(props: Props) {
     }, [ api, locId, collectionSize ])
 
     const checkData = useCallback(async () => {
-        if (api) {
+        if (api && itemId) {
             try {
                 const collectionItem = await getCollectionItem({ api, locId, itemId })
                 if (collectionItem) {
@@ -82,7 +80,7 @@ export default function CollectionLocItemChecker(props: Props) {
                                     />
                                 </Col>
                                 <Col>
-                                    <Button onClick={ checkData }>Check data</Button>
+                                    <Button onClick={ checkData } disabled={ itemId ? false : true }><Icon icon={{id: "search"}} /> Check Item ID</Button>
                                 </Col>
                             </Row>
                         }
@@ -121,17 +119,7 @@ function CheckResultFeedback(props: CheckResultProps) {
                             <div id="url-header" className="url-header">Certificate Public web address (URL) for the data covered by this Collection LOC:</div>
                             <div className="url-copy-paste-container">
                                 <div className="url-container">
-                                    <OverlayTrigger
-                                        placement="bottom"
-                                        delay={ 500 }
-                                        overlay={
-                                            <Tooltip id="urlToolTip">
-                                                { certificateUrl }
-                                            </Tooltip>
-                                        }
-                                    >
-                                        <a href={ certificateUrl } target="_blank" rel="noreferrer">{ certificateUrl }</a>
-                                    </OverlayTrigger>
+                                    <a href={ certificateUrl } target="_blank" rel="noreferrer">{ certificateUrl }</a>
                                 </div>
                                 <CopyPasteButton value={ certificateUrl } />
                             </div>

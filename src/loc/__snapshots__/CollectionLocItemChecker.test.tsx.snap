@@ -77,9 +77,14 @@ Object {
                   >
                     <button
                       class="Button btn btn-primary"
+                      disabled=""
                       type="button"
                     >
-                      Check data
+                      <img
+                        alt=""
+                        src="/assets/search.svg"
+                      />
+                       Check Item ID
                     </button>
                   </div>
                 </div>
@@ -167,9 +172,14 @@ Object {
                 >
                   <button
                     class="Button btn btn-primary"
+                    disabled=""
                     type="button"
                   >
-                    Check data
+                    <img
+                      alt=""
+                      src="/assets/search.svg"
+                    />
+                     Check Item ID
                   </button>
                 </div>
               </div>
