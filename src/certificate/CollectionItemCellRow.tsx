@@ -1,4 +1,3 @@
-import { CollectionItem } from "../logion-chain/Types";
 import CertificateCell from "./CertificateCell";
 import { Row } from "../common/Grid";
 
@@ -6,13 +5,15 @@ import './CollectionItemCellRow.css';
 import { Col } from "react-bootstrap";
 import MenuIcon from "../common/MenuIcon";
 import { LIGHT_MODE } from "../legal-officer/Types";
+import CertificateDateTimeCell from "./CertificateDateTimeCell";
+import { MergedCollectionItem } from "../common/types/ModelTypes";
 
 export interface Props {
-    item: CollectionItem
+    item: MergedCollectionItem
 }
 
 export default function CollectionItemCellRow(props: Props) {
-    const { id, description } = props.item
+    const { id, description, addedOn } = props.item
     return (
         <div className="CollectionItemCellRow">
             <Row>
@@ -21,6 +22,9 @@ export default function CollectionItemCellRow(props: Props) {
                     <p>This collection item identified hereafter with the
                         following data benefits from the present Collection LOC scope:</p>
                 </Col>
+            </Row>
+            <Row>
+                <CertificateDateTimeCell md={ 12 } label="Collection item timestamp:" dateTime={ addedOn } />
             </Row>
             <Row>
                 <CertificateCell md={ 12 } label="Collection item identification:">
