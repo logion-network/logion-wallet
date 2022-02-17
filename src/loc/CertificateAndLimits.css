@@ -36,6 +36,11 @@
     text-align: left;
 }
 
+.CertificateAndLimits .arguments h3,
+.CertificateAndLimits .limits h3 {
+    font-size: 1rem;
+}
+
 @media screen and (max-width: 1600px) {
     .CertificateAndLimits .limits,
     .CertificateAndLimits .api-settings {
