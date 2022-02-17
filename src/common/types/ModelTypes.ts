@@ -1,4 +1,4 @@
-import { LocType, MetadataItem, Link } from '../../logion-chain/Types';
+import { LocType, MetadataItem, Link, CollectionItem } from '../../logion-chain/Types';
 import Identity from './Identity';
 import PostalAddress from './PostalAddress';
 import { File } from '../../logion-chain/Types'
@@ -75,6 +75,12 @@ export interface LocMetadataItem extends MetadataItem, AddedOn {
 export interface LocLink extends Link, AddedOn {
     target: string; // is redundant with inherited "id: UUID"
 }
+
+export interface LocCollectionItem extends AddedOn {
+    itemId: string,
+}
+
+export type MergedCollectionItem = CollectionItem & AddedOn
 
 export interface LocRequestVoidInfo {
     reason?: string; // undefined in public view

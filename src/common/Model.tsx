@@ -6,7 +6,7 @@ import {
     ProtectionRequest,
     Transaction,
     LocRequest,
-    LocRequestStatus,
+    LocRequestStatus, LocCollectionItem,
 } from './types/ModelTypes';
 import Identity from './types/Identity';
 import { UUID } from '../logion-chain/UUID';
@@ -234,6 +234,15 @@ export async function preVoid(
     await axios.post(`/api/loc-request/${requestId}/void`, {
         reason
     });
+}
+
+export async function fetchPublicCollectionItem(
+    axios: AxiosInstance,
+    collectionLocId: string,
+    itemId: string,
+): Promise<LocCollectionItem> {
+    const response = await axios.get(`/api/collection/${ collectionLocId }/${ itemId }`);
+    return response.data;
 }
 
 export function isGrantedAccess(address: string | undefined, loc: LegalOfficerCase): boolean {

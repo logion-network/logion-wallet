@@ -6,13 +6,13 @@ import { useSearchParams } from "react-router-dom";
 import { UUID } from "../logion-chain/UUID";
 import { useLogionChain } from "../logion-chain";
 import { getLegalOfficerCase, getCollectionItem } from "../logion-chain/LogionLoc";
-import { File, LegalOfficerCase, Link, MetadataItem, VoidInfo, CollectionItem } from "../logion-chain/Types";
+import { File, LegalOfficerCase, Link, MetadataItem, VoidInfo } from "../logion-chain/Types";
 
 import Button from "../common/Button";
 import MailtoButton from "../common/MailtoButton";
 import Icon from "../common/Icon";
-import { LocRequest } from "../common/types/ModelTypes";
-import { fetchPublicLoc } from "../common/Model";
+import { LocRequest, MergedCollectionItem } from "../common/types/ModelTypes";
+import { fetchPublicLoc, fetchPublicCollectionItem } from "../common/Model";
 import CertificateDateTimeCell from "./CertificateDateTimeCell";
 import { copyToClipBoard } from "../common/Tools";
 import { anonymousAxiosFactory } from "../common/api";
@@ -50,7 +50,7 @@ export default function Certificate() {
     const [ nodeDown, setNodeDown ] = useState(false);
     const [ checkResult, setCheckResult ] = useState<DocumentCheckResult>({result: "NONE"});
     const { legalOfficers, getOfficer } = useDirectoryContext();
-    const [ collectionItem, setCollectionItem ] = useState<CollectionItem | undefined | null>(null);
+    const [ collectionItem, setCollectionItem ] = useState<MergedCollectionItem | undefined | null>(null);
 
     const checkHash = useCallback((hash: string) => {
         if (loc) {
@@ -105,7 +105,19 @@ export default function Certificate() {
                                     locId,
                                     itemId: collectionItemIdParam
                                 })
-                                setCollectionItem(collectionItem)
+                                if (collectionItem) {
+                                    const locCollectionItem = await fetchPublicCollectionItem(
+                                        axiosFactory(legalOfficerCase.owner),
+                                        locId.toString(),
+                                        collectionItemIdParam);
+                                    const mergedCollectionItem: MergedCollectionItem = {
+                                        ...collectionItem,
+                                        addedOn: locCollectionItem.addedOn
+                                    }
+                                    setCollectionItem(mergedCollectionItem)
+                                } else {
+                                    setCollectionItem(undefined)
+                                }
                             } catch (e) {
                                 setCollectionItem(undefined)
                             }
