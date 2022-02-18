@@ -104,6 +104,8 @@ function transactionType(transaction: Transaction, address: string): string {
             return "LOC voided";
         } else if(transaction.method === "makeVoidAndReplace") {
             return "LOC voided and replaced";
+        } else if(transaction.method === "addCollectionItem") {
+            return "Item added to Collection";
         } else {
             return "Other";
         }
