@@ -80,7 +80,7 @@ export interface LocCollectionItem extends AddedOn {
     itemId: string,
 }
 
-export type MergedCollectionItem = CollectionItem & AddedOn
+export type MergedCollectionItem = CollectionItem & Partial<AddedOn>
 
 export interface LocRequestVoidInfo {
     reason?: string; // undefined in public view
