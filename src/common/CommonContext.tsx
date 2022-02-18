@@ -578,13 +578,14 @@ export function CommonContextProvider(props: Props) {
 
     useEffect(() => {
         if(api !== null
+                && directoryContext.ready
                 && contextValue.accounts !== null
                 && contextValue.accounts.current !== undefined
                 && contextValue.dataAddress !== contextValue.accounts.current.address
                 && contextValue.fetchForAddress !== contextValue.accounts.current.address) {
             refreshRequests();
         }
-    }, [ api, contextValue, refreshRequests, dispatch ]);
+    }, [ api, directoryContext.ready, contextValue, refreshRequests, dispatch ]);
 
     useEffect(() => {
         if(contextValue.selectAddress === null) {
@@ -620,7 +621,8 @@ export function CommonContextProvider(props: Props) {
 
     useEffect(() => {
         if(contextValue.injectedAccounts !== injectedAccounts
-                && injectedAccounts !== null) {
+                && injectedAccounts !== null
+                && directoryContext.ready) {
 
             let currentAddress: string | null | undefined = contextValue.accounts?.current?.address;
             if(currentAddress === undefined) {
