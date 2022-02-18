@@ -51,8 +51,8 @@ describe("AccountTokens", () => {
         expect(merged.get("3")).toEqual(otherTokensRecord["3"]);
     });
 
-    it("refreshes", () => {
-        const tokens = new AccountTokens(tokensRecord).refresh(now);
+    it("cleanUps", () => {
+        const tokens = new AccountTokens(tokensRecord).cleanUp(now);
         expect(tokens.length).toBe(1);
         expect(tokens.addresses).toContain(ADDRESS_WITH_VALID_TOKEN);
         expect(tokens.get(ADDRESS_WITH_VALID_TOKEN)).toEqual(tokensRecord[ADDRESS_WITH_VALID_TOKEN]);

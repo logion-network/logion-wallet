@@ -1,4 +1,3 @@
-import React from 'react';
 import {
     Navigate,
     Routes,
@@ -11,17 +10,15 @@ import UserMain from './wallet-user/Main';
 import { useCommonContext } from './common/CommonContext';
 import Login, { LOGIN_PATH } from './Login';
 import RenderOrRedirectToLogin from './RenderOrRedirectToLogin';
-import { useDirectoryContext } from './directory/DirectoryContext';
 
 export default function RootRouter() {
     const { accounts } = useCommonContext();
-    const directoryContext = useDirectoryContext();
 
     if(accounts === null || accounts.all.length === 0) {
         return null;
     }
 
-    const isLegalOfficer = directoryContext.isLegalOfficer(accounts?.current?.address);
+    const isLegalOfficer = accounts?.current?.isLegalOfficer;
     let redirectTo;
     if(isLegalOfficer) {
         redirectTo = LEGAL_OFFICER_PATH;

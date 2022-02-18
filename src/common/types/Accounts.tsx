@@ -42,7 +42,7 @@ export class AccountTokens {
         return Object.keys(this.store);
     }
 
-    refresh(now: Moment): AccountTokens {
+    cleanUp(now: Moment): AccountTokens {
         const newStore: Record<string, Token> = {};
         for(const address of this.addresses) {
             const token = this.get(address)!;
@@ -82,6 +82,17 @@ export class AccountTokens {
         } else {
             return token.expirationDateTime.isAfter(now);
         }
+    }
+
+    earliestExpiration(): Moment | undefined {
+        let earliest: Moment | undefined;
+        for(const address of this.addresses) {
+            const expiration = this.store[address].expirationDateTime;
+            if(earliest === undefined || earliest.isAfter(expiration)) {
+                earliest = expiration;
+            }
+        }
+        return earliest;
     }
 }
 

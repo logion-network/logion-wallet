@@ -4,6 +4,7 @@ import { Children } from "../common/types/Helpers";
 import { DirectoryApi, LegalOfficer } from "./DirectoryApi";
 
 export interface DirectoryContext {
+    ready: boolean;
     legalOfficers: LegalOfficer[];
     isLegalOfficer: (address: string | undefined) => boolean;
     getOfficer: (address: string | undefined) => LegalOfficer | null;
@@ -15,6 +16,7 @@ const DirectoryContextObject: React.Context<DirectoryContext> = React.createCont
 
 function initialContextValue(): DirectoryContext {
     return {
+        ready: false,
         legalOfficers: [],
         isLegalOfficer: () => false,
         getOfficer: () => null,
@@ -100,6 +102,7 @@ const reducer: Reducer<DirectoryContext, Action> = (state: DirectoryContext, act
             return {
                 ...state,
                 ...action.fetchResult!,
+                ready: true,
             }
         }
         default:

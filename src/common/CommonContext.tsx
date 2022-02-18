@@ -32,7 +32,7 @@ import {
 import { LegalOfficerCase, IdentityLocType, LocType, DataLocType } from "../logion-chain/Types";
 import { toDecimalString, UUID } from "../logion-chain/UUID";
 import { getLegalOfficerCasesMap } from "../logion-chain/LogionLoc";
-import { authenticate } from "./Authentication";
+import { authenticate, refresh } from "./Authentication";
 import { DirectoryContext, useDirectoryContext } from "../directory/DirectoryContext";
 import config from "../config";
 
@@ -77,10 +77,11 @@ interface FullCommonContext extends CommonContext {
     tokens: AccountTokens;
     timer?: number;
     refreshAddress?: string;
+    tokensToRefresh?: AccountTokens;
 }
 
 function initialContextValue(): FullCommonContext {
-    const tokens = loadTokens().refresh(moment());
+    const tokens = loadTokens().cleanUp(moment());
     return {
         selectAddress: null,
         accounts: null,
@@ -132,7 +133,9 @@ type ActionType = 'SET_SELECT_ADDRESS'
     | 'SCHEDULE_TOKEN_REFRESH'
     | 'REFRESH_TOKENS'
     | 'SET_REFRESH'
-    | 'SET_AUTHENTICATE';
+    | 'SET_AUTHENTICATE'
+    | 'START_TOKEN_REFRESH'
+;
 
 interface Action {
     type: ActionType,
@@ -284,18 +287,14 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                 return state;
             }
         case 'REFRESH_TOKENS':
-            const tokens = state.tokens.refresh(moment());
-            if(!tokens.equals(state.tokens)) {
-                storeTokens(tokens);
-                const accounts = buildAccounts(state.injectedAccounts!, state.accounts?.current?.address, tokens, action.directoryContext!.isLegalOfficer);
-                return {
-                    ...state,
-                    tokens,
-                    accounts,
-                    isCurrentAuthenticated: () => tokens.isAuthenticated(moment(), accounts.current?.address),
-                }
-            } else {
-                return state;
+            return {
+                ...state,
+                tokensToRefresh: state.tokens
+            }
+        case 'START_TOKEN_REFRESH':
+            return {
+                ...state,
+                tokensToRefresh: undefined
             }
         case 'SET_REFRESH':
             return {
@@ -547,30 +546,6 @@ export function CommonContextProvider(props: Props) {
             .filter(requestAndLoc => requestAndLoc.loc !== undefined && requestAndLoc.loc.voidInfo === undefined);
     }
 
-    const authenticateCallback = useCallback(async (address: string[]) => {
-        if(directoryContext.legalOfficers.length === 0) {
-            const tokens = await authenticate(buildAxios(contextValue.accounts!, {url: config.directory}), address);
-            dispatch({
-                type: 'SET_TOKENS',
-                newTokens: tokens,
-                directoryContext,
-            });
-        } else {
-            for(let i = 0; i < directoryContext.legalOfficers.length; ++i) {
-                const legalOfficer = directoryContext.legalOfficers[i];
-                try {
-                    const tokens = await authenticate(buildAxios(contextValue.accounts!, {url: legalOfficer.node}), address);
-                    dispatch({
-                        type: 'SET_TOKENS',
-                        newTokens: tokens,
-                        directoryContext,
-                    });
-                    break;
-                } catch(error) {}
-            }
-        }
-    }, [ contextValue.accounts, directoryContext ]);
-
     const logout = useCallback(() => dispatch({
         type: 'LOGOUT',
         directoryContext,
@@ -578,13 +553,14 @@ export function CommonContextProvider(props: Props) {
 
     useEffect(() => {
         if(api !== null
+                && directoryContext.ready
                 && contextValue.accounts !== null
                 && contextValue.accounts.current !== undefined
                 && contextValue.dataAddress !== contextValue.accounts.current.address
                 && contextValue.fetchForAddress !== contextValue.accounts.current.address) {
             refreshRequests();
         }
-    }, [ api, contextValue, refreshRequests, dispatch ]);
+    }, [ api, directoryContext.ready, contextValue, refreshRequests, dispatch ]);
 
     useEffect(() => {
         if(contextValue.selectAddress === null) {
@@ -620,7 +596,8 @@ export function CommonContextProvider(props: Props) {
 
     useEffect(() => {
         if(contextValue.injectedAccounts !== injectedAccounts
-                && injectedAccounts !== null) {
+                && injectedAccounts !== null
+                && directoryContext.ready) {
 
             let currentAddress: string | null | undefined = contextValue.accounts?.current?.address;
             if(currentAddress === undefined) {
@@ -666,18 +643,45 @@ export function CommonContextProvider(props: Props) {
     }, [ contextValue, logout ]);
 
     useEffect(() => {
-        if(contextValue.timer === undefined) {
+        if(contextValue.accounts !== null
+                && contextValue.timer === undefined) {
+            const timeoutInS = 1;
             const timer = window.setInterval(() => {
                 dispatch({
                     type: 'REFRESH_TOKENS',
                 });
-            }, 1000);
+            }, timeoutInS * 1000);
             dispatch({
                 type: 'SCHEDULE_TOKEN_REFRESH',
                 timer
             });
         }
-    }, [ contextValue ]);
+    }, [ contextValue, dispatch ]);
+
+    useEffect(() => {
+        if(contextValue.tokensToRefresh !== undefined) {
+            dispatch({
+                type: 'START_TOKEN_REFRESH'
+            });
+            const currentTokens = contextValue.tokens.cleanUp(moment());
+            if(currentTokens.length > 0 && currentTokens.earliestExpiration()!.isBefore(moment().add(60, 'seconds'))) {
+                (async function() {
+                    let newTokens: AccountTokens;
+                    try {
+                        newTokens = await refresh(contextValue.axiosFactory!(), currentTokens);
+                    } catch(e) {
+                        console.log("Token refresh failed, reusing current tokens.");
+                        newTokens = currentTokens;
+                    }
+                    dispatch({
+                        type: 'SET_TOKENS',
+                        newTokens,
+                        directoryContext
+                    })
+                })();
+            }
+        }
+    }, [ contextValue.tokensToRefresh, dispatch, directoryContext, contextValue.axiosFactory, contextValue.tokens ]);
 
     useEffect(() => {
         if(contextValue.accounts !== null
@@ -690,6 +694,30 @@ export function CommonContextProvider(props: Props) {
             });
         }
     }, [ contextValue, refreshRequests, dispatch ]);
+
+    const authenticateCallback = useCallback(async (address: string[]) => {
+        if(directoryContext.legalOfficers.length === 0) {
+            const tokens = await authenticate(buildAxios(contextValue.accounts!, {url: config.directory}), address);
+            dispatch({
+                type: 'SET_TOKENS',
+                newTokens: tokens,
+                directoryContext,
+            });
+        } else {
+            for(let i = 0; i < directoryContext.legalOfficers.length; ++i) {
+                const legalOfficer = directoryContext.legalOfficers[i];
+                try {
+                    const tokens = await authenticate(buildAxios(contextValue.accounts!, {url: legalOfficer.node}), address);
+                    dispatch({
+                        type: 'SET_TOKENS',
+                        newTokens: tokens,
+                        directoryContext,
+                    });
+                    break;
+                } catch(error) {}
+            }
+        }
+    }, [ contextValue.accounts, directoryContext ]);
 
     useEffect(() => {
         if(contextValue.authenticate !== authenticateCallback) {
