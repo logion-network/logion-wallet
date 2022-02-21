@@ -32,12 +32,13 @@ export function setSignAndSend(fn: any) {
     signAndSend = fn;
 }
 
-export function mockSubmittableResult(isInBlock: boolean, statusType?: string): ISubmittableResult {
+export function mockSubmittableResult(isInBlock: boolean, statusType?: string, isError?: boolean): ISubmittableResult {
     return {
         isInBlock,
         status: {
             type: statusType
-        }
+        },
+        isError,
     } as ISubmittableResult;
 }
 

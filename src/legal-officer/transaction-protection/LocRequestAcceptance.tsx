@@ -16,11 +16,11 @@ import CollectionLimitsForm, { CollectionLimits, DEFAULT_LIMITS } from '../../lo
 
 enum AcceptStatus {
     NONE,
+    LOC_CREATION_PENDING,
+    CREATING_LOC,
     ACCEPTANCE_PENDING,
     ACCEPTING,
     ACCEPTED,
-    LOC_CREATION_PENDING,
-    CREATING_LOC,
     DONE
 }
 
@@ -156,7 +156,7 @@ export default function LocRequestAcceptance(props: Props) {
                         callback: close,
                     },
                     {
-                        id: 'reject',
+                        id: 'proceed',
                         buttonText: 'Proceed',
                         buttonVariant: 'polkadot',
                         mayProceed: acceptState.status === AcceptStatus.NONE && (props.requestToAccept.locType === 'Transaction' || limits.areValid()),
