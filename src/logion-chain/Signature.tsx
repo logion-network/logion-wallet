@@ -90,5 +90,5 @@ export function createHash(attributes: any[]): string {
 }
 
 export function isSuccessful(status: ISubmittableResult | null) {
-    return status !== null && status.isInBlock;
+    return status !== null && status.isInBlock && !status.isError;
 }
