@@ -15,6 +15,7 @@ export interface Props {
     onSuccess: (locRequest: LocRequest, nature?: string) => void,
     locRequest: LocRequestFragment;
     hasLinkNature: boolean;
+    defaultDescription?: string;
 }
 
 export default function LocCreationDialog(props: Props) {
@@ -22,7 +23,7 @@ export default function LocCreationDialog(props: Props) {
     const { axios } = useLegalOfficerContext();
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>({
         defaultValues: {
-            description: ""
+            description: props.defaultDescription || ""
         }
     });
     const [ newLocRequest, setNewLocRequest ] = useState<LocRequest | null>(null);
