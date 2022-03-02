@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import Tabs from '../common/Tabs';
 import { FullWidthPane } from '../common/Dashboard';
@@ -9,9 +10,11 @@ import ProtectionRequestsHistory from './ProtectionRequestsHistory';
 import ProtectedUsers from "./ProtectedUsers";
 
 import './ProtectionRequests.css';
+import { getQueryParam } from '../common/QueryString';
 
 export default function ProtectionRequests() {
-    const [ tabKey, setTabKey ] = useState<string>('pending');
+    const location = useLocation();
+    const [ tabKey, setTabKey ] = useState<string>(getQueryParam(location, "tab") || "pending");
 
     return (
         <FullWidthPane

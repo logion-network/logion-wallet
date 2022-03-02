@@ -242,13 +242,14 @@ export default function RecoveryDetails() {
             <LocCreationDialog
                 show={ visible === Visible.CREATE_NEW_LOC }
                 exit={ () => navigate(RECOVERY_REQUESTS_PATH) }
-                onSuccess={ (newLoc) => navigate(identityLocDetailsPath(newLoc.id)) }
+                onSuccess={ (newLoc) => navigate({pathname: identityLocDetailsPath(newLoc.id), search: `recovery-request=${ requestId }`}) }
                 locRequest={{
                     requesterAddress: recoveryInfo.recoveryAccount.requesterAddress,
                     userIdentity: recoveryInfo.recoveryAccount.userIdentity,
                     locType: 'Identity'
                 }}
                 hasLinkNature={ false }
+                defaultDescription={ `KYC ${ recoveryInfo.recoveryAccount.userIdentity.firstName } ${ recoveryInfo.recoveryAccount.userIdentity.lastName } - ${ recoveryInfo.recoveryAccount.requesterAddress }` }
             />
         </FullWidthPane>
     );

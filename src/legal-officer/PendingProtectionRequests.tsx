@@ -333,13 +333,14 @@ export default function PendingProtectionRequests(props: Props) {
                 <LocCreationDialog
                     show={ reviewState.status === ReviewStatus.CREATE_NEW_LOC }
                     exit={ handleClose }
-                    onSuccess={ (newLoc) => navigate(identityLocDetailsPath(newLoc.id)) }
+                    onSuccess={ (newLoc) => navigate({pathname: identityLocDetailsPath(newLoc.id), search: `protection-request=${ reviewState.request?.id }`}) }
                     locRequest={{
                         requesterAddress: reviewState.request!.requesterAddress,
                         userIdentity: reviewState.request!.userIdentity,
                         locType: 'Identity'
                     }}
                     hasLinkNature={ false }
+                    defaultDescription={ `KYC ${ reviewState.request!.userIdentity.firstName } ${ reviewState.request!.userIdentity.lastName } - ${ reviewState.request!.requesterAddress }` }
                 />
             }
         </>

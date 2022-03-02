@@ -1,9 +1,11 @@
 import {
     useParams,
-    useNavigate
+    useNavigate,
+    useLocation,
 } from './ReactRouterMock';
 
 export {
     useParams,
     useNavigate,
+    useLocation,
 };

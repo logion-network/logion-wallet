@@ -1,5 +1,7 @@
-import { useCallback, useState } from "react";
-import { useNavigate } from "react-router";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate, useLocation } from "react-router";
+import queryString from 'query-string';
+
 import { useCommonContext } from "../common/CommonContext";
 import { FullWidthPane } from "../common/Dashboard";
 import Tabs from "../common/Tabs";
@@ -34,6 +36,8 @@ import { Viewer } from "./types";
 import Tooltip from 'react-bootstrap/Tooltip';
 import CertificateAndLimits from "./CertificateAndLimits";
 import CollectionLocItemChecker from "./CollectionLocItemChecker";
+import { ProtectionRequest } from "../common/types/ModelTypes";
+import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
 
 export interface Props {
     viewer: Viewer;
@@ -41,10 +45,13 @@ export interface Props {
 
 export default function ContextualizedLocDetails(props: Props) {
     const { colorTheme } = useCommonContext();
+    const { pendingProtectionRequests, pendingRecoveryRequests } = useLegalOfficerContext();
     const navigate = useNavigate();
+    const location = useLocation();
     const { loc, locId, locRequest, locItems, supersededLocRequest, backPath, detailsPath } = useLocContext();
     const [ checkResult, setCheckResult ] = useState<DocumentCheckResult>({result: "NONE"});
     const [ createLoc, setCreateLoc ] = useState(false);
+    const [ protectionRequest, setProtectionRequest ] = useState<ProtectionRequest | null | undefined>();
 
     const checkHash = useCallback((hash: string) => {
         for(let i = 0; i < locItems!.length; ++i) {
@@ -64,6 +71,33 @@ export default function ContextualizedLocDetails(props: Props) {
             hash
         });
     }, [ locItems, setCheckResult ]);
+
+    useEffect(() => {
+        if(location.search) {
+            const params = queryString.parse(location.search);
+            let requestId: string;
+            let requests: ProtectionRequest[];
+            if('protection-request' in params) {
+                requestId = params['protection-request'] as string;
+                requests = pendingProtectionRequests!;
+            } else if('recovery-request' in params) {
+                requestId = params['recovery-request'] as string;
+                requests = pendingRecoveryRequests!;
+            } else {
+                requestId = "";
+                requests = [];
+            }
+
+            if(protectionRequest === undefined || (protectionRequest !== null && requestId !== protectionRequest.id)) {
+                const request = requests.find(request => request.id === requestId);
+                if(request !== undefined) {
+                    setProtectionRequest(request);
+                } else {
+                    setProtectionRequest(null);
+                }
+            }
+        }
+    }, [ location, pendingProtectionRequests, protectionRequest, setProtectionRequest, pendingRecoveryRequests ]);
 
     if (loc === null || locRequest === null) {
         return null;
@@ -154,6 +188,36 @@ export default function ContextualizedLocDetails(props: Props) {
                             </Button>
                         }
                     </div>
+                </Row>
+            }
+            {
+                protectionRequest !== undefined && protectionRequest !== null && !protectionRequest.isRecovery &&
+                <Row className="logion-loc-tip-container">
+                    <IconTextRow
+                        icon={ <Icon icon={ { id: "tip" } } width="45px" /> }
+                        text={
+                            <p><strong>Protection request context:</strong> you are currently verifying the identity of a given person by collecting the
+                                required documentation. This verification must follow proper due diligence using tools and processes defined by you and under
+                                your Legal Officer responsibility. After this verification, you will be able to confirm the fact you agree to be the
+                                Legal Officer of the related person and, thus, be requested to execute protection services such as recovery or multi-signature actions.</p>
+                        }
+                        className="logion-loc-tip"
+                    />
+                </Row>
+            }
+            {
+                protectionRequest !== undefined && protectionRequest !== null && protectionRequest.isRecovery &&
+                <Row className="logion-loc-tip-container">
+                    <IconTextRow
+                        icon={ <Icon icon={ { id: "tip" } } width="45px" /> }
+                        text={
+                            <p><strong>Recovery request context:</strong> you are currently verifying the identity of a given person by collecting the required documentation.
+                                This verification must follow proper due diligence using tools and processes defined by you and under your Legal Officer responsibility. After this
+                                verification, within this present page, you will be able to confirm the fact you are the Legal Officer of the related person and, thus, authorize the
+                                transfer of all the assets to the new account this person opened to replace his/her lost one.</p>
+                        }
+                        className="logion-loc-tip"
+                    />
                 </Row>
             }
             <Tabs
@@ -252,7 +316,7 @@ export default function ContextualizedLocDetails(props: Props) {
                                         { props.viewer === 'LegalOfficer' && <LocLinkButton excludeNewIdentity={ isLogionDataLoc(loc) } /> }
                                     </Col>
                                     <Col className="close-button-container" xxl={3} xl={4}>
-                                        { props.viewer === 'LegalOfficer' && <CloseLocButton /> }
+                                        { props.viewer === 'LegalOfficer' && <CloseLocButton protectionRequest={ protectionRequest } /> }
                                     </Col>
                                 </Row>
                             }

@@ -433,6 +433,7 @@ exports[`ContextualizedLocDetails renders for LO 1`] = `
                     >
                       <img
                         alt=""
+                        height="19px"
                         src="/assets/lock.svg"
                       />
                       <span
