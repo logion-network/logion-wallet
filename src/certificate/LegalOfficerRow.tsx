@@ -1,6 +1,7 @@
 import { LegalOfficer } from "../directory/DirectoryApi";
 import { LegalOfficerCase } from "../logion-chain/Types";
 import CertificateCell from "./CertificateCell";
+import { LegalOfficerContactInfo } from "../common/LegalOfficerContactInfo";
 import { LegalOfficerPostalAddress } from "../common/LegalOfficerPostalAddress";
 import LegalOfficerAdditionalDetails from "../common/LegalOfficerAdditionalDetails";
 import { Row, Col } from "../common/Grid";
@@ -13,7 +14,7 @@ export default function LegalOfficerRow(props: { legalOfficer: LegalOfficer, loc
             </CertificateCell>
             <Row>
                 <CertificateCell md={ 2 } label="">
-                    { props.legalOfficer.name }
+                    <LegalOfficerContactInfo identity={ props.legalOfficer.userIdentity } showName={ true } />
                 </CertificateCell>
                 <CertificateCell md={ 4 } label="Address">
                     <LegalOfficerPostalAddress address={ props.legalOfficer.postalAddress } />

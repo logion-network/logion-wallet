@@ -9,6 +9,7 @@ import { Row } from "../../common/Grid";
 import { LegalOfficer } from '../../directory/DirectoryApi';
 import { LegalOfficerPostalAddress } from '../../common/LegalOfficerPostalAddress';
 import LegalOfficerAdditionalDetails from '../../common/LegalOfficerAdditionalDetails';
+import { LegalOfficerContactInfo } from '../../common/LegalOfficerContactInfo';
 
 export interface Props {
     officer: LegalOfficer | null,
@@ -43,10 +44,13 @@ export default function Officer(props: Props) {
                 <span className="text">{ polkadotAddress }</span>
                 <CopyPasteButton value={ polkadotAddress } className="medium" />
             </Row>
-            <div className="details">
+            <Row className="contact">
+                { props.officer && <LegalOfficerContactInfo identity={ props.officer.userIdentity } showName={ false } /> }
+            </Row>
+            <Row className="details">
                 { props.officer && <LegalOfficerPostalAddress address={ props.officer.postalAddress } /> }
                 { props.officer && <LegalOfficerAdditionalDetails additionalDetails={ props.officer.additionalDetails } /> }
-            </div>
+            </Row>
         </div>
     );
 }
