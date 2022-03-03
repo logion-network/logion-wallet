@@ -59,7 +59,6 @@ export interface CommonContext {
     closedIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null;
     colorTheme: ColorTheme;
     setColorTheme: ((colorTheme: ColorTheme) => void) | null;
-    setTokens: (tokens: AccountTokens) => void;
     logout: () => void;
     axiosFactory?: AxiosFactory;
     refresh: (clearOnRefresh?: boolean) => void;
@@ -100,7 +99,6 @@ function initialContextValue(): FullCommonContext {
         colorTheme: DEFAULT_COLOR_THEME,
         setColorTheme: null,
         tokens,
-        setTokens: DEFAULT_NOOP,
         logout: DEFAULT_NOOP,
         refresh: DEFAULT_NOOP,
         voidTransactionLocs: null,
@@ -239,11 +237,6 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
             return {
                 ...state,
                 colorTheme: action.newColorTheme!,
-            };
-        case 'SET_SET_TOKEN':
-            return {
-                ...state,
-                setTokens: action.setTokens!,
             };
         case 'SET_TOKENS': {
             const tokens = state.tokens.merge(action.newTokens!);
@@ -563,7 +556,7 @@ export function CommonContextProvider(props: Props) {
     }, [ api, directoryContext.ready, contextValue, refreshRequests, dispatch ]);
 
     useEffect(() => {
-        if(contextValue.selectAddress === null) {
+        if(contextValue.selectAddress === null && directoryContext.ready) {
             const selectAddress = (address: string) => {
                 dispatch({
                     type: 'SELECT_ADDRESS',
@@ -619,28 +612,13 @@ export function CommonContextProvider(props: Props) {
     }, [ injectedAccounts, contextValue, directoryContext ]);
 
     useEffect(() => {
-        if(contextValue.setTokens === DEFAULT_NOOP) {
-            const setTokens = (tokens: AccountTokens) => {
-                dispatch({
-                    type: 'SET_TOKENS',
-                    newTokens: tokens,
-                })
-            }
-            dispatch({
-                type: 'SET_SET_TOKEN',
-                setTokens,
-            });
-        }
-    }, [ contextValue ]);
-
-    useEffect(() => {
-        if(contextValue.logout !== logout) {
+        if(contextValue.logout !== logout && directoryContext.ready) {
             dispatch({
                 type: 'SET_LOGOUT',
                 logout,
             });
         }
-    }, [ contextValue, logout ]);
+    }, [ contextValue, logout, directoryContext.ready ]);
 
     useEffect(() => {
         if(contextValue.accounts !== null
@@ -659,7 +637,8 @@ export function CommonContextProvider(props: Props) {
     }, [ contextValue, dispatch ]);
 
     useEffect(() => {
-        if(contextValue.tokensToRefresh !== undefined) {
+        if(contextValue.tokensToRefresh !== undefined
+                && directoryContext.ready) {
             dispatch({
                 type: 'START_TOKEN_REFRESH'
             });
@@ -686,16 +665,21 @@ export function CommonContextProvider(props: Props) {
     useEffect(() => {
         if(contextValue.accounts !== null
                 && contextValue.accounts.current !== undefined
-                && contextValue.refreshAddress !== contextValue.accounts.current.address) {
+                && contextValue.refreshAddress !== contextValue.accounts.current.address
+                && directoryContext.ready) {
             dispatch({
                 type: 'SET_REFRESH',
                 refresh: refreshRequests,
                 refreshAddress: contextValue.accounts.current.address,
             });
         }
-    }, [ contextValue, refreshRequests, dispatch ]);
+    }, [ contextValue, refreshRequests, dispatch, directoryContext.ready ]);
 
     const authenticateCallback = useCallback(async (address: string[]) => {
+        if(!directoryContext.ready) {
+            return;
+        }
+
         if(directoryContext.legalOfficers.length === 0) {
             const tokens = await authenticate(buildAxios(contextValue.accounts!, {url: config.directory}), address);
             dispatch({
