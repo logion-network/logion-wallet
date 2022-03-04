@@ -159,7 +159,7 @@ export default function CloseLocButton(props: Props) {
                 ]}
             >
                 <p>You are about to close the identity LOC (ID: { locId.toDecimalString() }) you created with regard to a request for protection.</p>
-                <p>By clicking on "Confirm" below, you will definitively accept to protect the account for the following person:</p>
+                <p>By clicking on "Confirm" below, you will definitively accept to protect the account of the following person:</p>
 
                 <Row>
                     <Col>
