@@ -21,7 +21,9 @@ exports[`renders 1`] = `
   <Route
     element={
       <Wallet
+        balances={null}
         settingsPath="/user/settings"
+        transactions={null}
         transactionsPath={[Function]}
       />
     }
@@ -30,10 +32,37 @@ exports[`renders 1`] = `
   <Route
     element={
       <Transactions
+        address="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
         backPath="/user/wallet"
+        balances={null}
+        transactions={null}
+        type="Wallet"
       />
     }
     path="/wallet/:coinId"
+  />
+  <Route
+    element={
+      <Vault
+        balances={null}
+        settingsPath="/user/settings"
+        transactions={null}
+        transactionsPath={[Function]}
+      />
+    }
+    path="/vault"
+  />
+  <Route
+    element={
+      <Transactions
+        address={null}
+        backPath="/user/vault"
+        balances={null}
+        transactions={null}
+        type="Vault"
+      />
+    }
+    path="/vault/:coinId"
   />
   <Route
     element={

@@ -20,9 +20,14 @@ import './Wallet.css';
 import NetworkWarning from './NetworkWarning';
 import { useResponsiveContext } from './Responsive';
 
+export type WalletType = "Wallet" | "Vault"
+
 export interface Props {
     transactionsPath: (coinId: string) => string,
-    settingsPath: string;
+    settingsPath: string,
+    balances: CoinBalance[] | null,
+    transactions: Transaction[] | null,
+    vaultAddress?: string
 }
 
 export default function Wallet(props: Props) {
@@ -39,13 +44,14 @@ export default function Wallet(props: Props) {
                 background: colorTheme.topMenuItems.iconGradient,
             }}
         >
-            <Content { ...props } />
+            <Content { ...props } type="Wallet" />
         </FullWidthPane>
     );
 }
 
-export function Content(props: Props) {
-    const { balances, transactions, nodesDown } = useCommonContext();
+export function Content(props: Props & { type: WalletType }) {
+    const { nodesDown } = useCommonContext();
+    const { balances, transactions, vaultAddress } = props;
     const navigate = useNavigate();
     const { width } = useResponsiveContext();
 
@@ -67,9 +73,9 @@ export function Content(props: Props) {
             </Row>
         }
         <Row>
-            <div className="col-xxxl-8">
+            <div className={ props.type === "Wallet" ? "col-xxxl-8" : "col-xxxl-12" }>
                 <Frame
-                    title="Asset balances"
+                    title={ props.type === "Vault" ? "Assets under vault protection" : "Asset balances" }
                     fillHeight
                 >
                     <Table
@@ -124,26 +130,29 @@ export function Content(props: Props) {
                     />
                 </Frame>
             </div>
-            <div className="col-xxxl-4">
-                <Frame
-                    fillHeight
-                    title={
-                        <div className="gauge-title">
-                            <Icon icon={ { id: gaugeCoin.iconId } } type={ gaugeCoin.iconType } height="72px"
-                                    width="auto" />
-                            <span>Current { SYMBOL } balance</span>
-                        </div>
-                    }
-                    className="gauge-container"
-                >
-                    <WalletGauge
-                        coin={ gaugeCoin }
-                        balance={ balances[0].balance }
-                        level={ balances[0].level }
-                        type='arc'
-                    />
-                </Frame>
-            </div>
+            { props.type === "Wallet" &&
+                <div className="col-xxxl-4">
+                    <Frame
+                        fillHeight
+                        title={
+                            <div className="gauge-title">
+                                <Icon icon={ { id: gaugeCoin.iconId } } type={ gaugeCoin.iconType } height="72px"
+                                      width="auto" />
+                                <span>Current { SYMBOL } balance</span>
+                            </div>
+                        }
+                        className="gauge-container"
+                    >
+                        <WalletGauge
+                            coin={ gaugeCoin }
+                            balance={ balances[0].balance }
+                            level={ balances[0].level }
+                            type='arc'
+                            vaultAddress={ vaultAddress }
+                        />
+                    </Frame>
+                </div>
+            }
         </Row>
         </>
     );

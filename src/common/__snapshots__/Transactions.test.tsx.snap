@@ -17,11 +17,40 @@ exports[`renders failed transaction 1`] = `
     }
   }
 >
-  <Content />
+  <Content
+    address="123"
+    balances={Array []}
+    transactions={Array []}
+    type="Wallet"
+  />
 </FullWidthPane>
 `;
 
-exports[`renders null with missing data 1`] = `null`;
+exports[`renders null with missing data 1`] = `
+<FullWidthPane
+  className="Transactions"
+  mainTitle="Wallet"
+  onBack={[Function]}
+  titleIcon={
+    Object {
+      "background": Object {
+        "from": "#3b6cf4",
+        "to": "#6050dc",
+      },
+      "icon": Object {
+        "id": "wallet",
+      },
+    }
+  }
+>
+  <Content
+    address="123"
+    balances={Array []}
+    transactions={Array []}
+    type="Wallet"
+  />
+</FullWidthPane>
+`;
 
 exports[`renders with all data 1`] = `
 <FullWidthPane
@@ -40,6 +69,11 @@ exports[`renders with all data 1`] = `
     }
   }
 >
-  <Content />
+  <Content
+    address="123"
+    balances={Array []}
+    transactions={Array []}
+    type="Wallet"
+  />
 </FullWidthPane>
 `;

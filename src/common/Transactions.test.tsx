@@ -10,7 +10,11 @@ import { DEFAULT_COIN_BALANCE, DEFAULT_TRANSACTION, DEFAULT_FAILED_TRANSACTION }
 
 test('renders null with missing data', () => {
     const result = shallowRender(<Transactions
+        address="123"
         backPath={ "back" }
+        balances={ [] }
+        transactions={ [] }
+        type="Wallet"
     />);
     expect(result).toMatchSnapshot();
 });
@@ -20,7 +24,11 @@ test('renders with all data', () => {
     setBalances([ DEFAULT_COIN_BALANCE ]);
     setTransactions([ DEFAULT_TRANSACTION ]);
     const result = shallowRender(<Transactions
+        address="123"
         backPath={ "back" }
+        balances={ [] }
+        transactions={ [] }
+        type="Wallet"
     />);
     expect(result).toMatchSnapshot();
 });
@@ -30,7 +38,11 @@ test('renders failed transaction', () => {
     setBalances([ DEFAULT_COIN_BALANCE ]);
     setTransactions([ DEFAULT_FAILED_TRANSACTION ]);
     const result = shallowRender(<Transactions
+        address="123"
         backPath={ "back" }
+        balances={ [] }
+        transactions={ [] }
+        type="Wallet"
     />);
     expect(result).toMatchSnapshot();
 });

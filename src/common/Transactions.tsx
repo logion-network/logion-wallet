@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
-import { Coin, prefixedLogBalance } from '../logion-chain/Balances';
+import { Coin, prefixedLogBalance, CoinBalance } from '../logion-chain/Balances';
 
 import { FullWidthPane } from './Dashboard';
 import Frame from './Frame';
@@ -21,13 +21,22 @@ import AmountCell from './AmountCell';
 import { TransactionStatusCell, TransactionStatusCellDetails } from "./TransactionStatusCell";
 import Loader from './Loader';
 import { useResponsiveContext } from './Responsive';
+import { Transaction } from "./types/ModelTypes";
+import { WalletType } from "./Wallet";
+import Button from "./Button";
 
 export interface Props {
+    address: string,
     backPath: string,
+    balances: CoinBalance[] | null,
+    transactions: Transaction[] | null,
+    type: WalletType,
+    vaultAddress?: string,
 }
 
 export default function Transactions(props: Props) {
-    const { balances, transactions, colorTheme } = useCommonContext();
+    const { colorTheme } = useCommonContext();
+    const { address, balances, transactions, type, vaultAddress } = props;
     const navigate = useNavigate();
 
     if (balances === null || transactions === null) {
@@ -37,22 +46,30 @@ export default function Transactions(props: Props) {
     return (
         <FullWidthPane
             className="Transactions"
-            mainTitle="Wallet"
+            mainTitle={ type }
             titleIcon={ {
                 icon: {
-                    id: 'wallet'
+                    id: type === "Vault" ? 'vault' : 'wallet'
                 },
                 background: colorTheme.topMenuItems.iconGradient,
             } }
             onBack={ () => navigate(props.backPath) }
         >
-            <Content />
+            <Content address={ address } balances={ balances } transactions={ transactions } type={ type } vaultAddress={ vaultAddress }/>
         </FullWidthPane>
     );
 }
 
-function Content() {
-    const { accounts, balances, transactions } = useCommonContext();
+interface ContentProps {
+    address: string,
+    balances: CoinBalance[],
+    transactions: Transaction[],
+    type: WalletType,
+    vaultAddress?: string,
+}
+
+function Content(props: ContentProps) {
+    const { address, balances, transactions, type, vaultAddress } = props;
     const { coinId } = useParams<"coinId">();
     const { width } = useResponsiveContext();
 
@@ -66,7 +83,7 @@ function Content() {
             <Row>
                 <Col>
                     <Frame
-                        title={ <TransactionsFrameTitle coin={ balance.coin } /> }
+                        title={ <TransactionsFrameTitle coin={ balance.coin } vaultOutButton={ type === "Vault" }/> }
                     >
                         <Table
                             columns={ [
@@ -102,7 +119,7 @@ function Content() {
                                 },
                                 {
                                     header: "Amount",
-                                    render: transaction => <TransferAmountCell amount={ transferBalance(accounts!, transaction) } />,
+                                    render: transaction => <TransferAmountCell amount={ transferBalance(address, transaction) } />,
                                     align: 'right',
                                     width: width({
                                         onSmallScreen: "100px",
@@ -134,32 +151,44 @@ function Content() {
                     </Frame>
                 </Col>
             </Row>
-            <Row>
-                <Col>
-                    <Frame
-                        title={ <BalanceFrameTitle coin={ balance.coin } /> }
-                    >
-                        <WalletGauge
-                            coin={ balance.coin }
-                            balance={ balance.balance }
-                            type='linear'
-                            level={ balance.level }
-                        />
-                    </Frame>
-                </Col>
-            </Row>
+            { type === "Wallet" &&
+                <Row>
+                    <Col>
+                        <Frame
+                            title={ <BalanceFrameTitle coin={ balance.coin } /> }
+                        >
+                            <WalletGauge
+                                coin={ balance.coin }
+                                balance={ balance.balance }
+                                type='linear'
+                                level={ balance.level }
+                                vaultAddress={ vaultAddress }
+                            />
+                        </Frame>
+                    </Col>
+                </Row>
+            }
         </>
     );
 }
 
-function TransactionsFrameTitle(props: {coin: Coin}) {
+function TransactionsFrameTitle(props: { coin: Coin, vaultOutButton: boolean }) {
     return (
-        <span className="frame-title">
-            Transaction history: <Icon
-                icon={{id: props.coin.iconId}}
-                type={ props.coin.iconType }
-            /> { props.coin.name } ({ props.coin.symbol })
-        </span>
+        <Row>
+            <Col>
+                <span className="frame-title">
+                    Transaction history: <Icon
+                    icon={ { id: props.coin.iconId } }
+                    type={ props.coin.iconType }
+                /> { props.coin.name } ({ props.coin.symbol })
+                </span>
+            </Col>
+            { props.vaultOutButton &&
+            <Col>
+                <Button><Icon icon={ { id: 'vault-out' } } /> Request a vault-out transfer</Button>
+            </Col>
+            }
+        </Row>
     );
 }
 

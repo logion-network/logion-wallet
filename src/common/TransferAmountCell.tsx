@@ -3,7 +3,6 @@ import { PrefixedNumber } from "../logion-chain/numbers";
 import { GREEN, RED } from "./ColorTheme";
 import Icon from "./Icon";
 import { Cell } from "./Table";
-import Accounts from "./types/Accounts";
 import { Transaction } from "./types/ModelTypes";
 
 import './TransferAmountCell.css';
@@ -44,9 +43,9 @@ export default function TransferAmountCell(props: Props) {
     }
 }
 
-export function transferBalance(accounts: Accounts, transaction: Transaction): PrefixedNumber {
+export function transferBalance(address: string, transaction: Transaction): PrefixedNumber {
     const amount = prefixedLogBalance(transaction.transferValue);
-    if(transaction.from === accounts!.current!.address) {
+    if(transaction.from === address) {
         return amount.negate();
     } else {
         return amount;

@@ -17,8 +17,11 @@ exports[`renders content 1`] = `
   }
 >
   <Content
+    balances={Array []}
     settingsPath=""
+    transactions={Array []}
     transactionsPath={[Function]}
+    type="Wallet"
   />
 </FullWidthPane>
 `;

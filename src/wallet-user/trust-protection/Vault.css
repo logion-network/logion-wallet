@@ -1,0 +1,34 @@
+.Vault .asset-name-cell {
+    padding-top: 3px;
+}
+
+.Vault .asset-name-cell .name {
+    margin-left: 10px;
+}
+
+.Vault .not-available {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #e6007a;
+    border: 2px solid #e6007a;
+    border-radius: 6px;
+    padding: 9px 20px;
+}
+
+.Vault .gauge-title {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+    align-items: center;
+}
+
+.Vault .gauge-title img {
+    margin-right: 10px;
+}
+
+@media (max-width: 1599px) {
+    .Vault .gauge-container {
+        margin-top: 30px;
+    }
+}
