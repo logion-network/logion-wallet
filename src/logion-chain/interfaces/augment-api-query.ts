@@ -8,7 +8,6 @@ import type { AnyNumber, ITuple } from '@polkadot/types-codec/types';
 import type { AssetBalance, AssetDetails, AssetMetadata } from '@polkadot/types/interfaces/assets';
 import type { AccountData, BalanceLock } from '@polkadot/types/interfaces/balances';
 import type { SetId, StoredPendingChange, StoredState } from '@polkadot/types/interfaces/grandpa';
-import type { ProxyAnnouncement, ProxyDefinition } from '@polkadot/types/interfaces/proxy';
 import type { ActiveRecovery, RecoveryConfig } from '@polkadot/types/interfaces/recovery';
 import type { AccountId, AssetId, Balance, BalanceOf, BlockNumber, Hash, KeyTypeId, Moment, OpaqueCall, Releases, ValidatorId } from '@polkadot/types/interfaces/runtime';
 import type { Keys, SessionIndex } from '@polkadot/types/interfaces/session';
@@ -162,21 +161,6 @@ declare module '@polkadot/api-base/types/storage' {
        * The set of well known nodes. This is stored sorted (just by value).
        **/
       wellKnownNodes: AugmentedQuery<ApiType, () => Observable<BTreeSet<PeerId>>, []> & QueryableStorageEntry<ApiType, []>;
-      /**
-       * Generic query
-       **/
-      [key: string]: QueryableStorageEntry<ApiType>;
-    };
-    proxy: {
-      /**
-       * The announcements made by the proxy (key).
-       **/
-      announcements: AugmentedQuery<ApiType, (arg: AccountId | string | Uint8Array) => Observable<ITuple<[Vec<ProxyAnnouncement>, BalanceOf]>>, [AccountId]> & QueryableStorageEntry<ApiType, [AccountId]>;
-      /**
-       * The set of account proxies. Maps the account which has delegated to the accounts
-       * which are being delegated to, together with the amount held on deposit.
-       **/
-      proxies: AugmentedQuery<ApiType, (arg: AccountId | string | Uint8Array) => Observable<ITuple<[Vec<ProxyDefinition>, BalanceOf]>>, [AccountId]> & QueryableStorageEntry<ApiType, [AccountId]>;
       /**
        * Generic query
        **/

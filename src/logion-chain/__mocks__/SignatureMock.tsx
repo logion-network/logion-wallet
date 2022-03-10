@@ -33,13 +33,18 @@ export function setSignAndSend(fn: any) {
 }
 
 export function mockSubmittableResult(isInBlock: boolean, statusType?: string, isError?: boolean): ISubmittableResult {
-    return {
+    const result: unknown = {
         isInBlock,
         status: {
             type: statusType
         },
         isError,
-    } as ISubmittableResult;
+        txHash: {
+            toHex: () => "some-hex"
+        },
+        txIndex: 42
+    };
+    return result as ISubmittableResult;
 }
 
 export function unsubscribe() {

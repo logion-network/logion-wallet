@@ -1,6 +1,6 @@
 import { web3FromAddress } from '@polkadot/extension-dapp';
 import { ISubmittableResult } from '@polkadot/types/types';
-import { SubmittableExtrinsic } from '@polkadot/api/submittable/types';
+import type { SubmittableExtrinsic } from '@polkadot/api/promise/types';
 import { toHex } from './Codec';
 import { Hash } from 'fast-sha256';
 import { base64Encode } from '@polkadot/util-crypto';
@@ -24,7 +24,7 @@ export interface ExtrinsicSubmissionParameters {
 }
 
 export interface ExtrinsicSignatureParameters extends ExtrinsicSubmissionParameters {
-    submittable: SubmittableExtrinsic<'promise'>,
+    submittable: SubmittableExtrinsic,
 }
 
 export function signAndSend(parameters: ExtrinsicSignatureParameters): Unsubscriber {

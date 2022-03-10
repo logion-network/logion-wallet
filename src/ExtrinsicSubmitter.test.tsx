@@ -1,5 +1,4 @@
 jest.mock("./logion-chain");
-jest.mock("./logion-chain/Signature");
 
 import { setIsSuccessful } from './logion-chain/__mocks__/SignatureMock';
 import { mockSubmittableResult } from './logion-chain/__mocks__/SignatureMock';
@@ -108,7 +107,6 @@ test("Submitter shows progress", async () => {
 test("Submitter shows success and calls onSuccess", async () => {
     const onSuccess = jest.fn();
     const onError = jest.fn();
-    setIsSuccessful(true);
     const result = buildSignAndSubmitMock();
 
     render(<ExtrinsicSubmitter
@@ -122,6 +120,9 @@ test("Submitter shows success and calls onSuccess", async () => {
     act(() => result.setResult!(mockSubmittableResult(true)));
 
     await waitFor(() => expect(screen.getByText("Submission successful.")).toBeInTheDocument());
-    expect(onSuccess).toBeCalledWith("extrinsicId");
+    expect(onSuccess).toBeCalledWith("extrinsicId", {
+        block: "some-hex",
+        index: 42
+    });
     expect(onError).not.toBeCalled();
 });
