@@ -54,36 +54,6 @@ declare module '@polkadot/api-base/types/consts' {
        **/
       [key: string]: Codec;
     };
-    proxy: {
-      /**
-       * `AnnouncementDepositBase` metadata shadow.
-       **/
-      announcementDepositBase: BalanceOf & AugmentedConst<ApiType>;
-      /**
-       * `AnnouncementDepositFactor` metadata shadow.
-       **/
-      announcementDepositFactor: BalanceOf & AugmentedConst<ApiType>;
-      /**
-       * `MaxPending` metadata shadow.
-       **/
-      maxPending: u32 & AugmentedConst<ApiType>;
-      /**
-       * The maximum amount of proxies allowed for a single account.
-       **/
-      maxProxies: u16 & AugmentedConst<ApiType>;
-      /**
-       * The base amount of currency needed to reserve for creating a proxy.
-       **/
-      proxyDepositBase: BalanceOf & AugmentedConst<ApiType>;
-      /**
-       * The amount of currency needed per proxy added.
-       **/
-      proxyDepositFactor: BalanceOf & AugmentedConst<ApiType>;
-      /**
-       * Generic const
-       **/
-      [key: string]: Codec;
-    };
     recovery: {
       /**
        * The base amount of currency needed to reserve for creating a recovery configuration.

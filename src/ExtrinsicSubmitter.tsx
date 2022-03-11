@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { HexString } from '@polkadot/util/types';
 
 import {
     SignedTransaction,
@@ -11,11 +12,16 @@ import ExtrinsicSubmissionResult from './ExtrinsicSubmissionResult';
 
 export type SignAndSubmit = ((setResult: React.Dispatch<React.SetStateAction<SignedTransaction | null>>, setError: React.Dispatch<React.SetStateAction<any>>) => Unsubscriber) | null;
 
+export interface SuccessfulTransaction {
+    readonly block: HexString;
+    readonly index: number;
+}
+
 export interface Props {
     id: string,
     successMessage?: string | JSX.Element,
     signAndSubmit: SignAndSubmit,
-    onSuccess: (id: string) => void,
+    onSuccess: (id: string, result: SuccessfulTransaction) => void,
     onError: (id: string) => void,
 }
 
@@ -45,7 +51,10 @@ export default function ExtrinsicSubmitter(props: Props) {
             setNotified(true);
             (async function() {
                 await unsubscribe(unsubscriber);
-                props.onSuccess(props.id);
+                props.onSuccess(props.id, {
+                    block: result!.txHash.toHex(),
+                    index: result!.txIndex!
+                });
             })();
         }
     }, [ result, notified, setNotified, props, unsubscriber ]);
@@ -58,7 +67,7 @@ export default function ExtrinsicSubmitter(props: Props) {
                 props.onError(props.id);
             })();
         }
-    }, [ result, notified, setNotified, props, error, unsubscriber ]);
+    }, [ notified, setNotified, props, error, unsubscriber ]);
 
     useEffect(() => {
         if(submitted && props.signAndSubmit === null) {

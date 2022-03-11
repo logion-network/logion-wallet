@@ -3,13 +3,12 @@
 
 import type { CollectionItemId, LocId, PeerId } from '../interfaces/default';
 import type { ApiTypes } from '@polkadot/api-base/types';
-import type { Bytes, Vec, u16, u32, u8 } from '@polkadot/types-codec';
+import type { Bytes, Vec, u32, u8 } from '@polkadot/types-codec';
 import type { ITuple } from '@polkadot/types-codec/types';
 import type { TAssetBalance } from '@polkadot/types/interfaces/assets';
 import type { BalanceStatus } from '@polkadot/types/interfaces/balances';
 import type { AuthorityList } from '@polkadot/types/interfaces/grandpa';
-import type { ProxyType } from '@polkadot/types/interfaces/proxy';
-import type { AccountId, AssetId, Balance, CallHash, Hash } from '@polkadot/types/interfaces/runtime';
+import type { AccountId, AssetId, Balance, CallHash } from '@polkadot/types/interfaces/runtime';
 import type { SessionIndex } from '@polkadot/types/interfaces/session';
 import type { DispatchError, DispatchInfo, DispatchResult } from '@polkadot/types/interfaces/system';
 import type { Timepoint } from '@polkadot/types/interfaces/utility';
@@ -243,25 +242,6 @@ declare module '@polkadot/api-base/types/events' {
        **/
       [key: string]: AugmentedEvent<ApiType>;
     };
-    proxy: {
-      /**
-       * An announcement was placed to make a call in the future. \[real, proxy, call_hash\]
-       **/
-      Announced: AugmentedEvent<ApiType, [AccountId, AccountId, Hash]>;
-      /**
-       * Anonymous account has been created by new proxy with given
-       * disambiguation index and proxy type. \[anonymous, who, proxy_type, disambiguation_index\]
-       **/
-      AnonymousCreated: AugmentedEvent<ApiType, [AccountId, AccountId, ProxyType, u16]>;
-      /**
-       * A proxy was executed correctly, with the given \[result\].
-       **/
-      ProxyExecuted: AugmentedEvent<ApiType, [DispatchResult]>;
-      /**
-       * Generic event
-       **/
-      [key: string]: AugmentedEvent<ApiType>;
-    };
     recovery: {
       /**
        * Lost account has been successfully recovered by rescuer account.
@@ -354,6 +334,12 @@ declare module '@polkadot/api-base/types/events' {
     validatorSet: {
       ValidatorAdded: AugmentedEvent<ApiType, [AccountId]>;
       ValidatorRemoved: AugmentedEvent<ApiType, [AccountId]>;
+      /**
+       * Generic event
+       **/
+      [key: string]: AugmentedEvent<ApiType>;
+    };
+    vault: {
       /**
        * Generic event
        **/
