@@ -51,7 +51,30 @@
     text-align: left;
 }
 
-.Transactions .Table .body {
+.Transactions .Frame-Wallet .Table .body {
     overflow-y: auto;
     height: calc(100vh - 600px);
 }
+
+.Transactions .Frame-Vault .Table .body {
+    overflow-y: auto;
+    height: calc(100vh - 805px);
+}
+
+.Transactions .request-vault-out {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+}
+
+.Transactions .gauge-title {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+    align-items: center;
+}
+
+.Transactions .gauge-title img {
+    margin-right: 10px;
+}
+
