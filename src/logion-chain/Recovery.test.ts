@@ -92,10 +92,16 @@ test("initiate recovery", () => {
 test("get active recovery", async () => {
     const accountToRecover = "account1";
     const recoveringAccount = "account2";
-    const expectedActiveRecovery = {};
     const activeRecovery = {
-        isSome: true,
-        unwrap: () => expectedActiveRecovery
+        isEmpty: false,
+        isNone: false,
+        unwrap: () => ({
+            friends: {
+                toArray: () => [
+                    { toString: () => DEFAULT_LEGAL_OFFICER }
+                ]
+            }
+        })
     };
     const recoverable = jest.fn()
         .mockImplementation((source, dest) =>
@@ -104,10 +110,11 @@ test("get active recovery", async () => {
                 : Promise.reject());
     setQueryRecoveryActiveRecoveries(recoverable);
     const api = new ApiPromise();
-    const config = await getActiveRecovery({
+    const recovery = await getActiveRecovery({
         api,
         sourceAccount: accountToRecover,
         destinationAccount: recoveringAccount,
     })
-    expect(config).toBe(activeRecovery);
+    expect(recovery).toBeDefined()
+    expect(recovery!.legalOfficers).toEqual([ DEFAULT_LEGAL_OFFICER ])
 });

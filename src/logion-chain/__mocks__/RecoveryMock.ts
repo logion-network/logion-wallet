@@ -13,9 +13,10 @@ export function setActiveRecoveryInProgress(value: boolean) {
 
 let _activeRecovery = false;
 
-export let getActiveRecovery = () => (Promise.resolve({
-    isSome: _activeRecovery,
-    isEmpty: !_activeRecovery
-}));
+export let getActiveRecovery = () => (Promise.resolve(
+    _activeRecovery ?
+        { legalOfficers: [ "" ] } :
+        undefined
+));
 
 export let initiateRecovery = (parameters: any) => signAndSend(parameters);

@@ -106,8 +106,8 @@ export default function CreateProtectionRequestForm(props: Props) {
                 sourceAccount: addressToRecover,
                 destinationAccount: currentAddress,
             });
-            setActiveRecovery(activeRecovery.isSome);
-            if(activeRecovery.isEmpty) {
+            setActiveRecovery(activeRecovery !== undefined);
+            if(activeRecovery === undefined) {
                 const signAndSubmit: SignAndSubmit = (setResult, setError) => initiateRecovery({
                     api: api!,
                     signerId: currentAddress,

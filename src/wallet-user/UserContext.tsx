@@ -208,14 +208,10 @@ export function UserContextProvider(props: Props) {
                     accountId: currentAddress
                 });
 
-                let recoveredAddress: string | null = null;
-                const proxy = await getProxy({
+                let recoveredAddress: string | null = await getProxy({
                     api: api!,
                     currentAddress
-                });
-                if(proxy.isSome) {
-                    recoveredAddress = proxy.unwrap().toString();
-                }
+                }) || null;
 
                 let vaultAddress: string | undefined = undefined
                 let vaultTransactions: Transaction[] = []
