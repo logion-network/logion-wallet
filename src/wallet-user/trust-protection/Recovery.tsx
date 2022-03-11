@@ -23,7 +23,7 @@ export default function Recovery() {
 
     if(goToTrustProtection) {
         return <GoToTrustProtection />;
-    } else if(recoveryConfig.isSome) {
+    } else if(recoveryConfig) {
         if(recoveredAddress !== null) {
             return <RecoveryProcess />;
         } else {

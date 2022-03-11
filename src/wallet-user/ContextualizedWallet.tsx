@@ -36,7 +36,7 @@ export default function ContextualizedWallet() {
     const userContext = api !== null ? <UserRouter /> : null;
     const noProtection = (pendingProtectionRequests !== null && pendingProtectionRequests.length === 0)
         && (acceptedProtectionRequests !== null && acceptedProtectionRequests.length === 0)
-        && (recoveryConfig !== null && recoveryConfig.isEmpty);
+        && (recoveryConfig !== null && recoveryConfig === undefined);
 
     return (
         <Dashboard
@@ -79,7 +79,7 @@ export default function ContextualizedWallet() {
                         background: colorTheme.topMenuItems.iconGradient,
                     },
                     onClick: refreshAll,
-                    disabled: (recoveryConfig === null || recoveryConfig.isEmpty)
+                    disabled: (recoveryConfig === null || recoveryConfig === undefined)
                 },
                 {
                     id: "loc-collection",

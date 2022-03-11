@@ -1,16 +1,9 @@
 import { ApiPromise } from '@polkadot/api';
 import { Option } from '@polkadot/types';
 import { AccountId, Call } from '@polkadot/types/interfaces';
-import {
-    RecoveryConfig as PolkadotRecoveryConfig,
-    ActiveRecovery as PolkadotActiveRecovery
-} from '@polkadot/types/interfaces/recovery';
+import { ActiveRecovery as PolkadotActiveRecovery } from '@polkadot/types/interfaces/recovery';
 
-import {
-    ExtrinsicSubmissionParameters,
-    signAndSend,
-    Unsubscriber
-} from './Signature';
+import { ExtrinsicSubmissionParameters, signAndSend, Unsubscriber } from './Signature';
 
 export interface RecoveryCreationParameters extends ExtrinsicSubmissionParameters {
     api: ApiPromise,
@@ -40,16 +33,22 @@ export interface GetRecoveryConfigParameters {
     accountId: string,
 }
 
-export async function getRecoveryConfig(parameters: GetRecoveryConfigParameters): Promise<Option<PolkadotRecoveryConfig>> {
+export async function getRecoveryConfig(parameters: GetRecoveryConfigParameters): Promise<RecoveryConfig | undefined> {
     const {
         api,
         accountId,
     } = parameters;
 
-    return await api.query.recovery.recoverable(accountId);
+    const recoveryConfig = await api.query.recovery.recoverable(accountId);
+    if (recoveryConfig.isEmpty) {
+        return undefined
+    }
+    return { legalOfficers: recoveryConfig.unwrap().friends.toArray().map(accountId => accountId.toString())};
 }
 
-export type RecoveryConfig = PolkadotRecoveryConfig;
+export type RecoveryConfig = {
+    legalOfficers: string[]
+}
 
 export interface GetActiveRecoveryParameters {
     api: ApiPromise,

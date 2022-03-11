@@ -175,7 +175,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
                         { header }
 
                         {
-                            props.type === 'accepted' && recoveryConfig?.isEmpty && signAndSubmit === null &&
+                            props.type === 'accepted' && recoveryConfig === undefined && signAndSubmit === null &&
                             <Button
                                 data-testid="btnActivate"
                                 onClick={ activateProtection }

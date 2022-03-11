@@ -10,7 +10,7 @@ const THRESHOLD = 2;
 
 export function getVaultAddress(requesterAddress: string, recoveryConfig: RecoveryConfig): string {
     checkKeyringLoaded()
-    const signatories: string[] = [ requesterAddress, ...recoveryConfig.friends.map(accountId => accountId.toString()) ].sort()
+    const signatories: string[] = [ requesterAddress, ...recoveryConfig.legalOfficers ].sort()
     const result = keyring.addMultisig(signatories, THRESHOLD);
     const vaultAddress = result.pair.address;
     console.log("Vault address is %s for signatories: %s", vaultAddress, signatories)
@@ -49,8 +49,7 @@ export async function requestVaultTransfer(parameters: RequestVaultTransferParam
 
     const { call, weight } = await transferCallAndWeight(api, signerId, recoveryConfig, amount, destination);
 
-    const legalOfficers = recoveryConfig.friends.toArray().map(accountId => accountId.toString());
-    const sortedLegalOfficers = [ ...legalOfficers ].sort();
+    const sortedLegalOfficers = [ ...recoveryConfig.legalOfficers ].sort();
     return signAndSend({
         signerId,
         submittable: api.tx.vault.requestCall(sortedLegalOfficers, call, weight),
@@ -69,7 +68,7 @@ async function transferCallAndWeight(
     const multisigOrigin = getVaultAddress(requesterAddress, recoveryConfig);
     const call = api.tx.balances.transfer(destination, amount);
     const dispatchInfo = await call.paymentInfo(multisigOrigin);
-    const maxWeight = dispatchInfo.weight; 
+    const maxWeight = dispatchInfo.weight;
     return {
         call: call.toHex(),
         weight: maxWeight
@@ -102,10 +101,9 @@ export async function approveVaultTransfer(parameters: VaultTransferApprovalPara
         api,
         accountId: requester
     });
-    const legalOfficers = recoveryConfig.unwrap().friends.toArray().map(accountId => accountId.toString());
-    const otherLegalOfficer = legalOfficers.find(accountId => accountId !== signerId)!;
+    const otherLegalOfficer = recoveryConfig!.legalOfficers.find(accountId => accountId !== signerId)!;
 
-    const { call, weight } = await transferCallAndWeight(api, requester, recoveryConfig.unwrap(), amount, destination);
+    const { call, weight } = await transferCallAndWeight(api, requester, recoveryConfig!, amount, destination);
 
     const otherSignatories = [ requester, otherLegalOfficer ].sort();
     return signAndSend({
