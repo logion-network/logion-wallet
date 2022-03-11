@@ -23,7 +23,7 @@ import Loader from './Loader';
 import { useResponsiveContext } from './Responsive';
 import { Transaction } from "./types/ModelTypes";
 import { WalletType } from "./Wallet";
-import Button from "./Button";
+import VaultOutRequest from "./VaultOutRequest";
 
 export interface Props {
     address: string,
@@ -185,7 +185,7 @@ function TransactionsFrameTitle(props: { coin: Coin, vaultOutButton: boolean }) 
             </Col>
             { props.vaultOutButton &&
             <Col>
-                <Button><Icon icon={ { id: 'vault-out' } } /> Request a vault-out transfer</Button>
+                <VaultOutRequest/>
             </Col>
             }
         </Row>

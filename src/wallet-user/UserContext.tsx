@@ -22,7 +22,7 @@ import {
 } from "./trust-protection/Model";
 import { useCommonContext } from '../common/CommonContext';
 import { DARK_MODE } from './Types';
-import { getVault } from "../logion-chain/Vault";
+import { getVaultAddress } from "../logion-chain/Vault";
 import { CoinBalance, getBalances } from "../logion-chain/Balances";
 
 export interface UserContext {
@@ -222,7 +222,7 @@ export function UserContextProvider(props: Props) {
                 let vaultTransactions: Transaction[] = []
                 let vaultBalances: CoinBalance[] = []
                 if (recoveryConfig.isSome) {
-                    vaultAddress = getVault(currentAddress, recoveryConfig.unwrap())
+                    vaultAddress = getVaultAddress(currentAddress, recoveryConfig.unwrap())
 
                     const anyClient = new AnySourceHttpClient<Endpoint, TransactionsSet>(initialState, token);
                     const transactionsSet = await anyClient.fetch(axios => getTransactions(axios, {
