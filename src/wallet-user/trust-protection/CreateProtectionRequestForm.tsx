@@ -125,7 +125,7 @@ export default function CreateProtectionRequestForm(props: Props) {
             setAddressToRecoverError("Checking recovery config...")
             getRecoveryConfig({ api: api!, accountId: addressToRecover })
                 .then(recoveryConfig => {
-                    if (recoveryConfig.isEmpty) {
+                    if (!recoveryConfig) {
                         setAddressToRecoverError("This SS58 address is not set up for recovery")
                     } else {
                         setAddressToRecoverError(undefined)

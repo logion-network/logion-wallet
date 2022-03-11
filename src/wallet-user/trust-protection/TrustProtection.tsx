@@ -28,7 +28,7 @@ export default function TrustProtection() {
 
     const requests = pendingProtectionRequests.concat(acceptedProtectionRequests);
 
-    if(recoveryConfig.isEmpty) {
+    if(recoveryConfig === undefined) {
         const goToRecovery = recoveredAddress !== null || (pendingProtectionRequests.length > 0 && isRecovery(pendingProtectionRequests[0]))
             || (acceptedProtectionRequests.length > 0 && isRecovery(acceptedProtectionRequests[0]) && acceptedProtectionRequests[0].status !== 'ACTIVATED');
 

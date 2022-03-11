@@ -3,6 +3,7 @@ import { TEST_WALLET_USER } from '../TestData';
 import {ApiPromise} from '@polkadot/api';
 import { ProtectionRequest } from "../../common/types/ModelTypes";
 import { DARK_MODE } from '../Types';
+import { RecoveryConfig } from "../../logion-chain/Recovery";
 
 export let createTokenRequest = () => null;
 
@@ -16,7 +17,7 @@ export let acceptedProtectionRequests: ProtectionRequest[] | null = null;
 
 export let api = new ApiPromise();
 
-export let recoveryConfig = {isEmpty: true, isSome: false, isNone: true};
+export let recoveryConfig: RecoveryConfig | undefined = undefined;
 
 export let setUserAddress = jest.fn();
 
@@ -60,7 +61,7 @@ export function setCreateProtectionRequest(callback: any) {
     createProtectionRequest = callback;
 }
 
-export function setRecoveryConfig(config: any) {
+export function setRecoveryConfig(config: RecoveryConfig | undefined) {
     recoveryConfig = config;
 }
 

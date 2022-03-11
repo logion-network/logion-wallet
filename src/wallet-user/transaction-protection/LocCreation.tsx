@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Option } from '@polkadot/types';
 
 import { useCommonContext } from '../../common/CommonContext';
 import { CreateLocRequest, createLocRequest } from '../../common/Model';
@@ -16,14 +15,14 @@ import { DataLocType } from "../../logion-chain/Types";
 
 function shouldShowIdentityFields(
     legalOfficer: string | undefined,
-    recoveryConfig: Option<RecoveryConfig> | null
+    recoveryConfig: RecoveryConfig | undefined | null
 ): boolean {
-    if(recoveryConfig === null || recoveryConfig.isNone) {
+    if(!recoveryConfig) {
         return true;
     } else if(legalOfficer === undefined || legalOfficer === "") {
         return false;
     } else {
-        return !recoveryConfig.unwrap().friends.toArray().map(accountId => accountId.toString()).includes(legalOfficer);
+        return !recoveryConfig.legalOfficers.includes(legalOfficer);
     }
 }
 
