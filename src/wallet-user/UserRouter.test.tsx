@@ -1,3 +1,5 @@
+jest.mock('../common/CommonContext');
+
 import { shallowRender } from '../tests';
 import UserRouter from './UserRouter';
 

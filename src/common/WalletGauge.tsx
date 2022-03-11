@@ -22,6 +22,12 @@ export interface Props {
     balance: PrefixedNumber,
     level: number,
     type: 'arc' | 'linear',
+    vaultAddress?: string
+}
+
+interface TransferDialogParams {
+    title: string,
+    destination: boolean
 }
 
 export default function WalletGauge(props: Props) {
@@ -31,6 +37,8 @@ export default function WalletGauge(props: Props) {
     const [ amount, setAmount ] = useState("");
     const [ unit, setUnit ] = useState(NONE);
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
+    const [ transferDialogParams, setTransferDialogParams ] = useState<TransferDialogParams>({title: "", destination: true})
+    const { vaultAddress } = props
 
     const transferCallback = useCallback(() => {
         const signAndSubmit: SignAndSubmit = (setResult, setError) => transfer({
@@ -63,8 +71,27 @@ export default function WalletGauge(props: Props) {
                         type={ props.type }
                     />
                     <div className="actions">
-                        <Button slim onClick={ startTransferringCallback }><Icon
-                            icon={ { id: 'send' } } /> Send</Button>
+                        <Button slim onClick={ () => {
+                            setTransferDialogParams({
+                                title: `Transfer ${ SYMBOL }s`,
+                                destination: true
+                            });
+                            startTransferringCallback();
+                        } }>
+                            <Icon icon={ { id: 'send' } } /> Send
+                        </Button>
+                        { vaultAddress !== undefined &&
+                            <Button slim onClick={ () => {
+                                setDestination(vaultAddress);
+                                setTransferDialogParams({
+                                    title: `Transfer ${ SYMBOL }s to your logion Vault`,
+                                    destination: false
+                                });
+                                startTransferringCallback();
+                            } }>
+                                <Icon icon={ { id: 'vault-in' } } /> Send to Vault
+                            </Button>
+                        }
                     </div>
                     <Dialog
                         show={ status !== Status.IDLE }
@@ -85,7 +112,7 @@ export default function WalletGauge(props: Props) {
                         ] }
                         size="lg"
                     >
-                        <h3>{ `Transfer ${ SYMBOL }s` }</h3>
+                        <h3>{ transferDialogParams.title }</h3>
                         {
                             status === Status.TRANSFERRING &&
                             <>
@@ -97,12 +124,13 @@ export default function WalletGauge(props: Props) {
                                         type="text"
                                         placeholder="The beneficiary's SS58 address"
                                         value={ destination }
+                                        readOnly= { !transferDialogParams.destination }
                                         onChange={ value => setDestination(value.target.value) }
                                     /> }
                                     colors={ colorTheme.dialog }
                                 />
                                 <FormGroup
-                                    id="amout"
+                                    id="amount"
                                     label="Amount"
                                     noFeedback={ true }
                                     control={

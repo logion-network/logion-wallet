@@ -13,6 +13,9 @@ import { UUID } from '../logion-chain/UUID';
 import LocDetails from '../loc/LocDetails';
 import { LocType } from "../logion-chain/Types";
 import React from "react";
+import { useCommonContext } from "../common/CommonContext";
+import { useUserContext } from "./UserContext";
+import Vault from "./trust-protection/Vault";
 
 export const HOME_PATH = USER_PATH;
 
@@ -24,11 +27,19 @@ export const RECOVERY_RELATIVE_PATH = '/recovery';
 export const RECOVERY_PATH = USER_PATH + RECOVERY_RELATIVE_PATH;
 export const WALLET_RELATIVE_PATH = '/wallet';
 export const WALLET_PATH = USER_PATH + WALLET_RELATIVE_PATH;
+export const VAULT_RELATIVE_PATH = '/vault';
+export const VAULT_PATH = USER_PATH + VAULT_RELATIVE_PATH;
 
 export const TRANSACTIONS_RELATIVE_PATH = WALLET_RELATIVE_PATH + '/:coinId';
 const TRANSACTIONS_PATH = USER_PATH + TRANSACTIONS_RELATIVE_PATH;
 export function transactionsPath(coinId: string): string {
     return TRANSACTIONS_PATH.replace(":coinId", coinId);
+}
+
+export const VAULT_TRANSACTIONS_RELATIVE_PATH = VAULT_RELATIVE_PATH + '/:coinId';
+const VAULT_TRANSACTIONS_PATH = USER_PATH + VAULT_TRANSACTIONS_RELATIVE_PATH;
+export function vaultTransactionsPath(coinId: string): string {
+    return VAULT_TRANSACTIONS_PATH.replace(":coinId", coinId);
 }
 
 export function dataLocDetailsPath(locType: LocType, locId: string) {
@@ -51,6 +62,8 @@ export function locDetailsPath(locId: string | UUID, locType: LocType) {
 }
 
 export default function UserRouter() {
+    const { accounts, balances, transactions } = useCommonContext();
+    const { vaultAddress, vaultBalances, vaultTransactions } = useUserContext();
 
     return (
         <Routes>
@@ -60,10 +73,33 @@ export default function UserRouter() {
             <Route path={ WALLET_RELATIVE_PATH } element={ <Wallet
                     transactionsPath={ transactionsPath }
                     settingsPath={ SETTINGS_PATH }
+                    balances={ balances }
+                    transactions={ transactions }
+                    vaultAddress = { vaultAddress || undefined }
                 />
             } />
             <Route path={ TRANSACTIONS_RELATIVE_PATH } element={ <Transactions
+                    address={ accounts!.current?.address! }
                     backPath={ WALLET_PATH }
+                    balances={ balances }
+                    transactions={ transactions }
+                    type="Wallet"
+                    vaultAddress={ vaultAddress || undefined }
+                />
+            } />
+            <Route path={ VAULT_RELATIVE_PATH } element={ <Vault
+                    transactionsPath={ vaultTransactionsPath }
+                    settingsPath={ SETTINGS_PATH }
+                    balances={ vaultBalances }
+                    transactions={ vaultTransactions }
+                />
+            } />
+            <Route path={ VAULT_TRANSACTIONS_RELATIVE_PATH } element={ <Transactions
+                    address={ vaultAddress! }
+                    backPath={ VAULT_PATH }
+                    balances={ vaultBalances }
+                    transactions={ vaultTransactions }
+                    type="Vault"
                 />
             } />
             <Route path={ locRequestsRelativePath('Transaction') }

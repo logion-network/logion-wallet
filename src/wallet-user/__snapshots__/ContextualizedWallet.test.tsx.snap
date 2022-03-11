@@ -91,6 +91,23 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
         "to": "/user/wallet",
       },
       Object {
+        "disabled": true,
+        "exact": false,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
+            "id": "vault",
+          },
+        },
+        "id": "vault",
+        "onClick": [Function],
+        "text": "Vault",
+        "to": "/user/vault",
+      },
+      Object {
         "exact": false,
         "icon": Object {
           "background": Object {
@@ -250,6 +267,23 @@ exports[`Given connected, when rendering, then show account, no connect button a
         "onClick": [Function],
         "text": "Wallet",
         "to": "/user/wallet",
+      },
+      Object {
+        "disabled": true,
+        "exact": false,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
+            "id": "vault",
+          },
+        },
+        "id": "vault",
+        "onClick": [Function],
+        "text": "Vault",
+        "to": "/user/vault",
       },
       Object {
         "exact": false,
@@ -413,6 +447,23 @@ exports[`Given connecting, when rendering, then show account, no button, no node
         "to": "/user/wallet",
       },
       Object {
+        "disabled": true,
+        "exact": false,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
+            "id": "vault",
+          },
+        },
+        "id": "vault",
+        "onClick": [Function],
+        "text": "Vault",
+        "to": "/user/vault",
+      },
+      Object {
         "exact": false,
         "icon": Object {
           "background": Object {
@@ -572,6 +623,23 @@ exports[`Given connection error, when rendering, then show account, no button, n
         "onClick": [Function],
         "text": "Wallet",
         "to": "/user/wallet",
+      },
+      Object {
+        "disabled": true,
+        "exact": false,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
+            "id": "vault",
+          },
+        },
+        "id": "vault",
+        "onClick": [Function],
+        "text": "Vault",
+        "to": "/user/vault",
       },
       Object {
         "exact": false,
@@ -735,6 +803,23 @@ exports[`Given disconnected, when rendering, then show disconnected and connect 
         "to": "/user/wallet",
       },
       Object {
+        "disabled": true,
+        "exact": false,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
+            "id": "vault",
+          },
+        },
+        "id": "vault",
+        "onClick": [Function],
+        "text": "Vault",
+        "to": "/user/vault",
+      },
+      Object {
         "exact": false,
         "icon": Object {
           "background": Object {
@@ -894,6 +979,23 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
         "onClick": [Function],
         "text": "Wallet",
         "to": "/user/wallet",
+      },
+      Object {
+        "disabled": true,
+        "exact": false,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
+            "id": "vault",
+          },
+        },
+        "id": "vault",
+        "onClick": [Function],
+        "text": "Vault",
+        "to": "/user/vault",
       },
       Object {
         "exact": false,

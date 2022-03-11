@@ -25,7 +25,9 @@ exports[`renders 1`] = `
   <Route
     element={
       <Wallet
+        balances={null}
         settingsPath="/legal-officer/settings"
+        transactions={null}
         transactionsPath={[Function]}
       />
     }
@@ -34,7 +36,11 @@ exports[`renders 1`] = `
   <Route
     element={
       <Transactions
+        address="5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
         backPath="/legal-officer/wallet"
+        balances={null}
+        transactions={null}
+        type="Wallet"
       />
     }
     path="/wallet/transactions/:coinId"

@@ -3,31 +3,36 @@ jest.mock("./CommonContext");
 import { shallowRender } from '../tests';
 
 import Wallet, { Content } from './Wallet';
-import { setBalances, setTransactions } from './__mocks__/CommonContextMock';
 import { DEFAULT_COIN_BALANCE, DEFAULT_TRANSACTION } from './TestData';
 
 test('renders content', () => {
     const result = shallowRender(<Wallet
-        transactionsPath={ coindId => coindId }
+        transactionsPath={ coinId => coinId }
         settingsPath=''
+        balances={ [] }
+        transactions={ [] }
     />);
     expect(result).toMatchSnapshot();
 });
 
 test('renders loader with no data', () => {
     const result = shallowRender(<Content
-        transactionsPath={ coindId => coindId }
+        transactionsPath={ coinId => coinId }
         settingsPath=''
+        balances={ null }
+        transactions={ null }
+        type="Wallet"
     />);
     expect(result).toMatchSnapshot();
 });
 
 test('renders with all data', () => {
-    setBalances([ DEFAULT_COIN_BALANCE ]);
-    setTransactions([ DEFAULT_TRANSACTION ]);
     const result = shallowRender(<Content
-        transactionsPath={ coindId => coindId }
+        transactionsPath={ coinId => coinId }
         settingsPath=''
+        balances={ [ DEFAULT_COIN_BALANCE ] }
+        transactions={ [ DEFAULT_TRANSACTION ] }
+        type="Wallet"
     />);
     expect(result).toMatchSnapshot();
 });

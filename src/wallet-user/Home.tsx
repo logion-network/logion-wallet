@@ -92,7 +92,7 @@ export function Content() {
                                     },
                                     {
                                         header: "Amount",
-                                        render: transaction => <TransferAmountCell amount={ transferBalance(accounts!, transaction) } />,
+                                        render: transaction => <TransferAmountCell amount={ transferBalance(accounts!.current!.address, transaction) } />,
                                         align: 'right',
                                         width: "120px",
                                     },

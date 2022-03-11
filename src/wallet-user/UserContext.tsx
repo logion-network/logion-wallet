@@ -4,16 +4,26 @@ import { Option } from '@polkadot/types';
 import { useLogionChain } from '../logion-chain';
 import { RecoveryConfig, getRecoveryConfig, getProxy } from '../logion-chain/Recovery';
 import { Children } from '../common/types/Helpers';
-import { aggregateArrays, AxiosFactory, Endpoint, MultiResponse, MultiSourceHttpClient, MultiSourceHttpClientState } from '../common/api';
+import {
+    aggregateArrays,
+    AxiosFactory,
+    Endpoint,
+    MultiResponse,
+    MultiSourceHttpClient,
+    MultiSourceHttpClientState,
+    AnySourceHttpClient
+} from '../common/api';
 
-import { ProtectionRequest } from "../common/types/ModelTypes";
-import { fetchProtectionRequests } from "../common/Model";
+import { ProtectionRequest, Transaction, TransactionsSet } from "../common/types/ModelTypes";
+import { fetchProtectionRequests, getTransactions } from "../common/Model";
 import {
     CreateProtectionRequest,
     createProtectionRequest as modelCreateProtectionRequest,
 } from "./trust-protection/Model";
 import { useCommonContext } from '../common/CommonContext';
 import { DARK_MODE } from './Types';
+import { getVaultAddress } from "../logion-chain/Vault";
+import { CoinBalance, getBalances } from "../logion-chain/Balances";
 
 export interface UserContext {
     dataAddress: string | null,
@@ -25,6 +35,9 @@ export interface UserContext {
     rejectedProtectionRequests: ProtectionRequest[] | null,
     recoveryConfig: Option<RecoveryConfig> | null,
     recoveredAddress?: string | null,
+    vaultAddress?: string | null,
+    vaultBalances: CoinBalance[] | null,
+    vaultTransactions: Transaction[] | null,
 }
 
 interface FullUserContext extends UserContext {
@@ -41,6 +54,9 @@ function initialContextValue(): FullUserContext {
         acceptedProtectionRequests: null,
         rejectedProtectionRequests: null,
         recoveryConfig: null,
+        vaultAddress: null,
+        vaultBalances: null,
+        vaultTransactions: null,
     }
 }
 
@@ -60,6 +76,9 @@ interface Action {
     acceptedProtectionRequests?: ProtectionRequest[],
     rejectedProtectionRequests?: ProtectionRequest[],
     recoveryConfig?: Option<RecoveryConfig>,
+    vaultAddress?: string,
+    vaultBalances?: CoinBalance[],
+    vaultTransactions?: Transaction[],
     refreshRequests?: (clearBeforeRefresh: boolean) => void,
     createProtectionRequest?: (legalOfficers: string[], requestFactory: (otherLegalOfficerAddress: string) => CreateProtectionRequest) => Promise<void>,
     clearBeforeRefresh?: boolean,
@@ -79,6 +98,9 @@ const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, actio
                     acceptedProtectionRequests: null,
                     rejectedProtectionRequests: null,
                     recoveryConfig: null,
+                    vaultAddress: null,
+                    vaultBalances: null,
+                    vaultTransactions: null,
                     recoveredAddress: null,
                 };
             } else {
@@ -98,6 +120,9 @@ const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, actio
                     acceptedProtectionRequests: action.acceptedProtectionRequests!,
                     rejectedProtectionRequests: action.rejectedProtectionRequests!,
                     recoveryConfig: action.recoveryConfig!,
+                    vaultAddress: action.vaultAddress,
+                    vaultBalances: action.vaultBalances!,
+                    vaultTransactions: action.vaultTransactions!,
                     recoveredAddress: action.recoveredAddress!,
                 };
             } else {
@@ -154,7 +179,8 @@ export function UserContextProvider(props: Props) {
                     nodesUp,
                     nodesDown,
                 }
-                const multiClient = new MultiSourceHttpClient<Endpoint, ProtectionRequest[]>(initialState, accounts!.current!.token!.value);
+                const token = accounts!.current!.token!.value;
+                const multiClient = new MultiSourceHttpClient<Endpoint, ProtectionRequest[]>(initialState, token);
                 let result: MultiResponse<ProtectionRequest[]>;
 
                 result = await multiClient.fetch(axios => fetchProtectionRequests(axios, {
@@ -192,6 +218,24 @@ export function UserContextProvider(props: Props) {
                     recoveredAddress = proxy.unwrap().toString();
                 }
 
+                let vaultAddress: string | undefined = undefined
+                let vaultTransactions: Transaction[] = []
+                let vaultBalances: CoinBalance[] = []
+                if (recoveryConfig.isSome) {
+                    vaultAddress = getVaultAddress(currentAddress, recoveryConfig.unwrap())
+
+                    const anyClient = new AnySourceHttpClient<Endpoint, TransactionsSet>(initialState, token);
+                    const transactionsSet = await anyClient.fetch(axios => getTransactions(axios, {
+                        address: vaultAddress!
+                    }));
+                    vaultTransactions = transactionsSet?.transactions || [];
+
+                    vaultBalances = await getBalances({
+                        api: api!,
+                        accountId: vaultAddress
+                    });
+                }
+
                 dispatch({
                     type: "SET_DATA",
                     dataAddress: currentAddress,
@@ -199,6 +243,9 @@ export function UserContextProvider(props: Props) {
                     acceptedProtectionRequests,
                     rejectedProtectionRequests,
                     recoveryConfig,
+                    vaultAddress,
+                    vaultBalances,
+                    vaultTransactions,
                     recoveredAddress,
                 });
             })();

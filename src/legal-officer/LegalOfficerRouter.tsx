@@ -36,7 +36,7 @@ import './LegalOfficerRouter.css';
 import { locRequestsRelativePath, dataLocDetailsRelativePath } from "../RootPaths";
 
 export default function LegalOfficerRouter() {
-    const { accounts, nodesDown, availableLegalOfficers } = useCommonContext();
+    const { accounts, nodesDown, availableLegalOfficers, balances, transactions } = useCommonContext();
 
     if(availableLegalOfficers === undefined) {
         return null;
@@ -70,9 +70,15 @@ export default function LegalOfficerRouter() {
             <Route path={ WALLET_RELATIVE_PATH } element={ <Wallet
                 transactionsPath={ transactionsPath }
                 settingsPath={ SETTINGS_PATH }
+                balances={ balances }
+                transactions={ transactions }
             />} />
             <Route path={ TRANSACTIONS_RELATIVE_PATH } element={ <Transactions
+                    address={ accounts!.current!.address }
                     backPath={ WALLET_PATH }
+                    balances={ balances }
+                    transactions={ transactions }
+                    type="Wallet"
             /> } />
             <Route path={ locRequestsRelativePath('Transaction') }
                    element={ <TransactionProtection
