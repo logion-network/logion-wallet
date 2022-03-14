@@ -24,7 +24,7 @@ import { useResponsiveContext } from './Responsive';
 import { Transaction } from "./types/ModelTypes";
 import { WalletType } from "./Wallet";
 import VaultOutRequest from "../vault/VaultOutRequest";
-import React from "react";
+import VaultTransferRequests from './VaultTransferRequests';
 import { enrichTransactionType } from "./Model";
 
 export interface Props {
@@ -172,7 +172,14 @@ function Content(props: ContentProps) {
             }
             { type === "Vault" &&
                 <Row>
-                    <Col className="col-xxxl-8"/>
+                    <Col className="col-xxxl-8">
+                        <Frame
+                            fillHeight
+                            title="Transfer signature request(s)"
+                        >
+                            <VaultTransferRequests />
+                        </Frame>
+                    </Col>
                     <Col className="col-xxxl-4">
                         <Frame
                             fillHeight

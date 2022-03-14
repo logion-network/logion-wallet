@@ -78,3 +78,7 @@
     margin-right: 10px;
 }
 
+.Transactions .VaultTransferRequests .Table .body {
+    overflow-y: auto;
+    height: calc(100vh - 805px);
+}
