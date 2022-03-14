@@ -5,6 +5,8 @@ import { Weight } from '@polkadot/types/interfaces/runtime';
 
 import { ExtrinsicSubmissionParameters, signAndSend, Unsubscriber } from "./Signature";
 import { getRecoveryConfig, RecoveryConfig } from "./Recovery";
+import { PrefixedNumber } from "./numbers";
+import { LGNT_SMALLEST_UNIT } from './Balances';
 
 const THRESHOLD = 2;
 
@@ -32,11 +34,11 @@ function isKeyringLoaded () {
 export interface RequestVaultTransferParameters extends ExtrinsicSubmissionParameters {
     api: ApiPromise;
     recoveryConfig: RecoveryConfig;
-    amount: bigint;
+    amount: PrefixedNumber;
     destination: string;
 }
 
-export async function requestVaultTransfer(parameters: RequestVaultTransferParameters): Promise<Unsubscriber> {
+export async function requestVaultTransfer(parameters: RequestVaultTransferParameters): Promise<{ unsubscriber: Unsubscriber }> {
     const {
         api,
         signerId,
@@ -47,15 +49,17 @@ export async function requestVaultTransfer(parameters: RequestVaultTransferParam
         amount,
     } = parameters;
 
-    const { call, weight } = await transferCallAndWeight(api, signerId, recoveryConfig, amount, destination);
+    const actualAmount = amount.convertTo(LGNT_SMALLEST_UNIT).coefficient.unnormalize();
+    const { call, weight } = await transferCallAndWeight(api, signerId, recoveryConfig, BigInt(actualAmount), destination);
 
     const sortedLegalOfficers = [ ...recoveryConfig.legalOfficers ].sort();
-    return signAndSend({
+    const unsubscriber = signAndSend({
         signerId,
         submittable: api.tx.vault.requestCall(sortedLegalOfficers, call, weight),
         callback,
         errorCallback,
     });
+    return { unsubscriber };
 }
 
 async function transferCallAndWeight(

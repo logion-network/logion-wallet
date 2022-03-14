@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { HexString } from '@polkadot/util/types';
 
 import {
     SignedTransaction,
@@ -12,15 +11,18 @@ import ExtrinsicSubmissionResult from './ExtrinsicSubmissionResult';
 
 export type SignAndSubmit = ((setResult: React.Dispatch<React.SetStateAction<SignedTransaction | null>>, setError: React.Dispatch<React.SetStateAction<any>>) => Unsubscriber) | null;
 
+export type AsyncSignAndSubmit = ((setResult: React.Dispatch<React.SetStateAction<SignedTransaction | null>>, setError: React.Dispatch<React.SetStateAction<any>>) => Promise<{ unsubscriber: Unsubscriber }>) | null;
+
 export interface SuccessfulTransaction {
-    readonly block: HexString;
+    readonly block: string;
     readonly index: number;
 }
 
 export interface Props {
     id: string,
     successMessage?: string | JSX.Element,
-    signAndSubmit: SignAndSubmit,
+    signAndSubmit?: SignAndSubmit,
+    asyncSignAndSubmit?: AsyncSignAndSubmit,
     onSuccess: (id: string, result: SuccessfulTransaction) => void,
     onError: (id: string) => void,
 }
@@ -33,7 +35,7 @@ export default function ExtrinsicSubmitter(props: Props) {
     const [ notified, setNotified ] = useState<boolean>(false);
 
     useEffect(() => {
-        if(!submitted && props.signAndSubmit !== null) {
+        if(!submitted && props.signAndSubmit !== undefined && props.signAndSubmit !== null) {
             setSubmitted(true);
             const signAndSubmit = props.signAndSubmit;
             (async function() {
@@ -47,12 +49,26 @@ export default function ExtrinsicSubmitter(props: Props) {
     }, [ unsubscriber, setUnsubscriber, setResult, setError, props, submitted ]);
 
     useEffect(() => {
+        if(!submitted && props.asyncSignAndSubmit !== undefined && props.asyncSignAndSubmit !== null) {
+            setSubmitted(true);
+            const signAndSubmit = props.asyncSignAndSubmit;
+            (async function() {
+                await unsubscribe(unsubscriber);
+                setResult(null);
+                setError(null);
+                const newSubscriber = await signAndSubmit(setResult, setError);
+                setUnsubscriber(newSubscriber.unsubscriber);
+            })();
+        }
+    }, [ unsubscriber, setUnsubscriber, setResult, setError, props, submitted ]);
+
+    useEffect(() => {
         if (isSuccessful(result) && !notified) {
             setNotified(true);
             (async function() {
                 await unsubscribe(unsubscriber);
                 props.onSuccess(props.id, {
-                    block: result!.txHash.toHex(),
+                    block: result!.status.asInBlock.toString(),
                     index: result!.txIndex!
                 });
             })();
@@ -78,7 +94,7 @@ export default function ExtrinsicSubmitter(props: Props) {
         }
     }, [ unsubscriber, setUnsubscriber, setResult, setError, props, submitted ]);
 
-    if(props.signAndSubmit === null) {
+    if(props.signAndSubmit === null || props.asyncSignAndSubmit === null) {
         return null;
     }
 
