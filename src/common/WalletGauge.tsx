@@ -119,19 +119,20 @@ export default function WalletGauge(props: Props) {
                         {
                             status === Status.TRANSFERRING &&
                             <>
-                                <FormGroup
-                                    id="destination"
-                                    label="Destination"
-                                    control={ <Form.Control
-                                        isInvalid={ destination !== "" && (!isValidAccountId(api!, destination) || destination === accounts!.current!.address) }
-                                        type="text"
-                                        placeholder="The beneficiary's SS58 address"
-                                        value={ destination }
-                                        readOnly= { !transferDialogParams.destination }
-                                        onChange={ value => setDestination(value.target.value) }
-                                    /> }
-                                    colors={ colorTheme.dialog }
-                                />
+                                { transferDialogParams.destination &&
+                                    <FormGroup
+                                        id="destination"
+                                        label="Destination"
+                                        control={ <Form.Control
+                                            isInvalid={ destination !== "" && (!isValidAccountId(api!, destination) || destination === accounts!.current!.address) }
+                                            type="text"
+                                            placeholder="The beneficiary's SS58 address"
+                                            value={ destination }
+                                            onChange={ value => setDestination(value.target.value) }
+                                        /> }
+                                        colors={ colorTheme.dialog }
+                                    />
+                                }
                                 <FormGroup
                                     id="amount"
                                     label="Amount"

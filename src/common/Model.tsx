@@ -6,7 +6,7 @@ import {
     ProtectionRequest,
     Transaction,
     LocRequest,
-    LocRequestStatus, LocCollectionItem,
+    LocRequestStatus, LocCollectionItem, TransferDirection,
 } from './types/ModelTypes';
 import Identity from './types/Identity';
 import { UUID } from '../logion-chain/UUID';
@@ -41,10 +41,26 @@ export async function getTransactions(
     };
 }
 
+export function enrichTransactionType(transaction: Transaction, vaultAddress?: string): string {
+    if (transaction.transferDirection === 'Sent' && transaction.to === vaultAddress) {
+        return "Sent to my vault"
+    }
+    return transaction.type
+}
+
 function enrichTransaction(transaction: Transaction, address: string): Transaction {
+
+    const transferDirection: TransferDirection =
+        !(transaction.pallet === "balances" && transaction.method.startsWith("transfer")) ?
+            'None' :
+            transaction.from === address ?
+                'Sent' :
+                'Received'
+
     return {
         ...transaction,
-        type: transactionType(transaction, address)
+        type: transactionType(transaction, address),
+        transferDirection
     }
 }
 
