@@ -27,12 +27,11 @@ interface FormValues {
 
 export default function VaultOutRequest() {
     const { api } = useLogionChain();
-    const { availableLegalOfficers, colorTheme, accounts, axiosFactory } = useCommonContext();
+    const { availableLegalOfficers, colorTheme, accounts, axiosFactory, refresh } = useCommonContext();
 
     const [ showDialog, setShowDialog ] = useState(false);
     const [ signAndSubmit, setSignAndSubmit ] = useState<AsyncSignAndSubmit>(null);
     const [ formValues, setFormValues ] = useState<FormValues | null>(null);
-    const [ showConfirmation, setShowConfirmation ] = useState(false);
     const [ failed, setFailed ] = useState(false);
 
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>({
@@ -76,7 +75,7 @@ export default function VaultOutRequest() {
         cleanUpCallback();
 
         const axios = axiosFactory!(formValues!.legalOfficer);
-        const vaultApi = new VaultApi(axios);
+        const vaultApi = new VaultApi(axios, formValues!.legalOfficer);
         const requesterAddress = accounts!.current!.address;
         const blockHeader = await api!.rpc.chain.getHeader(submittable.block);
         await vaultApi.createVaultTransferRequest({
@@ -87,8 +86,8 @@ export default function VaultOutRequest() {
             requesterAddress,
         });
         setShowDialog(false);
-        setShowConfirmation(true);
-    }, [ cleanUpCallback, formValues, accounts, api, axiosFactory ]);
+        refresh();
+    }, [ cleanUpCallback, formValues, accounts, api, axiosFactory, refresh ]);
 
     const cancelCallback = useCallback(() => {
         cleanUpCallback();
@@ -125,7 +124,7 @@ export default function VaultOutRequest() {
                 ]}
                 onSubmit={ handleSubmit(transferCallback) }
             >
-                <h2>Transfer { SYMBOL }n from your logion Vault</h2>
+                <h2>Transfer { SYMBOL }s from your logion Vault</h2>
 
                 { signAndSubmit === null &&
                 <>
@@ -223,22 +222,6 @@ export default function VaultOutRequest() {
                     onSuccess={ onExtrinsicSuccessCallback }
                     onError={ () => setFailed(true) }
                 />
-            </Dialog>
-            <Dialog
-                show={ showConfirmation }
-                size="lg"
-                actions={[
-                    {
-                        buttonText: "OK",
-                        id: "ok",
-                        buttonVariant: "primary",
-                        callback: () => setShowConfirmation(false)
-                    }
-                ]}
-            >
-                <h2>Transfer { SYMBOL }n from your logion Vault</h2>
-
-                <p>Your transfer request has been submitted to your Legal Officer.</p>
             </Dialog>
         </>
     )

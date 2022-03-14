@@ -23,7 +23,7 @@ export function allUp<E extends Endpoint>(endpoints: E[]): MultiSourceHttpClient
     }
 }
 
-export type Query<R> = (axios: AxiosInstance) => Promise<R>;
+export type Query<E, R> = (axios: AxiosInstance, endpoint: E) => Promise<R>;
 
 export class MultiSourceHttpClient<E extends Endpoint, R> {
 
@@ -39,11 +39,11 @@ export class MultiSourceHttpClient<E extends Endpoint, R> {
 
     private token?: string;
 
-    async fetch(query: Query<R>): Promise<MultiResponse<R>> {
+    async fetch(query: Query<E, R>): Promise<MultiResponse<R>> {
         const currentNodesUp = this.nodesUp.slice(0);
         this.nodesUp = [];
 
-        const promises = currentNodesUp.map(node => query(buildAuthenticatedAxios(node.url, this.token)));
+        const promises = currentNodesUp.map(node => query(buildAuthenticatedAxios(node.url, this.token), node));
         const allSettled = await Promise.allSettled(promises);
         let multiResponse: MultiResponse<R> = {};
         for(let i = 0; i < allSettled.length; ++i) {
@@ -80,12 +80,12 @@ export class AnySourceHttpClient<E extends Endpoint, R> {
 
     private token?: string;
 
-    async fetch(query: Query<R>): Promise<R | undefined> {
+    async fetch(query: Query<E, R>): Promise<R | undefined> {
         while(this.nodesUp.length > 0) {
             const selectedEndpointIndex = this.selectedEndpointIndex();
             let selectedEndpoint = this.nodesUp[selectedEndpointIndex];
             try {
-                return await query(buildAuthenticatedAxios(selectedEndpoint.url, this.token));
+                return await query(buildAuthenticatedAxios(selectedEndpoint.url, this.token), selectedEndpoint);
             } catch(error) {
                 this.nodesUp.splice(selectedEndpointIndex, 1);
                 this.nodesDown.push(selectedEndpoint);

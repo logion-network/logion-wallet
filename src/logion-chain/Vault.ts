@@ -7,6 +7,7 @@ import { ExtrinsicSubmissionParameters, signAndSend, Unsubscriber } from "./Sign
 import { getRecoveryConfig, RecoveryConfig } from "./Recovery";
 import { PrefixedNumber } from "./numbers";
 import { LGNT_SMALLEST_UNIT } from './Balances';
+import { SubmittableExtrinsic } from "@polkadot/api/promise/types";
 
 const THRESHOLD = 2;
 
@@ -70,13 +71,21 @@ async function transferCallAndWeight(
     destination: string,
 ): Promise<{ call: HexString, weight: Weight }> {
     const multisigOrigin = getVaultAddress(requesterAddress, recoveryConfig);
-    const call = api.tx.balances.transfer(destination, amount);
+    const call = transferCall(api, destination, amount);
     const dispatchInfo = await call.paymentInfo(multisigOrigin);
     const maxWeight = dispatchInfo.weight;
     return {
         call: call.toHex(),
         weight: maxWeight
     }
+}
+
+function transferCall(
+    api: ApiPromise,
+    destination: string,
+    amount: bigint,
+): SubmittableExtrinsic {
+    return api.tx.balances.transfer(destination, amount);
 }
 
 export interface VaultTransferApprovalParameters extends ExtrinsicSubmissionParameters {
@@ -113,6 +122,40 @@ export async function approveVaultTransfer(parameters: VaultTransferApprovalPara
     return signAndSend({
         signerId,
         submittable: api.tx.vault.approveCall(otherSignatories, call, {height: block, index}, weight),
+        callback,
+        errorCallback,
+    });
+}
+
+export interface CancelVaultTransferParameters extends ExtrinsicSubmissionParameters {
+    api: ApiPromise;
+    recoveryConfig: RecoveryConfig;
+    amount: PrefixedNumber;
+    destination: string;
+    block: bigint,
+    index: number
+}
+
+export function cancelVaultTransfer(parameters: CancelVaultTransferParameters): Unsubscriber {
+    const {
+        api,
+        signerId,
+        callback,
+        errorCallback,
+        recoveryConfig,
+        destination,
+        amount,
+        block,
+        index,
+    } = parameters;
+
+    const actualAmount = amount.convertTo(LGNT_SMALLEST_UNIT).coefficient.unnormalize();
+    const call = transferCall(api, destination, BigInt(actualAmount));
+
+    const sortedLegalOfficers = [ ...recoveryConfig.legalOfficers ].sort();
+    return signAndSend({
+        signerId,
+        submittable: api.tx.multisig.cancelAsMulti(2, sortedLegalOfficers, {height: block, index}, call.hash),
         callback,
         errorCallback,
     });

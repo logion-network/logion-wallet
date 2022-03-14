@@ -14,7 +14,7 @@ import {
     Endpoint,
     allUp,
     aggregateArrays,
-    AnySourceHttpClient
+    AnySourceHttpClient,
 } from './api';
 import Accounts, { buildAccounts, AccountTokens } from './types/Accounts';
 import { Children } from './types/Helpers';
@@ -35,8 +35,13 @@ import { getLegalOfficerCasesMap } from "../logion-chain/LogionLoc";
 import { authenticate, refresh } from "./Authentication";
 import { DirectoryContext, useDirectoryContext } from "../directory/DirectoryContext";
 import config from "../config";
+import { FetchVaultTransferRequest, VaultApi, VaultTransferRequest } from "../vault/VaultApi";
 
 const DEFAULT_NOOP = () => {};
+
+export interface LegalOfficerEndpoint extends Endpoint {
+    legalOfficer: string;
+}
 
 export interface RequestAndLoc {
     request: LocRequest;
@@ -69,6 +74,9 @@ export interface CommonContext {
     nodesUp: Endpoint[];
     nodesDown: Endpoint[];
     availableLegalOfficers: LegalOfficer[] | undefined;
+    pendingVaultTransferRequests: VaultTransferRequest[] | undefined;
+    cancelledVaultTransferRequests: VaultTransferRequest[] | undefined;
+    rejectedVaultTransferRequests: VaultTransferRequest[] | undefined;
 }
 
 interface FullCommonContext extends CommonContext {
@@ -108,6 +116,9 @@ function initialContextValue(): FullCommonContext {
         nodesUp: [],
         nodesDown: [],
         availableLegalOfficers: undefined,
+        pendingVaultTransferRequests: undefined,
+        cancelledVaultTransferRequests: undefined,
+        rejectedVaultTransferRequests: undefined,
     }
 }
 
@@ -167,6 +178,9 @@ interface Action {
     nodesDown?: Endpoint[];
     directoryContext?: DirectoryContext;
     availableLegalOfficers?: LegalOfficer[];
+    pendingVaultTransferRequests?: VaultTransferRequest[];
+    cancelledVaultTransferRequests?: VaultTransferRequest[];
+    rejectedVaultTransferRequests?: VaultTransferRequest[];
 }
 
 const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, action: Action): FullCommonContext => {
@@ -224,6 +238,9 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                     availableLegalOfficers: action.availableLegalOfficers!,
                     nodesUp,
                     nodesDown,
+                    pendingVaultTransferRequests: action.pendingVaultTransferRequests!,
+                    cancelledVaultTransferRequests: action.cancelledVaultTransferRequests!,
+                    rejectedVaultTransferRequests: action.rejectedVaultTransferRequests!,
                 };
             } else {
                 return state;
@@ -348,20 +365,23 @@ export function CommonContextProvider(props: Props) {
 
                 let initialState;
                 if(currentAccount.isLegalOfficer) {
-                    initialState = allUp<Endpoint>(directoryContext.legalOfficers
+                    initialState = allUp<LegalOfficerEndpoint>(directoryContext.legalOfficers
                         .filter(legalOfficer => legalOfficer.address === currentAccount.address)
-                        .map(legalOfficer => ({url: legalOfficer.node})));
+                        .map(legalOfficer => ({url: legalOfficer.node, legalOfficer: legalOfficer.address})));
                 } else {
-                    initialState = allUp<Endpoint>(directoryContext.legalOfficers.map(legalOfficer => ({url: legalOfficer.node})));
+                    initialState = allUp<LegalOfficerEndpoint>(directoryContext.legalOfficers.map(legalOfficer => ({
+                        url: legalOfficer.node,
+                        legalOfficer: legalOfficer.address
+                    })));
                 }
 
-                const anyClient = new AnySourceHttpClient<Endpoint, TransactionsSet>(initialState, currentAccount.token?.value);
+                const anyClient = new AnySourceHttpClient<LegalOfficerEndpoint, TransactionsSet>(initialState, currentAccount.token?.value);
                 const transactionsSet = await anyClient.fetch(axios => getTransactions(axios, {
                     address: currentAccount.address
                 }));
                 const transactions = transactionsSet?.transactions || [];
 
-                const multiClient = new MultiSourceHttpClient<Endpoint, LocRequest[]>(anyClient.getState(), currentAccount.token?.value);
+                const multiClient = new MultiSourceHttpClient<LegalOfficerEndpoint, LocRequest[]>(anyClient.getState(), currentAccount.token?.value);
 
                 const fetchAndAggregate = async (specification: Partial<FetchLocRequestSpecification>) => {
                     const result = await multiClient.fetch(axios => fetchLocRequests(axios, {
@@ -482,9 +502,40 @@ export function CommonContextProvider(props: Props) {
                         .concat(voidRequestsAndLocs(closedIdentityLocsOnlyLogion, locs))
                 }
 
+                const vaultTransferRequestsMultiClient = new MultiSourceHttpClient<LegalOfficerEndpoint, VaultTransferRequest[]>(multiClient.getState(),
+                    currentAccount.token?.value);
+                let vaultSpecificationFragment: FetchVaultTransferRequest;
+                if(currentAccount.isLegalOfficer) {
+                    vaultSpecificationFragment = {
+                        statuses: []
+                    }
+                } else {
+                    vaultSpecificationFragment = {
+                        requesterAddress: currentAddress,
+                        statuses: []
+                    }
+                }
+                const vaultTransferRequestsResult = await vaultTransferRequestsMultiClient.fetch((axios, endpoint) => new VaultApi(axios, endpoint.legalOfficer).getVaultTransferRequests({
+                    ...vaultSpecificationFragment,
+                    statuses: [ "PENDING" ]
+                }));
+                const pendingVaultTransferRequests = aggregateArrays(vaultTransferRequestsResult);
+
+                const cancelledVaultTransferRequestsResult = await vaultTransferRequestsMultiClient.fetch((axios, endpoint) => new VaultApi(axios, endpoint.legalOfficer).getVaultTransferRequests({
+                    ...vaultSpecificationFragment,
+                    statuses: [ "CANCELLED" ]
+                }));
+                const cancelledVaultTransferRequests = aggregateArrays(cancelledVaultTransferRequestsResult);
+
+                const rejectedVaultTransferRequestsResult = await vaultTransferRequestsMultiClient.fetch((axios, endpoint) => new VaultApi(axios, endpoint.legalOfficer).getVaultTransferRequests({
+                    ...vaultSpecificationFragment,
+                    statuses: [ "REJECTED" ]
+                }));
+                const rejectedVaultTransferRequests = aggregateArrays(rejectedVaultTransferRequestsResult);
+
                 let nodesUp: Endpoint[] | undefined;
                 let nodesDown: Endpoint[] | undefined;
-                const resultingState = multiClient.getState();
+                const resultingState = vaultTransferRequestsMultiClient.getState();
                 if(!currentAccount.isLegalOfficer) {
                     nodesUp = resultingState.nodesUp;
                     nodesDown = resultingState.nodesDown;
@@ -522,6 +573,9 @@ export function CommonContextProvider(props: Props) {
                     nodesDown,
                     availableLegalOfficers,
                     directoryContext,
+                    pendingVaultTransferRequests,
+                    cancelledVaultTransferRequests,
+                    rejectedVaultTransferRequests,
                 });
             })();
         }
