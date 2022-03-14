@@ -26,6 +26,8 @@ export interface ProtectionRequest {
     otherLegalOfficerAddress: string,
 }
 
+export type TransferDirection = "Sent" | "Received" | "None"
+
 export interface Transaction {
     from: string,
     to: string,
@@ -38,6 +40,7 @@ export interface Transaction {
     total: string,
     createdOn: string,
     type: string,
+    transferDirection: TransferDirection,
     successful: boolean,
     error?: TransactionError
 }

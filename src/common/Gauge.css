@@ -77,6 +77,12 @@
 
 @media (max-width: 1385px) {
     .Gauge.linear:before {
-        width: 400px;
+        width: 200px;
+    }
+    .Gauge .reading .value .integer-part {
+        font-size: 56px;
+    }
+    .Gauge .reading .value .decimal-part {
+        font-size: 21px;
     }
 }

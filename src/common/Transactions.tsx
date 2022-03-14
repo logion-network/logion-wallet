@@ -24,6 +24,8 @@ import { useResponsiveContext } from './Responsive';
 import { Transaction } from "./types/ModelTypes";
 import { WalletType } from "./Wallet";
 import VaultOutRequest from "../vault/VaultOutRequest";
+import React from "react";
+import { enrichTransactionType } from "./Model";
 
 export interface Props {
     address: string,
@@ -111,7 +113,7 @@ function Content(props: ContentProps) {
                                 },
                                 {
                                     header: "Transaction type",
-                                    render: transaction => <Cell content={ transaction.type } />,
+                                    render: transaction => <Cell content={ enrichTransactionType(transaction, vaultAddress) } />,
                                     width: width({
                                         onSmallScreen: "180px",
                                         otherwise: "250px"
