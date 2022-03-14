@@ -7,6 +7,8 @@ import { useUserContext } from "../UserContext";
 import { Row, Col } from "../../common/Grid";
 import CopyPasteButton from "../../common/CopyPasteButton";
 import Frame from "../../common/Frame";
+import Icon from "../../common/Icon";
+import IconTextRow from "../../common/IconTextRow";
 
 export interface Props extends WalletProps {
 }
@@ -18,14 +20,14 @@ export default function Vault(props: Props) {
         <FullWidthPane
             className="Vault"
             mainTitle="Vault"
-            titleIcon={{
+            titleIcon={ {
                 icon: {
                     id: 'vault'
                 },
                 background: colorTheme.topMenuItems.iconGradient,
-            }}
+            } }
         >
-            <Header/>
+            <Header />
             <WalletContent { ...props } type="Vault" />
         </FullWidthPane>
     );
@@ -35,22 +37,25 @@ function Header() {
     const { vaultAddress } = useUserContext()
 
     return (
-        <div className="col-xxxl-12">
+        <div className="col-xxxl-12 header">
             <Frame>
                 <Row>
-                    <Col>
-                        <p>Your logion Vault public address:</p>
-                        <Row>
+                    <Col className="vault-address">
+                        <p className="title">Your logion Vault public address:</p>
+                        <Row className="content">
                             <span>{ vaultAddress }</span>
-                            <CopyPasteButton value={ vaultAddress! } className="medium" />
+                            <CopyPasteButton value={ vaultAddress! } className="small" />
                         </Row>
                     </Col>
-                    <Col>
-                        <p>
-                            You can use this Vault public address to transfer assets directly to<br />
-                            your Vault. Once transferred, your assets will be immediately<br />
-                            protected by a Legal Officer signature-based transfer protocol.
-                        </p>
+                    <Col className="vault-tip">
+                        <IconTextRow
+                            icon={ <Icon icon={ { id: "tip" } } width="45px" /> }
+                            text={ <p>
+                                You can use this Vault public address to transfer assets directly to your Vault.<br />
+                                Once transferred, your assets will be immediately protected by a Legal Officer
+                                signature-based transfer protocol.
+                            </p> }
+                        />
                     </Col>
                 </Row>
             </Frame>
