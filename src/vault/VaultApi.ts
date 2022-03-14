@@ -17,6 +17,7 @@ export interface VaultTransferRequest {
     index: number;
     decision?: VaultTransferRequestDecision;
     status: VaultTransferRequestStatus;
+    legalOfficerAddress: string;
 }
 
 export interface CreateVaultTransferRequest {
@@ -34,19 +35,29 @@ export interface FetchVaultTransferRequest {
 
 export class VaultApi {
 
-    constructor(axios: AxiosInstance) {
+    constructor(axios: AxiosInstance, legalOfficerAddress: string) {
         this.axios = axios;
+        this.legalOfficerAddress = legalOfficerAddress;
     }
 
     private axios: AxiosInstance;
 
+    private legalOfficerAddress: string;
+
     async getVaultTransferRequests(fetch: FetchVaultTransferRequest): Promise<VaultTransferRequest[]> {
         const requests = (await this.axios.put("/api/vault-transfer-request", fetch)
             .then(response => response.data.requests)) as VaultTransferRequest[];
-        return requests;
+        return requests.map(request => ({
+            ...request,
+            legalOfficerAddress: this.legalOfficerAddress
+        }));
     }
 
     async createVaultTransferRequest(legalOfficer: CreateVaultTransferRequest): Promise<VaultTransferRequest> {
         return await this.axios.post('/api/vault-transfer-request', legalOfficer);
+    }
+
+    async cancelVaultTransferRequest(requestId: string): Promise<void> {
+        return await this.axios.post(`/api/vault-transfer-request/${requestId}/cancel`);
     }
 }
