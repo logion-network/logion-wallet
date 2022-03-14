@@ -82,7 +82,7 @@ function Content(props: ContentProps) {
         <>
             <Row>
                 <Col>
-                    <Frame
+                    <Frame className={ `Frame-${ type }` }
                         title={ <TransactionsFrameTitle coin={ balance.coin } vaultOutButton={ type === "Vault" }/> }
                     >
                         <Table
@@ -163,6 +163,32 @@ function Content(props: ContentProps) {
                                 type='linear'
                                 level={ balance.level }
                                 vaultAddress={ vaultAddress }
+                            />
+                        </Frame>
+                    </Col>
+                </Row>
+            }
+            { type === "Vault" &&
+                <Row>
+                    <Col className="col-xxxl-8"/>
+                    <Col className="col-xxxl-4">
+                        <Frame
+                            fillHeight
+                            title={
+                                <div className="gauge-title">
+                                    <Icon icon={ { id: balance.coin.iconId } } type={ balance.coin.iconType } height="72px"
+                                          width="auto" />
+                                    <span>Current { balance.coin.name } balance</span>
+                                </div>
+                            }
+                            className="gauge-container"
+                        >
+                            <WalletGauge
+                                coin={ balance.coin }
+                                balance={ balance.balance }
+                                type='arc'
+                                level={ balance.level }
+                                sendButton={ false }
                             />
                         </Frame>
                     </Col>

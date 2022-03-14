@@ -60,7 +60,7 @@ export default function VaultOutRequest() {
             amount: new PrefixedNumber(formValues.amount.value, formValues.amount.unit),
             destination: formValues.destination,
             signerId,
-            recoveryConfig: recoveryConfig.unwrap(),
+            recoveryConfig: recoveryConfig!,
             callback: setResult,
             errorCallback: setError
         });
@@ -101,7 +101,7 @@ export default function VaultOutRequest() {
 
     return (
         <>
-            <Button onClick={ () => setShowDialog(true) } >
+            <Button className="request-vault-out" onClick={ () => setShowDialog(true) } >
                 <Icon icon={ { id: 'vault-out' } } /> Request a vault-out transfer
             </Button>
             <Dialog

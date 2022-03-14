@@ -1,10 +1,12 @@
+import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from "../common/TestData";
+
 jest.mock('@polkadot/api');
 jest.mock('./Signature');
 
 import { setSignAndSend } from './__mocks__/SignatureMock';
 import { ApiPromise } from '@polkadot/api';
 import { setQueryRecoveryRecoverable, setQueryRecoveryActiveRecoveries } from '../__mocks__/PolkadotApiMock';
-import { createRecovery, getRecoveryConfig, initiateRecovery, getActiveRecovery } from './Recovery';
+import { createRecovery, getRecoveryConfig, initiateRecovery, getActiveRecovery, RecoveryConfig } from './Recovery';
 
 test("recovery creation", () => {
     const api = new ApiPromise();
@@ -36,10 +38,16 @@ test("recovery creation", () => {
 
 test("get recovery config", async () => {
     const accountId = "account";
-    const expectedRecoveryConfig = {};
     const recoveryConfig = {
-        isSome: true,
-        unwrap: () => expectedRecoveryConfig
+        isEmpty: false,
+        isNone: false,
+        unwrap: () => ({
+            friends: {
+                toArray: () => [
+                    { toString: () => DEFAULT_LEGAL_OFFICER }
+                ]
+            }
+        })
     };
     const recoverable = jest.fn()
         .mockImplementation(targetAccountId => targetAccountId === accountId ? Promise.resolve(recoveryConfig) : Promise.reject());
@@ -49,7 +57,8 @@ test("get recovery config", async () => {
         api,
         accountId
     })
-    expect(config).toBe(recoveryConfig);
+    expect(config).toBeDefined()
+    expect(config!.legalOfficers).toEqual([ DEFAULT_LEGAL_OFFICER ])
 });
 
 test("initiate recovery", () => {
@@ -83,10 +92,16 @@ test("initiate recovery", () => {
 test("get active recovery", async () => {
     const accountToRecover = "account1";
     const recoveringAccount = "account2";
-    const expectedActiveRecovery = {};
     const activeRecovery = {
-        isSome: true,
-        unwrap: () => expectedActiveRecovery
+        isEmpty: false,
+        isNone: false,
+        unwrap: () => ({
+            friends: {
+                toArray: () => [
+                    { toString: () => DEFAULT_LEGAL_OFFICER }
+                ]
+            }
+        })
     };
     const recoverable = jest.fn()
         .mockImplementation((source, dest) =>
@@ -95,10 +110,11 @@ test("get active recovery", async () => {
                 : Promise.reject());
     setQueryRecoveryActiveRecoveries(recoverable);
     const api = new ApiPromise();
-    const config = await getActiveRecovery({
+    const recovery = await getActiveRecovery({
         api,
         sourceAccount: accountToRecover,
         destinationAccount: recoveringAccount,
     })
-    expect(config).toBe(activeRecovery);
+    expect(recovery).toBeDefined()
+    expect(recovery!.legalOfficers).toEqual([ DEFAULT_LEGAL_OFFICER ])
 });

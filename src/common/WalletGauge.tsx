@@ -22,7 +22,8 @@ export interface Props {
     balance: PrefixedNumber,
     level: number,
     type: 'arc' | 'linear',
-    vaultAddress?: string
+    vaultAddress?: string,
+    sendButton?: boolean
 }
 
 interface TransferDialogParams {
@@ -38,7 +39,7 @@ export default function WalletGauge(props: Props) {
     const [ unit, setUnit ] = useState(NONE);
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
     const [ transferDialogParams, setTransferDialogParams ] = useState<TransferDialogParams>({title: "", destination: true})
-    const { vaultAddress } = props
+    const { vaultAddress, sendButton } = props
 
     const transferCallback = useCallback(() => {
         const signAndSubmit: SignAndSubmit = (setResult, setError) => transfer({
@@ -70,16 +71,17 @@ export default function WalletGauge(props: Props) {
                         level={ props.level }
                         type={ props.type }
                     />
+                    { (sendButton === undefined || sendButton) &&
                     <div className="actions">
-                        <Button slim onClick={ () => {
-                            setTransferDialogParams({
-                                title: `Transfer ${ SYMBOL }s`,
-                                destination: true
-                            });
-                            startTransferringCallback();
-                        } }>
-                            <Icon icon={ { id: 'send' } } /> Send
-                        </Button>
+                            <Button slim onClick={ () => {
+                                setTransferDialogParams({
+                                    title: `Transfer ${ SYMBOL }s`,
+                                    destination: true
+                                });
+                                startTransferringCallback();
+                            } }>
+                                <Icon icon={ { id: 'send' } } /> Send
+                            </Button>
                         { vaultAddress !== undefined &&
                             <Button slim onClick={ () => {
                                 setDestination(vaultAddress);
@@ -93,6 +95,7 @@ export default function WalletGauge(props: Props) {
                             </Button>
                         }
                     </div>
+                    }
                     <Dialog
                         show={ status !== Status.IDLE }
                         actions={ [

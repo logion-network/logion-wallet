@@ -23,16 +23,7 @@ describe("LocCreation", () => {
     })
 
     it("should create a LOC and display no message when a valid form is submitted", async () => {
-        setRecoveryConfig({
-            isNone: false,
-            unwrap: () => ({
-                friends: {
-                    toArray: () => [
-                        { toString: () => DEFAULT_LEGAL_OFFICER }
-                    ]
-                }
-            })
-        });
+        setRecoveryConfig({ legalOfficers: [ DEFAULT_LEGAL_OFFICER ] });
         await itCreatesLoc(false);
     })
 
@@ -46,16 +37,7 @@ describe("LocCreation", () => {
     })
 
     it("should create a LOC with identity info if not protected by selected LO", async () => {
-        setRecoveryConfig({
-            isNone: false,
-            unwrap: () => ({
-                friends: {
-                    toArray: () => [
-                        { toString: () => "" }
-                    ]
-                }
-            })
-        });
+        setRecoveryConfig({ legalOfficers: [ "" ] });
         await itCreatesLoc(true);
     })
 })

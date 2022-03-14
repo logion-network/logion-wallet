@@ -106,8 +106,8 @@ export default function CreateProtectionRequestForm(props: Props) {
                 sourceAccount: addressToRecover,
                 destinationAccount: currentAddress,
             });
-            setActiveRecovery(activeRecovery.isSome);
-            if(activeRecovery.isEmpty) {
+            setActiveRecovery(activeRecovery !== undefined);
+            if(activeRecovery === undefined) {
                 const signAndSubmit: SignAndSubmit = (setResult, setError) => initiateRecovery({
                     api: api!,
                     signerId: currentAddress,
@@ -125,7 +125,7 @@ export default function CreateProtectionRequestForm(props: Props) {
             setAddressToRecoverError("Checking recovery config...")
             getRecoveryConfig({ api: api!, accountId: addressToRecover })
                 .then(recoveryConfig => {
-                    if (recoveryConfig.isEmpty) {
+                    if (!recoveryConfig) {
                         setAddressToRecoverError("This SS58 address is not set up for recovery")
                     } else {
                         setAddressToRecoverError(undefined)

@@ -1,16 +1,7 @@
 import { ApiPromise } from '@polkadot/api';
-import { Option } from '@polkadot/types';
-import { AccountId, Call } from '@polkadot/types/interfaces';
-import {
-    RecoveryConfig as PolkadotRecoveryConfig,
-    ActiveRecovery as PolkadotActiveRecovery
-} from '@polkadot/types/interfaces/recovery';
+import { Call } from '@polkadot/types/interfaces';
 
-import {
-    ExtrinsicSubmissionParameters,
-    signAndSend,
-    Unsubscriber
-} from './Signature';
+import { ExtrinsicSubmissionParameters, signAndSend, Unsubscriber } from './Signature';
 
 export interface RecoveryCreationParameters extends ExtrinsicSubmissionParameters {
     api: ApiPromise,
@@ -40,16 +31,22 @@ export interface GetRecoveryConfigParameters {
     accountId: string,
 }
 
-export async function getRecoveryConfig(parameters: GetRecoveryConfigParameters): Promise<Option<PolkadotRecoveryConfig>> {
+export async function getRecoveryConfig(parameters: GetRecoveryConfigParameters): Promise<RecoveryConfig | undefined> {
     const {
         api,
         accountId,
     } = parameters;
 
-    return await api.query.recovery.recoverable(accountId);
+    const recoveryConfig = await api.query.recovery.recoverable(accountId);
+    if (recoveryConfig.isEmpty) {
+        return undefined
+    }
+    return { legalOfficers: recoveryConfig.unwrap().friends.toArray().map(accountId => accountId.toString())};
 }
 
-export type RecoveryConfig = PolkadotRecoveryConfig;
+export type RecoveryConfig = {
+    legalOfficers: string[]
+}
 
 export interface GetActiveRecoveryParameters {
     api: ApiPromise,
@@ -57,17 +54,23 @@ export interface GetActiveRecoveryParameters {
     destinationAccount: string,
 }
 
-export async function getActiveRecovery(parameters: GetActiveRecoveryParameters): Promise<Option<PolkadotActiveRecovery>> {
+export async function getActiveRecovery(parameters: GetActiveRecoveryParameters): Promise<ActiveRecovery | undefined> {
     const {
         api,
         sourceAccount,
         destinationAccount,
     } = parameters;
 
-    return await api.query.recovery.activeRecoveries(sourceAccount, destinationAccount);
+    const activeRecovery = await api.query.recovery.activeRecoveries(sourceAccount, destinationAccount);
+    if (activeRecovery.isEmpty) {
+        return undefined
+    }
+    return { legalOfficers: activeRecovery.unwrap().friends.toArray().map(accountId => accountId.toString())};
 }
 
-export type ActiveRecovery = PolkadotActiveRecovery;
+export type ActiveRecovery = {
+    legalOfficers: string[]
+}
 
 export interface InitiateRecoveryParameters extends ExtrinsicSubmissionParameters {
     api: ApiPromise,
@@ -120,13 +123,17 @@ export interface GetProxyParameters {
     currentAddress: string,
 }
 
-export async function getProxy(parameters: GetProxyParameters): Promise<Option<AccountId>> {
+export async function getProxy(parameters: GetProxyParameters): Promise<string | undefined> {
     const {
         api,
         currentAddress,
     } = parameters;
 
-    return await api.query.recovery.proxy(currentAddress);
+    const proxy = await api.query.recovery.proxy(currentAddress);
+    if (proxy.isEmpty) {
+        return undefined
+    }
+    return proxy.unwrap().toString();
 }
 
 export interface ClaimRecoveryParameters extends ExtrinsicSubmissionParameters {

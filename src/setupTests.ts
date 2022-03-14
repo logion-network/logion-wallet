@@ -5,4 +5,5 @@
 import '@testing-library/jest-dom';
 
 // Define runtime configuration (see config/index.tsx).
+// @ts-ignore
 global.CONFIG = {};

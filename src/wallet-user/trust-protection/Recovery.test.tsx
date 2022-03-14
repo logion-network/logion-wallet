@@ -13,7 +13,7 @@ test("renders", () => {
 test("renders pending protection request", () => {
     setPendingProtectionRequests(PENDING_RECOVERY_REQUESTS);
     setAcceptedProtectionRequests([]);
-    setRecoveryConfig({ isSome: false });
+    setRecoveryConfig(undefined);
 
     const tree = shallowRender(<Recovery />)
 
@@ -23,7 +23,7 @@ test("renders pending protection request", () => {
 test("renders accepted protection request", () => {
     setPendingProtectionRequests([]);
     setAcceptedProtectionRequests(ACCEPTED_RECOVERY_REQUESTS);
-    setRecoveryConfig({ isSome: false });
+    setRecoveryConfig(undefined);
 
     const tree = shallowRender(<Recovery />)
 
@@ -33,7 +33,7 @@ test("renders accepted protection request", () => {
 test("renders protected but not claimed", () => {
     setPendingProtectionRequests([]);
     setAcceptedProtectionRequests(ACTIVATED_RECOVERY_REQUESTS);
-    setRecoveryConfig({ isSome: true });
+    setRecoveryConfig({ legalOfficers: [ "" ] });
 
     const tree = shallowRender(<Recovery />)
 
@@ -43,7 +43,7 @@ test("renders protected but not claimed", () => {
 test("renders protected and claimed", () => {
     setPendingProtectionRequests([]);
     setAcceptedProtectionRequests(ACTIVATED_RECOVERY_REQUESTS);
-    setRecoveryConfig({ isSome: true });
+    setRecoveryConfig({ legalOfficers: [ "" ] });
     setRecoveredAddress(ACTIVATED_RECOVERY_REQUESTS[0].addressToRecover!);
 
     const tree = shallowRender(<Recovery />)

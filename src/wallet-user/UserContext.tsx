@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useCallback, useReducer, Reducer } from "react";
-import { Option } from '@polkadot/types';
 
 import { useLogionChain } from '../logion-chain';
 import { RecoveryConfig, getRecoveryConfig, getProxy } from '../logion-chain/Recovery';
@@ -33,7 +32,7 @@ export interface UserContext {
     pendingProtectionRequests: ProtectionRequest[] | null,
     acceptedProtectionRequests: ProtectionRequest[] | null,
     rejectedProtectionRequests: ProtectionRequest[] | null,
-    recoveryConfig: Option<RecoveryConfig> | null,
+    recoveryConfig?: RecoveryConfig | null, // Option.none moved to undefined.
     recoveredAddress?: string | null,
     vaultAddress?: string | null,
     vaultBalances: CoinBalance[] | null,
@@ -75,7 +74,7 @@ interface Action {
     pendingProtectionRequests?: ProtectionRequest[],
     acceptedProtectionRequests?: ProtectionRequest[],
     rejectedProtectionRequests?: ProtectionRequest[],
-    recoveryConfig?: Option<RecoveryConfig>,
+    recoveryConfig?: RecoveryConfig,
     vaultAddress?: string,
     vaultBalances?: CoinBalance[],
     vaultTransactions?: Transaction[],
@@ -209,20 +208,16 @@ export function UserContextProvider(props: Props) {
                     accountId: currentAddress
                 });
 
-                let recoveredAddress: string | null = null;
-                const proxy = await getProxy({
+                let recoveredAddress: string | null = await getProxy({
                     api: api!,
                     currentAddress
-                });
-                if(proxy.isSome) {
-                    recoveredAddress = proxy.unwrap().toString();
-                }
+                }) || null;
 
                 let vaultAddress: string | undefined = undefined
                 let vaultTransactions: Transaction[] = []
                 let vaultBalances: CoinBalance[] = []
-                if (recoveryConfig.isSome) {
-                    vaultAddress = getVaultAddress(currentAddress, recoveryConfig.unwrap())
+                if (recoveryConfig) {
+                    vaultAddress = getVaultAddress(currentAddress, recoveryConfig)
 
                     const anyClient = new AnySourceHttpClient<Endpoint, TransactionsSet>(initialState, token);
                     const transactionsSet = await anyClient.fetch(axios => getTransactions(axios, {

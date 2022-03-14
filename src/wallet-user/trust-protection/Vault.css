@@ -16,19 +16,24 @@
     padding: 9px 20px;
 }
 
-.Vault .gauge-title {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 40px;
-    align-items: center;
+.Vault .header {
+    margin-bottom: 20px;
 }
 
-.Vault .gauge-title img {
-    margin-right: 10px;
+.Vault .header .title {
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 10px;
 }
 
-@media (max-width: 1599px) {
-    .Vault .gauge-container {
-        margin-top: 30px;
-    }
+.Vault .vault-address {
+    margin-right: 15px;
+}
+
+.Vault .vault-tip {
+    width: calc(100% - 500px);
+}
+
+.Vault .vault-tip .text p {
+    margin-bottom: 0;
 }
