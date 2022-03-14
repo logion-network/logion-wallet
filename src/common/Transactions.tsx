@@ -23,7 +23,7 @@ import Loader from './Loader';
 import { useResponsiveContext } from './Responsive';
 import { Transaction } from "./types/ModelTypes";
 import { WalletType } from "./Wallet";
-import VaultOutRequest from "./VaultOutRequest";
+import VaultOutRequest from "../vault/VaultOutRequest";
 
 export interface Props {
     address: string,

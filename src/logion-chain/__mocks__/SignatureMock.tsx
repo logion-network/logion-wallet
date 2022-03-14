@@ -36,12 +36,12 @@ export function mockSubmittableResult(isInBlock: boolean, statusType?: string, i
     const result: unknown = {
         isInBlock,
         status: {
-            type: statusType
+            type: statusType,
+            asInBlock: {
+                toString: () => "some-hex"
+            },
         },
         isError,
-        txHash: {
-            toHex: () => "some-hex"
-        },
         txIndex: 42
     };
     return result as ISubmittableResult;
