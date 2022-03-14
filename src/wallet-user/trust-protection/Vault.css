@@ -27,11 +27,11 @@
 }
 
 .Vault .vault-address {
-    margin-right: 15px;
+    margin-right: 25px;
 }
 
 .Vault .vault-tip {
-    width: calc(100% - 500px);
+    width: calc(100% - 520px);
 }
 
 .Vault .vault-tip .text p {
