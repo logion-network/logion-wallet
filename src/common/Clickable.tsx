@@ -9,8 +9,8 @@ export interface Props {
 
 export default function Clickable(props: Props) {
     return (
-        <div className="Clickable" onClick={ props.onClick }>
+        <span className="Clickable" onClick={ props.onClick }>
             { props.children }
-        </div>
+        </span>
     );
 }

@@ -10,11 +10,13 @@ import MultiChoiceButton, { Choice } from './MultiChoiceButton';
 
 import './Button.css';
 
+export type LogionButtonVariant = ButtonVariant | "polkadot" | "secondary-polkadot";
+
 export interface Action {
     id: string,
     callback?: () => void,
     disabled?: boolean,
-    buttonVariant: ButtonVariant,
+    buttonVariant: LogionButtonVariant,
     buttonText: Children,
     buttonTestId?: string,
     type?: ButtonType,
@@ -25,7 +27,7 @@ export interface Props {
     action?: Action,
     type?: ButtonType,
     key?: string,
-    variant?: ButtonVariant,
+    variant?: LogionButtonVariant,
     disabled?: boolean,
     children?: Children,
     onClick?: (e?: any) => void,

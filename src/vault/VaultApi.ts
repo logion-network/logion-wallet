@@ -1,4 +1,6 @@
 import { AxiosInstance } from "axios";
+import UserIdentity from "../common/types/Identity";
+import PostalAddress from "../common/types/PostalAddress";
 
 export type VaultTransferRequestStatus = "ACCEPTED" | "PENDING" | "REJECTED" | "CANCELLED";
 
@@ -18,6 +20,8 @@ export interface VaultTransferRequest {
     decision?: VaultTransferRequestDecision;
     status: VaultTransferRequestStatus;
     legalOfficerAddress: string;
+    requesterIdentity: UserIdentity;
+    requesterPostalAddress: PostalAddress;
 }
 
 export interface CreateVaultTransferRequest {
@@ -59,5 +63,13 @@ export class VaultApi {
 
     async cancelVaultTransferRequest(requestId: string): Promise<void> {
         return await this.axios.post(`/api/vault-transfer-request/${requestId}/cancel`);
+    }
+
+    async acceptVaultTransferRequest(requestId: string): Promise<void> {
+        return await this.axios.post(`/api/vault-transfer-request/${requestId}/accept`);
+    }
+
+    async rejectVaultTransferRequest(requestId: string): Promise<void> {
+        return await this.axios.post(`/api/vault-transfer-request/${requestId}/reject`);
     }
 }

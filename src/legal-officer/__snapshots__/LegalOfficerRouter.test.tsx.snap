@@ -7,6 +7,10 @@ exports[`renders 1`] = `
     path="/protection"
   />
   <Route
+    element={<VaultOutRequests />}
+    path="/vault"
+  />
+  <Route
     element={<RecoveryRequests />}
     path="/recovery"
   />

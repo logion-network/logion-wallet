@@ -1,6 +1,5 @@
 import { keyring } from "@polkadot/ui-keyring";
 import { ApiPromise } from "@polkadot/api";
-import { HexString } from "@polkadot/util/types";
 import { Weight } from '@polkadot/types/interfaces/runtime';
 
 import { ExtrinsicSubmissionParameters, signAndSend, Unsubscriber } from "./Signature";
@@ -56,7 +55,7 @@ export async function requestVaultTransfer(parameters: RequestVaultTransferParam
     const sortedLegalOfficers = [ ...recoveryConfig.legalOfficers ].sort();
     const unsubscriber = signAndSend({
         signerId,
-        submittable: api.tx.vault.requestCall(sortedLegalOfficers, call, weight),
+        submittable: api.tx.vault.requestCall(sortedLegalOfficers, call.method.hash, weight),
         callback,
         errorCallback,
     });
@@ -69,13 +68,13 @@ async function transferCallAndWeight(
     recoveryConfig: RecoveryConfig,
     amount: bigint,
     destination: string,
-): Promise<{ call: HexString, weight: Weight }> {
+): Promise<{ call: SubmittableExtrinsic, weight: Weight }> {
     const multisigOrigin = getVaultAddress(requesterAddress, recoveryConfig);
     const call = transferCall(api, destination, amount);
     const dispatchInfo = await call.paymentInfo(multisigOrigin);
     const maxWeight = dispatchInfo.weight;
     return {
-        call: call.toHex(),
+        call,
         weight: maxWeight
     }
 }
@@ -91,13 +90,13 @@ function transferCall(
 export interface VaultTransferApprovalParameters extends ExtrinsicSubmissionParameters {
     api: ApiPromise,
     requester: string,
-    amount: bigint;
+    amount: PrefixedNumber;
     destination: string;
     block: bigint,
     index: number
 }
 
-export async function approveVaultTransfer(parameters: VaultTransferApprovalParameters): Promise<Unsubscriber> {
+export async function approveVaultTransfer(parameters: VaultTransferApprovalParameters): Promise<{ unsubscriber: Unsubscriber }> {
     const {
         api,
         signerId,
@@ -116,15 +115,17 @@ export async function approveVaultTransfer(parameters: VaultTransferApprovalPara
     });
     const otherLegalOfficer = recoveryConfig!.legalOfficers.find(accountId => accountId !== signerId)!;
 
-    const { call, weight } = await transferCallAndWeight(api, requester, recoveryConfig!, amount, destination);
+    const actualAmount = amount.convertTo(LGNT_SMALLEST_UNIT).coefficient.unnormalize();
+    const { call, weight } = await transferCallAndWeight(api, requester, recoveryConfig!, BigInt(actualAmount), destination);
 
     const otherSignatories = [ requester, otherLegalOfficer ].sort();
-    return signAndSend({
+    const unsubscriber = signAndSend({
         signerId,
-        submittable: api.tx.vault.approveCall(otherSignatories, call, {height: block, index}, weight),
+        submittable: api.tx.vault.approveCall(otherSignatories, call.method.toHex(), {height: block, index}, weight),
         callback,
         errorCallback,
     });
+    return { unsubscriber };
 }
 
 export interface CancelVaultTransferParameters extends ExtrinsicSubmissionParameters {
