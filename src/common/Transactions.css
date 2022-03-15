@@ -58,7 +58,7 @@
 
 .Transactions .Frame-Vault .Table .body {
     overflow-y: auto;
-    height: calc(100vh - 805px);
+    height: calc(86vh - 620px);
 }
 
 .Transactions .request-vault-out {
@@ -70,8 +70,12 @@
 .Transactions .gauge-title {
     display: flex;
     justify-content: center;
-    margin-bottom: 40px;
+    margin-bottom: 10px;
     align-items: center;
+}
+
+.Transactions .gauge-container .title {
+    margin-bottom: 10px;
 }
 
 .Transactions .gauge-title img {
@@ -83,5 +87,5 @@
 }
 .Transactions .VaultTransferRequests .Table .body {
     overflow-y: auto;
-    height: calc(100vh - 805px);
+    height: calc(14vh);
 }
