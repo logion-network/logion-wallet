@@ -100,7 +100,7 @@ export default function PendingVaultTransferRequests() {
                                 <Icon icon={{id: "ko"}} />
                             </Clickable> } />
                         ),
-                        width: '72px',
+                        width: '130px',
                     },
                 ]}
                 data={ pendingVaultTransferRequests }

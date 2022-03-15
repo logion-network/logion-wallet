@@ -98,7 +98,7 @@ export function getCoin(coinId: string): Coin {
     } else if(coinId === "lgnt") {
         return {
             id: 'lgnt',
-            name: 'Logion Token',
+            name: 'logion Token',
             iconId: 'lgnt',
             iconType: 'svg',
             symbol: SYMBOL,

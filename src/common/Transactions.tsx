@@ -172,7 +172,7 @@ function Content(props: ContentProps) {
             }
             { type === "Vault" &&
                 <Row>
-                    <Col className="col-xxxl-8">
+                    <Col className="col-xxxl-8 requests">
                         <Frame
                             fillHeight
                             title="Transfer signature request(s)"
