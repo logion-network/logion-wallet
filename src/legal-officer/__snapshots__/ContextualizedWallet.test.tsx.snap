@@ -46,6 +46,21 @@ exports[`renders 1`] = `
         "icon": Object {
           "height": "auto",
           "icon": Object {
+            "id": "vault-big",
+          },
+          "width": "60px",
+        },
+        "id": "vault",
+        "onClick": [Function],
+        "text": "Vault-out Requests",
+        "to": "/legal-officer/vault",
+      },
+      Object {
+        "disabled": false,
+        "exact": true,
+        "icon": Object {
+          "height": "auto",
+          "icon": Object {
             "hasVariants": true,
             "id": "recovery_request",
           },

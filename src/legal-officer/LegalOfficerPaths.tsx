@@ -55,3 +55,6 @@ export function locDetailsPath(locId: string | UUID, locType: LocType) {
     }
     return locType === 'Identity' ? identityLocDetailsPath(stringId) : dataLocDetailsPath(locType, stringId);
 }
+
+export const VAULT_OUT_REQUESTS_RELATIVE_PATH = '/vault';
+export const VAULT_OUT_REQUESTS_PATH = LEGAL_OFFICER_PATH + VAULT_OUT_REQUESTS_RELATIVE_PATH;

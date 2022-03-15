@@ -39,7 +39,7 @@ export default function HandledVaultTransferRequests(props: { requests: VaultTra
                     },
                     {
                         header: "Status",
-                        render: request => <VaultTransferRequestStatusCell status={ request.status } />,
+                        render: request => <VaultTransferRequestStatusCell status={ request.status } viewer="Wallet User" />,
                         width: '150px',
                     },
                     {

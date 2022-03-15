@@ -4,6 +4,7 @@ import { Children } from './types/Helpers';
 export interface Props {
     label: string;
     value: Children;
+    tooltip?: boolean;
 }
 
 export default function StaticLabelValue(props: Props) {

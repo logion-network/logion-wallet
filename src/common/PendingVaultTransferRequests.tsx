@@ -83,7 +83,7 @@ export default function PendingVaultTransferRequests() {
                     },
                     {
                         header: "Status",
-                        render: request => <VaultTransferRequestStatusCell status={ request.status } />,
+                        render: request => <VaultTransferRequestStatusCell status={ request.status } viewer="Wallet User" />,
                         width: '150px',
                     },
                     {

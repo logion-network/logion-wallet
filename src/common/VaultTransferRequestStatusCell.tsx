@@ -1,11 +1,12 @@
 import React from 'react';
 
-import { ORANGE, RED } from "./ColorTheme";
+import { GREEN, ORANGE, RED } from "./ColorTheme";
 import StatusCell from "./StatusCell";
 import { VaultTransferRequestStatus } from '../vault/VaultApi';
 
 export interface Props {
     status: VaultTransferRequestStatus;
+    viewer: "Legal Officer" | "Wallet User";
 }
 
 export default function VaultTransferRequestStatusCell(props: Props) {
@@ -24,7 +25,15 @@ export default function VaultTransferRequestStatusCell(props: Props) {
     } else if(props.status === "CANCELLED") {
         color = ORANGE;
         icon = undefined;
-        text = "Cancelled";
+        if(props.viewer === 'Wallet User') {
+            text = "Cancelled";
+        } else {
+            text = "Cancelled by user";
+        }
+    } else if(props.status === "ACCEPTED") {
+        color = GREEN;
+        icon = {id: "activated"}
+        text = "Accepted";
     } else {
         return null;
     }

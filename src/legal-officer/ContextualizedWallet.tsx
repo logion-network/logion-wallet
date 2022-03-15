@@ -11,7 +11,7 @@ import {
     RECOVERY_REQUESTS_PATH,
     SETTINGS_PATH,
     WALLET_PATH,
-    IDENTITIES_PATH, locRequestsPath,
+    IDENTITIES_PATH, locRequestsPath, VAULT_OUT_REQUESTS_PATH,
 } from './LegalOfficerPaths';
 import { useLegalOfficerContext } from './LegalOfficerContext';
 
@@ -114,6 +114,21 @@ export default function ContextualizedWallet() {
                         icon: {
                             id: 'shield',
                             hasVariants: true,
+                        },
+                        height: 'auto',
+                        width: '60px',
+                    },
+                    onClick: refreshAll,
+                    disabled: currentLegalOfficerUnavailable,
+                },
+                {
+                    id: "vault",
+                    text: "Vault-out Requests",
+                    to: VAULT_OUT_REQUESTS_PATH,
+                    exact: true,
+                    icon: {
+                        icon: {
+                            id: 'vault-big'
                         },
                         height: 'auto',
                         width: '60px',

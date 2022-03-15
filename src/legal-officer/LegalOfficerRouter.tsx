@@ -1,4 +1,3 @@
-import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 import {
@@ -16,6 +15,7 @@ import {
     locDetailsPath,
     IDENTITIES_PATH,
     locRequestsPath,
+    VAULT_OUT_REQUESTS_RELATIVE_PATH,
 } from './LegalOfficerPaths';
 
 import Home from './Home';
@@ -34,6 +34,7 @@ import DangerFrame from '../common/DangerFrame';
 
 import './LegalOfficerRouter.css';
 import { locRequestsRelativePath, dataLocDetailsRelativePath } from "../RootPaths";
+import VaultOutRequests from './vault/VaultOutRequests';
 
 export default function LegalOfficerRouter() {
     const { accounts, nodesDown, availableLegalOfficers, balances, transactions } = useCommonContext();
@@ -64,6 +65,7 @@ export default function LegalOfficerRouter() {
     return (
         <Routes>
             <Route path={ PROTECTION_REQUESTS_RELATIVE_PATH } element={ <ProtectionRequests /> } />
+            <Route path={ VAULT_OUT_REQUESTS_RELATIVE_PATH } element={ <VaultOutRequests /> } />
             <Route path={ RECOVERY_REQUESTS_RELATIVE_PATH } element={ <RecoveryRequests /> } />
             <Route path={ RECOVERY_DETAILS_RELATIVE_PATH } element={ <RecoveryDetails /> } />
             <Route path={ SETTINGS_RELATIVE_PATH } element={ <Settings showContactInformation={ true } /> } />

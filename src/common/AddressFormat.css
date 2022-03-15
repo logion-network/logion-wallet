@@ -1,0 +1,4 @@
+.AddressFormat {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

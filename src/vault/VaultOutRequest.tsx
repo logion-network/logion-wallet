@@ -110,14 +110,14 @@ export default function VaultOutRequest() {
                     {
                         buttonText: "Cancel",
                         id: "cancel",
-                        buttonVariant: "secondary",
+                        buttonVariant: "secondary-polkadot",
                         callback: cancelCallback,
                         disabled: signAndSubmit !== null && !failed
                     },
                     {
                         buttonText: "Transfer",
                         id: "transfer",
-                        buttonVariant: "primary",
+                        buttonVariant: "polkadot",
                         type: 'submit',
                         disabled: signAndSubmit !== null
                     }

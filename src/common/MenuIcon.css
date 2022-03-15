@@ -9,3 +9,7 @@
     flex-shrink: 0;
     flex-grow: 0;
 }
+
+.MenuIcon img {
+    width: 100%;
+}

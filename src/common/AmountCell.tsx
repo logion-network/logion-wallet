@@ -1,4 +1,5 @@
 import { PrefixedNumber } from "../logion-chain/numbers";
+import AmountFormat from "./AmountFormat";
 import { Cell } from "./Table";
 
 export interface Props {
@@ -10,7 +11,7 @@ export default function AmountCell(props: Props) {
         return <Cell content="-" align="right" />;
     } else {
         return (
-            <Cell content={ props.amount.coefficient.toFixedPrecision(2) + " " + props.amount.prefix.symbol } align="right" />
+            <Cell content={ <AmountFormat amount={ props.amount } /> } align="right" />
         );
     }
 }

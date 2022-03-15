@@ -77,6 +77,7 @@ export interface CommonContext {
     pendingVaultTransferRequests: VaultTransferRequest[] | undefined;
     cancelledVaultTransferRequests: VaultTransferRequest[] | undefined;
     rejectedVaultTransferRequests: VaultTransferRequest[] | undefined;
+    vaultTransferRequestsHistory: VaultTransferRequest[] | undefined;
 }
 
 interface FullCommonContext extends CommonContext {
@@ -119,6 +120,7 @@ function initialContextValue(): FullCommonContext {
         pendingVaultTransferRequests: undefined,
         cancelledVaultTransferRequests: undefined,
         rejectedVaultTransferRequests: undefined,
+        vaultTransferRequestsHistory: undefined,
     }
 }
 
@@ -181,6 +183,7 @@ interface Action {
     pendingVaultTransferRequests?: VaultTransferRequest[];
     cancelledVaultTransferRequests?: VaultTransferRequest[];
     rejectedVaultTransferRequests?: VaultTransferRequest[];
+    vaultTransferRequestsHistory?: VaultTransferRequest[];
 }
 
 const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, action: Action): FullCommonContext => {
@@ -241,6 +244,7 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                     pendingVaultTransferRequests: action.pendingVaultTransferRequests!,
                     cancelledVaultTransferRequests: action.cancelledVaultTransferRequests!,
                     rejectedVaultTransferRequests: action.rejectedVaultTransferRequests!,
+                    vaultTransferRequestsHistory: action.vaultTransferRequestsHistory!,
                 };
             } else {
                 return state;
@@ -533,6 +537,17 @@ export function CommonContextProvider(props: Props) {
                 }));
                 const rejectedVaultTransferRequests = aggregateArrays(rejectedVaultTransferRequestsResult);
 
+                const acceptedVaultTransferRequestsResult = await vaultTransferRequestsMultiClient.fetch((axios, endpoint) => new VaultApi(axios, endpoint.legalOfficer).getVaultTransferRequests({
+                    ...vaultSpecificationFragment,
+                    statuses: [ "ACCEPTED" ]
+                }));
+                const acceptedVaultTransferRequests = aggregateArrays(acceptedVaultTransferRequestsResult);
+
+                const vaultTransferRequestsHistory = cancelledVaultTransferRequests
+                    .concat(rejectedVaultTransferRequests)
+                    .concat(acceptedVaultTransferRequests)
+                    .sort((a, b) => a.createdOn.localeCompare(b.createdOn));
+
                 let nodesUp: Endpoint[] | undefined;
                 let nodesDown: Endpoint[] | undefined;
                 const resultingState = vaultTransferRequestsMultiClient.getState();
@@ -576,6 +591,7 @@ export function CommonContextProvider(props: Props) {
                     pendingVaultTransferRequests,
                     cancelledVaultTransferRequests,
                     rejectedVaultTransferRequests,
+                    vaultTransferRequestsHistory,
                 });
             })();
         }
