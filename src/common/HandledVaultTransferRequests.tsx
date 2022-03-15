@@ -7,7 +7,12 @@ import { useResponsiveContext } from "./Responsive";
 import Table, { Cell, DateTimeCell, EmptyTableMessage } from "./Table";
 import VaultTransferRequestStatusCell from "./VaultTransferRequestStatusCell";
 
-export default function HandledVaultTransferRequests(props: { requests: VaultTransferRequest[] | null }) {
+interface Props {
+    requests: VaultTransferRequest[] | null,
+    decisionOnLabel: string
+}
+
+export default function HandledVaultTransferRequests(props: Props) {
     const { width } = useResponsiveContext();
 
     if(!props.requests) {
@@ -48,7 +53,7 @@ export default function HandledVaultTransferRequests(props: { requests: VaultTra
                         width: '130px',
                     },
                     {
-                        header: "Decision",
+                        header: props.decisionOnLabel,
                         render: request => <DateTimeCell dateTime={ request.decision!.decisionOn } />,
                         width: '130px',
                     },
