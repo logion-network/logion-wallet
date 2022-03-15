@@ -22,12 +22,12 @@ export default function VaultTransferRequests() {
                 {
                     key: "rejected",
                     title: "Rejected",
-                    render: () => <HandledVaultTransferRequests requests={ rejectedVaultTransferRequests || [] } />
+                    render: () => <HandledVaultTransferRequests requests={ rejectedVaultTransferRequests || [] } decisionOnLabel="Decision" />
                 },
                 {
                     key: "cancelled",
                     title: "Cancelled",
-                    render: () => <HandledVaultTransferRequests requests={ cancelledVaultTransferRequests || [] } />
+                    render: () => <HandledVaultTransferRequests requests={ cancelledVaultTransferRequests || [] } decisionOnLabel="Cancellation Date"/>
                 }
             ]}
             onSelect={ setCurrentTab }
