@@ -1,5 +1,5 @@
 import { prefixedLogBalance } from "../logion-chain/Balances";
-import { PrefixedNumber } from "../logion-chain/numbers";
+import { NONE, PrefixedNumber } from "../logion-chain/numbers";
 import { GREEN, RED } from "./ColorTheme";
 import Icon from "./Icon";
 import { Cell } from "./Table";
@@ -49,5 +49,23 @@ export function transferBalance(address: string, transaction: Transaction): Pref
         return amount.negate();
     } else {
         return amount;
+    }
+}
+
+export function fees(address: string, transaction: Transaction): PrefixedNumber {
+    const amount = prefixedLogBalance(transaction.fee);
+    if(transaction.from === address) {
+        return amount;
+    } else {
+        return new PrefixedNumber("0", NONE);
+    }
+}
+
+export function deposit(address: string, transaction: Transaction): PrefixedNumber {
+    const amount = prefixedLogBalance(transaction.reserved);
+    if(transaction.from === address) {
+        return amount;
+    } else {
+        return new PrefixedNumber("0", NONE);
     }
 }

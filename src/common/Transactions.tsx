@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 
-import { Coin, prefixedLogBalance, CoinBalance } from '../logion-chain/Balances';
+import { Coin, CoinBalance } from '../logion-chain/Balances';
 
 import { FullWidthPane } from './Dashboard';
 import Frame from './Frame';
@@ -16,7 +16,7 @@ import { useCommonContext } from './CommonContext';
 import WalletGauge from './WalletGauge';
 
 import './Transactions.css';
-import TransferAmountCell, { transferBalance } from './TransferAmountCell';
+import TransferAmountCell, { transferBalance, fees, deposit } from './TransferAmountCell';
 import AmountCell from './AmountCell';
 import { TransactionStatusCell, TransactionStatusCellDetails } from "./TransactionStatusCell";
 import Loader from './Loader';
@@ -130,7 +130,7 @@ function Content(props: ContentProps) {
                                 },
                                 {
                                     header: "Paid fees",
-                                    render: transaction => <AmountCell amount={ prefixedLogBalance(transaction.fee) } />,
+                                    render: transaction => <AmountCell amount={ fees(address, transaction) } />,
                                     align: 'right',
                                     width: width({
                                         onSmallScreen: "80px",
@@ -139,7 +139,7 @@ function Content(props: ContentProps) {
                                 },
                                 {
                                     header: "Deposit",
-                                    render: transaction => <AmountCell amount={ prefixedLogBalance(transaction.reserved) } />,
+                                    render: transaction => <AmountCell amount={ deposit(address, transaction) } />,
                                     align: 'right',
                                     width: width({
                                         onSmallScreen: "80px",

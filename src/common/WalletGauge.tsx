@@ -38,8 +38,9 @@ export default function WalletGauge(props: Props) {
     const [ amount, setAmount ] = useState("");
     const [ unit, setUnit ] = useState(NONE);
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
-    const [ transferDialogParams, setTransferDialogParams ] = useState<TransferDialogParams>({title: "", destination: true})
-    const { vaultAddress, sendButton } = props
+    const [ transferDialogParams, setTransferDialogParams ] = useState<TransferDialogParams>({title: "", destination: true});
+    const { vaultAddress, sendButton } = props;
+    const [ transferError, setTransferError ] = useState(false);
 
     const transferCallback = useCallback(() => {
         const signAndSubmit: SignAndSubmit = (setResult, setError) => transfer({
@@ -102,15 +103,16 @@ export default function WalletGauge(props: Props) {
                             {
                                 id: 'cancel',
                                 buttonText: "Cancel",
-                                buttonVariant: 'secondary',
-                                callback: cancelCallback
+                                buttonVariant: 'secondary-polkadot',
+                                callback: cancelCallback,
+                                disabled: signAndSubmit !== null && !transferError
                             },
                             {
                                 id: 'transfer',
                                 buttonText: "Transfer",
-                                buttonVariant: 'primary',
+                                buttonVariant: 'polkadot',
                                 callback: transferCallback,
-                                disabled: status !== Status.TRANSFERRING || !isValidAccountId(api!, destination) || isNaN(Number(amount)) || destination === accounts!.current!.address
+                                disabled: signAndSubmit !== null || !isValidAccountId(api!, destination) || isNaN(Number(amount)) || Number(amount) === 0 || destination === accounts!.current!.address
                             }
                         ] }
                         size="lg"
@@ -175,8 +177,7 @@ export default function WalletGauge(props: Props) {
                             successMessage="Transfer successful."
                             signAndSubmit={ signAndSubmit }
                             onSuccess={ successCallback }
-                            onError={ () => {
-                            } }
+                            onError={ () => setTransferError(true) }
                         />
                         {
                             (status === Status.EXPECTING_NEW_TRANSACTION || status === Status.WAITING_FOR_NEW_TRANSACTION) &&

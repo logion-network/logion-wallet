@@ -125,6 +125,20 @@ function transactionType(transaction: Transaction, address: string): string {
         } else {
             return "Other";
         }
+    } else if(transaction.pallet === "vault") {
+        if(transaction.method === "requestCall") {
+            return "Vault operation requested";
+        } else if(transaction.method === "approveCall") {
+            return "Vault operation approved";
+        } else {
+            return "Other";
+        }
+    } else if(transaction.pallet === "multisig") {
+        if(transaction.method === "cancelAsMulti") {
+            return "Vault operation cancelled";
+        } else {
+            return "Other";
+        }
     } else {
         return 'Other';
     }

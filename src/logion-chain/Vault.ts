@@ -36,7 +36,13 @@ export async function requestVaultTransfer(parameters: RequestVaultTransferParam
     } = parameters;
 
     const actualAmount = amount.convertTo(LGNT_SMALLEST_UNIT).coefficient.unnormalize();
-    const { call, weight } = await transferCallAndWeight(api, signerId, recoveryConfig, BigInt(actualAmount), destination);
+    const { call, weight, multisigOrigin } = await transferCallAndWeight(api, signerId, recoveryConfig, BigInt(actualAmount), destination);
+
+    const existingMultisig = await api.query.multisig.multisigs(multisigOrigin, call.method.hash);
+    if(existingMultisig.isSome) {
+        errorCallback("A similar transfer has already been requested and is pending");
+        return { unsubscriber: Promise.resolve(() => {}) };
+    }
 
     const sortedLegalOfficers = [ ...recoveryConfig.legalOfficers ].sort();
     const unsubscriber = signAndSend({
@@ -54,14 +60,15 @@ async function transferCallAndWeight(
     recoveryConfig: RecoveryConfig,
     amount: bigint,
     destination: string,
-): Promise<{ call: SubmittableExtrinsic, weight: Weight }> {
+): Promise<{ call: SubmittableExtrinsic, weight: Weight, multisigOrigin: string }> {
     const multisigOrigin = getVaultAddress(requesterAddress, recoveryConfig);
     const call = transferCall(api, destination, amount);
     const dispatchInfo = await call.paymentInfo(multisigOrigin);
     const maxWeight = dispatchInfo.weight;
     return {
         call,
-        weight: maxWeight
+        weight: maxWeight,
+        multisigOrigin
     }
 }
 
@@ -142,7 +149,7 @@ export function cancelVaultTransfer(parameters: CancelVaultTransferParameters): 
     const sortedLegalOfficers = [ ...recoveryConfig.legalOfficers ].sort();
     return signAndSend({
         signerId,
-        submittable: api.tx.multisig.cancelAsMulti(2, sortedLegalOfficers, {height: block, index}, call.hash),
+        submittable: api.tx.multisig.cancelAsMulti(2, sortedLegalOfficers, {height: block, index}, call.method.hash),
         callback,
         errorCallback,
     });

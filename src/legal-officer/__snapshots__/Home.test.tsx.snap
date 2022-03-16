@@ -60,6 +60,7 @@ exports[`renders 1`] = `
                     "createdOn": "2021-07-28T12:30:00.000",
                     "fee": "125000",
                     "from": "from",
+                    "id": "id",
                     "method": "method",
                     "pallet": "pallet",
                     "reserved": "0",
