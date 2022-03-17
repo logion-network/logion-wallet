@@ -9,14 +9,14 @@ import { Coin, CoinBalance } from '../logion-chain/Balances';
 import { FullWidthPane } from './Dashboard';
 import Frame from './Frame';
 import Icon from './Icon';
-import Table, { DateCell, Cell, EmptyTableMessage } from './Table';
+import Table, { DateCell, Cell, EmptyTableMessage, Column } from './Table';
 
 import { useCommonContext } from './CommonContext';
 
 import WalletGauge from './WalletGauge';
 
 import './Transactions.css';
-import TransferAmountCell, { transferBalance, fees, deposit } from './TransferAmountCell';
+import TransferAmountCell, { transferBalance, fees } from './TransferAmountCell';
 import AmountCell from './AmountCell';
 import { TransactionStatusCell, TransactionStatusCellDetails } from "./TransactionStatusCell";
 import Loader from './Loader';
@@ -80,6 +80,60 @@ function Content(props: ContentProps) {
     }
 
     const balance = balances.filter(balance => balance.coin.id === coinId)[0];
+    const columns: Column<Transaction>[] = [
+        {
+            header: "Status",
+            render: transaction => <TransactionStatusCell transaction={ transaction } />,
+            renderDetails: transaction => <TransactionStatusCellDetails transaction={ transaction } />,
+            width: width({
+                onSmallScreen: "80px",
+                otherwise: "100px"
+            }),
+        },
+        {
+            header: "Transaction date",
+            render: transaction => <DateCell dateTime={ transaction.createdOn } />,
+            width: width({
+                onSmallScreen: "100px",
+                otherwise: "150px"
+            }),
+        },
+        {
+            header: <FromToHeader />,
+            render: transaction => <FromToCell from={ transaction.from }
+                                               to={ transaction.to } />,
+        },
+        {
+            header: "Transaction type",
+            render: transaction => <Cell content={ enrichTransactionType(transaction, vaultAddress) } />,
+            width: width({
+                onSmallScreen: "180px",
+                otherwise: "250px"
+            }),
+        },
+        {
+            header: "Amount",
+            render: transaction => <TransferAmountCell amount={ transferBalance(address, transaction) } />,
+            align: 'right',
+            width: width({
+                onSmallScreen: "100px",
+                otherwise: "120px"
+            }),
+        },
+    ];
+
+    if(props.type === 'Wallet') {
+        columns.push({
+            header: "Paid fees",
+            render: transaction => <AmountCell amount={ fees(address, transaction) } />,
+            align: 'right',
+            width: width({
+                onSmallScreen: "80px",
+                otherwise: "120px"
+            }),
+        });
+    }
+
     return (
         <>
             <Row>
@@ -88,65 +142,7 @@ function Content(props: ContentProps) {
                         title={ <TransactionsFrameTitle coin={ balance.coin } vaultOutButton={ type === "Vault" }/> }
                     >
                         <Table
-                            columns={ [
-                                {
-                                    header: "Status",
-                                    render: transaction => <TransactionStatusCell transaction={ transaction } />,
-                                    renderDetails: transaction => <TransactionStatusCellDetails transaction={ transaction } />,
-                                    width: width({
-                                        onSmallScreen: "80px",
-                                        otherwise: "100px"
-                                    }),
-                                },
-                                {
-                                    header: "Transaction date",
-                                    render: transaction => <DateCell dateTime={ transaction.createdOn } />,
-                                    width: width({
-                                        onSmallScreen: "100px",
-                                        otherwise: "150px"
-                                    }),
-                                },
-                                {
-                                    header: <FromToHeader />,
-                                    render: transaction => <FromToCell from={ transaction.from }
-                                                                       to={ transaction.to } />,
-                                },
-                                {
-                                    header: "Transaction type",
-                                    render: transaction => <Cell content={ enrichTransactionType(transaction, vaultAddress) } />,
-                                    width: width({
-                                        onSmallScreen: "180px",
-                                        otherwise: "250px"
-                                    }),
-                                },
-                                {
-                                    header: "Amount",
-                                    render: transaction => <TransferAmountCell amount={ transferBalance(address, transaction) } />,
-                                    align: 'right',
-                                    width: width({
-                                        onSmallScreen: "100px",
-                                        otherwise: "120px"
-                                    }),
-                                },
-                                {
-                                    header: "Paid fees",
-                                    render: transaction => <AmountCell amount={ fees(address, transaction) } />,
-                                    align: 'right',
-                                    width: width({
-                                        onSmallScreen: "80px",
-                                        otherwise: "120px"
-                                    }),
-                                },
-                                {
-                                    header: "Deposit",
-                                    render: transaction => <AmountCell amount={ deposit(address, transaction) } />,
-                                    align: 'right',
-                                    width: width({
-                                        onSmallScreen: "80px",
-                                        otherwise: "120px"
-                                    }),
-                                }
-                            ]}
+                            columns={ columns }
                             data={ transactions }
                             renderEmpty={ () => <EmptyTableMessage>No transaction yet</EmptyTableMessage> }
                         />

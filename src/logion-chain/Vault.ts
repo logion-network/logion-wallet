@@ -13,7 +13,6 @@ const THRESHOLD = 2;
 export function getVaultAddress(requesterAddress: string, recoveryConfig: RecoveryConfig): string {
     const signatories: string[] = [ requesterAddress, ...recoveryConfig.legalOfficers ].sort()
     const vaultAddress = encodeAddress(createKeyMulti(signatories, THRESHOLD));
-    console.log("Vault address is %s for signatories: %s", vaultAddress, signatories)
     return vaultAddress;
 }
 
