@@ -1,3 +1,4 @@
+import { BN } from "bn.js";
 import { UUID } from "../logion-chain/UUID";
 
 export class WsProvider {
@@ -90,7 +91,12 @@ export class ApiPromise {
     query = {
         system: {
             events: (callback: ((issuedEvents: any) => void)) => { eventsCallback = callback },
-            account: () => ({data: {free: "42", reserved: "0"}}),
+            account: () => ({
+                data: {
+                    free: new BN("42"),
+                    reserved: new BN("0")
+                }
+            }),
         },
         assets: {
             asset: (id: any) => {

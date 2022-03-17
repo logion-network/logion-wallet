@@ -16,6 +16,7 @@ export interface GetAccountDataParameters {
 export interface AccountData {
     available: string,
     reserved: string,
+    total: string,
 }
 
 export async function getAccountData(parameters: GetAccountDataParameters): Promise<AccountData> {
@@ -29,6 +30,7 @@ export async function getAccountData(parameters: GetAccountDataParameters): Prom
     return {
         available: accountData.data.free.toString(),
         reserved: accountData.data.reserved.toString(),
+        total: accountData.data.free.add(accountData.data.reserved).toString(),
     };
 }
 export interface Coin {
@@ -56,7 +58,7 @@ export async function getBalances(parameters: GetAccountDataParameters): Promise
         accountId,
     });
 
-    const logAvailable = scientificLogBalance(data.available).optimizeScale(3);
+    const logAvailable = scientificLogBalance(data.total).optimizeScale(3);
     const logPrefixedAvailable = convertToPrefixed(logAvailable);
     const logLevel = logAvailable.divideBy(ARTIFICIAL_MAX_BALANCE).toNumber();
 
