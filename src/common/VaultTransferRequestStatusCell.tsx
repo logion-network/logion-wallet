@@ -23,13 +23,17 @@ export default function VaultTransferRequestStatusCell(props: Props) {
         icon = { id: "pending" };
         text = "Pending";
     } else if(props.status === "CANCELLED") {
-        color = ORANGE;
+        color = RED;
         icon = undefined;
         if(props.viewer === 'Wallet User') {
             text = "Cancelled";
         } else {
             text = "Cancelled by user";
         }
+    } else if(props.status === "REJECTED_CANCELLED") {
+        color = RED;
+        icon = undefined;
+        text = "Rejected";
     } else if(props.status === "ACCEPTED") {
         color = GREEN;
         icon = {id: "activated"}

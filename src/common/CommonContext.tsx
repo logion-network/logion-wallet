@@ -527,7 +527,7 @@ export function CommonContextProvider(props: Props) {
 
                 const cancelledVaultTransferRequestsResult = await vaultTransferRequestsMultiClient.fetch((axios, endpoint) => new VaultApi(axios, endpoint.legalOfficer).getVaultTransferRequests({
                     ...vaultSpecificationFragment,
-                    statuses: [ "CANCELLED" ]
+                    statuses: [ "CANCELLED", "REJECTED_CANCELLED" ]
                 }));
                 const cancelledVaultTransferRequests = aggregateArrays(cancelledVaultTransferRequestsResult);
 

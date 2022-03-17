@@ -2,9 +2,10 @@ import { useCallback, useState } from "react";
 import { SignAndSubmit } from "../ExtrinsicSubmitter";
 import { useLogionChain } from "../logion-chain";
 import { prefixedLogBalance, SYMBOL } from "../logion-chain/Balances";
-import { VaultTransferRequest } from "../vault/VaultApi";
+import { VaultApi, VaultTransferRequest } from "../vault/VaultApi";
 import AmountCell from "./AmountCell";
-import Clickable from "./Clickable";
+import Button from "./Button";
+import ButtonGroup from "./ButtonGroup";
 import { useCommonContext } from "./CommonContext";
 import Icon from "./Icon";
 
@@ -15,10 +16,10 @@ import Table, { Cell, DateTimeCell, EmptyTableMessage } from "./Table";
 import { cancelVaultTransferCallback, onCancelVaultTransferSuccessCallback } from "./VaultTransferRequestsCallbacks";
 import VaultTransferRequestStatusCell from "./VaultTransferRequestStatusCell";
 
-export default function PendingVaultTransferRequests() {
+export default function RejectedVaultTransferRequests() {
     const { api } = useLogionChain();
-    const { pendingVaultTransferRequests, axiosFactory, refresh, accounts } = useCommonContext();
     const { width } = useResponsiveContext();
+    const { rejectedVaultTransferRequests, axiosFactory, refresh, accounts } = useCommonContext();
     const [ requestToCancel, setRequestToCancel ] = useState<VaultTransferRequest | null>(null);
     const [ cancelFailed, setCancelFailed ] = useState(false);
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
@@ -38,7 +39,16 @@ export default function PendingVaultTransferRequests() {
         setRequestToCancel
     }), [ requestToCancel, axiosFactory, setRequestToCancel, refresh ]);
 
-    if(!pendingVaultTransferRequests) {
+    const resubmitRequestCallback = useCallback((request: VaultTransferRequest) => {
+        (async function() {
+            const legalOfficer = request.legalOfficerAddress;
+            const api = new VaultApi(axiosFactory!(legalOfficer), legalOfficer);
+            await api.resubmitVaultTransferRequest(request.id);
+            refresh!();
+        })()
+    }, [ axiosFactory, refresh ]);
+
+    if(!rejectedVaultTransferRequests) {
         return null;
     }
 
@@ -76,19 +86,33 @@ export default function PendingVaultTransferRequests() {
                         width: '130px',
                     },
                     {
-                        header: "",
+                        header: "Decision",
+                        render: request => <DateTimeCell dateTime={ request.decision!.decisionOn } />,
+                        width: '130px',
+                    },
+                    {
+                        header: "Submit again?",
                         render: request => (
-                            <Cell content={ <Clickable
-                                onClick={ () => setRequestToCancel(request) }
-                            >
-                                <Icon icon={{id: "ko"}} />
-                            </Clickable> } />
+                            <ButtonGroup aria-label="actions">
+                                <Button
+                                    onClick={ cancelRequestCallback }
+                                    variant="none"
+                                >
+                                    <Icon icon={{id: "ko"}} height='40px' />
+                                </Button>
+                                <Button
+                                    onClick={ () => resubmitRequestCallback(request) }
+                                    variant="none"
+                                >
+                                    <Icon icon={{id: "ok"}} height='40px' />
+                                </Button>
+                            </ButtonGroup>
                         ),
                         width: '130px',
                     },
                 ]}
-                data={ pendingVaultTransferRequests }
-                renderEmpty={ () => <EmptyTableMessage>No pending vault-out transfers</EmptyTableMessage> }
+                data={ rejectedVaultTransferRequests }
+                renderEmpty={ () => <EmptyTableMessage>No request to display</EmptyTableMessage> }
             />
             <RequestToCancel
                 cancelFailed={ cancelFailed }
