@@ -414,33 +414,12 @@ function closestPrefix(tenExponent: number): UnitPrefix {
     if((to - from) <= 1) {
         candidate = from;
     }
-    if(candidate === 0) {
-        const candidateDistance = Math.abs(SORTED_UNITS[candidate].tenExponent - tenExponent);
-        const nextDistance = Math.abs(SORTED_UNITS[candidate + 1].tenExponent - tenExponent);
-        if(nextDistance < candidateDistance) {
-            return SORTED_UNITS[candidate + 1];
-        } else {
-            return SORTED_UNITS[candidate];
-        }
-    } else if(candidate === SORTED_UNITS.length - 1) {
-        const candidateDistance = Math.abs(SORTED_UNITS[candidate].tenExponent - tenExponent);
-        const previousDistance = Math.abs(SORTED_UNITS[candidate - 1].tenExponent - tenExponent);
-        if(previousDistance < candidateDistance) {
-            return SORTED_UNITS[candidate - 1];
-        } else {
-            return SORTED_UNITS[candidate];
-        }
+    if(candidate >= SORTED_UNITS.length - 1) {
+        return SORTED_UNITS[SORTED_UNITS.length - 1];
+    } else if(SORTED_UNITS[candidate].tenExponent === tenExponent) {
+        return SORTED_UNITS[candidate];
     } else {
-        const candidateDistance = Math.abs(SORTED_UNITS[candidate].tenExponent - tenExponent);
-        const previousDistance = Math.abs(SORTED_UNITS[candidate - 1].tenExponent - tenExponent);
-        const nextDistance = Math.abs(SORTED_UNITS[candidate + 1].tenExponent - tenExponent);
-        if(previousDistance < candidateDistance && previousDistance < nextDistance) {
-            return SORTED_UNITS[candidate - 1];
-        } else if(nextDistance < candidateDistance && nextDistance < previousDistance) {
-            return SORTED_UNITS[candidate + 1];
-        } else {
-            return SORTED_UNITS[candidate];
-        }
+        return SORTED_UNITS[candidate + 1];
     }
 }
 
