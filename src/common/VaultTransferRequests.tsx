@@ -2,11 +2,12 @@ import { useState } from "react";
 import { useCommonContext } from "./CommonContext";
 import HandledVaultTransferRequests from "./HandledVaultTransferRequests";
 import PendingVaultTransferRequests from "./PendingVaultTransferRequests";
+import RejectedVaultTransferRequests from "./RejectedVaultTransferRequests";
 
 import Tabs from "./Tabs";
 
 export default function VaultTransferRequests() {
-    const { cancelledVaultTransferRequests, rejectedVaultTransferRequests } = useCommonContext();
+    const { cancelledVaultTransferRequests } = useCommonContext();
     const [ currentTab, setCurrentTab ] = useState("pending");
 
     return (
@@ -22,7 +23,7 @@ export default function VaultTransferRequests() {
                 {
                     key: "rejected",
                     title: "Rejected",
-                    render: () => <HandledVaultTransferRequests requests={ rejectedVaultTransferRequests || [] } decisionOnLabel="Decision" />
+                    render: () => <RejectedVaultTransferRequests />
                 },
                 {
                     key: "cancelled",

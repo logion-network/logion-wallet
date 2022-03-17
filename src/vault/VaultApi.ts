@@ -2,7 +2,7 @@ import { AxiosInstance } from "axios";
 import UserIdentity from "../common/types/Identity";
 import PostalAddress from "../common/types/PostalAddress";
 
-export type VaultTransferRequestStatus = "ACCEPTED" | "PENDING" | "REJECTED" | "CANCELLED";
+export type VaultTransferRequestStatus = "ACCEPTED" | "PENDING" | "REJECTED" | "CANCELLED" | "REJECTED_CANCELLED";
 
 export interface VaultTransferRequestDecision {
     decisionOn: string;
@@ -69,7 +69,11 @@ export class VaultApi {
         return await this.axios.post(`/api/vault-transfer-request/${requestId}/accept`);
     }
 
-    async rejectVaultTransferRequest(requestId: string): Promise<void> {
-        return await this.axios.post(`/api/vault-transfer-request/${requestId}/reject`);
+    async rejectVaultTransferRequest(requestId: string, rejectReason: string): Promise<void> {
+        return await this.axios.post(`/api/vault-transfer-request/${requestId}/reject`, { rejectReason });
+    }
+
+    async resubmitVaultTransferRequest(requestId: string): Promise<void> {
+        return await this.axios.post(`/api/vault-transfer-request/${requestId}/resubmit`);
     }
 }

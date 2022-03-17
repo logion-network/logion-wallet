@@ -66,10 +66,10 @@ export default function PendingVaultTransferRequests() {
     const rejectRequestCallback = useCallback(async () => {
         const legalOfficer = requestToReject!.legalOfficerAddress;
         const api = new VaultApi(axiosFactory!(legalOfficer), legalOfficer);
-        await api.acceptVaultTransferRequest(requestToReject!.id);
+        await api.rejectVaultTransferRequest(requestToReject!.id, reason);
         setRequestToReject(null);
         refresh!();
-    }, [ requestToReject, axiosFactory, setRequestToReject, refresh ]);
+    }, [ requestToReject, axiosFactory, setRequestToReject, refresh, reason ]);
 
     if(!pendingVaultTransferRequests) {
         return null;
