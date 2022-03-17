@@ -126,6 +126,7 @@ export const DEFAULT_COIN_BALANCE: CoinBalance = {
 };
 
 export const DEFAULT_TRANSACTION: Transaction = {
+    id: "id",
     from: "from",
     to: "to",
     pallet: "pallet",

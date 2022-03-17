@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
 import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
 import { useLogionChain } from "../logion-chain";
-import { prefixedLogBalance, SYMBOL } from "../logion-chain/Balances";
-import { NONE, PrefixedNumber } from "../logion-chain/numbers";
+import { LGNT_SMALLEST_UNIT, prefixedLogBalance, SYMBOL } from "../logion-chain/Balances";
+import { PrefixedNumber } from "../logion-chain/numbers";
 import { getRecoveryConfig } from "../logion-chain/Recovery";
 import { cancelVaultTransfer } from "../logion-chain/Vault";
 import { VaultApi, VaultTransferRequest } from "../vault/VaultApi";
@@ -31,7 +31,7 @@ export default function PendingVaultTransferRequests() {
             api: api!,
             accountId: signerId
         })
-        const amount = new PrefixedNumber(requestToCancel!.amount, NONE);
+        const amount = new PrefixedNumber(requestToCancel!.amount, LGNT_SMALLEST_UNIT);
         const signAndSubmit: SignAndSubmit = (setResult, setError) => cancelVaultTransfer({
             api: api!,
             callback: setResult,
@@ -111,14 +111,14 @@ export default function PendingVaultTransferRequests() {
                 actions={[
                     {
                         buttonText: "Cancel",
-                        buttonVariant: "secondary",
+                        buttonVariant: "secondary-polkadot",
                         id: "cancel",
-                        callback: () => setRequestToCancel(null),
+                        callback: () => { setRequestToCancel(null); setSignAndSubmit(null) },
                         disabled: signAndSubmit !== null && !cancelFailed
                     },
                     {
                         buttonText: "Proceed",
-                        buttonVariant: "primary",
+                        buttonVariant: "polkadot",
                         id: "proceed",
                         callback: () => cancelRequestCallback(),
                         disabled: signAndSubmit !== null

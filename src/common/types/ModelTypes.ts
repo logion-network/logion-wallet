@@ -29,6 +29,7 @@ export interface ProtectionRequest {
 export type TransferDirection = "Sent" | "Received" | "None"
 
 export interface Transaction {
+    id: string,
     from: string,
     to: string,
     pallet: string,

@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import AmountControl, { Amount, validateAmount } from "../common/AmountControl";
 import Button from "../common/Button";
@@ -18,6 +18,7 @@ import { isValidAccountId } from '../logion-chain/Accounts';
 import { buildOptions } from '../wallet-user/trust-protection/SelectLegalOfficer';
 import { Form } from "react-bootstrap";
 import { VaultApi } from "./VaultApi";
+import { LegalOfficer } from "../directory/DirectoryApi";
 
 interface FormValues {
     legalOfficer: string;
@@ -33,6 +34,22 @@ export default function VaultOutRequest() {
     const [ signAndSubmit, setSignAndSubmit ] = useState<AsyncSignAndSubmit>(null);
     const [ formValues, setFormValues ] = useState<FormValues | null>(null);
     const [ failed, setFailed ] = useState(false);
+    const [ candidates, setCandidates ] = useState<LegalOfficer[]>([]);
+
+    useEffect(() => {
+        if(accounts && api) {
+            (async function() {
+                const accountId = accounts!.current!.address;
+                const recoveryConfig = await getRecoveryConfig({
+                    api: api!,
+                    accountId
+                });
+                if(availableLegalOfficers && recoveryConfig) {
+                    setCandidates(availableLegalOfficers.filter(legalOfficer => recoveryConfig.legalOfficers.includes(legalOfficer.address)));
+                }
+            })();
+        }
+    }, [ accounts, api, availableLegalOfficers, setCandidates ]);
 
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>({
         defaultValues: {
@@ -203,7 +220,7 @@ export default function VaultOutRequest() {
                                 render={({ field }) => (
                                     <Select
                                         isInvalid={ !!errors.legalOfficer?.message }
-                                        options={ buildOptions(availableLegalOfficers) }
+                                        options={ buildOptions(candidates) }
                                         value={ field.value }
                                         onChange={ field.onChange }
                                     />
