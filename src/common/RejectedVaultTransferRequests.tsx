@@ -13,6 +13,7 @@ import LegalOfficerName from "./LegalOfficerNameCell";
 import RequestToCancel from "./RequestToCancel";
 import { useResponsiveContext } from "./Responsive";
 import Table, { Cell, DateTimeCell, EmptyTableMessage } from "./Table";
+import VaultTransferRequestDetails from "./VaultTransferDetails";
 import { cancelVaultTransferCallback, onCancelVaultTransferSuccessCallback } from "./VaultTransferRequestsCallbacks";
 import VaultTransferRequestStatusCell from "./VaultTransferRequestStatusCell";
 
@@ -60,6 +61,7 @@ export default function RejectedVaultTransferRequests() {
                         header: "Legal Officer",
                         render: request => <LegalOfficerName address={ request.legalOfficerAddress } />,
                         align: 'left',
+                        renderDetails: request => <VaultTransferRequestDetails request={ request } />
                     },
                     {
                         header: "Type",
