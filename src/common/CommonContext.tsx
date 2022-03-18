@@ -523,30 +523,30 @@ export function CommonContextProvider(props: Props) {
                     ...vaultSpecificationFragment,
                     statuses: [ "PENDING" ]
                 }));
-                const pendingVaultTransferRequests = aggregateArrays(vaultTransferRequestsResult);
+                const pendingVaultTransferRequests = aggregateArrays(vaultTransferRequestsResult).sort((a, b) => b.createdOn.localeCompare(a.createdOn));
 
                 const cancelledVaultTransferRequestsResult = await vaultTransferRequestsMultiClient.fetch((axios, endpoint) => new VaultApi(axios, endpoint.legalOfficer).getVaultTransferRequests({
                     ...vaultSpecificationFragment,
                     statuses: [ "CANCELLED", "REJECTED_CANCELLED" ]
                 }));
-                const cancelledVaultTransferRequests = aggregateArrays(cancelledVaultTransferRequestsResult);
+                const cancelledVaultTransferRequests = aggregateArrays(cancelledVaultTransferRequestsResult).sort((a, b) => b.createdOn.localeCompare(a.createdOn));
 
                 const rejectedVaultTransferRequestsResult = await vaultTransferRequestsMultiClient.fetch((axios, endpoint) => new VaultApi(axios, endpoint.legalOfficer).getVaultTransferRequests({
                     ...vaultSpecificationFragment,
                     statuses: [ "REJECTED" ]
                 }));
-                const rejectedVaultTransferRequests = aggregateArrays(rejectedVaultTransferRequestsResult);
+                const rejectedVaultTransferRequests = aggregateArrays(rejectedVaultTransferRequestsResult).sort((a, b) => b.createdOn.localeCompare(a.createdOn));
 
                 const acceptedVaultTransferRequestsResult = await vaultTransferRequestsMultiClient.fetch((axios, endpoint) => new VaultApi(axios, endpoint.legalOfficer).getVaultTransferRequests({
                     ...vaultSpecificationFragment,
                     statuses: [ "ACCEPTED" ]
                 }));
-                const acceptedVaultTransferRequests = aggregateArrays(acceptedVaultTransferRequestsResult);
+                const acceptedVaultTransferRequests = aggregateArrays(acceptedVaultTransferRequestsResult).sort((a, b) => b.createdOn.localeCompare(a.createdOn));
 
                 const vaultTransferRequestsHistory = cancelledVaultTransferRequests
                     .concat(rejectedVaultTransferRequests)
                     .concat(acceptedVaultTransferRequests)
-                    .sort((a, b) => a.createdOn.localeCompare(b.createdOn));
+                    .sort((a, b) => b.createdOn.localeCompare(a.createdOn));
 
                 let nodesUp: Endpoint[] | undefined;
                 let nodesDown: Endpoint[] | undefined;

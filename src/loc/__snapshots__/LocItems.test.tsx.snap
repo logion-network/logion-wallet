@@ -117,7 +117,7 @@ exports[`LocItems renders with single draft item 1`] = `
           }
         >
           <div
-            className="Col"
+            className="Col has-details"
             style={
               Object {
                 "backgroundColor": "#152665",

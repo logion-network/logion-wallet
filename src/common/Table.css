@@ -82,6 +82,10 @@
     white-space: nowrap;
 }
 
+.Table .Col.has-details .regular-cell {
+    margin-right: 10px;
+}
+
 .Table .date-cell {
     font-size: 0.9rem;
     line-height: 20px;

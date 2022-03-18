@@ -61,12 +61,12 @@ export default function RejectedVaultTransferRequests() {
                         header: "Legal Officer",
                         render: request => <LegalOfficerName address={ request.legalOfficerAddress } />,
                         align: 'left',
-                        renderDetails: request => <VaultTransferRequestDetails request={ request } />
+                        renderDetails: request => <VaultTransferRequestDetails request={ request } />,
                     },
                     {
                         header: "Type",
                         render: () => <Cell content={`${SYMBOL}`} />,
-                        width: '80px',
+                        width: '70px',
                     },
                     {
                         header: "Amount",
@@ -97,7 +97,7 @@ export default function RejectedVaultTransferRequests() {
                         render: request => (
                             <ButtonGroup aria-label="actions">
                                 <Button
-                                    onClick={ cancelRequestCallback }
+                                    onClick={ () => setRequestToCancel(request) }
                                     variant="none"
                                 >
                                     <Icon icon={{id: "ko"}} height='40px' />

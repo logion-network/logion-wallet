@@ -108,8 +108,15 @@ export interface Props<T> {
 }
 
 function columnClassName<T>(column: Column<T>): (string | undefined) {
+    const classes: string[] = [];
     if(column.splitAfter !== undefined && column.splitAfter) {
-        return "split-after";
+        classes.push("split-after");
+    }
+    if(column.renderDetails) {
+        classes.push("has-details");
+    }
+    if(classes.length > 0) {
+        return classes.join(" ");
     } else {
         return undefined;
     }
@@ -257,7 +264,7 @@ export default function Table<T>(props: Props<T>) {
                                             style={{
                                                 width: rowComputedWidths[colIndex],
                                                 fontSize: fontSize(col),
-                                                backgroundColor: className === undefined ? colorTheme.table.row.background : undefined,
+                                                backgroundColor: !className || !className.includes("split-after") ? colorTheme.table.row.background : undefined,
                                                 textAlign: col.align === undefined ? 'center' : col.align,
                                             }}
                                         >
