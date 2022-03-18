@@ -8,7 +8,7 @@ import {
     KILO,
     ScientificNumber,
     MEGA,
-    ATTO, PICO,
+    ATTO, PICO, convertToPrefixed,
 } from './numbers';
 
 test("amount given balance", () => {
@@ -233,3 +233,23 @@ test("subtract ATTO", () => {
     expect(result.coefficient.toNumber()).toBe(368.999999874999845)
 })
 
+test("convertToPrefixed finds exact prefix", () => {
+    const scientific = new ScientificNumber("110.0000099", -6);
+    const prefixed = convertToPrefixed(scientific);
+    expect(prefixed.coefficient.toString()).toBe("110.0000099");
+    expect(prefixed.prefix.symbol).toBe("µ");
+})
+
+test("convertToPrefixed takes smalles if non-exact", () => {
+    const scientific = new ScientificNumber("1100.000099", -7);
+    const prefixed = convertToPrefixed(scientific);
+    expect(prefixed.coefficient.toString()).toBe("110.0000099");
+    expect(prefixed.prefix.symbol).toBe("µ");
+})
+
+test("convertToPrefixed limits to largest prefix", () => {
+    const scientific = new ScientificNumber("1", 19);
+    const prefixed = convertToPrefixed(scientific);
+    expect(prefixed.coefficient.toString()).toBe("10.");
+    expect(prefixed.prefix.symbol).toBe("E");
+})
