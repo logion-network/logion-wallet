@@ -4,7 +4,7 @@ import { useLogionChain } from "../../logion-chain";
 import { useCommonContext } from "../../common/CommonContext";
 import { useUserContext } from "../UserContext";
 import { CoinBalance, getBalances, LGNT_SMALLEST_UNIT } from "../../logion-chain/Balances";
-import { PrefixedNumber, MILLI } from "../../logion-chain/numbers";
+import { PrefixedNumber, NONE } from "../../logion-chain/numbers";
 import ExtrinsicSubmitter, { AsyncSignAndSubmit, SuccessfulTransaction } from "../../ExtrinsicSubmitter";
 import { signAndSendAsRecovered } from "../../logion-chain/Recovery";
 import { useForm, Controller } from "react-hook-form";
@@ -86,7 +86,7 @@ export default function VaultRecoveryProcessTab() {
 
     const amountToRecover = useMemo<PrefixedNumber>(() => recoveredCoinBalance?.balance ?
             recoveredCoinBalance?.balance :
-            new PrefixedNumber("0", MILLI),
+            new PrefixedNumber("0", NONE),
         [ recoveredCoinBalance ])
 
     const onTransferSuccessCallback = useCallback(async (_id: string, submittable: SuccessfulTransaction) => {
@@ -106,14 +106,15 @@ export default function VaultRecoveryProcessTab() {
     }, [ accounts, api, axiosFactory, legalOfficer, refresh, targetVaultAddress, clearFormCallback, amountToRecover ])
 
     const recoverCoin = useCallback(async (amount: PrefixedNumber) => {
-        const signAndSubmit: AsyncSignAndSubmit = (setResult, setError) => {
-            return buildVaultTransferCall({
-                api: api!,
-                requesterAddress: recoveredAddress!,
-                destination: targetVaultAddress!,
-                recoveryConfig: recoveryConfig!,
-                amount: amount,
-            }).then(call => {
+        const signAndSubmit: AsyncSignAndSubmit = async (setResult, setError) => {
+            try {
+                const call = await buildVaultTransferCall({
+                    api: api!,
+                    requesterAddress: recoveredAddress!,
+                    destination: targetVaultAddress!,
+                    recoveryConfig: recoveryConfig!,
+                    amount: amount,
+                })
                 const unsubscriber = signAndSendAsRecovered({
                     api: api!,
                     signerId: accounts!.current!.address,
@@ -123,13 +124,13 @@ export default function VaultRecoveryProcessTab() {
                     call
                 });
                 return { unsubscriber }
-            }).catch(reason => {
-                setError(reason)
+            } catch (error) {
+                setError(error)
                 return {
                     unsubscriber: Promise.resolve(() => {
                     })
                 }
-            })
+            }
         }
         setAsyncSignAndSubmit(() => signAndSubmit)
     }, [ api, accounts, recoveredAddress, recoveryConfig, targetVaultAddress ])
