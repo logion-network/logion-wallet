@@ -31,6 +31,7 @@ test("Recovered tokens can be transferred", async () => {
             symbol: 'DOT',
         },
         balance: new PrefixedNumber("100", MILLI),
+        available: new PrefixedNumber("100", MILLI),
         level: 1
     }
 

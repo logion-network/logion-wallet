@@ -4,7 +4,7 @@ import { AssetNameCell } from "../../common/Wallet";
 import Button from "../../common/Button";
 import React, { useState, useCallback, useEffect } from "react";
 import { CoinBalance, buildTransferCall, getBalances } from "../../logion-chain/Balances";
-import { PrefixedNumber, MILLI } from "../../logion-chain/numbers";
+import { PrefixedNumber, NONE } from "../../logion-chain/numbers";
 import ExtrinsicSubmitter, { SignAndSubmit } from "../../ExtrinsicSubmitter";
 import TransactionConfirmation, { Status } from "../../common/TransactionConfirmation";
 import Dialog from "../../common/Dialog";
@@ -28,7 +28,7 @@ export default function WalletRecoveryProcessTab() {
         if (balances === null && api !== null && recoveredAddress) {
             getBalances({ api, accountId: recoveredAddress })
                 .then(balances => {
-                    setBalances(balances.filter(balance => Number(balance.balance.toNumber()) > 0))
+                    setBalances(balances.filter(balance => Number(balance.available.toNumber()) > 0))
                 })
         }
     }, [ balances, setBalances, recoveredAddress, api ])
@@ -61,9 +61,9 @@ export default function WalletRecoveryProcessTab() {
         setBalances(null);
     }, [ setBalances, clearFormCallback ]);
 
-    const amountToRecover = recoveredCoinBalance?.balance ? recoveredCoinBalance?.balance : new PrefixedNumber("0", MILLI)
+    const amountToRecover = recoveredCoinBalance?.available ? recoveredCoinBalance?.available : new PrefixedNumber("0", NONE)
 
-    const coinBalances: CoinBalance[] = (balances !== null) ? balances.filter(coinBalance => Number(coinBalance.balance.toNumber()) > 0) : [];
+    const coinBalances: CoinBalance[] = (balances !== null) ? balances : [];
     return (
         <>
             <TransactionConfirmation
@@ -88,7 +88,7 @@ export default function WalletRecoveryProcessTab() {
                                     {
                                         header: "Balance",
                                         render: coinBalance => <Cell
-                                            content={ coinBalance.balance.coefficient.toFixedPrecision(2) } />,
+                                            content={ coinBalance.available.coefficient.toFixedPrecision(2) } />,
                                         width: "300px",
                                         align: 'right',
                                     },
