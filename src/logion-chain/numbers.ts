@@ -418,7 +418,7 @@ function closestPrefix(tenExponent: number): UnitPrefix {
     }
     if(candidate >= SORTED_UNITS.length - 1) {
         return SORTED_UNITS[SORTED_UNITS.length - 1];
-    } else if(SORTED_UNITS[candidate].tenExponent === tenExponent) {
+    } else if(SORTED_UNITS[candidate].tenExponent >= tenExponent) {
         return SORTED_UNITS[candidate];
     } else {
         return SORTED_UNITS[candidate + 1];

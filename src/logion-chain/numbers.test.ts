@@ -260,3 +260,10 @@ test("convertToPrefixed limits to largest prefix", () => {
     expect(prefixed.coefficient.toString()).toBe("10.");
     expect(prefixed.prefix.symbol).toBe("E");
 })
+
+test("convertToPrefixed finds atto with smaller", () => {
+    const scientific = new ScientificNumber("420", -19);
+    const prefixed = convertToPrefixed(scientific);
+    expect(prefixed.coefficient.toString()).toBe("42.");
+    expect(prefixed.prefix.symbol).toBe("a");
+})
