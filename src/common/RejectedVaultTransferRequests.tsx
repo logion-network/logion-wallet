@@ -15,7 +15,6 @@ import { useResponsiveContext } from "./Responsive";
 import Table, { Cell, DateTimeCell, EmptyTableMessage } from "./Table";
 import VaultTransferRequestDetails from "./VaultTransferDetails";
 import { cancelVaultTransferCallback, onCancelVaultTransferSuccessCallback } from "./VaultTransferRequestsCallbacks";
-import VaultTransferRequestStatusCell from "./VaultTransferRequestStatusCell";
 
 export default function RejectedVaultTransferRequests() {
     const { api } = useLogionChain();
@@ -58,6 +57,11 @@ export default function RejectedVaultTransferRequests() {
             <Table
                 columns={[
                     {
+                        header: "",
+                        render: () => <Cell content={ <Icon icon={{ id: "rejected" }} height="30px" /> } />,
+                        width: "50px",
+                    },
+                    {
                         header: "Legal Officer",
                         render: request => <LegalOfficerName address={ request.legalOfficerAddress } />,
                         align: 'left',
@@ -76,11 +80,6 @@ export default function RejectedVaultTransferRequests() {
                             onSmallScreen: "100px",
                             otherwise: "120px"
                         }),
-                    },
-                    {
-                        header: "Status",
-                        render: request => <VaultTransferRequestStatusCell status={ request.status } viewer="Wallet User" />,
-                        width: '150px',
                     },
                     {
                         header: "Creation date",

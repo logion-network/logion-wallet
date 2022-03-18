@@ -14,7 +14,7 @@ export default function VaultTransferRequestStatusCell(props: Props) {
     let icon;
     let text;
     let color;
-    if(props.status === "REJECTED") {
+    if(props.status === "REJECTED" || props.status === "REJECTED_CANCELLED") {
         color = RED;
         icon = { id: "rejected" };
         text = "Rejected";
@@ -24,16 +24,12 @@ export default function VaultTransferRequestStatusCell(props: Props) {
         text = "Pending";
     } else if(props.status === "CANCELLED") {
         color = RED;
-        icon = undefined;
+        icon = { id: "void" };
         if(props.viewer === 'Wallet User') {
             text = "Cancelled";
         } else {
             text = "Cancelled by user";
         }
-    } else if(props.status === "REJECTED_CANCELLED") {
-        color = RED;
-        icon = undefined;
-        text = "Rejected";
     } else if(props.status === "ACCEPTED") {
         color = GREEN;
         icon = {id: "activated"}

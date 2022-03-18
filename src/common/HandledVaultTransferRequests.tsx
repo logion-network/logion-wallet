@@ -1,21 +1,17 @@
 import { prefixedLogBalance, SYMBOL } from "../logion-chain/Balances";
-import { VaultTransferRequest } from "../vault/VaultApi";
 import AmountCell from "./AmountCell";
+import { useCommonContext } from "./CommonContext";
 
 import LegalOfficerName from "./LegalOfficerNameCell";
 import { useResponsiveContext } from "./Responsive";
 import Table, { Cell, DateTimeCell, EmptyTableMessage } from "./Table";
 import VaultTransferRequestStatusCell from "./VaultTransferRequestStatusCell";
 
-interface Props {
-    requests: VaultTransferRequest[] | null,
-    decisionOnLabel: string
-}
-
-export default function HandledVaultTransferRequests(props: Props) {
+export default function HandledVaultTransferRequests() {
     const { width } = useResponsiveContext();
+    const { vaultTransferRequestsHistory } = useCommonContext();
 
-    if(!props.requests) {
+    if(!vaultTransferRequestsHistory) {
         return null;
     }
 
@@ -53,12 +49,12 @@ export default function HandledVaultTransferRequests(props: Props) {
                         width: '130px',
                     },
                     {
-                        header: props.decisionOnLabel,
+                        header: "Decision",
                         render: request => <DateTimeCell dateTime={ request.decision!.decisionOn } />,
                         width: '130px',
                     },
                 ]}
-                data={ props.requests }
+                data={ vaultTransferRequestsHistory }
                 renderEmpty={ () => <EmptyTableMessage>No request to display</EmptyTableMessage> }
             />
         </>

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useCommonContext } from "./CommonContext";
 import HandledVaultTransferRequests from "./HandledVaultTransferRequests";
 import PendingVaultTransferRequests from "./PendingVaultTransferRequests";
 import RejectedVaultTransferRequests from "./RejectedVaultTransferRequests";
@@ -7,7 +6,6 @@ import RejectedVaultTransferRequests from "./RejectedVaultTransferRequests";
 import Tabs from "./Tabs";
 
 export default function VaultTransferRequests() {
-    const { cancelledVaultTransferRequests } = useCommonContext();
     const [ currentTab, setCurrentTab ] = useState("pending");
 
     return (
@@ -26,9 +24,9 @@ export default function VaultTransferRequests() {
                     render: () => <RejectedVaultTransferRequests />
                 },
                 {
-                    key: "cancelled",
-                    title: "Cancelled",
-                    render: () => <HandledVaultTransferRequests requests={ cancelledVaultTransferRequests || [] } decisionOnLabel="Cancellation Date"/>
+                    key: "history",
+                    title: "History",
+                    render: () => <HandledVaultTransferRequests />
                 }
             ]}
             onSelect={ setCurrentTab }
