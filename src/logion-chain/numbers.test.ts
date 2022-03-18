@@ -165,6 +165,13 @@ test("optimizeScale small negative prefixed", () => {
     expect(result.prefix).toBe(MILLI);
 });
 
+test("optimizeScale if already optimal", () => {
+    const scientific = new ScientificNumber("110.0000999374998932", -2);
+    const optimized = scientific.optimizeScale(3);
+    expect(optimized.coefficient.toString()).toBe("110.0000999374998932");
+    expect(optimized.tenExponent).toBe(-2);
+})
+
 test("divide", () => {
     const a = new ScientificNumber("50.00", 0);
     const b = new ScientificNumber("1.00", 2);

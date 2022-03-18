@@ -58,7 +58,7 @@ export async function getBalances(parameters: GetAccountDataParameters): Promise
         accountId,
     });
 
-    const logAvailable = scientificLogBalance(data.total).optimizeScale(3);
+    const logAvailable = scientificLogBalance(data.total);
     const logPrefixedAvailable = convertToPrefixed(logAvailable);
     const logLevel = logAvailable.divideBy(ARTIFICIAL_MAX_BALANCE).toNumber();
 

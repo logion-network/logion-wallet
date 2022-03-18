@@ -208,7 +208,9 @@ export class ScientificNumber {
 
     optimizeScale(maxDigits: number): ScientificNumber {
         const { integerPart, decimalPart } = this._normalized.split();
-        if(integerPart.length > maxDigits) {
+        if(integerPart.length === maxDigits) {
+            return this;
+        } else if(integerPart.length > maxDigits || integerPart.length > 0) {
             return this.limitIntegerDigits(integerPart, maxDigits);
         } else {
             const relevantDecimalPart = NormalizedNumber.zeroStripLeft(decimalPart);
