@@ -3,7 +3,7 @@ import { Weight } from '@polkadot/types/interfaces/runtime';
 import { createKeyMulti, encodeAddress } from '@polkadot/util-crypto';
 
 import { ExtrinsicSubmissionParameters, signAndSend, Unsubscriber } from "./Signature";
-import { getRecoveryConfig, RecoveryConfig } from "./Recovery";
+import { getRecoveryConfig, RecoveryConfig, buildAsRecoveredSubmittable } from "./Recovery";
 import { PrefixedNumber } from "./numbers";
 import { LGNT_SMALLEST_UNIT } from './Balances';
 import { SubmittableExtrinsic } from "@polkadot/api/promise/types";
@@ -13,8 +13,7 @@ const THRESHOLD = 2;
 
 export function getVaultAddress(requesterAddress: string, recoveryConfig: RecoveryConfig): string {
     const signatories: string[] = [ requesterAddress, ...recoveryConfig.legalOfficers ].sort()
-    const vaultAddress = encodeAddress(createKeyMulti(signatories, THRESHOLD));
-    return vaultAddress;
+    return encodeAddress(createKeyMulti(signatories, THRESHOLD));
 }
 
 export interface BuildRequestVaultTransferParameters {
@@ -22,6 +21,8 @@ export interface BuildRequestVaultTransferParameters {
     recoveryConfig: RecoveryConfig;
     amount: PrefixedNumber;
     destination: string;
+    recovery: boolean;
+    requesterAddress: string
 }
 
 export interface RequestVaultTransferParameters extends ExtrinsicSubmissionParameters, BuildRequestVaultTransferParameters {
@@ -37,7 +38,7 @@ export async function requestVaultTransfer(parameters: RequestVaultTransferParam
     try {
         const unsubscriber = signAndSend({
             signerId,
-            submittable: await buildRequestCallSubmittable({ ...parameters, requesterAddress: signerId }),
+            submittable: await buildRequestCallSubmittable({ ...parameters }),
             callback,
             errorCallback,
         });
@@ -49,17 +50,18 @@ export async function requestVaultTransfer(parameters: RequestVaultTransferParam
     }
 }
 
-async function buildRequestCallSubmittable(parameters: BuildRequestVaultTransferParameters & { requesterAddress: string }): Promise<SubmittableExtrinsic> {
+async function buildRequestCallSubmittable(parameters: BuildRequestVaultTransferParameters): Promise<SubmittableExtrinsic> {
     const {
         api,
         requesterAddress,
         recoveryConfig,
         destination,
         amount,
+        recovery,
     } = parameters;
 
     const actualAmount = amount.convertTo(LGNT_SMALLEST_UNIT).coefficient.unnormalize();
-    const { call, weight, multisigOrigin } = await transferCallAndWeight(api, requesterAddress, recoveryConfig, BigInt(actualAmount), destination);
+    const { call, weight, multisigOrigin } = await transferCallAndWeight(api, requesterAddress, recoveryConfig, BigInt(actualAmount), destination, recovery);
 
     const existingMultisig = await api.query.multisig.multisigs(multisigOrigin, call.method.hash);
     if(existingMultisig.isSome) {
@@ -70,7 +72,7 @@ async function buildRequestCallSubmittable(parameters: BuildRequestVaultTransfer
     return api.tx.vault.requestCall(sortedLegalOfficers, call.method.hash, weight)
 }
 
-export async function buildVaultTransferCall(parameters: BuildRequestVaultTransferParameters & { requesterAddress: string }): Promise<Call> {
+export async function buildVaultTransferCall(parameters: BuildRequestVaultTransferParameters): Promise<Call> {
     return parameters.api.createType('Call', await buildRequestCallSubmittable(parameters))
 }
 
@@ -80,11 +82,21 @@ async function transferCallAndWeight(
     recoveryConfig: RecoveryConfig,
     amount: bigint,
     destination: string,
+    recovery: boolean,
 ): Promise<{ call: SubmittableExtrinsic, weight: Weight, multisigOrigin: string }> {
     const multisigOrigin = getVaultAddress(requesterAddress, recoveryConfig);
-    const call = transferCall(api, destination, amount);
+    const call = recovery ?
+        buildAsRecoveredSubmittable({
+            api,
+            call: api.createType('Call', transferCall(api, destination, amount)),
+            recoveredAccountId: requesterAddress,
+        }) :
+        transferCall(api, destination, amount);
     const dispatchInfo = await call.paymentInfo(multisigOrigin);
     const maxWeight = dispatchInfo.weight;
+    console.log("requesterAddress: %s, amount: %s, destination: %s, recovery: %s", requesterAddress, amount, destination, recovery)
+    console.log("multisigOrigin: %s, m: %s, hash: %s", multisigOrigin, maxWeight, call.method.hash)
+
     return {
         call,
         weight: maxWeight,
@@ -107,6 +119,7 @@ export interface VaultTransferApprovalParameters extends ExtrinsicSubmissionPara
     destination: string;
     block: bigint,
     index: number
+    recovery: boolean
 }
 
 export async function approveVaultTransfer(parameters: VaultTransferApprovalParameters): Promise<{ unsubscriber: Unsubscriber }> {
@@ -120,6 +133,7 @@ export async function approveVaultTransfer(parameters: VaultTransferApprovalPara
         destination,
         block,
         index,
+        recovery
     } = parameters;
 
     const recoveryConfig = await getRecoveryConfig({
@@ -129,7 +143,7 @@ export async function approveVaultTransfer(parameters: VaultTransferApprovalPara
     const otherLegalOfficer = recoveryConfig!.legalOfficers.find(accountId => accountId !== signerId)!;
 
     const actualAmount = amount.convertTo(LGNT_SMALLEST_UNIT).coefficient.unnormalize();
-    const { call, weight } = await transferCallAndWeight(api, requester, recoveryConfig!, BigInt(actualAmount), destination);
+    const { call, weight } = await transferCallAndWeight(api, requester, recoveryConfig!, BigInt(actualAmount), destination, recovery);
 
     const otherSignatories = [ requester, otherLegalOfficer ].sort();
     const unsubscriber = signAndSend({

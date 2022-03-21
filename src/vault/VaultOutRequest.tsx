@@ -76,7 +76,9 @@ export default function VaultOutRequest() {
             amount: new PrefixedNumber(formValues.amount.value, formValues.amount.unit),
             destination: formValues.destination,
             signerId,
+            requesterAddress: signerId,
             recoveryConfig: recoveryConfig!,
+            recovery: false,
             callback: setResult,
             errorCallback: setError
         });
@@ -215,7 +217,7 @@ export default function VaultOutRequest() {
                                         value: 1,
                                         message: 'You must select a Legal Officer'
                                     },
-                                    
+
                                 }}
                                 render={({ field }) => (
                                     <Select

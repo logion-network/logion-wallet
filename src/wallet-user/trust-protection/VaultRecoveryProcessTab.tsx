@@ -1,12 +1,11 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
-import { getVaultAddress, buildVaultTransferCall } from "../../logion-chain/Vault";
+import { getVaultAddress, requestVaultTransfer } from "../../logion-chain/Vault";
 import { useLogionChain } from "../../logion-chain";
 import { useCommonContext } from "../../common/CommonContext";
 import { useUserContext } from "../UserContext";
 import { CoinBalance, getBalances, LGNT_SMALLEST_UNIT } from "../../logion-chain/Balances";
 import { PrefixedNumber, NONE } from "../../logion-chain/numbers";
 import ExtrinsicSubmitter, { AsyncSignAndSubmit, SuccessfulTransaction } from "../../ExtrinsicSubmitter";
-import { signAndSendAsRecovered } from "../../logion-chain/Recovery";
 import { useForm, Controller } from "react-hook-form";
 import { VaultApi } from "../../vault/VaultApi";
 import Button from "../../common/Button";
@@ -92,46 +91,31 @@ export default function VaultRecoveryProcessTab() {
     const onTransferSuccessCallback = useCallback(async (_id: string, submittable: SuccessfulTransaction) => {
         const axios = axiosFactory!(legalOfficer!);
         const vaultApi = new VaultApi(axios, legalOfficer!);
-        const requesterAddress = accounts!.current!.address;
         const blockHeader = await api!.rpc.chain.getHeader(submittable.block);
         await vaultApi.createVaultTransferRequest({
             amount: amountToRecover.convertTo(LGNT_SMALLEST_UNIT).coefficient.unnormalize(),
             destination: targetVaultAddress!,
             block: blockHeader.number.toString(),
             index: submittable.index,
-            requesterAddress,
+            requesterAddress: recoveredAddress!,
         });
         clearFormCallback();
         refresh();
-    }, [ accounts, api, axiosFactory, legalOfficer, refresh, targetVaultAddress, clearFormCallback, amountToRecover ])
+    }, [ api, axiosFactory, legalOfficer, refresh, targetVaultAddress, clearFormCallback, amountToRecover, recoveredAddress ])
 
     const recoverCoin = useCallback(async (amount: PrefixedNumber) => {
-        const signAndSubmit: AsyncSignAndSubmit = async (setResult, setError) => {
-            try {
-                const call = await buildVaultTransferCall({
-                    api: api!,
-                    requesterAddress: recoveredAddress!,
-                    destination: targetVaultAddress!,
-                    recoveryConfig: recoveryConfig!,
-                    amount: amount,
-                })
-                const unsubscriber = signAndSendAsRecovered({
-                    api: api!,
-                    signerId: accounts!.current!.address,
-                    callback: setResult,
-                    errorCallback: setError,
-                    recoveredAccountId: recoveredAddress!,
-                    call
-                });
-                return { unsubscriber }
-            } catch (error) {
-                setError(error)
-                return {
-                    unsubscriber: Promise.resolve(() => {
-                    })
-                }
-            }
-        }
+
+        const signAndSubmit: AsyncSignAndSubmit = (setResult, setError) => requestVaultTransfer({
+            api: api!,
+            amount,
+            destination: targetVaultAddress!,
+            signerId: accounts!.current!.address,
+            requesterAddress: recoveredAddress!,
+            recoveryConfig: recoveryConfig!,
+            recovery: true,
+            callback: setResult,
+            errorCallback: setError
+        });
         setAsyncSignAndSubmit(() => signAndSubmit)
     }, [ api, accounts, recoveredAddress, recoveryConfig, targetVaultAddress ])
 

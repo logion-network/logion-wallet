@@ -51,6 +51,7 @@ export default function PendingVaultTransferRequests() {
             amount,
             block: BigInt(requestToAccept!.block),
             index: requestToAccept!.index,
+            recovery: true // TODO Should not be hard-coded to true.
         });
         setSignAndSubmit(() => signAndSubmit);
     }, [ accounts, api, requestToAccept, setSignAndSubmit ]);

@@ -2,6 +2,7 @@ import { ApiPromise } from '@polkadot/api';
 import { Call } from '@polkadot/types/interfaces';
 
 import { ExtrinsicSubmissionParameters, signAndSend, Unsubscriber } from './Signature';
+import { SubmittableExtrinsic } from "@polkadot/api/promise/types";
 
 export interface RecoveryCreationParameters extends ExtrinsicSubmissionParameters {
     api: ApiPromise,
@@ -158,26 +159,39 @@ export function claimRecovery(parameters: ClaimRecoveryParameters): Unsubscriber
     });
 }
 
-export interface SignAndSendAsRecoveredParameters extends ExtrinsicSubmissionParameters {
+export interface BuildAsRecoveredCallParameters {
     api: ApiPromise,
     recoveredAccountId: string,
     call: Call,
 }
 
+export interface SignAndSendAsRecoveredParameters extends BuildAsRecoveredCallParameters, ExtrinsicSubmissionParameters {
+}
+
 export function signAndSendAsRecovered(parameters: SignAndSendAsRecoveredParameters): Unsubscriber {
     const {
-        api,
-        recoveredAccountId,
         signerId,
         callback,
         errorCallback,
-        call,
     } = parameters;
 
     return signAndSend({
         signerId,
-        submittable: api.tx.recovery.asRecovered(recoveredAccountId, call),
+        submittable: buildAsRecoveredSubmittable(parameters),
         callback,
         errorCallback,
     });
+}
+
+export function buildAsRecoveredCall(parameters: BuildAsRecoveredCallParameters): Call {
+    return parameters.api.createType('Call', buildAsRecoveredSubmittable(parameters))
+}
+
+export function buildAsRecoveredSubmittable(parameters: BuildAsRecoveredCallParameters): SubmittableExtrinsic {
+    const {
+        api,
+        recoveredAccountId,
+        call,
+    } = parameters;
+    return api.tx.recovery.asRecovered(recoveredAccountId, call)
 }
