@@ -8,6 +8,8 @@ const LGNT_DECIMALS = 18;
 export const LGNT_SMALLEST_UNIT = ATTO;
 export const SYMBOL = "LGNT";
 
+const DOT_BALANCE = buildCoinBalance('dot', new PrefixedNumber("0", NONE), new PrefixedNumber("0", NONE), 1)
+
 export interface GetAccountDataParameters {
     api: ApiPromise,
     accountId: string,
@@ -44,6 +46,7 @@ export interface Coin {
 export interface CoinBalance {
     coin: Coin,
     balance: PrefixedNumber,
+    available: PrefixedNumber,
     level: number,
 }
 
@@ -58,13 +61,15 @@ export async function getBalances(parameters: GetAccountDataParameters): Promise
         accountId,
     });
 
-    const logAvailable = scientificLogBalance(data.total);
-    const logPrefixedAvailable = convertToPrefixed(logAvailable);
-    const logLevel = logAvailable.divideBy(ARTIFICIAL_MAX_BALANCE).toNumber();
+    const logTotal = scientificLogBalance(data.total);
+    const logPrefixedTotal = convertToPrefixed(logTotal);
+    const logLevel = logTotal.divideBy(ARTIFICIAL_MAX_BALANCE).toNumber();
+
+    const logPrefixedAvailable = convertToPrefixed(scientificLogBalance(data.available))
 
     return [
-        buildCoinBalance('lgnt', logPrefixedAvailable, logLevel),
-        buildCoinBalance('dot', new PrefixedNumber("0", NONE), 1)
+        buildCoinBalance('lgnt', logPrefixedTotal, logPrefixedAvailable, logLevel),
+        DOT_BALANCE
     ];
 }
 
@@ -79,11 +84,12 @@ export function prefixedLogBalance(tokens: string): PrefixedNumber {
 
 const ARTIFICIAL_MAX_BALANCE = scientificLogBalance("100");
 
-function buildCoinBalance(coinId: string, balance: PrefixedNumber, level: number): CoinBalance {
+function buildCoinBalance(coinId: string, balance: PrefixedNumber, available: PrefixedNumber, level: number): CoinBalance {
     const coin = getCoin(coinId);
     return {
         coin,
         balance,
+        available,
         level,
     }
 }

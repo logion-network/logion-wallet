@@ -81,6 +81,21 @@ exports[`renders with all data 1`] = `
           data={
             Array [
               Object {
+                "available": PrefixedNumber {
+                  "_prefix": Object {
+                    "symbol": "a",
+                    "tenExponent": -18,
+                  },
+                  "_scientificNumber": ScientificNumber {
+                    "_normalized": NormalizedNumber {
+                      "_decimalPart": "",
+                      "_integerPart": "42",
+                      "_negative": false,
+                      "_normalized": "42.",
+                    },
+                    "_tenExponent": -18,
+                  },
+                },
                 "balance": PrefixedNumber {
                   "_prefix": Object {
                     "symbol": "a",

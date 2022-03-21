@@ -6,7 +6,7 @@ import {
     getAccountData,
     getBalances,
 } from './Balances';
-import { PrefixedNumber, ATTO, NONE } from './numbers';
+import { PrefixedNumber, ATTO, NONE, FEMTO } from './numbers';
 
 test("Getting account data", async () => {
     const api = new ApiPromise();
@@ -30,7 +30,8 @@ test("Getting balances", async () => {
         accountId
     });
 
-    expect(data[0].balance).toStrictEqual(new PrefixedNumber("42", ATTO));
+    const expected = new PrefixedNumber("0.00042", FEMTO);
+    expect(data[0].balance).toStrictEqual(expected);
     expect(data[0].coin.id).toBe("lgnt");
     expect(data[0].level).toBe(0.42000000000000004);
 

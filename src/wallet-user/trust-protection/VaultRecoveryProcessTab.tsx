@@ -65,7 +65,7 @@ export default function VaultRecoveryProcessTab() {
         if (vaultBalances === null && api !== null && recoveredVaultAddress) {
             getBalances({ api, accountId: recoveredVaultAddress })
                 .then(balances => {
-                    setVaultBalances(balances.filter(balance => Number(balance.balance.toNumber()) > 0))
+                    setVaultBalances(balances.filter(balance => Number(balance.available.toNumber()) > 0))
                 })
         }
     }, [ vaultBalances, setVaultBalances, recoveredVaultAddress, api ])
@@ -84,8 +84,8 @@ export default function VaultRecoveryProcessTab() {
         setStatus(Status.IDLE);
     }, [ setRecoveredCoinBalance, setAsyncSignAndSubmit, setSignAndSubmitError ])
 
-    const amountToRecover = useMemo<PrefixedNumber>(() => recoveredCoinBalance?.balance ?
-            recoveredCoinBalance?.balance :
+    const amountToRecover = useMemo<PrefixedNumber>(() => recoveredCoinBalance?.available ?
+            recoveredCoinBalance?.available :
             new PrefixedNumber("0", NONE),
         [ recoveredCoinBalance ])
 
@@ -139,7 +139,7 @@ export default function VaultRecoveryProcessTab() {
         return null;
     }
 
-    const coinBalances: CoinBalance[] = (vaultBalances !== null) ? vaultBalances.filter(coinBalance => Number(coinBalance.balance.toNumber()) > 0) : [];
+    const coinBalances: CoinBalance[] = (vaultBalances !== null) ? vaultBalances : [];
     return (<>
             <div className="content">
                 <Table
@@ -159,7 +159,7 @@ export default function VaultRecoveryProcessTab() {
                         {
                             header: "Balance",
                             render: coinBalance => <Cell
-                                content={ coinBalance.balance.coefficient.toFixedPrecision(2) } />,
+                                content={ coinBalance.available.coefficient.toFixedPrecision(2) } />,
                             width: "300px",
                             align: 'right',
                         },
