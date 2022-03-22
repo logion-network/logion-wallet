@@ -15,7 +15,7 @@ export default function VaultTransferRequestDetails(props: Props) {
                 <Col md={ 2 }>
                     <Detail
                         label="Polkadot Address"
-                        value={ <AddressFormat address={ props.request.requesterAddress } /> }
+                        value={ <AddressFormat address={ props.request.origin } /> }
                     />
                 </Col>
                 <Col>

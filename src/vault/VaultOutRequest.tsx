@@ -100,7 +100,7 @@ export default function VaultOutRequest() {
             destination: formValues!.destination,
             block: blockHeader.number.toString(),
             index: submittable.index,
-            requesterAddress,
+            origin: requesterAddress,
         });
         setShowDialog(false);
         refresh();
@@ -215,7 +215,7 @@ export default function VaultOutRequest() {
                                         value: 1,
                                         message: 'You must select a Legal Officer'
                                     },
-                                    
+
                                 }}
                                 render={({ field }) => (
                                     <Select

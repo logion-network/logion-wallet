@@ -12,7 +12,7 @@ export interface VaultTransferRequestDecision {
 export interface VaultTransferRequest {
     id: string;
     createdOn: string;
-    requesterAddress: string;
+    origin: string;
     destination: string;
     amount: string;
     block: string;
@@ -25,7 +25,7 @@ export interface VaultTransferRequest {
 }
 
 export interface CreateVaultTransferRequest {
-    requesterAddress: string;
+    origin: string;
     destination: string;
     amount: string;
     block: string;

@@ -92,18 +92,17 @@ export default function VaultRecoveryProcessTab() {
     const onTransferSuccessCallback = useCallback(async (_id: string, submittable: SuccessfulTransaction) => {
         const axios = axiosFactory!(legalOfficer!);
         const vaultApi = new VaultApi(axios, legalOfficer!);
-        const requesterAddress = accounts!.current!.address;
         const blockHeader = await api!.rpc.chain.getHeader(submittable.block);
         await vaultApi.createVaultTransferRequest({
             amount: amountToRecover.convertTo(LGNT_SMALLEST_UNIT).coefficient.unnormalize(),
             destination: targetVaultAddress!,
             block: blockHeader.number.toString(),
             index: submittable.index,
-            requesterAddress,
+            origin: recoveredAddress!,
         });
         clearFormCallback();
         refresh();
-    }, [ accounts, api, axiosFactory, legalOfficer, refresh, targetVaultAddress, clearFormCallback, amountToRecover ])
+    }, [ api, axiosFactory, legalOfficer, refresh, targetVaultAddress, clearFormCallback, amountToRecover, recoveredAddress ])
 
     const recoverCoin = useCallback(async (amount: PrefixedNumber) => {
         const signAndSubmit: AsyncSignAndSubmit = async (setResult, setError) => {
