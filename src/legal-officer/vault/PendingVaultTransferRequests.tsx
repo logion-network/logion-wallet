@@ -46,7 +46,7 @@ export default function PendingVaultTransferRequests() {
             callback: setResult,
             errorCallback: setError,
             signerId,
-            requester: requestToAccept!.requesterAddress,
+            requester: requestToAccept!.origin,
             destination: requestToAccept!.destination,
             amount,
             block: BigInt(requestToAccept!.block),
@@ -182,7 +182,7 @@ export default function PendingVaultTransferRequests() {
                     <Col md={ 3 }>
                         <StaticLabelValue
                             label="Destination"
-                            value={ <AddressFormat address={ requestToAccept?.requesterAddress } /> }
+                            value={ <AddressFormat address={ requestToAccept?.destination } /> }
                         />
                     </Col>
                     <Col md={ 1 }>
