@@ -36,7 +36,7 @@ export default function RecoveryProcess() {
     const { colorTheme, nodesDown } = useCommonContext();
     const { recoveredAddress, recoveryConfig } = useUserContext();
     const [ recoveredVaultAddress, setRecoveredVaultAddress ] = useState<string | null>(null)
-    const [ tabKey, setTabKey ] = useState<string>('Wallet');
+    const [ tabKey, setTabKey ] = useState<string>('Vault');
     const [ walletBalances, setWalletBalances ] = useState<number | null>(null)
     const [ vaultBalances, setVaultBalances ] = useState<number | null>(null)
 
@@ -89,17 +89,6 @@ export default function RecoveryProcess() {
                     activeKey={ tabKey }
                     tabs={[
                         {
-                            key: "Wallet",
-                            title: (
-                                <TabTitle
-                                    iconId="wallet"
-                                    title="Wallet"
-                                    size={ walletBalances }
-                                />
-                            ),
-                            render: () => <WalletRecoveryProcessTab/>
-                        },
-                        {
                             key: "Vault",
                             title: (
                                 <TabTitle
@@ -109,9 +98,23 @@ export default function RecoveryProcess() {
                                 />
                             ),
                             render: () => <VaultRecoveryProcessTab/>
+                        },
+                        {
+                            key: "Wallet",
+                            title: (
+                                <TabTitle
+                                    iconId="wallet"
+                                    title="Wallet"
+                                    size={ walletBalances }
+                                />
+                            ),
+                            render: () => <WalletRecoveryProcessTab
+                                vaultFirst={ vaultBalances > 0 }
+                                onSuccess={ () => setWalletBalances(null) }
+                            />
                         }
                     ] }
-                    onSelect={ key => setTabKey(key || 'Wallet') }
+                    onSelect={ key => setTabKey(key) }
                 />
             </>
         </FullWidthPane>
