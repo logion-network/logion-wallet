@@ -13,7 +13,7 @@ import userEvent from '@testing-library/user-event';
 import { setGetBalances } from '../../logion-chain/__mocks__/BalancesMock';
 import { setRecoveredAddress, setRecoveryConfig } from '../__mocks__/UserContextMock';
 
-import RecoveryProcess from './RecoveryProcess';
+import WalletRecoveryProcessTab from "./WalletRecoveryProcessTab";
 import { PrefixedNumber, MILLI } from "../../logion-chain/numbers";
 import { finalizeSubmission } from "../../logion-chain/__mocks__/SignatureMock";
 
@@ -40,17 +40,17 @@ test("Recovered tokens can be transferred", async () => {
     ]);
     setGetBalances(getBalances);
 
-    render(<RecoveryProcess />);
+    render(<WalletRecoveryProcessTab vaultFirst={ false } onSuccess={ () => {} } />);
 
-    expect(getBalances).toBeCalledTimes(2);
+    expect(getBalances).toBeCalledTimes(1);
     expect(getBalances).toBeCalledWith(expect.objectContaining({
         api: expect.anything(),
         accountId: recoveredAccountId
     }));
 
-    let transferButton: HTMLElement[];
-    await waitFor(() => transferButton = screen.getAllByRole("button", {name: "Transfer"}));
-    userEvent.click(transferButton![0]);
+    let transferButton: HTMLElement;
+    await waitFor(() => transferButton = screen.getByRole("button", {name: "Transfer"}));
+    userEvent.click(transferButton!);
 
     let dialog: HTMLElement;
     await waitFor(() => dialog = screen.getByRole("dialog"));
@@ -59,5 +59,5 @@ test("Recovered tokens can be transferred", async () => {
     userEvent.click(confirmButton!);
     await waitFor(() => finalizeSubmission());
 
-    await waitFor(() => expect(getBalances).toBeCalledTimes(5));
+    await waitFor(() => expect(getBalances).toBeCalledTimes(2));
 });

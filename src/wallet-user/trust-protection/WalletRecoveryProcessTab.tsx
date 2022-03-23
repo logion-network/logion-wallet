@@ -14,8 +14,14 @@ import { useLogionChain } from "../../logion-chain";
 import { signAndSendAsRecovered } from "../../logion-chain/Recovery";
 import { useCommonContext } from "../../common/CommonContext";
 import { useUserContext } from "../UserContext";
+import IconTextRow from "../../common/IconTextRow";
 
-export default function WalletRecoveryProcessTab() {
+interface Props {
+    vaultFirst: boolean
+    onSuccess: () => void
+}
+
+export default function WalletRecoveryProcessTab(props: Props) {
     const { api } = useLogionChain();
     const { accounts } = useCommonContext();
     const { recoveredAddress } = useUserContext();
@@ -59,7 +65,8 @@ export default function WalletRecoveryProcessTab() {
     const onTransferSuccess = useCallback(() => {
         clearFormCallback();
         setBalances(null);
-    }, [ setBalances, clearFormCallback ]);
+        props.onSuccess();
+    }, [ setBalances, clearFormCallback, props ]);
 
     const amountToRecover = recoveredCoinBalance?.available ? recoveredCoinBalance?.available : new PrefixedNumber("0", NONE)
 
@@ -71,6 +78,17 @@ export default function WalletRecoveryProcessTab() {
                 children={ (status, startTransferringCallback, cancelCallback, successCallback) => {
                     return (<>
                         <div className="content">
+                            { props.vaultFirst &&
+                                <IconTextRow
+                                    icon={ <Icon icon={ { id: "tip" } } width="45px" /> }
+                                    text={ <p>
+                                        You must first request the recovery of assets protected in your logion
+                                        Vault.<br />
+                                        Once this logion Vault recovery is validated by your Legal Officer, you will be
+                                        able to request the recovery of your wallet assets.</p> }
+                                />
+
+                            }
                             <Table
                                 columns={ [
                                     {
@@ -95,6 +113,7 @@ export default function WalletRecoveryProcessTab() {
                                     {
                                         header: "Action",
                                         render: coinBalance => <Button
+                                            disabled={ props.vaultFirst }
                                             variant="recovery"
                                             onClick={ () => {
                                                 setRecoveredCoinBalance(coinBalance);
