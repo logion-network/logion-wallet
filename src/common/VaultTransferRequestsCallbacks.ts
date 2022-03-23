@@ -2,10 +2,11 @@ import { ApiPromise } from "@polkadot/api";
 import { SignAndSubmit } from "../ExtrinsicSubmitter";
 import { LGNT_SMALLEST_UNIT } from "../logion-chain/Balances";
 import { PrefixedNumber } from "../logion-chain/numbers";
-import { getRecoveryConfig } from "../logion-chain/Recovery";
-import { cancelVaultTransfer } from "../logion-chain/Vault";
+import { getRecoveryConfig, signAndSendAsRecovered } from "../logion-chain/Recovery";
+import { cancelVaultTransfer, buildCancelVaultTransferCall } from "../logion-chain/Vault";
 import { VaultApi, VaultTransferRequest } from "../vault/VaultApi";
 import { AxiosFactory } from "./api";
+import React from "react";
 
 export async function cancelVaultTransferCallback(params: {
     signerId: string,
@@ -13,23 +14,45 @@ export async function cancelVaultTransferCallback(params: {
     requestToCancel: VaultTransferRequest,
     setSignAndSubmit: React.Dispatch<React.SetStateAction<SignAndSubmit>>,
 }) {
+    const { requestToCancel, signerId, api, setSignAndSubmit } = params
     const recoveryConfig = await getRecoveryConfig({
-        api: params.api,
-        accountId: params.signerId
+        api,
+        accountId: signerId
     })
-    const amount = new PrefixedNumber(params.requestToCancel.amount, LGNT_SMALLEST_UNIT);
-    const signAndSubmit: SignAndSubmit = (setResult, setError) => cancelVaultTransfer({
-        api: params.api,
-        callback: setResult,
-        errorCallback: setError,
-        signerId: params.signerId,
-        destination: params.requestToCancel.destination,
-        amount,
-        block: BigInt(params.requestToCancel.block),
-        index: params.requestToCancel.index,
-        recoveryConfig: recoveryConfig!,
-    });
-    params.setSignAndSubmit(() => signAndSubmit);
+    const amount = new PrefixedNumber(requestToCancel.amount, LGNT_SMALLEST_UNIT);
+    const signAndSubmit: SignAndSubmit = (setResult, setError) => {
+        if (requestToCancel.origin === signerId) {
+            return cancelVaultTransfer({
+                api,
+                callback: setResult,
+                errorCallback: setError,
+                signerId: signerId,
+                destination: requestToCancel.destination,
+                amount,
+                block: BigInt(requestToCancel.block),
+                index: requestToCancel.index,
+                recoveryConfig: recoveryConfig!,
+            });
+        } else {
+            const call = buildCancelVaultTransferCall({
+                api,
+                block: BigInt(requestToCancel.block),
+                index: requestToCancel.index,
+                recoveryConfig: recoveryConfig!,
+                destination: requestToCancel.destination,
+                amount,
+            })
+            return signAndSendAsRecovered({
+                api: api!,
+                signerId,
+                callback: setResult,
+                errorCallback: setError,
+                recoveredAccountId: requestToCancel.origin,
+                call
+            })
+        }
+    }
+    setSignAndSubmit(() => signAndSubmit);
 }
 
 export async function onCancelVaultTransferSuccessCallback(params: {

@@ -13,8 +13,7 @@ const THRESHOLD = 2;
 
 export function getVaultAddress(requesterAddress: string, recoveryConfig: RecoveryConfig): string {
     const signatories: string[] = [ requesterAddress, ...recoveryConfig.legalOfficers ].sort()
-    const vaultAddress = encodeAddress(createKeyMulti(signatories, THRESHOLD));
-    return vaultAddress;
+    return encodeAddress(createKeyMulti(signatories, THRESHOLD));
 }
 
 export interface BuildRequestVaultTransferParameters {
@@ -141,7 +140,7 @@ export async function approveVaultTransfer(parameters: VaultTransferApprovalPara
     return { unsubscriber };
 }
 
-export interface CancelVaultTransferParameters extends ExtrinsicSubmissionParameters {
+export interface BuildCancelVaultTransferParameters {
     api: ApiPromise;
     recoveryConfig: RecoveryConfig;
     amount: PrefixedNumber;
@@ -150,26 +149,30 @@ export interface CancelVaultTransferParameters extends ExtrinsicSubmissionParame
     index: number
 }
 
+export interface CancelVaultTransferParameters extends BuildCancelVaultTransferParameters, ExtrinsicSubmissionParameters {
+}
+
+export function buildCancelVaultTransferCall(parameters: BuildCancelVaultTransferParameters): Call {
+    return parameters.api.createType('Call', buildCancelCallSubmittable(parameters))
+}
+
+function buildCancelCallSubmittable(parameters: BuildCancelVaultTransferParameters): SubmittableExtrinsic {
+    const { api, amount, destination, recoveryConfig, block, index } = parameters
+    const actualAmount = amount.convertTo(LGNT_SMALLEST_UNIT).coefficient.unnormalize();
+    const call = transferCall(api, destination, BigInt(actualAmount));
+    const sortedLegalOfficers = [ ...recoveryConfig.legalOfficers ].sort();
+    return api.tx.multisig.cancelAsMulti(2, sortedLegalOfficers, {height: block, index}, call.method.hash)
+}
+
 export function cancelVaultTransfer(parameters: CancelVaultTransferParameters): Unsubscriber {
     const {
-        api,
         signerId,
         callback,
         errorCallback,
-        recoveryConfig,
-        destination,
-        amount,
-        block,
-        index,
     } = parameters;
-
-    const actualAmount = amount.convertTo(LGNT_SMALLEST_UNIT).coefficient.unnormalize();
-    const call = transferCall(api, destination, BigInt(actualAmount));
-
-    const sortedLegalOfficers = [ ...recoveryConfig.legalOfficers ].sort();
     return signAndSend({
         signerId,
-        submittable: api.tx.multisig.cancelAsMulti(2, sortedLegalOfficers, {height: block, index}, call.method.hash),
+        submittable: buildCancelCallSubmittable(parameters),
         callback,
         errorCallback,
     });
