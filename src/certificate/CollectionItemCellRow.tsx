@@ -7,9 +7,11 @@ import MenuIcon from "../common/MenuIcon";
 import { LIGHT_MODE } from "../legal-officer/Types";
 import CertificateDateTimeCell from "./CertificateDateTimeCell";
 import { MergedCollectionItem } from "../common/types/ModelTypes";
+import { DocumentCheckResult } from "../loc/CheckFileFrame";
 
 export interface Props {
-    item: MergedCollectionItem
+    item: MergedCollectionItem;
+    checkResult: DocumentCheckResult;
 }
 
 export default function CollectionItemCellRow(props: Props) {
@@ -27,7 +29,7 @@ export default function CollectionItemCellRow(props: Props) {
                 <CertificateDateTimeCell md={ 12 } label="Collection item timestamp:" dateTime={ addedOn } />
             </Row>
             <Row>
-                <CertificateCell md={ 12 } label="Collection item identification:">
+                <CertificateCell md={ 12 } label="Collection item identification:" matched={ props.checkResult.hash === id } >
                     { id }
                 </CertificateCell>
             </Row>
