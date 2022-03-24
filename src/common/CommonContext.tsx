@@ -74,10 +74,11 @@ export interface CommonContext {
     nodesUp: Endpoint[];
     nodesDown: Endpoint[];
     availableLegalOfficers: LegalOfficer[] | undefined;
-    pendingVaultTransferRequests: VaultTransferRequest[] | undefined;
-    cancelledVaultTransferRequests: VaultTransferRequest[] | undefined;
-    rejectedVaultTransferRequests: VaultTransferRequest[] | undefined;
-    vaultTransferRequestsHistory: VaultTransferRequest[] | undefined;
+    pendingVaultTransferRequests: ((onlyRegular: boolean) => VaultTransferRequest[]) | undefined;
+    cancelledVaultTransferRequests: ((onlyRegular: boolean) => VaultTransferRequest[]) | undefined;
+    rejectedVaultTransferRequests: ((onlyRegular: boolean) => VaultTransferRequest[]) | undefined;
+    vaultTransferRequestsHistory: ((onlyRegular: boolean) => VaultTransferRequest[]) | undefined;
+    cancelableVaultRecoveryRequest: ((recoveredAddress: string) => VaultTransferRequest | null) | undefined;
 }
 
 interface FullCommonContext extends CommonContext {
@@ -121,6 +122,7 @@ function initialContextValue(): FullCommonContext {
         cancelledVaultTransferRequests: undefined,
         rejectedVaultTransferRequests: undefined,
         vaultTransferRequestsHistory: undefined,
+        cancelableVaultRecoveryRequest: undefined
     }
 }
 
@@ -180,10 +182,11 @@ interface Action {
     nodesDown?: Endpoint[];
     directoryContext?: DirectoryContext;
     availableLegalOfficers?: LegalOfficer[];
-    pendingVaultTransferRequests?: VaultTransferRequest[];
-    cancelledVaultTransferRequests?: VaultTransferRequest[];
-    rejectedVaultTransferRequests?: VaultTransferRequest[];
-    vaultTransferRequestsHistory?: VaultTransferRequest[];
+    pendingVaultTransferRequests?: ((onlyRegular: boolean) => VaultTransferRequest[]);
+    cancelledVaultTransferRequests?: ((onlyRegular: boolean) => VaultTransferRequest[]);
+    rejectedVaultTransferRequests?: ((onlyRegular: boolean) => VaultTransferRequest[]);
+    vaultTransferRequestsHistory?: ((onlyRegular: boolean) => VaultTransferRequest[]);
+    cancelableVaultRecoveryRequest?: ((recoveredAddress: string) => VaultTransferRequest | null);
 }
 
 const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, action: Action): FullCommonContext => {
@@ -245,6 +248,7 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                     cancelledVaultTransferRequests: action.cancelledVaultTransferRequests!,
                     rejectedVaultTransferRequests: action.rejectedVaultTransferRequests!,
                     vaultTransferRequestsHistory: action.vaultTransferRequestsHistory!,
+                    cancelableVaultRecoveryRequest: action.cancelableVaultRecoveryRequest,
                 };
             } else {
                 return state;
@@ -588,14 +592,32 @@ export function CommonContextProvider(props: Props) {
                     nodesDown,
                     availableLegalOfficers,
                     directoryContext,
-                    pendingVaultTransferRequests,
-                    cancelledVaultTransferRequests,
-                    rejectedVaultTransferRequests,
-                    vaultTransferRequestsHistory,
+                    pendingVaultTransferRequests: filterableVaultRequests(pendingVaultTransferRequests, currentAddress),
+                    cancelledVaultTransferRequests: filterableVaultRequests(cancelledVaultTransferRequests, currentAddress),
+                    rejectedVaultTransferRequests: filterableVaultRequests(rejectedVaultTransferRequests, currentAddress),
+                    vaultTransferRequestsHistory: filterableVaultRequests(vaultTransferRequestsHistory, currentAddress),
+                    cancelableVaultRecoveryRequest: cancelableVaultRecoveryRequest(pendingVaultTransferRequests.concat(rejectedVaultTransferRequests)),
                 });
             })();
         }
     }, [ api, dispatch, contextValue, directoryContext ]);
+
+    function filterableVaultRequests(vaultTransferRequests: VaultTransferRequest[], requesterAddress: string):
+        (onlyRegular: boolean) => VaultTransferRequest[] {
+        return (onlyRegular: boolean) => {
+            if (!onlyRegular) {
+                return vaultTransferRequests
+            }
+            return vaultTransferRequests.filter(vtr => vtr.origin === requesterAddress)
+        }
+    }
+
+    function cancelableVaultRecoveryRequest(pendingOrRejectedVaultTransferRequests: VaultTransferRequest[]):
+        ((recoveredAddress: string) => VaultTransferRequest | null) {
+        return (recoveredAddress: string) => {
+            return pendingOrRejectedVaultTransferRequests.find(vaultTransferRequest => vaultTransferRequest.origin === recoveredAddress) || null
+        }
+    }
 
     function voidRequestsAndLocs(requests: LocRequest[], locs: Record<string, LegalOfficerCase>): RequestAndLoc[] {
         return requests

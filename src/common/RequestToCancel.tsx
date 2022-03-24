@@ -1,6 +1,7 @@
 import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
 import { VaultTransferRequest } from "../vault/VaultApi";
 import Dialog from "./Dialog";
+import React from "react";
 
 export interface Props {
     requestToCancel: VaultTransferRequest | null;
