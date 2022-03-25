@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { getVaultAddress, buildVaultTransferCall } from "../../logion-chain/Vault";
 import { useLogionChain } from "../../logion-chain";
 import { useCommonContext } from "../../common/CommonContext";
@@ -59,7 +59,7 @@ export default function VaultRecoveryProcessTab() {
         if (cancelableVaultRecoveryRequest && vaultRecoveryRequest === undefined && recoveredAddress) {
             setVaultRecoveryRequest(cancelableVaultRecoveryRequest(recoveredAddress))
         }
-    }, [cancelableVaultRecoveryRequest, setVaultRecoveryRequest, cancelableVaultRecoveryRequest, recoveredAddress])
+    }, [ cancelableVaultRecoveryRequest, setVaultRecoveryRequest, recoveredAddress, vaultRecoveryRequest ])
 
     useEffect(() => {
         if (candidates.length === 0 && recoveryConfig && availableLegalOfficers) {

@@ -74,6 +74,7 @@ export default function WalletRecoveryProcessTab(props: Props) {
     return (
         <>
             <TransactionConfirmation
+                vaultFirst={ props.vaultFirst }
                 clearFormCallback={ clearFormCallback }
                 children={ (status, startTransferringCallback, cancelCallback, successCallback) => {
                     return (<>
@@ -87,7 +88,6 @@ export default function WalletRecoveryProcessTab(props: Props) {
                                         Once this logion Vault recovery is validated by your Legal Officer, you will be
                                         able to request the recovery of your wallet assets.</p> }
                                 />
-
                             }
                             <Table
                                 columns={ [

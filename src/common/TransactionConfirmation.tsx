@@ -1,6 +1,8 @@
 import { useState, useCallback, useEffect } from "react";
-import { Children } from "./types/Helpers";
+import { Children, customClassName } from "./types/Helpers";
 import { useCommonContext } from "./CommonContext";
+
+import './TransactionConfirmation.css';
 
 export enum Status {
     IDLE,
@@ -18,9 +20,10 @@ const MAX_REFRESH_COUNT = 12;
 const REFRESH_PERIOD_MS = 3000;
 
 export interface Props {
-    children: (status: Status, startTransferringCallback: () => void, cancelCallback: () => void, successCallback: () => void) => Children
-    clearFormCallback: () => void,
-    initialStatus?: Status
+    children: (status: Status, startTransferringCallback: () => void, cancelCallback: () => void, successCallback: () => void) => Children;
+    clearFormCallback: () => void;
+    initialStatus?: Status;
+    vaultFirst?: boolean;
 }
 
 export default function TransactionConfirmation(props: Props) {
@@ -89,10 +92,10 @@ export default function TransactionConfirmation(props: Props) {
         }
     }, [ state, setState, transactions, refreshCount, scheduleRetryIfNoneInProgress ]);
 
+    const className = customClassName("TransactionConfirmation", props.vaultFirst ? "vault-first" : undefined);
     return (
-        <>
+        <div className={ className }>
             { props.children(state.status, startTransferringCallback, cancelCallback, successCallback) }
-        </>
+        </div>
     )
 }
-

@@ -6,9 +6,13 @@ describe("TransactionConfirmation", () => {
     function testRendering(props: Props, expectedStatus: Status) {
         const result = render(<TransactionConfirmation { ...props } />);
         const expectedResult = `
-<p>
-  ${ expectedStatus }
-</p>
+<div
+  className="TransactionConfirmation"
+>
+  <p>
+    ${ expectedStatus }
+  </p>
+</div>
 `;
         expect(result).toMatchInlineSnapshot(expectedResult);
     }

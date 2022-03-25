@@ -1,4 +1,8 @@
-
 .VaultRecoveryProcessTab .btn-group .StatusCell {
     margin-right: 20px;
+}
+
+.VaultRecoveryProcessTab .Table .body {
+    overflow-y: auto;
+    height: calc(100vh - 575px);
 }
