@@ -73,7 +73,7 @@ function transactionType(transaction: Transaction, address: string): string {
         }
     } else if(transaction.pallet === "recovery") {
         if(transaction.method === "createRecovery") {
-            return "Recovery created";
+            return "Protection activated";
         } else if(transaction.method === "vouchRecovery") {
             return "Recovery vouched";
         } else if(transaction.method === "initiateRecovery") {
@@ -81,7 +81,7 @@ function transactionType(transaction: Transaction, address: string): string {
         } else if(transaction.method === "claimRecovery") {
             return "Recovery claimed";
         } else if(transaction.method === "asRecovered") {
-            return "Assets recovered";
+            return "Recovery process";
         } else {
             return "Other";
         }
