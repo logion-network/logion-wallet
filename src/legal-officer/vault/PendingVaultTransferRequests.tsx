@@ -76,8 +76,9 @@ export default function PendingVaultTransferRequests() {
     }
 
     const getRequest = (requestId: string): (VaultTransferRequest | null) => {
-        for(let i = 0; i < pendingVaultTransferRequests!.length; ++i) {
-            const request = pendingVaultTransferRequests![i];
+        const pendingRequests = pendingVaultTransferRequests(false);
+        for(let i = 0; i < pendingRequests!.length; ++i) {
+            const request = pendingRequests[i];
             if(request.id === requestId) {
                 return request;
             }
@@ -143,7 +144,7 @@ export default function PendingVaultTransferRequests() {
                         }),
                     },
                 ]}
-                data={ pendingVaultTransferRequests }
+                data={ pendingVaultTransferRequests(false) }
                 renderEmpty={ () => <EmptyTableMessage>No pending vault-out transfers</EmptyTableMessage> }
             />
             <Dialog

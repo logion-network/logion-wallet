@@ -54,7 +54,7 @@ export default function HandledVaultTransferRequests() {
                         width: '130px',
                     },
                 ]}
-                data={ vaultTransferRequestsHistory }
+                data={ vaultTransferRequestsHistory(true) }
                 renderEmpty={ () => <EmptyTableMessage>No request to display</EmptyTableMessage> }
             />
         </>

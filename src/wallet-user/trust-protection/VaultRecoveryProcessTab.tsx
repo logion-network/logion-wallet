@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { getVaultAddress, buildVaultTransferCall } from "../../logion-chain/Vault";
 import { useLogionChain } from "../../logion-chain";
 import { useCommonContext } from "../../common/CommonContext";
 import { useUserContext } from "../UserContext";
 import { CoinBalance, getBalances, LGNT_SMALLEST_UNIT } from "../../logion-chain/Balances";
 import { PrefixedNumber, NONE } from "../../logion-chain/numbers";
-import ExtrinsicSubmitter, { AsyncSignAndSubmit, SuccessfulTransaction } from "../../ExtrinsicSubmitter";
+import ExtrinsicSubmitter, { AsyncSignAndSubmit, SuccessfulTransaction, SignAndSubmit } from "../../ExtrinsicSubmitter";
 import { signAndSendAsRecovered } from "../../logion-chain/Recovery";
 import { useForm, Controller } from "react-hook-form";
-import { VaultApi } from "../../vault/VaultApi";
+import { VaultApi, VaultTransferRequest } from "../../vault/VaultApi";
 import Button from "../../common/Button";
 import { AssetNameCell } from "../../common/Wallet";
 import Dialog from "../../common/Dialog";
@@ -18,6 +18,14 @@ import { buildOptions } from "./SelectLegalOfficer";
 import Select from "../../common/Select";
 import FormGroup from "../../common/FormGroup";
 import { LegalOfficer } from "../../directory/DirectoryApi";
+import VaultTransferRequestStatusCell from "../../common/VaultTransferRequestStatusCell";
+import Clickable from "../../common/Clickable";
+import {
+    cancelVaultTransferCallback,
+    onCancelVaultTransferSuccessCallback
+} from "../../common/VaultTransferRequestsCallbacks";
+import ButtonGroup from "../../common/ButtonGroup";
+import "./VaultRecoveryProcessTab.css"
 
 interface FormValues {
     legalOfficer: string | null;
@@ -31,7 +39,7 @@ enum Status {
 export default function VaultRecoveryProcessTab() {
 
     const { api } = useLogionChain();
-    const { accounts, availableLegalOfficers, axiosFactory, refresh, colorTheme } = useCommonContext();
+    const { accounts, availableLegalOfficers, axiosFactory, refresh, colorTheme, cancelableVaultRecoveryRequest } = useCommonContext();
     const { recoveredAddress, recoveryConfig } = useUserContext();
     const [ recoveredCoinBalance, setRecoveredCoinBalance ] = useState<CoinBalance | null>(null);
     const [ recoveredVaultAddress, setRecoveredVaultAddress ] = useState<string | null>(null)
@@ -39,9 +47,19 @@ export default function VaultRecoveryProcessTab() {
     const [ vaultBalances, setVaultBalances ] = useState<CoinBalance[] | null>(null)
     const [ legalOfficer, setLegalOfficer ] = useState<string | null>(null)
     const [ status, setStatus ] = useState<Status>(Status.IDLE)
-    const [ asyncSignAndSubmit, setAsyncSignAndSubmit ] = useState<AsyncSignAndSubmit>(null);
-    const [ signAndSubmitError, setSignAndSubmitError ] = useState<boolean>(false);
+    const [ requestSignAndSubmit, setRequestSignAndSubmit ] = useState<AsyncSignAndSubmit>(null);
+    const [ requestFailed, setRequestFailed ] = useState<boolean>(false);
     const [ candidates, setCandidates ] = useState<LegalOfficer[]>([]);
+    const [ vaultRecoveryRequest, setVaultRecoveryRequest ] = useState<VaultTransferRequest | null | undefined>(undefined);
+    const [ requestToCancel, setRequestToCancel ] = useState<VaultTransferRequest | null>(null);
+    const [ cancelSignAndSubmit, setCancelSignAndSubmit ] = useState<SignAndSubmit>(null);
+    const [ cancelFailed, setCancelFailed ] = useState(false);
+
+    useEffect(() => {
+        if (cancelableVaultRecoveryRequest && vaultRecoveryRequest === undefined && recoveredAddress) {
+            setVaultRecoveryRequest(cancelableVaultRecoveryRequest(recoveredAddress))
+        }
+    }, [ cancelableVaultRecoveryRequest, setVaultRecoveryRequest, recoveredAddress, vaultRecoveryRequest ])
 
     useEffect(() => {
         if (candidates.length === 0 && recoveryConfig && availableLegalOfficers) {
@@ -78,11 +96,13 @@ export default function VaultRecoveryProcessTab() {
 
     const clearFormCallback = useCallback(() => {
         setRecoveredCoinBalance(null);
-        setAsyncSignAndSubmit(null);
-        setSignAndSubmitError(false);
+        setRequestSignAndSubmit(null);
+        setCancelSignAndSubmit(null);
+        setRequestFailed(false);
+        setCancelFailed(false);
         setLegalOfficer(null);
         setStatus(Status.IDLE);
-    }, [ setRecoveredCoinBalance, setAsyncSignAndSubmit, setSignAndSubmitError ])
+    }, [ setRecoveredCoinBalance, setRequestSignAndSubmit, setCancelSignAndSubmit, setRequestFailed ])
 
     const amountToRecover = useMemo<PrefixedNumber>(() => recoveredCoinBalance?.available ?
             recoveredCoinBalance?.available :
@@ -93,16 +113,17 @@ export default function VaultRecoveryProcessTab() {
         const axios = axiosFactory!(legalOfficer!);
         const vaultApi = new VaultApi(axios, legalOfficer!);
         const blockHeader = await api!.rpc.chain.getHeader(submittable.block);
-        await vaultApi.createVaultTransferRequest({
+        const vaultTransferRequest = await vaultApi.createVaultTransferRequest({
             amount: amountToRecover.convertTo(LGNT_SMALLEST_UNIT).coefficient.unnormalize(),
             destination: targetVaultAddress!,
             block: blockHeader.number.toString(),
             index: submittable.index,
             origin: recoveredAddress!,
         });
+        setVaultRecoveryRequest(vaultTransferRequest)
         clearFormCallback();
         refresh();
-    }, [ api, axiosFactory, legalOfficer, refresh, targetVaultAddress, clearFormCallback, amountToRecover, recoveredAddress ])
+    }, [ api, axiosFactory, legalOfficer, refresh, targetVaultAddress, clearFormCallback, amountToRecover, recoveredAddress, setVaultRecoveryRequest ])
 
     const recoverCoin = useCallback(async (amount: PrefixedNumber) => {
         const signAndSubmit: AsyncSignAndSubmit = async (setResult, setError) => {
@@ -131,16 +152,36 @@ export default function VaultRecoveryProcessTab() {
                 }
             }
         }
-        setAsyncSignAndSubmit(() => signAndSubmit)
+        setRequestSignAndSubmit(() => signAndSubmit)
     }, [ api, accounts, recoveredAddress, recoveryConfig, targetVaultAddress ])
 
-    if (recoveredVaultAddress === null || availableLegalOfficers === undefined || !targetVaultAddress) {
+    const cancelRequestCallback = useCallback(() => {
+        return cancelVaultTransferCallback({
+            api: api!,
+            requestToCancel: requestToCancel!,
+            signerId: accounts!.current!.address,
+            setSignAndSubmit: setCancelSignAndSubmit
+        })
+    }, [ accounts, api, requestToCancel, setCancelSignAndSubmit ]);
+
+    const onCancelSuccessCallback = useCallback(() => {
+        setVaultRecoveryRequest(null)
+        return onCancelVaultTransferSuccessCallback({
+            requestToCancel: requestToCancel!,
+            axiosFactory: axiosFactory!,
+            refresh: refresh!,
+            setSignAndSubmit: setCancelSignAndSubmit,
+            setRequestToCancel,
+        })
+    }, [ requestToCancel, axiosFactory, setRequestToCancel, refresh ]);
+
+    if (recoveredVaultAddress === null || availableLegalOfficers === undefined || !targetVaultAddress || vaultRecoveryRequest === undefined) {
         return null;
     }
 
     const coinBalances: CoinBalance[] = (vaultBalances !== null) ? vaultBalances : [];
     return (<>
-            <div className="content">
+            <div className="VaultRecoveryProcessTab content">
                 <Table
                     columns={ [
                         {
@@ -164,15 +205,29 @@ export default function VaultRecoveryProcessTab() {
                         },
                         {
                             header: "Action",
-                            render: coinBalance => <Button
-                                variant="recovery"
-                                onClick={ () => {
-                                    setRecoveredCoinBalance(coinBalance);
-                                    setStatus(Status.TRANSFERRING)
-                                } }
-                            >
-                                Transfer
-                            </Button>,
+                            render: coinBalance => <>
+                                { vaultRecoveryRequest && (vaultRecoveryRequest.status === 'REJECTED' || vaultRecoveryRequest.status === 'PENDING') ?
+                                    <ButtonGroup>
+                                        <VaultTransferRequestStatusCell status={ vaultRecoveryRequest.status }
+                                                                        viewer="Wallet User" />
+                                        <Cell content={ <Clickable
+                                            onClick={ () => setRequestToCancel(vaultRecoveryRequest) }
+                                        >
+                                            <Icon icon={ { id: "ko" } } />
+                                        </Clickable> } />
+                                    </ButtonGroup>
+                                    :
+                                    <Button
+                                        variant="recovery"
+                                        onClick={ () => {
+                                            setRecoveredCoinBalance(coinBalance);
+                                            setStatus(Status.TRANSFERRING)
+                                        } }
+                                    >
+                                        Transfer
+                                    </Button>
+                                }
+                            </>,
                             width: "300px",
                         }
                     ] }
@@ -205,14 +260,14 @@ export default function VaultRecoveryProcessTab() {
                         buttonText: "Cancel",
                         buttonVariant: "secondary",
                         callback: clearFormCallback,
-                        disabled: asyncSignAndSubmit !== null && !signAndSubmitError,
+                        disabled: requestSignAndSubmit !== null && !requestFailed,
                     },
                     {
                         id: "transfer",
                         buttonText: "Transfer",
                         buttonVariant: "recovery",
                         callback: () => recoverCoin(amountToRecover),
-                        disabled: status !== Status.TRANSFERRING || asyncSignAndSubmit !== null || legalOfficer === null,
+                        disabled: status !== Status.TRANSFERRING || requestSignAndSubmit !== null || legalOfficer === null,
                     }
                 ] }
             >
@@ -257,9 +312,40 @@ export default function VaultRecoveryProcessTab() {
                 }
                 <ExtrinsicSubmitter
                     id="transfer"
-                    asyncSignAndSubmit={ asyncSignAndSubmit }
+                    asyncSignAndSubmit={ requestSignAndSubmit }
                     onSuccess={ onTransferSuccessCallback }
-                    onError={ () => setSignAndSubmitError(true) }
+                    onError={ () => setRequestFailed(true) }
+                />
+            </Dialog>
+            <Dialog
+                show={ requestToCancel !== null }
+                actions={[
+                    {
+                        buttonText: "Cancel",
+                        buttonVariant: "secondary-polkadot",
+                        id: "cancel",
+                        callback: () => { setRequestToCancel(null); setCancelSignAndSubmit(null) },
+                        disabled: cancelSignAndSubmit !== null && !cancelFailed
+                    },
+                    {
+                        buttonText: "Proceed",
+                        buttonVariant: "polkadot",
+                        id: "proceed",
+                        callback: cancelRequestCallback,
+                        disabled: cancelSignAndSubmit !== null
+                    }
+                ]}
+                size="lg"
+            >
+                <h2>Cancel vault recovery</h2>
+
+                <p>This will cancel the vault recovery. Your Legal Officer will be notified.</p>
+
+                <ExtrinsicSubmitter
+                    id="cancel"
+                    signAndSubmit={ cancelSignAndSubmit }
+                    onSuccess={ onCancelSuccessCallback }
+                    onError={ () => setCancelFailed(true) }
                 />
             </Dialog>
         </>

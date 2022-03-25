@@ -86,7 +86,7 @@ export default function PendingVaultTransferRequests() {
                         width: '130px',
                     },
                 ]}
-                data={ pendingVaultTransferRequests }
+                data={ pendingVaultTransferRequests(true) }
                 renderEmpty={ () => <EmptyTableMessage>No pending vault-out transfers</EmptyTableMessage> }
             />
             <RequestToCancel

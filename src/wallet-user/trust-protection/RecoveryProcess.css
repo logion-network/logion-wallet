@@ -40,11 +40,6 @@
     padding: 20px;
 }
 
-.RecoveryProcess .Table .body {
-    overflow-y: auto;
-    height: calc(100vh - 575px);
-}
-
 .RecoveryProcess .recovery-process-footer {
     background: linear-gradient(to top, #e95b5b7f, #152665 50%);
     position: relative;

@@ -112,7 +112,7 @@ export default function RejectedVaultTransferRequests() {
                         width: '130px',
                     },
                 ]}
-                data={ rejectedVaultTransferRequests }
+                data={ rejectedVaultTransferRequests(true) }
                 renderEmpty={ () => <EmptyTableMessage>No request to display</EmptyTableMessage> }
             />
             <RequestToCancel

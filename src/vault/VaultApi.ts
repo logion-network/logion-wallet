@@ -46,7 +46,7 @@ export class VaultApi {
 
     private axios: AxiosInstance;
 
-    private legalOfficerAddress: string;
+    private readonly legalOfficerAddress: string;
 
     async getVaultTransferRequests(fetch: FetchVaultTransferRequest): Promise<VaultTransferRequest[]> {
         const requests = (await this.axios.put("/api/vault-transfer-request", fetch)
@@ -57,8 +57,9 @@ export class VaultApi {
         }));
     }
 
-    async createVaultTransferRequest(legalOfficer: CreateVaultTransferRequest): Promise<VaultTransferRequest> {
-        return await this.axios.post('/api/vault-transfer-request', legalOfficer);
+    async createVaultTransferRequest(params: CreateVaultTransferRequest): Promise<VaultTransferRequest> {
+        const response = await this.axios.post('/api/vault-transfer-request', params);
+        return response.data;
     }
 
     async cancelVaultTransferRequest(requestId: string): Promise<void> {
