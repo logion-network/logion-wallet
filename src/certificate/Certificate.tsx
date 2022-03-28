@@ -64,12 +64,34 @@ export default function Certificate() {
                     return;
                 }
             }
-            setCheckResult({
-                result: "NEGATIVE",
-                hash
-            });
+
+            for (let i = 0; i < loc.metadata!.length; ++i) {
+                const item = loc.metadata[i]
+                if (item?.value === hash) {
+                    setCheckResult({
+                        result: "POSITIVE",
+                        hash
+                    });
+                    return;
+                }
+            }
         }
-    }, [ loc, setCheckResult ]);
+
+        if(collectionItem) {
+            if (collectionItem?.id === hash) {
+                setCheckResult({
+                    result: "POSITIVE",
+                    hash
+                });
+                return;
+            }
+        }
+
+        setCheckResult({
+            result: "NEGATIVE",
+            hash
+        });
+    }, [ loc, setCheckResult, collectionItem ]);
 
     useEffect(() => {
         if (api !== null && loc === undefined && locId !== undefined) {
@@ -295,7 +317,7 @@ export default function Certificate() {
 
                 </Row>
                 { matrix(loc.metadata, 2).map((items, index) => (
-                    <MetadataItemCellRow key={ index } items={ items } />
+                    <MetadataItemCellRow key={ index } items={ items } checkResult={ checkResult } />
                 )) }
                 { matrix(loc.files, 2).map((files, index) => (
                     <FileCellRow key={ index } files={ files } checkResult={ checkResult } />
@@ -304,7 +326,7 @@ export default function Certificate() {
                     <LinkCellRow key={ index } links={ links } />
                 )) }
                 { collectionItem !== null &&
-                    <CollectionItemCellRow item={ collectionItem! } />
+                    <CollectionItemCellRow item={ collectionItem! } checkResult={ checkResult } />
                 }
                 <LegalOfficerRow legalOfficer={ legalOfficer } loc={ loc } />
                 <Row className="buttons">
@@ -345,11 +367,11 @@ export default function Certificate() {
     )
 }
 
-function MetadataItemCellRow(props: { items: MetadataItem[] }) {
+function MetadataItemCellRow(props: { items: MetadataItem[], checkResult: DocumentCheckResult }) {
     return (
         <Row>
             { props.items.map(
-                item => <CertificateCell key={ item.name } md={ 6 } label={ item.name }><pre>{ item.value }</pre></CertificateCell>) }
+                item => <CertificateCell key={ item.name } md={ 6 } label={ item.name } matched={ props.checkResult.hash === item.value } ><pre>{ item.value }</pre></CertificateCell>) }
         </Row>
     )
 }

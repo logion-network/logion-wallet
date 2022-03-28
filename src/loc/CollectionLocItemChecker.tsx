@@ -15,9 +15,11 @@ import CopyPasteButton from "../common/CopyPasteButton";
 import { fullCollectionItemCertificate } from "../PublicPaths";
 
 import "./CollectionLocItemChecker.css"
+import { CollectionItem } from "../logion-chain/Types";
 
 export interface Props {
-    locId: UUID,
+    locId: UUID;
+    collectionItem?: CollectionItem;
 }
 
 export type CheckResult = 'NONE' | 'POSITIVE' | 'NEGATIVE';
@@ -26,10 +28,11 @@ export default function CollectionLocItemChecker(props: Props) {
 
     const { colorTheme } = useCommonContext();
     const { locId } = props;
-    const [ state, setState ] = useState<CheckResult>('NONE')
+    const [ state, setState ] = useState<CheckResult>('NONE');
     const [ collectionSize, setCollectionSize ] = useState<number | undefined | null>(null);
-    const [ itemId, setItemId ] = useState<string>("")
+    const [ itemId, setItemId ] = useState<string>("");
     const { api } = useLogionChain();
+    const [ managedCheck, setManagedCheck ] = useState<{itemId: string, active: boolean}>();
 
     useEffect(() => {
         if (api && collectionSize === null) {
@@ -53,6 +56,24 @@ export default function CollectionLocItemChecker(props: Props) {
         }
     }, [ api, locId, itemId ]);
 
+    useEffect(() => {
+        if(props.collectionItem && (
+                !managedCheck
+                || managedCheck.itemId !== props.collectionItem.id)) {
+
+            setManagedCheck({
+                itemId: props.collectionItem.id,
+                active: true
+            });
+            setItemId(props.collectionItem.id);
+            setState('POSITIVE');
+        } else if(!props.collectionItem && managedCheck) {
+            setManagedCheck(undefined);
+            setItemId("");
+            setState('NONE');
+        }
+    }, [ managedCheck, setManagedCheck, props.collectionItem ]);
+
     return (
         <PolkadotFrame className="CollectionLocItemChecker" colorTheme={ colorTheme }>
             <IconTextRow
@@ -69,12 +90,18 @@ export default function CollectionLocItemChecker(props: Props) {
                         noFeedback={ true }
                         control={
                             <Row>
-                                <Col>
+                                <Col className={ managedCheck?.active ? "matched" : undefined }>
                                     <Form.Control
                                         type="text"
                                         value={ itemId }
                                         onChange={ value => {
-                                            setState('NONE')
+                                            setState('NONE');
+                                            if(managedCheck) {
+                                                setManagedCheck({
+                                                    itemId: managedCheck.itemId,
+                                                    active: false
+                                                });
+                                            }
                                             setItemId(value.target.value);
                                         }}
                                     />

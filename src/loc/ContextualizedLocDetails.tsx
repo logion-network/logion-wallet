@@ -29,7 +29,7 @@ import InlineDateTime from "../common/InlineDateTime";
 import IconTextRow from "../common/IconTextRow";
 import Button from "../common/Button";
 import LocCreationDialog from "./LocCreationDialog";
-import { isLogionIdentityLoc, isLogionDataLoc } from "../logion-chain/Types";
+import { isLogionIdentityLoc, isLogionDataLoc, CollectionItem } from "../logion-chain/Types";
 import { UUID } from "../logion-chain/UUID";
 import Ellipsis from "../common/Ellipsis";
 import { Viewer } from "./types";
@@ -38,12 +38,15 @@ import CertificateAndLimits from "./CertificateAndLimits";
 import CollectionLocItemChecker from "./CollectionLocItemChecker";
 import { ProtectionRequest } from "../common/types/ModelTypes";
 import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
+import { getCollectionItem } from "../logion-chain/LogionLoc";
+import { useLogionChain } from "../logion-chain";
 
 export interface Props {
     viewer: Viewer;
 }
 
 export default function ContextualizedLocDetails(props: Props) {
+    const { api } = useLogionChain();
     const { colorTheme } = useCommonContext();
     const { pendingProtectionRequests, pendingRecoveryRequests } = useLegalOfficerContext();
     const navigate = useNavigate();
@@ -52,10 +55,13 @@ export default function ContextualizedLocDetails(props: Props) {
     const [ checkResult, setCheckResult ] = useState<DocumentCheckResult>({result: "NONE"});
     const [ createLoc, setCreateLoc ] = useState(false);
     const [ protectionRequest, setProtectionRequest ] = useState<ProtectionRequest | null | undefined>();
+    const [ collectionItem, setCollectionItem ] = useState<CollectionItem>();
 
-    const checkHash = useCallback((hash: string) => {
+    const checkHash = useCallback(async (hash: string) => {
+        setCollectionItem(undefined);
+
         for(let i = 0; i < locItems!.length; ++i) {
-            if(locItems[i].type === "Document") {
+            if(locItems[i].type === "Document" || locItems[i].type === "Data") {
                 const file = locItems[i];
                 if(file.value === hash) {
                     setCheckResult({
@@ -66,11 +72,23 @@ export default function ContextualizedLocDetails(props: Props) {
                 }
             }
         }
+
+        const collectionItem = await getCollectionItem({ api: api!, locId, itemId: hash });
+        if(collectionItem) {
+            setCollectionItem(collectionItem);
+            setCheckResult({
+                result: "POSITIVE",
+                hash
+            });
+            return;
+        }
+
         setCheckResult({
             result: "NEGATIVE",
             hash
         });
-    }, [ locItems, setCheckResult ]);
+        setCollectionItem(undefined);
+    }, [ api, locId, locItems, setCheckResult, setCollectionItem ]);
 
     useEffect(() => {
         if(location.search) {
@@ -366,7 +384,10 @@ export default function ContextualizedLocDetails(props: Props) {
                 loc={ loc }
             />
             { loc.locType === 'Collection' && loc.closed &&
-                <CollectionLocItemChecker locId={ locId } />
+                <CollectionLocItemChecker
+                    locId={ locId }
+                    collectionItem={ collectionItem }
+                />
             }
             {
                 loc.replacerOf !== undefined &&

@@ -52,3 +52,7 @@
 .CollectionLocItemChecker .url-copy-paste-container button {
     flex-shrink: 0;
 }
+
+.CollectionLocItemChecker .matched {
+    border: 2px dashed #e6007a;
+}
