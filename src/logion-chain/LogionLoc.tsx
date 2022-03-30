@@ -385,7 +385,12 @@ export async function getCollectionItem(
 
     const result = await api.query.logionLoc.collectionItemsMap(locId.toHexString(), itemId);
     if (result.isSome) {
-        const description = result.unwrap().description.toUtf8();
+        let description;
+        try {
+            description = result.unwrap().description.toUtf8();
+        } catch(e) {
+            description = result.unwrap().description.toHex();
+        }
         return { id: itemId, description }
     } else {
         return undefined;
