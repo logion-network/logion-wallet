@@ -2,7 +2,6 @@ jest.mock('./logion-chain');
 jest.mock('./logion-chain/Keys');
 jest.mock('./config');
 
-import React from 'react';
 import Main from './Main';
 import { setContextMock } from './logion-chain/__mocks__/LogionChainMock';
 import { setExtensionAvailable } from './logion-chain/__mocks__/KeysMock';

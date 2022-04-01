@@ -1,11 +1,10 @@
-import React from 'react';
+import { DataLocType } from "logion-api/dist/Types";
 
 import { useCommonContext } from '../../common/CommonContext';
 import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';
 import LegalOfficerName from '../../common/LegalOfficerNameCell';
 import Loader from '../../common/Loader';
-import { DataLocType } from "../../logion-chain/Types";
 
 export interface Props {
     locType: DataLocType

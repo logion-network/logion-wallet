@@ -1,11 +1,12 @@
-import { UUID } from "../logion-chain/UUID";
+import { UUID } from "logion-api/dist/UUID";
+import { CollectionItem } from "logion-api/dist/Types";
+
 import PolkadotFrame from "../common/PolkadotFrame";
 import { useCommonContext } from "../common/CommonContext";
 import Icon from "../common/Icon";
 import IconTextRow from "../common/IconTextRow";
 
 import "./CollectionLocItemChecker.css"
-import { CollectionItem } from "../logion-chain/Types";
 import ImportItems from "./ImportItems";
 
 export interface Props {

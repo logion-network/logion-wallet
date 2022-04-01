@@ -1,18 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { getBalances } from "logion-api/dist/Balances";
+import { getVaultAddress } from "logion-api/dist/Vault";
 
 import { useLogionChain } from '../../logion-chain';
+
 import { useCommonContext } from '../../common/CommonContext';
 import { FullWidthPane } from '../../common/Dashboard';
 import Tabs from '../../common/Tabs';
 import Icon from '../../common/Icon';
-import { useUserContext } from '../UserContext';
-import './RecoveryProcess.css';
-import { getBalances } from "../../logion-chain/Balances";
 import NetworkWarning from '../../common/NetworkWarning';
+
 import { SETTINGS_PATH } from '../UserRouter';
-import { getVaultAddress } from "../../logion-chain/Vault";
+import { useUserContext } from '../UserContext';
+
 import WalletRecoveryProcessTab from "./WalletRecoveryProcessTab";
 import VaultRecoveryProcessTab from "./VaultRecoveryProcessTab";
+
+import './RecoveryProcess.css';
 
 interface TabTitleProps {
     iconId: string,

@@ -1,5 +1,6 @@
 import { Col, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
+import { prefixedLogBalance, SYMBOL } from 'logion-api/dist/Balances';
 
 import { useCommonContext } from "../common/CommonContext";
 import { FullWidthPane } from '../common/Dashboard';
@@ -15,14 +16,13 @@ import Tabs from '../common/Tabs';
 import LegalOfficerName from '../common/LegalOfficerNameCell';
 import LocStatusCell from '../common/LocStatusCell';
 import ButtonGroup from '../common/ButtonGroup';
-
-import { prefixedLogBalance, SYMBOL } from '../logion-chain/Balances';
-
-import { SETTINGS_PATH, WALLET_PATH, dataLocDetailsPath, locRequestsPath } from './UserRouter';
 import { TransactionStatusCell } from "../common/TransactionStatusCell";
-import './Home.css';
 import NetworkWarning from '../common/NetworkWarning';
 import { useResponsiveContext } from '../common/Responsive';
+
+import { SETTINGS_PATH, WALLET_PATH, dataLocDetailsPath, locRequestsPath } from './UserRouter';
+
+import './Home.css';
 
 const MAX_OPEN_LOCS = 3;
 const MAX_PENDING_LOCS = 3;

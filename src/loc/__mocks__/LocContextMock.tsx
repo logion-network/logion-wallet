@@ -1,7 +1,8 @@
+import { LegalOfficerCase } from "logion-api/dist/Types";
+import { UUID } from "logion-api/dist/UUID";
+
 import { LocRequest } from "../../common/types/ModelTypes";
 import { mockSignAndSubmit } from "../../ExtrinsicSubmitterTestUtil";
-import { LegalOfficerCase } from "../../logion-chain/Types";
-import { UUID } from "../../logion-chain/UUID";
 import { LocItem } from "../types";
 
 let locItems: LocItem[] = [];

@@ -1,7 +1,8 @@
-import React, { useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
+import { Col, Row } from 'react-bootstrap';
+import { createRecovery, claimRecovery } from 'logion-api/dist/Recovery';
 
 import { useLogionChain } from '../../logion-chain';
-import { createRecovery, claimRecovery } from '../../logion-chain/Recovery';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
 
 import { ProtectionRequest, ProtectionRequestStatus } from "../../common/types/ModelTypes";
@@ -11,16 +12,18 @@ import Button from '../../common/Button';
 import Icon from '../../common/Icon';
 import { GREEN, ORANGE, rgbaToHex, YELLOW } from '../../common/ColorTheme';
 import { useCommonContext } from '../../common/CommonContext';
-
-import { useUserContext } from '../UserContext';
-
-import './ProtectionRecoveryRequest.css';
 import NetworkWarning from '../../common/NetworkWarning';
-import { SETTINGS_PATH } from '../UserRouter';
-import SelectLegalOfficer from './SelectLegalOfficer';
-import { Col, Row } from 'react-bootstrap';
+
 import { useDirectoryContext } from '../../directory/DirectoryContext';
 import { LegalOfficer } from '../../directory/DirectoryApi';
+
+import { useUserContext } from '../UserContext';
+import { SETTINGS_PATH } from '../UserRouter';
+
+import SelectLegalOfficer from './SelectLegalOfficer';
+
+import './ProtectionRecoveryRequest.css';
+import { signAndSend } from 'src/logion-chain/Signature';
 
 export type ProtectionRecoveryRequestStatus = 'pending' | 'accepted' | 'activated';
 
@@ -38,23 +41,27 @@ export default function ProtectionRecoveryRequest(props: Props) {
     const [ signAndSubmitClaim, setSignAndSubmitClaim ] = useState<SignAndSubmit>(null);
 
     const activateProtection = useCallback(() => {
-        const signAndSubmit: SignAndSubmit = (setResult, setError) => createRecovery({
-            api: api!,
+        const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
             signerId: accounts!.current!.address,
-            legalOfficers: props.requests.map(request => request.legalOfficerAddress),
             callback: setResult,
-            errorCallback: setError
+            errorCallback: setError,
+            submittable: createRecovery({
+                api: api!,
+                legalOfficers: props.requests.map(request => request.legalOfficerAddress),
+            })
         });
         setSignAndSubmit(() => signAndSubmit);
     }, [ api, accounts, props, setSignAndSubmit ]);
 
     const doClaimRecovery = useCallback(() => {
-        const signAndSubmit: SignAndSubmit = (setResult, setError) => claimRecovery({
-            api: api!,
+        const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
             signerId: accounts!.current!.address,
             callback: setResult,
             errorCallback: setError,
-            addressToRecover: props.requests[0].addressToRecover!,
+            submittable: claimRecovery({
+                api: api!,
+                addressToRecover: props.requests[0].addressToRecover!,
+            })
         });
         setSignAndSubmitClaim(() => signAndSubmit);
     }, [ api, accounts, props, setSignAndSubmitClaim ]);

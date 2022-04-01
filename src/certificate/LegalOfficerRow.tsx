@@ -1,5 +1,5 @@
 import { LegalOfficer } from "../directory/DirectoryApi";
-import { LegalOfficerCase } from "../logion-chain/Types";
+import { LegalOfficerCase } from "logion-api/dist/Types";
 import CertificateCell from "./CertificateCell";
 import { LegalOfficerContactInfo } from "../common/LegalOfficerContactInfo";
 import { LegalOfficerPostalAddress } from "../common/LegalOfficerPostalAddress";

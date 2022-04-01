@@ -1,21 +1,21 @@
 import { useState, useCallback, useEffect } from "react";
+import { Form } from "react-bootstrap";
+import { CollectionItem } from "logion-api/dist/Types";
+import { UUID } from "logion-api/dist/UUID";
+import { getCollectionItem, getCollectionSize } from "logion-api/dist/LogionLoc";
 
-import { UUID } from "../logion-chain/UUID";
 import { useLogionChain } from "../logion-chain";
-import { getCollectionItem, getCollectionSize } from "../logion-chain/LogionLoc";
 import PolkadotFrame from "../common/PolkadotFrame";
 import { useCommonContext } from "../common/CommonContext";
 import Icon from "../common/Icon";
 import IconTextRow from "../common/IconTextRow";
 import FormGroup from "../common/FormGroup";
-import { Form } from "react-bootstrap";
 import Button from "../common/Button";
 import { Row, Col } from "../common/Grid";
 import CopyPasteButton from "../common/CopyPasteButton";
 import { fullCollectionItemCertificate } from "../PublicPaths";
 
 import "./CollectionLocItemChecker.css"
-import { CollectionItem } from "../logion-chain/Types";
 import StatementOfFactsButton from "./statement/StatementOfFactsButton";
 import { useDirectoryContext } from "../directory/DirectoryContext";
 import { toItemId } from './types';

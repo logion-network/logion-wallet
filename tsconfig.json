@@ -18,7 +18,12 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+        "@polkadot/api/augment": ["logion-api/dist/interfaces/augment-api.ts"],
+        "@polkadot/types/augment": ["logion-api/dist/interfaces/augment-types.ts"]
+    }
   },
   "include": [
     "src"

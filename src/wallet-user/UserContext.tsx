@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useCallback, useReducer, Reducer } from "react";
+import { RecoveryConfig, getRecoveryConfig, getProxy } from 'logion-api/dist/Recovery';
+import { getVaultAddress } from "logion-api/dist/Vault";
+import { CoinBalance, getBalances } from "logion-api/dist/Balances";
 
 import { useLogionChain } from '../logion-chain';
-import { RecoveryConfig, getRecoveryConfig, getProxy } from '../logion-chain/Recovery';
 import { Children } from '../common/types/Helpers';
 import {
     aggregateArrays,
@@ -21,8 +23,6 @@ import {
 } from "./trust-protection/Model";
 import { useCommonContext } from '../common/CommonContext';
 import { DARK_MODE } from './Types';
-import { getVaultAddress } from "../logion-chain/Vault";
-import { CoinBalance, getBalances } from "../logion-chain/Balances";
 
 export interface UserContext {
     dataAddress: string | null,

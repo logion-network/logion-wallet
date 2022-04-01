@@ -1,18 +1,18 @@
 jest.mock('../../common/CommonContext');
 jest.mock('../LegalOfficerContext');
 jest.mock('../../logion-chain');
-jest.mock('../../logion-chain/LogionLoc');
+jest.mock('logion-api/dist/LogionLoc');
 jest.mock('../../logion-chain/Signature');
 jest.mock('../../loc/Model');
 
-import { render, screen, act, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { UUID } from 'logion-api/dist/UUID';
 
 import { shallowRender } from '../../tests';
 import { finalizeSubmission } from '../../logion-chain/__mocks__/SignatureMock';
 import { LocRequest } from '../../common/types/ModelTypes';
 import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT, axiosMock } from '../../common/__mocks__/CommonContextMock';
-import { UUID } from '../../logion-chain/UUID';
 
 import { setAcceptLocRequest, acceptLocRequest } from '../../loc/__mocks__/ModelMock';
 
@@ -50,7 +50,7 @@ describe("LocRequestAcceptance", () => {
         // Create LOC
         await waitFor(() => screen.getByRole("dialog"));
         await waitFor(() => screen.getByText(/Submitting/));
-        act(finalizeSubmission);
+        finalizeSubmission();
         await waitFor(() => screen.getByText(/LOC successfully created/));
         await waitFor(() => expect(acceptLocRequest).toBeCalledWith(
             axiosMock.object(),

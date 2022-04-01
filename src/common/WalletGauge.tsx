@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
-import { ATTO, FEMTO, MICRO, MILLI, NANO, NONE, PICO, PrefixedNumber } from '../logion-chain/numbers';
-import { Coin, SYMBOL, transfer } from '../logion-chain/Balances';
+import { ATTO, FEMTO, MICRO, MILLI, NANO, NONE, PICO, PrefixedNumber } from 'logion-api/dist/numbers';
+import { Coin, SYMBOL, transferSubmittable } from 'logion-api/dist/Balances';
+import { isValidAccountId } from 'logion-api/dist/Accounts';
 
 import Gauge from './Gauge';
 import Button from './Button';
@@ -12,10 +13,10 @@ import FormGroup from './FormGroup';
 import { useCommonContext } from './CommonContext';
 import { Form, Spinner, InputGroup, DropdownButton, Dropdown } from 'react-bootstrap';
 import { useLogionChain } from '../logion-chain';
-import { isValidAccountId } from '../logion-chain/Accounts';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../ExtrinsicSubmitter';
 import Alert from './Alert';
 import TransactionConfirmation, { Status } from "./TransactionConfirmation";
+import { signAndSend } from 'src/logion-chain/Signature';
 
 export interface Props {
     coin: Coin,
@@ -43,13 +44,15 @@ export default function WalletGauge(props: Props) {
     const [ transferError, setTransferError ] = useState(false);
 
     const transferCallback = useCallback(() => {
-        const signAndSubmit: SignAndSubmit = (setResult, setError) => transfer({
-            api: api!,
+        const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
             signerId: accounts!.current!.address,
             callback: setResult,
             errorCallback: setError,
-            destination,
-            amount: new PrefixedNumber(amount, unit),
+            submittable: transferSubmittable({
+                api: api!,
+                destination,
+                amount: new PrefixedNumber(amount, unit),
+            })
         });
         setSignAndSubmit(() => signAndSubmit);
     }, [ accounts, amount, api, destination, unit ]);

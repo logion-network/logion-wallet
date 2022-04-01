@@ -1,20 +1,23 @@
+import { useState, useCallback, useEffect } from "react";
+import { Spinner } from "react-bootstrap";
+import { CoinBalance, buildTransferCall, getBalances } from "logion-api/dist/Balances";
+import { asRecovered } from "logion-api/dist/Recovery";
+import { PrefixedNumber, NONE } from "logion-api/dist/numbers";
+
 import Table, { Cell, EmptyTableMessage } from "../../common/Table";
 import Icon from "../../common/Icon";
 import { AssetNameCell } from "../../common/Wallet";
 import Button from "../../common/Button";
-import React, { useState, useCallback, useEffect } from "react";
-import { CoinBalance, buildTransferCall, getBalances } from "../../logion-chain/Balances";
-import { PrefixedNumber, NONE } from "../../logion-chain/numbers";
-import ExtrinsicSubmitter, { SignAndSubmit } from "../../ExtrinsicSubmitter";
 import TransactionConfirmation, { Status } from "../../common/TransactionConfirmation";
 import Dialog from "../../common/Dialog";
 import Alert from "../../common/Alert";
-import { Spinner } from "react-bootstrap";
-import { useLogionChain } from "../../logion-chain";
-import { signAndSendAsRecovered } from "../../logion-chain/Recovery";
 import { useCommonContext } from "../../common/CommonContext";
-import { useUserContext } from "../UserContext";
 import IconTextRow from "../../common/IconTextRow";
+
+import { useLogionChain } from "../../logion-chain";
+import ExtrinsicSubmitter, { SignAndSubmit } from "../../ExtrinsicSubmitter";
+import { useUserContext } from "../UserContext";
+import { signAndSend } from "src/logion-chain/Signature";
 
 interface Props {
     vaultFirst: boolean
@@ -41,17 +44,19 @@ export default function WalletRecoveryProcessTab(props: Props) {
 
     const recoverCoin = useCallback(async (amount: PrefixedNumber) => {
 
-        const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSendAsRecovered({
-            api: api!,
+        const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
             signerId: accounts!.current!.address,
             callback: setResult,
             errorCallback: setError,
-            recoveredAccountId: recoveredAddress!,
-            call: buildTransferCall({
+            submittable: asRecovered({
                 api: api!,
-                amount: amount,
-                destination: accounts!.current!.address,
-            }),
+                recoveredAccountId: recoveredAddress!,
+                call: buildTransferCall({
+                    api: api!,
+                    amount: amount,
+                    destination: accounts!.current!.address,
+                }),
+            })
         });
         setSignAndSubmit(() => signAndSubmit);
     }, [ api, accounts, recoveredAddress ]);

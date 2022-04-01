@@ -1,6 +1,9 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import { useForm, Controller } from 'react-hook-form';
+import { useState, useCallback, useEffect } from 'react';
+import { Row, Col } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
+import { useForm, Controller } from 'react-hook-form';
+import { getActiveRecovery, initiateRecovery, getRecoveryConfig } from 'logion-api/dist/Recovery';
+import { isValidAccountId } from 'logion-api/dist/Accounts';
 
 import Button from "../../common/Button";
 import { FullWidthPane } from "../../common/Dashboard";
@@ -8,20 +11,19 @@ import Frame from "../../common/Frame";
 import Alert from "../../common/Alert";
 import Dialog from '../../common/Dialog';
 import FormGroup from '../../common/FormGroup';
+import NetworkWarning from '../../common/NetworkWarning';
+import { useCommonContext } from "../../common/CommonContext";
 
 import { useUserContext } from "../UserContext";
-import { useLogionChain, } from '../../logion-chain';
-import { getActiveRecovery, initiateRecovery, getRecoveryConfig } from '../../logion-chain/Recovery';
-import { Row, Col } from "react-bootstrap";
-import { useCommonContext } from "../../common/CommonContext";
+import { useLogionChain } from '../../logion-chain';
+import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
+import { SETTINGS_PATH } from '../UserRouter';
+import { LegalOfficer } from '../../directory/DirectoryApi';
+
 import LegalOfficers from './LegalOfficers';
 
 import './CreateProtectionRequestForm.css';
-import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
-import { isValidAccountId } from '../../logion-chain/Accounts';
-import NetworkWarning from '../../common/NetworkWarning';
-import { SETTINGS_PATH } from '../UserRouter';
-import { LegalOfficer } from '../../directory/DirectoryApi';
+import { signAndSend } from 'src/logion-chain/Signature';
 
 export interface Props {
     isRecovery: boolean,
@@ -108,12 +110,14 @@ export default function CreateProtectionRequestForm(props: Props) {
             });
             setActiveRecovery(activeRecovery !== undefined);
             if(activeRecovery === undefined) {
-                const signAndSubmit: SignAndSubmit = (setResult, setError) => initiateRecovery({
-                    api: api!,
+                const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
                     signerId: currentAddress,
                     callback: setResult,
                     errorCallback: setError,
-                    addressToRecover,
+                    submittable: initiateRecovery({
+                        api: api!,
+                        addressToRecover,
+                    })
                 });
                 setSignAndSubmit(() => signAndSubmit);
             }

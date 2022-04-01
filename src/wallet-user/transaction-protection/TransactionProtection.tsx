@@ -1,23 +1,24 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { DataLocType } from "logion-api/dist/Types";
 
 import { FullWidthPane } from '../../common/Dashboard';
 import Tabs from '../../common/Tabs';
 import Frame from '../../common/Frame';
 import { useCommonContext } from "../../common/CommonContext";
+import NetworkWarning from '../../common/NetworkWarning';
+
+import { SETTINGS_PATH } from '../UserRouter';
 
 import OpenedLocs from './OpenedLocs';
 import RequestedLocs from './RequestedLocs';
 import RejectedLocs from './RejectedLocs';
 import LocCreation from './LocCreation';
 import ClosedLocs from './ClosedLocs';
+import VoidLocs from './VoidLocs';
 
 import './TransactionProtection.css';
-import VoidLocs from './VoidLocs';
-import NetworkWarning from '../../common/NetworkWarning';
-import { SETTINGS_PATH } from '../UserRouter';
-import { DataLocType } from "../../logion-chain/Types";
 
 export interface Props {
     locType: DataLocType,

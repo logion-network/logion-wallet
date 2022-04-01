@@ -1,14 +1,15 @@
+jest.mock('logion-api/dist/LogionLoc');
+jest.mock('../logion-chain/Signature');
+jest.mock("logion-api/dist/Recovery");
 jest.mock("../common/CommonContext");
 jest.mock("../loc/Model");
 jest.mock("./Model");
 jest.mock("./LegalOfficerContext");
 jest.mock("../logion-chain");
-jest.mock('../logion-chain/LogionLoc');
-jest.mock('../logion-chain/Signature');
-jest.mock("../logion-chain/Recovery");
 
 import { render, waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+
 import RecoveryDetails from './RecoveryDetails';
 import { RecoveryInfo } from './Types';
 import { acceptProtectionRequest, rejectProtectionRequest } from '../loc/__mocks__/ModelMock';
@@ -18,7 +19,7 @@ import { axiosMock, setAddresses, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../commo
 import { setIsSuccessful } from '../logion-chain/__mocks__/SignatureMock';
 import { setParams, navigate } from '../__mocks__/ReactRouterMock';
 import { refreshRequests } from './__mocks__/LegalOfficerContextMock';
-import { CLOSED_IDENTITY_LOC_ID } from '../logion-chain/__mocks__/LogionLocMock';
+import { CLOSED_IDENTITY_LOC_ID } from '../__mocks__/logion-api/dist/LogionLocMock';
 
 describe("RecoveryDetails", () => {
 

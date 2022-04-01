@@ -1,5 +1,3 @@
-import { signAndSend } from "./SignatureMock";
-
 export let createRecovery = jest.fn().mockResolvedValue(() => {});
 export let vouchRecovery = jest.fn().mockResolvedValue(() => {});
 
@@ -19,4 +17,6 @@ export let getActiveRecovery = () => (Promise.resolve(
         undefined
 ));
 
-export let initiateRecovery = (parameters: any) => signAndSend(parameters);
+export let initiateRecovery = (parameters: any) => {};
+
+export let asRecovered = (parameters: any) => {};

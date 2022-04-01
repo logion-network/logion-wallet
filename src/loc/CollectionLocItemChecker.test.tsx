@@ -1,10 +1,11 @@
 jest.mock("../common/CommonContext");
 jest.mock("../logion-chain");
+jest.unmock("logion-api/dist/LogionLoc");
+
+import { render } from "@testing-library/react";
+import { UUID } from "logion-api/dist/UUID";
 
 import CollectionLocItemChecker from "./CollectionLocItemChecker";
-import { UUID } from "../logion-chain/UUID";
-import { render } from "@testing-library/react";
-
 
 describe("CollectionLocItemChecker", () => {
 

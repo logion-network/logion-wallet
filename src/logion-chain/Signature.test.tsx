@@ -1,7 +1,5 @@
 jest.mock('@polkadot/extension-dapp');
-jest.mock('@polkadot/ui-keyring');
 jest.mock('@polkadot/api');
-jest.mock('./Codec');
 
 import {
     createHash,

@@ -1,21 +1,22 @@
-import { render, screen, waitFor } from "@testing-library/react";
 import { useCallback, useState } from "react";
+import { render, screen, waitFor } from "@testing-library/react";
+import { UUID } from "logion-api/dist/UUID";
+import { LegalOfficerCase } from 'logion-api/dist/Types';
+
 import { LocRequest } from "../common/types/ModelTypes";
 import { fetchLocRequest, resetDefaultMocks } from "../common/__mocks__/ModelMock";
 import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
-import { UUID } from "../logion-chain/UUID";
-import { CLOSED_IDENTITY_LOC, CLOSED_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "../logion-chain/__mocks__/LogionLocMock";
+import { CLOSED_IDENTITY_LOC, CLOSED_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "../__mocks__/logion-api/dist/LogionLocMock";
 import { finalizeSubmission, resetSubmitting } from "../logion-chain/__mocks__/SignatureMock";
 import { clickByName } from "../tests";
 import { LocContextProvider, useLocContext } from "./LocContext"
 import { LocItemType } from "./types";
 import { addMetadata, addFile, addLink } from "./__mocks__/ModelMock";
-import { LegalOfficerCase } from '../logion-chain/Types';
 import { buildLocRequest } from "./TestData";
 
-jest.mock("../logion-chain");
-jest.mock("../logion-chain/LogionLoc");
+jest.mock("logion-api/dist/LogionLoc");
 jest.mock("../logion-chain/Signature");
+jest.mock("../logion-chain");
 jest.mock("../common/CommonContext");
 jest.mock("../common/Model");
 jest.mock("./Model");

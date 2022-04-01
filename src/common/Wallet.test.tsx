@@ -1,4 +1,5 @@
 jest.mock("./CommonContext");
+jest.unmock("logion-api/dist/Balances");
 
 import { shallowRender } from '../tests';
 

@@ -13,8 +13,3 @@ export {
     sign,
     isSuccessful,
 };
-
-import {
-    SignedTransaction as RealSignedTransaction
-} from '../Signature';
-export type SignedTransaction = RealSignedTransaction;

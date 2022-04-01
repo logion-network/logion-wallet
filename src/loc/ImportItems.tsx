@@ -1,5 +1,7 @@
 import { useCallback, useState } from "react";
 import csv from "csv-parser";
+import { UUID } from "logion-api/dist/UUID";
+import { getCollectionItem, addCollectionItem } from "logion-api/dist/LogionLoc";
 
 import Dialog from "../common/Dialog";
 import FileSelectorButton from "../common/FileSelectorButton";
@@ -8,9 +10,7 @@ import Table, { Cell, EmptyTableMessage } from "../common/Table";
 import { useCommonContext } from "../common/CommonContext";
 import Button from "../common/Button";
 import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
-import { addCollectionItem, getCollectionItem } from "../logion-chain/LogionLoc";
 import { useLogionChain } from "../logion-chain";
-import { UUID } from "../logion-chain/UUID";
 import { useResponsiveContext } from "../common/Responsive";
 import { useLocContext } from "./LocContext";
 import ImportItemDetails, { Item } from "./ImportItemDetails";
@@ -18,6 +18,7 @@ import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 import './ImportItems.css';
 import { toItemId } from "./types";
+import { signAndSend } from "src/logion-chain/Signature";
 
 const fileReaderStream = require("filereader-stream");
 
@@ -94,14 +95,16 @@ export default function ImportItems(props: Props) {
 
     const submitItem = useCallback((item: Item) => {
         item.submitted = true;
-        const signAndSubmit: SignAndSubmit = (setResult, setError) => addCollectionItem({
-            api: api!,
-            collectionId: props.collectionId,
+        const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
             signerId: accounts!.current!.address,
-            itemId: item.id,
-            itemDescription: item.description,
             callback: setResult,
-            errorCallback: setError
+            errorCallback: setError,
+            submittable: addCollectionItem({
+                api: api!,
+                collectionId: props.collectionId,
+                itemId: item.id,
+                itemDescription: item.description,
+            })
         });
         const newSubmitters = { ...submitters };
         newSubmitters[item.id] = signAndSubmit;

@@ -1,6 +1,7 @@
+import { UUID } from "logion-api/dist/UUID"
+
 import { sha256HexFromString } from "../common/hash";
 import { SignAndSubmit } from "../ExtrinsicSubmitter"
-import { UUID } from "../logion-chain/UUID"
 
 export type LocItemStatus = 'DRAFT' | 'PUBLISHED'
 

@@ -1,9 +1,7 @@
-import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useNavigate } from 'react-router-dom';
-
-import { CoinBalance, prefixedLogBalance, SYMBOL } from '../logion-chain/Balances';
+import { CoinBalance, prefixedLogBalance, SYMBOL } from 'logion-api/dist/Balances';
 
 import { useCommonContext } from './CommonContext';
 

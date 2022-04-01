@@ -1,10 +1,12 @@
 import React from "react";
+import { UUID } from "logion-api/dist/UUID";
+
 import Button from "../../common/Button";
 import Icon from "../../common/Icon";
 import { LocFile } from "../../common/types/ModelTypes";
-import { UUID } from "../../logion-chain/UUID";
-import './StatementOfFactsSummary.css';
 import { Children } from "../../common/types/Helpers";
+
+import './StatementOfFactsSummary.css';
 
 export interface Props {
     locId: UUID,

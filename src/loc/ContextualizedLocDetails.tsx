@@ -1,12 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router";
+import { Col, OverlayTrigger } from "react-bootstrap";
 import queryString from 'query-string';
+import { UUID } from "logion-api/dist/UUID";
+import { format } from "logion-api/dist/datetime";
+import { isLogionIdentityLoc, isLogionDataLoc, CollectionItem } from "logion-api/dist/Types";
+import { getCollectionItem } from "logion-api/dist/LogionLoc";
+import Tooltip from 'react-bootstrap/Tooltip';
 
 import { useCommonContext } from "../common/CommonContext";
 import { FullWidthPane } from "../common/Dashboard";
 import Tabs from "../common/Tabs";
-import { Col, OverlayTrigger } from "react-bootstrap";
-import { format } from "../logion-chain/datetime";
 import LocPublicDataButton from "./LocPublicDataButton";
 import { useLocContext } from "./LocContext";
 import LocItems from "./LocItems";
@@ -15,7 +19,6 @@ import { Row } from "../common/Grid";
 import { POLKADOT, RED, BackgroundAndForegroundColors, BLUE } from "../common/ColorTheme";
 import CloseLocButton from "./CloseLocButton";
 import LocPrivateFileButton from "./LocPrivateFileButton";
-import "./ContextualizedLocDetails.css";
 import Icon from "../common/Icon";
 import LocLinkButton from "./LocLinkButton";
 import CheckFileFrame, { DocumentCheckResult } from './CheckFileFrame';
@@ -29,18 +32,16 @@ import InlineDateTime from "../common/InlineDateTime";
 import IconTextRow from "../common/IconTextRow";
 import Button from "../common/Button";
 import LocCreationDialog from "./LocCreationDialog";
-import { isLogionIdentityLoc, isLogionDataLoc, CollectionItem } from "../logion-chain/Types";
-import { UUID } from "../logion-chain/UUID";
 import Ellipsis from "../common/Ellipsis";
 import { Viewer } from "./types";
-import Tooltip from 'react-bootstrap/Tooltip';
 import CertificateAndLimits from "./CertificateAndLimits";
 import CollectionLocItemChecker from "./CollectionLocItemChecker";
 import { ProtectionRequest } from "../common/types/ModelTypes";
 import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
-import { getCollectionItem } from "../logion-chain/LogionLoc";
 import { useLogionChain } from "../logion-chain";
 import ItemImporter from "./ItemImporter";
+
+import "./ContextualizedLocDetails.css";
 
 export interface Props {
     viewer: Viewer;

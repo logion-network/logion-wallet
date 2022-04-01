@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { vouchRecovery } from "logion-api/dist/Recovery";
+import { Col, Row } from "react-bootstrap";
 
 import Button from "../common/Button";
 import ProcessStep from "../legal-officer/ProcessStep";
@@ -11,14 +13,14 @@ import { useLocContext } from "./LocContext";
 import Icon from "../common/Icon";
 import { ProtectionRequest } from "../common/types/ModelTypes";
 
-import './CloseLocButton.css';
 import { acceptProtectionRequest } from "./Model";
 import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
 import { PROTECTION_REQUESTS_PATH, RECOVERY_REQUESTS_PATH } from "../legal-officer/LegalOfficerPaths";
-import { Col, Row } from "react-bootstrap";
 import StaticLabelValue from "../common/StaticLabelValue";
-import { vouchRecovery } from "../logion-chain/Recovery";
 import { useLogionChain } from "../logion-chain";
+
+import './CloseLocButton.css';
+import { signAndSend } from "src/logion-chain/Signature";
 
 enum CloseStatus {
     NONE,
@@ -74,13 +76,15 @@ export default function CloseLocButton(props: Props) {
             setCloseState({ status: CloseStatus.VOUCHING });
 
             const currentAddress = accounts!.current!.address;
-            const signAndSubmit: SignAndSubmit = (callback, errorCallback) => vouchRecovery({
-                api: api!,
+            const signAndSubmit: SignAndSubmit = (callback, errorCallback) => signAndSend({
+                signerId: currentAddress,
                 callback,
                 errorCallback,
-                signerId: currentAddress,
-                lost: props.protectionRequest!.addressToRecover!,
-                rescuer: props.protectionRequest!.requesterAddress,
+                submittable: vouchRecovery({
+                    api: api!,
+                    lost: props.protectionRequest!.addressToRecover!,
+                    rescuer: props.protectionRequest!.requesterAddress,
+                })
             });
             setSignAndSubmitVouch(() => signAndSubmit);
         } else {

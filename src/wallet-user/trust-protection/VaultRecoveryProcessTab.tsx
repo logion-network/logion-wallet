@@ -1,23 +1,23 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
-import { getVaultAddress, buildVaultTransferCall } from "../../logion-chain/Vault";
-import { useLogionChain } from "../../logion-chain";
-import { useCommonContext } from "../../common/CommonContext";
-import { useUserContext } from "../UserContext";
-import { CoinBalance, getBalances, LGNT_SMALLEST_UNIT } from "../../logion-chain/Balances";
-import { PrefixedNumber, NONE } from "../../logion-chain/numbers";
-import ExtrinsicSubmitter, { AsyncSignAndSubmit, SuccessfulTransaction, SignAndSubmit } from "../../ExtrinsicSubmitter";
-import { signAndSendAsRecovered } from "../../logion-chain/Recovery";
 import { useForm, Controller } from "react-hook-form";
+import { getVaultAddress, buildVaultTransferCall } from "logion-api/dist/Vault";
+import { PrefixedNumber, NONE } from "logion-api/dist/numbers";
+import { asRecovered } from "logion-api/dist/Recovery";
+import { CoinBalance, getBalances, LGNT_SMALLEST_UNIT } from "logion-api/dist/Balances";
+
+import { useLogionChain } from "../../logion-chain";
+import ExtrinsicSubmitter, { AsyncSignAndSubmit, SuccessfulTransaction, SignAndSubmit } from "../../ExtrinsicSubmitter";
+import { LegalOfficer } from "../../directory/DirectoryApi";
 import { VaultApi, VaultTransferRequest } from "../../vault/VaultApi";
+
+import { useCommonContext } from "../../common/CommonContext";
 import Button from "../../common/Button";
 import { AssetNameCell } from "../../common/Wallet";
 import Dialog from "../../common/Dialog";
 import Icon from "../../common/Icon";
 import Table, { Cell, EmptyTableMessage } from "../../common/Table";
-import { buildOptions } from "./SelectLegalOfficer";
 import Select from "../../common/Select";
 import FormGroup from "../../common/FormGroup";
-import { LegalOfficer } from "../../directory/DirectoryApi";
 import VaultTransferRequestStatusCell from "../../common/VaultTransferRequestStatusCell";
 import Clickable from "../../common/Clickable";
 import {
@@ -25,7 +25,12 @@ import {
     onCancelVaultTransferSuccessCallback
 } from "../../common/VaultTransferRequestsCallbacks";
 import ButtonGroup from "../../common/ButtonGroup";
+
+import { useUserContext } from "../UserContext";
+
+import { buildOptions } from "./SelectLegalOfficer";
 import "./VaultRecoveryProcessTab.css"
+import { signAndSend } from "src/logion-chain/Signature";
 
 interface FormValues {
     legalOfficer: string | null;
@@ -135,13 +140,15 @@ export default function VaultRecoveryProcessTab() {
                     recoveryConfig: recoveryConfig!,
                     amount: amount,
                 })
-                const unsubscriber = signAndSendAsRecovered({
-                    api: api!,
+                const unsubscriber = signAndSend({
                     signerId: accounts!.current!.address,
                     callback: setResult,
                     errorCallback: setError,
-                    recoveredAccountId: recoveredAddress!,
-                    call
+                    submittable: asRecovered({
+                        api: api!,
+                        recoveredAccountId: recoveredAddress!,
+                        call
+                    })
                 });
                 return { unsubscriber }
             } catch (error) {

@@ -1,5 +1,6 @@
 import { Col, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
+import { prefixedLogBalance, SYMBOL } from 'logion-api/dist/Balances';
 
 import { useCommonContext } from "../common/CommonContext";
 import { FullWidthPane } from '../common/Dashboard';
@@ -15,7 +16,6 @@ import Tabs from '../common/Tabs';
 import LocStatusCell from '../common/LocStatusCell';
 import ButtonGroup from '../common/ButtonGroup';
 
-import { prefixedLogBalance, SYMBOL } from '../logion-chain/Balances';
 
 import {
     IDENTITIES_PATH,

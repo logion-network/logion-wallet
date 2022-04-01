@@ -1,26 +1,21 @@
 import { LegalOfficerCase } from 'logion-api/dist/Types';
 
-import { DEFAULT_LEGAL_OFFICER } from '../../common/TestData';
-import { TEST_WALLET_USER } from '../../wallet-user/TestData';
-import { signAndSend } from './SignatureMock';
+import { DEFAULT_LEGAL_OFFICER } from '../../../common/TestData';
+import { TEST_WALLET_USER } from '../../../wallet-user/TestData';
 
 export function createLogionIdentityLoc(parameters: any) {
-    signAndSend(parameters);
     return Promise.resolve();
 }
 
 export function createLogionTransactionLoc(parameters: any) {
-    signAndSend(parameters);
     return Promise.resolve();
 }
 
 export function createPolkadotIdentityLoc(parameters: any) {
-    signAndSend(parameters);
     return Promise.resolve();
 }
 
 export function createPolkadotTransactionLoc(parameters: any) {
-    signAndSend(parameters);
     return Promise.resolve();
 }
 
@@ -67,27 +62,22 @@ export const OPEN_IDENTITY_LOC: LegalOfficerCase = {
 }
 
 export function addMetadata(parameters: any) {
-    signAndSend(parameters);
     return Promise.resolve();
 }
 
 export function addFile(parameters: any) {
-    signAndSend(parameters);
     return Promise.resolve();
 }
 
 export function addLink(parameters: any) {
-    signAndSend(parameters);
     return Promise.resolve();
 }
 
 export function closeLoc(parameters: any) {
-    signAndSend(parameters);
     return Promise.resolve();
 }
 
 export function voidLoc(parameters: any) {
-    signAndSend(parameters);
     return Promise.resolve();
 }
 
@@ -108,6 +98,5 @@ export function getCollectionItem() {
 }
 
 export function addCollectionItem(parameters: any) {
-    signAndSend(parameters);
     return Promise.resolve();
 }

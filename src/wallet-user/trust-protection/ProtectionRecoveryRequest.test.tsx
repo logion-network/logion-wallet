@@ -1,16 +1,16 @@
-jest.mock('../UserContext');
+jest.mock('logion-api/dist/Recovery');
+jest.mock('../../logion-chain/Signature');
 jest.mock('../../logion-chain');
 jest.mock('../../common/CommonContext');
 jest.mock('../../directory/DirectoryContext');
-jest.mock('../../logion-chain/Signature');
-jest.mock('../../logion-chain/Recovery');
+jest.mock('../UserContext');
 jest.mock('./Model');
 
 import { render, waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { createRecovery } from 'logion-api/dist/Recovery';
 
 import { shallowRender } from "../../tests";
-import { createRecovery } from '../../logion-chain/Recovery';
 
 import ProtectionRecoveryRequest from './ProtectionRecoveryRequest';
 import { TEST_WALLET_USER } from "../TestData";
@@ -55,9 +55,6 @@ describe("ProtectionRecoveryRequest", () => {
         await waitFor(() => expect(createRecovery).toBeCalledWith(
             expect.objectContaining({
                 api: expect.anything(),
-                signerId: requester,
-                callback: expect.anything(),
-                errorCallback: expect.anything(),
                 legalOfficers: expect.arrayContaining(ACCEPTED_PROTECTION_REQUESTS.map(request => request.legalOfficerAddress)),
             }
         )));

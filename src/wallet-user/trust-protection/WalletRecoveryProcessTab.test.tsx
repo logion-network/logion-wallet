@@ -1,21 +1,21 @@
-import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from "../../common/TestData";
-
-jest.mock('../../logion-chain');
-jest.mock('../../logion-chain/Balances');
-jest.mock('../../logion-chain/Signature');
-jest.mock('../../common/CommonContext');
-jest.mock('../UserContext');
-
-import { CoinBalance } from "../../logion-chain/Balances";
-import { render, screen, waitFor, getByRole } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { render, screen, waitFor, getByRole } from '@testing-library/react';
+import { PrefixedNumber, MILLI } from "logion-api/dist/numbers";
+import { CoinBalance } from "logion-api/dist/Balances";
 
-import { setGetBalances } from '../../logion-chain/__mocks__/BalancesMock';
+import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from "../../common/TestData";
+import { setGetBalances } from '../../__mocks__/logion-api/dist/BalancesMock';
 import { setRecoveredAddress, setRecoveryConfig } from '../__mocks__/UserContextMock';
 
 import WalletRecoveryProcessTab from "./WalletRecoveryProcessTab";
-import { PrefixedNumber, MILLI } from "../../logion-chain/numbers";
 import { finalizeSubmission } from "../../logion-chain/__mocks__/SignatureMock";
+
+jest.mock('../../logion-chain');
+jest.mock('logion-api/dist/Balances');
+jest.mock('../../logion-chain/Signature');
+jest.mock("logion-api/dist/Recovery");
+jest.mock('../../common/CommonContext');
+jest.mock('../UserContext');
 
 test("Recovered tokens can be transferred", async () => {
     const recoveredAccountId = "5GEZAeYtVZPEEmCT66scGoWS4Jd7AWJdXeNyvxC3LxKP8jCn";

@@ -1,6 +1,5 @@
 import { ISubmittableResult } from '@polkadot/types/types';
-
-import { toIsoString } from '../datetime';
+import { toIsoString } from 'logion-api/dist/datetime';
 
 export let signAndSend = (parameters: any) => {
     signAndSendCallback = parameters.callback;

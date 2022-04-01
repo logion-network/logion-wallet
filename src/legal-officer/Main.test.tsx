@@ -1,6 +1,5 @@
 jest.mock("../logion-chain");
 
-import React from 'react';
 import Main from './Main';
 import { DEFAULT_LEGAL_OFFICER } from "../common/TestData";
 import { shallowRender, mockAccount } from '../tests';

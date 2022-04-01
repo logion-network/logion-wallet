@@ -1,28 +1,16 @@
-import './interfaces/augment-api';
-import './interfaces/augment-types';
-import { ApiPromise, WsProvider } from '@polkadot/api';
-import jsonrpc from '@polkadot/types/interfaces/jsonrpc';
 import config from '../config';
-
-import * as definitions from './interfaces/definitions';
 
 export interface NodeMetadata {
     peerId: string
 }
 
-export async function buildApi(): Promise<ApiPromise> {
+export function getEndpoints(): string[] {
     const providerSocket = config.PROVIDER_SOCKET;
-    const provider = buildProvider(providerSocket);
-    const types = Object.values(definitions).reduce((res, { types }): object => ({ ...res, ...types }), {});
-    return await ApiPromise.create({ provider, types, rpc: { ...jsonrpc, ...config.RPC } });
-}
-
-function buildProvider(providerSocket?: string): WsProvider {
     if(providerSocket !== undefined) {
-        return new WsProvider(providerSocket);
+        return [ providerSocket ];
     } else {
         const sockets = config.edgeNodes.map(node => node.socket);
         sockets.sort(() => Math.random() - 0.5);
-        return new WsProvider(sockets, 100);
+        return sockets;
     }
 }

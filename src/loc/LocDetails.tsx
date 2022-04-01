@@ -1,8 +1,9 @@
+import { useParams } from "react-router";
+import { UUID } from "logion-api/dist/UUID";
+import { LocType } from "logion-api/dist/Types";
+
 import { LocContextProvider } from "./LocContext";
 import ContextualizedLocDetails from "./ContextualizedLocDetails";
-import { UUID } from "../logion-chain/UUID";
-import { useParams } from "react-router";
-import { LocType } from "../logion-chain/Types";
 import { Viewer } from "./types";
 
 export interface Props {

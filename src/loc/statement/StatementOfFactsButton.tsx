@@ -1,9 +1,12 @@
 import { useEffect, useState, useCallback } from "react";
 import { Dropdown } from "react-bootstrap";
+import { UUID } from "logion-api/dist/UUID";
+import { LegalOfficerCase } from "logion-api/dist/Types";
+import { getLegalOfficerCase } from "logion-api/dist/LogionLoc";
+
 import { useCommonContext } from "../../common/CommonContext";
 import { useDirectoryContext } from "../../directory/DirectoryContext";
 import { STATEMENT_OF_FACTS_PATH, locDetailsPath } from "../../legal-officer/LegalOfficerPaths";
-import { UUID } from "../../logion-chain/UUID";
 import { fullCertificateUrl, fullCollectionItemCertificate } from "../../PublicPaths";
 import { useLocContext } from "../LocContext";
 import { DEFAULT_PATH_MODEL, PathModel, toSearchString, FormValues, Language } from "./PathModel";
@@ -13,8 +16,6 @@ import Dialog from "../../common/Dialog";
 import StatementOfFactsForm from "./StatementOfFactsForm";
 import { useForm } from "react-hook-form";
 import StatementOfFactsSummary from "./StatementOfFactsSummary";
-import { getLegalOfficerCase } from "../../logion-chain/LogionLoc";
-import { LegalOfficerCase } from "../../logion-chain/Types";
 import { useLogionChain } from "../../logion-chain";
 
 type Status = 'IDLE' | 'INPUT' | 'READY'

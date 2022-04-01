@@ -1,5 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
+import { Form } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
+import { LGNT_SMALLEST_UNIT, SYMBOL } from "logion-api/dist/Balances";
+import { NONE, PrefixedNumber } from "logion-api/dist/numbers";
+import { getRecoveryConfig } from "logion-api/dist/Recovery";
+import { requestVaultTransfer } from "logion-api/dist/Vault";
+import { isValidAccountId } from 'logion-api/dist/Accounts';
+
 import AmountControl, { Amount, validateAmount } from "../common/AmountControl";
 import Button from "../common/Button";
 import { useCommonContext } from "../common/CommonContext";
@@ -7,18 +14,13 @@ import Dialog from "../common/Dialog";
 import FormGroup from "../common/FormGroup";
 import Icon from "../common/Icon";
 import Select from "../common/Select";
-import ExtrinsicSubmitter, { AsyncSignAndSubmit, SuccessfulTransaction } from "../ExtrinsicSubmitter";
+import ExtrinsicSubmitter, { SignAndSubmit, SuccessfulTransaction } from "../ExtrinsicSubmitter";
 import { useLogionChain } from "../logion-chain";
-import { LGNT_SMALLEST_UNIT, SYMBOL } from "../logion-chain/Balances";
-import { NONE, PrefixedNumber } from "../logion-chain/numbers";
-import { getRecoveryConfig } from "../logion-chain/Recovery";
-import { requestVaultTransfer } from "../logion-chain/Vault";
-import { isValidAccountId } from '../logion-chain/Accounts';
 
 import { buildOptions } from '../wallet-user/trust-protection/SelectLegalOfficer';
-import { Form } from "react-bootstrap";
 import { VaultApi } from "./VaultApi";
 import { LegalOfficer } from "../directory/DirectoryApi";
+import { signAndSend } from "src/logion-chain/Signature";
 
 interface FormValues {
     legalOfficer: string;
@@ -31,7 +33,7 @@ export default function VaultOutRequest() {
     const { availableLegalOfficers, colorTheme, accounts, axiosFactory, refresh } = useCommonContext();
 
     const [ showDialog, setShowDialog ] = useState(false);
-    const [ signAndSubmit, setSignAndSubmit ] = useState<AsyncSignAndSubmit>(null);
+    const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
     const [ formValues, setFormValues ] = useState<FormValues | null>(null);
     const [ failed, setFailed ] = useState(false);
     const [ candidates, setCandidates ] = useState<LegalOfficer[]>([]);
@@ -71,14 +73,19 @@ export default function VaultOutRequest() {
             accountId: signerId
         });
 
-        const signAndSubmit: AsyncSignAndSubmit = (setResult, setError) => requestVaultTransfer({
+        const submittable = await requestVaultTransfer({
+            signerId,
             api: api!,
             amount: new PrefixedNumber(formValues.amount.value, formValues.amount.unit),
             destination: formValues.destination,
-            signerId,
             recoveryConfig: recoveryConfig!,
+        });
+
+        const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
+            signerId,
             callback: setResult,
-            errorCallback: setError
+            errorCallback: setError,
+            submittable,
         });
         setSignAndSubmit(() => signAndSubmit);
     }, [ api, accounts, setFormValues ]);
@@ -235,7 +242,7 @@ export default function VaultOutRequest() {
 
                 <ExtrinsicSubmitter
                     id="vaultTransfer"
-                    asyncSignAndSubmit={ signAndSubmit }
+                    signAndSubmit={ signAndSubmit }
                     onSuccess={ onExtrinsicSuccessCallback }
                     onError={ () => setFailed(true) }
                 />

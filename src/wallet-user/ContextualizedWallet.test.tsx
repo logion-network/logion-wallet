@@ -2,7 +2,6 @@ jest.mock('../logion-chain');
 jest.mock('../common/CommonContext');
 jest.mock('./UserContext');
 
-import React from 'react';
 import ContextualizedWallet from './ContextualizedWallet';
 import { setContextMock } from '../logion-chain/__mocks__/LogionChainMock';
 import { shallowRender, mockAccount } from '../tests';

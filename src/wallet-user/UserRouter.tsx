@@ -1,20 +1,20 @@
 import { Routes, Route } from 'react-router-dom';
+import { UUID } from 'logion-api/dist/UUID';
+import { LocType } from "logion-api/dist/Types";
 
 import { USER_PATH, locRequestsRelativePath, dataLocDetailsRelativePath } from '../RootPaths';
 
-import Home from "./Home";
 import Settings from "../settings/Settings";
-import TrustProtection from "./trust-protection/TrustProtection";
-import Recovery from "./trust-protection/Recovery";
 import Wallet from "../common/Wallet";
 import Transactions from "../common/Transactions";
-import TransactionProtection from "./transaction-protection/TransactionProtection";
-import { UUID } from '../logion-chain/UUID';
 import LocDetails from '../loc/LocDetails';
-import { LocType } from "../logion-chain/Types";
-import React from "react";
 import { useCommonContext } from "../common/CommonContext";
+
 import { useUserContext } from "./UserContext";
+import Home from "./Home";
+import TrustProtection from "./trust-protection/TrustProtection";
+import TransactionProtection from "./transaction-protection/TransactionProtection";
+import Recovery from "./trust-protection/Recovery";
 import Vault from "./trust-protection/Vault";
 
 export const HOME_PATH = USER_PATH;

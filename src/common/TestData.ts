@@ -1,5 +1,5 @@
-import { Coin, CoinBalance, SYMBOL } from '../logion-chain/Balances';
-import { PrefixedNumber, ATTO } from '../logion-chain/numbers';
+import { Coin, CoinBalance, SYMBOL } from 'logion-api/dist/Balances';
+import { PrefixedNumber, ATTO } from 'logion-api/dist/numbers';
 
 import Identity from './types/Identity';
 import PostalAddress from './types/PostalAddress';

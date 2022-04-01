@@ -1,5 +1,7 @@
 import { useCallback, useState } from "react";
 import { Form } from "react-bootstrap";
+import { UUID } from "logion-api/dist/UUID";
+
 import Button from "../common/Button";
 import { useCommonContext } from "../common/CommonContext";
 import DangerDialog from "../common/DangerDialog";
@@ -8,7 +10,6 @@ import Icon from "../common/Icon";
 import { createLocRequest, CreateLocRequest } from "../common/Model";
 import { LocRequest } from "../common/types/ModelTypes";
 import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
-import { UUID } from "../logion-chain/UUID";
 import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
 import { FullVoidInfo, useLocContext } from "./LocContext";
 import LocCreationSteps from "./LocCreationSteps";

@@ -1,11 +1,8 @@
-jest.mock("./logion-chain");
-
-import { setIsSuccessful } from './logion-chain/__mocks__/SignatureMock';
-import { mockSubmittableResult } from './logion-chain/__mocks__/SignatureMock';
-
 import { screen, render, waitFor, act } from '@testing-library/react';
-import ExtrinsicSubmitter, { SignAndSubmit } from './ExtrinsicSubmitter';
 import { SignedTransaction } from './logion-chain/Signature';
+
+import { setIsSuccessful, mockSubmittableResult } from './logion-chain/__mocks__/SignatureMock';
+import ExtrinsicSubmitter, { SignAndSubmit } from './ExtrinsicSubmitter';
 
 test("Submitter empty with null signAndSubmit", () => {
     const onSuccess = jest.fn();
@@ -117,6 +114,7 @@ test("Submitter shows success and calls onSuccess", async () => {
     />);
 
     await waitFor(() => expect(result.setResult).not.toBeNull());
+    setIsSuccessful(true);
     act(() => result.setResult!(mockSubmittableResult(true)));
 
     await waitFor(() => expect(screen.getByText("Submission successful.")).toBeInTheDocument());

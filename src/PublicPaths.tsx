@@ -1,4 +1,4 @@
-import { UUID } from "./logion-chain/UUID";
+import { UUID } from "logion-api/dist/UUID";
 
 export const PUBLIC_PATH = "/public";
 export const CERTIFICATE_RELATIVE_PATH = "/certificate/:locId";

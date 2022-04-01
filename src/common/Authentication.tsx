@@ -1,8 +1,9 @@
 import moment from 'moment';
 import { AxiosInstance } from 'axios';
+import { toIsoString, fromIsoString } from 'logion-api/dist/datetime';
+
 import { AccountTokens, Token } from "./types/Accounts";
-import { sign } from '../logion-chain/Signature';
-import { toIsoString, fromIsoString } from '../logion-chain/datetime';
+import { sign } from 'src/logion-chain/Signature';
 
 interface AuthenticationSignature {
     signature: string;

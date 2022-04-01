@@ -1,5 +1,6 @@
-import { LocType } from '../logion-chain/Types';
-import { UUID } from '../logion-chain/UUID';
+import { LocType } from 'logion-api/dist/Types';
+import { UUID } from 'logion-api/dist/UUID';
+
 import { LEGAL_OFFICER_PATH, dataLocDetailsRelativePath, locRequestsRelativePath } from '../RootPaths';
 
 export const HOME_PATH = LEGAL_OFFICER_PATH;

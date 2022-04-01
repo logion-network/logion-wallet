@@ -1,17 +1,17 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { RecoveryConfig } from 'logion-api/dist/Recovery';
+import { DataLocType } from "logion-api/dist/Types";
 
 import { useCommonContext } from '../../common/CommonContext';
 import { CreateLocRequest, createLocRequest } from '../../common/Model';
 import Button from '../../common/Button';
 import Dialog from '../../common/Dialog';
+import UserIdentity from '../../common/types/Identity';
 
 import { useUserContext } from '../UserContext';
 
 import LocCreationForm, { FormValues } from './LocCreationForm';
-import { RecoveryConfig } from '../../logion-chain/Recovery';
-import UserIdentity from '../../common/types/Identity';
-import { DataLocType } from "../../logion-chain/Types";
 
 function shouldShowIdentityFields(
     legalOfficer: string | undefined,

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useLogionChain } from '../logion-chain';
 
 import { LegalOfficerContextProvider } from './LegalOfficerContext';

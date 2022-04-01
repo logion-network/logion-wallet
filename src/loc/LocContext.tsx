@@ -1,5 +1,8 @@
-import { UUID } from "../logion-chain/UUID";
 import React, { useContext, useReducer, Reducer, useEffect, useCallback, useState } from "react";
+import { UUID } from "logion-api/dist/UUID";
+import { getLegalOfficerCase, addMetadata, addFile, closeLoc, addLink, voidLoc } from "logion-api/dist/LogionLoc";
+import { LegalOfficerCase, VoidInfo, File as ChainFile, MetadataItem, Link, LocType } from "logion-api/dist/Types";
+
 import { LocRequest, LocFile, LocMetadataItem, LocLink } from "../common/types/ModelTypes";
 import {
     confirmLocFile,
@@ -14,11 +17,8 @@ import {
     isGrantedAccess
 } from "../common/Model";
 import { useCommonContext } from "../common/CommonContext";
-import { getLegalOfficerCase, addMetadata, addFile, closeLoc, addLink, voidLoc } from "../logion-chain/LogionLoc";
-import { LegalOfficerCase, VoidInfo, File as ChainFile, MetadataItem, Link, LocType } from "../logion-chain/Types";
 import { useLogionChain } from "../logion-chain";
 import { SignAndSubmit } from "../ExtrinsicSubmitter";
-import { SignAndSendCallback } from "../logion-chain/Signature";
 import { LocItemStatus, LocItem } from "./types";
 import {
     createDraftFileLocItem,
@@ -30,6 +30,7 @@ import {
 } from "./LocItemFactory";
 import { addLink as modelAddLink, addMetadata as modelAddMetadata, addFile as modelAddFile } from "./Model"
 import { fullCertificateUrl } from "../PublicPaths";
+import { signAndSend } from "src/logion-chain/Signature";
 
 export interface FullVoidInfo extends VoidInfo {
     reason: string;
@@ -395,19 +396,16 @@ export function LocContextProvider(props: Props) {
 
 
     const publishMetadataFunction = useCallback((item: LocItem) => {
-            const signAndSubmit: SignAndSubmit = (setResult, setError) => {
-                const callback: SignAndSendCallback = (signedTransaction) => {
-                    setResult(signedTransaction)
-                };
-                return addMetadata({
+            const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
+                signerId: contextValue.loc!.owner,
+                callback: setResult,
+                errorCallback: setError,
+                submittable: addMetadata({
                     locId: contextValue.locId,
                     api: api!,
-                    signerId: contextValue.loc!.owner,
                     item: { name: item.name, value: item.value, submitter: item.submitter },
-                    callback,
-                    errorCallback: setError
                 })
-            };
+            });
             return signAndSubmit;
         }, [ api, contextValue.locId, contextValue.loc ]
     )
@@ -419,56 +417,47 @@ export function LocContextProvider(props: Props) {
     }, [ setRefreshCounter ])
 
     const publishFileFunction = useCallback((item: LocItem) => {
-        const signAndSubmit: SignAndSubmit = (setResult, setError) => {
-            const callback: SignAndSendCallback = (signedTransaction) => {
-                setResult(signedTransaction)
-            };
-            return addFile({
-                locId: contextValue.locId,
-                api: api!,
+            const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
                 signerId: contextValue.loc!.owner,
-                hash: item.value,
-                nature: item.nature || "",
-                submitter: item.submitter,
-                callback,
-                errorCallback: setError
-            })
-        };
+                callback: setResult,
+                errorCallback: setError,
+                submittable: addFile({
+                    locId: contextValue.locId,
+                    api: api!,
+                    hash: item.value,
+                    nature: item.nature || "",
+                    submitter: item.submitter,
+                })
+            });
             return signAndSubmit;
         }, [ api, contextValue.locId, contextValue.loc ]
     )
 
     const publishLinkFunction = useCallback((item: LocItem) => {
-        const signAndSubmit: SignAndSubmit = (setResult, setError) => {
-            const callback: SignAndSendCallback = (signedTransaction) => {
-                setResult(signedTransaction)
-            };
-            return addLink({
+        const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
+            signerId: contextValue.loc!.owner,
+            callback: setResult,
+            errorCallback: setError,
+            submittable: addLink({
                 locId: contextValue.locId,
                 api: api!,
-                signerId: contextValue.loc!.owner,
                 target: item.target!,
                 nature: item.nature || "",
-                callback,
-                errorCallback: setError
             })
-        };
+        });
         return signAndSubmit;
     }, [ api, contextValue.locId, contextValue.loc ])
 
     const closeExtrinsicFunction = useCallback(() => {
-            const signAndSubmit: SignAndSubmit = (setResult, setError) => {
-                const callback: SignAndSendCallback = (signedTransaction) => {
-                    setResult(signedTransaction)
-                };
-                return closeLoc({
+            const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
+                signerId: contextValue.loc!.owner,
+                callback: setResult,
+                errorCallback: setError,
+                submittable: closeLoc({
                     locId: contextValue.locId,
                     api: api!,
-                    signerId: contextValue.loc!.owner,
-                    callback,
-                    errorCallback: setError
                 })
-            };
+            });
             return signAndSubmit;
         }, [ api, contextValue.locId, contextValue.loc ]
     )
@@ -524,19 +513,16 @@ export function LocContextProvider(props: Props) {
     )
 
     const voidLocExtrinsicFunction = useCallback((voidInfo: VoidInfo) => {
-        const signAndSubmit: SignAndSubmit = (setResult, setError) => {
-            const callback: SignAndSendCallback = (signedTransaction) => {
-                setResult(signedTransaction)
-            };
-            return voidLoc({
+        const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
+            signerId: contextValue.loc!.owner,
+            callback: setResult,
+            errorCallback: setError,
+            submittable: voidLoc({
                 locId: contextValue.locId,
                 api: api!,
-                signerId: contextValue.loc!.owner,
-                callback,
-                errorCallback: setError,
                 voidInfo
             })
-        };
+        });
         return signAndSubmit;
     }, [ api, contextValue.locId, contextValue.loc ])
 
