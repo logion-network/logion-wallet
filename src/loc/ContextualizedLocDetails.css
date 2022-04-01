@@ -69,6 +69,10 @@
     justify-content: flex-end;
 }
 
+.ContextualizedLocDetails .loc-supersedes {
+    margin-top: 30px;
+}
+
 @media (max-width: 1360px) {
 
     .ContextualizedLocDetails .link-button-container {

@@ -17,7 +17,7 @@ export default function VoidLocReplaceNewButton() {
     const { colorTheme, refresh, accounts } = useCommonContext();
     const { axios } = useLegalOfficerContext();
     const [ visible, setVisible ] = useState(false);
-    const { locRequest, voidLocExtrinsic, voidLoc } = useLocContext();
+    const { locRequest, voidLocExtrinsic, voidLoc, loc } = useLocContext();
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
     const [ submissionFailed, setSubmissionFailed ] = useState<boolean>(false);
     const [ reason, setReason ] = useState<string>("");
@@ -107,6 +107,7 @@ export default function VoidLocReplaceNewButton() {
                     newLocRequest !== null &&
                     <LocCreationSteps
                         requestToCreate={ newLocRequest }
+                        replacedLoc={ loc }
                         exit={ () => { setNewLocRequest(null); } }
                         onSuccess={ () => {
                             const voidInfo = {

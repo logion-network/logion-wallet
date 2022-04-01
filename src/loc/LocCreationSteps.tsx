@@ -2,13 +2,14 @@ import { useState, useEffect, useCallback } from 'react';
 
 import { useLogionChain } from '../logion-chain';
 import { UUID } from '../logion-chain/UUID';
-import { createLogionIdentityLoc, createLogionTransactionLoc, createPolkadotIdentityLoc, createPolkadotTransactionLoc } from '../logion-chain/LogionLoc';
+import { createLogionIdentityLoc, createLogionTransactionLoc, createPolkadotIdentityLoc, createPolkadotTransactionLoc, createCollectionLoc } from '../logion-chain/LogionLoc';
 import { useCommonContext } from '../common/CommonContext';
 import { LocRequest } from '../common/types/ModelTypes';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../ExtrinsicSubmitter';
 import ProcessStep from '../legal-officer/ProcessStep';
 import { useLegalOfficerContext } from '../legal-officer/LegalOfficerContext';
 import Alert from '../common/Alert';
+import { LegalOfficerCase } from '../logion-chain/Types';
 
 enum CreationStatus {
     NONE,
@@ -25,6 +26,7 @@ interface CreationState {
 
 export interface Props {
     requestToCreate: LocRequest | null,
+    replacedLoc?: LegalOfficerCase | null,
     exit: () => void,
     onSuccess: () => void,
 }
@@ -42,7 +44,7 @@ export default function LocCreationSteps(props: Props) {
         setCreationState({ ...creationState, status });
     }, [ creationState, setCreationState ]);
 
-    const { exit, onSuccess, requestToCreate } = props;
+    const { exit, onSuccess, requestToCreate, replacedLoc } = props;
 
     // LOC creation
     useEffect(() => {
@@ -85,6 +87,17 @@ export default function LocCreationSteps(props: Props) {
                         errorCallback: setError,
                         locId: new UUID(requestToCreate!.id),
                     });
+                } else if(requestToCreate!.requesterAddress && requestToCreate!.locType === 'Collection') {
+                    signAndSubmit = (setResult, setError) => createCollectionLoc({
+                        api: api!,
+                        signerId: accounts!.current!.address,
+                        callback: setResult,
+                        errorCallback: setError,
+                        locId: new UUID(requestToCreate!.id),
+                        requester: requestToCreate!.requesterAddress!,
+                        lastBlock: replacedLoc!.collectionLastBlockSubmission ? replacedLoc!.collectionLastBlockSubmission.toString() : undefined,
+                        maxSize: replacedLoc!.collectionMaxSize ? replacedLoc!.collectionMaxSize.toString() : undefined,
+                    });
                 } else {
                     throw new Error("Unexpected LOC request state");
                 }
@@ -100,6 +113,7 @@ export default function LocCreationSteps(props: Props) {
         api,
         requestToCreate,
         accounts,
+        replacedLoc,
     ]);
 
     const clear = useCallback(() => {
