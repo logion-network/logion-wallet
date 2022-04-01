@@ -347,7 +347,7 @@ export default function ContextualizedLocDetails(props: Props) {
                 flatBottom={ loc.voidInfo !== undefined }
             />
             {
-                loc.voidInfo !== undefined &&
+                loc.voidInfo !== undefined && loc.locType !== 'Collection' &&
                 <DangerFrame
                     className="loc-is-void"
                     title={ <span><Icon icon={ { id: 'void' } } width="45px" /> This LOC is VOID</span> }
@@ -377,6 +377,17 @@ export default function ContextualizedLocDetails(props: Props) {
                             the replacing LOC supersedes the void LOC will be visible on both certificates.
                         </p>
                     }
+                </DangerFrame>
+            }
+            {
+                loc.voidInfo !== undefined && loc.locType === 'Collection' &&
+                <DangerFrame
+                    className="loc-is-void"
+                    title={ <span><Icon icon={ { id: 'void' } } width="45px" /> This Collection LOC with all its related Collection Items are VOID</span> }
+                >
+                    <p><strong>You have voided this Collection LOC with all its related Collection Items at the following date:</strong> <InlineDateTime dateTime={ locRequest?.voidInfo?.voidedOn } /></p>
+                    <p><strong>Reason:</strong> { locRequest.voidInfo?.reason || "-" }</p>
+                    <p>Please note that related public certificates show a "VOID" mention to warn people that the content of the Collection LOC as well as its related Collection Items are not valid anymore.</p>
                 </DangerFrame>
             }
             <CertificateAndLimits
