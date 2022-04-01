@@ -438,8 +438,8 @@ export default function ContextualizedLocDetails(props: Props) {
                                     align="left"
                                 >
                                     <VoidLocButton />
-                                    <VoidLocReplaceNewButton />
-                                    <VoidLocReplaceExistingButton />
+                                    { loc.locType !== 'Collection' && <VoidLocReplaceNewButton /> }
+                                    { loc.locType !== 'Collection' && <VoidLocReplaceExistingButton /> }
                                 </ButtonGroup>
                             </>
                         }
