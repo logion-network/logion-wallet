@@ -198,7 +198,7 @@ exports[`ContextualizedLocDetails renders for LO 1`] = `
           >
             <div
               aria-labelledby="loc-content-tab-details"
-              className="tab-pane active"
+              className="fade tab-pane active show"
               id="loc-content-tabpane-details"
               role="tabpanel"
             >
@@ -863,7 +863,7 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
           >
             <div
               aria-labelledby="loc-content-tab-details"
-              className="tab-pane active"
+              className="fade tab-pane active show"
               id="loc-content-tabpane-details"
               role="tabpanel"
             >
