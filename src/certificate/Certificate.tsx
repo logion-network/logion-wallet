@@ -85,6 +85,13 @@ export default function Certificate() {
                 });
                 return;
             }
+            if (collectionItem?.description === hash) {
+                setCheckResult({
+                    result: "POSITIVE",
+                    hash
+                });
+                return;
+            }
         }
 
         setCheckResult({
