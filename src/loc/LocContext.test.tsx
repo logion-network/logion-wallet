@@ -1,6 +1,5 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import { useCallback, useState } from "react";
-import { act } from "react-dom/test-utils";
 import { LocRequest } from "../common/types/ModelTypes";
 import { fetchLocRequest, resetDefaultMocks } from "../common/__mocks__/ModelMock";
 import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
@@ -34,7 +33,7 @@ describe("LocContext", () => {
         givenOtherRequestForLink();
         givenAddEndpoints();
         whenRenderingInContext(OPEN_IDENTITY_LOC_ID, <ItemAdder/>);
-        await act(() => clickByName("Go"));
+        await clickByName("Go");
         await thenItemsAdded();
     })
 
@@ -43,9 +42,9 @@ describe("LocContext", () => {
         resetDefaultMocks();
         resetSubmitting();
         whenRenderingInContext(OPEN_IDENTITY_LOC_ID, <Closer/>);
-        await act(() => clickByName("Go"));
+        await clickByName("Go");
         await waitFor(() => expect(screen.getByText("Submitting...")).toBeVisible());
-        act(() => finalizeSubmission());
+        finalizeSubmission();
         await thenClosed();
     })
 
@@ -60,7 +59,7 @@ describe("LocContext", () => {
         resetDefaultMocks();
         whenRenderingInContext(OPEN_IDENTITY_LOC_ID, <ItemDeleter />);
         await waitFor(() => expect(screen.getByRole("button", {name: "Go"})).not.toBeDisabled());
-        await act(() => clickByName("Go"));
+        await clickByName("Go");
         await thenItemsDeleted();
     })
 
@@ -69,9 +68,9 @@ describe("LocContext", () => {
         resetDefaultMocks();
         resetSubmitting();
         whenRenderingInContext(CLOSED_IDENTITY_LOC_ID, <Voider/>);
-        await act(() => clickByName("Go"));
+        await clickByName("Go");
         await waitFor(() => expect(screen.getByText("Submitting...")).toBeVisible());
-        act(() => finalizeSubmission());
+        finalizeSubmission();
         await thenVoided();
     })
 })
@@ -224,9 +223,9 @@ async function publishesItem(itemType: LocItemType) {
     resetDefaultMocks();
     whenRenderingInContext(OPEN_IDENTITY_LOC_ID, <ItemPublisher itemType={ itemType } />);
     resetSubmitting();
-    await act(() => clickByName("Go"));
+    await clickByName("Go");
     await waitFor(() => expect(screen.getByText("Submitting...")).toBeVisible());
-    act(() => finalizeSubmission());
+    finalizeSubmission();
     await thenItemsPublished();
 }
 

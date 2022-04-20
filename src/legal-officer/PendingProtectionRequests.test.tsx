@@ -41,12 +41,12 @@ describe("PendingProtectionRequests", () => {
 
         render(<PendingProtectionRequests recovery={ false } />);
         const reviewButton = screen.getByRole("button", {name: "Review and proceed"});
-        userEvent.click(reviewButton);
+        await userEvent.click(reviewButton);
 
         let laterButton: HTMLElement;
         await waitFor(() => laterButton = screen.getByRole("button", {name: "Later"}));
         const reviewModal = screen.getByRole("dialog");
-        userEvent.click(laterButton!);
+        await userEvent.click(laterButton!);
 
         await waitFor(() => expect(reviewModal).not.toBeInTheDocument());
         expect(rejectCallback).not.toBeCalled();
@@ -62,12 +62,12 @@ describe("PendingProtectionRequests", () => {
 
         render(<PendingProtectionRequests recovery={ false } />);
         const reviewButton = screen.getByRole("button", {name: "Review and proceed"});
-        userEvent.click(reviewButton);
+        await userEvent.click(reviewButton);
 
         let rejectButton: HTMLElement;
         await waitFor(() => rejectButton = screen.getByRole('button', {name: "No"}));
         const reviewModal = screen.getByRole("dialog");
-        userEvent.click(rejectButton!);
+        await userEvent.click(rejectButton!);
 
         await waitFor(() => expect(reviewModal).not.toBeInTheDocument());
 
@@ -75,9 +75,9 @@ describe("PendingProtectionRequests", () => {
         await waitFor(() => confirmModal = screen.getByRole("dialog"));
         let reasonTextArea = screen.getByRole("textbox", {name: "Reason"});
         const rejectReason = "Reason";
-        userEvent.type(reasonTextArea!, rejectReason);
+        await userEvent.type(reasonTextArea!, rejectReason);
         let confirmButton = screen.getByRole('button', {name: "Confirm"});
-        userEvent.click(confirmButton!);
+        await userEvent.click(confirmButton!);
         await waitFor(() => expect(confirmModal).not.toBeInTheDocument());
 
         await waitFor(() => expect(rejectCallback).toBeCalledWith(
@@ -100,26 +100,26 @@ describe("PendingProtectionRequests", () => {
 
         render(<PendingProtectionRequests recovery={ false } />);
         const reviewButton = screen.getByRole("button", {name: "Review and proceed"});
-        userEvent.click(reviewButton);
+        await userEvent.click(reviewButton);
 
         let acceptButton: HTMLElement;
         await waitFor(() => acceptButton = screen.getByRole("button", {name: "Yes"}));
         const reviewModal = screen.getByRole("dialog");
-        userEvent.click(acceptButton!);
+        await userEvent.click(acceptButton!);
 
         let linkButton: HTMLElement;
         await waitFor(() => linkButton = screen.getByRole("button", {name: "Link to an existing Identity LOC"}));
-        userEvent.click(linkButton!);
+        await userEvent.click(linkButton!);
 
         await waitFor(() => expect(reviewModal).not.toBeInTheDocument());
 
         let closedLocInput: HTMLElement;
         await waitFor(() => closedLocInput = screen.getByRole("textbox", {name: "Closed Identity LOC ID"}));
-        userEvent.type(closedLocInput!, CLOSED_IDENTITY_LOC_ID);
+        await userEvent.type(closedLocInput!, CLOSED_IDENTITY_LOC_ID);
 
         let confirmButton: HTMLElement;
         await waitFor(() => confirmButton = screen.getByRole("button", {name: "Confirm"}));
-        userEvent.click(confirmButton!);
+        await userEvent.click(confirmButton!);
 
         await waitFor(() => expect(acceptCallback).toBeCalledWith(
             axiosMock.object(),

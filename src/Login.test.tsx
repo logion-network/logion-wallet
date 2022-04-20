@@ -50,8 +50,8 @@ describe("Login", () => {
             <Login />
         );
 
-        await waitFor(() => userEvent.click(screen.getByRole('checkbox')));
-        await waitFor(() => userEvent.click(screen.getByRole('button', {name: "Log in"})));
+        await userEvent.click(screen.getByRole('checkbox'));
+        await userEvent.click(screen.getByRole('button', {name: "Log in"}));
 
         await waitFor(() => expect(authenticate).toBeCalledWith([ DEFAULT_LEGAL_OFFICER ]));
     });

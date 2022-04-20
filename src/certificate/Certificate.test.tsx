@@ -60,7 +60,7 @@ async function fileUploadTest(hash: string, expectedResult: string) {
 
         let upload: HTMLElement | undefined = undefined;
         await waitFor(() => upload = screen.getByTestId("FileSelectorButtonHiddenInput"));
-        userEvent.upload(upload!, new File([''], "some-file"));
+        await userEvent.upload(upload!, new File([''], "some-file"));
 
         let result: HTMLElement | undefined = undefined;
         await waitFor(() => result = screen.getByText("Check result:"));

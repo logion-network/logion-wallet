@@ -40,19 +40,19 @@ describe("RecoveryDetails", () => {
 
         let processButton: HTMLElement;
         await waitFor(() => processButton = screen.getByRole("button", {name: "Proceed"}));
-        userEvent.click(processButton!);
+        await userEvent.click(processButton!);
 
         let linkButton: HTMLElement;
         await waitFor(() => linkButton = screen.getByRole("button", {name: "Link to an existing Identity LOC"}));
-        userEvent.click(linkButton!);
+        await userEvent.click(linkButton!);
 
         let closedLocInput: HTMLElement;
         await waitFor(() => closedLocInput = screen.getByRole("textbox", {name: "Closed Identity LOC ID"}));
-        userEvent.type(closedLocInput!, CLOSED_IDENTITY_LOC_ID);
+        await userEvent.type(closedLocInput!, CLOSED_IDENTITY_LOC_ID);
 
         let confirmButton: HTMLElement;
         await waitFor(() => confirmButton = screen.getByRole("button", {name: "Confirm and sign"}));
-        userEvent.click(confirmButton!);
+        await userEvent.click(confirmButton!);
 
         await waitFor(() => expect(acceptProtectionRequest).toBeCalledWith(
             axiosMock.object(),
@@ -82,11 +82,11 @@ describe("RecoveryDetails", () => {
 
         let processButton: HTMLElement;
         await waitFor(() => processButton = screen.getAllByRole("button", {name: "Refuse"})[0]);
-        userEvent.click(processButton!);
+        await userEvent.click(processButton!);
 
         let confirmButton: HTMLElement;
         await waitFor(() => confirmButton = screen.getAllByRole("button", {name: "Refuse"})[1]);
-        userEvent.click(confirmButton!);
+        await userEvent.click(confirmButton!);
 
         await waitFor(() => expect(rejectProtectionRequest).toBeCalledWith(axiosMock.object(), expect.objectContaining({
             legalOfficerAddress: DEFAULT_LEGAL_OFFICER_ACCOUNT.address,

@@ -50,7 +50,7 @@ async function itCreatesLoc(fillIdentityInfo: boolean) {
     const description = "description";
     await typeByLabel("Description", description)
 
-    userEvent.click(screen.getByText("Select..."));
+    await userEvent.click(screen.getByText("Select..."));
     await waitFor(() => userEvent.click(screen.getByText("Patrick Gielen")));
 
     if(fillIdentityInfo) {

@@ -1,4 +1,4 @@
-import { act, render, screen, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 
 import { LocRequestFragment } from "../common/types/ModelTypes";
 import { LocType } from "../logion-chain/Types";
@@ -61,11 +61,12 @@ async function createsWithUserIdentity(locType: LocType, requesterAddress: strin
 }
 
 async function submitAndExpectSuccess(exit: jest.Mock<any, any>, onSuccess: jest.Mock<any, any>) {
-    await act(() => clickByName("Submit"));
-    act(() => finalizeSubmission());
+    await clickByName("Submit");
+    await waitFor(() => expect(screen.getByText("Submitting...")).toBeVisible());
+    finalizeSubmission();
 
     await waitFor(() => expect(screen.getByText("LOC successfully created.")).toBeVisible());
-    await act(() => clickByName("OK"));
+    await clickByName("OK");
 
     expect(exit).toBeCalled();
     expect(onSuccess).toBeCalled();
@@ -124,7 +125,7 @@ async function failsWithoutUserIdentity(locType: LocType, requesterAddress: stri
 }
 
 async function submitAndExpectFailure(exit: jest.Mock<any, any>, onSuccess: jest.Mock<any, any>) {
-    await act(() => clickByName("Submit"));
+    await clickByName("Submit");
     await waitFor(() => expect(screen.queryAllByText(/is required/).length).toBe(4));
 
     expect(exit).not.toBeCalled();

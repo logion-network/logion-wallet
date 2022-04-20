@@ -45,7 +45,7 @@ describe("LocRequestAcceptance", () => {
         // Accept request
         setAcceptLocRequest(jest.fn().mockResolvedValue({}));
         const acceptButton = screen.getByRole('button', {name: 'Proceed'});
-        userEvent.click(acceptButton);
+        await userEvent.click(acceptButton);
 
         // Create LOC
         await waitFor(() => screen.getByRole("dialog"));
@@ -60,6 +60,6 @@ describe("LocRequestAcceptance", () => {
         ));
 
         const proceedReviewButton = screen.getByRole('button', {name: 'Close'});
-        userEvent.click(proceedReviewButton);
+        await userEvent.click(proceedReviewButton);
     });
 });

@@ -50,7 +50,7 @@ describe("ProtectionRecoveryRequest", () => {
         render(<ProtectionRecoveryRequest requests={ ACCEPTED_PROTECTION_REQUESTS } type='accepted' />);
 
         const activateButton = screen.getByRole('button', {name: "Activate"});
-        userEvent.click(activateButton);
+        await userEvent.click(activateButton);
 
         await waitFor(() => expect(createRecovery).toBeCalledWith(
             expect.objectContaining({

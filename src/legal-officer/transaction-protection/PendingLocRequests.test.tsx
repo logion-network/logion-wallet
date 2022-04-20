@@ -51,14 +51,14 @@ test("Click on reject and confirm rejects request", async () => {
 
     render(<PendingLocRequests locType="Transaction" />);
     const rejectButton = screen.getByTestId("reject-1");
-    userEvent.click(rejectButton);
+    await userEvent.click(rejectButton);
 
     const reasonText = "Because";
     const reasonTextArea = screen.getByTestId("reason");
-    userEvent.type(reasonTextArea, reasonText);
+    await userEvent.type(reasonTextArea, reasonText);
 
     const confirmButton = screen.getByRole("button", {name: "Proceed"});
-    userEvent.click(confirmButton);
+    await userEvent.click(confirmButton);
 
     expect(rejectCallback).toBeCalledWith(
         axiosMock.object(),
@@ -71,7 +71,7 @@ test("Click on reject and confirm rejects request", async () => {
     await waitFor(() => expect(screen.queryByTestId("modal-reject-1")).not.toBeInTheDocument());
 });
 
-test("Click on accept opens acceptance process", () => {
+test("Click on accept opens acceptance process", async () => {
     setPendingLocRequests([
         {
             id: "1",
@@ -87,7 +87,7 @@ test("Click on accept opens acceptance process", () => {
     const tree = render(<PendingLocRequests locType="Transaction" />);
 
     const acceptButton = tree.getByTestId("accept-1");
-    userEvent.click(acceptButton);
+    await userEvent.click(acceptButton);
 
     const acceptingModal = tree.getByRole('dialog');
     expect(getByText(acceptingModal, "Accepting Transaction Protection Request")).toBeInTheDocument();

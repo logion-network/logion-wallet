@@ -99,9 +99,7 @@ exports[`LocItems renders with single draft item 1`] = `
               "width": "400px",
             }
           }
-        >
-          
-        </div>
+        />
       </div>
     </div>
     <div

@@ -33,11 +33,11 @@ export { reactAct as act };
 export async function clickByName(name: string) {
     let button: HTMLElement;
     await waitFor(() => button = screen.getByRole("button", { name }));
-    userEvent.click(button!);
+    await userEvent.click(button!);
 }
 
 export async function typeByLabel(label: string, value: string) {
     let input: HTMLElement;
     await waitFor(() => input = screen.getByLabelText(label));
-    userEvent.type(input!, value);
+    await userEvent.type(input!, value);
 }
