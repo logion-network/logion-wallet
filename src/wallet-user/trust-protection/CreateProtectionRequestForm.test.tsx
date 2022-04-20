@@ -4,6 +4,7 @@ jest.mock('../../logion-chain/Accounts');
 jest.mock('../../logion-chain/Recovery');
 jest.mock('../../logion-chain/Signature');
 jest.mock('../../common/CommonContext');
+jest.setTimeout(10000);
 
 import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from "../../common/TestData";
 import { setCreateProtectionRequest } from "../__mocks__/UserContextMock";
