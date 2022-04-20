@@ -8,6 +8,7 @@ import {
 } from './logion-chain/Signature';
 
 import ExtrinsicSubmissionResult from './ExtrinsicSubmissionResult';
+import { flushSync } from 'react-dom';
 
 export type SignAndSubmit = ((setResult: React.Dispatch<React.SetStateAction<SignedTransaction | null>>, setError: React.Dispatch<React.SetStateAction<any>>) => Unsubscriber) | null;
 
@@ -36,7 +37,7 @@ export default function ExtrinsicSubmitter(props: Props) {
 
     useEffect(() => {
         if(!submitted && props.signAndSubmit !== undefined && props.signAndSubmit !== null) {
-            setSubmitted(true);
+            flushSync(() => setSubmitted(true));
             const signAndSubmit = props.signAndSubmit;
             (async function() {
                 await unsubscribe(unsubscriber);
@@ -50,7 +51,7 @@ export default function ExtrinsicSubmitter(props: Props) {
 
     useEffect(() => {
         if(!submitted && props.asyncSignAndSubmit !== undefined && props.asyncSignAndSubmit !== null) {
-            setSubmitted(true);
+            flushSync(() => setSubmitted(true));
             const signAndSubmit = props.asyncSignAndSubmit;
             (async function() {
                 await unsubscribe(unsubscriber);

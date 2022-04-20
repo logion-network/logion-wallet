@@ -50,13 +50,13 @@ test("Recovered tokens can be transferred", async () => {
 
     let transferButton: HTMLElement;
     await waitFor(() => transferButton = screen.getByRole("button", {name: "Transfer"}));
-    userEvent.click(transferButton!);
+    await userEvent.click(transferButton!);
 
     let dialog: HTMLElement;
     await waitFor(() => dialog = screen.getByRole("dialog"));
     let confirmButton: HTMLElement;
     await waitFor(() => confirmButton = getByRole(dialog, "button", {name: "Transfer"}));
-    userEvent.click(confirmButton!);
+    await userEvent.click(confirmButton!);
     await waitFor(() => finalizeSubmission());
 
     await waitFor(() => expect(getBalances).toBeCalledTimes(2));

@@ -313,9 +313,7 @@ exports[`ContextualizedLocDetails renders for LO 1`] = `
                       <span
                         className="value"
                       >
-                        
                          
-                        
                         <span
                           onBlur={[Function]}
                           onFocus={[Function]}
@@ -978,9 +976,7 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
                       <span
                         className="value"
                       >
-                        
                          
-                        
                         <span
                           onBlur={[Function]}
                           onFocus={[Function]}

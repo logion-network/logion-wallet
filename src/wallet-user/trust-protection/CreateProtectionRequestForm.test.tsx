@@ -4,6 +4,7 @@ jest.mock('../../logion-chain/Accounts');
 jest.mock('../../logion-chain/Recovery');
 jest.mock('../../logion-chain/Signature');
 jest.mock('../../common/CommonContext');
+jest.setTimeout(10000);
 
 import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from "../../common/TestData";
 import { setCreateProtectionRequest } from "../__mocks__/UserContextMock";
@@ -62,7 +63,7 @@ describe("CreateProtectionRequestForm", () => {
         render(<CreateProtectionRequestForm isRecovery={ false } />);
 
         await selectLegalOfficers();
-        fillInForm();
+        await fillInForm();
 
         await clickByName("Next");
 
@@ -77,14 +78,14 @@ describe("CreateProtectionRequestForm", () => {
 
         render(<CreateProtectionRequestForm isRecovery={ true } />);
 
-        userEvent.type(screen.getByLabelText("Address to Recover"), 'toRecover');
+        await userEvent.type(screen.getByLabelText("Address to Recover"), 'toRecover');
         const initiateButton = screen.getByRole('button', {name: "Initiate recovery"});
         await waitFor(() => expect(initiateButton).not.toBeDisabled());
-        userEvent.click(initiateButton);
+        await userEvent.click(initiateButton);
         await waitFor(() => screen.getByText(/The recovery has been successfully initiated/));
 
         await selectLegalOfficers();
-        fillInForm();
+        await fillInForm();
 
         await clickByName("Next");
 
@@ -100,16 +101,16 @@ describe("CreateProtectionRequestForm", () => {
 
         render(<CreateProtectionRequestForm isRecovery={ true } />);
 
-        userEvent.type(screen.getByLabelText("Address to Recover"), TEST_WALLET_USER2);
+        await userEvent.type(screen.getByLabelText("Address to Recover"), TEST_WALLET_USER2);
         const initiateButton = screen.getByRole('button', {name: "Initiate recovery"});
         await waitFor(() => expect(initiateButton).not.toBeDisabled());
-        userEvent.click(initiateButton);
+        await userEvent.click(initiateButton);
         await waitFor(() => expect(submitting()).toBe(true));
         act(() => finalizeSubmission());
         await waitFor(() => screen.getByText(/The recovery has been successfully initiated/));
 
         await selectLegalOfficers();
-        fillInForm();
+        await fillInForm();
 
         await clickByName("Next");
 
@@ -124,27 +125,27 @@ describe("CreateProtectionRequestForm", () => {
     });
 });
 
-function fillInForm() {
-    userEvent.type(screen.getByTestId("firstName"), 'John');
-    userEvent.type(screen.getByTestId("lastName"), 'Doe')
-    userEvent.type(screen.getByTestId("email"), 'john.doe@logion.network')
-    userEvent.type(screen.getByTestId("phoneNumber"), '+1234')
+async function fillInForm() {
+    await userEvent.type(screen.getByTestId("firstName"), 'John');
+    await userEvent.type(screen.getByTestId("lastName"), 'Doe')
+    await userEvent.type(screen.getByTestId("email"), 'john.doe@logion.network')
+    await userEvent.type(screen.getByTestId("phoneNumber"), '+1234')
 
-    userEvent.type(screen.getByTestId("line1"), 'Place de le République Française, 10')
-    userEvent.type(screen.getByTestId("line2"), 'boite 15')
-    userEvent.type(screen.getByTestId("postalCode"), '4000')
-    userEvent.type(screen.getByTestId("city"), 'Liège')
-    userEvent.type(screen.getByTestId("country"), 'Belgium')
+    await userEvent.type(screen.getByTestId("line1"), 'Place de le République Française, 10')
+    await userEvent.type(screen.getByTestId("line2"), 'boite 15')
+    await userEvent.type(screen.getByTestId("postalCode"), '4000')
+    await userEvent.type(screen.getByTestId("city"), 'Liège')
+    await userEvent.type(screen.getByTestId("country"), 'Belgium')
 
-    userEvent.click(screen.getByRole('checkbox'));
+    await userEvent.click(screen.getByRole('checkbox'));
 }
 
 async function selectLegalOfficers() {
     const legalOfficer1Select = screen.getByTestId('legalOfficer1Group');
-    userEvent.click(getByText(legalOfficer1Select, "Select..."));
+    await userEvent.click(getByText(legalOfficer1Select, "Select..."));
     await waitFor(() => userEvent.click(getByText(legalOfficer1Select, "Patrick Gielen")));
 
     const legalOfficer2Select = screen.getByTestId('legalOfficer2Group');
-    userEvent.click(getByText(legalOfficer2Select, "Select..."));
+    await userEvent.click(getByText(legalOfficer2Select, "Select..."));
     await waitFor(() => userEvent.click(getByText(legalOfficer2Select, "Guillaume Grain")));
 }

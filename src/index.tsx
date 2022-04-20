@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import moment from 'moment';
@@ -9,11 +9,9 @@ import './index.scss';
 
 moment.locale('en-gb');
 
-ReactDOM.render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>,
-    document.getElementById('root')
+const root = createRoot(document.getElementById('root')!);
+root.render(
+    <App />
 );
 
 // If you want to start measuring performance in your app, pass a function
