@@ -83,4 +83,16 @@ export const DARK_MODE: ColorTheme = {
         foreground: '#ffffff',
         borderColor: '#e6007a',
     },
+    dialogTable: {
+        background: '#152665',
+        foreground: '#ffffff',
+        header: {
+            background: '#0c163d',
+            foreground: '#ffffff',
+        },
+        row: {
+            background: '#152665',
+            foreground: '#ffffff',
+        }
+    },
 };

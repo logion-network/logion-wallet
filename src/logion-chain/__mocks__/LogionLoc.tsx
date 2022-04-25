@@ -9,6 +9,8 @@ import {
     addLink,
     closeLoc,
     voidLoc,
+    getCollectionItem,
+    addCollectionItem,
 } from './LogionLocMock';
 
 export {
@@ -22,4 +24,6 @@ export {
     addLink,
     closeLoc,
     voidLoc,
+    getCollectionItem,
+    addCollectionItem,
 }

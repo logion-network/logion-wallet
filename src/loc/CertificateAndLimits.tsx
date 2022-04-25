@@ -16,6 +16,7 @@ import NewTabLink from '../common/NewTabLink';
 import StaticLabelValue from '../common/StaticLabelValue';
 
 import './CertificateAndLimits.css';
+import ImportItems from './ImportItems';
 
 export interface Props {
     locId: UUID;
@@ -24,6 +25,7 @@ export interface Props {
 
 export default function CertificateAndLimits(props: Props) {
     const { api } = useLogionChain();
+
     const [ dateLimit, setDateLimit ] = useState("-");
     const [ showSettings, setShowSettings ] = useState(false);
 
@@ -67,7 +69,12 @@ export default function CertificateAndLimits(props: Props) {
                     props.loc.locType === 'Collection' && props.loc.closed &&
                     <Col className="col-xxxl-3 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6">
                         <div className="api-settings">
-                            <Button onClick={ () => setShowSettings(true) }><Icon icon={{id: "cog"}}/> Get dev settings</Button>
+                            <ImportItems
+                                collectionId={ props.locId }
+                            />
+                            <div>
+                                <Button onClick={ () => setShowSettings(true) }><Icon icon={{id: "cog"}} height="22px"/> Get dev settings</Button>
+                            </div>
                         </div>
                     </Col>
                 }

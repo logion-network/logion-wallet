@@ -136,7 +136,7 @@ exports[`LocItems renders with single draft item 1`] = `
               onClick={[Function]}
             >
               <img
-                alt=""
+                alt="arrow-down"
                 src="/assets/themes/light/arrow-down.svg"
               />
             </div>
@@ -238,7 +238,7 @@ exports[`LocItems renders with single draft item 1`] = `
                     type="button"
                   >
                     <img
-                      alt=""
+                      alt="publish"
                       height="20px"
                       src="/assets/publish.svg"
                     />
@@ -253,7 +253,7 @@ exports[`LocItems renders with single draft item 1`] = `
                     type="button"
                   >
                     <img
-                      alt=""
+                      alt="trash"
                       src="/assets/trash.svg"
                     />
                   </button>
@@ -316,7 +316,7 @@ exports[`LocItems renders with single draft item 1`] = `
                     type="button"
                   >
                     <img
-                      alt=""
+                      alt="copy_paste"
                       src="/assets/copy_paste.svg"
                     />
                   </button>

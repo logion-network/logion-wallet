@@ -12,6 +12,7 @@ import './Table.css';
 import Icon from './Icon';
 import Spinner from "react-bootstrap/Spinner";
 import CopyPasteButton from "./CopyPasteButton";
+import { TableColors } from './ColorTheme';
 
 
 export interface CellProps {
@@ -105,6 +106,7 @@ export interface Props<T> {
     columns: Column<T>[],
     renderEmpty: () => Children,
     rowStyle?: (item: T, index?: number) => string;
+    color?: TableColors;
 }
 
 function columnClassName<T>(column: Column<T>): (string | undefined) {
@@ -184,6 +186,11 @@ export default function Table<T>(props: Props<T>) {
     const [ detailsExpanded, setDetailsExpanded ] = useState<boolean[]>(initialDetailsExpanded(props.data, props.columns));
     const [ data, setData ] = useState<T[]>(props.data);
 
+    let color = colorTheme.table;
+    if(props.color !== undefined) {
+        color = props.color;
+    }
+
     let renderDetails: ((element: T) => Children) | undefined = undefined;
     for(let i = 0; i < props.columns.length; ++i) {
         const column = props.columns[i];
@@ -215,7 +222,7 @@ export default function Table<T>(props: Props<T>) {
             {
             `
             .Table .body .Row .Col.split-after::before {
-                background-color: ${colorTheme.table.row.background};
+                background-color: ${color.row.background};
             }
             `
             }
@@ -223,8 +230,8 @@ export default function Table<T>(props: Props<T>) {
             <div
                 className="header"
                 style={{
-                    color: colorTheme.table.header.foreground,
-                    backgroundColor: colorTheme.table.header.background,
+                    color: color.header.foreground,
+                    backgroundColor: color.header.background,
                 }}
             >
                 <Row>
@@ -251,7 +258,7 @@ export default function Table<T>(props: Props<T>) {
                             className={ (renderDetails !== undefined ? "has-details" : "") + (props.rowStyle !== undefined ? " " + props.rowStyle(item, itemIndex) : "") }
                             key={ itemIndex }
                             style={{
-                                color: colorTheme.table.row.foreground,
+                                color: color.row.foreground,
                             }}
                         >
                             {
@@ -264,7 +271,7 @@ export default function Table<T>(props: Props<T>) {
                                             style={{
                                                 width: rowComputedWidths[colIndex],
                                                 fontSize: fontSize(col),
-                                                backgroundColor: !className || !className.includes("split-after") ? colorTheme.table.row.background : undefined,
+                                                backgroundColor: !className || !className.includes("split-after") ? color.row.background : undefined,
                                                 textAlign: col.align === undefined ? 'center' : col.align,
                                             }}
                                         >
@@ -287,8 +294,8 @@ export default function Table<T>(props: Props<T>) {
                                 className={ "details" + (detailsExpanded[itemIndex] ? " expanded" : "") }
                                 key={ itemIndex + "-details" }
                                 style={{
-                                    color: colorTheme.table.row.foreground,
-                                    backgroundColor: colorTheme.table.row.background,
+                                    color: color.row.foreground,
+                                    backgroundColor: color.row.background,
                                 }}
                             >
                                 { renderDetails(item) }
@@ -302,8 +309,8 @@ export default function Table<T>(props: Props<T>) {
                     <Row
                         className="empty-data"
                         style={{
-                            color: colorTheme.table.row.foreground,
-                            backgroundColor: colorTheme.table.row.background,
+                            color: color.row.foreground,
+                            backgroundColor: color.row.background,
                         }}
                     >
                         { props.renderEmpty() }

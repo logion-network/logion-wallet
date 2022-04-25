@@ -2,42 +2,42 @@
 
 exports[`Category icon with undefined variant 1`] = `
 <img
-  alt=""
+  alt="iconId"
   src="/assets/categories/category/iconId.svg"
 />
 `;
 
 exports[`Category icon with variant 1`] = `
 <img
-  alt=""
+  alt="iconId"
   src="/assets/categories/category/themes/dark/iconId.svg"
 />
 `;
 
 exports[`Category icon without variant 1`] = `
 <img
-  alt=""
+  alt="iconId"
   src="/assets/categories/category/iconId.svg"
 />
 `;
 
 exports[`No category icon with no variants 1`] = `
 <img
-  alt=""
+  alt="iconId"
   src="/assets/iconId.svg"
 />
 `;
 
 exports[`No category icon with undefined variants 1`] = `
 <img
-  alt=""
+  alt="iconId"
   src="/assets/iconId.svg"
 />
 `;
 
 exports[`Simple icon with variant 1`] = `
 <img
-  alt=""
+  alt="iconId"
   src="/assets/themes/dark/iconId.svg"
 />
 `;

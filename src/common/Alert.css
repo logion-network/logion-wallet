@@ -4,3 +4,8 @@
     font-weight: bold;
     border-radius: 10px;
 }
+
+.Alert.slim {
+    padding-top: 0;
+    padding-bottom: 0;
+}

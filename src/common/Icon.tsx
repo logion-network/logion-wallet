@@ -38,7 +38,7 @@ export default function Icon(props: Props) {
     return (
         <img
             src={ iconUrl }
-            alt=''
+            alt={ props.icon.id }
             height={ props.height }
             width={ props.width }
         />

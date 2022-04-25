@@ -177,7 +177,7 @@ exports[`Renders Closed Logion Identity LOCs 1`] = `
             }
           >
             <img
-              alt=""
+              alt="activated"
               height="20px"
               src="/assets/activated.svg"
             />
@@ -229,7 +229,7 @@ exports[`Renders Closed Logion Identity LOCs 1`] = `
               type="button"
             >
               <img
-                alt=""
+                alt="copy_paste"
                 src="/assets/copy_paste.svg"
               />
             </button>
@@ -496,7 +496,7 @@ exports[`Renders Closed Polkadot Identity LOCs 1`] = `
             }
           >
             <img
-              alt=""
+              alt="activated"
               height="20px"
               src="/assets/activated.svg"
             />
@@ -548,7 +548,7 @@ exports[`Renders Closed Polkadot Identity LOCs 1`] = `
               type="button"
             >
               <img
-                alt=""
+                alt="copy_paste"
                 src="/assets/copy_paste.svg"
               />
             </button>

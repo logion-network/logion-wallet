@@ -11,6 +11,7 @@ export interface Props {
     error: any,
     successMessage?: string | JSX.Element,
     errorMessage?: string | JSX.Element,
+    slim?: boolean,
 }
 
 export default function ExtrinsicSubmissionResult(props: Props) {
@@ -21,20 +22,28 @@ export default function ExtrinsicSubmissionResult(props: Props) {
     if(error === null) {
         if(result === null) {
             alert = (
-                <Alert variant="polkadot">
+                <Alert variant="polkadot" slim={ props.slim }>
                     <p>Submitting...</p>
                 </Alert>
             );
         } else if(!isSuccessful(result)) {
-            alert = (
-                <Alert variant="polkadot">
-                    <Spinner animation="border"/>
-                    <p>{`Current status: ${result?.status.type}`}</p>
-                </Alert>
-            );
+            if(props.slim) {
+                alert = (
+                    <Alert variant="polkadot" slim={ props.slim }>
+                        <p><Spinner animation="border" size="sm" /> {`Current status: ${result?.status.type}`}</p>
+                    </Alert>
+                );
+            } else {
+                alert = (
+                    <Alert variant="polkadot" slim={ props.slim }>
+                        <Spinner animation="border"/>
+                        <p>{`Current status: ${result?.status.type}`}</p>
+                    </Alert>
+                );
+            }
         } else {
             alert = (
-                <Alert variant="polkadot">
+                <Alert variant="polkadot" slim={ props.slim }>
                 {
                     props.successMessage === undefined &&
                     <p>Submission successful.</p>
@@ -47,7 +56,7 @@ export default function ExtrinsicSubmissionResult(props: Props) {
         }
     } else {
         alert = (
-            <Alert variant="danger">
+            <Alert variant="danger" slim={ props.slim }>
             {
                 props.errorMessage === undefined &&
                 <p>{`Submission failed: ${error.toString()}`}</p>

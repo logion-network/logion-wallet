@@ -219,7 +219,7 @@ exports[`Renders pending requests 1`] = `
               type="button"
             >
               <img
-                alt=""
+                alt="copy_paste"
                 src="/assets/copy_paste.svg"
               />
             </button>

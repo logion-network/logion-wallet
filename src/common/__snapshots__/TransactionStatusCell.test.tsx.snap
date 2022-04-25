@@ -99,7 +99,7 @@ exports[`renders status of failed transaction 1`] = `
   className="TransactionStatusCell"
 >
   <img
-    alt=""
+    alt="ko"
     src="/assets/ko.svg"
   />
 </div>
@@ -110,7 +110,7 @@ exports[`renders status of successful transaction 1`] = `
   className="TransactionStatusCell"
 >
   <img
-    alt=""
+    alt="ok"
     src="/assets/ok.svg"
   />
 </div>

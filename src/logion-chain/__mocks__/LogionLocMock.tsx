@@ -89,3 +89,24 @@ export function voidLoc(parameters: any) {
     signAndSend(parameters);
     return Promise.resolve();
 }
+
+export const CLOSED_COLLECTION_LOC_ID = "195914524858768213081425411950368569411";
+
+export const CLOSED_COLLECTION_LOC: LegalOfficerCase = {
+    owner: DEFAULT_LEGAL_OFFICER,
+    requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+    locType: 'Collection',
+    closed: true,
+    files: [],
+    metadata: [],
+    links: []
+}
+
+export function getCollectionItem() {
+    return undefined;
+}
+
+export function addCollectionItem(parameters: any) {
+    signAndSend(parameters);
+    return Promise.resolve();
+}
