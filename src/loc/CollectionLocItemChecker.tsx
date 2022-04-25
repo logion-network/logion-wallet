@@ -16,6 +16,8 @@ import { fullCollectionItemCertificate } from "../PublicPaths";
 
 import "./CollectionLocItemChecker.css"
 import { CollectionItem } from "../logion-chain/Types";
+import StatementOfFactsButton from "./StatementOfFactsButton";
+import { useDirectoryContext } from "../directory/DirectoryContext";
 
 export interface Props {
     locId: UUID;
@@ -28,10 +30,13 @@ export default function CollectionLocItemChecker(props: Props) {
 
     const { colorTheme } = useCommonContext();
     const { locId } = props;
+    const { isLegalOfficer } = useDirectoryContext();
+    const { accounts } = useCommonContext();
+    const { api } = useLogionChain();
+
     const [ state, setState ] = useState<CheckResult>('NONE');
     const [ collectionSize, setCollectionSize ] = useState<number | undefined | null>(null);
     const [ itemId, setItemId ] = useState<string>("");
-    const { api } = useLogionChain();
     const [ managedCheck, setManagedCheck ] = useState<{itemId: string, active: boolean}>();
 
     useEffect(() => {
@@ -74,6 +79,10 @@ export default function CollectionLocItemChecker(props: Props) {
         }
     }, [ managedCheck, setManagedCheck, props.collectionItem ]);
 
+    if(accounts?.current?.address === undefined) {
+        return null;
+    }
+
     return (
         <PolkadotFrame className="CollectionLocItemChecker" colorTheme={ colorTheme }>
             <IconTextRow
@@ -106,8 +115,12 @@ export default function CollectionLocItemChecker(props: Props) {
                                         }}
                                     />
                                 </Col>
-                                <Col>
+                                <Col className="buttons">
                                     <Button onClick={ checkData } disabled={ itemId ? false : true }><Icon icon={{id: "search"}} /> Check Item ID</Button>
+                                    {
+                                        state === "POSITIVE" && isLegalOfficer(accounts.current.address) &&
+                                        <StatementOfFactsButton />
+                                    }
                                 </Col>
                             </Row>
                         }

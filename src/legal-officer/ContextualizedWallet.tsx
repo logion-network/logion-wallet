@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 
 import Dashboard from '../common/Dashboard';
 
@@ -11,13 +11,16 @@ import {
     RECOVERY_REQUESTS_PATH,
     SETTINGS_PATH,
     WALLET_PATH,
-    IDENTITIES_PATH, locRequestsPath, VAULT_OUT_REQUESTS_PATH,
+    IDENTITIES_PATH, locRequestsPath, VAULT_OUT_REQUESTS_PATH, STATEMENT_OF_FACTS_PATH,
 } from './LegalOfficerPaths';
 import { useLegalOfficerContext } from './LegalOfficerContext';
+import { useLocation } from 'react-router-dom';
+import StatementOfFacts from '../loc/StatementOfFacts';
 
 export default function ContextualizedWallet() {
     const { selectAddress, accounts, colorTheme, refresh, availableLegalOfficers } = useCommonContext();
     const { refreshRequests } = useLegalOfficerContext();
+    const location = useLocation();
 
     const refreshAll = useCallback(() => {
         refresh(false);
@@ -30,146 +33,150 @@ export default function ContextualizedWallet() {
 
     const currentLegalOfficerUnavailable = availableLegalOfficers.find(node => node.address === accounts?.current?.address) === undefined;
 
-    return (
-        <Dashboard
-            menuTop={[
-                {
-                    id: "home",
-                    text: "Home",
-                    to: HOME_PATH,
-                    exact: true,
-                    icon: {
+    if(location.pathname === STATEMENT_OF_FACTS_PATH) {
+        return <StatementOfFacts />;
+    } else {
+        return (
+            <Dashboard
+                menuTop={[
+                    {
+                        id: "home",
+                        text: "Home",
+                        to: HOME_PATH,
+                        exact: true,
                         icon: {
-                            id: 'home'
+                            icon: {
+                                id: 'home'
+                            },
+                            background: colorTheme.topMenuItems.iconGradient,
                         },
-                        background: colorTheme.topMenuItems.iconGradient,
+                        onClick: refreshAll,
+                        disabled: currentLegalOfficerUnavailable,
                     },
-                    onClick: refreshAll,
-                    disabled: currentLegalOfficerUnavailable,
-                },
-                {
-                    id: "wallet",
-                    text: "Wallet",
-                    to: WALLET_PATH,
-                    exact: false,
-                    icon: {
+                    {
+                        id: "wallet",
+                        text: "Wallet",
+                        to: WALLET_PATH,
+                        exact: false,
                         icon: {
-                            id: 'wallet'
+                            icon: {
+                                id: 'wallet'
+                            },
+                            background: colorTheme.topMenuItems.iconGradient,
                         },
-                        background: colorTheme.topMenuItems.iconGradient,
+                        onClick: refreshAll,
+                        disabled: currentLegalOfficerUnavailable,
                     },
-                    onClick: refreshAll,
-                    disabled: currentLegalOfficerUnavailable,
-                },
-                {
-                    id: "loc-collection",
-                    text: "Collections",
-                    to: locRequestsPath('Collection'),
-                    exact: false,
-                    icon: {
+                    {
+                        id: "loc-collection",
+                        text: "Collections",
+                        to: locRequestsPath('Collection'),
+                        exact: false,
                         icon: {
-                            id: 'collection'
+                            icon: {
+                                id: 'collection'
+                            },
+                            background: colorTheme.topMenuItems.iconGradient,
                         },
-                        background: colorTheme.topMenuItems.iconGradient,
+                        onClick: refreshAll,
+                        disabled: currentLegalOfficerUnavailable,
                     },
-                    onClick: refreshAll,
-                    disabled: currentLegalOfficerUnavailable,
-                },
-                {
-                    id: "loc-transaction",
-                    text: "Transactions",
-                    to: locRequestsPath('Transaction'),
-                    exact: false,
-                    icon: {
+                    {
+                        id: "loc-transaction",
+                        text: "Transactions",
+                        to: locRequestsPath('Transaction'),
+                        exact: false,
                         icon: {
-                            id: 'loc'
+                            icon: {
+                                id: 'loc'
+                            },
+                            background: colorTheme.topMenuItems.iconGradient,
                         },
-                        background: colorTheme.topMenuItems.iconGradient,
+                        onClick: refreshAll,
+                        disabled: currentLegalOfficerUnavailable,
                     },
-                    onClick: refreshAll,
-                    disabled: currentLegalOfficerUnavailable,
-                },
-                {
-                    id: "identity",
-                    text: "Identities",
-                    to: IDENTITIES_PATH,
-                    exact: false,
-                    icon: {
+                    {
+                        id: "identity",
+                        text: "Identities",
+                        to: IDENTITIES_PATH,
+                        exact: false,
                         icon: {
-                            id: 'identity'
+                            icon: {
+                                id: 'identity'
+                            },
+                            background: colorTheme.topMenuItems.iconGradient,
                         },
-                        background: colorTheme.topMenuItems.iconGradient,
-                    },
-                    onClick: refreshAll,
-                    disabled: currentLegalOfficerUnavailable,
-                }
-            ]}
-            menuMiddle={[
-                {
-                    id: "protection",
-                    text: "Protection Management",
-                    to: PROTECTION_REQUESTS_PATH,
-                    exact: true,
-                    icon: {
+                        onClick: refreshAll,
+                        disabled: currentLegalOfficerUnavailable,
+                    }
+                ]}
+                menuMiddle={[
+                    {
+                        id: "protection",
+                        text: "Protection Management",
+                        to: PROTECTION_REQUESTS_PATH,
+                        exact: true,
                         icon: {
-                            id: 'shield',
-                            hasVariants: true,
+                            icon: {
+                                id: 'shield',
+                                hasVariants: true,
+                            },
+                            height: 'auto',
+                            width: '60px',
                         },
-                        height: 'auto',
-                        width: '60px',
+                        onClick: refreshAll,
+                        disabled: currentLegalOfficerUnavailable,
                     },
-                    onClick: refreshAll,
-                    disabled: currentLegalOfficerUnavailable,
-                },
-                {
-                    id: "vault",
-                    text: "Vault-out Requests",
-                    to: VAULT_OUT_REQUESTS_PATH,
-                    exact: true,
-                    icon: {
+                    {
+                        id: "vault",
+                        text: "Vault-out Requests",
+                        to: VAULT_OUT_REQUESTS_PATH,
+                        exact: true,
                         icon: {
-                            id: 'vault-big'
+                            icon: {
+                                id: 'vault-big'
+                            },
+                            height: 'auto',
+                            width: '60px',
                         },
-                        height: 'auto',
-                        width: '60px',
+                        onClick: refreshAll,
+                        disabled: currentLegalOfficerUnavailable,
                     },
-                    onClick: refreshAll,
-                    disabled: currentLegalOfficerUnavailable,
-                },
-                {
-                    id: "recovery",
-                    text: "Recovery Requests",
-                    to: RECOVERY_REQUESTS_PATH,
-                    exact: true,
-                    icon: {
+                    {
+                        id: "recovery",
+                        text: "Recovery Requests",
+                        to: RECOVERY_REQUESTS_PATH,
+                        exact: true,
                         icon: {
-                            id: 'recovery_request',
-                            hasVariants: true,
+                            icon: {
+                                id: 'recovery_request',
+                                hasVariants: true,
+                            },
+                            height: 'auto',
+                            width: '60px',
                         },
-                        height: 'auto',
-                        width: '60px',
-                    },
-                    onClick: refreshAll,
-                    disabled: currentLegalOfficerUnavailable,
-                }
-            ]}
-            menuBottom={[
-                {
-                    id: "settings",
-                    text: "Settings",
-                    to: SETTINGS_PATH,
-                    exact: true,
-                    icon: {
+                        onClick: refreshAll,
+                        disabled: currentLegalOfficerUnavailable,
+                    }
+                ]}
+                menuBottom={[
+                    {
+                        id: "settings",
+                        text: "Settings",
+                        to: SETTINGS_PATH,
+                        exact: true,
                         icon: {
-                            id: 'settings'
+                            icon: {
+                                id: 'settings'
+                            },
+                            background: colorTheme.bottomMenuItems.iconGradient,
                         },
-                        background: colorTheme.bottomMenuItems.iconGradient,
-                    },
-                    onClick: refreshAll,
-                }
-            ]}
-        >
-            <LegalOfficerRouter />
-        </Dashboard>
-    );
+                        onClick: refreshAll,
+                    }
+                ]}
+            >
+                <LegalOfficerRouter />
+            </Dashboard>
+        );
+    }
 }

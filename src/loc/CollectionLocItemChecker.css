@@ -56,3 +56,7 @@
 .CollectionLocItemChecker .matched {
     border: 2px dashed #e6007a;
 }
+
+.CollectionLocItemChecker .buttons {
+    display: flex;   
+}

@@ -17,6 +17,9 @@ import StaticLabelValue from '../common/StaticLabelValue';
 
 import './CertificateAndLimits.css';
 import ImportItems from './ImportItems';
+import StatementOfFactsButton from './StatementOfFactsButton';
+import { useCommonContext } from '../common/CommonContext';
+import { useDirectoryContext } from '../directory/DirectoryContext';
 
 export interface Props {
     locId: UUID;
@@ -25,6 +28,8 @@ export interface Props {
 
 export default function CertificateAndLimits(props: Props) {
     const { api } = useLogionChain();
+    const { isLegalOfficer } = useDirectoryContext();
+    const { accounts } = useCommonContext();
 
     const [ dateLimit, setDateLimit ] = useState("-");
     const [ showSettings, setShowSettings ] = useState(false);
@@ -39,6 +44,10 @@ export default function CertificateAndLimits(props: Props) {
             })();
         }
     }, [ api, props.locId, props.loc.collectionLastBlockSubmission ]);
+
+    if(accounts?.current?.address === undefined) {
+        return null;
+    }
 
     return (
         <div
@@ -75,6 +84,14 @@ export default function CertificateAndLimits(props: Props) {
                             <div>
                                 <Button onClick={ () => setShowSettings(true) }><Icon icon={{id: "cog"}} height="22px"/> Get dev settings</Button>
                             </div>
+                        </div>
+                    </Col>
+                }
+                {
+                    props.loc.locType !== 'Collection' && isLegalOfficer(accounts.current.address) &&
+                    <Col className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12">
+                        <div className="preview">
+                            <StatementOfFactsButton />
                         </div>
                     </Col>
                 }
