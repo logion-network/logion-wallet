@@ -73,7 +73,7 @@ Object {
                     />
                   </div>
                   <div
-                    class="Col"
+                    class="Col buttons"
                   >
                     <button
                       class="Button btn btn-primary"
@@ -168,7 +168,7 @@ Object {
                   />
                 </div>
                 <div
-                  class="Col"
+                  class="Col buttons"
                 >
                   <button
                     class="Button btn btn-primary"
