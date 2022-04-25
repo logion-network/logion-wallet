@@ -10,6 +10,7 @@ export interface Props {
     disabled?: boolean;
     buttonText?: Children;
     onlyButton?: boolean;
+    accept?: string;
 }
 
 export default function FileSelectorButton(props: Props) {
@@ -45,6 +46,7 @@ export default function FileSelectorButton(props: Props) {
                 style={ { display: 'none' } }
                 disabled={ props.disabled }
                 data-testid="FileSelectorButtonHiddenInput"
+                accept={ props.accept }
             />
         </div>
     )

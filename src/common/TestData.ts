@@ -109,6 +109,18 @@ export const COLOR_THEME: ColorTheme = {
         foreground: '#000000',
         borderColor: '#e6007a',
     },
+    dialogTable: {
+        background: '#0c163d',
+        foreground: '#ffffff',
+        header: {
+            background: '#0c163d',
+            foreground: '#ffffff',
+        },
+        row: {
+            background: '#152665',
+            foreground: '#ffffff',
+        }
+    },
 };
 
 export const DEFAULT_COIN: Coin = {

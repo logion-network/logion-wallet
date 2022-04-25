@@ -24,7 +24,7 @@ Object {
             class="icon"
           >
             <img
-              alt=""
+              alt="polkadot_collection"
               src="/assets/polkadot_collection.svg"
               width="45px"
             />
@@ -81,7 +81,7 @@ Object {
                       type="button"
                     >
                       <img
-                        alt=""
+                        alt="search"
                         src="/assets/search.svg"
                       />
                        Check Item ID
@@ -119,7 +119,7 @@ Object {
           class="icon"
         >
           <img
-            alt=""
+            alt="polkadot_collection"
             src="/assets/polkadot_collection.svg"
             width="45px"
           />
@@ -176,7 +176,7 @@ Object {
                     type="button"
                   >
                     <img
-                      alt=""
+                      alt="search"
                       src="/assets/search.svg"
                     />
                      Check Item ID

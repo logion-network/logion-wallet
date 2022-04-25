@@ -27,7 +27,7 @@ describe("CloseLocButton", () => {
         ]);
 
         render(<CloseLocButton/>);
-        await clickByName("Close LOC");
+        await clickByName(/Close LOC/);
 
         await expectNoDialogVisible();
     })
@@ -49,7 +49,7 @@ describe("CloseLocButton", () => {
         setClose(closeMock);
 
         render(<CloseLocButton/>);
-        await clickByName("Close LOC");
+        await clickByName(/Close LOC/);
         await clickByName("Proceed");
         finalizeSubmission();
 
@@ -75,7 +75,7 @@ describe("CloseLocButton", () => {
         resetCloseExtrinsicSent();
 
         render(<CloseLocButton/>);
-        await clickByName("Close LOC");
+        await clickByName(/Close LOC/);
         await clickByName("Cancel");
 
         await waitFor(() => expect(closeExtrinsicSent()).toBe(false));
@@ -99,7 +99,7 @@ describe("CloseLocButton", () => {
         setClose(closeMock);
 
         render(<CloseLocButton/>);
-        await clickByName("Close LOC");
+        await clickByName(/Close LOC/);
         await clickByName("Proceed");
         failSubmission();
 

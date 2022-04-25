@@ -37,7 +37,13 @@
 }
 
 .CertificateAndLimits .api-settings {
-    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.CertificateAndLimits .api-settings *:nth-child(n+2) {
+    margin-top: 10px;
 }
 
 .CertificateAndLimits .copy-paste-container {

@@ -143,7 +143,7 @@ exports[`Renders pending requests 1`] = `
             }
           >
             <img
-              alt=""
+              alt="pending"
               height="20px"
               src="/assets/pending.svg"
             />

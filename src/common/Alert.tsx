@@ -1,7 +1,7 @@
 import React from 'react';
 import { Variant } from 'react-bootstrap/types';
 
-import { Children } from './types/Helpers';
+import { Children, customClassName } from './types/Helpers';
 import { GREEN, POLKADOT, RED, YELLOW } from './ColorTheme';
 
 import './Alert.css';
@@ -9,6 +9,7 @@ import './Alert.css';
 export interface Props {
     variant: Variant,
     children: Children;
+    slim?: boolean;
 }
 
 export default function Alert(props: Props) {
@@ -26,9 +27,11 @@ export default function Alert(props: Props) {
         backgroundColor = POLKADOT;
     }
 
+    const className = customClassName("Alert", props.variant, slimClassName(props.slim))
+
     return (
         <div
-            className={ `Alert ${props.variant}` }
+            className={ className }
             style={{
                 color,
                 backgroundColor
@@ -37,4 +40,12 @@ export default function Alert(props: Props) {
             { props.children }
         </div>
     );
+}
+
+function slimClassName(slim?: boolean): string | undefined {
+    if(slim !== undefined && slim) {
+        return "slim";
+    } else {
+        return undefined;
+    }
 }

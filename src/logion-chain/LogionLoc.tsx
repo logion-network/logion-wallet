@@ -417,3 +417,29 @@ export async function getCollectionSize(
         return undefined;
     }
 }
+
+export interface AddCollectionItemParameters extends ExtrinsicSubmissionParameters {
+    api: ApiPromise;
+    collectionId: UUID;
+    itemId: string;
+    itemDescription: string;
+}
+
+export function addCollectionItem(parameters: AddCollectionItemParameters): Unsubscriber {
+    const {
+        api,
+        signerId,
+        callback,
+        errorCallback,
+        collectionId,
+        itemId,
+        itemDescription,
+    } = parameters;
+
+    return signAndSend({
+        signerId,
+        submittable: api.tx.logionLoc.addCollectionItem(collectionId.toHexString(), itemId, itemDescription),
+        callback,
+        errorCallback,
+    });
+}

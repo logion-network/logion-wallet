@@ -11,3 +11,9 @@ export async function sha256Hex(file: File): Promise<string> {
     }
     return hasher.digest("hex");
 }
+
+export function sha256HexFromString(value: string): string {
+    const hasher = shajs('sha256');
+    hasher.update(Buffer.from(value, 'utf-8'));
+    return hasher.digest("hex");
+}

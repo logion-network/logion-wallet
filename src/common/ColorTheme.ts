@@ -48,6 +48,7 @@ export interface ColorTheme {
     table: TableColors,
     tabs: TabsColors,
     dialog: DialogColors,
+    dialogTable: TableColors,
 }
 
 export interface FrameColors extends BackgroundAndForegroundColors {
@@ -184,5 +185,17 @@ export const DEFAULT_COLOR_THEME: ColorTheme = {
         background: '#0c163d',
         foreground: '#ffffff',
         borderColor: '#e6007a',
+    },
+    dialogTable: {
+        background: '#152665',
+        foreground: '#ffffff',
+        header: {
+            background: '#152665',
+            foreground: '#ffffff',
+        },
+        row: {
+            background: '#0c163d',
+            foreground: '#ffffff',
+        }
     },
 };

@@ -213,7 +213,7 @@ exports[`Renders Open Logion Identity LOCs 1`] = `
               type="button"
             >
               <img
-                alt=""
+                alt="copy_paste"
                 src="/assets/copy_paste.svg"
               />
             </button>
@@ -494,7 +494,7 @@ exports[`Renders Open Polkadot Identity LOCs 1`] = `
               type="button"
             >
               <img
-                alt=""
+                alt="copy_paste"
                 src="/assets/copy_paste.svg"
               />
             </button>

@@ -25,7 +25,7 @@ exports[`ContextualizedLocDetails renders for LO 1`] = `
             }
           >
             <img
-              alt=""
+              alt="identity"
               src="/assets/identity.svg"
             />
           </div>
@@ -39,7 +39,7 @@ exports[`ContextualizedLocDetails renders for LO 1`] = `
             onClick={[Function]}
           >
             <img
-              alt=""
+              alt="back"
               src="/assets/themes/light/back.svg"
             />
              Back
@@ -244,7 +244,7 @@ exports[`ContextualizedLocDetails renders for LO 1`] = `
                         type="button"
                       >
                         <img
-                          alt=""
+                          alt="copy_paste"
                           src="/assets/copy_paste.svg"
                         />
                       </button>
@@ -369,7 +369,7 @@ exports[`ContextualizedLocDetails renders for LO 1`] = `
                     type="button"
                   >
                     <img
-                      alt=""
+                      alt="add"
                       height="19px"
                       src="/assets/add.svg"
                     />
@@ -387,7 +387,7 @@ exports[`ContextualizedLocDetails renders for LO 1`] = `
                     type="button"
                   >
                     <img
-                      alt=""
+                      alt="add"
                       height="19px"
                       src="/assets/add.svg"
                     />
@@ -430,7 +430,7 @@ exports[`ContextualizedLocDetails renders for LO 1`] = `
                       type="button"
                     >
                       <img
-                        alt=""
+                        alt="lock"
                         height="19px"
                         src="/assets/lock.svg"
                       />
@@ -483,7 +483,7 @@ exports[`ContextualizedLocDetails renders for LO 1`] = `
                     type="button"
                   >
                     <img
-                      alt=""
+                      alt="copy_paste"
                       src="/assets/copy_paste.svg"
                     />
                   </button>
@@ -517,7 +517,7 @@ exports[`ContextualizedLocDetails renders for LO 1`] = `
               className="icon"
             >
               <img
-                alt=""
+                alt="polkadot_doc_check"
                 src="/assets/polkadot_doc_check.svg"
                 width="45px"
               />
@@ -594,7 +594,7 @@ exports[`ContextualizedLocDetails renders for LO 1`] = `
               className="icon"
             >
               <img
-                alt=""
+                alt="void"
                 src="/assets/void.svg"
                 width="31px"
               />
@@ -688,7 +688,7 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
             }
           >
             <img
-              alt=""
+              alt="identity"
               src="/assets/identity.svg"
             />
           </div>
@@ -702,7 +702,7 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
             onClick={[Function]}
           >
             <img
-              alt=""
+              alt="back"
               src="/assets/themes/light/back.svg"
             />
              Back
@@ -907,7 +907,7 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
                         type="button"
                       >
                         <img
-                          alt=""
+                          alt="copy_paste"
                           src="/assets/copy_paste.svg"
                         />
                       </button>
@@ -1032,7 +1032,7 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
                     type="button"
                   >
                     <img
-                      alt=""
+                      alt="add"
                       height="19px"
                       src="/assets/add.svg"
                     />
@@ -1050,7 +1050,7 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
                     type="button"
                   >
                     <img
-                      alt=""
+                      alt="add"
                       height="19px"
                       src="/assets/add.svg"
                     />
@@ -1108,7 +1108,7 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
                     type="button"
                   >
                     <img
-                      alt=""
+                      alt="copy_paste"
                       src="/assets/copy_paste.svg"
                     />
                   </button>
@@ -1142,7 +1142,7 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
               className="icon"
             >
               <img
-                alt=""
+                alt="polkadot_doc_check"
                 src="/assets/polkadot_doc_check.svg"
                 width="45px"
               />

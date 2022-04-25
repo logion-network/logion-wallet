@@ -60,6 +60,7 @@ export interface LocContext {
     voidLocExtrinsic?: ((voidInfo: VoidInfo) => SignAndSubmit) | null
     backPath: string
     detailsPath: (locId: UUID, type: LocType) => string
+    refresh: () => void
 }
 
 const MAX_REFRESH = 20;
@@ -89,6 +90,7 @@ function initialContextValue(locId: UUID, backPath: string, detailsPath: (locId:
         deleteMetadata: null,
         voidLoc: null,
         voidLocExtrinsic: null,
+        refresh: () => {},
     }
 }
 
@@ -133,6 +135,7 @@ interface Action {
     voidInfo?: FullVoidInfo,
     voidLoc?: (voidInfo: FullVoidInfo) => void,
     voidLocExtrinsic?: (voidInfo: VoidInfo) => SignAndSubmit,
+    refresh?: () => void,
 }
 
 const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action): LocContext => {
@@ -164,6 +167,7 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
                 deleteMetadata: action.deleteMetadata!,
                 voidLoc: action.voidLoc!,
                 voidLocExtrinsic: action.voidLocExtrinsic!,
+                refresh: action.refresh!,
             }
         case "ADD_ITEM":
             if (itemExists(action.locItem!, state.locItems)) {
@@ -593,6 +597,10 @@ export function LocContextProvider(props: Props) {
             }, true))
     }, [ axiosFactory, accounts, contextValue.locId, addLocItemFunction ])
 
+    const refreshFunction = useCallback(() => {
+        dispatch({ type: 'RESET', locId: contextValue.locId });
+    }, [ dispatch, contextValue ]);
+
     useEffect(() => {
         if (contextValue.loc && contextValue.loc.owner !== null && contextValue.addMetadata === null) {
             const action: Action = {
@@ -613,6 +621,7 @@ export function LocContextProvider(props: Props) {
                 deleteMetadata: deleteMetadataFunction,
                 voidLoc: voidLocFunction,
                 voidLocExtrinsic: voidLocExtrinsicFunction,
+                refresh: refreshFunction,
             };
             dispatch(action)
         }
@@ -620,7 +629,7 @@ export function LocContextProvider(props: Props) {
         publishFileFunction, closeFunction, closeExtrinsicFunction,
         confirmFileFunction, deleteFileFunction, confirmLinkFunction, deleteLinkFunction, confirmMetadataFunction,
         deleteMetadataFunction, dispatch, publishLinkFunction, voidLocFunction, voidLocExtrinsicFunction,
-        addLinkFunction, addMetadataFunction, addFileFunction ])
+        addLinkFunction, addMetadataFunction, addFileFunction, refreshFunction ])
 
     return (
         <LocContextObject.Provider value={ contextValue }>

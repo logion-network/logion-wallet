@@ -26,6 +26,7 @@ export interface Props {
     asyncSignAndSubmit?: AsyncSignAndSubmit,
     onSuccess: (id: string, result: SuccessfulTransaction) => void,
     onError: (id: string) => void,
+    slim?: boolean,
 }
 
 export default function ExtrinsicSubmitter(props: Props) {
@@ -64,7 +65,7 @@ export default function ExtrinsicSubmitter(props: Props) {
     }, [ unsubscriber, setUnsubscriber, setResult, setError, props, submitted ]);
 
     useEffect(() => {
-        if (isSuccessful(result) && !notified) {
+        if (result !== null && isSuccessful(result) && !notified) {
             setNotified(true);
             (async function() {
                 await unsubscribe(unsubscriber);
@@ -104,6 +105,7 @@ export default function ExtrinsicSubmitter(props: Props) {
             result={result}
             error={error}
             successMessage={ props.successMessage }
+            slim={ props.slim }
         />
     );
 }
