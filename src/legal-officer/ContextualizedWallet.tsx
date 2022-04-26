@@ -15,7 +15,7 @@ import {
 } from './LegalOfficerPaths';
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import { useLocation } from 'react-router-dom';
-import StatementOfFacts from '../loc/StatementOfFacts';
+import StatementOfFacts from '../loc/statement/StatementOfFacts';
 
 export default function ContextualizedWallet() {
     const { selectAddress, accounts, colorTheme, refresh, availableLegalOfficers } = useCommonContext();

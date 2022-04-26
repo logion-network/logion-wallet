@@ -17,7 +17,7 @@ import StaticLabelValue from '../common/StaticLabelValue';
 
 import './CertificateAndLimits.css';
 import ImportItems from './ImportItems';
-import StatementOfFactsButton from './StatementOfFactsButton';
+import StatementOfFactsButton from './statement/StatementOfFactsButton';
 import { useCommonContext } from '../common/CommonContext';
 import { useDirectoryContext } from '../directory/DirectoryContext';
 
