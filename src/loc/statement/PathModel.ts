@@ -11,8 +11,19 @@ export interface PrivateItem {
     hash: string;
 }
 
-export interface PathModel {
-    language: string;
+export type Language = 'en' | 'fr';
+
+export type AmountType = 'cost' | 'base' | 'taxExcluded' | 'tax' | 'taxIncluded';
+
+export interface FormValues {
+    containingLocId: string;
+    timestampText: string;
+    requesterText: string;
+    amount: Record<AmountType, number>;
+}
+
+export interface PathModel extends FormValues {
+    language: Language;
     polkadotAddress: string;
     postalAddressLine1: string;
     postalAddressLine2: string;
@@ -51,6 +62,16 @@ export const DEFAULT_PATH_MODEL: PathModel = {
     publicItems: [],
     privateItems: [],
     logoUrl: "",
+    containingLocId: "",
+    timestampText: "",
+    requesterText: "",
+    amount: {
+        cost: 0,
+        base: 0,
+        taxExcluded: 0,
+        tax: 0,
+        taxIncluded: 0,
+    }
 };
 
 export function toSearchString(pathModel: PathModel): string {
@@ -83,6 +104,15 @@ export function toSearchString(pathModel: PathModel): string {
         params.push(`private_item_private_description=${item.privateDescription}`);
         params.push(`private_item_hash=${item.hash}`);
     }
+
+    params.push(`containing_loc_id=${pathModel.containingLocId}`)
+    params.push(`timestamp_text=${pathModel.timestampText}`)
+    params.push(`requester_text=${pathModel.requesterText}`)
+    params.push(`amount_cost=${pathModel.amount.cost}`)
+    params.push(`amount_base=${pathModel.amount.base}`)
+    params.push(`amount_tax_excluded=${pathModel.amount.taxExcluded}`)
+    params.push(`amount_tax=${pathModel.amount.tax}`)
+    params.push(`amount_tax_included=${pathModel.amount.taxIncluded}`)
 
     return `?${params.join("&")}`;
 }
@@ -151,7 +181,7 @@ export function parseSearchString(searchString: string): PathModel {
         }
 
         return {
-            language: params['lang'] as string,
+            language: params['lang'] as Language,
             polkadotAddress: params['polkadot_address'] as string,
             postalAddressLine1: params['postal_line1'] as string,
             postalAddressLine2: params['postal_line2'] as string,
@@ -169,6 +199,16 @@ export function parseSearchString(searchString: string): PathModel {
             logoUrl: params['logo'] as string,
             publicItems,
             privateItems,
+            containingLocId: params['containing_loc_id'] as string,
+            timestampText: params['timestamp_text'] as string,
+            requesterText: params['requester_text'] as string,
+            amount: {
+                cost: parseFloat(params['amount_cost'] as string),
+                base: parseFloat(params['amount_base'] as string),
+                taxExcluded: parseFloat(params['amount_tax_excluded'] as string),
+                tax: parseFloat(params['amount_tax'] as string),
+                taxIncluded: parseFloat(params['amount_tax_included'] as string),
+            },
         };
     } else {
         return DEFAULT_PATH_MODEL;
