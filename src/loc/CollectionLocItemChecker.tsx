@@ -16,7 +16,7 @@ import { fullCollectionItemCertificate } from "../PublicPaths";
 
 import "./CollectionLocItemChecker.css"
 import { CollectionItem } from "../logion-chain/Types";
-import StatementOfFactsButton from "./StatementOfFactsButton";
+import StatementOfFactsButton from "./statement/StatementOfFactsButton";
 import { useDirectoryContext } from "../directory/DirectoryContext";
 
 export interface Props {
