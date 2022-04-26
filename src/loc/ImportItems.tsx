@@ -134,7 +134,7 @@ export default function ImportItems(props: Props) {
     return (
         <div className="ImportItems">
             <FileSelectorButton
-                buttonText={<span><Icon icon={{id: "import_items"}} height="22px" /> Import items</span>}
+                buttonText="Import items"
                 onFileSelected={ readCsvFile }
                 onlyButton={ true }
                 accept="text/csv"
@@ -154,8 +154,6 @@ export default function ImportItems(props: Props) {
                 size="xl"
             >
                 <p>Please double-check the items that you are about to add to your Collection LOC.</p>
-                <p>If you are submitting items for files, we recommend to use the SHA-256 hash of each file as item ID.
-                    Item IDs must be 32-bytes long values encoded as a "0x" prefixed hex strings.</p>
                 <p><strong>If you did not prefix the ID with "0x" in the CSV file, we hashed the provided value for you.</strong></p>
 
                 <Table

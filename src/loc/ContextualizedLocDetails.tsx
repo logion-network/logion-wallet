@@ -40,6 +40,7 @@ import { ProtectionRequest } from "../common/types/ModelTypes";
 import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
 import { getCollectionItem } from "../logion-chain/LogionLoc";
 import { useLogionChain } from "../logion-chain";
+import ItemImporter from "./ItemImporter";
 
 export interface Props {
     viewer: Viewer;
@@ -47,7 +48,7 @@ export interface Props {
 
 export default function ContextualizedLocDetails(props: Props) {
     const { api } = useLogionChain();
-    const { colorTheme } = useCommonContext();
+    const { colorTheme, accounts } = useCommonContext();
     const { pendingProtectionRequests, pendingRecoveryRequests } = useLegalOfficerContext();
     const navigate = useNavigate();
     const location = useLocation();
@@ -396,6 +397,12 @@ export default function ContextualizedLocDetails(props: Props) {
             />
             { loc.locType === 'Collection' && loc.closed &&
                 <CollectionLocItemChecker
+                    locId={ locId }
+                    collectionItem={ collectionItem }
+                />
+            }
+            { loc.locType === 'Collection' && loc.closed && !accounts?.current?.isLegalOfficer &&
+                <ItemImporter
                     locId={ locId }
                     collectionItem={ collectionItem }
                 />

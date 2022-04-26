@@ -16,7 +16,6 @@ import NewTabLink from '../common/NewTabLink';
 import StaticLabelValue from '../common/StaticLabelValue';
 
 import './CertificateAndLimits.css';
-import ImportItems from './ImportItems';
 import StatementOfFactsButton from './statement/StatementOfFactsButton';
 import { useCommonContext } from '../common/CommonContext';
 import { useDirectoryContext } from '../directory/DirectoryContext';
@@ -78,9 +77,6 @@ export default function CertificateAndLimits(props: Props) {
                     props.loc.locType === 'Collection' && props.loc.closed &&
                     <Col className="col-xxxl-3 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6">
                         <div className="api-settings">
-                            <ImportItems
-                                collectionId={ props.locId }
-                            />
                             <div>
                                 <Button onClick={ () => setShowSettings(true) }><Icon icon={{id: "cog"}} height="22px"/> Get dev settings</Button>
                             </div>
