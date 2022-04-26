@@ -8,22 +8,15 @@ import Table, { Cell, EmptyTableMessage } from "../common/Table";
 import { useCommonContext } from "../common/CommonContext";
 import Button from "../common/Button";
 import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
-import { CollectionItem } from "../logion-chain/Types";
 import { addCollectionItem, getCollectionItem } from "../logion-chain/LogionLoc";
 import { useLogionChain } from "../logion-chain";
 import { UUID } from "../logion-chain/UUID";
 import { sha256HexFromString } from "../common/hash";
 import { useResponsiveContext } from "../common/Responsive";
 import { useLocContext } from "./LocContext";
+import ImportItemDetails, { Item } from "./ImportItemDetails";
 
 const fileReaderStream = require("filereader-stream");
-
-interface Item extends CollectionItem {
-    valid: boolean;
-    submitted: boolean;
-    failed: boolean;
-    success: boolean;
-}
 
 type Submitters = Record<string, SignAndSubmit>;
 
@@ -169,8 +162,9 @@ export default function ImportItems(props: Props) {
                         },
                         {
                             header: "Description",
-                            render: item => <Cell content={ item.description } tooltipId={ `${item.id}-tooltip` } overflowing />,
+                            render: item => <Cell content={ item.description } overflowing />,
                             align: "left",
+                            renderDetails: item => <ImportItemDetails item={ item } />,
                         },
                         {
                             header: "",

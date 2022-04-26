@@ -1,0 +1,11 @@
+.ImportItemDetails {
+    padding: 18px 10px;
+}
+
+.ImportItemDetails pre {
+    font-size: 0.9rem;
+    font-family: "Montserrat", sans-serif;
+    line-break: anywhere;
+    white-space: break-spaces;
+    margin-bottom: 0;
+}
