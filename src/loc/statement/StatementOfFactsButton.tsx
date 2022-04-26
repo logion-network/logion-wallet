@@ -3,7 +3,8 @@ import { Dropdown } from "react-bootstrap";
 import { useCommonContext } from "../../common/CommonContext";
 import { useDirectoryContext } from "../../directory/DirectoryContext";
 import { STATEMENT_OF_FACTS_PATH } from "../../legal-officer/LegalOfficerPaths";
-import { fullCertificateUrl } from "../../PublicPaths";
+import { UUID } from "../../logion-chain/UUID";
+import { fullCertificateUrl, fullCollectionItemCertificate } from "../../PublicPaths";
 import { useLocContext } from "../LocContext";
 import { DEFAULT_PATH_MODEL, PathModel, toSearchString } from "./PathModel";
 
@@ -35,12 +36,13 @@ const CustomItem = React.forwardRef<HTMLAnchorElement, CustomItemProps>((props, 
     );
 });
 
-export default function StatementOfFactsButton() {
+export default function StatementOfFactsButton(props: { itemId?: string }) {
     const { accounts } = useCommonContext();
     const { ready, getOfficer } = useDirectoryContext();
     const { loc, locId, locRequest } = useLocContext();
 
     const [ pathModel, setPathModel ] = useState<PathModel>(DEFAULT_PATH_MODEL);
+    const [ itemId, setItemId ] = useState<string>();
 
     useEffect(() => {
         if(ready
@@ -73,7 +75,7 @@ export default function StatementOfFactsButton() {
                 ...pathModel,
                 locId: locId.toDecimalString(),
                 requesterAddress: loc?.requesterAddress || "",
-                certificateUrl: fullCertificateUrl(locId),
+                certificateUrl: certificateUrl(locId, itemId),
                 publicItems: locRequest!.metadata.map(item => ({
                     description: item.name,
                     content: item.value,
@@ -85,7 +87,17 @@ export default function StatementOfFactsButton() {
                 })),
             });
         }
-    }, [ loc, locId, locRequest, pathModel, setPathModel ]);
+    }, [ loc, locId, locRequest, pathModel, setPathModel, itemId ]);
+
+    useEffect(() => {
+        if(props.itemId !== itemId) {
+            setItemId(props.itemId);
+            setPathModel({
+                ...pathModel,
+                certificateUrl: certificateUrl(locId, props.itemId),
+            });
+        }
+    }, [ props.itemId, itemId, setItemId, pathModel, setPathModel, locId ]);
 
     return (
         <Dropdown>
@@ -96,4 +108,12 @@ export default function StatementOfFactsButton() {
             </Dropdown.Menu>
         </Dropdown>
     );
+}
+
+function certificateUrl(locId: UUID, itemId?: string): string {
+    if(itemId) {
+        return fullCollectionItemCertificate(locId, itemId);
+    } else {
+        return fullCertificateUrl(locId);
+    }
 }
