@@ -119,7 +119,7 @@ export default function CollectionLocItemChecker(props: Props) {
                                     <Button onClick={ checkData } disabled={ itemId ? false : true }><Icon icon={{id: "search"}} /> Check Item ID</Button>
                                     {
                                         state === "POSITIVE" && isLegalOfficer(accounts.current.address) &&
-                                        <StatementOfFactsButton />
+                                        <StatementOfFactsButton itemId={ itemId } />
                                     }
                                 </Col>
                             </Row>

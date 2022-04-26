@@ -99,7 +99,7 @@ export function parseSearchString(searchString: string): PathModel {
                 for(let i = 0; i < publicDescriptions.length && i < publicContents.length; ++i) {
                     const description = publicDescriptions[i];
                     const content = publicContents[i];
-                    if(description !== null && content !== null) {
+                    if(description && content) {
                         publicItems.push({
                             description,
                             content,
@@ -109,7 +109,7 @@ export function parseSearchString(searchString: string): PathModel {
             } else {
                 const description = publicDescriptions as string;
                 const content = publicContents as string;
-                if(description !== null && content !== null) {
+                if(description && content) {
                     publicItems.push({
                         description,
                         content,
@@ -128,7 +128,7 @@ export function parseSearchString(searchString: string): PathModel {
                     const publicDescription = privatePublicDescriptions[i];
                     const privateDescription = privatePrivateDescriptions[i];
                     const hash = privateHashes[i];
-                    if(publicDescription !== null && privateDescription !== null && hash !== null) {
+                    if(publicDescription && privateDescription && hash) {
                         privateItems.push({
                             publicDescription,
                             privateDescription,
@@ -140,7 +140,7 @@ export function parseSearchString(searchString: string): PathModel {
                 const publicDescription = privatePublicDescriptions as string;
                 const privateDescription = privatePrivateDescriptions as string;
                 const hash = privateHashes as string;
-                if(publicDescription !== null && privateDescription !== null && hash !== null) {
+                if(publicDescription && privateDescription && hash) {
                     privateItems.push({
                         publicDescription,
                         privateDescription,
