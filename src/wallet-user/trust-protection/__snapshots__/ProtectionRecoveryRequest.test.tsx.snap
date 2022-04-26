@@ -39,6 +39,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
             Object {
               "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "logoUrl": "",
               "name": "Patrick Gielen",
               "node": "http://logion.patrick.com",
               "postalAddress": Object {
@@ -63,6 +64,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "logoUrl": "",
                 "name": "Patrick Gielen",
                 "node": "http://logion.patrick.com",
                 "postalAddress": Object {
@@ -83,6 +85,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "logoUrl": "",
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
                 "postalAddress": Object {
@@ -103,6 +106,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+                "logoUrl": "",
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
                 "postalAddress": Object {
@@ -127,6 +131,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
             Object {
               "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+              "logoUrl": "",
               "name": "Guillaume Grain",
               "node": "http://logion.guillaume.com",
               "postalAddress": Object {
@@ -156,6 +161,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
             Object {
               "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+              "logoUrl": "",
               "name": "Guillaume Grain",
               "node": "http://logion.guillaume.com",
               "postalAddress": Object {
@@ -180,6 +186,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "logoUrl": "",
                 "name": "Patrick Gielen",
                 "node": "http://logion.patrick.com",
                 "postalAddress": Object {
@@ -200,6 +207,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "logoUrl": "",
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
                 "postalAddress": Object {
@@ -220,6 +228,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+                "logoUrl": "",
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
                 "postalAddress": Object {
@@ -244,6 +253,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
             Object {
               "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "logoUrl": "",
               "name": "Patrick Gielen",
               "node": "http://logion.patrick.com",
               "postalAddress": Object {
@@ -373,6 +383,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
             Object {
               "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "logoUrl": "",
               "name": "Patrick Gielen",
               "node": "http://logion.patrick.com",
               "postalAddress": Object {
@@ -397,6 +408,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "logoUrl": "",
                 "name": "Patrick Gielen",
                 "node": "http://logion.patrick.com",
                 "postalAddress": Object {
@@ -417,6 +429,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "logoUrl": "",
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
                 "postalAddress": Object {
@@ -437,6 +450,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+                "logoUrl": "",
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
                 "postalAddress": Object {
@@ -461,6 +475,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
             Object {
               "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+              "logoUrl": "",
               "name": "Guillaume Grain",
               "node": "http://logion.guillaume.com",
               "postalAddress": Object {
@@ -490,6 +505,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
             Object {
               "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+              "logoUrl": "",
               "name": "Guillaume Grain",
               "node": "http://logion.guillaume.com",
               "postalAddress": Object {
@@ -514,6 +530,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "logoUrl": "",
                 "name": "Patrick Gielen",
                 "node": "http://logion.patrick.com",
                 "postalAddress": Object {
@@ -534,6 +551,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "logoUrl": "",
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
                 "postalAddress": Object {
@@ -554,6 +572,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+                "logoUrl": "",
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
                 "postalAddress": Object {
@@ -578,6 +597,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
             Object {
               "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "logoUrl": "",
               "name": "Patrick Gielen",
               "node": "http://logion.patrick.com",
               "postalAddress": Object {
@@ -694,6 +714,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
             Object {
               "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "logoUrl": "",
               "name": "Patrick Gielen",
               "node": "http://logion.patrick.com",
               "postalAddress": Object {
@@ -718,6 +739,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "logoUrl": "",
                 "name": "Patrick Gielen",
                 "node": "http://logion.patrick.com",
                 "postalAddress": Object {
@@ -738,6 +760,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "logoUrl": "",
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
                 "postalAddress": Object {
@@ -758,6 +781,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+                "logoUrl": "",
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
                 "postalAddress": Object {
@@ -782,6 +806,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
             Object {
               "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+              "logoUrl": "",
               "name": "Guillaume Grain",
               "node": "http://logion.guillaume.com",
               "postalAddress": Object {
@@ -811,6 +836,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
             Object {
               "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+              "logoUrl": "",
               "name": "Guillaume Grain",
               "node": "http://logion.guillaume.com",
               "postalAddress": Object {
@@ -835,6 +861,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "logoUrl": "",
                 "name": "Patrick Gielen",
                 "node": "http://logion.patrick.com",
                 "postalAddress": Object {
@@ -855,6 +882,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "logoUrl": "",
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
                 "postalAddress": Object {
@@ -875,6 +903,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+                "logoUrl": "",
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
                 "postalAddress": Object {
@@ -899,6 +928,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
             Object {
               "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "logoUrl": "",
               "name": "Patrick Gielen",
               "node": "http://logion.patrick.com",
               "postalAddress": Object {
@@ -1031,6 +1061,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
             Object {
               "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "logoUrl": "",
               "name": "Patrick Gielen",
               "node": "http://logion.patrick.com",
               "postalAddress": Object {
@@ -1055,6 +1086,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "logoUrl": "",
                 "name": "Patrick Gielen",
                 "node": "http://logion.patrick.com",
                 "postalAddress": Object {
@@ -1075,6 +1107,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "logoUrl": "",
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
                 "postalAddress": Object {
@@ -1095,6 +1128,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+                "logoUrl": "",
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
                 "postalAddress": Object {
@@ -1119,6 +1153,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
             Object {
               "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+              "logoUrl": "",
               "name": "Guillaume Grain",
               "node": "http://logion.guillaume.com",
               "postalAddress": Object {
@@ -1148,6 +1183,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
             Object {
               "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+              "logoUrl": "",
               "name": "Guillaume Grain",
               "node": "http://logion.guillaume.com",
               "postalAddress": Object {
@@ -1172,6 +1208,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "logoUrl": "",
                 "name": "Patrick Gielen",
                 "node": "http://logion.patrick.com",
                 "postalAddress": Object {
@@ -1192,6 +1229,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "logoUrl": "",
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
                 "postalAddress": Object {
@@ -1212,6 +1250,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+                "logoUrl": "",
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
                 "postalAddress": Object {
@@ -1236,6 +1275,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
             Object {
               "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "logoUrl": "",
               "name": "Patrick Gielen",
               "node": "http://logion.patrick.com",
               "postalAddress": Object {
@@ -1355,6 +1395,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
             Object {
               "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "logoUrl": "",
               "name": "Patrick Gielen",
               "node": "http://logion.patrick.com",
               "postalAddress": Object {
@@ -1379,6 +1420,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "logoUrl": "",
                 "name": "Patrick Gielen",
                 "node": "http://logion.patrick.com",
                 "postalAddress": Object {
@@ -1399,6 +1441,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "logoUrl": "",
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
                 "postalAddress": Object {
@@ -1419,6 +1462,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+                "logoUrl": "",
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
                 "postalAddress": Object {
@@ -1443,6 +1487,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
             Object {
               "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+              "logoUrl": "",
               "name": "Guillaume Grain",
               "node": "http://logion.guillaume.com",
               "postalAddress": Object {
@@ -1472,6 +1517,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
             Object {
               "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+              "logoUrl": "",
               "name": "Guillaume Grain",
               "node": "http://logion.guillaume.com",
               "postalAddress": Object {
@@ -1496,6 +1542,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "logoUrl": "",
                 "name": "Patrick Gielen",
                 "node": "http://logion.patrick.com",
                 "postalAddress": Object {
@@ -1516,6 +1563,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "logoUrl": "",
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
                 "postalAddress": Object {
@@ -1536,6 +1584,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+                "logoUrl": "",
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
                 "postalAddress": Object {
@@ -1560,6 +1609,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
             Object {
               "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "logoUrl": "",
               "name": "Patrick Gielen",
               "node": "http://logion.patrick.com",
               "postalAddress": Object {
@@ -1681,6 +1731,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
             Object {
               "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "logoUrl": "",
               "name": "Patrick Gielen",
               "node": "http://logion.patrick.com",
               "postalAddress": Object {
@@ -1705,6 +1756,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "logoUrl": "",
                 "name": "Patrick Gielen",
                 "node": "http://logion.patrick.com",
                 "postalAddress": Object {
@@ -1725,6 +1777,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "logoUrl": "",
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
                 "postalAddress": Object {
@@ -1745,6 +1798,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+                "logoUrl": "",
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
                 "postalAddress": Object {
@@ -1769,6 +1823,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
             Object {
               "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+              "logoUrl": "",
               "name": "Guillaume Grain",
               "node": "http://logion.guillaume.com",
               "postalAddress": Object {
@@ -1798,6 +1853,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
             Object {
               "additionalDetails": "",
               "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+              "logoUrl": "",
               "name": "Guillaume Grain",
               "node": "http://logion.guillaume.com",
               "postalAddress": Object {
@@ -1822,6 +1878,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "logoUrl": "",
                 "name": "Patrick Gielen",
                 "node": "http://logion.patrick.com",
                 "postalAddress": Object {
@@ -1842,6 +1899,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "logoUrl": "",
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
                 "postalAddress": Object {
@@ -1862,6 +1920,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
               Object {
                 "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+                "logoUrl": "",
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
                 "postalAddress": Object {
@@ -1886,6 +1945,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
             Object {
               "additionalDetails": "",
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "logoUrl": "",
               "name": "Patrick Gielen",
               "node": "http://logion.patrick.com",
               "postalAddress": Object {
