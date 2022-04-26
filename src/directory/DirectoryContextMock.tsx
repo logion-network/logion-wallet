@@ -19,7 +19,8 @@ export const PATRICK: LegalOfficer = {
         city: "Etterbeek",
         country: "Belgique"
     },
-    node: "http://logion.patrick.com"
+    node: "http://logion.patrick.com",
+    logoUrl: "",
 };
 
 export const GUILLAUME: LegalOfficer = {
@@ -40,7 +41,8 @@ export const GUILLAUME: LegalOfficer = {
         city: "LYON",
         country: "France"
     },
-    node: "http://logion.guillaume.com"
+    node: "http://logion.guillaume.com",
+    logoUrl: "",
 };
 
 export const ALAIN: LegalOfficer = {
@@ -61,7 +63,8 @@ export const ALAIN: LegalOfficer = {
         city: "Bourges",
         country: "France"
     },
-    node: "http://logion.alain.com"
+    node: "http://logion.alain.com",
+    logoUrl: "",
 };
 
 export const legalOfficers: LegalOfficer[] = [

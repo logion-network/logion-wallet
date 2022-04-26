@@ -29,6 +29,7 @@ export interface PathModel {
     certificateUrl: string;
     publicItems: PublicItem[];
     privateItems: PrivateItem[];
+    logoUrl: string;
 }
 
 export const DEFAULT_PATH_MODEL: PathModel = {
@@ -49,6 +50,7 @@ export const DEFAULT_PATH_MODEL: PathModel = {
     certificateUrl: "",
     publicItems: [],
     privateItems: [],
+    logoUrl: "",
 };
 
 export function toSearchString(pathModel: PathModel): string {
@@ -69,6 +71,7 @@ export function toSearchString(pathModel: PathModel): string {
     params.push(`loc_id=${pathModel.locId}`);
     params.push(`certificate_url=${pathModel.certificateUrl}`);
     params.push(`requester=${pathModel.requesterAddress}`);
+    params.push(`logo=${pathModel.logoUrl}`);
 
     for(const item of pathModel.publicItems) {
         params.push(`public_item_description=${item.description}`);
@@ -163,6 +166,7 @@ export function parseSearchString(searchString: string): PathModel {
             nodeAddress: params['node_address'] as string,
             locId: params['loc_id'] as string,
             certificateUrl: params['certificate_url'] as string,
+            logoUrl: params['logo'] as string,
             publicItems,
             privateItems,
         };

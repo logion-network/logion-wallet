@@ -61,6 +61,7 @@ export default function StatementOfFactsButton() {
                 company: legalOfficer?.postalAddress.company || "",
                 shortPostalAddress: `${legalOfficer?.postalAddress.postalCode} ${legalOfficer?.postalAddress.city}, ${legalOfficer?.postalAddress.line1}, ${legalOfficer?.postalAddress.line2}`,
                 nodeAddress: legalOfficer?.node || "",
+                logoUrl: legalOfficer?.logoUrl || "",
             });
         }
     }, [ ready, accounts, getOfficer, pathModel ]);

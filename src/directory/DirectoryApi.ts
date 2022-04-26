@@ -11,6 +11,7 @@ export interface LegalOfficer {
     additionalDetails: string,
     node: string,
     name: string,
+    logoUrl: string,
 }
 
 export class DirectoryApi {
