@@ -401,7 +401,7 @@ export default function ContextualizedLocDetails(props: Props) {
                     collectionItem={ collectionItem }
                 />
             }
-            { loc.locType === 'Collection' && loc.closed && !accounts?.current?.isLegalOfficer &&
+            { loc.locType === 'Collection' && loc.closed && loc.voidInfo === undefined && !accounts?.current?.isLegalOfficer &&
                 <ItemImporter
                     locId={ locId }
                     collectionItem={ collectionItem }
