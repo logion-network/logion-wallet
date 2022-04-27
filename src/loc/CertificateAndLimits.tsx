@@ -87,7 +87,7 @@ export default function CertificateAndLimits(props: Props) {
                     props.loc.locType !== 'Collection' && isLegalOfficer(accounts.current.address) &&
                     <Col className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12">
                         <div className="preview">
-                            <StatementOfFactsButton />
+                            <StatementOfFactsButton/>
                         </div>
                     </Col>
                 }
