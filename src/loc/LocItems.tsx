@@ -123,7 +123,7 @@ export default function LocItems(props: Props) {
                                 <span className="item-type">{ locItem.type }</span> {
                                     locItem.type === 'Document' &&
                                     <ViewFileButton
-                                        nodeOwner={ locItem.submitter }
+                                        nodeOwner={ loc!.owner }
                                         fileName={ locItem.name }
                                         downloader={ (axios: AxiosInstance) => getFile(axios, {
                                             locId: locId.toString(),

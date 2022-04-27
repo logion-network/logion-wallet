@@ -177,10 +177,15 @@ export default function StatementOfFactsButton(props: { itemId?: string }) {
                     }
                 ] }
             >
-                <StatementOfFactsSummary previewPath={ `${ STATEMENT_OF_FACTS_PATH }${ toSearchString({
-                    ...pathModel,
-                    language: language || 'en'
-                }) }` } />
+                <StatementOfFactsSummary
+                    previewPath={ `${ STATEMENT_OF_FACTS_PATH }${ toSearchString({
+                        ...pathModel,
+                        language: language || 'en'
+                    }) }` }
+                    files={ locRequest?.files || [] }
+                    locId={ locId }
+                    nodeOwner={ loc!.owner }
+                />
             </Dialog>
         </>
     );
