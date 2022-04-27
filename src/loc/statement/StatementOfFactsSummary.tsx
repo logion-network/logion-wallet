@@ -38,14 +38,14 @@ export default function StatementOfFactsSummary(props: Props) {
                 You can access the related LOC by clicking on the link, hereafter. Do not forget to upload the
                 <strong>signed version of your Statement of Facts</strong> before closing the related LOC. DO NOT put
                 the signed version of this Statement of Facts in another LOC, otherwise, the LOC URL mentioned in the
-                Statement of Facts will be not valid.
+                Statement of Facts will not be valid.
             </p>
             <p>
                 For your convenience, all files mentioned in the Statement of Facts are also ready to be downloaded by
                 clicking the related icon hereafter.
             </p>
             <Row>
-                <Col>Statements od Facts</Col>
+                <Col>Statements of Facts</Col>
                 <Col>
                     <NewTabForward path={ props.previewPath }>
                         <Button>Preview</Button>

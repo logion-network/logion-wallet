@@ -149,7 +149,7 @@ class ParamsParser {
         return decodeURIComponent(this.params[name] as string);
     }
 
-    valueAsFloat(name: string): number {
+    valueAsNumber(name: string): number {
         return parseFloat(this.valueAsString(name));
     }
 }
@@ -240,11 +240,11 @@ export function parseSearchString(searchString: string): PathModel {
             timestampText: parser.valueAsString('timestamp_text'),
             requesterText: parser.valueAsString('requester_text'),
             amount: {
-                cost: parser.valueAsFloat('amount_cost'),
-                base: parser.valueAsFloat('amount_base'),
-                taxExcluded: parser.valueAsFloat('amount_tax_excluded'),
-                tax: parser.valueAsFloat('amount_tax'),
-                taxIncluded: parser.valueAsFloat('amount_tax_included'),
+                cost: parser.valueAsNumber('amount_cost'),
+                base: parser.valueAsNumber('amount_base'),
+                taxExcluded: parser.valueAsNumber('amount_tax_excluded'),
+                tax: parser.valueAsNumber('amount_tax'),
+                taxIncluded: parser.valueAsNumber('amount_tax_included'),
             },
         };
     } else {
