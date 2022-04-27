@@ -1,4 +1,4 @@
-import queryString from 'query-string';
+import queryString, { ParsedQuery } from 'query-string';
 
 export interface PublicItem {
     description: string;
@@ -72,58 +72,95 @@ export const DEFAULT_PATH_MODEL: PathModel = {
         tax: 0,
         taxIncluded: 0,
     }
-};
+}
+
+class ParamsBuilder {
+    private params: string[] = []
+
+    param(name: string, value: string): ParamsBuilder {
+        this.params.push(`${ name }=${ encodeURIComponent(value) }`)
+        return this
+    }
+
+    build() {
+        return `?${this.params.join("&")}`
+    }
+}
 
 export function toSearchString(pathModel: PathModel): string {
-    const params: string[] = [];
+    const builder = new ParamsBuilder()
 
-    params.push(`lang=${pathModel.language}`);
-    params.push(`polkadot_address=${pathModel.polkadotAddress}`);
-    params.push(`postal_line1=${pathModel.postalAddressLine1}`);
-    params.push(`postal_line2=${pathModel.postalAddressLine2}`);
-    params.push(`postal_line3=${pathModel.postalAddressLine3}`);
-    params.push(`postal_line4=${pathModel.postalAddressLine4}`);
-    params.push(`email=${pathModel.email}`);
-    params.push(`first_name=${pathModel.firstName}`);
-    params.push(`last_name=${pathModel.lastName}`);
-    params.push(`company=${pathModel.company}`);
-    params.push(`short_postal_address=${pathModel.shortPostalAddress}`);
-    params.push(`node_address=${pathModel.nodeAddress}`);
-    params.push(`loc_id=${pathModel.locId}`);
-    params.push(`certificate_url=${pathModel.certificateUrl}`);
-    params.push(`requester=${pathModel.requesterAddress}`);
-    params.push(`logo=${pathModel.logoUrl}`);
+    builder
+        .param("lang", pathModel.language)
+        .param("polkadot_address", pathModel.polkadotAddress)
+        .param("postal_line1", pathModel.postalAddressLine1)
+        .param("postal_line2", pathModel.postalAddressLine2)
+        .param("postal_line3", pathModel.postalAddressLine3)
+        .param("postal_line4", pathModel.postalAddressLine4)
+        .param("email", pathModel.email)
+        .param("first_name", pathModel.firstName)
+        .param("last_name", pathModel.lastName)
+        .param("company", pathModel.company)
+        .param("short_postal_address", pathModel.shortPostalAddress)
+        .param("node_address", pathModel.nodeAddress)
+        .param("loc_id", pathModel.locId)
+        .param("certificate_url", pathModel.certificateUrl)
+        .param("requester", pathModel.requesterAddress)
+        .param("logo", pathModel.logoUrl)
 
-    for(const item of pathModel.publicItems) {
-        params.push(`public_item_description=${item.description}`);
-        params.push(`public_item_content=${item.content}`);
+    for (const item of pathModel.publicItems) {
+        builder
+            .param("public_item_description", item.description)
+            .param("public_item_content", item.content)
     }
 
-    for(const item of pathModel.privateItems) {
-        params.push(`private_item_public_description=${item.publicDescription}`);
-        params.push(`private_item_private_description=${item.privateDescription}`);
-        params.push(`private_item_hash=${item.hash}`);
+    for (const item of pathModel.privateItems) {
+        builder
+            .param("private_item_public_description", item.publicDescription)
+            .param("private_item_private_description", item.privateDescription)
+            .param("private_item_hash", item.hash)
     }
 
-    params.push(`containing_loc_id=${pathModel.containingLocId}`)
-    params.push(`timestamp_text=${pathModel.timestampText}`)
-    params.push(`requester_text=${pathModel.requesterText}`)
-    params.push(`amount_cost=${pathModel.amount.cost}`)
-    params.push(`amount_base=${pathModel.amount.base}`)
-    params.push(`amount_tax_excluded=${pathModel.amount.taxExcluded}`)
-    params.push(`amount_tax=${pathModel.amount.tax}`)
-    params.push(`amount_tax_included=${pathModel.amount.taxIncluded}`)
+    builder
+        .param("containing_loc_id", pathModel.containingLocId)
+        .param("timestamp_text", pathModel.timestampText)
+        .param("requester_text", pathModel.requesterText)
+        .param("amount_cost", "" + pathModel.amount.cost)
+        .param("amount_base", "" + pathModel.amount.base)
+        .param("amount_tax_excluded", "" + pathModel.amount.taxExcluded)
+        .param("amount_tax", "" + pathModel.amount.tax)
+        .param("amount_tax_included", "" + pathModel.amount.taxIncluded)
 
-    return `?${params.join("&")}`;
+    return builder.build()
+}
+
+class ParamsParser {
+    private readonly params: ParsedQuery;
+
+    constructor(searchString: string) {
+        this.params = queryString.parse(searchString);
+    }
+
+    value(name: string) {
+        return this.params[name];
+    }
+
+    valueAsString(name: string): string {
+        return decodeURIComponent(this.params[name] as string);
+    }
+
+    valueAsFloat(name: string): number {
+        return parseFloat(this.valueAsString(name));
+    }
 }
 
 export function parseSearchString(searchString: string): PathModel {
     if(searchString) {
-        const params = queryString.parse(searchString);
+        const parser = new ParamsParser(searchString)
 
         let publicItems: PublicItem[] = [];
-        const publicDescriptions = params['public_item_description'];
-        const publicContents = params['public_item_content'];
+        const publicDescriptions = parser.value('public_item_description');
+        const publicContents = parser.value('public_item_content');
         if(publicDescriptions !== null && publicContents !== null) {
             if(Array.isArray(publicDescriptions) && Array.isArray(publicContents)) {
                 for(let i = 0; i < publicDescriptions.length && i < publicContents.length; ++i) {
@@ -131,8 +168,8 @@ export function parseSearchString(searchString: string): PathModel {
                     const content = publicContents[i];
                     if(description && content) {
                         publicItems.push({
-                            description,
-                            content,
+                            description: decodeURIComponent(description),
+                            content: decodeURIComponent(content),
                         });
                     }
                 }
@@ -141,28 +178,28 @@ export function parseSearchString(searchString: string): PathModel {
                 const content = publicContents as string;
                 if(description && content) {
                     publicItems.push({
-                        description,
-                        content,
+                        description: decodeURIComponent(description),
+                        content: decodeURIComponent(content),
                     });
                 }
             }
         }
 
         let privateItems: PrivateItem[] = [];
-        const privatePublicDescriptions = params['private_item_public_description'];
-        const privatePrivateDescriptions = params['private_item_private_description'];
-        const privateHashes = params['private_item_hash'];
+        const privatePublicDescriptions = parser.value('private_item_public_description');
+        const privatePrivateDescriptions = parser.value('private_item_private_description');
+        const privateHashes = parser.value('private_item_hash');
         if(privatePublicDescriptions !== null && privatePrivateDescriptions !== null && privateHashes !== null) {
             if(Array.isArray(privatePublicDescriptions) && Array.isArray(privatePrivateDescriptions) && Array.isArray(privateHashes)) {
-                for(let i = 0; i < privatePublicDescriptions.length && i < privatePrivateDescriptions.length && privateHashes.length; ++i) {
+                for(let i = 0; i < privatePublicDescriptions.length && i < privatePrivateDescriptions.length && i < privateHashes.length; ++i) {
                     const publicDescription = privatePublicDescriptions[i];
                     const privateDescription = privatePrivateDescriptions[i];
                     const hash = privateHashes[i];
                     if(publicDescription && privateDescription && hash) {
                         privateItems.push({
-                            publicDescription,
-                            privateDescription,
-                            hash,
+                            publicDescription: decodeURIComponent(publicDescription),
+                            privateDescription: decodeURIComponent(privateDescription),
+                            hash: decodeURIComponent(hash),
                         });
                     }
                 }
@@ -172,42 +209,42 @@ export function parseSearchString(searchString: string): PathModel {
                 const hash = privateHashes as string;
                 if(publicDescription && privateDescription && hash) {
                     privateItems.push({
-                        publicDescription,
-                        privateDescription,
-                        hash,
+                        publicDescription: decodeURIComponent(publicDescription),
+                        privateDescription: decodeURIComponent(privateDescription),
+                        hash: decodeURIComponent(hash),
                     });
                 }
             }
         }
 
         return {
-            language: params['lang'] as Language,
-            polkadotAddress: params['polkadot_address'] as string,
-            postalAddressLine1: params['postal_line1'] as string,
-            postalAddressLine2: params['postal_line2'] as string,
-            postalAddressLine3: params['postal_line3'] as string,
-            postalAddressLine4: params['postal_line4'] as string,
-            email: params['email'] as string,
-            firstName: params['first_name'] as string,
-            lastName: params['last_name'] as string,
-            company: params['company'] as string,
-            shortPostalAddress: params['short_postal_address'] as string,
-            requesterAddress: params['requester'] as string,
-            nodeAddress: params['node_address'] as string,
-            locId: params['loc_id'] as string,
-            certificateUrl: params['certificate_url'] as string,
-            logoUrl: params['logo'] as string,
+            language: parser.value('lang') as Language,
+            polkadotAddress: parser.valueAsString('polkadot_address'),
+            postalAddressLine1: parser.valueAsString('postal_line1'),
+            postalAddressLine2: parser.valueAsString('postal_line2'),
+            postalAddressLine3: parser.valueAsString('postal_line3'),
+            postalAddressLine4: parser.valueAsString('postal_line4'),
+            email: parser.valueAsString('email'),
+            firstName: parser.valueAsString('first_name'),
+            lastName: parser.valueAsString('last_name'),
+            company: parser.valueAsString('company'),
+            shortPostalAddress: parser.valueAsString('short_postal_address'),
+            requesterAddress: parser.valueAsString('requester'),
+            nodeAddress: parser.valueAsString('node_address'),
+            locId: parser.valueAsString('loc_id'),
+            certificateUrl: parser.valueAsString('certificate_url'),
+            logoUrl: parser.valueAsString('logo'),
             publicItems,
             privateItems,
-            containingLocId: params['containing_loc_id'] as string,
-            timestampText: params['timestamp_text'] as string,
-            requesterText: params['requester_text'] as string,
+            containingLocId: parser.valueAsString('containing_loc_id'),
+            timestampText: parser.valueAsString('timestamp_text'),
+            requesterText: parser.valueAsString('requester_text'),
             amount: {
-                cost: parseFloat(params['amount_cost'] as string),
-                base: parseFloat(params['amount_base'] as string),
-                taxExcluded: parseFloat(params['amount_tax_excluded'] as string),
-                tax: parseFloat(params['amount_tax'] as string),
-                taxIncluded: parseFloat(params['amount_tax_included'] as string),
+                cost: parser.valueAsFloat('amount_cost'),
+                base: parser.valueAsFloat('amount_base'),
+                taxExcluded: parser.valueAsFloat('amount_tax_excluded'),
+                tax: parser.valueAsFloat('amount_tax'),
+                taxIncluded: parser.valueAsFloat('amount_tax_included'),
             },
         };
     } else {
