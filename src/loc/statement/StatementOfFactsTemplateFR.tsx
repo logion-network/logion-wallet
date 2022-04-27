@@ -95,11 +95,11 @@ export default function StatementOfFactsTemplateFR(props: Props) {
 
             <div className="footer">
                 <div>
-                    <div>Coût du présent: { props.pathModel.amount.cost }</div>
-                    <div>Base: { props.pathModel.amount.base }</div>
-                    <div>HT: { props.pathModel.amount.taxExcluded }</div>
-                    <div>Taxe: { props.pathModel.amount.tax }</div>
-                    <div>TTC: { props.pathModel.amount.taxIncluded }</div>
+                    { !isNaN(props.pathModel.amount.cost) && <div>Coût du présent: { props.pathModel.amount.cost }</div>}
+                    { !isNaN(props.pathModel.amount.base) && <div>Base: { props.pathModel.amount.base }</div>}
+                    { !isNaN(props.pathModel.amount.taxExcluded) && <div>HT: { props.pathModel.amount.taxExcluded }</div>}
+                    { !isNaN(props.pathModel.amount.tax) && <div>Taxe: { props.pathModel.amount.tax }</div>}
+                    { !isNaN(props.pathModel.amount.taxIncluded) && <div>TTC: { props.pathModel.amount.taxIncluded }</div>}
                 </div>
                 <div className="signature-container">
                     <img className="sof-signature" src={ process.env.PUBLIC_URL + "/assets/sof_signature.svg" } alt="signature" />

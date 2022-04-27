@@ -77,8 +77,9 @@ export const DEFAULT_PATH_MODEL: PathModel = {
 class ParamsBuilder {
     private params: string[] = []
 
-    param(name: string, value: string): ParamsBuilder {
-        this.params.push(`${ name }=${ encodeURIComponent(value) }`)
+    param(name: string, value: string | number | null | undefined): ParamsBuilder {
+        const paramValue = value ? encodeURIComponent(value) : ""
+        this.params.push(`${ name }=${ paramValue }`)
         return this
     }
 
@@ -125,11 +126,11 @@ export function toSearchString(pathModel: PathModel): string {
         .param("containing_loc_id", pathModel.containingLocId)
         .param("timestamp_text", pathModel.timestampText)
         .param("requester_text", pathModel.requesterText)
-        .param("amount_cost", "" + pathModel.amount.cost)
-        .param("amount_base", "" + pathModel.amount.base)
-        .param("amount_tax_excluded", "" + pathModel.amount.taxExcluded)
-        .param("amount_tax", "" + pathModel.amount.tax)
-        .param("amount_tax_included", "" + pathModel.amount.taxIncluded)
+        .param("amount_cost", pathModel.amount.cost)
+        .param("amount_base", pathModel.amount.base)
+        .param("amount_tax_excluded", pathModel.amount.taxExcluded)
+        .param("amount_tax", pathModel.amount.tax)
+        .param("amount_tax_included", pathModel.amount.taxIncluded)
 
     return builder.build()
 }
