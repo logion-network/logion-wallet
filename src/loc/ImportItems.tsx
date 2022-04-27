@@ -15,6 +15,9 @@ import { sha256HexFromString } from "../common/hash";
 import { useResponsiveContext } from "../common/Responsive";
 import { useLocContext } from "./LocContext";
 import ImportItemDetails, { Item } from "./ImportItemDetails";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
+
+import './ImportItems.css';
 
 const fileReaderStream = require("filereader-stream");
 
@@ -23,8 +26,6 @@ type Submitters = Record<string, SignAndSubmit>;
 export interface Props {
     collectionId: UUID;
 }
-
-const INVALID_ID = "Invalid ID";
 
 export default function ImportItems(props: Props) {
     const { width } = useResponsiveContext();
@@ -41,26 +42,41 @@ export default function ImportItems(props: Props) {
     const readCsvFile = useCallback((file: File) => {
         setSubmitters({});
         const rows: Item[] = [];
+        const ids: Record<string, null> = {};
         fileReaderStream(file)
             .pipe(csv({headers: false}))
             .on("data", (data: any) => {
-                if(Object.keys(data).length === 2) {
-                    const id = toHexString(data['0']);
+                if(Object.keys(data).length >= 2) {
+                    const givenId = data['0'];
+                    const id = toHexString(givenId);
+                    const displayId = id !== undefined ? id : givenId;
+
+                    let error: string | undefined = undefined;
+                    if(id === undefined) {
+                        error = "Invalid ID";
+                    } else if(id in ids) {
+                        error = "Duplicate ID";
+                    }
+
                     rows.push({
-                        id,
-                        valid: id !== INVALID_ID,
+                        id: displayId,
+                        error,
                         description: data['1'],
                         submitted: false,
                         failed: false,
                         success: false
                     });
+
+                    if(id !== undefined) {
+                        ids[id] = null;
+                    }
                 }
             })
             .on("error", (error: any) => console.log(error))
             .on("end", () => {
                 (async function() {
                     for(const item of rows) {
-                        if(item.valid) {
+                        if(!item.error) {
                             const existingItem = await getCollectionItem({
                                 api: api!,
                                 locId: props.collectionId,
@@ -171,7 +187,7 @@ export default function ImportItems(props: Props) {
                             render: item => (
                                 <>
                                     {
-                                        (!item.submitted && item.valid) &&
+                                        (!item.submitted && !item.error) &&
                                         <Button
                                             variant="polkadot"
                                             onClick={ () => submitItem(item) }
@@ -196,8 +212,20 @@ export default function ImportItems(props: Props) {
                                         <Cell content={ <Icon icon={{ id: "ok" }} /> } />
                                     }
                                     {
-                                        !item.valid &&
-                                        <Cell content={ <Icon icon={{ id: "ko" }} /> } />
+                                        item.error &&
+                                        <Cell content={
+                                            <OverlayTrigger
+                                                placement="bottom"
+                                                delay={ 500 }
+                                                overlay={
+                                                    <Tooltip id={`tooltip-${item.id}`}>
+                                                        { item.error }
+                                                    </Tooltip>
+                                                }
+                                            >
+                                                <span><Icon icon={{ id: "ko" }} /></span>
+                                            </OverlayTrigger>
+                                        } />
                                     }
                                 </>
                             )
@@ -207,23 +235,25 @@ export default function ImportItems(props: Props) {
                     renderEmpty={ () => <EmptyTableMessage>No item to import</EmptyTableMessage> }
                     color={ colorTheme.dialogTable }
                 />
-                <Button
-                    variant="polkadot"
-                    onClick={ importAll }
-                    disabled={ getNotSubmitted(items) === 0 || isBatchImport }
-                >
-                    <Icon icon={{id: "import_items"}} height="23px" /> Import all
-                </Button>
+                <div className="import-all-container">
+                    <Button
+                        variant="polkadot"
+                        onClick={ importAll }
+                        disabled={ getNotSubmitted(items) === 0 || isBatchImport }
+                    >
+                        <Icon icon={{id: "import_items"}} height="23px" /> Import all
+                    </Button>
+                </div>
             </Dialog>
         </div>
     );
 }
 
-function toHexString(maybeHex: string): string {
+function toHexString(maybeHex: string): string | undefined {
     if(maybeHex.startsWith("0x") && maybeHex.length === 66) {
         return maybeHex;
     } else if(maybeHex.startsWith("0x") && maybeHex.length !== 66) {
-        return INVALID_ID;
+        return undefined;
     } else {
         return `0x${sha256HexFromString(maybeHex)}`;
     }
@@ -236,7 +266,7 @@ function getFirstItem(items: Item[]): number {
 
 function getNextItem(items: Item[], current: number): number {
     let next = current + 1;
-    while(next < items.length && (!items[next].valid || items[next].submitted)) {
+    while(next < items.length && (items[next].error || items[next].submitted)) {
         ++next;
     }
     return next;
@@ -245,7 +275,7 @@ function getNextItem(items: Item[], current: number): number {
 function getNotSubmitted(items: Item[]): number {
     let count = 0;
     for(const item of items) {
-        if(!item.submitted && item.valid) {
+        if(!item.submitted && !item.error) {
             ++count;
         }
     }

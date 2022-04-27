@@ -3,7 +3,7 @@ import { CollectionItem } from "../logion-chain/Types";
 import './ImportItemDetails.css';
 
 export interface Item extends CollectionItem {
-    valid: boolean;
+    error?: string;
     submitted: boolean;
     failed: boolean;
     success: boolean;

@@ -21,6 +21,7 @@
 
 .LocItemDetail .value-container {
     text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .LocItemDetail .copy-paste-container {
