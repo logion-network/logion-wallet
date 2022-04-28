@@ -1,3 +1,4 @@
+import { sha256HexFromString } from "../common/hash";
 import { SignAndSubmit } from "../ExtrinsicSubmitter"
 import { UUID } from "../logion-chain/UUID"
 
@@ -39,3 +40,14 @@ export interface PublishProps {
 }
 
 export type Viewer = 'User' | 'LegalOfficer';
+
+
+export function toItemId(maybeHex: string): string | undefined {
+    if(maybeHex.startsWith("0x") && maybeHex.length === 66) {
+        return maybeHex;
+    } else if(maybeHex.startsWith("0x") && maybeHex.length !== 66) {
+        return undefined;
+    } else {
+        return `0x${sha256HexFromString(maybeHex)}`;
+    }
+}

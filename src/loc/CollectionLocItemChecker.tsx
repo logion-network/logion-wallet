@@ -18,6 +18,7 @@ import "./CollectionLocItemChecker.css"
 import { CollectionItem } from "../logion-chain/Types";
 import StatementOfFactsButton from "./statement/StatementOfFactsButton";
 import { useDirectoryContext } from "../directory/DirectoryContext";
+import { toItemId } from './types';
 
 export interface Props {
     locId: UUID;
@@ -48,15 +49,20 @@ export default function CollectionLocItemChecker(props: Props) {
 
     const checkData = useCallback(async () => {
         if (api && itemId) {
-            try {
-                const collectionItem = await getCollectionItem({ api, locId, itemId })
-                if (collectionItem) {
-                    setState('POSITIVE')
-                } else {
-                    setState('NEGATIVE')
+            const actualId = toItemId(itemId);
+            if(actualId === undefined) {
+                setState('NEGATIVE');
+            } else {
+                try {
+                    const collectionItem = await getCollectionItem({ api, locId, itemId: actualId });
+                    if (collectionItem) {
+                        setState('POSITIVE');
+                    } else {
+                        setState('NEGATIVE');
+                    }
+                } catch (e) {
+                    setState('NEGATIVE');
                 }
-            } catch (e) {
-                setState('NEGATIVE')
             }
         }
     }, [ api, locId, itemId ]);
@@ -119,14 +125,14 @@ export default function CollectionLocItemChecker(props: Props) {
                                     <Button onClick={ checkData } disabled={ itemId ? false : true }><Icon icon={{id: "search"}} /> Check Item ID</Button>
                                     {
                                         state === "POSITIVE" && isLegalOfficer(accounts.current.address) &&
-                                        <StatementOfFactsButton itemId={ itemId } />
+                                        <StatementOfFactsButton itemId={ toItemId(itemId) } />
                                     }
                                 </Col>
                             </Row>
                         }
                         colors={ colorTheme.frame }
                     />
-                    <CheckResultFeedback locId={ locId } itemId={ itemId } state={ state } />
+                    <CheckResultFeedback locId={ locId } itemId={ toItemId(itemId) } state={ state } />
                 </>
                 } />
         </PolkadotFrame>)
@@ -134,7 +140,7 @@ export default function CollectionLocItemChecker(props: Props) {
 
 interface CheckResultProps {
     locId: UUID,
-    itemId: string,
+    itemId?: string,
     state: CheckResult,
 }
 
