@@ -1,4 +1,4 @@
-import { Controller, Control } from "react-hook-form";
+import { Controller, Control, FieldErrors } from "react-hook-form";
 import FormGroup from "../../common/FormGroup";
 import { useCommonContext } from "../../common/CommonContext";
 import Form from "react-bootstrap/Form";
@@ -17,6 +17,7 @@ const amountLabel: Record<AmountType, string> = {
 export interface Props {
     type: LocType,
     control: Control<FormValues>,
+    errors: FieldErrors<FormValues>
 }
 
 export default function StatementOfFactsForm(props: Props) {
@@ -71,6 +72,7 @@ export default function StatementOfFactsForm(props: Props) {
                         control={ control }
                         render={ ({ field }) => (
                             <Form.Control
+                                isInvalid={!!props.errors.containingLocId?.message}
                                 type="text"
                                 placeholder="e.g. 123...789"
                                 aria-describedby="containingLocId"
@@ -80,6 +82,7 @@ export default function StatementOfFactsForm(props: Props) {
                     />
                 }
                 colors={ colorTheme.dialog }
+                feedback={ props.errors.containingLocId?.message }
             />
             <FormGroup
                 id="timestampText"

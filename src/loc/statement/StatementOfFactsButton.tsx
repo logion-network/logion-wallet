@@ -28,32 +28,41 @@ export default function StatementOfFactsButton(props: { itemId?: string }) {
     const [ itemId, setItemId ] = useState<string>();
     const [ status, setStatus ] = useState<Status>('IDLE')
     const [ language, setLanguage ] = useState<Language | null>(null)
-    const { control, handleSubmit, reset } = useForm<FormValues>();
+    const { control, handleSubmit, formState: { errors }, reset, setError } = useForm<FormValues>();
     const { api } = useLogionChain();
     type ContainingLoc = (LegalOfficerCase & { id: UUID })
     const [ containingLoc, setContainingLoc ] = useState<ContainingLoc | null | undefined>(null)
     const submit = useCallback(async (formValues: FormValues) => {
         if (api) {
             const containingLocId = UUID.fromAnyString(formValues.containingLocId);
-            if (containingLocId) {
-                const loc = await getLegalOfficerCase({ locId: containingLocId, api })
-                if (loc) {
-                    setContainingLoc({
-                        id: containingLocId,
-                        ...loc
-                    })
-                    setPathModel({
-                        ...pathModel,
-                        ...formValues
-                    })
-                    setStatus('READY')
-                } else {
-                    setContainingLoc(undefined)
-                    // TODO raise error to form
-                }
+            if (!containingLocId) {
+                setError("containingLocId", { type: "value", message: "Invalid LOC ID" })
+                return
+            }
+            if (containingLocId.toString() === locId.toString()) {
+                setError("containingLocId", { type: "value", message: "Choose a different LOC to upload Statement of Facts" })
+                return
+            }
+            const loc = await getLegalOfficerCase({ locId: containingLocId, api })
+            if (!loc) {
+                setError("containingLocId", { type: "value", message: "LOC not found on chain" })
+            } else if (loc.closed) {
+                setError('containingLocId', { type: "value", message: "LOC must be open" })
+            } else if (loc.voidInfo) {
+                setError('containingLocId', { type: "value", message: "LOC must not be void" })
+            } else {
+                setContainingLoc({
+                    id: containingLocId,
+                    ...loc
+                })
+                setPathModel({
+                    ...pathModel,
+                    ...formValues
+                })
+                setStatus('READY')
             }
         }
-    }, [ api, pathModel, setPathModel, setContainingLoc ])
+    }, [ api, pathModel, setPathModel, setContainingLoc, setError, locId ])
     const navigate = useNavigate();
 
     const dropDownItem = (language: Language) => {
@@ -156,7 +165,11 @@ export default function StatementOfFactsButton(props: { itemId?: string }) {
                 ] }
                 onSubmit={ handleSubmit(submit) }
             >
-                <StatementOfFactsForm type={ loc!.locType } control={ control } />
+                <StatementOfFactsForm
+                    type={ loc!.locType }
+                    control={ control }
+                    errors={ errors }
+                />
             </Dialog>
 
             <Dialog
