@@ -89,17 +89,14 @@ export default function StatementOfFactsTemplateEN(props: Props) {
             et dont une copie est conservée au rang des minutes de l’étude.</p>
 
             <p>Adresse du certificat public en ligne du présent constat:<br/>
-            { props.pathModel.certificateUrl }</p>
+                <a href={ props.pathModel.certificateUrl }>{ props.pathModel.certificateUrl }</a>
+            </p>
 
             <p>Le certificat public en ligne mentionné permet de vérifier qu’une copie numérique du présent procès verbal de constat est bien celle qui a fait l’objet de la requête telle que réalisée par le signataire. Cette vérification se faisant par la comparaison de l’empreinte numérique de la copie numérique à vérifier avec l’empreinte numérique du présent document.</p>
 
             <div className="footer">
                 <div>
-                    { !isNaN(props.pathModel.amount.cost) && <div>Coût du présent: { props.pathModel.amount.cost }</div>}
-                    { !isNaN(props.pathModel.amount.base) && <div>Base: { props.pathModel.amount.base }</div>}
-                    { !isNaN(props.pathModel.amount.taxExcluded) && <div>HT: { props.pathModel.amount.taxExcluded }</div>}
-                    { !isNaN(props.pathModel.amount.tax) && <div>Taxe: { props.pathModel.amount.tax }</div>}
-                    { !isNaN(props.pathModel.amount.taxIncluded) && <div>TTC: { props.pathModel.amount.taxIncluded }</div>}
+                    <pre>{ props.pathModel.amount }</pre>
                 </div>
                 <div className="signature-container">
                     <img className="sof-signature" src={ process.env.PUBLIC_URL + "/assets/sof_signature.svg" } alt="signature" />

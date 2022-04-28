@@ -4,20 +4,19 @@ import { useCommonContext } from "../../common/CommonContext";
 import Form from "react-bootstrap/Form";
 import React from "react";
 import { LocType } from "../../logion-chain/Types";
-import { AmountType, FormValues } from "./PathModel";
+import { FormValues, Language } from "./PathModel";
+import "./StatementOfFactsForm.css"
 
-const amountLabel: Record<AmountType, string> = {
-    cost: "Cost",
-    base: "Base",
-    taxExcluded: "Tax Excluded",
-    tax: "Tax",
-    taxIncluded: "Tax Included",
+const amountDefaultValues: Record<Language, string[]> = {
+    en: [ "Cost", "Base", "Tax Excluded", "Tax", "Tax Included" ],
+    fr: [ "Coût du présent", "Base", "HT", "Taxe", "TTC" ],
 }
 
 export interface Props {
     type: LocType,
     control: Control<FormValues>,
     errors: FieldErrors<FormValues>
+    language: Language
 }
 
 export default function StatementOfFactsForm(props: Props) {
@@ -28,32 +27,8 @@ export default function StatementOfFactsForm(props: Props) {
         "Collection Item and related Collection LOC" :
         `${ type } LOC`
 
-    const amountFormGroup = (amount: AmountType) => {
-        return (
-            <FormGroup
-                className="AmountFormGroup"
-                id={ amount }
-                label={ amountLabel[amount] }
-                control={
-                    <Controller
-                        name={ `amount.${amount}` }
-                        control={ control }
-                        render={ ({ field }) => (
-                            <Form.Control
-                                type="number"
-                                aria-describedby={ amount }
-                                { ...field }
-                            />
-                        ) }
-                    />
-                }
-                colors={ colorTheme.dialog }
-            />
-        )
-    }
-
     return (
-        <>
+        <div className="StatementOfFactsForm">
             <h3>Statement of Facts generator</h3>
             <p>You are about to generate a Statement of Facts PDF based on the scope of the
                 current { info }. This Statement of Facts will list all the public content, confidential files hash and related description
@@ -124,11 +99,26 @@ export default function StatementOfFactsForm(props: Props) {
                 }
                 colors={ colorTheme.dialog }
             />
-            { amountFormGroup('cost') }
-            { amountFormGroup('base') }
-            { amountFormGroup('taxExcluded') }
-            { amountFormGroup('tax') }
-            { amountFormGroup('taxIncluded') }
-        </>
+            <FormGroup
+                id="amount"
+                label="Price"
+                control={
+                    <Controller
+                        name="amount"
+                        control={ control }
+                        render={ ({ field }) => (
+                            <Form.Control
+                                as="textarea"
+                                defaultValue={ amountDefaultValues[props.language].join("\n") }
+                                aria-describedby="amount"
+                                style={ { height: '140px' } }
+                                { ...field }
+                            />
+                        ) }
+                    />
+                }
+                colors={ colorTheme.dialog }
+            />
+        </div>
     )
 }

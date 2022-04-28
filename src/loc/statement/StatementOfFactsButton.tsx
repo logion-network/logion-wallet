@@ -13,7 +13,6 @@ import Dialog from "../../common/Dialog";
 import StatementOfFactsForm from "./StatementOfFactsForm";
 import { useForm } from "react-hook-form";
 import StatementOfFactsSummary from "./StatementOfFactsSummary";
-import { useNavigate } from "react-router-dom";
 import { getLegalOfficerCase } from "../../logion-chain/LogionLoc";
 import { LegalOfficerCase } from "../../logion-chain/Types";
 import { useLogionChain } from "../../logion-chain";
@@ -63,7 +62,6 @@ export default function StatementOfFactsButton(props: { itemId?: string }) {
             }
         }
     }, [ api, pathModel, setPathModel, setContainingLoc, setError, locId ])
-    const navigate = useNavigate();
 
     const dropDownItem = (language: Language) => {
         return (
@@ -137,7 +135,7 @@ export default function StatementOfFactsButton(props: { itemId?: string }) {
 
     return (
         <>
-            <Dropdown>
+            <Dropdown className="StatementOfFactsButtonDropdownItem">
                 <Dropdown.Toggle className="Button" id="StatementOfFacts-dropdown-toggle">Statement of
                     facts</Dropdown.Toggle>
                 <Dropdown.Menu>
@@ -169,6 +167,7 @@ export default function StatementOfFactsButton(props: { itemId?: string }) {
                     type={ loc!.locType }
                     control={ control }
                     errors={ errors }
+                    language={ language || 'en' }
                 />
             </Dialog>
 
@@ -181,12 +180,6 @@ export default function StatementOfFactsButton(props: { itemId?: string }) {
                         callback: cancelCallback,
                         buttonText: 'Cancel',
                         buttonVariant: 'secondary',
-                    },
-                    {
-                        id: "submit",
-                        callback: () => navigate(locDetailsPath(containingLoc!.id, containingLoc!.locType)),
-                        buttonText: 'Go to related LOC',
-                        buttonVariant: 'primary',
                     }
                 ] }
             >
@@ -195,6 +188,7 @@ export default function StatementOfFactsButton(props: { itemId?: string }) {
                         ...pathModel,
                         language: language || 'en'
                     }) }` }
+                    relatedLocPath={ containingLoc ? locDetailsPath(containingLoc!.id, containingLoc!.locType) : "" }
                     files={ locRequest?.files || [] }
                     locId={ locId }
                     nodeOwner={ loc!.owner }

@@ -13,13 +13,11 @@ export interface PrivateItem {
 
 export type Language = 'en' | 'fr';
 
-export type AmountType = 'cost' | 'base' | 'taxExcluded' | 'tax' | 'taxIncluded';
-
 export interface FormValues {
     containingLocId: string;
     timestampText: string;
     requesterText: string;
-    amount: Record<AmountType, number>;
+    amount: string;
 }
 
 export interface PathModel extends FormValues {
@@ -65,13 +63,7 @@ export const DEFAULT_PATH_MODEL: PathModel = {
     containingLocId: "",
     timestampText: "",
     requesterText: "",
-    amount: {
-        cost: 0,
-        base: 0,
-        taxExcluded: 0,
-        tax: 0,
-        taxIncluded: 0,
-    }
+    amount: "",
 }
 
 class ParamsBuilder {
@@ -126,11 +118,7 @@ export function toSearchString(pathModel: PathModel): string {
         .param("containing_loc_id", pathModel.containingLocId)
         .param("timestamp_text", pathModel.timestampText)
         .param("requester_text", pathModel.requesterText)
-        .param("amount_cost", pathModel.amount.cost)
-        .param("amount_base", pathModel.amount.base)
-        .param("amount_tax_excluded", pathModel.amount.taxExcluded)
-        .param("amount_tax", pathModel.amount.tax)
-        .param("amount_tax_included", pathModel.amount.taxIncluded)
+        .param("amount", pathModel.amount)
 
     return builder.build()
 }
@@ -240,13 +228,7 @@ export function parseSearchString(searchString: string): PathModel {
             containingLocId: parser.valueAsString('containing_loc_id'),
             timestampText: parser.valueAsString('timestamp_text'),
             requesterText: parser.valueAsString('requester_text'),
-            amount: {
-                cost: parser.valueAsNumber('amount_cost'),
-                base: parser.valueAsNumber('amount_base'),
-                taxExcluded: parser.valueAsNumber('amount_tax_excluded'),
-                tax: parser.valueAsNumber('amount_tax'),
-                taxIncluded: parser.valueAsNumber('amount_tax_included'),
-            },
+            amount: parser.valueAsString('amount'),
         };
     } else {
         return DEFAULT_PATH_MODEL;
