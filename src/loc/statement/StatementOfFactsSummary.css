@@ -1,0 +1,16 @@
+.StatementOfFactsSummary .PreviewAndDownload {
+    border-bottom: 2px solid;
+    border-left: 2px solid;
+}
+
+.StatementOfFactsSummary .PreviewAndDownloadCell {
+    border-top: 2px solid;
+    border-right: 2px solid;
+    vertical-align: baseline;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.StatementOfFactsSummary .PreviewAndDownloadCell ul {
+    margin-bottom: 0;
+}

@@ -7,14 +7,18 @@ import { TypedFile } from "../loc/Model";
 import Icon from "./Icon";
 
 import './ViewFileButton.css';
+import { Children } from "./types/Helpers";
 
-export interface Props {
-    nodeOwner: string;
+export interface FileInfo {
     fileName: string;
     downloader: (axios: AxiosInstance) => Promise<TypedFile>;
 }
 
-async function openFile(axios: AxiosInstance, props: Props) {
+export interface ViewFileProps extends FileInfo {
+    nodeOwner: string;
+}
+
+async function openFile(axios: AxiosInstance, props: ViewFileProps) {
     const file = await props.downloader(axios!);
     const url = window.URL.createObjectURL(new Blob([ file.data ]));
     const link:HTMLAnchorElement = document.createElement('a');
@@ -25,7 +29,7 @@ async function openFile(axios: AxiosInstance, props: Props) {
     link.click();
 }
 
-export default function ViewFileButton(props: Props) {
+export default function ViewFileButton(props: ViewFileProps) {
     const { axiosFactory } = useCommonContext();
     if (axiosFactory === undefined) {
         return null;
@@ -33,6 +37,30 @@ export default function ViewFileButton(props: Props) {
     return (
         <Button onClick={ () => openFile(axiosFactory(props.nodeOwner)!, props) } className="ViewFileButton">
             <Icon icon={{id: 'view'}} />
+        </Button>
+    )
+}
+
+export interface DownloadFilesProps {
+    nodeOwner: string;
+    files: FileInfo[];
+    children?: Children;
+}
+
+export function DownloadFilesButton(props: DownloadFilesProps) {
+    const { axiosFactory } = useCommonContext();
+    if (axiosFactory === undefined) {
+        return null;
+    }
+    const { nodeOwner } = props
+    const openFiles = async () => {
+        for (const file of props.files) {
+            await openFile(axiosFactory(props.nodeOwner), { nodeOwner, ...file })
+        }
+    }
+    return (
+        <Button onClick={ openFiles } className="DownloadFilesButton">
+            { props.children }
         </Button>
     )
 }
