@@ -11,13 +11,13 @@ import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
 import { addCollectionItem, getCollectionItem } from "../logion-chain/LogionLoc";
 import { useLogionChain } from "../logion-chain";
 import { UUID } from "../logion-chain/UUID";
-import { sha256HexFromString } from "../common/hash";
 import { useResponsiveContext } from "../common/Responsive";
 import { useLocContext } from "./LocContext";
 import ImportItemDetails, { Item } from "./ImportItemDetails";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 import './ImportItems.css';
+import { toItemId } from "./types";
 
 const fileReaderStream = require("filereader-stream");
 
@@ -48,7 +48,7 @@ export default function ImportItems(props: Props) {
             .on("data", (data: any) => {
                 if(Object.keys(data).length >= 2) {
                     const givenId = data['0'];
-                    const id = toHexString(givenId);
+                    const id = toItemId(givenId);
                     const displayId = id !== undefined ? id : givenId;
 
                     let error: string | undefined = undefined;
@@ -247,16 +247,6 @@ export default function ImportItems(props: Props) {
             </Dialog>
         </div>
     );
-}
-
-function toHexString(maybeHex: string): string | undefined {
-    if(maybeHex.startsWith("0x") && maybeHex.length === 66) {
-        return maybeHex;
-    } else if(maybeHex.startsWith("0x") && maybeHex.length !== 66) {
-        return undefined;
-    } else {
-        return `0x${sha256HexFromString(maybeHex)}`;
-    }
 }
 
 function getFirstItem(items: Item[]): number {
