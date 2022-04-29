@@ -39,6 +39,8 @@ export interface PathModel extends FormValues {
     publicItems: PublicItem[];
     privateItems: PrivateItem[];
     logoUrl: string;
+    itemId: string;
+    itemDescription: string;
 }
 
 export const DEFAULT_PATH_MODEL: PathModel = {
@@ -64,6 +66,8 @@ export const DEFAULT_PATH_MODEL: PathModel = {
     timestampText: "",
     requesterText: "",
     amount: "",
+    itemId: "",
+    itemDescription: "",
 }
 
 class ParamsBuilder {
@@ -100,6 +104,8 @@ export function toSearchString(pathModel: PathModel): string {
         .param("certificate_url", pathModel.certificateUrl)
         .param("requester", pathModel.requesterAddress)
         .param("logo", pathModel.logoUrl)
+        .param("item_id", pathModel.itemId)
+        .param("item_description", pathModel.itemDescription)
 
     for (const item of pathModel.publicItems) {
         builder
@@ -229,6 +235,8 @@ export function parseSearchString(searchString: string): PathModel {
             timestampText: parser.valueAsString('timestamp_text'),
             requesterText: parser.valueAsString('requester_text'),
             amount: parser.valueAsString('amount'),
+            itemId: parser.valueAsString('item_id'),
+            itemDescription: parser.valueAsString('item_description'),
         };
     } else {
         return DEFAULT_PATH_MODEL;

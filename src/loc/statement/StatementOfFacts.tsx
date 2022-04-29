@@ -12,7 +12,9 @@ export default function StatementOfFacts() {
     const [ pathModel, setPathModel ] = useState(DEFAULT_PATH_MODEL);
 
     useEffect(() => {
-        setPathModel(parseSearchString(location.search));
+        const pathModel = parseSearchString(location.search);
+        document.title = `logion - ${ pathModel.locId }`;
+        setPathModel(pathModel);
     }, [ location ]);
 
     useEffect(() => {

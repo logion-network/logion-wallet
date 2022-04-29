@@ -38,6 +38,7 @@ export default function CollectionLocItemChecker(props: Props) {
     const [ state, setState ] = useState<CheckResult>('NONE');
     const [ collectionSize, setCollectionSize ] = useState<number | undefined | null>(null);
     const [ itemId, setItemId ] = useState<string>("");
+    const [ item, setItem ] = useState<CollectionItem>();
     const [ managedCheck, setManagedCheck ] = useState<{itemId: string, active: boolean}>();
 
     useEffect(() => {
@@ -56,6 +57,7 @@ export default function CollectionLocItemChecker(props: Props) {
                 try {
                     const collectionItem = await getCollectionItem({ api, locId, itemId: actualId });
                     if (collectionItem) {
+                        setItem(collectionItem);
                         setState('POSITIVE');
                     } else {
                         setState('NEGATIVE');
@@ -124,8 +126,8 @@ export default function CollectionLocItemChecker(props: Props) {
                                 <Col className="buttons">
                                     <Button onClick={ checkData } disabled={ itemId ? false : true }><Icon icon={{id: "search"}} /> Check Item ID</Button>
                                     {
-                                        state === "POSITIVE" && isLegalOfficer(accounts.current.address) &&
-                                        <StatementOfFactsButton itemId={ toItemId(itemId) } />
+                                        state === "POSITIVE" && item !== undefined && isLegalOfficer(accounts.current.address) &&
+                                        <StatementOfFactsButton itemId={ toItemId(itemId) } itemDescription={ item.description } />
                                     }
                                 </Col>
                             </Row>
