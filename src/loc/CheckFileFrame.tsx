@@ -75,7 +75,7 @@ export default function CheckFileFrame(props: Props) {
                             onlyButton={ true }
                         />
                         {
-                            props.checkResult !== "NONE" &&
+                            props.checkResult !== "NONE" && hash !== null &&
                             <CheckFileResult
                                 type={ props.checkResult }
                                 hash={ hash!.hash }
