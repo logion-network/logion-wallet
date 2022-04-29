@@ -17,7 +17,7 @@ export default function StatementOfFactsTemplateEN(props: Props) {
                         <div>{ props.pathModel.email }</div>
                     </div>
                     <div className="polkadot-address">
-                        <div>Clé publique blockchain du Legal Officer:</div>
+                        <div>Logion Legal Officer public key:</div>
                         <div>{ props.pathModel.polkadotAddress }</div>
                     </div>
                 </div>
@@ -27,58 +27,58 @@ export default function StatementOfFactsTemplateEN(props: Props) {
             </div>
 
             <h1 className="main-title">
-                Procès verbal de constat - English Version
+                Statement of facts
             </h1>
 
             <div className="time">
                 { props.pathModel.timestampText }
             </div>
 
-            <h2>Demandeur</h2>
+            <h2>Requester</h2>
             <p>{ props.pathModel.requesterText }</p>
-            <p>Identifié par son ID : { props.pathModel.requesterAddress }</p>
+            <p>Identified by the following ID: { props.pathModel.requesterAddress }</p>
 
-            <p className="intro">Je, Soussigné, Me { props.pathModel.firstName } <span className="lastName">{ props.pathModel.lastName }</span>,
-                Huissier de Justice qualifié Commissaire de Justice qualifié et Logion Legal Officer - ID Logion { props.pathModel.polkadotAddress } - au sein de
-                la société { props.pathModel.company }, titulaire d’un office d’Huissier de Justice à la résidence de { props.pathModel.shortPostalAddress } ;</p>
+            <p className="intro">I hereby undersigned, Me { props.pathModel.firstName } <span className="lastName">{ props.pathModel.lastName }</span>,
+            Official Judicial Officer and Logion Legal Officer - ID { props.pathModel.polkadotAddress } - wihtin
+                company { props.pathModel.company }, in charge of a public Judicial Officer office located at the following address: { props.pathModel.shortPostalAddress } ;</p>
 
-            <p className="proceeds">Procède aux constatations suivantes&nbsp;:</p>
+            <p className="proceeds">certify that I observed  the following facts:</p>
 
-            <h2 className="facts-title">Constations</h2>
+            <h2 className="facts-title">Facts</h2>
 
-            <p>Les constatations ont été réalisées dans le respect strict du process qui a fait l’objet d’un Procès Verbal de Constat qui contient en outre l’Audit de Sécurité, le tout ayant été enregistré dans le dossier numérique (Legal Officer Case) portant l’ID suivant : { props.pathModel.containingLocId }</p>
+            <p>The following facts have been established by strictly following the process defined in the Statement of Facts recorded in the following Legal Officer Case under the following ID: { props.pathModel.containingLocId }</p>
 
-            <p>Afin de procéder aux constations, j’effectue les opérations suivantes:</p>
+            <p>In order to establish the following facts, I perform the following operations:</p>
             <ul>
-                <li>Je me rends sur l’adresse { props.pathModel.nodeAddress } et procède à mon identification.</li>
-                <li>Je me rends sur le dossier numérique (Legal Officer Case) objet de la demande de procès verbal de constat dont l’identifiant est: { props.pathModel.locId }</li>
+                <li>I access the URL { props.pathModel.nodeAddress } and authenticate myself.</li>
+                <li>I access the following Legal Officer Case from which a Statement of Facts is requested: { props.pathModel.locId }</li>
             </ul>
 
-            <p>Les éléments suivants sont enregistrés dans le dossier numérique (Legal Officer Case) { props.pathModel.locId }&nbsp;:</p>
+            <p>The following materials have been factually recorded within the Legal Officer Case { props.pathModel.locId }:</p>
 
-            <h3>1 - Données publiques</h3>
+            <h3>1 - Public data</h3>
 
             <div className="facts">
                 {
                     props.pathModel.publicItems.map(item =>
                         <div className="fact-container">
-                            <div>Description publique: { item.description }</div>
-                            <div>Contenu: { item.content }</div>
+                            <div>Public description: { item.description }</div>
+                            <div>Content: { item.content }</div>
                         </div>
                     )
                 }
             </div>
 
-            <h3 className="confidential-title">2 - Documents confidentiels</h3>
+            <h3 className="confidential-title">2 - Confidential documents</h3>
 
-            <p>Concernant les documents confidentiels, seules les empreintes numériques - réalisées selon la technique du HASH - ont été publiées sur la blockchain logion. Les fichiers associés aux empreintes numériques - ou  HASH SHA256 - listées sont les suivantes:</p>
+            <p>With regard to confidential documents, only the digital fingerprints - made using the HASH / SHA256 technique - have been published on the logion blockchain. Confidential document related files from which digital fingerprints (HASH-SHA256) have been made in this Legal Officer Case are the following:</p>
 
             <div className="facts">
                 {
                     props.pathModel.privateItems.map(item =>
                         <div className="fact-container">
-                            <div>Description publique: { item.publicDescription }</div>
-                            <div>Description privée: { item.privateDescription }</div>
+                            <div>Public description: { item.publicDescription }</div>
+                            <div>Private description: { item.privateDescription }</div>
                             <div>Hash: { item.hash }</div>
                         </div>
                     )
@@ -88,9 +88,9 @@ export default function StatementOfFactsTemplateEN(props: Props) {
             {
                 props.pathModel.itemId &&
                 <>
-                <h3 className="item-title">3 - Données d’une Collection (Collection item)</h3>
+                <h3 className="item-title">3 - Collection item</h3>
 
-                <p>Le dossier numérique mentionné - { props.pathModel.locId } - étant un dossier numérique de collection (Collection Legal Officer Case), les données suivantes ont été enregistrées par le requêteur lui même sur l’infrastructure logion dans le cadre du dossier numérique susmentionné:</p>
+                <p>As the Legal Officer Case mentioned in the present document - { props.pathModel.locId } - is a Collection Legal Officer Case, the following informations have been recorded as “Collection Item” by the requester him/herself on the logion infrastrcuture under the scope of the related Collection Legal Officer Case:</p>
 
                 <div className="facts">
                     <div className="fact-container">
@@ -101,22 +101,22 @@ export default function StatementOfFactsTemplateEN(props: Props) {
                 </>
             }
 
-            <p className="conclusion-first">Mes constatations terminées, je dresse le présent Procés Verbal de constat et l’enregistre dans le dossier numérique (Legal Officer Case) dont l’identifiant est : { props.pathModel.containingLocId }
-            et dont une copie est conservée au rang des minutes de l’étude.</p>
+            <p className="conclusion-first">As I concluded my observations, I create the present Statement of Facts and record it in the following
+            Legal Officer Case: { props.pathModel.containingLocId }, a copy of which is archived at my office location.</p>
 
-            <p>Adresse du certificat public en ligne du présent constat:<br/>
+            <p>Web address (URL) of the related State of Facts public certificate:<br/>
                 <a href={ props.pathModel.certificateUrl }>{ props.pathModel.certificateUrl }</a>
             </p>
 
-            <p>Le certificat public en ligne mentionné permet de vérifier qu’une copie numérique du présent procès verbal de constat est bien celle qui a fait l’objet de la requête telle que réalisée par le signataire. Cette vérification se faisant par la comparaison de l’empreinte numérique de la copie numérique à vérifier avec l’empreinte numérique du présent document.</p>
+            <p>This public certificate allows the verification of the authenticity of a digital copy of the present Statement of facts, resulting from the request made to the signatory of the present Statement of Facts. That verification will be done by a comparison of the digital fingerprint of the file that needs to be checked with the digital fingerprint of the present document, as recorded in the related Legal Officer Case.</p>
 
             <div className="footer">
                 <div>
-                    <h3>Prix</h3>
+                    <h3>Price</h3>
                     <pre>{ props.pathModel.amount }</pre>
                 </div>
                 <div className="signature-container">
-                    <h3>Signature électronique</h3>
+                    <h3>Electronic signature</h3>
                     <img className="sof-signature" src={ process.env.PUBLIC_URL + "/assets/sof_signature.svg" } alt="signature" />
                 </div>
             </div>
