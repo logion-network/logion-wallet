@@ -24,7 +24,7 @@
         width: 100%;
         margin-top: 2cm;
     }
-    
+
     .header > *:first-child {
         width: 70%;
     }
@@ -37,20 +37,20 @@
         text-align: center;
         margin-top: 1cm;
     }
-    
+
     .logo img {
         width: 2cm;
     }
-    
+
     .postal-address,
     .polkadot-address {
         text-align: center;
     }
-    
+
     .polkadot-address {
         margin-top: 5mm;
     }
-    
+
     .main-title {
         border: 0.5mm solid black;
         font-size: 15pt;
@@ -62,48 +62,48 @@
         margin-top: 1cm;
         margin-bottom: 1cm;
     }
-    
+
     h2 {
         font-weight: bold;
         font-size: 11pt;
         margin-top: 1cm;
         margin-bottom: 1cm;
     }
-    
+
     .intro,
     .proceeds {
         margin-top: 2cm;
     }
-    
+
     .fact-container {
         border-bottom: 0.5mm solid black;
         padding-top: 1cm;
         padding-bottom: 1cm;
     }
-    
+
     .fact-container:first-child {
         border-top: 0.5mm solid black;
     }
-    
+
     h3 {
         font-weight: bold;
         font-size: 11pt;
         margin-top: 1cm;
         margin-bottom: 1cm;
     }
-    
+
     .footer {
         display: flex;
         width: 100%;
         margin-top: 2cm;
     }
-    
+
     .footer > * {
         width: 50%;
         border: 0.5mm solid black;
         padding: 2mm 2mm;
     }
-    
+
     .footer > *:first-child {
         border-right: none;
     }
@@ -117,5 +117,9 @@
         position: absolute;
         bottom: -3cm;
         right: -1cm;
+    }
+
+    a {
+        word-break: break-all;
     }
 }
