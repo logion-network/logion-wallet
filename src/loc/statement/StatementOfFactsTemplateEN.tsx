@@ -16,14 +16,15 @@ export default function StatementOfFactsTemplateEN(props: Props) {
                         <div>{ props.pathModel.postalAddressLine4 }</div>
                         <div>{ props.pathModel.email }</div>
                     </div>
-                    <div className="polkadot-address">
-                        <div>Logion Legal Officer public key:</div>
-                        <div>{ props.pathModel.polkadotAddress }</div>
-                    </div>
                 </div>
                 <div className="logo">
                     <img src={ props.pathModel.logoUrl ? props.pathModel.logoUrl : process.env.PUBLIC_URL + "/logo_black.png" } alt="logo" />
                 </div>
+            </div>
+
+            <div className="polkadot-address">
+                <div>Logion Legal Officer public key:</div>
+                <div>{ props.pathModel.polkadotAddress }</div>
             </div>
 
             <h1 className="main-title">
@@ -108,7 +109,7 @@ export default function StatementOfFactsTemplateEN(props: Props) {
                 <a href={ props.pathModel.certificateUrl }>{ props.pathModel.certificateUrl }</a>
             </p>
 
-            <p>This public certificate allows the verification of the authenticity of a digital copy of the present Statement of facts, resulting from the request made to the signatory of the present Statement of Facts. That verification will be done by a comparison of the digital fingerprint of the file that needs to be checked with the digital fingerprint of the present document, as recorded in the related Legal Officer Case.</p>
+            <p>This public certificate allows the verification of the authenticity of a digital copy of the present Statement of facts, resulting from the request made to the signatory of the present Statement of Facts. That verification will be done by a comparison of the digital fingerprint of the file that needs to be checked with the digital fingerprint of the present document, as recorded in the related Legal Officer Case. In the event of any conflict between the verified files, the version recorded by the Logion Legal Officer shall prevail.</p>
 
             <div className="footer">
                 <div>
