@@ -16,14 +16,15 @@ export default function StatementOfFactsTemplateFR(props: Props) {
                         <div>{ props.pathModel.postalAddressLine4 }</div>
                         <div>{ props.pathModel.email }</div>
                     </div>
-                    <div className="polkadot-address">
-                        <div>Clé publique blockchain du Legal Officer:</div>
-                        <div>{ props.pathModel.polkadotAddress }</div>
-                    </div>
                 </div>
                 <div className="logo">
                     <img src={ props.pathModel.logoUrl ? props.pathModel.logoUrl : process.env.PUBLIC_URL + "/logo_black.png" } alt="logo" />
                 </div>
+            </div>
+
+            <div className="polkadot-address">
+                <div>Clé publique blockchain du Legal Officer:</div>
+                <div>{ props.pathModel.polkadotAddress }</div>
             </div>
 
             <h1 className="main-title">
@@ -108,7 +109,7 @@ export default function StatementOfFactsTemplateFR(props: Props) {
                 <a href={ props.pathModel.certificateUrl }>{ props.pathModel.certificateUrl }</a>
             </p>
 
-            <p>Le certificat public en ligne mentionné permet de vérifier qu’une copie numérique du présent procès verbal de constat est bien celle qui a fait l’objet de la requête telle que réalisée par le signataire. Cette vérification se faisant par la comparaison de l’empreinte numérique de la copie numérique à vérifier avec l’empreinte numérique du présent document.</p>
+            <p>Le certificat public en ligne mentionné permet de vérifier qu’une copie numérique du présent procès-verbal de constat est bien celle qui a fait l’objet de la requête telle que réalisée par le signataire. Cette vérification se faisant par la comparaison de l’empreinte numérique (techniquement dénommée HASH) de la copie numérique à vérifier avec l’empreinte numérique du présent document tel que enregistré dans le dossier numérique (Legal Officer Case) correspondant. En cas de litige seul l’exemplaire conservé par le Logion Legal Officer fera foi.</p>
 
             <div className="footer">
                 <div>

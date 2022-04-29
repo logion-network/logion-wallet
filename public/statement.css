@@ -26,17 +26,13 @@
         margin-top: 2cm;
     }
 
-    .header > *:first-child {
-        width: 70%;
-    }
-
-    .header > *:nth-child(2) {
-        width: 70%;
+    .header > * {
+        width: 50%;
     }
 
     .logo {
         text-align: center;
-        margin-top: 1cm;
+        margin-top: 3mm;
     }
 
     .logo img {
