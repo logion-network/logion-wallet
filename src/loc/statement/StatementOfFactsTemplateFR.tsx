@@ -36,7 +36,7 @@ export default function StatementOfFactsTemplateFR(props: Props) {
 
             <h2>Demandeur</h2>
             <p>{ props.pathModel.requesterText }</p>
-            <p>Identifié par son ID Logion : { props.pathModel.requesterAddress }</p>
+            <p>Identifié par son ID : { props.pathModel.requesterAddress }</p>
 
             <p className="intro">Je, Soussigné, Me { props.pathModel.firstName } <span className="lastName">{ props.pathModel.lastName }</span>,
                 Huissier de Justice qualifié Commissaire de Justice qualifié et Logion Legal Officer - ID Logion { props.pathModel.polkadotAddress } - au sein de
@@ -85,6 +85,22 @@ export default function StatementOfFactsTemplateFR(props: Props) {
                 }
             </div>
 
+            {
+                props.pathModel.itemId &&
+                <>
+                <h3 className="item-title">3 - Données d’une Collection (Collection item)</h3>
+
+                <p>Le dossier numérique mentionné - { props.pathModel.locId } - étant un dossier numérique de collection (Collection Legal Officer Case), les données suivantes ont été enregistrées par le requêteur lui même sur l’infrastructure logion dans le cadre du dossier numérique susmentionné:</p>
+
+                <div className="facts">
+                    <div className="fact-container">
+                        <div>Collection item ID: { props.pathModel.itemId }</div>
+                        <div>Description: { props.pathModel.itemDescription }</div>
+                    </div>
+                </div>
+                </>
+            }
+
             <p className="conclusion-first">Mes constatations terminées, je dresse le présent Procés Verbal de constat et l’enregistre dans le dossier numérique (Legal Officer Case) dont l’identifiant est : { props.pathModel.containingLocId }
             et dont une copie est conservée au rang des minutes de l’étude.</p>
 
@@ -96,11 +112,12 @@ export default function StatementOfFactsTemplateFR(props: Props) {
 
             <div className="footer">
                 <div>
+                    <h3>Prix</h3>
                     <pre>{ props.pathModel.amount }</pre>
                 </div>
                 <div className="signature-container">
+                    <h3>Signature électronique</h3>
                     <img className="sof-signature" src={ process.env.PUBLIC_URL + "/assets/sof_signature.svg" } alt="signature" />
-                    SIGNATURE ÉLECTRONIQUE avec la carte de l’Huissier de Justice
                 </div>
             </div>
         </>

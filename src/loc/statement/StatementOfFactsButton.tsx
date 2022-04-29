@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { Dropdown } from "react-bootstrap";
 import { useCommonContext } from "../../common/CommonContext";
 import { useDirectoryContext } from "../../directory/DirectoryContext";
@@ -19,18 +19,20 @@ import { useLogionChain } from "../../logion-chain";
 
 type Status = 'IDLE' | 'INPUT' | 'READY'
 
-export default function StatementOfFactsButton(props: { itemId?: string }) {
+export default function StatementOfFactsButton(props: { itemId?: string, itemDescription?: string }) {
     const { accounts } = useCommonContext();
     const { ready, getOfficer } = useDirectoryContext();
     const { loc, locId, locRequest } = useLocContext();
     const [ pathModel, setPathModel ] = useState<PathModel>(DEFAULT_PATH_MODEL);
     const [ itemId, setItemId ] = useState<string>();
+    const [ itemDescription, setItemDescription ] = useState<string>();
     const [ status, setStatus ] = useState<Status>('IDLE')
     const [ language, setLanguage ] = useState<Language | null>(null)
     const { control, handleSubmit, formState: { errors }, reset, setError } = useForm<FormValues>();
     const { api } = useLogionChain();
     type ContainingLoc = (LegalOfficerCase & { id: UUID })
     const [ containingLoc, setContainingLoc ] = useState<ContainingLoc | null | undefined>(null)
+
     const submit = useCallback(async (formValues: FormValues) => {
         if (api) {
             const containingLocId = UUID.fromAnyString(formValues.containingLocId);
@@ -119,14 +121,23 @@ export default function StatementOfFactsButton(props: { itemId?: string }) {
     }, [ loc, locId, locRequest, pathModel, setPathModel, itemId ]);
 
     useEffect(() => {
-        if(props.itemId !== itemId) {
+        if(props.itemId !== itemId || props.itemDescription !== itemDescription) {
             setItemId(props.itemId);
+            setItemDescription(props.itemDescription);
+            console.log({
+                ...pathModel,
+                itemId: props.itemId || "",
+                itemDescription: props.itemDescription || "",
+                certificateUrl: certificateUrl(locId, props.itemId),
+            })
             setPathModel({
                 ...pathModel,
+                itemId: props.itemId || "",
+                itemDescription: props.itemDescription || "",
                 certificateUrl: certificateUrl(locId, props.itemId),
             });
         }
-    }, [ props.itemId, itemId, setItemId, pathModel, setPathModel, locId ]);
+    }, [ props, itemId, itemDescription, setItemId, setItemDescription, pathModel, setPathModel, locId ]);
 
     const cancelCallback = useCallback(() => {
         setStatus('IDLE')

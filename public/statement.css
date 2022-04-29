@@ -8,13 +8,14 @@
 }
 
 @media print {
-    html, body {
+    html, body, pre {
         font-family: Arial, Helvetica, sans-serif;
         font-size: 11pt;
     }
 
     .facts-title,
     .confidential-title,
+    .item-title,
     .conclusion-first {
         break-before: page;
     }
@@ -90,6 +91,7 @@
         font-size: 11pt;
         margin-top: 1cm;
         margin-bottom: 1cm;
+        padding-bottom: 5mm;
     }
 
     .footer {
@@ -100,23 +102,34 @@
 
     .footer > * {
         width: 50%;
-        border: 0.5mm solid black;
-        padding: 2mm 2mm;
     }
 
     .footer > *:first-child {
-        border-right: none;
+        padding-right: 5mm;
+    }
+
+    .footer > *:first-child {
+        padding-left: 5mm;
+    }
+
+    .footer h3 {
+        text-transform: uppercase;
+        margin-top: 0;
+        margin-bottom: 5mm;
+        border-bottom: 0.5mm solid black;
     }
 
     .signature-container {
-        position: relative;
+        text-align: right;
     }
 
     .sof-signature {
+        margin-top: 1cm;
         height: 4cm;
-        position: absolute;
-        bottom: -3cm;
-        right: -1cm;
+    }
+
+    .footer .signature-container h3 {
+        text-align: left;
     }
 
     a {
