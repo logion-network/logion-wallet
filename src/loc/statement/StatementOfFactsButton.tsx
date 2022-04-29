@@ -13,7 +13,6 @@ import Dialog from "../../common/Dialog";
 import StatementOfFactsForm from "./StatementOfFactsForm";
 import { useForm } from "react-hook-form";
 import StatementOfFactsSummary from "./StatementOfFactsSummary";
-import { useNavigate } from "react-router-dom";
 import { getLegalOfficerCase } from "../../logion-chain/LogionLoc";
 import { LegalOfficerCase } from "../../logion-chain/Types";
 import { useLogionChain } from "../../logion-chain";
@@ -28,33 +27,41 @@ export default function StatementOfFactsButton(props: { itemId?: string }) {
     const [ itemId, setItemId ] = useState<string>();
     const [ status, setStatus ] = useState<Status>('IDLE')
     const [ language, setLanguage ] = useState<Language | null>(null)
-    const { control, handleSubmit, reset } = useForm<FormValues>();
+    const { control, handleSubmit, formState: { errors }, reset, setError } = useForm<FormValues>();
     const { api } = useLogionChain();
     type ContainingLoc = (LegalOfficerCase & { id: UUID })
     const [ containingLoc, setContainingLoc ] = useState<ContainingLoc | null | undefined>(null)
     const submit = useCallback(async (formValues: FormValues) => {
         if (api) {
             const containingLocId = UUID.fromAnyString(formValues.containingLocId);
-            if (containingLocId) {
-                const loc = await getLegalOfficerCase({ locId: containingLocId, api })
-                if (loc) {
-                    setContainingLoc({
-                        id: containingLocId,
-                        ...loc
-                    })
-                    setPathModel({
-                        ...pathModel,
-                        ...formValues
-                    })
-                    setStatus('READY')
-                } else {
-                    setContainingLoc(undefined)
-                    // TODO raise error to form
-                }
+            if (!containingLocId) {
+                setError("containingLocId", { type: "value", message: "Invalid LOC ID" })
+                return
+            }
+            if (containingLocId.toString() === locId.toString()) {
+                setError("containingLocId", { type: "value", message: "Choose a different LOC to upload Statement of Facts" })
+                return
+            }
+            const loc = await getLegalOfficerCase({ locId: containingLocId, api })
+            if (!loc) {
+                setError("containingLocId", { type: "value", message: "LOC not found on chain" })
+            } else if (loc.closed) {
+                setError('containingLocId', { type: "value", message: "LOC must be open" })
+            } else if (loc.voidInfo) {
+                setError('containingLocId', { type: "value", message: "LOC must not be void" })
+            } else {
+                setContainingLoc({
+                    id: containingLocId,
+                    ...loc
+                })
+                setPathModel({
+                    ...pathModel,
+                    ...formValues
+                })
+                setStatus('READY')
             }
         }
-    }, [ api, pathModel, setPathModel, setContainingLoc ])
-    const navigate = useNavigate();
+    }, [ api, pathModel, setPathModel, setContainingLoc, setError, locId ])
 
     const dropDownItem = (language: Language) => {
         return (
@@ -128,7 +135,7 @@ export default function StatementOfFactsButton(props: { itemId?: string }) {
 
     return (
         <>
-            <Dropdown>
+            <Dropdown className="StatementOfFactsButtonDropdownItem">
                 <Dropdown.Toggle className="Button" id="StatementOfFacts-dropdown-toggle">Statement of
                     facts</Dropdown.Toggle>
                 <Dropdown.Menu>
@@ -156,7 +163,12 @@ export default function StatementOfFactsButton(props: { itemId?: string }) {
                 ] }
                 onSubmit={ handleSubmit(submit) }
             >
-                <StatementOfFactsForm type={ loc!.locType } control={ control } />
+                <StatementOfFactsForm
+                    type={ loc!.locType }
+                    control={ control }
+                    errors={ errors }
+                    language={ language || 'en' }
+                />
             </Dialog>
 
             <Dialog
@@ -168,12 +180,6 @@ export default function StatementOfFactsButton(props: { itemId?: string }) {
                         callback: cancelCallback,
                         buttonText: 'Cancel',
                         buttonVariant: 'secondary',
-                    },
-                    {
-                        id: "submit",
-                        callback: () => navigate(locDetailsPath(containingLoc!.id, containingLoc!.locType)),
-                        buttonText: 'Go to related LOC',
-                        buttonVariant: 'primary',
                     }
                 ] }
             >
@@ -182,6 +188,7 @@ export default function StatementOfFactsButton(props: { itemId?: string }) {
                         ...pathModel,
                         language: language || 'en'
                     }) }` }
+                    relatedLocPath={ containingLoc ? locDetailsPath(containingLoc!.id, containingLoc!.locType) : "" }
                     files={ locRequest?.files || [] }
                     locId={ locId }
                     nodeOwner={ loc!.owner }
