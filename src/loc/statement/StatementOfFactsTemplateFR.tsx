@@ -44,11 +44,11 @@ export default function StatementOfFactsTemplateFR(props: Props) {
 
             <p className="proceeds">Procède aux constatations suivantes&nbsp;:</p>
 
-            <h2 className="facts-title">Constations</h2>
+            <h2 className="facts-title">Constatations</h2>
 
             <p>Les constatations ont été réalisées dans le respect strict du process qui a fait l’objet d’un Procès Verbal de Constat qui contient en outre l’Audit de Sécurité, le tout ayant été enregistré dans le dossier numérique (Legal Officer Case) portant l’ID suivant : { props.pathModel.containingLocId }</p>
 
-            <p>Afin de procéder aux constations, j’effectue les opérations suivantes:</p>
+            <p>Afin de procéder aux constatations, j’effectue les opérations suivantes:</p>
             <ul>
                 <li>Je me rends sur l’adresse { props.pathModel.nodeAddress } et procède à mon identification.</li>
                 <li>Je me rends sur le dossier numérique (Legal Officer Case) objet de la demande de procès verbal de constat dont l’identifiant est: { props.pathModel.locId }</li>

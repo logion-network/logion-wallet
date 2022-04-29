@@ -89,7 +89,7 @@ export default function StatementOfFactsForm(props: Props) {
                         render={ ({ field }) => (
                             <Form.Control
                                 as="textarea"
-                                placeholder="e.g. SARL TRUMP, immatriculé au RCS de PARIS sous le numéro siren Instagram, dont le siège social est situé rue de la Liberté 75001 PARIS agissant poursuites et diligences de son représentant légal domicilié en cette qualité audit siège."
+                                placeholder="e.g. SARL YYYY, immatriculé au RCS de PARIS sous le numéro siren 123456, dont le siège social est situé rue de la Liberté 75001 PARIS agissant poursuites et diligences de son représentant légal domicilié en cette qualité audit siège."
                                 aria-describedby="requesterText"
                                 style={ { height: '80px' } }
                                 { ...field }
