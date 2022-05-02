@@ -102,8 +102,9 @@ export default function StatementOfFactsTemplateEN(props: Props) {
                 </>
             }
 
-            <p className="conclusion-first">As I concluded my observations, I create the present Statement of Facts and record it in the following
-            Legal Officer Case: { props.pathModel.containingLocId }, a copy of which is archived at my office location.</p>
+            <p className="conclusion-first">As I concluded my observations, I create the present Statement of Facts and
+                record it in the following Legal Officer Case: { props.pathModel.containingLocId } , a copy of which is
+                archived at my office location.</p>
 
             <p>Web address (URL) of the related State of Facts public certificate:<br/>
                 <a href={ props.pathModel.certificateUrl }>{ props.pathModel.certificateUrl }</a>
