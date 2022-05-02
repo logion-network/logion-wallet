@@ -39,12 +39,12 @@ export default function StatementOfFactsSummary(props: Props) {
             <div className="Step1">
                 <h4>Step 1 :</h4>
                 <p>Your statement of Facts is ready, you can preview it by clicking on the related icon, hereafter.</p>
-                <Button slim>
-                    <NewTabForward path={ props.previewPath }>
+                <NewTabForward path={ props.previewPath }>
+                    <Button slim>
                         <Icon icon={ { id: 'preview' } } />
                         Statement of Facts Preview
-                    </NewTabForward>
-                </Button>
+                    </Button>
+                </NewTabForward>
             </div>
             <div className="Step2">
                 <h4>Step 2 :</h4>
@@ -53,17 +53,15 @@ export default function StatementOfFactsSummary(props: Props) {
                         LOC: </strong>
                     You can access the related LOC by clicking on the link, hereafter. Do not forget to upload the
                     <strong> signed version of your Statement of Facts</strong> before closing the related LOC. DO NOT
-                    put
-                    the signed version of this Statement of Facts in another LOC, otherwise, the LOC URL mentioned in
-                    the
-                    Statement of Facts will not be valid.
+                    put the signed version of this Statement of Facts in another LOC, otherwise, the LOC URL mentioned
+                    in the Statement of Facts will not be valid.
                 </p>
-                <Button>
-                    <NewTabForward path={ props.relatedLocPath }>
+                <NewTabForward path={ props.relatedLocPath }>
+                    <Button>
                         <Icon icon={ { id: 'loc' } } />
                         Go to related LOC
-                    </NewTabForward>
-                </Button>
+                    </Button>
+                </NewTabForward>
             </div>
         </div>
     )
