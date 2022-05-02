@@ -100,8 +100,7 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
     }, [ ready, accounts, getOfficer, pathModel, setPathModel ]);
 
     useEffect(() => {
-        if ((loc?.requesterAddress !== pathModel.requester && loc?.requesterLocId?.toDecimalString() !== pathModel.requester)
-            || locId.toDecimalString() !== pathModel.locId) {
+        if (locId.toDecimalString() !== pathModel.locId) {
             const requester = loc?.requesterAddress ? loc.requesterAddress : loc?.requesterLocId?.toDecimalString() || ""
             setPathModel({
                 ...pathModel,
