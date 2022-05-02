@@ -100,12 +100,13 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
     }, [ ready, accounts, getOfficer, pathModel, setPathModel ]);
 
     useEffect(() => {
-        if(loc?.requesterAddress !== pathModel.requesterAddress
-                || locId.toDecimalString() !== pathModel.locId) {
+        if ((loc?.requesterAddress !== pathModel.requester && loc?.requesterLocId?.toDecimalString() !== pathModel.requester)
+            || locId.toDecimalString() !== pathModel.locId) {
+            const requester = loc?.requesterAddress ? loc.requesterAddress : loc?.requesterLocId?.toDecimalString() || ""
             setPathModel({
                 ...pathModel,
                 locId: locId.toDecimalString(),
-                requesterAddress: loc?.requesterAddress || "",
+                requester,
                 certificateUrl: certificateUrl(locId, itemId),
                 publicItems: locRequest!.metadata.map(item => ({
                     description: item.name,
@@ -200,7 +201,6 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                         language: language || 'en'
                     }) }` }
                     relatedLocPath={ containingLoc ? locDetailsPath(containingLoc!.id, containingLoc!.locType) : "" }
-                    files={ locRequest?.files || [] }
                     locId={ locId }
                     nodeOwner={ loc!.owner }
                 />

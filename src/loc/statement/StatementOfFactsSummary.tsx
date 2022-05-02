@@ -1,7 +1,6 @@
 import React from "react";
 import Button from "../../common/Button";
 import Icon from "../../common/Icon";
-import { LocFile } from "../../common/types/ModelTypes";
 import { UUID } from "../../logion-chain/UUID";
 import './StatementOfFactsSummary.css';
 import { Children } from "../../common/types/Helpers";
@@ -11,7 +10,6 @@ export interface Props {
     nodeOwner: string,
     previewPath: string;
     relatedLocPath: string;
-    files: LocFile[];
 }
 
 export default function StatementOfFactsSummary(props: Props) {

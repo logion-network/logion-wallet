@@ -37,7 +37,7 @@ export default function StatementOfFactsTemplateEN(props: Props) {
 
             <h2>Requester</h2>
             <p>{ props.pathModel.requesterText }</p>
-            <p>Identified by the following ID: { props.pathModel.requesterAddress }</p>
+            <p>Identified by the following ID: { props.pathModel.requester }</p>
 
             <p className="intro">I hereby undersigned, Me { props.pathModel.firstName } <span className="lastName">{ props.pathModel.lastName }</span>,
             Official Judicial Officer and Logion Legal Officer - ID { props.pathModel.polkadotAddress } - wihtin
