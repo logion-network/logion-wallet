@@ -36,7 +36,10 @@
     }
 
     .logo img {
-        width: 2cm;
+        height: auto;
+        max-height: 2cm;
+        width: auto;
+        max-width: 6cm;
     }
 
     .postal-address,
