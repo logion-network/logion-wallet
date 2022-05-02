@@ -4,7 +4,7 @@ import { useCommonContext } from "../../common/CommonContext";
 import { useDirectoryContext } from "../../directory/DirectoryContext";
 import { STATEMENT_OF_FACTS_PATH, locDetailsPath } from "../../legal-officer/LegalOfficerPaths";
 import { UUID } from "../../logion-chain/UUID";
-import { fullCertificateUrl, fullCollectionItemCertificate } from "../../PublicPaths";
+import { fullCertificateUrl } from "../../PublicPaths";
 import { useLocContext } from "../LocContext";
 import { DEFAULT_PATH_MODEL, PathModel, toSearchString, FormValues, Language } from "./PathModel";
 
@@ -100,14 +100,13 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
     }, [ ready, accounts, getOfficer, pathModel, setPathModel ]);
 
     useEffect(() => {
-        if ((loc?.requesterAddress !== pathModel.requester && loc?.requesterLocId?.toDecimalString() !== pathModel.requester)
-            || locId.toDecimalString() !== pathModel.locId) {
+        if (locId.toDecimalString() !== pathModel.locId && containingLoc) {
             const requester = loc?.requesterAddress ? loc.requesterAddress : loc?.requesterLocId?.toDecimalString() || ""
             setPathModel({
                 ...pathModel,
                 locId: locId.toDecimalString(),
                 requester,
-                certificateUrl: certificateUrl(locId, itemId),
+                certificateUrl: fullCertificateUrl(containingLoc.id),
                 publicItems: locRequest!.metadata.map(item => ({
                     description: item.name,
                     content: item.value,
@@ -119,26 +118,20 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                 })),
             });
         }
-    }, [ loc, locId, locRequest, pathModel, setPathModel, itemId ]);
+    }, [ loc, locId, locRequest, pathModel, setPathModel, itemId, containingLoc ]);
 
     useEffect(() => {
-        if(props.itemId !== itemId || props.itemDescription !== itemDescription) {
+        if((props.itemId !== itemId || props.itemDescription !== itemDescription) && containingLoc) {
             setItemId(props.itemId);
             setItemDescription(props.itemDescription);
-            console.log({
-                ...pathModel,
-                itemId: props.itemId || "",
-                itemDescription: props.itemDescription || "",
-                certificateUrl: certificateUrl(locId, props.itemId),
-            })
             setPathModel({
                 ...pathModel,
                 itemId: props.itemId || "",
                 itemDescription: props.itemDescription || "",
-                certificateUrl: certificateUrl(locId, props.itemId),
+                certificateUrl: fullCertificateUrl(containingLoc.id),
             });
         }
-    }, [ props, itemId, itemDescription, setItemId, setItemDescription, pathModel, setPathModel, locId ]);
+    }, [ props, itemId, itemDescription, setItemId, setItemDescription, pathModel, setPathModel, locId, containingLoc ]);
 
     const cancelCallback = useCallback(() => {
         setStatus('IDLE')
@@ -207,12 +200,4 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
             </Dialog>
         </>
     );
-}
-
-function certificateUrl(locId: UUID, itemId?: string): string {
-    if(itemId) {
-        return fullCollectionItemCertificate(locId, itemId);
-    } else {
-        return fullCertificateUrl(locId);
-    }
 }

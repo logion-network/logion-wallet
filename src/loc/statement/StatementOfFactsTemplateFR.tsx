@@ -102,8 +102,9 @@ export default function StatementOfFactsTemplateFR(props: Props) {
                 </>
             }
 
-            <p className="conclusion-first">Mes constatations terminées, je dresse le présent Procés Verbal de constat et l’enregistre dans le dossier numérique (Legal Officer Case) dont l’identifiant est : { props.pathModel.containingLocId }
-            et dont une copie est conservée au rang des minutes de l’étude.</p>
+            <p className="conclusion-first">Mes constatations terminées, je dresse le présent Procés Verbal de constat
+                et l’enregistre dans le dossier numérique (Legal Officer Case) dont l’identifiant est :
+                { props.pathModel.containingLocId } et dont une copie est conservée au rang des minutes de l’étude.</p>
 
             <p>Adresse du certificat public en ligne du présent constat:<br/>
                 <a href={ props.pathModel.certificateUrl }>{ props.pathModel.certificateUrl }</a>
