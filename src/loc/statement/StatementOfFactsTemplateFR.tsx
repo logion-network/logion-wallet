@@ -37,7 +37,7 @@ export default function StatementOfFactsTemplateFR(props: Props) {
 
             <h2>Demandeur</h2>
             <p>{ props.pathModel.requesterText }</p>
-            <p>Identifié par son ID : { props.pathModel.requesterAddress }</p>
+            <p>Identifié par son ID : { props.pathModel.requester }</p>
 
             <p className="intro">Je, Soussigné, Me { props.pathModel.firstName } <span className="lastName">{ props.pathModel.lastName }</span>,
                 Huissier de Justice qualifié Commissaire de Justice qualifié et Logion Legal Officer - ID Logion { props.pathModel.polkadotAddress } - au sein de
@@ -102,8 +102,10 @@ export default function StatementOfFactsTemplateFR(props: Props) {
                 </>
             }
 
-            <p className="conclusion-first">Mes constatations terminées, je dresse le présent Procés Verbal de constat et l’enregistre dans le dossier numérique (Legal Officer Case) dont l’identifiant est : { props.pathModel.containingLocId }
-            et dont une copie est conservée au rang des minutes de l’étude.</p>
+            <p className="conclusion-first">Mes constatations terminées, je dresse le présent Procés Verbal de constat
+                et l’enregistre dans le dossier numérique (Legal Officer Case) dont l’identifiant
+                est: { props.pathModel.containingLocId } et dont une copie est conservée au rang des minutes de
+                l’étude.</p>
 
             <p>Adresse du certificat public en ligne du présent constat:<br/>
                 <a href={ props.pathModel.certificateUrl }>{ props.pathModel.certificateUrl }</a>

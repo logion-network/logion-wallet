@@ -47,7 +47,7 @@ export interface LocContext {
     addLink: ((otherLoc: LocRequest, nature: string) => void) | null
     publishLink: ((locItem: LocItem) => SignAndSubmit) | null
     publishMetadata: ((locItem: LocItem) => SignAndSubmit) | null
-    addFile: ((name: string, file: File, nature: string) => void) | null
+    addFile: ((name: string, file: File, nature: string) => Promise<void>) | null
     publishFile: ((locItem: LocItem) => SignAndSubmit) | null
     close: (() => void) | null
     closeExtrinsic: (() => SignAndSubmit) | null
@@ -123,7 +123,7 @@ interface Action {
     addLink?: (otherLoc: LocRequest, nature: string) => void,
     publishLink?: (locItem: LocItem) => SignAndSubmit,
     publishMetadata?: (locItem: LocItem) => SignAndSubmit,
-    addFile?: (name: string, file: File, nature: string) => void
+    addFile?: (name: string, file: File, nature: string) => Promise<void>,
     publishFile?: (locItem: LocItem) => SignAndSubmit,
     close?: () => void,
     closeExtrinsic?: () => SignAndSubmit,

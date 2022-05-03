@@ -37,7 +37,7 @@ export default function StatementOfFactsTemplateEN(props: Props) {
 
             <h2>Requester</h2>
             <p>{ props.pathModel.requesterText }</p>
-            <p>Identified by the following ID: { props.pathModel.requesterAddress }</p>
+            <p>Identified by the following ID: { props.pathModel.requester }</p>
 
             <p className="intro">I hereby undersigned, Me { props.pathModel.firstName } <span className="lastName">{ props.pathModel.lastName }</span>,
             Official Judicial Officer and Logion Legal Officer - ID { props.pathModel.polkadotAddress } - wihtin
@@ -102,8 +102,9 @@ export default function StatementOfFactsTemplateEN(props: Props) {
                 </>
             }
 
-            <p className="conclusion-first">As I concluded my observations, I create the present Statement of Facts and record it in the following
-            Legal Officer Case: { props.pathModel.containingLocId }, a copy of which is archived at my office location.</p>
+            <p className="conclusion-first">As I concluded my observations, I create the present Statement of Facts and
+                record it in the following Legal Officer Case: { props.pathModel.containingLocId } , a copy of which is
+                archived at my office location.</p>
 
             <p>Web address (URL) of the related State of Facts public certificate:<br/>
                 <a href={ props.pathModel.certificateUrl }>{ props.pathModel.certificateUrl }</a>

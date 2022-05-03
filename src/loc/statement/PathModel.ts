@@ -32,7 +32,7 @@ export interface PathModel extends FormValues {
     lastName: string;
     company: string;
     shortPostalAddress: string;
-    requesterAddress: string;
+    requester: string;
     nodeAddress: string;
     locId: string;
     certificateUrl: string;
@@ -55,7 +55,7 @@ export const DEFAULT_PATH_MODEL: PathModel = {
     lastName: "",
     company: "",
     shortPostalAddress: "",
-    requesterAddress: "",
+    requester: "",
     nodeAddress: "",
     locId: "",
     certificateUrl: "",
@@ -102,7 +102,7 @@ export function toSearchString(pathModel: PathModel): string {
         .param("node_address", pathModel.nodeAddress)
         .param("loc_id", pathModel.locId)
         .param("certificate_url", pathModel.certificateUrl)
-        .param("requester", pathModel.requesterAddress)
+        .param("requester", pathModel.requester)
         .param("logo", pathModel.logoUrl)
         .param("item_id", pathModel.itemId)
         .param("item_description", pathModel.itemDescription)
@@ -224,7 +224,7 @@ export function parseSearchString(searchString: string): PathModel {
             lastName: parser.valueAsString('last_name'),
             company: parser.valueAsString('company'),
             shortPostalAddress: parser.valueAsString('short_postal_address'),
-            requesterAddress: parser.valueAsString('requester'),
+            requester: parser.valueAsString('requester'),
             nodeAddress: parser.valueAsString('node_address'),
             locId: parser.valueAsString('loc_id'),
             certificateUrl: parser.valueAsString('certificate_url'),

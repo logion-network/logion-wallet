@@ -8,28 +8,40 @@ import { sha256Hex } from "../common/hash";
 import { useLocContext } from "./LocContext";
 import { LocItem } from "./types";
 import Icon from "../common/Icon";
+import { Spinner } from "react-bootstrap";
+import { Row } from "../common/Grid";
+
+type Status = 'Idle' | 'UploadDialog' | 'Uploading';
 
 export default function LocPrivateFileButton() {
 
     const { colorTheme } = useCommonContext();
-    const [ visible, setVisible ] = useState(false);
+    const [ status, setStatus ] = useState<Status>('Idle');
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>();
     const [ file, setFile ] = useState<File | null>(null);
     const { addFile, locItems } = useLocContext();
     const [ existingItem, setExistingItem ] = useState<LocItem | null>(null);
     const [ duplicateHash, setDuplicateHash ] = useState<string | null>(null);
+    const [ uploadError, setUploadError ] =  useState<string>(" ")
 
     const submit = useCallback(async (formValues: FormValues) => {
+        setUploadError("")
         if (file) {
             const hash = "0x" + await sha256Hex(file);
             const existingItem = locItems.find(item => item.type === "Document" && item.value === hash);
             if(existingItem !== undefined) {
-                setVisible(false);
+                setStatus('Idle');
                 setExistingItem(existingItem);
                 setDuplicateHash(hash);
             } else {
-                addFile!(formValues.fileName, file, formValues.nature);
-                setVisible(false);
+                setStatus('Uploading')
+                try {
+                    await addFile!(formValues.fileName, file, formValues.nature);
+                    setStatus('Idle');
+                } catch (error) {
+                    setStatus('UploadDialog')
+                    setUploadError("" + error)
+                }
             }
         }
     }, [ file, addFile, locItems, setExistingItem ])
@@ -38,17 +50,19 @@ export default function LocPrivateFileButton() {
         <>
             <Button onClick={ () => {
                 reset()
-                setVisible(true)
+                setFile(null)
+                setUploadError("")
+                setStatus('UploadDialog')
             } }>
                 <Icon icon={{id: "add"}} height="19px" /><span className="text">Add a confidential document</span>
             </Button>
             <Dialog
-                show={ visible }
+                show={ status !== 'Idle' }
                 size={ "lg" }
                 actions={ [
                     {
                         id: "cancel",
-                        callback: () => setVisible(false),
+                        callback: () => setStatus('Idle'),
                         buttonText: 'Cancel',
                         buttonVariant: 'secondary',
                     },
@@ -57,6 +71,7 @@ export default function LocPrivateFileButton() {
                         buttonText: 'Submit',
                         buttonVariant: 'primary',
                         type: 'submit',
+                        disabled: status === 'Uploading'
                     }
                 ] }
                 onSubmit={ handleSubmit(submit) }
@@ -67,6 +82,15 @@ export default function LocPrivateFileButton() {
                     colors={ colorTheme.dialog }
                     onFileSelected={ setFile }
                 />
+                { status === 'Uploading' &&
+                    <Row>
+                        <Spinner animation="border" size="sm" />
+                        &nbsp;Uploading and encrypting
+                    </Row>
+                }
+                { status !== 'Uploading' &&
+                    <Row>{ uploadError }</Row>
+                }
             </Dialog>
             <Dialog
                 show={ duplicateHash !== null }

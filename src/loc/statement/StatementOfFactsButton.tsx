@@ -7,7 +7,7 @@ import { getLegalOfficerCase } from "logion-api/dist/LogionLoc";
 import { useCommonContext } from "../../common/CommonContext";
 import { useDirectoryContext } from "../../directory/DirectoryContext";
 import { STATEMENT_OF_FACTS_PATH, locDetailsPath } from "../../legal-officer/LegalOfficerPaths";
-import { fullCertificateUrl, fullCollectionItemCertificate } from "../../PublicPaths";
+import { fullCertificateUrl } from "../../PublicPaths";
 import { useLocContext } from "../LocContext";
 import { DEFAULT_PATH_MODEL, PathModel, toSearchString, FormValues, Language } from "./PathModel";
 
@@ -101,13 +101,13 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
     }, [ ready, accounts, getOfficer, pathModel, setPathModel ]);
 
     useEffect(() => {
-        if(loc?.requesterAddress !== pathModel.requesterAddress
-                || locId.toDecimalString() !== pathModel.locId) {
+        if (locId.toDecimalString() !== pathModel.locId && containingLoc) {
+            const requester = loc?.requesterAddress ? loc.requesterAddress : loc?.requesterLocId?.toDecimalString() || ""
             setPathModel({
                 ...pathModel,
                 locId: locId.toDecimalString(),
-                requesterAddress: loc?.requesterAddress || "",
-                certificateUrl: certificateUrl(locId, itemId),
+                requester,
+                certificateUrl: fullCertificateUrl(containingLoc.id),
                 publicItems: locRequest!.metadata.map(item => ({
                     description: item.name,
                     content: item.value,
@@ -119,26 +119,20 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                 })),
             });
         }
-    }, [ loc, locId, locRequest, pathModel, setPathModel, itemId ]);
+    }, [ loc, locId, locRequest, pathModel, setPathModel, itemId, containingLoc ]);
 
     useEffect(() => {
-        if(props.itemId !== itemId || props.itemDescription !== itemDescription) {
+        if((props.itemId !== itemId || props.itemDescription !== itemDescription) && containingLoc) {
             setItemId(props.itemId);
             setItemDescription(props.itemDescription);
-            console.log({
-                ...pathModel,
-                itemId: props.itemId || "",
-                itemDescription: props.itemDescription || "",
-                certificateUrl: certificateUrl(locId, props.itemId),
-            })
             setPathModel({
                 ...pathModel,
                 itemId: props.itemId || "",
                 itemDescription: props.itemDescription || "",
-                certificateUrl: certificateUrl(locId, props.itemId),
+                certificateUrl: fullCertificateUrl(containingLoc.id),
             });
         }
-    }, [ props, itemId, itemDescription, setItemId, setItemDescription, pathModel, setPathModel, locId ]);
+    }, [ props, itemId, itemDescription, setItemId, setItemDescription, pathModel, setPathModel, locId, containingLoc ]);
 
     const cancelCallback = useCallback(() => {
         setStatus('IDLE')
@@ -201,19 +195,10 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                         language: language || 'en'
                     }) }` }
                     relatedLocPath={ containingLoc ? locDetailsPath(containingLoc!.id, containingLoc!.locType) : "" }
-                    files={ locRequest?.files || [] }
                     locId={ locId }
                     nodeOwner={ loc!.owner }
                 />
             </Dialog>
         </>
     );
-}
-
-function certificateUrl(locId: UUID, itemId?: string): string {
-    if(itemId) {
-        return fullCollectionItemCertificate(locId, itemId);
-    } else {
-        return fullCertificateUrl(locId);
-    }
 }
