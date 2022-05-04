@@ -1,28 +1,30 @@
+import { AxiosInstance } from "axios";
+import { LegalOfficerCase } from "logion-api/dist/Types";
+
 import Table, { Cell, DateTimeCell, EmptyTableMessage, ActionCell } from "../common/Table";
 import StatusCell from "../common/StatusCell";
 import LegalOfficerName from "../common/LegalOfficerNameCell";
-import { useLocContext } from "./LocContext";
 import ButtonGroup from "../common/ButtonGroup";
 import Button from "../common/Button";
-import LocPublicDataDetails from "./LocPublicDataDetails";
-import LocPublishPublicDataButton from "./LocPublishPublicDataButton";
 import { POLKADOT } from "../common/ColorTheme";
 import { Child } from "../common/types/Helpers";
-import LocPrivateFileDetails from "./LocPrivateFileDetails";
-import LocPublishPrivateFileButton from "./LocPublishPrivateFileButton";
 import ViewFileButton from "../common/ViewFileButton";
-import { AxiosInstance } from "axios";
-import { getFile } from "./Model";
-import { LocItem, Viewer } from "./types";
-import LocLinkDetails from "./LocLinkDetails";
-import LocPublishLinkButton from "./LocPublishLinkButton";
-
-import './LocItems.css';
 import Icon from "../common/Icon";
 import { useResponsiveContext } from "../common/Responsive";
 import SubmitterName from "../common/SubmitterName";
 import { useCommonContext } from "../common/CommonContext";
-import { LegalOfficerCase } from "../logion-chain/Types";
+
+import { getFile } from "./Model";
+import { LocItem, Viewer } from "./types";
+import LocLinkDetails from "./LocLinkDetails";
+import LocPublishLinkButton from "./LocPublishLinkButton";
+import LocPrivateFileDetails from "./LocPrivateFileDetails";
+import LocPublishPrivateFileButton from "./LocPublishPrivateFileButton";
+import LocPublishPublicDataButton from "./LocPublishPublicDataButton";
+import LocPublicDataDetails from "./LocPublicDataDetails";
+import { useLocContext } from "./LocContext";
+
+import './LocItems.css';
 
 export interface Props {
     matchedHash?: string;

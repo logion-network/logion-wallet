@@ -1,6 +1,7 @@
+import { LegalOfficerCase } from "logion-api/dist/Types";
+import { UUID } from "logion-api/dist/UUID";
+
 import { LocRequest } from "../common/types/ModelTypes";
-import { LegalOfficerCase } from "../logion-chain/Types";
-import { UUID } from "../logion-chain/UUID";
 
 export function buildLocRequest(locId: UUID, loc: LegalOfficerCase): LocRequest {
     return {

@@ -1,11 +1,10 @@
 import { It, Mock } from "moq.ts";
 import { AxiosInstance, AxiosResponse } from "axios";
+
 import { TEST_WALLET_USER } from '../TestData';
 import { ANOTHER_LEGAL_OFFICER } from "../../common/TestData";
-import { CreateProtectionRequest, createProtectionRequest } from "./Model";
 
-jest.mock('../../logion-chain');
-jest.mock('../../logion-chain/Signature');
+import { CreateProtectionRequest, createProtectionRequest } from "./Model";
 
 const request: CreateProtectionRequest = {
     requesterAddress: TEST_WALLET_USER,

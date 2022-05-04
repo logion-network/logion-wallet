@@ -1,8 +1,7 @@
-import React from 'react';
 import Spinner from 'react-bootstrap/Spinner';
-import Alert from './common/Alert';
 
 import { SignedTransaction, isSuccessful } from './logion-chain/Signature';
+import Alert from './common/Alert';
 
 import './ExtrinsicSubmissionResult.css';
 

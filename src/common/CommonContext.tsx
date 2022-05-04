@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useReducer, Reducer, useCallback } from "react";
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import moment from 'moment';
+import { CoinBalance, getBalances } from 'logion-api/dist/Balances';
+import { LegalOfficerCase, IdentityLocType, LocType, DataLocType } from "logion-api/dist/Types";
+import { toDecimalString, UUID } from "logion-api/dist/UUID";
+import { getLegalOfficerCasesMap } from "logion-api/dist/LogionLoc";
 
 import { useLogionChain } from '../logion-chain';
-import { CoinBalance, getBalances } from '../logion-chain/Balances';
-
 import { LegalOfficer } from '../directory/DirectoryApi';
 import {
     AxiosFactory,
@@ -29,9 +31,6 @@ import {
     loadCurrentAddress,
     clearCurrentAddress
 } from './Storage';
-import { LegalOfficerCase, IdentityLocType, LocType, DataLocType } from "../logion-chain/Types";
-import { toDecimalString, UUID } from "../logion-chain/UUID";
-import { getLegalOfficerCasesMap } from "../logion-chain/LogionLoc";
 import { authenticate, refresh } from "./Authentication";
 import { DirectoryContext, useDirectoryContext } from "../directory/DirectoryContext";
 import config from "../config";
@@ -790,7 +789,9 @@ export function CommonContextProvider(props: Props) {
                         directoryContext,
                     });
                     break;
-                } catch(error) {}
+                } catch(error) {
+                    console.log(error);
+                }
             }
         }
     }, [ contextValue.accounts, directoryContext ]);

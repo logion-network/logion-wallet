@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
+import { DataLocType } from "logion-api/dist/Types";
 
 import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';
@@ -16,7 +17,6 @@ import { rejectLocRequest } from '../../loc/Model';
 import LocRequestAcceptance from './LocRequestAcceptance';
 import LocRequestDetails from './LocRequestDetails';
 import Icon from '../../common/Icon';
-import { DataLocType } from "../../logion-chain/Types";
 
 export interface Props {
     locType: DataLocType;

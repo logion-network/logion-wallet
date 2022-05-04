@@ -1,6 +1,4 @@
-import React from 'react';
-
-import { UUID } from '../logion-chain/UUID';
+import { UUID } from 'logion-api/dist/UUID';
 
 import { CopyPasteCell } from './Table';
 import { LocRequestStatus } from './types/ModelTypes';

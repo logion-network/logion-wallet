@@ -2,15 +2,14 @@ import React, { CSSProperties, useState, useCallback, useEffect } from 'react';
 import * as Css from 'csstype';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
-
-import { format } from '../logion-chain/datetime';
+import { format } from 'logion-api/dist/datetime';
+import Spinner from "react-bootstrap/Spinner";
 
 import { Row, Col } from './Grid';
 import { Child, Children } from './types/Helpers';
 import { useCommonContext } from './CommonContext';
 import './Table.css';
 import Icon from './Icon';
-import Spinner from "react-bootstrap/Spinner";
 import CopyPasteButton from "./CopyPasteButton";
 import { TableColors } from './ColorTheme';
 

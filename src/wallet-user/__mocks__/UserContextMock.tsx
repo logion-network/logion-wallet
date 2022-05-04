@@ -1,9 +1,10 @@
+import { ApiPromise } from '@polkadot/api';
+import { RecoveryConfig } from "logion-api/dist/Recovery";
+
 import { DEFAULT_LEGAL_OFFICER } from "../../common/TestData";
 import { TEST_WALLET_USER } from '../TestData';
-import {ApiPromise} from '@polkadot/api';
 import { ProtectionRequest } from "../../common/types/ModelTypes";
 import { DARK_MODE } from '../Types';
-import { RecoveryConfig } from "../../logion-chain/Recovery";
 
 export let createTokenRequest = () => null;
 

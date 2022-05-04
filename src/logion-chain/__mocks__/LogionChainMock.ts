@@ -1,5 +1,6 @@
 import BN from 'bn.js'
-import { UUID } from "../UUID";
+import { UUID } from "logion-api/dist/UUID";
+
 import { mockCompact } from "../../__mocks__/PolkadotApiMock";
 
 export const LogionChainContextProvider = (props: any) => null;

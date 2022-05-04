@@ -1,3 +1,4 @@
+import { Col, Row } from 'react-bootstrap';
 import { FullWidthPane } from '../common/Dashboard';
 import Frame from '../common/Frame';
 import { useCommonContext } from '../common/CommonContext';
@@ -9,7 +10,6 @@ import { useVersionContext } from '../version/VersionContext';
 import './SettingsPane.css';
 import Alert from '../common/Alert';
 import { useDirectoryContext } from '../directory/DirectoryContext';
-import { Col, Row } from 'react-bootstrap';
 import DirectoryData from '../settings/DirectoryData';
 
 function status(metadata: NodeMetadata | null): string {

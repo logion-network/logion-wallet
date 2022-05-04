@@ -1,4 +1,6 @@
 import { AxiosInstance } from 'axios';
+import { UUID } from 'logion-api/dist/UUID';
+import { LocType, IdentityLocType, LegalOfficerCase } from 'logion-api/dist/Types';
 
 import {
     TransactionsSet,
@@ -9,8 +11,6 @@ import {
     LocRequestStatus, LocCollectionItem, TransferDirection,
 } from './types/ModelTypes';
 import Identity from './types/Identity';
-import { UUID } from '../logion-chain/UUID';
-import { LocType, IdentityLocType, LegalOfficerCase } from '../logion-chain/Types';
 
 export type ProtectionRequestKind = 'RECOVERY' | 'PROTECTION_ONLY' | 'ANY';
 

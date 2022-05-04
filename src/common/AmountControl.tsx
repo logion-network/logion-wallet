@@ -1,8 +1,8 @@
 import { useCallback } from "react";
 import { Dropdown, DropdownButton, Form, InputGroup } from "react-bootstrap";
-import { SYMBOL } from "../logion-chain/Balances";
+import { SYMBOL } from "logion-api/dist/Balances";
 
-import { ATTO, FEMTO, MICRO, MILLI, NANO, NONE, PICO, UnitPrefix } from '../logion-chain/numbers';
+import { ATTO, FEMTO, MICRO, MILLI, NANO, NONE, PICO, UnitPrefix } from 'logion-api/dist/numbers';
 
 export interface Amount {
     value: string;

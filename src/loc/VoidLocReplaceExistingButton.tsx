@@ -1,15 +1,16 @@
 import { useCallback, useState } from "react";
 import { Form } from "react-bootstrap";
+import { getLegalOfficerCase } from "logion-api/dist/LogionLoc";
+import { UUID } from "logion-api/dist/UUID";
+
 import Button from "../common/Button";
 import { useCommonContext } from "../common/CommonContext";
 import DangerDialog from "../common/DangerDialog";
 import FormGroup from "../common/FormGroup";
 import Icon from "../common/Icon";
 import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
-import { useLogionChain } from "../logion-chain";
-import { getLegalOfficerCase } from "../logion-chain/LogionLoc";
-import { UUID } from "../logion-chain/UUID";
 import { FullVoidInfo, useLocContext } from "./LocContext";
+import { useLogionChain } from "../logion-chain";
 
 export default function VoidLocReplaceExistingButton() {
     const { colorTheme, refresh } = useCommonContext();

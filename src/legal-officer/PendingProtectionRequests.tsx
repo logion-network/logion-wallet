@@ -1,4 +1,6 @@
-import React, { useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
+import { useNavigate } from "react-router-dom";
+import { UUID } from 'logion-api/dist/UUID';
 
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Form from 'react-bootstrap/Form';
@@ -13,11 +15,9 @@ import { ProtectionRequest } from '../common/types/ModelTypes';
 import ProcessStep from './ProcessStep';
 import ProtectionRequestStatus from './ProtectionRequestStatus';
 import ProtectionRequestDetails from './ProtectionRequestDetails';
-import { useNavigate } from "react-router-dom";
 import { recoveryDetailsPath, identityLocDetailsPath } from "./LegalOfficerPaths";
 import AccountInfo from "../common/AccountInfo";
 import LocIdFormGroup from './LocIdFormGroup';
-import { UUID } from '../logion-chain/UUID';
 import LocCreationDialog from '../loc/LocCreationDialog';
 
 enum ReviewStatus {

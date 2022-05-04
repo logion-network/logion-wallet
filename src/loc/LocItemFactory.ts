@@ -1,7 +1,8 @@
+import { UUID } from "logion-api/dist/UUID";
+import { File, Link, MetadataItem } from "logion-api/dist/Types";
+
 import { LocItem } from "./types";
-import { File, Link, MetadataItem } from "../logion-chain/Types";
 import { LocFile, LocMetadataItem, LocLink } from "../common/types/ModelTypes";
-import { UUID } from "../logion-chain/UUID";
 
 export interface MergeLocFileParameters {
     fileFromBackend: LocFile,

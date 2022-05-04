@@ -1,12 +1,12 @@
 import { Mock } from 'moq.ts';
 import { AxiosInstance } from 'axios';
 import moment from 'moment';
+import { IdentityLocType, DataLocType } from "logion-api/dist/Types";
 
 import { TEST_WALLET_USER } from '../../wallet-user/TestData';
 import { COLOR_THEME, DEFAULT_LEGAL_OFFICER } from '../TestData';
 import Accounts, { Account } from '../types/Accounts';
 import { CommonContext, RequestAndLoc } from "../CommonContext";
-import { IdentityLocType, DataLocType } from "../../logion-chain/Types";
 import { legalOfficers } from '../../directory/DirectoryContextMock';
 
 export let selectAddress = jest.fn();

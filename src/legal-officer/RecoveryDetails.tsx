@@ -1,5 +1,8 @@
-import React, { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback } from "react";
+import { Col, Row } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
+import { vouchRecovery } from 'logion-api/dist/Recovery';
+import { UUID } from 'logion-api/dist/UUID';
 
 import { useCommonContext } from "../common/CommonContext";
 import { useLegalOfficerContext } from "./LegalOfficerContext";
@@ -7,7 +10,6 @@ import { FullWidthPane } from "../common/Dashboard";
 import { useParams, useNavigate } from 'react-router';
 import { identityLocDetailsPath, RECOVERY_REQUESTS_PATH } from "./LegalOfficerPaths";
 import Button from "../common/Button";
-import { Col, Row } from "react-bootstrap";
 import { acceptProtectionRequest, rejectProtectionRequest } from "../loc/Model";
 import { fetchRecoveryInfo } from "./Model";
 import { RecoveryInfo } from "./Types";
@@ -19,12 +21,11 @@ import Spacer from "../common/Spacer";
 import Icon from "../common/Icon";
 import Dialog from "../common/Dialog";
 import { useLogionChain } from '../logion-chain';
-import { vouchRecovery } from '../logion-chain/Recovery';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../ExtrinsicSubmitter';
 import ButtonGroup from "../common/ButtonGroup";
-import { UUID } from '../logion-chain/UUID';
 import LocIdFormGroup from "./LocIdFormGroup";
 import LocCreationDialog from "../loc/LocCreationDialog";
+import { signAndSend } from "src/logion-chain/Signature";
 
 enum Visible {
     NONE,
@@ -60,13 +61,15 @@ export default function RecoveryDetails() {
                 requestId: requestId!,
                 locId: locId!
             });
-            const signAndSubmit: SignAndSubmit = (callback, errorCallback) => vouchRecovery({
-                api: api!,
+            const signAndSubmit: SignAndSubmit = (callback, errorCallback) => signAndSend({
+                signerId: currentAddress,
                 callback,
                 errorCallback,
-                signerId: currentAddress,
-                lost: recoveryInfo!.accountToRecover.requesterAddress,
-                rescuer: recoveryInfo!.recoveryAccount.requesterAddress,
+                submittable: vouchRecovery({
+                    api: api!,
+                    lost: recoveryInfo!.accountToRecover.requesterAddress,
+                    rescuer: recoveryInfo!.recoveryAccount.requesterAddress,
+                })
             });
             setSignAndSubmit(() => signAndSubmit);
         })();

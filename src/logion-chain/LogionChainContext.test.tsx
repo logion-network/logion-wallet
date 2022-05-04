@@ -1,5 +1,4 @@
 jest.mock('@polkadot/api');
-jest.mock('@polkadot/ui-keyring');
 jest.mock('@polkadot/extension-dapp');
 
 import { useLogionChain, LogionChainContextProvider } from './LogionChainContext';

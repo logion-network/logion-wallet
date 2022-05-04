@@ -1,20 +1,22 @@
+jest.mock('logion-api/dist/Accounts');
+jest.mock('logion-api/dist/Recovery');
+jest.mock('../../logion-chain/Signature');
 jest.mock('../UserContext');
 jest.mock('../../logion-chain');
-jest.mock('../../logion-chain/Accounts');
-jest.mock('../../logion-chain/Recovery');
-jest.mock('../../logion-chain/Signature');
 jest.mock('../../common/CommonContext');
 jest.setTimeout(10000);
+
+import { render, screen, waitFor, getByText, act } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from "../../common/TestData";
 import { setCreateProtectionRequest } from "../__mocks__/UserContextMock";
 import { clickByName, shallowRender } from "../../tests";
-import CreateProtectionRequestForm from "./CreateProtectionRequestForm";
-import { render, screen, waitFor, getByText, act } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { setActiveRecoveryInProgress } from "../../logion-chain/__mocks__/RecoveryMock";
+import { setActiveRecoveryInProgress } from "../../__mocks__/logion-api/dist/RecoveryMock";
 import { finalizeSubmission, resetSubmitting, submitting } from "../../logion-chain/__mocks__/SignatureMock";
 import { TEST_WALLET_USER2 } from "../TestData";
+
+import CreateProtectionRequestForm from "./CreateProtectionRequestForm";
 
 test("renders", () => {
     const tree = shallowRender(<CreateProtectionRequestForm isRecovery={ false } />)

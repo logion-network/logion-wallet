@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { ChainTime } from 'logion-api/dist/ChainTime';
+import { format } from 'logion-api/dist/datetime';
+import { LegalOfficerCase } from 'logion-api/dist/Types';
+import { UUID } from 'logion-api/dist/UUID';
 
 import Button from '../common/Button';
 import CopyPasteButton from '../common/CopyPasteButton';
 import Dialog from '../common/Dialog';
 import Icon from '../common/Icon';
 import { useLogionChain } from '../logion-chain';
-import { ChainTime } from '../logion-chain/ChainTime';
-import { format } from '../logion-chain/datetime';
-import { LegalOfficerCase } from '../logion-chain/Types';
-import { UUID } from '../logion-chain/UUID';
 import { fullCertificateUrl } from '../PublicPaths';
 import config from '../config';
 import NewTabLink from '../common/NewTabLink';

@@ -1,4 +1,4 @@
-import { prefixedLogBalance, SYMBOL } from "../../logion-chain/Balances";
+import { prefixedLogBalance, SYMBOL } from "logion-api/dist/Balances";
 
 import AmountCell from "../../common/AmountCell";
 import { useCommonContext } from "../../common/CommonContext";

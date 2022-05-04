@@ -1,14 +1,14 @@
 import { useCallback, useState } from 'react';
 import { Form } from 'react-bootstrap';
-import Alert from '../common/Alert';
+import { getLegalOfficerCase } from 'logion-api/dist/LogionLoc';
+import { LocType } from 'logion-api/dist/Types';
+import { UUID } from 'logion-api/dist/UUID';
 
+import Alert from '../common/Alert';
 import { BackgroundAndForegroundColors } from '../common/ColorTheme';
 import FormGroup from '../common/FormGroup';
 
 import { useLogionChain } from '../logion-chain';
-import { getLegalOfficerCase } from '../logion-chain/LogionLoc';
-import { LocType } from '../logion-chain/Types';
-import { UUID } from '../logion-chain/UUID';
 
 export interface Props {
     colors: BackgroundAndForegroundColors;

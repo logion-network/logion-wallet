@@ -1,7 +1,7 @@
 jest.mock('../../common/CommonContext');
+import { IdentityLocType } from "logion-api/dist/Types";
 
 import VoidLocs from "./VoidLocs";
-import { IdentityLocType } from "../../logion-chain/Types";
 import { shallowRender, render } from '../../tests';
 import { setVoidedIdentityLocsByType } from '../../common/__mocks__/CommonContextMock';
 

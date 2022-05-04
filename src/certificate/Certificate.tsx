@@ -3,11 +3,11 @@ import { Row, Col, Container } from "react-bootstrap";
 import { useParams } from "react-router";
 import { useSearchParams } from "react-router-dom";
 
-import { UUID } from "../logion-chain/UUID";
-import { useLogionChain } from "../logion-chain";
-import { getLegalOfficerCase, getCollectionItem } from "../logion-chain/LogionLoc";
-import { File, LegalOfficerCase, Link, MetadataItem, VoidInfo } from "../logion-chain/Types";
+import { UUID } from "logion-api/dist/UUID";
+import { getLegalOfficerCase, getCollectionItem } from "logion-api/dist/LogionLoc";
+import { File, LegalOfficerCase, Link, MetadataItem, VoidInfo } from "logion-api/dist/Types";
 
+import { useLogionChain } from "../logion-chain";
 import Button from "../common/Button";
 import MailtoButton from "../common/MailtoButton";
 import Icon from "../common/Icon";

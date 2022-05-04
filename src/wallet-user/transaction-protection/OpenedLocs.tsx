@@ -1,3 +1,6 @@
+import { useNavigate } from 'react-router-dom';
+import { DataLocType } from "logion-api/dist/Types";
+
 import { useCommonContext } from '../../common/CommonContext';
 import Table, { Cell, EmptyTableMessage, DateTimeCell, ActionCell } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';
@@ -7,9 +10,7 @@ import ButtonGroup from "../../common/ButtonGroup";
 import Button from "../../common/Button";
 import Loader from '../../common/Loader';
 import { locDetailsPath } from '../UserRouter';
-import { useNavigate } from 'react-router-dom';
 import { useResponsiveContext } from '../../common/Responsive';
-import { DataLocType } from "../../logion-chain/Types";
 
 export interface Props {
     locType: DataLocType

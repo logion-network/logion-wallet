@@ -1,13 +1,11 @@
 import { useCallback, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
+import { LGNT_SMALLEST_UNIT, prefixedLogBalance, SYMBOL } from "logion-api/dist/Balances";
+import { PrefixedNumber } from "logion-api/dist/numbers";
+import { approveVaultTransfer } from "logion-api/dist/Vault";
 
-import ExtrinsicSubmitter, { AsyncSignAndSubmit } from "../../ExtrinsicSubmitter";
-
+import ExtrinsicSubmitter, { SignAndSubmit } from "../../ExtrinsicSubmitter";
 import { useLogionChain } from "../../logion-chain";
-import { LGNT_SMALLEST_UNIT, prefixedLogBalance, SYMBOL } from "../../logion-chain/Balances";
-import { PrefixedNumber } from "../../logion-chain/numbers";
-import { approveVaultTransfer } from "../../logion-chain/Vault";
-
 import AmountCell from "../../common/AmountCell";
 import { useCommonContext } from "../../common/CommonContext";
 import Dialog from "../../common/Dialog";
@@ -27,6 +25,7 @@ import DateTimeFormat from "../../common/DateTimeFormat";
 import { VaultApi, VaultTransferRequest } from "../../vault/VaultApi";
 
 import VaultTransferRequestDetails from "./VaultTransferDetails";
+import { signAndSend } from "src/logion-chain/Signature";
 
 export default function PendingVaultTransferRequests() {
     const { api } = useLogionChain();
@@ -36,21 +35,25 @@ export default function PendingVaultTransferRequests() {
     const [ reason, setReason ] = useState<string>("");
     const [ requestToAccept, setRequestToAccept ] = useState<VaultTransferRequest | null>(null);
     const [ approvalFailed, setApprovalFailed ] = useState(false);
-    const [ signAndSubmit, setSignAndSubmit ] = useState<AsyncSignAndSubmit>(null);
+    const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
 
     const acceptRequestCallback = useCallback(async () => {
         const signerId = accounts!.current!.address;
         const amount = new PrefixedNumber(requestToAccept!.amount, LGNT_SMALLEST_UNIT);
-        const signAndSubmit: AsyncSignAndSubmit = (setResult, setError) => approveVaultTransfer({
-            api: api!,
-            callback: setResult,
-            errorCallback: setError,
+        const submittable = await approveVaultTransfer({
             signerId,
+            api: api!,
             requester: requestToAccept!.origin,
             destination: requestToAccept!.destination,
             amount,
             block: BigInt(requestToAccept!.block),
             index: requestToAccept!.index,
+        });
+        const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
+            signerId,
+            callback: setResult,
+            errorCallback: setError,
+            submittable,
         });
         setSignAndSubmit(() => signAndSubmit);
     }, [ accounts, api, requestToAccept, setSignAndSubmit ]);
@@ -208,7 +211,7 @@ export default function PendingVaultTransferRequests() {
 
                 <ExtrinsicSubmitter
                     id="approve"
-                    asyncSignAndSubmit={ signAndSubmit }
+                    signAndSubmit={ signAndSubmit }
                     onSuccess={ onApprovalSuccessCallback }
                     onError={ () => setApprovalFailed(true) }
                 />

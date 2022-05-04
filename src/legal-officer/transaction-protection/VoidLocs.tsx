@@ -1,13 +1,14 @@
+import { useNavigate } from "react-router-dom";
+import { LocType, IdentityLocType } from 'logion-api/dist/Types';
+
 import { useCommonContext } from '../../common/CommonContext';
 import Table, { Cell, EmptyTableMessage, DateTimeCell, ActionCell } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';
 import LocIdCell from '../../common/LocIdCell';
 import UserIdentityNameCell from '../../common/UserIdentityNameCell';
 import Button from "../../common/Button";
-import { useNavigate } from "react-router-dom";
 import { locDetailsPath } from "../LegalOfficerPaths";
 import ButtonGroup from "../../common/ButtonGroup";
-import { LocType, IdentityLocType } from '../../logion-chain/Types';
 import { useResponsiveContext } from '../../common/Responsive';
 
 export interface Props {

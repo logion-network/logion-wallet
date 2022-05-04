@@ -1,4 +1,4 @@
-import { PrefixedNumber } from "../logion-chain/numbers";
+import { PrefixedNumber } from "logion-api/dist/numbers";
 import AmountFormat from "./AmountFormat";
 import { Cell } from "./Table";
 

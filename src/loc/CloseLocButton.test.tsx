@@ -7,9 +7,9 @@ import { closeExtrinsicSent, resetCloseExtrinsicSent, setClose, setLocItems } fr
 
 import CloseLocButton from './CloseLocButton';
 
+jest.mock("../logion-chain/Signature");
 jest.mock("./LocContext");
 jest.mock("../common/CommonContext");
-jest.mock("../logion-chain/Signature");
 
 describe("CloseLocButton", () => {
 

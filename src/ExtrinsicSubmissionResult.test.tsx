@@ -1,7 +1,7 @@
+import { SignedTransaction } from './logion-chain/Signature';
 import { render } from './tests';
 
 import ExtrinsicSubmissionResult from './ExtrinsicSubmissionResult';
-import { SignedTransaction } from './logion-chain/Signature';
 
 test("No result, no error", () => {
     const tree = render(<ExtrinsicSubmissionResult result={null} error={null} />);

@@ -1,8 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
+import { UUID } from 'logion-api/dist/UUID';
+import { createCollectionLoc, createPolkadotTransactionLoc } from 'logion-api/dist/LogionLoc';
+import { ChainTime } from 'logion-api/dist/ChainTime';
 
 import { useLogionChain } from '../../logion-chain';
-import { UUID } from '../../logion-chain/UUID';
-import { createCollectionLoc, createPolkadotTransactionLoc } from '../../logion-chain/LogionLoc';
 import { useCommonContext } from '../../common/CommonContext';
 import { LocRequest } from '../../common/types/ModelTypes';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
@@ -10,9 +11,9 @@ import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
 import { acceptLocRequest } from '../../loc/Model';
 import ProcessStep from '../ProcessStep';
 
-import { ChainTime } from '../../logion-chain/ChainTime';
 import CollectionLocMessage from '../../loc/CollectionLocMessage';
 import CollectionLimitsForm, { CollectionLimits, DEFAULT_LIMITS } from '../../loc/CollectionLimitsForm';
+import { signAndSend } from '../../logion-chain/Signature';
 
 enum AcceptStatus {
     NONE,
@@ -55,13 +56,15 @@ export default function LocRequestAcceptance(props: Props) {
             (async function() {
                 let signAndSubmit: SignAndSubmit;
                 if(props.requestToAccept?.locType === 'Transaction') {
-                    signAndSubmit = (setResult, setError) => createPolkadotTransactionLoc({
-                        api: api!,
+                    signAndSubmit = (setResult, setError) => signAndSend({
                         signerId: accounts!.current!.address,
                         callback: setResult,
                         errorCallback: setError,
-                        locId: new UUID(props.requestToAccept!.id),
-                        requester: props.requestToAccept!.requesterAddress!,
+                        submittable: createPolkadotTransactionLoc({
+                            api: api!,
+                            locId: new UUID(props.requestToAccept!.id),
+                            requester: props.requestToAccept!.requesterAddress!,
+                        })
                     });
                 } else if(props.requestToAccept?.locType === 'Collection') {
                     let lastBlock: string | undefined;
@@ -75,15 +78,17 @@ export default function LocRequestAcceptance(props: Props) {
                     if(limits.hasDataNumberLimit) {
                         maxSize = limits.dataNumberLimit;
                     }
-                    signAndSubmit = (setResult, setError) => createCollectionLoc({
-                        api: api!,
+                    signAndSubmit = (setResult, setError) => signAndSend({
                         signerId: accounts!.current!.address,
                         callback: setResult,
                         errorCallback: setError,
-                        locId: new UUID(props.requestToAccept!.id),
-                        requester: props.requestToAccept!.requesterAddress!,
-                        lastBlock,
-                        maxSize
+                        submittable: createCollectionLoc({
+                            api: api!,
+                            locId: new UUID(props.requestToAccept!.id),
+                            requester: props.requestToAccept!.requesterAddress!,
+                            lastBlock,
+                            maxSize
+                        })
                     });
                 } else {
                     throw new Error(`Unsupported LOC type ${props.requestToAccept?.locType}`);

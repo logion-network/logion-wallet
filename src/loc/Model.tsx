@@ -1,5 +1,5 @@
 import { AxiosInstance } from 'axios';
-import { UUID } from '../logion-chain/UUID';
+import { UUID } from 'logion-api/dist/UUID';
 
 export interface RejectProtectionRequestParameters {
     requestId: string,

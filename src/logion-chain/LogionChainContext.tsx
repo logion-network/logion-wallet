@@ -6,12 +6,10 @@ import { ApiPromise } from '@polkadot/api';
 import { Header, Extrinsic, Hash, Block } from '@polkadot/types/interfaces';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
-import { ExtrinsicsAndHead } from './Blocks';
+import { ExtrinsicsAndHead } from 'logion-api/dist/Blocks';
+import { buildApi } from 'logion-api/dist/Connection';
+import { getEndpoints, NodeMetadata } from './Connection';
 import { enableExtensions } from './Keys';
-import { NodeMetadata, buildApi } from './Connection';
-
-///
-// Initial state for `useReducer`
 
 type ConsumptionStatus = 'PENDING' | 'STARTING' | 'STARTED';
 
@@ -93,9 +91,6 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
     }
 };
 
-///
-// Connecting to the LogionChain node
-
 const connect = (state: FullLogionChainContextType, dispatch: React.Dispatch<Action>) => {
     if(state.connecting) {
         return;
@@ -103,7 +98,7 @@ const connect = (state: FullLogionChainContextType, dispatch: React.Dispatch<Act
 
     dispatch({ type: 'CONNECT_INIT' });
     (async function() {
-        const api = await buildApi();
+        const api = await buildApi(getEndpoints());
         dispatch({ type: 'CONNECT_SUCCESS', api });
         const peerId = await api.rpc.system.localPeerId();
         dispatch({type: 'SET_NODE_METADATA', connectedNodeMetadata: {

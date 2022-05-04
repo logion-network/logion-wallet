@@ -1,10 +1,12 @@
 import { Controller, Control, FieldErrors } from "react-hook-form";
+import Form from "react-bootstrap/Form";
+import { LocType } from "logion-api/dist/Types";
+
 import FormGroup from "../../common/FormGroup";
 import { useCommonContext } from "../../common/CommonContext";
-import Form from "react-bootstrap/Form";
-import React from "react";
-import { LocType } from "../../logion-chain/Types";
+
 import { FormValues, Language } from "./PathModel";
+
 import "./StatementOfFactsForm.css"
 
 const amountDefaultValues: Record<Language, string[]> = {

@@ -1,18 +1,18 @@
 import { render, screen, waitFor } from "@testing-library/react";
+import { LocType } from "logion-api/dist/Types";
 
 import { LocRequestFragment } from "../common/types/ModelTypes";
-import { LocType } from "../logion-chain/Types";
 import { finalizeSubmission } from "../logion-chain/__mocks__/SignatureMock";
 import { clickByName, typeByLabel } from "../tests";
 import { TEST_WALLET_USER } from "../wallet-user/TestData";
 
 import LocCreationDialog from "./LocCreationDialog";
 
+jest.mock("logion-api/dist/LogionLoc");
+jest.mock("../logion-chain/Signature");
 jest.mock("../common/CommonContext");
 jest.mock("../common/Model");
 jest.mock("../legal-officer/LegalOfficerContext");
-jest.mock("../logion-chain/LogionLoc");
-jest.mock("../logion-chain/Signature");
 
 describe("LocCreationDialog", () => {
   

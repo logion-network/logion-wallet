@@ -4,6 +4,7 @@ import {
     getRecoveryConfig,
     getActiveRecovery,
     initiateRecovery,
+    asRecovered,
 } from './RecoveryMock';
 
 export {
@@ -12,4 +13,5 @@ export {
     getRecoveryConfig,
     getActiveRecovery,
     initiateRecovery,
+    asRecovered,
 }

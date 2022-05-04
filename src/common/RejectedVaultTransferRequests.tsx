@@ -1,7 +1,8 @@
 import { useCallback, useState } from "react";
+import { prefixedLogBalance, SYMBOL } from "logion-api/dist/Balances";
+
 import { SignAndSubmit } from "../ExtrinsicSubmitter";
 import { useLogionChain } from "../logion-chain";
-import { prefixedLogBalance, SYMBOL } from "../logion-chain/Balances";
 import { VaultApi, VaultTransferRequest } from "../vault/VaultApi";
 import AmountCell from "./AmountCell";
 import Button from "./Button";

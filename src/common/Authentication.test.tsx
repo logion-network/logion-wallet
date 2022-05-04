@@ -1,6 +1,6 @@
 import { AxiosInstance, AxiosResponse } from "axios";
 import { It, Mock } from "moq.ts";
-import { ISO_DATETIME_PATTERN } from "../logion-chain/datetime";
+import { ISO_DATETIME_PATTERN } from "logion-api/dist/datetime";
 
 import { authenticate } from './Authentication';
 

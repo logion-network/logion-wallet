@@ -1,7 +1,7 @@
-import { LocType, MetadataItem, Link, CollectionItem } from '../../logion-chain/Types';
+import { File, LocType, MetadataItem, Link, CollectionItem } from 'logion-api/dist/Types';
+
 import Identity from './Identity';
 import PostalAddress from './PostalAddress';
-import { File } from '../../logion-chain/Types'
 import UserIdentity from './Identity';
 
 export type ProtectionRequestStatus = "PENDING" | "REJECTED" | "ACCEPTED" | "ACTIVATED";

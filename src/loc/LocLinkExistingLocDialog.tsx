@@ -1,11 +1,12 @@
+import { useForm } from "react-hook-form";
+import { UUID } from "logion-api/dist/UUID";
+import { getLegalOfficerCase } from "logion-api/dist/LogionLoc";
+
+import { useLogionChain } from "../logion-chain";
 import Dialog from "../common/Dialog";
 import LocLinkExistingForm, { FormValues } from "./LocLinkExistingForm";
-import { useForm } from "react-hook-form";
 import { useCallback } from "react";
 import { useLocContext } from "./LocContext";
-import { UUID } from "../logion-chain/UUID";
-import { getLegalOfficerCase } from "../logion-chain/LogionLoc";
-import { useLogionChain } from "../logion-chain";
 import { fetchLocRequest } from "../common/Model";
 import { useCommonContext } from "../common/CommonContext";
 
