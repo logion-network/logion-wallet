@@ -141,11 +141,7 @@ class ParamsParser {
     }
 
     valueAsString(name: string): string {
-        return decodeURIComponent(this.params[name] as string);
-    }
-
-    valueAsNumber(name: string): number {
-        return parseFloat(this.valueAsString(name));
+        return this.params[name] as string;
     }
 }
 
@@ -163,8 +159,8 @@ export function parseSearchString(searchString: string): PathModel {
                     const content = publicContents[i];
                     if(description && content) {
                         publicItems.push({
-                            description: decodeURIComponent(description),
-                            content: decodeURIComponent(content),
+                            description,
+                            content,
                         });
                     }
                 }
@@ -173,8 +169,8 @@ export function parseSearchString(searchString: string): PathModel {
                 const content = publicContents as string;
                 if(description && content) {
                     publicItems.push({
-                        description: decodeURIComponent(description),
-                        content: decodeURIComponent(content),
+                        description,
+                        content,
                     });
                 }
             }
@@ -192,9 +188,9 @@ export function parseSearchString(searchString: string): PathModel {
                     const hash = privateHashes[i];
                     if(publicDescription && privateDescription && hash) {
                         privateItems.push({
-                            publicDescription: decodeURIComponent(publicDescription),
-                            privateDescription: decodeURIComponent(privateDescription),
-                            hash: decodeURIComponent(hash),
+                            publicDescription,
+                            privateDescription,
+                            hash,
                         });
                     }
                 }
@@ -204,9 +200,9 @@ export function parseSearchString(searchString: string): PathModel {
                 const hash = privateHashes as string;
                 if(publicDescription && privateDescription && hash) {
                     privateItems.push({
-                        publicDescription: decodeURIComponent(publicDescription),
-                        privateDescription: decodeURIComponent(privateDescription),
-                        hash: decodeURIComponent(hash),
+                        publicDescription,
+                        privateDescription,
+                        hash,
                     });
                 }
             }
