@@ -15,6 +15,7 @@ describe("StatementOfFactsRequestButton", () => {
         await clickByName("Request a Statement of Facts");
         await clickByName("Confirm");
         expect(requestSofMock).toBeCalledWith(undefined);
+        await clickByName("Close");
     })
 
     it("requests SOF on Collection LOC", async () => {
@@ -25,5 +26,6 @@ describe("StatementOfFactsRequestButton", () => {
         await clickByName("Request a Statement of Facts");
         await clickByName("Confirm");
         expect(requestSofMock).toBeCalledWith(itemId);
+        await clickByName("Close");
     })
 })
