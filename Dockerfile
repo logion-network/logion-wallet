@@ -1,5 +1,5 @@
 # Build image
-FROM node:14 AS build
+FROM node:16 AS build
 
 WORKDIR /tmp/logion-wallet
 
