@@ -19,7 +19,7 @@ export default function StatementOfFactsRequestButton(props: { itemId?: string }
             <Button onClick={ () => setConfirmVisible(true) }>Request a Statement of Facts</Button>
             <Dialog
                 show={ confirmVisible }
-                size="sm"
+                size="lg"
                 actions={ [
                     {
                         id: "cancel",
@@ -34,12 +34,13 @@ export default function StatementOfFactsRequestButton(props: { itemId?: string }
                             setConfirmVisible(false);
                             refresh();
                         },
-                        buttonText: 'Submit',
+                        buttonText: 'Confirm',
                         buttonVariant: 'primary',
                     }
                 ] }
             >
-                <p>You are about to request your Legal Officer to create a Statement of Facts</p>
+                <p>You are about to request an official Statement of Facts with regards to this Legal Officer Case
+                    content to the Legal Officer in charge. Do you confirm that request?</p>
             </Dialog>
         </>
     )
