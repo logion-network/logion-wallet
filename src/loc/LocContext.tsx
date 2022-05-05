@@ -364,7 +364,7 @@ export function LocContextProvider(props: Props) {
 
         const proceed = async () => {
             let nextRefresh = NextRefresh.SCHEDULE;
-            const locRequest = await fetchLocRequest(axiosFactory(accounts!.current!.address)!, contextValue.locId.toString());
+            const locRequest = await fetchLocRequest(axiosFactory(contextValue.loc!.owner)!, contextValue.locId.toString());
             if (refreshTimestamps(locRequest)) {
                 nextRefresh = NextRefresh.IMMEDIATE;
             }
@@ -374,7 +374,7 @@ export function LocContextProvider(props: Props) {
             return nextRefresh;
         }
         return proceed()
-    }, [ contextValue.loc, contextValue.locItems, contextValue.locId, axiosFactory, accounts, contextValue.locRequest, refresh ])
+    }, [ contextValue.loc, contextValue.locItems, contextValue.locId, axiosFactory, contextValue.locRequest, refresh ])
 
     useEffect(() => {
         if (refreshCounter > 0 && !refreshing) {
@@ -468,12 +468,12 @@ export function LocContextProvider(props: Props) {
     )
 
     const closeFunction = useCallback(() => {
-            preClose(axiosFactory!(accounts!.current!.address)!, contextValue.locId)
+            preClose(axiosFactory!(contextValue.loc!.owner)!, contextValue.locId)
             .then(() => {
                 dispatch({ type: 'CLOSE' });
                 setRefreshCounter(MAX_REFRESH);
             });
-        }, [ axiosFactory, accounts, contextValue.locId, dispatch ]
+        }, [ axiosFactory, contextValue.locId, dispatch, contextValue.loc ]
     )
 
     const dispatchPublished = (locItem: LocItem) => {
@@ -482,39 +482,39 @@ export function LocContextProvider(props: Props) {
     }
 
     const confirmFileFunction = useCallback(async (locItem: LocItem) => {
-            confirmLocFile(axiosFactory!(accounts!.current!.address)!, contextValue.locId, locItem.value)
+            confirmLocFile(axiosFactory!(contextValue.loc!.owner)!, contextValue.locId, locItem.value)
                 .then(() => dispatchPublished(locItem))
-        }, [ axiosFactory, accounts, contextValue.locId ]
+        }, [ axiosFactory, contextValue.locId, contextValue.loc ]
     )
 
     const deleteFileFunction = useCallback((item: LocItem) => {
-            deleteLocFile(axiosFactory!(accounts!.current!.address)!, contextValue.locId, item.value)
+            deleteLocFile(axiosFactory!(contextValue.loc!.owner)!, contextValue.locId, item.value)
                 .then(() => dispatch({ type: 'DELETE_ITEM', locItem: item }));
-        }, [ axiosFactory, accounts, contextValue.locId ]
+        }, [ axiosFactory, contextValue.locId, contextValue.loc ]
     )
 
     const confirmLinkFunction = useCallback(async (locItem: LocItem) => {
-            confirmLocLink(axiosFactory!(accounts!.current!.address)!, contextValue.locId, locItem.target!)
+            confirmLocLink(axiosFactory!(contextValue.loc!.owner)!, contextValue.locId, locItem.target!)
                 .then(() => dispatchPublished(locItem))
-        }, [ axiosFactory, accounts, contextValue.locId ]
+        }, [ axiosFactory, contextValue.locId, contextValue.loc ]
     )
 
     const deleteLinkFunction = useCallback((item: LocItem) => {
-            deleteLocLink(axiosFactory!(accounts!.current!.address)!, contextValue.locId, item.target!)
+            deleteLocLink(axiosFactory!(contextValue.loc!.owner)!, contextValue.locId, item.target!)
                 .then(() => dispatch({ type: 'DELETE_ITEM', locItem: item }));
-        }, [ axiosFactory, accounts, contextValue.locId ]
+        }, [ axiosFactory, contextValue.locId, contextValue.loc ]
     )
 
     const confirmMetadataFunction = useCallback(async (locItem: LocItem) => {
-            confirmLocMetadataItem(axiosFactory!(accounts!.current!.address)!, contextValue.locId, locItem.name)
+            confirmLocMetadataItem(axiosFactory!(contextValue.loc!.owner)!, contextValue.locId, locItem.name)
                 .then(() => dispatchPublished(locItem))
-        }, [ axiosFactory, accounts, contextValue.locId ]
+        }, [ axiosFactory, contextValue.locId, contextValue.loc ]
     )
 
     const deleteMetadataFunction = useCallback((item: LocItem) => {
-            deleteLocMetadataItem(axiosFactory!(accounts!.current!.address)!, contextValue.locId, item.name)
+            deleteLocMetadataItem(axiosFactory!(contextValue.loc!.owner)!, contextValue.locId, item.name)
                 .then(() => dispatch({ type: 'DELETE_ITEM', locItem: item }));
-        }, [ axiosFactory, accounts, contextValue.locId ]
+        }, [ axiosFactory, contextValue.locId, contextValue.loc ]
     )
 
     const voidLocExtrinsicFunction = useCallback((voidInfo: VoidInfo) => {
@@ -532,15 +532,15 @@ export function LocContextProvider(props: Props) {
     }, [ api, contextValue.locId, contextValue.loc ])
 
     const voidLocFunction = useCallback((voidInfo: FullVoidInfo) => {
-        preVoid(axiosFactory!(accounts!.current!.address)!, contextValue.locId, voidInfo.reason)
+        preVoid(axiosFactory!(contextValue.loc!.owner)!, contextValue.locId, voidInfo.reason)
         .then(() => {
             dispatch({ type: 'VOID', voidInfo });
             setRefreshCounter(MAX_REFRESH);
         });
-    }, [ axiosFactory, accounts, contextValue.locId, dispatch ])
+    }, [ axiosFactory, contextValue.locId, dispatch, contextValue.loc ])
 
     const addLinkFunction = useCallback(async (otherLoc: LocRequest, nature: string) => {
-        await modelAddLink(axiosFactory!(accounts!.current!.address)!, {
+        await modelAddLink(axiosFactory!(contextValue.loc!.owner)!, {
             locId: contextValue.locId.toString(),
             target: otherLoc.id,
             nature
@@ -552,11 +552,11 @@ export function LocContextProvider(props: Props) {
             submitter: contextValue.loc!.owner,
             linkDetailsPath: contextValue.detailsPath(otherLocId, otherLoc.locType)
         }, true));
-    }, [ axiosFactory, accounts, contextValue, addLocItemFunction ])
+    }, [ axiosFactory, contextValue, addLocItemFunction ])
 
     const addMetadataFunction = useCallback(async (name: string, value: string) => {
         const submitter = accounts!.current!.address;
-        await modelAddMetadata(axiosFactory!(submitter), {
+        await modelAddMetadata(axiosFactory!(contextValue.loc!.owner), {
             locId: contextValue.locId.toString(),
             name,
             value,
@@ -566,11 +566,11 @@ export function LocContextProvider(props: Props) {
             {
                 metadataItem: { name, value, submitter },
             }, true))
-    }, [ axiosFactory, accounts, contextValue.locId, addLocItemFunction ])
+    }, [ axiosFactory, accounts, contextValue.locId, addLocItemFunction, contextValue.loc ])
 
     const addFileFunction = useCallback(async (name: string, file: File, nature: string) => {
         const submitter = accounts!.current!.address;
-        const { hash } = await modelAddFile(axiosFactory!(submitter)!, {
+        const { hash } = await modelAddFile(axiosFactory!(contextValue.loc!.owner)!, {
             file,
             locId: contextValue.locId.toString(),
             fileName: name,
@@ -586,7 +586,7 @@ export function LocContextProvider(props: Props) {
                 },
                 name
             }, true))
-    }, [ axiosFactory, accounts, contextValue.locId, addLocItemFunction ])
+    }, [ axiosFactory, accounts, contextValue.locId, addLocItemFunction, contextValue.loc ])
 
     const refreshFunction = useCallback(() => {
         dispatch({ type: 'RESET', locId: contextValue.locId });
