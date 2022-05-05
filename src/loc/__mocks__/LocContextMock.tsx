@@ -57,10 +57,16 @@ export function setLoc(request: LegalOfficerCase) {
 
 export let refresh = jest.fn();
 
+export let requestSof = jest.fn();
+
+export function setRequestSof(fn: jest.Mock) {
+    requestSof = fn;
+}
+
 export function useLocContext() {
     return {
         linkLoc: {
-            
+
         },
         locId,
         locRequest,
@@ -68,6 +74,7 @@ export function useLocContext() {
         closeExtrinsic: () => mockSignAndSubmit(() => _closeExtrinsicSent = true),
         close,
         loc,
-        refresh
+        refresh,
+        requestSof
     };
 }

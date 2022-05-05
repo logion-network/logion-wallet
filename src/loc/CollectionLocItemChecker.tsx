@@ -17,12 +17,13 @@ import { fullCollectionItemCertificate } from "../PublicPaths";
 
 import "./CollectionLocItemChecker.css"
 import StatementOfFactsButton from "./statement/StatementOfFactsButton";
-import { useDirectoryContext } from "../directory/DirectoryContext";
-import { toItemId } from './types';
+import { toItemId, Viewer } from './types';
+import StatementOfFactsRequestButton from "./statement/StatementOfFactsRequestButton";
 
 export interface Props {
     locId: UUID;
     collectionItem?: CollectionItem;
+    viewer: Viewer;
 }
 
 export type CheckResult = 'NONE' | 'POSITIVE' | 'NEGATIVE';
@@ -31,7 +32,6 @@ export default function CollectionLocItemChecker(props: Props) {
 
     const { colorTheme } = useCommonContext();
     const { locId } = props;
-    const { isLegalOfficer } = useDirectoryContext();
     const { accounts } = useCommonContext();
     const { api } = useLogionChain();
 
@@ -79,6 +79,7 @@ export default function CollectionLocItemChecker(props: Props) {
                 active: true
             });
             setItemId(props.collectionItem.id);
+            setItem(props.collectionItem);
             setState('POSITIVE');
         } else if(!props.collectionItem && managedCheck) {
             setManagedCheck(undefined);
@@ -124,10 +125,17 @@ export default function CollectionLocItemChecker(props: Props) {
                                     />
                                 </Col>
                                 <Col className="buttons">
-                                    <Button onClick={ checkData } disabled={ itemId ? false : true }><Icon icon={{id: "search"}} /> Check Item ID</Button>
+                                    <Button onClick={ checkData } disabled={ !itemId }><Icon
+                                        icon={ { id: "search" } } /> Check Item ID</Button>
                                     {
-                                        state === "POSITIVE" && item !== undefined && isLegalOfficer(accounts.current.address) &&
-                                        <StatementOfFactsButton itemId={ toItemId(itemId) } itemDescription={ item.description } />
+                                        state === "POSITIVE" && item !== undefined &&
+                                        (
+                                            (props.viewer === 'LegalOfficer' &&
+                                                <StatementOfFactsButton itemId={ toItemId(itemId) }
+                                                                        itemDescription={ item.description } />) ||
+                                            (props.viewer === 'User' &&
+                                                <StatementOfFactsRequestButton itemId={ toItemId(itemId) } />)
+                                        )
                                     }
                                 </Col>
                             </Row>

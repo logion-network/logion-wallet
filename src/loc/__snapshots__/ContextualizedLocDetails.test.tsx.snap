@@ -490,6 +490,28 @@ exports[`ContextualizedLocDetails renders for LO 1`] = `
                 </div>
               </div>
             </div>
+            <div
+              className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12 col"
+            >
+              <div
+                className="sof-preview"
+              >
+                <div
+                  className="StatementOfFactsButtonDropdownItem dropdown"
+                >
+                  <button
+                    aria-expanded={false}
+                    className="Button dropdown-toggle btn btn-primary"
+                    disabled={false}
+                    id="StatementOfFacts-dropdown-toggle"
+                    onClick={[Function]}
+                    type="button"
+                  >
+                    Statement of facts
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div
@@ -1113,6 +1135,23 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
                     />
                   </button>
                 </div>
+              </div>
+            </div>
+            <div
+              className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12 col"
+            >
+              <div
+                className="sof-request"
+              >
+                <button
+                  className="Button btn btn-primary"
+                  disabled={false}
+                  onClick={[Function]}
+                  style={Object {}}
+                  type="button"
+                >
+                  Request a Statement of Facts
+                </button>
               </div>
             </div>
           </div>

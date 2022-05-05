@@ -49,7 +49,7 @@ export interface Props {
 
 export default function ContextualizedLocDetails(props: Props) {
     const { api } = useLogionChain();
-    const { colorTheme, accounts } = useCommonContext();
+    const { colorTheme } = useCommonContext();
     const { pendingProtectionRequests, pendingRecoveryRequests } = useLegalOfficerContext();
     const navigate = useNavigate();
     const location = useLocation();
@@ -395,14 +395,16 @@ export default function ContextualizedLocDetails(props: Props) {
             <CertificateAndLimits
                 locId={ locId }
                 loc={ loc }
+                viewer={ props.viewer }
             />
             { loc.locType === 'Collection' && loc.closed &&
                 <CollectionLocItemChecker
                     locId={ locId }
                     collectionItem={ collectionItem }
+                    viewer={ props.viewer }
                 />
             }
-            { loc.locType === 'Collection' && loc.closed && loc.voidInfo === undefined && !accounts?.current?.isLegalOfficer &&
+            { loc.locType === 'Collection' && loc.closed && loc.voidInfo === undefined && props.viewer === 'User' &&
                 <ItemImporter
                     locId={ locId }
                     collectionItem={ collectionItem }

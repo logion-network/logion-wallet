@@ -193,6 +193,19 @@ export async function createLocRequest(
     return response.data;
 }
 
+export interface CreateSofRequest {
+    locId: string;
+    itemId?: string;
+}
+
+export async function createSofRequest(
+    axios: AxiosInstance,
+    request: CreateSofRequest,
+): Promise<LocRequest> {
+    const response = await axios.post(`/api/loc-request/sof`, request);
+    return response.data;
+}
+
 export async function confirmLocFile(
     axios: AxiosInstance,
     locId: UUID,

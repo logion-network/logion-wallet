@@ -18,16 +18,17 @@ import StaticLabelValue from '../common/StaticLabelValue';
 import './CertificateAndLimits.css';
 import StatementOfFactsButton from './statement/StatementOfFactsButton';
 import { useCommonContext } from '../common/CommonContext';
-import { useDirectoryContext } from '../directory/DirectoryContext';
+import StatementOfFactsRequestButton from "./statement/StatementOfFactsRequestButton";
+import { Viewer } from "./types";
 
 export interface Props {
     locId: UUID;
     loc: LegalOfficerCase;
+    viewer: Viewer
 }
 
 export default function CertificateAndLimits(props: Props) {
     const { api } = useLogionChain();
-    const { isLegalOfficer } = useDirectoryContext();
     const { accounts } = useCommonContext();
 
     const [ dateLimit, setDateLimit ] = useState("-");
@@ -84,10 +85,18 @@ export default function CertificateAndLimits(props: Props) {
                     </Col>
                 }
                 {
-                    props.loc.locType !== 'Collection' && isLegalOfficer(accounts.current.address) &&
+                    props.loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' &&
                     <Col className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12">
-                        <div className="preview">
+                        <div className="sof-preview">
                             <StatementOfFactsButton/>
+                        </div>
+                    </Col>
+                }
+                {
+                    props.loc.locType !== 'Collection' && props.viewer === 'User' &&
+                    <Col className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12">
+                        <div className="sof-request">
+                            <StatementOfFactsRequestButton/>
                         </div>
                     </Col>
                 }
