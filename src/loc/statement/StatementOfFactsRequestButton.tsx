@@ -1,45 +1,69 @@
 import Button from "../../common/Button";
 import { useLocContext } from "../LocContext";
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import Dialog from "../../common/Dialog";
 import { useCommonContext } from "../../common/CommonContext";
+import { locRequestsPath } from "../../wallet-user/UserRouter";
+
+type Status = 'Idle' | 'Confirming' | 'Requesting' | 'Requested';
 
 export default function StatementOfFactsRequestButton(props: { itemId?: string }) {
 
     const { requestSof } = useLocContext();
     const { refresh } = useCommonContext()
-    const [ confirmVisible, setConfirmVisible ] = useState<boolean>(false)
+    const [ status, setStatus ] = useState<Status>('Idle')
 
-    if (!requestSof) {
-        return null;
-    }
+    const confirmCallback = useCallback(() => {
+        setStatus('Requesting')
+        requestSof!(props.itemId);
+        refresh();
+        setStatus('Requested');
+    }, [ props.itemId, refresh, requestSof ])
 
     return (
         <>
-            <Button onClick={ () => setConfirmVisible(true) }>Request a Statement of Facts</Button>
+            <Button onClick={ () => setStatus('Confirming') }>
+                Request a Statement of Facts
+            </Button>
             <Dialog
-                show={ confirmVisible }
-                size="sm"
+                show={ status === 'Confirming' || status === 'Requesting' }
+                size="lg"
                 actions={ [
                     {
                         id: "cancel",
-                        callback: () => setConfirmVisible(false),
+                        callback: () => setStatus('Idle'),
                         buttonText: 'Cancel',
                         buttonVariant: 'secondary',
                     },
                     {
                         id: "submit",
-                        callback: () => {
-                            requestSof(props.itemId);
-                            setConfirmVisible(false);
-                            refresh();
-                        },
-                        buttonText: 'Submit',
+                        callback: confirmCallback,
+                        buttonText: 'Confirm',
                         buttonVariant: 'primary',
+                        disabled: status === 'Requesting'
                     }
                 ] }
             >
-                <p>You are about to request your Legal Officer to create a Statement of Facts</p>
+                <p>You are about to request an official Statement of Facts with regards to this Legal Officer Case
+                    content to the Legal Officer in charge. Do you confirm that request?</p>
+            </Dialog>
+            <Dialog
+                show={ status === 'Requested' }
+                size={ "lg" }
+                actions={ [
+                    {
+                        id: "close",
+                        callback: () => setStatus('Idle'),
+                        buttonText: 'Close',
+                        buttonVariant: 'primary'
+                    }
+                ] }
+            >
+                <p>Your request has been submitted: a Legal Officer Case that will secure the requested Statement of
+                    Facts would be created if this request is accepted by the Legal Officer in charge. You can follow
+                    the status of that Legal Officer Case which will contain the requested Statement of Facts on
+                    your <a href={ locRequestsPath("Transaction") }>Transaction LOC dashboard</a>
+                </p>
             </Dialog>
         </>
     )
