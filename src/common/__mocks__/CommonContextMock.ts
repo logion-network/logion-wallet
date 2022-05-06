@@ -52,6 +52,8 @@ export let openedLocRequests: Record<DataLocType, any[]> | null = null;
 
 export let closedLocRequests: Record<DataLocType, any[]> | null = null;
 
+export let openedIdentityLocs: RequestAndLoc[] | null = null;
+
 export let refresh = jest.fn();
 
 export let authenticate = jest.fn();
@@ -82,6 +84,7 @@ export function useCommonContext() {
         openedIdentityLocsByType,
         closedIdentityLocsByType,
         voidIdentityLocsByType,
+        openedIdentityLocs,
         availableLegalOfficers: legalOfficers
     };
     return commonContext;
@@ -127,6 +130,10 @@ export function setPendingLocRequests(requests: any[]) {
 
 export function setClosedLocRequests(requests: any[]) {
     closedLocRequests = { Collection: [], Transaction: requests };
+}
+
+export function setOpenedIdentityLocs(requests: any[]) {
+    openedIdentityLocs = requests;
 }
 
 export function setOpenedIdentityLocsByType(locs: Record<IdentityLocType, RequestAndLoc[]>) {

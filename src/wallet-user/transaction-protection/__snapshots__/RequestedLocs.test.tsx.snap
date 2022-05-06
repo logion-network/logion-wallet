@@ -117,10 +117,17 @@ exports[`Renders pending requests 1`] = `
           }
         >
           <div
-            className="regular-cell"
+            className="regular-cell overflowing"
             style={Object {}}
           >
-            LOC description
+            <span
+              onBlur={[Function]}
+              onFocus={[Function]}
+              onMouseOut={[Function]}
+              onMouseOver={[Function]}
+            >
+              LOC description
+            </span>
           </div>
         </div>
         <div

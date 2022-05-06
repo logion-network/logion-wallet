@@ -65,7 +65,7 @@ export default function PendingLocRequests(props: Props) {
                     },
                     {
                         header: "Description",
-                        render: request => <Cell content={ request.description } />,
+                        render: request => <Cell content={ request.description } overflowing tooltipId="description" />,
                         align: "left",
                     },
                     {

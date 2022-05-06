@@ -28,14 +28,6 @@
     right: 25px;
 }
 
-.UserHome .open-transactions {
-    margin-top: 30px;
-}
-
-.UserHome .pending-transactions {
-    margin-top: 30px;
-}
-
 @media (max-width: 1350px) {
     .UserHome .character-container img {
         width: 150px;
