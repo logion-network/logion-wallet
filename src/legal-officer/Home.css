@@ -22,27 +22,15 @@
     right: 25px;
 }
 
-.LegalOfficerHome .open-transactions {
-    margin-top: 30px;
-}
-
-.LegalOfficerHome .pending-transactions {
-    margin-top: 30px;
-}
-
 .LegalOfficerHome .identities {
     position: relative;
-    margin-top: 60px;
+    margin-top: 30px;
 }
 
 .LegalOfficerHome .identities-button {
     position: absolute;
     top: 25px;
     right: 25px;
-}
-
-.LegalOfficerHome .open-identities {
-    margin-top: 30px;
 }
 
 @media (max-width: 1350px) {

@@ -3,7 +3,13 @@ jest.mock("../common/CommonContext");
 jest.mock("logion-api/dist/Balances");
 
 import { DEFAULT_COIN_BALANCE, DEFAULT_TRANSACTION } from "../common/TestData";
-import { setBalances, setOpenedLocRequests, setPendingLocRequests, setTransactions } from "../common/__mocks__/CommonContextMock";
+import {
+    setBalances,
+    setOpenedLocRequests,
+    setPendingLocRequests,
+    setTransactions,
+    setOpenedIdentityLocs
+} from "../common/__mocks__/CommonContextMock";
 import { shallowRender } from "../tests";
 import Home from "./Home";
 
@@ -28,6 +34,7 @@ test("renders", () => {
             status: "REQUESTED"
         }
     ]);
+    setOpenedIdentityLocs([])
     const tree = shallowRender(<Home />)
     expect(tree).toMatchSnapshot();
 });
