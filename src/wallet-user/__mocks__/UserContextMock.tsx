@@ -1,5 +1,5 @@
 import { ApiPromise } from '@polkadot/api';
-import { RecoveryConfig } from "logion-api/dist/Recovery";
+import { RecoveryConfig } from "@logion/node-api/dist/Recovery";
 
 import { DEFAULT_LEGAL_OFFICER } from "../../common/TestData";
 import { TEST_WALLET_USER } from '../TestData';

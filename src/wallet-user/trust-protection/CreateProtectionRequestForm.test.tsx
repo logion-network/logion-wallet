@@ -1,5 +1,5 @@
-jest.mock('logion-api/dist/Accounts');
-jest.mock('logion-api/dist/Recovery');
+jest.mock('@logion/node-api/dist/Accounts');
+jest.mock('@logion/node-api/dist/Recovery');
 jest.mock('../../logion-chain/Signature');
 jest.mock('../UserContext');
 jest.mock('../../logion-chain');
@@ -12,7 +12,7 @@ import userEvent from "@testing-library/user-event";
 import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from "../../common/TestData";
 import { setCreateProtectionRequest } from "../__mocks__/UserContextMock";
 import { clickByName, shallowRender } from "../../tests";
-import { setActiveRecoveryInProgress } from "../../__mocks__/logion-api/dist/RecoveryMock";
+import { setActiveRecoveryInProgress } from "../../__mocks__/@logion/node-api/dist/RecoveryMock";
 import { finalizeSubmission, resetSubmitting, submitting } from "../../logion-chain/__mocks__/SignatureMock";
 import { TEST_WALLET_USER2 } from "../TestData";
 

@@ -1,8 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
 import { Dropdown } from "react-bootstrap";
-import { UUID } from "logion-api/dist/UUID";
-import { LegalOfficerCase } from "logion-api/dist/Types";
-import { getLegalOfficerCase } from "logion-api/dist/LogionLoc";
+import { UUID } from "@logion/node-api/dist/UUID";
+import { LegalOfficerCase } from "@logion/node-api/dist/Types";
+import { getLegalOfficerCase } from "@logion/node-api/dist/LogionLoc";
 
 import { useCommonContext } from "../../common/CommonContext";
 import { useDirectoryContext } from "../../directory/DirectoryContext";

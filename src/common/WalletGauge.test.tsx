@@ -1,10 +1,10 @@
 import { shallowRender } from '../tests';
-import { getCoin } from "logion-api/dist/Balances";
-import { PrefixedNumber, MILLI } from 'logion-api/dist/numbers';
+import { getCoin } from "@logion/node-api/dist/Balances";
+import { PrefixedNumber, MILLI } from '@logion/node-api/dist/numbers';
 
 import WalletGauge from './WalletGauge';
 
-jest.unmock('logion-api/dist/Balances');
+jest.unmock('@logion/node-api/dist/Balances');
 
 test("renders arc", () => {
     testWalletGauge('arc');

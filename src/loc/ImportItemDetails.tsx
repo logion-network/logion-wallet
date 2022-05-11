@@ -1,4 +1,4 @@
-import { CollectionItem } from "logion-api/dist/Types";
+import { CollectionItem } from "@logion/node-api/dist/Types";
 
 import './ImportItemDetails.css';
 

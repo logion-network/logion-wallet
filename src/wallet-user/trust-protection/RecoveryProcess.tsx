@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { getBalances } from "logion-api/dist/Balances";
-import { getVaultAddress } from "logion-api/dist/Vault";
+import { getBalances } from "@logion/node-api/dist/Balances";
+import { getVaultAddress } from "@logion/node-api/dist/Vault";
 
 import { useLogionChain } from '../../logion-chain';
 

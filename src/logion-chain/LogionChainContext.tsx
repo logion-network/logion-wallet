@@ -6,8 +6,8 @@ import { ApiPromise } from '@polkadot/api';
 import { Header, Extrinsic, Hash, Block } from '@polkadot/types/interfaces';
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 
-import { ExtrinsicsAndHead } from 'logion-api/dist/Blocks';
-import { buildApi } from 'logion-api/dist/Connection';
+import { ExtrinsicsAndHead } from '@logion/node-api/dist/Blocks';
+import { buildApi } from '@logion/node-api/dist/Connection';
 import { getEndpoints, NodeMetadata } from './Connection';
 import { enableExtensions } from './Keys';
 

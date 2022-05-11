@@ -1,7 +1,7 @@
 import { act } from 'react-test-renderer';
 
 import { shallowRender } from '../tests';
-import { CLOSED_IDENTITY_LOC_ID, UNPREFIXED_FILE_HASH } from '../__mocks__/logion-api/dist/LogionLocMock';
+import { CLOSED_IDENTITY_LOC_ID, UNPREFIXED_FILE_HASH } from '../__mocks__/@logion/node-api/dist/LogionLocMock';
 import { setParams, setSearchParams } from '../__mocks__/ReactRouterMock';
 
 import Certificate from './Certificate';
@@ -12,7 +12,7 @@ import { sha256Hex } from '../common/__mocks__/HashMock';
 jest.mock("react-router");
 jest.mock("react-router-dom");
 jest.mock("../logion-chain");
-jest.mock("logion-api/dist/LogionLoc");
+jest.mock("@logion/node-api/dist/LogionLoc");
 jest.mock("../common/api");
 jest.mock("../common/hash");
 jest.mock("../common/Model");

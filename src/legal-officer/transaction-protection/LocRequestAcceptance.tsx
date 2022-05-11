@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
-import { UUID } from 'logion-api/dist/UUID';
-import { createCollectionLoc, createPolkadotTransactionLoc } from 'logion-api/dist/LogionLoc';
-import { ChainTime } from 'logion-api/dist/ChainTime';
+import { UUID } from '@logion/node-api/dist/UUID';
+import { createCollectionLoc, createPolkadotTransactionLoc } from '@logion/node-api/dist/LogionLoc';
+import { ChainTime } from '@logion/node-api/dist/ChainTime';
 
 import { useLogionChain } from '../../logion-chain';
 import { useCommonContext } from '../../common/CommonContext';

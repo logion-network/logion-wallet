@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { Form } from "react-bootstrap";
-import { UUID } from "logion-api/dist/UUID";
+import { UUID } from "@logion/node-api/dist/UUID";
 
 import Button from "../common/Button";
 import { useCommonContext } from "../common/CommonContext";

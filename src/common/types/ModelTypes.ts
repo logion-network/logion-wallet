@@ -1,4 +1,4 @@
-import { File, LocType, MetadataItem, Link, CollectionItem } from 'logion-api/dist/Types';
+import { File, LocType, MetadataItem, Link, CollectionItem } from '@logion/node-api/dist/Types';
 
 import Identity from './Identity';
 import PostalAddress from './PostalAddress';

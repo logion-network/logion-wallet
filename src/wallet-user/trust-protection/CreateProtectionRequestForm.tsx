@@ -2,8 +2,8 @@ import { useState, useCallback, useEffect } from 'react';
 import { Row, Col } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useForm, Controller } from 'react-hook-form';
-import { getActiveRecovery, initiateRecovery, getRecoveryConfig } from 'logion-api/dist/Recovery';
-import { isValidAccountId } from 'logion-api/dist/Accounts';
+import { getActiveRecovery, initiateRecovery, getRecoveryConfig } from '@logion/node-api/dist/Recovery';
+import { isValidAccountId } from '@logion/node-api/dist/Accounts';
 
 import Button from "../../common/Button";
 import { FullWidthPane } from "../../common/Dashboard";

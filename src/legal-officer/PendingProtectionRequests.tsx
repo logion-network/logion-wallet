@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { useNavigate } from "react-router-dom";
-import { UUID } from 'logion-api/dist/UUID';
+import { UUID } from '@logion/node-api/dist/UUID';
 
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Form from 'react-bootstrap/Form';

@@ -1,19 +1,19 @@
 import userEvent from '@testing-library/user-event';
 import { render, screen, waitFor, getByRole } from '@testing-library/react';
-import { PrefixedNumber, MILLI } from "logion-api/dist/numbers";
-import { CoinBalance } from "logion-api/dist/Balances";
+import { PrefixedNumber, MILLI } from "@logion/node-api/dist/numbers";
+import { CoinBalance } from "@logion/node-api/dist/Balances";
 
 import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from "../../common/TestData";
-import { setGetBalances } from '../../__mocks__/logion-api/dist/BalancesMock';
+import { setGetBalances } from '../../__mocks__/@logion/node-api/dist/BalancesMock';
 import { setRecoveredAddress, setRecoveryConfig } from '../__mocks__/UserContextMock';
 
 import WalletRecoveryProcessTab from "./WalletRecoveryProcessTab";
 import { finalizeSubmission } from "../../logion-chain/__mocks__/SignatureMock";
 
 jest.mock('../../logion-chain');
-jest.mock('logion-api/dist/Balances');
+jest.mock('@logion/node-api/dist/Balances');
 jest.mock('../../logion-chain/Signature');
-jest.mock("logion-api/dist/Recovery");
+jest.mock("@logion/node-api/dist/Recovery");
 jest.mock('../../common/CommonContext');
 jest.mock('../UserContext');
 

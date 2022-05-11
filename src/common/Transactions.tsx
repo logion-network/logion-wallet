@@ -3,7 +3,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
-import { Coin, CoinBalance } from 'logion-api/dist/Balances';
+import { Coin, CoinBalance } from '@logion/node-api/dist/Balances';
 
 import { FullWidthPane } from './Dashboard';
 import Frame from './Frame';

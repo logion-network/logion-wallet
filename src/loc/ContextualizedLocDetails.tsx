@@ -2,10 +2,10 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router";
 import { Col, OverlayTrigger } from "react-bootstrap";
 import queryString from 'query-string';
-import { UUID } from "logion-api/dist/UUID";
-import { format } from "logion-api/dist/datetime";
-import { isLogionIdentityLoc, isLogionDataLoc, CollectionItem } from "logion-api/dist/Types";
-import { getCollectionItem } from "logion-api/dist/LogionLoc";
+import { UUID } from "@logion/node-api/dist/UUID";
+import { format } from "@logion/node-api/dist/datetime";
+import { isLogionIdentityLoc, isLogionDataLoc, CollectionItem } from "@logion/node-api/dist/Types";
+import { getCollectionItem } from "@logion/node-api/dist/LogionLoc";
 import Tooltip from 'react-bootstrap/Tooltip';
 
 import { useCommonContext } from "../common/CommonContext";

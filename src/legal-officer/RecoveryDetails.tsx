@@ -1,8 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
 import { Col, Row } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
-import { vouchRecovery } from 'logion-api/dist/Recovery';
-import { UUID } from 'logion-api/dist/UUID';
+import { vouchRecovery } from '@logion/node-api/dist/Recovery';
+import { UUID } from '@logion/node-api/dist/UUID';
 
 import { useCommonContext } from "../common/CommonContext";
 import { useLegalOfficerContext } from "./LegalOfficerContext";

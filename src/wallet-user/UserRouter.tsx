@@ -1,6 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
-import { UUID } from 'logion-api/dist/UUID';
-import { LocType } from "logion-api/dist/Types";
+import { UUID } from '@logion/node-api/dist/UUID';
+import { LocType } from "@logion/node-api/dist/Types";
 
 import { USER_PATH, locRequestsRelativePath, dataLocDetailsRelativePath } from '../RootPaths';
 

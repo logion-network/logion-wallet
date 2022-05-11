@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { createRecovery, claimRecovery } from 'logion-api/dist/Recovery';
+import { createRecovery, claimRecovery } from '@logion/node-api/dist/Recovery';
 
 import { useLogionChain } from '../../logion-chain';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';

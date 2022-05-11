@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { vouchRecovery } from "logion-api/dist/Recovery";
+import { vouchRecovery } from "@logion/node-api/dist/Recovery";
 import { Col, Row } from "react-bootstrap";
 
 import Button from "../common/Button";

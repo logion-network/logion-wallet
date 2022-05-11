@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import csv from "csv-parser";
-import { UUID } from "logion-api/dist/UUID";
-import { getCollectionItem, addCollectionItem } from "logion-api/dist/LogionLoc";
+import { UUID } from "@logion/node-api/dist/UUID";
+import { getCollectionItem, addCollectionItem } from "@logion/node-api/dist/LogionLoc";
 
 import Dialog from "../common/Dialog";
 import FileSelectorButton from "../common/FileSelectorButton";

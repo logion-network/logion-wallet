@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { RecoveryConfig } from 'logion-api/dist/Recovery';
-import { DataLocType } from "logion-api/dist/Types";
+import { RecoveryConfig } from '@logion/node-api/dist/Recovery';
+import { DataLocType } from "@logion/node-api/dist/Types";
 
 import { useCommonContext } from '../../common/CommonContext';
 import { CreateLocRequest, createLocRequest } from '../../common/Model';

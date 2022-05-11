@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { prefixedLogBalance, SYMBOL } from "logion-api/dist/Balances";
+import { prefixedLogBalance, SYMBOL } from "@logion/node-api/dist/Balances";
 
 import { SignAndSubmit } from "../ExtrinsicSubmitter";
 import { useLogionChain } from "../logion-chain";

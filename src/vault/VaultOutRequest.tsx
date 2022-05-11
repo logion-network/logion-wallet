@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
-import { LGNT_SMALLEST_UNIT, SYMBOL } from "logion-api/dist/Balances";
-import { NONE, PrefixedNumber } from "logion-api/dist/numbers";
-import { getRecoveryConfig } from "logion-api/dist/Recovery";
-import { requestVaultTransfer } from "logion-api/dist/Vault";
-import { isValidAccountId } from 'logion-api/dist/Accounts';
+import { LGNT_SMALLEST_UNIT, SYMBOL } from "@logion/node-api/dist/Balances";
+import { NONE, PrefixedNumber } from "@logion/node-api/dist/numbers";
+import { getRecoveryConfig } from "@logion/node-api/dist/Recovery";
+import { requestVaultTransfer } from "@logion/node-api/dist/Vault";
+import { isValidAccountId } from '@logion/node-api/dist/Accounts';
 
 import AmountControl, { Amount, validateAmount } from "../common/AmountControl";
 import Button from "../common/Button";

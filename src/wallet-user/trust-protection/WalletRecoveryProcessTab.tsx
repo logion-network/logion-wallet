@@ -1,8 +1,8 @@
 import { useState, useCallback, useEffect } from "react";
 import { Spinner } from "react-bootstrap";
-import { CoinBalance, buildTransferCall, getBalances } from "logion-api/dist/Balances";
-import { asRecovered } from "logion-api/dist/Recovery";
-import { PrefixedNumber, NONE } from "logion-api/dist/numbers";
+import { CoinBalance, buildTransferCall, getBalances } from "@logion/node-api/dist/Balances";
+import { asRecovered } from "@logion/node-api/dist/Recovery";
+import { PrefixedNumber, NONE } from "@logion/node-api/dist/numbers";
 
 import Table, { Cell, EmptyTableMessage } from "../../common/Table";
 import Icon from "../../common/Icon";

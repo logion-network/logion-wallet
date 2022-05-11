@@ -1,5 +1,5 @@
 import { AxiosInstance } from "axios";
-import { LegalOfficerCase } from "logion-api/dist/Types";
+import { LegalOfficerCase } from "@logion/node-api/dist/Types";
 
 import Table, { Cell, DateTimeCell, EmptyTableMessage, ActionCell } from "../common/Table";
 import StatusCell from "../common/StatusCell";

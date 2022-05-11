@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useReducer, Reducer, useCallback } from "react";
 import { InjectedAccountWithMeta } from '@polkadot/extension-inject/types';
 import moment from 'moment';
-import { CoinBalance, getBalances } from 'logion-api/dist/Balances';
-import { LegalOfficerCase, IdentityLocType, LocType, DataLocType } from "logion-api/dist/Types";
-import { toDecimalString, UUID } from "logion-api/dist/UUID";
-import { getLegalOfficerCasesMap } from "logion-api/dist/LogionLoc";
+import { CoinBalance, getBalances } from '@logion/node-api/dist/Balances';
+import { LegalOfficerCase, IdentityLocType, LocType, DataLocType } from "@logion/node-api/dist/Types";
+import { toDecimalString, UUID } from "@logion/node-api/dist/UUID";
+import { getLegalOfficerCasesMap } from "@logion/node-api/dist/LogionLoc";
 
 import { useLogionChain } from '../logion-chain';
 import { LegalOfficer } from '../directory/DirectoryApi';

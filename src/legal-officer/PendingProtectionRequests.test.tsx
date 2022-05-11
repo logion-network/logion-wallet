@@ -1,4 +1,4 @@
-jest.mock('logion-api/dist/LogionLoc');
+jest.mock('@logion/node-api/dist/LogionLoc');
 jest.mock('../logion-chain/Signature');
 jest.mock('./LegalOfficerContext');
 jest.mock('../logion-chain');
@@ -14,7 +14,7 @@ import { setPendingProtectionRequests } from './__mocks__/LegalOfficerContextMoc
 import { setAcceptProtectionRequest, setRejectProtectionRequest } from '../loc/__mocks__/ModelMock';
 import { PENDING_PROTECTION_REQUESTS } from './TestData';
 import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT, axiosMock } from '../common/__mocks__/CommonContextMock';
-import { CLOSED_IDENTITY_LOC_ID } from '../__mocks__/logion-api/dist/LogionLocMock';
+import { CLOSED_IDENTITY_LOC_ID } from '../__mocks__/@logion/node-api/dist/LogionLocMock';
 
 describe("PendingProtectionRequests", () => {
 

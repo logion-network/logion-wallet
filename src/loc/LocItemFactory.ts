@@ -1,5 +1,5 @@
-import { UUID } from "logion-api/dist/UUID";
-import { File, Link, MetadataItem } from "logion-api/dist/Types";
+import { UUID } from "@logion/node-api/dist/UUID";
+import { File, Link, MetadataItem } from "@logion/node-api/dist/Types";
 
 import { LocItem } from "./types";
 import { LocFile, LocMetadataItem, LocLink } from "../common/types/ModelTypes";

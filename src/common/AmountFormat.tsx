@@ -1,4 +1,4 @@
-import { PrefixedNumber } from "logion-api/dist/numbers";
+import { PrefixedNumber } from "@logion/node-api/dist/numbers";
 
 export default function AmountFormat(props: { amount?: PrefixedNumber | undefined }) {
 

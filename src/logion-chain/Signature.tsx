@@ -1,12 +1,12 @@
 import { web3FromAddress } from '@polkadot/extension-dapp';
 import { ISubmittableResult } from '@polkadot/types/types';
 import type { SubmittableExtrinsic } from '@polkadot/api/promise/types';
-import { toHex } from 'logion-api/dist/Codec';
+import { toHex } from '@logion/node-api/dist/Codec';
 import { Hash } from 'fast-sha256';
 import { base64Encode } from '@polkadot/util-crypto';
 import { TextEncoder } from '@polkadot/x-textencoder';
 import { Moment } from 'moment';
-import { toIsoString } from 'logion-api/dist/datetime';
+import { toIsoString } from '@logion/node-api/dist/datetime';
 
 export type SignedTransaction = ISubmittableResult;
 

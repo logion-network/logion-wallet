@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
-import { LGNT_SMALLEST_UNIT, prefixedLogBalance, SYMBOL } from "logion-api/dist/Balances";
-import { PrefixedNumber } from "logion-api/dist/numbers";
-import { approveVaultTransfer } from "logion-api/dist/Vault";
+import { LGNT_SMALLEST_UNIT, prefixedLogBalance, SYMBOL } from "@logion/node-api/dist/Balances";
+import { PrefixedNumber } from "@logion/node-api/dist/numbers";
+import { approveVaultTransfer } from "@logion/node-api/dist/Vault";
 
 import ExtrinsicSubmitter, { SignAndSubmit } from "../../ExtrinsicSubmitter";
 import { useLogionChain } from "../../logion-chain";

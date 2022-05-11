@@ -1,7 +1,7 @@
 import { Mock } from 'moq.ts';
 import { AxiosInstance } from 'axios';
 import moment from 'moment';
-import { IdentityLocType, DataLocType } from "logion-api/dist/Types";
+import { IdentityLocType, DataLocType } from "@logion/node-api/dist/Types";
 
 import { TEST_WALLET_USER } from '../../wallet-user/TestData';
 import { COLOR_THEME, DEFAULT_LEGAL_OFFICER } from '../TestData';
