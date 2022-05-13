@@ -42,6 +42,8 @@ import { useLogionChain } from "../logion-chain";
 import ItemImporter from "./ItemImporter";
 
 import "./ContextualizedLocDetails.css";
+import { useDirectoryContext } from "../directory/DirectoryContext";
+import { LegalOfficer } from "../directory/DirectoryApi";
 
 export interface Props {
     viewer: Viewer;
@@ -58,6 +60,8 @@ export default function ContextualizedLocDetails(props: Props) {
     const [ createLoc, setCreateLoc ] = useState(false);
     const [ protectionRequest, setProtectionRequest ] = useState<ProtectionRequest | null | undefined>();
     const [ collectionItem, setCollectionItem ] = useState<CollectionItem>();
+    const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer | null>(null)
+    const { getOfficer } = useDirectoryContext()
 
     const checkHash = useCallback(async (hash: string) => {
         setCollectionItem(undefined);
@@ -118,6 +122,15 @@ export default function ContextualizedLocDetails(props: Props) {
             }
         }
     }, [ location, pendingProtectionRequests, protectionRequest, setProtectionRequest, pendingRecoveryRequests ]);
+
+    useEffect(() => {
+        if (api !== null && legalOfficer === null && loc) {
+            const owner = getOfficer(loc.owner);
+            if(owner !== null) {
+                setLegalOfficer(owner);
+            }
+        }
+    }, [ api, legalOfficer, loc, getOfficer, setLegalOfficer ])
 
     if (loc === null || locRequest === null) {
         return null;
@@ -280,35 +293,52 @@ export default function ContextualizedLocDetails(props: Props) {
                                 </Col>
 
                                 <Col md={ 4 } className="closed-icon-container">
-                                    <LocItemDetail
-                                        label="Requested by"
-                                    >
-                                        { locRequest.userIdentity?.firstName || "" } { locRequest.userIdentity?.lastName || "" }
-                                        {
-                                            locRequest.requesterAddress !== null && locRequest.requesterAddress !== undefined &&
-                                            <>
-                                                <OverlayTrigger
-                                                    placement="top"
-                                                    delay={ 500 }
-                                                    overlay={
-                                                        <Tooltip id={ locRequest.requesterAddress }>{ locRequest.requesterAddress }</Tooltip> }>
-                                                    <span><br /> { locRequest.requesterAddress }</span>
-                                                </OverlayTrigger>
-                                            </>
-                                        }
-                                        {
-                                            locRequest.requesterIdentityLoc !== null && locRequest.requesterIdentityLoc !== undefined &&
-                                            <span><br />
+                                    { props.viewer === 'LegalOfficer' &&
+                                        <LocItemDetail
+                                            label="Requested by"
+                                        >
+                                            { locRequest.userIdentity?.firstName || "" } { locRequest.userIdentity?.lastName || "" }
+                                            {
+                                                locRequest.requesterAddress !== null && locRequest.requesterAddress !== undefined &&
+                                                <>
+                                                    <OverlayTrigger
+                                                        placement="top"
+                                                        delay={ 500 }
+                                                        overlay={
+                                                            <Tooltip
+                                                                id={ locRequest.requesterAddress }>{ locRequest.requesterAddress }</Tooltip> }>
+                                                        <span><br /> { locRequest.requesterAddress }</span>
+                                                    </OverlayTrigger>
+                                                </>
+                                            }
+                                            {
+                                                locRequest.requesterIdentityLoc !== null && locRequest.requesterIdentityLoc !== undefined &&
+                                                <span><br />
                                             <NewTabLink
-                                                href={detailsPath(new UUID(locRequest.requesterIdentityLoc), 'Identity')}
+                                                href={ detailsPath(new UUID(locRequest.requesterIdentityLoc), 'Identity') }
                                                 iconId="loc-link"
                                                 inline
                                             >
-                                                <Ellipsis maxWidth="250px">{ new UUID(locRequest.requesterIdentityLoc).toDecimalString() }</Ellipsis>
+                                                <Ellipsis
+                                                    maxWidth="250px">{ new UUID(locRequest.requesterIdentityLoc).toDecimalString() }</Ellipsis>
                                             </NewTabLink>
                                         </span>
-                                        }
-                                    </LocItemDetail>
+                                            }
+                                        </LocItemDetail>
+                                    }
+                                    { props.viewer === 'User' &&
+                                        <LocItemDetail label="Legal Officer in charge">
+                                            { legalOfficer?.name || "" }
+                                            <OverlayTrigger
+                                                placement="top"
+                                                delay={ 500 }
+                                                overlay={
+                                                    <Tooltip
+                                                        id={ locRequest?.ownerAddress }>{ locRequest?.ownerAddress }</Tooltip> }>
+                                                <span><br /> { locRequest?.ownerAddress }</span>
+                                            </OverlayTrigger>
+                                        </LocItemDetail>
+                                    }
                                     {
                                         loc.closed && loc.voidInfo === undefined &&
                                         <div className="closed-icon">
