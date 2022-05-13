@@ -5,6 +5,7 @@ import Identity from './types/Identity';
 import PostalAddress from './types/PostalAddress';
 import { Transaction } from './types/ModelTypes';
 import { ColorTheme, rgbaToHex } from './ColorTheme';
+import { LegalOfficer } from '@logion/client';
 
 export const DEFAULT_LEGAL_OFFICER = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"; // Alice
 export const ANOTHER_LEGAL_OFFICER = "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty"; // Bob
@@ -165,3 +166,74 @@ export const DEFAULT_FAILED_TRANSACTION:Transaction = {
     }
 }
 
+export const PATRICK: LegalOfficer = {
+    name: "Alice",
+    address: DEFAULT_LEGAL_OFFICER,
+    additionalDetails: "",
+    userIdentity: {
+        firstName: "Patrick",
+        lastName: "Gielen",
+        email: "patrick@logion.network",
+        phoneNumber: "+32 498 237 107"
+    },
+    postalAddress: {
+        company: "MODERO",
+        line1: "Huissier de Justice Etterbeek",
+        line2: "Rue Beckers 17",
+        postalCode: "1040",
+        city: "Etterbeek",
+        country: "Belgique"
+    },
+    node: "http://logion.patrick.com",
+    logoUrl: "",
+};
+
+export const GUILLAUME: LegalOfficer = {
+    name: "Guillaume Grain",
+    address: ANOTHER_LEGAL_OFFICER,
+    additionalDetails: "",
+    userIdentity: {
+        firstName: "Patrick",
+        lastName: "Gielen",
+        email: "g.grain@adrastee-lyon.fr",
+        phoneNumber: "+33 4 78 52 87 56"
+    },
+    postalAddress: {
+        company: "SELARL ADRASTEE",
+        line1: "Gare des Brotteaux",
+        line2: "14, place Jules Ferry",
+        postalCode: "69006",
+        city: "LYON",
+        country: "France"
+    },
+    node: "http://logion.guillaume.com",
+    logoUrl: "",
+};
+
+export const ALAIN: LegalOfficer = {
+    name: "Alain Barland",
+    address: A_THIRD_LEGAL_OFFICER,
+    additionalDetails: "",
+    userIdentity: {
+        firstName: "Patrick",
+        lastName: "Gielen",
+        email: "alain.barland@auxilia-conseils.com",
+        phoneNumber: "+33 2 48 67 50 50"
+    },
+    postalAddress: {
+        company: "AUXILIA CONSEILS 18",
+        line1: "Huissiers de Justice associés",
+        line2: "7 rue Jean Francois Champollion Parc Comitec",
+        postalCode: "18000",
+        city: "Bourges",
+        country: "France"
+    },
+    node: "http://logion.alain.com",
+    logoUrl: "",
+};
+
+export const legalOfficers: LegalOfficer[] = [
+    PATRICK,
+    GUILLAUME,
+    ALAIN
+];

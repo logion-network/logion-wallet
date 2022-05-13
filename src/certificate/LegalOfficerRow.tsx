@@ -1,4 +1,4 @@
-import { LegalOfficer } from "../directory/DirectoryApi";
+import { LegalOfficer } from "@logion/client";
 import { LegalOfficerCase } from "@logion/node-api/dist/Types";
 import CertificateCell from "./CertificateCell";
 import { LegalOfficerContactInfo } from "../common/LegalOfficerContactInfo";

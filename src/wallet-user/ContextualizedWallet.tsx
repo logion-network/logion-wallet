@@ -18,8 +18,8 @@ import { useCommonContext } from '../common/CommonContext';
 import { useNavigate } from 'react-router';
 
 export default function ContextualizedWallet() {
-    const { api } = useLogionChain();
-    const { selectAddress, accounts, colorTheme, nodesDown, refresh } = useCommonContext();
+    const { selectAddress, accounts, api } = useLogionChain();
+    const { colorTheme, nodesDown, refresh } = useCommonContext();
     const { pendingProtectionRequests, acceptedProtectionRequests, recoveryConfig, refreshRequests } = useUserContext();
     const [ discardProtection, setDiscardProtection ] = useState<boolean>(false);
     const navigate = useNavigate();

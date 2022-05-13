@@ -1,4 +1,4 @@
-import { DEFAULT_LEGAL_OFFICER_ACCOUNT, setCurrentAddress } from '../common/__mocks__/CommonContextMock';
+import { DEFAULT_LEGAL_OFFICER_ACCOUNT, setCurrentAddress } from '../logion-chain/__mocks__/LogionChainMock';
 import { shallowRender } from '../tests';
 import LegalOfficerRouter from './LegalOfficerRouter';
 

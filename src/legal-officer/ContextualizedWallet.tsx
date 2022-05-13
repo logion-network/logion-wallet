@@ -16,9 +16,11 @@ import {
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import { useLocation } from 'react-router-dom';
 import StatementOfFacts from '../loc/statement/StatementOfFacts';
+import { useLogionChain } from '../logion-chain';
 
 export default function ContextualizedWallet() {
-    const { selectAddress, accounts, colorTheme, refresh, availableLegalOfficers } = useCommonContext();
+    const { selectAddress, accounts } = useLogionChain();
+    const { colorTheme, refresh, availableLegalOfficers } = useCommonContext();
     const { refreshRequests } = useLegalOfficerContext();
     const location = useLocation();
 

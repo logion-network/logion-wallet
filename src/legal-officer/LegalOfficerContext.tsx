@@ -6,6 +6,7 @@ import { fetchProtectionRequests, } from '../common/Model';
 import { useCommonContext } from '../common/CommonContext';
 import { LIGHT_MODE } from './Types';
 import { AxiosFactory } from '../common/api';
+import { useLogionChain } from '../logion-chain';
 
 export interface LegalOfficerContext {
     refreshRequests: ((clearBeforeRefresh: boolean) => void) | null,
@@ -106,7 +107,8 @@ export interface Props {
 }
 
 export function LegalOfficerContextProvider(props: Props) {
-    const { accounts, colorTheme, setColorTheme, axiosFactory, isCurrentAuthenticated } = useCommonContext();
+    const { accounts, axiosFactory, isCurrentAuthenticated } = useLogionChain();
+    const { colorTheme, setColorTheme } = useCommonContext();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
     useEffect(() => {

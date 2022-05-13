@@ -30,8 +30,8 @@ export interface Props {
 
 export default function ImportItems(props: Props) {
     const { width } = useResponsiveContext();
-    const { colorTheme, accounts } = useCommonContext();
-    const { api } = useLogionChain();
+    const { api, accounts } = useLogionChain();
+    const { colorTheme } = useCommonContext();
     const { refresh } = useLocContext();
 
     const [ showImportItems, setShowImportItems ] = useState(false);

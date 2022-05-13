@@ -6,6 +6,7 @@ import { NONE, PrefixedNumber } from "@logion/node-api/dist/numbers";
 import { getRecoveryConfig } from "@logion/node-api/dist/Recovery";
 import { requestVaultTransfer } from "@logion/node-api/dist/Vault";
 import { isValidAccountId } from '@logion/node-api/dist/Accounts';
+import { LegalOfficer } from "@logion/client";
 
 import AmountControl, { Amount, validateAmount } from "../common/AmountControl";
 import Button from "../common/Button";
@@ -19,7 +20,6 @@ import { useLogionChain } from "../logion-chain";
 
 import { buildOptions } from '../wallet-user/trust-protection/SelectLegalOfficer';
 import { VaultApi } from "./VaultApi";
-import { LegalOfficer } from "../directory/DirectoryApi";
 import { signAndSend } from "src/logion-chain/Signature";
 
 interface FormValues {
@@ -29,8 +29,8 @@ interface FormValues {
 }
 
 export default function VaultOutRequest() {
-    const { api } = useLogionChain();
-    const { availableLegalOfficers, colorTheme, accounts, axiosFactory, refresh } = useCommonContext();
+    const { api, accounts, axiosFactory } = useLogionChain();
+    const { availableLegalOfficers, colorTheme, refresh } = useCommonContext();
 
     const [ showDialog, setShowDialog ] = useState(false);
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);

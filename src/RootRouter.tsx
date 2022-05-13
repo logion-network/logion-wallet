@@ -7,12 +7,12 @@ import {
 import { LEGAL_OFFICER_PATH, USER_PATH } from './RootPaths';
 import LegalOfficerMain from './legal-officer/Main';
 import UserMain from './wallet-user/Main';
-import { useCommonContext } from './common/CommonContext';
 import Login, { LOGIN_PATH } from './Login';
 import RenderOrRedirectToLogin from './RenderOrRedirectToLogin';
+import { useLogionChain } from './logion-chain';
 
 export default function RootRouter() {
-    const { accounts } = useCommonContext();
+    const { accounts } = useLogionChain();
 
     if(accounts === null || accounts.all.length === 0) {
         return null;

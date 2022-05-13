@@ -35,8 +35,8 @@ export interface Props {
 }
 
 export default function LocRequestAcceptance(props: Props) {
-    const { api } = useLogionChain();
-    const { accounts, axiosFactory, refresh, colorTheme } = useCommonContext();
+    const { accounts, axiosFactory, api } = useLogionChain();
+    const { refresh, colorTheme } = useCommonContext();
 
     const [ acceptState, setAcceptState ] = useState<AcceptState>({status: AcceptStatus.NONE});
 

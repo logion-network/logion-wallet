@@ -1,9 +1,9 @@
-import moment from 'moment';
-import { Token, AccountTokens } from "./Accounts";
+import { DateTime } from 'luxon';
+import { Token, AccountTokens } from "@logion/client";
 
 describe("AccountTokens", () => {
 
-    const now = moment();
+    const now = DateTime.now();
 
     const ADDRESS_WITH_VALID_TOKEN = "1";
     
@@ -14,18 +14,18 @@ describe("AccountTokens", () => {
     const tokensRecord: Record<string, Token> = {
         "1": {
             value: "token-valid",
-            expirationDateTime: now.clone().add(1, "hour")
+            expirationDateTime: now.plus({ hours: 1 })
         },
         "2": {
             value: "token-expired",
-            expirationDateTime: now.clone().add(-1, "hour")
+            expirationDateTime: now.plus({ hours: -1 })
         }
     };
 
     const otherTokensRecord: Record<string, Token> = {
         "3": {
             value: "token-3",
-            expirationDateTime: now.clone().add(1, "hour")
+            expirationDateTime: now.plus({ hours: 1 })
         }
     };
 

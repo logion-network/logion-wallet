@@ -18,6 +18,7 @@ import ButtonGroup from '../common/ButtonGroup';
 import { TransactionStatusCell } from "../common/TransactionStatusCell";
 import NetworkWarning from '../common/NetworkWarning';
 import { useResponsiveContext } from '../common/Responsive';
+import { useLogionChain } from '../logion-chain';
 
 import { SETTINGS_PATH, WALLET_PATH, dataLocDetailsPath, locRequestsPath } from './UserRouter';
 
@@ -46,7 +47,8 @@ export default function Account() {
 }
 
 export function Content() {
-    const { balances, accounts, transactions, openedLocRequests, pendingLocRequests, nodesDown } = useCommonContext();
+    const { accounts } = useLogionChain();
+    const { balances, transactions, openedLocRequests, pendingLocRequests, nodesDown } = useCommonContext();
     const navigate = useNavigate();
     const { width } = useResponsiveContext();
 

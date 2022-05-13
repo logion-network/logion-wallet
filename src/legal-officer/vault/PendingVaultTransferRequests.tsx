@@ -28,8 +28,8 @@ import VaultTransferRequestDetails from "./VaultTransferDetails";
 import { signAndSend } from "src/logion-chain/Signature";
 
 export default function PendingVaultTransferRequests() {
-    const { api } = useLogionChain();
-    const { pendingVaultTransferRequests, axiosFactory, refresh, accounts, colorTheme } = useCommonContext();
+    const { api, axiosFactory, accounts } = useLogionChain();
+    const { pendingVaultTransferRequests, refresh, colorTheme } = useCommonContext();
     const { width } = useResponsiveContext();
     const [ requestToReject, setRequestToReject ] = useState<VaultTransferRequest | null>(null);
     const [ reason, setReason ] = useState<string>("");

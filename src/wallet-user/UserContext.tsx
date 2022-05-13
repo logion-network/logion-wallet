@@ -23,6 +23,7 @@ import {
 } from "./trust-protection/Model";
 import { useCommonContext } from '../common/CommonContext';
 import { DARK_MODE } from './Types';
+import { DateTime } from "luxon";
 
 export interface UserContext {
     dataAddress: string | null,
@@ -154,7 +155,8 @@ export interface Props {
 }
 
 export function UserContextProvider(props: Props) {
-    const { accounts, colorTheme, setColorTheme, axiosFactory, isCurrentAuthenticated, nodesUp, nodesDown } = useCommonContext();
+    const { accounts, client, axiosFactory } = useLogionChain();
+    const { colorTheme, setColorTheme, nodesUp, nodesDown } = useCommonContext();
     const { api } = useLogionChain();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
@@ -249,16 +251,16 @@ export function UserContextProvider(props: Props) {
 
     useEffect(() => {
         if(api !== null
-                && axiosFactory !== undefined
+                && client !== undefined
+                && client!.isTokenValid(DateTime.now())
                 && accounts !== null
                 && accounts.current !== undefined
                 && contextValue.dataAddress !== accounts.current.address
                 && contextValue.fetchForAddress !== accounts.current.address
-                && isCurrentAuthenticated()
                 && nodesUp.length > 0) {
             refreshRequests(true);
         }
-    }, [ api, axiosFactory, contextValue, accounts, refreshRequests, dispatch, isCurrentAuthenticated, nodesUp ]);
+    }, [ api, client, contextValue, accounts, refreshRequests, dispatch, nodesUp ]);
 
     useEffect(() => {
         if(contextValue.refreshRequests !== refreshRequests && api !== null) {

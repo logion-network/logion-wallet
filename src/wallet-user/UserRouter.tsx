@@ -16,6 +16,7 @@ import TrustProtection from "./trust-protection/TrustProtection";
 import TransactionProtection from "./transaction-protection/TransactionProtection";
 import Recovery from "./trust-protection/Recovery";
 import Vault from "./trust-protection/Vault";
+import { useLogionChain } from '../logion-chain';
 
 export const HOME_PATH = USER_PATH;
 
@@ -62,7 +63,8 @@ export function locDetailsPath(locId: string | UUID, locType: LocType) {
 }
 
 export default function UserRouter() {
-    const { accounts, balances, transactions } = useCommonContext();
+    const { accounts } = useLogionChain();
+    const { balances, transactions } = useCommonContext();
     const { vaultAddress, vaultBalances, vaultTransactions } = useUserContext();
 
     return (

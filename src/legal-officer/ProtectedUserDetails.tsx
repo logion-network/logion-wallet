@@ -1,19 +1,21 @@
-import React from "react";
-
 import { Col } from '../common/Grid';
 import Detail from "../common/Detail";
 
 import { ProtectionRequest } from "../common/types/ModelTypes";
 import CopyPasteButton from "../common/CopyPasteButton";
-import { useDirectoryContext } from "../directory/DirectoryContext";
 import { LegalOfficerPostalAddress } from "../common/LegalOfficerPostalAddress";
+import { useLogionChain } from '../logion-chain';
 
 export interface Props {
     request : ProtectionRequest,
 }
 
 export default function ProtectedUserDetails(props: Props) {
-    const { getOfficer } = useDirectoryContext();
+    const { getOfficer } = useLogionChain();
+
+    if(getOfficer === undefined) {
+        return null;
+    }
 
     const legalOfficer = getOfficer(props.request.otherLegalOfficerAddress);
 

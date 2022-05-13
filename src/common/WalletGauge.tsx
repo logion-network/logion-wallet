@@ -33,8 +33,8 @@ interface TransferDialogParams {
 }
 
 export default function WalletGauge(props: Props) {
-    const { colorTheme, accounts } = useCommonContext();
-    const { api } = useLogionChain();
+    const { colorTheme } = useCommonContext();
+    const { api, accounts } = useLogionChain();
     const [ destination, setDestination ] = useState("");
     const [ amount, setAmount ] = useState("");
     const [ unit, setUnit ] = useState(NONE);

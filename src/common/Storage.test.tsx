@@ -1,5 +1,5 @@
-import moment from 'moment';
-import { AccountTokens } from "./types/Accounts";
+import { AccountTokens } from '@logion/client';
+import { DateTime } from 'luxon';
 import {
     storeTokens,
     clearTokens,
@@ -13,7 +13,7 @@ describe("Tokens storage", () => {
         const tokens = new AccountTokens({
             "abc": {
                 value: "token-abc",
-                expirationDateTime: moment(expirationDateTime)
+                expirationDateTime: DateTime.fromISO(expirationDateTime)
             }
         });
 
@@ -30,7 +30,7 @@ describe("Tokens storage", () => {
         const tokens = new AccountTokens({
             "abc": {
                 value: "token-abc",
-                expirationDateTime: moment(expirationDateTime)
+                expirationDateTime: DateTime.fromISO(expirationDateTime)
             }
         });
         storeTokens(tokens);
@@ -45,7 +45,7 @@ describe("Tokens storage", () => {
         const tokens = new AccountTokens({
             "abc": {
                 value: "token-abc",
-                expirationDateTime: moment(expirationDateTime)
+                expirationDateTime: DateTime.fromISO(expirationDateTime)
             }
         });
         storeTokens(tokens);
@@ -60,7 +60,7 @@ describe("Tokens storage", () => {
         const tokens = new AccountTokens({
             "abc": {
                 value: "token-abc",
-                expirationDateTime: moment(expirationDateTime)
+                expirationDateTime: DateTime.fromISO(expirationDateTime)
             }
         });
         storeTokens(tokens);

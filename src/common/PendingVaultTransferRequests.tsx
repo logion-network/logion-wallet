@@ -16,8 +16,8 @@ import Table, { Cell, DateTimeCell, EmptyTableMessage } from "./Table";
 import { cancelVaultTransferCallback, onCancelVaultTransferSuccessCallback } from "./VaultTransferRequestsCallbacks";
 
 export default function PendingVaultTransferRequests() {
-    const { api } = useLogionChain();
-    const { pendingVaultTransferRequests, axiosFactory, refresh, accounts } = useCommonContext();
+    const { axiosFactory, api, accounts } = useLogionChain();
+    const { pendingVaultTransferRequests, refresh } = useCommonContext();
     const { width } = useResponsiveContext();
     const [ requestToCancel, setRequestToCancel ] = useState<VaultTransferRequest | null>(null);
     const [ cancelFailed, setCancelFailed ] = useState(false);

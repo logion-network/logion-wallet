@@ -32,8 +32,7 @@ export default function CollectionLocItemChecker(props: Props) {
 
     const { colorTheme } = useCommonContext();
     const { locId } = props;
-    const { accounts } = useCommonContext();
-    const { api } = useLogionChain();
+    const { api, accounts } = useLogionChain();
 
     const [ state, setState ] = useState<CheckResult>('NONE');
     const [ collectionSize, setCollectionSize ] = useState<number | undefined | null>(null);

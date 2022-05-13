@@ -19,6 +19,7 @@ import { recoveryDetailsPath, identityLocDetailsPath } from "./LegalOfficerPaths
 import AccountInfo from "../common/AccountInfo";
 import LocIdFormGroup from './LocIdFormGroup';
 import LocCreationDialog from '../loc/LocCreationDialog';
+import { useLogionChain } from '../logion-chain';
 
 enum ReviewStatus {
     NONE,
@@ -40,7 +41,8 @@ export interface Props {
 }
 
 export default function PendingProtectionRequests(props: Props) {
-    const { accounts, axiosFactory, colorTheme } = useCommonContext();
+    const { accounts, axiosFactory } = useLogionChain();
+    const { colorTheme } = useCommonContext();
     const { pendingProtectionRequests, refreshRequests, pendingRecoveryRequests } = useLegalOfficerContext();
     const [ rejectReason, setRejectReason ] = useState<string>("");
     const [ reviewState, setReviewState ] = useState<ReviewState>(NO_REVIEW_STATE);

@@ -1,4 +1,3 @@
-import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
@@ -13,6 +12,7 @@ import MenuIcon from './MenuIcon';
 import Clickable from './Clickable';
 import Icon from './Icon';
 import { useCommonContext } from './CommonContext';
+import { useLogionChain } from '../logion-chain';
 
 import './Dashboard.css';
 
@@ -101,7 +101,7 @@ export interface BasePaneProps extends TitlesProps {
 }
 
 function BasePane(props: BasePaneProps) {
-    const { selectAddress } = useCommonContext();
+    const { selectAddress } = useLogionChain();
 
     let contentAreaClass = "ContentArea";
     if(props.className !== undefined) {

@@ -15,7 +15,7 @@ import { RecoveryInfo } from './Types';
 import { acceptProtectionRequest, rejectProtectionRequest } from '../loc/__mocks__/ModelMock';
 import { setFetchRecoveryInfo } from './__mocks__/ModelMock';
 import { PROTECTION_REQUESTS_HISTORY } from './TestData';
-import { axiosMock, setAddresses, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../common/__mocks__/CommonContextMock';
+import { axiosMock, setAddresses, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../logion-chain/__mocks__/LogionChainMock';
 import { setIsSuccessful } from '../logion-chain/__mocks__/SignatureMock';
 import { setParams, navigate } from '../__mocks__/ReactRouterMock';
 import { refreshRequests } from './__mocks__/LegalOfficerContextMock';

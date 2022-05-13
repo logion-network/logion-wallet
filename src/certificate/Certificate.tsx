@@ -28,11 +28,10 @@ import { fullCertificateUrl } from "../PublicPaths";
 import CertificateCell from "./CertificateCell";
 import './Certificate.css'
 import CheckFileFrame, { DocumentCheckResult } from "../loc/CheckFileFrame";
-import { LegalOfficer } from "../directory/DirectoryApi";
-import { useDirectoryContext } from "../directory/DirectoryContext";
 import CollectionItemCellRow from "./CollectionItemCellRow";
 import IntroductionText from "./IntroductionText";
 import LegalOfficerRow from "./LegalOfficerRow";
+import { LegalOfficer } from "@logion/client";
 
 export default function Certificate() {
 
@@ -40,7 +39,7 @@ export default function Certificate() {
     const collectionItemIdParam = useParams<"collectionItemId">().collectionItemId;
     const [ searchParams ] = useSearchParams();
     const locId: UUID = useMemo(() => UUID.fromAnyString(locIdParam)!, [ locIdParam ]);
-    const { api } = useLogionChain();
+    const { api, client } = useLogionChain();
     const [ loc, setLoc ] = useState<LegalOfficerCase | undefined>(undefined)
     const [ supersededLoc, setSupersededLoc ] = useState<LegalOfficerCase | undefined>(undefined)
     const [ supersededLocRequest, setSupersededLocRequest ] = useState<LocRequest | undefined>(undefined)
@@ -49,7 +48,6 @@ export default function Certificate() {
     const [ voidWarningVisible, setVoidWarningVisible ] = useState<boolean>(false);
     const [ nodeDown, setNodeDown ] = useState(false);
     const [ checkResult, setCheckResult ] = useState<DocumentCheckResult>({result: "NONE"});
-    const { legalOfficers, getOfficer } = useDirectoryContext();
     const [ collectionItem, setCollectionItem ] = useState<MergedCollectionItem | undefined | null>(null);
 
     const checkHash = useCallback((hash: string) => {
@@ -101,7 +99,7 @@ export default function Certificate() {
     }, [ loc, setCheckResult, collectionItem ]);
 
     useEffect(() => {
-        if (api !== null && loc === undefined && locId !== undefined) {
+        if (api !== null && loc === undefined && locId !== undefined && client?.legalOfficers !== undefined) {
             (async function () {
                 const legalOfficerCase = await getLegalOfficerCase({ api, locId });
                 if (legalOfficerCase) {
@@ -109,7 +107,7 @@ export default function Certificate() {
                         window.location.href = fullCertificateUrl(legalOfficerCase.voidInfo.replacer, false, true);
                     } else {
                         setLoc(legalOfficerCase)
-                        const axiosFactory = anonymousAxiosFactory(legalOfficers);
+                        const axiosFactory = anonymousAxiosFactory(client!.legalOfficers);
                         try {
                             setPublicLoc(await fetchPublicLoc(axiosFactory(legalOfficerCase.owner), locId.toString()));
                         } catch(error) {
@@ -161,16 +159,13 @@ export default function Certificate() {
                 }
             })()
         }
-    }, [ api, locId, loc, setLoc, setPublicLoc, legalOfficers, searchParams, collectionItemIdParam ])
+    }, [ api, locId, loc, setLoc, setPublicLoc, client, searchParams, collectionItemIdParam ])
 
     useEffect(() => {
-        if (api !== null && legalOfficer === null && loc !== undefined) {
-            const owner = getOfficer(loc.owner);
-            if(owner !== null) {
-                setLegalOfficer(owner);
-            }
+        if (client !== null && legalOfficer === null && loc !== undefined) {
+            setLegalOfficer(client.legalOfficers.find(legalOfficer => legalOfficer.address === loc.owner)!);
         }
-    }, [ api, legalOfficer, loc, getOfficer, setLegalOfficer ])
+    }, [ client, legalOfficer, setLegalOfficer, loc ])
 
     if (api === null) {
         return (

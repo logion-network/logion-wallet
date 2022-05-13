@@ -1,26 +1,27 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
+import { LegalOfficer } from "@logion/client";
+
 import Button from "../common/Button";
 import { GREEN, RED } from "../common/ColorTheme";
 import { useCommonContext } from "../common/CommonContext";
 import FormGroup from "../common/FormGroup";
 import UserIdentity from "../common/types/Identity";
 import PostalAddress from "../common/types/PostalAddress";
-import { LegalOfficer } from "../directory/DirectoryApi";
-import { useDirectoryContext } from "../directory/DirectoryContext";
+import { useLogionChain } from "../logion-chain";
 
 type SaveStatus = 'SUCCESS' | 'ERROR' | 'NONE';
 
 export default function DirectoryData() {
-    const { accounts, colorTheme } = useCommonContext();
-    const { getOfficer, saveOfficer } = useDirectoryContext();
+    const { accounts, getOfficer, saveOfficer } = useLogionChain();
+    const { colorTheme } = useCommonContext();
     const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer | undefined>();
     const [ saveStatus, setSaveStatus ] = useState<SaveStatus>();
     const [ previousNode, setPreviousNode ] = useState<string>("");
     const [ shouldRefresh, setShouldRefresh ] = useState(false);
 
     useEffect(() => {
-        if(!legalOfficer || legalOfficer.address !== accounts?.current?.address) {
+        if(getOfficer && (!legalOfficer || legalOfficer.address !== accounts?.current?.address)) {
             const legalOfficerFromDirectory = getOfficer(accounts?.current?.address);
             if(legalOfficerFromDirectory) {
                 setLegalOfficer(legalOfficerFromDirectory);
@@ -31,7 +32,7 @@ export default function DirectoryData() {
 
     const save = useCallback(async () => {
         setSaveStatus('NONE');
-        if(legalOfficer) {
+        if(legalOfficer && saveOfficer) {
             try {
                 await saveOfficer(legalOfficer);
                 setSaveStatus('SUCCESS');
@@ -45,7 +46,7 @@ export default function DirectoryData() {
         }
     }, [ saveOfficer, legalOfficer, setSaveStatus, setShouldRefresh, previousNode ]);
 
-    if(!legalOfficer || !accounts || !accounts.current || !accounts.current.isLegalOfficer) {
+    if(!legalOfficer || !accounts || !accounts.current || !accounts.current.isLegalOfficer || getOfficer === undefined || saveOfficer === undefined) {
         return null;
     }
 

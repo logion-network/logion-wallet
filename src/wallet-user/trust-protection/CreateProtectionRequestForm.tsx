@@ -4,6 +4,7 @@ import Form from "react-bootstrap/Form";
 import { useForm, Controller } from 'react-hook-form';
 import { getActiveRecovery, initiateRecovery, getRecoveryConfig } from '@logion/node-api/dist/Recovery';
 import { isValidAccountId } from '@logion/node-api/dist/Accounts';
+import { LegalOfficer } from "@logion/client";
 
 import Button from "../../common/Button";
 import { FullWidthPane } from "../../common/Dashboard";
@@ -18,7 +19,6 @@ import { useUserContext } from "../UserContext";
 import { useLogionChain } from '../../logion-chain';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
 import { SETTINGS_PATH } from '../UserRouter';
-import { LegalOfficer } from '../../directory/DirectoryApi';
 
 import LegalOfficers from './LegalOfficers';
 
@@ -43,9 +43,9 @@ interface FormValues {
 }
 
 export default function CreateProtectionRequestForm(props: Props) {
-    const { api } = useLogionChain();
+    const { api, accounts } = useLogionChain();
     const { control, handleSubmit, formState: {errors} } = useForm<FormValues>();
-    const { accounts, colorTheme, nodesDown, availableLegalOfficers } = useCommonContext();
+    const { colorTheme, nodesDown, availableLegalOfficers } = useCommonContext();
     const { createProtectionRequest, refreshRequests } = useUserContext();
     const [ legalOfficer1, setLegalOfficer1 ] = useState<LegalOfficer | null>(null);
     const [ legalOfficer2, setLegalOfficer2 ] = useState<LegalOfficer | null>(null);

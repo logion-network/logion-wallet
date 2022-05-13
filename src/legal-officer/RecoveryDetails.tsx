@@ -35,8 +35,8 @@ enum Visible {
 }
 
 export default function RecoveryDetails() {
-    const { accounts, axiosFactory, colorTheme } = useCommonContext();
-    const { api } = useLogionChain();
+    const { accounts, axiosFactory, api } = useLogionChain();
+    const { colorTheme } = useCommonContext();
     const { refreshRequests } = useLegalOfficerContext();
     const { requestId } = useParams<"requestId">();
     const [ recoveryInfo, setRecoveryInfo ] = useState<RecoveryInfo | null>(null);

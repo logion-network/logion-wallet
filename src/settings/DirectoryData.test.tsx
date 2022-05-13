@@ -1,10 +1,10 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
-import { DEFAULT_LEGAL_OFFICER } from '../common/TestData';
-import { DEFAULT_LEGAL_OFFICER_ACCOUNT, setCurrentAddress } from '../common/__mocks__/CommonContextMock';
-import { PATRICK, saveOfficer } from '../directory/DirectoryContextMock';
-import { clickByName, shallowRender } from '../tests';
+import { PATRICK } from 'src/common/TestData';
+import { DEFAULT_LEGAL_OFFICER_ACCOUNT, setCurrentAddress, saveOfficer } from '../logion-chain/__mocks__/LogionChainMock';
+import { clickByName } from '../tests';
 import DirectoryData from './DirectoryData';
 
+jest.mock("../logion-chain");
 jest.mock("../common/CommonContext");
 jest.mock("../directory/DirectoryContext");
 

@@ -1,12 +1,11 @@
-import React from 'react';
 import * as css from 'csstype';
+import { LegalOfficer } from "@logion/client";
 
 import { BackgroundAndForegroundColors } from '../../common/ColorTheme';
 
 import './Officer.css';
 import CopyPasteButton from "../../common/CopyPasteButton";
 import { Row } from "../../common/Grid";
-import { LegalOfficer } from '../../directory/DirectoryApi';
 import { LegalOfficerPostalAddress } from '../../common/LegalOfficerPostalAddress';
 import LegalOfficerAdditionalDetails from '../../common/LegalOfficerAdditionalDetails';
 import { LegalOfficerContactInfo } from '../../common/LegalOfficerContactInfo';

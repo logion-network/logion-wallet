@@ -1,5 +1,5 @@
 import { useLogionChain } from './logion-chain';
-import { isExtensionAvailable } from './logion-chain/Keys';
+import { isExtensionAvailable } from '@logion/extension';
 
 import RootRouter from './RootRouter';
 import Loader from './Loader';

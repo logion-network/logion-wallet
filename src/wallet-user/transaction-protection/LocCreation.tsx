@@ -12,6 +12,7 @@ import UserIdentity from '../../common/types/Identity';
 import { useUserContext } from '../UserContext';
 
 import LocCreationForm, { FormValues } from './LocCreationForm';
+import { useLogionChain } from '../../logion-chain';
 
 function shouldShowIdentityFields(
     legalOfficer: string | undefined,
@@ -32,7 +33,8 @@ export interface Props {
 }
 
 export default function LocCreation(props: Props) {
-    const { colorTheme, accounts, refresh, axiosFactory } = useCommonContext();
+    const { accounts, axiosFactory } = useLogionChain();
+    const { colorTheme, refresh } = useCommonContext();
     const { recoveryConfig } = useUserContext();
     const [ requestLoc, setRequestLoc ] = useState(false);
     const { locType, requestButtonLabel } = props;

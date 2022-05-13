@@ -1,15 +1,14 @@
 import { Navigate, useLocation } from 'react-router-dom';
 
-import { useCommonContext } from './common/CommonContext';
-
 import { LOGIN_PATH, LocationState } from './Login';
+import { useLogionChain } from './logion-chain';
 
 export interface Props {
     render: () => JSX.Element;
 }
 
 export default function RenderOrRedirectToLogin(props: Props) {
-    const { accounts } = useCommonContext();
+    const { accounts } = useLogionChain();
     const location = useLocation();
 
     if(accounts !== null

@@ -245,8 +245,8 @@ const enum NextRefresh {
 
 export function LocContextProvider(props: Props) {
 
-    const { api } = useLogionChain();
-    const { axiosFactory, accounts, refresh } = useCommonContext();
+    const { axiosFactory, accounts, api } = useLogionChain();
+    const { refresh } = useCommonContext();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue(props.locId, props.backPath, props.detailsPath));
     const [ refreshing, setRefreshing ] = useState<boolean>(false);
     const [ refreshCounter, setRefreshCounter ] = useState<number>(0);

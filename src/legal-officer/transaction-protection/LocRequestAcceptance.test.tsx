@@ -12,7 +12,7 @@ import { UUID } from '@logion/node-api/dist/UUID';
 import { shallowRender } from '../../tests';
 import { finalizeSubmission } from '../../logion-chain/__mocks__/SignatureMock';
 import { LocRequest } from '../../common/types/ModelTypes';
-import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT, axiosMock } from '../../common/__mocks__/CommonContextMock';
+import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT, axiosMock } from '../../logion-chain/__mocks__/LogionChainMock';
 
 import { setAcceptLocRequest, acceptLocRequest } from '../../loc/__mocks__/ModelMock';
 

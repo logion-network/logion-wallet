@@ -13,7 +13,7 @@ import PendingProtectionRequests from './PendingProtectionRequests';
 import { setPendingProtectionRequests } from './__mocks__/LegalOfficerContextMock';
 import { setAcceptProtectionRequest, setRejectProtectionRequest } from '../loc/__mocks__/ModelMock';
 import { PENDING_PROTECTION_REQUESTS } from './TestData';
-import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT, axiosMock } from '../common/__mocks__/CommonContextMock';
+import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT, axiosMock } from '../logion-chain/__mocks__/LogionChainMock';
 import { CLOSED_IDENTITY_LOC_ID } from '../__mocks__/@logion/node-api/dist/LogionLocMock';
 
 describe("PendingProtectionRequests", () => {

@@ -8,7 +8,6 @@ import LocLinkExistingForm, { FormValues } from "./LocLinkExistingForm";
 import { useCallback } from "react";
 import { useLocContext } from "./LocContext";
 import { fetchLocRequest } from "../common/Model";
-import { useCommonContext } from "../common/CommonContext";
 
 export interface Props {
     show: boolean,
@@ -16,9 +15,8 @@ export interface Props {
 }
 
 export default function LocLinkExistingDialog(props: Props) {
-    const { api } = useLogionChain();
+    const { api, axiosFactory } = useLogionChain();
     const { addLink, locItems } = useLocContext();
-    const { axiosFactory } = useCommonContext();
     const { control, handleSubmit, setError, clearErrors, formState: { errors }, reset } = useForm<FormValues>({
         defaultValues: {
             locId: ""

@@ -1,6 +1,6 @@
-import React from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { LegalOfficer } from "@logion/client";
 
 import { ORANGE, GREEN, RED, YELLOW } from "../../common/ColorTheme";
 import Select, { OptionType } from '../../common/Select';
@@ -12,7 +12,6 @@ import { ProtectionRequestStatus } from "../../common/types/ModelTypes";
 
 import Officer from './Officer';
 import './SelectLegalOfficer.css';
-import { LegalOfficer } from "../../directory/DirectoryApi";
 
 export type Mode = 'choose' | 'select' | 'view';
 

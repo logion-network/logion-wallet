@@ -18,9 +18,9 @@ import VaultTransferRequestDetails from "./VaultTransferDetails";
 import { cancelVaultTransferCallback, onCancelVaultTransferSuccessCallback } from "./VaultTransferRequestsCallbacks";
 
 export default function RejectedVaultTransferRequests() {
-    const { api } = useLogionChain();
+    const { api, axiosFactory, accounts } = useLogionChain();
     const { width } = useResponsiveContext();
-    const { rejectedVaultTransferRequests, axiosFactory, refresh, accounts } = useCommonContext();
+    const { rejectedVaultTransferRequests, refresh } = useCommonContext();
     const [ requestToCancel, setRequestToCancel ] = useState<VaultTransferRequest | null>(null);
     const [ cancelFailed, setCancelFailed ] = useState(false);
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);

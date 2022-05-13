@@ -12,7 +12,7 @@ import ViewFileButton from "../common/ViewFileButton";
 import Icon from "../common/Icon";
 import { useResponsiveContext } from "../common/Responsive";
 import SubmitterName from "../common/SubmitterName";
-import { useCommonContext } from "../common/CommonContext";
+import { useLogionChain } from "../logion-chain";
 
 import { getFile } from "./Model";
 import { LocItem, Viewer } from "./types";
@@ -32,7 +32,7 @@ export interface Props {
 }
 
 export default function LocItems(props: Props) {
-    const { accounts } = useCommonContext();
+    const { accounts } = useLogionChain();
     const { locId, loc, locItems, deleteMetadata, deleteLink, deleteFile, locRequest } = useLocContext();
     const { width } = useResponsiveContext();
 

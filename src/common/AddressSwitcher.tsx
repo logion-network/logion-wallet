@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 
 import './AddressSwitcher.css';
@@ -9,13 +9,15 @@ import Dialog from './Dialog';
 import { useNavigate } from "react-router";
 import { Account } from "./types/Accounts";
 import { LEGAL_OFFICER_PATH, USER_PATH } from "../RootPaths";
+import { useLogionChain } from '../logion-chain';
 
 export interface Props {
     selectAddress: ((userAddress: string) => void) | null,
 }
 
 export default function AddressSwitcher(props: Props) {
-    const { colorTheme, logout, accounts, authenticate } = useCommonContext();
+    const { logout, accounts, authenticate } = useLogionChain();
+    const { colorTheme } = useCommonContext();
     const [ confirm, setConfirm ] = useState<boolean>(false);
     const navigate = useNavigate();
 

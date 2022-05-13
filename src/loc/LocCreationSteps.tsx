@@ -3,7 +3,6 @@ import { UUID } from '@logion/node-api/dist/UUID';
 import { createLogionIdentityLoc, createLogionTransactionLoc, createPolkadotIdentityLoc, createPolkadotTransactionLoc } from '@logion/node-api/dist/LogionLoc';
 
 import { useLogionChain } from '../logion-chain';
-import { useCommonContext } from '../common/CommonContext';
 import { LocRequest } from '../common/types/ModelTypes';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../ExtrinsicSubmitter';
 import ProcessStep from '../legal-officer/ProcessStep';
@@ -31,8 +30,7 @@ export interface Props {
 }
 
 export default function LocCreationSteps(props: Props) {
-    const { api } = useLogionChain();
-    const { accounts } = useCommonContext();
+    const { api, accounts } = useLogionChain();
     const { axios } = useLegalOfficerContext();
 
     const [ creationState, setCreationState ] = useState<CreationState>({ status: CreationStatus.LOC_CREATION_PENDING });

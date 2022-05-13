@@ -9,7 +9,6 @@ import { useVersionContext } from '../version/VersionContext';
 
 import './SettingsPane.css';
 import Alert from '../common/Alert';
-import { useDirectoryContext } from '../directory/DirectoryContext';
 import DirectoryData from '../settings/DirectoryData';
 
 function status(metadata: NodeMetadata | null): string {
@@ -25,10 +24,13 @@ export interface Props {
 }
 
 export default function SettingsPane(props: Props) {
-    const { connectedNodeMetadata } = useLogionChain();
+    const { connectedNodeMetadata, getOfficer } = useLogionChain();
     const { colorTheme, nodesDown } = useCommonContext();
     const { currentVersion, latestVersion } = useVersionContext();
-    const { getOfficer } = useDirectoryContext();
+
+    if(getOfficer === undefined) {
+        return null;
+    }
 
     return (
         <FullWidthPane

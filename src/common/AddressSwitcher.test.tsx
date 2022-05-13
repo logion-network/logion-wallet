@@ -1,14 +1,15 @@
-import moment from 'moment';
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { DateTime } from 'luxon';
 
 import Accounts, { Account } from './types/Accounts';
 import { shallowRender } from '../tests';
 import AddressSwitcher from './AddressSwitcher';
-import { setAddresses, authenticate } from './__mocks__/CommonContextMock';
+import { setAddresses, authenticate } from '../logion-chain/__mocks__/LogionChainMock';
 import { TEST_WALLET_USER } from '../wallet-user/TestData';
 import { DEFAULT_LEGAL_OFFICER } from "./TestData";
 
+jest.mock('../logion-chain');
 jest.mock('./CommonContext');
 jest.mock('./Authentication');
 
@@ -18,7 +19,7 @@ const AUTHENTICATED_ADDRESS: Account = {
     isLegalOfficer: false,
     token: {
         value: "token",
-        expirationDateTime: moment('2021-09-10T10:53:00.000Z'),
+        expirationDateTime: DateTime.fromISO('2021-09-10T10:53:00.000Z'),
     },
 };
 
