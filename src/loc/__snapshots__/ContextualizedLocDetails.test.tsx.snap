@@ -989,7 +989,7 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
                     <div
                       className="Col label"
                     >
-                      Requested by
+                      Legal Officer in charge
                       : 
                     </div>
                     <div
@@ -998,7 +998,6 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
                       <span
                         className="value"
                       >
-                         
                         <span
                           onBlur={[Function]}
                           onFocus={[Function]}
@@ -1007,7 +1006,7 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
                         >
                           <br />
                            
-                          5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW
+                          5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
                         </span>
                       </span>
                     </div>
