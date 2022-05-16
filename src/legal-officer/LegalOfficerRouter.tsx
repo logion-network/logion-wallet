@@ -35,9 +35,11 @@ import DangerFrame from '../common/DangerFrame';
 import './LegalOfficerRouter.css';
 import { locRequestsRelativePath, dataLocDetailsRelativePath } from "../RootPaths";
 import VaultOutRequests from './vault/VaultOutRequests';
+import { useLogionChain } from '../logion-chain';
 
 export default function LegalOfficerRouter() {
-    const { accounts, nodesDown, availableLegalOfficers, balances, transactions } = useCommonContext();
+    const { accounts } = useLogionChain();
+    const { nodesDown, availableLegalOfficers, balances, transactions } = useCommonContext();
 
     if(availableLegalOfficers === undefined) {
         return null;

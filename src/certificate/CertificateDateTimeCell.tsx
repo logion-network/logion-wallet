@@ -1,5 +1,5 @@
 import CertificateCell, { CertificateCellProps } from "./CertificateCell";
-import { format } from "logion-api/dist/datetime";
+import { format } from "@logion/node-api/dist/datetime";
 
 interface Props extends CertificateCellProps {
     dateTime?: string

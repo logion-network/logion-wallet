@@ -1,5 +1,5 @@
-import { LocType } from 'logion-api/dist/Types';
-import { UUID } from 'logion-api/dist/UUID';
+import { LocType } from '@logion/node-api/dist/Types';
+import { UUID } from '@logion/node-api/dist/UUID';
 
 import { LEGAL_OFFICER_PATH, dataLocDetailsRelativePath, locRequestsRelativePath } from '../RootPaths';
 

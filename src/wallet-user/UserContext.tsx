@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useCallback, useReducer, Reducer } from "react";
-import { RecoveryConfig, getRecoveryConfig, getProxy } from 'logion-api/dist/Recovery';
-import { getVaultAddress } from "logion-api/dist/Vault";
-import { CoinBalance, getBalances } from "logion-api/dist/Balances";
+import { RecoveryConfig, getRecoveryConfig, getProxy } from '@logion/node-api/dist/Recovery';
+import { getVaultAddress } from "@logion/node-api/dist/Vault";
+import { CoinBalance, getBalances } from "@logion/node-api/dist/Balances";
 
 import { useLogionChain } from '../logion-chain';
 import { Children } from '../common/types/Helpers';
@@ -23,6 +23,7 @@ import {
 } from "./trust-protection/Model";
 import { useCommonContext } from '../common/CommonContext';
 import { DARK_MODE } from './Types';
+import { DateTime } from "luxon";
 
 export interface UserContext {
     dataAddress: string | null,
@@ -154,7 +155,8 @@ export interface Props {
 }
 
 export function UserContextProvider(props: Props) {
-    const { accounts, colorTheme, setColorTheme, axiosFactory, isCurrentAuthenticated, nodesUp, nodesDown } = useCommonContext();
+    const { accounts, client, axiosFactory } = useLogionChain();
+    const { colorTheme, setColorTheme, nodesUp, nodesDown } = useCommonContext();
     const { api } = useLogionChain();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
@@ -249,16 +251,16 @@ export function UserContextProvider(props: Props) {
 
     useEffect(() => {
         if(api !== null
-                && axiosFactory !== undefined
+                && client !== undefined
+                && client!.isTokenValid(DateTime.now())
                 && accounts !== null
                 && accounts.current !== undefined
                 && contextValue.dataAddress !== accounts.current.address
                 && contextValue.fetchForAddress !== accounts.current.address
-                && isCurrentAuthenticated()
                 && nodesUp.length > 0) {
             refreshRequests(true);
         }
-    }, [ api, axiosFactory, contextValue, accounts, refreshRequests, dispatch, isCurrentAuthenticated, nodesUp ]);
+    }, [ api, client, contextValue, accounts, refreshRequests, dispatch, nodesUp ]);
 
     useEffect(() => {
         if(contextValue.refreshRequests !== refreshRequests && api !== null) {

@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
-import { UUID } from "logion-api/dist/UUID";
-import { getLegalOfficerCase } from "logion-api/dist/LogionLoc";
+import { UUID } from "@logion/node-api/dist/UUID";
+import { getLegalOfficerCase } from "@logion/node-api/dist/LogionLoc";
 
 import { useLogionChain } from "../logion-chain";
 import Dialog from "../common/Dialog";
@@ -8,7 +8,6 @@ import LocLinkExistingForm, { FormValues } from "./LocLinkExistingForm";
 import { useCallback } from "react";
 import { useLocContext } from "./LocContext";
 import { fetchLocRequest } from "../common/Model";
-import { useCommonContext } from "../common/CommonContext";
 
 export interface Props {
     show: boolean,
@@ -16,9 +15,8 @@ export interface Props {
 }
 
 export default function LocLinkExistingDialog(props: Props) {
-    const { api } = useLogionChain();
+    const { api, axiosFactory } = useLogionChain();
     const { addLink, locItems } = useLocContext();
-    const { axiosFactory } = useCommonContext();
     const { control, handleSubmit, setError, clearErrors, formState: { errors }, reset } = useForm<FormValues>({
         defaultValues: {
             locId: ""

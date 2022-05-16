@@ -1,5 +1,5 @@
-import { UUID } from "logion-api/dist/UUID";
-import { CollectionItem } from "logion-api/dist/Types";
+import { UUID } from "@logion/node-api/dist/UUID";
+import { CollectionItem } from "@logion/node-api/dist/Types";
 
 import PolkadotFrame from "../common/PolkadotFrame";
 import { useCommonContext } from "../common/CommonContext";

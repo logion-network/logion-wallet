@@ -1,8 +1,8 @@
 import { useCallback, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
-import { LGNT_SMALLEST_UNIT, prefixedLogBalance, SYMBOL } from "logion-api/dist/Balances";
-import { PrefixedNumber } from "logion-api/dist/numbers";
-import { approveVaultTransfer } from "logion-api/dist/Vault";
+import { LGNT_SMALLEST_UNIT, prefixedLogBalance, SYMBOL } from "@logion/node-api/dist/Balances";
+import { PrefixedNumber } from "@logion/node-api/dist/numbers";
+import { approveVaultTransfer } from "@logion/node-api/dist/Vault";
 
 import ExtrinsicSubmitter, { SignAndSubmit } from "../../ExtrinsicSubmitter";
 import { useLogionChain } from "../../logion-chain";
@@ -28,8 +28,8 @@ import VaultTransferRequestDetails from "./VaultTransferDetails";
 import { signAndSend } from "src/logion-chain/Signature";
 
 export default function PendingVaultTransferRequests() {
-    const { api } = useLogionChain();
-    const { pendingVaultTransferRequests, axiosFactory, refresh, accounts, colorTheme } = useCommonContext();
+    const { api, axiosFactory, accounts } = useLogionChain();
+    const { pendingVaultTransferRequests, refresh, colorTheme } = useCommonContext();
     const { width } = useResponsiveContext();
     const [ requestToReject, setRequestToReject ] = useState<VaultTransferRequest | null>(null);
     const [ reason, setReason ] = useState<string>("");

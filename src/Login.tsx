@@ -3,7 +3,6 @@ import { useNavigate, useLocation, Location } from 'react-router-dom';
 
 import Container from 'react-bootstrap/Container';
 
-import { useCommonContext } from './common/CommonContext';
 import { useLogionChain } from './logion-chain';
 import Button from './common/Button';
 import Checkbox from './common/Checkbox';
@@ -40,8 +39,7 @@ function referrer(location: Location): string {
 export default function Login() {
     const location = useLocation();
     const navigate = useNavigate();
-    const { connectedNodeMetadata } = useLogionChain();
-    const { accounts, axiosFactory, authenticate } = useCommonContext();
+    const { connectedNodeMetadata, accounts, axiosFactory, authenticate } = useLogionChain();
     const [ selectedAddresses, setSelectedAddresses ] = useState<string[]>(getSelectedAddresses(location));
 
     const startLogin = useCallback(async () => {

@@ -1,6 +1,6 @@
 jest.mock('../../common/CommonContext');
 
-import { IdentityLocType } from "logion-api/dist/Types";
+import { IdentityLocType } from "@logion/node-api/dist/Types";
 import { shallowRender, render } from '../../tests';
 import ClosedLocs from './ClosedLocs';
 import { setClosedLocRequests, setClosedIdentityLocsByType } from '../../common/__mocks__/CommonContextMock';

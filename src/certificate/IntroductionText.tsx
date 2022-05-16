@@ -1,5 +1,5 @@
-import { UUID } from "logion-api/dist/UUID";
-import { LegalOfficerCase, isLogionIdentityLoc } from "logion-api/dist/Types";
+import { UUID } from "@logion/node-api/dist/UUID";
+import { LegalOfficerCase, isLogionIdentityLoc } from "@logion/node-api/dist/Types";
 
 export interface Props {
     locId: UUID

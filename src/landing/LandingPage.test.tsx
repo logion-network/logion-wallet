@@ -2,6 +2,8 @@ import { shallowRender } from '../tests';
 
 import LandingPage from './LandingPage';
 
+jest.mock("../logion-chain");
+
 test("renders install", () => {
     const result = shallowRender(
         <LandingPage activeStep="install"/>

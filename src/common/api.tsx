@@ -1,5 +1,5 @@
+import { LegalOfficer } from '@logion/client';
 import axios, { AxiosInstance } from 'axios';
-import { LegalOfficer } from '../directory/DirectoryApi';
 
 import Accounts, { Account } from './types/Accounts';
 

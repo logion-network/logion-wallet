@@ -1,8 +1,9 @@
 export let _enabledApp: string | null = null;
 
-export function web3Enable(appName: string): Promise<void> {
+export function enableExtensions(appName: string, callback: (accounts: any[]) => void): Promise<(consumer: (accounts: any[]) => void) => void> {
     _enabledApp = appName;
-    return Promise.resolve();
+    _accountsCallback = callback;
+    return Promise.resolve(web3AccountsSubscribe);
 }
 
 export function enabledApp(): string | null {
@@ -49,4 +50,8 @@ export function setSigner(signerId: string, signer: any) {
     extensions[signerId] = {
         signer
     };
+}
+
+export class ExtensionSigner {
+
 }

@@ -1,10 +1,10 @@
 jest.mock('react-router-dom');
-jest.mock('./common/CommonContext');
+jest.mock('./logion-chain');
 
 import { shallowRender, act } from './tests';
 
 import RenderOrRedirectToLogin from './RenderOrRedirectToLogin';
-import { setAddresses, setCurrentAddress, DEFAULT_USER_ACCOUNT } from './common/__mocks__/CommonContextMock';
+import { setAddresses, setCurrentAddress, DEFAULT_USER_ACCOUNT } from './logion-chain/__mocks__/LogionChainMock';
 import { Account } from './common/types/Accounts';
 import { TEST_WALLET_USER } from './wallet-user/TestData';
 

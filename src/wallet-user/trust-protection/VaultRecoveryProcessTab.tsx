@@ -1,13 +1,13 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { getVaultAddress, buildVaultTransferCall } from "logion-api/dist/Vault";
-import { PrefixedNumber, NONE } from "logion-api/dist/numbers";
-import { asRecovered } from "logion-api/dist/Recovery";
-import { CoinBalance, getBalances, LGNT_SMALLEST_UNIT } from "logion-api/dist/Balances";
+import { getVaultAddress, buildVaultTransferCall } from "@logion/node-api/dist/Vault";
+import { PrefixedNumber, NONE } from "@logion/node-api/dist/numbers";
+import { asRecovered } from "@logion/node-api/dist/Recovery";
+import { CoinBalance, getBalances, LGNT_SMALLEST_UNIT } from "@logion/node-api/dist/Balances";
+import { LegalOfficer } from "@logion/client";
 
 import { useLogionChain } from "../../logion-chain";
 import ExtrinsicSubmitter, { AsyncSignAndSubmit, SuccessfulTransaction, SignAndSubmit } from "../../ExtrinsicSubmitter";
-import { LegalOfficer } from "../../directory/DirectoryApi";
 import { VaultApi, VaultTransferRequest } from "../../vault/VaultApi";
 
 import { useCommonContext } from "../../common/CommonContext";
@@ -43,8 +43,8 @@ enum Status {
 
 export default function VaultRecoveryProcessTab() {
 
-    const { api } = useLogionChain();
-    const { accounts, availableLegalOfficers, axiosFactory, refresh, colorTheme, cancelableVaultRecoveryRequest } = useCommonContext();
+    const { api, accounts, axiosFactory } = useLogionChain();
+    const { refresh, colorTheme, availableLegalOfficers, cancelableVaultRecoveryRequest } = useCommonContext();
     const { recoveredAddress, recoveryConfig } = useUserContext();
     const [ recoveredCoinBalance, setRecoveredCoinBalance ] = useState<CoinBalance | null>(null);
     const [ recoveredVaultAddress, setRecoveredVaultAddress ] = useState<string | null>(null)

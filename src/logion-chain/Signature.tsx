@@ -1,12 +1,7 @@
-import { web3FromAddress } from '@polkadot/extension-dapp';
+import { ExtensionSigner } from '@logion/extension';
 import { ISubmittableResult } from '@polkadot/types/types';
 import type { SubmittableExtrinsic } from '@polkadot/api/promise/types';
-import { toHex } from 'logion-api/dist/Codec';
-import { Hash } from 'fast-sha256';
-import { base64Encode } from '@polkadot/util-crypto';
-import { TextEncoder } from '@polkadot/x-textencoder';
-import { Moment } from 'moment';
-import { toIsoString } from 'logion-api/dist/datetime';
+import { DateTime } from 'luxon';
 
 export type SignedTransaction = ISubmittableResult;
 
@@ -27,65 +22,41 @@ export interface ExtrinsicSignatureParameters extends ExtrinsicSubmissionParamet
 }
 
 export function signAndSend(parameters: ExtrinsicSignatureParameters): Unsubscriber {
-    const unsubscriber = web3FromAddress(parameters.signerId)
-        .then(extension => parameters.submittable.signAndSend(parameters.signerId, {
-            signer: extension.signer
-        }, parameters.callback));
-    unsubscriber.catch(parameters.errorCallback);
-    return unsubscriber;
+    const signer = new ExtensionSigner();
+    signer.signAndSend({
+        signerId: parameters.signerId,
+        submittable: parameters.submittable,
+        callback: parameters.callback,
+    })
+    .catch(error => parameters.errorCallback(error));
+    return Promise.resolve(() => {});
 }
 
 export async function replaceUnsubscriber(
-        currentUnsubscriber: Unsubscriber | null,
-        setUnsubscriber: (newUnsubscriber: Unsubscriber | null) => void,
-        newUnsubscriber: Unsubscriber | null): Promise<void> {
-    try {
-        await unsubscribe(currentUnsubscriber);
-    } catch(e) {
-        // Should have been already handled by callback
-    }
-    setUnsubscriber(newUnsubscriber);
+    _currentUnsubscriber: Unsubscriber | null,
+    _setUnsubscriber: (newUnsubscriber: Unsubscriber | null) => void,
+    _newUnsubscriber: Unsubscriber | null
+): Promise<void> {
+    // Unsubscribers are managed by ExtensionSigner
 }
 
-export async function unsubscribe(unsubscriber: Unsubscriber | null): Promise<void> {
-    if(unsubscriber !== null) {
-        try {
-            const callable = await unsubscriber;
-            callable();
-        } catch(e) {
-            console.log("Could not unsubscribe: " + e);
-        }
-    }
+export async function unsubscribe(_unsubscriber: Unsubscriber | null): Promise<void> {
+    // Unsubscribers are managed by ExtensionSigner
 }
 
 export interface AttributesSignatureParameters {
     signerId: string,
     resource: string,
     operation: string,
-    signedOn: Moment,
+    signedOn: DateTime,
     attributes: any[],
 }
 
 export async function sign(parameters: AttributesSignatureParameters): Promise<string> {
-    const extension = await web3FromAddress(parameters.signerId);
-    let signedOn = toIsoString(parameters.signedOn);
-    const attributes = [parameters.resource, parameters.operation, signedOn];
-    const allAttributes = attributes.concat(parameters.attributes);
-    const result = await extension.signer.signRaw!({
-        address: parameters.signerId,
-        type: "bytes",
-        data: toHex(createHash(allAttributes))
-    });
-    return result.signature;
-}
-
-export function createHash(attributes: any[]): string {
-    let digest = new Hash();
-    for (let i = 0; i < attributes.length; i++) {
-        const bytes = new TextEncoder().encode(attributes[i]);
-        digest.update(bytes);
-    }
-    return base64Encode(digest.digest());
+    const signer = new ExtensionSigner();
+    return signer.signRaw({
+        ...parameters
+    })
 }
 
 export function isSuccessful(status: ISubmittableResult | null) {

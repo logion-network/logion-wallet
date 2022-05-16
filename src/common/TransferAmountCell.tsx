@@ -1,5 +1,5 @@
-import { prefixedLogBalance } from "logion-api/dist/Balances";
-import { NONE, PrefixedNumber } from "logion-api/dist/numbers";
+import { prefixedLogBalance } from "@logion/node-api/dist/Balances";
+import { NONE, PrefixedNumber } from "@logion/node-api/dist/numbers";
 import { GREEN, RED } from "./ColorTheme";
 import Icon from "./Icon";
 import { Cell } from "./Table";

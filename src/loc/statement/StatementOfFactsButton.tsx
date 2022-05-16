@@ -1,11 +1,9 @@
 import { useEffect, useState, useCallback } from "react";
 import { Dropdown } from "react-bootstrap";
-import { UUID } from "logion-api/dist/UUID";
-import { LegalOfficerCase } from "logion-api/dist/Types";
-import { getLegalOfficerCase } from "logion-api/dist/LogionLoc";
+import { UUID } from "@logion/node-api/dist/UUID";
+import { LegalOfficerCase } from "@logion/node-api/dist/Types";
+import { getLegalOfficerCase } from "@logion/node-api/dist/LogionLoc";
 
-import { useCommonContext } from "../../common/CommonContext";
-import { useDirectoryContext } from "../../directory/DirectoryContext";
 import { STATEMENT_OF_FACTS_PATH, locDetailsPath } from "../../legal-officer/LegalOfficerPaths";
 import { fullCertificateUrl } from "../../PublicPaths";
 import { useLocContext } from "../LocContext";
@@ -21,8 +19,7 @@ import { useLogionChain } from "../../logion-chain";
 type Status = 'IDLE' | 'INPUT' | 'READY'
 
 export default function StatementOfFactsButton(props: { itemId?: string, itemDescription?: string }) {
-    const { accounts } = useCommonContext();
-    const { ready, getOfficer } = useDirectoryContext();
+    const { api, accounts, getOfficer } = useLogionChain();
     const { loc, locId, locRequest } = useLocContext();
     const [ pathModel, setPathModel ] = useState<PathModel>(DEFAULT_PATH_MODEL);
     const [ itemId, setItemId ] = useState<string>();
@@ -30,7 +27,6 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
     const [ status, setStatus ] = useState<Status>('IDLE')
     const [ language, setLanguage ] = useState<Language | null>(null)
     const { control, handleSubmit, formState: { errors }, reset, setError } = useForm<FormValues>();
-    const { api } = useLogionChain();
     type ContainingLoc = (LegalOfficerCase & { id: UUID })
     const [ containingLoc, setContainingLoc ] = useState<ContainingLoc | null | undefined>(null)
 
@@ -77,7 +73,7 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
     }
 
     useEffect(() => {
-        if (ready
+        if (getOfficer !== undefined
             && accounts?.current?.address !== undefined
             && accounts.current.address !== pathModel.polkadotAddress) {
             const polkadotAddress = accounts.current.address;
@@ -98,7 +94,7 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                 logoUrl: legalOfficer?.logoUrl || "",
             });
         }
-    }, [ ready, accounts, getOfficer, pathModel, setPathModel ]);
+    }, [ getOfficer, accounts, pathModel, setPathModel ]);
 
     useEffect(() => {
         if (locId.toDecimalString() !== pathModel.locId && containingLoc) {

@@ -1,7 +1,7 @@
-import { LegalOfficerCase } from 'logion-api/dist/Types';
+import { LegalOfficerCase } from '@logion/node-api/dist/Types';
 
-import { DEFAULT_LEGAL_OFFICER } from '../../../common/TestData';
-import { TEST_WALLET_USER } from '../../../wallet-user/TestData';
+import { DEFAULT_LEGAL_OFFICER } from '../../../../common/TestData';
+import { TEST_WALLET_USER } from '../../../../wallet-user/TestData';
 
 export function createLogionIdentityLoc(parameters: any) {
     return Promise.resolve();

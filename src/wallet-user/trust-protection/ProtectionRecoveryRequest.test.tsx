@@ -1,14 +1,13 @@
-jest.mock('logion-api/dist/Recovery');
+jest.mock('@logion/node-api/dist/Recovery');
 jest.mock('../../logion-chain/Signature');
 jest.mock('../../logion-chain');
 jest.mock('../../common/CommonContext');
-jest.mock('../../directory/DirectoryContext');
 jest.mock('../UserContext');
 jest.mock('./Model');
 
 import { render, waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { createRecovery } from 'logion-api/dist/Recovery';
+import { createRecovery } from '@logion/node-api/dist/Recovery';
 
 import { shallowRender } from "../../tests";
 

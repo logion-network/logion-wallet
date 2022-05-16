@@ -1,9 +1,9 @@
 import React from "react";
 import { ApiPromise } from "@polkadot/api";
-import { LGNT_SMALLEST_UNIT } from "logion-api/dist/Balances";
-import { PrefixedNumber } from "logion-api/dist/numbers";
-import { getRecoveryConfig, asRecovered } from "logion-api/dist/Recovery";
-import { cancelVaultTransfer, buildCancelVaultTransferCall } from "logion-api/dist/Vault";
+import { LGNT_SMALLEST_UNIT } from "@logion/node-api/dist/Balances";
+import { PrefixedNumber } from "@logion/node-api/dist/numbers";
+import { getRecoveryConfig, asRecovered } from "@logion/node-api/dist/Recovery";
+import { cancelVaultTransfer, buildCancelVaultTransferCall } from "@logion/node-api/dist/Vault";
 
 import { SignAndSubmit } from "../ExtrinsicSubmitter";
 import { VaultApi, VaultTransferRequest } from "../vault/VaultApi";

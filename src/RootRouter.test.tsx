@@ -1,10 +1,10 @@
+jest.mock('./logion-chain');
 jest.mock('./common/CommonContext');
-jest.mock('./directory/DirectoryContext');
 
 import { shallowRender } from './tests';
 
 import RootRouter from './RootRouter';
-import { setAddresses, setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT, DEFAULT_USER_ACCOUNT } from './common/__mocks__/CommonContextMock';
+import { setAddresses, setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT, DEFAULT_USER_ACCOUNT } from './logion-chain/__mocks__/LogionChainMock';
 
 test('Given null addresses, when rendering, then null', () => {
     setAddresses(null);

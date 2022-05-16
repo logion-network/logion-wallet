@@ -1,8 +1,8 @@
 import { useState, useCallback, useEffect } from "react";
 import { Form } from "react-bootstrap";
-import { CollectionItem } from "logion-api/dist/Types";
-import { UUID } from "logion-api/dist/UUID";
-import { getCollectionItem, getCollectionSize } from "logion-api/dist/LogionLoc";
+import { CollectionItem } from "@logion/node-api/dist/Types";
+import { UUID } from "@logion/node-api/dist/UUID";
+import { getCollectionItem, getCollectionSize } from "@logion/node-api/dist/LogionLoc";
 
 import { useLogionChain } from "../logion-chain";
 import PolkadotFrame from "../common/PolkadotFrame";
@@ -32,8 +32,7 @@ export default function CollectionLocItemChecker(props: Props) {
 
     const { colorTheme } = useCommonContext();
     const { locId } = props;
-    const { accounts } = useCommonContext();
-    const { api } = useLogionChain();
+    const { api, accounts } = useLogionChain();
 
     const [ state, setState ] = useState<CheckResult>('NONE');
     const [ collectionSize, setCollectionSize ] = useState<number | undefined | null>(null);

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { ChainTime } from 'logion-api/dist/ChainTime';
-import { format } from 'logion-api/dist/datetime';
-import { LegalOfficerCase } from 'logion-api/dist/Types';
-import { UUID } from 'logion-api/dist/UUID';
+import { ChainTime } from '@logion/node-api/dist/ChainTime';
+import { format } from '@logion/node-api/dist/datetime';
+import { LegalOfficerCase } from '@logion/node-api/dist/Types';
+import { UUID } from '@logion/node-api/dist/UUID';
 
 import Button from '../common/Button';
 import CopyPasteButton from '../common/CopyPasteButton';
@@ -17,7 +17,6 @@ import StaticLabelValue from '../common/StaticLabelValue';
 
 import './CertificateAndLimits.css';
 import StatementOfFactsButton from './statement/StatementOfFactsButton';
-import { useCommonContext } from '../common/CommonContext';
 import StatementOfFactsRequestButton from "./statement/StatementOfFactsRequestButton";
 import { Viewer } from "./types";
 
@@ -28,8 +27,7 @@ export interface Props {
 }
 
 export default function CertificateAndLimits(props: Props) {
-    const { api } = useLogionChain();
-    const { accounts } = useCommonContext();
+    const { api, accounts } = useLogionChain();
 
     const [ dateLimit, setDateLimit ] = useState("-");
     const [ showSettings, setShowSettings ] = useState(false);

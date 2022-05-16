@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { createRecovery, claimRecovery } from 'logion-api/dist/Recovery';
+import { createRecovery, claimRecovery } from '@logion/node-api/dist/Recovery';
+import { LegalOfficer } from "@logion/client";
 
 import { useLogionChain } from '../../logion-chain';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
@@ -13,9 +14,6 @@ import Icon from '../../common/Icon';
 import { GREEN, ORANGE, rgbaToHex, YELLOW } from '../../common/ColorTheme';
 import { useCommonContext } from '../../common/CommonContext';
 import NetworkWarning from '../../common/NetworkWarning';
-
-import { useDirectoryContext } from '../../directory/DirectoryContext';
-import { LegalOfficer } from '../../directory/DirectoryApi';
 
 import { useUserContext } from '../UserContext';
 import { SETTINGS_PATH } from '../UserRouter';
@@ -33,9 +31,8 @@ export interface Props {
 }
 
 export default function ProtectionRecoveryRequest(props: Props) {
-    const { api } = useLogionChain();
-    const { accounts, colorTheme, nodesDown, availableLegalOfficers } = useCommonContext();
-    const { getOfficer } = useDirectoryContext();
+    const { api, accounts, getOfficer } = useLogionChain();
+    const { colorTheme, availableLegalOfficers, nodesDown } = useCommonContext();
     const { refreshRequests, recoveryConfig, recoveredAddress } = useUserContext();
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
     const [ signAndSubmitClaim, setSignAndSubmitClaim ] = useState<SignAndSubmit>(null);
@@ -66,7 +63,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
         setSignAndSubmitClaim(() => signAndSubmit);
     }, [ api, accounts, props, setSignAndSubmitClaim ]);
 
-    if(recoveryConfig === null || recoveredAddress === undefined || availableLegalOfficers === undefined) {
+    if(recoveryConfig === null || recoveredAddress === undefined || availableLegalOfficers === undefined || getOfficer === undefined) {
         return null;
     }
 

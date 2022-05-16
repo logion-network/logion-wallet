@@ -1,7 +1,7 @@
 jest.mock('../../common/CommonContext');
 jest.mock('../../common/Model');
 jest.mock('../../wallet-user/UserContext');
-jest.mock('../../directory/DirectoryContext');
+jest.mock('../../logion-chain');
 
 import { render } from '../../tests';
 import RequestedLocs from './RequestedLocs';

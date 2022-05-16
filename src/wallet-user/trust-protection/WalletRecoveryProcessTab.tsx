@@ -1,8 +1,8 @@
 import { useState, useCallback, useEffect } from "react";
 import { Spinner } from "react-bootstrap";
-import { CoinBalance, buildTransferCall, getBalances } from "logion-api/dist/Balances";
-import { asRecovered } from "logion-api/dist/Recovery";
-import { PrefixedNumber, NONE } from "logion-api/dist/numbers";
+import { CoinBalance, buildTransferCall, getBalances } from "@logion/node-api/dist/Balances";
+import { asRecovered } from "@logion/node-api/dist/Recovery";
+import { PrefixedNumber, NONE } from "@logion/node-api/dist/numbers";
 
 import Table, { Cell, EmptyTableMessage } from "../../common/Table";
 import Icon from "../../common/Icon";
@@ -11,7 +11,6 @@ import Button from "../../common/Button";
 import TransactionConfirmation, { Status } from "../../common/TransactionConfirmation";
 import Dialog from "../../common/Dialog";
 import Alert from "../../common/Alert";
-import { useCommonContext } from "../../common/CommonContext";
 import IconTextRow from "../../common/IconTextRow";
 
 import { useLogionChain } from "../../logion-chain";
@@ -25,8 +24,7 @@ interface Props {
 }
 
 export default function WalletRecoveryProcessTab(props: Props) {
-    const { api } = useLogionChain();
-    const { accounts } = useCommonContext();
+    const { api, accounts } = useLogionChain();
     const { recoveredAddress } = useUserContext();
     const [ recoveredCoinBalance, setRecoveredCoinBalance ] = useState<CoinBalance | null>(null);
     const [ balances, setBalances ] = useState<CoinBalance[] | null>(null)

@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
-import { ATTO, FEMTO, MICRO, MILLI, NANO, NONE, PICO, PrefixedNumber } from 'logion-api/dist/numbers';
-import { Coin, SYMBOL, transferSubmittable } from 'logion-api/dist/Balances';
-import { isValidAccountId } from 'logion-api/dist/Accounts';
+import { ATTO, FEMTO, MICRO, MILLI, NANO, NONE, PICO, PrefixedNumber } from '@logion/node-api/dist/numbers';
+import { Coin, SYMBOL, transferSubmittable } from '@logion/node-api/dist/Balances';
+import { isValidAccountId } from '@logion/node-api/dist/Accounts';
 
 import Gauge from './Gauge';
 import Button from './Button';
@@ -33,8 +33,8 @@ interface TransferDialogParams {
 }
 
 export default function WalletGauge(props: Props) {
-    const { colorTheme, accounts } = useCommonContext();
-    const { api } = useLogionChain();
+    const { colorTheme } = useCommonContext();
+    const { api, accounts } = useLogionChain();
     const [ destination, setDestination ] = useState("");
     const [ amount, setAmount ] = useState("");
     const [ unit, setUnit ] = useState(NONE);

@@ -1,5 +1,5 @@
-import { UUID } from "logion-api/dist/UUID";
-import { OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "../__mocks__/logion-api/dist/LogionLocMock";
+import { UUID } from "@logion/node-api/dist/UUID";
+import { OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "../__mocks__/@logion/node-api/dist/LogionLocMock";
 import { render } from "../tests"
 
 import ContextualizedLocDetails from "./ContextualizedLocDetails"
@@ -10,6 +10,7 @@ import { setLoc, setLocId, setLocRequest } from "./__mocks__/LocContextMock";
 jest.mock('../common/CommonContext');
 jest.mock('./LocContext');
 jest.mock('react-router');
+jest.mock('../logion-chain');
 
 describe("ContextualizedLocDetails", () => {
     it("renders for LO", () => rendersForViewer("LegalOfficer"))

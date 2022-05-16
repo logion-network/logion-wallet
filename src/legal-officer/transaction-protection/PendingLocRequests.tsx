@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
-import { DataLocType } from "logion-api/dist/Types";
+import { DataLocType } from "@logion/node-api/dist/Types";
 
 import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';
@@ -17,13 +17,15 @@ import { rejectLocRequest } from '../../loc/Model';
 import LocRequestAcceptance from './LocRequestAcceptance';
 import LocRequestDetails from './LocRequestDetails';
 import Icon from '../../common/Icon';
+import { useLogionChain } from '../../logion-chain';
 
 export interface Props {
     locType: DataLocType;
 }
 
 export default function PendingLocRequests(props: Props) {
-    const { pendingLocRequests, axiosFactory, refresh, accounts } = useCommonContext();
+    const { axiosFactory, accounts } = useLogionChain();
+    const { pendingLocRequests, refresh } = useCommonContext();
     const [ requestToReject, setRequestToReject ] = useState<string | null>(null);
     const [ reason, setReason ] = useState<string>("");
     const [ requestToAccept, setRequestToAccept ] = useState<LocRequest | null>(null);

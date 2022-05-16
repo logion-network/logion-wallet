@@ -2,7 +2,7 @@ import React, { CSSProperties, useState, useCallback, useEffect } from 'react';
 import * as Css from 'csstype';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
-import { format } from 'logion-api/dist/datetime';
+import { format } from '@logion/node-api/dist/datetime';
 import Spinner from "react-bootstrap/Spinner";
 
 import { Row, Col } from './Grid';

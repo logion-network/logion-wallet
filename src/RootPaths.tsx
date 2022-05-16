@@ -1,4 +1,4 @@
-import { LocType } from "logion-api/dist/Types";
+import { LocType } from "@logion/node-api/dist/Types";
 
 export const LEGAL_OFFICER_PATH = "/legal-officer";
 export const USER_PATH = "/user";

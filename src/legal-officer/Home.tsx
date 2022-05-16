@@ -1,6 +1,6 @@
 import { Col, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
-import { prefixedLogBalance, SYMBOL } from 'logion-api/dist/Balances';
+import { prefixedLogBalance, SYMBOL } from '@logion/node-api/dist/Balances';
 
 import { useCommonContext } from "../common/CommonContext";
 import { FullWidthPane } from '../common/Dashboard';
@@ -28,15 +28,16 @@ import './Home.css';
 import UserIdentityNameCell from '../common/UserIdentityNameCell';
 import LocRequestDetails from './transaction-protection/LocRequestDetails';
 import { TransactionStatusCell } from "../common/TransactionStatusCell";
+import { useLogionChain } from '../logion-chain';
 
 const MAX_OPEN_LOCS = 3;
 const MAX_PENDING_LOCS = 3;
 
 export default function Account() {
+    const { accounts } = useLogionChain();
     const {
         colorTheme,
         balances,
-        accounts,
         transactions,
         openedLocRequests,
         pendingLocRequests,

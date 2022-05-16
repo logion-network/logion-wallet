@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
-import { UUID } from 'logion-api/dist/UUID';
-import { createCollectionLoc, createPolkadotTransactionLoc } from 'logion-api/dist/LogionLoc';
-import { ChainTime } from 'logion-api/dist/ChainTime';
+import { UUID } from '@logion/node-api/dist/UUID';
+import { createCollectionLoc, createPolkadotTransactionLoc } from '@logion/node-api/dist/LogionLoc';
+import { ChainTime } from '@logion/node-api/dist/ChainTime';
 
 import { useLogionChain } from '../../logion-chain';
 import { useCommonContext } from '../../common/CommonContext';
@@ -35,8 +35,8 @@ export interface Props {
 }
 
 export default function LocRequestAcceptance(props: Props) {
-    const { api } = useLogionChain();
-    const { accounts, axiosFactory, refresh, colorTheme } = useCommonContext();
+    const { accounts, axiosFactory, api } = useLogionChain();
+    const { refresh, colorTheme } = useCommonContext();
 
     const [ acceptState, setAcceptState ] = useState<AcceptState>({status: AcceptStatus.NONE});
 

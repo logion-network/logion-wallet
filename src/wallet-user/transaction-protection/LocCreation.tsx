@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { RecoveryConfig } from 'logion-api/dist/Recovery';
-import { DataLocType } from "logion-api/dist/Types";
+import { RecoveryConfig } from '@logion/node-api/dist/Recovery';
+import { DataLocType } from "@logion/node-api/dist/Types";
 
 import { useCommonContext } from '../../common/CommonContext';
 import { CreateLocRequest, createLocRequest } from '../../common/Model';
@@ -12,6 +12,7 @@ import UserIdentity from '../../common/types/Identity';
 import { useUserContext } from '../UserContext';
 
 import LocCreationForm, { FormValues } from './LocCreationForm';
+import { useLogionChain } from '../../logion-chain';
 
 function shouldShowIdentityFields(
     legalOfficer: string | undefined,
@@ -32,7 +33,8 @@ export interface Props {
 }
 
 export default function LocCreation(props: Props) {
-    const { colorTheme, accounts, refresh, axiosFactory } = useCommonContext();
+    const { accounts, axiosFactory } = useLogionChain();
+    const { colorTheme, refresh } = useCommonContext();
     const { recoveryConfig } = useUserContext();
     const [ requestLoc, setRequestLoc ] = useState(false);
     const { locType, requestButtonLabel } = props;

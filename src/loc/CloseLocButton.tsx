@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { vouchRecovery } from "logion-api/dist/Recovery";
+import { vouchRecovery } from "@logion/node-api/dist/Recovery";
 import { Col, Row } from "react-bootstrap";
 
 import Button from "../common/Button";
@@ -44,8 +44,8 @@ export interface Props {
 
 export default function CloseLocButton(props: Props) {
     const navigate = useNavigate();
-    const { api } = useLogionChain();
-    const { accounts, refresh, axiosFactory } = useCommonContext();
+    const { accounts, axiosFactory, api } = useLogionChain();
+    const { refresh } = useCommonContext();
     const { refreshRequests } = useLegalOfficerContext();
     const { closeExtrinsic, close, locItems, locId } = useLocContext();
     const [ closeState, setCloseState ] = useState<CloseState>({ status: CloseStatus.NONE });

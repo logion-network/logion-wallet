@@ -1,6 +1,4 @@
-import React from 'react';
-import { useDirectoryContext } from '../directory/DirectoryContext';
-
+import { useLogionChain } from '../logion-chain';
 import { Cell } from './Table';
 
 export interface Props {
@@ -8,11 +6,15 @@ export interface Props {
 }
 
 export default function LegalOfficerName(props: Props) {
-    const { getOfficer } = useDirectoryContext();
+    const { getOfficer } = useLogionChain();
+
+    if(getOfficer === undefined) {
+        return null;
+    }
 
     const legalOfficer = getOfficer(props.address);
     let content: string;
-    if(legalOfficer === null) {
+    if(!legalOfficer) {
         content = "!! UNKNOWN LEGAL OFFICER !!";
     } else {
         content = legalOfficer.name;

@@ -1,7 +1,7 @@
 import React, { useContext, useReducer, Reducer, useEffect, useCallback, useState } from "react";
-import { UUID } from "logion-api/dist/UUID";
-import { getLegalOfficerCase, addMetadata, addFile, closeLoc, addLink, voidLoc } from "logion-api/dist/LogionLoc";
-import { LegalOfficerCase, VoidInfo, File as ChainFile, MetadataItem, Link, LocType } from "logion-api/dist/Types";
+import { UUID } from "@logion/node-api/dist/UUID";
+import { getLegalOfficerCase, addMetadata, addFile, closeLoc, addLink, voidLoc } from "@logion/node-api/dist/LogionLoc";
+import { LegalOfficerCase, VoidInfo, File as ChainFile, MetadataItem, Link, LocType } from "@logion/node-api/dist/Types";
 
 import { LocRequest, LocFile, LocMetadataItem, LocLink } from "../common/types/ModelTypes";
 import {
@@ -245,8 +245,8 @@ const enum NextRefresh {
 
 export function LocContextProvider(props: Props) {
 
-    const { api } = useLogionChain();
-    const { axiosFactory, accounts, refresh } = useCommonContext();
+    const { axiosFactory, accounts, api } = useLogionChain();
+    const { refresh } = useCommonContext();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue(props.locId, props.backPath, props.detailsPath));
     const [ refreshing, setRefreshing ] = useState<boolean>(false);
     const [ refreshCounter, setRefreshCounter ] = useState<number>(0);

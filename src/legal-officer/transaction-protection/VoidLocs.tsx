@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { LocType, IdentityLocType } from 'logion-api/dist/Types';
+import { LocType, IdentityLocType } from '@logion/node-api/dist/Types';
 
 import { useCommonContext } from '../../common/CommonContext';
 import Table, { Cell, EmptyTableMessage, DateTimeCell, ActionCell } from '../../common/Table';

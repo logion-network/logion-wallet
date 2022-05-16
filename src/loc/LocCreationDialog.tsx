@@ -8,6 +8,7 @@ import { isLogionIdentityLoc, LocRequest, LocRequestFragment } from "../common/t
 import LocCreationSteps from "./LocCreationSteps";
 import { useLegalOfficerContext } from '../legal-officer/LegalOfficerContext';
 import Alert from '../common/Alert';
+import { useLogionChain } from '../logion-chain';
 
 export interface Props {
     show: boolean,
@@ -19,7 +20,8 @@ export interface Props {
 }
 
 export default function LocCreationDialog(props: Props) {
-    const { colorTheme, accounts, refresh } = useCommonContext();
+    const { accounts } = useLogionChain();
+    const { colorTheme, refresh } = useCommonContext();
     const { axios } = useLegalOfficerContext();
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>({
         defaultValues: {

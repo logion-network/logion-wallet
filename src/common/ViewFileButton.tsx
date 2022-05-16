@@ -1,6 +1,5 @@
 import { AxiosInstance } from "axios";
 
-import { useCommonContext } from "./CommonContext";
 import Button from "./Button";
 
 import { TypedFile } from "../loc/Model";
@@ -8,6 +7,7 @@ import Icon from "./Icon";
 
 import './ViewFileButton.css';
 import { Children } from "./types/Helpers";
+import { useLogionChain } from "../logion-chain";
 
 export interface FileInfo {
     fileName: string;
@@ -30,7 +30,7 @@ async function openFile(axios: AxiosInstance, props: ViewFileProps) {
 }
 
 export default function ViewFileButton(props: ViewFileProps) {
-    const { axiosFactory } = useCommonContext();
+    const { axiosFactory } = useLogionChain();
     if (axiosFactory === undefined) {
         return null;
     }
@@ -48,7 +48,7 @@ export interface DownloadFilesProps {
 }
 
 export function DownloadFilesButton(props: DownloadFilesProps) {
-    const { axiosFactory } = useCommonContext();
+    const { axiosFactory } = useLogionChain();
     if (axiosFactory === undefined) {
         return null;
     }

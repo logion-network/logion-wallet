@@ -1,6 +1,5 @@
-import moment from 'moment';
-import { LegalOfficer } from '../directory/DirectoryApi';
-import { AccountTokens, Token } from "./types/Accounts";
+import { DateTime } from 'luxon';
+import { AccountTokens, Token, LegalOfficer } from '@logion/client';
 
 export function storeTokens(tokens: AccountTokens) {
     const storage = getStorage();
@@ -49,7 +48,7 @@ export function loadTokens(): AccountTokens {
 
                 tokens[key.substring(TOKEN_KEY_PREFIX.length)] = {
                     value: storedToken.value,
-                    expirationDateTime: moment(storedToken.expirationDateTime),
+                    expirationDateTime: DateTime.fromISO(storedToken.expirationDateTime),
                 }
             } catch(e) {
                 console.log(`Unable to parse entry ${key}, skipping`);

@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { toIsoString } from 'logion-api/dist/datetime';
+import { toIsoString } from '@logion/node-api/dist/datetime';
 
 import { ProtectionRequest } from '../common/types/ModelTypes';
 import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from "../common/TestData";

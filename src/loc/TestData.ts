@@ -1,5 +1,5 @@
-import { LegalOfficerCase } from "logion-api/dist/Types";
-import { UUID } from "logion-api/dist/UUID";
+import { LegalOfficerCase } from "@logion/node-api/dist/Types";
+import { UUID } from "@logion/node-api/dist/UUID";
 
 import { LocRequest } from "../common/types/ModelTypes";
 

@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { Form } from "react-bootstrap";
-import { UUID } from "logion-api/dist/UUID";
+import { UUID } from "@logion/node-api/dist/UUID";
 
 import Button from "../common/Button";
 import { useCommonContext } from "../common/CommonContext";
@@ -13,9 +13,11 @@ import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
 import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
 import { FullVoidInfo, useLocContext } from "./LocContext";
 import LocCreationSteps from "./LocCreationSteps";
+import { useLogionChain } from "../logion-chain";
 
 export default function VoidLocReplaceNewButton() {
-    const { colorTheme, refresh, accounts } = useCommonContext();
+    const { accounts } = useLogionChain();
+    const { colorTheme, refresh } = useCommonContext();
     const { axios } = useLegalOfficerContext();
     const [ visible, setVisible ] = useState(false);
     const { locRequest, voidLocExtrinsic, voidLoc } = useLocContext();

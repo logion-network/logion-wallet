@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { DataLocType } from "logion-api/dist/Types";
+import { DataLocType } from "@logion/node-api/dist/Types";
 
 import { FullWidthPane } from '../../common/Dashboard';
 import Tabs from '../../common/Tabs';

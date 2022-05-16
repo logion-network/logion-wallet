@@ -1,8 +1,8 @@
 import { useEffect, useState, useCallback } from "react";
 import { Col, Row } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
-import { vouchRecovery } from 'logion-api/dist/Recovery';
-import { UUID } from 'logion-api/dist/UUID';
+import { vouchRecovery } from '@logion/node-api/dist/Recovery';
+import { UUID } from '@logion/node-api/dist/UUID';
 
 import { useCommonContext } from "../common/CommonContext";
 import { useLegalOfficerContext } from "./LegalOfficerContext";
@@ -35,8 +35,8 @@ enum Visible {
 }
 
 export default function RecoveryDetails() {
-    const { accounts, axiosFactory, colorTheme } = useCommonContext();
-    const { api } = useLogionChain();
+    const { accounts, axiosFactory, api } = useLogionChain();
+    const { colorTheme } = useCommonContext();
     const { refreshRequests } = useLegalOfficerContext();
     const { requestId } = useParams<"requestId">();
     const [ recoveryInfo, setRecoveryInfo ] = useState<RecoveryInfo | null>(null);
