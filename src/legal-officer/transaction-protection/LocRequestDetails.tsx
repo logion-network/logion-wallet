@@ -1,5 +1,3 @@
-import React from "react";
-
 import { Col } from '../../common/Grid';
 import Detail from "../../common/Detail";
 import { LocRequest } from "../../common/types/ModelTypes";

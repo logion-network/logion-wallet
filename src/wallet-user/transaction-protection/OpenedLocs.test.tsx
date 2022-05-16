@@ -1,5 +1,5 @@
 jest.mock('../../common/CommonContext');
-jest.mock('../../directory/DirectoryContext');
+jest.mock('../../logion-chain');
 
 import { render } from '../../tests';
 import OpenedLocs from './OpenedLocs';

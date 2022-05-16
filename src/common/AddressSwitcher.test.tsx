@@ -11,7 +11,6 @@ import { DEFAULT_LEGAL_OFFICER } from "./TestData";
 
 jest.mock('../logion-chain');
 jest.mock('./CommonContext');
-jest.mock('./Authentication');
 
 const AUTHENTICATED_ADDRESS: Account = {
     name: "name authenticated",
@@ -19,7 +18,7 @@ const AUTHENTICATED_ADDRESS: Account = {
     isLegalOfficer: false,
     token: {
         value: "token",
-        expirationDateTime: DateTime.fromISO('2021-09-10T10:53:00.000Z'),
+        expirationDateTime: DateTime.fromISO('2021-09-10T10:53:00.000Z', {zone: 'utc'}),
     },
 };
 

@@ -998,6 +998,7 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
                       <span
                         className="value"
                       >
+                        Patrick Gielen
                         <span
                           onBlur={[Function]}
                           onFocus={[Function]}

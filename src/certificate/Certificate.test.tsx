@@ -16,7 +16,6 @@ jest.mock("@logion/node-api/dist/LogionLoc");
 jest.mock("../common/api");
 jest.mock("../common/hash");
 jest.mock("../common/Model");
-jest.mock("../directory/DirectoryContext");
 
 describe("Certificate", () => {
   
@@ -50,20 +49,20 @@ describe("Certificate", () => {
 
 async function fileUploadTest(hash: string, expectedResult: string) {
     setParams({locId: CLOSED_IDENTITY_LOC_ID});
-        setSearchParams({
-            has: () => false
-        });
+    setSearchParams({
+        has: () => false
+    });
 
-        sha256Hex.mockReturnValue(Promise.resolve(hash));
+    sha256Hex.mockReturnValue(Promise.resolve(hash));
 
-        render(<Certificate/>);
+    render(<Certificate/>);
 
-        let upload: HTMLElement | undefined = undefined;
-        await waitFor(() => upload = screen.getByTestId("FileSelectorButtonHiddenInput"));
-        await userEvent.upload(upload!, new File([''], "some-file"));
+    let upload: HTMLElement | undefined = undefined;
+    await waitFor(() => upload = screen.getByTestId("FileSelectorButtonHiddenInput"));
+    await userEvent.upload(upload!, new File([''], "some-file"));
 
-        let result: HTMLElement | undefined = undefined;
-        await waitFor(() => result = screen.getByText("Check result:"));
+    let result: HTMLElement | undefined = undefined;
+    await waitFor(() => result = screen.getByText("Check result:"));
 
-        expect(getByText(result!, expectedResult)).toBeVisible();
+    expect(getByText(result!, expectedResult)).toBeVisible();
 }

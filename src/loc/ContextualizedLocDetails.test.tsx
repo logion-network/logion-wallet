@@ -10,6 +10,7 @@ import { setLoc, setLocId, setLocRequest } from "./__mocks__/LocContextMock";
 jest.mock('../common/CommonContext');
 jest.mock('./LocContext');
 jest.mock('react-router');
+jest.mock('../logion-chain');
 
 describe("ContextualizedLocDetails", () => {
     it("renders for LO", () => rendersForViewer("LegalOfficer"))

@@ -1,4 +1,5 @@
 jest.mock('../common/CommonContext');
+jest.mock('../logion-chain');
 
 import { shallowRender } from '../tests';
 import UserRouter from './UserRouter';

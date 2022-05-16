@@ -6,6 +6,8 @@ import {
     loadTokens
 } from './Storage';
 
+jest.unmock('@logion/client');
+
 describe("Tokens storage", () => {
 
     it("stores tokens", () => {
@@ -13,7 +15,7 @@ describe("Tokens storage", () => {
         const tokens = new AccountTokens({
             "abc": {
                 value: "token-abc",
-                expirationDateTime: DateTime.fromISO(expirationDateTime)
+                expirationDateTime: DateTime.fromISO(expirationDateTime, {zone: 'utc'})
             }
         });
 
@@ -30,7 +32,7 @@ describe("Tokens storage", () => {
         const tokens = new AccountTokens({
             "abc": {
                 value: "token-abc",
-                expirationDateTime: DateTime.fromISO(expirationDateTime)
+                expirationDateTime: DateTime.fromISO(expirationDateTime, {zone: 'utc'})
             }
         });
         storeTokens(tokens);

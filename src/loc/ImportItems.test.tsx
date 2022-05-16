@@ -11,6 +11,7 @@ import { setLoc, setLocId, refresh } from "./__mocks__/LocContextMock";
 jest.mock("../common/CommonContext");
 jest.mock("@logion/node-api/dist/LogionLoc");
 jest.mock("../logion-chain/Signature");
+jest.mock("../logion-chain");
 jest.mock("./LocContext");
 
 describe("ImportItems", () => {

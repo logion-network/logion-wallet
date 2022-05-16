@@ -1,6 +1,5 @@
 jest.mock('./logion-chain');
 jest.mock('./common/CommonContext');
-jest.mock('./directory/DirectoryContext');
 
 import { shallowRender } from './tests';
 

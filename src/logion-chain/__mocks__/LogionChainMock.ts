@@ -9,6 +9,7 @@ import { DateTime } from 'luxon';
 import { AxiosInstance } from 'axios';
 import { Mock } from 'moq.ts';
 import Accounts, { Account } from 'src/common/types/Accounts';
+import { LogionClient } from 'src/__mocks__/@logion/client';
 
 export const LogionChainContextProvider = (props: any) => null;
 
@@ -80,6 +81,8 @@ const api = {
     }
 };
 
+const client = new LogionClient();
+
 export let authenticate = jest.fn();
 
 export let saveOfficer = jest.fn();
@@ -127,6 +130,9 @@ export function setCurrentAddress(value: Account | undefined) {
             all: [ value ]
         };
     }
+    if(context) {
+        context.accounts = accounts;
+    }
 }
 
 export function setAddresses(value: Accounts | null) {
@@ -135,25 +141,30 @@ export function setAddresses(value: Accounts | null) {
 
 export let axiosMock = new Mock<AxiosInstance>();
 
-let context = {
-    apiState: 'CONNECT_INIT',
-    injectedAccounts: null,
-    api,
-    connectedNodeMetadata: {
-
-    },
-    selectAddress,
-    accounts,
-    axiosFactory: () => axiosMock.object(),
-    authenticate,
-    getOfficer,
-    saveOfficer,
-};
+let context: any = undefined;
 
 export function setContextMock(value: any) {
     context = value;
 }
 
 export function useLogionChain() {
-    return context;
+    if(context) {
+        return context;
+    } else {
+        return {
+            apiState: 'CONNECT_INIT',
+            injectedAccounts: null,
+            api,
+            connectedNodeMetadata: {
+        
+            },
+            selectAddress,
+            accounts,
+            axiosFactory: () => axiosMock.object(),
+            authenticate,
+            getOfficer,
+            saveOfficer,
+            client,
+        };
+    }
 }

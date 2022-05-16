@@ -2,7 +2,6 @@ import { shallowRender } from '../tests';
 import SettingsPane from './SettingsPane';
 
 jest.mock("../logion-chain");
-jest.mock("../directory/DirectoryContext");
 jest.mock("../version/VersionContext");
 
 describe("SettingsPane", () => {

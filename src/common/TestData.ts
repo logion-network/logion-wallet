@@ -167,7 +167,7 @@ export const DEFAULT_FAILED_TRANSACTION:Transaction = {
 }
 
 export const PATRICK: LegalOfficer = {
-    name: "Alice",
+    name: "Patrick Gielen",
     address: DEFAULT_LEGAL_OFFICER,
     additionalDetails: "",
     userIdentity: {

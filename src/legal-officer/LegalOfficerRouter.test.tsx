@@ -3,6 +3,7 @@ import { shallowRender } from '../tests';
 import LegalOfficerRouter from './LegalOfficerRouter';
 
 jest.mock('../common/CommonContext');
+jest.mock('../logion-chain');
 
 test("renders", () => {
     setCurrentAddress(DEFAULT_LEGAL_OFFICER_ACCOUNT);

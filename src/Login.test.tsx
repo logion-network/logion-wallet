@@ -10,7 +10,6 @@ import { DEFAULT_LEGAL_OFFICER } from "./common/TestData";
 import Login from './Login';
 
 jest.mock('./logion-chain');
-jest.mock('./common/Authentication');
 
 const AUTHENTICATED_ADDRESS: Account = {
     name: "name authenticated",

@@ -8,7 +8,7 @@ import ExtrinsicSubmitter, { SignAndSubmit } from '../ExtrinsicSubmitter';
 import ProcessStep from '../legal-officer/ProcessStep';
 import { useLegalOfficerContext } from '../legal-officer/LegalOfficerContext';
 import Alert from '../common/Alert';
-import { signAndSend } from 'src/logion-chain/Signature';
+import { signAndSend } from '../logion-chain/Signature';
 
 enum CreationStatus {
     NONE,

@@ -8,6 +8,7 @@ import { setLoc, setLocId, setLocItems, setLocRequest } from "./__mocks__/LocCon
 
 jest.mock("../common/CommonContext");
 jest.mock("./LocContext");
+jest.mock("../logion-chain");
 
 describe("LocItems", () => {
   

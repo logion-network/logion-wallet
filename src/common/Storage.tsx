@@ -1,7 +1,5 @@
 import { DateTime } from 'luxon';
-import { AccountTokens } from '@logion/client/dist/AuthenticationClient';
-import { Token } from '@logion/client/dist/Http';
-import { LegalOfficer } from '@logion/client/dist/Types';
+import { AccountTokens, Token, LegalOfficer } from '@logion/client';
 
 export function storeTokens(tokens: AccountTokens) {
     const storage = getStorage();

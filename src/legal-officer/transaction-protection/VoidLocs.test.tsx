@@ -1,4 +1,5 @@
 jest.mock('../../common/CommonContext');
+jest.mock('../../logion-chain');
 import { IdentityLocType } from "@logion/node-api/dist/Types";
 
 import VoidLocs from "./VoidLocs";

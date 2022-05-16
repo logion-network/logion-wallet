@@ -10,6 +10,7 @@ import LocCreation from './LocCreation';
 jest.mock('../../common/CommonContext');
 jest.mock('../../common/Model');
 jest.mock('../../wallet-user/UserContext');
+jest.mock('../../logion-chain');
 
 describe("LocCreation", () => {
 

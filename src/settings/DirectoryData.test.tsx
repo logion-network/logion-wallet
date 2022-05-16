@@ -6,7 +6,6 @@ import DirectoryData from './DirectoryData';
 
 jest.mock("../logion-chain");
 jest.mock("../common/CommonContext");
-jest.mock("../directory/DirectoryContext");
 
 describe("DirectoryData", () => {
 
