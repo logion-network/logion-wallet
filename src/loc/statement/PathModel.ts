@@ -41,6 +41,7 @@ export interface PathModel extends FormValues {
     logoUrl: string;
     itemId: string;
     itemDescription: string;
+    imageSrc: string;
 }
 
 export const DEFAULT_PATH_MODEL: PathModel = {
@@ -68,6 +69,7 @@ export const DEFAULT_PATH_MODEL: PathModel = {
     amount: "",
     itemId: "",
     itemDescription: "",
+    imageSrc: "",
 }
 
 class ParamsBuilder {
@@ -125,6 +127,7 @@ export function toSearchString(pathModel: PathModel): string {
         .param("timestamp_text", pathModel.timestampText)
         .param("requester_text", pathModel.requesterText)
         .param("amount", pathModel.amount)
+        .param("image_src", pathModel.imageSrc)
 
     return builder.build()
 }
@@ -233,6 +236,7 @@ export function parseSearchString(searchString: string): PathModel {
             amount: parser.valueAsString('amount'),
             itemId: parser.valueAsString('item_id'),
             itemDescription: parser.valueAsString('item_description'),
+            imageSrc: parser.valueAsString('image_src')
         };
     } else {
         return DEFAULT_PATH_MODEL;

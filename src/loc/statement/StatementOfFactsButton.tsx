@@ -29,6 +29,7 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
     const { control, handleSubmit, formState: { errors }, reset, setError } = useForm<FormValues>();
     type ContainingLoc = (LegalOfficerCase & { id: UUID })
     const [ containingLoc, setContainingLoc ] = useState<ContainingLoc | null | undefined>(null)
+    const [ imageSrc, setImageSrc ] = useState<string>("");
 
     const submit = useCallback(async (formValues: FormValues) => {
         if (api) {
@@ -55,12 +56,13 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                 })
                 setPathModel({
                     ...pathModel,
-                    ...formValues
+                    ...formValues,
+                    imageSrc
                 })
                 setStatus('READY')
             }
         }
-    }, [ api, pathModel, setPathModel, setContainingLoc, setError, locId ])
+    }, [ api, pathModel, setPathModel, setContainingLoc, setError, locId, imageSrc ])
 
     const dropDownItem = (language: Language) => {
         return (
@@ -68,6 +70,7 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                 reset()
                 setStatus('INPUT')
                 setLanguage(language)
+                setImageSrc("")
             } }>{ language.toUpperCase() }</Dropdown.Item>
         )
     }
@@ -130,6 +133,17 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
         }
     }, [ props, itemId, itemDescription, setItemId, setItemDescription, pathModel, setPathModel, locId, containingLoc ]);
 
+    const fileSelectedCallback = useCallback((file: File) => {
+        const reader = new FileReader();
+        reader.addEventListener('loadend', () => {
+            const base64ImageUrl = reader.result;
+            if (base64ImageUrl) {
+                setImageSrc(base64ImageUrl as string)
+            }
+        })
+        reader.readAsDataURL(file)
+    }, [ setImageSrc ])
+
     const cancelCallback = useCallback(() => {
         setStatus('IDLE')
         setLanguage(null)
@@ -170,6 +184,7 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                     control={ control }
                     errors={ errors }
                     language={ language || 'en' }
+                    onFileSelected={ fileSelectedCallback }
                 />
             </Dialog>
 
