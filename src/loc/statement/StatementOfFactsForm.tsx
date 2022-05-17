@@ -5,7 +5,7 @@ import { LocType } from "@logion/node-api/dist/Types";
 import FormGroup from "../../common/FormGroup";
 import { useCommonContext } from "../../common/CommonContext";
 
-import { FormValues, Language } from "./PathModel";
+import { FormValues, Language } from "./SofParams";
 
 import "./StatementOfFactsForm.css"
 import FileSelectorButton from "../../common/FileSelectorButton";

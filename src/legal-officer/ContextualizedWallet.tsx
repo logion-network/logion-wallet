@@ -11,7 +11,10 @@ import {
     RECOVERY_REQUESTS_PATH,
     SETTINGS_PATH,
     WALLET_PATH,
-    IDENTITIES_PATH, locRequestsPath, VAULT_OUT_REQUESTS_PATH, STATEMENT_OF_FACTS_PATH,
+    IDENTITIES_PATH,
+    locRequestsPath,
+    VAULT_OUT_REQUESTS_PATH,
+    statementOfFactsPath,
 } from './LegalOfficerPaths';
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import { useLocation } from 'react-router-dom';
@@ -35,7 +38,7 @@ export default function ContextualizedWallet() {
 
     const currentLegalOfficerUnavailable = availableLegalOfficers.find(node => node.address === accounts?.current?.address) === undefined;
 
-    if(location.pathname === STATEMENT_OF_FACTS_PATH) {
+    if(location.pathname.startsWith(statementOfFactsPath())) {
         return <StatementOfFacts />;
     } else {
         return (

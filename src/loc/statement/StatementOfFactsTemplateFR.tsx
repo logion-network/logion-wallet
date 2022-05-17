@@ -1,10 +1,11 @@
-import { PathModel } from "./PathModel";
+import { SofParams } from "./SofParams";
 
 export interface Props {
-    pathModel: PathModel;
+    pathModel: SofParams;
 }
 
 export default function StatementOfFactsTemplateFR(props: Props) {
+    console.log("path Model: %s", JSON.stringify(props.pathModel))
     return (
         <>
             <div className="header">

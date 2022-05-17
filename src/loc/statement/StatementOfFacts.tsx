@@ -1,20 +1,23 @@
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { DEFAULT_PATH_MODEL, parseSearchString } from './PathModel';
+import { DEFAULT_SOF_PARAMS } from './SofParams';
 import StatementOfFactsTemplateEN from './StatementOfFactsTemplateEN';
 import StatementOfFactsTemplateFR from './StatementOfFactsTemplateFR';
+import { UUID } from "@logion/node-api/dist/UUID";
+import { loadSofParams } from "../../common/Storage";
 
 const { Previewer } = require('pagedjs');
 
 export default function StatementOfFacts() {
     const location = useLocation();
 
-    const [ pathModel, setPathModel ] = useState(DEFAULT_PATH_MODEL);
+    const [ sofParams, setSofParams ] = useState(DEFAULT_SOF_PARAMS);
 
     useEffect(() => {
-        const pathModel = parseSearchString(location.search);
+        const sofId = new UUID(location.pathname.substring(location.pathname.lastIndexOf("/") + 1));
+        const pathModel = loadSofParams(sofId);
         document.title = `logion - ${ pathModel.locId }`;
-        setPathModel(pathModel);
+        setSofParams(pathModel);
     }, [ location ]);
 
     useEffect(() => {
@@ -24,9 +27,9 @@ export default function StatementOfFacts() {
         });
     }, []);
 
-    if(pathModel.language === 'fr') {
-        return <StatementOfFactsTemplateFR pathModel={ pathModel } />;
+    if(sofParams.language === 'fr') {
+        return <StatementOfFactsTemplateFR pathModel={ sofParams } />;
     } else {
-        return <StatementOfFactsTemplateEN pathModel={ pathModel } />;
+        return <StatementOfFactsTemplateEN pathModel={ sofParams } />;
     }
 }
