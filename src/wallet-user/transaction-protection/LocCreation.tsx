@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { RecoveryConfig } from '@logion/node-api/dist/Recovery';
 import { DataLocType } from "@logion/node-api/dist/Types";
 
 import { useCommonContext } from '../../common/CommonContext';
@@ -13,17 +12,21 @@ import { useUserContext } from '../UserContext';
 
 import LocCreationForm, { FormValues } from './LocCreationForm';
 import { useLogionChain } from '../../logion-chain';
+import { NoProtection, ProtectionState, UnavailableProtection } from '@logion/client';
 
 function shouldShowIdentityFields(
     legalOfficer: string | undefined,
-    recoveryConfig: RecoveryConfig | undefined | null
+    protectionState: ProtectionState | undefined,
 ): boolean {
-    if(!recoveryConfig) {
+    if(!protectionState
+            || protectionState instanceof UnavailableProtection
+            || protectionState instanceof NoProtection
+            || !protectionState.protectionParameters.isActive) {
         return true;
     } else if(legalOfficer === undefined || legalOfficer === "") {
         return false;
     } else {
-        return !recoveryConfig.legalOfficers.includes(legalOfficer);
+        return !protectionState.protectionParameters.states.map(state => state.legalOfficer.address).includes(legalOfficer);
     }
 }
 
@@ -35,7 +38,7 @@ export interface Props {
 export default function LocCreation(props: Props) {
     const { accounts, axiosFactory } = useLogionChain();
     const { colorTheme, refresh } = useCommonContext();
-    const { recoveryConfig } = useUserContext();
+    const { protectionState } = useUserContext();
     const [ requestLoc, setRequestLoc ] = useState(false);
     const { locType, requestButtonLabel } = props;
     const { control, handleSubmit, formState: { errors }, reset, watch } = useForm<FormValues>({
@@ -50,7 +53,7 @@ export default function LocCreation(props: Props) {
     });
     const [ selectedLegalOfficer, setSelectedLegalOfficer ] = useState<string | undefined>();
 
-    const showIdentityFields = shouldShowIdentityFields(selectedLegalOfficer, recoveryConfig);
+    const showIdentityFields = shouldShowIdentityFields(selectedLegalOfficer, protectionState);
 
     const submit = useCallback(async (formValues: FormValues) => {
         let userIdentity: UserIdentity | undefined;

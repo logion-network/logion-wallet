@@ -21,12 +21,11 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
       icon="activated"
       text="Your Logion Protection is active"
     />
-    <ExtrinsicSubmitter
-      id="activatedProtection"
-      onError={[Function]}
-      onSuccess={[Function]}
-      signAndSubmit={null}
+    <ClientExtrinsicSubmitter
       successMessage="Protection successfully activated."
+    />
+    <ClientExtrinsicSubmitter
+      successMessage="Recovery successfully initiated."
     />
     <Row
       className="legal-officers"
@@ -333,13 +332,16 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
 
 exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
 <FullWidthPane
-  mainTitle="My Logion Protection"
+  mainTitle="Recovery"
   titleIcon={
     Object {
-      "background": undefined,
+      "background": Object {
+        "from": "#7a90cb",
+        "to": "#3b6cf4",
+      },
       "icon": Object {
-        "hasVariants": true,
-        "id": "shield",
+        "hasVariants": false,
+        "id": "recovery",
       },
     }
   }
@@ -352,11 +354,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
       icon="activated"
       text="You are now ready to claim the access to address toRecover."
     />
-    <ExtrinsicSubmitter
-      id="activatedProtection"
-      onError={[Function]}
-      onSuccess={[Function]}
-      signAndSubmit={null}
+    <ClientExtrinsicSubmitter
       successMessage="Protection successfully activated."
     />
     <Button
@@ -365,11 +363,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
     >
       Claim
     </Button>
-    <ExtrinsicSubmitter
-      id="initiateRecovery"
-      onError={[Function]}
-      onSuccess={[Function]}
-      signAndSubmit={null}
+    <ClientExtrinsicSubmitter
       successMessage="Recovery successfully initiated."
     />
     <Row
@@ -696,12 +690,11 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
       icon="activated"
       text="Your Logion Protection is active"
     />
-    <ExtrinsicSubmitter
-      id="activatedProtection"
-      onError={[Function]}
-      onSuccess={[Function]}
-      signAndSubmit={null}
+    <ClientExtrinsicSubmitter
       successMessage="Protection successfully activated."
+    />
+    <ClientExtrinsicSubmitter
+      successMessage="Recovery successfully initiated."
     />
     <Row
       className="legal-officers"
@@ -825,7 +818,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
               },
             }
           }
-          status="ACTIVATED"
+          status="PENDING"
         />
       </Col>
       <Col
@@ -947,7 +940,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
               },
             }
           }
-          status="ACTIVATED"
+          status="PENDING"
         />
       </Col>
     </Row>
@@ -1030,11 +1023,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
       icon="activated"
       text="You are now ready to claim the access to address toRecover."
     />
-    <ExtrinsicSubmitter
-      id="activatedProtection"
-      onError={[Function]}
-      onSuccess={[Function]}
-      signAndSubmit={null}
+    <ClientExtrinsicSubmitter
       successMessage="Protection successfully activated."
     />
     <Button
@@ -1043,11 +1032,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
     >
       Claim
     </Button>
-    <ExtrinsicSubmitter
-      id="initiateRecovery"
-      onError={[Function]}
-      onSuccess={[Function]}
-      signAndSubmit={null}
+    <ClientExtrinsicSubmitter
       successMessage="Recovery successfully initiated."
     />
     <Row
@@ -1377,12 +1362,11 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                         completion of one of your Legal Officer approval processes, you will be able to use all features
                         provided by your logion account dashboard."
     />
-    <ExtrinsicSubmitter
-      id="activatedProtection"
-      onError={[Function]}
-      onSuccess={[Function]}
-      signAndSubmit={null}
+    <ClientExtrinsicSubmitter
       successMessage="Protection successfully activated."
+    />
+    <ClientExtrinsicSubmitter
+      successMessage="Recovery successfully initiated."
     />
     <Row
       className="legal-officers"
@@ -1713,12 +1697,11 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
       text="Your Logion Recovery request  for account toRecover has been submitted. Your Legal Officers will contact you
                         as soon as possible to finalize the KYC process."
     />
-    <ExtrinsicSubmitter
-      id="activatedProtection"
-      onError={[Function]}
-      onSuccess={[Function]}
-      signAndSubmit={null}
+    <ClientExtrinsicSubmitter
       successMessage="Protection successfully activated."
+    />
+    <ClientExtrinsicSubmitter
+      successMessage="Recovery successfully initiated."
     />
     <Row
       className="legal-officers"

@@ -1,12 +1,10 @@
 import { useCallback, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { createRecovery, claimRecovery } from '@logion/node-api/dist/Recovery';
-import { LegalOfficer } from "@logion/client";
+import { LegalOfficer, PendingProtection, UnavailableProtection } from "@logion/client";
 
 import { useLogionChain } from '../../logion-chain';
-import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
 
-import { ProtectionRequest, ProtectionRequestStatus } from "../../common/types/ModelTypes";
+import { ProtectionRequestStatus } from "../../common/types/ModelTypes";
 import { FullWidthPane } from "../../common/Dashboard";
 import Frame from "../../common/Frame";
 import Button from '../../common/Button';
@@ -14,6 +12,7 @@ import Icon from '../../common/Icon';
 import { GREEN, ORANGE, rgbaToHex, YELLOW } from '../../common/ColorTheme';
 import { useCommonContext } from '../../common/CommonContext';
 import NetworkWarning from '../../common/NetworkWarning';
+import ClientExtrinsicSubmitter, { Call } from '../../ClientExtrinsicSubmitter';
 
 import { useUserContext } from '../UserContext';
 import { SETTINGS_PATH } from '../UserRouter';
@@ -21,64 +20,42 @@ import { SETTINGS_PATH } from '../UserRouter';
 import SelectLegalOfficer from './SelectLegalOfficer';
 
 import './ProtectionRecoveryRequest.css';
-import { signAndSend } from 'src/logion-chain/Signature';
 
-export type ProtectionRecoveryRequestStatus = 'pending' | 'accepted' | 'activated';
+export type ProtectionRecoveryRequestStatus = 'pending' | 'accepted' | 'activated' | 'unavailable';
 
 export interface Props {
-    requests: ProtectionRequest[],
     type: ProtectionRecoveryRequestStatus,
 }
 
 export default function ProtectionRecoveryRequest(props: Props) {
-    const { api, accounts, getOfficer } = useLogionChain();
+    const { getOfficer } = useLogionChain();
     const { colorTheme, availableLegalOfficers, nodesDown } = useCommonContext();
-    const { refreshRequests, recoveryConfig, recoveredAddress } = useUserContext();
-    const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
-    const [ signAndSubmitClaim, setSignAndSubmitClaim ] = useState<SignAndSubmit>(null);
+    const { protectionState, activateProtection, claimRecovery } = useUserContext();
+    const [ activationCall, setActivationCall ] = useState<Call>();
+    const [ claimCall, setClaimCall ] = useState<Call>();
 
-    const activateProtection = useCallback(() => {
-        const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
-            signerId: accounts!.current!.address,
-            callback: setResult,
-            errorCallback: setError,
-            submittable: createRecovery({
-                api: api!,
-                legalOfficers: props.requests.map(request => request.legalOfficerAddress),
-            })
-        });
-        setSignAndSubmit(() => signAndSubmit);
-    }, [ api, accounts, props, setSignAndSubmit ]);
+    const activateProtectionCallback = useCallback(async () => {
+        setActivationCall(() => activateProtection!);
+    }, [ activateProtection, setActivationCall ]);
 
-    const doClaimRecovery = useCallback(() => {
-        const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
-            signerId: accounts!.current!.address,
-            callback: setResult,
-            errorCallback: setError,
-            submittable: claimRecovery({
-                api: api!,
-                addressToRecover: props.requests[0].addressToRecover!,
-            })
-        });
-        setSignAndSubmitClaim(() => signAndSubmit);
-    }, [ api, accounts, props, setSignAndSubmitClaim ]);
+    const claimRecoveryCallback = useCallback(async () => {
+        setActivationCall(undefined);
+        setClaimCall(() => claimRecovery!);
+    }, [ claimRecovery, setClaimCall ]);
 
-    if(recoveryConfig === null || recoveredAddress === undefined || availableLegalOfficers === undefined || getOfficer === undefined) {
+    if(protectionState === undefined || availableLegalOfficers === undefined || getOfficer === undefined) {
         return null;
     }
 
-    const isRecovery = recoveredAddress !== null || props.requests.find(request => request.isRecovery) !== undefined;
-
-    if(props.requests.length >= 2) {
-        const request = props.requests[0];
-
-        const legalOfficer1: LegalOfficer = getOfficer(props.requests[0].legalOfficerAddress)!;
-        const legalOfficer2: LegalOfficer = getOfficer(props.requests[1].legalOfficerAddress)!;
+    if(props.type !== 'unavailable') {
+        const protectionParameters = protectionState.protectionParameters;
+        const legalOfficer1: LegalOfficer = protectionParameters.states[0].legalOfficer;
+        const legalOfficer2: LegalOfficer = protectionParameters.states[1].legalOfficer;
         let legalOfficer1Status: ProtectionRequestStatus;
         let legalOfficer2Status: ProtectionRequestStatus;
-        if(props.type === 'pending') {
-            legalOfficer1Status = props.requests[0].status;
-            legalOfficer2Status = props.requests[1].status;
+        if(protectionState instanceof PendingProtection) {
+            legalOfficer1Status = protectionParameters.states[0].status;
+            legalOfficer2Status = protectionParameters.states[1].status;
         } else if(props.type === 'accepted') {
             legalOfficer1Status = 'ACCEPTED';
             legalOfficer2Status = 'ACCEPTED';
@@ -87,14 +64,14 @@ export default function ProtectionRecoveryRequest(props: Props) {
             legalOfficer2Status = 'ACTIVATED';
         }
 
-        const forAccount = request.addressToRecover !== null ? ` for account ${request.addressToRecover}` : "";
+        const forAccount = protectionParameters.isRecovery ? ` for account ${protectionParameters.recoveredAddress}` : "";
 
-        const mainTitle = isRecovery && request.status !== 'ACTIVATED' ? "Recovery" : "My Logion Protection";
+        const mainTitle = protectionParameters.isRecovery && !protectionParameters.isClaimed ? "Recovery" : "My Logion Protection";
         let subTitle;
         let header = null;
         if(props.type === 'pending') {
-            subTitle = isRecovery ? "Recovery process status" : undefined;
-            if(isRecovery) {
+            subTitle = protectionParameters.isRecovery ? "Recovery process status" : undefined;
+            if(protectionParameters.isRecovery) {
                 subTitle = "Recovery process status";
                 header = (
                     <Header
@@ -117,7 +94,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
                 );
             }
         } else if(props.type === 'accepted') {
-            if(isRecovery) {
+            if(protectionParameters.isRecovery) {
                 subTitle = "My recovery request";
                 header = (
                     <Header
@@ -140,12 +117,12 @@ export default function ProtectionRecoveryRequest(props: Props) {
                 );
             }
         } else if(props.type === 'activated') {
-            if(isRecovery && recoveredAddress === null) {
+            if(protectionParameters.isRecovery && !protectionParameters.isClaimed) {
                 header = (
                     <Header
                         icon="activated"
                         color={ GREEN }
-                        text={`You are now ready to claim the access to address ${request.addressToRecover}.`}
+                        text={`You are now ready to claim the access to address ${protectionParameters.recoveredAddress}.`}
                     />
                 );
             } else {
@@ -165,10 +142,10 @@ export default function ProtectionRecoveryRequest(props: Props) {
                 subTitle={ subTitle }
                 titleIcon={{
                     icon: {
-                        id: isRecovery && request.status !== 'ACTIVATED' ? 'recovery' : 'shield',
-                        hasVariants: isRecovery && request.status !== 'ACTIVATED' ? false : true,
+                        id: protectionParameters.isRecovery && !protectionParameters.isClaimed ? 'recovery' : 'shield',
+                        hasVariants: protectionParameters.isRecovery && !protectionParameters.isClaimed ? false : true,
                     },
-                    background: isRecovery && request.status !== 'ACTIVATED' ? colorTheme.recoveryItems.iconGradient : undefined,
+                    background: protectionParameters.isRecovery && !protectionParameters.isClaimed ? colorTheme.recoveryItems.iconGradient : undefined,
                 }}
             >
                     {
@@ -179,43 +156,31 @@ export default function ProtectionRecoveryRequest(props: Props) {
                         { header }
 
                         {
-                            props.type === 'accepted' && recoveryConfig === undefined && signAndSubmit === null &&
+                            props.type === 'accepted' && !protectionParameters.isActive && activationCall === undefined &&
                             <Button
                                 data-testid="btnActivate"
-                                onClick={ activateProtection }
+                                onClick={ activateProtectionCallback }
                             >
                                 Activate
                             </Button>
                         }
-                        <ExtrinsicSubmitter
-                            id="activatedProtection"
+                        <ClientExtrinsicSubmitter
                             successMessage="Protection successfully activated."
-                            signAndSubmit={ signAndSubmit }
-                            onSuccess={ () => {
-                                setSignAndSubmit(null);
-                                refreshRequests!(true);
-                            }}
-                            onError={ () => {} }
+                            call={ activationCall }
                         />
                         {
-                            props.type === 'activated' && isRecovery && recoveredAddress === null && signAndSubmitClaim === null &&
+                            props.type === 'activated' && protectionParameters.isRecovery && !protectionParameters.isClaimed && claimCall === undefined &&
                             <Button
                                 data-testid="btnClaim"
-                                onClick={ doClaimRecovery }
+                                onClick={ claimRecoveryCallback }
                             >
                                 Claim
                             </Button>
                         }
-                        {
-                            props.type === 'activated' && isRecovery && recoveredAddress === null &&
-                            <ExtrinsicSubmitter
-                                id="initiateRecovery"
-                                successMessage="Recovery successfully initiated."
-                                signAndSubmit={ signAndSubmitClaim }
-                                onSuccess={ () => { setSignAndSubmitClaim(null); refreshRequests!(true); } }
-                                onError={ () => {} }
-                            />
-                        }
+                        <ClientExtrinsicSubmitter
+                            successMessage="Recovery successfully initiated."
+                            call={ claimCall }
+                        />
 
                         <Row className="legal-officers">
                             <Col md={6}>
@@ -258,17 +223,18 @@ export default function ProtectionRecoveryRequest(props: Props) {
             </FullWidthPane>
         );
     } else {
-        const mainTitle = isRecovery ? "Recovery" : "My Logion Protection";
+        const unavailableProtection = protectionState as UnavailableProtection;
+        const mainTitle = unavailableProtection.isRecovery ? "Recovery" : "My Logion Protection";
 
         return (
             <FullWidthPane
                 mainTitle={ mainTitle }
                 titleIcon={{
                     icon: {
-                        id: isRecovery ? 'recovery' : 'shield',
-                        hasVariants: isRecovery ? false : true,
+                        id: unavailableProtection.isRecovery ? 'recovery' : 'shield',
+                        hasVariants: unavailableProtection.isRecovery ? false : true,
                     },
-                    background: isRecovery ? colorTheme.recoveryItems.iconGradient : undefined,
+                    background: unavailableProtection.isRecovery ? colorTheme.recoveryItems.iconGradient : undefined,
                 }}
             >
                     {
@@ -278,7 +244,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
                     <Frame className="ProtectionRecoveryRequest network-warning">
 
                         {
-                            props.type === 'activated' &&
+                            unavailableProtection.isActivated &&
                             <div
                                 className="alert-activated"
                                 style={{

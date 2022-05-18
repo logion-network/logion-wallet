@@ -1,5 +1,6 @@
+import { AcceptedProtection, NoProtection, PendingProtection, UnavailableProtection } from "@logion/client";
+
 import { useUserContext } from "../UserContext";
-import { isRecovery } from "./Model";
 
 import GoToRecovery from './GoToRecovery';
 import CreateProtectionRequestForm from "./CreateProtectionRequestForm";
@@ -8,9 +9,9 @@ import Loader from '../../common/Loader';
 import { FullWidthPane } from '../../common/Dashboard';
 
 export default function TrustProtection() {
-    const { pendingProtectionRequests, acceptedProtectionRequests, recoveryConfig, recoveredAddress } = useUserContext();
+    const { protectionState } = useUserContext();
 
-    if (pendingProtectionRequests === null || acceptedProtectionRequests === null || recoveryConfig === null || recoveredAddress === undefined) {
+    if (!protectionState) {
         return (
             <FullWidthPane
                 mainTitle="My Logion Protection"
@@ -26,22 +27,22 @@ export default function TrustProtection() {
         );
     }
 
-    const requests = pendingProtectionRequests.concat(acceptedProtectionRequests);
-
-    if(recoveryConfig === undefined) {
-        const goToRecovery = recoveredAddress !== null || (pendingProtectionRequests.length > 0 && isRecovery(pendingProtectionRequests[0]))
-            || (acceptedProtectionRequests.length > 0 && isRecovery(acceptedProtectionRequests[0]) && acceptedProtectionRequests[0].status !== 'ACTIVATED');
-
+    if(protectionState instanceof UnavailableProtection) {
+        return <ProtectionRecoveryRequest type='unavailable' />;
+    } else if(protectionState instanceof NoProtection) {
+        return <CreateProtectionRequestForm isRecovery={ false } />;
+    } else {
+        const goToRecovery = protectionState.protectionParameters.isRecovery && !protectionState.protectionParameters.isClaimed;
         if(goToRecovery) {
             return <GoToRecovery />;
-        } else if(requests.length > 0 && pendingProtectionRequests.length > 0) {
-            return <ProtectionRecoveryRequest requests={ requests } type='pending' />;
-        } else if(acceptedProtectionRequests.length === 2) {
-            return <ProtectionRecoveryRequest requests={ requests } type='accepted' />;
+        } else if(protectionState.protectionParameters.isActive) {
+            return <ProtectionRecoveryRequest type='activated' />;
+        } else if(protectionState instanceof PendingProtection) {
+            return <ProtectionRecoveryRequest type='pending' />;
+        } else if(protectionState instanceof AcceptedProtection) {
+            return <ProtectionRecoveryRequest type='accepted' />;
         } else {
-            return <CreateProtectionRequestForm isRecovery={ false } />;
+            return null;
         }
-    } else {
-        return <ProtectionRecoveryRequest requests={ requests } type='activated' />;
     }
 }

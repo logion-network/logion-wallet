@@ -25,20 +25,21 @@ interface Props {
 
 export default function WalletRecoveryProcessTab(props: Props) {
     const { api, accounts } = useLogionChain();
-    const { recoveredAddress } = useUserContext();
+    const { protectionState } = useUserContext();
     const [ recoveredCoinBalance, setRecoveredCoinBalance ] = useState<CoinBalance | null>(null);
     const [ balances, setBalances ] = useState<CoinBalance[] | null>(null)
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
     const [ signAndSubmitError, setSignAndSubmitError ] = useState<boolean>(false);
 
     useEffect(() => {
-        if (balances === null && api !== null && recoveredAddress) {
-            getBalances({ api, accountId: recoveredAddress })
+        if (balances === null && api !== null && protectionState && "protectionParameters" in protectionState) {
+            const protectionParameters = protectionState.protectionParameters;
+            getBalances({ api, accountId: protectionParameters.recoveredAddress! })
                 .then(balances => {
                     setBalances(balances.filter(balance => Number(balance.available.toNumber()) > 0))
                 })
         }
-    }, [ balances, setBalances, recoveredAddress, api ])
+    }, [ balances, setBalances, protectionState, api ])
 
     const recoverCoin = useCallback(async (amount: PrefixedNumber) => {
 
@@ -48,7 +49,7 @@ export default function WalletRecoveryProcessTab(props: Props) {
             errorCallback: setError,
             submittable: asRecovered({
                 api: api!,
-                recoveredAccountId: recoveredAddress!,
+                recoveredAccountId: protectionState!.protectionParameters.recoveredAddress!,
                 call: buildTransferCall({
                     api: api!,
                     amount: amount,
@@ -57,7 +58,7 @@ export default function WalletRecoveryProcessTab(props: Props) {
             })
         });
         setSignAndSubmit(() => signAndSubmit);
-    }, [ api, accounts, recoveredAddress ]);
+    }, [ api, accounts, protectionState ]);
 
     const clearFormCallback = useCallback(() => {
         setRecoveredCoinBalance(null);
@@ -174,7 +175,7 @@ export default function WalletRecoveryProcessTab(props: Props) {
                                     transfer { amountToRecover.coefficient.toFixedPrecision(2) }&nbsp;
                                     { amountToRecover.prefix.symbol }
                                     { recoveredCoinBalance?.coin.symbol }
-                                    <br />from account { recoveredAddress }
+                                    <br />from account { protectionState?.protectionParameters.recoveredAddress || "" }
                                     <br />to account { accounts?.current?.address }.
                                 </p>
                             }

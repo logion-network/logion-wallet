@@ -2,19 +2,32 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
 
 import { clickByName, typeByLabel } from '../../tests';
-import { DEFAULT_LEGAL_OFFICER } from "../../common/TestData";
-import { setRecoveryConfig } from '../__mocks__/UserContextMock';
+import { GUILLAUME, PATRICK } from "../../common/TestData";
+import { setProtectionState } from '../__mocks__/UserContextMock';
 
 import LocCreation from './LocCreation';
+import { ActiveProtection, NoProtection } from '@logion/client';
+import { RecoverySharedState } from '@logion/client/dist/Recovery';
+import { ACTIVATED_PROTECTION_REQUESTS } from '../trust-protection/TestData';
 
 jest.mock('../../common/CommonContext');
 jest.mock('../../common/Model');
 jest.mock('../../wallet-user/UserContext');
 jest.mock('../../logion-chain');
+jest.unmock("@logion/client");
 
 describe("LocCreation", () => {
 
     it("should display messages when an empty form is submitted", async () => {
+        setProtectionState(new ActiveProtection({
+            pendingProtectionRequests: [],
+            acceptedProtectionRequests: ACTIVATED_PROTECTION_REQUESTS,
+            allRequests: ACTIVATED_PROTECTION_REQUESTS,
+            selectedLegalOfficers: [ PATRICK, GUILLAUME ],
+            recoveryConfig: {
+                legalOfficers: [ PATRICK.address, GUILLAUME.address ]
+            },
+        } as unknown as RecoverySharedState));
         render(<LocCreation locType="Transaction" requestButtonLabel="Request a Transaction Protection" />);
 
         await clickByName("Request a Transaction Protection");
@@ -24,11 +37,28 @@ describe("LocCreation", () => {
     })
 
     it("should create a LOC and display no message when a valid form is submitted", async () => {
-        setRecoveryConfig({ legalOfficers: [ DEFAULT_LEGAL_OFFICER ] });
+        setProtectionState(new ActiveProtection({
+            pendingProtectionRequests: [],
+            acceptedProtectionRequests: ACTIVATED_PROTECTION_REQUESTS,
+            allRequests: ACTIVATED_PROTECTION_REQUESTS,
+            selectedLegalOfficers: [ PATRICK, GUILLAUME ],
+            recoveryConfig: {
+                legalOfficers: [ PATRICK.address, GUILLAUME.address ]
+            }
+        } as unknown as RecoverySharedState));
         await itCreatesLoc(false);
     })
 
     it("should close dialog and not create token when cancel is pressed", async () => {
+        setProtectionState(new ActiveProtection({
+            pendingProtectionRequests: [],
+            acceptedProtectionRequests: ACTIVATED_PROTECTION_REQUESTS,
+            allRequests: ACTIVATED_PROTECTION_REQUESTS,
+            selectedLegalOfficers: [ PATRICK, GUILLAUME ],
+            recoveryConfig: {
+                legalOfficers: [ PATRICK.address, GUILLAUME.address ]
+            }
+        } as unknown as RecoverySharedState));
         render(<LocCreation locType="Transaction" requestButtonLabel="Request a Transaction Protection" />);
 
         await clickByName("Request a Transaction Protection");
@@ -38,7 +68,9 @@ describe("LocCreation", () => {
     })
 
     it("should create a LOC with identity info if not protected by selected LO", async () => {
-        setRecoveryConfig({ legalOfficers: [ "" ] });
+        setProtectionState(new NoProtection({
+            
+        } as unknown as RecoverySharedState));
         await itCreatesLoc(true);
     })
 })

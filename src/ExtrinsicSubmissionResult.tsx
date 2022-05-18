@@ -6,7 +6,7 @@ import Alert from './common/Alert';
 import './ExtrinsicSubmissionResult.css';
 
 export interface Props {
-    result: SignedTransaction | null,
+    result?: SignedTransaction | null,
     error: any,
     successMessage?: string | JSX.Element,
     errorMessage?: string | JSX.Element,
@@ -17,15 +17,19 @@ export default function ExtrinsicSubmissionResult(props: Props) {
 
     const { result, error } = props;
 
+    if(result === undefined && !error) {
+        return null;
+    }
+
     let alert = null;
-    if(error === null) {
-        if(result === null) {
+    if(!error) {
+        if(!result) {
             alert = (
                 <Alert variant="polkadot" slim={ props.slim }>
                     <p>Submitting...</p>
                 </Alert>
             );
-        } else if(!isSuccessful(result)) {
+        } else if(!isSuccessful(result || null)) {
             if(props.slim) {
                 alert = (
                     <Alert variant="polkadot" slim={ props.slim }>

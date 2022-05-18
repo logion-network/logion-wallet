@@ -1,45 +1,54 @@
 import { ApiPromise } from '@polkadot/api';
-import { RecoveryConfig } from "@logion/node-api/dist/Recovery";
 
-import { DEFAULT_LEGAL_OFFICER } from "../../common/TestData";
+import { GUILLAUME, PATRICK } from "../../common/TestData";
 import { TEST_WALLET_USER } from '../TestData';
-import { ProtectionRequest } from "../../common/types/ModelTypes";
-import { DARK_MODE } from '../Types';
+import { AccountTokens, DirectoryClient, NoProtection, ProtectionState } from '@logion/client';
+import { AxiosFactory } from '@logion/client/dist/AxiosFactory';
+import { ComponentFactory } from '@logion/client/dist/ComponentFactory';
+import { LegalOfficerEndpoint, LogionClientConfig, SharedState } from '@logion/client/dist/SharedClient';
+import { NetworkState } from '@logion/client/dist/NetworkState';
+import { UserContext } from '../UserContext';
 
 export let createTokenRequest = () => null;
 
 export let refreshRequests = jest.fn();
 
-export let createProtectionRequest = () => null;
+export let createProtectionRequest = jest.fn().mockReturnValue(Promise.resolve());
 
-export let pendingProtectionRequests: ProtectionRequest[] | null = null;
+export let activateProtection = jest.fn().mockReturnValue(Promise.resolve());
 
-export let acceptedProtectionRequests: ProtectionRequest[] | null = null;
+export let claimRecovery = jest.fn().mockReturnValue(Promise.resolve());
 
 export let api = new ApiPromise();
 
-export let recoveryConfig: RecoveryConfig | undefined = undefined;
+export const DEFAULT_SHARED_STATE: SharedState = {
+    axiosFactory: {} as AxiosFactory,
+    componentFactory: {} as ComponentFactory,
+    config: {
 
-export let setUserAddress = jest.fn();
+    } as LogionClientConfig,
+    directoryClient: {} as DirectoryClient,
+    legalOfficers: [ PATRICK, GUILLAUME ],
+    networkState: {} as NetworkState<LegalOfficerEndpoint>,
+    nodeApi: api,
+    tokens: {} as AccountTokens,
+    currentAddress: TEST_WALLET_USER,
+}
 
-export let userAddress = TEST_WALLET_USER;
+export let protectionState: ProtectionState | undefined = {} as NoProtection;
 
-export let recoveredAddress: string | null = null;
+export function setProtectionState(state: ProtectionState | undefined) {
+    protectionState = state;
+}
 
 export function useUserContext() {
     return {
-        legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
-        userAddress,
         refreshRequests,
         createProtectionRequest,
-        pendingProtectionRequests,
-        acceptedProtectionRequests,
-        recoveryConfig,
-        api,
-        setUserAddress,
-        colorTheme: DARK_MODE,
-        recoveredAddress,
-    };
+        activateProtection,
+        claimRecovery,
+        protectionState,
+    } as Partial<UserContext>;
 }
 
 export function setCreateTokenRequest(callback: any) {
@@ -50,32 +59,12 @@ export function setRefreshRequests(func: any) {
     refreshRequests = func;
 }
 
-export function setPendingProtectionRequests(requests: ProtectionRequest[] | null) {
-    pendingProtectionRequests = requests;
-}
-
-export function setAcceptedProtectionRequests(requests: ProtectionRequest[] | null) {
-    acceptedProtectionRequests = requests;
-}
-
 export function setCreateProtectionRequest(callback: any) {
     createProtectionRequest = callback;
-}
-
-export function setRecoveryConfig(config: RecoveryConfig | undefined) {
-    recoveryConfig = config;
 }
 
 export function UserContextProvider() {
     return (
         <div/>
     );
-}
-
-export function setContextUserAddress(address: string) {
-    userAddress = address;
-}
-
-export function setRecoveredAddress(value: string) {
-    recoveredAddress = value;
 }

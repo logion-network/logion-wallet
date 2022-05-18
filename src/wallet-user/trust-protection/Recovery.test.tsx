@@ -1,19 +1,27 @@
 jest.mock('../UserContext');
+jest.unmock("@logion/client");
 
 import {shallowRender} from "../../tests";
 import Recovery from "./Recovery";
-import { setPendingProtectionRequests, setAcceptedProtectionRequests, setRecoveryConfig, setRecoveredAddress } from '../__mocks__/UserContextMock';
+import { setProtectionState } from '../__mocks__/UserContextMock';
 import { PENDING_RECOVERY_REQUESTS, ACCEPTED_RECOVERY_REQUESTS, ACTIVATED_RECOVERY_REQUESTS } from "./TestData";
+import { PendingProtection, AcceptedProtection, PendingRecovery, ClaimedRecovery } from "@logion/client";
+import { RecoverySharedState } from "@logion/client/dist/Recovery";
+import { GUILLAUME, PATRICK } from "src/common/TestData";
 
 test("renders", () => {
+    setProtectionState(undefined);
     const tree = shallowRender(<Recovery />)
     expect(tree).toMatchSnapshot();
 });
 
 test("renders pending protection request", () => {
-    setPendingProtectionRequests(PENDING_RECOVERY_REQUESTS);
-    setAcceptedProtectionRequests([]);
-    setRecoveryConfig(undefined);
+    setProtectionState(new PendingProtection({
+        pendingProtectionRequests: PENDING_RECOVERY_REQUESTS,
+        acceptedProtectionRequests: [],
+        allRequests: PENDING_RECOVERY_REQUESTS,
+        selectedLegalOfficers: [ PATRICK, GUILLAUME ]
+    } as unknown as RecoverySharedState));
 
     const tree = shallowRender(<Recovery />)
 
@@ -21,9 +29,12 @@ test("renders pending protection request", () => {
 });
 
 test("renders accepted protection request", () => {
-    setPendingProtectionRequests([]);
-    setAcceptedProtectionRequests(ACCEPTED_RECOVERY_REQUESTS);
-    setRecoveryConfig(undefined);
+    setProtectionState(new AcceptedProtection({
+        pendingProtectionRequests: [],
+        acceptedProtectionRequests: ACCEPTED_RECOVERY_REQUESTS,
+        allRequests: ACCEPTED_RECOVERY_REQUESTS,
+        selectedLegalOfficers: [ PATRICK, GUILLAUME ]
+    } as unknown as RecoverySharedState));
 
     const tree = shallowRender(<Recovery />)
 
@@ -31,9 +42,15 @@ test("renders accepted protection request", () => {
 });
 
 test("renders protected but not claimed", () => {
-    setPendingProtectionRequests([]);
-    setAcceptedProtectionRequests(ACTIVATED_RECOVERY_REQUESTS);
-    setRecoveryConfig({ legalOfficers: [ "" ] });
+    setProtectionState(new PendingRecovery({
+        pendingProtectionRequests: [],
+        acceptedProtectionRequests: ACCEPTED_RECOVERY_REQUESTS,
+        allRequests: ACCEPTED_RECOVERY_REQUESTS,
+        selectedLegalOfficers: [ PATRICK, GUILLAUME ],
+        recoveryConfig: {
+            legalOfficers: [ PATRICK.address, GUILLAUME.address ]
+        }
+    } as unknown as RecoverySharedState));
 
     const tree = shallowRender(<Recovery />)
 
@@ -41,10 +58,16 @@ test("renders protected but not claimed", () => {
 });
 
 test("renders protected and claimed", () => {
-    setPendingProtectionRequests([]);
-    setAcceptedProtectionRequests(ACTIVATED_RECOVERY_REQUESTS);
-    setRecoveryConfig({ legalOfficers: [ "" ] });
-    setRecoveredAddress(ACTIVATED_RECOVERY_REQUESTS[0].addressToRecover!);
+    setProtectionState(new ClaimedRecovery({
+        pendingProtectionRequests: [],
+        acceptedProtectionRequests: ACCEPTED_RECOVERY_REQUESTS,
+        allRequests: ACCEPTED_RECOVERY_REQUESTS,
+        selectedLegalOfficers: [ PATRICK, GUILLAUME ],
+        recoveryConfig: {
+            legalOfficers: [ PATRICK.address, GUILLAUME.address ]
+        },
+        recoveredAddress: ACTIVATED_RECOVERY_REQUESTS[0].addressToRecover!
+    } as unknown as RecoverySharedState));
 
     const tree = shallowRender(<Recovery />)
 

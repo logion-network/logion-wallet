@@ -4,7 +4,7 @@ import { getVaultAddress, buildVaultTransferCall } from "@logion/node-api/dist/V
 import { PrefixedNumber, NONE } from "@logion/node-api/dist/numbers";
 import { asRecovered } from "@logion/node-api/dist/Recovery";
 import { CoinBalance, getBalances, LGNT_SMALLEST_UNIT } from "@logion/node-api/dist/Balances";
-import { LegalOfficer } from "@logion/client";
+import { LegalOfficer, ProtectionState } from "@logion/client";
 
 import { useLogionChain } from "../../logion-chain";
 import ExtrinsicSubmitter, { AsyncSignAndSubmit, SuccessfulTransaction, SignAndSubmit } from "../../ExtrinsicSubmitter";
@@ -41,11 +41,20 @@ enum Status {
     TRANSFERRING,
 }
 
+function legalOfficers(protectionState: ProtectionState): string[] {
+    return protectionState.protectionParameters.states.map(state => state.legalOfficer.address);
+}
+
+function getVaultAddressUsingProtection(protectionState: ProtectionState): string {
+    const recoveredAddress = protectionState.protectionParameters.recoveredAddress!;
+    return getVaultAddress(recoveredAddress, legalOfficers(protectionState));
+}
+
 export default function VaultRecoveryProcessTab() {
 
     const { api, accounts, axiosFactory } = useLogionChain();
     const { refresh, colorTheme, availableLegalOfficers, cancelableVaultRecoveryRequest } = useCommonContext();
-    const { recoveredAddress, recoveryConfig } = useUserContext();
+    const { protectionState } = useUserContext();
     const [ recoveredCoinBalance, setRecoveredCoinBalance ] = useState<CoinBalance | null>(null);
     const [ recoveredVaultAddress, setRecoveredVaultAddress ] = useState<string | null>(null)
     const [ targetVaultAddress, setTargetVaultAddress ] = useState<string | null>(null)
@@ -61,28 +70,29 @@ export default function VaultRecoveryProcessTab() {
     const [ cancelFailed, setCancelFailed ] = useState(false);
 
     useEffect(() => {
-        if (cancelableVaultRecoveryRequest && vaultRecoveryRequest === undefined && recoveredAddress) {
-            setVaultRecoveryRequest(cancelableVaultRecoveryRequest(recoveredAddress))
+        if (cancelableVaultRecoveryRequest && vaultRecoveryRequest === undefined && protectionState) {
+            setVaultRecoveryRequest(cancelableVaultRecoveryRequest(protectionState!.protectionParameters.recoveredAddress!))
         }
-    }, [ cancelableVaultRecoveryRequest, setVaultRecoveryRequest, recoveredAddress, vaultRecoveryRequest ])
+    }, [ cancelableVaultRecoveryRequest, setVaultRecoveryRequest, protectionState, vaultRecoveryRequest ])
 
     useEffect(() => {
-        if (candidates.length === 0 && recoveryConfig && availableLegalOfficers) {
-            setCandidates(availableLegalOfficers.filter(legalOfficer => recoveryConfig.legalOfficers.includes(legalOfficer.address)));
+        if (candidates.length === 0 && protectionState && availableLegalOfficers) {
+            const addresses = legalOfficers(protectionState);
+            setCandidates(availableLegalOfficers.filter(legalOfficer => addresses.includes(legalOfficer.address)));
         }
-    }, [ candidates, setCandidates, availableLegalOfficers, recoveryConfig ])
+    }, [ candidates, setCandidates, availableLegalOfficers, protectionState ])
 
     useEffect(() => {
-        if (recoveredVaultAddress === null && recoveredAddress && recoveryConfig) {
-            setRecoveredVaultAddress(getVaultAddress(recoveredAddress, recoveryConfig))
+        if (recoveredVaultAddress === null && protectionState) {
+            setRecoveredVaultAddress(getVaultAddressUsingProtection(protectionState))
         }
-    }, [ recoveredVaultAddress, setRecoveredVaultAddress, recoveredAddress, recoveryConfig ])
+    }, [ recoveredVaultAddress, setRecoveredVaultAddress, protectionState ])
 
     useEffect(() => {
-        if (targetVaultAddress === null && accounts && recoveryConfig) {
-            setTargetVaultAddress(getVaultAddress(accounts.current!.address, recoveryConfig))
+        if (targetVaultAddress === null && accounts && protectionState) {
+            setTargetVaultAddress(getVaultAddress(accounts.current!.address, legalOfficers(protectionState)))
         }
-    }, [ targetVaultAddress, setTargetVaultAddress, accounts, recoveryConfig])
+    }, [ targetVaultAddress, setTargetVaultAddress, accounts, protectionState ])
 
     useEffect(() => {
         if (vaultBalances === null && api !== null && recoveredVaultAddress) {
@@ -123,21 +133,21 @@ export default function VaultRecoveryProcessTab() {
             destination: targetVaultAddress!,
             block: blockHeader.number.toString(),
             index: submittable.index,
-            origin: recoveredAddress!,
+            origin: protectionState!.protectionParameters.recoveredAddress!,
         });
         setVaultRecoveryRequest(vaultTransferRequest)
         clearFormCallback();
         refresh();
-    }, [ api, axiosFactory, legalOfficer, refresh, targetVaultAddress, clearFormCallback, amountToRecover, recoveredAddress, setVaultRecoveryRequest ])
+    }, [ api, axiosFactory, legalOfficer, refresh, targetVaultAddress, clearFormCallback, amountToRecover, protectionState, setVaultRecoveryRequest ])
 
     const recoverCoin = useCallback(async (amount: PrefixedNumber) => {
         const signAndSubmit: AsyncSignAndSubmit = async (setResult, setError) => {
             try {
                 const call = await buildVaultTransferCall({
                     api: api!,
-                    requesterAddress: recoveredAddress!,
+                    requesterAddress: protectionState!.protectionParameters.recoveredAddress!,
                     destination: targetVaultAddress!,
-                    recoveryConfig: recoveryConfig!,
+                    legalOfficers: legalOfficers(protectionState!),
                     amount: amount,
                 })
                 const unsubscriber = signAndSend({
@@ -146,7 +156,7 @@ export default function VaultRecoveryProcessTab() {
                     errorCallback: setError,
                     submittable: asRecovered({
                         api: api!,
-                        recoveredAccountId: recoveredAddress!,
+                        recoveredAccountId: protectionState!.protectionParameters.recoveredAddress!,
                         call
                     })
                 });
@@ -160,7 +170,7 @@ export default function VaultRecoveryProcessTab() {
             }
         }
         setRequestSignAndSubmit(() => signAndSubmit)
-    }, [ api, accounts, recoveredAddress, recoveryConfig, targetVaultAddress ])
+    }, [ api, accounts, protectionState, targetVaultAddress ])
 
     const cancelRequestCallback = useCallback(() => {
         return cancelVaultTransferCallback({

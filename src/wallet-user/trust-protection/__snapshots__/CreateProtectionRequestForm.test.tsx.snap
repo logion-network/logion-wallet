@@ -1120,6 +1120,10 @@ exports[`renders 1`] = `
               id="agree"
               noFeedback={true}
             />
+            <ClientExtrinsicSubmitter
+              onSuccess={[Function]}
+              successMessage="Recovery successfully initiated."
+            />
             <Button
               action={
                 Object {

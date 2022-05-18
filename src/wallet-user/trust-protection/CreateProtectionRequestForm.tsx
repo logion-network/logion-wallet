@@ -1,9 +1,7 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Row, Col } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useForm, Controller } from 'react-hook-form';
-import { getActiveRecovery, initiateRecovery, getRecoveryConfig } from '@logion/node-api/dist/Recovery';
-import { isValidAccountId } from '@logion/node-api/dist/Accounts';
 import { LegalOfficer } from "@logion/client";
 
 import Button from "../../common/Button";
@@ -17,13 +15,12 @@ import { useCommonContext } from "../../common/CommonContext";
 
 import { useUserContext } from "../UserContext";
 import { useLogionChain } from '../../logion-chain';
-import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
+import ClientExtrinsicSubmitter, { Call, CallCallback } from '../../ClientExtrinsicSubmitter';
 import { SETTINGS_PATH } from '../UserRouter';
 
 import LegalOfficers from './LegalOfficers';
 
 import './CreateProtectionRequestForm.css';
-import { signAndSend } from 'src/logion-chain/Signature';
 
 export interface Props {
     isRecovery: boolean,
@@ -43,47 +40,72 @@ interface FormValues {
 }
 
 export default function CreateProtectionRequestForm(props: Props) {
-    const { api, accounts } = useLogionChain();
+    const { api, client } = useLogionChain();
     const { control, handleSubmit, formState: {errors} } = useForm<FormValues>();
     const { colorTheme, nodesDown, availableLegalOfficers } = useCommonContext();
     const { createProtectionRequest, refreshRequests } = useUserContext();
     const [ legalOfficer1, setLegalOfficer1 ] = useState<LegalOfficer | null>(null);
     const [ legalOfficer2, setLegalOfficer2 ] = useState<LegalOfficer | null>(null);
     const [ addressToRecover, setAddressToRecover ] = useState<string>("");
-    const [ addressToRecoverError, setAddressToRecoverError ] = useState<string | undefined>("");
+    const [ addressToRecoverError, setAddressToRecoverError ] = useState<string>("");
     const [ requestCreated, setRequestCreated ] = useState<boolean>(false);
-    const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
-    const [ activeRecovery, setActiveRecovery ] = useState<boolean>(false);
+    const [ call, setCall ] = useState<Call>();
 
     const submit = async (formValues: FormValues) => {
         if(legalOfficer1 === null || legalOfficer2 === null
             || !formValues.agree
-            || (props.isRecovery && !activeRecovery)) {
+            || (props.isRecovery && addressToRecoverError !== "")) {
             return;
         }
-        const currentAddress = accounts!.current!.address;
-        const legalOfficers = [ legalOfficer1.address, legalOfficer2.address ];
-        await createProtectionRequest!(legalOfficers, (otherLegalOfficerAddress: string) => ({
-            requesterAddress: currentAddress,
-            otherLegalOfficerAddress,
-            userIdentity: {
-                firstName: formValues.firstName,
-                lastName: formValues.lastName,
-                email: formValues.email,
-                phoneNumber: formValues.phoneNumber
-            },
-            userPostalAddress: {
-                line1: formValues.line1,
-                line2: formValues.line2,
-                postalCode: formValues.postalCode,
-                city: formValues.city,
-                country: formValues.country,
-            },
-            legalOfficerAddresses: [ legalOfficer1.address, legalOfficer2.address ],
-            isRecovery: props.isRecovery,
-            addressToRecover: addressToRecover,
-        }));
-        setRequestCreated(true);
+
+        if(props.isRecovery) {
+            const call = async (callback: CallCallback) => {
+                await createProtectionRequest!({
+                    legalOfficers: [
+                        legalOfficer1,
+                        legalOfficer2
+                    ],
+                    postalAddress: {
+                        line1: formValues.line1,
+                        line2: formValues.line2,
+                        postalCode: formValues.postalCode,
+                        city: formValues.city,
+                        country: formValues.country,
+                    },
+                    userIdentity: {
+                        firstName: formValues.firstName,
+                        lastName: formValues.lastName,
+                        email: formValues.email,
+                        phoneNumber: formValues.phoneNumber
+                    },
+                    addressToRecover: addressToRecover !== "" ? addressToRecover : undefined,
+                    callback,
+                });
+            };
+            setCall(() => call);
+        } else {
+            await createProtectionRequest!({
+                legalOfficers: [
+                    legalOfficer1,
+                    legalOfficer2
+                ],
+                postalAddress: {
+                    line1: formValues.line1,
+                    line2: formValues.line2,
+                    postalCode: formValues.postalCode,
+                    city: formValues.city,
+                    country: formValues.country,
+                },
+                userIdentity: {
+                    firstName: formValues.firstName,
+                    lastName: formValues.lastName,
+                    email: formValues.email,
+                    phoneNumber: formValues.phoneNumber
+                },
+                addressToRecover: addressToRecover !== "" ? addressToRecover : undefined,
+            });
+            setRequestCreated(true);
+        }
     }
 
     let mainTitle;
@@ -100,45 +122,24 @@ export default function CreateProtectionRequestForm(props: Props) {
         subTitle = "Activate my Logion Protection";
     }
 
-    const initiateRecoveryOnClick = useCallback(() => {
-        const currentAddress = accounts!.current!.address;
-        (async function() {
-            const activeRecovery = await getActiveRecovery({
-                api: api!,
-                sourceAccount: addressToRecover,
-                destinationAccount: currentAddress,
-            });
-            setActiveRecovery(activeRecovery !== undefined);
-            if(activeRecovery === undefined) {
-                const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
-                    signerId: currentAddress,
-                    callback: setResult,
-                    errorCallback: setError,
-                    submittable: initiateRecovery({
-                        api: api!,
-                        addressToRecover,
-                    })
-                });
-                setSignAndSubmit(() => signAndSubmit);
-            }
-        })();
-    }, [ api, accounts, addressToRecover, setSignAndSubmit ]);
-
     useEffect(() => {
-        if (isValidAccountId(api!, addressToRecover)) {
-            setAddressToRecoverError("Checking recovery config...")
-            getRecoveryConfig({ api: api!, accountId: addressToRecover })
-                .then(recoveryConfig => {
-                    if (!recoveryConfig) {
-                        setAddressToRecoverError("This SS58 address is not set up for recovery")
-                    } else {
-                        setAddressToRecoverError(undefined)
-                    }
-                })
+        if(!props.isRecovery) {
+            setAddressToRecoverError("");
         } else {
-            setAddressToRecoverError("A valid SS58 address is required")
+            if(client !== null && client.isValidAddress(addressToRecover)) {
+                setAddressToRecoverError("Checking recovery config...");
+                (async function() {
+                    if(await client.isProtected(addressToRecover)) {
+                        setAddressToRecoverError("");
+                    } else {
+                        setAddressToRecoverError("This SS58 address is not set up for recovery");
+                    }
+                })();
+            } else {
+                setAddressToRecoverError("A valid SS58 address is required");
+            }
         }
-    }, [ api, addressToRecover ])
+    }, [ api, addressToRecover, client, props.isRecovery ])
 
     let legalOfficersTitle;
     if(props.isRecovery) {
@@ -179,54 +180,27 @@ export default function CreateProtectionRequestForm(props: Props) {
                             className="CreateProtectionRequestFormInitiateRecovery"
                         >
                             <h3>Initiate recovery</h3>
-                            {
-                                !activeRecovery &&
-                                <>
-                                    <FormGroup
-                                        id="accountToRecover"
-                                        label="Address to Recover"
-                                        control={
-                                            <Form.Control
-                                                isInvalid={ addressToRecoverError !== undefined }
-                                                type="text"
-                                                data-testid="addressToRecover"
-                                                value={ addressToRecover }
-                                                onChange={ event => setAddressToRecover(event.target.value) }
-                                            />
-                                        }
-                                        feedback={ addressToRecoverError || "" }
-                                        colors={ colorTheme.frame }
+                            <FormGroup
+                                id="accountToRecover"
+                                label="Address to Recover"
+                                control={
+                                    <Form.Control
+                                        isInvalid={ addressToRecoverError !== "" }
+                                        type="text"
+                                        data-testid="addressToRecover"
+                                        value={ addressToRecover }
+                                        onChange={ event => setAddressToRecover(event.target.value) }
                                     />
-                                    {
-                                        signAndSubmit === null &&
-                                        <Button
-                                            onClick={ initiateRecoveryOnClick }
-                                            disabled={ addressToRecoverError !== undefined }
-                                        >
-                                            Initiate recovery
-                                        </Button>
-                                    }
-                                    <ExtrinsicSubmitter
-                                        id="initiateRecovery"
-                                        successMessage="Recovery successfully initiated."
-                                        signAndSubmit={ signAndSubmit }
-                                        onSuccess={ () => { setSignAndSubmit(null); setActiveRecovery(true); } }
-                                        onError={ () => {} }
-                                    />
-                                </>
-                            }
-                            {
-                                activeRecovery &&
-                                <Alert variant="accepted">
-                                    The recovery has been successfully initiated, you may now contact your legal officers.
-                                </Alert>
-                            }
+                                }
+                                feedback={ addressToRecoverError }
+                                colors={ colorTheme.frame }
+                            />
                         </Frame>
                     }
 
                     <Frame
                         className="CreateProtectionRequestFormLegalOfficers"
-                        disabled={ props.isRecovery && !activeRecovery }
+                        disabled={ addressToRecoverError !== "" }
                     >
                         <h3>{ legalOfficersTitle }</h3>
                         {
@@ -252,7 +226,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                 <Col md={6}>
                     <Frame
                         className="CreateProtectionRequestFormOther"
-                        disabled={ legalOfficer1 === null || legalOfficer2 === null || legalOfficer1.address === legalOfficer2.address }
+                        disabled={ legalOfficer1 === null || legalOfficer2 === null || legalOfficer1.address === legalOfficer2.address || addressToRecoverError !== "" }
                     >
                         <h3>Fill in your personal information</h3>
 
@@ -505,6 +479,11 @@ export default function CreateProtectionRequestForm(props: Props) {
                                     }
                                     colors={ colorTheme.frame }
                                     noFeedback
+                                />
+                                <ClientExtrinsicSubmitter
+                                    successMessage="Recovery successfully initiated."
+                                    call={ call }
+                                    onSuccess={ () => setRequestCreated(true) }
                                 />
 
                                 <Button

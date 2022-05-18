@@ -16,11 +16,12 @@ import UserRouter, {
 import { useUserContext } from "./UserContext";
 import { useCommonContext } from '../common/CommonContext';
 import { useNavigate } from 'react-router';
+import { NoProtection } from '@logion/client';
 
 export default function ContextualizedWallet() {
     const { selectAddress, accounts, api } = useLogionChain();
     const { colorTheme, nodesDown, refresh } = useCommonContext();
-    const { pendingProtectionRequests, acceptedProtectionRequests, recoveryConfig, refreshRequests } = useUserContext();
+    const { protectionState, refreshRequests } = useUserContext();
     const [ discardProtection, setDiscardProtection ] = useState<boolean>(false);
     const navigate = useNavigate();
 
@@ -29,14 +30,12 @@ export default function ContextualizedWallet() {
         refreshRequests!(false);
     }, [ refresh, refreshRequests ]);
 
-    if(selectAddress === null || accounts === null) {
+    if(selectAddress === null || accounts === null || protectionState === undefined) {
         return null;
     }
 
     const userContext = api !== null ? <UserRouter /> : null;
-    const noProtection = (pendingProtectionRequests !== null && pendingProtectionRequests.length === 0)
-        && (acceptedProtectionRequests !== null && acceptedProtectionRequests.length === 0)
-        && (recoveryConfig !== null && recoveryConfig === undefined);
+    const noProtection = protectionState instanceof NoProtection;
 
     return (
         <Dashboard
@@ -79,7 +78,7 @@ export default function ContextualizedWallet() {
                         background: colorTheme.topMenuItems.iconGradient,
                     },
                     onClick: refreshAll,
-                    disabled: (recoveryConfig === null || recoveryConfig === undefined)
+                    disabled: noProtection || !protectionState?.protectionParameters.isActive
                 },
                 {
                     id: "loc-collection",

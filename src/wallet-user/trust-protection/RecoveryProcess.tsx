@@ -17,6 +17,7 @@ import WalletRecoveryProcessTab from "./WalletRecoveryProcessTab";
 import VaultRecoveryProcessTab from "./VaultRecoveryProcessTab";
 
 import './RecoveryProcess.css';
+import { ClaimedRecovery } from '@logion/client';
 
 interface TabTitleProps {
     iconId: string,
@@ -38,26 +39,28 @@ function TabTitle(props: TabTitleProps) {
 export default function RecoveryProcess() {
     const { api } = useLogionChain();
     const { colorTheme, nodesDown } = useCommonContext();
-    const { recoveredAddress, recoveryConfig } = useUserContext();
+    const { protectionState } = useUserContext();
     const [ recoveredVaultAddress, setRecoveredVaultAddress ] = useState<string | null>(null)
     const [ tabKey, setTabKey ] = useState<string>('Vault');
     const [ walletBalances, setWalletBalances ] = useState<number | null>(null)
     const [ vaultBalances, setVaultBalances ] = useState<number | null>(null)
 
     useEffect(() => {
-        if (recoveredVaultAddress === null && recoveredAddress && recoveryConfig) {
-            setRecoveredVaultAddress(getVaultAddress(recoveredAddress, recoveryConfig))
+        if (recoveredVaultAddress === null && (protectionState instanceof ClaimedRecovery)) {
+            const recoveredAddress = protectionState.protectionParameters.recoveredAddress!;
+            const legalOfficers = protectionState.protectionParameters.states.map(state => state.legalOfficer.address);
+            setRecoveredVaultAddress(getVaultAddress(recoveredAddress, legalOfficers))
         }
-    }, [ recoveredVaultAddress, setRecoveredVaultAddress, recoveredAddress, recoveryConfig ])
+    }, [ recoveredVaultAddress, setRecoveredVaultAddress, protectionState ])
 
     useEffect(() => {
-        if (walletBalances === null && api !== null && recoveredAddress) {
-            getBalances({ api, accountId: recoveredAddress })
+        if (walletBalances === null && api !== null && (protectionState instanceof ClaimedRecovery)) {
+            getBalances({ api, accountId: protectionState.protectionParameters.recoveredAddress! })
                 .then(balances => {
                     setWalletBalances(balances.filter(balance => Number(balance.balance.toNumber()) > 0).length)
                 })
         }
-    }, [ walletBalances, setWalletBalances, recoveredAddress, api ])
+    }, [ walletBalances, setWalletBalances, protectionState, api ])
 
     useEffect(() => {
         if (vaultBalances === null && api !== null && recoveredVaultAddress !== null) {
@@ -68,7 +71,7 @@ export default function RecoveryProcess() {
         }
     }, [ vaultBalances, setVaultBalances, recoveredVaultAddress, api ])
 
-    if (recoveredAddress === null || walletBalances === null || vaultBalances === null) {
+    if (!(protectionState instanceof ClaimedRecovery) || walletBalances === null || vaultBalances === null) {
         return null;
     }
 
