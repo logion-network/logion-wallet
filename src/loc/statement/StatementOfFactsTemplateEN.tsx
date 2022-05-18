@@ -27,6 +27,12 @@ export default function StatementOfFactsTemplateEN(props: Props) {
                 <div>{ props.pathModel.polkadotAddress }</div>
             </div>
 
+            { props.pathModel.imageSrc.length > 0 &&
+                <div>
+                    <img src={ props.pathModel.imageSrc } alt="Snapshot" />
+                </div>
+            }
+
             <h1 className="main-title">
                 Statement of facts
             </h1>
