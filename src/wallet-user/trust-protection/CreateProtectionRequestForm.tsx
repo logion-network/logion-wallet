@@ -78,7 +78,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                         email: formValues.email,
                         phoneNumber: formValues.phoneNumber
                     },
-                    addressToRecover: addressToRecover !== "" ? addressToRecover : undefined,
+                    addressToRecover,
                     callback,
                 });
             };
@@ -102,7 +102,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                     email: formValues.email,
                     phoneNumber: formValues.phoneNumber
                 },
-                addressToRecover: addressToRecover !== "" ? addressToRecover : undefined,
+                addressToRecover: undefined,
             });
             setRequestCreated(true);
         }
