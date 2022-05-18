@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Given connected and no metadata, when rendering, then show account, no connect button, no node info, tokenization 1`] = `
+exports[`ContextualizedWallet Given connected and no metadata, when rendering, then show account, no connect button, no node info, tokenization 1`] = `
 <Dashboard
   menuBottom={
     Array [
@@ -166,7 +166,7 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
         },
       ]
     }
-    show={false}
+    show={true}
     size="lg"
   >
     <React.Fragment>
@@ -178,7 +178,7 @@ exports[`Given connected and no metadata, when rendering, then show account, no 
 </Dashboard>
 `;
 
-exports[`Given connected, when rendering, then show account, no connect button and tokenization 1`] = `
+exports[`ContextualizedWallet Given connected, when rendering, then show account, no connect button and tokenization 1`] = `
 <Dashboard
   menuBottom={
     Array [
@@ -344,7 +344,7 @@ exports[`Given connected, when rendering, then show account, no connect button a
         },
       ]
     }
-    show={false}
+    show={true}
     size="lg"
   >
     <React.Fragment>
@@ -356,7 +356,7 @@ exports[`Given connected, when rendering, then show account, no connect button a
 </Dashboard>
 `;
 
-exports[`Given connecting, when rendering, then show account, no button, no node info 1`] = `
+exports[`ContextualizedWallet Given connecting, when rendering, then show account, no button, no node info 1`] = `
 <Dashboard
   menuBottom={
     Array [
@@ -522,7 +522,7 @@ exports[`Given connecting, when rendering, then show account, no button, no node
         },
       ]
     }
-    show={false}
+    show={true}
     size="lg"
   >
     <React.Fragment>
@@ -534,7 +534,7 @@ exports[`Given connecting, when rendering, then show account, no button, no node
 </Dashboard>
 `;
 
-exports[`Given connection error, when rendering, then show account, no button, no node info 1`] = `
+exports[`ContextualizedWallet Given connection error, when rendering, then show account, no button, no node info 1`] = `
 <Dashboard
   menuBottom={
     Array [
@@ -700,7 +700,7 @@ exports[`Given connection error, when rendering, then show account, no button, n
         },
       ]
     }
-    show={false}
+    show={true}
     size="lg"
   >
     <React.Fragment>
@@ -712,185 +712,9 @@ exports[`Given connection error, when rendering, then show account, no button, n
 </Dashboard>
 `;
 
-exports[`Given disconnected, when rendering, then show disconnected and connect button 1`] = `
-<Dashboard
-  menuBottom={
-    Array [
-      Object {
-        "exact": true,
-        "icon": Object {
-          "background": Object {
-            "from": "#7a90cb",
-            "to": "#3b6cf4",
-          },
-          "icon": Object {
-            "id": "settings",
-          },
-        },
-        "id": "settings",
-        "text": "Settings",
-        "to": "/user/settings",
-      },
-      Object {
-        "exact": true,
-        "icon": Object {
-          "background": Object {
-            "from": "#7a90cb",
-            "to": "#3b6cf4",
-          },
-          "icon": Object {
-            "id": "recovery",
-          },
-        },
-        "id": "recovery",
-        "onClick": [Function],
-        "text": "Recovery",
-        "to": "/user/recovery",
-      },
-    ]
-  }
-  menuMiddle={
-    Array [
-      Object {
-        "exact": true,
-        "icon": Object {
-          "height": "auto",
-          "icon": Object {
-            "hasVariants": true,
-            "id": "shield",
-          },
-          "width": "auto",
-        },
-        "id": "protection",
-        "onClick": [Function],
-        "text": "My Logion Protection",
-        "to": "/user/protection",
-      },
-    ]
-  }
-  menuTop={
-    Array [
-      Object {
-        "exact": true,
-        "icon": Object {
-          "background": Object {
-            "from": "#3b6cf4",
-            "to": "#6050dc",
-          },
-          "icon": Object {
-            "id": "home",
-          },
-        },
-        "id": "home",
-        "onClick": [Function],
-        "text": "Home",
-        "to": "/user",
-      },
-      Object {
-        "exact": false,
-        "icon": Object {
-          "background": Object {
-            "from": "#3b6cf4",
-            "to": "#6050dc",
-          },
-          "icon": Object {
-            "id": "wallet",
-          },
-        },
-        "id": "wallet",
-        "onClick": [Function],
-        "text": "Wallet",
-        "to": "/user/wallet",
-      },
-      Object {
-        "disabled": true,
-        "exact": false,
-        "icon": Object {
-          "background": Object {
-            "from": "#3b6cf4",
-            "to": "#6050dc",
-          },
-          "icon": Object {
-            "id": "vault",
-          },
-        },
-        "id": "vault",
-        "onClick": [Function],
-        "text": "Vault",
-        "to": "/user/vault",
-      },
-      Object {
-        "exact": false,
-        "icon": Object {
-          "background": Object {
-            "from": "#3b6cf4",
-            "to": "#6050dc",
-          },
-          "icon": Object {
-            "id": "collection",
-          },
-        },
-        "id": "loc-collection",
-        "onClick": [Function],
-        "text": "Collections",
-        "to": "/user/loc/collection",
-      },
-      Object {
-        "exact": false,
-        "icon": Object {
-          "background": Object {
-            "from": "#3b6cf4",
-            "to": "#6050dc",
-          },
-          "icon": Object {
-            "id": "loc",
-          },
-        },
-        "id": "loc-transaction",
-        "onClick": [Function],
-        "text": "Transactions",
-        "to": "/user/loc/transaction",
-      },
-    ]
-  }
->
-  <UserRouter />
-  <WarningDialog
-    actions={
-      Array [
-        Object {
-          "buttonText": "I will do it later",
-          "buttonVariant": "secondary",
-          "callback": [Function],
-          "id": "discard",
-        },
-        Object {
-          "buttonText": "Activate the logion protection",
-          "buttonVariant": "primary",
-          "callback": [Function],
-          "id": "protection",
-        },
-        Object {
-          "buttonText": "Start a recovery process",
-          "buttonVariant": "recovery",
-          "callback": [Function],
-          "id": "recovery",
-        },
-      ]
-    }
-    show={false}
-    size="lg"
-  >
-    <React.Fragment>
-      Dear user,
-      <br />
-      We strongly recommend that you activate your logion trust protection right now in order to enjoy all logion's features and benefits. You can also immediately start a recovery process if you need to recover your assets locked in another account by clicking on the related button below.
-    </React.Fragment>
-  </WarningDialog>
-</Dashboard>
-`;
+exports[`ContextualizedWallet Given disconnected, when rendering, then show disconnected and connect button 1`] = `null`;
 
-exports[`Given no injected account, when rendering, then nothing displayed 1`] = `
+exports[`ContextualizedWallet Given no injected account, when rendering, then nothing displayed 1`] = `
 <Dashboard
   menuBottom={
     Array [
@@ -1056,7 +880,7 @@ exports[`Given no injected account, when rendering, then nothing displayed 1`] =
         },
       ]
     }
-    show={false}
+    show={true}
     size="lg"
   >
     <React.Fragment>

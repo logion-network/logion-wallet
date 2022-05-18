@@ -20,7 +20,8 @@ import { useLogionChain } from "../logion-chain";
 
 import { buildOptions } from '../wallet-user/trust-protection/SelectLegalOfficer';
 import { VaultApi } from "./VaultApi";
-import { signAndSend } from "src/logion-chain/Signature";
+import { signAndSend } from "../logion-chain/Signature";
+import { useUserContext } from "../wallet-user/UserContext";
 
 interface FormValues {
     legalOfficer: string;
@@ -31,6 +32,7 @@ interface FormValues {
 export default function VaultOutRequest() {
     const { api, accounts, axiosFactory } = useLogionChain();
     const { availableLegalOfficers, colorTheme, refresh } = useCommonContext();
+    const { protectionState } = useUserContext();
 
     const [ showDialog, setShowDialog ] = useState(false);
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
@@ -68,17 +70,13 @@ export default function VaultOutRequest() {
         setFormValues(formValues);
 
         const signerId = accounts!.current!.address;
-        const recoveryConfig = await getRecoveryConfig({
-            api: api!,
-            accountId: signerId
-        });
 
         const submittable = await requestVaultTransfer({
             signerId,
             api: api!,
             amount: new PrefixedNumber(formValues.amount.value, formValues.amount.unit),
             destination: formValues.destination,
-            recoveryConfig: recoveryConfig!,
+            legalOfficers: protectionState!.protectionParameters.states.map(state => state.legalOfficer.address),
         });
 
         const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
@@ -88,7 +86,7 @@ export default function VaultOutRequest() {
             submittable,
         });
         setSignAndSubmit(() => signAndSubmit);
-    }, [ api, accounts, setFormValues ]);
+    }, [ api, accounts, setFormValues, protectionState ]);
 
     const cleanUpCallback = useCallback(() => {
         setSignAndSubmit(null);

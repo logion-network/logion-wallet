@@ -1,40 +1,39 @@
 import React, { useContext, useEffect, useCallback, useReducer, Reducer } from "react";
-import { RecoveryConfig, getRecoveryConfig, getProxy } from '@logion/node-api/dist/Recovery';
 import { getVaultAddress } from "@logion/node-api/dist/Vault";
 import { CoinBalance, getBalances } from "@logion/node-api/dist/Balances";
+import { DateTime } from "luxon";
+import { ActiveProtection, ClaimedRecovery, LegalOfficer, NoProtection, PendingProtection, PostalAddress, ProtectionState, UserIdentity, SignCallback, AcceptedProtection, PendingRecovery } from "@logion/client";
 
 import { useLogionChain } from '../logion-chain';
 import { Children } from '../common/types/Helpers';
 import {
-    aggregateArrays,
     AxiosFactory,
     Endpoint,
-    MultiResponse,
-    MultiSourceHttpClient,
     MultiSourceHttpClientState,
     AnySourceHttpClient
 } from '../common/api';
 
-import { ProtectionRequest, Transaction, TransactionsSet } from "../common/types/ModelTypes";
-import { fetchProtectionRequests, getTransactions } from "../common/Model";
-import {
-    CreateProtectionRequest,
-    createProtectionRequest as modelCreateProtectionRequest,
-} from "./trust-protection/Model";
+import { Transaction, TransactionsSet } from "../common/types/ModelTypes";
+import { getTransactions } from "../common/Model";
 import { useCommonContext } from '../common/CommonContext';
 import { DARK_MODE } from './Types';
-import { DateTime } from "luxon";
+
+export interface CreateProtectionRequestParams {
+    legalOfficers: LegalOfficer[],
+    postalAddress: PostalAddress,
+    userIdentity: UserIdentity,
+    addressToRecover?: string,
+    callback?: SignCallback,
+};
 
 export interface UserContext {
     dataAddress: string | null,
     fetchForAddress: string | null,
     refreshRequests: ((clearBeforeRefresh: boolean) => void) | null,
-    createProtectionRequest: ((legalOfficers: string[], requestFactory: (otherLegalOfficerAddress: string) => CreateProtectionRequest) => Promise<void>) | null,
-    pendingProtectionRequests: ProtectionRequest[] | null,
-    acceptedProtectionRequests: ProtectionRequest[] | null,
-    rejectedProtectionRequests: ProtectionRequest[] | null,
-    recoveryConfig?: RecoveryConfig | null, // Option.none moved to undefined.
-    recoveredAddress?: string | null,
+    createProtectionRequest: ((params: CreateProtectionRequestParams) => Promise<void>) | null,
+    activateProtection: ((callback: SignCallback) => Promise<void>) | null,
+    claimRecovery: ((callback: SignCallback) => Promise<void>) | null,
+    protectionState?: ProtectionState,
     vaultAddress?: string | null,
     vaultBalances: CoinBalance[] | null,
     vaultTransactions: Transaction[] | null,
@@ -50,10 +49,8 @@ function initialContextValue(): FullUserContext {
         fetchForAddress: null,
         refreshRequests: null,
         createProtectionRequest: null,
-        pendingProtectionRequests: null,
-        acceptedProtectionRequests: null,
-        rejectedProtectionRequests: null,
-        recoveryConfig: null,
+        activateProtection: null,
+        claimRecovery: null,
         vaultAddress: null,
         vaultBalances: null,
         vaultTransactions: null,
@@ -66,42 +63,38 @@ type ActionType = 'FETCH_IN_PROGRESS'
     | 'SET_DATA'
     | 'SET_REFRESH_REQUESTS_FUNCTION'
     | 'SET_CREATE_PROTECTION_REQUEST_FUNCTION'
+    | 'SET_ACTIVATE_PROTECTION_FUNCTION'
+    | 'SET_CLAIM_RECOVERY_FUNCTION'
     | 'SET_CURRENT_AXIOS'
+    | 'REFRESH_PROTECTION_STATE'
 ;
 
 interface Action {
     type: ActionType,
     dataAddress?: string,
-    pendingProtectionRequests?: ProtectionRequest[],
-    acceptedProtectionRequests?: ProtectionRequest[],
-    rejectedProtectionRequests?: ProtectionRequest[],
-    recoveryConfig?: RecoveryConfig,
+    protectionState?: ProtectionState,
     vaultAddress?: string,
     vaultBalances?: CoinBalance[],
     vaultTransactions?: Transaction[],
     refreshRequests?: (clearBeforeRefresh: boolean) => void,
-    createProtectionRequest?: (legalOfficers: string[], requestFactory: (otherLegalOfficerAddress: string) => CreateProtectionRequest) => Promise<void>,
+    createProtectionRequest?: (params: CreateProtectionRequestParams) => Promise<void>,
+    activateProtection?: (callback: SignCallback) => Promise<void>,
+    claimRecovery?: (callback: SignCallback) => Promise<void>,
     clearBeforeRefresh?: boolean,
-    recoveredAddress?: string | null,
     axiosFactory?: AxiosFactory,
 }
 
 const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, action: Action): FullUserContext => {
     switch (action.type) {
         case 'FETCH_IN_PROGRESS':
-            console.log("fetch in progress for " + action.dataAddress!);
             if(action.clearBeforeRefresh!) {
                 return {
                     ...state,
                     fetchForAddress: action.dataAddress!,
-                    pendingProtectionRequests: null,
-                    acceptedProtectionRequests: null,
-                    rejectedProtectionRequests: null,
-                    recoveryConfig: null,
+                    protectionState: undefined,
                     vaultAddress: null,
                     vaultBalances: null,
                     vaultTransactions: null,
-                    recoveredAddress: null,
                 };
             } else {
                 return {
@@ -116,14 +109,10 @@ const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, actio
                     ...state,
                     fetchForAddress: null,
                     dataAddress: action.dataAddress!,
-                    pendingProtectionRequests: action.pendingProtectionRequests!,
-                    acceptedProtectionRequests: action.acceptedProtectionRequests!,
-                    rejectedProtectionRequests: action.rejectedProtectionRequests!,
-                    recoveryConfig: action.recoveryConfig!,
+                    protectionState: action.protectionState!,
                     vaultAddress: action.vaultAddress,
                     vaultBalances: action.vaultBalances!,
                     vaultTransactions: action.vaultTransactions!,
-                    recoveredAddress: action.recoveredAddress!,
                 };
             } else {
                 console.log(`Skipping data because ${action.dataAddress} <> ${state.fetchForAddress}`);
@@ -139,10 +128,25 @@ const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, actio
                 ...state,
                 createProtectionRequest: action.createProtectionRequest!,
             };
+        case "SET_ACTIVATE_PROTECTION_FUNCTION":
+            return {
+                ...state,
+                activateProtection: action.activateProtection!,
+            };
+        case "SET_CLAIM_RECOVERY_FUNCTION":
+            return {
+                ...state,
+                claimRecovery: action.claimRecovery!,
+            };
         case "SET_CURRENT_AXIOS":
             return {
                 ...state,
                 currentAxiosFactory: action.axiosFactory!,
+            };
+        case "REFRESH_PROTECTION_STATE":
+            return {
+                ...state,
+                protectionState: action.protectionState!,
             };
         default:
             /* istanbul ignore next */
@@ -155,7 +159,7 @@ export interface Props {
 }
 
 export function UserContextProvider(props: Props) {
-    const { accounts, client, axiosFactory } = useLogionChain();
+    const { accounts, client, axiosFactory, signer } = useLogionChain();
     const { colorTheme, setColorTheme, nodesUp, nodesDown } = useCommonContext();
     const { api } = useLogionChain();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
@@ -167,8 +171,9 @@ export function UserContextProvider(props: Props) {
     }, [ colorTheme, setColorTheme ]);
 
     const refreshRequests = useCallback((clearBeforeRefresh: boolean) => {
-        if(api !== null) {
+        if(api !== null && client !== null) {
             const currentAddress = accounts!.current!.address;
+            const forceProtectionStateFetch = currentAddress !== contextValue.dataAddress;
             dispatch({
                 type: "FETCH_IN_PROGRESS",
                 dataAddress: currentAddress,
@@ -176,50 +181,27 @@ export function UserContextProvider(props: Props) {
             });
 
             (async function () {
+                let protectionState = contextValue.protectionState;
+                if(protectionState === undefined || forceProtectionStateFetch) {
+                    protectionState = await client.protectionState();
+                } else if(contextValue.protectionState instanceof PendingProtection) {
+                    protectionState = await contextValue.protectionState.refresh();
+                }
+
                 const initialState: MultiSourceHttpClientState<Endpoint> = {
                     nodesUp,
                     nodesDown,
                 }
                 const token = accounts!.current!.token!.value;
-                const multiClient = new MultiSourceHttpClient<Endpoint, ProtectionRequest[]>(initialState, token);
-                let result: MultiResponse<ProtectionRequest[]>;
-
-                result = await multiClient.fetch(axios => fetchProtectionRequests(axios, {
-                    requesterAddress: currentAddress,
-                    statuses: [ "PENDING" ],
-                    kind: "ANY",
-                }));
-                const pendingProtectionRequests = aggregateArrays(result);
-
-                result = await multiClient.fetch(axios => fetchProtectionRequests(axios, {
-                    requesterAddress: currentAddress,
-                    statuses: [ "ACCEPTED", "ACTIVATED" ],
-                    kind: "ANY",
-                }));
-                const acceptedProtectionRequests = aggregateArrays(result);
-
-                result = await multiClient.fetch(axios => fetchProtectionRequests(axios, {
-                    requesterAddress: currentAddress,
-                    statuses: [ "REJECTED" ],
-                    kind: "ANY",
-                }));
-                const rejectedProtectionRequests = aggregateArrays(result);
-
-                const recoveryConfig = await getRecoveryConfig({
-                    api: api!,
-                    accountId: currentAddress
-                });
-
-                let recoveredAddress: string | null = await getProxy({
-                    api: api!,
-                    currentAddress
-                }) || null;
 
                 let vaultAddress: string | undefined = undefined
                 let vaultTransactions: Transaction[] = []
                 let vaultBalances: CoinBalance[] = []
-                if (recoveryConfig) {
-                    vaultAddress = getVaultAddress(currentAddress, recoveryConfig)
+                if (contextValue.protectionState instanceof ActiveProtection
+                        || contextValue.protectionState instanceof ClaimedRecovery) {
+                    const activeOrClaimed = contextValue.protectionState;
+                    const legalOfficers = activeOrClaimed.protectionParameters.states.map(state => state.legalOfficer.address);
+                    vaultAddress = getVaultAddress(currentAddress, legalOfficers);
 
                     const anyClient = new AnySourceHttpClient<Endpoint, TransactionsSet>(initialState, token);
                     const transactionsSet = await anyClient.fetch(axios => getTransactions(axios, {
@@ -236,18 +218,14 @@ export function UserContextProvider(props: Props) {
                 dispatch({
                     type: "SET_DATA",
                     dataAddress: currentAddress,
-                    pendingProtectionRequests,
-                    acceptedProtectionRequests,
-                    rejectedProtectionRequests,
-                    recoveryConfig,
+                    protectionState,
                     vaultAddress,
                     vaultBalances,
                     vaultTransactions,
-                    recoveredAddress,
                 });
             })();
         }
-    }, [ api, dispatch, accounts, nodesUp, nodesDown ]);
+    }, [ api, dispatch, accounts, nodesUp, nodesDown, client, contextValue.protectionState, contextValue.dataAddress ]);
 
     useEffect(() => {
         if(api !== null
@@ -271,23 +249,79 @@ export function UserContextProvider(props: Props) {
         }
     }, [ api, refreshRequests, contextValue, dispatch ]);
 
-    useEffect(() => {
-        if (axiosFactory !== undefined
-                && api !== null
-                && (contextValue.createProtectionRequest === null || axiosFactory !== contextValue.currentAxiosFactory)) {
-            const createProtectionRequest = async (legalOfficers: string[], requestFactory: (otherLegalOfficerAddress: string) => CreateProtectionRequest): Promise<void> => {
-                const promises = [
-                    modelCreateProtectionRequest(axiosFactory(legalOfficers[0])!, requestFactory(legalOfficers[1])),
-                    modelCreateProtectionRequest(axiosFactory(legalOfficers[1])!, requestFactory(legalOfficers[0]))
-                ]
-                await Promise.all(promises);
+    const createProtectionRequestCallback = useCallback(async (params: CreateProtectionRequestParams) => {
+        const protectionState = contextValue.protectionState;
+        if(protectionState instanceof NoProtection) {
+            let pending: ProtectionState;
+            if(params.addressToRecover !== undefined) {
+                pending = await protectionState.requestRecovery({
+                    legalOfficer1: params.legalOfficers[0],
+                    legalOfficer2: params.legalOfficers[1],
+                    postalAddress: params.postalAddress,
+                    userIdentity: params.userIdentity,
+                    recoveredAddress: params.addressToRecover,
+                    callback: params.callback,
+                    signer: signer!,
+                });
+            } else {
+                pending = await protectionState.requestProtection({
+                    legalOfficer1: params.legalOfficers[0],
+                    legalOfficer2: params.legalOfficers[1],
+                    postalAddress: params.postalAddress,
+                    userIdentity: params.userIdentity,
+                });
             }
             dispatch({
-                type: "SET_CREATE_PROTECTION_REQUEST_FUNCTION",
-                createProtectionRequest,
+                type: "REFRESH_PROTECTION_STATE",
+                protectionState: pending,
             });
         }
-    }, [ axiosFactory, api, contextValue, refreshRequests, dispatch ]);
+    }, [ contextValue.protectionState, dispatch, signer ]);
+
+    useEffect(() => {
+        if(contextValue.createProtectionRequest !== createProtectionRequestCallback) {
+            dispatch({
+                type: "SET_CREATE_PROTECTION_REQUEST_FUNCTION",
+                createProtectionRequest: createProtectionRequestCallback,
+            });
+        }
+    }, [ contextValue, dispatch, createProtectionRequestCallback ]);
+
+    const activateProtectionCallback = useCallback(async (callback: SignCallback) => {
+        const acceptedProtection = contextValue.protectionState as AcceptedProtection;
+        const protectionState = await acceptedProtection.activate(signer!, callback);
+        dispatch({
+            type: "REFRESH_PROTECTION_STATE",
+            protectionState
+        });
+    }, [ contextValue.protectionState, signer ]);
+
+    useEffect(() => {
+        if(contextValue.activateProtection !== activateProtectionCallback) {
+            dispatch({
+                type: "SET_ACTIVATE_PROTECTION_FUNCTION",
+                activateProtection: activateProtectionCallback
+            });
+        }
+    }, [ contextValue, activateProtectionCallback ]);
+
+    const claimRecoveryCallback = useCallback(async (callback: SignCallback) => {
+        const pendingRecovery = contextValue.protectionState as PendingRecovery;
+        const protectionState = await pendingRecovery.claimRecovery(signer!, callback);
+        dispatch({
+            type: "REFRESH_PROTECTION_STATE",
+            protectionState
+        });
+    }, [ contextValue.protectionState, signer ]);
+
+    useEffect(() => {
+        if(contextValue.claimRecovery !== claimRecoveryCallback) {
+            dispatch({
+                type: "SET_CLAIM_RECOVERY_FUNCTION",
+                claimRecovery: claimRecoveryCallback
+            });
+        }
+    }, [ contextValue, claimRecoveryCallback ]);
 
     useEffect(() => {
         if(axiosFactory !== undefined

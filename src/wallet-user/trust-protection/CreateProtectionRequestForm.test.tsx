@@ -9,7 +9,7 @@ jest.setTimeout(10000);
 import { render, screen, waitFor, getByText, act } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from "../../common/TestData";
+import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER, PATRICK, GUILLAUME } from "../../common/TestData";
 import { setCreateProtectionRequest } from "../__mocks__/UserContextMock";
 import { clickByName, shallowRender } from "../../tests";
 import { setActiveRecoveryInProgress } from "../../__mocks__/@logion/node-api/dist/RecoveryMock";
@@ -70,8 +70,9 @@ describe("CreateProtectionRequestForm", () => {
         await clickByName("Next");
 
         await waitFor(() => expect(createProtectionRequest).toBeCalledWith(
-            expect.arrayContaining([ DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER ]),
-            expect.anything()
+            expect.objectContaining({
+                legalOfficers: [ PATRICK, GUILLAUME ],
+            })
         ));
     });
 
@@ -81,10 +82,6 @@ describe("CreateProtectionRequestForm", () => {
         render(<CreateProtectionRequestForm isRecovery={ true } />);
 
         await userEvent.type(screen.getByLabelText("Address to Recover"), 'toRecover');
-        const initiateButton = screen.getByRole('button', {name: "Initiate recovery"});
-        await waitFor(() => expect(initiateButton).not.toBeDisabled());
-        await userEvent.click(initiateButton);
-        await waitFor(() => screen.getByText(/The recovery has been successfully initiated/));
 
         await selectLegalOfficers();
         await fillInForm();
@@ -92,8 +89,9 @@ describe("CreateProtectionRequestForm", () => {
         await clickByName("Next");
 
         await waitFor(() => expect(createProtectionRequest).toBeCalledWith(
-            expect.arrayContaining([ DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER ]),
-            expect.anything()
+            expect.objectContaining({
+                legalOfficers: [ PATRICK, GUILLAUME ],
+            })
         ));
     });
 
@@ -104,26 +102,17 @@ describe("CreateProtectionRequestForm", () => {
         render(<CreateProtectionRequestForm isRecovery={ true } />);
 
         await userEvent.type(screen.getByLabelText("Address to Recover"), TEST_WALLET_USER2);
-        const initiateButton = screen.getByRole('button', {name: "Initiate recovery"});
-        await waitFor(() => expect(initiateButton).not.toBeDisabled());
-        await userEvent.click(initiateButton);
-        await waitFor(() => expect(submitting()).toBe(true));
-        act(() => finalizeSubmission());
-        await waitFor(() => screen.getByText(/The recovery has been successfully initiated/));
 
         await selectLegalOfficers();
         await fillInForm();
 
         await clickByName("Next");
 
-        let dialog: HTMLElement;
-        await waitFor(() => dialog = screen.getByRole("dialog"));
-        await clickByName("OK");
-
-        expect(createProtectionRequest).toBeCalledWith(
-            expect.arrayContaining([ DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER ]),
-            expect.anything()
-        );
+        await waitFor(() => expect(createProtectionRequest).toBeCalledWith(
+            expect.objectContaining({
+                legalOfficers: [ PATRICK, GUILLAUME ],
+            })
+        ));
     });
 });
 
