@@ -8,7 +8,6 @@ import { useCommonContext } from "../../common/CommonContext";
 import { FormValues, Language } from "./SofParams";
 
 import "./StatementOfFactsForm.css"
-import FileSelectorButton from "../../common/FileSelectorButton";
 
 const amountDefaultValues: Record<Language, string[]> = {
     en: [ "Cost", "Base", "Tax Excluded", "Tax", "Tax Included" ],
@@ -20,7 +19,6 @@ export interface Props {
     control: Control<FormValues>,
     errors: FieldErrors<FormValues>
     language: Language
-    onFileSelected: (file: File) => void;
 }
 
 export default function StatementOfFactsForm(props: Props) {
@@ -119,18 +117,6 @@ export default function StatementOfFactsForm(props: Props) {
                                 { ...field }
                             />
                         ) }
-                    />
-                }
-                colors={ colorTheme.dialog }
-            />
-            <FormGroup
-                id="imageSrc"
-                label="Image"
-                control={
-                    <FileSelectorButton
-                        accept="image/*"
-                        buttonText="Choose an image"
-                        onFileSelected={ props.onFileSelected }
                     />
                 }
                 colors={ colorTheme.dialog }

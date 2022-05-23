@@ -13,11 +13,17 @@
         font-size: 11pt;
     }
 
+    .prerequisite-title,
+    .requester-title,
     .facts-title,
     .confidential-title,
     .item-title,
     .conclusion-first {
         break-before: page;
+    }
+
+    .prerequisite {
+        page-break-inside: avoid;
     }
 
     .header {

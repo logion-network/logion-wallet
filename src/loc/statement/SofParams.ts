@@ -11,6 +11,10 @@ export interface PrivateItem {
 
 export type Language = 'en' | 'fr';
 
+export interface Prerequisites {
+    prerequisites: Prerequisite[];
+}
+
 export interface FormValues {
     containingLocId: string;
     timestampText: string;
@@ -18,7 +22,7 @@ export interface FormValues {
     amount: string;
 }
 
-export interface SofParams extends FormValues {
+interface LocInfo {
     language: Language;
     polkadotAddress: string;
     postalAddressLine1: string;
@@ -39,7 +43,9 @@ export interface SofParams extends FormValues {
     logoUrl: string;
     itemId: string;
     itemDescription: string;
-    imageSrc: string;
+}
+
+export interface SofParams extends Prerequisites, LocInfo, FormValues {
 }
 
 export const DEFAULT_SOF_PARAMS: SofParams = {
@@ -67,6 +73,11 @@ export const DEFAULT_SOF_PARAMS: SofParams = {
     amount: "",
     itemId: "",
     itemDescription: "",
-    imageSrc: "",
+    prerequisites: [],
 }
 
+export interface Prerequisite {
+    label: string;
+    text: string;
+    imageSrc: string;
+}
