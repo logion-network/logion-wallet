@@ -31,7 +31,7 @@ export async function cancelVaultTransferCallback(params: {
                     amount,
                     block: BigInt(requestToCancel.block),
                     index: requestToCancel.index,
-                    recoveryConfig: recoveryConfig!,
+                    legalOfficers: recoveryConfig!.legalOfficers,
                 }),
                 callback: setResult,
                 errorCallback: setError,
@@ -42,7 +42,7 @@ export async function cancelVaultTransferCallback(params: {
                 api,
                 block: BigInt(requestToCancel.block),
                 index: requestToCancel.index,
-                recoveryConfig: recoveryConfig!,
+                legalOfficers: recoveryConfig!.legalOfficers,
                 destination: requestToCancel.destination,
                 amount,
             });
