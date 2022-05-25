@@ -56,32 +56,6 @@ export async function acceptLocRequest(
     await axios.post(`/api/loc-request/${parameters.requestId}/accept`, { });
 }
 
-export interface AddFileParameters {
-    locId: string,
-    file: File,
-    fileName: string,
-    nature: string,
-    submitter: string,
-}
-
-export interface AddFileResult {
-    hash: string
-}
-
-export async function addFile(
-    axios: AxiosInstance,
-    parameters: AddFileParameters
-): Promise<AddFileResult> {
-    const formData = new FormData();
-    formData.append('file', parameters.file, parameters.fileName);
-    formData.append('nature', parameters.nature);
-    const response = await axios.post(
-        `/api/loc-request/${ parameters.locId }/files`,
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" } })
-    return response.data;
-}
-
 export interface AddLinkParameters {
     locId: string,
     target: string,
@@ -111,28 +85,4 @@ export async function addMetadata(
     await axios.post(`/api/loc-request/${ parameters.locId }/metadata`, { name, value })
 }
 
-export interface GetFileParameters {
-    locId: string,
-    hash: string
-}
-
-export interface TypedFile {
-    data: any,
-    extension: string
-}
-
-export async function getFile(
-    axios: AxiosInstance,
-    parameters: GetFileParameters
-): Promise<TypedFile> {
-    const response = await axios.get(`/api/loc-request/${ parameters.locId }/files/${ parameters.hash }`, { responseType: 'blob' });
-    const contentType:string = response.headers['content-type'];
-    return { data: response.data, extension: determineExtension(contentType) };
-}
-
-function determineExtension(contentType: string) {
-    if (!contentType || contentType.indexOf("/") < 0) {
-        return "txt"
-    }
-    return contentType.split("/")[1];
-}
+export { addFile, getFile } from "./FileModel"

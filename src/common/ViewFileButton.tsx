@@ -2,7 +2,7 @@ import { AxiosInstance } from "axios";
 
 import Button from "./Button";
 
-import { TypedFile } from "../loc/Model";
+import { TypedFile } from "../loc/FileModel";
 import Icon from "./Icon";
 
 import './ViewFileButton.css';

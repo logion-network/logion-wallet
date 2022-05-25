@@ -16,15 +16,26 @@ exports[`SettingsPane renders for legal officer 1`] = `
     }
   }
 >
-  <Row>
-    <Col>
-      <Frame
-        title="Directory data"
-      >
-        <DirectoryData />
-      </Frame>
-    </Col>
-  </Row>
+  <React.Fragment>
+    <Row>
+      <Col>
+        <Frame
+          title="Directory data"
+        >
+          <DirectoryData />
+        </Frame>
+      </Col>
+    </Row>
+    <Row>
+      <Col>
+        <Frame
+          title="Files"
+        >
+          <Files />
+        </Frame>
+      </Col>
+    </Row>
+  </React.Fragment>
   <Row>
     <Col>
       <Frame

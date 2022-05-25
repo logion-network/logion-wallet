@@ -10,6 +10,7 @@ import { useVersionContext } from '../version/VersionContext';
 import './SettingsPane.css';
 import Alert from '../common/Alert';
 import DirectoryData from '../settings/DirectoryData';
+import { Files } from "./Files";
 
 function status(metadata: NodeMetadata | null): string {
     if(metadata !== null) {
@@ -45,15 +46,24 @@ export default function SettingsPane(props: Props) {
         >
             {
                 props.showContactInformation &&
-                <Row>
-                    <Col>
-                        <Frame
-                            title="Directory data"
-                        >
-                            <DirectoryData />
-                        </Frame>
-                    </Col>
-                </Row>
+                <>
+                    <Row>
+                        <Col>
+                            <Frame
+                                title="Directory data"
+                            >
+                                <DirectoryData />
+                            </Frame>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Frame title="Files">
+                                <Files/>
+                            </Frame>
+                        </Col>
+                    </Row>
+                </>
             }
             <Row>
                 <Col>
