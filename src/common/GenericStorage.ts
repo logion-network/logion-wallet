@@ -60,7 +60,6 @@ export function newMultiJsonStorable<T>(keyPrefix: string): MultiStorable<T> {
 export function storeMulti<T>(storable: MultiStorable<T>, key: string, obj: T) {
     const storage = getStorage();
     const value = storable.toValue(obj);
-    console.log("Storing %s%s\n%s", keyPrefix(storable), key, value)
     storage.setItem(keyPrefix(storable) + key, value)
 }
 

@@ -7,7 +7,7 @@ import { getLegalOfficerCase } from "@logion/node-api/dist/LogionLoc";
 import { locDetailsPath, statementOfFactsPath } from "../../legal-officer/LegalOfficerPaths";
 import { fullCertificateUrl } from "../../PublicPaths";
 import { useLocContext } from "../LocContext";
-import { DEFAULT_SOF_PARAMS, SofParams, FormValues, Language } from "./SofParams";
+import { DEFAULT_SOF_PARAMS, SofParams, FormValues, Language, Prerequisite } from "./SofParams";
 
 import './StatementOfFactsButton.css';
 import Dialog from "../../common/Dialog";
@@ -16,8 +16,10 @@ import { useForm } from "react-hook-form";
 import StatementOfFactsSummary from "./StatementOfFactsSummary";
 import { useLogionChain } from "../../logion-chain";
 import { storeSofParams } from "../../common/Storage";
+import { PrerequisiteWizard } from "./PrerequisiteWizard";
+import { PREREQUISITE_WIZARD_STEPS } from "./WizardSteps";
 
-type Status = 'IDLE' | 'INPUT' | 'READY'
+type Status = 'IDLE' | 'PRE-REQUISITE' | 'INPUT' | 'READY'
 
 export default function StatementOfFactsButton(props: { itemId?: string, itemDescription?: string }) {
     const { api, accounts, getOfficer } = useLogionChain();
@@ -30,7 +32,6 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
     const { control, handleSubmit, formState: { errors }, reset, setError } = useForm<FormValues>();
     type ContainingLoc = (LegalOfficerCase & { id: UUID })
     const [ containingLoc, setContainingLoc ] = useState<ContainingLoc | null | undefined>(null)
-    const [ imageSrc, setImageSrc ] = useState<string>("");
     const [ sofId, setSofId ] = useState<UUID | undefined>(undefined);
 
     const submit = useCallback(async (formValues: FormValues) => {
@@ -61,7 +62,6 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                     ...sofParams,
                     ...formValues,
                     certificateUrl: fullCertificateUrl(containingLocId),
-                    imageSrc,
                     language: language || 'en'
                 })
                 storeSofParams(id, pm);
@@ -69,15 +69,14 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                 setStatus('READY');
             }
         }
-    }, [ api, sofParams, setContainingLoc, setError, locId, imageSrc, language ])
+    }, [ api, sofParams, setContainingLoc, setError, locId, language ])
 
     const dropDownItem = (language: Language) => {
         return (
             <Dropdown.Item onClick={ () => {
                 reset()
-                setStatus('INPUT')
                 setLanguage(language)
-                setImageSrc("")
+                setStatus('PRE-REQUISITE')
             } }>{ language.toUpperCase() }</Dropdown.Item>
         )
     }
@@ -138,21 +137,19 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
         }
     }, [ props, itemId, itemDescription, setItemId, setItemDescription, sofParams, setSofParams, locId ]);
 
-    const fileSelectedCallback = useCallback((file: File) => {
-        const reader = new FileReader();
-        reader.addEventListener('loadend', () => {
-            const base64ImageUrl = reader.result;
-            if (base64ImageUrl) {
-                setImageSrc(base64ImageUrl as string)
-            }
-        })
-        reader.readAsDataURL(file)
-    }, [ setImageSrc ])
-
     const cancelCallback = useCallback(() => {
         setStatus('IDLE')
         setLanguage(null)
     }, [ setStatus, setLanguage ])
+
+    const prerequisitesDoneCallback = useCallback((prerequisites: Prerequisite[]) => {
+        setSofParams({
+                ...sofParams,
+                prerequisites,
+            }
+        )
+        setStatus('INPUT');
+    }, [ sofParams ])
 
     return (
         <>
@@ -164,6 +161,14 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                     { dropDownItem('fr') }
                 </Dropdown.Menu>
             </Dropdown>
+
+            <PrerequisiteWizard
+                show={ status === 'PRE-REQUISITE' }
+                language={ language || 'en' }
+                steps={ PREREQUISITE_WIZARD_STEPS }
+                onDone={ prerequisitesDoneCallback }
+                onCancel={ cancelCallback }
+            />
 
             <Dialog
                 show={ status === 'INPUT' }
@@ -184,12 +189,12 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                 ] }
                 onSubmit={ handleSubmit(submit) }
             >
+
                 <StatementOfFactsForm
                     type={ loc!.locType }
                     control={ control }
                     errors={ errors }
                     language={ language || 'en' }
-                    onFileSelected={ fileSelectedCallback }
                 />
             </Dialog>
 
