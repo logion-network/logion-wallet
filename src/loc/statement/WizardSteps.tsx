@@ -82,7 +82,7 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
         },
         text: {
             en: "--",
-            fr: "J’ouvre mon navigateur. Une page vierge se présente. Ensuite, afin d'accéder à logion et procéder à l'établissement de ce constat, je rentre l'adresse suivante "https://node02.logion.network/" puis m'identifie avec mes codes d'accès logion.
+            fr: "J’ouvre mon navigateur. Une page vierge se présente.",
         },
         addImage: true
     },
