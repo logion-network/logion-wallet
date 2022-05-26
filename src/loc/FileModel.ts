@@ -1,12 +1,11 @@
 import { AxiosInstance, AxiosResponse } from "axios";
 
-export const LO_FILE_IDS = ['sof-header', 'sof-oath']
+export const LO_FILE_IDS = ['sof-header']
 
 export type LoFileId = typeof LO_FILE_IDS[number];
 
 export const LO_FILE_DESCRIPTION: Record<LoFileId, string> = {
-    'sof-header': "Header of the Statement of facts",
-    'sof-oath': "The transcript of your oath"
+    'sof-header': "Header of the Statement of facts"
 }
 
 export interface GetFileParameters {
@@ -89,6 +88,3 @@ export async function addLoFile(
         formData,
         { headers: { "Content-Type": "multipart/form-data" } })
 }
-
-
-

@@ -131,7 +131,7 @@ export default function StatementOfFactsTemplateEN(props: Props) {
                     <pre>{ props.pathModel.amount }</pre>
                 </div>
                 <div className="signature-container">
-                    <h3>Electronic signature</h3>
+                    <h3>Signature</h3>
                     <img className="sof-signature" src={ process.env.PUBLIC_URL + "/assets/sof_signature.svg" } alt="signature" />
                 </div>
             </div>

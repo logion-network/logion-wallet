@@ -1,6 +1,8 @@
 @page {
     size: A4;
     margin: 2cm 2cm;
+    padding: 1cm 1cm;
+    border: 0.5mm solid black;
 
     @bottom-right {
         content: counter(page) "/" counter(pages);
@@ -13,12 +15,14 @@
         font-size: 11pt;
     }
 
+    .time,
     .prerequisite-title,
     .requester-title,
     .facts-title,
     .confidential-title,
     .item-title,
-    .conclusion-first {
+    .conclusion-first,
+    .appendix {
         break-before: page;
     }
 
@@ -29,7 +33,7 @@
     .header {
         display: flex;
         width: 100%;
-        margin-top: 2cm;
+        margin-top: 3cm;
     }
 
     .header > * {
@@ -65,8 +69,7 @@
         font-weight: bold;
         padding-top: 2mm;
         padding-bottom: 2mm;
-        margin-top: 1cm;
-        margin-bottom: 1cm;
+        margin-top: 4cm;
     }
 
     h2 {
@@ -139,5 +142,27 @@
 
     a {
         word-break: break-all;
+    }
+
+    .oath-container {
+        display: flex;
+        width: 100%;
+        flex-grow: 0;
+    }
+
+    .oath-container > * {
+        width: 50%;
+    }
+
+    .oath-container .oath-logo {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .oath-container .oath-logo img {
+        width: 100%;
+        flex-shrink: 0;
+        flex-grow: 0;
     }
 }

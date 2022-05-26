@@ -18,12 +18,15 @@ import { useLogionChain } from "../../logion-chain";
 import { storeSofParams } from "../../common/Storage";
 import { PrerequisiteWizard } from "./PrerequisiteWizard";
 import { PREREQUISITE_WIZARD_STEPS } from "./WizardSteps";
+import { LegalOfficer } from "@logion/client";
+import { useLegalOfficerContext } from "../../legal-officer/LegalOfficerContext";
 
 type Status = 'IDLE' | 'PRE-REQUISITE' | 'INPUT' | 'READY'
 
 export default function StatementOfFactsButton(props: { itemId?: string, itemDescription?: string }) {
     const { api, accounts, getOfficer } = useLogionChain();
     const { loc, locId, locRequest } = useLocContext();
+    const { settings } = useLegalOfficerContext();
     const [ sofParams, setSofParams ] = useState<SofParams>(DEFAULT_SOF_PARAMS);
     const [ itemId, setItemId ] = useState<string>();
     const [ itemDescription, setItemDescription ] = useState<string>();
@@ -33,6 +36,7 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
     type ContainingLoc = (LegalOfficerCase & { id: UUID })
     const [ containingLoc, setContainingLoc ] = useState<ContainingLoc | null | undefined>(null)
     const [ sofId, setSofId ] = useState<UUID | undefined>(undefined);
+    const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer>();
 
     const submit = useCallback(async (formValues: FormValues) => {
         if (api) {
@@ -62,14 +66,16 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                     ...sofParams,
                     ...formValues,
                     certificateUrl: fullCertificateUrl(containingLocId),
-                    language: language || 'en'
+                    language: language || 'en',
+                    oathLogoUrl: `${ legalOfficer!.node }/api/lo-file/sof-header?jwt_token=${ accounts?.current?.token?.value }`,
+                    oathText: settings!['oath'] || "-"
                 })
                 storeSofParams(id, pm);
                 setSofId(id);
                 setStatus('READY');
             }
         }
-    }, [ api, sofParams, setContainingLoc, setError, locId, language ])
+    }, [ api, sofParams, setContainingLoc, setError, locId, language, accounts, legalOfficer, settings ])
 
     const dropDownItem = (language: Language) => {
         return (
@@ -87,6 +93,7 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
             && accounts.current.address !== sofParams.polkadotAddress) {
             const polkadotAddress = accounts.current.address;
             const legalOfficer = getOfficer(polkadotAddress);
+            setLegalOfficer(legalOfficer);
             setSofParams({
                 ...sofParams,
                 polkadotAddress,
@@ -150,6 +157,10 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
         )
         setStatus('INPUT');
     }, [ sofParams ])
+
+    if(settings === undefined) {
+        return null;
+    }
 
     return (
         <>

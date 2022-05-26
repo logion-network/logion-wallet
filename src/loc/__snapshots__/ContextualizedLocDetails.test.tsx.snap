@@ -495,22 +495,7 @@ exports[`ContextualizedLocDetails renders for LO 1`] = `
             >
               <div
                 className="sof-preview"
-              >
-                <div
-                  className="StatementOfFactsButtonDropdownItem dropdown"
-                >
-                  <button
-                    aria-expanded={false}
-                    className="Button dropdown-toggle btn btn-primary"
-                    disabled={false}
-                    id="StatementOfFacts-dropdown-toggle"
-                    onClick={[Function]}
-                    type="button"
-                  >
-                    Statement of facts
-                  </button>
-                </div>
-              </div>
+              />
             </div>
           </div>
         </div>

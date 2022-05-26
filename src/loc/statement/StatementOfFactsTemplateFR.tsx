@@ -132,8 +132,20 @@ export default function StatementOfFactsTemplateFR(props: Props) {
                     <pre>{ props.pathModel.amount }</pre>
                 </div>
                 <div className="signature-container">
-                    <h3>Signature électronique</h3>
+                    <h3>Signature</h3>
                     <img className="sof-signature" src={ process.env.PUBLIC_URL + "/assets/sof_signature.svg" } alt="signature" />
+                </div>
+            </div>
+
+            <div className="appendix">
+                <h2>Prestation de serment de l’Officier en charge de ce constat</h2>
+                <div className="oath-container">
+                    <div className="oath">
+                        <p>{ props.pathModel.oathText }</p>
+                    </div>
+                    <div className="oath-logo">
+                        <img src={ props.pathModel.oathLogoUrl } alt="oath logo" />
+                    </div>
                 </div>
             </div>
         </>

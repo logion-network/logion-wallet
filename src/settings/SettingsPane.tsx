@@ -58,7 +58,7 @@ export default function SettingsPane(props: Props) {
                     </Row>
                     <Row>
                         <Col>
-                            <Frame title="Files">
+                            <Frame title="Instance settings">
                                 <Files/>
                             </Frame>
                         </Col>

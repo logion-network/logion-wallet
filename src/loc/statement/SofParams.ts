@@ -45,7 +45,12 @@ interface LocInfo {
     itemDescription: string;
 }
 
-export interface SofParams extends Prerequisites, LocInfo, FormValues {
+interface SettingsData {
+    oathText: string;
+    oathLogoUrl: string;
+}
+
+export interface SofParams extends Prerequisites, LocInfo, FormValues, SettingsData {
 }
 
 export const DEFAULT_SOF_PARAMS: SofParams = {
@@ -74,6 +79,8 @@ export const DEFAULT_SOF_PARAMS: SofParams = {
     itemId: "",
     itemDescription: "",
     prerequisites: [],
+    oathText: "",
+    oathLogoUrl: "",
 }
 
 export interface Prerequisite {

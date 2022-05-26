@@ -20,6 +20,9 @@ export interface LegalOfficerContext {
     axios?: AxiosInstance;
     pendingVaultTransferRequests?: VaultTransferRequest[];
     vaultTransferRequestsHistory?: VaultTransferRequest[];
+    settings?: Record<string, string>;
+    updateSetting: (id: string, value: string) => Promise<void>;
+    allSettingsKeys: string[];
 }
 
 interface FullLegalOfficerContext extends LegalOfficerContext {
@@ -37,6 +40,8 @@ function initialContextValue(): FullLegalOfficerContext {
         protectionRequestsHistory: null,
         pendingRecoveryRequests: null,
         recoveryRequestsHistory: null,
+        updateSetting: () => Promise.reject(),
+        allSettingsKeys: [ 'oath' ]
     };
 }
 
@@ -45,6 +50,7 @@ const LegalOfficerContextObject: React.Context<FullLegalOfficerContext> = React.
 type ActionType = 'FETCH_IN_PROGRESS'
     | 'SET_DATA'
     | 'SET_CURRENT_USER'
+    | 'UPDATE_SETTING'
 ;
 
 interface Action {
@@ -62,6 +68,10 @@ interface Action {
     rejectRequest?: ((requestId: string, reason: string) => Promise<void>) | null;
     pendingVaultTransferRequests?: VaultTransferRequest[];
     vaultTransferRequestsHistory?: VaultTransferRequest[];
+    settings?: Record<string, string>;
+    updateSetting?: (id: string, value: string) => Promise<void>;
+    id?: string;
+    value?: string;
 }
 
 const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOfficerContext, action: Action): FullLegalOfficerContext => {
@@ -93,6 +103,7 @@ const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOffic
                     recoveryRequestsHistory: action.recoveryRequestsHistory!,
                     pendingVaultTransferRequests: action.pendingVaultTransferRequests!,
                     vaultTransferRequestsHistory: action.vaultTransferRequestsHistory!,
+                    settings: action.settings!,
                 };
             } else {
                 return state;
@@ -102,8 +113,17 @@ const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOffic
                 ...state,
                 refreshRequests: action.refreshRequests!,
                 axios: action.axios!,
+                updateSetting: action.updateSetting!,
             };
         }
+        case "UPDATE_SETTING":
+            return {
+                ...state,
+                settings: {
+                    ...state.settings!,
+                    [action.id!]: action.value!,
+                }
+            }
         default:
             /* istanbul ignore next */
             throw new Error(`Unknown type: ${action.type}`);
@@ -134,11 +154,21 @@ export function LegalOfficerContextProvider(props: Props) {
                 && isCurrentAuthenticated()) {
             const currentAccount = accounts!.current!.address;
             const refreshRequests = (clear: boolean) => refreshRequestsFunction(clear, currentAccount, dispatch, axiosFactory);
+            const axios = axiosFactory(currentAccount);
+            const updateSettingCallback = async (id: string, value: string) => {
+                await updateSetting(axios, id, value);
+                dispatch({
+                    type: "UPDATE_SETTING",
+                    id,
+                    value,
+                })
+            };
             dispatch({
                 type: 'SET_CURRENT_USER',
-               axios: axiosFactory(currentAccount),
-               currentAccount,
-               refreshRequests,
+                axios,
+                currentAccount,
+                refreshRequests,
+                updateSetting: updateSettingCallback,
             });
             refreshRequests(true);
         }
@@ -202,6 +232,8 @@ function refreshRequestsFunction(clearBeforeRefresh: boolean, currentAddress: st
         });
         const vaultTransferRequestsHistory = vaultTransferRequestsHistoryResult.sort((a, b) => b.createdOn.localeCompare(a.createdOn));
 
+        const settings = await getSettings(axios);
+
         dispatch({
             type: "SET_DATA",
             pendingProtectionRequests,
@@ -212,6 +244,16 @@ function refreshRequestsFunction(clearBeforeRefresh: boolean, currentAddress: st
             recoveryRequestsHistory,
             pendingVaultTransferRequests,
             vaultTransferRequestsHistory,
+            settings,
         });
     })();
+}
+
+async function getSettings(axios: AxiosInstance): Promise<Record<string, string>> {
+    const response = await axios.get('/api/setting');
+    return response.data.settings;
+}
+
+async function updateSetting(axios: AxiosInstance, id: string, value: string): Promise<void> {
+    await axios.put(`/api/setting/${id}`, { value });
 }
