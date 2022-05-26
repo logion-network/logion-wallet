@@ -160,8 +160,8 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
               <p></p>
               <p>Please write here any additional information you would like to mention within this Statement of Facts</div>,
         label: {
-            en: "Additional comment",
-            fr: "Information complémentaires",
+            en: "Additional comment(s)",
+            fr: "Information(s) complémentaire(s)",
         },
         text: {
             en: "--",
