@@ -24,7 +24,7 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
     {
         wizardIntroduction:
             <div>
-                <p>Mandatory initial browsing and computer environment cleaning</p>
+                <p><b>Mandatory initial browsing and computer environment cleaning</b></p>
                 <p></p>
                 <p>If not already done, you  have to CLOSE your browser and then execute the following operations. For each step, you will have to take a screen capture considered as a proof of execution.</p>
                 <p>The required operations are:</p>
@@ -38,7 +38,7 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
     {
         wizardIntroduction:
             <div>
-                <p>Mandatory initial browsing environment cleaning</p>
+                <p><b>Mandatory initial browsing environment cleaning</b></p>
                 <p></p>
                 <p>As explained in the previous screen, you should have cleared browsing data and take a screen capture of the menu with the related options checked.</p>
             </div>,
@@ -55,7 +55,7 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
     {
         wizardIntroduction:
             <div>
-                <p>Recycle bin cleaning</p>
+                <p><b>Recycle bin cleaning</b></p>
                 <p></p>
                 <p>As explained in the first screen, you should have cleared your recycle bin and take a screen capture of it as a proof of execution.</p>
             </div>,
@@ -72,7 +72,7 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
     {
         wizardIntroduction:
             <div>
-                <p>New browser window opening and logion access</p>
+                <p><b>New browser window opening and logion access</b></p>
                 <p></p>
                 <p>As explained in the first screen, you should have open a brand new browser window and take a screen capture of it as a proof of execution.</p>
             </div>,
@@ -89,7 +89,7 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
     {
         wizardIntroduction:
             <div>
-                <p>Network environment settings confirmation</p>
+                <p><b>Network environment settings confirmation</b></p>
                 <p></p>
                 <p>Please verify your network environement settings by using your computer internal network tool and selecting a screen capture of it, considered as a proof of execution.</p>
             </div>,
@@ -106,7 +106,7 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
     {
         wizardIntroduction:
             <div>
-                <p>No-proxy environment confirmation</p>
+                <p><b>No-proxy environment confirmation</b></p>
                 <p></p>
                 <p>Please verify your proxy environement settings by checking your browser related settings and selecting a screen capture of it, considered as a proof of execution.</p>
             </div>,
@@ -123,7 +123,7 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
     {
         wizardIntroduction:
             <div>
-              <p>Screen capture settings</p>
+              <p><b>Screen capture settings</b></p>
               <p></p>
               <p>Please provide in the following text area your screen resolution as well as the method / tool you are using to save your screen capture.</p>
             </div>,
@@ -139,7 +139,7 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
     {
         wizardIntroduction:
             <div>
-              <p>Time and date check</p>
+              <p><b>Time and date check</b></p>
               <p></p>
               <p>Please check the time and date of your computer operating system to verify its synchronization with internet time server. Then select a screen capture of it, considered as a proof of execution.</p>
             </div>,
@@ -152,5 +152,21 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
             fr: "la date et l’heure retenues par l'horloge du système d'exploitation sont bien la date de ce jour (synchronisation automatique avec un serveur de temps Internet time.windows.com).",
         },
         addImage: true
+    },
+    {
+        wizardIntroduction:
+            <div>
+              <p><b>Additional comment</b></p>
+              <p></p>
+              <p>Please write here any additional information you would like to mention within this Statement of Facts</div>,
+        label: {
+            en: "Additional comment",
+            fr: "Information complémentaires",
+        },
+        text: {
+            en: "--",
+            fr: "Je n'ai aucune information complémentaire à mentioner.",
+        },
+        
     },
 ]
