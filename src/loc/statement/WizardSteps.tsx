@@ -28,43 +28,61 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
                 <p></p>
                 <p>If not already done, you  have to CLOSE your browser and then execute the following operations. For each step, you will have to take a screen capture considered as a proof of execution.</p>
                 <p>The required operations are:</p>
-                <li>With the browser you will use to generate the State of Facts, please select the "Clear browsing data" menu and erase all the following data: browsing history, download history, cookies and other site data, cached images and files. Then take a screen capture of the menu with the related options checked</li>
-                <li>Empty your recycle bin and take a screen capture of the your empty recycle bin.</li>
+                <li>Open the browser you will use to generate the State of Facts, please select the "Clear browsing data" menu and erase all the following data: browsing history, download history, cookies and other site data, cached images and files. Then take a screen capture of the menu with the related options checked as a proof of execution.</li>
+                <li>Empty your recycle bin and take a screen capture of the your empty recycle bin as a proof of execution.</li>
+                <li>Open a new empty browser window and take a screen capture of it as a proof of execution.
                 <p></p>
-                <p>Then you will access again the current Statement of Facts generator and click on the "Next" button: the next step will let you describe those operations and upload related screen captures as a proof of execution.
+                <p>Then access again the current Statement of Facts generator and click on the "Next" button: the next step will let you describe those operations and upload related screen captures as a proof of execution.
             </div>,
     },
     {
         wizardIntroduction:
             <div>
-                <p>Computer environment settings</p>
+                <p>Mandatory initial browsing environment cleaning</p>
                 <p></p>
-                <p>Please establish your computer environement settings by describing the process you follow in the text area bellow and selecting a screen capture considered as a proof of execution.</p>
+                <p>As explained in the previous screen, you should have cleared browsing data and take a screen capture of the menu with the related options checked.</p>
             </div>,
         label: {
-            en: "Computer environment settings",
-            fr: "Description de l'environnement",
+            en: "Mandatory initial browsing environment cleaning",
+            fr: "Nettoyage initial du navigateur",
         },
         text: {
             en: "--",
-            fr: "Les constatations vont être effectuées sur le poste informatique identifié «VNZN2002 » dans l’environnement de travail connecté au serveur informatique de l’Etude,  soit un  ordinateur  de  type  PC  Dell, avec  navigateur  Firefox (Version 100.0.2 (64-bit)) dont la page de démarrage est une page vierge (about :blank), Système d'Exploitation : Windows 10 Professionnel. J’effectue ci-dessous une capture écran des « Informations système générales » de mon ordinateur : ",
+            fr: "Avant de commencer la création de mon constat, j’efface toutes les données de navigation en ouvrant les paramètres de mon navigateur Firefox. Je m’assure que les cases « Historique de navigation », « Historique des téléchargements », « Images et fichiers en cache » et « Cookies et autres données de site » sont cochées puis je clique sur « Effacer les données ».",
+        },
+        addImage: true
+    },              
+    {
+        wizardIntroduction:
+            <div>
+                <p>Recycle bin cleaning</p>
+                <p></p>
+                <p>As explained in the first screen, you should have cleared your recycle bin and take a screen capture of it as a proof of execution.</p>
+            </div>,
+        label: {
+            en: "Recycle bin cleaning",
+            fr: "Nettoyage de la corbeille",
+        },
+        text: {
+            en: "--",
+            fr: "La corbeille est vidée.",
         },
         addImage: true
     },
     {
         wizardIntroduction:
             <div>
-                <p>Network environment settings</p>
+                <p>New browser window opening and logion access</p>
                 <p></p>
-                <p>Please establish your network environement settings by mentionning your network provider, you IP adress and by also selecting a screen capture of an external IP check service, considered as a proof of execution.</p>
+                <p>As explained in the first screen, you should have open a brand new browser window and take a screen capture of it as a proof of execution.</p>
             </div>,
         label: {
-            en: "Network environment settings",
-            fr: "Description de l'environnement réseau",
+            en: "New browser window opening and logion access",
+            fr: "Ouverture d'une nouvelle fenêtre de navigateur et accès à logion",
         },
         text: {
             en: "--",
-            fr: "Fournisseur d'accès Internet Lien Principal : Fibre Dédiée Orange opérée par Sewan SAS IP : 178.255.167.44 Fournisseur d’accès lien Secondaire : Fibre Mutualisée Orange Pro IP : 81.250.134.85 Afin de connaître mon adresse IP publique, je me connecte à Internet et au site dont l’adresse est https://mon-ip.net/. Mon adresse IP publique est 178.255.167.44 ",
+            fr: "J’ouvre mon navigateur. Une page vierge se présente. Ensuite, afin d'accéder à logion et procéder à l'établissement de ce constat, je rentre l'adresse suivante "https://node02.logion.network/" puis m'identifie avec mes codes d'accès logion.
         },
         addImage: true
     },
