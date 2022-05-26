@@ -1,5 +1,6 @@
+import { VaultTransferRequest } from "@logion/client";
+
 import Detail from "./Detail";
-import { VaultTransferRequest } from "../vault/VaultApi";
 
 export interface Props {
     request : VaultTransferRequest;

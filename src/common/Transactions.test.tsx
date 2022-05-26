@@ -4,9 +4,10 @@ jest.mock("./CommonContext");
 import { shallowRender } from '../tests';
 
 import Transactions from './Transactions';
-import { setBalances, setTransactions } from './__mocks__/CommonContextMock';
+import { setBalanceState } from './__mocks__/CommonContextMock';
 import { setParams } from '../__mocks__/ReactRouterMock';
 import { DEFAULT_COIN_BALANCE, DEFAULT_TRANSACTION, DEFAULT_FAILED_TRANSACTION } from './TestData';
+import { BalanceState } from '@logion/client/dist/Balance';
 
 test('renders null with missing data', () => {
     const result = shallowRender(<Transactions
@@ -21,8 +22,10 @@ test('renders null with missing data', () => {
 
 test('renders with all data', () => {
     setParams({coinId: 'lgnt'});
-    setBalances([ DEFAULT_COIN_BALANCE ]);
-    setTransactions([ DEFAULT_TRANSACTION ]);
+    setBalanceState({
+        balances: [ DEFAULT_COIN_BALANCE ],
+        transactions: [ DEFAULT_TRANSACTION ],
+    } as BalanceState);
     const result = shallowRender(<Transactions
         address="123"
         backPath={ "back" }
@@ -35,8 +38,10 @@ test('renders with all data', () => {
 
 test('renders failed transaction', () => {
     setParams({coinId: 'lgnt'});
-    setBalances([ DEFAULT_COIN_BALANCE ]);
-    setTransactions([ DEFAULT_FAILED_TRANSACTION ]);
+    setBalanceState({
+        balances: [ DEFAULT_COIN_BALANCE ],
+        transactions: [ DEFAULT_FAILED_TRANSACTION ],
+    } as BalanceState);
     const result = shallowRender(<Transactions
         address="123"
         backPath={ "back" }

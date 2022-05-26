@@ -1130,6 +1130,7 @@ exports[`renders 1`] = `
                   "buttonTestId": "btnSubmit",
                   "buttonText": "Next",
                   "buttonVariant": "primary",
+                  "disabled": false,
                   "id": "submit",
                   "type": "submit",
                 }

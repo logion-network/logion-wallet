@@ -29,7 +29,7 @@ export interface Props {
 export default function TransactionConfirmation(props: Props) {
 
     const { clearFormCallback, initialStatus } = props
-    const { refresh, transactions } = useCommonContext();
+    const { refresh, balanceState } = useCommonContext();
     const [ state, setState ] = useState<State>({ status: initialStatus ? initialStatus : Status.IDLE });
     const [ refreshCount, setRefreshCount ] = useState(0);
     const [ refreshScheduled, setRefreshScheduled ] = useState(false);
@@ -42,9 +42,9 @@ export default function TransactionConfirmation(props: Props) {
         clearFormCallback();
         setState({
             status: Status.EXPECTING_NEW_TRANSACTION,
-            minExpectedTransactions: transactions ? transactions!.length + 1 : 1
+            minExpectedTransactions: balanceState ? balanceState.transactions.length + 1 : 1
         });
-    }, [ clearFormCallback, transactions, setState ]);
+    }, [ clearFormCallback, balanceState, setState ]);
 
     const cancelCallback = useCallback(() => {
         clearFormCallback();
@@ -80,17 +80,17 @@ export default function TransactionConfirmation(props: Props) {
 
     useEffect(() => {
         if(state.status === Status.WAITING_FOR_NEW_TRANSACTION) {
-            if(transactions
-                && (transactions.length >= state.minExpectedTransactions!
+            if(balanceState
+                && (balanceState.transactions.length >= state.minExpectedTransactions!
                     || refreshCount >= MAX_REFRESH_COUNT)) {
-                console.log(`Stopped polling after ${refreshCount} retries  (${transactions!.length} >= ${state.minExpectedTransactions!})`);
+                console.log(`Stopped polling after ${refreshCount} retries  (${balanceState.transactions.length} >= ${state.minExpectedTransactions!})`);
                 setState({status: Status.IDLE});
             } else {
-                console.log(`Scheduling retry #${refreshCount} (${transactions?.length} < ${state.minExpectedTransactions!})...`);
+                console.log(`Scheduling retry #${refreshCount} (${balanceState!.transactions?.length} < ${state.minExpectedTransactions!})...`);
                 scheduleRetryIfNoneInProgress(refreshCount);
             }
         }
-    }, [ state, setState, transactions, refreshCount, scheduleRetryIfNoneInProgress ]);
+    }, [ state, setState, balanceState, refreshCount, scheduleRetryIfNoneInProgress ]);
 
     const className = customClassName("TransactionConfirmation", props.vaultFirst ? "vault-first" : undefined);
     return (

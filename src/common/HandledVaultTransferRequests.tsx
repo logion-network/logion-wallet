@@ -1,8 +1,7 @@
 import { prefixedLogBalance, SYMBOL } from "@logion/node-api/dist/Balances";
 
+import { useUserContext } from "../wallet-user/UserContext";
 import AmountCell from "./AmountCell";
-import { useCommonContext } from "./CommonContext";
-
 import LegalOfficerName from "./LegalOfficerNameCell";
 import { useResponsiveContext } from "./Responsive";
 import Table, { Cell, DateTimeCell, EmptyTableMessage } from "./Table";
@@ -10,9 +9,9 @@ import VaultTransferRequestStatusCell from "./VaultTransferRequestStatusCell";
 
 export default function HandledVaultTransferRequests() {
     const { width } = useResponsiveContext();
-    const { vaultTransferRequestsHistory } = useCommonContext();
+    const { vaultState } = useUserContext();
 
-    if(!vaultTransferRequestsHistory) {
+    if(!vaultState) {
         return null;
     }
 
@@ -55,7 +54,7 @@ export default function HandledVaultTransferRequests() {
                         width: '130px',
                     },
                 ]}
-                data={ vaultTransferRequestsHistory(true) }
+                data={ vaultState.vaultTransferRequestsHistory }
                 renderEmpty={ () => <EmptyTableMessage>No request to display</EmptyTableMessage> }
             />
         </>

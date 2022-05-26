@@ -55,7 +55,7 @@ export default function LocCreationDialog(props: Props) {
             if(props.hasLinkNature) {
                 setLinkNature(formValues.linkNature);
             }
-            refresh()
+            refresh(false);
         })();
     }, [ axios, accounts, props.locRequest, refresh, props.hasLinkNature ]);
 

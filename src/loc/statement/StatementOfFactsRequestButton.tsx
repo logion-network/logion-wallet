@@ -16,7 +16,7 @@ export default function StatementOfFactsRequestButton(props: { itemId?: string }
     const confirmCallback = useCallback(() => {
         setStatus('Requesting')
         requestSof!(props.itemId);
-        refresh();
+        refresh(false);
         setStatus('Requested');
     }, [ props.itemId, refresh, requestSof ])
 

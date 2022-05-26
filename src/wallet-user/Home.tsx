@@ -23,6 +23,7 @@ import { useLogionChain } from '../logion-chain';
 import { SETTINGS_PATH, WALLET_PATH, dataLocDetailsPath, locRequestsPath } from './UserRouter';
 
 import './Home.css';
+import TransactionType from 'src/common/TransactionType';
 
 const MAX_OPEN_LOCS = 3;
 const MAX_PENDING_LOCS = 3;
@@ -48,11 +49,11 @@ export default function Account() {
 
 export function Content() {
     const { accounts } = useLogionChain();
-    const { balances, transactions, openedLocRequests, pendingLocRequests, nodesDown } = useCommonContext();
+    const { balanceState, openedLocRequests, pendingLocRequests, nodesDown } = useCommonContext();
     const navigate = useNavigate();
     const { width } = useResponsiveContext();
 
-    if (balances === null || transactions === null || accounts === null || openedLocRequests === null || pendingLocRequests === null) {
+    if (!balanceState || !(accounts?.current?.address) || openedLocRequests === null || pendingLocRequests === null) {
         return <Loader />;
     }
 
@@ -90,7 +91,7 @@ export function Content() {
                                         },
                                         {
                                             header: "Transaction type",
-                                            render: transaction => <Cell content={ transaction.type } />
+                                            render: transaction => <TransactionType address={ accounts.current!.address } transaction={ transaction } walletType="Wallet" />,
                                         },
                                         {
                                             header: "Amount",
@@ -107,17 +108,17 @@ export function Content() {
                                             width: "120px",
                                         }
                                     ] }
-                                    data={ transactions.slice(0, 1) }
+                                    data={ balanceState.transactions.slice(0, 1) }
                                     renderEmpty={ () => <EmptyTableMessage>No transaction yet</EmptyTableMessage> }
                                 />
                             </Col>
                             <Col>
                                 <div className="reading-container">
                                     <Reading
-                                        readingIntegerPart={ balances[0].balance.coefficient.toInteger() }
-                                        readingDecimalPart={ balances[0].balance.coefficient.toFixedPrecisionDecimals(2) }
-                                        unit={ balances[0].balance.prefix.symbol + SYMBOL }
-                                        level={ balances[0].level }
+                                        readingIntegerPart={ balanceState.balances[0].balance.coefficient.toInteger() }
+                                        readingDecimalPart={ balanceState.balances[0].balance.coefficient.toFixedPrecisionDecimals(2) }
+                                        unit={ balanceState.balances[0].balance.prefix.symbol + SYMBOL }
+                                        level={ balanceState.balances[0].level }
                                     />
                                     <Button
                                         onClick={ () => navigate(WALLET_PATH) }

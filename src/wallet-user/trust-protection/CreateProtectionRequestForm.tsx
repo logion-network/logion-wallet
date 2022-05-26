@@ -493,6 +493,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                                         buttonText: "Next",
                                         buttonTestId: "btnSubmit",
                                         type: 'submit',
+                                        disabled: call !== undefined,
                                     }}
                                 />
                             </div>

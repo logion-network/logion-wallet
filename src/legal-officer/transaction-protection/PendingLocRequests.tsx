@@ -41,7 +41,7 @@ export default function PendingLocRequests(props: Props) {
             requestId: requestToReject!,
             rejectReason: reason!,
         });
-        refresh();
+        refresh(false);
         setRequestToReject(null);
     };
 

@@ -131,7 +131,7 @@ export default function LocRequestAcceptance(props: Props) {
 
     const closeAndRefresh = useCallback(() => {
         close();
-        refresh();
+        refresh(false);
     }, [ refresh, close ]);
 
     if(props.requestToAccept === null) {

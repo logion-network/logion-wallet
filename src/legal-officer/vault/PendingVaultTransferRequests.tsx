@@ -3,6 +3,7 @@ import { Col, Form, Row } from "react-bootstrap";
 import { LGNT_SMALLEST_UNIT, prefixedLogBalance, SYMBOL } from "@logion/node-api/dist/Balances";
 import { PrefixedNumber } from "@logion/node-api/dist/numbers";
 import { approveVaultTransfer } from "@logion/node-api/dist/Vault";
+import { VaultTransferRequest } from "@logion/client";
 
 import ExtrinsicSubmitter, { SignAndSubmit } from "../../ExtrinsicSubmitter";
 import { useLogionChain } from "../../logion-chain";
@@ -22,14 +23,16 @@ import AmountFormat from "../../common/AmountFormat";
 import AddressFormat from "../../common/AddressFormat";
 import DateTimeFormat from "../../common/DateTimeFormat";
 
-import { VaultApi, VaultTransferRequest } from "../../vault/VaultApi";
+import { VaultApi } from "../../vault/VaultApi";
 
 import VaultTransferRequestDetails from "./VaultTransferDetails";
 import { signAndSend } from "src/logion-chain/Signature";
+import { useLegalOfficerContext } from "../LegalOfficerContext";
 
 export default function PendingVaultTransferRequests() {
     const { api, axiosFactory, accounts } = useLogionChain();
-    const { pendingVaultTransferRequests, refresh, colorTheme } = useCommonContext();
+    const { colorTheme } = useCommonContext();
+    const { pendingVaultTransferRequests, refreshRequests } = useLegalOfficerContext();
     const { width } = useResponsiveContext();
     const [ requestToReject, setRequestToReject ] = useState<VaultTransferRequest | null>(null);
     const [ reason, setReason ] = useState<string>("");
@@ -63,23 +66,23 @@ export default function PendingVaultTransferRequests() {
         const api = new VaultApi(axiosFactory!(legalOfficer), legalOfficer);
         await api.acceptVaultTransferRequest(requestToAccept!.id);
         setRequestToAccept(null);
-        refresh!();
-    }, [ requestToAccept, axiosFactory, setRequestToAccept, refresh ]);
+        refreshRequests!(false);
+    }, [ requestToAccept, axiosFactory, setRequestToAccept, refreshRequests ]);
 
     const rejectRequestCallback = useCallback(async () => {
         const legalOfficer = requestToReject!.legalOfficerAddress;
         const api = new VaultApi(axiosFactory!(legalOfficer), legalOfficer);
         await api.rejectVaultTransferRequest(requestToReject!.id, reason);
         setRequestToReject(null);
-        refresh!();
-    }, [ requestToReject, axiosFactory, setRequestToReject, refresh, reason ]);
+        refreshRequests!(false);
+    }, [ requestToReject, axiosFactory, setRequestToReject, refreshRequests, reason ]);
 
     if(!pendingVaultTransferRequests) {
         return null;
     }
 
     const getRequest = (requestId: string): (VaultTransferRequest | null) => {
-        const pendingRequests = pendingVaultTransferRequests(false);
+        const pendingRequests = pendingVaultTransferRequests;
         for(let i = 0; i < pendingRequests!.length; ++i) {
             const request = pendingRequests[i];
             if(request.id === requestId) {
@@ -147,7 +150,7 @@ export default function PendingVaultTransferRequests() {
                         }),
                     },
                 ]}
-                data={ pendingVaultTransferRequests(false) }
+                data={ pendingVaultTransferRequests }
                 renderEmpty={ () => <EmptyTableMessage>No pending vault-out transfers</EmptyTableMessage> }
             />
             <Dialog

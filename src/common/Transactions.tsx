@@ -8,7 +8,7 @@ import { Coin, CoinBalance } from '@logion/node-api/dist/Balances';
 import { FullWidthPane } from './Dashboard';
 import Frame from './Frame';
 import Icon from './Icon';
-import Table, { DateCell, Cell, EmptyTableMessage, Column } from './Table';
+import Table, { DateCell, EmptyTableMessage, Column } from './Table';
 
 import { useCommonContext } from './CommonContext';
 
@@ -24,7 +24,7 @@ import { Transaction } from "./types/ModelTypes";
 import { WalletType } from "./Wallet";
 import VaultOutRequest from "../vault/VaultOutRequest";
 import VaultTransferRequests from './VaultTransferRequests';
-import { enrichTransactionType } from "./Model";
+import TransactionType from './TransactionType';
 
 export interface Props {
     address: string,
@@ -104,7 +104,7 @@ function Content(props: ContentProps) {
         },
         {
             header: "Transaction type",
-            render: transaction => <Cell content={ enrichTransactionType(transaction, vaultAddress) } />,
+            render: transaction => <TransactionType transaction={ transaction } walletType={ props.type } address={ props.address } vaultAddress={ props.vaultAddress } />,
             width: width({
                 onSmallScreen: "180px",
                 otherwise: "250px"

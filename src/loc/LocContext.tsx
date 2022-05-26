@@ -358,7 +358,7 @@ export function LocContextProvider(props: Props) {
         }
 
         if (allItemsOK(contextValue.locItems) && requestOK(contextValue.locRequest)) {
-            refresh!();
+            refresh!(false);
             return Promise.resolve(NextRefresh.STOP);
         }
 

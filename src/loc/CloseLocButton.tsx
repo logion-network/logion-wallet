@@ -90,7 +90,7 @@ export default function CloseLocButton(props: Props) {
         } else {
             setCloseState({ status: CloseStatus.NONE });
             close!();
-            refresh!();
+            refresh!(false);
         }
     }, [ setCloseState, props.protectionRequest, accounts, api, close, refresh ]);
 
@@ -104,7 +104,7 @@ export default function CloseLocButton(props: Props) {
                     locId: locId!
                 });
                 close!();
-                refresh!();
+                refresh!(false);
                 refreshRequests!(false);
 
                 if(props.protectionRequest?.isRecovery) {

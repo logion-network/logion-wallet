@@ -6,9 +6,8 @@ import {
     TransactionsSet,
     ProtectionRequestStatus,
     ProtectionRequest,
-    Transaction,
     LocRequest,
-    LocRequestStatus, LocCollectionItem, TransferDirection,
+    LocRequestStatus, LocCollectionItem,
 } from './types/ModelTypes';
 import Identity from './types/Identity';
 
@@ -37,111 +36,8 @@ export async function getTransactions(
 ): Promise<TransactionsSet> {
     const response = await axios.put("/api/transaction", request);
     return {
-        transactions: response.data.transactions.map((transaction: Transaction) => enrichTransaction(transaction, request.address))
+        transactions: response.data.transactions
     };
-}
-
-export function enrichTransactionType(transaction: Transaction, vaultAddress?: string): string {
-    if (transaction.transferDirection === 'Sent' && transaction.to === vaultAddress) {
-        return "Sent to my vault"
-    }
-    return transaction.type
-}
-
-function enrichTransaction(transaction: Transaction, address: string): Transaction {
-
-    const transferDirection: TransferDirection =
-        !(transaction.pallet === "balances" && transaction.method.startsWith("transfer")) ?
-            'None' :
-            transaction.from === address ?
-                'Sent' :
-                'Received'
-
-    return {
-        ...transaction,
-        type: transactionType(transaction, address),
-        transferDirection
-    }
-}
-
-function transactionType(transaction: Transaction, address: string): string {
-    if(transaction.pallet === "verifiedRecovery") {
-        if (transaction.method === "createRecovery") {
-            return "Recovery created";
-        } else {
-            return "Other";
-        }
-    } else if(transaction.pallet === "recovery") {
-        if(transaction.method === "createRecovery") {
-            return "Protection activated";
-        } else if(transaction.method === "vouchRecovery") {
-            return "Recovery vouched";
-        } else if(transaction.method === "initiateRecovery") {
-            return "Recovery initiated";
-        } else if(transaction.method === "claimRecovery") {
-            return "Recovery claimed";
-        } else if(transaction.method === "asRecovered") {
-            return "Recovery process";
-        } else {
-            return "Other";
-        }
-    } else if(transaction.pallet === "balances") {
-        if(transaction.method.startsWith("transfer")) {
-            if(transaction.from === address) {
-                return "Sent";
-            } else {
-                return "Received";
-            }
-        } else {
-            return "Other";
-        }
-    } else if(transaction.pallet === "assets") {
-        if(transaction.method === "mint") {
-            return "Asset tokens minted";
-        } else if(transaction.method === "create") {
-            return "Asset created";
-        } else if(transaction.method === "setMetadata") {
-            return "Asset metadata set";
-        } else {
-            return "Other";
-        }
-    } else if(transaction.pallet === "logionLoc") {
-        if(transaction.method === "addFile") {
-            return "File added to LOC";
-        } else if(transaction.method === "addLink") {
-            return "Link added to LOC";
-        } else if(transaction.method === "addMetadata") {
-            return "Metadata added to LOC";
-        } else if(transaction.method === "close") {
-            return "LOC closed";
-        } else if(transaction.method === "createLoc") {
-            return "LOC created";
-        } else if(transaction.method === "makeVoid") {
-            return "LOC voided";
-        } else if(transaction.method === "makeVoidAndReplace") {
-            return "LOC voided and replaced";
-        } else if(transaction.method === "addCollectionItem") {
-            return "Item added to Collection";
-        } else {
-            return "Other";
-        }
-    } else if(transaction.pallet === "vault") {
-        if(transaction.method === "requestCall") {
-            return "Vault operation requested";
-        } else if(transaction.method === "approveCall") {
-            return "Vault operation approved";
-        } else {
-            return "Other";
-        }
-    } else if(transaction.pallet === "multisig") {
-        if(transaction.method === "cancelAsMulti") {
-            return "Vault operation cancelled";
-        } else {
-            return "Other";
-        }
-    } else {
-        return 'Other';
-    }
 }
 
 export interface FetchLocRequestSpecification {

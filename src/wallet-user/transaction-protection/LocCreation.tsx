@@ -77,7 +77,7 @@ export default function LocCreation(props: Props) {
         await createLocRequest!(axiosFactory!(formValues.legalOfficer), request);
 
         reset();
-        refresh!();
+        refresh!(false);
         setRequestLoc(false);
     }, [ axiosFactory, accounts, setRequestLoc, refresh, reset, showIdentityFields, locType ]);
 
