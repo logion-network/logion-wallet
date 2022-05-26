@@ -1,10 +1,11 @@
-import { PathModel } from "./PathModel";
+import { SofParams } from "./SofParams";
 
 export interface Props {
-    pathModel: PathModel;
+    pathModel: SofParams;
 }
 
 export default function StatementOfFactsTemplateFR(props: Props) {
+    console.log("path Model: %s", JSON.stringify(props.pathModel))
     return (
         <>
             <div className="header">
@@ -27,12 +28,6 @@ export default function StatementOfFactsTemplateFR(props: Props) {
                 <div>{ props.pathModel.polkadotAddress }</div>
             </div>
 
-            { props.pathModel.imageSrc.length > 0 &&
-                <div>
-                    <img src={ props.pathModel.imageSrc } alt="Snapshot" />
-                </div>
-            }
-
             <h1 className="main-title">
                 Procès verbal de constat
             </h1>
@@ -41,7 +36,19 @@ export default function StatementOfFactsTemplateFR(props: Props) {
                 { props.pathModel.timestampText }
             </div>
 
-            <h2>Demandeur</h2>
+            <h3 className="prerequisite-title">Prérequis</h3>
+            { props.pathModel.prerequisites.map(prerequisite => <div className="prerequisite">
+                    <h3>{ prerequisite.label }</h3>
+                    { prerequisite.imageSrc.length > 0 &&
+                        <img src={ prerequisite.imageSrc } width="100%" alt="Snapshot" />
+                    }
+                    { prerequisite.text.length > 0 &&
+                        <p>{ prerequisite.text }</p>
+                    }
+                </div>
+            ) }
+
+            <h2 className="requester-title">Demandeur</h2>
             <p>{ props.pathModel.requesterText }</p>
             <p>Identifié par son ID : { props.pathModel.requester }</p>
 

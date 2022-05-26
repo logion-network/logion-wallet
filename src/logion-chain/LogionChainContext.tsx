@@ -8,7 +8,7 @@ import { enableExtensions, ExtensionSigner, InjectedAccount } from '@logion/exte
 
 import config, { Node } from '../config';
 import Accounts, { buildAccounts } from '../common/types/Accounts';
-import { clearCurrentAddress, clearTokens, loadCurrentAddress, loadTokens, storeCurrentAddress, storeTokens } from '../common/Storage';
+import { clearAll, loadCurrentAddress, loadTokens, storeCurrentAddress, storeTokens } from '../common/Storage';
 
 import { getEndpoints, NodeMetadata } from './Connection';
 import { AxiosFactory } from '../common/api';
@@ -128,7 +128,7 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
 
         case 'EXTENSIONS_ENABLED':
             return { ...state, extensionsEnabled: true, signer: action.signer! };
-        
+
         case 'SET_SELECT_ADDRESS':
             return {
                 ...state,
@@ -152,8 +152,7 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
             };
 
         case 'LOGOUT': {
-            clearTokens();
-            clearCurrentAddress();
+            clearAll();
             const client = state.client!.logout();
             clearInterval(state.timer!);
             return {
@@ -335,7 +334,7 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
     }, [ state, logout ]);
 
     useEffect(() => {
-        if(state.client !== null 
+        if(state.client !== null
             && state.client.tokens.length > 0
             && state.timer === undefined) {
             const timeoutInS = 1;

@@ -4,10 +4,10 @@ import { UUID } from "@logion/node-api/dist/UUID";
 import { LegalOfficerCase } from "@logion/node-api/dist/Types";
 import { getLegalOfficerCase } from "@logion/node-api/dist/LogionLoc";
 
-import { STATEMENT_OF_FACTS_PATH, locDetailsPath } from "../../legal-officer/LegalOfficerPaths";
+import { locDetailsPath, statementOfFactsPath } from "../../legal-officer/LegalOfficerPaths";
 import { fullCertificateUrl } from "../../PublicPaths";
 import { useLocContext } from "../LocContext";
-import { DEFAULT_PATH_MODEL, PathModel, toSearchString, FormValues, Language } from "./PathModel";
+import { DEFAULT_SOF_PARAMS, SofParams, FormValues, Language, Prerequisite } from "./SofParams";
 
 import './StatementOfFactsButton.css';
 import Dialog from "../../common/Dialog";
@@ -15,13 +15,16 @@ import StatementOfFactsForm from "./StatementOfFactsForm";
 import { useForm } from "react-hook-form";
 import StatementOfFactsSummary from "./StatementOfFactsSummary";
 import { useLogionChain } from "../../logion-chain";
+import { storeSofParams } from "../../common/Storage";
+import { PrerequisiteWizard } from "./PrerequisiteWizard";
+import { PREREQUISITE_WIZARD_STEPS } from "./WizardSteps";
 
-type Status = 'IDLE' | 'INPUT' | 'READY'
+type Status = 'IDLE' | 'PRE-REQUISITE' | 'INPUT' | 'READY'
 
 export default function StatementOfFactsButton(props: { itemId?: string, itemDescription?: string }) {
     const { api, accounts, getOfficer } = useLogionChain();
     const { loc, locId, locRequest } = useLocContext();
-    const [ pathModel, setPathModel ] = useState<PathModel>(DEFAULT_PATH_MODEL);
+    const [ sofParams, setSofParams ] = useState<SofParams>(DEFAULT_SOF_PARAMS);
     const [ itemId, setItemId ] = useState<string>();
     const [ itemDescription, setItemDescription ] = useState<string>();
     const [ status, setStatus ] = useState<Status>('IDLE')
@@ -29,7 +32,7 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
     const { control, handleSubmit, formState: { errors }, reset, setError } = useForm<FormValues>();
     type ContainingLoc = (LegalOfficerCase & { id: UUID })
     const [ containingLoc, setContainingLoc ] = useState<ContainingLoc | null | undefined>(null)
-    const [ imageSrc, setImageSrc ] = useState<string>("");
+    const [ sofId, setSofId ] = useState<UUID | undefined>(undefined);
 
     const submit = useCallback(async (formValues: FormValues) => {
         if (api) {
@@ -54,23 +57,26 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                     id: containingLocId,
                     ...loc
                 })
-                setPathModel({
-                    ...pathModel,
+                const id = new UUID();
+                const pm:SofParams = ({
+                    ...sofParams,
                     ...formValues,
-                    imageSrc
+                    certificateUrl: fullCertificateUrl(containingLocId),
+                    language: language || 'en'
                 })
-                setStatus('READY')
+                storeSofParams(id, pm);
+                setSofId(id);
+                setStatus('READY');
             }
         }
-    }, [ api, pathModel, setPathModel, setContainingLoc, setError, locId, imageSrc ])
+    }, [ api, sofParams, setContainingLoc, setError, locId, language ])
 
     const dropDownItem = (language: Language) => {
         return (
             <Dropdown.Item onClick={ () => {
                 reset()
-                setStatus('INPUT')
                 setLanguage(language)
-                setImageSrc("")
+                setStatus('PRE-REQUISITE')
             } }>{ language.toUpperCase() }</Dropdown.Item>
         )
     }
@@ -78,11 +84,11 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
     useEffect(() => {
         if (getOfficer !== undefined
             && accounts?.current?.address !== undefined
-            && accounts.current.address !== pathModel.polkadotAddress) {
+            && accounts.current.address !== sofParams.polkadotAddress) {
             const polkadotAddress = accounts.current.address;
             const legalOfficer = getOfficer(polkadotAddress);
-            setPathModel({
-                ...pathModel,
+            setSofParams({
+                ...sofParams,
                 polkadotAddress,
                 postalAddressLine1: legalOfficer?.postalAddress.company || "",
                 postalAddressLine2: legalOfficer?.postalAddress.line1 || "",
@@ -97,16 +103,15 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                 logoUrl: legalOfficer?.logoUrl || "",
             });
         }
-    }, [ getOfficer, accounts, pathModel, setPathModel ]);
+    }, [ getOfficer, accounts, sofParams, setSofParams ]);
 
     useEffect(() => {
-        if (locId.toDecimalString() !== pathModel.locId && containingLoc) {
+        if (locId.toDecimalString() !== sofParams.locId) {
             const requester = loc?.requesterAddress ? loc.requesterAddress : loc?.requesterLocId?.toDecimalString() || ""
-            setPathModel({
-                ...pathModel,
+            setSofParams({
+                ...sofParams,
                 locId: locId.toDecimalString(),
                 requester,
-                certificateUrl: fullCertificateUrl(containingLoc.id),
                 publicItems: locRequest!.metadata.map(item => ({
                     description: item.name,
                     content: item.value,
@@ -118,36 +123,33 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                 })),
             });
         }
-    }, [ loc, locId, locRequest, pathModel, setPathModel, itemId, containingLoc ]);
+    }, [ loc, locId, locRequest, sofParams, setSofParams, itemId ]);
 
     useEffect(() => {
-        if((props.itemId !== itemId || props.itemDescription !== itemDescription) && containingLoc) {
+        if((props.itemId !== itemId || props.itemDescription !== itemDescription)) {
             setItemId(props.itemId);
             setItemDescription(props.itemDescription);
-            setPathModel({
-                ...pathModel,
+            setSofParams({
+                ...sofParams,
                 itemId: props.itemId || "",
                 itemDescription: props.itemDescription || "",
-                certificateUrl: fullCertificateUrl(containingLoc.id),
             });
         }
-    }, [ props, itemId, itemDescription, setItemId, setItemDescription, pathModel, setPathModel, locId, containingLoc ]);
-
-    const fileSelectedCallback = useCallback((file: File) => {
-        const reader = new FileReader();
-        reader.addEventListener('loadend', () => {
-            const base64ImageUrl = reader.result;
-            if (base64ImageUrl) {
-                setImageSrc(base64ImageUrl as string)
-            }
-        })
-        reader.readAsDataURL(file)
-    }, [ setImageSrc ])
+    }, [ props, itemId, itemDescription, setItemId, setItemDescription, sofParams, setSofParams, locId ]);
 
     const cancelCallback = useCallback(() => {
         setStatus('IDLE')
         setLanguage(null)
     }, [ setStatus, setLanguage ])
+
+    const prerequisitesDoneCallback = useCallback((prerequisites: Prerequisite[]) => {
+        setSofParams({
+                ...sofParams,
+                prerequisites,
+            }
+        )
+        setStatus('INPUT');
+    }, [ sofParams ])
 
     return (
         <>
@@ -159,6 +161,14 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                     { dropDownItem('fr') }
                 </Dropdown.Menu>
             </Dropdown>
+
+            <PrerequisiteWizard
+                show={ status === 'PRE-REQUISITE' }
+                language={ language || 'en' }
+                steps={ PREREQUISITE_WIZARD_STEPS }
+                onDone={ prerequisitesDoneCallback }
+                onCancel={ cancelCallback }
+            />
 
             <Dialog
                 show={ status === 'INPUT' }
@@ -179,12 +189,12 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                 ] }
                 onSubmit={ handleSubmit(submit) }
             >
+
                 <StatementOfFactsForm
                     type={ loc!.locType }
                     control={ control }
                     errors={ errors }
                     language={ language || 'en' }
-                    onFileSelected={ fileSelectedCallback }
                 />
             </Dialog>
 
@@ -201,10 +211,7 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                 ] }
             >
                 <StatementOfFactsSummary
-                    previewPath={ `${ STATEMENT_OF_FACTS_PATH }${ toSearchString({
-                        ...pathModel,
-                        language: language || 'en'
-                    }) }` }
+                    previewPath={ statementOfFactsPath(sofId) }
                     relatedLocPath={ containingLoc ? locDetailsPath(containingLoc!.id, containingLoc!.locType) : "" }
                     locId={ locId }
                     nodeOwner={ loc!.owner }
