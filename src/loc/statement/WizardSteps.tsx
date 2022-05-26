@@ -24,6 +24,19 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
     {
         wizardIntroduction:
             <div>
+                <p>Mandatory initial browsing and computer environment cleaning</p>
+                <p></p>
+                <p>If not already done, you  have to CLOSE your browser and then execute the following operations. For each step, you will have to take a screen capture considered as a proof of execution.</p>
+                <p>The required operations are:</p>
+                <li>With the browser you will use to generate the State of Facts, please select the "Clear browsing data" menu and erase all the following data: browsing history, download history, cookies and other site data, cached images and files. Then take a screen capture of the menu with the related options checked</li>
+                <li>Empty your recycle bin and take a screen capture of the your empty recycle bin.</li>
+                <p></p>
+                <p>Then you will access again the current Statement of Facts generator and click on the "Next" button: the next step will let you describe those operations and upload related screen captures as a proof of execution.
+            </div>,
+    },
+    {
+        wizardIntroduction:
+            <div>
                 <p>Computer environment settings</p>
                 <p></p>
                 <p>Please establish your computer environement settings by describing the process you follow in the text area bellow and selecting a screen capture considered as a proof of execution.</p>
@@ -102,7 +115,7 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
         },
         text: {
             en: "--",
-            fr: "La résolution de mon écran est 1920 x 1080 pixels. Captures écran réalisées avec les  Touche Windows+ Shift + S dans le presse-papier puis enregistrée en format JPEG à 80% avec le logiciel Snipping Tool de Windows ",
+            fr: "La résolution de mon écran est 1920 x 1080 pixels. Captures écran réalisées avec les touches Windows+Shift+S dans le presse-papier puis enregistrée en format JPEG à 80% avec le logiciel Snipping Tool de Windows ",
         }
     },
     {
