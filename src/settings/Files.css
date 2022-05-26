@@ -1,0 +1,9 @@
+.Files .FileSelectorButton {
+    height: 20px;
+    margin-top: -10px;
+}
+
+.Files .ViewFileButton {
+    margin-top: 0;
+    margin-left: 10px;
+}
