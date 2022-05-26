@@ -34,7 +34,7 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
         },
         text: {
             en: "--",
-            fr: "Les constatations vont être effectuées sur le poste informatique identifié «VNZN2002 » dans l’environnement de travail connecté au serveur informatique de l’Etude,  soit un  ordinateur  de  type  PC  Dell, avec  navigateur  Chrome (Version 101.0.4951.54) dont la page de démarrage est une page vierge (about :blank), Système d'Exploitation : Windows 10 Professionnel. J’effectue ci-dessous une capture écran des « Informations système générales » de mon ordinateur : ",
+            fr: "Les constatations vont être effectuées sur le poste informatique identifié «VNZN2002 » dans l’environnement de travail connecté au serveur informatique de l’Etude,  soit un  ordinateur  de  type  PC  Dell, avec  navigateur  Firefox (Version 100.0.2 (64-bit)) dont la page de démarrage est une page vierge (about :blank), Système d'Exploitation : Windows 10 Professionnel. J’effectue ci-dessous une capture écran des « Informations système générales » de mon ordinateur : ",
         },
         addImage: true
     },
