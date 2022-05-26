@@ -1,7 +1,6 @@
 import { Props as WalletProps, Content as WalletContent } from "../../common/Wallet"
 import { useCommonContext } from "../../common/CommonContext";
 import { FullWidthPane } from "../../common/Dashboard";
-import React from "react";
 import './Vault.css';
 import { useUserContext } from "../UserContext";
 import { Row, Col } from "../../common/Grid";
@@ -34,7 +33,11 @@ export default function Vault(props: Props) {
 }
 
 function Header() {
-    const { vaultAddress } = useUserContext()
+    const { vaultState } = useUserContext();
+
+    if(!vaultState) {
+        return null;
+    }
 
     return (
         <div className="col-xxxl-12 header">
@@ -43,8 +46,8 @@ function Header() {
                     <Col className="vault-address">
                         <p className="title">Your logion Vault public address:</p>
                         <Row className="content">
-                            <span>{ vaultAddress }</span>
-                            <CopyPasteButton value={ vaultAddress! } className="small" />
+                            <span>{ vaultState.vaultAddress }</span>
+                            <CopyPasteButton value={ vaultState.vaultAddress } className="small" />
                         </Row>
                     </Col>
                     <Col className="vault-tip">

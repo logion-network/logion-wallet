@@ -1,8 +1,6 @@
-import React from 'react';
-
+import { VaultTransferRequestStatus } from "@logion/client/dist/VaultClient";
 import { GREEN, ORANGE, RED } from "./ColorTheme";
 import StatusCell from "./StatusCell";
-import { VaultTransferRequestStatus } from '../vault/VaultApi';
 
 export interface Props {
     status: VaultTransferRequestStatus;

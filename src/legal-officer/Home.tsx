@@ -29,6 +29,7 @@ import UserIdentityNameCell from '../common/UserIdentityNameCell';
 import LocRequestDetails from './transaction-protection/LocRequestDetails';
 import { TransactionStatusCell } from "../common/TransactionStatusCell";
 import { useLogionChain } from '../logion-chain';
+import TransactionType from 'src/common/TransactionType';
 
 const MAX_OPEN_LOCS = 3;
 const MAX_PENDING_LOCS = 3;
@@ -37,15 +38,14 @@ export default function Account() {
     const { accounts } = useLogionChain();
     const {
         colorTheme,
-        balances,
-        transactions,
+        balanceState,
         openedLocRequests,
         pendingLocRequests,
         openedIdentityLocs
     } = useCommonContext();
     const navigate = useNavigate();
 
-    if (balances === null || transactions === null || accounts === null || openedLocRequests === null || pendingLocRequests === null || openedIdentityLocs === null) {
+    if (!balanceState || accounts === null || openedLocRequests === null || pendingLocRequests === null || openedIdentityLocs === null) {
         return <Loader />;
     }
 
@@ -82,7 +82,7 @@ export default function Account() {
                                         },
                                         {
                                             header: "Transaction type",
-                                            render: transaction => <Cell content={ transaction.type } />
+                                            render: transaction => <TransactionType address={ accounts.current!.address } transaction={ transaction } walletType="Wallet" />,
                                         },
                                         {
                                             header: "Amount",
@@ -99,17 +99,17 @@ export default function Account() {
                                             width: "120px",
                                         }
                                     ] }
-                                    data={ transactions.slice(0, 1) }
+                                    data={ balanceState.transactions.slice(0, 1) }
                                     renderEmpty={ () => <EmptyTableMessage>No transaction yet</EmptyTableMessage> }
                                 />
                             </Col>
                             <Col>
                                 <div className="reading-container">
                                     <Reading
-                                        readingIntegerPart={ balances[0].balance.coefficient.toInteger() }
-                                        readingDecimalPart={ balances[0].balance.coefficient.toFixedPrecisionDecimals(2) }
-                                        unit={ balances[0].balance.prefix.symbol + SYMBOL }
-                                        level={ balances[0].level }
+                                        readingIntegerPart={ balanceState.balances[0].balance.coefficient.toInteger() }
+                                        readingDecimalPart={ balanceState.balances[0].balance.coefficient.toFixedPrecisionDecimals(2) }
+                                        unit={ balanceState.balances[0].balance.prefix.symbol + SYMBOL }
+                                        level={ balanceState.balances[0].level }
                                     />
                                     <Button
                                         onClick={ () => navigate(WALLET_PATH) }

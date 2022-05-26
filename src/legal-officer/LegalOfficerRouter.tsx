@@ -39,9 +39,9 @@ import { useLogionChain } from '../logion-chain';
 
 export default function LegalOfficerRouter() {
     const { accounts } = useLogionChain();
-    const { nodesDown, availableLegalOfficers, balances, transactions } = useCommonContext();
+    const { nodesDown, availableLegalOfficers, balanceState } = useCommonContext();
 
-    if(availableLegalOfficers === undefined) {
+    if(availableLegalOfficers === undefined || !(accounts?.current?.address)) {
         return null;
     }
 
@@ -74,14 +74,15 @@ export default function LegalOfficerRouter() {
             <Route path={ WALLET_RELATIVE_PATH } element={ <Wallet
                 transactionsPath={ transactionsPath }
                 settingsPath={ SETTINGS_PATH }
-                balances={ balances }
-                transactions={ transactions }
+                balances={ balanceState?.balances || [] }
+                transactions={ balanceState?.transactions || [] }
+                address={ accounts.current.address }
             />} />
             <Route path={ TRANSACTIONS_RELATIVE_PATH } element={ <Transactions
                     address={ accounts!.current!.address }
                     backPath={ WALLET_PATH }
-                    balances={ balances }
-                    transactions={ transactions }
+                    balances={ balanceState?.balances || [] }
+                    transactions={ balanceState?.transactions || [] }
                     type="Wallet"
             /> } />
             <Route path={ locRequestsRelativePath('Transaction') }

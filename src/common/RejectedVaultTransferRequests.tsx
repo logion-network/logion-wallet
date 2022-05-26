@@ -1,13 +1,11 @@
 import { useCallback, useState } from "react";
 import { prefixedLogBalance, SYMBOL } from "@logion/node-api/dist/Balances";
+import { VaultState, VaultTransferRequest } from "@logion/client";
 
-import { SignAndSubmit } from "../ExtrinsicSubmitter";
 import { useLogionChain } from "../logion-chain";
-import { VaultApi, VaultTransferRequest } from "../vault/VaultApi";
 import AmountCell from "./AmountCell";
 import Button from "./Button";
 import ButtonGroup from "./ButtonGroup";
-import { useCommonContext } from "./CommonContext";
 import Icon from "./Icon";
 
 import LegalOfficerName from "./LegalOfficerNameCell";
@@ -15,41 +13,40 @@ import RequestToCancel from "./RequestToCancel";
 import { useResponsiveContext } from "./Responsive";
 import Table, { Cell, DateTimeCell, EmptyTableMessage } from "./Table";
 import VaultTransferRequestDetails from "./VaultTransferDetails";
-import { cancelVaultTransferCallback, onCancelVaultTransferSuccessCallback } from "./VaultTransferRequestsCallbacks";
+import { useUserContext } from "../wallet-user/UserContext";
+import { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
 
 export default function RejectedVaultTransferRequests() {
-    const { api, axiosFactory, accounts } = useLogionChain();
+    const { getOfficer, signer } = useLogionChain();
+    const { mutateVaultState, vaultState } = useUserContext();
     const { width } = useResponsiveContext();
-    const { rejectedVaultTransferRequests, refresh } = useCommonContext();
     const [ requestToCancel, setRequestToCancel ] = useState<VaultTransferRequest | null>(null);
     const [ cancelFailed, setCancelFailed ] = useState(false);
-    const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
+    const [ call, setCall ] = useState<Call>();
 
-    const cancelRequestCallback = useCallback(() => cancelVaultTransferCallback({
-        api: api!,
-        requestToCancel: requestToCancel!,
-        signerId: accounts!.current!.address,
-        setSignAndSubmit
-    }), [ accounts, api, requestToCancel, setSignAndSubmit ]);
+    const cancelRequestCallback = useCallback(async () => {
+        const call = async (callback: CallCallback) => {
+            await mutateVaultState(async (state: VaultState) => {
+                const legalOfficer = getOfficer!(requestToCancel!.legalOfficerAddress)!;
+                return state.cancelVaultTransferRequest(
+                    legalOfficer,
+                    requestToCancel!,
+                    signer!,
+                    callback,
+                );
+            });
+        };
+        setCall(() => call);
+    }, [ mutateVaultState, getOfficer, requestToCancel, signer ]);
 
-    const onCancelSuccessCallback = useCallback(() => onCancelVaultTransferSuccessCallback({
-        requestToCancel: requestToCancel!,
-        axiosFactory: axiosFactory!,
-        refresh: refresh!,
-        setSignAndSubmit,
-        setRequestToCancel
-    }), [ requestToCancel, axiosFactory, setRequestToCancel, refresh ]);
-
-    const resubmitRequestCallback = useCallback((request: VaultTransferRequest) => {
+    const resubmitRequestCallback = useCallback(async (request: VaultTransferRequest) => {
         (async function() {
-            const legalOfficer = request.legalOfficerAddress;
-            const api = new VaultApi(axiosFactory!(legalOfficer), legalOfficer);
-            await api.resubmitVaultTransferRequest(request.id);
-            refresh!();
+            const legalOfficer = getOfficer!(request.legalOfficerAddress)!;
+            await mutateVaultState((vaultState: VaultState) => vaultState.resubmitVaultTransferRequest(legalOfficer, request));
         })()
-    }, [ axiosFactory, refresh ]);
+    }, [ mutateVaultState, getOfficer ]);
 
-    if(!rejectedVaultTransferRequests) {
+    if(!vaultState?.rejectedVaultTransferRequests) {
         return null;
     }
 
@@ -113,18 +110,17 @@ export default function RejectedVaultTransferRequests() {
                         width: '130px',
                     },
                 ]}
-                data={ rejectedVaultTransferRequests(true) }
+                data={ vaultState.rejectedVaultTransferRequests }
                 renderEmpty={ () => <EmptyTableMessage>No request to display</EmptyTableMessage> }
             />
             <RequestToCancel
                 cancelFailed={ cancelFailed }
                 cancelRequestCallback={ cancelRequestCallback }
-                onCancelSuccessCallback={ onCancelSuccessCallback }
                 requestToCancel={ requestToCancel }
                 setCancelFailed={ setCancelFailed }
                 setRequestToCancel={ setRequestToCancel }
-                setSignAndSubmit={ setSignAndSubmit }
-                signAndSubmit={ signAndSubmit }
+                setCall={ setCall }
+                call={ call }
             />
         </>
     );

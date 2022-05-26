@@ -131,7 +131,7 @@ export default function VoidLocReplaceNewButton() {
                         onSuccess={ () => {
                             setVisible(false);
                             voidLoc!(voidInfo)
-                            refresh!()
+                            refresh!(false);
                         } }
                         onError={ () => setSubmissionFailed(true) }
                     />

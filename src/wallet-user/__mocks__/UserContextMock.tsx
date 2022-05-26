@@ -8,6 +8,7 @@ import { ComponentFactory } from '@logion/client/dist/ComponentFactory';
 import { LegalOfficerEndpoint, LogionClientConfig, SharedState } from '@logion/client/dist/SharedClient';
 import { NetworkState } from '@logion/client/dist/NetworkState';
 import { UserContext } from '../UserContext';
+import { BalanceState } from '@logion/client/dist/Balance';
 
 export let createTokenRequest = () => null;
 
@@ -41,6 +42,14 @@ export function setProtectionState(state: ProtectionState | undefined) {
     protectionState = state;
 }
 
+export let recoveredBalanceState: BalanceState | undefined = {} as BalanceState;
+
+export function setRecoveredBalanceState(state: BalanceState | undefined) {
+    recoveredBalanceState = state;
+}
+
+export let mutateRecoveredBalanceState = jest.fn().mockReturnValue(Promise.resolve());
+
 export function useUserContext() {
     return {
         refreshRequests,
@@ -48,6 +57,8 @@ export function useUserContext() {
         activateProtection,
         claimRecovery,
         protectionState,
+        recoveredBalanceState,
+        mutateRecoveredBalanceState,
     } as Partial<UserContext>;
 }
 

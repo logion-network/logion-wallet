@@ -1,6 +1,5 @@
 import React, { useContext, useEffect, useReducer, Reducer, useCallback } from "react";
 import { DateTime } from 'luxon';
-import { CoinBalance, getBalances } from '@logion/node-api/dist/Balances';
 import { LegalOfficerCase, IdentityLocType, LocType, DataLocType } from "@logion/node-api/dist/Types";
 import { toDecimalString, UUID } from "@logion/node-api/dist/UUID";
 import { getLegalOfficerCasesMap } from "@logion/node-api/dist/LogionLoc";
@@ -13,13 +12,12 @@ import {
     Endpoint,
     allUp,
     aggregateArrays,
-    AnySourceHttpClient,
 } from './api';
 import { Children } from './types/Helpers';
-import { Transaction, LocRequest, TransactionsSet } from './types/ModelTypes';
-import { getTransactions, FetchLocRequestSpecification, fetchLocRequests } from "./Model";
+import { LocRequest } from './types/ModelTypes';
+import { FetchLocRequestSpecification, fetchLocRequests } from "./Model";
 import { ColorTheme, DEFAULT_COLOR_THEME } from "./ColorTheme";
-import { FetchVaultTransferRequest, VaultApi, VaultTransferRequest } from "../vault/VaultApi";
+import { BalanceState } from "@logion/client/dist/Balance";
 
 const DEFAULT_NOOP = () => {};
 
@@ -35,8 +33,7 @@ export interface RequestAndLoc {
 export interface CommonContext {
     fetchForAddress: string | null;
     dataAddress: string | null;
-    balances: CoinBalance[] | null;
-    transactions: Transaction[] | null;
+    balanceState?: BalanceState;
     pendingLocRequests: Record<DataLocType, LocRequest[]> | null;
     rejectedLocRequests: Record<DataLocType, LocRequest[]> | null;
     openedLocRequests: Record<DataLocType, RequestAndLoc[]> | null;
@@ -46,17 +43,12 @@ export interface CommonContext {
     closedIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null;
     colorTheme: ColorTheme;
     setColorTheme: ((colorTheme: ColorTheme) => void) | null;
-    refresh: (clearOnRefresh?: boolean) => void;
+    refresh: (clearOnRefresh: boolean) => void;
     voidTransactionLocs: Record<DataLocType, RequestAndLoc[]> | null;
     voidIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null;
     nodesUp: Endpoint[];
     nodesDown: Endpoint[];
     availableLegalOfficers: LegalOfficer[] | undefined;
-    pendingVaultTransferRequests: ((onlyRegular: boolean) => VaultTransferRequest[]) | undefined;
-    cancelledVaultTransferRequests: ((onlyRegular: boolean) => VaultTransferRequest[]) | undefined;
-    rejectedVaultTransferRequests: ((onlyRegular: boolean) => VaultTransferRequest[]) | undefined;
-    vaultTransferRequestsHistory: ((onlyRegular: boolean) => VaultTransferRequest[]) | undefined;
-    cancelableVaultRecoveryRequest: ((recoveredAddress: string) => VaultTransferRequest | null) | undefined;
 }
 
 interface FullCommonContext extends CommonContext {
@@ -67,8 +59,6 @@ function initialContextValue(): FullCommonContext {
     return {
         fetchForAddress: null,
         dataAddress: null,
-        balances: null,
-        transactions: null,
         pendingLocRequests: null,
         rejectedLocRequests: null,
         openedLocRequests: null,
@@ -84,11 +74,6 @@ function initialContextValue(): FullCommonContext {
         nodesUp: [],
         nodesDown: [],
         availableLegalOfficers: undefined,
-        pendingVaultTransferRequests: undefined,
-        cancelledVaultTransferRequests: undefined,
-        rejectedVaultTransferRequests: undefined,
-        vaultTransferRequestsHistory: undefined,
-        cancelableVaultRecoveryRequest: undefined,
     }
 }
 
@@ -110,8 +95,7 @@ interface Action {
     type: ActionType,
     injectedAccounts?: InjectedAccount[],
     dataAddress?: string,
-    balances?: CoinBalance[],
-    transactions?: Transaction[],
+    balanceState?: BalanceState,
     newColorTheme?: ColorTheme,
     setColorTheme?: ((colorTheme: ColorTheme) => void),
     pendingLocRequests?: Record<DataLocType, LocRequest[]>;
@@ -129,11 +113,6 @@ interface Action {
     nodesUp?: Endpoint[];
     nodesDown?: Endpoint[];
     availableLegalOfficers?: LegalOfficer[];
-    pendingVaultTransferRequests?: ((onlyRegular: boolean) => VaultTransferRequest[]);
-    cancelledVaultTransferRequests?: ((onlyRegular: boolean) => VaultTransferRequest[]);
-    rejectedVaultTransferRequests?: ((onlyRegular: boolean) => VaultTransferRequest[]);
-    vaultTransferRequestsHistory?: ((onlyRegular: boolean) => VaultTransferRequest[]);
-    cancelableVaultRecoveryRequest?: ((recoveredAddress: string) => VaultTransferRequest | null);
 }
 
 const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, action: Action): FullCommonContext => {
@@ -142,8 +121,7 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
             return {
                 ...state,
                 fetchForAddress: action.dataAddress!,
-                balances: action.clearOnRefresh ? null : state.balances,
-                transactions: action.clearOnRefresh ? null : state.transactions,
+                balanceState: action.clearOnRefresh ? undefined : state.balanceState,
             };
         case 'SET_DATA':
             if(action.dataAddress === state.fetchForAddress) {
@@ -153,8 +131,7 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                     ...state,
                     fetchForAddress: null,
                     dataAddress: action.dataAddress!,
-                    balances: action.balances!,
-                    transactions: action.transactions!,
+                    balanceState: action.balanceState!,
                     pendingLocRequests: action.pendingLocRequests!,
                     openedLocRequests: action.openedLocRequests!,
                     closedLocRequests: action.closedLocRequests!,
@@ -167,11 +144,6 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                     availableLegalOfficers: action.availableLegalOfficers!,
                     nodesUp,
                     nodesDown,
-                    pendingVaultTransferRequests: action.pendingVaultTransferRequests!,
-                    cancelledVaultTransferRequests: action.cancelledVaultTransferRequests!,
-                    rejectedVaultTransferRequests: action.rejectedVaultTransferRequests!,
-                    vaultTransferRequestsHistory: action.vaultTransferRequestsHistory!,
-                    cancelableVaultRecoveryRequest: action.cancelableVaultRecoveryRequest,
                 };
             } else {
                 return state;
@@ -219,10 +191,7 @@ export function CommonContextProvider(props: Props) {
             });
 
             (async function () {
-                const balances = await getBalances({
-                    api: api!,
-                    accountId: currentAddress
-                });
+                const balanceState = await client.balanceState();
 
                 let specificationFragment: FetchLocRequestSpecification;
                 if(currentAccount.isLegalOfficer) {
@@ -251,13 +220,7 @@ export function CommonContextProvider(props: Props) {
                     })));
                 }
 
-                const anyClient = new AnySourceHttpClient<LegalOfficerEndpoint, TransactionsSet>(initialState, currentAccount.token?.value);
-                const transactionsSet = await anyClient.fetch(axios => getTransactions(axios, {
-                    address: currentAccount.address
-                }));
-                const transactions = transactionsSet?.transactions || [];
-
-                const multiClient = new MultiSourceHttpClient<LegalOfficerEndpoint, LocRequest[]>(anyClient.getState(), currentAccount.token?.value);
+                const multiClient = new MultiSourceHttpClient<LegalOfficerEndpoint, LocRequest[]>(initialState, currentAccount.token?.value);
 
                 const fetchAndAggregate = async (specification: Partial<FetchLocRequestSpecification>) => {
                     const result = await multiClient.fetch(axios => fetchLocRequests(axios, {
@@ -378,51 +341,9 @@ export function CommonContextProvider(props: Props) {
                         .concat(voidRequestsAndLocs(closedIdentityLocsOnlyLogion, locs))
                 }
 
-                const vaultTransferRequestsMultiClient = new MultiSourceHttpClient<LegalOfficerEndpoint, VaultTransferRequest[]>(multiClient.getState(),
-                    currentAccount.token?.value);
-                let vaultSpecificationFragment: FetchVaultTransferRequest;
-                if(currentAccount.isLegalOfficer) {
-                    vaultSpecificationFragment = {
-                        statuses: []
-                    }
-                } else {
-                    vaultSpecificationFragment = {
-                        requesterAddress: currentAddress,
-                        statuses: []
-                    }
-                }
-                const vaultTransferRequestsResult = await vaultTransferRequestsMultiClient.fetch((axios, endpoint) => new VaultApi(axios, endpoint.legalOfficer).getVaultTransferRequests({
-                    ...vaultSpecificationFragment,
-                    statuses: [ "PENDING" ]
-                }));
-                const pendingVaultTransferRequests = aggregateArrays(vaultTransferRequestsResult).sort((a, b) => b.createdOn.localeCompare(a.createdOn));
-
-                const cancelledVaultTransferRequestsResult = await vaultTransferRequestsMultiClient.fetch((axios, endpoint) => new VaultApi(axios, endpoint.legalOfficer).getVaultTransferRequests({
-                    ...vaultSpecificationFragment,
-                    statuses: [ "CANCELLED", "REJECTED_CANCELLED" ]
-                }));
-                const cancelledVaultTransferRequests = aggregateArrays(cancelledVaultTransferRequestsResult).sort((a, b) => b.createdOn.localeCompare(a.createdOn));
-
-                const rejectedVaultTransferRequestsResult = await vaultTransferRequestsMultiClient.fetch((axios, endpoint) => new VaultApi(axios, endpoint.legalOfficer).getVaultTransferRequests({
-                    ...vaultSpecificationFragment,
-                    statuses: [ "REJECTED" ]
-                }));
-                const rejectedVaultTransferRequests = aggregateArrays(rejectedVaultTransferRequestsResult).sort((a, b) => b.createdOn.localeCompare(a.createdOn));
-
-                const acceptedVaultTransferRequestsResult = await vaultTransferRequestsMultiClient.fetch((axios, endpoint) => new VaultApi(axios, endpoint.legalOfficer).getVaultTransferRequests({
-                    ...vaultSpecificationFragment,
-                    statuses: [ "ACCEPTED" ]
-                }));
-                const acceptedVaultTransferRequests = aggregateArrays(acceptedVaultTransferRequestsResult).sort((a, b) => b.createdOn.localeCompare(a.createdOn));
-
-                const vaultTransferRequestsHistory = cancelledVaultTransferRequests
-                    .concat(rejectedVaultTransferRequests)
-                    .concat(acceptedVaultTransferRequests)
-                    .sort((a, b) => b.createdOn.localeCompare(a.createdOn));
-
                 let nodesUp: Endpoint[] | undefined;
                 let nodesDown: Endpoint[] | undefined;
-                const resultingState = vaultTransferRequestsMultiClient.getState();
+                const resultingState = multiClient.getState();
                 if(!currentAccount.isLegalOfficer) {
                     nodesUp = resultingState.nodesUp;
                     nodesDown = resultingState.nodesDown;
@@ -445,8 +366,7 @@ export function CommonContextProvider(props: Props) {
                 dispatch({
                     type: "SET_DATA",
                     dataAddress: currentAddress,
-                    balances,
-                    transactions,
+                    balanceState,
                     pendingLocRequests,
                     openedLocRequests,
                     closedLocRequests,
@@ -459,32 +379,10 @@ export function CommonContextProvider(props: Props) {
                     nodesUp,
                     nodesDown,
                     availableLegalOfficers,
-                    pendingVaultTransferRequests: filterableVaultRequests(pendingVaultTransferRequests, currentAddress),
-                    cancelledVaultTransferRequests: filterableVaultRequests(cancelledVaultTransferRequests, currentAddress),
-                    rejectedVaultTransferRequests: filterableVaultRequests(rejectedVaultTransferRequests, currentAddress),
-                    vaultTransferRequestsHistory: filterableVaultRequests(vaultTransferRequestsHistory, currentAddress),
-                    cancelableVaultRecoveryRequest: cancelableVaultRecoveryRequest(pendingVaultTransferRequests.concat(rejectedVaultTransferRequests)),
                 });
             })();
         }
     }, [ api, dispatch, accounts, client ]);
-
-    function filterableVaultRequests(vaultTransferRequests: VaultTransferRequest[], requesterAddress: string):
-        (onlyRegular: boolean) => VaultTransferRequest[] {
-        return (onlyRegular: boolean) => {
-            if (!onlyRegular) {
-                return vaultTransferRequests
-            }
-            return vaultTransferRequests.filter(vtr => vtr.origin === requesterAddress)
-        }
-    }
-
-    function cancelableVaultRecoveryRequest(pendingOrRejectedVaultTransferRequests: VaultTransferRequest[]):
-        ((recoveredAddress: string) => VaultTransferRequest | null) {
-        return (recoveredAddress: string) => {
-            return pendingOrRejectedVaultTransferRequests.find(vaultTransferRequest => vaultTransferRequest.origin === recoveredAddress) || null
-        }
-    }
 
     function voidRequestsAndLocs(requests: LocRequest[], locs: Record<string, LegalOfficerCase>): RequestAndLoc[] {
         return requests

@@ -1,16 +1,16 @@
 import { prefixedLogBalance, SYMBOL } from "@logion/node-api/dist/Balances";
 
 import AmountCell from "../../common/AmountCell";
-import { useCommonContext } from "../../common/CommonContext";
 import { useResponsiveContext } from "../../common/Responsive";
 import Table, { Cell, DateTimeCell, EmptyTableMessage } from "../../common/Table";
 import VaultTransferRequestStatusCell from "../../common/VaultTransferRequestStatusCell";
 import UserIdentityNameCell from "../../common/UserIdentityNameCell";
 
 import VaultTransferRequestDetails from "./VaultTransferDetails";
+import { useLegalOfficerContext } from "../LegalOfficerContext";
 
 export default function VaultTransferRequestsHistory() {
-    const { vaultTransferRequestsHistory } = useCommonContext();
+    const { vaultTransferRequestsHistory } = useLegalOfficerContext();
     const { width } = useResponsiveContext();
 
     if(!vaultTransferRequestsHistory) {
@@ -52,7 +52,7 @@ export default function VaultTransferRequestsHistory() {
                         width: '130px',
                     },
                 ]}
-                data={ vaultTransferRequestsHistory(false) }
+                data={ vaultTransferRequestsHistory }
                 renderEmpty={ () => <EmptyTableMessage>No pending vault-out transfers</EmptyTableMessage> }
             />
         </>

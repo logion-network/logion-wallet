@@ -1,22 +1,17 @@
 import React, { useContext, useEffect, useCallback, useReducer, Reducer } from "react";
-import { getVaultAddress } from "@logion/node-api/dist/Vault";
-import { CoinBalance, getBalances } from "@logion/node-api/dist/Balances";
 import { DateTime } from "luxon";
 import { ActiveProtection, ClaimedRecovery, LegalOfficer, NoProtection, PendingProtection, PostalAddress, ProtectionState, UserIdentity, SignCallback, AcceptedProtection, PendingRecovery } from "@logion/client";
+import { VaultState } from "@logion/client";
 
 import { useLogionChain } from '../logion-chain';
 import { Children } from '../common/types/Helpers';
 import {
     AxiosFactory,
-    Endpoint,
-    MultiSourceHttpClientState,
-    AnySourceHttpClient
 } from '../common/api';
 
-import { Transaction, TransactionsSet } from "../common/types/ModelTypes";
-import { getTransactions } from "../common/Model";
 import { useCommonContext } from '../common/CommonContext';
 import { DARK_MODE } from './Types';
+import { BalanceState } from "@logion/client/dist/Balance";
 
 export interface CreateProtectionRequestParams {
     legalOfficers: LegalOfficer[],
@@ -34,9 +29,12 @@ export interface UserContext {
     activateProtection: ((callback: SignCallback) => Promise<void>) | null,
     claimRecovery: ((callback: SignCallback) => Promise<void>) | null,
     protectionState?: ProtectionState,
-    vaultAddress?: string | null,
-    vaultBalances: CoinBalance[] | null,
-    vaultTransactions: Transaction[] | null,
+    vaultState?: VaultState,
+    mutateVaultState: (mutator: (current: VaultState) => Promise<VaultState>) => Promise<void>,
+    recoveredVaultState?: VaultState,
+    mutateRecoveredVaultState: (mutator: (current: VaultState) => Promise<VaultState>) => Promise<void>,
+    recoveredBalanceState?: BalanceState,
+    mutateRecoveredBalanceState: (mutator: (current: BalanceState) => Promise<BalanceState>) => Promise<void>,
 }
 
 interface FullUserContext extends UserContext {
@@ -51,9 +49,9 @@ function initialContextValue(): FullUserContext {
         createProtectionRequest: null,
         activateProtection: null,
         claimRecovery: null,
-        vaultAddress: null,
-        vaultBalances: null,
-        vaultTransactions: null,
+        mutateVaultState: () => Promise.reject(),
+        mutateRecoveredVaultState: () => Promise.reject(),
+        mutateRecoveredBalanceState: () => Promise.reject(),
     }
 }
 
@@ -67,21 +65,30 @@ type ActionType = 'FETCH_IN_PROGRESS'
     | 'SET_CLAIM_RECOVERY_FUNCTION'
     | 'SET_CURRENT_AXIOS'
     | 'REFRESH_PROTECTION_STATE'
+    | 'SET_MUTATE_VAULT_STATE'
+    | 'MUTATE_VAULT_STATE'
+    | 'SET_MUTATE_RECOVERED_VAULT_STATE'
+    | 'MUTATE_RECOVERED_VAULT_STATE'
+    | 'SET_MUTATE_RECOVERED_BALANCE_STATE'
+    | 'MUTATE_RECOVERED_BALANCE_STATE'
 ;
 
 interface Action {
     type: ActionType,
     dataAddress?: string,
     protectionState?: ProtectionState,
-    vaultAddress?: string,
-    vaultBalances?: CoinBalance[],
-    vaultTransactions?: Transaction[],
     refreshRequests?: (clearBeforeRefresh: boolean) => void,
     createProtectionRequest?: (params: CreateProtectionRequestParams) => Promise<void>,
     activateProtection?: (callback: SignCallback) => Promise<void>,
     claimRecovery?: (callback: SignCallback) => Promise<void>,
     clearBeforeRefresh?: boolean,
     axiosFactory?: AxiosFactory,
+    vaultState?: VaultState,
+    mutateVaultState?: (mutator: (current: VaultState) => Promise<VaultState>) => Promise<void>,
+    recoveredVaultState?: VaultState,
+    mutateRecoveredVaultState?: (mutator: (current: VaultState) => Promise<VaultState>) => Promise<void>,
+    recoveredBalanceState?: BalanceState,
+    mutateRecoveredBalanceState?: (mutator: (current: BalanceState) => Promise<BalanceState>) => Promise<void>,
 }
 
 const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, action: Action): FullUserContext => {
@@ -92,9 +99,9 @@ const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, actio
                     ...state,
                     fetchForAddress: action.dataAddress!,
                     protectionState: undefined,
-                    vaultAddress: null,
-                    vaultBalances: null,
-                    vaultTransactions: null,
+                    vaultState: undefined,
+                    recoveredVaultState: undefined,
+                    recoveredBalanceState: undefined,
                 };
             } else {
                 return {
@@ -110,9 +117,9 @@ const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, actio
                     fetchForAddress: null,
                     dataAddress: action.dataAddress!,
                     protectionState: action.protectionState!,
-                    vaultAddress: action.vaultAddress,
-                    vaultBalances: action.vaultBalances!,
-                    vaultTransactions: action.vaultTransactions!,
+                    vaultState: action.vaultState,
+                    recoveredVaultState: action.recoveredVaultState,
+                    recoveredBalanceState: action.recoveredBalanceState,
                 };
             } else {
                 console.log(`Skipping data because ${action.dataAddress} <> ${state.fetchForAddress}`);
@@ -144,9 +151,45 @@ const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, actio
                 currentAxiosFactory: action.axiosFactory!,
             };
         case "REFRESH_PROTECTION_STATE":
+            const vaultState = action.vaultState ? action.vaultState : state.vaultState;
+            const recoveredVaultState = action.recoveredVaultState ? action.recoveredVaultState : state.recoveredVaultState;
+            const recoveredBalanceState = action.recoveredBalanceState ? action.recoveredBalanceState : state.recoveredBalanceState;
             return {
                 ...state,
                 protectionState: action.protectionState!,
+                vaultState,
+                recoveredVaultState,
+                recoveredBalanceState,
+            };
+        case "SET_MUTATE_VAULT_STATE":
+            return {
+                ...state,
+                mutateVaultState: action.mutateVaultState!,
+            };
+        case "MUTATE_VAULT_STATE":
+            return {
+                ...state,
+                vaultState: action.vaultState!,
+            };
+        case "SET_MUTATE_RECOVERED_VAULT_STATE":
+            return {
+                ...state,
+                mutateRecoveredVaultState: action.mutateRecoveredVaultState!,
+            };
+        case "MUTATE_RECOVERED_VAULT_STATE":
+            return {
+                ...state,
+                recoveredVaultState: action.recoveredVaultState!,
+            };
+        case "SET_MUTATE_RECOVERED_BALANCE_STATE":
+            return {
+                ...state,
+                mutateRecoveredBalanceState: action.mutateRecoveredBalanceState!,
+            };
+        case "MUTATE_RECOVERED_BALANCE_STATE":
+            return {
+                ...state,
+                recoveredBalanceState: action.recoveredBalanceState!,
             };
         default:
             /* istanbul ignore next */
@@ -160,8 +203,7 @@ export interface Props {
 
 export function UserContextProvider(props: Props) {
     const { accounts, client, axiosFactory, signer } = useLogionChain();
-    const { colorTheme, setColorTheme, nodesUp, nodesDown } = useCommonContext();
-    const { api } = useLogionChain();
+    const { colorTheme, setColorTheme, nodesUp } = useCommonContext();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
     useEffect(() => {
@@ -171,7 +213,7 @@ export function UserContextProvider(props: Props) {
     }, [ colorTheme, setColorTheme ]);
 
     const refreshRequests = useCallback((clearBeforeRefresh: boolean) => {
-        if(api !== null && client !== null) {
+        if(client !== null) {
             const currentAddress = accounts!.current!.address;
             const forceProtectionStateFetch = currentAddress !== contextValue.dataAddress;
             dispatch({
@@ -188,48 +230,34 @@ export function UserContextProvider(props: Props) {
                     protectionState = await contextValue.protectionState.refresh();
                 }
 
-                const initialState: MultiSourceHttpClientState<Endpoint> = {
-                    nodesUp,
-                    nodesDown,
+                let vaultState: VaultState | undefined;
+                if (protectionState instanceof ActiveProtection
+                        || protectionState instanceof PendingRecovery
+                        || protectionState instanceof ClaimedRecovery) {
+                    vaultState = await protectionState.vaultState();
                 }
-                const token = accounts!.current!.token!.value;
 
-                let vaultAddress: string | undefined = undefined
-                let vaultTransactions: Transaction[] = []
-                let vaultBalances: CoinBalance[] = []
-                if (contextValue.protectionState instanceof ActiveProtection
-                        || contextValue.protectionState instanceof ClaimedRecovery) {
-                    const activeOrClaimed = contextValue.protectionState;
-                    const legalOfficers = activeOrClaimed.protectionParameters.states.map(state => state.legalOfficer.address);
-                    vaultAddress = getVaultAddress(currentAddress, legalOfficers);
-
-                    const anyClient = new AnySourceHttpClient<Endpoint, TransactionsSet>(initialState, token);
-                    const transactionsSet = await anyClient.fetch(axios => getTransactions(axios, {
-                        address: vaultAddress!
-                    }));
-                    vaultTransactions = transactionsSet?.transactions || [];
-
-                    vaultBalances = await getBalances({
-                        api: api!,
-                        accountId: vaultAddress
-                    });
+                let recoveredVaultState: VaultState | undefined;
+                let recoveredBalanceState: BalanceState | undefined;
+                if(protectionState instanceof ClaimedRecovery) {
+                    recoveredVaultState = await protectionState.recoveredVaultState();
+                    recoveredBalanceState = await protectionState.recoveredBalanceState();
                 }
 
                 dispatch({
                     type: "SET_DATA",
                     dataAddress: currentAddress,
                     protectionState,
-                    vaultAddress,
-                    vaultBalances,
-                    vaultTransactions,
+                    vaultState,
+                    recoveredVaultState,
+                    recoveredBalanceState,
                 });
             })();
         }
-    }, [ api, dispatch, accounts, nodesUp, nodesDown, client, contextValue.protectionState, contextValue.dataAddress ]);
+    }, [ dispatch, accounts, client, contextValue.protectionState, contextValue.dataAddress ]);
 
     useEffect(() => {
-        if(api !== null
-                && client !== undefined
+        if(client !== undefined
                 && client!.isTokenValid(DateTime.now())
                 && accounts !== null
                 && accounts.current !== undefined
@@ -238,16 +266,16 @@ export function UserContextProvider(props: Props) {
                 && nodesUp.length > 0) {
             refreshRequests(true);
         }
-    }, [ api, client, contextValue, accounts, refreshRequests, dispatch, nodesUp ]);
+    }, [ client, contextValue, accounts, refreshRequests, dispatch, nodesUp ]);
 
     useEffect(() => {
-        if(contextValue.refreshRequests !== refreshRequests && api !== null) {
+        if(contextValue.refreshRequests !== refreshRequests) {
             dispatch({
                 type: "SET_REFRESH_REQUESTS_FUNCTION",
                 refreshRequests,
             });
         }
-    }, [ api, refreshRequests, contextValue, dispatch ]);
+    }, [ refreshRequests, contextValue, dispatch ]);
 
     const createProtectionRequestCallback = useCallback(async (params: CreateProtectionRequestParams) => {
         const protectionState = contextValue.protectionState;
@@ -290,9 +318,11 @@ export function UserContextProvider(props: Props) {
     const activateProtectionCallback = useCallback(async (callback: SignCallback) => {
         const acceptedProtection = contextValue.protectionState as AcceptedProtection;
         const protectionState = await acceptedProtection.activate(signer!, callback);
+        const vaultState = await protectionState.vaultState();
         dispatch({
             type: "REFRESH_PROTECTION_STATE",
-            protectionState
+            protectionState,
+            vaultState,
         });
     }, [ contextValue.protectionState, signer ]);
 
@@ -308,9 +338,13 @@ export function UserContextProvider(props: Props) {
     const claimRecoveryCallback = useCallback(async (callback: SignCallback) => {
         const pendingRecovery = contextValue.protectionState as PendingRecovery;
         const protectionState = await pendingRecovery.claimRecovery(signer!, callback);
+        const recoveredBalanceState = await protectionState.recoveredBalanceState();
+        const recoveredVaultState = await protectionState.recoveredVaultState();
         dispatch({
             type: "REFRESH_PROTECTION_STATE",
-            protectionState
+            protectionState,
+            recoveredBalanceState,
+            recoveredVaultState,
         });
     }, [ contextValue.protectionState, signer ]);
 
@@ -332,6 +366,57 @@ export function UserContextProvider(props: Props) {
             });
         }
     }, [ axiosFactory, contextValue, dispatch ]);
+
+    const mutateVaultStateCallback = useCallback(async (mutator: (current: VaultState) => Promise<VaultState>): Promise<void> => {
+        const newState = await mutator(contextValue.vaultState!);
+        dispatch({
+            type: "MUTATE_VAULT_STATE",
+            vaultState: newState,
+        });
+    }, [ contextValue.vaultState ]);
+
+    useEffect(() => {
+        if(contextValue.mutateVaultState !== mutateVaultStateCallback) {
+            dispatch({
+                type: "SET_MUTATE_VAULT_STATE",
+                mutateVaultState: mutateVaultStateCallback,
+            });
+        }
+    }, [ contextValue.mutateVaultState, mutateVaultStateCallback ]);
+
+    const mutateRecoveredVaultStateCallback = useCallback(async (mutator: (current: VaultState) => Promise<VaultState>): Promise<void> => {
+        const newState = await mutator(contextValue.recoveredVaultState!);
+        dispatch({
+            type: "MUTATE_RECOVERED_VAULT_STATE",
+            recoveredVaultState: newState,
+        });
+    }, [ contextValue.recoveredVaultState ]);
+
+    useEffect(() => {
+        if(contextValue.mutateRecoveredVaultState !== mutateRecoveredVaultStateCallback) {
+            dispatch({
+                type: "SET_MUTATE_RECOVERED_VAULT_STATE",
+                mutateRecoveredVaultState: mutateRecoveredVaultStateCallback,
+            });
+        }
+    }, [ mutateRecoveredVaultStateCallback, contextValue.mutateRecoveredVaultState ]);
+
+    const mutateRecoveredBalanceStateCallback = useCallback(async (mutator: (current: BalanceState) => Promise<BalanceState>): Promise<void> => {
+        const newState = await mutator(contextValue.recoveredBalanceState!);
+        dispatch({
+            type: "MUTATE_RECOVERED_BALANCE_STATE",
+            recoveredBalanceState: newState,
+        });
+    }, [ contextValue.recoveredBalanceState ]);
+
+    useEffect(() => {
+        if(contextValue.mutateRecoveredBalanceState !== mutateRecoveredBalanceStateCallback) {
+            dispatch({
+                type: "SET_MUTATE_RECOVERED_BALANCE_STATE",
+                mutateRecoveredBalanceState: mutateRecoveredBalanceStateCallback,
+            });
+        }
+    }, [ mutateRecoveredBalanceStateCallback, contextValue.mutateRecoveredBalanceState ]);
 
     return (
         <UserContextObject.Provider value={contextValue}>

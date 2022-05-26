@@ -26,6 +26,7 @@ export default function ClientExtrinsicSubmitter(props: Props) {
     const [ error, setError ] = useState<any>(null);
     const [ submitted, setSubmitted ] = useState<boolean>(false);
     const [ notified, setNotified ] = useState<boolean>(false);
+    const [ callEnded, setCallEnded ] = useState<boolean>(false);
 
     useEffect(() => {
         if(!submitted && props.call !== undefined) {
@@ -33,8 +34,10 @@ export default function ClientExtrinsicSubmitter(props: Props) {
             (async function() {
                 setResult(null);
                 setError(null);
+                setCallEnded(false);
                 try {
                     await props.call!((callbackResult: ISubmittableResult) => setResult(callbackResult));
+                    setCallEnded(true);
                 } catch(e) {
                     setError(e);
                 }
@@ -43,14 +46,14 @@ export default function ClientExtrinsicSubmitter(props: Props) {
     }, [ setResult, setError, props, submitted ]);
 
     useEffect(() => {
-        if (result !== null && isSuccessful(result) && !notified && props.onSuccess) {
+        if (result !== null && isSuccessful(result) && !notified && props.onSuccess && callEnded) {
             setNotified(true);
             props.onSuccess!({
                 block: result!.status.asInBlock.toString(),
                 index: result!.txIndex!
             });
         }
-    }, [ result, notified, setNotified, props ]);
+    }, [ result, notified, setNotified, props, callEnded ]);
 
     useEffect(() => {
         if (error !== null && !notified && props.onError) {

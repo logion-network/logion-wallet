@@ -17,7 +17,7 @@ import { Transaction } from './types/ModelTypes';
 import './Wallet.css';
 import NetworkWarning from './NetworkWarning';
 import { useResponsiveContext } from './Responsive';
-import { enrichTransactionType } from "./Model";
+import { buildTransactionType } from "./TransactionType";
 
 export type WalletType = "Wallet" | "Vault"
 
@@ -26,6 +26,7 @@ export interface Props {
     settingsPath: string,
     balances: CoinBalance[] | null,
     transactions: Transaction[] | null,
+    address: string,
     vaultAddress?: string
 }
 
@@ -108,7 +109,7 @@ export function Content(props: Props & { type: WalletType }) {
                             },
                             {
                                 header: "Last transaction type",
-                                render: balance => <Cell content={ balance.coin.id !== 'dot' && latestTransaction !== undefined ? enrichTransactionType(latestTransaction, vaultAddress) : "-" } />
+                                render: balance => <Cell content={ balance.coin.id !== 'dot' && latestTransaction !== undefined ? buildTransactionType({ transaction: latestTransaction, address: props.address, walletType: "Wallet", vaultAddress: props.vaultAddress }) : "-" } />
                             },
                             {
                                 header: "Last transaction amount",

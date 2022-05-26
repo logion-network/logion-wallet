@@ -1,44 +1,41 @@
 import { useCallback, useState } from "react";
 import { prefixedLogBalance, SYMBOL } from "@logion/node-api/dist/Balances";
+import { VaultState, VaultTransferRequest } from "@logion/client";
 
-import { SignAndSubmit } from "../ExtrinsicSubmitter";
 import { useLogionChain } from "../logion-chain";
-import { VaultTransferRequest } from "../vault/VaultApi";
 import AmountCell from "./AmountCell";
 import Clickable from "./Clickable";
-import { useCommonContext } from "./CommonContext";
 import Icon from "./Icon";
 
 import LegalOfficerName from "./LegalOfficerNameCell";
 import RequestToCancel from "./RequestToCancel";
 import { useResponsiveContext } from "./Responsive";
 import Table, { Cell, DateTimeCell, EmptyTableMessage } from "./Table";
-import { cancelVaultTransferCallback, onCancelVaultTransferSuccessCallback } from "./VaultTransferRequestsCallbacks";
+import { useUserContext } from "../wallet-user/UserContext";
+import { Call, CallCallback } from "../ClientExtrinsicSubmitter";
 
 export default function PendingVaultTransferRequests() {
-    const { axiosFactory, api, accounts } = useLogionChain();
-    const { pendingVaultTransferRequests, refresh } = useCommonContext();
+    const { getOfficer, signer } = useLogionChain();
+    const { mutateVaultState, vaultState } = useUserContext();
     const { width } = useResponsiveContext();
     const [ requestToCancel, setRequestToCancel ] = useState<VaultTransferRequest | null>(null);
     const [ cancelFailed, setCancelFailed ] = useState(false);
-    const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
+    const [ call, setCall ] = useState<Call>();
 
-    const cancelRequestCallback = useCallback(() => cancelVaultTransferCallback({
-        api: api!,
-        requestToCancel: requestToCancel!,
-        signerId: accounts!.current!.address,
-        setSignAndSubmit
-    }), [ accounts, api, requestToCancel, setSignAndSubmit ]);
+    const cancelRequestCallback = useCallback(() => {
+        setCall(async (callback: CallCallback) => {
+            await mutateVaultState(async (vaultState: VaultState) => {
+                return await vaultState.cancelVaultTransferRequest(
+                    getOfficer!(requestToCancel!.legalOfficerAddress)!,
+                    requestToCancel!,
+                    signer!,
+                    callback
+                );
+            })
+        });
+    }, [ requestToCancel, mutateVaultState, signer, getOfficer ]);
 
-    const onCancelSuccessCallback = useCallback(() => onCancelVaultTransferSuccessCallback({
-        requestToCancel: requestToCancel!,
-        axiosFactory: axiosFactory!,
-        refresh: refresh!,
-        setSignAndSubmit,
-        setRequestToCancel
-    }), [ requestToCancel, axiosFactory, setRequestToCancel, refresh ]);
-
-    if(!pendingVaultTransferRequests) {
+    if(!vaultState) {
         return null;
     }
 
@@ -87,18 +84,17 @@ export default function PendingVaultTransferRequests() {
                         width: '130px',
                     },
                 ]}
-                data={ pendingVaultTransferRequests(true) }
+                data={ vaultState!.pendingVaultTransferRequests }
                 renderEmpty={ () => <EmptyTableMessage>No pending vault-out transfers</EmptyTableMessage> }
             />
             <RequestToCancel
                 cancelFailed={ cancelFailed }
                 cancelRequestCallback={ cancelRequestCallback }
-                onCancelSuccessCallback={ onCancelSuccessCallback }
                 requestToCancel={ requestToCancel }
                 setCancelFailed={ setCancelFailed }
                 setRequestToCancel={ setRequestToCancel }
-                setSignAndSubmit={ setSignAndSubmit }
-                signAndSubmit={ signAndSubmit }
+                setCall={ setCall }
+                call={ call }
             />
         </>
     );

@@ -1,4 +1,6 @@
 import { useCallback, useState } from 'react';
+import { useNavigate } from 'react-router';
+import { NoProtection } from '@logion/client';
 
 import { useLogionChain } from '../logion-chain';
 
@@ -15,13 +17,11 @@ import UserRouter, {
 } from "./UserRouter";
 import { useUserContext } from "./UserContext";
 import { useCommonContext } from '../common/CommonContext';
-import { useNavigate } from 'react-router';
-import { NoProtection } from '@logion/client';
 
 export default function ContextualizedWallet() {
     const { selectAddress, accounts, api } = useLogionChain();
     const { colorTheme, nodesDown, refresh } = useCommonContext();
-    const { protectionState, refreshRequests } = useUserContext();
+    const { protectionState, refreshRequests, vaultState } = useUserContext();
     const [ discardProtection, setDiscardProtection ] = useState<boolean>(false);
     const navigate = useNavigate();
 
@@ -78,7 +78,7 @@ export default function ContextualizedWallet() {
                         background: colorTheme.topMenuItems.iconGradient,
                     },
                     onClick: refreshAll,
-                    disabled: noProtection || !protectionState?.protectionParameters.isActive
+                    disabled: !vaultState,
                 },
                 {
                     id: "loc-collection",

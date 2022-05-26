@@ -1,8 +1,8 @@
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback } from "react";
 import { Spinner } from "react-bootstrap";
-import { CoinBalance, buildTransferCall, getBalances } from "@logion/node-api/dist/Balances";
-import { asRecovered } from "@logion/node-api/dist/Recovery";
+import { CoinBalance } from "@logion/node-api/dist/Balances";
 import { PrefixedNumber, NONE } from "@logion/node-api/dist/numbers";
+import { BalanceState } from "@logion/client/dist/Balance";
 
 import Table, { Cell, EmptyTableMessage } from "../../common/Table";
 import Icon from "../../common/Icon";
@@ -14,67 +14,46 @@ import Alert from "../../common/Alert";
 import IconTextRow from "../../common/IconTextRow";
 
 import { useLogionChain } from "../../logion-chain";
-import ExtrinsicSubmitter, { SignAndSubmit } from "../../ExtrinsicSubmitter";
 import { useUserContext } from "../UserContext";
-import { signAndSend } from "src/logion-chain/Signature";
+import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
 
 interface Props {
     vaultFirst: boolean
-    onSuccess: () => void
 }
 
 export default function WalletRecoveryProcessTab(props: Props) {
-    const { api, accounts } = useLogionChain();
-    const { protectionState } = useUserContext();
+    const { accounts, signer } = useLogionChain();
+    const { protectionState, recoveredBalanceState, mutateRecoveredBalanceState } = useUserContext();
     const [ recoveredCoinBalance, setRecoveredCoinBalance ] = useState<CoinBalance | null>(null);
-    const [ balances, setBalances ] = useState<CoinBalance[] | null>(null)
-    const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
+    const [ signAndSubmit, setSignAndSubmit ] = useState<Call>();
     const [ signAndSubmitError, setSignAndSubmitError ] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (balances === null && api !== null && protectionState && "protectionParameters" in protectionState) {
-            const protectionParameters = protectionState.protectionParameters;
-            getBalances({ api, accountId: protectionParameters.recoveredAddress! })
-                .then(balances => {
-                    setBalances(balances.filter(balance => Number(balance.available.toNumber()) > 0))
-                })
-        }
-    }, [ balances, setBalances, protectionState, api ])
-
     const recoverCoin = useCallback(async (amount: PrefixedNumber) => {
-
-        const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
-            signerId: accounts!.current!.address,
-            callback: setResult,
-            errorCallback: setError,
-            submittable: asRecovered({
-                api: api!,
-                recoveredAccountId: protectionState!.protectionParameters.recoveredAddress!,
-                call: buildTransferCall({
-                    api: api!,
-                    amount: amount,
+        const signAndSubmit: Call = async (callback: CallCallback) => {
+            console.log(`callback: ${callback}`);
+            console.log(`mutateRecoveredBalanceState: ${mutateRecoveredBalanceState}`);
+            await mutateRecoveredBalanceState(async (state: BalanceState) => {
+                console.log(`state: ${state}`)
+                return state.transfer({
+                    signer: signer!,
                     destination: accounts!.current!.address,
-                }),
-            })
-        });
+                    amount,
+                    callback,
+                });
+            });
+        };
         setSignAndSubmit(() => signAndSubmit);
-    }, [ api, accounts, protectionState ]);
+    }, [ accounts, signer, mutateRecoveredBalanceState ]);
 
     const clearFormCallback = useCallback(() => {
         setRecoveredCoinBalance(null);
-        setSignAndSubmit(null);
+        setSignAndSubmit(undefined);
         setSignAndSubmitError(false);
     }, [ setRecoveredCoinBalance, setSignAndSubmit, setSignAndSubmitError ])
 
-    const onTransferSuccess = useCallback(() => {
-        clearFormCallback();
-        setBalances(null);
-        props.onSuccess();
-    }, [ setBalances, clearFormCallback, props ]);
-
     const amountToRecover = recoveredCoinBalance?.available ? recoveredCoinBalance?.available : new PrefixedNumber("0", NONE)
 
-    const coinBalances: CoinBalance[] = (balances !== null) ? balances : [];
+    const coinBalances: CoinBalance[] = recoveredBalanceState ? recoveredBalanceState.balances.filter(balance => balance.available.toNumber() > 0) : [];
     return (
         <>
             <TransactionConfirmation
@@ -133,11 +112,11 @@ export default function WalletRecoveryProcessTab(props: Props) {
                                 renderEmpty={ () => (
                                     <EmptyTableMessage>
                                         {
-                                            (balances !== null) &&
+                                            (recoveredBalanceState !== null) &&
                                             "No coin to recover"
                                         }
                                         {
-                                            (balances === null) &&
+                                            (recoveredBalanceState === null) &&
                                             "Fetching data..."
                                         }
                                     </EmptyTableMessage>
@@ -158,14 +137,14 @@ export default function WalletRecoveryProcessTab(props: Props) {
                                     buttonText: "Cancel",
                                     buttonVariant: "secondary",
                                     callback: cancelCallback,
-                                    disabled: signAndSubmit !== null && !signAndSubmitError,
+                                    disabled: signAndSubmit !== undefined && !signAndSubmitError,
                                 },
                                 {
                                     id: "transfer",
                                     buttonText: "Transfer",
                                     buttonVariant: "recovery",
                                     callback: () => recoverCoin(amountToRecover),
-                                    disabled: status !== Status.TRANSFERRING || signAndSubmit !== null,
+                                    disabled: status !== Status.TRANSFERRING || signAndSubmit !== undefined,
                                 }
                             ] }
                         >
@@ -179,11 +158,10 @@ export default function WalletRecoveryProcessTab(props: Props) {
                                     <br />to account { accounts?.current?.address }.
                                 </p>
                             }
-                            <ExtrinsicSubmitter
-                                id="transfer"
-                                signAndSubmit={ signAndSubmit }
+                            <ClientExtrinsicSubmitter
+                                call={ signAndSubmit }
                                 onSuccess={ () => {
-                                    onTransferSuccess();
+                                    clearFormCallback();
                                     successCallback()
                                 } }
                                 onError={ () => setSignAndSubmitError(true) }

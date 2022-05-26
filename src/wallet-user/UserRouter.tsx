@@ -64,8 +64,12 @@ export function locDetailsPath(locId: string | UUID, locType: LocType) {
 
 export default function UserRouter() {
     const { accounts } = useLogionChain();
-    const { balances, transactions } = useCommonContext();
-    const { vaultAddress, vaultBalances, vaultTransactions } = useUserContext();
+    const { balanceState } = useCommonContext();
+    const { vaultState } = useUserContext();
+
+    if(!balanceState || !(accounts?.current?.address)) {
+        return null;
+    }
 
     return (
         <Routes>
@@ -75,32 +79,34 @@ export default function UserRouter() {
             <Route path={ WALLET_RELATIVE_PATH } element={ <Wallet
                     transactionsPath={ transactionsPath }
                     settingsPath={ SETTINGS_PATH }
-                    balances={ balances }
-                    transactions={ transactions }
-                    vaultAddress = { vaultAddress || undefined }
+                    balances={ balanceState.balances }
+                    transactions={ balanceState.transactions }
+                    vaultAddress = { vaultState?.vaultAddress || undefined }
+                    address={ accounts.current.address }
                 />
             } />
             <Route path={ TRANSACTIONS_RELATIVE_PATH } element={ <Transactions
                     address={ accounts!.current?.address! }
                     backPath={ WALLET_PATH }
-                    balances={ balances }
-                    transactions={ transactions }
+                    balances={ balanceState.balances }
+                    transactions={ balanceState.transactions }
                     type="Wallet"
-                    vaultAddress={ vaultAddress || undefined }
+                    vaultAddress={ vaultState?.vaultAddress || undefined }
                 />
             } />
             <Route path={ VAULT_RELATIVE_PATH } element={ <Vault
                     transactionsPath={ vaultTransactionsPath }
                     settingsPath={ SETTINGS_PATH }
-                    balances={ vaultBalances }
-                    transactions={ vaultTransactions }
+                    balances={ vaultState?.balances || null }
+                    transactions={ vaultState?.transactions || null }
+                    address={ accounts.current.address }
                 />
             } />
             <Route path={ VAULT_TRANSACTIONS_RELATIVE_PATH } element={ <Transactions
-                    address={ vaultAddress! }
+                    address={ vaultState?.vaultAddress || "" }
                     backPath={ VAULT_PATH }
-                    balances={ vaultBalances }
-                    transactions={ vaultTransactions }
+                    balances={ vaultState?.balances || null }
+                    transactions={ vaultState?.transactions || null }
                     type="Vault"
                 />
             } />

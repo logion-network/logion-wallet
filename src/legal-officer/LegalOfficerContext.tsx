@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useReducer, Reducer } from 'react';
 import { AxiosInstance } from 'axios';
+import { VaultTransferRequest } from '@logion/client';
 
 import { ProtectionRequest, } from '../common/types/ModelTypes';
 import { fetchProtectionRequests, } from '../common/Model';
@@ -7,6 +8,7 @@ import { useCommonContext } from '../common/CommonContext';
 import { LIGHT_MODE } from './Types';
 import { AxiosFactory } from '../common/api';
 import { useLogionChain } from '../logion-chain';
+import { VaultApi } from '../vault/VaultApi';
 
 export interface LegalOfficerContext {
     refreshRequests: ((clearBeforeRefresh: boolean) => void) | null,
@@ -16,6 +18,8 @@ export interface LegalOfficerContext {
     pendingRecoveryRequests: ProtectionRequest[] | null,
     recoveryRequestsHistory: ProtectionRequest[] | null,
     axios?: AxiosInstance;
+    pendingVaultTransferRequests?: VaultTransferRequest[];
+    vaultTransferRequestsHistory?: VaultTransferRequest[];
 }
 
 interface FullLegalOfficerContext extends LegalOfficerContext {
@@ -56,6 +60,8 @@ interface Action {
     axios?: AxiosInstance;
     currentAccount?: string;
     rejectRequest?: ((requestId: string, reason: string) => Promise<void>) | null;
+    pendingVaultTransferRequests?: VaultTransferRequest[];
+    vaultTransferRequestsHistory?: VaultTransferRequest[];
 }
 
 const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOfficerContext, action: Action): FullLegalOfficerContext => {
@@ -85,6 +91,8 @@ const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOffic
                     activatedProtectionRequests: action.activatedProtectionRequests!,
                     pendingRecoveryRequests: action.pendingRecoveryRequests!,
                     recoveryRequestsHistory: action.recoveryRequestsHistory!,
+                    pendingVaultTransferRequests: action.pendingVaultTransferRequests!,
+                    vaultTransferRequestsHistory: action.vaultTransferRequestsHistory!,
                 };
             } else {
                 return state;
@@ -178,6 +186,22 @@ function refreshRequestsFunction(clearBeforeRefresh: boolean, currentAddress: st
             kind: 'RECOVERY',
         });
 
+        const vaultSpecificationFragment = {
+            statuses: []
+        }
+
+        const vaultTransferRequestsResult = await new VaultApi(axios, currentAddress).getVaultTransferRequests({
+            ...vaultSpecificationFragment,
+            statuses: [ "PENDING" ]
+        });
+        const pendingVaultTransferRequests = vaultTransferRequestsResult.sort((a, b) => b.createdOn.localeCompare(a.createdOn));
+
+        const vaultTransferRequestsHistoryResult = await new VaultApi(axios, currentAddress).getVaultTransferRequests({
+            ...vaultSpecificationFragment,
+            statuses: [ "CANCELLED", "REJECTED_CANCELLED", "REJECTED", "ACCEPTED" ]
+        });
+        const vaultTransferRequestsHistory = vaultTransferRequestsHistoryResult.sort((a, b) => b.createdOn.localeCompare(a.createdOn));
+
         dispatch({
             type: "SET_DATA",
             pendingProtectionRequests,
@@ -186,6 +210,8 @@ function refreshRequestsFunction(clearBeforeRefresh: boolean, currentAddress: st
             dataAddress: currentAddress,
             pendingRecoveryRequests,
             recoveryRequestsHistory,
+            pendingVaultTransferRequests,
+            vaultTransferRequestsHistory,
         });
     })();
 }

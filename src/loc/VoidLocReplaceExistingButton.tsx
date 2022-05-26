@@ -123,7 +123,7 @@ export default function VoidLocReplaceExistingButton() {
                         onSuccess={ () => {
                             setVisible(false);
                             voidLoc!(voidInfo)
-                            refresh!()
+                            refresh!(false);
                         } }
                         onError={ () => {} }
                     />

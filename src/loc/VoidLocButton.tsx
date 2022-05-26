@@ -90,7 +90,7 @@ export default function VoidLocButton() {
                         onSuccess={ () => {
                             setVisible(false);
                             voidLoc!(voidInfo);
-                            refresh!()
+                            refresh!(false);
                         } }
                         onError={ () => setSubmissionFailed(true) }
                     />

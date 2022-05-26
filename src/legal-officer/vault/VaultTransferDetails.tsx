@@ -1,6 +1,7 @@
 import { Row, Col } from 'react-bootstrap';
+import { VaultTransferRequest } from '@logion/client';
+
 import Detail from "../../common/Detail";
-import { VaultTransferRequest } from "../../vault/VaultApi";
 import AddressFormat from '../../common/AddressFormat';
 
 export interface Props {

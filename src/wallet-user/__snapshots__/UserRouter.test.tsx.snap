@@ -21,9 +21,8 @@ exports[`renders 1`] = `
   <Route
     element={
       <Wallet
-        balances={null}
+        address="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
         settingsPath="/user/settings"
-        transactions={null}
         transactionsPath={[Function]}
       />
     }
@@ -34,8 +33,6 @@ exports[`renders 1`] = `
       <Transactions
         address="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
         backPath="/user/wallet"
-        balances={null}
-        transactions={null}
         type="Wallet"
       />
     }
@@ -44,6 +41,7 @@ exports[`renders 1`] = `
   <Route
     element={
       <Vault
+        address="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
         balances={null}
         settingsPath="/user/settings"
         transactions={null}
@@ -55,7 +53,7 @@ exports[`renders 1`] = `
   <Route
     element={
       <Transactions
-        address={null}
+        address=""
         backPath="/user/vault"
         balances={null}
         transactions={null}

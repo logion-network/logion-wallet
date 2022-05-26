@@ -2,10 +2,7 @@ import { IdentityLocType, DataLocType } from "@logion/node-api/dist/Types";
 
 import { COLOR_THEME, legalOfficers } from '../TestData';
 import { CommonContext, RequestAndLoc } from "../CommonContext";
-
-export let balances: any = null;
-
-export let transactions: any = null;
+import { BalanceState } from "@logion/client/dist/Balance";
 
 export let setColorTheme = jest.fn();
 
@@ -27,10 +24,15 @@ let closedIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null = 
 
 let voidIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null = null;
 
+export let balanceState: BalanceState | undefined = {} as BalanceState;
+
+export function setBalanceState(value: BalanceState | undefined) {
+    balanceState = value;
+}
+
 export function useCommonContext() {
     const commonContext:Partial<CommonContext> = {
-        balances,
-        transactions,
+        balanceState,
         colorTheme: COLOR_THEME,
         setColorTheme,
         pendingLocRequests,
@@ -47,14 +49,6 @@ export function useCommonContext() {
         availableLegalOfficers: legalOfficers
     };
     return commonContext;
-}
-
-export function setBalances(value: any) {
-    balances = value;
-}
-
-export function setTransactions(value: any) {
-    transactions = value;
 }
 
 export function setRejectedLocRequests(requests: any[]) {

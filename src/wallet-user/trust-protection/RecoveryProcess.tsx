@@ -1,8 +1,4 @@
-import { useState, useEffect } from 'react';
-import { getBalances } from "@logion/node-api/dist/Balances";
-import { getVaultAddress } from "@logion/node-api/dist/Vault";
-
-import { useLogionChain } from '../../logion-chain';
+import { useState } from 'react';
 
 import { useCommonContext } from '../../common/CommonContext';
 import { FullWidthPane } from '../../common/Dashboard';
@@ -17,7 +13,6 @@ import WalletRecoveryProcessTab from "./WalletRecoveryProcessTab";
 import VaultRecoveryProcessTab from "./VaultRecoveryProcessTab";
 
 import './RecoveryProcess.css';
-import { ClaimedRecovery } from '@logion/client';
 
 interface TabTitleProps {
     iconId: string,
@@ -37,43 +32,16 @@ function TabTitle(props: TabTitleProps) {
 }
 
 export default function RecoveryProcess() {
-    const { api } = useLogionChain();
     const { colorTheme, nodesDown } = useCommonContext();
-    const { protectionState } = useUserContext();
-    const [ recoveredVaultAddress, setRecoveredVaultAddress ] = useState<string | null>(null)
+    const { recoveredBalanceState, recoveredVaultState } = useUserContext();
     const [ tabKey, setTabKey ] = useState<string>('Vault');
-    const [ walletBalances, setWalletBalances ] = useState<number | null>(null)
-    const [ vaultBalances, setVaultBalances ] = useState<number | null>(null)
 
-    useEffect(() => {
-        if (recoveredVaultAddress === null && (protectionState instanceof ClaimedRecovery)) {
-            const recoveredAddress = protectionState.protectionParameters.recoveredAddress!;
-            const legalOfficers = protectionState.protectionParameters.states.map(state => state.legalOfficer.address);
-            setRecoveredVaultAddress(getVaultAddress(recoveredAddress, legalOfficers))
-        }
-    }, [ recoveredVaultAddress, setRecoveredVaultAddress, protectionState ])
-
-    useEffect(() => {
-        if (walletBalances === null && api !== null && (protectionState instanceof ClaimedRecovery)) {
-            getBalances({ api, accountId: protectionState.protectionParameters.recoveredAddress! })
-                .then(balances => {
-                    setWalletBalances(balances.filter(balance => Number(balance.balance.toNumber()) > 0).length)
-                })
-        }
-    }, [ walletBalances, setWalletBalances, protectionState, api ])
-
-    useEffect(() => {
-        if (vaultBalances === null && api !== null && recoveredVaultAddress !== null) {
-            getBalances({ api, accountId: recoveredVaultAddress })
-                .then(balances => {
-                    setVaultBalances(balances.filter(balance => Number(balance.balance.toNumber()) > 0).length)
-                })
-        }
-    }, [ vaultBalances, setVaultBalances, recoveredVaultAddress, api ])
-
-    if (!(protectionState instanceof ClaimedRecovery) || walletBalances === null || vaultBalances === null) {
+    if (!recoveredBalanceState || !recoveredVaultState) {
         return null;
     }
+
+    const walletBalances = recoveredBalanceState.balances.filter(balance => balance.available.toNumber() > 0);
+    const vaultBalances = recoveredVaultState.balances.filter(balance => balance.available.toNumber() > 0);
 
     return (
         <FullWidthPane
@@ -101,7 +69,7 @@ export default function RecoveryProcess() {
                                 <TabTitle
                                     iconId="vault"
                                     title="Vault"
-                                    size={ vaultBalances }
+                                    size={ vaultBalances.length }
                                 />
                             ),
                             render: () => <VaultRecoveryProcessTab/>
@@ -112,12 +80,11 @@ export default function RecoveryProcess() {
                                 <TabTitle
                                     iconId="wallet"
                                     title="Wallet"
-                                    size={ walletBalances }
+                                    size={ walletBalances.length }
                                 />
                             ),
                             render: () => <WalletRecoveryProcessTab
-                                vaultFirst={ vaultBalances > 0 }
-                                onSuccess={ () => setWalletBalances(null) }
+                                vaultFirst={ vaultBalances.length > 0 }
                             />
                         }
                     ] }

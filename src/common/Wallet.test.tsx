@@ -12,6 +12,7 @@ test('renders content', () => {
         settingsPath=''
         balances={ [] }
         transactions={ [] }
+        address=""
     />);
     expect(result).toMatchSnapshot();
 });
@@ -23,6 +24,7 @@ test('renders loader with no data', () => {
         balances={ null }
         transactions={ null }
         type="Wallet"
+        address=""
     />);
     expect(result).toMatchSnapshot();
 });
@@ -34,6 +36,7 @@ test('renders with all data', () => {
         balances={ [ DEFAULT_COIN_BALANCE ] }
         transactions={ [ DEFAULT_TRANSACTION ] }
         type="Wallet"
+        address=""
     />);
     expect(result).toMatchSnapshot();
 });

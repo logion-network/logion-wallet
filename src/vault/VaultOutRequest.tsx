@@ -1,12 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
-import { LGNT_SMALLEST_UNIT, SYMBOL } from "@logion/node-api/dist/Balances";
+import { SYMBOL } from "@logion/node-api/dist/Balances";
 import { NONE, PrefixedNumber } from "@logion/node-api/dist/numbers";
-import { getRecoveryConfig } from "@logion/node-api/dist/Recovery";
-import { requestVaultTransfer } from "@logion/node-api/dist/Vault";
-import { isValidAccountId } from '@logion/node-api/dist/Accounts';
-import { LegalOfficer } from "@logion/client";
+import { LegalOfficer, VaultState } from "@logion/client";
 
 import AmountControl, { Amount, validateAmount } from "../common/AmountControl";
 import Button from "../common/Button";
@@ -15,13 +12,11 @@ import Dialog from "../common/Dialog";
 import FormGroup from "../common/FormGroup";
 import Icon from "../common/Icon";
 import Select from "../common/Select";
-import ExtrinsicSubmitter, { SignAndSubmit, SuccessfulTransaction } from "../ExtrinsicSubmitter";
 import { useLogionChain } from "../logion-chain";
 
 import { buildOptions } from '../wallet-user/trust-protection/SelectLegalOfficer';
-import { VaultApi } from "./VaultApi";
-import { signAndSend } from "../logion-chain/Signature";
 import { useUserContext } from "../wallet-user/UserContext";
+import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
 
 interface FormValues {
     legalOfficer: string;
@@ -30,30 +25,21 @@ interface FormValues {
 }
 
 export default function VaultOutRequest() {
-    const { api, accounts, axiosFactory } = useLogionChain();
-    const { availableLegalOfficers, colorTheme, refresh } = useCommonContext();
-    const { protectionState } = useUserContext();
+    const { api, accounts, getOfficer, signer, client } = useLogionChain();
+    const { availableLegalOfficers, colorTheme } = useCommonContext();
+    const { protectionState, mutateVaultState } = useUserContext();
 
     const [ showDialog, setShowDialog ] = useState(false);
-    const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
-    const [ formValues, setFormValues ] = useState<FormValues | null>(null);
+    const [ signAndSubmit, setSignAndSubmit ] = useState<Call>();
     const [ failed, setFailed ] = useState(false);
     const [ candidates, setCandidates ] = useState<LegalOfficer[]>([]);
 
     useEffect(() => {
-        if(accounts && api) {
-            (async function() {
-                const accountId = accounts!.current!.address;
-                const recoveryConfig = await getRecoveryConfig({
-                    api: api!,
-                    accountId
-                });
-                if(availableLegalOfficers && recoveryConfig) {
-                    setCandidates(availableLegalOfficers.filter(legalOfficer => recoveryConfig.legalOfficers.includes(legalOfficer.address)));
-                }
-            })();
+        if(availableLegalOfficers && protectionState) {
+            const protectingLegalOfficers = protectionState.protectionParameters.states.map(state => state.legalOfficer.address);
+            setCandidates(availableLegalOfficers.filter(legalOfficer => protectingLegalOfficers.includes(legalOfficer.address)));
         }
-    }, [ accounts, api, availableLegalOfficers, setCandidates ]);
+    }, [ accounts, api, availableLegalOfficers, setCandidates, protectionState ]);
 
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>({
         defaultValues: {
@@ -67,56 +53,36 @@ export default function VaultOutRequest() {
     });
 
     const transferCallback = useCallback(async (formValues: FormValues) => {
-        setFormValues(formValues);
-
-        const signerId = accounts!.current!.address;
-
-        const submittable = await requestVaultTransfer({
-            signerId,
-            api: api!,
-            amount: new PrefixedNumber(formValues.amount.value, formValues.amount.unit),
-            destination: formValues.destination,
-            legalOfficers: protectionState!.protectionParameters.states.map(state => state.legalOfficer.address),
-        });
-
-        const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
-            signerId,
-            callback: setResult,
-            errorCallback: setError,
-            submittable,
-        });
+        const signAndSubmit: Call = async (callback: CallCallback) => {
+            await mutateVaultState(async (state: VaultState) => {
+                return await state.createVaultTransferRequest({
+                    legalOfficer: getOfficer!(formValues!.legalOfficer)!,
+                    amount: new PrefixedNumber(formValues.amount.value, formValues.amount.unit),
+                    destination: formValues.destination,
+                    signer: signer!,
+                    callback,
+                });
+            })
+        };
         setSignAndSubmit(() => signAndSubmit);
-    }, [ api, accounts, setFormValues, protectionState ]);
+    }, [ getOfficer, mutateVaultState, signer ]);
 
     const cleanUpCallback = useCallback(() => {
-        setSignAndSubmit(null);
+        setSignAndSubmit(undefined);
         reset();
     }, [ setSignAndSubmit, reset ]);
 
-    const onExtrinsicSuccessCallback = useCallback(async (_id: string, submittable: SuccessfulTransaction) => {
+    const onExtrinsicSuccessCallback = useCallback(async () => {
         cleanUpCallback();
-
-        const axios = axiosFactory!(formValues!.legalOfficer);
-        const vaultApi = new VaultApi(axios, formValues!.legalOfficer);
-        const requesterAddress = accounts!.current!.address;
-        const blockHeader = await api!.rpc.chain.getHeader(submittable.block);
-        await vaultApi.createVaultTransferRequest({
-            amount: new PrefixedNumber(formValues!.amount.value, formValues!.amount.unit).convertTo(LGNT_SMALLEST_UNIT).coefficient.unnormalize(),
-            destination: formValues!.destination,
-            block: blockHeader.number.toString(),
-            index: submittable.index,
-            origin: requesterAddress,
-        });
         setShowDialog(false);
-        refresh();
-    }, [ cleanUpCallback, formValues, accounts, api, axiosFactory, refresh ]);
+    }, [ cleanUpCallback, setShowDialog ]);
 
     const cancelCallback = useCallback(() => {
         cleanUpCallback();
         setShowDialog(false);
     }, [ cleanUpCallback, setShowDialog ]);
 
-    if(availableLegalOfficers === undefined) {
+    if(availableLegalOfficers === undefined || !client) {
         return null;
     }
 
@@ -134,21 +100,21 @@ export default function VaultOutRequest() {
                         id: "cancel",
                         buttonVariant: "secondary-polkadot",
                         callback: cancelCallback,
-                        disabled: signAndSubmit !== null && !failed
+                        disabled: signAndSubmit !== undefined && !failed
                     },
                     {
                         buttonText: "Transfer",
                         id: "transfer",
                         buttonVariant: "polkadot",
                         type: 'submit',
-                        disabled: signAndSubmit !== null
+                        disabled: signAndSubmit !== undefined
                     }
                 ]}
                 onSubmit={ handleSubmit(transferCallback) }
             >
                 <h2>Transfer { SYMBOL }s from your logion Vault</h2>
 
-                { signAndSubmit === null &&
+                { signAndSubmit === undefined &&
                 <>
                     <FormGroup
                         id="destination"
@@ -159,7 +125,7 @@ export default function VaultOutRequest() {
                                 control={ control }
                                 rules={{
                                     validate: address => {
-                                        if(isValidAccountId(api!, address)) {
+                                        if(client.isValidAddress(address)) {
                                             return undefined;
                                         } else {
                                             return "Invalid destination";
@@ -238,9 +204,8 @@ export default function VaultOutRequest() {
                 </>
                 }
 
-                <ExtrinsicSubmitter
-                    id="vaultTransfer"
-                    signAndSubmit={ signAndSubmit }
+                <ClientExtrinsicSubmitter
+                    call={ signAndSubmit }
                     onSuccess={ onExtrinsicSuccessCallback }
                     onError={ () => setFailed(true) }
                 />

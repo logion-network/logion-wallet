@@ -3,18 +3,14 @@ import { render, screen, waitFor, getByRole } from '@testing-library/react';
 import { PrefixedNumber, MILLI } from "@logion/node-api/dist/numbers";
 import { CoinBalance } from "@logion/node-api/dist/Balances";
 
-import { setGetBalances } from '../../__mocks__/@logion/node-api/dist/BalancesMock';
-import { setProtectionState } from '../__mocks__/UserContextMock';
+import { mutateRecoveredBalanceState, setProtectionState, setRecoveredBalanceState } from '../__mocks__/UserContextMock';
 
 import WalletRecoveryProcessTab from "./WalletRecoveryProcessTab";
-import { finalizeSubmission } from "../../logion-chain/__mocks__/SignatureMock";
 import { ClaimedRecovery } from '@logion/client';
 import { ProtectionParameters } from '@logion/client/dist/Recovery';
+import { BalanceState } from '@logion/client/dist/Balance';
 
 jest.mock('../../logion-chain');
-jest.mock('@logion/node-api/dist/Balances');
-jest.mock('../../logion-chain/Signature');
-jest.mock("@logion/node-api/dist/Recovery");
 jest.mock('../../common/CommonContext');
 jest.mock('../UserContext');
 
@@ -27,7 +23,7 @@ test("Recovered tokens can be transferred", async () => {
     } as unknown as ClaimedRecovery;
     setProtectionState(protectionState);
 
-    const coinBalance:CoinBalance = {
+    const coinBalance: CoinBalance = {
         coin: {
             id: 'dot',
             name: 'Polkadot',
@@ -40,18 +36,11 @@ test("Recovered tokens can be transferred", async () => {
         level: 1
     }
 
-    const getBalances = jest.fn().mockResolvedValue([
-        coinBalance
-    ]);
-    setGetBalances(getBalances);
+    setRecoveredBalanceState({
+        balances: [ coinBalance ]
+    } as BalanceState);
 
-    render(<WalletRecoveryProcessTab vaultFirst={ false } onSuccess={ () => {} } />);
-
-    expect(getBalances).toBeCalledTimes(1);
-    expect(getBalances).toBeCalledWith(expect.objectContaining({
-        api: expect.anything(),
-        accountId: recoveredAccountId
-    }));
+    render(<WalletRecoveryProcessTab vaultFirst={ false } />);
 
     let transferButton: HTMLElement;
     await waitFor(() => transferButton = screen.getByRole("button", {name: "Transfer"}));
@@ -61,8 +50,8 @@ test("Recovered tokens can be transferred", async () => {
     await waitFor(() => dialog = screen.getByRole("dialog"));
     let confirmButton: HTMLElement;
     await waitFor(() => confirmButton = getByRole(dialog, "button", {name: "Transfer"}));
+    await waitFor(() => expect(confirmButton).not.toBeDisabled());
     await userEvent.click(confirmButton!);
-    await waitFor(() => finalizeSubmission());
 
-    await waitFor(() => expect(getBalances).toBeCalledTimes(2));
+    expect(mutateRecoveredBalanceState).toBeCalledTimes(1);
 });
