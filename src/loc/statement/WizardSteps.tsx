@@ -24,12 +24,12 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
     {
         wizardIntroduction:
             <div>
-                <p>Computer environement settings</p>
+                <p>Computer environment settings</p>
                 <p></p>
                 <p>Please establish your computer environement settings by describing your process in the following text area and selecting a screen capture considered as a proof of execution.</p>
             </div>,
         label: {
-            en: "Computer environement settings",
+            en: "Computer environment settings",
             fr: "Description de l'environnement",
         },
         text: {
