@@ -75,6 +75,23 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
     {
         wizardIntroduction:
             <div>
+                <p>No-proxy environment confirmation</p>
+                <p></p>
+                <p>Please verify your proxy environement settings by checking your browser related settings and selecting a screen capture of it, considered as a proof of execution.</p>
+            </div>,
+        label: {
+            en: "No-proxy environment confirmation",
+            fr: "Confirmation d'absence d'usage d'un serveur proxy",
+        },
+        text: {
+            en: "--",
+            fr: "l’ordinateur utilisé n’est pas connecté à un Serveur Proxy (je m’en assure en vérifiant les paramètres de mon navigateur).",
+        },
+        addImage: true
+    }, 
+    {
+        wizardIntroduction:
+            <div>
               <p>Screen capture settings</p>
               <p></p>
               <p>Please provide in the following text area your screen resolution as well as the method / tool you are using to save your screen capture.</p>
