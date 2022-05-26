@@ -166,7 +166,6 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
         text: {
             en: "--",
             fr: "Je n'ai aucune information complémentaire à mentioner.",
-        },
-        
+        }
     }
 ]
