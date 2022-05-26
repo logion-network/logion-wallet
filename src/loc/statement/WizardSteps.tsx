@@ -24,14 +24,17 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
     {
         wizardIntroduction:
             <div>
-                <p>Take a screen shot of the <strong>empty trash bin</strong>,
-                    save it to a file and add it to SOF with the below button.</p>
-                <p>Second paragraph... </p>
-                <p>A third one...</p>
+                <p>First step: Computer environement settings</p>
+                <p></p>
+                <p>Please establish your computer environement settings by describing your process in the following text area and selecting a screen capture considered as a proof of execution.</p>
             </div>,
         label: {
-            en: "Screenshot of empty trash bin",
-            fr: "Capture d'écran de la poubelle vide",
+            en: "Computer environement settings",
+            fr: "Description de l'environnement",
+        },
+        text: {
+            en: "--",
+            fr: "Les constatations vont être effectuées sur le poste informatique identifié «VNZN2002 » dans l’environnement de travail connecté au serveur informatique de l’Etude,  soit un  ordinateur  de  type  PC  Dell, avec  navigateur  Chrome (Version 101.0.4951.54) dont la page de démarrage est une page vierge (about :blank), Système d'Exploitation : Windows 10 Professionnel. J’effectue ci-dessous une capture écran des « Informations système générales » de mon ordinateur : ",
         },
         addImage: true
     },
