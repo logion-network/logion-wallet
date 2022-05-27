@@ -24,7 +24,7 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
     {
         wizardIntroduction:
             <div>
-                <p><strong>Mandatory initial browsing and computer environment cleaning</strong></p>
+                <h2>Mandatory initial browsing and computer environment cleaning</strong></h2>
                 <p></p>
                 <p>If not already done, you  have to CLOSE your browser and then execute the following operations. For each step, you will have to take a screen capture considered as a proof of execution.</p>
                 <p>The required operations are:</p>
@@ -44,7 +44,7 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
     {
         wizardIntroduction:
             <div>
-                <p><b>Mandatory initial browsing environment cleaning</b></p>
+                <h3>Mandatory initial browsing environment cleaning</h3>
                 <p></p>
                 <p>As explained in the previous screen, you should have cleared browsing data and take a screen capture of the menu with the related options checked.</p>
             </div>,
@@ -61,7 +61,7 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
     {
         wizardIntroduction:
             <div>
-                <p><b>Recycle bin cleaning</b></p>
+                <h3>Recycle bin cleaning</h3>
                 <p></p>
                 <p>As explained in the first screen, you should have cleared your recycle bin and take a screen capture of it as a proof of execution.</p>
             </div>,
@@ -78,7 +78,7 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
     {
         wizardIntroduction:
             <div>
-                <p><b>Network environment settings confirmation</b></p>
+                <h2>Network environment settings confirmation</h2>
                 <p></p>
                 <p>Please verify your network environement settings by using your computer internal network tool and selecting a screen capture of it, considered as a proof of execution.</p>
             </div>,
@@ -95,7 +95,7 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
     {
         wizardIntroduction:
             <div>
-              <p><b>Screen capture settings</b></p>
+              <h2>Screen capture settings</h2>
               <p></p>
               <p>Please provide in the following text area your screen resolution as well as the method / tool you are using to save your screen capture.</p>
             </div>,
@@ -111,7 +111,7 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
     {
         wizardIntroduction:
             <div>
-              <p><b>Time and date check</b></p>
+              <h2>Time and date check</h2>
               <p></p>
               <p>Please check the time and date of your computer operating system to verify its synchronization with internet time server. Then select a screen capture of it, considered as a proof of execution.</p>
             </div>,
@@ -128,7 +128,7 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
     {
         wizardIntroduction:
             <div>
-                <p><b>New browser window opening</b></p>
+                <h2>New browser window opening</h2>
                 <p></p>
                 <p>As explained in the first screen, you should have open a brand new browser window and take a screen capture of it as a proof of execution.</p>
             </div>,
@@ -145,7 +145,7 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
     {
         wizardIntroduction:
             <div>
-                <p><b>No-proxy environment confirmation</b></p>
+                <h2>No-proxy environment confirmation</h2>
                 <p></p>
                 <p>Please verify your proxy environement settings by checking your browser related settings and selecting a screen capture of it, considered as a proof of execution.</p>
             </div>,
@@ -162,7 +162,7 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
     {
         wizardIntroduction:
             <div>
-              <p><b>Additional comment</b></p>
+              <h2>Additional comment</h2>
               <p></p>
               <p>Please write here any additional information you would like to mention within this Statement of Facts</p>
             </div>,
