@@ -7,6 +7,8 @@ import { useCommonContext } from "../../common/CommonContext";
 import FileSelectorButton from "../../common/FileSelectorButton";
 import { WizardStep } from "./WizardSteps";
 
+import './PrerequisiteWizard.css';
+
 export interface Props {
     show: boolean,
     language: Language,
@@ -87,6 +89,7 @@ export function PrerequisiteWizard(props: Props) {
 
     return (
         <Dialog
+            className="PrerequisiteWizard"
             show={ show }
             size={ "lg" }
             actions={ [
