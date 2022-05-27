@@ -95,9 +95,26 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
     {
         wizardIntroduction:
             <div>
-                <h2>Network environment settings confirmation</h2>
+                <h2>Network environment settings </h2>
                 <p></p>
                 <p>Please verify your network environement settings by using your computer internal network tool and selecting a screen capture of it, considered as a proof of execution.</p>
+            </div>,
+        label: {
+            en: "Network environment settings ",
+            fr: "Environnement réseau",
+        },
+        text: {
+            en: "--",
+            fr: "Puis, dans la commande de mon ordinateur, je tape « cmd » et valide ma commande. Je tape alors dans la fenêtre qui s’ouvre « ipconfig ». La fenêtre suivante apparaît indiquant que mon adresse IPv4 est 192.168.100.42. Mon masque de sous réseau est 255.255.255.0 et la passerelle par défaut est 192.168.100.250.",
+        },
+        addImage: true
+    },
+    {
+        wizardIntroduction:
+            <div>
+                <h2>Network environment settings confirmation</h2>
+                <p></p>
+                <p>Please verify your IP address by using an external IP check service tool and select a screen capture of it, considered as a proof of execution.</p>
             </div>,
         label: {
             en: "Network environment settings confirmation",
@@ -105,7 +122,7 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
         },
         text: {
             en: "--",
-            fr: "Puis, dans la commande de mon ordinateur, je tape « cmd » et valide ma commande. Je tape alors dans la fenêtre qui s’ouvre « ipconfig ». La fenêtre suivante apparaît indiquant que mon adresse IPv4 est 192.168.100.42. Mon masque de sous réseau est 255.255.255.0 et la passerelle par défaut est 192.168.100.250.",
+            fr: "Afin de connaître mon adresse IP publique, je me connecte à Internet et au site dont l’adresse est https://mon-ip.net/. Mon adresse IP publique est 178.255.167.44.",
         },
         addImage: true
     },
