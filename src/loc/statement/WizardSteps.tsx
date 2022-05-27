@@ -24,16 +24,22 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
     {
         wizardIntroduction:
             <div>
-                <p><b>Mandatory initial browsing and computer environment cleaning</b></p>
+                <p><strong>Mandatory initial browsing and computer environment cleaning</strong></p>
                 <p></p>
                 <p>If not already done, you  have to CLOSE your browser and then execute the following operations. For each step, you will have to take a screen capture considered as a proof of execution.</p>
                 <p>The required operations are:</p>
-                <li>Open the browser you will use to generate the State of Facts, please select the "Clear browsing data" menu and erase all the following data: browsing history, download history, cookies and other site data, cached images and files. Then take a screen capture of the menu with the related options checked as a proof of execution.</li>
-                <li>Empty your recycle bin and take a screen capture of the your empty recycle bin as a proof of execution.</li>
-                <li>Open a new empty browser window and take a screen capture of it as a proof of execution.
+                <ul>
+                    <li>Open the browser you will use to generate the State of Facts, please select the "Clear browsing data" menu and erase all the following data: browsing history, download history, cookies and other site data, cached images and files. Then take a screen capture of the menu with the related options checked as a proof of execution.</li>
+                    <li>Empty your recycle bin and take a screen capture of the your empty recycle bin as a proof of execution.</li>
+                    <li>Open a new empty browser window and take a screen capture of it as a proof of execution.</li>
+                </ul>
                 <p></p>
-                <p>Then access again the current Statement of Facts generator and click on the "Next" button: the next step will let you describe those operations and upload related screen captures as a proof of execution.
+                <p>Then access again the current Statement of Facts generator and click on the "Next" button: the next step will let you describe those operations and upload related screen captures as a proof of execution.</p>
             </div>,
+        label: {
+            en: "Mandatory initial browsing and computer environment cleaning",
+            fr: "Nettoyage initial du navigateur et de l'environnement système",
+        },
     },
     {
         wizardIntroduction:
@@ -158,7 +164,8 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
             <div>
               <p><b>Additional comment</b></p>
               <p></p>
-              <p>Please write here any additional information you would like to mention within this Statement of Facts</div>,
+              <p>Please write here any additional information you would like to mention within this Statement of Facts</p>
+            </div>,
         label: {
             en: "Additional comment(s)",
             fr: "Information(s) complémentaire(s)",
