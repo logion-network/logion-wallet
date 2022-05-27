@@ -162,6 +162,10 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
         setLanguage(null)
     }, [ setStatus, setLanguage ])
 
+    const previousCallback = useCallback(() => {
+        setStatus('PRE-REQUISITE')
+    }, [ setStatus ])
+
     const prerequisitesDoneCallback = useCallback((prerequisites: Prerequisite[]) => {
         setSofParams({
                 ...sofParams,
@@ -203,6 +207,12 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                         callback: cancelCallback,
                         buttonText: 'Cancel',
                         buttonVariant: 'secondary',
+                    },
+                    {
+                        id: "previous",
+                        callback: previousCallback,
+                        buttonText: 'Previous',
+                        buttonVariant: 'primary',
                     },
                     {
                         id: "submit",
