@@ -72,23 +72,6 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
     {
         wizardIntroduction:
             <div>
-                <p><b>New browser window opening and logion access</b></p>
-                <p></p>
-                <p>As explained in the first screen, you should have open a brand new browser window and take a screen capture of it as a proof of execution.</p>
-            </div>,
-        label: {
-            en: "New browser window opening and logion access",
-            fr: "Ouverture d'une nouvelle fenêtre de navigateur et accès à logion",
-        },
-        text: {
-            en: "--",
-            fr: "J’ouvre mon navigateur. Une page vierge se présente.",
-        },
-        addImage: true
-    },
-    {
-        wizardIntroduction:
-            <div>
                 <p><b>Network environment settings confirmation</b></p>
                 <p></p>
                 <p>Please verify your network environement settings by using your computer internal network tool and selecting a screen capture of it, considered as a proof of execution.</p>
@@ -106,30 +89,13 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
     {
         wizardIntroduction:
             <div>
-                <p><b>No-proxy environment confirmation</b></p>
-                <p></p>
-                <p>Please verify your proxy environement settings by checking your browser related settings and selecting a screen capture of it, considered as a proof of execution.</p>
-            </div>,
-        label: {
-            en: "No-proxy environment confirmation",
-            fr: "Confirmation d'absence d'usage d'un serveur proxy",
-        },
-        text: {
-            en: "--",
-            fr: "l’ordinateur utilisé n’est pas connecté à un Serveur Proxy (je m’en assure en vérifiant les paramètres de mon navigateur).",
-        },
-        addImage: true
-    }, 
-    {
-        wizardIntroduction:
-            <div>
               <p><b>Screen capture settings</b></p>
               <p></p>
               <p>Please provide in the following text area your screen resolution as well as the method / tool you are using to save your screen capture.</p>
             </div>,
         label: {
-            en: "Screen capture settings",
-            fr: "Paramètres de capture d'écran",
+            en: "Screen capture settings - the Legal Officer in charge of this Statement of Facts certifies s(h)e took all screen captures provided in this document.",
+            fr: "Paramètres de capture d'écran - l'Officier en charge de ce constat certifie être à l'origine des captures d'écran présentent dans le présent constat.",
         },
         text: {
             en: "--",
@@ -153,6 +119,40 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
         },
         addImage: true
     },
+    {
+        wizardIntroduction:
+            <div>
+                <p><b>New browser window opening</b></p>
+                <p></p>
+                <p>As explained in the first screen, you should have open a brand new browser window and take a screen capture of it as a proof of execution.</p>
+            </div>,
+        label: {
+            en: "New browser window opening",
+            fr: "Ouverture d'une nouvelle fenêtre de navigateur",
+        },
+        text: {
+            en: "--",
+            fr: "J’ouvre mon navigateur. Une page vierge se présente.",
+        },
+        addImage: true
+    },                 
+    {
+        wizardIntroduction:
+            <div>
+                <p><b>No-proxy environment confirmation</b></p>
+                <p></p>
+                <p>Please verify your proxy environement settings by checking your browser related settings and selecting a screen capture of it, considered as a proof of execution.</p>
+            </div>,
+        label: {
+            en: "No-proxy environment confirmation",
+            fr: "Confirmation d'absence d'usage d'un serveur proxy",
+        },
+        text: {
+            en: "--",
+            fr: "l’ordinateur utilisé n’est pas connecté à un Serveur Proxy (je m’en assure en vérifiant les paramètres de mon navigateur).",
+        },
+        addImage: true
+    }, 
     {
         wizardIntroduction:
             <div>
