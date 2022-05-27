@@ -148,7 +148,7 @@ function WizardStepForm(props: StepProps) {
                         <Form.Control
                             as="textarea"
                             aria-describedby="text"
-                            style={ { height: '80px' } }
+                            style={ { height: '160px' } }
                             value={ value.text }
                             onChange={ e => onTextChange(e.target.value) }
                         />

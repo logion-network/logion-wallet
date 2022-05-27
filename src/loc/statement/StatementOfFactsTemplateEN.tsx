@@ -43,7 +43,7 @@ export default function StatementOfFactsTemplateEN(props: Props) {
             </div>
 
             <h3 className="prerequisite-title">Prerequisites</h3>
-            { props.pathModel.prerequisites.map(prerequisite => <div className="prerequisite">
+            { props.pathModel.prerequisites.map((prerequisite, index) => <div key={ index } className="prerequisite">
                     <h3>{ prerequisite.label }</h3>
                     { prerequisite.imageSrc.length > 0 &&
                         <img src={ prerequisite.imageSrc } width="100%" alt="Snapshot" />
@@ -139,6 +139,18 @@ export default function StatementOfFactsTemplateEN(props: Props) {
                 <div className="signature-container">
                     <h3>Signature</h3>
                     <img className="sof-signature" src={ process.env.PUBLIC_URL + "/assets/sof_signature.svg" } alt="signature" />
+                </div>
+            </div>
+
+            <div className="appendix">
+                <h2>Prestation de serment de l’Officier en charge de ce constat</h2>
+                <div className="oath-container">
+                    <div className="oath">
+                        <p>{ props.pathModel.oathText }</p>
+                    </div>
+                    <div className="oath-logo">
+                        <img src={ props.pathModel.oathLogoUrl } alt="oath logo" />
+                    </div>
                 </div>
             </div>
         </>

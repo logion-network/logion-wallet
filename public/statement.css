@@ -15,7 +15,6 @@
         font-size: 11pt;
     }
 
-    .time,
     .prerequisite-title,
     .requester-title,
     .facts-title,
@@ -70,6 +69,10 @@
         padding-top: 2mm;
         padding-bottom: 2mm;
         margin-top: 4cm;
+    }
+
+    .time {
+        margin-top: 2cm;
     }
 
     h2 {
