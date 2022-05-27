@@ -24,7 +24,7 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
     {
         wizardIntroduction:
             <div>
-                <h2>Mandatory initial browsing and computer environment cleaning</strong></h2>
+                <h2>Mandatory initial browsing and computer environment cleaning</h2>
                 <p></p>
                 <p>If not already done, you  have to CLOSE your browser and then execute the following operations. For each step, you will have to take a screen capture considered as a proof of execution.</p>
                 <p>The required operations are:</p>
