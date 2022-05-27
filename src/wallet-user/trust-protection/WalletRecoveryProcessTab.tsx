@@ -30,10 +30,7 @@ export default function WalletRecoveryProcessTab(props: Props) {
 
     const recoverCoin = useCallback(async (amount: PrefixedNumber) => {
         const signAndSubmit: Call = async (callback: CallCallback) => {
-            console.log(`callback: ${callback}`);
-            console.log(`mutateRecoveredBalanceState: ${mutateRecoveredBalanceState}`);
             await mutateRecoveredBalanceState(async (state: BalanceState) => {
-                console.log(`state: ${state}`)
                 return state.transfer({
                     signer: signer!,
                     destination: accounts!.current!.address,

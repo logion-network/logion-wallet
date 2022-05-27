@@ -1,7 +1,6 @@
 import { Language, Prerequisite } from "./SofParams";
 import { useState, useCallback, useEffect } from "react";
 import Dialog from "../../common/Dialog";
-import { Control, Controller, useForm } from "react-hook-form";
 import FormGroup from "../../common/FormGroup";
 import Form from "react-bootstrap/Form";
 import { useCommonContext } from "../../common/CommonContext";
@@ -14,10 +13,6 @@ export interface Props {
     steps: WizardStep[],
     onDone: (prerequisites: Prerequisite[]) => void,
     onCancel: () => void,
-}
-
-interface FormValues {
-    text: string,
 }
 
 function buildPrerequisite(step: WizardStep, language: Language): Prerequisite {
@@ -33,22 +28,20 @@ export function PrerequisiteWizard(props: Props) {
 
     const { show, steps, onDone, onCancel } = props;
     const [ currentStep, setCurrentStep ] = useState<number>(1);
-    const { control, handleSubmit, reset } = useForm<FormValues>()
     const [ prerequisites, setPrerequisites ] = useState<Prerequisite[]>([])
     const [ language, setLanguage ] = useState<Language>();
 
     const clear = useCallback((language?: Language) => {
-        reset();
         setPrerequisites(steps.map(step => buildPrerequisite(step, language || 'en')));
         setCurrentStep(1);
-    }, [ reset, steps ])
+    }, [ steps, setPrerequisites, setCurrentStep ])
 
     useEffect(() => {
         if (props.language && props.language !== language) {
             setLanguage(props.language);
             clear(props.language)
         }
-    }, [ props.language, language, clear ])
+    }, [ props.language, language, setLanguage, clear ])
 
     const cancelCallback = useCallback(() => {
         clear(language);
@@ -59,7 +52,7 @@ export function PrerequisiteWizard(props: Props) {
         const current = prerequisites.concat();
         updaterFn(current[currentStep - 1]);
         setPrerequisites(current);
-    }, [ currentStep, prerequisites ])
+    }, [ currentStep, prerequisites, setPrerequisites ])
 
     const previous = useCallback(() => {
         if (currentStep > 1) {
@@ -88,11 +81,9 @@ export function PrerequisiteWizard(props: Props) {
         reader.readAsDataURL(file)
     }, [ updateStep ])
 
-    const submit = useCallback((formValues: FormValues) => {
-        updateStep(step => step.text = formValues.text || "")
-        reset()
-        next();
-    }, [ updateStep, reset, next ])
+    const textChangedCallback = useCallback((text: string) => {
+        updateStep(step => step.text = text)
+    }, [ updateStep ])
 
     return (
         <Dialog
@@ -114,19 +105,18 @@ export function PrerequisiteWizard(props: Props) {
                 },
                 {
                     id: "next",
+                    callback: next,
                     buttonText: 'Next',
                     buttonVariant: 'primary',
-                    type: 'submit',
                 },
             ] }
-            onSubmit={ handleSubmit(submit) }
         >
             <div>
                 <h3>Statement of Facts generator - Pre-requisites - step { currentStep } of { steps.length }</h3>
                 <WizardStepForm
                     step={ steps[currentStep - 1] }
                     value={ prerequisites[currentStep - 1] }
-                    control={ control }
+                    onTextChange={ textChangedCallback }
                     onFileSelected={ fileSelectedCallback }
                 />
             </div>
@@ -137,13 +127,13 @@ export function PrerequisiteWizard(props: Props) {
 interface StepProps {
     step: WizardStep,
     value: Prerequisite,
-    control: Control<FormValues>,
     onFileSelected: (file: File) => void,
+    onTextChange: (text: string) => void,
 }
 
 function WizardStepForm(props: StepProps) {
 
-    const { control, step, value } = props
+    const { step, value, onTextChange, onFileSelected } = props
     const { colorTheme } = useCommonContext();
 
     return (
@@ -155,18 +145,12 @@ function WizardStepForm(props: StepProps) {
                 <FormGroup
                     id="text"
                     control={
-                        <Controller
-                            name="text"
-                            control={ control }
-                            render={ ({ field }) => (
-                                <Form.Control
-                                    as="textarea"
-                                    aria-describedby="text"
-                                    style={ { height: '80px' } }
-                                    defaultValue={ value.text }
-                                    { ...field }
-                                />
-                            ) }
+                        <Form.Control
+                            as="textarea"
+                            aria-describedby="text"
+                            style={ { height: '80px' } }
+                            value={ value.text }
+                            onChange={ e => onTextChange(e.target.value) }
                         />
                     }
                     colors={ colorTheme.dialog }
@@ -186,7 +170,7 @@ function WizardStepForm(props: StepProps) {
                             <FileSelectorButton
                                 accept="image/*"
                                 buttonText="Choose an image"
-                                onFileSelected={ props.onFileSelected }
+                                onFileSelected={ onFileSelected }
                                 onlyButton
                             />
                         }

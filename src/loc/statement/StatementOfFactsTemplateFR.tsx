@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { loadPagedJs } from "./PagedJS";
 import { SofParams } from "./SofParams";
 
 export interface Props {
@@ -5,7 +7,11 @@ export interface Props {
 }
 
 export default function StatementOfFactsTemplateFR(props: Props) {
-    console.log("path Model: %s", JSON.stringify(props.pathModel))
+
+    useEffect(() => {
+        loadPagedJs();
+    }, []);
+
     return (
         <>
             <div className="header">
@@ -37,7 +43,7 @@ export default function StatementOfFactsTemplateFR(props: Props) {
             </div>
 
             <h3 className="prerequisite-title">Prérequis</h3>
-            { props.pathModel.prerequisites.map(prerequisite => <div className="prerequisite">
+            { props.pathModel.prerequisites.map((prerequisite, index) => <div key={ index } className="prerequisite">
                     <h3>{ prerequisite.label }</h3>
                     { prerequisite.imageSrc.length > 0 &&
                         <img src={ prerequisite.imageSrc } width="100%" alt="Snapshot" />

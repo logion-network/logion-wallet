@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { loadPagedJs } from "./PagedJS";
 import { SofParams } from "./SofParams";
 
 export interface Props {
@@ -5,7 +7,11 @@ export interface Props {
 }
 
 export default function StatementOfFactsTemplateEN(props: Props) {
-    console.log("path Model: %s", JSON.stringify(props.pathModel))
+
+    useEffect(() => {
+        loadPagedJs();
+    }, []);
+
     return (
         <>
             <div className="header">
