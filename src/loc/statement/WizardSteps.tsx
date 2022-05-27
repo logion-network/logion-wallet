@@ -78,6 +78,23 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
     {
         wizardIntroduction:
             <div>
+                <h2>New browser window opening</h2>
+                <p></p>
+                <p>As explained in the first screen, you should have open a brand new browser window and take a screen capture of it as a proof of execution.</p>
+            </div>,
+        label: {
+            en: "New browser window opening",
+            fr: "Ouverture d'une nouvelle fenêtre de navigateur",
+        },
+        text: {
+            en: "--",
+            fr: "J’ouvre mon navigateur. Une page vierge se présente.",
+        },
+        addImage: true
+    },
+    {
+        wizardIntroduction:
+            <div>
                 <h2>Network environment settings confirmation</h2>
                 <p></p>
                 <p>Please verify your network environement settings by using your computer internal network tool and selecting a screen capture of it, considered as a proof of execution.</p>
@@ -124,24 +141,7 @@ export const PREREQUISITE_WIZARD_STEPS: WizardStep[] = [
             fr: "la date et l’heure retenues par l'horloge du système d'exploitation sont bien la date de ce jour (synchronisation automatique avec un serveur de temps Internet time.windows.com).",
         },
         addImage: true
-    },
-    {
-        wizardIntroduction:
-            <div>
-                <h2>New browser window opening</h2>
-                <p></p>
-                <p>As explained in the first screen, you should have open a brand new browser window and take a screen capture of it as a proof of execution.</p>
-            </div>,
-        label: {
-            en: "New browser window opening",
-            fr: "Ouverture d'une nouvelle fenêtre de navigateur",
-        },
-        text: {
-            en: "--",
-            fr: "J’ouvre mon navigateur. Une page vierge se présente.",
-        },
-        addImage: true
-    },                 
+    },              
     {
         wizardIntroduction:
             <div>

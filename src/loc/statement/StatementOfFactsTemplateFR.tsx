@@ -42,7 +42,7 @@ export default function StatementOfFactsTemplateFR(props: Props) {
                 { props.pathModel.timestampText }
             </div>
 
-            <h3 className="prerequisite-title">Prérequis</h3>
+            <h2 className="prerequisite-title">Prérequis</h2>
             { props.pathModel.prerequisites.map((prerequisite, index) => <div key={ index } className="prerequisite">
                     <h3>{ prerequisite.label }</h3>
                     { prerequisite.imageSrc.length > 0 &&
