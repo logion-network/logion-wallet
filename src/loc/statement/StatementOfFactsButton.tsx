@@ -37,6 +37,7 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
     const [ containingLoc, setContainingLoc ] = useState<ContainingLoc | null | undefined>(null)
     const [ sofId, setSofId ] = useState<UUID | undefined>(undefined);
     const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer>();
+    const [ submitError, setSubmitError ] = useState<string | undefined>(undefined);
 
     const submit = useCallback(async (formValues: FormValues) => {
         if (api) {
@@ -62,7 +63,7 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                     ...loc
                 })
                 const id = new UUID();
-                const pm:SofParams = ({
+                const sp:SofParams = ({
                     ...sofParams,
                     ...formValues,
                     certificateUrl: fullCertificateUrl(containingLocId),
@@ -70,9 +71,20 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                     oathLogoUrl: `${ legalOfficer!.node }/api/lo-file/sof-header?jwt_token=${ accounts?.current?.token?.value }`,
                     oathText: settings!['oath'] || "-"
                 })
-                storeSofParams(id, pm);
-                setSofId(id);
-                setStatus('READY');
+                try {
+                    storeSofParams(id, sp);
+                    setSofId(id);
+                    setStatus('READY');
+                } catch(error) {
+                    let message = "" + error;
+                    if (message.startsWith("QuotaExceededError")) {
+                        message = `The overall screen capture file size quota has been exceeded.\nPlease try to reduce each file size to not exceed 10Mo.`
+                    }
+                    else {
+                        message = `Failed to store SOF info to Local Storage\n ${ message }`;
+                    }
+                    setSubmitError(message)
+                }
             }
         }
     }, [ api, sofParams, setContainingLoc, setError, locId, language, accounts, legalOfficer, settings ])
@@ -80,9 +92,10 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
     const dropDownItem = (language: Language) => {
         return (
             <Dropdown.Item onClick={ () => {
-                reset()
-                setLanguage(language)
-                setStatus('PRE-REQUISITE')
+                reset();
+                setLanguage(language);
+                setStatus('PRE-REQUISITE');
+                setSubmitError(undefined);
             } }>{ language.toUpperCase() }</Dropdown.Item>
         )
     }
@@ -149,6 +162,10 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
         setLanguage(null)
     }, [ setStatus, setLanguage ])
 
+    const previousCallback = useCallback(() => {
+        setStatus('PRE-REQUISITE')
+    }, [ setStatus ])
+
     const prerequisitesDoneCallback = useCallback((prerequisites: Prerequisite[]) => {
         setSofParams({
                 ...sofParams,
@@ -192,6 +209,12 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                         buttonVariant: 'secondary',
                     },
                     {
+                        id: "previous",
+                        callback: previousCallback,
+                        buttonText: 'Previous',
+                        buttonVariant: 'primary',
+                    },
+                    {
                         id: "submit",
                         buttonText: 'Submit',
                         buttonVariant: 'primary',
@@ -206,6 +229,7 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                     control={ control }
                     errors={ errors }
                     language={ language || 'en' }
+                    submitError={ submitError }
                 />
             </Dialog>
 

@@ -17,14 +17,15 @@ const amountDefaultValues: Record<Language, string[]> = {
 export interface Props {
     type: LocType,
     control: Control<FormValues>,
-    errors: FieldErrors<FormValues>
-    language: Language
+    errors: FieldErrors<FormValues>,
+    language: Language,
+    submitError: string | undefined,
 }
 
 export default function StatementOfFactsForm(props: Props) {
 
     const { colorTheme } = useCommonContext();
-    const { type, control } = props;
+    const { type, control, submitError } = props;
     const info = type === 'Collection' ?
         "Collection Item and related Collection LOC" :
         `${ type } LOC`
@@ -121,6 +122,7 @@ export default function StatementOfFactsForm(props: Props) {
                 }
                 colors={ colorTheme.dialog }
             />
+            { submitError && <pre className="submit-error">{ submitError }</pre> }
         </div>
     )
 }

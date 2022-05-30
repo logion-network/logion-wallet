@@ -67,10 +67,9 @@ export function PrerequisiteWizard(props: Props) {
             setCurrentStep(currentStep + 1)
         } else {
             const data = prerequisites.concat()
-            clear(language);
             onDone(data);
         }
-    }, [ currentStep, setCurrentStep, steps, prerequisites, onDone, clear, language ])
+    }, [ currentStep, setCurrentStep, steps, prerequisites, onDone ])
 
     const fileSelectedCallback = useCallback((file: File) => {
         const reader = new FileReader();

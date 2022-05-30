@@ -1,3 +1,9 @@
 .StatementOfFactsForm p {
     text-align: left;
 }
+
+.StatementOfFactsForm .submit-error {
+    font-family: inherit;
+    font-size: inherit;
+    color: red;
+}
