@@ -1,13 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
-import { LegalOfficer } from "@logion/client";
+import { LegalOfficer, PostalAddress, UserIdentity } from "@logion/client";
 
 import Button from "../common/Button";
 import { GREEN, RED } from "../common/ColorTheme";
 import { useCommonContext } from "../common/CommonContext";
 import FormGroup from "../common/FormGroup";
-import UserIdentity from "../common/types/Identity";
-import PostalAddress from "../common/types/PostalAddress";
 import { useLogionChain } from "../logion-chain";
 
 type SaveStatus = 'SUCCESS' | 'ERROR' | 'NONE';

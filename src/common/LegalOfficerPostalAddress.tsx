@@ -1,4 +1,4 @@
-import PostalAddress from "./types/PostalAddress";
+import { PostalAddress } from "@logion/client";
 
 export interface Props {
     address: PostalAddress;

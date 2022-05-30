@@ -1,60 +1,5 @@
+import { UserIdentity } from '@logion/client';
 import { File, LocType, MetadataItem, Link, CollectionItem } from '@logion/node-api/dist/Types';
-
-import Identity from './Identity';
-import PostalAddress from './PostalAddress';
-import UserIdentity from './Identity';
-
-export type ProtectionRequestStatus = "PENDING" | "REJECTED" | "ACCEPTED" | "ACTIVATED";
-
-export interface LegalOfficerDecision {
-    rejectReason: string | null,
-    decisionOn: string | null,
-    locId?: string | null,
-}
-
-export interface ProtectionRequest {
-    id: string,
-    requesterAddress: string,
-    decision: LegalOfficerDecision,
-    userIdentity: Identity,
-    userPostalAddress: PostalAddress,
-    createdOn: string,
-    isRecovery: boolean,
-    addressToRecover: string | null,
-    status: ProtectionRequestStatus,
-    legalOfficerAddress: string,
-    otherLegalOfficerAddress: string,
-}
-
-export type TransferDirection = "Sent" | "Received" | "None"
-
-export interface Transaction {
-    id: string,
-    from: string,
-    to: string,
-    pallet: string,
-    method: string,
-    transferValue: string,
-    tip: string,
-    fee: string,
-    reserved: string,
-    total: string,
-    createdOn: string,
-    type: string,
-    transferDirection: TransferDirection,
-    successful: boolean,
-    error?: TransactionError
-}
-
-export interface TransactionError {
-    section: string,
-    name: string,
-    details: string
-}
-
-export interface TransactionsSet {
-    transactions: Transaction[],
-}
 
 export interface AddedOn {
     addedOn: string;
@@ -102,7 +47,7 @@ export interface LocRequest {
     id: string;
     status: "OPEN" | "REQUESTED" | "REJECTED" | "CLOSED";
     rejectReason?: string;
-    userIdentity?: Identity;
+    userIdentity?: UserIdentity;
     closedOn?: string;
     files: LocFile[];
     metadata: LocMetadataItem[];

@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { LocRequestStatus } from './types/ModelTypes';
 import { ORANGE, GREEN, RED } from "./ColorTheme";
 import StatusCell from "./StatusCell";

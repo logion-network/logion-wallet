@@ -1,6 +1,6 @@
-import React from 'react';
-import PostalAddressType from './types/PostalAddress';
 import { Row, Col } from "react-bootstrap";
+import { PostalAddress as PostalAddressType } from "@logion/client";
+
 import { BackgroundAndForegroundColors } from "./ColorTheme";
 import ComparableField from "./ComparableField";
 import "./PostalAddress.css";

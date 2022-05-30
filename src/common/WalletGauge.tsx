@@ -1,22 +1,22 @@
 import { useState, useCallback } from 'react';
+import { Form, Spinner, InputGroup, DropdownButton, Dropdown } from 'react-bootstrap';
+import { BalanceState } from '@logion/client/dist/Balance';
 import { ATTO, FEMTO, MICRO, MILLI, NANO, NONE, PICO, PrefixedNumber } from '@logion/node-api/dist/numbers';
-import { Coin, SYMBOL, transferSubmittable } from '@logion/node-api/dist/Balances';
-import { isValidAccountId } from '@logion/node-api/dist/Accounts';
+import { Coin, SYMBOL } from '@logion/node-api/dist/Balances';
+
+import { useLogionChain } from '../logion-chain';
+import ClientExtrinsicSubmitter, { Call, CallCallback } from '../ClientExtrinsicSubmitter';
 
 import Gauge from './Gauge';
 import Button from './Button';
 import Icon from './Icon';
-
-import './WalletGauge.css';
 import Dialog from './Dialog';
 import FormGroup from './FormGroup';
 import { useCommonContext } from './CommonContext';
-import { Form, Spinner, InputGroup, DropdownButton, Dropdown } from 'react-bootstrap';
-import { useLogionChain } from '../logion-chain';
-import ExtrinsicSubmitter, { SignAndSubmit } from '../ExtrinsicSubmitter';
 import Alert from './Alert';
 import TransactionConfirmation, { Status } from "./TransactionConfirmation";
-import { signAndSend } from 'src/logion-chain/Signature';
+
+import './WalletGauge.css';
 
 export interface Props {
     coin: Coin,
@@ -33,35 +33,39 @@ interface TransferDialogParams {
 }
 
 export default function WalletGauge(props: Props) {
-    const { colorTheme } = useCommonContext();
-    const { api, accounts } = useLogionChain();
+    const { accounts, signer, client } = useLogionChain();
+    const { colorTheme, mutateBalanceState } = useCommonContext();
     const [ destination, setDestination ] = useState("");
     const [ amount, setAmount ] = useState("");
     const [ unit, setUnit ] = useState(NONE);
-    const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
+    const [ signAndSubmit, setSignAndSubmit ] = useState<Call>();
     const [ transferDialogParams, setTransferDialogParams ] = useState<TransferDialogParams>({title: "", destination: true});
     const { vaultAddress, sendButton } = props;
     const [ transferError, setTransferError ] = useState(false);
 
     const transferCallback = useCallback(() => {
-        const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
-            signerId: accounts!.current!.address,
-            callback: setResult,
-            errorCallback: setError,
-            submittable: transferSubmittable({
-                api: api!,
-                destination,
-                amount: new PrefixedNumber(amount, unit),
-            })
-        });
+        const signAndSubmit: Call = async (callback: CallCallback) => {
+            await mutateBalanceState(async (state: BalanceState) => {
+                return await state.transfer({
+                    amount: new PrefixedNumber(amount, unit),
+                    destination,
+                    callback,
+                    signer: signer!
+                });
+            });
+        };
         setSignAndSubmit(() => signAndSubmit);
-    }, [ accounts, amount, api, destination, unit ]);
+    }, [ amount, destination, unit, mutateBalanceState, signer ]);
 
     const clearFormCallback = useCallback(() => {
         setDestination("");
         setAmount("");
-        setSignAndSubmit(null);
+        setSignAndSubmit(undefined);
     }, [ setDestination, setAmount, setSignAndSubmit ])
+
+    if(!client) {
+        return null;
+    }
 
     return (
         <TransactionConfirmation
@@ -108,14 +112,14 @@ export default function WalletGauge(props: Props) {
                                 buttonText: "Cancel",
                                 buttonVariant: 'secondary-polkadot',
                                 callback: cancelCallback,
-                                disabled: signAndSubmit !== null && !transferError
+                                disabled: signAndSubmit !== undefined && !transferError
                             },
                             {
                                 id: 'transfer',
                                 buttonText: "Transfer",
                                 buttonVariant: 'polkadot',
                                 callback: transferCallback,
-                                disabled: signAndSubmit !== null || !isValidAccountId(api!, destination) || isNaN(Number(amount)) || Number(amount) === 0 || destination === accounts!.current!.address
+                                disabled: signAndSubmit !== undefined || !client.isValidAddress(destination) || isNaN(Number(amount)) || Number(amount) === 0 || destination === accounts!.current!.address
                             }
                         ] }
                         size="lg"
@@ -129,7 +133,7 @@ export default function WalletGauge(props: Props) {
                                         id="destination"
                                         label="Destination"
                                         control={ <Form.Control
-                                            isInvalid={ destination !== "" && (!isValidAccountId(api!, destination) || destination === accounts!.current!.address) }
+                                            isInvalid={ destination !== "" && (!client.isValidAddress(destination) || destination === accounts!.current!.address) }
                                             type="text"
                                             placeholder="The beneficiary's SS58 address"
                                             value={ destination }
@@ -175,10 +179,9 @@ export default function WalletGauge(props: Props) {
                                 />
                             </>
                         }
-                        <ExtrinsicSubmitter
-                            id="transferLogs"
+                        <ClientExtrinsicSubmitter
                             successMessage="Transfer successful."
-                            signAndSubmit={ signAndSubmit }
+                            call={ signAndSubmit }
                             onSuccess={ successCallback }
                             onError={ () => setTransferError(true) }
                         />

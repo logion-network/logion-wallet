@@ -1,4 +1,5 @@
-import { Transaction } from "./types/ModelTypes";
+import { Transaction } from "@logion/client/dist/TransactionClient";
+
 import Icon from "./Icon";
 import Detail from "./Detail";
 import './TransactionStatusCell.css';

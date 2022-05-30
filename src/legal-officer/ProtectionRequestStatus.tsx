@@ -1,7 +1,8 @@
+import { ProtectionRequestStatus as ProtectionRequestStatusType } from '@logion/client/dist/RecoveryClient';
+
 import Icon from "../common/Icon";
 import { ORANGE, GREEN, RED, YELLOW } from "../common/ColorTheme";
 
-import { ProtectionRequestStatus as ProtectionRequestStatusType } from '../common/types/ModelTypes';
 import './ProtectionRequestStatus.css';
 
 export interface Props {

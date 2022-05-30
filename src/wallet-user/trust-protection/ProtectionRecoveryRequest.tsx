@@ -4,7 +4,6 @@ import { LegalOfficer, PendingProtection, UnavailableProtection } from "@logion/
 
 import { useLogionChain } from '../../logion-chain';
 
-import { ProtectionRequestStatus } from "../../common/types/ModelTypes";
 import { FullWidthPane } from "../../common/Dashboard";
 import Frame from "../../common/Frame";
 import Button from '../../common/Button';
@@ -20,6 +19,7 @@ import { SETTINGS_PATH } from '../UserRouter';
 import SelectLegalOfficer from './SelectLegalOfficer';
 
 import './ProtectionRecoveryRequest.css';
+import { ProtectionRequestStatus } from '@logion/client/dist/RecoveryClient';
 
 export type ProtectionRecoveryRequestStatus = 'pending' | 'accepted' | 'activated' | 'unavailable';
 

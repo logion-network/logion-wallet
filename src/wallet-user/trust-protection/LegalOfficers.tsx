@@ -1,6 +1,5 @@
 import { LegalOfficer } from "@logion/client";
-
-import { ProtectionRequestStatus } from "../../common/types/ModelTypes";
+import { ProtectionRequestStatus } from "@logion/client/dist/RecoveryClient";
 
 import SelectLegalOfficer, { Mode } from './SelectLegalOfficer';
 import './LegalOfficers.css';

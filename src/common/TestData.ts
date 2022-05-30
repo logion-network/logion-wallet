@@ -1,17 +1,15 @@
+import { LegalOfficer, PostalAddress, UserIdentity } from '@logion/client';
+import { Transaction } from '@logion/client/dist/TransactionClient';
 import { Coin, CoinBalance, SYMBOL } from '@logion/node-api/dist/Balances';
 import { PrefixedNumber, ATTO } from '@logion/node-api/dist/numbers';
 
-import Identity from './types/Identity';
-import PostalAddress from './types/PostalAddress';
-import { Transaction } from './types/ModelTypes';
 import { ColorTheme, rgbaToHex } from './ColorTheme';
-import { LegalOfficer } from '@logion/client';
 
 export const DEFAULT_LEGAL_OFFICER = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"; // Alice
 export const ANOTHER_LEGAL_OFFICER = "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty"; // Bob
 export const A_THIRD_LEGAL_OFFICER = "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y"; // Charlie
 
-export const DEFAULT_IDENTITY: Identity = {
+export const DEFAULT_IDENTITY: UserIdentity = {
     firstName: "John",
     lastName: "Doe",
     email: "john.doe@logion.network",

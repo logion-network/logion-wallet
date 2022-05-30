@@ -12,12 +12,12 @@ import Icon from './Icon';
 import Button from './Button';
 import WalletGauge from './WalletGauge';
 import Loader from './Loader';
-import { Transaction } from './types/ModelTypes';
 
 import './Wallet.css';
 import NetworkWarning from './NetworkWarning';
 import { useResponsiveContext } from './Responsive';
 import { buildTransactionType } from "./TransactionType";
+import { Transaction } from '@logion/client/dist/TransactionClient';
 
 export type WalletType = "Wallet" | "Vault"
 

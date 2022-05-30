@@ -49,6 +49,7 @@ export interface CommonContext {
     nodesUp: Endpoint[];
     nodesDown: Endpoint[];
     availableLegalOfficers: LegalOfficer[] | undefined;
+    mutateBalanceState: (mutator: ((state: BalanceState) => Promise<BalanceState>)) => Promise<void>,
 }
 
 interface FullCommonContext extends CommonContext {
@@ -74,6 +75,7 @@ function initialContextValue(): FullCommonContext {
         nodesUp: [],
         nodesDown: [],
         availableLegalOfficers: undefined,
+        mutateBalanceState: () => Promise.reject(),
     }
 }
 
@@ -89,6 +91,8 @@ type ActionType = 'FETCH_IN_PROGRESS'
     | 'SET_SET_COLOR_THEME'
     | 'SET_SET_TOKEN'
     | 'SET_REFRESH'
+    | 'SET_MUTATE_BALANCE_STATE'
+    | 'MUTATE_BALANCE_STATE'
 ;
 
 interface Action {
@@ -113,6 +117,7 @@ interface Action {
     nodesUp?: Endpoint[];
     nodesDown?: Endpoint[];
     availableLegalOfficers?: LegalOfficer[];
+    mutateBalanceState?: (mutator: ((state: BalanceState) => Promise<BalanceState>)) => Promise<void>,
 }
 
 const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, action: Action): FullCommonContext => {
@@ -163,6 +168,16 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                 ...state,
                 refresh: action.refresh!,
                 refreshAddress: action.refreshAddress!,
+            };
+        case 'SET_MUTATE_BALANCE_STATE':
+            return {
+                ...state,
+                mutateBalanceState: action.mutateBalanceState!,
+            };
+        case 'MUTATE_BALANCE_STATE':
+            return {
+                ...state,
+                balanceState: action.balanceState!,
             };
         default:
             /* istanbul ignore next */
@@ -435,6 +450,23 @@ export function CommonContextProvider(props: Props) {
             });
         }
     }, [ contextValue, refreshRequests, dispatch, accounts, client ]);
+
+    const mutateBalanceStateCallback = useCallback(async (mutator: ((state: BalanceState) => Promise<BalanceState>)) => {
+        const balanceState = await mutator(contextValue.balanceState!);
+        dispatch({
+            type: "MUTATE_BALANCE_STATE",
+            balanceState,
+        });
+    }, [ contextValue.balanceState, dispatch ]);
+
+    useEffect(() => {
+        if(contextValue.mutateBalanceState !== mutateBalanceStateCallback) {
+            dispatch({
+                type: "SET_MUTATE_BALANCE_STATE",
+                mutateBalanceState: mutateBalanceStateCallback,
+            })
+        }
+    }, [ contextValue.mutateBalanceState, mutateBalanceStateCallback ]);
 
     return (
         <CommonContextObject.Provider value={contextValue}>

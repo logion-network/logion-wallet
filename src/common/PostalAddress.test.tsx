@@ -1,6 +1,7 @@
-import PostalAddress from './PostalAddress';
-import PostalAddressType from './types/PostalAddress'
+import { PostalAddress as PostalAddressType } from '@logion/client';
+
 import { render } from '../tests';
+import PostalAddress from './PostalAddress';
 import { DEFAULT_ADDRESS, COLOR_THEME } from './TestData';
 
 const DIFFERENT_ADDRESS: PostalAddressType = {

@@ -1,7 +1,7 @@
 import moment from 'moment';
 import { toIsoString } from '@logion/node-api/dist/datetime';
+import { ProtectionRequest } from '@logion/client/dist/RecoveryClient';
 
-import { ProtectionRequest } from '../common/types/ModelTypes';
 import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from "../common/TestData";
 
 export const PENDING_PROTECTION_REQUESTS: ProtectionRequest[] = [

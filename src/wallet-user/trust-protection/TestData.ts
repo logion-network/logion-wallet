@@ -1,6 +1,6 @@
+import { ProtectionRequest, ProtectionRequestStatus } from '@logion/client/dist/RecoveryClient';
 import moment from 'moment';
 
-import { ProtectionRequest, ProtectionRequestStatus } from '../../common/types/ModelTypes';
 import { DEFAULT_IDENTITY, DEFAULT_ADDRESS, DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from '../../common/TestData';
 import { TEST_WALLET_USER } from '../TestData';
 

@@ -1,4 +1,4 @@
-import UserIdentity from "./types/Identity";
+import { UserIdentity } from "@logion/client";
 
 export interface Props {
     identity: UserIdentity;

@@ -1,8 +1,9 @@
-import React from 'react';
-import IdentityType from './types/Identity';
 import { Row, Col } from "react-bootstrap";
+import { UserIdentity as IdentityType } from "@logion/client";
+
 import { BackgroundAndForegroundColors } from "./ColorTheme";
 import ComparableField from "./ComparableField";
+
 import "./Identity.css";
 
 export interface Props {

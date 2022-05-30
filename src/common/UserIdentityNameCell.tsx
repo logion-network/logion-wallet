@@ -1,7 +1,5 @@
-import React from 'react';
-
+import { UserIdentity } from '@logion/client';
 import { Cell } from './Table';
-import UserIdentity from './types/Identity';
 
 export interface Props {
     userIdentity?: UserIdentity;
