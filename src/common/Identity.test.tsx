@@ -1,5 +1,6 @@
+import { UserIdentity as IdentityType } from '@logion/client';
+
 import Identity from './Identity';
-import IdentityType from './types/Identity';
 import { render } from '../tests';
 import { DEFAULT_IDENTITY, COLOR_THEME } from './TestData';
 

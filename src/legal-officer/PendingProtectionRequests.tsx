@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import { useNavigate } from "react-router-dom";
 import { UUID } from '@logion/node-api/dist/UUID';
-
+import { ProtectionRequest } from '@logion/client/dist/RecoveryClient';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Form from 'react-bootstrap/Form';
 
@@ -11,7 +11,6 @@ import { useCommonContext } from '../common/CommonContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import { acceptProtectionRequest, rejectProtectionRequest } from '../loc/Model';
-import { ProtectionRequest } from '../common/types/ModelTypes';
 import ProcessStep from './ProcessStep';
 import ProtectionRequestStatus from './ProtectionRequestStatus';
 import ProtectionRequestDetails from './ProtectionRequestDetails';

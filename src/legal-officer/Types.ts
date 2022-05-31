@@ -1,5 +1,6 @@
+import { ProtectionRequest } from '@logion/client/dist/RecoveryClient';
+
 import { ColorTheme, rgbaToHex } from '../common/ColorTheme';
-import { ProtectionRequest } from '../common/types/ModelTypes';
 
 export interface RecoveryInfo {
     recoveryAccount: ProtectionRequest,

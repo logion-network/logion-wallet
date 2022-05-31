@@ -1,9 +1,10 @@
+import { Transaction } from "@logion/client/dist/TransactionClient";
 import { prefixedLogBalance } from "@logion/node-api/dist/Balances";
 import { NONE, PrefixedNumber } from "@logion/node-api/dist/numbers";
+
 import { GREEN, RED } from "./ColorTheme";
 import Icon from "./Icon";
 import { Cell } from "./Table";
-import { Transaction } from "./types/ModelTypes";
 
 import './TransferAmountCell.css';
 

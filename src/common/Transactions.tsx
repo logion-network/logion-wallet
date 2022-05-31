@@ -3,6 +3,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
+import { Transaction } from '@logion/client/dist/TransactionClient';
 import { Coin, CoinBalance } from '@logion/node-api/dist/Balances';
 
 import { FullWidthPane } from './Dashboard';
@@ -20,7 +21,6 @@ import AmountCell from './AmountCell';
 import { TransactionStatusCell, TransactionStatusCellDetails } from "./TransactionStatusCell";
 import Loader from './Loader';
 import { useResponsiveContext } from './Responsive';
-import { Transaction } from "./types/ModelTypes";
 import { WalletType } from "./Wallet";
 import VaultOutRequest from "../vault/VaultOutRequest";
 import VaultTransferRequests from './VaultTransferRequests';

@@ -1,9 +1,7 @@
-import React from "react";
+import { ProtectionRequest } from '@logion/client/dist/RecoveryClient';
 
 import { Col } from '../common/Grid';
 import Detail from "../common/Detail";
-
-import { ProtectionRequest } from "../common/types/ModelTypes";
 
 export interface ProtectionRequestDetailsProps {
     request : ProtectionRequest,

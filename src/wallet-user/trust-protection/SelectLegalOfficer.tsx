@@ -1,6 +1,7 @@
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { LegalOfficer } from "@logion/client";
+import { ProtectionRequestStatus } from "@logion/client/dist/RecoveryClient";
 
 import { ORANGE, GREEN, RED, YELLOW } from "../../common/ColorTheme";
 import Select, { OptionType } from '../../common/Select';
@@ -8,9 +9,8 @@ import Icon from "../../common/Icon";
 import FormGroup from '../../common/FormGroup';
 import { useCommonContext } from '../../common/CommonContext';
 
-import { ProtectionRequestStatus } from "../../common/types/ModelTypes";
-
 import Officer from './Officer';
+
 import './SelectLegalOfficer.css';
 
 export type Mode = 'choose' | 'select' | 'view';

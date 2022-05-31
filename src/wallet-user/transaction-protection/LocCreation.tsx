@@ -6,13 +6,12 @@ import { useCommonContext } from '../../common/CommonContext';
 import { CreateLocRequest, createLocRequest } from '../../common/Model';
 import Button from '../../common/Button';
 import Dialog from '../../common/Dialog';
-import UserIdentity from '../../common/types/Identity';
 
 import { useUserContext } from '../UserContext';
 
 import LocCreationForm, { FormValues } from './LocCreationForm';
 import { useLogionChain } from '../../logion-chain';
-import { NoProtection, ProtectionState, UnavailableProtection } from '@logion/client';
+import { NoProtection, ProtectionState, UnavailableProtection, UserIdentity } from '@logion/client';
 
 function shouldShowIdentityFields(
     legalOfficer: string | undefined,

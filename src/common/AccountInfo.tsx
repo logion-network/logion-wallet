@@ -1,5 +1,5 @@
-import PostalAddressType from "./types/PostalAddress";
-import IdentityType from "./types/Identity";
+import { UserIdentity as IdentityType, PostalAddress as PostalAddressType } from "@logion/client";
+
 import Identity from "./Identity";
 import PostalAddress from "./PostalAddress";
 import './AccountInfo.css';

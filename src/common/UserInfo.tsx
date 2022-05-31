@@ -1,5 +1,4 @@
-import UserIdentity from "./types/Identity";
-import PostalAddress from "./types/PostalAddress";
+import { PostalAddress, UserIdentity } from "@logion/client";
 import Button from "react-bootstrap/Button";
 import Collapsible from "react-collapsible";
 

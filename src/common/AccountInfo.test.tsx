@@ -1,9 +1,9 @@
+import { UserIdentity as IdentityType, PostalAddress as PostalAddressType } from "@logion/client";
+
 import { render } from "../tests";
 import { DEFAULT_IDENTITY, COLOR_THEME, DEFAULT_ADDRESS } from "./TestData";
 import AccountInfo from "./AccountInfo";
 import { TEST_WALLET_USER } from "../wallet-user/TestData";
-import IdentityType from "./types/Identity";
-import PostalAddressType from "./types/PostalAddress";
 
 const DIFFERENT_IDENTITY: IdentityType = {
     firstName: "John2",

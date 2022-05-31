@@ -1,9 +1,8 @@
-import Identity from "./types/Identity";
+import { UserIdentity } from "@logion/client";
 import { Cell } from "./Table";
-import React from "react";
 
 export interface Props {
-    identity?: Identity,
+    identity?: UserIdentity,
 }
 
 export default function SubmitterName(props: Props) {

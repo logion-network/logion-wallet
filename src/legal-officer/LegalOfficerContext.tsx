@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useReducer, Reducer } from 'react';
 import { AxiosInstance } from 'axios';
 import { VaultTransferRequest } from '@logion/client';
+import { ProtectionRequest } from '@logion/client/dist/RecoveryClient';
 
-import { ProtectionRequest, } from '../common/types/ModelTypes';
 import { fetchProtectionRequests, } from '../common/Model';
 import { useCommonContext } from '../common/CommonContext';
 import { LIGHT_MODE } from './Types';

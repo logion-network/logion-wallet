@@ -1,7 +1,8 @@
+import { ProtectionRequest } from '@logion/client/dist/RecoveryClient';
+
 import { Col } from '../common/Grid';
 import Detail from "../common/Detail";
 
-import { ProtectionRequest } from "../common/types/ModelTypes";
 import CopyPasteButton from "../common/CopyPasteButton";
 import { LegalOfficerPostalAddress } from "../common/LegalOfficerPostalAddress";
 import { useLogionChain } from '../logion-chain';

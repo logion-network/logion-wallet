@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { ProtectionRequest } from "@logion/client/dist/RecoveryClient";
 import { vouchRecovery } from "@logion/node-api/dist/Recovery";
 import { Col, Row } from "react-bootstrap";
 
@@ -11,16 +12,15 @@ import { useCommonContext } from "../common/CommonContext";
 
 import { useLocContext } from "./LocContext";
 import Icon from "../common/Icon";
-import { ProtectionRequest } from "../common/types/ModelTypes";
 
 import { acceptProtectionRequest } from "./Model";
 import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
 import { PROTECTION_REQUESTS_PATH, RECOVERY_REQUESTS_PATH } from "../legal-officer/LegalOfficerPaths";
 import StaticLabelValue from "../common/StaticLabelValue";
 import { useLogionChain } from "../logion-chain";
+import { signAndSend } from "../logion-chain/Signature";
 
 import './CloseLocButton.css';
-import { signAndSend } from "src/logion-chain/Signature";
 
 enum CloseStatus {
     NONE,

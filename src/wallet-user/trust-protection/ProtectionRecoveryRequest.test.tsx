@@ -2,7 +2,6 @@ jest.mock('../../logion-chain/Signature');
 jest.mock('../../logion-chain');
 jest.mock('../../common/CommonContext');
 jest.mock('../UserContext');
-jest.mock('./Model');
 jest.unmock('@logion/client');
 
 import { render, screen, waitFor } from '@testing-library/react';

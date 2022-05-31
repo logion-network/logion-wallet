@@ -2,6 +2,8 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router";
 import { Col, OverlayTrigger } from "react-bootstrap";
 import queryString from 'query-string';
+import { LegalOfficer } from "@logion/client";
+import { ProtectionRequest } from "@logion/client/dist/RecoveryClient";
 import { UUID } from "@logion/node-api/dist/UUID";
 import { format } from "@logion/node-api/dist/datetime";
 import { isLogionIdentityLoc, isLogionDataLoc, CollectionItem } from "@logion/node-api/dist/Types";
@@ -36,13 +38,11 @@ import Ellipsis from "../common/Ellipsis";
 import { Viewer } from "./types";
 import CertificateAndLimits from "./CertificateAndLimits";
 import CollectionLocItemChecker from "./CollectionLocItemChecker";
-import { ProtectionRequest } from "../common/types/ModelTypes";
 import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
 import { useLogionChain } from "../logion-chain";
 import ItemImporter from "./ItemImporter";
 
 import "./ContextualizedLocDetails.css";
-import { LegalOfficer } from "@logion/client";
 
 export interface Props {
     viewer: Viewer;
