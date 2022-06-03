@@ -5,14 +5,14 @@ import { LocRequestStatus } from './types/ModelTypes';
 
 export interface Props {
     status: LocRequestStatus;
-    id: string;
+    id: string | UUID;
 }
 
 export default function LocIdCell(props: Props) {
-
+    const locId: UUID = props.id instanceof UUID ? props.id : new UUID(props.id);
     let content: string;
     if(props.status === 'OPEN' || props.status === 'CLOSED') {
-        content = new UUID(props.id).toDecimalString();
+        content = locId.toDecimalString();
     } else {
         content = "-";
     }

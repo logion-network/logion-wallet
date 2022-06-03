@@ -1,9 +1,127 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Renders null with no data 1`] = `
+exports[`Renders empty with no data 1`] = `
 <div
-  className="spinner-border"
-/>
+  className="Table"
+>
+  <style>
+    
+            .Table .body .Row .Col.split-after::before {
+                background-color: #152665;
+            }
+            
+  </style>
+  <div
+    className="header"
+    style={
+      Object {
+        "backgroundColor": "#0c163d",
+        "color": "#ffffff",
+      }
+    }
+  >
+    <div
+      className="Row"
+    >
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "left",
+            "width": "calc(( 100% - 740px ) / 3)",
+          }
+        }
+      >
+        Legal Officer
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "left",
+            "width": "calc(( 100% - 740px ) / 3)",
+          }
+        }
+      >
+        Description
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "center",
+            "width": "140px",
+          }
+        }
+      >
+        Status
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "left",
+            "width": "calc(( 100% - 740px ) / 3)",
+          }
+        }
+      >
+        LOC ID
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "center",
+            "width": "200px",
+          }
+        }
+      >
+        Creation date
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "center",
+            "width": "200px",
+          }
+        }
+      >
+        Closing date
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "center",
+            "width": "200px",
+          }
+        }
+      >
+        Action
+      </div>
+    </div>
+  </div>
+  <div
+    className="body"
+  >
+    <div
+      className="Row empty-data"
+      style={
+        Object {
+          "backgroundColor": "#152665",
+          "color": "#ffffff",
+        }
+      }
+    >
+      <div
+        className="empty-message"
+      >
+        No LOCs
+      </div>
+    </div>
+  </div>
+</div>
 `;
 
 exports[`Renders pending requests 1`] = `

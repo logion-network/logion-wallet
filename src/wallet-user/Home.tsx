@@ -24,6 +24,7 @@ import { SETTINGS_PATH, WALLET_PATH, dataLocDetailsPath, locRequestsPath } from 
 
 import './Home.css';
 import TransactionType from 'src/common/TransactionType';
+import { useUserContext } from "./UserContext";
 
 const MAX_OPEN_LOCS = 3;
 const MAX_PENDING_LOCS = 3;
@@ -49,11 +50,12 @@ export default function Account() {
 
 export function Content() {
     const { accounts } = useLogionChain();
-    const { balanceState, openedLocRequests, pendingLocRequests, nodesDown } = useCommonContext();
+    const { balanceState, nodesDown } = useCommonContext();
+    const { locsState } = useUserContext();
     const navigate = useNavigate();
     const { width } = useResponsiveContext();
 
-    if (!balanceState || !(accounts?.current?.address) || openedLocRequests === null || pendingLocRequests === null) {
+    if (!balanceState || !(accounts?.current?.address) || locsState === undefined) {
         return <Loader />;
     }
 
@@ -187,7 +189,7 @@ export function Content() {
                                     align: 'center',
                                 },
                             ] }
-                            data={ openedLocRequests['Transaction'].map(requestAndLoc => requestAndLoc.request).slice(0, MAX_OPEN_LOCS) }
+                            data={ locsState.openLocs['Transaction'].map(locState => locState.data()).slice(0, MAX_OPEN_LOCS) }
                             renderEmpty={ () => <EmptyTableMessage>No open LOC yet</EmptyTableMessage> }
                         />
                     </Frame>
@@ -221,7 +223,7 @@ export function Content() {
                                     align: 'center',
                                 }
                             ] }
-                            data={ pendingLocRequests['Transaction'].slice(0, MAX_PENDING_LOCS) }
+                            data={ locsState.pendingRequests['Transaction'].map(locsState => locsState.data()).slice(0, MAX_PENDING_LOCS) }
                             renderEmpty={ () => <EmptyTableMessage>No requested LOC yet</EmptyTableMessage> }
                         />
                     </Frame>

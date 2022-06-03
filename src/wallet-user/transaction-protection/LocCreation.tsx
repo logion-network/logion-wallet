@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { DataLocType } from "@logion/node-api/dist/Types";
 
 import { useCommonContext } from '../../common/CommonContext';
-import { CreateLocRequest, createLocRequest } from '../../common/Model';
+import { LocsState } from "@logion/client/dist/Loc";
 import Button from '../../common/Button';
 import Dialog from '../../common/Dialog';
 
@@ -35,9 +35,9 @@ export interface Props {
 }
 
 export default function LocCreation(props: Props) {
-    const { accounts, axiosFactory } = useLogionChain();
-    const { colorTheme, refresh } = useCommonContext();
-    const { protectionState } = useUserContext();
+    const { getOfficer } = useLogionChain();
+    const { colorTheme } = useCommonContext();
+    const { protectionState, mutateLocsState, refreshRequests } = useUserContext();
     const [ requestLoc, setRequestLoc ] = useState(false);
     const { locType, requestButtonLabel } = props;
     const { control, handleSubmit, formState: { errors }, reset, watch } = useForm<FormValues>({
@@ -65,20 +65,20 @@ export default function LocCreation(props: Props) {
             }
         }
 
-        const currentAddress = accounts!.current!.address;
-        const request: CreateLocRequest = {
-            ownerAddress: formValues.legalOfficer,
-            requesterAddress: currentAddress,
-            description: formValues.description,
-            locType,
-            userIdentity,
-        }
-        await createLocRequest!(axiosFactory!(formValues.legalOfficer), request);
+        const legalOfficer = getOfficer!(formValues.legalOfficer)!
+        await mutateLocsState(async (locsState: LocsState) => {
+            return (await locsState!.requestLoc({
+                legalOfficer,
+                description: formValues.description,
+                userIdentity,
+                locType,
+            })).locsState();
+        })
 
         reset();
-        refresh!(false);
+        refreshRequests!(false);
         setRequestLoc(false);
-    }, [ axiosFactory, accounts, setRequestLoc, refresh, reset, showIdentityFields, locType ]);
+    }, [ setRequestLoc, refreshRequests, reset, showIdentityFields, locType, getOfficer, mutateLocsState ]);
 
     useEffect(() => {
         const subscription = watch(({ legalOfficer }) => setSelectedLegalOfficer(legalOfficer));

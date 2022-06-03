@@ -1,6 +1,6 @@
 import { DataLocType } from "@logion/node-api/dist/Types";
 
-import { useCommonContext } from '../../common/CommonContext';
+import { useUserContext } from "../UserContext";
 import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';
 import LegalOfficerName from '../../common/LegalOfficerNameCell';
@@ -11,10 +11,10 @@ export interface Props {
 }
 
 export default function RequestedLocs(props: Props) {
-    const { pendingLocRequests } = useCommonContext();
+    const { locsState } = useUserContext()
     const { locType } = props
 
-    if(pendingLocRequests === null) {
+    if(locsState === null || locsState?.pendingRequests === undefined) {
         return <Loader />;
     }
 
@@ -43,7 +43,7 @@ export default function RequestedLocs(props: Props) {
                     align: 'center',
                 }
             ]}
-            data={ pendingLocRequests[locType] }
+            data={ locsState.pendingRequests[locType].map(locState => locState.data()) }
             renderEmpty={ () => <EmptyTableMessage>No requested LOCs</EmptyTableMessage> }
         />
     );

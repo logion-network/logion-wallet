@@ -16,7 +16,7 @@ jest.mock('../../wallet-user/UserContext');
 jest.mock('../../logion-chain');
 jest.unmock("@logion/client");
 
-describe("LocCreation", () => {
+fdescribe("LocCreation", () => {
 
     it("should display messages when an empty form is submitted", async () => {
         setProtectionState(new ActiveProtection({
@@ -69,7 +69,7 @@ describe("LocCreation", () => {
 
     it("should create a LOC with identity info if not protected by selected LO", async () => {
         setProtectionState(new NoProtection({
-            
+
         } as unknown as RecoverySharedState));
         await itCreatesLoc(true);
     })

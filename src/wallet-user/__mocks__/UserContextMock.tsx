@@ -9,6 +9,7 @@ import { LegalOfficerEndpoint, LogionClientConfig, SharedState } from '@logion/c
 import { NetworkState } from '@logion/client/dist/NetworkState';
 import { UserContext } from '../UserContext';
 import { BalanceState } from '@logion/client/dist/Balance';
+import { LocsState } from "@logion/client/dist/Loc";
 
 export let createTokenRequest = () => null;
 
@@ -50,6 +51,34 @@ export function setRecoveredBalanceState(state: BalanceState | undefined) {
 
 export let mutateRecoveredBalanceState = jest.fn().mockReturnValue(Promise.resolve());
 
+export let locsState: LocsState | undefined = new LocsState({} as SharedState);
+
+export function setLocsState(state: LocsState | undefined) {
+    locsState = state;
+}
+
+export function setOpenedLocRequests(requests: any[]) {
+    locsState!.openLocs["Transaction"] = requests;
+}
+
+export function setClosedLocRequests(requests: any[]) {
+    locsState!.closedLocs["Transaction"] = requests;
+}
+
+export function setVoidedLocs(requests: any[]) {
+    locsState!.voidedLocs["Transaction"] = requests;
+}
+
+export function setPendingLocRequests(requests: any[]) {
+    locsState!.pendingRequests["Transaction"] = requests;
+}
+
+export function setRejectedLocRequests(requests: any[]) {
+    locsState!.rejectedRequests["Transaction"] = requests;
+}
+
+export let mutateLocsState = jest.fn().mockReturnValue(Promise.resolve());
+
 export function useUserContext() {
     return {
         refreshRequests,
@@ -59,6 +88,8 @@ export function useUserContext() {
         protectionState,
         recoveredBalanceState,
         mutateRecoveredBalanceState,
+        locsState,
+        mutateLocsState
     } as Partial<UserContext>;
 }
 

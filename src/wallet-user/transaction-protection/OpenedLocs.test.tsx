@@ -1,24 +1,27 @@
 jest.mock('../../common/CommonContext');
+jest.mock('../../wallet-user/UserContext');
 jest.mock('../../logion-chain');
 
 import { render } from '../../tests';
 import OpenedLocs from './OpenedLocs';
-import { setOpenedLocRequests } from '../../common/__mocks__/CommonContextMock';
+import { setOpenedLocRequests } from "../__mocks__/UserContextMock";
 
-test("Renders null with no data", () => {
+test("Renders empty with no data", () => {
     const tree = render(<OpenedLocs locType="Transaction" />);
     expect(tree).toMatchSnapshot();
 });
 
-test("Renders pending requests", () => {
+test("Renders open locs", () => {
     setOpenedLocRequests([
         {
-            request: {
-                id: "6378b339-8f4a-486a-bf5e-6f34b951456a",
-                ownerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-                requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-                description: "LOC description",
-                status: "OPEN"
+            data: () => {
+                return {
+                    id: "6378b339-8f4a-486a-bf5e-6f34b951456a",
+                    ownerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                    requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+                    description: "LOC description",
+                    status: "OPEN"
+                }
             }
         }
     ]);
