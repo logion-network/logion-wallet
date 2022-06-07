@@ -55,3 +55,7 @@ export function setSigner(signerId: string, signer: any) {
 export class ExtensionSigner {
 
 }
+
+export function isExtensionAvailable() {
+    return true;
+}

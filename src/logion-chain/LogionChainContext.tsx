@@ -4,7 +4,7 @@ import { DateTime } from 'luxon';
 import { ApiPromise } from '@polkadot/api';
 import { buildApi } from '@logion/node-api';
 import { AccountTokens, LegalOfficer, LogionClient } from '@logion/client';
-import { enableExtensions, ExtensionSigner, InjectedAccount } from '@logion/extension';
+import { enableExtensions, ExtensionSigner, InjectedAccount, isExtensionAvailable } from '@logion/extension';
 
 import config, { Node } from '../config';
 import Accounts, { buildAccounts } from '../common/types/Accounts';
@@ -127,7 +127,7 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
             return { ...state, injectedAccounts: action.injectedAccounts! };
 
         case 'EXTENSIONS_ENABLED':
-            return { ...state, extensionsEnabled: true, signer: action.signer! };
+            return { ...state, extensionsEnabled: true, signer: action.signer || null };
 
         case 'SET_SELECT_ADDRESS':
             return {
@@ -238,16 +238,26 @@ async function consumeInjectedAccounts(state: LogionChainContextType, dispatch: 
     } else if(state.injectedAccountsConsumptionState === 'STARTING') {
         dispatch({type: 'INJECTED_ACCOUNTS_CONSUMPTION_STARTED'});
         const register = await enableExtensions(config.APP_NAME);
-        dispatch({
-            type: 'EXTENSIONS_ENABLED',
-            signer: new ExtensionSigner()
-        });
-        register((accounts: InjectedAccount[]) => {
+        if(isExtensionAvailable()) {
+            dispatch({
+                type: 'EXTENSIONS_ENABLED',
+                signer: new ExtensionSigner()
+            });
+            register((accounts: InjectedAccount[]) => {
+                dispatch({
+                    type: 'SET_INJECTED_ACCOUNTS',
+                    injectedAccounts: accounts
+                });
+            });
+        } else {
+            dispatch({
+                type: 'EXTENSIONS_ENABLED',
+            });
             dispatch({
                 type: 'SET_INJECTED_ACCOUNTS',
-                injectedAccounts: accounts
+                injectedAccounts: []
             });
-        });
+        }
     }
 }
 
@@ -266,7 +276,7 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
     timeout = setTimeout(() => consumeInjectedAccounts(state, dispatch), 100);
 
     useEffect(() => {
-        if(state.injectedAccounts && state.client === null && !state.connecting) {
+        if(state.injectedAccounts !== null && state.client === null && !state.connecting) {
             dispatch({
                 type: 'CONNECT_INIT'
             });
@@ -283,7 +293,7 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
                 const startupTokens = loadTokens().cleanUp(DateTime.now());
                 let client = logionClient.useTokens(startupTokens);
 
-                if(startupTokens.length > 0) {
+                if(startupTokens.length > 0 && state.injectedAccounts!.length > 0) {
                     let candidates = [ loadCurrentAddress() || undefined, state.injectedAccounts![0].address ];
                     const now = DateTime.now();
                     let currentAddress = candidates.find(address => startupTokens.isAuthenticated(now, address));
