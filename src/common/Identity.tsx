@@ -7,10 +7,11 @@ import ComparableField from "./ComparableField";
 import "./Identity.css";
 
 export interface Props {
-    identity: IdentityType
+    identity?: IdentityType
     otherIdentity?: IdentityType
     colors: BackgroundAndForegroundColors
     squeeze: boolean
+    noComparison: boolean
 }
 
 export default function Identity(props: Props) {
@@ -19,6 +20,7 @@ export default function Identity(props: Props) {
         id: string
         label: string
         field: (identity: IdentityType) => string
+        noComparison: boolean
     }
 
     function ComparableIdentityField(fieldProps: FieldProps) {
@@ -31,6 +33,7 @@ export default function Identity(props: Props) {
                 field={ fieldProps.field }
                 colors={ props.colors }
                 squeeze={ props.squeeze }
+                noComparison={ props.noComparison }
             />
         );
     }
@@ -43,6 +46,7 @@ export default function Identity(props: Props) {
                         id="firstName"
                         label="First Name"
                         field={ identity => identity.firstName }
+                        noComparison={ props.noComparison }
                     />
                 </Col>
                 <Col className="IdentityCol" md={ 6 }>
@@ -50,6 +54,7 @@ export default function Identity(props: Props) {
                         id="lastName"
                         label="Last Name"
                         field={ identity => identity.lastName }
+                        noComparison={ props.noComparison }
                     />
                 </Col>
             </Row>
@@ -59,6 +64,7 @@ export default function Identity(props: Props) {
                         id="email"
                         label="Email"
                         field={ identity => identity.email }
+                        noComparison={ props.noComparison }
                     />
                 </Col>
                 <Col className="IdentityCol" md={ 6 }>
@@ -66,6 +72,7 @@ export default function Identity(props: Props) {
                         id="phoneNumber"
                         label="Phone Number"
                         field={ identity => identity.phoneNumber }
+                        noComparison={ props.noComparison }
                     />
                 </Col>
             </Row>
