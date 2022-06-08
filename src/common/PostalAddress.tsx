@@ -6,10 +6,11 @@ import ComparableField from "./ComparableField";
 import "./PostalAddress.css";
 
 export interface Props {
-    postalAddress: PostalAddressType
+    postalAddress?: PostalAddressType
     otherPostalAddress?: PostalAddressType
     colors: BackgroundAndForegroundColors
     squeeze: boolean
+    noComparison: boolean
 }
 
 export default function PostalAddress(props: Props) {
@@ -18,6 +19,7 @@ export default function PostalAddress(props: Props) {
         id: string
         label: string
         field: (postalAddress: PostalAddressType) => string
+        noComparison: boolean
     }
 
     function ComparablePostalAddressField(fieldProps: FieldProps) {
@@ -31,6 +33,7 @@ export default function PostalAddress(props: Props) {
                 field={ fieldProps.field }
                 colors={ props.colors }
                 squeeze={ props.squeeze }
+                noComparison={ props.noComparison }
             />
         );
     }
@@ -44,6 +47,7 @@ export default function PostalAddress(props: Props) {
                         id="line1"
                         label="Line1"
                         field={ address => address.line1 }
+                        noComparison={ props.noComparison }
                     />
                 </Col>
             </Row>
@@ -53,6 +57,7 @@ export default function PostalAddress(props: Props) {
                         id="line2"
                         label="Line2"
                         field={ address => address.line2 }
+                        noComparison={ props.noComparison }
                     />
                 </Col>
             </Row>
@@ -62,6 +67,7 @@ export default function PostalAddress(props: Props) {
                         id="postalCode"
                         label="Postal Code"
                         field={ address => address.postalCode }
+                        noComparison={ props.noComparison }
                     />
                 </Col>
                 <Col className="PostalAddressCol" md={ 8 }>
@@ -69,6 +75,7 @@ export default function PostalAddress(props: Props) {
                         id="city"
                         label="City"
                         field={ address => address.city }
+                        noComparison={ props.noComparison }
                     />
                 </Col>
             </Row>
@@ -78,6 +85,7 @@ export default function PostalAddress(props: Props) {
                         id="country"
                         label="Country"
                         field={ address => address.country }
+                        noComparison={ props.noComparison }
                     />
                 </Col>
             </Row>

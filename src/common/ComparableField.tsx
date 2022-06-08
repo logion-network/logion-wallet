@@ -7,11 +7,12 @@ import "./ComparableField.css";
 export interface ComparableFieldProps<T> {
     id: string
     label: string
-    data: T
+    data?: T
     otherData?: T
     field: (value: T) => string
     colors: BackgroundAndForegroundColors
     squeeze: boolean
+    noComparison: boolean
 }
 
 export default function ComparableField<T>(props: ComparableFieldProps<T>) {
@@ -19,12 +20,17 @@ export default function ComparableField<T>(props: ComparableFieldProps<T>) {
     const { control } = useForm<any>();
 
     function isInvalid(): boolean {
-        const value = props.field(props.data);
-        if (props.otherData !== undefined) {
-            const otherValue = props.field(props.otherData);
-            return value !== otherValue;
+        if(props.noComparison) {
+            return false;
+        } else {
+            if (props.data !== undefined && props.otherData !== undefined) {
+                const value = props.field(props.data);
+                const otherValue = props.field(props.otherData);
+                return value !== otherValue;
+            } else {
+                return true;
+            }
         }
-        return false;
     }
 
     return (
@@ -36,7 +42,7 @@ export default function ComparableField<T>(props: ComparableFieldProps<T>) {
                     <Controller
                         name={ props.id }
                         control={ control }
-                        defaultValue={ props.field(props.data) }
+                        defaultValue={ props.data ? props.field(props.data) : "" }
                         render={ ({ field }) => (
                             <Form.Control
                                 isInvalid={ isInvalid() }

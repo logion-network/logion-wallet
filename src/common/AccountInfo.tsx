@@ -9,12 +9,13 @@ import { BackgroundAndForegroundColors } from "./ColorTheme";
 export interface Props {
     label: string
     address: string
-    identity: IdentityType
-    postalAddress: PostalAddressType
+    identity?: IdentityType
+    postalAddress?: PostalAddressType
     otherIdentity?: IdentityType
     otherPostalAddress?: PostalAddressType
     colors: BackgroundAndForegroundColors
     squeeze: boolean
+    noComparison: boolean
 }
 
 export default function AccountInfo(props: Props) {
@@ -27,18 +28,21 @@ export default function AccountInfo(props: Props) {
                 field={ props => props.address }
                 colors={ props.colors }
                 squeeze={ props.squeeze }
+                noComparison={ true }
             />
             <Identity
                 identity={ props.identity }
                 otherIdentity={ props.otherIdentity }
                 colors={ props.colors }
                 squeeze={ props.squeeze }
+                noComparison={ props.noComparison }
             />
             <PostalAddress
                 postalAddress={ props.postalAddress }
                 otherPostalAddress={ props.otherPostalAddress }
                 colors={ props.colors }
                 squeeze={ props.squeeze }
+                noComparison={ props.noComparison }
             />
         </div>
     )

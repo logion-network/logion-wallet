@@ -258,6 +258,7 @@ export default function PendingProtectionRequests(props: Props) {
                         postalAddress={ reviewState.request!.userPostalAddress }
                         colors={ colorTheme.dialog }
                         squeeze={ false }
+                        noComparison={ true }
                     />
                     <p>I executed my due diligence and accept to be the Legal Officer of this user</p>
                 </ProcessStep>

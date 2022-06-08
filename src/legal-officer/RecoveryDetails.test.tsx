@@ -30,6 +30,7 @@ describe("RecoveryDetails", () => {
         });
         const protectionRequest = PROTECTION_REQUESTS_HISTORY[0];
         const recoveryConfig: RecoveryInfo = {
+            addressToRecover: protectionRequest.addressToRecover!,
             accountToRecover: protectionRequest,
             recoveryAccount: protectionRequest,
         };
@@ -72,6 +73,7 @@ describe("RecoveryDetails", () => {
         });
         const protectionRequest = PROTECTION_REQUESTS_HISTORY[0];
         const recoveryConfig: RecoveryInfo = {
+            addressToRecover: protectionRequest.addressToRecover!,
             accountToRecover: protectionRequest,
             recoveryAccount: protectionRequest,
         };
