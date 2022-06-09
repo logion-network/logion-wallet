@@ -30,6 +30,7 @@ export const DEFAULT_SHARED_STATE: SharedState = {
     } as LogionClientConfig,
     directoryClient: {} as DirectoryClient,
     legalOfficers: [ PATRICK, GUILLAUME ],
+    allLegalOfficers: [ PATRICK, GUILLAUME ],
     networkState: {} as NetworkState<LegalOfficerEndpoint>,
     nodeApi: api,
     tokens: {} as AccountTokens,
