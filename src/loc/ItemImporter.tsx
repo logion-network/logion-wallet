@@ -32,9 +32,7 @@ export default function ItemImporter(props: Props) {
                         hex string (i.e. "0x" followed by 64 hexdecimal digits). <strong>If it is not the case, the tool will automatically hash the value and use the result as the item's
                         identifier.</strong> If you are submitting items for files, we recommend to use the SHA-256 hash of each file as the item ID.</p>
                     <p>The second column is the description of the item and must be at most 4096 bytes long (UTF-8).</p>
-                    <ImportItems
-                        collectionId={ props.locId }
-                    />
+                    <ImportItems />
                 </>
                 } />
         </PolkadotFrame>

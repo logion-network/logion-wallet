@@ -14,8 +14,7 @@ import {
     confirmLocLink,
     confirmLocMetadataItem,
     deleteLocMetadataItem,
-    isGrantedAccess,
-    createSofRequest
+    isGrantedAccess
 } from "../common/Model";
 import { useCommonContext } from "../common/CommonContext";
 import { useLogionChain } from "../logion-chain";
@@ -32,6 +31,7 @@ import {
 import { addLink as modelAddLink, addMetadata as modelAddMetadata, addFile as modelAddFile } from "./Model"
 import { fullCertificateUrl } from "../PublicPaths";
 import { signAndSend } from "src/logion-chain/Signature";
+import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
 
 export interface FullVoidInfo extends VoidInfo {
     reason: string;
@@ -63,7 +63,6 @@ export interface LocContext {
     backPath: string
     detailsPath: (locId: UUID, type: LocType) => string
     refresh: () => void
-    requestSof: ((collectionItemId?: string) => void) | null
 }
 
 const MAX_REFRESH = 20;
@@ -94,7 +93,6 @@ function initialContextValue(locId: UUID, backPath: string, detailsPath: (locId:
         voidLoc: null,
         voidLocExtrinsic: null,
         refresh: () => {},
-        requestSof: null,
     }
 }
 
@@ -140,7 +138,6 @@ interface Action {
     voidLoc?: (voidInfo: FullVoidInfo) => void,
     voidLocExtrinsic?: (voidInfo: VoidInfo) => SignAndSubmit,
     refresh?: () => void,
-    requestSof?: (collectionItemId?: string) => void,
 }
 
 const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action): LocContext => {
@@ -173,7 +170,6 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
                 voidLoc: action.voidLoc!,
                 voidLocExtrinsic: action.voidLocExtrinsic!,
                 refresh: action.refresh!,
-                requestSof: action.requestSof!,
             }
         case "ADD_ITEM":
             if (itemExists(action.locItem!, state.locItems)) {
@@ -247,6 +243,7 @@ export function LocContextProvider(props: Props) {
 
     const { axiosFactory, accounts, api } = useLogionChain();
     const { refresh } = useCommonContext();
+    const { refreshLocs} = useLegalOfficerContext();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue(props.locId, props.backPath, props.detailsPath));
     const [ refreshing, setRefreshing ] = useState<boolean>(false);
     const [ refreshCounter, setRefreshCounter ] = useState<number>(0);
@@ -359,6 +356,7 @@ export function LocContextProvider(props: Props) {
 
         if (allItemsOK(contextValue.locItems) && requestOK(contextValue.locRequest)) {
             refresh!(false);
+            refreshLocs();
             return Promise.resolve(NextRefresh.STOP);
         }
 
@@ -374,7 +372,7 @@ export function LocContextProvider(props: Props) {
             return nextRefresh;
         }
         return proceed()
-    }, [ contextValue.loc, contextValue.locItems, contextValue.locId, axiosFactory, contextValue.locRequest, refresh ])
+    }, [ contextValue.loc, contextValue.locItems, contextValue.locId, axiosFactory, contextValue.locRequest, refresh, refreshLocs ])
 
     useEffect(() => {
         if (refreshCounter > 0 && !refreshing) {
@@ -592,13 +590,6 @@ export function LocContextProvider(props: Props) {
         dispatch({ type: 'RESET', locId: contextValue.locId });
     }, [ dispatch, contextValue ]);
 
-    const requestSofFunction = useCallback(async (itemId?: string) => {
-        await createSofRequest(axiosFactory!(contextValue.loc!.owner)!, {
-            locId: contextValue.locId.toString(),
-            itemId
-        })
-    }, [ axiosFactory, contextValue.locId, contextValue.loc, ])
-
     useEffect(() => {
         if (contextValue.loc && contextValue.loc.owner !== null && contextValue.addMetadata === null) {
             const action: Action = {
@@ -620,7 +611,6 @@ export function LocContextProvider(props: Props) {
                 voidLoc: voidLocFunction,
                 voidLocExtrinsic: voidLocExtrinsicFunction,
                 refresh: refreshFunction,
-                requestSof: requestSofFunction
             };
             dispatch(action)
         }
@@ -628,7 +618,7 @@ export function LocContextProvider(props: Props) {
         publishFileFunction, closeFunction, closeExtrinsicFunction,
         confirmFileFunction, deleteFileFunction, confirmLinkFunction, deleteLinkFunction, confirmMetadataFunction,
         deleteMetadataFunction, dispatch, publishLinkFunction, voidLocFunction, voidLocExtrinsicFunction,
-        addLinkFunction, addMetadataFunction, addFileFunction, refreshFunction, requestSofFunction ])
+        addLinkFunction, addMetadataFunction, addFileFunction, refreshFunction ])
 
     return (
         <LocContextObject.Provider value={ contextValue }>

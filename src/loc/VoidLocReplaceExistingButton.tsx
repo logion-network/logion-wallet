@@ -11,6 +11,7 @@ import Icon from "../common/Icon";
 import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
 import { FullVoidInfo, useLocContext } from "./LocContext";
 import { useLogionChain } from "../logion-chain";
+import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
 
 export default function VoidLocReplaceExistingButton() {
     const { colorTheme, refresh } = useCommonContext();
@@ -22,6 +23,7 @@ export default function VoidLocReplaceExistingButton() {
     const [ replacerLocId, setReplacerLocId ] = useState<string>("");
     const [ replacerLocIdError, setReplacerLocIdError ] = useState<string | undefined>(undefined);
     const [ voidInfo, setVoidInfo ] = useState<FullVoidInfo | null>(null);
+    const { refreshLocs } = useLegalOfficerContext();
 
     const checkAndVoid = useCallback(async () => {
         const locId = UUID.fromDecimalString(replacerLocId);
@@ -124,6 +126,7 @@ export default function VoidLocReplaceExistingButton() {
                             setVisible(false);
                             voidLoc!(voidInfo)
                             refresh!(false);
+                            refreshLocs();
                         } }
                         onError={ () => {} }
                     />

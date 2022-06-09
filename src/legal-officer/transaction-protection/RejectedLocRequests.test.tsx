@@ -1,7 +1,7 @@
-jest.mock('../../common/CommonContext');
+jest.mock('../LegalOfficerContext');
 
 import { shallowRender } from '../../tests';
-import { setRejectedLocRequests } from '../../common/__mocks__/CommonContextMock';
+import { setRejectedLocRequests } from "../__mocks__/LegalOfficerContextMock";
 
 import RejectedLocRequests from './RejectedLocRequests';
 

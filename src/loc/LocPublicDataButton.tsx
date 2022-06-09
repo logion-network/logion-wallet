@@ -7,13 +7,29 @@ import React, { useCallback, useState } from "react";
 import { useLocContext } from "./LocContext";
 import Icon from "../common/Icon";
 import { LocItem } from "./types";
+import { useUserLocContext } from "./UserLocContext";
 
-export default function LocPublicDataButton() {
+export function LOLocPublicDataButton() {
+    const { addMetadata, locItems } = useLocContext();
+    return <LocPublicDataButton locItems={ locItems } addMetadata={ addMetadata } />
+}
 
+export function UserLocPublicDataButton() {
+    const { addMetadata, locItems } = useUserLocContext();
+    return <LocPublicDataButton locItems={ locItems } addMetadata={ addMetadata } />
+}
+
+interface Props {
+    locItems: LocItem[]
+    addMetadata: ((name: string, value: string) => void) | null
+}
+
+function LocPublicDataButton(props: Props) {
+
+    const { addMetadata, locItems } = props;
     const { colorTheme } = useCommonContext();
     const [ visible, setVisible ] = useState(false);
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>();
-    const { addMetadata, locItems } = useLocContext();
     const [ existingItem, setExistingItem ] = useState<LocItem | undefined>(undefined);
 
     const submit = useCallback((formValues: FormValues) => {

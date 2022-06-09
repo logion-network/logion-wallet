@@ -974,7 +974,7 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
                     <div
                       className="Col label"
                     >
-                      Legal Officer in charge
+                      Requested by
                       : 
                     </div>
                     <div
@@ -983,7 +983,7 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
                       <span
                         className="value"
                       >
-                        Patrick Gielen
+                         
                         <span
                           onBlur={[Function]}
                           onFocus={[Function]}
@@ -992,7 +992,7 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
                         >
                           <br />
                            
-                          5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+                          5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW
                         </span>
                       </span>
                     </div>
@@ -1070,10 +1070,48 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
                 </div>
                 <div
                   className="link-button-container col-xxl-4 col-xl-4"
-                />
+                >
+                  <div
+                    className="dropdown"
+                  >
+                    <button
+                      aria-expanded={false}
+                      className="Button dropdown-toggle btn btn-primary"
+                      disabled={false}
+                      id="LocLinkButton-dropdown-toggle"
+                      onClick={[Function]}
+                      type="button"
+                    >
+                      Link this LOC to another LOC
+                    </button>
+                  </div>
+                </div>
                 <div
                   className="close-button-container col-xxl-3 col-xl-4"
-                />
+                >
+                  <div
+                    className="CloseLocButton"
+                  >
+                    <button
+                      className="Button close btn btn-primary"
+                      disabled={false}
+                      onClick={[Function]}
+                      style={Object {}}
+                      type="button"
+                    >
+                      <img
+                        alt="lock"
+                        height="19px"
+                        src="/assets/lock.svg"
+                      />
+                      <span
+                        className="text"
+                      >
+                        Close LOC
+                      </span>
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1126,18 +1164,8 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
               className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12 col"
             >
               <div
-                className="sof-request"
-              >
-                <button
-                  className="Button btn btn-primary"
-                  disabled={false}
-                  onClick={[Function]}
-                  style={Object {}}
-                  type="button"
-                >
-                  Request a Statement of Facts
-                </button>
-              </div>
+                className="sof-preview"
+              />
             </div>
           </div>
         </div>
@@ -1214,6 +1242,94 @@ exports[`ContextualizedLocDetails renders for wallet user 1`] = `
                   }
                   type="file"
                 />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="Frame DangerFrame void-loc"
+          style={
+            Object {
+              "backgroundColor": "#ffffff",
+              "boxShadow": "0 0 25px #3b6cf41a",
+              "color": "#000000",
+            }
+          }
+        >
+          <style>
+            
+    .Frame a,
+    .Frame .btn-link {
+        color: #3b6cf426
+    }
+    
+          </style>
+          <div
+            className="IconTextRow"
+          >
+            <div
+              className="icon"
+            >
+              <img
+                alt="void"
+                src="/assets/void.svg"
+                width="31px"
+              />
+            </div>
+            <div
+              className="text"
+            >
+              <p
+                className="frame-title"
+              >
+                 Void this LOC
+              </p>
+              <p>
+                This action will invalidate the present LOC: the LOC status, its public certificate will show a "VOID" mention to warn people that the content of the LOC is not valid anymore. If another replacing LOC is set, people will be automatically redirected to the replacing LOC when accessing the void LOC URL and a mention of the fact that the replacing LOC 
+                <strong>
+                  supersedes
+                </strong>
+                 the void LOC will be shared on both public certificates. 
+                <strong>
+                  PLEASE USE CAREFULLY.
+                </strong>
+              </p>
+              <div
+                className="ButtonGroup left"
+              >
+                <div
+                  align="left"
+                  className="btn-group"
+                  role="group"
+                >
+                  <button
+                    className="Button btn btn-danger"
+                    disabled={false}
+                    onClick={[Function]}
+                    style={Object {}}
+                    type="button"
+                  >
+                    Void LOC
+                  </button>
+                  <button
+                    className="Button btn btn-danger"
+                    disabled={false}
+                    onClick={[Function]}
+                    style={Object {}}
+                    type="button"
+                  >
+                    Void and replace by a NEW LOC
+                  </button>
+                  <button
+                    className="Button btn btn-danger"
+                    disabled={false}
+                    onClick={[Function]}
+                    style={Object {}}
+                    type="button"
+                  >
+                    Void and replace by an EXISTING LOC
+                  </button>
+                </div>
               </div>
             </div>
           </div>

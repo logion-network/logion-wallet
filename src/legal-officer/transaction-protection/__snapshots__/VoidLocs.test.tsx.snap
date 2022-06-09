@@ -7,7 +7,7 @@ exports[`Renders Void Logion Identity LOCs 1`] = `
   <style>
     
             .Table .body .Row .Col.split-after::before {
-                background-color: #152665;
+                background-color: #0c163d;
             }
             
   </style>
@@ -15,7 +15,7 @@ exports[`Renders Void Logion Identity LOCs 1`] = `
     className="header"
     style={
       Object {
-        "backgroundColor": "#0c163d",
+        "backgroundColor": "#152665",
         "color": "#ffffff",
       }
     }
@@ -118,7 +118,7 @@ exports[`Renders Void Logion Identity LOCs 1`] = `
           className="Col"
           style={
             Object {
-              "backgroundColor": "#152665",
+              "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "left",
               "width": "calc(( 100% - 740px ) / 3)",
@@ -136,7 +136,7 @@ exports[`Renders Void Logion Identity LOCs 1`] = `
           className="Col"
           style={
             Object {
-              "backgroundColor": "#152665",
+              "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "left",
               "width": "calc(( 100% - 740px ) / 3)",
@@ -161,7 +161,7 @@ exports[`Renders Void Logion Identity LOCs 1`] = `
           className="Col"
           style={
             Object {
-              "backgroundColor": "#152665",
+              "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "center",
               "width": "140px",
@@ -198,7 +198,7 @@ exports[`Renders Void Logion Identity LOCs 1`] = `
           className="Col"
           style={
             Object {
-              "backgroundColor": "#152665",
+              "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "left",
               "width": "calc(( 100% - 740px ) / 3)",
@@ -239,7 +239,7 @@ exports[`Renders Void Logion Identity LOCs 1`] = `
           className="Col"
           style={
             Object {
-              "backgroundColor": "#152665",
+              "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "center",
               "width": "200px",
@@ -261,7 +261,7 @@ exports[`Renders Void Logion Identity LOCs 1`] = `
           className="Col"
           style={
             Object {
-              "backgroundColor": "#152665",
+              "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "center",
               "width": "200px",
@@ -276,7 +276,7 @@ exports[`Renders Void Logion Identity LOCs 1`] = `
           className="Col"
           style={
             Object {
-              "backgroundColor": "#152665",
+              "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "center",
               "width": "200px",
@@ -319,7 +319,7 @@ exports[`Renders Void Polkadot Identity LOCs 1`] = `
   <style>
     
             .Table .body .Row .Col.split-after::before {
-                background-color: #152665;
+                background-color: #0c163d;
             }
             
   </style>
@@ -327,7 +327,7 @@ exports[`Renders Void Polkadot Identity LOCs 1`] = `
     className="header"
     style={
       Object {
-        "backgroundColor": "#0c163d",
+        "backgroundColor": "#152665",
         "color": "#ffffff",
       }
     }
@@ -430,7 +430,7 @@ exports[`Renders Void Polkadot Identity LOCs 1`] = `
           className="Col"
           style={
             Object {
-              "backgroundColor": "#152665",
+              "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "left",
               "width": "calc(( 100% - 740px ) / 3)",
@@ -448,7 +448,7 @@ exports[`Renders Void Polkadot Identity LOCs 1`] = `
           className="Col"
           style={
             Object {
-              "backgroundColor": "#152665",
+              "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "left",
               "width": "calc(( 100% - 740px ) / 3)",
@@ -473,7 +473,7 @@ exports[`Renders Void Polkadot Identity LOCs 1`] = `
           className="Col"
           style={
             Object {
-              "backgroundColor": "#152665",
+              "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "center",
               "width": "140px",
@@ -510,7 +510,7 @@ exports[`Renders Void Polkadot Identity LOCs 1`] = `
           className="Col"
           style={
             Object {
-              "backgroundColor": "#152665",
+              "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "left",
               "width": "calc(( 100% - 740px ) / 3)",
@@ -551,7 +551,7 @@ exports[`Renders Void Polkadot Identity LOCs 1`] = `
           className="Col"
           style={
             Object {
-              "backgroundColor": "#152665",
+              "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "center",
               "width": "200px",
@@ -573,7 +573,7 @@ exports[`Renders Void Polkadot Identity LOCs 1`] = `
           className="Col"
           style={
             Object {
-              "backgroundColor": "#152665",
+              "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "center",
               "width": "200px",
@@ -588,7 +588,7 @@ exports[`Renders Void Polkadot Identity LOCs 1`] = `
           className="Col"
           style={
             Object {
-              "backgroundColor": "#152665",
+              "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "center",
               "width": "200px",

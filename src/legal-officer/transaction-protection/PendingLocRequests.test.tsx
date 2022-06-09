@@ -9,7 +9,7 @@ import userEvent from '@testing-library/user-event';
 import { shallowRender } from '../../tests';
 
 import { axiosMock, setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../../logion-chain/__mocks__/LogionChainMock';
-import { setPendingLocRequests } from '../../common/__mocks__/CommonContextMock';
+import { setPendingLocRequests } from "../__mocks__/LegalOfficerContextMock";
 
 import { setRejectLocRequest } from '../../loc/__mocks__/ModelMock';
 

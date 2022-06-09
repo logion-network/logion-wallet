@@ -1,7 +1,7 @@
 import { Col, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
 import { prefixedLogBalance, SYMBOL } from '@logion/node-api/dist/Balances';
-
+import { useLegalOfficerContext } from "./LegalOfficerContext";
 import { useCommonContext } from "../common/CommonContext";
 import { FullWidthPane } from '../common/Dashboard';
 import Icon from '../common/Icon';
@@ -39,10 +39,12 @@ export default function Account() {
     const {
         colorTheme,
         balanceState,
+    } = useCommonContext();
+    const {
         openedLocRequests,
         pendingLocRequests,
         openedIdentityLocs
-    } = useCommonContext();
+    } = useLegalOfficerContext();
     const navigate = useNavigate();
 
     if (!balanceState || accounts === null || openedLocRequests === null || pendingLocRequests === null || openedIdentityLocs === null) {

@@ -27,8 +27,6 @@ exports[`LocDetails renders 1`] = `
     }
   }
 >
-  <ContextualizedLocDetails
-    viewer="LegalOfficer"
-  />
+  <ContextualizedLocDetails />
 </LocContextProvider>
 `;

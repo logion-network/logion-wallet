@@ -7,6 +7,7 @@ import FormGroup from "../common/FormGroup";
 import Icon from "../common/Icon";
 import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
 import { FullVoidInfo, useLocContext } from "./LocContext";
+import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
 
 export default function VoidLocButton() {
     const { colorTheme, refresh } = useCommonContext();
@@ -15,6 +16,7 @@ export default function VoidLocButton() {
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
     const [ submissionFailed, setSubmissionFailed ] = useState<boolean>(false);
     const [ voidInfo, setVoidInfo ] = useState<FullVoidInfo>({reason: ""});
+    const { refreshLocs } = useLegalOfficerContext();
 
     const clearAndClose = useCallback(() => {
         setVoidInfo({reason: ""});
@@ -91,6 +93,7 @@ export default function VoidLocButton() {
                             setVisible(false);
                             voidLoc!(voidInfo);
                             refresh!(false);
+                            refreshLocs();
                         } }
                         onError={ () => setSubmissionFailed(true) }
                     />

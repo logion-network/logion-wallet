@@ -13,14 +13,14 @@ import Tooltip from 'react-bootstrap/Tooltip';
 import { useCommonContext } from "../common/CommonContext";
 import { FullWidthPane } from "../common/Dashboard";
 import Tabs from "../common/Tabs";
-import LocPublicDataButton from "./LocPublicDataButton";
+import { LOLocPublicDataButton } from "./LocPublicDataButton";
 import { useLocContext } from "./LocContext";
-import LocItems from "./LocItems";
+import { LOLocItems } from "./LocItems";
 import LocItemDetail from "./LocItemDetail";
 import { Row } from "../common/Grid";
 import { POLKADOT, RED, BackgroundAndForegroundColors, BLUE } from "../common/ColorTheme";
 import CloseLocButton from "./CloseLocButton";
-import LocPrivateFileButton from "./LocPrivateFileButton";
+import { LOLocPrivateFileButton } from "./LocPrivateFileButton";
 import Icon from "../common/Icon";
 import LocLinkButton from "./LocLinkButton";
 import CheckFileFrame, { DocumentCheckResult } from './CheckFileFrame';
@@ -35,20 +35,14 @@ import IconTextRow from "../common/IconTextRow";
 import Button from "../common/Button";
 import LocCreationDialog from "./LocCreationDialog";
 import Ellipsis from "../common/Ellipsis";
-import { Viewer } from "./types";
 import CertificateAndLimits from "./CertificateAndLimits";
 import CollectionLocItemChecker from "./CollectionLocItemChecker";
 import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
 import { useLogionChain } from "../logion-chain";
-import ItemImporter from "./ItemImporter";
 
 import "./ContextualizedLocDetails.css";
 
-export interface Props {
-    viewer: Viewer;
-}
-
-export default function ContextualizedLocDetails(props: Props) {
+export default function ContextualizedLocDetails() {
     const { api, getOfficer } = useLogionChain();
     const { colorTheme } = useCommonContext();
     const { pendingProtectionRequests, pendingRecoveryRequests } = useLegalOfficerContext();
@@ -291,7 +285,6 @@ export default function ContextualizedLocDetails(props: Props) {
                                 </Col>
 
                                 <Col md={ 4 } className="closed-icon-container">
-                                    { props.viewer === 'LegalOfficer' &&
                                         <LocItemDetail
                                             label="Requested by"
                                         >
@@ -323,20 +316,6 @@ export default function ContextualizedLocDetails(props: Props) {
                                         </span>
                                             }
                                         </LocItemDetail>
-                                    }
-                                    { props.viewer === 'User' &&
-                                        <LocItemDetail label="Legal Officer in charge">
-                                            { legalOfficer?.name || "" }
-                                            <OverlayTrigger
-                                                placement="top"
-                                                delay={ 500 }
-                                                overlay={
-                                                    <Tooltip
-                                                        id={ locRequest?.ownerAddress }>{ locRequest?.ownerAddress }</Tooltip> }>
-                                                <span><br /> { locRequest?.ownerAddress }</span>
-                                            </OverlayTrigger>
-                                        </LocItemDetail>
-                                    }
                                     {
                                         loc.closed && loc.voidInfo === undefined &&
                                         <div className="closed-icon">
@@ -352,19 +331,19 @@ export default function ContextualizedLocDetails(props: Props) {
                                 </Col>
                             </Row>
                             <div className="separator" style={{ backgroundColor: locTabBorderColor }} />
-                            <LocItems matchedHash={ checkResult.hash } viewer={ props.viewer } />
+                            <LOLocItems matchedHash={ checkResult.hash } />
                             {
                                 !loc.closed && loc.voidInfo === undefined &&
                                 <Row>
                                     <Col className="add-buttons-container" xxl={5} xl={4}>
-                                        <LocPublicDataButton />
-                                        <LocPrivateFileButton />
+                                        <LOLocPublicDataButton/>
+                                        <LOLocPrivateFileButton/>
                                     </Col>
                                     <Col className="link-button-container" xxl={4} xl={4}>
-                                        { props.viewer === 'LegalOfficer' && <LocLinkButton excludeNewIdentity={ isLogionDataLoc(loc) } /> }
+                                        <LocLinkButton excludeNewIdentity={ isLogionDataLoc(loc) } />
                                     </Col>
                                     <Col className="close-button-container" xxl={3} xl={4}>
-                                        { props.viewer === 'LegalOfficer' && <CloseLocButton protectionRequest={ protectionRequest } /> }
+                                        <CloseLocButton protectionRequest={ protectionRequest } />
                                     </Col>
                                 </Row>
                             }
@@ -423,19 +402,13 @@ export default function ContextualizedLocDetails(props: Props) {
             <CertificateAndLimits
                 locId={ locId }
                 loc={ loc }
-                viewer={ props.viewer }
+                viewer="LegalOfficer"
             />
             { loc.locType === 'Collection' && loc.closed &&
                 <CollectionLocItemChecker
                     locId={ locId }
                     collectionItem={ collectionItem }
-                    viewer={ props.viewer }
-                />
-            }
-            { loc.locType === 'Collection' && loc.closed && loc.voidInfo === undefined && props.viewer === 'User' &&
-                <ItemImporter
-                    locId={ locId }
-                    collectionItem={ collectionItem }
+                    viewer="LegalOfficer"
                 />
             }
             {
@@ -468,7 +441,7 @@ export default function ContextualizedLocDetails(props: Props) {
                 checkResult={ checkResult.result }
             />
             {
-                props.viewer === 'LegalOfficer' && loc.voidInfo === undefined &&
+                loc.voidInfo === undefined &&
                 <DangerFrame
                     className="void-loc"
                 >

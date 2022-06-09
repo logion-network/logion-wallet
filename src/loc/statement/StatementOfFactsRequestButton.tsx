@@ -1,5 +1,5 @@
 import Button from "../../common/Button";
-import { useLocContext } from "../LocContext";
+import { useUserLocContext } from "../UserLocContext";
 import { useState, useCallback } from "react";
 import Dialog from "../../common/Dialog";
 import { useCommonContext } from "../../common/CommonContext";
@@ -9,16 +9,21 @@ type Status = 'Idle' | 'Confirming' | 'Requesting' | 'Requested';
 
 export default function StatementOfFactsRequestButton(props: { itemId?: string }) {
 
-    const { requestSof } = useLocContext();
+    const { itemId } = props;
+    const { requestSof, requestSofOnCollection } = useUserLocContext();
     const { refresh } = useCommonContext()
     const [ status, setStatus ] = useState<Status>('Idle')
 
     const confirmCallback = useCallback(() => {
         setStatus('Requesting')
-        requestSof!(props.itemId);
+        if (itemId) {
+            requestSofOnCollection!(itemId);
+        } else {
+            requestSof!();
+        }
         refresh(false);
         setStatus('Requested');
-    }, [ props.itemId, refresh, requestSof ])
+    }, [ itemId, refresh, requestSof, requestSofOnCollection ])
 
     return (
         <>

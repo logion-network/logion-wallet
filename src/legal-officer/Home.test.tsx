@@ -5,12 +5,12 @@ jest.mock("../logion-chain");
 
 import { BalanceState } from "@logion/client/dist/Balance";
 import { DEFAULT_COIN_BALANCE, DEFAULT_TRANSACTION } from "../common/TestData";
+import { setBalanceState, } from "../common/__mocks__/CommonContextMock";
 import {
-    setBalanceState,
     setOpenedLocRequests,
     setPendingLocRequests,
     setOpenedIdentityLocs
-} from "../common/__mocks__/CommonContextMock";
+} from "./__mocks__/LegalOfficerContextMock";
 import { shallowRender } from "../tests";
 import Home from "./Home";
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { ChainTime } from '@logion/node-api/dist/ChainTime';
 import { format } from '@logion/node-api/dist/datetime';
-import { LegalOfficerCase } from '@logion/node-api/dist/Types';
+import { LocType } from '@logion/node-api/dist/Types';
 import { UUID } from '@logion/node-api/dist/UUID';
 
 import Button from '../common/Button';
@@ -20,9 +20,17 @@ import StatementOfFactsButton from './statement/StatementOfFactsButton';
 import StatementOfFactsRequestButton from "./statement/StatementOfFactsRequestButton";
 import { Viewer } from "./types";
 
+interface LocProps {
+    closed: boolean
+    requesterAddress?: string
+    locType: LocType
+    collectionLastBlockSubmission?: bigint
+    collectionMaxSize?: number
+}
+
 export interface Props {
-    locId: UUID;
-    loc: LegalOfficerCase;
+    locId: UUID
+    loc: LocProps
     viewer: Viewer
 }
 
@@ -167,6 +175,6 @@ export default function CertificateAndLimits(props: Props) {
     );
 }
 
-function itemLimit(loc: LegalOfficerCase): string {
+function itemLimit(loc: LocProps): string {
     return loc.collectionMaxSize ? loc.collectionMaxSize.toString() : "-";
 }

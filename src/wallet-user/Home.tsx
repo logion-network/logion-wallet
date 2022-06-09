@@ -178,7 +178,7 @@ export function Content() {
                                         <ActionCell>
                                             <ButtonGroup>
                                                 <Button
-                                                    onClick={ () => navigate(dataLocDetailsPath(request.locType, request.id)) }>View</Button>
+                                                    onClick={ () => navigate(dataLocDetailsPath(request.locType, request.id.toString())) }>View</Button>
                                             </ButtonGroup>
                                         </ActionCell>
                                     ,

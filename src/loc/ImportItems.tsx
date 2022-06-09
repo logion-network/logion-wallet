@@ -1,7 +1,5 @@
 import { useCallback, useState } from "react";
 import csv from "csv-parser";
-import { UUID } from "@logion/node-api/dist/UUID";
-import { getCollectionItem, addCollectionItem } from "@logion/node-api/dist/LogionLoc";
 
 import Dialog from "../common/Dialog";
 import FileSelectorButton from "../common/FileSelectorButton";
@@ -9,30 +7,26 @@ import Icon from "../common/Icon";
 import Table, { Cell, EmptyTableMessage } from "../common/Table";
 import { useCommonContext } from "../common/CommonContext";
 import Button from "../common/Button";
-import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
 import { useLogionChain } from "../logion-chain";
 import { useResponsiveContext } from "../common/Responsive";
-import { useLocContext } from "./LocContext";
+import { useUserLocContext } from "./UserLocContext";
 import ImportItemDetails, { Item } from "./ImportItemDetails";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 import './ImportItems.css';
 import { toItemId } from "./types";
-import { signAndSend } from "src/logion-chain/Signature";
+import { ClosedCollectionLoc } from "@logion/client/dist/Loc";
+import ClientExtrinsicSubmitter, { Call, CallCallback } from "../ClientExtrinsicSubmitter";
 
 const fileReaderStream = require("filereader-stream");
 
-type Submitters = Record<string, SignAndSubmit>;
+type Submitters = Record<string, Call>;
 
-export interface Props {
-    collectionId: UUID;
-}
-
-export default function ImportItems(props: Props) {
+export default function ImportItems() {
     const { width } = useResponsiveContext();
-    const { api, accounts } = useLogionChain();
+    const { signer } = useLogionChain();
     const { colorTheme } = useCommonContext();
-    const { refresh } = useLocContext();
+    const { refresh, locState } = useUserLocContext();
 
     const [ showImportItems, setShowImportItems ] = useState(false);
     const [ items, setItems ] = useState<Item[]>([]);
@@ -41,6 +35,7 @@ export default function ImportItems(props: Props) {
     const [ isBatchImport, setIsBatchImport ] = useState(false);
 
     const readCsvFile = useCallback((file: File) => {
+        const collection = locState as ClosedCollectionLoc;
         setSubmitters({});
         const rows: Item[] = [];
         const ids: Record<string, null> = {};
@@ -78,9 +73,7 @@ export default function ImportItems(props: Props) {
                 (async function() {
                     for(const item of rows) {
                         if(!item.error) {
-                            const existingItem = await getCollectionItem({
-                                api: api!,
-                                locId: props.collectionId,
+                            const existingItem = await collection.getCollectionItem({
                                 itemId: item.id
                             });
                             item.submitted = existingItem !== undefined;
@@ -91,27 +84,25 @@ export default function ImportItems(props: Props) {
                     setShowImportItems(true);
                 })();
             });
-    }, [ setSubmitters, api, props.collectionId ]);
+    }, [ setSubmitters, locState ]);
 
-    const submitItem = useCallback((item: Item) => {
+    const submitItem = useCallback(async (item: Item) => {
+        const collection = locState as ClosedCollectionLoc;
         item.submitted = true;
-        const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
-            signerId: accounts!.current!.address,
-            callback: setResult,
-            errorCallback: setError,
-            submittable: addCollectionItem({
-                api: api!,
-                collectionId: props.collectionId,
+        const signAndSubmit: Call = async (callback: CallCallback) => {
+            await collection.addCollectionItem({
+                signer: signer!,
                 itemId: item.id,
                 itemDescription: item.description,
+                callback
             })
-        });
+        }
         const newSubmitters = { ...submitters };
         newSubmitters[item.id] = signAndSubmit;
         setSubmitters(newSubmitters);
-    }, [ submitters, accounts, api, props.collectionId ]);
+    }, [ submitters, signer, locState ]);
 
-    const submitNext = useCallback((submittedItem: Item, failed: boolean) => {
+    const submitNext = useCallback(async (submittedItem: Item, failed: boolean) => {
         if(failed) {
             submittedItem.failed = true;
         } else {
@@ -121,7 +112,7 @@ export default function ImportItems(props: Props) {
             const nextItemIndex = getNextItem(items, currentItem);
             if(nextItemIndex < items.length) {
                 setCurrentItem(nextItemIndex);
-                submitItem(items[nextItemIndex]);
+                await submitItem(items[nextItemIndex]);
             } else {
                 setIsBatchImport(false);
             }
@@ -134,12 +125,12 @@ export default function ImportItems(props: Props) {
         refresh();
     }, [ setShowImportItems, setIsBatchImport, refresh ]);
 
-    const importAll = useCallback(() => {
+    const importAll = useCallback(async () => {
         if(items.length > 0) {
             setIsBatchImport(true);
             const firstItemIndex = getFirstItem(items);
             setCurrentItem(firstItemIndex);
-            submitItem(items[firstItemIndex]);
+            await submitItem(items[firstItemIndex]);
         }
     }, [ setIsBatchImport, setCurrentItem, submitItem, items ]);
 
@@ -201,9 +192,8 @@ export default function ImportItems(props: Props) {
                                     {
                                         (item.submitted && !item.success && submitters[item.id] !== undefined && submitters[item.id] !== null) &&
                                         <Cell content={
-                                            <ExtrinsicSubmitter
-                                                id={ item.id }
-                                                signAndSubmit={ submitters[item.id] || null }
+                                            <ClientExtrinsicSubmitter
+                                                call={ submitters[item.id] || null }
                                                 onError={ () => submitNext(item, true) }
                                                 onSuccess={ () => submitNext(item, false) }
                                                 slim

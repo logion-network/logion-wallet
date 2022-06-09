@@ -22,8 +22,6 @@ function rendersForViewer(viewer: Viewer) {
     setLocId(uuid);
     setLoc(OPEN_IDENTITY_LOC);
     setLocRequest(buildLocRequest(uuid, OPEN_IDENTITY_LOC));
-    const tree = render(<ContextualizedLocDetails
-        viewer={ viewer }
-    />);
+    const tree = render(<ContextualizedLocDetails />);
     expect(tree).toMatchSnapshot();
 }
