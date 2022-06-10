@@ -135,7 +135,7 @@ export interface Props {
 }
 
 export function LegalOfficerContextProvider(props: Props) {
-    const { accounts, axiosFactory, isCurrentAuthenticated, client } = useLogionChain();
+    const { accounts, axiosFactory, isCurrentAuthenticated, client, getOfficer } = useLogionChain();
     const { colorTheme, setColorTheme } = useCommonContext();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
@@ -147,6 +147,7 @@ export function LegalOfficerContextProvider(props: Props) {
 
     useEffect(() => {
         if(accounts !== null
+                && getOfficer !== undefined
                 && client
                 && axiosFactory !== undefined
                 && accounts.current !== undefined
@@ -154,7 +155,7 @@ export function LegalOfficerContextProvider(props: Props) {
                 && contextValue.fetchForAddress !== accounts.current.address
                 && isCurrentAuthenticated()) {
             const currentAccount = accounts!.current!.address;
-            const currentLegalOfficer = client.allLegalOfficers.find(legalOfficer => legalOfficer.address === currentAccount);
+            const currentLegalOfficer = getOfficer(currentAccount);
             if(currentLegalOfficer!.node) {
                 const refreshRequests = (clear: boolean) => refreshRequestsFunction(clear, currentAccount, dispatch, axiosFactory);
                 const axios = axiosFactory(currentAccount);
@@ -176,7 +177,7 @@ export function LegalOfficerContextProvider(props: Props) {
                 refreshRequests(true);
             }
         }
-    }, [ contextValue, axiosFactory, accounts, isCurrentAuthenticated, client ]);
+    }, [ contextValue, axiosFactory, accounts, isCurrentAuthenticated, client, getOfficer ]);
 
     return (
         <LegalOfficerContextObject.Provider value={contextValue}>
