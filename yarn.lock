@@ -1565,10 +1565,10 @@
     axios "^0.27.2"
     luxon "^2.3.2"
 
-"@logion/client@^0.3.1":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@logion/client/-/client-0.3.1.tgz#3c9820ffc16bd86ceccc6f157ffd3a9f14bea07b"
-  integrity sha512-Obtzn/oKU+apyhGcJQOayo4WSlRYkZn63Fa+3zDxObvQ0W6JSh7mietd+38xyGIa4i/ywZd+OObQv/iE4DnYmQ==
+"@logion/client@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@logion/client/-/client-0.3.2.tgz#ea95fcedb9f21ab377c71e98f91041c58cde8047"
+  integrity sha512-/y8CPALRibIYDLiXd7QJ9AEtHdymcpr9JuDhpjWHUEZ4dIpgWzLThS8tVDtR66x+gVbDjjGqIzk0NZsFiQ/F0w==
   dependencies:
     "@logion/node-api" "^0.1.4"
     axios "^0.27.2"

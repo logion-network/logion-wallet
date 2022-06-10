@@ -224,7 +224,7 @@ function buildClientHelpers(client: LogionClient, injectedAccounts: InjectedAcco
     return {
         axiosFactory: buildAxiosFactory(client),
         isCurrentAuthenticated: () => client.isTokenValid(DateTime.now()),
-        getOfficer: address => client.legalOfficers.find(legalOfficer => legalOfficer.address === address),
+        getOfficer: address => client.allLegalOfficers.find(legalOfficer => legalOfficer.address === address),
         saveOfficer: legalOfficer => client.directoryClient.createOrUpdate(legalOfficer),
         accounts: buildAccounts(injectedAccounts!, client.currentAddress, client),
     }
