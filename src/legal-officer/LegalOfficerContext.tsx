@@ -233,7 +233,7 @@ export interface Props {
 }
 
 export function LegalOfficerContextProvider(props: Props) {
-    const { api, client, accounts, axiosFactory, isCurrentAuthenticated } = useLogionChain();
+    const { api, accounts, axiosFactory, isCurrentAuthenticated, client, getOfficer } = useLogionChain();
     const { colorTheme, setColorTheme } = useCommonContext();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
@@ -447,32 +447,37 @@ export function LegalOfficerContextProvider(props: Props) {
 
     useEffect(() => {
         if(accounts !== null
+                && getOfficer !== undefined
+                && client
                 && axiosFactory !== undefined
                 && accounts.current !== undefined
                 && contextValue.dataAddress !== accounts.current.address
                 && contextValue.fetchForAddress !== accounts.current.address
                 && isCurrentAuthenticated()) {
             const currentAccount = accounts!.current!.address;
-            const refreshRequests = (clear: boolean) => refreshRequestsFunction(clear, currentAccount, dispatch, axiosFactory);
-            const axios = axiosFactory(currentAccount);
-            const updateSettingCallback = async (id: string, value: string) => {
-                await updateSetting(axios, id, value);
+            const currentLegalOfficer = getOfficer(currentAccount);
+            if(currentLegalOfficer!.node) {
+                const refreshRequests = (clear: boolean) => refreshRequestsFunction(clear, currentAccount, dispatch, axiosFactory);
+                const axios = axiosFactory(currentAccount);
+                const updateSettingCallback = async (id: string, value: string) => {
+                    await updateSetting(axios, id, value);
+                    dispatch({
+                        type: "UPDATE_SETTING",
+                        id,
+                        value,
+                    })
+                };
                 dispatch({
-                    type: "UPDATE_SETTING",
-                    id,
-                    value,
-                })
-            };
-            dispatch({
-                type: 'SET_CURRENT_USER',
-                axios,
-                currentAccount,
-                refreshRequests,
-                updateSetting: updateSettingCallback,
-            });
-            refreshRequests(true);
+                    type: 'SET_CURRENT_USER',
+                    axios,
+                    currentAccount,
+                    refreshRequests,
+                    updateSetting: updateSettingCallback,
+                });
+                refreshRequests(true);
+            }
         }
-    }, [ contextValue, axiosFactory, accounts, isCurrentAuthenticated ]);
+    }, [ contextValue, axiosFactory, accounts, isCurrentAuthenticated, client, getOfficer ]);
 
     return (
         <LegalOfficerContextObject.Provider value={contextValue}>

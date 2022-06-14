@@ -1565,6 +1565,15 @@
     axios "^0.27.2"
     luxon "^2.3.2"
 
+"@logion/client@^0.3.2":
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/@logion/client/-/client-0.3.2.tgz#ea95fcedb9f21ab377c71e98f91041c58cde8047"
+  integrity sha512-/y8CPALRibIYDLiXd7QJ9AEtHdymcpr9JuDhpjWHUEZ4dIpgWzLThS8tVDtR66x+gVbDjjGqIzk0NZsFiQ/F0w==
+  dependencies:
+    "@logion/node-api" "^0.1.4"
+    axios "^0.27.2"
+    luxon "^2.3.2"
+
 "@logion/extension@^0.2.0":
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/@logion/extension/-/extension-0.2.0.tgz#cdae4e8053a27ef0c61cffbef1a50b317594ffd6"

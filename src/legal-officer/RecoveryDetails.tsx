@@ -67,7 +67,7 @@ export default function RecoveryDetails() {
                 errorCallback,
                 submittable: vouchRecovery({
                     api: api!,
-                    lost: recoveryInfo!.accountToRecover.requesterAddress,
+                    lost: recoveryInfo!.accountToRecover!.requesterAddress,
                     rescuer: recoveryInfo!.recoveryAccount.requesterAddress,
                 })
             });
@@ -119,13 +119,14 @@ export default function RecoveryDetails() {
                         <Frame altColors={ true }>
                             <AccountInfo
                                 label="Account address, subject of the recovery"
-                                address={ recoveryInfo.accountToRecover.requesterAddress }
-                                identity={ recoveryInfo.accountToRecover.userIdentity }
-                                postalAddress={ recoveryInfo.accountToRecover.userPostalAddress }
+                                address={ recoveryInfo.addressToRecover }
+                                identity={ recoveryInfo.accountToRecover?.userIdentity }
+                                postalAddress={ recoveryInfo.accountToRecover?.userPostalAddress }
                                 otherIdentity={ recoveryInfo.recoveryAccount.userIdentity }
                                 otherPostalAddress={ recoveryInfo.recoveryAccount.userPostalAddress }
                                 colors={ colorTheme.dashboard }
                                 squeeze={ true }
+                                noComparison={ false }
                             />
                         </Frame>
                     </Col>
@@ -137,10 +138,11 @@ export default function RecoveryDetails() {
                                 address={ recoveryInfo.recoveryAccount.requesterAddress }
                                 identity={ recoveryInfo.recoveryAccount.userIdentity }
                                 postalAddress={ recoveryInfo.recoveryAccount.userPostalAddress }
-                                otherIdentity={ recoveryInfo.accountToRecover.userIdentity }
-                                otherPostalAddress={ recoveryInfo.accountToRecover.userPostalAddress }
+                                otherIdentity={ recoveryInfo.accountToRecover?.userIdentity }
+                                otherPostalAddress={ recoveryInfo.accountToRecover?.userPostalAddress }
                                 colors={ colorTheme.dashboard }
                                 squeeze={ true }
+                                noComparison={ false }
                             />
                         </Frame>
                     </Col>
@@ -191,7 +193,7 @@ export default function RecoveryDetails() {
             >
                 <p>
                     I did my due diligence and accept to grant the
-                    account { recoveryInfo.accountToRecover.requesterAddress } the right to transfer all assets
+                    account { recoveryInfo.accountToRecover?.requesterAddress } the right to transfer all assets
                     to the account { recoveryInfo.recoveryAccount.requesterAddress }.
                 </p>
                 <LocIdFormGroup
@@ -229,7 +231,7 @@ export default function RecoveryDetails() {
                 size="lg"
             >
                 I did my due diligence and refuse to grant the
-                account { recoveryInfo.accountToRecover.requesterAddress } the right to transfer all assets
+                account { recoveryInfo.accountToRecover?.requesterAddress || "-" } the right to transfer all assets
                 to the account { recoveryInfo.recoveryAccount.requesterAddress }.
                 <Form.Group>
                     <Form.Label>Reason</Form.Label>

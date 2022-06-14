@@ -163,10 +163,9 @@ export function CommonContextProvider(props: Props) {
                         .filter(legalOfficer => legalOfficer.address === currentAccount.address)
                         .map(legalOfficer => ({url: legalOfficer.node, legalOfficer: legalOfficer.address})));
                 } else {
-                    initialState = allUp<LegalOfficerEndpoint>(client.legalOfficers.map(legalOfficer => ({
-                        url: legalOfficer.node,
-                        legalOfficer: legalOfficer.address
-                    })));
+                    initialState = allUp<LegalOfficerEndpoint>(client.legalOfficers
+                        .filter(legalOfficer => legalOfficer.node)
+                        .map(legalOfficer => ({ url: legalOfficer.node, legalOfficer: legalOfficer.address })));
                 }
 
                 const multiClient = new MultiSourceHttpClient<LegalOfficerEndpoint, LocRequest[]>(initialState, currentAccount.token?.value);

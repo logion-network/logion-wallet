@@ -3,8 +3,9 @@ import { ProtectionRequest } from '@logion/client/dist/RecoveryClient';
 import { ColorTheme, rgbaToHex } from '../common/ColorTheme';
 
 export interface RecoveryInfo {
+    addressToRecover: string,
     recoveryAccount: ProtectionRequest,
-    accountToRecover: ProtectionRequest,
+    accountToRecover?: ProtectionRequest,
 }
 
 export const LIGHT_MODE: ColorTheme = {

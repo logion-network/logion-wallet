@@ -18,6 +18,7 @@ test("renders without comparison", () => {
             postalAddress={ DEFAULT_ADDRESS }
             colors={ COLOR_THEME.dashboard }
             squeeze={ true }
+            noComparison={ true }
         />
     );
     expect(tree).toMatchSnapshot();
@@ -30,6 +31,7 @@ test("renders and compares with same address", () => {
             otherPostalAddress={ DEFAULT_ADDRESS }
             colors={ COLOR_THEME.dashboard }
             squeeze={ true }
+            noComparison={ false }
         />
     );
     expect(tree).toMatchSnapshot();
@@ -42,6 +44,7 @@ test("renders and compares with different address", () => {
             otherPostalAddress={ DIFFERENT_ADDRESS }
             colors={ COLOR_THEME.dashboard }
             squeeze={ true }
+            noComparison={ false }
         />
     );
     expect(tree).toMatchSnapshot();

@@ -52,7 +52,7 @@ export function setRecoveredBalanceState(state: BalanceState | undefined) {
 
 export let mutateRecoveredBalanceState = jest.fn().mockReturnValue(Promise.resolve());
 
-export let locsState: LocsState | undefined = new LocsState({} as SharedState);
+export let locsState: LocsState | undefined = new LocsState({} as SharedState, {});
 
 export function setLocsState(state: LocsState | undefined) {
     locsState = state;

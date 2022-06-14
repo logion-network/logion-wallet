@@ -66,46 +66,6 @@ export class MultiSourceHttpClient<E extends Endpoint, R> {
     }
 }
 
-export class AnySourceHttpClient<E extends Endpoint, R> {
-
-    constructor(initialState: MultiSourceHttpClientState<E>, token?: string) {
-        this.nodesUp = initialState.nodesUp.slice(0);
-        this.nodesDown = initialState.nodesDown.slice(0);
-        this.token = token;
-    }
-
-    private nodesUp: E[];
-
-    private nodesDown: E[];
-
-    private token?: string;
-
-    async fetch(query: Query<E, R>): Promise<R | undefined> {
-        while(this.nodesUp.length > 0) {
-            const selectedEndpointIndex = this.selectedEndpointIndex();
-            let selectedEndpoint = this.nodesUp[selectedEndpointIndex];
-            try {
-                return await query(buildAuthenticatedAxios(selectedEndpoint.url, this.token), selectedEndpoint);
-            } catch(error) {
-                this.nodesUp.splice(selectedEndpointIndex, 1);
-                this.nodesDown.push(selectedEndpoint);
-            }
-        }
-        return undefined;
-    }
-
-    private selectedEndpointIndex(): number {
-        return Math.floor(Math.random() * this.nodesUp.length);
-    }
-
-    getState(): MultiSourceHttpClientState<E> {
-        return {
-            nodesUp: this.nodesUp.slice(0),
-            nodesDown: this.nodesDown.slice(0)
-        };
-    }
-}
-
 export function aggregateArrays<E>(response: MultiResponse<E[]>): E[] {
     let array: E[] = [];
     for(const key in response) {
