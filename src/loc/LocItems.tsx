@@ -25,7 +25,7 @@ import { useLocContext } from "./LocContext";
 
 import './LocItems.css';
 import { useUserLocContext } from "./UserLocContext";
-import { UUID } from "@logion/node-api/dist/UUID";
+import { UUID } from "@logion/node-api";
 import { UserIdentity } from "@logion/client";
 
 export interface Props {

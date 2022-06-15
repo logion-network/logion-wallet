@@ -27,7 +27,7 @@ import { useLogionChain } from "../logion-chain";
 import ItemImporter from "./ItemImporter";
 import "./ContextualizedLocDetails.css";
 import { useUserLocContext } from "./UserLocContext";
-import { VoidedLoc, ClosedCollectionLoc } from "@logion/client/dist/Loc";
+import { VoidedLoc, ClosedCollectionLoc } from "@logion/client";
 
 export default function UserContextualizedLocDetails() {
     const { getOfficer } = useLogionChain();

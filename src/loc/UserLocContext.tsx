@@ -13,7 +13,7 @@ import {
     LocData,
     PendingRequest,
     VoidedCollectionLoc
-} from "@logion/client/dist/Loc";
+} from "@logion/client";
 import { useUserContext } from "../wallet-user/UserContext";
 
 export type ActiveLoc = OpenLoc | ClosedLoc | ClosedCollectionLoc | VoidedLoc | VoidedCollectionLoc;
@@ -165,11 +165,11 @@ export function UserLocContextProvider(props: Props) {
             .then(locState => locState.locsState()))
     }, [ mutateLocsState ])
 
-    const dispatchLocAndItems = useCallback(async (pr: Promise<ActiveLoc>) => {
-        const locState = await pr
+    const dispatchLocAndItems = useCallback(async (promisedLoc: Promise<ActiveLoc>) => {
+        const locState = await promisedLoc
         const locItems = await toLocItems(locState)
         dispatch({ type: 'SET_LOC', locState, locItems })
-        await refreshRequests(pr!)
+        await refreshRequests(promisedLoc!)
     }, [ toLocItems, refreshRequests ])
 
     useEffect(() => {

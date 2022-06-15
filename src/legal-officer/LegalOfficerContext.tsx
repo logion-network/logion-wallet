@@ -4,9 +4,9 @@ import { VaultTransferRequest } from '@logion/client';
 import { ProtectionRequest } from '@logion/client/dist/RecoveryClient';
 
 import { fetchProtectionRequests, FetchLocRequestSpecification, fetchLocRequests, } from '../common/Model';
-import { useCommonContext, LegalOfficerEndpoint } from '../common/CommonContext';
+import { useCommonContext } from '../common/CommonContext';
 import { LIGHT_MODE } from './Types';
-import { AxiosFactory, allUp, MultiSourceHttpClient, aggregateArrays } from '../common/api';
+import { AxiosFactory } from '../common/api';
 import { useLogionChain } from '../logion-chain';
 import { VaultApi } from '../vault/VaultApi';
 import { DataLocType, IdentityLocType, LegalOfficerCase, LocType } from "@logion/node-api/dist/Types";
@@ -249,7 +249,8 @@ export function LegalOfficerContextProvider(props: Props) {
             && accounts !== null
             && accounts.current !== undefined
             && client !== null
-            && client.isTokenValid(now)) {
+            && client.isTokenValid(now)
+            && axiosFactory !== undefined) {
 
             const currentAccount = accounts.current;
             const currentAddress = currentAccount.address;
@@ -259,24 +260,18 @@ export function LegalOfficerContextProvider(props: Props) {
             });
 
             (async function () {
-                let specificationFragment: FetchLocRequestSpecification = {
-                    ownerAddress: currentAddress,
-                    statuses: [],
-                    locTypes: []
-                }
 
-                let initialState = allUp<LegalOfficerEndpoint>(client.legalOfficers
-                    .filter(legalOfficer => legalOfficer.address === currentAccount.address)
-                    .map(legalOfficer => ({ url: legalOfficer.node, legalOfficer: legalOfficer.address })));
+                const fetch = async (specification: Partial<FetchLocRequestSpecification>) => {
 
-                const multiClient = new MultiSourceHttpClient<LegalOfficerEndpoint, LocRequest[]>(initialState, currentAccount.token?.value);
-
-                const fetchAndAggregate = async (specification: Partial<FetchLocRequestSpecification>) => {
-                    const result = await multiClient.fetch(axios => fetchLocRequests(axios, {
+                    const specificationFragment: FetchLocRequestSpecification = {
+                        ownerAddress: currentAddress,
+                        statuses: [],
+                        locTypes: []
+                    }
+                    return await fetchLocRequests(axiosFactory(currentAccount.address), {
                         ...specificationFragment,
                         ...specification
-                    }));
-                    return aggregateArrays<LocRequest>(result);
+                    });
                 }
 
                 interface RequestsByType {
@@ -288,19 +283,19 @@ export function LegalOfficerContextProvider(props: Props) {
                 }
 
                 async function fetchRequests(locType: LocType): Promise<RequestsByType> {
-                    const pending = await fetchAndAggregate({
+                    const pending = await fetch({
                         statuses: [ "REQUESTED" ],
                         locTypes: [ locType ]
                     })
-                    const opened = await fetchAndAggregate({
+                    const opened = await fetch({
                         statuses: [ "OPEN" ],
                         locTypes: [ locType ]
                     })
-                    const closed = await fetchAndAggregate({
+                    const closed = await fetch({
                         statuses: [ "CLOSED" ],
                         locTypes: [ locType ]
                     })
-                    const rejected = await fetchAndAggregate({
+                    const rejected = await fetch({
                         statuses: [ "REJECTED" ],
                         locTypes: [ locType ]
                     })
@@ -311,26 +306,26 @@ export function LegalOfficerContextProvider(props: Props) {
                     return { pending, rejected, opened, closed, locIds }
                 }
 
-                const openedIdentityLocsOnly = await fetchAndAggregate({
+                const openedIdentityLocsOnly = await fetch({
                     statuses: [ "OPEN" ],
                     locTypes: [ 'Identity' ]
                 })
-                const openedIdentityLocsOnlyPolkadot = await fetchAndAggregate({
+                const openedIdentityLocsOnlyPolkadot = await fetch({
                     statuses: [ "OPEN" ],
                     locTypes: [ 'Identity' ],
                     identityLocType: 'Polkadot'
                 })
-                const closedIdentityLocsOnlyPolkadot = await fetchAndAggregate({
+                const closedIdentityLocsOnlyPolkadot = await fetch({
                     statuses: [ "CLOSED" ],
                     locTypes: [ 'Identity' ],
                     identityLocType: 'Polkadot'
                 })
-                const openedIdentityLocsOnlyLogion = await fetchAndAggregate({
+                const openedIdentityLocsOnlyLogion = await fetch({
                     statuses: [ "OPEN" ],
                     locTypes: [ 'Identity' ],
                     identityLocType: 'Logion'
                 })
-                const closedIdentityLocsOnlyLogion = await fetchAndAggregate({
+                const closedIdentityLocsOnlyLogion = await fetch({
                     statuses: [ "CLOSED" ],
                     locTypes: [ 'Identity' ],
                     identityLocType: 'Logion'
@@ -405,7 +400,7 @@ export function LegalOfficerContextProvider(props: Props) {
                 });
             })();
         }
-    }, [ api, dispatch, accounts, client ]);
+    }, [ api, dispatch, accounts, client, axiosFactory ]);
 
     function voidRequestsAndLocs(requests: LocRequest[], locs: Record<string, LegalOfficerCase>): RequestAndLoc[] {
         return requests

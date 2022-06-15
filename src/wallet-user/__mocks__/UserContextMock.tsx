@@ -16,7 +16,7 @@ import {
     RejectedRequest,
     ClosedCollectionLoc,
     OpenLoc, VoidedCollectionLoc, VoidedLoc
-} from "@logion/client/dist/Loc";
+} from "@logion/client";
 import { DataLocType } from "@logion/node-api/dist/Types";
 
 export let createTokenRequest = () => null;

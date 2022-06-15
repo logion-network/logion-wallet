@@ -15,7 +15,7 @@ import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 import './ImportItems.css';
 import { toItemId } from "./types";
-import { ClosedCollectionLoc } from "@logion/client/dist/Loc";
+import { ClosedCollectionLoc } from "@logion/client";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "../ClientExtrinsicSubmitter";
 
 const fileReaderStream = require("filereader-stream");

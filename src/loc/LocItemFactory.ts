@@ -3,7 +3,7 @@ import { File, Link, MetadataItem } from "@logion/node-api/dist/Types";
 
 import { LocItem } from "./types";
 import { LocFile, LocMetadataItem, LocLink } from "../common/types/ModelTypes";
-import { MergedMetadataItem, MergedFile, MergedLink } from "@logion/client/dist/Loc";
+import { MergedMetadataItem, MergedFile, MergedLink } from "@logion/client";
 
 export interface MergeLocFileParameters {
     fileFromBackend: LocFile,

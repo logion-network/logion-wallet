@@ -20,7 +20,7 @@ import StatementOfFactsButton from "./statement/StatementOfFactsButton";
 import { toItemId, Viewer } from './types';
 import StatementOfFactsRequestButton from "./statement/StatementOfFactsRequestButton";
 import { useUserLocContext } from "./UserLocContext";
-import { ClosedCollectionLoc } from "@logion/client/dist/Loc";
+import { ClosedCollectionLoc } from "@logion/client";
 
 export interface Props {
     locId: UUID;

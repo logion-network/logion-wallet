@@ -243,7 +243,7 @@ export function LocContextProvider(props: Props) {
 
     const { axiosFactory, accounts, api } = useLogionChain();
     const { refresh } = useCommonContext();
-    const { refreshLocs} = useLegalOfficerContext();
+    const { refreshLocs } = useLegalOfficerContext();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue(props.locId, props.backPath, props.detailsPath));
     const [ refreshing, setRefreshing ] = useState<boolean>(false);
     const [ refreshCounter, setRefreshCounter ] = useState<number>(0);

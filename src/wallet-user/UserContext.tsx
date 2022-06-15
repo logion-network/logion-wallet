@@ -12,7 +12,7 @@ import {
 import { useCommonContext } from '../common/CommonContext';
 import { DARK_MODE } from './Types';
 import { BalanceState } from "@logion/client/dist/Balance";
-import { LocsState } from "@logion/client/dist/Loc";
+import { LocsState } from "@logion/client";
 
 export interface CreateProtectionRequestParams {
     legalOfficers: LegalOfficer[],

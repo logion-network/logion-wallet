@@ -4,7 +4,7 @@ import { clickByName } from '../tests';
 import ImportItems from './ImportItems';
 import { setLocState, refresh } from "./__mocks__/UserLocContextMock";
 import { CollectionItem } from "@logion/node-api/dist/Types";
-import { AddCollectionItemParams } from "@logion/client/dist/LocClient";
+import { AddCollectionItemParams } from "@logion/client";
 import { mockSubmittableResult } from "../logion-chain/__mocks__/SignatureMock";
 
 jest.mock("../common/CommonContext");

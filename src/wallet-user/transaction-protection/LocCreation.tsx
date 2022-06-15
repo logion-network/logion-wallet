@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { DataLocType } from "@logion/node-api/dist/Types";
 
 import { useCommonContext } from '../../common/CommonContext';
-import { LocsState } from "@logion/client/dist/Loc";
+import { LocsState } from "@logion/client";
 import Button from '../../common/Button';
 import Dialog from '../../common/Dialog';
 

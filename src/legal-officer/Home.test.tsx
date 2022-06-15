@@ -2,6 +2,7 @@ jest.mock("react-router");
 jest.mock("../common/CommonContext");
 jest.mock("@logion/node-api/dist/Balances");
 jest.mock("../logion-chain");
+jest.mock('./LegalOfficerContext');
 
 import { BalanceState } from "@logion/client/dist/Balance";
 import { DEFAULT_COIN_BALANCE, DEFAULT_TRANSACTION } from "../common/TestData";
