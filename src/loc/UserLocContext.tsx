@@ -5,10 +5,18 @@ import { useLogionChain } from "../logion-chain";
 import { LocItemStatus, LocItem } from "./types";
 import { metadataToLocItem, fileToLocItem, linkToLocItem } from "./LocItemFactory";
 import { fullCertificateUrl } from "../PublicPaths";
-import { OpenLoc, ClosedLoc, VoidedLoc, ClosedCollectionLoc, LocData } from "@logion/client/dist/Loc";
+import {
+    OpenLoc,
+    ClosedLoc,
+    VoidedLoc,
+    ClosedCollectionLoc,
+    LocData,
+    PendingRequest,
+    VoidedCollectionLoc
+} from "@logion/client/dist/Loc";
 import { useUserContext } from "../wallet-user/UserContext";
 
-export type ActiveLoc = OpenLoc | ClosedLoc | ClosedCollectionLoc | VoidedLoc;
+export type ActiveLoc = OpenLoc | ClosedLoc | ClosedCollectionLoc | VoidedLoc | VoidedCollectionLoc;
 
 export interface UserLocContext {
     locId: UUID
@@ -103,7 +111,7 @@ export interface Props {
 export function UserLocContextProvider(props: Props) {
 
     const { accounts, client } = useLogionChain();
-    const { refreshRequests } = useUserContext();
+    const { mutateLocsState } = useUserContext();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue(props.locId, props.backPath, props.detailsPath));
 
     useEffect(() => {
@@ -152,41 +160,48 @@ export function UserLocContextProvider(props: Props) {
         return locItems;
     }, [ contextValue, accounts ])
 
-    const dispatchLocAndItems = useCallback(async (locState: ActiveLoc) => {
+    const refreshRequests = useCallback(async (locState: Promise<PendingRequest | ActiveLoc>) => {
+        await mutateLocsState(() => locState
+            .then(locState => locState.locsState()))
+    }, [ mutateLocsState ])
+
+    const dispatchLocAndItems = useCallback(async (pr: Promise<ActiveLoc>) => {
+        const locState = await pr
         const locItems = await toLocItems(locState)
         dispatch({ type: 'SET_LOC', locState, locItems })
-    }, [ toLocItems ])
+        await refreshRequests(pr!)
+    }, [ toLocItems, refreshRequests ])
 
     useEffect(() => {
         if (client !== null && contextValue.locState === null) {
             (async function () {
-                const locState = await (await client.locsState()).findById({ locId: contextValue.locId }) as ActiveLoc;
+                const locState = (await client.locsState()).findById({ locId: contextValue.locId }) as Promise<ActiveLoc>;
                 await dispatchLocAndItems(locState)
             })();
         }
     }, [ contextValue, contextValue.locId, accounts, client, dispatchLocAndItems ])
 
     const deleteFileFunction = useCallback(async (item: LocItem) => {
-        await dispatchLocAndItems(await (contextValue.locState as OpenLoc).deleteFile({ hash: item.value }))
+        await dispatchLocAndItems((contextValue.locState as OpenLoc).deleteFile({ hash: item.value }))
     }, [ contextValue.locState, dispatchLocAndItems ])
 
     const deleteMetadataFunction = useCallback(async (item: LocItem) => {
-        await dispatchLocAndItems(await (contextValue.locState as OpenLoc).deleteMetadata({ name: item.name }))
+        await dispatchLocAndItems((contextValue.locState as OpenLoc).deleteMetadata({ name: item.name }))
     }, [ contextValue.locState, dispatchLocAndItems ])
 
     const addMetadataFunction = useCallback(async (name: string, value: string) => {
-        await dispatchLocAndItems(await (contextValue.locState as OpenLoc).addMetadata({
+        await dispatchLocAndItems((contextValue.locState as OpenLoc).addMetadata({
             name,
             value,
         }))
     }, [ contextValue.locState, dispatchLocAndItems ])
 
     const addFileFunction = useCallback(async (name: string, file: File, nature: string) => {
-        const { state } = await (contextValue.locState as OpenLoc).addFile({
+        const state = (contextValue.locState as OpenLoc).addFile({
             file,
             fileName: name,
             nature
-        })
+        }).then(result => result.state);
         await dispatchLocAndItems(state)
     }, [ contextValue.locState, dispatchLocAndItems ])
 
@@ -197,8 +212,7 @@ export function UserLocContextProvider(props: Props) {
     const requestSofFunction = useCallback(async () => {
         const loc = contextValue.locState;
         if (loc instanceof OpenLoc || loc instanceof ClosedLoc) {
-            await loc.requestSof()
-            refreshRequests!(false)
+            await refreshRequests(loc.requestSof())
         } else {
             throw Error("Can only request SOF on Open or Closed LOC.")
         }
@@ -207,8 +221,7 @@ export function UserLocContextProvider(props: Props) {
     const requestSofOnCollectionFunction = useCallback(async (itemId: string) => {
         const loc = contextValue.locState;
         if (loc instanceof ClosedCollectionLoc) {
-            await loc.requestSof({ itemId })
-            refreshRequests!(false)
+            await refreshRequests(loc.requestSof({ itemId }));
         } else {
             throw Error("Can only request SOF on Closed Collection LOC.")
         }

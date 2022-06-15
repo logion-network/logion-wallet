@@ -37,7 +37,7 @@ export interface Props {
 export default function LocCreation(props: Props) {
     const { getOfficer } = useLogionChain();
     const { colorTheme } = useCommonContext();
-    const { protectionState, mutateLocsState, refreshRequests } = useUserContext();
+    const { protectionState, mutateLocsState } = useUserContext();
     const [ requestLoc, setRequestLoc ] = useState(false);
     const { locType, requestButtonLabel } = props;
     const { control, handleSubmit, formState: { errors }, reset, watch } = useForm<FormValues>({
@@ -76,9 +76,8 @@ export default function LocCreation(props: Props) {
         })
 
         reset();
-        refreshRequests!(false);
         setRequestLoc(false);
-    }, [ setRequestLoc, refreshRequests, reset, showIdentityFields, locType, getOfficer, mutateLocsState ]);
+    }, [ setRequestLoc, reset, showIdentityFields, locType, getOfficer, mutateLocsState ]);
 
     useEffect(() => {
         const subscription = watch(({ legalOfficer }) => setSelectedLegalOfficer(legalOfficer));
