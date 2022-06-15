@@ -36,7 +36,7 @@ import Button from "../common/Button";
 import LocCreationDialog from "./LocCreationDialog";
 import Ellipsis from "../common/Ellipsis";
 import CertificateAndLimits from "./CertificateAndLimits";
-import CollectionLocItemChecker from "./CollectionLocItemChecker";
+import { LOCollectionLocItemChecker } from "./CollectionLocItemChecker";
 import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
 import { useLogionChain } from "../logion-chain";
 
@@ -405,10 +405,9 @@ export default function ContextualizedLocDetails() {
                 viewer="LegalOfficer"
             />
             { loc.locType === 'Collection' && loc.closed &&
-                <CollectionLocItemChecker
+                <LOCollectionLocItemChecker
                     locId={ locId }
                     collectionItem={ collectionItem }
-                    viewer="LegalOfficer"
                 />
             }
             {

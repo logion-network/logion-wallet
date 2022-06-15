@@ -9,7 +9,15 @@ import { LegalOfficerEndpoint, LogionClientConfig, SharedState } from '@logion/c
 import { NetworkState } from '@logion/client/dist/NetworkState';
 import { UserContext } from '../UserContext';
 import { BalanceState } from '@logion/client/dist/Balance';
-import { LocsState } from "@logion/client/dist/Loc";
+import {
+    LocsState,
+    PendingRequest,
+    ClosedLoc,
+    RejectedRequest,
+    ClosedCollectionLoc,
+    OpenLoc, VoidedCollectionLoc, VoidedLoc
+} from "@logion/client/dist/Loc";
+import { DataLocType } from "@logion/node-api/dist/Types";
 
 export let createTokenRequest = () => null;
 
@@ -52,30 +60,61 @@ export function setRecoveredBalanceState(state: BalanceState | undefined) {
 
 export let mutateRecoveredBalanceState = jest.fn().mockReturnValue(Promise.resolve());
 
-export let locsState: LocsState | undefined = new LocsState({} as SharedState, {});
-
-export function setLocsState(state: LocsState | undefined) {
-    locsState = state;
-}
+export let locsState: Partial<LocsState>;
 
 export function setOpenedLocRequests(requests: any[]) {
-    locsState!.openLocs["Transaction"] = requests;
+    locsState = {
+        get openLocs(): Record<DataLocType, OpenLoc[]> {
+            return {
+                "Transaction": requests,
+                "Collection": []
+            }
+        }
+    }
 }
 
 export function setClosedLocRequests(requests: any[]) {
-    locsState!.closedLocs["Transaction"] = requests;
+    locsState = {
+        get closedLocs(): Record<DataLocType, (ClosedLoc | ClosedCollectionLoc)[]> {
+            return {
+                "Transaction": requests,
+                "Collection": []
+            }
+        }
+    }
 }
 
 export function setVoidedLocs(requests: any[]) {
-    locsState!.voidedLocs["Transaction"] = requests;
+    locsState = {
+        get voidedLocs(): Record<DataLocType, (VoidedLoc | VoidedCollectionLoc)[]> {
+            return {
+                "Transaction": requests,
+                "Collection": []
+            }
+        }
+    }
 }
 
 export function setPendingLocRequests(requests: any[]) {
-    locsState!.pendingRequests["Transaction"] = requests;
+    locsState = {
+        get pendingRequests(): Record<DataLocType, PendingRequest[]> {
+            return {
+                "Transaction": requests,
+                "Collection": []
+            }
+        }
+    }
 }
 
 export function setRejectedLocRequests(requests: any[]) {
-    locsState!.rejectedRequests["Transaction"] = requests;
+    locsState = {
+        get rejectedRequests(): Record<DataLocType, RejectedRequest[]> {
+            return {
+                "Transaction": requests,
+                "Collection": []
+            }
+        }
+    }
 }
 
 export let mutateLocsState = jest.fn().mockReturnValue(Promise.resolve());
@@ -91,7 +130,7 @@ export function useUserContext() {
         mutateRecoveredBalanceState,
         locsState,
         mutateLocsState
-    } as Partial<UserContext>;
+    } as unknown as Partial<UserContext>;
 }
 
 export function setCreateTokenRequest(callback: any) {

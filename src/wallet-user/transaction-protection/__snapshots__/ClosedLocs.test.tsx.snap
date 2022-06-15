@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Renders empty with no data 1`] = `
+exports[`ClosedLocs Renders empty list 1`] = `
 <div
   className="Table"
 >
@@ -124,7 +124,13 @@ exports[`Renders empty with no data 1`] = `
 </div>
 `;
 
-exports[`Renders pending requests 1`] = `
+exports[`ClosedLocs Renders null with no data 1`] = `
+<div
+  className="spinner-border"
+/>
+`;
+
+exports[`ClosedLocs Renders pending requests 1`] = `
 <div
   className="Table"
 >

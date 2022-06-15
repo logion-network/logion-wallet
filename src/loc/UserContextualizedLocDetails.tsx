@@ -22,7 +22,7 @@ import NewTabLink from "../common/NewTabLink";
 import InlineDateTime from "../common/InlineDateTime";
 import IconTextRow from "../common/IconTextRow";
 import CertificateAndLimits from "./CertificateAndLimits";
-import CollectionLocItemChecker from "./CollectionLocItemChecker";
+import { UserCollectionLocItemChecker } from "./CollectionLocItemChecker";
 import { useLogionChain } from "../logion-chain";
 import ItemImporter from "./ItemImporter";
 import "./ContextualizedLocDetails.css";
@@ -63,7 +63,7 @@ export default function UserContextualizedLocDetails() {
         }
 
         if (locState instanceof ClosedCollectionLoc) {
-            const collectionItem = await locState.getCollectionItem({itemId: hash})
+            const collectionItem = (await locState.checkHash(hash)).collectionItem;
             if (collectionItem) {
                 setCollectionItem(collectionItem);
                 setCheckResult({
@@ -291,10 +291,9 @@ export default function UserContextualizedLocDetails() {
                 viewer="User"
             />
             { loc.locType === 'Collection' && loc.closed &&
-                <CollectionLocItemChecker
+                <UserCollectionLocItemChecker
                     locId={ locId }
                     collectionItem={ collectionItem }
-                    viewer="User"
                 />
             }
             { loc.locType === 'Collection' && loc.closed && loc.voidInfo === undefined &&

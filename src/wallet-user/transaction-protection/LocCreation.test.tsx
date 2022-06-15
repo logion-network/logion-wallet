@@ -16,7 +16,7 @@ jest.mock('../../wallet-user/UserContext');
 jest.mock('../../logion-chain');
 jest.unmock("@logion/client");
 
-fdescribe("LocCreation", () => {
+describe("LocCreation", () => {
 
     it("should display messages when an empty form is submitted", async () => {
         setProtectionState(new ActiveProtection({
