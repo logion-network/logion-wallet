@@ -1,6 +1,7 @@
 import { DateTime } from "luxon";
 import { PATRICK } from "../common/TestData";
 import { TEST_WALLET_USER } from "../wallet-user/TestData";
+import { ISubmittableResult } from "@polkadot/types/types";
 
 export class LogionClient {
 
@@ -52,4 +53,8 @@ export class AccountTokens {
             expirationDateTime: DateTime.now().plus({hours: 1})
         });
     }
+}
+
+export function isSuccessful(result: ISubmittableResult) {
+    return true;
 }

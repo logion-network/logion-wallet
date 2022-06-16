@@ -18,6 +18,7 @@ import LocRequestAcceptance from './LocRequestAcceptance';
 import LocRequestDetails from './LocRequestDetails';
 import Icon from '../../common/Icon';
 import { useLogionChain } from '../../logion-chain';
+import { useLegalOfficerContext } from "../LegalOfficerContext";
 
 export interface Props {
     locType: DataLocType;
@@ -25,7 +26,8 @@ export interface Props {
 
 export default function PendingLocRequests(props: Props) {
     const { axiosFactory, accounts } = useLogionChain();
-    const { pendingLocRequests, refresh } = useCommonContext();
+    const { refresh } = useCommonContext();
+    const { pendingLocRequests, refreshLocs } = useLegalOfficerContext();
     const [ requestToReject, setRequestToReject ] = useState<string | null>(null);
     const [ reason, setReason ] = useState<string>("");
     const [ requestToAccept, setRequestToAccept ] = useState<LocRequest | null>(null);
@@ -42,6 +44,7 @@ export default function PendingLocRequests(props: Props) {
             rejectReason: reason!,
         });
         refresh(false);
+        refreshLocs();
         setRequestToReject(null);
     };
 

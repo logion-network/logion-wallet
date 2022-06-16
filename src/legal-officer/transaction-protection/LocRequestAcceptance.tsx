@@ -14,6 +14,7 @@ import ProcessStep from '../ProcessStep';
 import CollectionLocMessage from '../../loc/CollectionLocMessage';
 import CollectionLimitsForm, { CollectionLimits, DEFAULT_LIMITS } from '../../loc/CollectionLimitsForm';
 import { signAndSend } from '../../logion-chain/Signature';
+import { useLegalOfficerContext } from "../LegalOfficerContext";
 
 enum AcceptStatus {
     NONE,
@@ -37,6 +38,7 @@ export interface Props {
 export default function LocRequestAcceptance(props: Props) {
     const { accounts, axiosFactory, api } = useLogionChain();
     const { refresh, colorTheme } = useCommonContext();
+    const { refreshLocs } = useLegalOfficerContext()
 
     const [ acceptState, setAcceptState ] = useState<AcceptState>({status: AcceptStatus.NONE});
 
@@ -132,7 +134,8 @@ export default function LocRequestAcceptance(props: Props) {
     const closeAndRefresh = useCallback(() => {
         close();
         refresh(false);
-    }, [ refresh, close ]);
+        refreshLocs();
+    }, [ refresh, close, refreshLocs ]);
 
     if(props.requestToAccept === null) {
         return null;

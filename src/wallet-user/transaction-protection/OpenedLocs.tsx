@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { DataLocType } from "@logion/node-api/dist/Types";
 
-import { useCommonContext } from '../../common/CommonContext';
+import { useUserContext } from "../UserContext";
 import Table, { Cell, EmptyTableMessage, DateTimeCell, ActionCell } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';
 import LocIdCell from '../../common/LocIdCell';
@@ -17,12 +17,12 @@ export interface Props {
 }
 
 export default function OpenedLocs(props: Props) {
-    const { openedLocRequests } = useCommonContext();
+    const { locsState } = useUserContext()
     const navigate = useNavigate();
     const { width } = useResponsiveContext();
     const { locType } = props
 
-    if(openedLocRequests === null) {
+    if(locsState === null || locsState?.openLocs === undefined) {
         return <Loader />;
     }
 
@@ -31,27 +31,27 @@ export default function OpenedLocs(props: Props) {
             columns={[
                 {
                     "header": "Legal Officer",
-                    render: request => <LegalOfficerName address={ request.ownerAddress } />,
+                    render: locData => <LegalOfficerName address={ locData.ownerAddress } />,
                     align: 'left',
                 },
                 {
                     "header": "Description",
-                    render: request => <Cell content={ request.description } overflowing tooltipId='description-tooltip' />,
+                    render: locData => <Cell content={ locData.description } overflowing tooltipId='description-tooltip' />,
                     align: 'left',
                 },
                 {
                     header: "Status",
-                    render: request => <LocStatusCell status={ request.status }/>,
+                    render: locData => <LocStatusCell status={ locData.status }/>,
                     width: "140px",
                 },
                 {
                     header: "LOC ID",
-                    render: request => <LocIdCell status={ request.status } id={ request.id }/>,
+                    render: locData => <LocIdCell status={ locData.status } id={ locData.id }/>,
                     align: "left",
                 },
                 {
                     "header": "Creation date",
-                    render: request => <DateTimeCell dateTime={ request.createdOn || null } />,
+                    render: locData => <DateTimeCell dateTime={ locData.createdOn || null } />,
                     width: width({
                         onSmallScreen: "150px",
                         otherwise: "200px"
@@ -60,10 +60,10 @@ export default function OpenedLocs(props: Props) {
                 },
                 {
                     header: "Action",
-                    render: request =>
+                    render: locData =>
                         <ActionCell>
                             <ButtonGroup>
-                                <Button onClick={ () => navigate(locDetailsPath(request.id, request.locType)) }>View</Button>
+                                <Button onClick={ () => navigate(locDetailsPath(locData.id, locData.locType)) }>View</Button>
                             </ButtonGroup>
                         </ActionCell>
                     ,
@@ -74,7 +74,7 @@ export default function OpenedLocs(props: Props) {
                     align: 'center',
                 },
             ]}
-            data={ openedLocRequests[locType].map(requestAndLoc => requestAndLoc.request) }
+            data={ locsState.openLocs[locType].map(locState => locState.data()) }
             renderEmpty={ () => <EmptyTableMessage>No LOCs</EmptyTableMessage>}
         />
     );

@@ -1,5 +1,4 @@
 import { AxiosInstance } from "axios";
-import { LegalOfficerCase } from "@logion/node-api/dist/Types";
 
 import Table, { Cell, DateTimeCell, EmptyTableMessage, ActionCell } from "../common/Table";
 import StatusCell from "../common/StatusCell";
@@ -25,15 +24,70 @@ import LocPublicDataDetails from "./LocPublicDataDetails";
 import { useLocContext } from "./LocContext";
 
 import './LocItems.css';
+import { useUserLocContext } from "./UserLocContext";
+import { UUID } from "@logion/node-api";
+import { UserIdentity } from "@logion/client";
 
 export interface Props {
     matchedHash?: string;
-    viewer: Viewer;
 }
 
-export default function LocItems(props: Props) {
+export function LOLocItems(props: Props) {
+    const { loc, locRequest, locId, locItems, deleteMetadata, deleteFile, deleteLink } = useLocContext();
+    if (loc === null) {
+        return null;
+    }
+    return <LocItems
+        matchedHash={ props.matchedHash }
+        viewer="LegalOfficer"
+        locId={ locId }
+        locItems={ locItems }
+        deleteMetadata={ deleteMetadata }
+        deleteFile={ deleteFile }
+        deleteLink={ deleteLink }
+        owner={ loc.owner }
+        closed={ loc.closed }
+        userIdentity={ locRequest?.userIdentity }
+    />
+}
+
+export function UserLocItems(props: Props) {
+    const { loc, locId, locItems, deleteMetadata, deleteFile } = useUserLocContext();
+    if (loc === null) {
+        return null;
+    }
+    return <LocItems
+        matchedHash={ props.matchedHash }
+        viewer="User"
+        locId={ locId }
+        locItems={ locItems }
+        deleteMetadata={ deleteMetadata }
+        deleteFile={ deleteFile }
+        deleteLink={ null }
+        owner={ loc?.ownerAddress }
+        closed={ loc.closed }
+        userIdentity={ loc.userIdentity }
+    />
+
+}
+
+interface LocItemsProps {
+    matchedHash?: string;
+    viewer: Viewer;
+    locId: UUID
+    locItems: LocItem[]
+    deleteMetadata: ((locItem: LocItem) => void) | null
+    deleteFile: ((locItem: LocItem) => void) | null
+    deleteLink: ((locItem: LocItem) => void) | null
+    owner: string
+    closed: boolean
+    userIdentity?: UserIdentity
+}
+
+export default function LocItems(props: LocItemsProps) {
+    const { locId, locItems, deleteMetadata, deleteFile, deleteLink, owner, userIdentity, closed } = props;
     const { accounts } = useLogionChain();
-    const { locId, loc, locItems, deleteMetadata, deleteLink, deleteFile, locRequest } = useLocContext();
+
     const { width } = useResponsiveContext();
 
     function renderDetails(locItem: LocItem): Child {
@@ -47,8 +101,8 @@ export default function LocItems(props: Props) {
     }
 
     interface DeleteButtonProps {
-        locItem:LocItem
-        action: (locItem:LocItem) => void
+        locItem: LocItem
+        action: (locItem: LocItem) => void
     }
 
     function DeleteButton(props: DeleteButtonProps) {
@@ -59,7 +113,7 @@ export default function LocItems(props: Props) {
                 onClick={ () => action(locItem) }
                 data-testid={ `remove-${ locItem.type }-${ locItem.name }` }
             >
-                <Icon icon={{id: 'trash'}} />
+                <Icon icon={ { id: 'trash' } } />
             </Button>
         );
     }
@@ -70,20 +124,23 @@ export default function LocItems(props: Props) {
             <ActionCell>
                 { locItem.type === 'Data' && <ButtonGroup>
                     { props.viewer === 'LegalOfficer' && <LocPublishPublicDataButton locItem={ locItem } /> }
-                    { canDelete(accounts?.current?.address, locItem, loc) && <DeleteButton locItem={ locItem } action={ deleteMetadata! } /> }
+                    { canDelete(accounts?.current?.address, locItem, owner) &&
+                        <DeleteButton locItem={ locItem } action={ deleteMetadata! } /> }
                 </ButtonGroup> }
                 { locItem.type === 'Linked LOC' && <ButtonGroup>
                     { props.viewer === 'LegalOfficer' && <LocPublishLinkButton locItem={ locItem } /> }
-                    { canDelete(accounts?.current?.address, locItem, loc) && <DeleteButton locItem={ locItem } action={ deleteLink! } /> }
+                    { canDelete(accounts?.current?.address, locItem, owner) &&
+                        <DeleteButton locItem={ locItem } action={ deleteLink! } /> }
                 </ButtonGroup> }
                 { locItem.type === 'Document' && <ButtonGroup>
                     { props.viewer === 'LegalOfficer' && <LocPublishPrivateFileButton locItem={ locItem } /> }
-                    { canDelete(accounts?.current?.address, locItem, loc) && <DeleteButton locItem={ locItem } action={ deleteFile! } /> }
+                    { canDelete(accounts?.current?.address, locItem, owner) &&
+                        <DeleteButton locItem={ locItem } action={ deleteFile! } /> }
                 </ButtonGroup> }
             </ActionCell>)
     }
 
-    if(locItems.length <= 0 && !loc?.closed) {
+    if (locItems.length <= 0 && !closed) {
         return (
             <div className="LocItems empty-loc">
                 <img alt="empty loc" src={ process.env.PUBLIC_URL + "/assets/empty-loc.svg" } />
@@ -113,19 +170,19 @@ export default function LocItems(props: Props) {
                             render: locItem => <DateTimeCell
                                 dateTime={ locItem.timestamp }
                                 spinner={ locItem.status === 'PUBLISHED' } />,
-                                width: width({
-                                    onSmallScreen: '100px',
-                                    otherwise: '200px'
-                                }),
+                            width: width({
+                                onSmallScreen: '100px',
+                                otherwise: '200px'
+                            }),
                         },
                         {
                             header: "Type",
                             render: locItem => <Cell content={
-                            <>
-                                <span className="item-type">{ locItem.type }</span> {
+                                <>
+                                    <span className="item-type">{ locItem.type }</span> {
                                     locItem.type === 'Document' &&
                                     <ViewFileButton
-                                        nodeOwner={ loc!.owner }
+                                        nodeOwner={ owner }
                                         fileName={ locItem.name }
                                         downloader={ (axios: AxiosInstance) => getFile(axios, {
                                             locId: locId.toString(),
@@ -133,7 +190,7 @@ export default function LocItems(props: Props) {
                                         }) }
                                     />
                                 }
-                            </> } />,
+                                </> } />,
                             width: width({
                                 onSmallScreen: '145px',
                                 otherwise: '160px'
@@ -144,9 +201,9 @@ export default function LocItems(props: Props) {
                             header: "Submitted by",
                             render: locItem =>
                                 <>
-                                    { locItem.submitter === loc?.owner ?
+                                    { locItem.submitter === owner ?
                                         <LegalOfficerName address={ locItem.submitter } /> :
-                                        <SubmitterName identity={ locRequest?.userIdentity }/>
+                                        <SubmitterName identity={ userIdentity } />
                                     }
                                 </>
                         },
@@ -156,7 +213,8 @@ export default function LocItems(props: Props) {
                                 if (locItem.status === 'DRAFT') {
                                     return renderActions(locItem)
                                 } else {
-                                    return (<StatusCell icon={{ id: 'published' }} text="Published" color={ POLKADOT } />)
+                                    return (
+                                        <StatusCell icon={ { id: 'published' } } text="Published" color={ POLKADOT } />)
                                 }
                             },
                             width: width({
@@ -173,14 +231,14 @@ export default function LocItems(props: Props) {
     }
 }
 
-function canDelete(address: string | undefined, item: LocItem, loc: LegalOfficerCase | null): boolean {
-    if(!address) {
+function canDelete(address: string | undefined, item: LocItem, owner: string): boolean {
+    if (!address) {
         return false;
     }
 
-    if(item.type === "Linked LOC") {
-        return address === loc?.owner;
+    if (item.type === "Linked LOC") {
+        return address === owner;
     } else {
-        return address === loc?.owner || address === item.submitter;
+        return address === owner || address === item.submitter;
     }
 }

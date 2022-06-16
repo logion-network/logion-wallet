@@ -1,16 +1,17 @@
 jest.mock('../../common/CommonContext');
+jest.mock('../LegalOfficerContext');
 
 import { IdentityLocType } from "@logion/node-api/dist/Types";
 import { shallowRender, render } from '../../tests';
 import OpenedLocs from './OpenedLocs';
-import { setOpenedLocRequests, setOpenedIdentityLocsByType } from '../../common/__mocks__/CommonContextMock';
+import { setOpenedLocRequests, setOpenedIdentityLocsByType } from "../__mocks__/LegalOfficerContextMock";
 
 test("Renders null with no data", () => {
     const tree = shallowRender(<OpenedLocs locType="Transaction" />);
     expect(tree).toMatchSnapshot();
 });
 
-test("Renders pending requests", () => {
+test("Renders open locs", () => {
     setOpenedLocRequests([
         {
             request: {

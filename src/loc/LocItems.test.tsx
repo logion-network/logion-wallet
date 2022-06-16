@@ -2,7 +2,7 @@ import { UUID } from "@logion/node-api/dist/UUID";
 import { OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "../__mocks__/@logion/node-api/dist/LogionLocMock";
 import { render } from "../tests";
 import { TEST_WALLET_USER } from "../wallet-user/TestData";
-import LocItems from "./LocItems";
+import LocItems, { LOLocItems } from "./LocItems";
 import { buildLocRequest } from "./TestData";
 import { setLoc, setLocId, setLocItems, setLocRequest } from "./__mocks__/LocContextMock";
 
@@ -11,15 +11,13 @@ jest.mock("./LocContext");
 jest.mock("../logion-chain");
 
 describe("LocItems", () => {
-  
+
     it("renders empty list", () => {
         const uuid = UUID.fromDecimalString(OPEN_IDENTITY_LOC_ID)!;
         setLocId(uuid);
         setLoc(OPEN_IDENTITY_LOC);
         setLocRequest(buildLocRequest(uuid, OPEN_IDENTITY_LOC));
-        const tree = render(<LocItems
-            viewer="LegalOfficer"
-        />);
+        const tree = render(<LOLocItems />);
         expect(tree).toMatchSnapshot();
     })
 
@@ -47,9 +45,7 @@ describe("LocItems", () => {
             }
         ])
 
-        const tree = render(<LocItems
-            viewer="LegalOfficer"
-        />);
+        const tree = render(<LOLocItems />);
 
         expect(tree).toMatchSnapshot();
     })

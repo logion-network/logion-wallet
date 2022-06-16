@@ -19,42 +19,88 @@ import "./CollectionLocItemChecker.css"
 import StatementOfFactsButton from "./statement/StatementOfFactsButton";
 import { toItemId, Viewer } from './types';
 import StatementOfFactsRequestButton from "./statement/StatementOfFactsRequestButton";
+import { useUserLocContext } from "./UserLocContext";
+import { ClosedCollectionLoc } from "@logion/client";
 
 export interface Props {
     locId: UUID;
     collectionItem?: CollectionItem;
-    viewer: Viewer;
 }
 
 export type CheckResult = 'NONE' | 'POSITIVE' | 'NEGATIVE';
 
-export default function CollectionLocItemChecker(props: Props) {
+export function UserCollectionLocItemChecker(props: Props) {
+
+    const { locId, collectionItem } = props;
+    const { locState } = useUserLocContext();
+    const collection: ClosedCollectionLoc = locState as ClosedCollectionLoc;
+
+    async function collectionItemFunction(actualId: string): Promise<CollectionItem | undefined> {
+        const result = await collection.checkHash(actualId)
+        return result.collectionItem;
+    }
+
+    return (
+        <CollectionLocItemChecker
+            viewer="User"
+            locId={ locId }
+            collectionItem={ collectionItem }
+            collectionSizeFunction={ () => collection.size() }
+            collectionItemFunction={ collectionItemFunction }
+        />)
+}
+
+export function LOCollectionLocItemChecker(props: Props) {
+
+    const { locId, collectionItem } = props;
+    const { api } = useLogionChain();
+
+    if (api === null) {
+        return null;
+    }
+
+    return (
+        <CollectionLocItemChecker
+            viewer="LegalOfficer"
+            locId={ locId }
+            collectionItem={ collectionItem }
+            collectionSizeFunction={ () => getCollectionSize({ api, locId }) }
+            collectionItemFunction={ (actualId: string) => getCollectionItem({ api, locId, itemId: actualId }) }
+        />)
+}
+
+interface LocalProps extends Props {
+    viewer: Viewer;
+    collectionSizeFunction: () => Promise<number | undefined>
+    collectionItemFunction: (actualId: string) => Promise<CollectionItem | undefined>
+}
+
+function CollectionLocItemChecker(props: LocalProps) {
 
     const { colorTheme } = useCommonContext();
-    const { locId } = props;
-    const { api, accounts } = useLogionChain();
-
+    const { locId, collectionSizeFunction, collectionItemFunction } = props;
+    const { accounts } = useLogionChain();
     const [ state, setState ] = useState<CheckResult>('NONE');
     const [ collectionSize, setCollectionSize ] = useState<number | undefined | null>(null);
     const [ itemId, setItemId ] = useState<string>("");
     const [ item, setItem ] = useState<CollectionItem>();
-    const [ managedCheck, setManagedCheck ] = useState<{itemId: string, active: boolean}>();
+    const [ managedCheck, setManagedCheck ] = useState<{ itemId: string, active: boolean }>();
 
     useEffect(() => {
-        if (api && collectionSize === null) {
-            getCollectionSize({ api, locId })
+        if (collectionSize === null) {
+            collectionSizeFunction()
                 .then(setCollectionSize)
         }
-    }, [ api, locId, collectionSize ])
+    }, [ collectionSizeFunction, collectionSize ])
 
     const checkData = useCallback(async () => {
-        if (api && itemId) {
+        if (itemId) {
             const actualId = toItemId(itemId);
-            if(actualId === undefined) {
+            if (actualId === undefined) {
                 setState('NEGATIVE');
             } else {
                 try {
-                    const collectionItem = await getCollectionItem({ api, locId, itemId: actualId });
+                    const collectionItem = await collectionItemFunction(actualId);
                     if (collectionItem) {
                         setItem(collectionItem);
                         setState('POSITIVE');
@@ -66,12 +112,12 @@ export default function CollectionLocItemChecker(props: Props) {
                 }
             }
         }
-    }, [ api, locId, itemId ]);
+    }, [ itemId, collectionItemFunction ]);
 
     useEffect(() => {
-        if(props.collectionItem && (
-                !managedCheck
-                || managedCheck.itemId !== props.collectionItem.id)) {
+        if (props.collectionItem && (
+            !managedCheck
+            || managedCheck.itemId !== props.collectionItem.id)) {
 
             setManagedCheck({
                 itemId: props.collectionItem.id,
@@ -80,14 +126,14 @@ export default function CollectionLocItemChecker(props: Props) {
             setItemId(props.collectionItem.id);
             setItem(props.collectionItem);
             setState('POSITIVE');
-        } else if(!props.collectionItem && managedCheck) {
+        } else if (!props.collectionItem && managedCheck) {
             setManagedCheck(undefined);
             setItemId("");
             setState('NONE');
         }
     }, [ managedCheck, setManagedCheck, props.collectionItem ]);
 
-    if(accounts?.current?.address === undefined) {
+    if (accounts?.current?.address === undefined) {
         return null;
     }
 
@@ -101,7 +147,8 @@ export default function CollectionLocItemChecker(props: Props) {
                     <p>The Collection LOC material listed above benefits all data imported through the logion API by an
                         external application approved between the Legal Officer and its client under a process validated
                         by the Legal Officer of the present LOC.</p>
-                    <p>To check if a Collection Item is covered by this Collection LOC and get its online public certificate, just submit the related Collection Item ID in the input field below:</p>
+                    <p>To check if a Collection Item is covered by this Collection LOC and get its online public
+                        certificate, just submit the related Collection Item ID in the input field below:</p>
                     <FormGroup
                         id="itemId"
                         noFeedback={ true }
@@ -113,14 +160,14 @@ export default function CollectionLocItemChecker(props: Props) {
                                         value={ itemId }
                                         onChange={ value => {
                                             setState('NONE');
-                                            if(managedCheck) {
+                                            if (managedCheck) {
                                                 setManagedCheck({
                                                     itemId: managedCheck.itemId,
                                                     active: false
                                                 });
                                             }
                                             setItemId(value.target.value);
-                                        }}
+                                        } }
                                     />
                                 </Col>
                                 <Col className="buttons">
@@ -163,7 +210,8 @@ function CheckResultFeedback(props: CheckResultProps) {
                     <Col>
                         <p>
                             Check result: <span className="label-positive">positive</span><br />
-                            The Collection Item - defined by the ID you submitted - is covered by the current Collection LOC.
+                            The Collection Item - defined by the ID you submitted - is covered by the current Collection
+                            LOC.
                         </p>
                     </Col>
                     <Col>
@@ -171,7 +219,9 @@ function CheckResultFeedback(props: CheckResultProps) {
                     </Col>
                     <Col>
                         <p>
-                            <div id="url-header" className="url-header">Certificate Public web address (URL) for the data covered by this Collection LOC:</div>
+                            <div id="url-header" className="url-header">Certificate Public web address (URL) for the
+                                data covered by this Collection LOC:
+                            </div>
                             <div className="url-copy-paste-container">
                                 <div className="url-container">
                                     <a href={ certificateUrl } target="_blank" rel="noreferrer">{ certificateUrl }</a>
@@ -188,7 +238,8 @@ function CheckResultFeedback(props: CheckResultProps) {
                     <Col>
                         <p>
                             Check result: <span className="label-negative">negative</span><br />
-                            The Collection Item - defined by the ID you submitted - has no match and is NOT covered by the current<br />
+                            The Collection Item - defined by the ID you submitted - has no match and is NOT covered by
+                            the current<br />
                             Collection LOC. Please be careful and execute a deeper due diligence.
                         </p>
                     </Col>

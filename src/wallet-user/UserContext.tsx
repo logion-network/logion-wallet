@@ -12,6 +12,7 @@ import {
 import { useCommonContext } from '../common/CommonContext';
 import { DARK_MODE } from './Types';
 import { BalanceState } from "@logion/client/dist/Balance";
+import { LocsState } from "@logion/client";
 
 export interface CreateProtectionRequestParams {
     legalOfficers: LegalOfficer[],
@@ -19,7 +20,7 @@ export interface CreateProtectionRequestParams {
     userIdentity: UserIdentity,
     addressToRecover?: string,
     callback?: SignCallback,
-};
+}
 
 export interface UserContext {
     dataAddress: string | null,
@@ -35,6 +36,8 @@ export interface UserContext {
     mutateRecoveredVaultState: (mutator: (current: VaultState) => Promise<VaultState>) => Promise<void>,
     recoveredBalanceState?: BalanceState,
     mutateRecoveredBalanceState: (mutator: (current: BalanceState) => Promise<BalanceState>) => Promise<void>,
+    locsState?: LocsState,
+    mutateLocsState: (mutator: (current: LocsState) => Promise<LocsState>) => Promise<void>,
 }
 
 interface FullUserContext extends UserContext {
@@ -52,6 +55,7 @@ function initialContextValue(): FullUserContext {
         mutateVaultState: () => Promise.reject(),
         mutateRecoveredVaultState: () => Promise.reject(),
         mutateRecoveredBalanceState: () => Promise.reject(),
+        mutateLocsState: () => Promise.reject(),
     }
 }
 
@@ -71,6 +75,8 @@ type ActionType = 'FETCH_IN_PROGRESS'
     | 'MUTATE_RECOVERED_VAULT_STATE'
     | 'SET_MUTATE_RECOVERED_BALANCE_STATE'
     | 'MUTATE_RECOVERED_BALANCE_STATE'
+    | 'SET_MUTATE_LOCS_STATE'
+    | 'MUTATE_LOCS_STATE'
 ;
 
 interface Action {
@@ -89,6 +95,8 @@ interface Action {
     mutateRecoveredVaultState?: (mutator: (current: VaultState) => Promise<VaultState>) => Promise<void>,
     recoveredBalanceState?: BalanceState,
     mutateRecoveredBalanceState?: (mutator: (current: BalanceState) => Promise<BalanceState>) => Promise<void>,
+    locsState?: LocsState,
+    mutateLocsState?: (mutator: (current: LocsState) => Promise<LocsState>) => Promise<void>,
 }
 
 const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, action: Action): FullUserContext => {
@@ -102,6 +110,7 @@ const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, actio
                     vaultState: undefined,
                     recoveredVaultState: undefined,
                     recoveredBalanceState: undefined,
+                    locsState: undefined,
                 };
             } else {
                 return {
@@ -120,6 +129,7 @@ const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, actio
                     vaultState: action.vaultState,
                     recoveredVaultState: action.recoveredVaultState,
                     recoveredBalanceState: action.recoveredBalanceState,
+                    locsState: action.locsState,
                 };
             } else {
                 console.log(`Skipping data because ${action.dataAddress} <> ${state.fetchForAddress}`);
@@ -191,6 +201,16 @@ const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, actio
                 ...state,
                 recoveredBalanceState: action.recoveredBalanceState!,
             };
+        case "SET_MUTATE_LOCS_STATE":
+            return {
+                ...state,
+                mutateLocsState: action.mutateLocsState!,
+            };
+        case "MUTATE_LOCS_STATE":
+            return {
+                ...state,
+                locsState: action.locsState!,
+            };
         default:
             /* istanbul ignore next */
             throw new Error(`Unknown type: ${action.type}`);
@@ -244,6 +264,11 @@ export function UserContextProvider(props: Props) {
                     recoveredBalanceState = await protectionState.recoveredBalanceState();
                 }
 
+                let locsState = contextValue.locsState;
+                if (locsState === undefined) {
+                    locsState = await client.locsState();
+                }
+
                 dispatch({
                     type: "SET_DATA",
                     dataAddress: currentAddress,
@@ -251,10 +276,11 @@ export function UserContextProvider(props: Props) {
                     vaultState,
                     recoveredVaultState,
                     recoveredBalanceState,
+                    locsState,
                 });
             })();
         }
-    }, [ dispatch, accounts, client, contextValue.protectionState, contextValue.dataAddress ]);
+    }, [ dispatch, accounts, client, contextValue.protectionState, contextValue.dataAddress, contextValue.locsState ]);
 
     useEffect(() => {
         if(client !== undefined
@@ -417,6 +443,23 @@ export function UserContextProvider(props: Props) {
             });
         }
     }, [ mutateRecoveredBalanceStateCallback, contextValue.mutateRecoveredBalanceState ]);
+
+    const mutateLocsStateCallback = useCallback(async (mutator: (current: LocsState) => Promise<LocsState>): Promise<void> => {
+        const newState = await mutator(contextValue.locsState!);
+        dispatch({
+            type: "MUTATE_LOCS_STATE",
+            locsState: newState,
+        });
+    }, [ contextValue.locsState ]);
+
+    useEffect(() => {
+        if(contextValue.mutateLocsState !== mutateLocsStateCallback) {
+            dispatch({
+                type: "SET_MUTATE_LOCS_STATE",
+                mutateLocsState: mutateLocsStateCallback,
+            });
+        }
+    }, [ mutateLocsStateCallback, contextValue.mutateLocsState ]);
 
     return (
         <UserContextObject.Provider value={contextValue}>

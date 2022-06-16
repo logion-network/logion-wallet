@@ -8,6 +8,14 @@ import {
     pendingProtectionRequests,
     activatedProtectionRequests,
     protectionRequestsHistory,
+    openedLocRequests,
+    openedIdentityLocs,
+    openedIdentityLocsByType,
+    closedLocRequests,
+    closedIdentityLocsByType,
+    pendingLocRequests,
+    rejectedLocRequests,
+    voidIdentityLocsByType,
 } from "./LegalOfficerContextMock";
 
 export function useLegalOfficerContext() {
@@ -20,5 +28,14 @@ export function useLegalOfficerContext() {
         activatedProtectionRequests,
         protectionRequestsHistory,
         colorTheme: COLOR_THEME,
+        openedLocRequests,
+        openedIdentityLocs,
+        openedIdentityLocsByType,
+        closedLocRequests,
+        closedIdentityLocsByType,
+        pendingLocRequests,
+        rejectedLocRequests,
+        voidIdentityLocsByType,
+        refreshLocs: () => {}
     };
 }

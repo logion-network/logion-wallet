@@ -22,7 +22,7 @@ export interface Props {
 export default function LocCreationDialog(props: Props) {
     const { accounts } = useLogionChain();
     const { colorTheme, refresh } = useCommonContext();
-    const { axios } = useLegalOfficerContext();
+    const { axios, refreshLocs } = useLegalOfficerContext();
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>({
         defaultValues: {
             description: props.defaultDescription || ""
@@ -56,8 +56,9 @@ export default function LocCreationDialog(props: Props) {
                 setLinkNature(formValues.linkNature);
             }
             refresh(false);
+            refreshLocs();
         })();
-    }, [ axios, accounts, props.locRequest, refresh, props.hasLinkNature ]);
+    }, [ axios, accounts, props.locRequest, refresh, refreshLocs, props.hasLinkNature ]);
 
     const clear = useCallback(() => {
         reset();

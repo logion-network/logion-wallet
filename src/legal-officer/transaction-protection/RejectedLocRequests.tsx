@@ -2,7 +2,7 @@ import { DataLocType } from "@logion/node-api/dist/Types";
 
 import Table, { Cell, DateTimeCell, EmptyTableMessage } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';
-import { useCommonContext } from '../../common/CommonContext';
+import { useLegalOfficerContext } from "../LegalOfficerContext";
 import UserIdentityNameCell from '../../common/UserIdentityNameCell';
 
 import LocRequestDetails from './LocRequestDetails';
@@ -12,7 +12,7 @@ export interface Props {
 }
 
 export default function RejectedLocRequests(props: Props) {
-    const { rejectedLocRequests } = useCommonContext();
+    const { rejectedLocRequests } = useLegalOfficerContext();
 
     if(rejectedLocRequests === null) {
         return null;

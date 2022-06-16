@@ -5,6 +5,8 @@ import { LocType } from "@logion/node-api/dist/Types";
 import { LocContextProvider } from "./LocContext";
 import ContextualizedLocDetails from "./ContextualizedLocDetails";
 import { Viewer } from "./types";
+import { UserLocContextProvider } from "./UserLocContext";
+import UserContextualizedLocDetails from "./UserContextualizedLocDetails";
 
 export interface Props {
     backPath: string;
@@ -15,13 +17,25 @@ export interface Props {
 export default function LocDetails(props: Props) {
     const locId: UUID = new UUID(useParams<"locId">().locId);
 
-    return (
-        <LocContextProvider
-            locId={ locId }
-            backPath={ props.backPath }
-            detailsPath={ props.detailsPath }
-        >
-            <ContextualizedLocDetails viewer={ props.viewer } />
-        </LocContextProvider>
-    )
+    if (props.viewer === "LegalOfficer") {
+        return (
+            <LocContextProvider
+                locId={ locId }
+                backPath={ props.backPath }
+                detailsPath={ props.detailsPath }
+            >
+                <ContextualizedLocDetails/>
+            </LocContextProvider>
+        )
+    } else {
+        return (
+            <UserLocContextProvider
+                locId={ locId }
+                backPath={ props.backPath }
+                detailsPath={ props.detailsPath }
+            >
+                <UserContextualizedLocDetails/>
+            </UserLocContextProvider>
+        )
+    }
 }

@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { DataLocType } from "@logion/node-api/dist/Types";
 
-import { useCommonContext } from '../../common/CommonContext';
+import { useUserContext } from "../UserContext";
 import Table, { Cell, EmptyTableMessage, DateTimeCell, ActionCell } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';
 import LocIdCell from '../../common/LocIdCell';
@@ -17,12 +17,12 @@ export interface Props {
 }
 
 export default function ClosedLocs(props: Props) {
-    const { closedLocRequests } = useCommonContext();
+    const { locsState } = useUserContext()
     const navigate = useNavigate();
     const { width } = useResponsiveContext();
     const { locType } = props
 
-    if(closedLocRequests === null) {
+    if (locsState === null || locsState?.closedLocs === undefined) {
         return <Loader />;
     }
 
@@ -31,27 +31,27 @@ export default function ClosedLocs(props: Props) {
             columns={[
                 {
                     "header": "Legal Officer",
-                    render: requestAndLoc => <LegalOfficerName address={ requestAndLoc.request.ownerAddress } />,
+                    render: locData => <LegalOfficerName address={ locData.ownerAddress } />,
                     align: 'left',
                 },
                 {
                     "header": "Description",
-                    render: requestAndLoc => <Cell content={ requestAndLoc.request.description } overflowing tooltipId='description-tooltip' />,
+                    render: locData => <Cell content={ locData.description } overflowing tooltipId='description-tooltip' />,
                     align: 'left',
                 },
                 {
                     header: "Status",
-                    render: requestAndLoc => <LocStatusCell status={ requestAndLoc.request.status }/>,
+                    render: locData => <LocStatusCell status={ locData.status }/>,
                     width: "140px",
                 },
                 {
                     header: "LOC ID",
-                    render: requestAndLoc => <LocIdCell status={ requestAndLoc.request.status } id={ requestAndLoc.request.id }/>,
+                    render: locData => <LocIdCell status={ locData.status } id={ locData.id }/>,
                     align: "left",
                 },
                 {
                     "header": "Creation date",
-                    render: requestAndLoc => <DateTimeCell dateTime={ requestAndLoc.request.createdOn || null } />,
+                    render: locData => <DateTimeCell dateTime={ locData.createdOn || null } />,
                     width: width({
                         onSmallScreen: "120px",
                         otherwise: "200px"
@@ -60,7 +60,7 @@ export default function ClosedLocs(props: Props) {
                 },
                 {
                     header: "Closing date",
-                    render: requestAndLoc => <DateTimeCell dateTime={ requestAndLoc.request.closedOn || null } />,
+                    render: locData => <DateTimeCell dateTime={ locData.closedOn || null } />,
                     width: width({
                         onSmallScreen: "120px",
                         otherwise: "200px"
@@ -72,7 +72,7 @@ export default function ClosedLocs(props: Props) {
                     render: request =>
                         <ActionCell>
                             <ButtonGroup>
-                                <Button onClick={ () => navigate(locDetailsPath(request.request.id, request.request.locType)) }>View</Button>
+                                <Button onClick={ () => navigate(locDetailsPath(request.id, request.locType)) }>View</Button>
                             </ButtonGroup>
                         </ActionCell>
                     ,
@@ -83,7 +83,7 @@ export default function ClosedLocs(props: Props) {
                     align: 'center',
                 },
             ]}
-            data={ closedLocRequests[locType] }
+            data={ locsState.closedLocs[locType].map(locState => locState.data()) }
             renderEmpty={ () => <EmptyTableMessage>No LOCs</EmptyTableMessage>}
         />
     );

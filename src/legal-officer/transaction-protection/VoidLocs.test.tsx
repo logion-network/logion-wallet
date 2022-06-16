@@ -1,10 +1,10 @@
-jest.mock('../../common/CommonContext');
+jest.mock('../LegalOfficerContext');
 jest.mock('../../logion-chain');
 import { IdentityLocType } from "@logion/node-api/dist/Types";
 
 import VoidLocs from "./VoidLocs";
 import { shallowRender, render } from '../../tests';
-import { setVoidedIdentityLocsByType } from '../../common/__mocks__/CommonContextMock';
+import { setVoidedIdentityLocsByType } from "../__mocks__/LegalOfficerContextMock";
 
 test("Renders null with no data", () => {
     const tree = shallowRender(<VoidLocs locType="Transaction" />);

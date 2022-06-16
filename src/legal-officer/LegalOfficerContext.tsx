@@ -1,17 +1,29 @@
-import React, { useContext, useEffect, useReducer, Reducer } from 'react';
+import React, { useContext, useEffect, useReducer, Reducer, useCallback } from 'react';
 import { AxiosInstance } from 'axios';
 import { VaultTransferRequest } from '@logion/client';
 import { ProtectionRequest } from '@logion/client/dist/RecoveryClient';
 
-import { fetchProtectionRequests, } from '../common/Model';
+import { fetchProtectionRequests, FetchLocRequestSpecification, fetchLocRequests, } from '../common/Model';
 import { useCommonContext } from '../common/CommonContext';
 import { LIGHT_MODE } from './Types';
 import { AxiosFactory } from '../common/api';
 import { useLogionChain } from '../logion-chain';
 import { VaultApi } from '../vault/VaultApi';
+import { DataLocType, IdentityLocType, LegalOfficerCase, LocType } from "@logion/node-api/dist/Types";
+import { LocRequest } from "../common/types/ModelTypes";
+import { DateTime } from "luxon";
+import { UUID, toDecimalString } from "@logion/node-api/dist/UUID";
+import { getLegalOfficerCasesMap } from "@logion/node-api/dist/LogionLoc";
+
+const DEFAULT_NOOP = () => {};
+
+export interface RequestAndLoc {
+    request: LocRequest;
+    loc?: LegalOfficerCase;
+}
 
 export interface LegalOfficerContext {
-    refreshRequests: ((clearBeforeRefresh: boolean) => void) | null,
+    refreshRequests: ((clearBeforeRefresh: boolean) => void),
     pendingProtectionRequests: ProtectionRequest[] | null,
     activatedProtectionRequests: ProtectionRequest[] | null,
     protectionRequestsHistory: ProtectionRequest[] | null,
@@ -23,25 +35,50 @@ export interface LegalOfficerContext {
     settings?: Record<string, string>;
     updateSetting: (id: string, value: string) => Promise<void>;
     allSettingsKeys: string[];
+    pendingLocRequests: Record<DataLocType, LocRequest[]> | null;
+    rejectedLocRequests: Record<DataLocType, LocRequest[]> | null;
+    openedLocRequests: Record<DataLocType, RequestAndLoc[]> | null;
+    closedLocRequests: Record<DataLocType, RequestAndLoc[]> | null;
+    openedIdentityLocs: RequestAndLoc[] | null;
+    openedIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null;
+    closedIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null;
+    voidTransactionLocs: Record<DataLocType, RequestAndLoc[]> | null;
+    voidIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null;
+    refreshLocs: () => void;
 }
 
 interface FullLegalOfficerContext extends LegalOfficerContext {
     dataAddress: string | null;
     fetchForAddress: string | null;
+    locsDataAddress: string | null;
+    fetchLocsForAddress: string | null;
+    refreshAddress?: string;
 }
 
 function initialContextValue(): FullLegalOfficerContext {
     return {
         dataAddress: null,
         fetchForAddress: null,
-        refreshRequests: null,
+        locsDataAddress: null,
+        fetchLocsForAddress: null,
+        refreshRequests: DEFAULT_NOOP,
         pendingProtectionRequests: null,
         activatedProtectionRequests: null,
         protectionRequestsHistory: null,
         pendingRecoveryRequests: null,
         recoveryRequestsHistory: null,
         updateSetting: () => Promise.reject(),
-        allSettingsKeys: [ 'oath' ]
+        allSettingsKeys: [ 'oath' ],
+        pendingLocRequests: null,
+        rejectedLocRequests: null,
+        openedLocRequests: null,
+        closedLocRequests: null,
+        openedIdentityLocs: null,
+        openedIdentityLocsByType: null,
+        closedIdentityLocsByType: null,
+        voidTransactionLocs: null,
+        voidIdentityLocsByType: null,
+        refreshLocs: DEFAULT_NOOP,
     };
 }
 
@@ -51,6 +88,9 @@ type ActionType = 'FETCH_IN_PROGRESS'
     | 'SET_DATA'
     | 'SET_CURRENT_USER'
     | 'UPDATE_SETTING'
+    | 'FETCH_LOCS_IN_PROGRESS'
+    | 'SET_LOCS_DATA'
+    | 'SET_REFRESH'
 ;
 
 interface Action {
@@ -72,10 +112,43 @@ interface Action {
     updateSetting?: (id: string, value: string) => Promise<void>;
     id?: string;
     value?: string;
+    pendingLocRequests?: Record<DataLocType, LocRequest[]>;
+    rejectedLocRequests?: Record<DataLocType, LocRequest[]>;
+    openedLocRequests?: Record<DataLocType, RequestAndLoc[]>;
+    closedLocRequests?: Record<DataLocType, RequestAndLoc[]>;
+    openedIdentityLocs?: RequestAndLoc[];
+    openedIdentityLocsByType?: Record<IdentityLocType, RequestAndLoc[]>;
+    closedIdentityLocsByType?: Record<IdentityLocType, RequestAndLoc[]>;
+    voidTransactionLocs?: Record<DataLocType, RequestAndLoc[]>;
+    voidIdentityLocsByType?: Record<IdentityLocType, RequestAndLoc[]>;
+    refreshLocs?: (() => void);
+    refreshAddress?: string;
 }
 
 const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOfficerContext, action: Action): FullLegalOfficerContext => {
+    console.log("ACTION %s", action.type)
     switch (action.type) {
+        case 'FETCH_LOCS_IN_PROGRESS':
+            if (action.clearBeforeRefresh!) {
+                return {
+                    ...state,
+                    fetchLocsForAddress: action.dataAddress!,
+                    pendingLocRequests: null,
+                    rejectedLocRequests: null,
+                    openedLocRequests: null,
+                    closedLocRequests: null,
+                    openedIdentityLocs: null,
+                    openedIdentityLocsByType: null,
+                    closedIdentityLocsByType: null,
+                    voidTransactionLocs: null,
+                    voidIdentityLocsByType: null,
+                }
+            } else {
+                return {
+                    ...state,
+                    fetchLocsForAddress: action.dataAddress!,
+                };
+            }
         case 'FETCH_IN_PROGRESS':
             if(action.clearBeforeRefresh!) {
                 return {
@@ -89,6 +162,25 @@ const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOffic
                     ...state,
                     fetchForAddress: action.dataAddress!,
                 };
+            }
+        case "SET_LOCS_DATA":
+            if (action.dataAddress === state.fetchLocsForAddress) {
+                return {
+                    ...state,
+                    fetchLocsForAddress: null,
+                    locsDataAddress: action.dataAddress!,
+                    pendingLocRequests: action.pendingLocRequests!,
+                    rejectedLocRequests: action.rejectedLocRequests!,
+                    openedLocRequests: action.openedLocRequests!,
+                    closedLocRequests: action.closedLocRequests!,
+                    openedIdentityLocs: action.openedIdentityLocs!,
+                    openedIdentityLocsByType: action.openedIdentityLocsByType!,
+                    closedIdentityLocsByType: action.closedIdentityLocsByType!,
+                    voidTransactionLocs: action.voidTransactionLocs!,
+                    voidIdentityLocsByType: action.voidIdentityLocsByType!,
+                }
+            } else {
+                return state;
             }
         case 'SET_DATA':
             if(action.dataAddress === state.fetchForAddress) {
@@ -124,6 +216,12 @@ const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOffic
                     [action.id!]: action.value!,
                 }
             }
+        case 'SET_REFRESH':
+            return {
+                ...state,
+                refreshLocs: action.refreshLocs!,
+                refreshAddress: action.refreshAddress!,
+            };
         default:
             /* istanbul ignore next */
             throw new Error(`Unknown type: ${action.type}`);
@@ -135,7 +233,7 @@ export interface Props {
 }
 
 export function LegalOfficerContextProvider(props: Props) {
-    const { accounts, axiosFactory, isCurrentAuthenticated, client, getOfficer } = useLogionChain();
+    const { api, accounts, axiosFactory, isCurrentAuthenticated, client, getOfficer } = useLogionChain();
     const { colorTheme, setColorTheme } = useCommonContext();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
@@ -144,6 +242,203 @@ export function LegalOfficerContextProvider(props: Props) {
             setColorTheme(LIGHT_MODE);
         }
     }, [ colorTheme, setColorTheme ]);
+
+    const refreshLocs = useCallback(() => {
+        const now = DateTime.now();
+        if(api !== null
+            && accounts !== null
+            && accounts.current !== undefined
+            && client !== null
+            && client.isTokenValid(now)
+            && axiosFactory !== undefined) {
+
+            const currentAccount = accounts.current;
+            const currentAddress = currentAccount.address;
+            dispatch({
+                type: "FETCH_LOCS_IN_PROGRESS",
+                dataAddress: currentAddress,
+            });
+
+            (async function () {
+
+                const fetch = async (specification: Partial<FetchLocRequestSpecification>) => {
+
+                    const specificationFragment: FetchLocRequestSpecification = {
+                        ownerAddress: currentAddress,
+                        statuses: [],
+                        locTypes: []
+                    }
+                    return await fetchLocRequests(axiosFactory(currentAccount.address), {
+                        ...specificationFragment,
+                        ...specification
+                    });
+                }
+
+                interface RequestsByType {
+                    pending: LocRequest[],
+                    rejected: LocRequest[],
+                    opened: LocRequest[],
+                    closed: LocRequest[],
+                    locIds: UUID[]
+                }
+
+                async function fetchRequests(locType: LocType): Promise<RequestsByType> {
+                    const pending = await fetch({
+                        statuses: [ "REQUESTED" ],
+                        locTypes: [ locType ]
+                    })
+                    const opened = await fetch({
+                        statuses: [ "OPEN" ],
+                        locTypes: [ locType ]
+                    })
+                    const closed = await fetch({
+                        statuses: [ "CLOSED" ],
+                        locTypes: [ locType ]
+                    })
+                    const rejected = await fetch({
+                        statuses: [ "REJECTED" ],
+                        locTypes: [ locType ]
+                    })
+
+                    let locIds = opened.map(loc => new UUID(loc.id))
+                    locIds = locIds.concat(closed.map(loc => new UUID(loc.id)));
+
+                    return { pending, rejected, opened, closed, locIds }
+                }
+
+                const openedIdentityLocsOnly = await fetch({
+                    statuses: [ "OPEN" ],
+                    locTypes: [ 'Identity' ]
+                })
+                const openedIdentityLocsOnlyPolkadot = await fetch({
+                    statuses: [ "OPEN" ],
+                    locTypes: [ 'Identity' ],
+                    identityLocType: 'Polkadot'
+                })
+                const closedIdentityLocsOnlyPolkadot = await fetch({
+                    statuses: [ "CLOSED" ],
+                    locTypes: [ 'Identity' ],
+                    identityLocType: 'Polkadot'
+                })
+                const openedIdentityLocsOnlyLogion = await fetch({
+                    statuses: [ "OPEN" ],
+                    locTypes: [ 'Identity' ],
+                    identityLocType: 'Logion'
+                })
+                const closedIdentityLocsOnlyLogion = await fetch({
+                    statuses: [ "CLOSED" ],
+                    locTypes: [ 'Identity' ],
+                    identityLocType: 'Logion'
+                })
+
+                const transactionLocs = await fetchRequests('Transaction');
+                const collectionLocs = await fetchRequests('Collection');
+
+                let locIds = transactionLocs.locIds
+                    .concat(collectionLocs.locIds)
+                    .concat(openedIdentityLocsOnly.map(loc => new UUID(loc.id)))
+                    .concat(closedIdentityLocsOnlyPolkadot.map(loc => new UUID(loc.id)))
+                    .concat(closedIdentityLocsOnlyLogion.map(loc => new UUID(loc.id)));
+                const locs = await getLegalOfficerCasesMap({
+                    api: api!,
+                    locIds
+                });
+
+                const pendingLocRequests: Record<DataLocType, LocRequest[]> = {
+                    'Transaction': transactionLocs.pending,
+                    'Collection': collectionLocs.pending
+                }
+                const rejectedLocRequests: Record<DataLocType, LocRequest[]> = {
+                    'Transaction': transactionLocs.rejected,
+                    'Collection': collectionLocs.rejected
+                }
+                const openedLocRequests: Record<DataLocType, RequestAndLoc[]> = {
+                    'Transaction': notVoidRequestsAndLocs(transactionLocs.opened, locs),
+                    'Collection': notVoidRequestsAndLocs(collectionLocs.opened, locs)
+                }
+                const closedLocRequests: Record<DataLocType, RequestAndLoc[]> = {
+                    'Transaction': notVoidRequestsAndLocs(transactionLocs.closed, locs),
+                    'Collection': notVoidRequestsAndLocs(collectionLocs.closed, locs)
+                }
+                const voidTransactionLocs: Record<DataLocType, RequestAndLoc[]> = {
+                    'Transaction': voidRequestsAndLocs(transactionLocs.opened, locs)
+                        .concat(voidRequestsAndLocs(transactionLocs.closed, locs)),
+                    'Collection': voidRequestsAndLocs(collectionLocs.opened, locs)
+                        .concat(voidRequestsAndLocs(collectionLocs.closed, locs))
+                }
+
+                // Identity
+                const openedIdentityLocs = notVoidRequestsAndLocs(openedIdentityLocsOnly, locs);
+
+                const openedIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> = {
+                    'Polkadot': notVoidRequestsAndLocs(openedIdentityLocsOnlyPolkadot, locs),
+                    'Logion': notVoidRequestsAndLocs(openedIdentityLocsOnlyLogion, locs)
+                };
+                const closedIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> = {
+                    'Polkadot': notVoidRequestsAndLocs(closedIdentityLocsOnlyPolkadot, locs),
+                    'Logion': notVoidRequestsAndLocs(closedIdentityLocsOnlyLogion, locs)
+                }
+                const voidIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> = {
+                    'Polkadot': voidRequestsAndLocs(openedIdentityLocsOnlyPolkadot, locs)
+                        .concat(voidRequestsAndLocs(closedIdentityLocsOnlyPolkadot, locs)),
+                    'Logion': voidRequestsAndLocs(openedIdentityLocsOnlyLogion, locs)
+                        .concat(voidRequestsAndLocs(closedIdentityLocsOnlyLogion, locs))
+                }
+
+                dispatch({
+                    type: "SET_LOCS_DATA",
+                    dataAddress: currentAddress,
+                    pendingLocRequests,
+                    openedLocRequests,
+                    closedLocRequests,
+                    rejectedLocRequests,
+                    openedIdentityLocs,
+                    openedIdentityLocsByType,
+                    closedIdentityLocsByType,
+                    voidTransactionLocs,
+                    voidIdentityLocsByType,
+                });
+            })();
+        }
+    }, [ api, dispatch, accounts, client, axiosFactory ]);
+
+    function voidRequestsAndLocs(requests: LocRequest[], locs: Record<string, LegalOfficerCase>): RequestAndLoc[] {
+        return requests
+            .map(request => ({request, loc: locs[toDecimalString(request.id)]}))
+            .filter(requestAndLoc => requestAndLoc.loc !== undefined && requestAndLoc.loc.voidInfo !== undefined);
+    }
+
+    function notVoidRequestsAndLocs(requests: LocRequest[], locs: Record<string, LegalOfficerCase>): RequestAndLoc[] {
+        return requests
+            .map(request => ({request, loc: locs[toDecimalString(request.id)]}))
+            .filter(requestAndLoc => requestAndLoc.loc !== undefined && requestAndLoc.loc.voidInfo === undefined);
+    }
+
+    useEffect(() => {
+        if(api !== null
+            && client !== null
+            && client.isTokenValid(DateTime.now())
+            && accounts !== null
+            && accounts.current !== undefined
+            && contextValue.locsDataAddress !== accounts.current.address
+            && contextValue.fetchLocsForAddress !== accounts.current.address) {
+            refreshLocs();
+        }
+    }, [ api, contextValue, refreshLocs, accounts, client ]);
+
+    useEffect(() => {
+        if(accounts !== null
+            && accounts.current !== undefined
+            && contextValue.refreshAddress !== accounts.current.address
+            && client !== null) {
+            dispatch({
+                type: 'SET_REFRESH',
+                refreshLocs: refreshLocs,
+                refreshAddress: accounts.current.address,
+            });
+        }
+    }, [ contextValue, refreshLocs, dispatch, accounts, client ]);
+
 
     useEffect(() => {
         if(accounts !== null

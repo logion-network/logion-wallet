@@ -1,6 +1,6 @@
 import { DataLocType } from "@logion/node-api/dist/Types";
 
-import { useCommonContext } from '../../common/CommonContext';
+import { useUserContext } from "../UserContext";
 import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';
 import LegalOfficerName from '../../common/LegalOfficerNameCell';
@@ -11,10 +11,10 @@ export interface Props {
 }
 
 export default function RejectedLocs(props: Props) {
-    const { rejectedLocRequests } = useCommonContext();
+    const { locsState } = useUserContext()
     const { locType } = props
 
-    if(rejectedLocRequests === null) {
+    if(locsState === null || locsState?.rejectedRequests === undefined) {
         return <Loader />;
     }
 
@@ -48,7 +48,7 @@ export default function RejectedLocs(props: Props) {
                     align: 'center',
                 },
             ]}
-            data={ rejectedLocRequests[locType] }
+            data={ locsState.rejectedRequests[locType].map(locState => locState.data()) }
             renderEmpty={ () => <EmptyTableMessage>No LOCs</EmptyTableMessage>}
         />
     );

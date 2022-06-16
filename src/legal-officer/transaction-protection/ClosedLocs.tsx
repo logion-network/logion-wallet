@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { LocType, IdentityLocType } from '@logion/node-api/dist/Types';
 
-import { useCommonContext } from '../../common/CommonContext';
+import { useLegalOfficerContext } from "../LegalOfficerContext";
 import Table, { Cell, EmptyTableMessage, DateTimeCell, ActionCell } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';
 import LocIdCell from '../../common/LocIdCell';
@@ -17,7 +17,7 @@ export interface Props {
 }
 
 export default function ClosedLocs(props: Props) {
-    const { closedLocRequests, closedIdentityLocsByType } = useCommonContext();
+    const { closedLocRequests, closedIdentityLocsByType } = useLegalOfficerContext();
     const navigate = useNavigate();
     const { width } = useResponsiveContext();
     const { locType, identityLocType } = props

@@ -69,7 +69,7 @@ describe("LocCreation", () => {
 
     it("should create a LOC with identity info if not protected by selected LO", async () => {
         setProtectionState(new NoProtection({
-            
+
         } as unknown as RecoverySharedState));
         await itCreatesLoc(true);
     })

@@ -1,9 +1,10 @@
 jest.mock('../../common/CommonContext');
+jest.mock('../LegalOfficerContext');
 
 import { IdentityLocType } from "@logion/node-api/dist/Types";
 import { shallowRender, render } from '../../tests';
 import ClosedLocs from './ClosedLocs';
-import { setClosedLocRequests, setClosedIdentityLocsByType } from '../../common/__mocks__/CommonContextMock';
+import { setClosedLocRequests, setClosedIdentityLocsByType } from "../__mocks__/LegalOfficerContextMock";
 
 test("Renders null with no data", () => {
     const tree = shallowRender(<ClosedLocs locType="Transaction" />);

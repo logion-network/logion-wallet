@@ -3,6 +3,7 @@ import { File, Link, MetadataItem } from "@logion/node-api/dist/Types";
 
 import { LocItem } from "./types";
 import { LocFile, LocMetadataItem, LocLink } from "../common/types/ModelTypes";
+import { MergedMetadataItem, MergedFile, MergedLink } from "@logion/client";
 
 export interface MergeLocFileParameters {
     fileFromBackend: LocFile,
@@ -73,6 +74,53 @@ export function mergeLocMetadataItem(parameters: MergeLocMetadataItemParameters)
         const locItem = createDraftMetadataLocItem({
             metadataItem: itemFromBackend,
         }, false);
+        return { locItem, refreshNeeded: false };
+    }
+}
+
+export function metadataToLocItem(mergedMetadataItem: MergedMetadataItem): MergeResult {
+    if (mergedMetadataItem.published) {
+        return createPublishedMetadataLocItem({
+            metadataItem: mergedMetadataItem, timestamp: mergedMetadataItem.addedOn || null
+        })
+    } else {
+        const locItem = createDraftMetadataLocItem({ metadataItem: mergedMetadataItem }, false)
+        return { locItem, refreshNeeded: false };
+    }
+}
+
+export function fileToLocItem(mergedFile: MergedFile,): MergeResult {
+    if (mergedFile.published) {
+        return createPublishedFileLocItem({
+            file: mergedFile, name: mergedFile.name, timestamp: mergedFile.addedOn || null
+        })
+    } else {
+        const locItem = createDraftFileLocItem({ file: mergedFile, name: mergedFile.name }, false)
+        return { locItem, refreshNeeded: false };
+    }
+}
+
+export function linkToLocItem(
+    mergedLink: MergedLink,
+    otherLocDescription: string,
+    submitter: string,
+    linkDetailsPath: string,
+): MergeResult {
+    if (mergedLink.published) {
+        return createPublishedLinkedLocItem({
+            link: mergedLink,
+            timestamp: mergedLink.addedOn || null,
+            otherLocDescription,
+            submitter,
+            linkDetailsPath,
+        })
+    } else {
+        const locItem = createDraftLinkedLocItem({
+            link: mergedLink,
+            otherLocDescription,
+            submitter,
+            linkDetailsPath,
+        }, false)
         return { locItem, refreshNeeded: false };
     }
 }

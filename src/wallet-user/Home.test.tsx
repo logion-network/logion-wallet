@@ -4,7 +4,8 @@ jest.mock("../common/CommonContext");
 
 import { BalanceState } from "@logion/client/dist/Balance";
 import { DEFAULT_COIN_BALANCE, DEFAULT_TRANSACTION } from "../common/TestData";
-import { setBalanceState, setOpenedLocRequests, setPendingLocRequests } from "../common/__mocks__/CommonContextMock";
+import { setBalanceState } from "../common/__mocks__/CommonContextMock";
+import { setOpenedLocRequests, setPendingLocRequests } from "./__mocks__/UserContextMock";
 import { shallowRender } from "../tests";
 import Home from "./Home";
 
