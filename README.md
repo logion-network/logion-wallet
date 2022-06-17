@@ -20,20 +20,16 @@ Use below command in order to connect to a locally running infrastructure
 yarn start
 ```
 
-### Connecting to a hosted infrastructure
-
-Change the endpoints in `src/config/development.json`.
-
 ### Test users
 
-Alice, Bob and Charlie are the accounts associated with the legal officers currently powering the Logion wallet.
+In a testing environment, Alice and Bob are the accounts associated with the legal officers currently powering the Logion wallet.
 In order to access the legal officer UI,
 at least one legal officer keypair must be loaded in the Polkadot extension. The first step is to produce the secret
 seed of one of those accounts. This is achieved with the following command:
 
     subkey inspect SECRET_URI
 
-where `SECRET_URI` is `//Alice` for Alice and `//Bob` for Bob.
+where `SECRET_URI` is `//Alice` for Alice, `//Bob` for Bob, etc.
 
 This is the list of test accounts' secret seeds:
 
@@ -47,40 +43,8 @@ In order to register them with the extension:
 2. Encode the secret seed
 3. Set a password
 
-The logion wallet should now show the legal officer interface instead of the regular wallet if you log in with a
-legal officer address.
+if you log in with a legal officer address, the logion wallet should show the legal officer interface instead of the regular wallet.
 
-Note that each account is linked to a specific Logion legal officer, it is probably a good idea
-to name them accordingly in the extension:
-
-- Alice is Patrick
-- Bob is Guillaume
-- Charlie is Eline
-
-
-## Using Polkadot{.js}
-
-[Polkadot{.js}](https://polkadot.js.org/apps/) can be used to
-explore and interact with a Logion node. The procedure is as follows:
-
-1. Launch the node locally (see above)
-2. Launch the web app with [this link](https://polkadot.js.org/apps)
-3. Select the local node by clicking on the top-left icon and selecting "Development > Local node"
-4. Configure custom data (see `src/logion-chain/interfaces/definitions.ts`)
-   in "Settings > Developer" screen and click "Save"
-5. You should now be able to interact with the node running locally
-
-
-## Generating custom types for Polkadot JS
-
-The logion-chain SDK must be synchronized each time the logion node API changes (new custom types, queries,
-transactions, etc.). To do so:
-
-1. Update `src/logion-chain/interfaces/definitions.ts` file (may not be needed)
-2. Start a local logion node
-3. Run `yarn generate:defs-meta`
-
-You are then able to fix and/or enrich the logion-chain SDK.
 
 ## Releasing
 
