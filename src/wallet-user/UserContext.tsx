@@ -1,6 +1,18 @@
 import React, { useContext, useEffect, useCallback, useReducer, Reducer } from "react";
 import { DateTime } from "luxon";
-import { ActiveProtection, ClaimedRecovery, LegalOfficer, NoProtection, PendingProtection, PostalAddress, ProtectionState, UserIdentity, SignCallback, AcceptedProtection, PendingRecovery } from "@logion/client";
+import {
+    ActiveProtection,
+    ClaimedRecovery,
+    LegalOfficer,
+    NoProtection,
+    PendingProtection,
+    PostalAddress,
+    ProtectionState,
+    UserIdentity,
+    SignCallback,
+    AcceptedProtection,
+    PendingRecovery, RejectedProtection
+} from "@logion/client";
 import { VaultState } from "@logion/client";
 
 import { useLogionChain } from '../logion-chain';
@@ -29,6 +41,9 @@ export interface UserContext {
     createProtectionRequest: ((params: CreateProtectionRequestParams) => Promise<void>) | null,
     activateProtection: ((callback: SignCallback) => Promise<void>) | null,
     claimRecovery: ((callback: SignCallback) => Promise<void>) | null,
+    cancelProtection: () => Promise<void>,
+    resubmitProtection: (legalOfficer: LegalOfficer) => Promise<void>,
+    changeProtectionLegalOfficer: (legalOfficer: LegalOfficer, newLegalOfficer: LegalOfficer) => Promise<void>
     protectionState?: ProtectionState,
     vaultState?: VaultState,
     mutateVaultState: (mutator: (current: VaultState) => Promise<VaultState>) => Promise<void>,
@@ -52,6 +67,9 @@ function initialContextValue(): FullUserContext {
         createProtectionRequest: null,
         activateProtection: null,
         claimRecovery: null,
+        cancelProtection: () => Promise.reject(),
+        resubmitProtection: () => Promise.reject(),
+        changeProtectionLegalOfficer: () => Promise.reject(),
         mutateVaultState: () => Promise.reject(),
         mutateRecoveredVaultState: () => Promise.reject(),
         mutateRecoveredBalanceState: () => Promise.reject(),
@@ -77,7 +95,10 @@ type ActionType = 'FETCH_IN_PROGRESS'
     | 'MUTATE_RECOVERED_BALANCE_STATE'
     | 'SET_MUTATE_LOCS_STATE'
     | 'MUTATE_LOCS_STATE'
-;
+    | 'SET_PROTECTION_CANCEL'
+    | 'SET_PROTECTION_RESUBMIT'
+    | 'SET_PROTECTION_CHANGE_LO'
+    ;
 
 interface Action {
     type: ActionType,
@@ -87,6 +108,9 @@ interface Action {
     createProtectionRequest?: (params: CreateProtectionRequestParams) => Promise<void>,
     activateProtection?: (callback: SignCallback) => Promise<void>,
     claimRecovery?: (callback: SignCallback) => Promise<void>,
+    cancelProtection?: () => Promise<void>,
+    resubmitProtection?: (legalOfficer: LegalOfficer) => Promise<void>,
+    changeProtectionLegalOfficer?: (legalOfficer: LegalOfficer, newLegalOfficer: LegalOfficer) => Promise<void>,
     clearBeforeRefresh?: boolean,
     axiosFactory?: AxiosFactory,
     vaultState?: VaultState,
@@ -211,6 +235,21 @@ const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, actio
                 ...state,
                 locsState: action.locsState!,
             };
+        case "SET_PROTECTION_CANCEL":
+            return {
+                ...state,
+                cancelProtection: action.cancelProtection!,
+            }
+        case "SET_PROTECTION_RESUBMIT":
+            return {
+                ...state,
+                resubmitProtection: action.resubmitProtection!,
+            }
+        case "SET_PROTECTION_CHANGE_LO":
+            return {
+                ...state,
+                changeProtectionLegalOfficer: action.changeProtectionLegalOfficer!
+            }
         default:
             /* istanbul ignore next */
             throw new Error(`Unknown type: ${action.type}`);
@@ -353,7 +392,7 @@ export function UserContextProvider(props: Props) {
     }, [ contextValue.protectionState, signer ]);
 
     useEffect(() => {
-        if(contextValue.activateProtection !== activateProtectionCallback) {
+        if (contextValue.activateProtection !== activateProtectionCallback) {
             dispatch({
                 type: "SET_ACTIVATE_PROTECTION_FUNCTION",
                 activateProtection: activateProtectionCallback
@@ -375,7 +414,7 @@ export function UserContextProvider(props: Props) {
     }, [ contextValue.protectionState, signer ]);
 
     useEffect(() => {
-        if(contextValue.claimRecovery !== claimRecoveryCallback) {
+        if (contextValue.claimRecovery !== claimRecoveryCallback) {
             dispatch({
                 type: "SET_CLAIM_RECOVERY_FUNCTION",
                 claimRecovery: claimRecoveryCallback
@@ -384,8 +423,8 @@ export function UserContextProvider(props: Props) {
     }, [ contextValue, claimRecoveryCallback ]);
 
     useEffect(() => {
-        if(axiosFactory !== undefined
-                && contextValue.currentAxiosFactory !== axiosFactory) {
+        if (axiosFactory !== undefined
+            && contextValue.currentAxiosFactory !== axiosFactory) {
             dispatch({
                 type: "SET_CURRENT_AXIOS",
                 axiosFactory,
@@ -402,7 +441,7 @@ export function UserContextProvider(props: Props) {
     }, [ contextValue.vaultState ]);
 
     useEffect(() => {
-        if(contextValue.mutateVaultState !== mutateVaultStateCallback) {
+        if (contextValue.mutateVaultState !== mutateVaultStateCallback) {
             dispatch({
                 type: "SET_MUTATE_VAULT_STATE",
                 mutateVaultState: mutateVaultStateCallback,
@@ -419,7 +458,7 @@ export function UserContextProvider(props: Props) {
     }, [ contextValue.recoveredVaultState ]);
 
     useEffect(() => {
-        if(contextValue.mutateRecoveredVaultState !== mutateRecoveredVaultStateCallback) {
+        if (contextValue.mutateRecoveredVaultState !== mutateRecoveredVaultStateCallback) {
             dispatch({
                 type: "SET_MUTATE_RECOVERED_VAULT_STATE",
                 mutateRecoveredVaultState: mutateRecoveredVaultStateCallback,
@@ -436,7 +475,7 @@ export function UserContextProvider(props: Props) {
     }, [ contextValue.recoveredBalanceState ]);
 
     useEffect(() => {
-        if(contextValue.mutateRecoveredBalanceState !== mutateRecoveredBalanceStateCallback) {
+        if (contextValue.mutateRecoveredBalanceState !== mutateRecoveredBalanceStateCallback) {
             dispatch({
                 type: "SET_MUTATE_RECOVERED_BALANCE_STATE",
                 mutateRecoveredBalanceState: mutateRecoveredBalanceStateCallback,
@@ -453,7 +492,7 @@ export function UserContextProvider(props: Props) {
     }, [ contextValue.locsState ]);
 
     useEffect(() => {
-        if(contextValue.mutateLocsState !== mutateLocsStateCallback) {
+        if (contextValue.mutateLocsState !== mutateLocsStateCallback) {
             dispatch({
                 type: "SET_MUTATE_LOCS_STATE",
                 mutateLocsState: mutateLocsStateCallback,
@@ -461,9 +500,63 @@ export function UserContextProvider(props: Props) {
         }
     }, [ mutateLocsStateCallback, contextValue.mutateLocsState ]);
 
+    const cancelProtectionCallback = useCallback(async () => {
+        const rejectedProtection = contextValue.protectionState as RejectedProtection;
+        const noProtection = await rejectedProtection.cancel();
+        dispatch({
+            type: "REFRESH_PROTECTION_STATE",
+            protectionState: noProtection
+        })
+    }, [ contextValue.protectionState ])
+
+    const resubmitProtectionCallback = useCallback(async (legalOfficer: LegalOfficer) => {
+        const rejectedProtection = contextValue.protectionState as RejectedProtection;
+        const pendingProtection = await rejectedProtection.resubmit(legalOfficer);
+        dispatch({
+            type: "REFRESH_PROTECTION_STATE",
+            protectionState: pendingProtection
+        })
+    }, [ contextValue.protectionState ])
+
+    const changeProtectionLegalOfficerCallback = useCallback(async (legalOfficer: LegalOfficer, newLegalOfficer: LegalOfficer) => {
+        const rejectedProtection = contextValue.protectionState as RejectedProtection;
+        const pendingProtection = await rejectedProtection.changeLegalOfficer(legalOfficer, newLegalOfficer);
+        dispatch({
+            type: "REFRESH_PROTECTION_STATE",
+            protectionState: pendingProtection
+        })
+    }, [ contextValue.protectionState ])
+
+    useEffect(() => {
+        if (contextValue.cancelProtection !== cancelProtectionCallback) {
+            dispatch({
+                type: "SET_PROTECTION_CANCEL",
+                cancelProtection: cancelProtectionCallback,
+            });
+        }
+    }, [ contextValue.cancelProtection, cancelProtectionCallback]);
+
+    useEffect(() => {
+        if (contextValue.resubmitProtection !== resubmitProtectionCallback) {
+            dispatch({
+                type: "SET_PROTECTION_RESUBMIT",
+                resubmitProtection: resubmitProtectionCallback,
+            });
+        }
+    }, [ contextValue.resubmitProtection, resubmitProtectionCallback ]);
+
+    useEffect(() => {
+        if (contextValue.changeProtectionLegalOfficer !== changeProtectionLegalOfficerCallback) {
+            dispatch({
+                type: "SET_PROTECTION_CHANGE_LO",
+                changeProtectionLegalOfficer: changeProtectionLegalOfficerCallback
+            });
+        }
+    }, [ contextValue.changeProtectionLegalOfficer, changeProtectionLegalOfficerCallback ]);
+
     return (
-        <UserContextObject.Provider value={contextValue}>
-            {props.children}
+        <UserContextObject.Provider value={ contextValue }>
+            { props.children }
         </UserContextObject.Provider>
     );
 }

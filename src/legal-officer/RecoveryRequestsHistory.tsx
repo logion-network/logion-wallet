@@ -32,7 +32,7 @@ export default function RecoveryRequestsHistory() {
                     {
                         header: "Status",
                         render: request => <ProtectionRequestStatus status={ request.status } />,
-                        width: "150px",
+                        width: "170px",
                         splitAfter: true,
                     },
                     {

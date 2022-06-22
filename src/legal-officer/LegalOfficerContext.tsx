@@ -503,7 +503,7 @@ function refreshRequestsFunction(clearBeforeRefresh: boolean, currentAddress: st
             kind: 'ANY',
         });
         const protectionRequestsHistory = await fetchProtectionRequests(axios, {
-            statuses: ["ACCEPTED", "REJECTED", "ACTIVATED"],
+            statuses: ["ACCEPTED", "REJECTED", "ACTIVATED", "CANCELLED", "REJECTED_CANCELLED", "ACCEPTED_CANCELLED"],
             kind: 'PROTECTION_ONLY',
         });
 
@@ -512,7 +512,7 @@ function refreshRequestsFunction(clearBeforeRefresh: boolean, currentAddress: st
             kind: 'RECOVERY',
         });
         const recoveryRequestsHistory = await fetchProtectionRequests(axios, {
-            statuses: ["ACCEPTED", "REJECTED", "ACTIVATED"],
+            statuses: ["ACCEPTED", "REJECTED", "ACTIVATED", "CANCELLED", "REJECTED_CANCELLED", "ACCEPTED_CANCELLED"],
             kind: 'RECOVERY',
         });
 

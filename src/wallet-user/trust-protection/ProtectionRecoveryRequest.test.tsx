@@ -31,6 +31,7 @@ describe("ProtectionRecoveryRequest", () => {
             pendingProtectionRequests: [],
             allRequests: ACTIVATED_PROTECTION_REQUESTS,
             rejectedProtectionRequests: [],
+            cancelledProtectionRequests: [],
             selectedLegalOfficers: [ PATRICK, GUILLAUME ]
         });
         setProtectionState(state);
@@ -45,6 +46,7 @@ describe("ProtectionRecoveryRequest", () => {
             pendingProtectionRequests: PENDING_PROTECTION_REQUESTS,
             allRequests: PENDING_PROTECTION_REQUESTS,
             rejectedProtectionRequests: [],
+            cancelledProtectionRequests: [],
             selectedLegalOfficers: [ PATRICK, GUILLAUME ]
         });
         setProtectionState(state);
@@ -59,6 +61,7 @@ describe("ProtectionRecoveryRequest", () => {
             pendingProtectionRequests: [],
             allRequests: ACTIVATED_RECOVERY_REQUESTS,
             rejectedProtectionRequests: [],
+            cancelledProtectionRequests: [],
             selectedLegalOfficers: [ PATRICK, GUILLAUME ]
         });
         setProtectionState(state);
@@ -73,6 +76,7 @@ describe("ProtectionRecoveryRequest", () => {
             pendingProtectionRequests: [],
             allRequests: ACCEPTED_RECOVERY_REQUESTS,
             rejectedProtectionRequests: [],
+            cancelledProtectionRequests: [],
             selectedLegalOfficers: [ PATRICK, GUILLAUME ]
         });
         setProtectionState(state);
@@ -87,6 +91,7 @@ describe("ProtectionRecoveryRequest", () => {
             pendingProtectionRequests: [],
             allRequests: ACCEPTED_PROTECTION_REQUESTS,
             rejectedProtectionRequests: [],
+            cancelledProtectionRequests: [],
             selectedLegalOfficers: [ PATRICK, GUILLAUME ]
         });
         setProtectionState(state);
@@ -105,6 +110,7 @@ describe("ProtectionRecoveryRequest", () => {
             pendingProtectionRequests: PENDING_PROTECTION_REQUESTS,
             allRequests: PENDING_PROTECTION_REQUESTS,
             rejectedProtectionRequests: [],
+            cancelledProtectionRequests: [],
             selectedLegalOfficers: [ PATRICK, GUILLAUME ]
         });
         setProtectionState(state);
@@ -119,6 +125,7 @@ describe("ProtectionRecoveryRequest", () => {
             pendingProtectionRequests: PENDING_RECOVERY_REQUESTS,
             allRequests: PENDING_RECOVERY_REQUESTS,
             rejectedProtectionRequests: [],
+            cancelledProtectionRequests: [],
             selectedLegalOfficers: [ PATRICK, GUILLAUME ]
         });
         setProtectionState(state);
