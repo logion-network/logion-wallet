@@ -1,0 +1,19 @@
+.ProtectionRefusal .Title {
+    text-align: center;
+    margin: 20px;
+}
+
+.ProtectionRefusal .Button {
+    margin: 15px;
+}
+
+.ProtectionRefusal .select,
+.ProtectionRefusal .restart {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.ProtectionRefusal .ButtonGroup {
+    width: auto;
+}
