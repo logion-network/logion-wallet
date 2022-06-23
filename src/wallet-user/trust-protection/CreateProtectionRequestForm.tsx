@@ -219,7 +219,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                             setLegalOfficer1={ setLegalOfficer1 }
                             legalOfficer2={ legalOfficer2 }
                             setLegalOfficer2={ setLegalOfficer2 }
-                            mode={ props.isRecovery ? 'select' : 'choose' }
+                            label={ props.isRecovery ? "Select Legal Officer N°" : "Choose Legal Officer N°" }
                         />
                     </Frame>
                 </Col>

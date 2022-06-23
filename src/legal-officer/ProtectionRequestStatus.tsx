@@ -30,6 +30,10 @@ export default function ProtectionRequestStatus(props: Props) {
         statusColor = RED;
         icon = (<Icon icon={{ id: "rejected" }} />);
         status = <span style={{color: statusColor, textTransform: "uppercase"}}>Rejected</span>;
+    } else if(props.status === "CANCELLED" || props.status === "ACCEPTED_CANCELLED" || props.status === "REJECTED_CANCELLED") {
+        statusColor = RED;
+        icon = (<Icon icon={{ id: "void_label" }} />);
+        status = <span style={{color: statusColor, textTransform: "uppercase"}}>Cancelled</span>;
     } else {
         icon = null;
         status = null;

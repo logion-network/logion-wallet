@@ -1,6 +1,12 @@
 import { useCallback, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { LegalOfficer, PendingProtection, UnavailableProtection } from "@logion/client";
+import {
+    LegalOfficer,
+    PendingProtection,
+    UnavailableProtection,
+    RejectedProtection,
+    RejectedRecovery
+} from "@logion/client";
 
 import { useLogionChain } from '../../logion-chain';
 
@@ -20,8 +26,9 @@ import SelectLegalOfficer from './SelectLegalOfficer';
 
 import './ProtectionRecoveryRequest.css';
 import { ProtectionRequestStatus } from '@logion/client/dist/RecoveryClient';
+import ProtectionRefusal from "./ProtectionRefusal";
 
-export type ProtectionRecoveryRequestStatus = 'pending' | 'accepted' | 'activated' | 'unavailable';
+export type ProtectionRecoveryRequestStatus = 'pending' | 'accepted' | 'activated' | 'unavailable' | 'rejected';
 
 export interface Props {
     type: ProtectionRecoveryRequestStatus,
@@ -53,7 +60,7 @@ export default function ProtectionRecoveryRequest(props: Props) {
         const legalOfficer2: LegalOfficer = protectionParameters.states[1].legalOfficer;
         let legalOfficer1Status: ProtectionRequestStatus;
         let legalOfficer2Status: ProtectionRequestStatus;
-        if(protectionState instanceof PendingProtection) {
+        if(protectionState instanceof PendingProtection || protectionState instanceof RejectedProtection || protectionState instanceof RejectedRecovery) {
             legalOfficer1Status = protectionParameters.states[0].status;
             legalOfficer2Status = protectionParameters.states[1].status;
         } else if(props.type === 'accepted') {
@@ -134,6 +141,30 @@ export default function ProtectionRecoveryRequest(props: Props) {
                     />
                 );
             }
+        } else if (props.type === 'rejected') {
+            if(protectionParameters.isRecovery) {
+                header = (
+                    <Header
+                        icon="pending"
+                        color={ ORANGE }
+                        text="Your Logion Recovery request has been submitted. It appears that at least one of the
+                        selected Legal Officers refused your request: you have to decide what would be the next step.
+                        Please note that, only after the successful completion of both of your Legal Officer approval
+                        processes, you will be able to retrieve your assets from your previous account."
+                    />
+                );
+            } else {
+                header = (
+                    <Header
+                        icon="pending"
+                        color={ ORANGE }
+                        text="Your Logion Protection request has been submitted. It appears that at least one of the
+                        selected Legal Officers refused your request: you have to decide what would be the next step.
+                        Please note that, only after the successful completion of your Legal Officer approval processes,
+                        you will be able to use all features provided by your logion account dashboard."
+                    />
+                );
+            }
         }
 
         return (
@@ -190,18 +221,25 @@ export default function ProtectionRecoveryRequest(props: Props) {
                                     otherLegalOfficer={ legalOfficer2 }
                                     legalOfficers={ availableLegalOfficers }
                                     mode="view"
+                                    label="Legal Officer N°1"
                                     status={ legalOfficer1Status }
                                 />
                             </Col>
                             <Col md={6}>
-                                <SelectLegalOfficer
-                                    legalOfficerNumber={ 2 }
-                                    legalOfficer={ legalOfficer2 }
-                                    otherLegalOfficer={ legalOfficer1 }
-                                    legalOfficers={ availableLegalOfficers }
-                                    mode="view"
-                                    status={ legalOfficer2Status }
-                                />
+                                { props.type === 'rejected' &&
+                                    <ProtectionRefusal protection={ protectionState as RejectedProtection }/>
+                                }
+                                { props.type !== 'rejected' &&
+                                    <SelectLegalOfficer
+                                        legalOfficerNumber={ 2 }
+                                        legalOfficer={ legalOfficer2 }
+                                        otherLegalOfficer={ legalOfficer1 }
+                                        legalOfficers={ availableLegalOfficers }
+                                        mode="view"
+                                        label="Legal Officer N°2"
+                                        status={ legalOfficer2Status }
+                                    />
+                                }
                             </Col>
                         </Row>
 

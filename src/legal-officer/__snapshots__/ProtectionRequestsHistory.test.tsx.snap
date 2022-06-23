@@ -24,7 +24,7 @@ exports[`Renders requests history 1`] = `
           "header": "Status",
           "render": [Function],
           "splitAfter": true,
-          "width": "150px",
+          "width": "170px",
         },
         Object {
           "header": "Submission date",

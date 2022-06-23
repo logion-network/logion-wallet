@@ -13,7 +13,7 @@ import Officer from './Officer';
 
 import './SelectLegalOfficer.css';
 
-export type Mode = 'choose' | 'select' | 'view';
+export type Mode = 'select' | 'view';
 
 export function buildOptions(legalOfficers: LegalOfficer[]): OptionType[] {
     const options: OptionType[] = [];
@@ -38,25 +38,17 @@ export interface Props {
     setLegalOfficer?: (legalOfficer: LegalOfficer) => void,
     mode: Mode,
     status?: ProtectionRequestStatus,
+    label: string,
 }
 
 export default function SelectLegalOfficer(props: Props) {
     const { colorTheme } = useCommonContext();
-
+    const { label } = props;
     const legalOfficersOptions: OptionType[] = buildOptions(props.legalOfficers);
     const legalOfficersByAddress: Record<string, LegalOfficer> = {};
     props.legalOfficers.forEach(legalOfficer => {
         legalOfficersByAddress[legalOfficer.address] = legalOfficer;
     });
-
-    let label;
-    if(props.mode === 'choose') {
-        label = `Choose Legal Officer N°${props.legalOfficerNumber}`;
-    } else if(props.mode === 'view') {
-        label = `Legal Officer N°${props.legalOfficerNumber}`;
-    } else {
-        label = `Select Legal Officer N°${props.legalOfficerNumber}`;
-    }
 
     let icon;
     let status;

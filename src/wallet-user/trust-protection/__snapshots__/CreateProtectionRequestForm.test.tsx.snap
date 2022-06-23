@@ -26,6 +26,7 @@ exports[`renders 1`] = `
           Choose your Legal Officers
         </h3>
         <LegalOfficers
+          label="Choose Legal Officer N°"
           legalOfficer1={null}
           legalOfficer2={null}
           legalOfficers={
@@ -95,7 +96,6 @@ exports[`renders 1`] = `
               },
             ]
           }
-          mode="choose"
           setLegalOfficer1={[Function]}
           setLegalOfficer2={[Function]}
         />
