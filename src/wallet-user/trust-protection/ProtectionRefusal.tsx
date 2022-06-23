@@ -16,7 +16,8 @@ export default function ProtectionRefusal(props: Props) {
     const rejectedState = protection.protectionParameters.states[0];
     const currentLegalOfficer = rejectedState.legalOfficer;
     const [ newLegalOfficer, setNewLegalOfficer ] = useState<LegalOfficer | null>(null)
-    const otherLegalOfficer = protection.protectionParameters.states[1].legalOfficer;
+    const otherState = protection.protectionParameters.states[1];
+    const otherLegalOfficer = otherState.legalOfficer;
     const { availableLegalOfficers } = useCommonContext();
 
     if (!availableLegalOfficers) {
@@ -36,28 +37,32 @@ export default function ProtectionRefusal(props: Props) {
                 <Button onClick={ cancelProtection }>
                     Restart the complete process
                 </Button>
-                <Button onClick={ () => resubmitProtection(rejectedState.legalOfficer) }>
-                    Submit your request again
-                </Button>
+                { otherState.status !== 'REJECTED' &&
+                    <Button onClick={ () => resubmitProtection(rejectedState.legalOfficer) }>
+                        Submit your request again
+                    </Button>
+                }
             </Row>
-            <Row>
-                <SelectLegalOfficer
-                    legalOfficer={ newLegalOfficer }
-                    legalOfficerNumber={ 3 }
-                    legalOfficers={ legalOfficers }
-                    mode="select"
-                    otherLegalOfficer={ otherLegalOfficer }
-                    setLegalOfficer={ setNewLegalOfficer }
-                    label="Or select another Legal Officer for your protection:"
-                />
+            { otherState.status !== 'REJECTED' &&
+                <Row>
+                    <SelectLegalOfficer
+                        legalOfficer={ newLegalOfficer }
+                        legalOfficerNumber={ 3 }
+                        legalOfficers={ legalOfficers }
+                        mode="select"
+                        otherLegalOfficer={ otherLegalOfficer }
+                        setLegalOfficer={ setNewLegalOfficer }
+                        label="Or select another Legal Officer for your protection:"
+                    />
 
-                <Button
-                    disabled={ newLegalOfficer === null }
-                    onClick={ () => changeProtectionLegalOfficer(rejectedState.legalOfficer, newLegalOfficer!) }
-                >
-                    Submit a new request
-                </Button>
-            </Row>
+                    <Button
+                        disabled={ newLegalOfficer === null }
+                        onClick={ () => changeProtectionLegalOfficer(rejectedState.legalOfficer, newLegalOfficer!) }
+                    >
+                        Submit a new request
+                    </Button>
+                </Row>
+            }
         </div>
     )
 }
