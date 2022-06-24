@@ -1,10 +1,13 @@
 import { RejectedProtection, LegalOfficer } from "@logion/client";
 import Button from "../../common/Button";
-import { Row } from "../../common/Grid";
 import { useUserContext } from "../UserContext";
 import { useState } from "react";
 import SelectLegalOfficer from "./SelectLegalOfficer";
 import { useCommonContext } from "../../common/CommonContext";
+import './ProtectionRefusal.css';
+import { RED } from "../../common/ColorTheme";
+import ButtonGroup from "../../common/ButtonGroup";
+import { LegalOfficerProtectionState } from "@logion/client/dist/Recovery";
 
 export interface Props {
     protection: RejectedProtection
@@ -24,44 +27,80 @@ export default function ProtectionRefusal(props: Props) {
         return null
     }
     const legalOfficers = availableLegalOfficers.filter(lo => lo.address !== currentLegalOfficer.address && lo.address !== otherLegalOfficer.address);
+    type Refusal = 'single' | 'double';
+    const refusal: Refusal = otherState.status === 'REJECTED' ? 'double' : 'single';
+
+    function reasonBox(state: LegalOfficerProtectionState) {
+        const legalOfficer = state.legalOfficer;
+        const reason = state.decision.rejectReason;
+        return (
+            <p>
+                <strong>{ legalOfficer.name }</strong>:<br />
+                «{ reason }»
+            </p>
+        )
+    }
 
     return (
-        <div>
-            <h3>Protection Refusal</h3>
-            <p>The Legal Officer { currentLegalOfficer.name } did not accept your protection request due to the
-                following reason:</p>
-            <p>{ rejectedState.decision.rejectReason }</p>
-            <p>Please contact { currentLegalOfficer.name } for more details and select one of the following next
-                steps:</p>
-            <Row>
-                <Button onClick={ cancelProtection }>
-                    Restart the complete process
-                </Button>
-                { otherState.status !== 'REJECTED' &&
-                    <Button onClick={ () => resubmitProtection(rejectedState.legalOfficer) }>
-                        Submit your request again
+        <div className="ProtectionRefusal">
+            <h2 className="Title" style={ { color: RED } }>Protection Refusal</h2>
+            { refusal === 'single' &&
+                <>
+                    <p>The Legal Officer { currentLegalOfficer.name } did not accept your protection request due to
+                        the
+                        following reason:</p>
+                    <p>«{ rejectedState.decision.rejectReason }»</p>
+                    <p>Please contact { currentLegalOfficer.name } for more details and select one of the following next
+                        steps:</p>
+                </>
+            }
+            { refusal === 'double' &&
+                <>
+                    <p>Two Legal Officers - { currentLegalOfficer.name } and { otherLegalOfficer.name } - did not accept
+                        your protection request due to the following reasons:</p>
+                    { reasonBox(rejectedState) }
+                    { reasonBox(otherState) }
+                    <p>Please contact { currentLegalOfficer.name } and { otherLegalOfficer.name } for more details and select the following next
+                        step:</p>
+                </>
+            }
+            <div className="restart">
+                <ButtonGroup>
+                    <Button onClick={ cancelProtection }>
+                        Restart the complete process
                     </Button>
+                </ButtonGroup>
+                { refusal === 'single' &&
+                    <ButtonGroup>
+                        <Button onClick={ () => resubmitProtection(rejectedState.legalOfficer) }>
+                            Submit your request again
+                        </Button>
+                    </ButtonGroup>
                 }
-            </Row>
-            { otherState.status !== 'REJECTED' &&
-                <Row>
-                    <SelectLegalOfficer
-                        legalOfficer={ newLegalOfficer }
-                        legalOfficerNumber={ 3 }
-                        legalOfficers={ legalOfficers }
-                        mode="select"
-                        otherLegalOfficer={ otherLegalOfficer }
-                        setLegalOfficer={ setNewLegalOfficer }
-                        label="Or select another Legal Officer for your protection:"
-                    />
-
-                    <Button
-                        disabled={ newLegalOfficer === null }
-                        onClick={ () => changeProtectionLegalOfficer(rejectedState.legalOfficer, newLegalOfficer!) }
-                    >
-                        Submit a new request
-                    </Button>
-                </Row>
+            </div>
+            { refusal === 'single' &&
+                <>
+                    <div>Or select another Legal Officer for your protection:</div>
+                    <div className="select">
+                        <ButtonGroup>
+                            <Button
+                                disabled={ newLegalOfficer === null }
+                                onClick={ () => changeProtectionLegalOfficer(rejectedState.legalOfficer, newLegalOfficer!) }
+                            >
+                                Submit a new request
+                            </Button>
+                        </ButtonGroup>
+                        <SelectLegalOfficer
+                            legalOfficer={ newLegalOfficer }
+                            legalOfficerNumber={ 3 }
+                            legalOfficers={ legalOfficers }
+                            mode="select"
+                            otherLegalOfficer={ otherLegalOfficer }
+                            setLegalOfficer={ setNewLegalOfficer }
+                            label=""
+                        />
+                    </div>
+                </>
             }
         </div>
     )
