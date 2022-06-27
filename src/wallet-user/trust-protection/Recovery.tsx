@@ -4,7 +4,13 @@ import GoToTrustProtection from './GoToTrustProtection';
 import CreateProtectionRequestForm from "./CreateProtectionRequestForm";
 import ProtectionRecoveryRequest from './ProtectionRecoveryRequest';
 import RecoveryProcess from './RecoveryProcess';
-import { AcceptedProtection, NoProtection, PendingProtection, UnavailableProtection } from "@logion/client";
+import {
+    AcceptedProtection,
+    NoProtection,
+    PendingProtection,
+    UnavailableProtection,
+    RejectedRecovery
+} from "@logion/client";
 
 export default function Recovery() {
     const { protectionState } = useUserContext();
@@ -31,6 +37,8 @@ export default function Recovery() {
             return <ProtectionRecoveryRequest type='accepted' />;
         } else if(protectionState instanceof PendingProtection) {
             return <ProtectionRecoveryRequest type='pending' />;
+        } else if (protectionState instanceof RejectedRecovery) {
+            return <ProtectionRecoveryRequest type='rejected' />;
         } else {
             return null;
         }

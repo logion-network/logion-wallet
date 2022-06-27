@@ -1,0 +1,18 @@
+.RecoveryRefusal .Title {
+    text-align: center;
+    margin: 20px;
+}
+
+.RecoveryRefusal .Button {
+    margin: 15px;
+}
+
+.RecoveryRefusal .restart {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+.RecoveryRefusal .ButtonGroup {
+    width: auto;
+}

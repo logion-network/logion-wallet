@@ -27,6 +27,7 @@ import SelectLegalOfficer from './SelectLegalOfficer';
 import './ProtectionRecoveryRequest.css';
 import { ProtectionRequestStatus } from '@logion/client/dist/RecoveryClient';
 import ProtectionRefusal from "./ProtectionRefusal";
+import RecoveryRefusal from "./RecoveryRefusal";
 
 export type ProtectionRecoveryRequestStatus = 'pending' | 'accepted' | 'activated' | 'unavailable' | 'rejected';
 
@@ -226,8 +227,11 @@ export default function ProtectionRecoveryRequest(props: Props) {
                                 />
                             </Col>
                             <Col md={6}>
-                                { props.type === 'rejected' &&
+                                { props.type === 'rejected' && !protectionParameters.isRecovery &&
                                     <ProtectionRefusal protection={ protectionState as RejectedProtection }/>
+                                }
+                                { props.type === 'rejected' && protectionParameters.isRecovery &&
+                                    <RecoveryRefusal recovery={ protectionState as RejectedRecovery }/>
                                 }
                                 { props.type !== 'rejected' &&
                                     <SelectLegalOfficer
