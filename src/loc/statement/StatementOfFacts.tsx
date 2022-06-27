@@ -3,7 +3,6 @@ import { useLocation } from 'react-router-dom';
 import { SofParams } from './SofParams';
 import StatementOfFactsTemplateEN from './StatementOfFactsTemplateEN';
 import StatementOfFactsTemplateFR from './StatementOfFactsTemplateFR';
-import { UUID } from "@logion/node-api/dist/UUID";
 import { loadSofParams } from "../../common/Storage";
 
 export default function StatementOfFacts() {
@@ -12,8 +11,7 @@ export default function StatementOfFacts() {
     const [ sofParams, setSofParams ] = useState<SofParams>();
 
     useEffect(() => {
-        const sofId = new UUID(location.pathname.substring(location.pathname.lastIndexOf("/") + 1));
-        const pathModel = loadSofParams(sofId);
+        const pathModel = loadSofParams();
         document.title = `logion - ${ pathModel.locId }`;
         setSofParams(pathModel);
     }, [ location ]);

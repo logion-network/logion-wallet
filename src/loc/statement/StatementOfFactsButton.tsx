@@ -4,7 +4,7 @@ import { UUID } from "@logion/node-api/dist/UUID";
 import { LegalOfficerCase } from "@logion/node-api/dist/Types";
 import { getLegalOfficerCase } from "@logion/node-api/dist/LogionLoc";
 
-import { locDetailsPath, statementOfFactsPath } from "../../legal-officer/LegalOfficerPaths";
+import { locDetailsPath, STATEMENT_OF_FACTS_PATH } from "../../legal-officer/LegalOfficerPaths";
 import { fullCertificateUrl } from "../../PublicPaths";
 import { useLocContext } from "../LocContext";
 import { DEFAULT_SOF_PARAMS, SofParams, FormValues, Language, Prerequisite } from "./SofParams";
@@ -15,7 +15,7 @@ import StatementOfFactsForm from "./StatementOfFactsForm";
 import { useForm } from "react-hook-form";
 import StatementOfFactsSummary from "./StatementOfFactsSummary";
 import { useLogionChain } from "../../logion-chain";
-import { storeSofParams } from "../../common/Storage";
+import { clearSofParams, storeSofParams } from "../../common/Storage";
 import { PrerequisiteWizard } from "./PrerequisiteWizard";
 import { PREREQUISITE_WIZARD_STEPS } from "./WizardSteps";
 import { LegalOfficer } from "@logion/client";
@@ -35,7 +35,6 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
     const { control, handleSubmit, formState: { errors }, reset, setError } = useForm<FormValues>();
     type ContainingLoc = (LegalOfficerCase & { id: UUID })
     const [ containingLoc, setContainingLoc ] = useState<ContainingLoc | null | undefined>(null)
-    const [ sofId, setSofId ] = useState<UUID | undefined>(undefined);
     const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer>();
     const [ submitError, setSubmitError ] = useState<string | undefined>(undefined);
 
@@ -62,7 +61,6 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                     id: containingLocId,
                     ...loc
                 })
-                const id = new UUID();
                 const sp:SofParams = ({
                     ...sofParams,
                     ...formValues,
@@ -72,8 +70,8 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                     oathText: settings!['oath'] || "-"
                 })
                 try {
-                    storeSofParams(id, sp);
-                    setSofId(id);
+                    clearSofParams();
+                    storeSofParams(sp);
                     setStatus('READY');
                 } catch(error) {
                     let message = "" + error;
@@ -246,7 +244,7 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                 ] }
             >
                 <StatementOfFactsSummary
-                    previewPath={ statementOfFactsPath(sofId) }
+                    previewPath={ STATEMENT_OF_FACTS_PATH }
                     relatedLocPath={ containingLoc ? locDetailsPath(containingLoc!.id, containingLoc!.locType) : "" }
                     locId={ locId }
                     nodeOwner={ loc!.owner }
