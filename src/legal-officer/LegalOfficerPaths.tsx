@@ -60,8 +60,5 @@ export function locDetailsPath(locId: string | UUID, locType: LocType) {
 export const VAULT_OUT_REQUESTS_RELATIVE_PATH = '/vault';
 export const VAULT_OUT_REQUESTS_PATH = LEGAL_OFFICER_PATH + VAULT_OUT_REQUESTS_RELATIVE_PATH;
 
-export const STATEMENT_OF_FACTS_RELATIVE_PATH = '/statement/:sofId';
+export const STATEMENT_OF_FACTS_RELATIVE_PATH = '/statement';
 export const STATEMENT_OF_FACTS_PATH = LEGAL_OFFICER_PATH + STATEMENT_OF_FACTS_RELATIVE_PATH;
-export function statementOfFactsPath(sofId?: UUID) {
-    return STATEMENT_OF_FACTS_PATH.replace(":sofId", sofId ? sofId.toString() : "")
-}

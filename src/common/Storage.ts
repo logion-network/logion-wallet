@@ -9,11 +9,10 @@ import {
     SingleStorable,
     clearSingle,
     loadSingle,
-    newMultiJsonStorable,
+    newSingleJsonStorable,
     newSingleStringStorable,
 } from "./GenericStorage";
 import { SofParams } from "../loc/statement/SofParams";
-import { UUID } from "@logion/node-api/dist/UUID";
 
 const token: MultiStorable<Token> = {
     keyPrefix: "token",
@@ -62,18 +61,18 @@ export function loadCurrentAddress(): string | undefined {
     return loadSingle(currentAddress)
 }
 
-const sofParams: MultiStorable<SofParams> = newMultiJsonStorable<SofParams>("SofParams")
+const sofParams: SingleStorable<SofParams> = newSingleJsonStorable<SofParams>("SofParams")
 
-export function storeSofParams(key: UUID, obj: SofParams) {
-    storeMulti(sofParams, key.toString(), obj)
+export function storeSofParams(obj: SofParams) {
+    storeSingle(sofParams, obj)
 }
 
-export function loadSofParams(key: UUID): SofParams {
-    return loadMulti(sofParams)[key.toString()]
+export function loadSofParams(): SofParams {
+    return loadSingle(sofParams)!
 }
 
 export function clearSofParams() {
-    clearMulti(sofParams)
+    clearSingle(sofParams)
 }
 
 export { clearAll } from "./GenericStorage"
