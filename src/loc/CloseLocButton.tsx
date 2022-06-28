@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { ProtectionRequest } from "@logion/client/dist/RecoveryClient";
-import { vouchRecovery } from "@logion/node-api/dist/Recovery";
+import { vouchRecovery, getActiveRecovery } from "@logion/node-api/dist/Recovery";
 import { Col, Row } from "react-bootstrap";
 
 import Button from "../common/Button";
@@ -69,31 +69,50 @@ export default function CloseLocButton(props: Props) {
         }
     }, [ locItems, setDisabled ]);
 
-    const onCloseSuccess = useCallback(() => {
+    const alreadyVouched = useCallback(async (lost: string, rescuer: string, currentAddress: string) => {
+        const activeRecovery = await getActiveRecovery({
+            api: api!,
+            sourceAccount: lost,
+            destinationAccount: rescuer
+        });
+
+        return !!(activeRecovery && activeRecovery.legalOfficers.find(lo => lo === currentAddress));
+
+    }, [ api ]);
+
+    const onCloseSuccess = useCallback(async () => {
         if(props.protectionRequest && !props.protectionRequest.isRecovery) {
             setCloseState({ status: CloseStatus.ACCEPTING });
         } else if(props.protectionRequest && props.protectionRequest.isRecovery) {
-            setCloseState({ status: CloseStatus.VOUCHING });
 
+            const lost = props.protectionRequest!.addressToRecover!;
+            const rescuer = props.protectionRequest!.requesterAddress;
             const currentAddress = accounts!.current!.address;
-            const signAndSubmit: SignAndSubmit = (callback, errorCallback) => signAndSend({
-                signerId: currentAddress,
-                callback,
-                errorCallback,
-                submittable: vouchRecovery({
-                    api: api!,
-                    lost: props.protectionRequest!.addressToRecover!,
-                    rescuer: props.protectionRequest!.requesterAddress,
-                })
-            });
-            setSignAndSubmitVouch(() => signAndSubmit);
+
+            if (await alreadyVouched(lost, rescuer, currentAddress)) {
+                setCloseState({ status: CloseStatus.ACCEPTING });
+            } else {
+                setCloseState({ status: CloseStatus.VOUCHING });
+
+                const signAndSubmit: SignAndSubmit = (callback, errorCallback) => signAndSend({
+                    signerId: currentAddress,
+                    callback,
+                    errorCallback,
+                    submittable: vouchRecovery({
+                        api: api!,
+                        lost,
+                        rescuer,
+                    })
+                });
+                setSignAndSubmitVouch(() => signAndSubmit);
+            }
         } else {
             setCloseState({ status: CloseStatus.NONE });
             close!();
             refresh!(false);
             refreshLocs();
         }
-    }, [ setCloseState, props.protectionRequest, accounts, api, close, refresh, refreshLocs ]);
+    }, [ setCloseState, props.protectionRequest, accounts, api, close, refresh, refreshLocs, alreadyVouched ]);
 
     useEffect(() => {
         if (closeState.status === CloseStatus.ACCEPTING) {
