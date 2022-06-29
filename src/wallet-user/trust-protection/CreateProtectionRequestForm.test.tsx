@@ -35,6 +35,10 @@ describe("CreateProtectionRequestForm", () => {
     it("should display messages when an empty form is submitted", async () => {
         render(<CreateProtectionRequestForm isRecovery={ false } />);
 
+        let agree: HTMLElement;
+        await waitFor(() => agree = screen.getByTestId("agree"));
+        await userEvent.click(agree!);
+
         await clickByName("Next");
 
         await waitFor(() => {
