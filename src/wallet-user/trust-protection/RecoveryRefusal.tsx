@@ -6,13 +6,15 @@ import './RecoveryRefusal.css';
 import { RED } from "../../common/ColorTheme";
 import ButtonGroup from "../../common/ButtonGroup";
 import { LegalOfficerProtectionState } from "@logion/client/dist/Recovery";
+import { Refusal } from "./ProtectionRecoveryRequest";
 
 export interface Props {
     recovery: RejectedRecovery
+    refusal: Refusal
 }
 
 export default function RecoveryRefusal(props: Props) {
-    const { recovery } = props;
+    const { recovery, refusal } = props;
     const { cancelProtection, resubmitProtection } = useUserContext()
     const rejectedState = recovery.protectionParameters.states[0];
     const currentLegalOfficer = rejectedState.legalOfficer;
@@ -23,8 +25,6 @@ export default function RecoveryRefusal(props: Props) {
     if (!availableLegalOfficers) {
         return null
     }
-    type Refusal = 'single' | 'double';
-    const refusal: Refusal = otherState.status === 'REJECTED' ? 'double' : 'single';
 
     function reasonBox(state: LegalOfficerProtectionState) {
         const legalOfficer = state.legalOfficer;
