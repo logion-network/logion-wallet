@@ -359,12 +359,16 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
     <ClientExtrinsicSubmitter
       successMessage="Protection successfully activated."
     />
-    <Button
-      data-testid="btnClaim"
-      onClick={[Function]}
+    <ButtonGroup
+      className="Claim"
     >
-      Claim
-    </Button>
+      <Button
+        data-testid="btnClaim"
+        onClick={[Function]}
+      >
+        Claim
+      </Button>
+    </ButtonGroup>
     <ClientExtrinsicSubmitter
       successMessage="Recovery successfully initiated."
     />
@@ -1032,12 +1036,16 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
     <ClientExtrinsicSubmitter
       successMessage="Protection successfully activated."
     />
-    <Button
-      data-testid="btnClaim"
-      onClick={[Function]}
+    <ButtonGroup
+      className="Claim"
     >
-      Claim
-    </Button>
+      <Button
+        data-testid="btnClaim"
+        onClick={[Function]}
+      >
+        Claim
+      </Button>
+    </ButtonGroup>
     <ClientExtrinsicSubmitter
       successMessage="Recovery successfully initiated."
     />

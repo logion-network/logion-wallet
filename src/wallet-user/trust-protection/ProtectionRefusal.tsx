@@ -8,13 +8,15 @@ import './ProtectionRefusal.css';
 import { RED } from "../../common/ColorTheme";
 import ButtonGroup from "../../common/ButtonGroup";
 import { LegalOfficerProtectionState } from "@logion/client/dist/Recovery";
+import { Refusal } from "./ProtectionRecoveryRequest";
 
 export interface Props {
     protection: RejectedProtection
+    refusal: Refusal
 }
 
 export default function ProtectionRefusal(props: Props) {
-    const { protection } = props;
+    const { protection, refusal } = props;
     const { cancelProtection, resubmitProtection, changeProtectionLegalOfficer } = useUserContext()
     const rejectedState = protection.protectionParameters.states[0];
     const currentLegalOfficer = rejectedState.legalOfficer;
@@ -27,8 +29,6 @@ export default function ProtectionRefusal(props: Props) {
         return null
     }
     const legalOfficers = availableLegalOfficers.filter(lo => lo.address !== currentLegalOfficer.address && lo.address !== otherLegalOfficer.address);
-    type Refusal = 'single' | 'double';
-    const refusal: Refusal = otherState.status === 'REJECTED' ? 'double' : 'single';
 
     function reasonBox(state: LegalOfficerProtectionState) {
         const legalOfficer = state.legalOfficer;
@@ -82,14 +82,6 @@ export default function ProtectionRefusal(props: Props) {
                 <>
                     <div>Or select another Legal Officer for your protection:</div>
                     <div className="select">
-                        <ButtonGroup>
-                            <Button
-                                disabled={ newLegalOfficer === null }
-                                onClick={ () => changeProtectionLegalOfficer(rejectedState.legalOfficer, newLegalOfficer!) }
-                            >
-                                Submit a new request
-                            </Button>
-                        </ButtonGroup>
                         <SelectLegalOfficer
                             legalOfficer={ newLegalOfficer }
                             legalOfficerNumber={ 3 }
@@ -99,6 +91,14 @@ export default function ProtectionRefusal(props: Props) {
                             setLegalOfficer={ setNewLegalOfficer }
                             label=""
                         />
+                        <ButtonGroup>
+                            <Button
+                                disabled={ newLegalOfficer === null }
+                                onClick={ () => changeProtectionLegalOfficer(rejectedState.legalOfficer, newLegalOfficer!) }
+                            >
+                                Submit a new request
+                            </Button>
+                        </ButtonGroup>
                     </div>
                 </>
             }
