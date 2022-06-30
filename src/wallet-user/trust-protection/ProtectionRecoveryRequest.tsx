@@ -28,6 +28,7 @@ import './ProtectionRecoveryRequest.css';
 import { ProtectionRequestStatus } from '@logion/client/dist/RecoveryClient';
 import ProtectionRefusal from "./ProtectionRefusal";
 import RecoveryRefusal from "./RecoveryRefusal";
+import ButtonGroup from "../../common/ButtonGroup";
 
 export type ProtectionRecoveryRequestStatus = 'pending' | 'accepted' | 'activated' | 'unavailable' | 'rejected';
 
@@ -196,12 +197,14 @@ export default function ProtectionRecoveryRequest(props: Props) {
 
                         {
                             props.type === 'accepted' && !protectionParameters.isActive && activationCall === undefined &&
-                            <Button
-                                data-testid="btnActivate"
-                                onClick={ activateProtectionCallback }
-                            >
-                                Activate
-                            </Button>
+                            <ButtonGroup className="Activate">
+                                <Button
+                                    data-testid="btnActivate"
+                                    onClick={ activateProtectionCallback }
+                                >
+                                    Activate
+                                </Button>
+                            </ButtonGroup>
                         }
                         <ClientExtrinsicSubmitter
                             successMessage="Protection successfully activated."
@@ -209,12 +212,14 @@ export default function ProtectionRecoveryRequest(props: Props) {
                         />
                         {
                             props.type === 'activated' && protectionParameters.isRecovery && !protectionParameters.isClaimed && claimCall === undefined &&
-                            <Button
-                                data-testid="btnClaim"
-                                onClick={ claimRecoveryCallback }
-                            >
-                                Claim
-                            </Button>
+                            <ButtonGroup className="Claim">
+                                <Button
+                                    data-testid="btnClaim"
+                                    onClick={ claimRecoveryCallback }
+                                >
+                                    Claim
+                                </Button>
+                            </ButtonGroup>
                         }
                         <ClientExtrinsicSubmitter
                             successMessage="Recovery successfully initiated."
