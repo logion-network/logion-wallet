@@ -1,4 +1,10 @@
-import { AcceptedProtection, NoProtection, PendingProtection, UnavailableProtection, RejectedProtection, RejectedRecovery } from "@logion/client";
+import {
+    AcceptedProtection,
+    NoProtection,
+    PendingProtection,
+    UnavailableProtection,
+    RejectedProtection
+} from "@logion/client";
 
 import { useUserContext } from "../UserContext";
 
@@ -41,7 +47,7 @@ export default function TrustProtection() {
             return <ProtectionRecoveryRequest type='pending' />;
         } else if(protectionState instanceof AcceptedProtection) {
             return <ProtectionRecoveryRequest type='accepted' />;
-        } else if (protectionState instanceof RejectedProtection || protectionState instanceof  RejectedRecovery) {
+        } else if (protectionState instanceof RejectedProtection) {
             return <ProtectionRecoveryRequest type='rejected' />;
         } else {
             return null;

@@ -36,7 +36,6 @@ interface FormValues {
     postalCode: string,
     city: string,
     country: string,
-    agree: string,
 }
 
 export default function CreateProtectionRequestForm(props: Props) {
@@ -50,10 +49,11 @@ export default function CreateProtectionRequestForm(props: Props) {
     const [ addressToRecoverError, setAddressToRecoverError ] = useState<string>("");
     const [ requestCreated, setRequestCreated ] = useState<boolean>(false);
     const [ call, setCall ] = useState<Call>();
+    const [ agree, setAgree ] = useState<boolean>(false);
 
     const submit = async (formValues: FormValues) => {
         if(legalOfficer1 === null || legalOfficer2 === null
-            || !formValues.agree
+            || !agree
             || (props.isRecovery && addressToRecoverError !== "")) {
             return;
         }
@@ -457,33 +457,21 @@ export default function CreateProtectionRequestForm(props: Props) {
                             />
 
                             <div className="agree-submit">
-                                <FormGroup
-                                    id="agree"
-                                    control={
-                                        <Controller
-                                            name="agree"
-                                            control={control}
-                                            defaultValue=""
-                                            rules={{required: "You must agree in order to proceed"}}
-                                            render={({field}) => (
-                                                <Form.Check
-                                                    isInvalid={!!errors.agree?.message}
-                                                    type="checkbox"
-                                                    id="agree"
-                                                    label="I agree to send my personal information to the chosen Legal Officers"
-                                                    feedback={errors.agree?.message}
-                                                    { ...field }
-                                                />
-                                            )}
-                                        />
-                                    }
-                                    colors={ colorTheme.frame }
-                                    noFeedback
+                                <Form.Check
+                                    data-testid="agree"
+                                    type="checkbox"
+                                    checked={ agree }
+                                    onChange={ () => {
+                                        setAgree(!agree);
+                                        setCall(undefined)
+                                    } }
+                                    label="I agree to send my personal information to the chosen Legal Officers"
                                 />
                                 <ClientExtrinsicSubmitter
                                     successMessage="Recovery successfully initiated."
                                     call={ call }
                                     onSuccess={ () => setRequestCreated(true) }
+                                    onError={ () => setAgree(false) }
                                 />
 
                                 <Button
@@ -493,7 +481,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                                         buttonText: "Next",
                                         buttonTestId: "btnSubmit",
                                         type: 'submit',
-                                        disabled: call !== undefined,
+                                        disabled: !agree,
                                     }}
                                 />
                             </div>

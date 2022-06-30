@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { Col, Row } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
-import { vouchRecovery } from '@logion/node-api/dist/Recovery';
+import { vouchRecovery, getActiveRecovery } from '@logion/node-api/dist/Recovery';
 import { UUID } from '@logion/node-api/dist/UUID';
 
 import { useCommonContext } from "../common/CommonContext";
@@ -54,26 +54,44 @@ export default function RecoveryDetails() {
         }
     }, [ axiosFactory, accounts, recoveryInfo, setRecoveryInfo, requestId ]);
 
+    const alreadyVouched = useCallback(async (lost: string, rescuer: string, currentAddress: string) => {
+        const activeRecovery = await getActiveRecovery({
+            api: api!,
+            sourceAccount: lost,
+            destinationAccount: rescuer
+        });
+
+        return !!(activeRecovery && activeRecovery.legalOfficers.find(lo => lo === currentAddress));
+
+    }, [ api ]);
+
     const accept = useCallback(() => {
         (async function() {
             const currentAddress = accounts!.current!.address;
+            const lost = recoveryInfo!.accountToRecover!.requesterAddress;
+            const rescuer = recoveryInfo!.recoveryAccount.requesterAddress;
             await acceptProtectionRequest(axiosFactory!(currentAddress)!, {
                 requestId: requestId!,
                 locId: locId!
             });
-            const signAndSubmit: SignAndSubmit = (callback, errorCallback) => signAndSend({
-                signerId: currentAddress,
-                callback,
-                errorCallback,
-                submittable: vouchRecovery({
-                    api: api!,
-                    lost: recoveryInfo!.accountToRecover!.requesterAddress,
-                    rescuer: recoveryInfo!.recoveryAccount.requesterAddress,
-                })
-            });
-            setSignAndSubmit(() => signAndSubmit);
+            if (await alreadyVouched(lost, rescuer, currentAddress)) {
+                refreshRequests!(false);
+                navigate(RECOVERY_REQUESTS_PATH);
+            } else {
+                const signAndSubmit: SignAndSubmit = (callback, errorCallback) => signAndSend({
+                    signerId: currentAddress,
+                    callback,
+                    errorCallback,
+                    submittable: vouchRecovery({
+                        api: api!,
+                        lost,
+                        rescuer,
+                    })
+                });
+                setSignAndSubmit(() => signAndSubmit);
+            }
         })();
-    }, [ axiosFactory, requestId, accounts, api, recoveryInfo, locId ]);
+    }, [ axiosFactory, requestId, accounts, api, recoveryInfo, locId, alreadyVouched, navigate, refreshRequests ]);
 
     const doReject = useCallback(() => {
         (async function() {

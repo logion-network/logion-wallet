@@ -1023,104 +1023,15 @@ exports[`renders 1`] = `
           <div
             className="agree-submit"
           >
-            <FormGroup
-              colors={
-                Object {
-                  "altBackground": "#eff3fe",
-                  "background": "#ffffff",
-                  "foreground": "#000000",
-                  "link": "#3b6cf426",
-                }
-              }
-              control={
-                <Unknown
-                  control={
-                    Object {
-                      "_defaultValues": Object {},
-                      "_executeSchema": [Function],
-                      "_fields": Object {},
-                      "_formState": Object {
-                        "dirtyFields": Object {},
-                        "errors": Object {},
-                        "isDirty": false,
-                        "isSubmitSuccessful": false,
-                        "isSubmitted": false,
-                        "isSubmitting": false,
-                        "isValid": false,
-                        "isValidating": false,
-                        "submitCount": 0,
-                        "touchedFields": Object {},
-                      },
-                      "_formValues": Object {},
-                      "_getDirty": [Function],
-                      "_getFieldArray": [Function],
-                      "_getWatch": [Function],
-                      "_names": Object {
-                        "array": Set {},
-                        "mount": Set {},
-                        "unMount": Set {},
-                        "watch": Set {},
-                      },
-                      "_options": Object {
-                        "mode": "onSubmit",
-                        "reValidateMode": "onChange",
-                        "shouldFocusError": true,
-                      },
-                      "_proxyFormState": Object {
-                        "dirtyFields": false,
-                        "errors": "all",
-                        "isDirty": false,
-                        "isValid": false,
-                        "isValidating": false,
-                        "touchedFields": false,
-                      },
-                      "_removeUnmounted": [Function],
-                      "_stateFlags": Object {
-                        "action": false,
-                        "mount": false,
-                        "watch": false,
-                      },
-                      "_subjects": Object {
-                        "array": Object {
-                          "next": [Function],
-                          "observers": Array [],
-                          "subscribe": [Function],
-                          "unsubscribe": [Function],
-                        },
-                        "state": Object {
-                          "next": [Function],
-                          "observers": Array [],
-                          "subscribe": [Function],
-                          "unsubscribe": [Function],
-                        },
-                        "watch": Object {
-                          "next": [Function],
-                          "observers": Array [],
-                          "subscribe": [Function],
-                          "unsubscribe": [Function],
-                        },
-                      },
-                      "_updateFieldArray": [Function],
-                      "_updateValid": [Function],
-                      "getFieldState": [Function],
-                      "register": [Function],
-                      "unregister": [Function],
-                    }
-                  }
-                  defaultValue=""
-                  name="agree"
-                  render={[Function]}
-                  rules={
-                    Object {
-                      "required": "You must agree in order to proceed",
-                    }
-                  }
-                />
-              }
-              id="agree"
-              noFeedback={true}
+            <FormCheck
+              checked={false}
+              data-testid="agree"
+              label="I agree to send my personal information to the chosen Legal Officers"
+              onChange={[Function]}
+              type="checkbox"
             />
             <ClientExtrinsicSubmitter
+              onError={[Function]}
               onSuccess={[Function]}
               successMessage="Recovery successfully initiated."
             />
@@ -1130,7 +1041,7 @@ exports[`renders 1`] = `
                   "buttonTestId": "btnSubmit",
                   "buttonText": "Next",
                   "buttonVariant": "primary",
-                  "disabled": false,
+                  "disabled": true,
                   "id": "submit",
                   "type": "submit",
                 }
