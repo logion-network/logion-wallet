@@ -274,7 +274,7 @@ export function UserContextProvider(props: Props) {
     const refreshRequests = useCallback((clearBeforeRefresh: boolean) => {
         if(client !== null) {
             const currentAddress = accounts!.current!.address;
-            const forceProtectionStateFetch = currentAddress !== contextValue.dataAddress;
+            const forceStateFetch = currentAddress !== contextValue.dataAddress;
             dispatch({
                 type: "FETCH_IN_PROGRESS",
                 dataAddress: currentAddress,
@@ -283,7 +283,7 @@ export function UserContextProvider(props: Props) {
 
             (async function () {
                 let protectionState = contextValue.protectionState;
-                if(protectionState === undefined || forceProtectionStateFetch) {
+                if(protectionState === undefined || forceStateFetch) {
                     protectionState = await client.protectionState();
                 } else if(contextValue.protectionState instanceof PendingProtection) {
                     protectionState = await contextValue.protectionState.refresh();
@@ -304,8 +304,10 @@ export function UserContextProvider(props: Props) {
                 }
 
                 let locsState = contextValue.locsState;
-                if (locsState === undefined) {
+                if (locsState === undefined || forceStateFetch) {
                     locsState = await client.locsState();
+                } else {
+                    locsState = await locsState.refresh();
                 }
 
                 dispatch({
