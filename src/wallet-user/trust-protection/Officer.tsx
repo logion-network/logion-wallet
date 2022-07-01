@@ -14,6 +14,7 @@ export interface Props {
     officer: LegalOfficer | null,
     colors: BackgroundAndForegroundColors,
     borderColor?: string,
+    fillEmptyOfficerDetails?: boolean,
 }
 
 export default function Officer(props: Props) {
@@ -24,6 +25,14 @@ export default function Officer(props: Props) {
     } else {
         visibility = 'hidden';
     }
+
+    let display: css.Property.Display;
+    if(props.officer === null && (props.fillEmptyOfficerDetails !== undefined && !props.fillEmptyOfficerDetails)) {
+        display = 'none';
+    } else {
+        display = 'block';
+    }
+
     let border = undefined;
     if(props.borderColor !== undefined) {
         border = `1px solid ${props.borderColor}`;
@@ -34,6 +43,7 @@ export default function Officer(props: Props) {
         <div className="Officer"
              style={ {
                  visibility,
+                 display,
                  color: props.colors.foreground,
                  backgroundColor: props.colors.background,
                  border,
