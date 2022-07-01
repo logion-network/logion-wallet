@@ -1563,21 +1563,21 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
   integrity sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==
 
-"@logion/client@^0.5.0-2":
-  version "0.5.0-2"
-  resolved "https://registry.yarnpkg.com/@logion/client/-/client-0.5.0-2.tgz#87c7530e9fd4265c626b1ca8ec5d4d40799cf206"
-  integrity sha512-WSYhbtQVu0Hf2ftUYxr1L0MaZHOE+V1Z1ZLy1SQzfVd9XCXZhOcTxkP2Q8iADFwdAc2YOMch6RaqCTTBuXU2dQ==
+"@logion/client@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@logion/client/-/client-0.5.0.tgz#046f777ca4a5aa88d185b31237b5ae82c41859d4"
+  integrity sha512-bjUfrgw/lKRBNpyuBZY4CGzx2WvBxhb2E3Irla0nLCrRqx3rOwnMAgOnHsAfLvnf7HRwFTZ1BSC77F/mv2qUUg==
   dependencies:
     "@logion/node-api" "^0.2.1"
     axios "^0.27.2"
     luxon "^2.3.2"
 
 "@logion/extension@^0.3.1-1":
-  version "0.3.1-2"
-  resolved "https://registry.yarnpkg.com/@logion/extension/-/extension-0.3.1-2.tgz#d029b8c7aa83fffa360f8bb8c9f41d573bb500a0"
-  integrity sha512-G7efJYbetwaepcgrqrv3yYRfmDxUJykQUk+it7GwD/9tZtvii61aXxtv8b8EkK+COAxepuKOQdKqYQ9YbTTZjw==
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@logion/extension/-/extension-0.3.1.tgz#4098844c9feee75b099b377bc169200cc12ece82"
+  integrity sha512-VL9YOniiYkMaTFOsxyMgxxzCZKKngoblAOvetx/Ez4OQSIskGfyCmnlcGmo/MY2csNQth63RO8vekfjwbKWg+Q==
   dependencies:
-    "@logion/client" "^0.5.0-2"
+    "@logion/client" "^0.5.0"
     "@polkadot/extension-dapp" "^0.43.1"
 
 "@logion/node-api@^0.2.1":
@@ -7625,9 +7625,9 @@ no-case@^3.0.4:
     tslib "^2.0.3"
 
 nock@^13.2.7:
-  version "13.2.7"
-  resolved "https://registry.yarnpkg.com/nock/-/nock-13.2.7.tgz#c93933b61df42f4f4b3a07fde946a4e209c0c168"
-  integrity sha512-R6NUw7RIPtKwgK7jskuKoEi4VFMqIHtV2Uu9K/Uegc4TA5cqe+oNMYslZcUmnVNQCTG6wcSqUBaGTDd7sq5srg==
+  version "13.2.8"
+  resolved "https://registry.yarnpkg.com/nock/-/nock-13.2.8.tgz#e2043ccaa8e285508274575e090a7fe1e46b90f1"
+  integrity sha512-JT42FrXfQRpfyL4cnbBEJdf4nmBpVP0yoCcSBr+xkT8Q1y3pgtaCKHGAAOIFcEJ3O3t0QbVAmid0S0f2bj3Wpg==
   dependencies:
     debug "^4.1.0"
     json-stringify-safe "^5.0.1"
