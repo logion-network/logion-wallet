@@ -39,6 +39,7 @@ export interface Props {
     mode: Mode,
     status?: ProtectionRequestStatus,
     label: string,
+    fillEmptyOfficerDetails?: boolean,
 }
 
 export default function SelectLegalOfficer(props: Props) {
@@ -113,6 +114,7 @@ export default function SelectLegalOfficer(props: Props) {
                 officer={ props.legalOfficer }
                 colors={ colorTheme.frame }
                 borderColor={ statusColor }
+                fillEmptyOfficerDetails={ props.fillEmptyOfficerDetails }
             />
         </div>
     );

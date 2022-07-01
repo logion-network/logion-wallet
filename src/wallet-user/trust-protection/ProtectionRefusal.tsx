@@ -90,6 +90,7 @@ export default function ProtectionRefusal(props: Props) {
                             otherLegalOfficer={ otherLegalOfficer }
                             setLegalOfficer={ setNewLegalOfficer }
                             label=""
+                            fillEmptyOfficerDetails={ false }
                         />
                         <ButtonGroup>
                             <Button
