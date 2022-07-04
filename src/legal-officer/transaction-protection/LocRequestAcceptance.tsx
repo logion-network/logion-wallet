@@ -80,6 +80,7 @@ export default function LocRequestAcceptance(props: Props) {
                     if(limits.hasDataNumberLimit) {
                         maxSize = limits.dataNumberLimit;
                     }
+                    const canUpload = limits.canUpload;
                     signAndSubmit = (setResult, setError) => signAndSend({
                         signerId: accounts!.current!.address,
                         callback: setResult,
@@ -89,7 +90,8 @@ export default function LocRequestAcceptance(props: Props) {
                             locId: new UUID(props.requestToAccept!.id),
                             requester: props.requestToAccept!.requesterAddress!,
                             lastBlock,
-                            maxSize
+                            maxSize,
+                            canUpload,
                         })
                     });
                 } else {

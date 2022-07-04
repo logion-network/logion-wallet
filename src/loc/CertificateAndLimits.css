@@ -32,10 +32,6 @@
     flex-direction: column;
 }
 
-.CertificateAndLimits .limits div:first-child {
-    margin-bottom: 20px;
-}
-
 .CertificateAndLimits .api-settings {
     display: flex;
     flex-direction: column;

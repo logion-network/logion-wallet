@@ -2,3 +2,10 @@
     margin-left: 40px;
     margin-right: 40px;
 }
+
+.CollectionLimitsForm .can-upload-check-container {
+    width: 300px;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
