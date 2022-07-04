@@ -58,6 +58,7 @@ export default function ImportItems() {
                         id: displayId,
                         error,
                         description: data['1'],
+                        files: [],
                         submitted: false,
                         failed: false,
                         success: false

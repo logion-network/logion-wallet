@@ -26,6 +26,7 @@ interface LocProps {
     locType: LocType
     collectionLastBlockSubmission?: bigint
     collectionMaxSize?: number
+    collectionCanUpload?: boolean
 }
 
 export interface Props {
@@ -77,6 +78,7 @@ export default function CertificateAndLimits(props: Props) {
                         <div className="limits">
                             <div><strong>Collection Date Limit:</strong> { dateLimit }</div>
                             <div><strong>Collection Item Limit:</strong> { itemLimit(props.loc) }</div>
+                            <div><strong>Collection Upload Accepted:</strong> { props.loc.collectionCanUpload ? "Yes" : "No" }</div>
                         </div>
                     </Col>
                 }
