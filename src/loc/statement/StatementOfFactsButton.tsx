@@ -133,11 +133,13 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                 publicItems: locRequest!.metadata.map(item => ({
                     description: item.name,
                     content: item.value,
+                    timestamp: item.addedOn,
                 })),
                 privateItems: locRequest!.files.map(item => ({
                     publicDescription: item.nature,
                     privateDescription: item.name,
                     hash: item.hash,
+                    timestamp: item.addedOn,
                 })),
             });
         }
