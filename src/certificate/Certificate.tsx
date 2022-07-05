@@ -5,13 +5,13 @@ import { useSearchParams } from "react-router-dom";
 
 import { UUID } from "@logion/node-api/dist/UUID";
 import { getLegalOfficerCase, getCollectionItem } from "@logion/node-api/dist/LogionLoc";
-import { File, LegalOfficerCase, Link, MetadataItem, VoidInfo } from "@logion/node-api/dist/Types";
+import { LegalOfficerCase, VoidInfo } from "@logion/node-api/dist/Types";
 
 import { useLogionChain } from "../logion-chain";
 import Button from "../common/Button";
 import MailtoButton from "../common/MailtoButton";
 import Icon from "../common/Icon";
-import { LocRequest, MergedCollectionItem } from "../common/types/ModelTypes";
+import { LocFile, LocLink, LocMetadataItem, LocRequest, MergedCollectionItem } from "../common/types/ModelTypes";
 import { fetchPublicLoc, fetchPublicCollectionItem } from "../common/Model";
 import CertificateDateTimeCell from "./CertificateDateTimeCell";
 import { copyToClipBoard } from "../common/Tools";
@@ -226,9 +226,26 @@ export default function Certificate() {
 
     let createdOn = undefined;
     let closedOn = undefined;
+    let metadata: LocMetadataItem[] = loc.metadata.map(item => ({
+        ...item,
+        addedOn: "?"
+    }));
+    let files: LocFile[] = loc.files.map(file => ({
+        ...file,
+        name: "?",
+        addedOn: "?"
+    }));
+    let links: LocLink[] = loc.links.map(link => ({
+        ...link,
+        target: link.id.toString(),
+        addedOn: "?"
+    }));
     if (publicLoc) {
         createdOn = publicLoc.createdOn;
         closedOn = publicLoc.closedOn;
+        metadata = publicLoc.metadata;
+        files = publicLoc.files;
+        links = publicLoc.links;
     }
 
     let certificateBorderColor = "#3b6cf4";
@@ -318,13 +335,13 @@ export default function Certificate() {
                     </CertificateCell> }
 
                 </Row>
-                { matrix(loc.metadata, 2).map((items, index) => (
+                { matrix(metadata, 2).map((items, index) => (
                     <MetadataItemCellRow key={ index } items={ items } checkResult={ checkResult } />
                 )) }
-                { matrix(loc.files, 2).map((files, index) => (
+                { matrix(files, 2).map((files, index) => (
                     <FileCellRow key={ index } files={ files } checkResult={ checkResult } />
                 )) }
-                { matrix(loc.links, 2).map((links, index) => (
+                { matrix(links, 2).map((links, index) => (
                     <LinkCellRow key={ index } links={ links } />
                 )) }
                 { collectionItem !== null &&
@@ -369,31 +386,40 @@ export default function Certificate() {
     )
 }
 
-function MetadataItemCellRow(props: { items: MetadataItem[], checkResult: DocumentCheckResult }) {
+function MetadataItemCellRow(props: { items: LocMetadataItem[], checkResult: DocumentCheckResult }) {
     return (
         <Row>
             { props.items.map(
-                item => <CertificateCell key={ item.name } md={ 6 } label={ item.name } matched={ props.checkResult.hash === item.value } ><pre>{ item.value }</pre></CertificateCell>) }
+                item => <CertificateCell key={ item.name } md={ 6 } label={ item.name } matched={ props.checkResult.hash === item.value } >
+                    <pre>{ item.value }</pre>
+                    <p><strong>Timestamp:</strong> <InlineDateTime dateTime={ item.addedOn } /></p>
+                </CertificateCell>)
+            }
         </Row>
     )
 }
 
-function FileCellRow(props: { files: File[], checkResult: DocumentCheckResult }) {
+function FileCellRow(props: { files: LocFile[], checkResult: DocumentCheckResult }) {
     return (
         <Row>
             { props.files.map(
-                file => <CertificateCell key={ file.hash } md={ 6 } label={ `Document Hash (${file.nature})` } matched={ props.checkResult.hash === file.hash } >{ file.hash }</CertificateCell>) }
+                file => <CertificateCell key={ file.hash } md={ 6 } label={ `Document Hash (${file.nature})` } matched={ props.checkResult.hash === file.hash } >
+                    <p>{ file.hash }</p>
+                    <p><strong>Timestamp:</strong> <InlineDateTime dateTime={ file.addedOn } /></p>
+                </CertificateCell>)
+            }
         </Row>
     )
 }
 
-function LinkCellRow(props: { links: Link[] }) {
+function LinkCellRow(props: { links: LocLink[] }) {
     return (
         <Row>
             { props.links.map(
                 link =>
                     <CertificateCell key={ link.id.toString() } md={ 6 } label={ `Linked LOC (${ link.nature })` }>
                         <NewTabLink href={ fullCertificateUrl(link.id) } iconId="loc-link">{ link.id.toDecimalString() }</NewTabLink>
+                        <p><strong>Timestamp:</strong> <InlineDateTime dateTime={ link.addedOn } /></p>
                     </CertificateCell>)
             }
         </Row>

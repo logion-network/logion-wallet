@@ -84,6 +84,7 @@ export default function StatementOfFactsTemplateEN(props: Props) {
                         <div className="fact-container">
                             <div>Public description: { item.description }</div>
                             <div>Content: { item.content }</div>
+                            <div>Timestamp: { item.timestamp }</div>
                         </div>
                     )
                 }
@@ -100,6 +101,7 @@ export default function StatementOfFactsTemplateEN(props: Props) {
                             <div>Public description: { item.publicDescription }</div>
                             <div>Private description: { item.privateDescription }</div>
                             <div>Hash: { item.hash }</div>
+                            <div>Timestamp: { item.timestamp }</div>
                         </div>
                     )
                 }

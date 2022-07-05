@@ -1,12 +1,14 @@
 export interface PublicItem {
     description: string;
     content: string;
+    timestamp: string;
 }
 
 export interface PrivateItem {
     publicDescription: string;
     privateDescription: string;
     hash: string;
+    timestamp: string;
 }
 
 export type Language = 'en' | 'fr';
