@@ -27,7 +27,7 @@ import { useLogionChain } from "../logion-chain";
 import ItemImporter from "./ItemImporter";
 import "./ContextualizedLocDetails.css";
 import { useUserLocContext } from "./UserLocContext";
-import { VoidedLoc, ClosedCollectionLoc } from "@logion/client";
+import { LocData, ClosedCollectionLoc } from "@logion/client";
 
 export default function UserContextualizedLocDetails() {
     const { getOfficer } = useLogionChain();
@@ -37,11 +37,11 @@ export default function UserContextualizedLocDetails() {
     const [ checkResult, setCheckResult ] = useState<DocumentCheckResult>({result: "NONE"});
     const [ collectionItem, setCollectionItem ] = useState<CollectionItem>();
     const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer | null>(null)
-    const [ supersededLoc, setSupersededLoc ] = useState<VoidedLoc | undefined | null>(null)
+    const [ supersededLoc, setSupersededLoc ] = useState<LocData | undefined | null>(null)
 
     useEffect(() => {
         if (loc && loc.replacerOf && locState && supersededLoc === null) {
-            locState.supersededLoc()
+            locState.publicSupersededLoc()
                 .then(setSupersededLoc)
         }
     }, [ loc, locState, supersededLoc ])
@@ -312,7 +312,7 @@ export default function UserContextualizedLocDetails() {
                         text={
                             <>
                                 <p className="frame-title">IMPORTANT: this logion Legal Officer Case (LOC) supersedes a previous LOC (VOID)</p>
-                                <p><strong>This LOC supersedes a previous LOC (VOID) since the following date:</strong> <InlineDateTime dateTime={ supersededLoc.data().voidInfo?.voidedOn } /></p>
+                                <p><strong>This LOC supersedes a previous LOC (VOID) since the following date:</strong> <InlineDateTime dateTime={ supersededLoc.voidInfo?.voidedOn } /></p>
                                 <p><strong>For record purpose, this LOC supersedes the following LOC: </strong>
                                     <NewTabLink
                                         href={ detailsPath(loc.replacerOf!, loc.locType) }
