@@ -1,5 +1,6 @@
 .ImportItemDetails {
     padding: 18px 10px;
+    width: 100%;
 }
 
 .ImportItemDetails pre {
@@ -8,4 +9,8 @@
     line-break: anywhere;
     white-space: break-spaces;
     margin-bottom: 0;
+}
+
+.ImportItemDetails .item-file {
+    text-align: left;
 }

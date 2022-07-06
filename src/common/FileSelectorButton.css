@@ -7,3 +7,7 @@
     margin-right: auto;
     margin-top: 10px;
 }
+
+.FileSelectorButton.only-button .Button {
+    margin-top: 0;
+}
