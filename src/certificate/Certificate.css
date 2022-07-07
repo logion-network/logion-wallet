@@ -154,6 +154,21 @@
     padding-bottom: 200px;
 }
 
+.Certificate .timestamp {
+    font-weight: normal;
+}
+
+.Certificate .file-nature {
+    font-weight: normal;
+    text-transform: none;
+}
+
+.Certificate .separator {
+    display: inline-block;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
 @media screen and (max-width: 1400px) {
     .Certificate .folder-icon img {
         width: 470px;

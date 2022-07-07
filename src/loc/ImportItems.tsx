@@ -93,7 +93,7 @@ export default function ImportItems() {
                             });
                             item.submitted = existingItem !== undefined;
                             item.success = existingItem !== undefined;
-                            // TODO update item.upload using backend API
+                            item.upload = existingItem === undefined || !existingItem.files[0].uploaded;
                         }
                     }
                     setItems(rows);
@@ -110,6 +110,7 @@ export default function ImportItems() {
                 signer: signer!,
                 itemId: item.id,
                 itemDescription: item.description,
+                itemFiles: item.files,
                 callback
             })
         }

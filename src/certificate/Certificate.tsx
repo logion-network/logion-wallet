@@ -20,7 +20,7 @@ import NewTabLink from "../common/NewTabLink";
 import DangerDialog from "../common/DangerDialog";
 import { LIGHT_MODE } from "../legal-officer/Types";
 import { RED } from "../common/ColorTheme";
-import InlineDateTime from "../common/InlineDateTime";
+import InlineDateTime, { formatDateTime } from "../common/InlineDateTime";
 import IconTextRow from "../common/IconTextRow";
 import { fullCertificateUrl } from "../PublicPaths";
 
@@ -32,6 +32,7 @@ import CollectionItemCellRow from "./CollectionItemCellRow";
 import IntroductionText from "./IntroductionText";
 import LegalOfficerRow from "./LegalOfficerRow";
 import { LegalOfficer } from "@logion/client";
+import { Children } from "src/common/types/Helpers";
 
 export default function Certificate() {
 
@@ -390,22 +391,30 @@ function MetadataItemCellRow(props: { items: LocMetadataItem[], checkResult: Doc
     return (
         <Row>
             { props.items.map(
-                item => <CertificateCell key={ item.name } md={ 6 } label={ item.name } matched={ props.checkResult.hash === item.value } >
+                item => <CertificateCell key={ item.name } md={ 6 } label={ <ItemCellTitle text={ item.name } timestamp={ item.addedOn } /> } matched={ props.checkResult.hash === item.value } >
                     <pre>{ item.value }</pre>
-                    <p><strong>Timestamp:</strong> <InlineDateTime dateTime={ item.addedOn } /></p>
                 </CertificateCell>)
             }
         </Row>
     )
 }
 
+function ItemCellTitle(props: { text: Children, timestamp: string }) {
+    return (
+        <span>
+            <span>{ props.text }</span>
+            <span className="separator">|</span>
+            <span>Timestamp:</span><span className="timestamp"> { formatDateTime(props.timestamp) }</span>
+        </span>
+    );
+}
+
 function FileCellRow(props: { files: LocFile[], checkResult: DocumentCheckResult }) {
     return (
         <Row>
             { props.files.map(
-                file => <CertificateCell key={ file.hash } md={ 6 } label={ `Document Hash (${file.nature})` } matched={ props.checkResult.hash === file.hash } >
+                file => <CertificateCell key={ file.hash } md={ 6 } label={ <ItemCellTitle text={ <span>Document Hash <span className="file-nature">({ file.nature })</span></span> } timestamp={ file.addedOn } /> } matched={ props.checkResult.hash === file.hash } >
                     <p>{ file.hash }</p>
-                    <p><strong>Timestamp:</strong> <InlineDateTime dateTime={ file.addedOn } /></p>
                 </CertificateCell>)
             }
         </Row>
@@ -417,9 +426,8 @@ function LinkCellRow(props: { links: LocLink[] }) {
         <Row>
             { props.links.map(
                 link =>
-                    <CertificateCell key={ link.id.toString() } md={ 6 } label={ `Linked LOC (${ link.nature })` }>
+                    <CertificateCell key={ link.id.toString() } md={ 6 } label={ <ItemCellTitle text={ <span>Linked LOC <span className="file-nature">({ link.nature })</span></span> } timestamp={ link.addedOn } /> }>
                         <NewTabLink href={ fullCertificateUrl(link.id) } iconId="loc-link">{ link.id.toDecimalString() }</NewTabLink>
-                        <p><strong>Timestamp:</strong> <InlineDateTime dateTime={ link.addedOn } /></p>
                     </CertificateCell>)
             }
         </Row>
