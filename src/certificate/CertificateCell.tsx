@@ -3,7 +3,7 @@ import './CertificateCell.css'
 import { Col } from "react-bootstrap";
 
 export interface CertificateCellProps {
-    label: string,
+    label: Children,
     children?: Children,
     matched?: boolean,
     md?: number;

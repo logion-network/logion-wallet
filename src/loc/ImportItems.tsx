@@ -16,6 +16,7 @@ import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import './ImportItems.css';
 import { toItemId } from "./types";
 import { ClosedCollectionLoc } from "@logion/client";
+import { ItemFile } from "@logion/node-api/dist/Types";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "../ClientExtrinsicSubmitter";
 
 const fileReaderStream = require("filereader-stream");
@@ -54,14 +55,27 @@ export default function ImportItems() {
                         error = "Duplicate ID";
                     }
 
+                    let files: ItemFile[] = [];
+                    if(Object.keys(data).length >= 6) {
+                        files = [
+                            {
+                                name: data['2'],
+                                contentType: data['3'],
+                                size: data['4'],
+                                hash: data['5']
+                            }
+                        ];
+                    }
+
                     rows.push({
                         id: displayId,
                         error,
                         description: data['1'],
-                        files: [],
+                        files,
                         submitted: false,
                         failed: false,
-                        success: false
+                        success: false,
+                        upload: files.length > 0 ? true : false,
                     });
 
                     if(id !== undefined) {
@@ -79,6 +93,7 @@ export default function ImportItems() {
                             });
                             item.submitted = existingItem !== undefined;
                             item.success = existingItem !== undefined;
+                            item.upload = existingItem === undefined || !existingItem.files[0].uploaded;
                         }
                     }
                     setItems(rows);
@@ -95,6 +110,7 @@ export default function ImportItems() {
                 signer: signer!,
                 itemId: item.id,
                 itemDescription: item.description,
+                itemFiles: item.files,
                 callback
             })
         }
@@ -134,6 +150,22 @@ export default function ImportItems() {
             await submitItem(items[firstItemIndex]);
         }
     }, [ setIsBatchImport, setCurrentItem, submitItem, items ]);
+
+    const uploadItemFile = useCallback(async (item: Item, file: File) => {
+        const collection = locState as ClosedCollectionLoc;
+        try {
+            await collection.uploadCollectionItemFile({
+                itemId: item.id,
+                itemFile: {
+                    ...item.files[0],
+                    content: file,
+                },
+            });
+            item.upload = false;
+        } catch(e) {
+            item.error = String(e);
+        }
+    }, [ locState ]);
 
     return (
         <div className="ImportItems">
@@ -202,7 +234,18 @@ export default function ImportItems() {
                                         } />
                                     }
                                     {
-                                        (item.submitted && item.success) &&
+                                        (item.submitted && item.success && item.upload && !item.error) &&
+                                        <Cell content={
+                                            <FileSelectorButton
+                                                buttonText="Upload file"
+                                                onFileSelected={ file => uploadItemFile(item, file) }
+                                                onlyButton={ true }
+                                                accept={ item.files[0].contentType }
+                                            />
+                                        } />
+                                    }
+                                    {
+                                        (item.submitted && item.success && !item.upload) &&
                                         <Cell content={ <Icon icon={{ id: "ok" }} /> } />
                                     }
                                     {
