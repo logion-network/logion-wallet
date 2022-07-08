@@ -45,6 +45,7 @@ interface LocInfo {
     logoUrl: string;
     itemId: string;
     itemDescription: string;
+    itemAddedOn: string;
 }
 
 interface SettingsData {
@@ -80,6 +81,7 @@ export const DEFAULT_SOF_PARAMS: SofParams = {
     amount: "",
     itemId: "",
     itemDescription: "",
+    itemAddedOn: "",
     prerequisites: [],
     oathText: "",
     oathLogoUrl: "",

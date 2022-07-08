@@ -118,6 +118,7 @@ export default function StatementOfFactsTemplateFR(props: Props) {
                     <div className="fact-container">
                         <div>Collection item ID: { props.pathModel.itemId }</div>
                         <div>Description: { props.pathModel.itemDescription }</div>
+                        <div>Timestamp: { props.pathModel.itemAddedOn }</div>
                     </div>
                 </div>
                 </>

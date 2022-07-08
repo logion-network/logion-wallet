@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { Col, OverlayTrigger } from "react-bootstrap";
-import { LegalOfficer } from "@logion/client";
+import { LegalOfficer, UploadableCollectionItem } from "@logion/client";
 import { format } from "@logion/node-api/dist/datetime";
-import { CollectionItem } from "@logion/node-api/dist/Types";
 import Tooltip from 'react-bootstrap/Tooltip';
 
 import { useCommonContext } from "../common/CommonContext";
@@ -35,7 +34,7 @@ export default function UserContextualizedLocDetails() {
     const navigate = useNavigate();
     const { locState, loc, locId, locItems, backPath, detailsPath } = useUserLocContext();
     const [ checkResult, setCheckResult ] = useState<DocumentCheckResult>({result: "NONE"});
-    const [ collectionItem, setCollectionItem ] = useState<CollectionItem>();
+    const [ collectionItem, setCollectionItem ] = useState<UploadableCollectionItem>();
     const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer | null>(null)
     const [ supersededLoc, setSupersededLoc ] = useState<LocData | undefined | null>(null)
 
