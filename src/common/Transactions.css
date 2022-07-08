@@ -54,6 +54,7 @@
 .Transactions .Frame-Wallet .Table .body {
     overflow-y: auto;
     height: calc(100vh - 600px);
+    min-height: 65px;
 }
 
 .Transactions .Frame-Vault .Table .body {
