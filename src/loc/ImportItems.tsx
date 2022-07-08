@@ -1,5 +1,8 @@
-import { useCallback, useState } from "react";
+import { ClosedCollectionLoc, UploadableCollectionItem } from "@logion/client";
+import { ItemFile } from "@logion/node-api/dist/Types";
 import csv from "csv-parser";
+import { useCallback, useState } from "react";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 import Dialog from "../common/Dialog";
 import FileSelectorButton from "../common/FileSelectorButton";
@@ -9,14 +12,11 @@ import { useCommonContext } from "../common/CommonContext";
 import Button from "../common/Button";
 import { useLogionChain } from "../logion-chain";
 import { useResponsiveContext } from "../common/Responsive";
-import { useUserLocContext } from "./UserLocContext";
+import { ActiveLoc, useUserLocContext } from "./UserLocContext";
 import ImportItemDetails, { Item } from "./ImportItemDetails";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 import './ImportItems.css';
 import { toItemId } from "./types";
-import { ClosedCollectionLoc } from "@logion/client";
-import { ItemFile } from "@logion/node-api/dist/Types";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "../ClientExtrinsicSubmitter";
 
 const fileReaderStream = require("filereader-stream");
@@ -36,6 +36,7 @@ export default function ImportItems() {
     const [ isBatchImport, setIsBatchImport ] = useState(false);
 
     const readCsvFile = useCallback((file: File) => {
+        const expectedCols = uploadExpected(locState) ? 6 : 2;
         const collection = locState as ClosedCollectionLoc;
         setSubmitters({});
         const rows: Item[] = [];
@@ -43,40 +44,56 @@ export default function ImportItems() {
         fileReaderStream(file)
             .pipe(csv({headers: false}))
             .on("data", (data: any) => {
-                if(Object.keys(data).length >= 2) {
+                const nCols = countColumns(data);
+                console.log(nCols)
+                if(nCols > 0) {
                     const givenId = data['0'];
                     const id = toItemId(givenId);
                     const displayId = id !== undefined ? id : givenId;
+                    const description = nCols > 1 ? data['1'] : "";
 
-                    let error: string | undefined = undefined;
-                    if(id === undefined) {
-                        error = "Invalid ID";
-                    } else if(id in ids) {
-                        error = "Duplicate ID";
+                    if(nCols !== expectedCols) {
+                        rows.push({
+                            id: displayId,
+                            error: `Expected ${expectedCols} columns, got ${nCols}`,
+                            description,
+                            files: [],
+                            submitted: false,
+                            failed: false,
+                            success: false,
+                            upload: false,
+                        });
+                    } else {
+                        let error: string | undefined = undefined;
+                        if(id === undefined) {
+                            error = "Invalid ID";
+                        } else if(id in ids) {
+                            error = "Duplicate ID";
+                        }
+
+                        let files: ItemFile[] = [];
+                        if(nCols === 6) {
+                            files = [
+                                {
+                                    name: data['2'],
+                                    contentType: data['3'],
+                                    size: data['4'],
+                                    hash: data['5']
+                                }
+                            ];
+                        }
+
+                        rows.push({
+                            id: displayId,
+                            error,
+                            description,
+                            files,
+                            submitted: false,
+                            failed: false,
+                            success: false,
+                            upload: shouldUpload(locState, undefined),
+                        });
                     }
-
-                    let files: ItemFile[] = [];
-                    if(Object.keys(data).length >= 6) {
-                        files = [
-                            {
-                                name: data['2'],
-                                contentType: data['3'],
-                                size: data['4'],
-                                hash: data['5']
-                            }
-                        ];
-                    }
-
-                    rows.push({
-                        id: displayId,
-                        error,
-                        description: data['1'],
-                        files,
-                        submitted: false,
-                        failed: false,
-                        success: false,
-                        upload: files.length > 0 ? true : false,
-                    });
 
                     if(id !== undefined) {
                         ids[id] = null;
@@ -93,7 +110,7 @@ export default function ImportItems() {
                             });
                             item.submitted = existingItem !== undefined;
                             item.success = existingItem !== undefined;
-                            item.upload = existingItem === undefined || !existingItem.files[0].uploaded;
+                            item.upload = shouldUpload(locState, existingItem);
                         }
                     }
                     setItems(rows);
@@ -307,4 +324,26 @@ function getNotSubmitted(items: Item[]): number {
         }
     }
     return count;
+}
+
+function countColumns(data: any): number {
+    const maxCols = Object.keys(data).length;
+    let nCols = maxCols;
+    while(nCols > 0) {
+        if(data[nCols - 1]) {
+            return nCols;
+        }
+        --nCols;
+    }
+    return 0;
+}
+
+function shouldUpload(locState: ActiveLoc | null, existingItem: UploadableCollectionItem | undefined): boolean {
+    const mustUpload = uploadExpected(locState);
+    return mustUpload && (existingItem === undefined || (existingItem.files.length > 0 && !existingItem.files[0].uploaded));
+}
+
+function uploadExpected(locState: ActiveLoc | null): boolean {
+    const collection = locState as ClosedCollectionLoc;
+    return collection.data().collectionCanUpload !== undefined && collection.data().collectionCanUpload === true;
 }

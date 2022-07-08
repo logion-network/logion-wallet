@@ -1563,21 +1563,21 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
   integrity sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==
 
-"@logion/client@^0.6.0-4":
-  version "0.6.0-4"
-  resolved "https://registry.yarnpkg.com/@logion/client/-/client-0.6.0-4.tgz#39de5989f23d00ddde9a6c79b101e56c4f677b1d"
-  integrity sha512-kW3QSzdd/7ZTeOwmMRsTDFcliUFDbnLS+ZvHEsV3mllvBeMKe7C6toEd87Drb4Y1SlcS81OU+M6+mVNsTkZGcQ==
+"@logion/client@^0.6.0-5":
+  version "0.6.0-5"
+  resolved "https://registry.yarnpkg.com/@logion/client/-/client-0.6.0-5.tgz#65839def298d49d4a0c8e23df7957759a9954ca5"
+  integrity sha512-lEC6Di568EALvwJmFOtVt4LlygII21+yMPN8v9tIlPjJHqXHm4cT9KsHCSZBk/1scti8ZHWcY4zFsaYPX5f3qw==
   dependencies:
     "@logion/node-api" "^0.3.0-1"
     axios "^0.27.2"
     luxon "^2.3.2"
 
-"@logion/extension@^0.3.2-4":
-  version "0.3.2-4"
-  resolved "https://registry.yarnpkg.com/@logion/extension/-/extension-0.3.2-4.tgz#fc1ba55ab6765867b2724824dd6ac83a48a3a95b"
-  integrity sha512-HOpqSPWfD6wNuwu05btdUH2OUKXUAl8yObu2fVSMDY+Pss0En+vomb4xzzz7Nb7WlO7G9cDUNzQObMSGfNqvGw==
+"@logion/extension@^0.3.2-5":
+  version "0.3.2-5"
+  resolved "https://registry.yarnpkg.com/@logion/extension/-/extension-0.3.2-5.tgz#9faca7163ed3c2712ddddc8e2be442480f45acd3"
+  integrity sha512-TuZq5U3Q9Jpz9GCPFcks+TrixOQzB4r+XVrSjoZuLhiLdD3zuFjJQXSetLs2wX9BlnjweSBdQ9Z0E60sGXipEQ==
   dependencies:
-    "@logion/client" "^0.6.0-4"
+    "@logion/client" "^0.6.0-5"
     "@polkadot/extension-dapp" "^0.43.1"
 
 "@logion/node-api@^0.3.0-1":
