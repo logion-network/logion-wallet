@@ -33,6 +33,13 @@ export class LogionClient {
     isProtected() {
         return true;
     }
+
+    locsState() {
+        return {
+
+            findById: () => undefined
+        };
+    }
 }
 
 export class AccountTokens {
