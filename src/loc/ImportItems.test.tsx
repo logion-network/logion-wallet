@@ -48,9 +48,12 @@ async function uploadCsv(): Promise<any> {
         addCollectionItem: jest.fn((params: AddCollectionItemParams) => {
             params.callback!(mockSubmittableResult(true, "finalized"))
         }),
-        getCollectionItem(parameters: { itemId: string }): Promise<CollectionItem | undefined> {
+        getCollectionItem(_parameters: { itemId: string }): Promise<CollectionItem | undefined> {
             return Promise.resolve(undefined);
-        }
+        },
+        data: () => ({
+            collectionCanUpload: false,
+        }),
     };
     setLocState(collection);
 
