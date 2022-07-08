@@ -8,15 +8,12 @@ import { fullCertificateUrl } from "../PublicPaths";
 import {
     OpenLoc,
     ClosedLoc,
-    VoidedLoc,
     ClosedCollectionLoc,
     LocData,
     PendingRequest,
-    VoidedCollectionLoc
 } from "@logion/client";
 import { useUserContext } from "../wallet-user/UserContext";
-
-export type ActiveLoc = OpenLoc | ClosedLoc | ClosedCollectionLoc | VoidedLoc | VoidedCollectionLoc;
+import { ActiveLoc } from "./LocContext";
 
 export interface UserLocContext {
     locId: UUID

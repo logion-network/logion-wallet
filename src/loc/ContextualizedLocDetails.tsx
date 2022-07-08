@@ -2,12 +2,11 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router";
 import { Col, OverlayTrigger } from "react-bootstrap";
 import queryString from 'query-string';
-import { LegalOfficer } from "@logion/client";
+import { LegalOfficer, UploadableCollectionItem, ClosedCollectionLoc } from "@logion/client";
 import { ProtectionRequest } from "@logion/client/dist/RecoveryClient";
 import { UUID } from "@logion/node-api/dist/UUID";
 import { format } from "@logion/node-api/dist/datetime";
-import { isLogionIdentityLoc, isLogionDataLoc, CollectionItem } from "@logion/node-api/dist/Types";
-import { getCollectionItem } from "@logion/node-api/dist/LogionLoc";
+import { isLogionIdentityLoc, isLogionDataLoc } from "@logion/node-api/dist/Types";
 import Tooltip from 'react-bootstrap/Tooltip';
 
 import { useCommonContext } from "../common/CommonContext";
@@ -48,11 +47,11 @@ export default function ContextualizedLocDetails() {
     const { pendingProtectionRequests, pendingRecoveryRequests } = useLegalOfficerContext();
     const navigate = useNavigate();
     const location = useLocation();
-    const { loc, locId, locRequest, locItems, supersededLocRequest, backPath, detailsPath } = useLocContext();
+    const { loc, locId, locRequest, locItems, supersededLocRequest, backPath, detailsPath, locState } = useLocContext();
     const [ checkResult, setCheckResult ] = useState<DocumentCheckResult>({result: "NONE"});
     const [ createLoc, setCreateLoc ] = useState(false);
     const [ protectionRequest, setProtectionRequest ] = useState<ProtectionRequest | null | undefined>();
-    const [ collectionItem, setCollectionItem ] = useState<CollectionItem>();
+    const [ collectionItem, setCollectionItem ] = useState<UploadableCollectionItem>();
     const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer | null>(null)
 
     const checkHash = useCallback(async (hash: string) => {
@@ -71,7 +70,8 @@ export default function ContextualizedLocDetails() {
             }
         }
 
-        const collectionItem = await getCollectionItem({ api: api!, locId, itemId: hash });
+        const collection = locState as ClosedCollectionLoc;
+        const collectionItem = await collection.getCollectionItem({ itemId: hash });
         if(collectionItem) {
             setCollectionItem(collectionItem);
             setCheckResult({
@@ -86,7 +86,7 @@ export default function ContextualizedLocDetails() {
             hash
         });
         setCollectionItem(undefined);
-    }, [ api, locId, locItems, setCheckResult, setCollectionItem ]);
+    }, [ locItems, setCheckResult, setCollectionItem, locState ]);
 
     useEffect(() => {
         if(location.search) {

@@ -1,8 +1,8 @@
 import { useState, useCallback, useEffect } from "react";
 import { Form } from "react-bootstrap";
-import { CollectionItem } from "@logion/node-api/dist/Types";
+import { ClosedCollectionLoc, UploadableCollectionItem } from "@logion/client";
 import { UUID } from "@logion/node-api/dist/UUID";
-import { getCollectionItem, getCollectionSize } from "@logion/node-api/dist/LogionLoc";
+import { getCollectionSize } from "@logion/node-api/dist/LogionLoc";
 
 import { useLogionChain } from "../logion-chain";
 import PolkadotFrame from "../common/PolkadotFrame";
@@ -20,11 +20,11 @@ import StatementOfFactsButton from "./statement/StatementOfFactsButton";
 import { toItemId, Viewer } from './types';
 import StatementOfFactsRequestButton from "./statement/StatementOfFactsRequestButton";
 import { useUserLocContext } from "./UserLocContext";
-import { ClosedCollectionLoc } from "@logion/client";
+import { useLocContext } from "./LocContext";
 
 export interface Props {
     locId: UUID;
-    collectionItem?: CollectionItem;
+    collectionItem?: UploadableCollectionItem;
 }
 
 export type CheckResult = 'NONE' | 'POSITIVE' | 'NEGATIVE';
@@ -35,7 +35,7 @@ export function UserCollectionLocItemChecker(props: Props) {
     const { locState } = useUserLocContext();
     const collection: ClosedCollectionLoc = locState as ClosedCollectionLoc;
 
-    async function collectionItemFunction(actualId: string): Promise<CollectionItem | undefined> {
+    async function collectionItemFunction(actualId: string): Promise<UploadableCollectionItem | undefined> {
         const result = await collection.checkHash(actualId)
         return result.collectionItem;
     }
@@ -54,6 +54,8 @@ export function LOCollectionLocItemChecker(props: Props) {
 
     const { locId, collectionItem } = props;
     const { api } = useLogionChain();
+    const { locState } = useLocContext();
+    const collection: ClosedCollectionLoc = locState as ClosedCollectionLoc;
 
     if (api === null) {
         return null;
@@ -65,14 +67,14 @@ export function LOCollectionLocItemChecker(props: Props) {
             locId={ locId }
             collectionItem={ collectionItem }
             collectionSizeFunction={ () => getCollectionSize({ api, locId }) }
-            collectionItemFunction={ (actualId: string) => getCollectionItem({ api, locId, itemId: actualId }) }
+            collectionItemFunction={ (actualId: string) => collection.getCollectionItem({ itemId: actualId }) }
         />)
 }
 
 interface LocalProps extends Props {
     viewer: Viewer;
     collectionSizeFunction: () => Promise<number | undefined>
-    collectionItemFunction: (actualId: string) => Promise<CollectionItem | undefined>
+    collectionItemFunction: (actualId: string) => Promise<UploadableCollectionItem | undefined>
 }
 
 function CollectionLocItemChecker(props: LocalProps) {
@@ -83,7 +85,7 @@ function CollectionLocItemChecker(props: LocalProps) {
     const [ state, setState ] = useState<CheckResult>('NONE');
     const [ collectionSize, setCollectionSize ] = useState<number | undefined | null>(null);
     const [ itemId, setItemId ] = useState<string>("");
-    const [ item, setItem ] = useState<CollectionItem>();
+    const [ item, setItem ] = useState<UploadableCollectionItem>();
     const [ managedCheck, setManagedCheck ] = useState<{ itemId: string, active: boolean }>();
 
     useEffect(() => {
@@ -177,10 +179,17 @@ function CollectionLocItemChecker(props: LocalProps) {
                                         state === "POSITIVE" && item !== undefined &&
                                         (
                                             (props.viewer === 'LegalOfficer' &&
-                                                <StatementOfFactsButton itemId={ toItemId(itemId) }
-                                                                        itemDescription={ item.description } />) ||
+                                                <StatementOfFactsButton
+                                                    itemId={ toItemId(itemId) }
+                                                    itemDescription={ item.description }
+                                                    itemAddedOn={ item.addedOn }
+                                                />
+                                            ) ||
                                             (props.viewer === 'User' &&
-                                                <StatementOfFactsRequestButton itemId={ toItemId(itemId) } />)
+                                                <StatementOfFactsRequestButton
+                                                    itemId={ toItemId(itemId) }
+                                                />
+                                            )
                                         )
                                     }
                                 </Col>

@@ -23,7 +23,7 @@ import { useLegalOfficerContext } from "../../legal-officer/LegalOfficerContext"
 
 type Status = 'IDLE' | 'PRE-REQUISITE' | 'INPUT' | 'READY'
 
-export default function StatementOfFactsButton(props: { itemId?: string, itemDescription?: string }) {
+export default function StatementOfFactsButton(props: { itemId?: string, itemDescription?: string, itemAddedOn?: string }) {
     const { api, accounts, getOfficer } = useLogionChain();
     const { loc, locId, locRequest } = useLocContext();
     const { settings } = useLegalOfficerContext();
@@ -153,6 +153,7 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                 ...sofParams,
                 itemId: props.itemId || "",
                 itemDescription: props.itemDescription || "",
+                itemAddedOn: props.itemAddedOn || "",
             });
         }
     }, [ props, itemId, itemDescription, setItemId, setItemDescription, sofParams, setSofParams, locId ]);

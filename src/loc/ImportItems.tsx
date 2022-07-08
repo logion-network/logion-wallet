@@ -12,12 +12,13 @@ import { useCommonContext } from "../common/CommonContext";
 import Button from "../common/Button";
 import { useLogionChain } from "../logion-chain";
 import { useResponsiveContext } from "../common/Responsive";
-import { ActiveLoc, useUserLocContext } from "./UserLocContext";
+import { useUserLocContext } from "./UserLocContext";
 import ImportItemDetails, { Item } from "./ImportItemDetails";
 
 import './ImportItems.css';
 import { toItemId } from "./types";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "../ClientExtrinsicSubmitter";
+import { ActiveLoc } from "./LocContext";
 
 const fileReaderStream = require("filereader-stream");
 

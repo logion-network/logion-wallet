@@ -2,6 +2,13 @@ import React, { useContext, useReducer, Reducer, useEffect, useCallback, useStat
 import { UUID } from "@logion/node-api/dist/UUID";
 import { getLegalOfficerCase, addMetadata, addFile, closeLoc, addLink, voidLoc } from "@logion/node-api/dist/LogionLoc";
 import { LegalOfficerCase, VoidInfo, File as ChainFile, MetadataItem, Link, LocType } from "@logion/node-api/dist/Types";
+import {
+    OpenLoc,
+    ClosedLoc,
+    VoidedLoc,
+    ClosedCollectionLoc,
+    VoidedCollectionLoc
+} from "@logion/client";
 
 import { LocRequest, LocFile, LocMetadataItem, LocLink } from "../common/types/ModelTypes";
 import {
@@ -37,6 +44,8 @@ export interface FullVoidInfo extends VoidInfo {
     reason: string;
 }
 
+export type ActiveLoc = OpenLoc | ClosedLoc | ClosedCollectionLoc | VoidedLoc | VoidedCollectionLoc;
+
 export interface LocContext {
     locId: UUID
     locRequest: LocRequest | null
@@ -63,6 +72,7 @@ export interface LocContext {
     backPath: string
     detailsPath: (locId: UUID, type: LocType) => string
     refresh: () => void
+    locState: ActiveLoc | null
 }
 
 const MAX_REFRESH = 20;
@@ -93,6 +103,7 @@ function initialContextValue(locId: UUID, backPath: string, detailsPath: (locId:
         voidLoc: null,
         voidLocExtrinsic: null,
         refresh: () => {},
+        locState: null,
     }
 }
 
@@ -138,6 +149,7 @@ interface Action {
     voidLoc?: (voidInfo: FullVoidInfo) => void,
     voidLocExtrinsic?: (voidInfo: VoidInfo) => SignAndSubmit,
     refresh?: () => void,
+    locState?: ActiveLoc,
 }
 
 const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action): LocContext => {
@@ -149,7 +161,14 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
         case "SET_LOC_REQUEST":
             return { ...state, locRequest: action.locRequest! }
         case "SET_LOC":
-            return { ...state, loc: action.loc!, supersededLoc: action.supersededLoc, supersededLocRequest: action.supersededLocRequest, locRequest: action.locRequest! }
+            return {
+                ...state,
+                loc: action.loc!,
+                supersededLoc: action.supersededLoc,
+                supersededLocRequest: action.supersededLocRequest,
+                locRequest: action.locRequest!,
+                locState: action.locState!,
+            }
         case "SET_FUNCTIONS":
             return {
                 ...state,
@@ -241,7 +260,7 @@ const enum NextRefresh {
 
 export function LocContextProvider(props: Props) {
 
-    const { axiosFactory, accounts, api } = useLogionChain();
+    const { axiosFactory, accounts, api, client } = useLogionChain();
     const { refresh } = useCommonContext();
     const { refreshLocs } = useLegalOfficerContext();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue(props.locId, props.backPath, props.detailsPath));
@@ -255,7 +274,7 @@ export function LocContextProvider(props: Props) {
     }, [ contextValue.locId, props.locId ])
 
     useEffect(() => {
-        if (contextValue.locRequest === null && axiosFactory !== undefined && contextValue.loc === null && api !== null) {
+        if (contextValue.locRequest === null && axiosFactory !== undefined && contextValue.loc === null && api !== null && client !== null) {
             (async function() {
                 const loc = await getLegalOfficerCase({ locId: contextValue.locId, api });
                 const locOwner = loc!.owner;
@@ -267,7 +286,15 @@ export function LocContextProvider(props: Props) {
                     const supersededLocOwner = loc!.owner;
                     supersededLocRequest = await fetchLocRequest(axiosFactory!(supersededLocOwner)!, loc.replacerOf.toString());
                 }
-                dispatch({ type: 'SET_LOC', loc, supersededLoc, supersededLocRequest, locRequest });
+                const locState = await (await client.locsState()).findById({ locId: contextValue.locId });
+                dispatch({
+                    type: 'SET_LOC',
+                    loc,
+                    supersededLoc,
+                    supersededLocRequest,
+                    locRequest,
+                    locState,
+                });
                 if (loc) {
                     let refreshNeeded = false;
                     const submitter = loc.owner;
@@ -318,7 +345,7 @@ export function LocContextProvider(props: Props) {
                 }
             })();
         }
-    }, [ contextValue, contextValue.locId, axiosFactory, accounts, api ])
+    }, [ contextValue, contextValue.locId, axiosFactory, accounts, api, client ])
 
     const refreshNameTimestamp = useCallback<() => Promise<NextRefresh>>(() => {
 
