@@ -20,7 +20,7 @@ import NewTabLink from "../common/NewTabLink";
 import DangerDialog from "../common/DangerDialog";
 import { LIGHT_MODE } from "../legal-officer/Types";
 import { RED } from "../common/ColorTheme";
-import InlineDateTime, { formatDateTime } from "../common/InlineDateTime";
+import InlineDateTime from "../common/InlineDateTime";
 import IconTextRow from "../common/IconTextRow";
 import { fullCertificateUrl } from "../PublicPaths";
 
@@ -404,7 +404,7 @@ function ItemCellTitle(props: { text: Children, timestamp: string }) {
         <span>
             <span>{ props.text }</span>
             <span className="separator">|</span>
-            <span>Timestamp:</span><span className="timestamp"> { formatDateTime(props.timestamp) }</span>
+            <span>Timestamp:</span><span className="timestamp"> <InlineDateTime dateTime={ props.timestamp } /></span>
         </span>
     );
 }

@@ -16,12 +16,3 @@ export default function InlineDateTime(props: Props) {
         <span>{ formattedDateTime }</span>
     );
 }
-
-export function formatDateTime(dateTime?: string): string {
-    if(dateTime !== undefined) {
-        const {date, time} = format(dateTime);
-        return `${date} / ${time}`;
-    } else {
-        return "-";
-    }
-}
