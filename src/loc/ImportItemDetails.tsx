@@ -2,8 +2,11 @@ import { CollectionItem } from "@logion/node-api/dist/Types";
 
 import './ImportItemDetails.css';
 
+export type ErrorType = 'validation' | 'chain' | 'upload';
+
 export interface Item extends CollectionItem {
     error?: string;
+    errorType?: ErrorType;
     submitted: boolean;
     failed: boolean;
     success: boolean;
@@ -13,6 +16,10 @@ export interface Item extends CollectionItem {
 export default function ImportItemDetails(props: { item: Item }) {
     return (
         <div className="ImportItemDetails">
+            {
+                props.item.error &&
+                <p className="error-message">{ props.item.error }</p>
+            }
             <pre>{ props.item.description }</pre>
             {
                 props.item.files.length > 0 &&

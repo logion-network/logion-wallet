@@ -3,6 +3,10 @@
     width: 100%;
 }
 
+.ImportItemDetails .error-message {
+    color: #e11a25;
+}
+
 .ImportItemDetails pre {
     font-size: 0.9rem;
     font-family: "Montserrat", sans-serif;
