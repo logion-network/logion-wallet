@@ -13,7 +13,7 @@ import Button from "../common/Button";
 import { useLogionChain } from "../logion-chain";
 import { useResponsiveContext } from "../common/Responsive";
 import { useUserLocContext } from "./UserLocContext";
-import ImportItemDetails, { Item } from "./ImportItemDetails";
+import ImportItemDetails, { ErrorType, Item } from "./ImportItemDetails";
 
 import './ImportItems.css';
 import { toItemId } from "./types";
@@ -57,6 +57,7 @@ export default function ImportItems() {
                         rows.push({
                             id: displayId,
                             error: `Expected ${expectedCols} columns, got ${nCols}`,
+                            errorType: "validation",
                             description,
                             files: [],
                             submitted: false,
@@ -66,10 +67,13 @@ export default function ImportItems() {
                         });
                     } else {
                         let error: string | undefined = undefined;
+                        let errorType: ErrorType | undefined = undefined;
                         if(id === undefined) {
                             error = "Invalid ID";
+                            errorType = "validation";
                         } else if(id in ids) {
                             error = "Duplicate ID";
+                            errorType = "validation";
                         }
 
                         let files: ItemFile[] = [];
@@ -87,6 +91,7 @@ export default function ImportItems() {
                         rows.push({
                             id: displayId,
                             error,
+                            errorType,
                             description,
                             files,
                             submitted: false,
@@ -180,10 +185,14 @@ export default function ImportItems() {
                 },
             });
             item.upload = false;
+            item.error = undefined;
+            item.errorType = undefined;
         } catch(e) {
             item.error = String(e);
+            item.errorType = "upload";
         }
-    }, [ locState ]);
+        setItems([ ...items ]);
+    }, [ locState, items, setItems ]);
 
     return (
         <div className="ImportItems">
@@ -226,6 +235,7 @@ export default function ImportItems() {
                             render: item => <Cell content={ item.description } overflowing />,
                             align: "left",
                             renderDetails: item => <ImportItemDetails item={ item } />,
+                            detailsExpanded: item => item.error !== undefined,
                         },
                         {
                             header: "",
@@ -252,14 +262,20 @@ export default function ImportItems() {
                                         } />
                                     }
                                     {
-                                        (item.submitted && item.success && item.upload && !item.error) &&
+                                        (item.submitted && item.success && item.upload && (!item.error || item.errorType === "upload")) &&
                                         <Cell content={
+                                            <>
                                             <FileSelectorButton
                                                 buttonText="Upload file"
                                                 onFileSelected={ file => uploadItemFile(item, file) }
                                                 onlyButton={ true }
                                                 accept={ item.files[0].contentType }
                                             />
+                                            {
+                                                item.error &&
+                                                <span className="upload-error"><Icon icon={{ id: "ko" }} /></span>
+                                            }
+                                            </>
                                         } />
                                     }
                                     {
@@ -267,7 +283,7 @@ export default function ImportItems() {
                                         <Cell content={ <Icon icon={{ id: "ok" }} /> } />
                                     }
                                     {
-                                        item.error &&
+                                        (item.error && item.errorType !== "upload") &&
                                         <Cell content={
                                             <OverlayTrigger
                                                 placement="bottom"

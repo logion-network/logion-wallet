@@ -1,3 +1,7 @@
+.FileSelectorButton.only-button {
+    display: inline-block;
+}
+
 .FileSelectorButton.only-button input {
     display: none;
 }
@@ -10,4 +14,5 @@
 
 .FileSelectorButton.only-button .Button {
     margin-top: 0;
+    margin-right: 0;
 }

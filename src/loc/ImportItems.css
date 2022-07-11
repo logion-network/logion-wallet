@@ -8,3 +8,7 @@
 .ImportItems .regular-cell .Alert.danger {
     line-height: 1.1;
 }
+
+.ImportItems .regular-cell .upload-error {
+    margin-left: 15px;
+}
