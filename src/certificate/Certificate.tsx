@@ -426,8 +426,8 @@ function LinkCellRow(props: { links: LocLink[] }) {
         <Row>
             { props.links.map(
                 link =>
-                    <CertificateCell key={ link.id.toString() } md={ 6 } label={ <ItemCellTitle text={ <span>Linked LOC <span className="file-nature">({ link.nature })</span></span> } timestamp={ link.addedOn } /> }>
-                        <NewTabLink href={ fullCertificateUrl(link.id) } iconId="loc-link">{ link.id.toDecimalString() }</NewTabLink>
+                    <CertificateCell key={ link.target } md={ 6 } label={ <ItemCellTitle text={ <span>Linked LOC <span className="file-nature">({ link.nature })</span></span> } timestamp={ link.addedOn } /> }>
+                        <NewTabLink href={ fullCertificateUrl(new UUID(link.target)) } iconId="loc-link">{ new UUID(link.target).toDecimalString() }</NewTabLink>
                     </CertificateCell>)
             }
         </Row>
