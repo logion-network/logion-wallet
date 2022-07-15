@@ -4,7 +4,7 @@ import {
     isExtensionAvailable,
     enableMetaMask,
     allMetamaskAccounts,
-} from '../PolkadotExtensionDappMock';
+} from '../../PolkadotExtensionDappMock';
 export {
     enableExtensions,
     ExtensionSigner,
