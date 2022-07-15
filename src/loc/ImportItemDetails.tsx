@@ -1,10 +1,13 @@
-import { CollectionItem } from "@logion/node-api/dist/Types";
+import { ItemFileWithContent } from "@logion/client";
 
 import './ImportItemDetails.css';
 
 export type ErrorType = 'validation' | 'chain' | 'upload';
 
-export interface Item extends CollectionItem {
+export interface Item {
+    id: string;
+    description: string;
+    files: ItemFileWithContent[];
     error?: string;
     errorType?: ErrorType;
     submitted: boolean;
@@ -27,8 +30,8 @@ export default function ImportItemDetails(props: { item: Item }) {
                     <p>Attached file:</p>
                     <ul>
                         <li>Name: { props.item.files[0].name }</li>
-                        <li>Content type: { props.item.files[0].contentType }</li>
-                        <li>Hash: { props.item.files[0].hash }</li>
+                        <li>Content type: { props.item.files[0].contentType.mimeType }</li>
+                        <li>Hash: { props.item.files[0].hashOrContent.contentHash }</li>
                         <li>Size: { props.item.files[0].size.toString() } bytes</li>
                     </ul>
                 </div>

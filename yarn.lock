@@ -1563,27 +1563,28 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
   integrity sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==
 
-"@logion/client@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@logion/client/-/client-0.6.0.tgz#3986a6110968a2d9c0512cb9d3a22de2e5ebec1d"
-  integrity sha512-ljUQwoTXSX1Q5BLG5Y9aykYOU83erQPh4nePg4BYHUzb0kmivLakMiUC1XV6aJcQu1GNYuL3kAaYwc16bj/91w==
+"@logion/client@^0.7.0-1":
+  version "0.7.0-1"
+  resolved "https://registry.yarnpkg.com/@logion/client/-/client-0.7.0-1.tgz#b797593a4326771dcc86a9f097e67335696b7cbc"
+  integrity sha512-DuEDrBUEOl3jZ0ofo+rL9aFsHwsVvxRECOPmLgpAIsSInlxoSi57fhoJ3zGEmFI9Jr6P30cyshVU1Zs+HmxKMA==
   dependencies:
-    "@logion/node-api" "^0.3.0"
+    "@logion/node-api" "^0.3.1"
     axios "^0.27.2"
     luxon "^2.3.2"
+    mime-db "^1.52.0"
 
-"@logion/extension@^0.3.2":
-  version "0.3.2"
-  resolved "https://registry.yarnpkg.com/@logion/extension/-/extension-0.3.2.tgz#7f42251755ef5104f545e6d108f7e9b1f7c3f1a6"
-  integrity sha512-xM/wSv+cE0r8UsxomNTW4mzplkXt0DwzGPOgYRslKX97VoSDNaIqpZNLjVoiy0D0EqFgeNe4bbOWRcy1TJQWQQ==
+"@logion/extension@^0.3.4-1":
+  version "0.3.4-1"
+  resolved "https://registry.yarnpkg.com/@logion/extension/-/extension-0.3.4-1.tgz#187bbe5e1afed6084ae08e9bad547d32717ee9a3"
+  integrity sha512-8EJ7pwrSHKezOa9d5Xm+JK9CWsOjDhmdb7n21ekd+de5iiN8FS8wYfzEcXDL+I6c3d9oB2oBElCZE1I9U5PjZQ==
   dependencies:
-    "@logion/client" "^0.6.0"
+    "@logion/client" "^0.7.0-1"
     "@polkadot/extension-dapp" "^0.43.1"
 
-"@logion/node-api@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@logion/node-api/-/node-api-0.3.0.tgz#afb369bd6d3b4e39abe59065a3138ed970e00a64"
-  integrity sha512-ZUVmWP8mraOrPwjC3QjtqN50Mmy/TT+MoX/5HqS6QBmhlV5oYfphBbJ52uWodgaGgM4VBrIP3vJbKOiQ47pjmA==
+"@logion/node-api@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@logion/node-api/-/node-api-0.3.1.tgz#af5ba53c94901246ccade069542364c2fa9b7070"
+  integrity sha512-x6TO7MLZ+And4e1Lyrhj0XxKwT+R3eC6oLN4VhPykfhfxY/lHFRpvM5ftvVsT3RoS6IgYctV2K21hvNeOLiKNw==
   dependencies:
     "@polkadot/api" "^8.8.2"
     "@polkadot/util" "^9.4.1"
@@ -7399,7 +7400,7 @@ micromatch@^4.0.2, micromatch@^4.0.4:
     braces "^3.0.2"
     picomatch "^2.3.1"
 
-mime-db@1.52.0, "mime-db@>= 1.43.0 < 2":
+mime-db@1.52.0, "mime-db@>= 1.43.0 < 2", mime-db@^1.52.0:
   version "1.52.0"
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.52.0.tgz#bbabcdc02859f4987301c856e3387ce5ec43bf70"
   integrity sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==
