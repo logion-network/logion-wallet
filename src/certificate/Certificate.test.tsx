@@ -16,9 +16,10 @@ jest.mock("@logion/node-api/dist/LogionLoc");
 jest.mock("../common/api");
 jest.mock("../common/hash");
 jest.mock("../common/Model");
+jest.mock('@logion/extension');
 
 describe("Certificate", () => {
-  
+
     it("renders LOC not found", () => {
         setParams({locId: "95306891657235687884416897796814545554"});
         setSearchParams({

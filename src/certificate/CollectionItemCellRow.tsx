@@ -46,19 +46,24 @@ export default function CollectionItemCellRow(props: Props) {
             { files && files.length > 0 &&
                 <Row>
                     <CertificateCell md={ 12 } label="Files">
-                        { files.map(file => (
-                            <>
-                                <Row>
-                                    <Col md={ 7 }>{ file.name } ({ file.contentType }, { file.size.toString() } bytes)</Col>
-                                    <Col md={ 3 }>
-                                        <MetaMaskClaimButton locId={ locId } owner={ owner } item={ item } file={ file }/>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col md={ 7 }>{ file.hash }</Col>
-                                </Row>
-                            </>
-                        )) }
+                        <ul>
+                            { files.map(file => (
+                                <li>
+                                    <Row>
+                                        <Col md={ 7 }>
+                                            { file.name } ({ file.contentType }, { file.size.toString() } bytes)
+                                        </Col>
+                                        <Col md={ 3 }>
+                                            <MetaMaskClaimButton locId={ locId } owner={ owner } item={ item }
+                                                                 file={ file } />
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col md={ 7 }>{ file.hash }</Col>
+                                    </Row>
+                                </li>
+                            )) }
+                        </ul>
                     </CertificateCell>
                 </Row>
             }

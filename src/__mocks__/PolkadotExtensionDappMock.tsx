@@ -59,3 +59,11 @@ export class ExtensionSigner {
 export function isExtensionAvailable() {
     return true;
 }
+
+export function enableMetaMask(appName: string) {
+    return Promise.resolve(false)
+}
+
+export function allMetamaskAccounts() {
+    return Promise.resolve([])
+}
