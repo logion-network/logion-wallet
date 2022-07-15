@@ -346,7 +346,7 @@ export default function Certificate() {
                     <LinkCellRow key={ index } links={ links } />
                 )) }
                 { collectionItem !== null &&
-                    <CollectionItemCellRow item={ collectionItem! } checkResult={ checkResult } />
+                    <CollectionItemCellRow locId={ locId } owner={ legalOfficer.address } item={ collectionItem! } checkResult={ checkResult } />
                 }
                 <LegalOfficerRow legalOfficer={ legalOfficer } loc={ loc } />
                 <Row className="buttons">

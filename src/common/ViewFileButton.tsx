@@ -16,6 +16,7 @@ export interface FileInfo {
 
 export interface ViewFileProps extends FileInfo {
     nodeOwner: string;
+    children?: Children;
 }
 
 async function openFile(axios: AxiosInstance, props: ViewFileProps) {
@@ -34,9 +35,26 @@ export default function ViewFileButton(props: ViewFileProps) {
     if (axiosFactory === undefined) {
         return null;
     }
+
+    const children = props.children !== undefined ?
+        props.children :
+        <Icon icon={ { id: 'view' } } />
+
     return (
         <Button onClick={ () => openFile(axiosFactory(props.nodeOwner)!, props) } className="ViewFileButton">
-            <Icon icon={{id: 'view'}} />
+            { children }
+        </Button>
+    )
+}
+
+export function DownloadFileButton(props: ViewFileProps) {
+    const { axiosFactory } = useLogionChain();
+    if (axiosFactory === undefined) {
+        return null;
+    }
+    return (
+        <Button onClick={ () => openFile(axiosFactory(props.nodeOwner)!, props) } className="ViewFileButton">
+            { props.children }
         </Button>
     )
 }

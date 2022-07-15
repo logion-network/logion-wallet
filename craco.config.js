@@ -10,6 +10,12 @@ module.exports = {
             config.resolve.fallback.process = require.resolve('process/browser');
             config.resolve.fallback.stream = require.resolve('stream-browserify');
             config.resolve.fallback.util = require.resolve('text-encoding');
+            config.resolve.fallback.crypto = require.resolve('crypto-browserify');
+            config.resolve.fallback.http = require.resolve('stream-http');
+            config.resolve.fallback.https = require.resolve('https-browserify');
+            config.resolve.fallback.assert = require.resolve('assert/');
+            config.resolve.fallback.url = require.resolve('url/');
+            config.resolve.fallback.os = require.resolve('os-browserify/browser');
 
             config.plugins.push(
                 new webpack.ProvidePlugin({
