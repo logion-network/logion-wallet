@@ -1,5 +1,4 @@
-import { ClosedCollectionLoc, UploadableCollectionItem } from "@logion/client";
-import { ItemFile } from "@logion/node-api/dist/Types";
+import { ClosedCollectionLoc, UploadableCollectionItem, ItemFileWithContent, HashOrContent, MimeType } from "@logion/client";
 import csv from "csv-parser";
 import { useCallback, useState } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
@@ -76,15 +75,15 @@ export default function ImportItems() {
                             errorType = "validation";
                         }
 
-                        let files: ItemFile[] = [];
+                        let files: ItemFileWithContent[] = [];
                         if(nCols === 6) {
                             files = [
-                                {
+                                new ItemFileWithContent({
                                     name: data['2'],
-                                    contentType: data['3'],
+                                    contentType: MimeType.from(data['3']),
                                     size: data['4'],
-                                    hash: data['5']
-                                }
+                                    hashOrContent: HashOrContent.fromHash(data['5']),
+                                })
                             ];
                         }
 
@@ -179,10 +178,12 @@ export default function ImportItems() {
         try {
             await collection.uploadCollectionItemFile({
                 itemId: item.id,
-                itemFile: {
-                    ...item.files[0],
-                    content: file,
-                },
+                itemFile: new ItemFileWithContent({
+                    name: item.files[0].name,
+                    contentType: item.files[0].contentType,
+                    size: item.files[0].size,
+                    hashOrContent: new HashOrContent({ hash: item.files[0].hashOrContent.contentHash, content: file }),
+                }),
             });
             item.upload = false;
             item.error = undefined;
@@ -269,7 +270,7 @@ export default function ImportItems() {
                                                 buttonText="Upload file"
                                                 onFileSelected={ file => uploadItemFile(item, file) }
                                                 onlyButton={ true }
-                                                accept={ item.files[0].contentType }
+                                                accept={ item.files[0].contentType.mimeType }
                                             />
                                             {
                                                 item.error &&
