@@ -20,11 +20,14 @@ import { Children } from '../common/types/Helpers';
 import {
     AxiosFactory,
 } from '../common/api';
+import { DidUri } from "../workshop/Kilt";
 
 import { useCommonContext } from '../common/CommonContext';
 import { DARK_MODE } from './Types';
 import { BalanceState } from "@logion/client/dist/Balance";
 import { LocsState } from "@logion/client";
+import { UUID } from "@logion/node-api";
+import { IRequestForAttestation } from "@kiltprotocol/sdk-js";
 
 export interface CreateProtectionRequestParams {
     legalOfficers: LegalOfficer[],
@@ -32,6 +35,7 @@ export interface CreateProtectionRequestParams {
     userIdentity: UserIdentity,
     addressToRecover?: string,
     callback?: SignCallback,
+    requesterDidUri: string,
 }
 
 export interface UserContext {
@@ -53,6 +57,7 @@ export interface UserContext {
     mutateRecoveredBalanceState: (mutator: (current: BalanceState) => Promise<BalanceState>) => Promise<void>,
     locsState?: LocsState,
     mutateLocsState: (mutator: (current: LocsState) => Promise<LocsState>) => Promise<void>,
+    attestationRequests?: LegalOfficerAttestationRequest[],
 }
 
 interface FullUserContext extends UserContext {
@@ -100,6 +105,11 @@ type ActionType = 'FETCH_IN_PROGRESS'
     | 'SET_PROTECTION_CHANGE_LO'
     ;
 
+export interface LegalOfficerAttestationRequest {
+    legalOfficer: LegalOfficer;
+    attestationRequest: IRequestForAttestation;
+}
+
 interface Action {
     type: ActionType,
     dataAddress?: string,
@@ -121,6 +131,7 @@ interface Action {
     mutateRecoveredBalanceState?: (mutator: (current: BalanceState) => Promise<BalanceState>) => Promise<void>,
     locsState?: LocsState,
     mutateLocsState?: (mutator: (current: LocsState) => Promise<LocsState>) => Promise<void>,
+    attestationRequests?: LegalOfficerAttestationRequest[],
 }
 
 const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, action: Action): FullUserContext => {
@@ -194,6 +205,7 @@ const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, actio
                 vaultState,
                 recoveredVaultState,
                 recoveredBalanceState,
+                attestationRequests: action.attestationRequests,
             };
         case "SET_MUTATE_VAULT_STATE":
             return {
@@ -261,7 +273,7 @@ export interface Props {
 }
 
 export function UserContextProvider(props: Props) {
-    const { accounts, client, axiosFactory, signer } = useLogionChain();
+    const { accounts, client, axiosFactory, signer, kilt } = useLogionChain();
     const { colorTheme, setColorTheme, nodesUp } = useCommonContext();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
@@ -347,7 +359,7 @@ export function UserContextProvider(props: Props) {
     const createProtectionRequestCallback = useCallback(async (params: CreateProtectionRequestParams) => {
         const protectionState = contextValue.protectionState;
         if(protectionState instanceof NoProtection) {
-            let pending: ProtectionState;
+            let pending: PendingProtection;
             if(params.addressToRecover !== undefined) {
                 pending = await protectionState.requestRecovery({
                     legalOfficer1: params.legalOfficers[0],
@@ -366,12 +378,40 @@ export function UserContextProvider(props: Props) {
                     userIdentity: params.userIdentity,
                 });
             }
+
+            const requesterAccountId = accounts!.current!.address;
+            const states = pending.protectionParameters.states;
+
+            const attestationRequest1 = await kilt!.requestAttestation({
+                requesterAccountId,
+                identityLocId: new UUID(states[0].id).toDecimalString(),
+                legalOfficerAccountId: states[0].legalOfficer.address,
+                requesterDidUri: params.requesterDidUri as DidUri,
+            });
+
+            const attestationRequest2 = await kilt!.requestAttestation({
+                requesterAccountId,
+                identityLocId: new UUID(states[1].id).toDecimalString(),
+                legalOfficerAccountId: states[1].legalOfficer.address,
+                requesterDidUri: params.requesterDidUri as DidUri,
+            });
+
             dispatch({
                 type: "REFRESH_PROTECTION_STATE",
                 protectionState: pending,
+                attestationRequests: [
+                    {
+                        legalOfficer: states[0].legalOfficer,
+                        attestationRequest: attestationRequest1,
+                    },
+                    {
+                        legalOfficer: states[1].legalOfficer,
+                        attestationRequest: attestationRequest2,
+                    }
+                ],
             });
         }
-    }, [ contextValue.protectionState, dispatch, signer ]);
+    }, [ contextValue.protectionState, dispatch, signer, kilt, accounts ]);
 
     useEffect(() => {
         if(contextValue.createProtectionRequest !== createProtectionRequestCallback) {

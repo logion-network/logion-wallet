@@ -36,6 +36,7 @@ interface FormValues {
     postalCode: string,
     city: string,
     country: string,
+    did: string,
 }
 
 export default function CreateProtectionRequestForm(props: Props) {
@@ -80,6 +81,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                     },
                     addressToRecover,
                     callback,
+                    requesterDidUri: formValues.did,
                 });
             };
             setCall(() => call);
@@ -103,6 +105,7 @@ export default function CreateProtectionRequestForm(props: Props) {
                     phoneNumber: formValues.phoneNumber
                 },
                 addressToRecover: undefined,
+                requesterDidUri: formValues.did,
             });
             setRequestCreated(true);
         }
@@ -434,6 +437,8 @@ export default function CreateProtectionRequestForm(props: Props) {
                                 />
                             </Col>
                             </Row>
+                            <Row>
+                            <Col>
                             <FormGroup
                                 id="country"
                                 label="Country"
@@ -455,6 +460,31 @@ export default function CreateProtectionRequestForm(props: Props) {
                                 feedback={ errors.country?.message }
                                 colors={ colorTheme.frame }
                             />
+                            </Col>
+                            </Row>
+                            <Row>
+                                <FormGroup
+                                    id="did"
+                                    label="DID"
+                                    control={
+                                        <Controller
+                                            name="did"
+                                            control={control}
+                                            defaultValue=""
+                                            rules={{required: 'The DID is required'}}
+                                            render={({field}) => (
+                                                <Form.Control
+                                                    isInvalid={!!errors.did?.message}
+                                                    type="text" placeholder="e.g. XYZ"
+                                                    { ...field }
+                                                />
+                                        )}
+                                        />
+                                    }
+                                    feedback={ errors.did?.message }
+                                    colors={ colorTheme.frame }
+                                />
+                            </Row>
 
                             <div className="agree-submit">
                                 <Form.Check

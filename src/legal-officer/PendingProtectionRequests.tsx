@@ -19,6 +19,7 @@ import AccountInfo from "../common/AccountInfo";
 import LocIdFormGroup from './LocIdFormGroup';
 import LocCreationDialog from '../loc/LocCreationDialog';
 import { useLogionChain } from '../logion-chain';
+import { Spinner } from 'react-bootstrap';
 
 enum ReviewStatus {
     NONE,
@@ -40,13 +41,16 @@ export interface Props {
 }
 
 export default function PendingProtectionRequests(props: Props) {
-    const { accounts, axiosFactory } = useLogionChain();
+    const { accounts, axiosFactory, kilt } = useLogionChain();
     const { colorTheme } = useCommonContext();
     const { pendingProtectionRequests, refreshRequests, pendingRecoveryRequests } = useLegalOfficerContext();
     const [ rejectReason, setRejectReason ] = useState<string>("");
     const [ reviewState, setReviewState ] = useState<ReviewState>(NO_REVIEW_STATE);
     const navigate = useNavigate();
     const [ locId, setLocId ] = useState<UUID | undefined>();
+    const [ claim, setClaim ] = useState<string>("");
+    const [ attestation, setAttestation ] = useState<string>("");
+    const [ attesting, setAttesting ] = useState(false);
 
     const handleClose = useCallback(() => {
         setReviewState(NO_REVIEW_STATE);
@@ -78,6 +82,16 @@ export default function PendingProtectionRequests(props: Props) {
             refreshRequests!(false);
         })();
     }, [ axiosFactory, reviewState, accounts, setReviewState, refreshRequests, locId ]);
+
+    const attestClaimCallback = useCallback(async () => {
+        setAttesting(true);
+        try {
+            const attestation = await kilt!.attestClaim(JSON.parse(claim));
+            setAttestation(JSON.stringify(attestation, undefined, 4));
+        } finally {
+            setAttesting(false);
+        }
+    }, [ kilt, setAttestation, claim ]);
 
     if (pendingProtectionRequests === null || pendingRecoveryRequests === null) {
         return null;
@@ -261,6 +275,36 @@ export default function PendingProtectionRequests(props: Props) {
                         noComparison={ true }
                     />
                     <p>I executed my due diligence and accept to be the Legal Officer of this user</p>
+                    {
+                        !attestation &&
+                        <>
+                            <Form.Group controlId='reason'>
+                                <Form.Label>Claim</Form.Label>
+                                <Form.Control
+                                    as="textarea"
+                                    rows={10}
+                                    onChange={ e => setClaim(e.target.value) }
+                                    value={ claim }
+                                />
+                            </Form.Group>
+                            {
+                                !attesting &&
+                                <Button onClick={ attestClaimCallback }>
+                                    Attest claim
+                                </Button>
+                            }
+                            {
+                                attesting &&
+                                <Button><Spinner animation='border'/></Button>
+                            }
+                        </>
+                    }
+                    {
+                        attestation &&
+                        <pre>
+                            { attestation }
+                        </pre>
+                    }
                 </ProcessStep>
             }
             {

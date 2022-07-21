@@ -29,6 +29,7 @@ import { ProtectionRequestStatus } from '@logion/client/dist/RecoveryClient';
 import ProtectionRefusal from "./ProtectionRefusal";
 import RecoveryRefusal from "./RecoveryRefusal";
 import ButtonGroup from "../../common/ButtonGroup";
+import CredentialBuilder from './CredentialBuilder';
 
 export type ProtectionRecoveryRequestStatus = 'pending' | 'accepted' | 'activated' | 'unavailable' | 'rejected';
 
@@ -41,7 +42,7 @@ export type Refusal = 'single' | 'double' | 'none';
 export default function ProtectionRecoveryRequest(props: Props) {
     const { getOfficer } = useLogionChain();
     const { colorTheme, availableLegalOfficers, nodesDown } = useCommonContext();
-    const { protectionState, activateProtection, claimRecovery } = useUserContext();
+    const { protectionState, activateProtection, claimRecovery, attestationRequests } = useUserContext();
     const [ activationCall, setActivationCall ] = useState<Call>();
     const [ claimCall, setClaimCall ] = useState<Call>();
 
@@ -74,6 +75,9 @@ export default function ProtectionRecoveryRequest(props: Props) {
             legalOfficer1Status = 'ACTIVATED';
             legalOfficer2Status = 'ACTIVATED';
         }
+
+        const legalOfficer1AttestionRequest = attestationRequests?.find(request => request.legalOfficer.address === legalOfficer1.address)?.attestationRequest;
+        const legalOfficer2AttestionRequest = attestationRequests?.find(request => request.legalOfficer.address === legalOfficer2.address)?.attestationRequest;
 
         const forAccount = protectionParameters.isRecovery ? ` for account ${protectionParameters.recoveredAddress}` : "";
 
@@ -248,6 +252,16 @@ export default function ProtectionRecoveryRequest(props: Props) {
                                     label="Legal Officer N°1"
                                     status={ legalOfficer1Status }
                                 />
+                                {
+                                    legalOfficer1AttestionRequest &&
+                                    <pre>
+                                        { JSON.stringify(legalOfficer1AttestionRequest, undefined, 4) }
+                                    </pre>
+                                }
+                                {
+                                    legalOfficer1Status === 'ACCEPTED' &&
+                                    <CredentialBuilder />
+                                }
                             </Col>
                             <Col md={6}>
                                 { refusal === 'single' &&
@@ -267,6 +281,16 @@ export default function ProtectionRecoveryRequest(props: Props) {
                                         label="Legal Officer N°2"
                                         status={ legalOfficer2Status }
                                     />
+                                }
+                                {
+                                    legalOfficer2AttestionRequest &&
+                                    <pre>
+                                        { JSON.stringify(legalOfficer2AttestionRequest, undefined, 4) }
+                                    </pre>
+                                }
+                                {
+                                    legalOfficer2Status === 'ACCEPTED' &&
+                                    <CredentialBuilder />
                                 }
                             </Col>
                         </Row>
