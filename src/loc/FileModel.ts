@@ -13,6 +13,10 @@ export interface GetFileParameters {
     hash: string
 }
 
+export interface GetCollectionItemFileParameters extends GetFileParameters {
+    collectionItemId: string,
+}
+
 export interface TypedFile {
     data: any,
     extension: string
@@ -33,6 +37,19 @@ export async function getLoFile(
     const response = await axios.get(`/api/lo-file/${ parameters.fileId }`, { responseType: 'blob' });
     return typedFile(response);
 }
+
+export async function getCollectionItemFile(
+    axios: AxiosInstance,
+    parameters: GetCollectionItemFileParameters
+): Promise<TypedFile> {
+    const { locId, collectionItemId, hash } = parameters
+    const response = await axios.get(
+        `/api/collection/${ locId }/${ collectionItemId }/files/${ hash }`,
+        { responseType: 'blob' }
+    );
+    return typedFile(response);
+}
+
 
 function typedFile(response: AxiosResponse): TypedFile {
     const contentType: string = response.headers['content-type'];

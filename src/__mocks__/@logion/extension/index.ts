@@ -2,9 +2,13 @@ import {
     enableExtensions,
     ExtensionSigner,
     isExtensionAvailable,
-} from '../PolkadotExtensionDappMock';
+    enableMetaMask,
+    allMetamaskAccounts,
+} from '../../PolkadotExtensionDappMock';
 export {
     enableExtensions,
     ExtensionSigner,
     isExtensionAvailable,
+    enableMetaMask,
+    allMetamaskAccounts,
 };

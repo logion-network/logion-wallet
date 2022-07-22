@@ -8,14 +8,19 @@ import { LIGHT_MODE } from "../legal-officer/Types";
 import CertificateDateTimeCell from "./CertificateDateTimeCell";
 import { MergedCollectionItem } from "../common/types/ModelTypes";
 import { DocumentCheckResult } from "../loc/CheckFileFrame";
+import MetaMaskClaimButton from "./MetaMaskClaimButton";
+import { UUID } from "@logion/node-api/dist/UUID";
 
 export interface Props {
+    locId: UUID,
+    owner: string,
     item: MergedCollectionItem;
     checkResult: DocumentCheckResult;
 }
 
 export default function CollectionItemCellRow(props: Props) {
-    const { id, description, addedOn } = props.item
+    const { locId, owner, item } = props
+    const { id, description, addedOn, files } = item
     return (
         <div className="CollectionItemCellRow">
             <Row>
@@ -38,6 +43,30 @@ export default function CollectionItemCellRow(props: Props) {
                     <pre>{ description }</pre>
                 </CertificateCell>
             </Row>
+            { files && files.length > 0 &&
+                <Row>
+                    <CertificateCell md={ 12 } label="Files">
+                        <ul>
+                            { files.map(file => (
+                                <li>
+                                    <Row>
+                                        <Col md={ 7 }>
+                                            { file.name } ({ file.contentType }, { file.size.toString() } bytes)
+                                        </Col>
+                                        <Col md={ 3 }>
+                                            <MetaMaskClaimButton locId={ locId } owner={ owner } item={ item }
+                                                                 file={ file } />
+                                        </Col>
+                                    </Row>
+                                    <Row>
+                                        <Col md={ 7 }>{ file.hash }</Col>
+                                    </Row>
+                                </li>
+                            )) }
+                        </ul>
+                    </CertificateCell>
+                </Row>
+            }
         </div>
     )
 }
