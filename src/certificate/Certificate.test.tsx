@@ -16,7 +16,6 @@ jest.mock("@logion/node-api/dist/LogionLoc");
 jest.mock("../common/api");
 jest.mock("../common/hash");
 jest.mock("../common/Model");
-jest.mock('@logion/extension');
 
 describe("Certificate", () => {
 

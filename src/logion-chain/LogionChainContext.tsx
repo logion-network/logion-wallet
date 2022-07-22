@@ -12,6 +12,7 @@ import { clearAll, loadCurrentAddress, loadTokens, storeCurrentAddress, storeTok
 
 import { getEndpoints, NodeMetadata } from './Connection';
 import { AxiosFactory } from '../common/api';
+import { Token } from "@logion/client/dist/Http";
 
 type ConsumptionStatus = 'PENDING' | 'STARTING' | 'STARTED';
 
@@ -30,6 +31,7 @@ export interface LogionChainContextType {
     axiosFactory?: AxiosFactory,
     isCurrentAuthenticated: () => boolean,
     authenticate: (address: string[]) => Promise<void>,
+    authenticateAddress: (address: string) => Promise<Token | undefined>,
     getOfficer?: (address: string | undefined) => LegalOfficer | undefined,
     saveOfficer?: (legalOfficer: LegalOfficer) => Promise<void>,
 }
@@ -55,6 +57,7 @@ const initState = (): FullLogionChainContextType => ({
     logout: () => {},
     isCurrentAuthenticated: () => false,
     authenticate: (_: string[]) => Promise.reject(),
+    authenticateAddress: (_: string) => Promise.reject(),
 });
 
 type ActionType = 'SET_SELECT_ADDRESS'
@@ -71,6 +74,7 @@ type ActionType = 'SET_SELECT_ADDRESS'
     | 'REFRESH_TOKENS'
     | 'START_TOKEN_REFRESH'
     | 'SET_AUTHENTICATE'
+    | 'SET_AUTHENTICATE_ADDRESS'
     | 'RESET_CLIENT'
 ;
 
@@ -90,6 +94,7 @@ interface Action {
     logout?: () => void;
     logionClient?: LogionClient;
     authenticate?: (address: string[]) => Promise<void>;
+    authenticateAddress?: (address: string) => Promise<Token | undefined>;
 }
 
 function buildAxiosFactory(authenticatedClient?: LogionClient): AxiosFactory {
@@ -190,6 +195,12 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
             return {
                 ...state,
                 authenticate: action.authenticate!,
+            };
+
+        case 'SET_AUTHENTICATE_ADDRESS':
+            return {
+                ...state,
+                authenticateAddress: action.authenticateAddress!,
             };
 
         case 'RESET_CLIENT':
@@ -391,6 +402,14 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
         });
     }, [ state.client, state.signer ]);
 
+    const authenticateAddressCallback = useCallback(async (address: string) => {
+        if(!state.client || !state.signer) {
+            return undefined;
+        }
+        let client = await state.client.authenticate([ address ], state.signer);
+        return client.tokens.get(address)
+    }, [ state.client, state.signer ]);
+
     useEffect(() => {
         if(state.authenticate !== authenticateCallback) {
             dispatch({
@@ -399,6 +418,15 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
             });
         }
     }, [ state.authenticate, authenticateCallback ]);
+
+    useEffect(() => {
+        if(state.authenticateAddress !== authenticateAddressCallback) {
+            dispatch({
+                type: 'SET_AUTHENTICATE_ADDRESS',
+                authenticateAddress: authenticateAddressCallback
+            });
+        }
+    }, [ state.authenticateAddress, authenticateAddressCallback ]);
 
     return <LogionChainContext.Provider value={state}>
         {props.children}
