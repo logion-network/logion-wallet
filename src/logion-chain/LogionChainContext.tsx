@@ -4,7 +4,7 @@ import { DateTime } from 'luxon';
 import { ApiPromise } from '@polkadot/api';
 import { buildApi } from '@logion/node-api';
 import { AccountTokens, LegalOfficer, LogionClient } from '@logion/client';
-import { enableExtensions, ExtensionSigner, InjectedAccount, isExtensionAvailable } from '@logion/extension';
+import { ExtensionSigner, InjectedAccount, enableExtensions, isExtensionAvailable } from '@logion/extension';
 
 import config, { Node } from '../config';
 import Accounts, { buildAccounts } from '../common/types/Accounts';
@@ -12,6 +12,7 @@ import { clearAll, loadCurrentAddress, loadTokens, storeCurrentAddress, storeTok
 
 import { getEndpoints, NodeMetadata } from './Connection';
 import { AxiosFactory } from '../common/api';
+import { KiltAdapter } from 'src/workshop/Kilt';
 
 type ConsumptionStatus = 'PENDING' | 'STARTING' | 'STARTED';
 
@@ -32,6 +33,7 @@ export interface LogionChainContextType {
     authenticate: (address: string[]) => Promise<void>,
     getOfficer?: (address: string | undefined) => LegalOfficer | undefined,
     saveOfficer?: (legalOfficer: LegalOfficer) => Promise<void>,
+    kilt: KiltAdapter | null,
 }
 
 export interface FullLogionChainContextType extends LogionChainContextType {
@@ -55,6 +57,7 @@ const initState = (): FullLogionChainContextType => ({
     logout: () => {},
     isCurrentAuthenticated: () => false,
     authenticate: (_: string[]) => Promise.reject(),
+    kilt: null,
 });
 
 type ActionType = 'SET_SELECT_ADDRESS'
@@ -90,6 +93,7 @@ interface Action {
     logout?: () => void;
     logionClient?: LogionClient;
     authenticate?: (address: string[]) => Promise<void>;
+    kilt?: KiltAdapter;
 }
 
 function buildAxiosFactory(authenticatedClient?: LogionClient): AxiosFactory {
@@ -115,6 +119,7 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
                 client: action.client!,
                 connectedNodeMetadata: action.connectedNodeMetadata!,
                 ...buildClientHelpers(action.client!, state.injectedAccounts!),
+                kilt: action.kilt!,
             };
 
         case 'START_INJECTED_ACCOUNTS_CONSUMPTION':
@@ -302,6 +307,9 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
                     }
                 }
 
+                const kilt = new KiltAdapter();
+                await kilt.connect();
+
                 dispatch({
                     type: 'CONNECT_SUCCESS',
                     api,
@@ -309,7 +317,8 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
                     logionClient,
                     connectedNodeMetadata: {
                         peerId : peerId.toString()
-                    }
+                    },
+                    kilt
                 });
             })();
         }

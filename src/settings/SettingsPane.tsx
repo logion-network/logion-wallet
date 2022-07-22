@@ -11,6 +11,7 @@ import './SettingsPane.css';
 import Alert from '../common/Alert';
 import DirectoryData from '../settings/DirectoryData';
 import { Files } from "./Files";
+import KiltData from './KiltData';
 
 function status(metadata: NodeMetadata | null): string {
     if(metadata !== null) {
@@ -113,6 +114,13 @@ export default function SettingsPane(props: Props) {
                                 <p><strong>You are using the latest version of logion: { currentVersion }.</strong></p>
                             </Alert>
                         }
+                    </Frame>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <Frame title="KILT">
+                        <KiltData/>
                     </Frame>
                 </Col>
             </Row>
