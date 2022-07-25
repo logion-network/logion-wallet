@@ -156,7 +156,7 @@ export function useLogionChain() {
             injectedAccounts: null,
             api,
             connectedNodeMetadata: {
-        
+
             },
             selectAddress,
             accounts,
@@ -165,6 +165,7 @@ export function useLogionChain() {
             getOfficer,
             saveOfficer,
             client,
+            isCurrentAuthenticated: () => true
         };
     }
 }

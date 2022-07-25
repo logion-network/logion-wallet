@@ -1,17 +1,16 @@
 import { MergedCollectionItem } from "../common/types/ModelTypes";
 import Button from "../common/Button";
 import { useCallback, useState } from "react";
-import { enableMetaMask, allMetamaskAccounts } from "@logion/extension/dist/Extension";
+import { enableMetaMask, allMetamaskAccounts } from "@logion/extension";
 import config from "../config";
 import Dialog from "../common/Dialog";
 import { ItemFile } from "@logion/node-api/dist/Types";
-import { sign } from "../logion-chain/Signature";
-import { DateTime } from "luxon";
 import { UUID } from "@logion/node-api/dist/UUID";
 import ViewFileButton from "../common/ViewFileButton";
 import { AxiosInstance } from "axios";
 import { getCollectionItemFile } from "../loc/FileModel";
 import { useLogionChain } from "../logion-chain";
+import { Token } from "@logion/client";
 
 export interface Props {
     locId: UUID,
@@ -25,9 +24,9 @@ export default function MetaMaskClaimButton(props: Props) {
     const { locId, owner, item, file } = props;
     const [ metaMaskEnabled, setMetaMaskEnabled ] = useState<boolean | undefined>(undefined);
     const [ metaMaskAddress, setMetaMaskAddress ] = useState<string | undefined>(undefined);
-    const [ signature, setSignature ] = useState<string | undefined>(undefined);
+    const [ tokenForDownload, setTokenForDownload ] = useState<Token | undefined>(undefined);
     const [ error, setError ] = useState<string | undefined>(undefined);
-    const { isCurrentAuthenticated } = useLogionChain()
+    const { isCurrentAuthenticated, authenticateAddress } = useLogionChain()
 
     const selectMetaMaskAccount = useCallback(async () => {
         let enabled = metaMaskEnabled;
@@ -46,25 +45,19 @@ export default function MetaMaskClaimButton(props: Props) {
         }
     }, [ metaMaskEnabled ])
 
-    const signWithMetaMask = useCallback(async () => {
+    const authenticateWithMetaMask = useCallback(async () => {
+        setError(undefined);
         try {
-            const signature = await sign({
-                signerId: metaMaskAddress!,
-                resource: "collection",
-                operation: "claim",
-                signedOn: DateTime.now(),
-                attributes: [ locId, item.id, file.hash ]
-            })
-            setSignature(signature)
+            setTokenForDownload(await authenticateAddress(metaMaskAddress!))
         } catch (error) {
             setError("" + (error as Error).message)
         }
-    }, [ metaMaskAddress, locId, item.id, file.hash ])
+    }, [ authenticateAddress, metaMaskAddress ])
 
     const reset = useCallback(() => {
         setMetaMaskEnabled(undefined);
         setMetaMaskAddress(undefined);
-        setSignature(undefined);
+        setTokenForDownload(undefined);
         setError(undefined);
     }, [])
 
@@ -88,8 +81,8 @@ export default function MetaMaskClaimButton(props: Props) {
                         id: "sign",
                         buttonText: "Sign",
                         buttonVariant: 'primary',
-                        disabled: signature !== undefined,
-                        callback: signWithMetaMask,
+                        disabled: tokenForDownload !== undefined,
+                        callback: authenticateWithMetaMask,
                     }
                 ] }
                 show={ metaMaskAddress !== undefined || error !== undefined }
@@ -101,7 +94,7 @@ export default function MetaMaskClaimButton(props: Props) {
                         you must first sign with your Ethereum address { metaMaskAddress }
                     </>
                 </p>
-                { signature !== undefined &&
+                { tokenForDownload !== undefined &&
                     <>
                         <ViewFileButton
                             nodeOwner={ owner }
