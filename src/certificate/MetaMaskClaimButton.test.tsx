@@ -23,7 +23,8 @@ describe("MetaMaskClaimButton", () => {
             id: "0x2dbc8ea2fabb49e6344b6990a9831d12469c44e72723979e3b2531fb4d8bd3f6",
             addedOn: "2022-01-20T15:45:00.000",
             description: "Some magnificent art work",
-            files: [ itemFile ]
+            files: [ itemFile ],
+            restrictedDelivery: false,
         },
         file: itemFile
     }

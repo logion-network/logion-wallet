@@ -1,5 +1,4 @@
 import { ClosedCollectionLoc, UploadableCollectionItem, ItemFileWithContent, HashOrContent, MimeType } from "@logion/client";
-import csv from "csv-parser";
 import { useCallback, useState } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
@@ -18,8 +17,7 @@ import './ImportItems.css';
 import { toItemId } from "./types";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "../ClientExtrinsicSubmitter";
 import { ActiveLoc } from "./LocContext";
-
-const fileReaderStream = require("filereader-stream");
+import { CsvItem, readItemsCsv } from "./ImportCsvReader";
 
 type Submitters = Record<string, Call>;
 
@@ -35,93 +33,40 @@ export default function ImportItems() {
     const [ currentItem, setCurrentItem ] = useState(0);
     const [ isBatchImport, setIsBatchImport ] = useState(false);
 
-    const readCsvFile = useCallback((file: File) => {
-        const expectedCols = uploadExpected(locState) ? 6 : 2;
+    const readCsvFile = useCallback(async (file: File) => {
         const collection = locState as ClosedCollectionLoc;
         setSubmitters({});
-        const rows: Item[] = [];
-        const ids: Record<string, null> = {};
-        fileReaderStream(file)
-            .pipe(csv({headers: false}))
-            .on("data", (data: any) => {
-                const nCols = countColumns(data);
-                console.log(nCols)
-                if(nCols > 0) {
-                    const givenId = data['0'];
-                    const id = toItemId(givenId);
-                    const displayId = id !== undefined ? id : givenId;
-                    const description = nCols > 1 ? data['1'] : "";
 
-                    if(nCols !== expectedCols) {
-                        rows.push({
-                            id: displayId,
-                            error: `Expected ${expectedCols} columns, got ${nCols}`,
-                            errorType: "validation",
-                            description,
-                            files: [],
-                            submitted: false,
-                            failed: false,
-                            success: false,
-                            upload: false,
-                        });
-                    } else {
-                        let error: string | undefined = undefined;
-                        let errorType: ErrorType | undefined = undefined;
-                        if(id === undefined) {
-                            error = "Invalid ID";
-                            errorType = "validation";
-                        } else if(id in ids) {
-                            error = "Duplicate ID";
-                            errorType = "validation";
-                        }
+        const result = await readItemsCsv(file);
+        if("items" in result) {
+            const rows = toItems(result.items);
 
-                        let files: ItemFileWithContent[] = [];
-                        if(nCols === 6) {
-                            files = [
-                                new ItemFileWithContent({
-                                    name: data['2'],
-                                    contentType: MimeType.from(data['3']),
-                                    size: data['4'],
-                                    hashOrContent: HashOrContent.fromHash(data['5']),
-                                })
-                            ];
-                        }
-
-                        rows.push({
-                            id: displayId,
-                            error,
-                            errorType,
-                            description,
-                            files,
-                            submitted: false,
-                            failed: false,
-                            success: false,
-                            upload: shouldUpload(locState, undefined),
-                        });
-                    }
-
-                    if(id !== undefined) {
-                        ids[id] = null;
-                    }
+            for(const item of rows) {
+                if(!item.error) {
+                    const existingItem = await collection.getCollectionItem({
+                        itemId: item.id
+                    });
+                    item.submitted = existingItem !== undefined;
+                    item.success = existingItem !== undefined;
+                    item.upload = shouldUpload(locState, existingItem);
                 }
-            })
-            .on("error", (error: any) => console.log(error))
-            .on("end", () => {
-                (async function() {
-                    for(const item of rows) {
-                        if(!item.error) {
-                            const existingItem = await collection.getCollectionItem({
-                                itemId: item.id
-                            });
-                            item.submitted = existingItem !== undefined;
-                            item.success = existingItem !== undefined;
-                            item.upload = shouldUpload(locState, existingItem);
-                        }
-                    }
-                    setItems(rows);
-                    setShowImportItems(true);
-                })();
-            });
+            }
+
+            setItems(rows);
+        } else {
+            setItems([{
+                id: "-",
+                error: result.error,
+                errorType: "validation",
+                description: "-",
+                files: [],
+                submitted: false,
+                failed: false,
+                success: false,
+                upload: false,
+            }]);
+        }
+        setShowImportItems(true);
     }, [ setSubmitters, locState ]);
 
     const submitItem = useCallback(async (item: Item) => {
@@ -344,18 +289,6 @@ function getNotSubmitted(items: Item[]): number {
     return count;
 }
 
-function countColumns(data: any): number {
-    const maxCols = Object.keys(data).length;
-    let nCols = maxCols;
-    while(nCols > 0) {
-        if(data[nCols - 1]) {
-            return nCols;
-        }
-        --nCols;
-    }
-    return 0;
-}
-
 function shouldUpload(locState: ActiveLoc | null, existingItem: UploadableCollectionItem | undefined): boolean {
     const mustUpload = uploadExpected(locState);
     return mustUpload && (existingItem === undefined || (existingItem.files.length > 0 && !existingItem.files[0].uploaded));
@@ -364,4 +297,58 @@ function shouldUpload(locState: ActiveLoc | null, existingItem: UploadableCollec
 function uploadExpected(locState: ActiveLoc | null): boolean {
     const collection = locState as ClosedCollectionLoc;
     return collection.data().collectionCanUpload !== undefined && collection.data().collectionCanUpload === true;
+}
+
+function toItems(csvItems: CsvItem[]): Item[] {
+    return csvItems.map(csvItem => {
+        const givenId = csvItem.id;
+        const id = toItemId(givenId);
+        const displayId = id !== undefined ? id : givenId;
+        const description = csvItem.description;
+
+        if(csvItem.validationError) {
+            return {
+                id: displayId,
+                error: csvItem.validationError,
+                errorType: "validation",
+                description,
+                files: [],
+                submitted: false,
+                failed: false,
+                success: false,
+                upload: false,
+            };
+        } else {
+            let error: string | undefined = undefined;
+            let errorType: ErrorType | undefined = undefined;
+            if(id === undefined) {
+                error = "Invalid ID";
+                errorType = "validation";
+            }
+
+            let files: ItemFileWithContent[] = [];
+            if("fileName" in csvItem) {
+                files = [
+                    new ItemFileWithContent({
+                        name: csvItem.fileName,
+                        contentType: MimeType.from(csvItem.fileContentType),
+                        size: BigInt(csvItem.fileSize),
+                        hashOrContent: HashOrContent.fromHash(csvItem.fileHash),
+                    })
+                ];
+            }
+
+            return {
+                id: displayId,
+                error,
+                errorType,
+                description,
+                files,
+                submitted: false,
+                failed: false,
+                success: false,
+                upload: false,
+            };
+        }
+    });
 }
