@@ -15,25 +15,37 @@ export interface CsvItemWithFile extends CsvItemWitoutFile {
     fileHash: string;
 }
 
-export type CsvItem = CsvItemWitoutFile | CsvItemWithFile;
+export interface CsvItemWithFileAndToken extends CsvItemWithFile {
+    restrictedDelivery: boolean;
+    tokenType: string;
+    tokenId: string;
+}
+
+export type CsvItem = CsvItemWitoutFile | CsvItemWithFile | CsvItemWithFileAndToken;
 
 const COLUMNS_WITHOUT_FILE = ['ID', 'DESCRIPTION'] as const;
 const COLUMNS_WITH_FILE = [ ...COLUMNS_WITHOUT_FILE, 'FILE NAME', 'FILE CONTENT TYPE', 'FILE SIZE', 'FILE HASH'] as const;
+const COLUMNS_WITH_FILE_AND_TOKEN = [ ...COLUMNS_WITH_FILE, 'RESTRICTED', 'TOKEN TYPE', 'TOKEN ID'] as const;
 
 type RowWithoutFile = {
-    [K in typeof COLUMNS_WITHOUT_FILE[number] | string]: string
+    [K in typeof COLUMNS_WITHOUT_FILE[number]]: string
 }
 
 type RowWithFile = {
-    [K in typeof COLUMNS_WITH_FILE[number] | string]: string
+    [K in typeof COLUMNS_WITH_FILE[number]]: string
+}
+
+type RowWithFileAndToken = {
+    [K in typeof COLUMNS_WITH_FILE_AND_TOKEN[number]]: string
 }
 
 export enum CsvRowType {
     WithoutFile,
     WithFile,
+    WithFileAndToken,
 }
 
-type CsvRow = RowWithoutFile | RowWithFile;
+type CsvRow = RowWithoutFile | RowWithFile | RowWithFileAndToken;
 
 export interface SuccessfulReadItemsCsv {
     items: CsvItem[];
@@ -75,13 +87,21 @@ export async function readItemsCsv(file: File): Promise<ReadItemsCsvResult> {
                         validationError,
                     };
 
-                    if(rowType === CsvRowType.WithFile) {
+                    if(rowType === CsvRowType.WithFile || rowType === CsvRowType.WithFileAndToken) {
                         const dataWithFile: RowWithFile = data as RowWithFile;
                         const itemWithFile = item as CsvItemWithFile;
                         itemWithFile.fileName = dataWithFile['FILE NAME'];
                         itemWithFile.fileContentType = dataWithFile['FILE CONTENT TYPE'];
                         itemWithFile.fileSize = dataWithFile['FILE SIZE'];
                         itemWithFile.fileHash = dataWithFile['FILE HASH'];
+                    }
+
+                    if(rowType === CsvRowType.WithFileAndToken) {
+                        const dataWithToken: RowWithFileAndToken = data as RowWithFileAndToken;
+                        const itemWithToken = item as CsvItemWithFileAndToken;
+                        itemWithToken.restrictedDelivery = isTrue(dataWithToken['RESTRICTED']);
+                        itemWithToken.tokenType = dataWithToken['TOKEN TYPE'];
+                        itemWithToken.tokenId = dataWithToken['TOKEN ID'];
                     }
 
                     rows.push(item);
@@ -109,6 +129,8 @@ function validateColumns(data: CsvRow): CsvRowType | undefined {
         return validateColumnsGivenType(data, COLUMNS_WITHOUT_FILE, CsvRowType.WithoutFile);
     } else if(keys.length === COLUMNS_WITH_FILE.length) {
         return validateColumnsGivenType(data, COLUMNS_WITH_FILE, CsvRowType.WithFile);
+    } else if(keys.length === COLUMNS_WITH_FILE_AND_TOKEN.length) {
+        return validateColumnsGivenType(data, COLUMNS_WITH_FILE_AND_TOKEN, CsvRowType.WithFileAndToken);
     } else {
         return undefined;
     }
@@ -124,7 +146,7 @@ function validateColumnsGivenType(data: CsvRow, expectedKeys: ReadonlyArray<stri
     return expectedType;
 }
 
-function isEmpty(data: CsvRow): boolean {
+function isEmpty(data: any): boolean {
     const keys = Object.keys(data);
     for(const key of keys) {
         if(data[key]) {
@@ -132,4 +154,8 @@ function isEmpty(data: CsvRow): boolean {
         }
     }
     return true;
+}
+
+function isTrue(value: string): boolean {
+    return value.toLowerCase() === "y";
 }
