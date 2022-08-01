@@ -113,11 +113,14 @@ export default function MetaMaskClaimButton(props: Props) {
                         <ViewFileButton
                             nodeOwner={ owner }
                             fileName={ file.name }
-                            downloader={ (axios: AxiosInstance) => getCollectionItemFile(axios, {
-                                locId: locId.toString(),
-                                collectionItemId: item.id,
-                                hash: file.hash,
-                            }) }
+                            downloader={ (axios: AxiosInstance) => {
+                                overrideAuthorizationToken(axios, tokenForDownload);
+                                return getCollectionItemFile(axios, {
+                                    locId: locId.toString(),
+                                    collectionItemId: item.id,
+                                    hash: file.hash,
+                                })
+                            }}
                         >
                             Download
                         </ViewFileButton>
@@ -131,4 +134,14 @@ export default function MetaMaskClaimButton(props: Props) {
             </Dialog>
         </>
     )
+}
+
+function overrideAuthorizationToken(axios: AxiosInstance, tokenForDownload: Token) {
+    axios.interceptors.request.use((config) => {
+        if(!config.headers) {
+            config.headers = {};
+        }
+        config.headers['Authorization'] = `Bearer ${tokenForDownload.value}`;
+        return config;
+    });
 }
