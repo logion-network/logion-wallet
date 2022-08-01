@@ -63,20 +63,6 @@ export default function MetaMaskClaimButton(props: Props) {
 
     return (
         <>
-            {
-                !item.restrictedDelivery &&
-                <ViewFileButton
-                    nodeOwner={ owner }
-                    fileName={ file.name }
-                    downloader={ (axios: AxiosInstance) => getCollectionItemFile(axios, {
-                        locId: locId.toString(),
-                        collectionItemId: item.id,
-                        hash: file.hash,
-                    }) }
-                >
-                    Download
-                </ViewFileButton>
-            }
             { item.restrictedDelivery &&
                 <Button
                     onClick={ selectMetaMaskAccount }>
