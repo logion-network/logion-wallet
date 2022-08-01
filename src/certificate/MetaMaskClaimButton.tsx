@@ -26,7 +26,7 @@ export default function MetaMaskClaimButton(props: Props) {
     const [ metaMaskAddress, setMetaMaskAddress ] = useState<string | undefined>(undefined);
     const [ tokenForDownload, setTokenForDownload ] = useState<Token | undefined>(undefined);
     const [ error, setError ] = useState<string | undefined>(undefined);
-    const { isCurrentAuthenticated, authenticateAddress } = useLogionChain()
+    const { authenticateAddress } = useLogionChain();
 
     const selectMetaMaskAccount = useCallback(async () => {
         let enabled = metaMaskEnabled;
@@ -63,7 +63,21 @@ export default function MetaMaskClaimButton(props: Props) {
 
     return (
         <>
-            { isCurrentAuthenticated() &&
+            {
+                !item.restrictedDelivery &&
+                <ViewFileButton
+                    nodeOwner={ owner }
+                    fileName={ file.name }
+                    downloader={ (axios: AxiosInstance) => getCollectionItemFile(axios, {
+                        locId: locId.toString(),
+                        collectionItemId: item.id,
+                        hash: file.hash,
+                    }) }
+                >
+                    Download
+                </ViewFileButton>
+            }
+            { item.restrictedDelivery &&
                 <Button
                     onClick={ selectMetaMaskAccount }>
                     Claim

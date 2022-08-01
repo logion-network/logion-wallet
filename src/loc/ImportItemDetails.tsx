@@ -1,4 +1,4 @@
-import { ItemFileWithContent } from "@logion/client";
+import { ItemFileWithContent, ItemTokenWithRestrictedType } from "@logion/client";
 
 import './ImportItemDetails.css';
 
@@ -8,6 +8,8 @@ export interface Item {
     id: string;
     description: string;
     files: ItemFileWithContent[];
+    restrictedDelivery: boolean;
+    token?: ItemTokenWithRestrictedType;
     error?: string;
     errorType?: ErrorType;
     submitted: boolean;
@@ -33,6 +35,17 @@ export default function ImportItemDetails(props: { item: Item }) {
                         <li>Content type: { props.item.files[0].contentType.mimeType }</li>
                         <li>Hash: { props.item.files[0].hashOrContent.contentHash }</li>
                         <li>Size: { props.item.files[0].size.toString() } bytes</li>
+                    </ul>
+                </div>
+            }
+            <p className="item-delivery">Restricted delivery: { props.item.restrictedDelivery ? "Yes" : "No" }</p>
+            {
+                props.item.token &&
+                <div className="item-token">
+                    <p>Underlying token:</p>
+                    <ul>
+                        <li>Type: { props.item.token.type }</li>
+                        <li>ID: { props.item.token.id }</li>
                     </ul>
                 </div>
             }

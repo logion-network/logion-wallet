@@ -1,5 +1,4 @@
-import { ClosedCollectionLoc, UploadableCollectionItem, ItemFileWithContent, HashOrContent, MimeType } from "@logion/client";
-import csv from "csv-parser";
+import { ClosedCollectionLoc, UploadableCollectionItem, ItemFileWithContent, HashOrContent, MimeType, ItemTokenWithRestrictedType } from "@logion/client";
 import { useCallback, useState } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
@@ -18,8 +17,8 @@ import './ImportItems.css';
 import { toItemId } from "./types";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "../ClientExtrinsicSubmitter";
 import { ActiveLoc } from "./LocContext";
-
-const fileReaderStream = require("filereader-stream");
+import { CsvItem, readItemsCsv } from "./ImportCsvReader";
+import Alert from "src/common/Alert";
 
 type Submitters = Record<string, Call>;
 
@@ -31,97 +30,35 @@ export default function ImportItems() {
 
     const [ showImportItems, setShowImportItems ] = useState(false);
     const [ items, setItems ] = useState<Item[]>([]);
+    const [ csvReadError, setCsvReadError ] = useState<string>("");
     const [ submitters, setSubmitters ] = useState<Submitters>({});
     const [ currentItem, setCurrentItem ] = useState(0);
     const [ isBatchImport, setIsBatchImport ] = useState(false);
 
-    const readCsvFile = useCallback((file: File) => {
-        const expectedCols = uploadExpected(locState) ? 6 : 2;
+    const readCsvFile = useCallback(async (file: File) => {
         const collection = locState as ClosedCollectionLoc;
         setSubmitters({});
-        const rows: Item[] = [];
-        const ids: Record<string, null> = {};
-        fileReaderStream(file)
-            .pipe(csv({headers: false}))
-            .on("data", (data: any) => {
-                const nCols = countColumns(data);
-                console.log(nCols)
-                if(nCols > 0) {
-                    const givenId = data['0'];
-                    const id = toItemId(givenId);
-                    const displayId = id !== undefined ? id : givenId;
-                    const description = nCols > 1 ? data['1'] : "";
 
-                    if(nCols !== expectedCols) {
-                        rows.push({
-                            id: displayId,
-                            error: `Expected ${expectedCols} columns, got ${nCols}`,
-                            errorType: "validation",
-                            description,
-                            files: [],
-                            submitted: false,
-                            failed: false,
-                            success: false,
-                            upload: false,
-                        });
-                    } else {
-                        let error: string | undefined = undefined;
-                        let errorType: ErrorType | undefined = undefined;
-                        if(id === undefined) {
-                            error = "Invalid ID";
-                            errorType = "validation";
-                        } else if(id in ids) {
-                            error = "Duplicate ID";
-                            errorType = "validation";
-                        }
+        const result = await readItemsCsv(file);
+        if("items" in result) {
+            const rows = toItems(result.items);
 
-                        let files: ItemFileWithContent[] = [];
-                        if(nCols === 6) {
-                            files = [
-                                new ItemFileWithContent({
-                                    name: data['2'],
-                                    contentType: MimeType.from(data['3']),
-                                    size: data['4'],
-                                    hashOrContent: HashOrContent.fromHash(data['5']),
-                                })
-                            ];
-                        }
-
-                        rows.push({
-                            id: displayId,
-                            error,
-                            errorType,
-                            description,
-                            files,
-                            submitted: false,
-                            failed: false,
-                            success: false,
-                            upload: shouldUpload(locState, undefined),
-                        });
-                    }
-
-                    if(id !== undefined) {
-                        ids[id] = null;
-                    }
+            for(const item of rows) {
+                if(!item.error) {
+                    const existingItem = await collection.getCollectionItem({
+                        itemId: item.id
+                    });
+                    item.submitted = existingItem !== undefined;
+                    item.success = existingItem !== undefined;
+                    item.upload = shouldUpload(locState, existingItem);
                 }
-            })
-            .on("error", (error: any) => console.log(error))
-            .on("end", () => {
-                (async function() {
-                    for(const item of rows) {
-                        if(!item.error) {
-                            const existingItem = await collection.getCollectionItem({
-                                itemId: item.id
-                            });
-                            item.submitted = existingItem !== undefined;
-                            item.success = existingItem !== undefined;
-                            item.upload = shouldUpload(locState, existingItem);
-                        }
-                    }
-                    setItems(rows);
-                    setShowImportItems(true);
-                })();
-            });
+            }
+
+            setItems(rows);
+        } else {
+            setCsvReadError(result.error);
+        }
+        setShowImportItems(true);
     }, [ setSubmitters, locState ]);
 
     const submitItem = useCallback(async (item: Item) => {
@@ -133,7 +70,9 @@ export default function ImportItems() {
                 itemId: item.id,
                 itemDescription: item.description,
                 itemFiles: item.files,
-                callback
+                restrictedDelivery: item.restrictedDelivery,
+                itemToken: item.token,
+                callback,
             })
         }
         const newSubmitters = { ...submitters };
@@ -220,102 +159,113 @@ export default function ImportItems() {
                 <p>Please double-check the items that you are about to add to your Collection LOC.</p>
                 <p><strong>If you did not prefix the ID with "0x" in the CSV file, we hashed the provided value for you.</strong></p>
 
-                <Table
-                    columns={[
-                        {
-                            header: "ID",
-                            render: item => <Cell content={ item.id } />,
-                            align: "left",
-                            width: width({
-                                onSmallScreen: "540px",
-                                otherwise: "610px"
-                            }),
-                        },
-                        {
-                            header: "Description",
-                            render: item => <Cell content={ item.description } overflowing />,
-                            align: "left",
-                            renderDetails: item => <ImportItemDetails item={ item } />,
-                            detailsExpanded: item => item.error !== undefined,
-                        },
-                        {
-                            header: "",
-                            render: item => (
-                                <>
-                                    {
-                                        (!item.submitted && !item.error) &&
-                                        <Button
-                                            variant="polkadot"
-                                            onClick={ () => submitItem(item) }
-                                        >
-                                            <Icon icon={{id: "import_items"}} height="23px" /> Import
-                                        </Button>
-                                    }
-                                    {
-                                        (item.submitted && !item.success && submitters[item.id] !== undefined && submitters[item.id] !== null) &&
-                                        <Cell content={
-                                            <ClientExtrinsicSubmitter
-                                                call={ submitters[item.id] || null }
-                                                onError={ () => submitNext(item, true) }
-                                                onSuccess={ () => submitNext(item, false) }
-                                                slim
-                                            />
-                                        } />
-                                    }
-                                    {
-                                        (item.submitted && item.success && item.upload && (!item.error || item.errorType === "upload")) &&
-                                        <Cell content={
-                                            <>
-                                            <FileSelectorButton
-                                                buttonText="Upload file"
-                                                onFileSelected={ file => uploadItemFile(item, file) }
-                                                onlyButton={ true }
-                                                accept={ item.files[0].contentType.mimeType }
-                                            />
-                                            {
-                                                item.error &&
-                                                <span className="upload-error"><Icon icon={{ id: "ko" }} /></span>
-                                            }
-                                            </>
-                                        } />
-                                    }
-                                    {
-                                        (item.submitted && item.success && !item.upload) &&
-                                        <Cell content={ <Icon icon={{ id: "ok" }} /> } />
-                                    }
-                                    {
-                                        (item.error && item.errorType !== "upload") &&
-                                        <Cell content={
-                                            <OverlayTrigger
-                                                placement="bottom"
-                                                delay={ 500 }
-                                                overlay={
-                                                    <Tooltip id={`tooltip-${item.id}`}>
-                                                        { item.error }
-                                                    </Tooltip>
-                                                }
+                { items.length > 0 &&
+                    <>
+                    <Table
+                        columns={[
+                            {
+                                header: "ID",
+                                render: item => <Cell content={ item.id } />,
+                                align: "left",
+                                width: width({
+                                    onSmallScreen: "540px",
+                                    otherwise: "610px"
+                                }),
+                            },
+                            {
+                                header: "Description",
+                                render: item => <Cell content={ item.description } overflowing />,
+                                align: "left",
+                                renderDetails: item => <ImportItemDetails item={ item } />,
+                                detailsExpanded: item => item.error !== undefined,
+                            },
+                            {
+                                header: "",
+                                render: item => (
+                                    <>
+                                        {
+                                            (!item.submitted && !item.error) &&
+                                            <Button
+                                                variant="polkadot"
+                                                onClick={ () => submitItem(item) }
                                             >
-                                                <span><Icon icon={{ id: "ko" }} /></span>
-                                            </OverlayTrigger>
-                                        } />
-                                    }
-                                </>
-                            )
-                        }
-                    ]}
-                    data={ items || [] }
-                    renderEmpty={ () => <EmptyTableMessage>No item to import</EmptyTableMessage> }
-                    color={ colorTheme.dialogTable }
-                />
-                <div className="import-all-container">
-                    <Button
-                        variant="polkadot"
-                        onClick={ importAll }
-                        disabled={ getNotSubmitted(items) === 0 || isBatchImport }
-                    >
-                        <Icon icon={{id: "import_items"}} height="23px" /> Import all
-                    </Button>
-                </div>
+                                                <Icon icon={{id: "import_items"}} height="23px" /> Import
+                                            </Button>
+                                        }
+                                        {
+                                            (item.submitted && !item.success && submitters[item.id] !== undefined && submitters[item.id] !== null) &&
+                                            <Cell content={
+                                                <ClientExtrinsicSubmitter
+                                                    call={ submitters[item.id] || null }
+                                                    onError={ () => submitNext(item, true) }
+                                                    onSuccess={ () => submitNext(item, false) }
+                                                    slim
+                                                />
+                                            } />
+                                        }
+                                        {
+                                            (item.submitted && item.success && item.upload && (!item.error || item.errorType === "upload")) &&
+                                            <Cell content={
+                                                <>
+                                                <FileSelectorButton
+                                                    buttonText="Upload file"
+                                                    onFileSelected={ file => uploadItemFile(item, file) }
+                                                    onlyButton={ true }
+                                                    accept={ item.files[0].contentType.mimeType }
+                                                />
+                                                {
+                                                    item.error &&
+                                                    <span className="upload-error"><Icon icon={{ id: "ko" }} /></span>
+                                                }
+                                                </>
+                                            } />
+                                        }
+                                        {
+                                            (item.submitted && item.success && !item.upload) &&
+                                            <Cell content={ <Icon icon={{ id: "ok" }} /> } />
+                                        }
+                                        {
+                                            (item.error && item.errorType !== "upload") &&
+                                            <Cell content={
+                                                <OverlayTrigger
+                                                    placement="bottom"
+                                                    delay={ 500 }
+                                                    overlay={
+                                                        <Tooltip id={`tooltip-${item.id}`}>
+                                                            { item.error }
+                                                        </Tooltip>
+                                                    }
+                                                >
+                                                    <span><Icon icon={{ id: "ko" }} /></span>
+                                                </OverlayTrigger>
+                                            } />
+                                        }
+                                    </>
+                                )
+                            }
+                        ]}
+                        data={ items || [] }
+                        renderEmpty={ () => <EmptyTableMessage>No item to import</EmptyTableMessage> }
+                        color={ colorTheme.dialogTable }
+                    />
+
+                    <div className="import-all-container">
+                        <Button
+                            variant="polkadot"
+                            onClick={ importAll }
+                            disabled={ getNotSubmitted(items) === 0 || isBatchImport }
+                        >
+                            <Icon icon={{id: "import_items"}} height="23px" /> Import all
+                        </Button>
+                    </div>
+                    </>
+                }
+                {
+                    csvReadError &&
+                    <Alert variant="danger">
+                        { csvReadError }
+                    </Alert>
+                }
             </Dialog>
         </div>
     );
@@ -344,18 +294,6 @@ function getNotSubmitted(items: Item[]): number {
     return count;
 }
 
-function countColumns(data: any): number {
-    const maxCols = Object.keys(data).length;
-    let nCols = maxCols;
-    while(nCols > 0) {
-        if(data[nCols - 1]) {
-            return nCols;
-        }
-        --nCols;
-    }
-    return 0;
-}
-
 function shouldUpload(locState: ActiveLoc | null, existingItem: UploadableCollectionItem | undefined): boolean {
     const mustUpload = uploadExpected(locState);
     return mustUpload && (existingItem === undefined || (existingItem.files.length > 0 && !existingItem.files[0].uploaded));
@@ -364,4 +302,78 @@ function shouldUpload(locState: ActiveLoc | null, existingItem: UploadableCollec
 function uploadExpected(locState: ActiveLoc | null): boolean {
     const collection = locState as ClosedCollectionLoc;
     return collection.data().collectionCanUpload !== undefined && collection.data().collectionCanUpload === true;
+}
+
+function toItems(csvItems: CsvItem[]): Item[] {
+    return csvItems.map(csvItem => {
+        const givenId = csvItem.id;
+        const id = toItemId(givenId);
+        const displayId = id !== undefined ? id : givenId;
+        const description = csvItem.description;
+
+        if(csvItem.validationError) {
+            return {
+                id: displayId,
+                error: csvItem.validationError,
+                errorType: "validation",
+                description,
+                files: [],
+                restrictedDelivery: false,
+                submitted: false,
+                failed: false,
+                success: false,
+                upload: false,
+            };
+        } else {
+            let error: string | undefined = undefined;
+            let errorType: ErrorType | undefined = undefined;
+            if(id === undefined) {
+                error = "Invalid ID";
+                errorType = "validation";
+            }
+
+            let files: ItemFileWithContent[] = [];
+            if("fileName" in csvItem) {
+                files = [
+                    new ItemFileWithContent({
+                        name: csvItem.fileName,
+                        contentType: MimeType.from(csvItem.fileContentType),
+                        size: BigInt(csvItem.fileSize),
+                        hashOrContent: HashOrContent.fromHash(csvItem.fileHash),
+                    })
+                ];
+            }
+
+            let restrictedDelivery = false;
+            let token: ItemTokenWithRestrictedType | undefined = undefined;
+            if("restrictedDelivery" in csvItem) {
+                restrictedDelivery = csvItem.restrictedDelivery;
+                if(csvItem.tokenType && csvItem.tokenId) {
+                    if(csvItem.tokenType === "ethereum_erc721") {
+                        token = {
+                            type: csvItem.tokenType,
+                            id: csvItem.tokenId,
+                        }
+                    } else {
+                        error = `Unsupported token type ${csvItem.tokenType}`;
+                        errorType = "validation";
+                    }
+                }
+            }
+
+            return {
+                id: displayId,
+                error,
+                errorType,
+                description,
+                files,
+                restrictedDelivery,
+                token,
+                submitted: false,
+                failed: false,
+                success: false,
+                upload: false,
+            };
+        }
+    });
 }
