@@ -180,9 +180,7 @@ function CollectionLocItemChecker(props: LocalProps) {
                                         (
                                             (props.viewer === 'LegalOfficer' &&
                                                 <StatementOfFactsButton
-                                                    itemId={ toItemId(itemId) }
-                                                    itemDescription={ item.description }
-                                                    itemAddedOn={ item.addedOn }
+                                                    item={ item }
                                                 />
                                             ) ||
                                             (props.viewer === 'User' &&

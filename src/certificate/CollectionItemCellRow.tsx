@@ -20,7 +20,7 @@ export interface Props {
 
 export default function CollectionItemCellRow(props: Props) {
     const { locId, owner, item } = props
-    const { id, description, addedOn, files } = item
+    const { id, description, addedOn, files, restrictedDelivery, token } = item
     return (
         <div className="CollectionItemCellRow">
             <Row>
@@ -43,6 +43,22 @@ export default function CollectionItemCellRow(props: Props) {
                     <pre>{ description }</pre>
                 </CertificateCell>
             </Row>
+            <Row>
+                <CertificateCell md={ 12 } label="Restricted delivery:">
+                    { restrictedDelivery ? "Yes": "No" }
+                </CertificateCell>
+            </Row>
+            {
+                token !== undefined &&
+                <Row>
+                    <CertificateCell md={ 4 } label="Underlying Token Type:">
+                        { token.type }
+                    </CertificateCell>
+                    <CertificateCell md={ 8 } label="Underlying Token ID:">
+                        <pre>{ token.id }</pre>
+                    </CertificateCell>
+                </Row>
+            }
             { files && files.length > 0 &&
                 <Row>
                     <CertificateCell md={ 12 } label="Files">
