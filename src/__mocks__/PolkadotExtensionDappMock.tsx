@@ -60,10 +60,22 @@ export function isExtensionAvailable() {
     return true;
 }
 
+let metamaskEnabled = false;
+
 export function enableMetaMask(appName: string) {
-    return Promise.resolve(false)
+    return Promise.resolve(metamaskEnabled)
+}
+
+export function setMetamaskEnabled(value: boolean) {
+    metamaskEnabled = value;
 }
 
 export function allMetamaskAccounts() {
-    return Promise.resolve([])
+    if(metamaskEnabled) {
+        return Promise.resolve([{
+            address: "0xa6db31d1aee06a3ad7e4e56de3775e80d2f5ea84",
+        }]);
+    } else {
+        return Promise.resolve([]);
+    }
 }

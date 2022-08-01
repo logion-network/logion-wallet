@@ -1,11 +1,12 @@
 jest.mock('../logion-chain');
 
-import { render } from '@testing-library/react';
+import { render, waitFor, screen } from '@testing-library/react';
 import { clickByName } from '../tests';
 import MetaMaskClaimButton, { Props } from "./MetaMaskClaimButton";
 import { UUID } from "@logion/node-api/dist/UUID";
 import { DEFAULT_LEGAL_OFFICER } from "../common/TestData";
-import { ItemFile } from "@logion/node-api/dist/Types";
+import { ItemFile } from "@logion/node-api";
+import { setMetamaskEnabled } from '../__mocks__/PolkadotExtensionDappMock';
 
 describe("MetaMaskClaimButton", () => {
 
@@ -24,21 +25,21 @@ describe("MetaMaskClaimButton", () => {
             addedOn: "2022-01-20T15:45:00.000",
             description: "Some magnificent art work",
             files: [ itemFile ],
-            restrictedDelivery: false,
+            restrictedDelivery: true,
         },
         file: itemFile
     }
 
-    it("renders button only, when authenticated", () => {
+    it("renders button for restricted delivery", () => {
 
         const button = render(<MetaMaskClaimButton { ...props } />);
         expect(button).toMatchSnapshot();
     })
 
-    it("renders dialog if MetaMask enabled", async () => {
-
-        const button = render(<MetaMaskClaimButton { ...props } />);
+    it("renders dialog if MetaMask enabled and address available", async () => {
+        setMetamaskEnabled(true);
+        render(<MetaMaskClaimButton { ...props } />);
         await clickByName("Claim");
-        expect(button).toMatchSnapshot();
+        await waitFor(() => screen.getByText(/in order to claim/i));
     })
 })
