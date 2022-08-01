@@ -108,7 +108,7 @@ export default function StatementOfFactsTemplateEN(props: Props) {
             </div>
 
             {
-                props.pathModel.itemId &&
+                props.pathModel.collectionItem &&
                 <>
                 <h3 className="item-title">3 - Collection item</h3>
 
@@ -116,9 +116,27 @@ export default function StatementOfFactsTemplateEN(props: Props) {
 
                 <div className="facts">
                     <div className="fact-container">
-                        <div>Collection item ID: { props.pathModel.itemId }</div>
-                        <div>Description: { props.pathModel.itemDescription }</div>
-                        <div>Timestamp: { props.pathModel.itemAddedOn }</div>
+                        <div>Collection item ID: { props.pathModel.collectionItem.id }</div>
+                        <div>Description: { props.pathModel.collectionItem.description }</div>
+                        <div>Timestamp: { props.pathModel.collectionItem.addedOn }</div>
+                        <div>Restricted delivery: { props.pathModel.collectionItem.restrictedDelivery }</div>
+                        {
+                            props.pathModel.collectionItem.token &&
+                            <>
+                            <div>Underlying Token Type: { props.pathModel.collectionItem.token.type }</div>
+                            <div>Underlying Token ID: { props.pathModel.collectionItem.token.id }</div>
+                            </>
+                        }
+                        {
+                            props.pathModel.collectionItem.files.map((file, index) => (
+                                <>
+                                <div>File #{index + 1} Name: { file.name }</div>
+                                <div>File #{index + 1} Content Type: { file.contentType }</div>
+                                <div>File #{index + 1} Hash: { file.hash }</div>
+                                <div>File #{index + 1} Size: { file.size.toString() }</div>
+                                </>
+                            ))
+                        }
                     </div>
                 </div>
                 </>

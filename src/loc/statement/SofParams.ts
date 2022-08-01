@@ -1,3 +1,5 @@
+import { ItemToken } from "@logion/node-api";
+
 export interface PublicItem {
     description: string;
     content: string;
@@ -24,6 +26,22 @@ export interface FormValues {
     amount: string;
 }
 
+export interface SofCollectionItemFile {
+    name: string;
+    contentType: string;
+    size: string;
+    hash: string;
+}
+
+export interface SofCollectionItem {
+    id: string;
+    description: string;
+    addedOn: string;
+    files: SofCollectionItemFile[];
+    token?: ItemToken;
+    restrictedDelivery: boolean;
+}
+
 interface LocInfo {
     language: Language;
     polkadotAddress: string;
@@ -43,9 +61,7 @@ interface LocInfo {
     publicItems: PublicItem[];
     privateItems: PrivateItem[];
     logoUrl: string;
-    itemId: string;
-    itemDescription: string;
-    itemAddedOn: string;
+    collectionItem?: SofCollectionItem;
 }
 
 interface SettingsData {
@@ -79,9 +95,6 @@ export const DEFAULT_SOF_PARAMS: SofParams = {
     timestampText: "",
     requesterText: "",
     amount: "",
-    itemId: "",
-    itemDescription: "",
-    itemAddedOn: "",
     prerequisites: [],
     oathText: "",
     oathLogoUrl: "",

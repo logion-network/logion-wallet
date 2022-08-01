@@ -3,6 +3,7 @@ import { Dropdown } from "react-bootstrap";
 import { UUID } from "@logion/node-api/dist/UUID";
 import { LegalOfficerCase } from "@logion/node-api/dist/Types";
 import { getLegalOfficerCase } from "@logion/node-api/dist/LogionLoc";
+import { UploadableCollectionItem } from "@logion/client";
 
 import { locDetailsPath, STATEMENT_OF_FACTS_PATH } from "../../legal-officer/LegalOfficerPaths";
 import { fullCertificateUrl } from "../../PublicPaths";
@@ -23,13 +24,12 @@ import { useLegalOfficerContext } from "../../legal-officer/LegalOfficerContext"
 
 type Status = 'IDLE' | 'PRE-REQUISITE' | 'INPUT' | 'READY'
 
-export default function StatementOfFactsButton(props: { itemId?: string, itemDescription?: string, itemAddedOn?: string }) {
+export default function StatementOfFactsButton(props: { item?: UploadableCollectionItem }) {
     const { api, accounts, getOfficer } = useLogionChain();
     const { loc, locId, locRequest } = useLocContext();
     const { settings } = useLegalOfficerContext();
     const [ sofParams, setSofParams ] = useState<SofParams>(DEFAULT_SOF_PARAMS);
-    const [ itemId, setItemId ] = useState<string>();
-    const [ itemDescription, setItemDescription ] = useState<string>();
+    const [ item, setItem ] = useState<UploadableCollectionItem>();
     const [ status, setStatus ] = useState<Status>('IDLE')
     const [ language, setLanguage ] = useState<Language | null>(null)
     const { control, handleSubmit, formState: { errors }, reset, setError } = useForm<FormValues>();
@@ -143,20 +143,23 @@ export default function StatementOfFactsButton(props: { itemId?: string, itemDes
                 })),
             });
         }
-    }, [ loc, locId, locRequest, sofParams, setSofParams, itemId ]);
+    }, [ loc, locId, locRequest, sofParams, setSofParams ]);
 
     useEffect(() => {
-        if((props.itemId !== itemId || props.itemDescription !== itemDescription)) {
-            setItemId(props.itemId);
-            setItemDescription(props.itemDescription);
+        if((props.item && !item) || (!props.item && item) || (props.item && item && props.item.id !== item.id)) {
+            setItem(props.item);
             setSofParams({
                 ...sofParams,
-                itemId: props.itemId || "",
-                itemDescription: props.itemDescription || "",
-                itemAddedOn: props.itemAddedOn || "",
+                collectionItem: ( props.item ? {
+                    ...props.item,
+                    files: props.item.files.map(file => ({
+                        ...file,
+                        size: file.size.toString(),
+                    })),
+                } : undefined),
             });
         }
-    }, [ props, itemId, itemDescription, setItemId, setItemDescription, sofParams, setSofParams, locId ]);
+    }, [ props, item, setItem, sofParams, setSofParams, locId ]);
 
     const cancelCallback = useCallback(() => {
         setStatus('IDLE')

@@ -108,7 +108,7 @@ export default function StatementOfFactsTemplateFR(props: Props) {
             </div>
 
             {
-                props.pathModel.itemId &&
+                props.pathModel.collectionItem &&
                 <>
                 <h3 className="item-title">3 - Données d’une Collection (Collection item)</h3>
 
@@ -116,9 +116,27 @@ export default function StatementOfFactsTemplateFR(props: Props) {
 
                 <div className="facts">
                     <div className="fact-container">
-                        <div>Collection item ID: { props.pathModel.itemId }</div>
-                        <div>Description: { props.pathModel.itemDescription }</div>
-                        <div>Timestamp: { props.pathModel.itemAddedOn }</div>
+                        <div>Collection item ID: { props.pathModel.collectionItem.id }</div>
+                        <div>Description: { props.pathModel.collectionItem.description }</div>
+                        <div>Timestamp: { props.pathModel.collectionItem.addedOn }</div>
+                        <div>Diffusion restreinte: { props.pathModel.collectionItem.restrictedDelivery }</div>
+                        {
+                            props.pathModel.collectionItem.token &&
+                            <>
+                            <div>Type de token sous-jacent: { props.pathModel.collectionItem.token.type }</div>
+                            <div>ID du token sous-jacent: { props.pathModel.collectionItem.token.id }</div>
+                            </>
+                        }
+                        {
+                            props.pathModel.collectionItem.files.map((file, index) => (
+                                <>
+                                <div>Fichier #{index + 1} - nom: { file.name }</div>
+                                <div>Fichier #{index + 1} - type de contenu: { file.contentType }</div>
+                                <div>Fichier #{index + 1} - hash: { file.hash }</div>
+                                <div>Fichier #{index + 1} - taille: { file.size.toString() }</div>
+                                </>
+                            ))
+                        }
                     </div>
                 </div>
                 </>
