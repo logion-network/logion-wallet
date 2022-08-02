@@ -105,3 +105,16 @@ export async function addLoFile(
         formData,
         { headers: { "Content-Type": "multipart/form-data" } })
 }
+
+export async function checkCanGetCollectionItemFile(
+    axios: AxiosInstance,
+    parameters: GetCollectionItemFileParameters
+): Promise<boolean> {
+    const { locId, collectionItemId, hash } = parameters
+    try {
+        await axios.get(`/api/collection/${ locId }/${ collectionItemId }/files/${ hash }/check`);
+        return true;
+    } catch(e) {
+        return false;
+    }
+}
