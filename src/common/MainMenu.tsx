@@ -2,8 +2,6 @@ import React from 'react';
 
 import MenuItem, { MenuItemData } from './MenuItem';
 
-import './MainMenu.css';
-
 export interface Props {
     items: MenuItemData[],
 }
@@ -11,7 +9,7 @@ export interface Props {
 export default function MainMenu(props: Props) {
 
     return (
-        <div className="MainMenu">
+        <div>
             {
                 props.items.map(item => (
                 <MenuItem
