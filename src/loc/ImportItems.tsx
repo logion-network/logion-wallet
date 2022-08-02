@@ -156,7 +156,9 @@ export default function ImportItems() {
                 show={ showImportItems }
                 size="xl"
             >
-                <p>Please double-check the items that you are about to add to your Collection LOC.</p>
+                <p>Please double-check the items that you are about to add to your Collection LOC: related data will be recorded on the logion blockchain.
+                    <strong>Further deletion will NOT be possible.</strong>
+                </p>
                 <p><strong>If you did not prefix the ID with "0x" in the CSV file, we hashed the provided value for you.</strong></p>
 
                 { items.length > 0 &&
