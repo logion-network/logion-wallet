@@ -220,23 +220,6 @@ export default function DirectoryData() {
                     />
                 </Col>
             </Row>
-            <Row>
-                <Col>
-                    <FormGroup
-                        id="logoUrl"
-                        label="Logo URL"
-                        control={ <Form.Control
-                            type="text"
-                            value={ legalOfficer?.logoUrl }
-                            onChange={ event => setLegalOfficer({
-                                ...legalOfficer!,
-                                logoUrl: event.target.value
-                            }) }
-                        /> }
-                        colors={ colorTheme.frame }
-                    />
-                </Col>
-            </Row>
             <Button onClick={ save }>
                 Save changes
             </Button>

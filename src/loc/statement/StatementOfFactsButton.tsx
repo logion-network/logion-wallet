@@ -21,6 +21,7 @@ import { PrerequisiteWizard } from "./PrerequisiteWizard";
 import { PREREQUISITE_WIZARD_STEPS } from "./WizardSteps";
 import { LegalOfficer } from "@logion/client";
 import { useLegalOfficerContext } from "../../legal-officer/LegalOfficerContext";
+import { loFileUrl } from "../FileModel";
 
 type Status = 'IDLE' | 'PRE-REQUISITE' | 'INPUT' | 'READY'
 
@@ -66,7 +67,9 @@ export default function StatementOfFactsButton(props: { item?: UploadableCollect
                     ...formValues,
                     certificateUrl: fullCertificateUrl(containingLocId),
                     language: language || 'en',
-                    oathLogoUrl: `${ legalOfficer!.node }/api/lo-file/sof-header?jwt_token=${ accounts?.current?.token?.value }`,
+                    logoUrl: loFileUrl(legalOfficer!, 'header-logo', accounts!.current!.token!),
+                    oathLogoUrl: loFileUrl(legalOfficer!, 'oath-logo', accounts!.current!.token!),
+                    sealUrl: loFileUrl(legalOfficer!, 'seal', accounts!.current!.token!),
                     oathText: settings!['oath'] || "-"
                 })
                 try {

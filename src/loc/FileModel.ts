@@ -1,11 +1,18 @@
 import { AxiosInstance, AxiosResponse } from "axios";
+import { LegalOfficer, Token } from "@logion/client";
 
-export const LO_FILE_IDS = ['sof-header']
+export const LO_FILE_IDS = [ 'oath-logo', 'header-logo', 'seal' ];
 
 export type LoFileId = typeof LO_FILE_IDS[number];
 
 export const LO_FILE_DESCRIPTION: Record<LoFileId, string> = {
-    'sof-header': "Header of the Statement of facts"
+    'header-logo': "Statement of facts: header logo",
+    'seal': "Statement of facts: seal",
+    'oath-logo': "Statement of facts: oath logo"
+}
+
+export function loFileUrl(legalOfficer: LegalOfficer, file: LoFileId, token: Token): string {
+    return `${ legalOfficer!.node }/api/lo-file/${ file }?jwt_token=${ token.value }`;
 }
 
 export interface GetFileParameters {

@@ -25,7 +25,7 @@ export default function StatementOfFactsTemplateEN(props: Props) {
                     </div>
                 </div>
                 <div className="logo">
-                    <img src={ props.pathModel.logoUrl ? props.pathModel.logoUrl : process.env.PUBLIC_URL + "/logo_black.png" } alt="logo" />
+                    <img src={ props.pathModel.logoUrl } alt="logo" />
                 </div>
             </div>
 
