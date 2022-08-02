@@ -8,6 +8,11 @@
     width: 100%;
 }
 
+.AddressSwitcher .dropdown-menu {
+    overflow-y: auto;
+    max-height: calc( 100vh - 160px );
+}
+
 #address-switcher-toggle {
     width: 100%;
     height: 95px;
