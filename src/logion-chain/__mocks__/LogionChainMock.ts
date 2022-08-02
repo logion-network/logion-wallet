@@ -10,6 +10,7 @@ import { AxiosInstance } from 'axios';
 import { Mock } from 'moq.ts';
 import Accounts, { Account } from 'src/common/types/Accounts';
 import { LogionClient } from 'src/__mocks__/@logion/client';
+import moment from 'moment';
 
 export const LogionChainContextProvider = (props: any) => null;
 
@@ -165,7 +166,15 @@ export function useLogionChain() {
             getOfficer,
             saveOfficer,
             client,
-            isCurrentAuthenticated: () => true
+            isCurrentAuthenticated: () => true,
+            authenticateAddress,
         };
     }
+}
+
+function authenticateAddress(address: string) {
+    return {
+        value: `some-token-value-for-${address}`,
+        expirationDate: moment().toISOString(),
+    };
 }

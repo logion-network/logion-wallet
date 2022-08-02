@@ -5,21 +5,37 @@ Object {
   "asFragment": [Function],
   "baseElement": <body>
     <div>
+      <div
+        class="MetaMaskClaimButton"
+      >
+        <button
+          class="Button btn btn-primary"
+          type="button"
+        >
+          <img
+            alt="claim"
+            src="/assets/claim.svg"
+          />
+           Claim your asset
+        </button>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="MetaMaskClaimButton"
+    >
       <button
         class="Button btn btn-primary"
         type="button"
       >
-        Claim
+        <img
+          alt="claim"
+          src="/assets/claim.svg"
+        />
+         Claim your asset
       </button>
     </div>
-  </body>,
-  "container": <div>
-    <button
-      class="Button btn btn-primary"
-      type="button"
-    >
-      Claim
-    </button>
   </div>,
   "debug": [Function],
   "findAllByAltText": [Function],

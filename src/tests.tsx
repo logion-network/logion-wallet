@@ -30,7 +30,7 @@ export function mockAccount(address: string, name: string) {
 
 export { reactAct as act };
 
-export async function clickByName(name: string | RegExp) {
+export async function clickByName(name: string | RegExp | ((accessibleName: string, element: Element) => boolean)) {
     let button: HTMLElement;
     await waitFor(() => button = screen.getByRole("button", { name }));
     await userEvent.click(button!);

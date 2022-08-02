@@ -2,6 +2,6 @@
     padding: 9px 10px;
 }
 
-.ViewFileButton img {
+.ViewFileButton.limit-icon-size img {
     height: 1rem;
 }

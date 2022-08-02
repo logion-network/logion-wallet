@@ -6,7 +6,7 @@ import { TypedFile } from "../loc/FileModel";
 import Icon from "./Icon";
 
 import './ViewFileButton.css';
-import { Children } from "./types/Helpers";
+import { Children, customClassName } from "./types/Helpers";
 import { useLogionChain } from "../logion-chain";
 
 export interface FileInfo {
@@ -17,6 +17,7 @@ export interface FileInfo {
 export interface ViewFileProps extends FileInfo {
     nodeOwner: string;
     children?: Children;
+    limitIconSize?: boolean;
 }
 
 async function openFile(axios: AxiosInstance, props: ViewFileProps) {
@@ -40,8 +41,11 @@ export default function ViewFileButton(props: ViewFileProps) {
         props.children :
         <Icon icon={ { id: 'view' } } />
 
+    const limitIconSize = (props.limitIconSize === undefined || props.limitIconSize);
+
+    const className = customClassName("ViewFileButton", (limitIconSize ? "limit-icon-size" : undefined))
     return (
-        <Button onClick={ () => openFile(axiosFactory(props.nodeOwner)!, props) } className="ViewFileButton">
+        <Button onClick={ () => openFile(axiosFactory(props.nodeOwner)!, props) } className={ className }>
             { children }
         </Button>
     )
