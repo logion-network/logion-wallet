@@ -2,7 +2,7 @@
 
 exports[`OpenedLocs Renders empty list 1`] = `
 <div
-  className="Table"
+  className="Table constrained-row-height"
 >
   <style>
     
@@ -121,7 +121,7 @@ exports[`OpenedLocs Renders null with no data 1`] = `
 
 exports[`OpenedLocs Renders open locs 1`] = `
 <div
-  className="Table"
+  className="Table constrained-row-height"
 >
   <style>
     

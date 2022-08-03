@@ -14,6 +14,14 @@ export default function StatementOfFactsTemplateEN(props: Props) {
 
     return (
         <>
+            <style>{`
+                .pagedjs_pagebox > .pagedjs_area > .pagedjs_page_content {
+                    background-image: url("${ props.pathModel.sealUrl }");
+                    background-size: 100%;
+                    background-position: center;
+                    background-repeat: no-repeat;
+                }
+            `}</style>
             <div className="header">
                 <div className="contact">
                     <div className="postal-address">
@@ -25,7 +33,7 @@ export default function StatementOfFactsTemplateEN(props: Props) {
                     </div>
                 </div>
                 <div className="logo">
-                    <img src={ props.pathModel.logoUrl ? props.pathModel.logoUrl : process.env.PUBLIC_URL + "/logo_black.png" } alt="logo" />
+                    <img src={ props.pathModel.logoUrl } alt="logo" />
                 </div>
             </div>
 

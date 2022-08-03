@@ -10,7 +10,7 @@ import { useVersionContext } from '../version/VersionContext';
 import './SettingsPane.css';
 import Alert from '../common/Alert';
 import DirectoryData from '../settings/DirectoryData';
-import { Files } from "./Files";
+import { ValuesFiles } from "./ValuesFiles";
 
 function status(metadata: NodeMetadata | null): string {
     if(metadata !== null) {
@@ -59,7 +59,7 @@ export default function SettingsPane(props: Props) {
                     <Row>
                         <Col>
                             <Frame title="Instance settings">
-                                <Files/>
+                                <ValuesFiles/>
                             </Frame>
                         </Col>
                     </Row>

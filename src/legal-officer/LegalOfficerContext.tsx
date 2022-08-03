@@ -15,6 +15,14 @@ import { DateTime } from "luxon";
 import { UUID, toDecimalString } from "@logion/node-api/dist/UUID";
 import { getLegalOfficerCasesMap } from "@logion/node-api/dist/LogionLoc";
 
+export const SETTINGS_KEYS = [ 'oath' ];
+
+export type SettingId = typeof SETTINGS_KEYS[number];
+
+export const SETTINGS_DESCRIPTION: Record<SettingId, string> = {
+    oath: "Statement of facts: oath text"
+};
+
 const DEFAULT_NOOP = () => {};
 
 export interface RequestAndLoc {
@@ -33,8 +41,7 @@ export interface LegalOfficerContext {
     pendingVaultTransferRequests?: VaultTransferRequest[];
     vaultTransferRequestsHistory?: VaultTransferRequest[];
     settings?: Record<string, string>;
-    updateSetting: (id: string, value: string) => Promise<void>;
-    allSettingsKeys: string[];
+    updateSetting: (id: SettingId, value: string) => Promise<void>;
     pendingLocRequests: Record<DataLocType, LocRequest[]> | null;
     rejectedLocRequests: Record<DataLocType, LocRequest[]> | null;
     openedLocRequests: Record<DataLocType, RequestAndLoc[]> | null;
@@ -68,7 +75,6 @@ function initialContextValue(): FullLegalOfficerContext {
         pendingRecoveryRequests: null,
         recoveryRequestsHistory: null,
         updateSetting: () => Promise.reject(),
-        allSettingsKeys: [ 'oath' ],
         pendingLocRequests: null,
         rejectedLocRequests: null,
         openedLocRequests: null,

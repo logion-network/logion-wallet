@@ -2,7 +2,7 @@
 
 exports[`RejectedLocs Renders empty list 1`] = `
 <div
-  className="Table"
+  className="Table constrained-row-height"
 >
   <style>
     
@@ -110,7 +110,7 @@ exports[`RejectedLocs Renders null with no data 1`] = `
 
 exports[`RejectedLocs Renders rejected requests 1`] = `
 <div
-  className="Table"
+  className="Table constrained-row-height"
 >
   <style>
     

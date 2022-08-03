@@ -5,16 +5,16 @@ import ViewFileButton from "../common/ViewFileButton";
 import { useLogionChain } from "../logion-chain";
 import { AxiosInstance } from "axios";
 import { getLoFile, addLoFile, LO_FILE_DESCRIPTION, LO_FILE_IDS, LoFileId } from "../loc/FileModel";
-import "./Files.css";
-import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
+import "./ValuesFiles.css";
+import { SETTINGS_DESCRIPTION, SETTINGS_KEYS, useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
 import EditableCell from "src/common/EditableCell";
 import Button from "src/common/Button";
 import { useState } from "react";
 
-export function Files() {
+export function ValuesFiles() {
 
     const { accounts, axiosFactory } = useLogionChain();
-    const { settings, allSettingsKeys, updateSetting } = useLegalOfficerContext();
+    const { settings, updateSetting } = useLegalOfficerContext();
     const [ newSettings, setNewSettings ] = useState<Record<string, string>>({});
 
     const nodeOwner = accounts?.current?.address;
@@ -30,20 +30,21 @@ export function Files() {
     }
 
     return (
-        <div className="Files">
-            <h3>Values</h3>
+        <div className="ValuesFiles">
             <Table
                 columns={ [
                     {
-                        header: "ID",
-                        render: id => id
+                        header: "",
+                        render: fileId => SETTINGS_DESCRIPTION[fileId],
+                        align: "left",
                     },
                     {
-                        header: "Value",
-                        render: id => <EditableCell value={ newSettings[id] || settings[id] || "" } onChange={ value => setNewSettings({ ...newSettings, [id]: value }) } />
+                        header: "",
+                        render: id => <EditableCell value={ newSettings[id] || settings[id] || "" } onChange={ value => setNewSettings({ ...newSettings, [id]: value }) } />,
+                        align: "left",
                     },
                     {
-                        header: "Actions",
+                        header: "",
                         render: id =>
                             <ActionCell>
                                 <Button
@@ -56,23 +57,19 @@ export function Files() {
                         align: "center"
                     },
                 ] }
-                data={ allSettingsKeys }
+                data={ SETTINGS_KEYS }
                 renderEmpty={ () => null }
             />
 
-            <h3>Files</h3>
             <Table
                 columns={ [
                     {
-                        header: "ID",
-                        render: fileId => fileId
+                        header: "",
+                        render: fileId => LO_FILE_DESCRIPTION[fileId],
+                        align: "left",
                     },
                     {
-                        header: "Description",
-                        render: fileId => LO_FILE_DESCRIPTION[fileId]
-                    },
-                    {
-                        header: "Actions",
+                        header: "",
                         render: fileId =>
                             <ActionCell>
                                 <FileSelectorButton

@@ -2,7 +2,7 @@
 
 exports[`Renders Closed Logion Identity LOCs 1`] = `
 <div
-  className="Table"
+  className="Table constrained-row-height"
 >
   <style>
     
@@ -321,7 +321,7 @@ exports[`Renders Closed Logion Identity LOCs 1`] = `
 
 exports[`Renders Closed Polkadot Identity LOCs 1`] = `
 <div
-  className="Table"
+  className="Table constrained-row-height"
 >
   <style>
     

@@ -6,7 +6,7 @@ import { format } from '@logion/node-api/dist/datetime';
 import Spinner from "react-bootstrap/Spinner";
 
 import { Row, Col } from './Grid';
-import { Child, Children } from './types/Helpers';
+import { Child, Children, customClassName } from './types/Helpers';
 import { useCommonContext } from './CommonContext';
 import './Table.css';
 import Icon from './Icon';
@@ -106,6 +106,7 @@ export interface Props<T> {
     renderEmpty: () => Children,
     rowStyle?: (item: T, index?: number) => string;
     color?: TableColors;
+    constrainedRowHeight?: boolean;
 }
 
 function columnClassName<T>(column: Column<T>): (string | undefined) {
@@ -215,8 +216,10 @@ export default function Table<T>(props: Props<T>) {
         }
     }, [ props, data, setDetailsExpanded, setData ]);
 
+    const constrainedRowHeight = props.constrainedRowHeight === undefined || props.constrainedRowHeight;
+    const className = customClassName("Table", (constrainedRowHeight ? "constrained-row-height" : undefined));
     return (
-        <div className="Table">
+        <div className={ className }>
             <style>
             {
             `

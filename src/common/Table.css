@@ -17,6 +17,9 @@
 .Table .body .Row .Col {
     position: relative;
     padding: 10px;
+}
+
+.Table.constrained-row-height .body .Row .Col {
     height: 60px;
     overflow: hidden;
 }

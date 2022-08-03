@@ -2,7 +2,7 @@
 
 exports[`ClosedLocs Renders empty list 1`] = `
 <div
-  className="Table"
+  className="Table constrained-row-height"
 >
   <style>
     
@@ -132,7 +132,7 @@ exports[`ClosedLocs Renders null with no data 1`] = `
 
 exports[`ClosedLocs Renders pending requests 1`] = `
 <div
-  className="Table"
+  className="Table constrained-row-height"
 >
   <style>
     

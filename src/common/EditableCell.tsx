@@ -11,7 +11,8 @@ export default function EditableCell(props: Props) {
     return (
         <Cell content={
             <Form.Control
-                type="text"
+                as="textarea"
+                rows={3}
                 value={ props.value }
                 onChange={ e => props.onChange(e.target.value) }
             />

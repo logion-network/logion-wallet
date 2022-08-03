@@ -60,11 +60,12 @@ interface LocInfo {
     certificateUrl: string;
     publicItems: PublicItem[];
     privateItems: PrivateItem[];
-    logoUrl: string;
     collectionItem?: SofCollectionItem;
 }
 
 interface SettingsData {
+    logoUrl: string;
+    sealUrl: string;
     oathText: string;
     oathLogoUrl: string;
 }
@@ -98,6 +99,7 @@ export const DEFAULT_SOF_PARAMS: SofParams = {
     prerequisites: [],
     oathText: "",
     oathLogoUrl: "",
+    sealUrl: "",
 }
 
 export interface Prerequisite {
