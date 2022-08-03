@@ -16,8 +16,7 @@ jest.mock("./UserLocContext");
 
 describe("ImportItems", () => {
 
-    // TODO Fix and re-enable test
-    xit("imports all CSV", async () => {
+    it("imports all CSV", async () => {
         const collection = await uploadCsv();
 
         await waitFor(() => screen.getByRole("button", { name: /Import all/ }));
