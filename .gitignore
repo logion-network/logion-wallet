@@ -30,7 +30,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Yarn 2
+# Yarn
 .pnp.*
 .yarn/*
 !.yarn/patches

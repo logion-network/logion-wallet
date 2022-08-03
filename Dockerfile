@@ -4,7 +4,7 @@ FROM node:16 AS build
 WORKDIR /tmp/logion-wallet
 
 COPY . .
-RUN yarn install --frozen-lockfile
+RUN yarn install --immutable
 RUN yarn build
 
 # Deployment image
