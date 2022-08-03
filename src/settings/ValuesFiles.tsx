@@ -59,6 +59,7 @@ export function ValuesFiles() {
                 ] }
                 data={ SETTINGS_KEYS }
                 renderEmpty={ () => null }
+                constrainedRowHeight={ false }
             />
 
             <Table
