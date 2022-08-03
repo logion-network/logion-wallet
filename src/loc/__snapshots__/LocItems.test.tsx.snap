@@ -26,7 +26,7 @@ exports[`LocItems renders with single draft item 1`] = `
   className="LocItems"
 >
   <div
-    className="Table"
+    className="Table constrained-row-height"
   >
     <style>
       

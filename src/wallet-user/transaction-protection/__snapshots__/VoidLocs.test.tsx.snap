@@ -2,7 +2,7 @@
 
 exports[`VoidLocs Renders empty list 1`] = `
 <div
-  className="Table"
+  className="Table constrained-row-height"
 >
   <style>
     
@@ -132,7 +132,7 @@ exports[`VoidLocs Renders null with no data 1`] = `
 
 exports[`VoidLocs Renders void locs 1`] = `
 <div
-  className="Table"
+  className="Table constrained-row-height"
 >
   <style>
     

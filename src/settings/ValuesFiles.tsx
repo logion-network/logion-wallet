@@ -31,21 +31,20 @@ export function ValuesFiles() {
 
     return (
         <div className="ValuesFiles">
-            <h3>Values</h3>
             <Table
                 columns={ [
                     {
-                        header: "Description",
+                        header: "",
                         render: fileId => SETTINGS_DESCRIPTION[fileId],
                         align: "left",
                     },
                     {
-                        header: "Value",
+                        header: "",
                         render: id => <EditableCell value={ newSettings[id] || settings[id] || "" } onChange={ value => setNewSettings({ ...newSettings, [id]: value }) } />,
                         align: "left",
                     },
                     {
-                        header: "Actions",
+                        header: "",
                         render: id =>
                             <ActionCell>
                                 <Button
@@ -62,16 +61,15 @@ export function ValuesFiles() {
                 renderEmpty={ () => null }
             />
 
-            <h3>Files</h3>
             <Table
                 columns={ [
                     {
-                        header: "Description",
+                        header: "",
                         render: fileId => LO_FILE_DESCRIPTION[fileId],
                         align: "left",
                     },
                     {
-                        header: "Actions",
+                        header: "",
                         render: fileId =>
                             <ActionCell>
                                 <FileSelectorButton

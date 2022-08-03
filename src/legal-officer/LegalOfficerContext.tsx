@@ -20,7 +20,7 @@ export const SETTINGS_KEYS = [ 'oath' ];
 export type SettingId = typeof SETTINGS_KEYS[number];
 
 export const SETTINGS_DESCRIPTION: Record<SettingId, string> = {
-    oath: "Oath"
+    oath: "Statement of facts: oath text"
 };
 
 const DEFAULT_NOOP = () => {};
