@@ -9,8 +9,6 @@ export function getEndpoints(): string[] {
     if(providerSocket !== undefined) {
         return [ providerSocket ];
     } else {
-        const sockets = config.edgeNodes.map(node => node.socket);
-        sockets.sort(() => Math.random() - 0.5);
-        return sockets;
+        return config.edgeNodes.map(node => node.socket);
     }
 }
