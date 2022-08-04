@@ -52,14 +52,6 @@ export interface AttributesSignatureParameters {
     attributes: any[],
 }
 
-export async function sign(parameters: AttributesSignatureParameters): Promise<string> {
-    const signer = new ExtensionSigner();
-    const typedSignature = await signer.signRaw({
-        ...parameters
-    });
-    return typedSignature.signature
-}
-
 export function isSuccessful(status: ISubmittableResult | null) {
     return status !== null && status.isInBlock && !status.isError;
 }

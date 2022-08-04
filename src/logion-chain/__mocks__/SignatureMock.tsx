@@ -1,5 +1,4 @@
 import { ISubmittableResult } from '@polkadot/types/types';
-import { toIsoString } from '@logion/node-api/dist/datetime';
 
 export let signAndSend = (parameters: any) => {
     signAndSendCallback = parameters.callback;
@@ -52,13 +51,6 @@ export function unsubscribe() {
 
 export function replaceUnsubscriber() {
 
-}
-
-export function sign(parameters: any) {
-    let signedOn = toIsoString(parameters.signedOn);
-    const requiredAttributes = [parameters.resource, parameters.operation, signedOn];
-    const attributes = requiredAttributes.concat(parameters.attributes);
-    return Promise.resolve(attributes.toString());
 }
 
 export let _isSuccessful: boolean | undefined = undefined;

@@ -1,13 +1,9 @@
 import { createRoot } from 'react-dom/client';
-import moment from 'moment';
-import 'moment/locale/en-gb';
 
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import './index.scss';
-
-moment.locale('en-gb');
 
 const root = createRoot(document.getElementById('root')!);
 root.render(

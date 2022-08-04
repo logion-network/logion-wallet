@@ -1,4 +1,4 @@
-import { format } from "@logion/node-api/dist/datetime";
+import { format } from "./DateTimeFormat";
 
 export interface Props {
     dateTime?: string;

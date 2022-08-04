@@ -1,3 +1,4 @@
+import { DateTime } from "luxon";
 import BN from 'bn.js'
 import { UUID } from "@logion/node-api/dist/UUID";
 
@@ -5,12 +6,10 @@ import { mockCompact } from "../../__mocks__/PolkadotApiMock";
 import { LegalOfficer } from '@logion/client';
 import { DEFAULT_LEGAL_OFFICER, legalOfficers } from 'src/common/TestData';
 import { TEST_WALLET_USER } from 'src/wallet-user/TestData';
-import { DateTime } from 'luxon';
 import { AxiosInstance } from 'axios';
 import { Mock } from 'moq.ts';
 import Accounts, { Account } from 'src/common/types/Accounts';
 import { LogionClient } from 'src/__mocks__/@logion/client';
-import moment from 'moment';
 
 export const LogionChainContextProvider = (props: any) => null;
 
@@ -175,6 +174,6 @@ export function useLogionChain() {
 function authenticateAddress(address: string) {
     return {
         value: `some-token-value-for-${address}`,
-        expirationDate: moment().toISOString(),
+        expirationDate: DateTime.now().toISO(),
     };
 }

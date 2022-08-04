@@ -1,4 +1,4 @@
-import { format } from "@logion/node-api/dist/datetime";
+import { fromIsoString } from "@logion/client";
 
 export default function DateTimeFormat(props: { dateTime: string | undefined }) {
 
@@ -8,4 +8,11 @@ export default function DateTimeFormat(props: { dateTime: string | undefined }) 
     } else {
         return <span>-</span>;
     }
+}
+
+export function format(isoString: string): { date: string, time: string } {
+    const dateTime = fromIsoString(isoString);
+    const date = dateTime.toLocaleString({}, { locale: "fr-FR" });
+    const time = dateTime.toLocaleString({ hour: "numeric", minute: "numeric" }, { locale: "fr-FR" });
+    return { date, time }
 }

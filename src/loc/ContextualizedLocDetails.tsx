@@ -5,7 +5,6 @@ import queryString from 'query-string';
 import { LegalOfficer, UploadableCollectionItem, ClosedCollectionLoc } from "@logion/client";
 import { ProtectionRequest } from "@logion/client/dist/RecoveryClient";
 import { UUID } from "@logion/node-api/dist/UUID";
-import { format } from "@logion/node-api/dist/datetime";
 import { isLogionIdentityLoc, isLogionDataLoc } from "@logion/node-api/dist/Types";
 import Tooltip from 'react-bootstrap/Tooltip';
 
@@ -38,6 +37,7 @@ import CertificateAndLimits from "./CertificateAndLimits";
 import { LOCollectionLocItemChecker } from "./CollectionLocItemChecker";
 import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
 import { useLogionChain } from "../logion-chain";
+import { format } from "../common/DateTimeFormat";
 
 import "./ContextualizedLocDetails.css";
 

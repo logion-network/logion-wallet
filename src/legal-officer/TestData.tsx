@@ -1,5 +1,5 @@
-import moment from 'moment';
-import { toIsoString } from '@logion/node-api/dist/datetime';
+import { DateTime } from 'luxon';
+import { toIsoString } from "@logion/client";
 import { ProtectionRequest } from '@logion/client/dist/RecoveryClient';
 
 import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from "../common/TestData";
@@ -27,7 +27,7 @@ export const PENDING_PROTECTION_REQUESTS: ProtectionRequest[] = [
             city: "Liège",
             country: "Belgium",
         },
-        createdOn: toIsoString(moment('2021-06-10T11:40:00.000Z')),
+        createdOn: toIsoString(DateTime.fromISO('2021-06-10T11:40:00.000', {zone: "utc"})),
         isRecovery: false,
         addressToRecover: null,
         status: "PENDING"
@@ -42,7 +42,7 @@ export const PROTECTION_REQUESTS_HISTORY: ProtectionRequest[] = [
         otherLegalOfficerAddress: ANOTHER_LEGAL_OFFICER,
         decision: {
                 rejectReason: null,
-                decisionOn: toIsoString(moment('2021-06-10T11:40:00.000Z')),
+                decisionOn: toIsoString(DateTime.fromISO('2021-06-10T11:40:00.000', {zone: "utc"})),
                 locId: "locId"
         },
         userIdentity: {
@@ -58,7 +58,7 @@ export const PROTECTION_REQUESTS_HISTORY: ProtectionRequest[] = [
             city: "Liège",
             country: "Belgium",
         },
-        createdOn: toIsoString(moment('2021-06-10T11:40:00.000Z')),
+        createdOn: toIsoString(DateTime.fromISO('2021-06-10T11:40:00.000', {zone: "utc"})),
         isRecovery: false,
         addressToRecover: null,
         status: "ACTIVATED"
@@ -73,7 +73,7 @@ export const RECOVERY_REQUESTS_HISTORY: ProtectionRequest[] = [
         otherLegalOfficerAddress: ANOTHER_LEGAL_OFFICER,
         decision: {
             rejectReason: null,
-            decisionOn: toIsoString(moment('2021-06-10T11:40:00.000Z')),
+            decisionOn: toIsoString(DateTime.fromISO('2021-06-10T11:40:00.000', {zone: "utc"})),
             locId: "locId"
         },
         userIdentity: {
@@ -89,7 +89,7 @@ export const RECOVERY_REQUESTS_HISTORY: ProtectionRequest[] = [
             city: "Liège",
             country: "Belgium",
         },
-        createdOn: toIsoString(moment('2021-06-10T11:40:00.000Z')),
+        createdOn: toIsoString(DateTime.fromISO('2021-06-10T11:40:00.000', {zone: "utc"})),
         isRecovery: true,
         addressToRecover: "an-address",
         status: "PENDING"

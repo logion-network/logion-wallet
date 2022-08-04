@@ -265,9 +265,9 @@ exports[`ContextualizedLocDetails renders 1`] = `
                       <span
                         className="value"
                       >
-                        Invalid date
+                        Invalid DateTime
                          / 
-                        Invalid date
+                        Invalid DateTime
                       </span>
                     </div>
                   </div>

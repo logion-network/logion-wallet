@@ -1,5 +1,4 @@
 import { ProtectionRequest, ProtectionRequestStatus } from '@logion/client/dist/RecoveryClient';
-import moment from 'moment';
 
 import { DEFAULT_IDENTITY, DEFAULT_ADDRESS, DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from '../../common/TestData';
 import { TEST_WALLET_USER } from '../TestData';
@@ -61,11 +60,11 @@ function createProtectionRequest(
         otherLegalOfficerAddress,
         decision: {
             rejectReason: status === 'REJECTED' ? "Because" : null,
-            decisionOn: status !== 'PENDING' ? moment('2021-06-10T13:48:00.000Z').toISOString() : null,
+            decisionOn: status !== 'PENDING' ? '2021-06-10T13:48:00.000Z' : null,
         },
         userIdentity: DEFAULT_IDENTITY,
         userPostalAddress: DEFAULT_ADDRESS,
-        createdOn: moment('2021-06-10T13:48:00.000Z').toISOString(),
+        createdOn: '2021-06-10T13:48:00.000Z',
         isRecovery,
         addressToRecover,
         status,

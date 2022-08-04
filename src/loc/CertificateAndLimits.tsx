@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { ChainTime } from '@logion/node-api/dist/ChainTime';
-import { format } from '@logion/node-api/dist/datetime';
 import { LocType } from '@logion/node-api/dist/Types';
 import { UUID } from '@logion/node-api/dist/UUID';
 
@@ -14,6 +13,7 @@ import { fullCertificateUrl } from '../PublicPaths';
 import config from '../config';
 import NewTabLink from '../common/NewTabLink';
 import StaticLabelValue from '../common/StaticLabelValue';
+import { format } from '../common/DateTimeFormat';
 
 import './CertificateAndLimits.css';
 import StatementOfFactsButton from './statement/StatementOfFactsButton';
