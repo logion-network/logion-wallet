@@ -127,7 +127,7 @@ export default function StatementOfFactsTemplateEN(props: Props) {
                         <div>Collection item ID: { props.pathModel.collectionItem.id }</div>
                         <div>Description: { props.pathModel.collectionItem.description }</div>
                         <div>Timestamp: { props.pathModel.collectionItem.addedOn }</div>
-                        <div>Restricted delivery: { props.pathModel.collectionItem.restrictedDelivery }</div>
+                        <div>Restricted delivery: { props.pathModel.collectionItem.restrictedDelivery ? "Yes" : "No" }</div>
                         {
                             props.pathModel.collectionItem.token &&
                             <>
@@ -141,7 +141,7 @@ export default function StatementOfFactsTemplateEN(props: Props) {
                                 <div>File #{index + 1} Name: { file.name }</div>
                                 <div>File #{index + 1} Content Type: { file.contentType }</div>
                                 <div>File #{index + 1} Hash: { file.hash }</div>
-                                <div>File #{index + 1} Size: { file.size.toString() }</div>
+                                <div>File #{index + 1} Size: { file.size.toString() } bytes</div>
                                 </>
                             ))
                         }
