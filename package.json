@@ -105,8 +105,5 @@
         "ts-node": "^10.2.1",
         "typescript": "^4.5.5"
     },
-    "resolutions": {
-        "autoprefixer": "10.4.5"
-    },
     "packageManager": "yarn@3.2.2"
 }
