@@ -286,7 +286,7 @@ export default function UserContextualizedLocDetails() {
             }
             <CertificateAndLimits
                 locId={ locId }
-                loc={ loc }
+                loc={{ ...loc, isVoid: loc.voidInfo !== undefined }}
                 viewer="User"
             />
             { loc.locType === 'Collection' && loc.closed &&

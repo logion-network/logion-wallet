@@ -3,10 +3,22 @@
     padding: 20px 30px;
 }
 
+.CollectionItemCellRow.is-void {
+    border: 2px solid #e11a25;
+}
+
 .CollectionItemCellRow .MenuIcon {
     display: inline-block;
     font-size: 1rem;
     vertical-align: bottom;
+}
+
+.CollectionItemCellRow .MenuIcon {
+    background: linear-gradient(to bottom, #3b6cf4, #6050dc);
+}
+
+.CollectionItemCellRow.is-void .MenuIcon {
+    background: linear-gradient(to bottom, #ea1f46, #9b0d28);
 }
 
 .CollectionItemCellRow h2 {

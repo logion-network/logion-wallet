@@ -401,7 +401,7 @@ export default function ContextualizedLocDetails() {
             }
             <CertificateAndLimits
                 locId={ locId }
-                loc={ loc }
+                loc={{ ...loc, isVoid: loc.voidInfo !== undefined }}
                 viewer="LegalOfficer"
             />
             { loc.locType === 'Collection' && loc.closed &&
