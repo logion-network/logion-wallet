@@ -4,28 +4,32 @@ import { Row } from "../common/Grid";
 import './CollectionItemCellRow.css';
 import { Col } from "react-bootstrap";
 import MenuIcon from "../common/MenuIcon";
-import { LIGHT_MODE } from "../legal-officer/Types";
 import CertificateDateTimeCell from "./CertificateDateTimeCell";
 import { MergedCollectionItem } from "../common/types/ModelTypes";
 import { DocumentCheckResult } from "../loc/CheckFileFrame";
 import MetaMaskClaimButton from "./MetaMaskClaimButton";
 import { UUID } from "@logion/node-api/dist/UUID";
+import { customClassName } from "src/common/types/Helpers";
 
 export interface Props {
     locId: UUID,
     owner: string,
     item: MergedCollectionItem;
     checkResult: DocumentCheckResult;
+    isVoid: boolean;
 }
 
 export default function CollectionItemCellRow(props: Props) {
     const { locId, owner, item } = props
     const { id, description, addedOn, files, restrictedDelivery, token } = item
+
+    const className = customClassName("CollectionItemCellRow", props.isVoid ? "is-void" : undefined);
+
     return (
-        <div className="CollectionItemCellRow">
+        <div className={ className }>
             <Row>
                 <Col>
-                    <h2><MenuIcon icon={{id:"collection"}} background={ LIGHT_MODE.topMenuItems.iconGradient }/> Collection Item</h2>
+                    <h2><MenuIcon icon={{id:"collection"}} /> Collection Item</h2>
                     <p>This collection item identified hereafter with the
                         following data benefits from the present Collection LOC scope:</p>
                 </Col>
@@ -70,8 +74,15 @@ export default function CollectionItemCellRow(props: Props) {
                                             { file.name } ({ file.contentType }, { file.size.toString() } bytes)
                                         </Col>
                                         <Col md={ 3 }>
-                                            <MetaMaskClaimButton locId={ locId } owner={ owner } item={ item }
-                                                                 file={ file } />
+                                            {
+                                                !props.isVoid &&
+                                                <MetaMaskClaimButton
+                                                    locId={ locId }
+                                                    owner={ owner }
+                                                    item={ item }
+                                                    file={ file }
+                                                />
+                                            }
                                         </Col>
                                     </Row>
                                     <Row>

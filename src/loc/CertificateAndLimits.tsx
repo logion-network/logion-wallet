@@ -27,6 +27,7 @@ interface LocProps {
     collectionLastBlockSubmission?: bigint
     collectionMaxSize?: number
     collectionCanUpload?: boolean
+    isVoid: boolean
 }
 
 export interface Props {
@@ -83,7 +84,7 @@ export default function CertificateAndLimits(props: Props) {
                     </Col>
                 }
                 {
-                    props.loc.locType === 'Collection' && props.loc.closed &&
+                    props.loc.locType === 'Collection' && props.loc.closed && !props.loc.isVoid &&
                     <Col className="col-xxxl-3 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6">
                         <div className="api-settings">
                             <div>
