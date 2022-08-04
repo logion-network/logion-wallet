@@ -63,6 +63,16 @@ export class AccountTokens {
     }
 }
 
-export function isSuccessful(result: ISubmittableResult) {
-    return true;
+let _isSuccessful: boolean | undefined = undefined;
+
+export function isSuccessful(result: any) {
+    if(_isSuccessful === undefined) {
+        return result !== null && result.isInBlock;
+    } else {
+        return _isSuccessful;
+    }
+}
+
+export function setIsSuccessful(value: boolean) {
+    _isSuccessful = value;
 }

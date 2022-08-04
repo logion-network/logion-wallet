@@ -44,25 +44,3 @@ export function mockSubmittableResult(isInBlock: boolean, statusType?: string, i
     };
     return result as ISubmittableResult;
 }
-
-export function unsubscribe() {
-    return Promise.resolve();
-}
-
-export function replaceUnsubscriber() {
-
-}
-
-export let _isSuccessful: boolean | undefined = undefined;
-
-export function isSuccessful(result: any) {
-    if(_isSuccessful === undefined) {
-        return result !== null && result.isInBlock;
-    } else {
-        return _isSuccessful;
-    }
-}
-
-export function setIsSuccessful(value: boolean) {
-    _isSuccessful = value;
-}

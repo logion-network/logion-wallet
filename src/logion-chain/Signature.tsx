@@ -1,27 +1,21 @@
 import { ExtensionSigner } from '@logion/extension';
 import { ISubmittableResult } from '@polkadot/types/types';
 import type { SubmittableExtrinsic } from '@polkadot/api/promise/types';
-import { DateTime } from 'luxon';
 
 export type SignedTransaction = ISubmittableResult;
 
 export type SignAndSendCallback = (result: SignedTransaction) => void;
 
-export type Unsubscriber = Promise<() => void>;
-
 export type ErrorCallback = (error: any) => void;
 
-export interface ExtrinsicSubmissionParameters {
+export interface ExtrinsicSignatureParameters {
     signerId: string,
     callback: SignAndSendCallback,
     errorCallback: ErrorCallback
-}
-
-export interface ExtrinsicSignatureParameters extends ExtrinsicSubmissionParameters {
     submittable: SubmittableExtrinsic,
 }
 
-export function signAndSend(parameters: ExtrinsicSignatureParameters): Unsubscriber {
+export function signAndSend(parameters: ExtrinsicSignatureParameters) {
     const signer = new ExtensionSigner();
     signer.signAndSend({
         signerId: parameters.signerId,
@@ -29,29 +23,4 @@ export function signAndSend(parameters: ExtrinsicSignatureParameters): Unsubscri
         callback: parameters.callback,
     })
     .catch(error => parameters.errorCallback(error));
-    return Promise.resolve(() => {});
-}
-
-export async function replaceUnsubscriber(
-    _currentUnsubscriber: Unsubscriber | null,
-    _setUnsubscriber: (newUnsubscriber: Unsubscriber | null) => void,
-    _newUnsubscriber: Unsubscriber | null
-): Promise<void> {
-    // Unsubscribers are managed by ExtensionSigner
-}
-
-export async function unsubscribe(_unsubscriber: Unsubscriber | null): Promise<void> {
-    // Unsubscribers are managed by ExtensionSigner
-}
-
-export interface AttributesSignatureParameters {
-    signerId: string,
-    resource: string,
-    operation: string,
-    signedOn: DateTime,
-    attributes: any[],
-}
-
-export function isSuccessful(status: ISubmittableResult | null) {
-    return status !== null && status.isInBlock && !status.isError;
 }

@@ -1,8 +1,9 @@
 import { screen, render, waitFor, act } from '@testing-library/react';
 import { SignedTransaction } from './logion-chain/Signature';
 
-import { setIsSuccessful, mockSubmittableResult } from './logion-chain/__mocks__/SignatureMock';
+import { mockSubmittableResult } from './logion-chain/__mocks__/SignatureMock';
 import ExtrinsicSubmitter, { SignAndSubmit } from './ExtrinsicSubmitter';
+import { setIsSuccessful } from './__mocks__/LogionClientMock';
 
 test("Submitter empty with null signAndSubmit", () => {
     const onSuccess = jest.fn();
