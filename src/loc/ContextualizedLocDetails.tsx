@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router";
 import { Col, OverlayTrigger } from "react-bootstrap";
 import queryString from 'query-string';
-import { LegalOfficer, UploadableCollectionItem, ClosedCollectionLoc } from "@logion/client";
+import { UploadableCollectionItem, ClosedCollectionLoc } from "@logion/client";
 import { ProtectionRequest } from "@logion/client/dist/RecoveryClient";
 import { UUID } from "@logion/node-api/dist/UUID";
 import { isLogionIdentityLoc, isLogionDataLoc } from "@logion/node-api/dist/Types";
@@ -36,23 +36,20 @@ import Ellipsis from "../common/Ellipsis";
 import CertificateAndLimits from "./CertificateAndLimits";
 import { LOCollectionLocItemChecker } from "./CollectionLocItemChecker";
 import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
-import { useLogionChain } from "../logion-chain";
 import { format } from "../common/DateTimeFormat";
 
 import "./ContextualizedLocDetails.css";
 
 export default function ContextualizedLocDetails() {
-    const { api, getOfficer } = useLogionChain();
     const { colorTheme } = useCommonContext();
     const { pendingProtectionRequests, pendingRecoveryRequests } = useLegalOfficerContext();
     const navigate = useNavigate();
     const location = useLocation();
     const { loc, locId, locRequest, locItems, supersededLocRequest, backPath, detailsPath, locState } = useLocContext();
-    const [ checkResult, setCheckResult ] = useState<DocumentCheckResult>({result: "NONE"});
+    const [ checkResult, setCheckResult ] = useState<DocumentCheckResult>({ result: "NONE" });
     const [ createLoc, setCreateLoc ] = useState(false);
     const [ protectionRequest, setProtectionRequest ] = useState<ProtectionRequest | null | undefined>();
     const [ collectionItem, setCollectionItem ] = useState<UploadableCollectionItem>();
-    const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer | null>(null)
 
     const checkHash = useCallback(async (hash: string) => {
         setCollectionItem(undefined);
@@ -114,15 +111,6 @@ export default function ContextualizedLocDetails() {
             }
         }
     }, [ location, pendingProtectionRequests, protectionRequest, setProtectionRequest, pendingRecoveryRequests ]);
-
-    useEffect(() => {
-        if (api !== null && legalOfficer === null && loc) {
-            const owner = getOfficer!(loc.owner);
-            if(owner !== undefined) {
-                setLegalOfficer(owner);
-            }
-        }
-    }, [ api, legalOfficer, loc, getOfficer, setLegalOfficer ])
 
     if (loc === null || locRequest === null) {
         return null;

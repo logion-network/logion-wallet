@@ -64,7 +64,8 @@ export default function LocPublishButton(props: PublishProps) {
                         props.confirm!(props.locItem)
                         setPublishState({ status: PublishStatus.PUBLISHED })
                     } }
-                    onError={ () => setPublishState({ status: PublishStatus.ERROR }) } />
+                    onError={ () => setPublishState({ status: PublishStatus.ERROR }) }
+                />
             </ProcessStep>
             <ProcessStep
                 active={ publishState.status === PublishStatus.PUBLISHED || publishState.status === PublishStatus.ERROR }

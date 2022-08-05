@@ -3,7 +3,7 @@ import Dialog from "../common/Dialog";
 import LocPublicDataForm, { FormValues } from "./LocPublicDataForm";
 import { useCommonContext } from "../common/CommonContext";
 import { useForm } from "react-hook-form";
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { useLocContext } from "./LocContext";
 import Icon from "../common/Icon";
 import { LocItem } from "./types";

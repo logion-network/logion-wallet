@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LocItems renders empty list 1`] = `
+exports[`LOLocItems renders empty list 1`] = `
 <div
   className="LocItems empty-loc"
 >
@@ -21,7 +21,378 @@ exports[`LocItems renders empty list 1`] = `
 </div>
 `;
 
-exports[`LocItems renders with single draft item 1`] = `
+exports[`LOLocItems renders with single draft item 1`] = `
+<div
+  className="LocItems"
+>
+  <div
+    className="Table constrained-row-height"
+  >
+    <style>
+      
+            .Table .body .Row .Col.split-after::before {
+                background-color: #152665;
+            }
+            
+    </style>
+    <div
+      className="header"
+      style={
+        Object {
+          "backgroundColor": "#0c163d",
+          "color": "#ffffff",
+        }
+      }
+    >
+      <div
+        className="Row"
+      >
+        <div
+          className="Col"
+          style={
+            Object {
+              "textAlign": "left",
+              "width": "250px",
+            }
+          }
+        >
+          Name
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "textAlign": "center",
+              "width": "200px",
+            }
+          }
+        >
+          Timestamp
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "textAlign": "left",
+              "width": "160px",
+            }
+          }
+        >
+          Type
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "textAlign": "center",
+              "width": "calc(( 100% - 1010px ) / 1)",
+            }
+          }
+        >
+          Submitted by
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "textAlign": "center",
+              "width": "400px",
+            }
+          }
+        />
+      </div>
+    </div>
+    <div
+      className="body"
+    >
+      <div>
+        <div
+          className="Row has-details "
+          style={
+            Object {
+              "color": "#ffffff",
+            }
+          }
+        >
+          <div
+            className="Col has-details"
+            style={
+              Object {
+                "backgroundColor": "#152665",
+                "fontSize": undefined,
+                "textAlign": "left",
+                "width": "250px",
+              }
+            }
+          >
+            <div
+              className="regular-cell"
+              style={Object {}}
+            >
+              Name
+            </div>
+            <div
+              className="ShowDetailsButton"
+              onClick={[Function]}
+            >
+              <img
+                alt="arrow-down"
+                src="/assets/themes/light/arrow-down.svg"
+              />
+            </div>
+          </div>
+          <div
+            className="Col"
+            style={
+              Object {
+                "backgroundColor": "#152665",
+                "fontSize": undefined,
+                "textAlign": "center",
+                "width": "200px",
+              }
+            }
+          >
+            <div
+              className="regular-cell"
+              style={
+                Object {
+                  "textAlign": "center",
+                }
+              }
+            >
+              -
+            </div>
+          </div>
+          <div
+            className="Col"
+            style={
+              Object {
+                "backgroundColor": "#152665",
+                "fontSize": undefined,
+                "textAlign": "left",
+                "width": "160px",
+              }
+            }
+          >
+            <div
+              className="regular-cell"
+              style={Object {}}
+            >
+              <span
+                className="item-type"
+              >
+                Data
+              </span>
+               
+            </div>
+          </div>
+          <div
+            className="Col"
+            style={
+              Object {
+                "backgroundColor": "#152665",
+                "fontSize": undefined,
+                "textAlign": "center",
+                "width": "calc(( 100% - 1010px ) / 1)",
+              }
+            }
+          >
+            <div
+              className="regular-cell"
+              style={Object {}}
+            >
+              Patrick Gielen
+            </div>
+          </div>
+          <div
+            className="Col"
+            style={
+              Object {
+                "backgroundColor": "#152665",
+                "fontSize": undefined,
+                "textAlign": "center",
+                "width": "400px",
+              }
+            }
+          >
+            <div
+              className="action-cell"
+            >
+              <div
+                className="ButtonGroup"
+              >
+                <div
+                  className="btn-group"
+                  role="group"
+                >
+                  <button
+                    className="Button btn btn-polkadot"
+                    disabled={false}
+                    onClick={[Function]}
+                    style={
+                      Object {
+                        "backgroundColor": "#e6007a",
+                        "color": "white",
+                      }
+                    }
+                    type="button"
+                  >
+                    <img
+                      alt="publish"
+                      height="20px"
+                      src="/assets/publish.svg"
+                    />
+                     Publish to the blockchain
+                  </button>
+                  <button
+                    className="Button btn btn-danger-flat"
+                    data-testid="remove-Data-Name"
+                    disabled={false}
+                    onClick={[Function]}
+                    style={Object {}}
+                    type="button"
+                  >
+                    <img
+                      alt="trash"
+                      src="/assets/trash.svg"
+                    />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="Row details"
+          style={
+            Object {
+              "backgroundColor": "#152665",
+              "color": "#ffffff",
+            }
+          }
+        >
+          <div
+            className="Col LocItemDetails"
+            style={
+              Object {
+                "width": "100%",
+              }
+            }
+          >
+            <div
+              className="frame"
+            >
+              <div
+                className="frame-title"
+              >
+                Data to be published
+              </div>
+              <div
+                className="Row LocItemDetail"
+              >
+                <div
+                  className="Col label"
+                >
+                  Submitter ID
+                  : 
+                </div>
+                <div
+                  className="Col value-container"
+                >
+                  <span
+                    className="value"
+                  >
+                    5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY
+                  </span>
+                </div>
+                <div
+                  className="Col copy-paste-container"
+                >
+                  <button
+                    className="Button CopyPasteButton small btn btn-primary"
+                    disabled={false}
+                    onClick={[Function]}
+                    style={Object {}}
+                    type="button"
+                  >
+                    <img
+                      alt="copy_paste"
+                      src="/assets/copy_paste.svg"
+                    />
+                  </button>
+                </div>
+              </div>
+              <div
+                className="Row LocItemDetail"
+              >
+                <div
+                  className="Col label"
+                >
+                  Name
+                  : 
+                </div>
+                <div
+                  className="Col value-container"
+                >
+                  <span
+                    className="value"
+                  >
+                    Name
+                  </span>
+                </div>
+              </div>
+              <div
+                className="Row LocItemDetail"
+              >
+                <div
+                  className="Col label"
+                >
+                  Value
+                  : 
+                </div>
+                <div
+                  className="Col value-container"
+                >
+                  <span
+                    className="value"
+                  >
+                    <pre>
+                      Value
+                    </pre>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`UserLocItems renders empty list 1`] = `
+<div
+  className="LocItems empty-loc"
+>
+  <img
+    alt="empty loc"
+    src="/assets/empty-loc.svg"
+  />
+  <p
+    className="primary"
+  >
+    This LOC is empty.
+  </p>
+  <p
+    className="secondary"
+  >
+    You can add public data and/or confidential documents.
+  </p>
+</div>
+`;
+
+exports[`UserLocItems renders with single draft item 1`] = `
 <div
   className="LocItems"
 >
@@ -226,25 +597,6 @@ exports[`LocItems renders with single draft item 1`] = `
                   role="group"
                 >
                   <button
-                    className="Button btn btn-polkadot"
-                    disabled={false}
-                    onClick={[Function]}
-                    style={
-                      Object {
-                        "backgroundColor": "#e6007a",
-                        "color": "white",
-                      }
-                    }
-                    type="button"
-                  >
-                    <img
-                      alt="publish"
-                      height="20px"
-                      src="/assets/publish.svg"
-                    />
-                     Publish to the blockchain
-                  </button>
-                  <button
                     className="Button btn btn-danger-flat"
                     data-testid="remove-Data-Name"
                     disabled={false}
@@ -302,7 +654,7 @@ exports[`LocItems renders with single draft item 1`] = `
                   <span
                     className="value"
                   >
-                    5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY
+                    5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW
                   </span>
                 </div>
                 <div

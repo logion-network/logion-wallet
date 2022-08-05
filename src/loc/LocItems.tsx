@@ -54,6 +54,7 @@ export function LOLocItems(props: Props) {
 export function UserLocItems(props: Props) {
     const { loc, locId, locItems, deleteMetadata, deleteFile } = useUserLocContext();
     if (loc === null) {
+        console.log(loc, locId, locItems);
         return null;
     }
     return <LocItems
@@ -84,7 +85,7 @@ interface LocItemsProps {
     userIdentity?: UserIdentity
 }
 
-export default function LocItems(props: LocItemsProps) {
+function LocItems(props: LocItemsProps) {
     const { locId, locItems, deleteMetadata, deleteFile, deleteLink, owner, userIdentity, closed } = props;
     const { accounts } = useLogionChain();
 
@@ -93,7 +94,7 @@ export default function LocItems(props: LocItemsProps) {
     function renderDetails(locItem: LocItem): Child {
         return (
             <>
-                { locItem.type === 'Data' && <LocPublicDataDetails item={ locItem } label={ locItem.name } /> }
+                { locItem.type === 'Data' && <LocPublicDataDetails item={ locItem } /> }
                 { locItem.type === 'Document' && <LocPrivateFileDetails item={ locItem } /> }
                 { locItem.type === 'Linked LOC' && <LocLinkDetails item={ locItem } /> }
             </>
@@ -224,7 +225,7 @@ export default function LocItems(props: LocItemsProps) {
                         }
                     ] }
                     renderEmpty={ () => <EmptyTableMessage>No public data nor private documents</EmptyTableMessage> }
-                    rowStyle={ (item, index?) => (item.type === "Document" && item.value === props.matchedHash) ? "matched" : "" }
+                    rowStyle={ item => (item.type === "Document" && item.value === props.matchedHash) ? "matched" : "" }
                 />
             </div>
         );

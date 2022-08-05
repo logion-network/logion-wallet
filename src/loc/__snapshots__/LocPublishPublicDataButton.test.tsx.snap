@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LocPublishPublicData renders 1`] = `
+exports[`LocPublishPublicDataButton renders 1`] = `
 <LocPublishButton
   itemType="Public Data"
   locItem={

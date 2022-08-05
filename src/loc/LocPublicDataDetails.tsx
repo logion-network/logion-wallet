@@ -6,7 +6,6 @@ import { LocItem } from "./types";
 
 export interface Props {
     item: LocItem
-    label: string
 }
 
 export default function LocPublicDataDetails(props: Props) {
@@ -18,7 +17,7 @@ export default function LocPublicDataDetails(props: Props) {
                 <LocItemDetail label="Submitter ID" copyButtonText={ props.item.submitter }>
                     { props.item.submitter }
                 </LocItemDetail>
-                <LocItemDetail label="Name">{ props.label }</LocItemDetail>
+                <LocItemDetail label="Name">{ props.item.name }</LocItemDetail>
                 <LocItemDetail label="Value"><pre>{ props.item.value }</pre></LocItemDetail>
             </div>
         </Col>

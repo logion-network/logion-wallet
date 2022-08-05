@@ -30,7 +30,9 @@ export function mockAccount(address: string, name: string) {
 
 export { reactAct as act };
 
-export async function clickByName(name: string | RegExp | ((accessibleName: string, element: Element) => boolean)) {
+export type ButtonName = string | RegExp | ((accessibleName: string, element: Element) => boolean);
+
+export async function clickByName(name: ButtonName) {
     let button: HTMLElement;
     await waitFor(() => button = screen.getByRole("button", { name }));
     await userEvent.click(button!);
@@ -40,4 +42,14 @@ export async function typeByLabel(label: string, value: string) {
     let input: HTMLElement;
     await waitFor(() => input = screen.getByLabelText(label));
     await userEvent.type(input!, value);
+}
+
+export async function uploadByTestId(testId: string, file: File) {
+    let upload: HTMLElement | undefined = undefined;
+    await waitFor(() => upload = screen.getByTestId(testId));
+    await userEvent.upload(upload!, file);
+}
+
+export function waitForButtonEnabled(name: ButtonName) {
+    return waitFor(() => expect(screen.getByRole("button", { name })).not.toBeDisabled());
 }

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`LocDetails renders 1`] = `
+exports[`LocDetails renders for LO 1`] = `
 <LocContextProvider
   backPath="/"
   detailsPath={[Function]}
@@ -29,4 +29,35 @@ exports[`LocDetails renders 1`] = `
 >
   <ContextualizedLocDetails />
 </LocContextProvider>
+`;
+
+exports[`LocDetails renders for user 1`] = `
+<UserLocContextProvider
+  backPath="/"
+  detailsPath={[Function]}
+  locId={
+    UUID {
+      "bytes": Uint8Array [
+        174,
+        212,
+        198,
+        228,
+        151,
+        158,
+        72,
+        173,
+        190,
+        110,
+        75,
+        211,
+        159,
+        185,
+        71,
+        98,
+      ],
+    }
+  }
+>
+  <UserContextualizedLocDetails />
+</UserLocContextProvider>
 `;

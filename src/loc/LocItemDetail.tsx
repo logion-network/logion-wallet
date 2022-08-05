@@ -1,10 +1,12 @@
-import "./LocItemDetail.css"
+import { Spinner } from "react-bootstrap";
+
 import { Children, customClassName } from "../common/types/Helpers";
 import { Col, Row } from "../common/Grid";
-import { Spinner } from "react-bootstrap";
 import CopyPasteButton from "../common/CopyPasteButton";
 
-interface DetailProps {
+import "./LocItemDetail.css"
+
+export interface DetailProps {
     label: string,
     children?: Children,
     className?: string,
