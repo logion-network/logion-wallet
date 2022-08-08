@@ -1,5 +1,5 @@
 import Button from "../common/Button";
-import React, { useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import Dialog from "../common/Dialog";
 import LocPrivateFileForm, { FormValues } from "./LocPrivateFileForm";
 import { useForm } from "react-hook-form";

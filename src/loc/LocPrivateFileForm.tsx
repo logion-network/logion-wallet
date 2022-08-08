@@ -1,4 +1,3 @@
-import React from "react";
 import FileSelectorButton from "../common/FileSelectorButton";
 import FormGroup from "../common/FormGroup";
 import { Controller, Control, FieldErrors } from "react-hook-form";

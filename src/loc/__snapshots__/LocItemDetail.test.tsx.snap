@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LocItemDetail accepts custom class names 1`] = `
+<Row
+  className="LocItemDetail my-custom-class-name"
+>
+  <Col
+    className="label"
+  >
+    Some label
+    : 
+  </Col>
+  <Col
+    className="value-container"
+  >
+    <span
+      className="value"
+    >
+      Some content
+    </span>
+  </Col>
+</Row>
+`;
+
+exports[`LocItemDetail shows children without spinner 1`] = `
+<Row
+  className="LocItemDetail"
+>
+  <Col
+    className="label"
+  >
+    Some label
+    : 
+  </Col>
+  <Col
+    className="value-container"
+  >
+    <span
+      className="value"
+    >
+      Some content
+    </span>
+  </Col>
+</Row>
+`;
+
+exports[`LocItemDetail shows copy-paste button when requested 1`] = `
+<Row
+  className="LocItemDetail"
+>
+  <Col
+    className="label"
+  >
+    Some label
+    : 
+  </Col>
+  <Col
+    className="value-container"
+  >
+    <span
+      className="value"
+    >
+      Some content
+    </span>
+  </Col>
+  <Col
+    className="copy-paste-container"
+  >
+    <CopyPasteButton
+      className="small"
+      value="Some value to copy-paste"
+    />
+  </Col>
+</Row>
+`;
+
+exports[`LocItemDetail shows spinner instead of children when enabled 1`] = `
+<Row
+  className="LocItemDetail"
+>
+  <Col
+    className="label"
+  >
+    Some label
+    : 
+  </Col>
+  <Col
+    className="value-container"
+  >
+    <Spinner
+      animation="border"
+      size="sm"
+    />
+  </Col>
+</Row>
+`;

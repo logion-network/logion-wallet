@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LocPublicDataDetails renders 1`] = `
+<Col
+  className="LocItemDetails"
+  style={
+    Object {
+      "width": "100%",
+    }
+  }
+>
+  <div
+    className="frame"
+  >
+    <div
+      className="frame-title"
+    >
+      Data to be published
+    </div>
+    <LocItemDetail
+      copyButtonText="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
+      label="Submitter ID"
+    >
+      5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY
+    </LocItemDetail>
+    <LocItemDetail
+      label="Name"
+    >
+      Data name
+    </LocItemDetail>
+    <LocItemDetail
+      label="Value"
+    >
+      <pre>
+        Data value
+      </pre>
+    </LocItemDetail>
+  </div>
+</Col>
+`;

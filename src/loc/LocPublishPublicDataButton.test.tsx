@@ -4,7 +4,7 @@ import { LocItem } from "./types";
 import { shallowRender } from "../tests";
 import LocPublishPublicDataButton from "./LocPublishPublicDataButton";
 
-describe("LocPublishPublicData", () => {
+describe("LocPublishPublicDataButton", () => {
 
     const locItem:LocItem = {
         name: "data-name",

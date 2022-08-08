@@ -63,6 +63,16 @@ export function setRequestSof(fn: jest.Mock) {
     requestSof = fn;
 }
 
+export let deleteMetadata = jest.fn();
+
+export let deleteFile = jest.fn();
+
+export let deleteLink = jest.fn();
+
+export let addFile = jest.fn().mockResolvedValue(undefined);
+
+export let addMetadata = jest.fn().mockResolvedValue(undefined);
+
 export function useLocContext() {
     return {
         linkLoc: {
@@ -75,6 +85,11 @@ export function useLocContext() {
         close,
         loc,
         refresh,
-        requestSof
+        requestSof,
+        deleteMetadata,
+        deleteFile,
+        deleteLink,
+        addFile,
+        addMetadata,
     };
 }
