@@ -1,4 +1,4 @@
-import { ClosedCollectionLoc, UploadableCollectionItem, ItemFileWithContent, HashOrContent, MimeType, ItemTokenWithRestrictedType } from "@logion/client";
+import { ClosedCollectionLoc, UploadableCollectionItem, ItemFileWithContent, HashOrContent, MimeType, ItemTokenWithRestrictedType, isTokenType } from "@logion/client";
 import { useCallback, useState } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
@@ -354,7 +354,7 @@ function toItems(csvItems: CsvItem[]): Item[] {
             if("restrictedDelivery" in csvItem) {
                 restrictedDelivery = csvItem.restrictedDelivery;
                 if(csvItem.tokenType && csvItem.tokenId) {
-                    if(csvItem.tokenType === "ethereum_erc721") {
+                    if(isTokenType(csvItem.tokenType)) {
                         token = {
                             type: csvItem.tokenType,
                             id: csvItem.tokenId,
