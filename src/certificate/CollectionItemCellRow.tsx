@@ -6,7 +6,7 @@ import { Col } from "react-bootstrap";
 import MenuIcon from "../common/MenuIcon";
 import CertificateDateTimeCell from "./CertificateDateTimeCell";
 import { MergedCollectionItem } from "../common/types/ModelTypes";
-import { DocumentCheckResult } from "../loc/CheckFileFrame";
+import { DocumentCheckResult } from "src/components/checkfileframe/CheckFileFrame";
 import MetaMaskClaimButton from "./MetaMaskClaimButton";
 import { UUID } from "@logion/node-api/dist/UUID";
 import { customClassName } from "src/common/types/Helpers";

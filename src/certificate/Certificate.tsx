@@ -27,12 +27,13 @@ import { fullCertificateUrl } from "../PublicPaths";
 
 import CertificateCell from "./CertificateCell";
 import './Certificate.css'
-import CheckFileFrame, { DocumentCheckResult } from "../loc/CheckFileFrame";
+import CheckFileFrame, { DocumentCheckResult } from "src/components/checkfileframe/CheckFileFrame";
 import CollectionItemCellRow from "./CollectionItemCellRow";
 import IntroductionText from "./IntroductionText";
 import LegalOfficerRow from "./LegalOfficerRow";
 import { LegalOfficer } from "@logion/client";
 import { Children } from "src/common/types/Helpers";
+import CheckDeliveredFrame from "src/components/deliverycheck/CheckDeliveredFrame";
 
 export default function Certificate() {
 
@@ -389,6 +390,17 @@ export default function Certificate() {
                     colorTheme={ LIGHT_MODE }
                 />
             </Container>
+            {
+                loc && collectionItem && client &&
+                <Container className="CopyCheck">
+                    <CheckDeliveredFrame
+                        collectionLocId={ locId.toString() }
+                        itemId={ collectionItem.id }
+                        axiosFactory={ () => anonymousAxiosFactory(client.legalOfficers)(legalOfficer.address) }
+                        colorTheme={ LIGHT_MODE }
+                    />
+                </Container>
+            }
         </div>
     )
 }
