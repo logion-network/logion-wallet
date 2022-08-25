@@ -5,6 +5,7 @@
 
 .IconTextRow .text {
     margin-left: 15px;
+    width: 100%;
 }
 
 .Dashboard .PrimaryArea .IconTextRow p.text-title {

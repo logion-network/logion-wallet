@@ -21,7 +21,7 @@ import CloseLocButton from "./CloseLocButton";
 import { LOLocPrivateFileButton } from "./LocPrivateFileButton";
 import Icon from "../common/Icon";
 import LocLinkButton from "./LocLinkButton";
-import CheckFileFrame, { DocumentCheckResult } from './CheckFileFrame';
+import CheckFileFrame, { DocumentCheckResult } from 'src/components/checkfileframe/CheckFileFrame';
 import DangerFrame from "../common/DangerFrame";
 import ButtonGroup from "../common/ButtonGroup";
 import VoidLocButton from "./VoidLocButton";

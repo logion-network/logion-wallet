@@ -125,3 +125,25 @@ export async function checkCanGetCollectionItemFile(
         return false;
     }
 }
+
+export interface CheckLatestDeliveryResponse {
+    copyHash: string;
+    generatedOn: string;
+    owner: string;
+}
+
+export interface ItemDeliveriesResponse {
+    [key: string]: CheckLatestDeliveryResponse[];
+}
+
+export async function getLatestDeliveries(
+    axios: AxiosInstance,
+    parameters: {
+        locId: string,
+        collectionItemId: string,
+    }
+): Promise<ItemDeliveriesResponse> {
+    const { locId, collectionItemId } = parameters
+    const response = await axios.get(`/api/collection/${ locId }/${ collectionItemId }/latest-deliveries`);
+    return response.data;
+}

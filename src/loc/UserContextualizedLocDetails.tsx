@@ -18,7 +18,7 @@ import { useLogionChain } from "../logion-chain";
 import { format } from "../common/DateTimeFormat";
 
 import { UserLocPrivateFileButton } from "./LocPrivateFileButton";
-import CheckFileFrame, { DocumentCheckResult } from './CheckFileFrame';
+import CheckFileFrame, { DocumentCheckResult } from 'src/components/checkfileframe/CheckFileFrame';
 import { UserLocPublicDataButton } from "./LocPublicDataButton";
 import { UserLocItems } from "./LocItems";
 import LocItemDetail from "./LocItemDetail";
