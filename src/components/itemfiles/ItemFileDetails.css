@@ -1,0 +1,12 @@
+.ItemFileDetails {
+    width: calc(100% - 60px);
+    margin-left: auto;
+    margin-right: auto;
+    padding-top: 20px;
+}
+
+.ItemFileDetails .Table .header .Col {
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    font-weight: normal;
+}

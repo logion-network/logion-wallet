@@ -7,7 +7,7 @@
 }
 
 .CollectionLocItemChecker .IconTextRow .text {
-    width: calc(100% - 50px);
+    width: calc(100% - 80px);
 }
 
 .CollectionLocItemChecker .CheckResultFeedback {

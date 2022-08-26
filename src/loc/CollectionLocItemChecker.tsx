@@ -21,9 +21,12 @@ import { toItemId, Viewer } from './types';
 import StatementOfFactsRequestButton from "./statement/StatementOfFactsRequestButton";
 import { useUserLocContext } from "./UserLocContext";
 import { useLocContext } from "./LocContext";
+import ItemFiles from "src/components/itemfiles/ItemFiles";
+import { getAllDeliveries, ItemDeliveriesResponse } from "./FileModel";
 
 export interface Props {
     locId: UUID;
+    locOwner: string;
     collectionItem?: UploadableCollectionItem;
 }
 
@@ -31,7 +34,7 @@ export type CheckResult = 'NONE' | 'POSITIVE' | 'NEGATIVE';
 
 export function UserCollectionLocItemChecker(props: Props) {
 
-    const { locId, collectionItem } = props;
+    const { locId, collectionItem, locOwner } = props;
     const { locState } = useUserLocContext();
     const collection: ClosedCollectionLoc = locState as ClosedCollectionLoc;
 
@@ -44,6 +47,7 @@ export function UserCollectionLocItemChecker(props: Props) {
         <CollectionLocItemChecker
             viewer="User"
             locId={ locId }
+            locOwner={ locOwner }
             collectionItem={ collectionItem }
             collectionSizeFunction={ () => collection.size() }
             collectionItemFunction={ collectionItemFunction }
@@ -52,7 +56,7 @@ export function UserCollectionLocItemChecker(props: Props) {
 
 export function LOCollectionLocItemChecker(props: Props) {
 
-    const { locId, collectionItem } = props;
+    const { locId, collectionItem, locOwner } = props;
     const { api } = useLogionChain();
     const { locState } = useLocContext();
     const collection: ClosedCollectionLoc = locState as ClosedCollectionLoc;
@@ -65,6 +69,7 @@ export function LOCollectionLocItemChecker(props: Props) {
         <CollectionLocItemChecker
             viewer="LegalOfficer"
             locId={ locId }
+            locOwner={ locOwner }
             collectionItem={ collectionItem }
             collectionSizeFunction={ () => getCollectionSize({ api, locId }) }
             collectionItemFunction={ (actualId: string) => collection.getCollectionItem({ itemId: actualId }) }
@@ -80,12 +85,13 @@ interface LocalProps extends Props {
 function CollectionLocItemChecker(props: LocalProps) {
 
     const { colorTheme } = useCommonContext();
-    const { locId, collectionSizeFunction, collectionItemFunction } = props;
-    const { accounts } = useLogionChain();
+    const { locId, collectionSizeFunction, collectionItemFunction, locOwner } = props;
+    const { accounts, axiosFactory } = useLogionChain();
     const [ state, setState ] = useState<CheckResult>('NONE');
     const [ collectionSize, setCollectionSize ] = useState<number | undefined | null>(null);
     const [ itemId, setItemId ] = useState<string>("");
     const [ item, setItem ] = useState<UploadableCollectionItem>();
+    const [ deliveries, setDeliveries ] = useState<ItemDeliveriesResponse>();
     const [ managedCheck, setManagedCheck ] = useState<{ itemId: string, active: boolean }>();
 
     useEffect(() => {
@@ -105,6 +111,10 @@ function CollectionLocItemChecker(props: LocalProps) {
                     const collectionItem = await collectionItemFunction(actualId);
                     if (collectionItem) {
                         setItem(collectionItem);
+                        if(props.viewer === "LegalOfficer") {
+                            const deliveries = await getAllDeliveries(axiosFactory!(locOwner), { locId: locId.toString(), collectionItemId: itemId });
+                            setDeliveries(deliveries);
+                        }
                         setState('POSITIVE');
                     } else {
                         setState('NEGATIVE');
@@ -114,7 +124,7 @@ function CollectionLocItemChecker(props: LocalProps) {
                 }
             }
         }
-    }, [ itemId, collectionItemFunction ]);
+    }, [ itemId, collectionItemFunction, axiosFactory, locId, locOwner, props.viewer ]);
 
     useEffect(() => {
         if (props.collectionItem && (
@@ -195,7 +205,13 @@ function CollectionLocItemChecker(props: LocalProps) {
                         }
                         colors={ colorTheme.frame }
                     />
-                    <CheckResultFeedback locId={ locId } itemId={ toItemId(itemId) } state={ state } />
+                    <CheckResultFeedback
+                        locId={ locId }
+                        itemId={ toItemId(itemId) }
+                        state={ state }
+                        item={ item }
+                        deliveries={ deliveries }
+                    />
                 </>
                 } />
         </PolkadotFrame>)
@@ -205,39 +221,47 @@ interface CheckResultProps {
     locId: UUID,
     itemId?: string,
     state: CheckResult,
+    item?: UploadableCollectionItem,
+    deliveries?: ItemDeliveriesResponse,
 }
 
 function CheckResultFeedback(props: CheckResultProps) {
-    const { locId, itemId, state } = props
+    const { locId, itemId, state, item, deliveries } = props
     switch (state) {
         case "POSITIVE":
             const certificateUrl = fullCollectionItemCertificate(locId, itemId)
             return (
-                <Row className="CheckResultFeedback result-positive" id={ `feedback-${ state }` }>
-                    <Col>
-                        <p>
-                            Check result: <span className="label-positive">positive</span><br />
-                            The Collection Item - defined by the ID you submitted - is covered by the current Collection
-                            LOC.
-                        </p>
-                    </Col>
-                    <Col>
-                        <Icon icon={ { id: "ok" } } height='45px' />
-                    </Col>
-                    <Col>
-                        <p>
-                            <div id="url-header" className="url-header">Certificate Public web address (URL) for the
-                                data covered by this Collection LOC:
-                            </div>
-                            <div className="url-copy-paste-container">
-                                <div className="url-container">
-                                    <a href={ certificateUrl } target="_blank" rel="noreferrer">{ certificateUrl }</a>
+                <>
+                    <Row className="CheckResultFeedback result-positive" id={ `feedback-${ state }` }>
+                        <Col>
+                            <p>
+                                Check result: <span className="label-positive">positive</span><br />
+                                The Collection Item - defined by the ID you submitted - is covered by the current Collection
+                                LOC.
+                            </p>
+                        </Col>
+                        <Col>
+                            <Icon icon={ { id: "ok" } } height='45px' />
+                        </Col>
+                        <Col>
+                            <p>
+                                <div id="url-header" className="url-header">Certificate Public web address (URL) for the
+                                    data covered by this Collection LOC:
                                 </div>
-                                <CopyPasteButton value={ certificateUrl } />
-                            </div>
-                        </p>
-                    </Col>
-                </Row>
+                                <div className="url-copy-paste-container">
+                                    <div className="url-container">
+                                        <a href={ certificateUrl } target="_blank" rel="noreferrer">{ certificateUrl }</a>
+                                    </div>
+                                    <CopyPasteButton value={ certificateUrl } />
+                                </div>
+                            </p>
+                        </Col>
+                    </Row>
+                    {
+                        item !== undefined && item.files.length > 0 &&
+                        <ItemFiles item={ item } deliveries={ deliveries } />
+                    }
+                </>
             )
         case "NEGATIVE":
             return (

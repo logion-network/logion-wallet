@@ -1,0 +1,205 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ItemFiles renders with delivery  1`] = `
+<div
+  className="ItemFiles"
+>
+  <h3>
+    <Icon
+      height="45px"
+      icon={
+        Object {
+          "id": "polkadot_check_asset",
+        }
+      }
+    />
+     
+    <span
+      className="title-text"
+    >
+      List of Collection Item's file(s)
+    </span>
+  </h3>
+  <Table
+    columns={
+      Array [
+        Object {
+          "align": "left",
+          "header": "Name",
+          "render": [Function],
+        },
+        Object {
+          "align": "left",
+          "header": "Type",
+          "render": [Function],
+        },
+        Object {
+          "align": "left",
+          "header": "Size (bytes)",
+          "render": [Function],
+        },
+        Object {
+          "align": "left",
+          "header": "Hash",
+          "render": [Function],
+          "width": "250px",
+        },
+        Object {
+          "header": "# of claim(s)",
+          "render": [Function],
+          "renderDetails": [Function],
+          "width": "150px",
+        },
+      ]
+    }
+    data={
+      Array [
+        Object {
+          "contentType": "image/jpeg",
+          "hash": "0xa025ca5f086f3b6df1ca96c235c4daff57083bbd4c9320a3013e787849f9fffa",
+          "name": "programming_music.jpg",
+          "size": 90718n,
+          "uploaded": true,
+        },
+      ]
+    }
+    renderEmpty={[Function]}
+  />
+</div>
+`;
+
+exports[`ItemFiles renders with empty deliveries 1`] = `
+<div
+  className="ItemFiles"
+>
+  <h3>
+    <Icon
+      height="45px"
+      icon={
+        Object {
+          "id": "polkadot_check_asset",
+        }
+      }
+    />
+     
+    <span
+      className="title-text"
+    >
+      List of Collection Item's file(s)
+    </span>
+  </h3>
+  <Table
+    columns={
+      Array [
+        Object {
+          "align": "left",
+          "header": "Name",
+          "render": [Function],
+        },
+        Object {
+          "align": "left",
+          "header": "Type",
+          "render": [Function],
+        },
+        Object {
+          "align": "left",
+          "header": "Size (bytes)",
+          "render": [Function],
+        },
+        Object {
+          "align": "left",
+          "header": "Hash",
+          "render": [Function],
+          "width": "250px",
+        },
+        Object {
+          "header": "# of claim(s)",
+          "render": [Function],
+          "renderDetails": [Function],
+          "width": "150px",
+        },
+      ]
+    }
+    data={
+      Array [
+        Object {
+          "contentType": "image/jpeg",
+          "hash": "0xa025ca5f086f3b6df1ca96c235c4daff57083bbd4c9320a3013e787849f9fffa",
+          "name": "programming_music.jpg",
+          "size": 90718n,
+          "uploaded": true,
+        },
+      ]
+    }
+    renderEmpty={[Function]}
+  />
+</div>
+`;
+
+exports[`ItemFiles renders with undefined deliveries 1`] = `
+<div
+  className="ItemFiles"
+>
+  <h3>
+    <Icon
+      height="45px"
+      icon={
+        Object {
+          "id": "polkadot_check_asset",
+        }
+      }
+    />
+     
+    <span
+      className="title-text"
+    >
+      List of Collection Item's file(s)
+    </span>
+  </h3>
+  <Table
+    columns={
+      Array [
+        Object {
+          "align": "left",
+          "header": "Name",
+          "render": [Function],
+        },
+        Object {
+          "align": "left",
+          "header": "Type",
+          "render": [Function],
+        },
+        Object {
+          "align": "left",
+          "header": "Size (bytes)",
+          "render": [Function],
+        },
+        Object {
+          "align": "left",
+          "header": "Hash",
+          "render": [Function],
+          "width": "250px",
+        },
+        Object {
+          "header": "# of claim(s)",
+          "render": [Function],
+          "renderDetails": undefined,
+          "width": "150px",
+        },
+      ]
+    }
+    data={
+      Array [
+        Object {
+          "contentType": "image/jpeg",
+          "hash": "0xa025ca5f086f3b6df1ca96c235c4daff57083bbd4c9320a3013e787849f9fffa",
+          "name": "programming_music.jpg",
+          "size": 90718n,
+          "uploaded": true,
+        },
+      ]
+    }
+    renderEmpty={[Function]}
+  />
+</div>
+`;
