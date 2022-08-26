@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import FileSelectorButton from "src/common/FileSelectorButton";
 import { sha256Hex } from "src/common/hash";
+import { Children } from "src/common/types/Helpers";
 
 export interface DocumentHash {
     file: File;
@@ -8,7 +9,7 @@ export interface DocumentHash {
 }
 
 export interface Props {
-    buttonText: string;
+    buttonText: Children;
     onHash: (hash: DocumentHash) => void;
     onFileSelected?: (file: File) => void;
 }

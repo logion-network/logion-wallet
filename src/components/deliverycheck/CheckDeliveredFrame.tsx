@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { AxiosInstance } from 'axios';
 
 import Icon from "src/common/Icon";
@@ -6,11 +6,11 @@ import PolkadotFrame from "src/common/PolkadotFrame";
 
 import IconTextRow from "src/common/IconTextRow";
 import { ColorTheme } from "src/common/ColorTheme";
-import FileHasher, { DocumentHash } from "src/components/filehasher/FileHasher";
 import CheckFileResult from "src/components/checkfileresult/CheckFileResult";
 
-import { CheckLatestDeliveryResponse, getLatestDeliveries, ItemDeliveriesResponse } from "src/loc/FileModel";
+import { CheckLatestDeliveryResponse } from "src/loc/FileModel";
 
+import CheckDeliveredButton, { CheckResult } from "./CheckDeliveredButton";
 import './CheckDeliveredFrame.css';
 
 export interface Props {
@@ -21,45 +21,20 @@ export interface Props {
 }
 
 export default function CheckDeliveredFrame(props: Props) {
-    const [ fetched, setFetched ] = useState(false);
-    const [ latestDeliveries, setLatestDeliveries ] = useState<ItemDeliveriesResponse | undefined>();
-    const [ hash, setHash ] = useState<DocumentHash | null>(null);
     const [ checking, setChecking ] = useState(false);
     const [ checked, setChecked ] = useState(false);
     const [ matchingCopy, setMatchingCopy ] = useState<CheckLatestDeliveryResponse | undefined>();
 
-    useEffect(() => {
-        if(!fetched && !latestDeliveries) {
-            setFetched(true);
-            (async function() {
-                const axios = props.axiosFactory();
-                const response = await getLatestDeliveries(axios, { locId: props.collectionLocId, collectionItemId: props.itemId });
-                setLatestDeliveries(response);
-                setFetched(false);
-            })();
-        }
-    }, [ fetched, setFetched, latestDeliveries, setLatestDeliveries, props ]);
-
-    useEffect(() => {
-        if(hash && latestDeliveries && !checking) {
-            setChecking(true);
-            for(const originalFileHash of Object.keys(latestDeliveries)) {
-                const latestDelivery = latestDeliveries[originalFileHash][0];
-                if(latestDelivery.copyHash === hash.hash) {
-                    setMatchingCopy(latestDelivery);
-                    break;
-                }
-            }
-            setChecked(true);
-        }
-    }, [ hash, latestDeliveries, checked, setChecked, checking ]);
-
-    const resetCheck = useCallback(() => {
-        setHash(null);
-        setChecking(false);
-        setChecked(false);
+    const onChecking = useCallback(() => {
+        setChecking(true);
         setMatchingCopy(undefined);
-    }, [ setHash, setChecking, setChecked, setMatchingCopy ]);
+        setChecked(false);
+    }, []);
+
+    const onChecked = useCallback((result: CheckResult) => {
+        setMatchingCopy(result.match);
+        setChecked(true);
+    }, []);
 
     return (
         <PolkadotFrame
@@ -71,10 +46,12 @@ export default function CheckDeliveredFrame(props: Props) {
                 text={
                     <>
                         <p className="text-title">Authenticity Check Tool</p>
-                        <FileHasher
-                            onFileSelected={ resetCheck }
-                            onHash={ setHash }
-                            buttonText="Check file"
+                        <CheckDeliveredButton
+                            axiosFactory={ props.axiosFactory }
+                            collectionLocId={ props.collectionLocId }
+                            itemId={ props.itemId }
+                            onChecking={ onChecking }
+                            onChecked={ onChecked }
                         />
                         {
                             checking &&
@@ -95,7 +72,7 @@ export default function CheckDeliveredFrame(props: Props) {
                                     </div>
                                 }
                                 {
-                                    checked && !matchingCopy &&
+                                    checked && matchingCopy === undefined &&
                                     <div>
                                         <p>Submitted file is not latest authentic copy delivered to the owner</p>
                                     </div>
