@@ -395,6 +395,7 @@ export default function ContextualizedLocDetails() {
             { loc.locType === 'Collection' && loc.closed &&
                 <LOCollectionLocItemChecker
                     locId={ locId }
+                    locOwner={ loc.owner }
                     collectionItem={ collectionItem }
                 />
             }

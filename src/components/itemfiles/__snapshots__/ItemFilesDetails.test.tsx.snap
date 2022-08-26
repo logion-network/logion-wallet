@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ItemFilesDetails renders with deliveries 1`] = `
+<div
+  className="ItemFileDetails"
+>
+  <Table
+    color={
+      Object {
+        "background": "#152665",
+        "foreground": "#ffffff",
+        "header": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "row": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+      }
+    }
+    columns={
+      Array [
+        Object {
+          "align": "left",
+          "header": "Delivered File Hash",
+          "render": [Function],
+        },
+        Object {
+          "align": "left",
+          "header": "NFT Owner Address (recipient)",
+          "render": [Function],
+        },
+        Object {
+          "header": "Delivery Date",
+          "render": [Function],
+          "width": "150px",
+        },
+      ]
+    }
+    data={
+      Array [
+        Object {
+          "copyHash": "0x72685ddcbec5052f9db2523252407990c24bb94d43b478d1a22411e612f3b650",
+          "generatedOn": "2022-08-25T07:27:46.128Z",
+          "owner": "0x900edc98db53508e6742723988b872dd08cd09c2",
+        },
+      ]
+    }
+    renderEmpty={[Function]}
+  />
+</div>
+`;
+
+exports[`ItemFilesDetails renders without deliveries 1`] = `
+<div
+  className="ItemFileDetails"
+>
+  <Table
+    color={
+      Object {
+        "background": "#152665",
+        "foreground": "#ffffff",
+        "header": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+        "row": Object {
+          "background": "#0c163d",
+          "foreground": "#ffffff",
+        },
+      }
+    }
+    columns={
+      Array [
+        Object {
+          "align": "left",
+          "header": "Delivered File Hash",
+          "render": [Function],
+        },
+        Object {
+          "align": "left",
+          "header": "NFT Owner Address (recipient)",
+          "render": [Function],
+        },
+        Object {
+          "header": "Delivery Date",
+          "render": [Function],
+          "width": "150px",
+        },
+      ]
+    }
+    data={Array []}
+    renderEmpty={[Function]}
+  />
+</div>
+`;

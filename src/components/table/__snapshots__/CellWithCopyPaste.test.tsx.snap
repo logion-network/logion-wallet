@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CellWithCopyPaste renders 1`] = `
+<Cell
+  content={
+    <span>
+      <Ellipsis
+        maxWidth="calc(100% - 75px)"
+      >
+        Some content
+      </Ellipsis>
+       
+      <CopyPasteButton
+        className="medium"
+        value="Some content"
+      />
+    </span>
+  }
+/>
+`;

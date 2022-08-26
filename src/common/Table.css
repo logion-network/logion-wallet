@@ -85,6 +85,10 @@
     white-space: nowrap;
 }
 
+.Table .regular-cell span {
+    line-height: 1;
+}
+
 .Table .Col.has-details .regular-cell {
     margin-right: 10px;
 }

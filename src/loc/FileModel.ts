@@ -147,3 +147,15 @@ export async function getLatestDeliveries(
     const response = await axios.get(`/api/collection/${ locId }/${ collectionItemId }/latest-deliveries`);
     return response.data;
 }
+
+export async function getAllDeliveries(
+    axios: AxiosInstance,
+    parameters: {
+        locId: string,
+        collectionItemId: string,
+    }
+): Promise<ItemDeliveriesResponse> {
+    const { locId, collectionItemId } = parameters
+    const response = await axios.get(`/api/collection/${ locId }/${ collectionItemId }/all-deliveries`);
+    return response.data;
+}
