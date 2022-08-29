@@ -30,7 +30,7 @@ export default function CheckDeliveredDialog(props: Props) {
         setChecking(false);
         setShowDialog(false);
         props.onChecked(result);
-    }, []);
+    }, [ props ]);
 
     return (
         <Row>

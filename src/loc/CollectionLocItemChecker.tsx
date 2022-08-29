@@ -243,7 +243,7 @@ interface CheckResultProps {
 }
 
 function CheckResultFeedback(props: CheckResultProps) {
-    const { locId, itemId, state, item, deliveries, locOwner, axiosFactory } = props;
+    const { locId, itemId, state, item, deliveries } = props;
     const { client } = useLogionChain();
 
     if(!client) {
