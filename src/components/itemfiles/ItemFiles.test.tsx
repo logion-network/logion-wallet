@@ -1,4 +1,5 @@
 import { UploadableCollectionItem } from "@logion/client";
+import { AxiosInstance } from "axios";
 import { shallowRender } from "src/tests";
 import ItemFiles from "./ItemFiles";
 
@@ -27,6 +28,9 @@ describe("ItemFiles", () => {
     it("renders with undefined deliveries", () => {
         const result = shallowRender(<ItemFiles
             item={ item }
+            withCheck={ false }
+            axiosFactory={ () => { return {} as AxiosInstance } }
+            locId={ "eff6da24-1364-4594-965a-3b31f1e1df25" }
         />);
         expect(result).toMatchSnapshot();
     });
@@ -35,6 +39,9 @@ describe("ItemFiles", () => {
         const result = shallowRender(<ItemFiles
             item={ item }
             deliveries={{}}
+            withCheck={ false }
+            axiosFactory={ () => { return {} as AxiosInstance } }
+            locId={ "eff6da24-1364-4594-965a-3b31f1e1df25" }
         />);
         expect(result).toMatchSnapshot();
     });
@@ -51,6 +58,9 @@ describe("ItemFiles", () => {
                     }
                 ]
             }}
+            withCheck={ false }
+            axiosFactory={ () => { return {} as AxiosInstance } }
+            locId={ "eff6da24-1364-4594-965a-3b31f1e1df25" }
         />);
         expect(result).toMatchSnapshot();
     });

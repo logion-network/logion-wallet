@@ -1,3 +1,4 @@
+import { AxiosInstance } from "axios";
 import { useState, useCallback, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { ClosedCollectionLoc, UploadableCollectionItem } from "@logion/client";
@@ -23,6 +24,7 @@ import { useUserLocContext } from "./UserLocContext";
 import { useLocContext } from "./LocContext";
 import ItemFiles from "src/components/itemfiles/ItemFiles";
 import { getAllDeliveries, ItemDeliveriesResponse } from "./FileModel";
+import { useLegalOfficerContext } from "src/legal-officer/LegalOfficerContext";
 
 export interface Props {
     locId: UUID;
@@ -36,11 +38,16 @@ export function UserCollectionLocItemChecker(props: Props) {
 
     const { locId, collectionItem, locOwner } = props;
     const { locState } = useUserLocContext();
+    const { client } = useLogionChain();
     const collection: ClosedCollectionLoc = locState as ClosedCollectionLoc;
 
     async function collectionItemFunction(actualId: string): Promise<UploadableCollectionItem | undefined> {
         const result = await collection.checkHash(actualId)
         return result.collectionItem;
+    }
+
+    if(!client) {
+        return null;
     }
 
     return (
@@ -51,6 +58,7 @@ export function UserCollectionLocItemChecker(props: Props) {
             collectionItem={ collectionItem }
             collectionSizeFunction={ () => collection.size() }
             collectionItemFunction={ collectionItemFunction }
+            axiosFactory={ () => client.buildAxios(client.legalOfficers.find(legalOfficer => legalOfficer.address === locOwner)!) }
         />)
 }
 
@@ -59,9 +67,10 @@ export function LOCollectionLocItemChecker(props: Props) {
     const { locId, collectionItem, locOwner } = props;
     const { api } = useLogionChain();
     const { locState } = useLocContext();
+    const { axios } = useLegalOfficerContext();
     const collection: ClosedCollectionLoc = locState as ClosedCollectionLoc;
 
-    if (api === null) {
+    if (!api || !axios) {
         return null;
     }
 
@@ -73,6 +82,7 @@ export function LOCollectionLocItemChecker(props: Props) {
             collectionItem={ collectionItem }
             collectionSizeFunction={ () => getCollectionSize({ api, locId }) }
             collectionItemFunction={ (actualId: string) => collection.getCollectionItem({ itemId: actualId }) }
+            axiosFactory={ () => axios }
         />)
 }
 
@@ -80,6 +90,7 @@ interface LocalProps extends Props {
     viewer: Viewer;
     collectionSizeFunction: () => Promise<number | undefined>
     collectionItemFunction: (actualId: string) => Promise<UploadableCollectionItem | undefined>
+    axiosFactory: () => AxiosInstance
 }
 
 function CollectionLocItemChecker(props: LocalProps) {
@@ -211,6 +222,9 @@ function CollectionLocItemChecker(props: LocalProps) {
                         state={ state }
                         item={ item }
                         deliveries={ deliveries }
+                        viewer={ props.viewer }
+                        locOwner={ props.locOwner }
+                        axiosFactory={ props.axiosFactory }
                     />
                 </>
                 } />
@@ -223,10 +237,19 @@ interface CheckResultProps {
     state: CheckResult,
     item?: UploadableCollectionItem,
     deliveries?: ItemDeliveriesResponse,
+    viewer: Viewer,
+    locOwner: string,
+    axiosFactory: () => AxiosInstance,
 }
 
 function CheckResultFeedback(props: CheckResultProps) {
-    const { locId, itemId, state, item, deliveries } = props
+    const { locId, itemId, state, item, deliveries } = props;
+    const { client } = useLogionChain();
+
+    if(!client) {
+        return null;
+    }
+
     switch (state) {
         case "POSITIVE":
             const certificateUrl = fullCollectionItemCertificate(locId, itemId)
@@ -259,7 +282,13 @@ function CheckResultFeedback(props: CheckResultProps) {
                     </Row>
                     {
                         item !== undefined && item.files.length > 0 &&
-                        <ItemFiles item={ item } deliveries={ deliveries } />
+                        <ItemFiles
+                            item={ item }
+                            deliveries={ deliveries }
+                            withCheck={ props.viewer === "LegalOfficer" }
+                            axiosFactory={ props.axiosFactory }
+                            locId={ props.locId.toString() }
+                        />
                     }
                 </>
             )

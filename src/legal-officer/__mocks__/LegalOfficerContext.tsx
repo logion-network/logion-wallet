@@ -1,3 +1,4 @@
+import { AxiosInstance } from "axios";
 import { COLOR_THEME } from "../../common/TestData";
 
 import {
@@ -36,6 +37,7 @@ export function useLegalOfficerContext() {
         pendingLocRequests,
         rejectedLocRequests,
         voidIdentityLocsByType,
-        refreshLocs: () => {}
+        refreshLocs: () => {},
+        axios: {} as AxiosInstance,
     };
 }

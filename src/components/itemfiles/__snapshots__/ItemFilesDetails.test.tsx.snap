@@ -48,6 +48,7 @@ exports[`ItemFilesDetails renders with deliveries 1`] = `
       ]
     }
     renderEmpty={[Function]}
+    rowStyle={[Function]}
   />
 </div>
 `;
@@ -92,6 +93,7 @@ exports[`ItemFilesDetails renders without deliveries 1`] = `
     }
     data={Array []}
     renderEmpty={[Function]}
+    rowStyle={[Function]}
   />
 </div>
 `;

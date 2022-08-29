@@ -1,5 +1,6 @@
 jest.mock("../common/CommonContext");
 jest.mock("../logion-chain");
+jest.mock("src/legal-officer/LegalOfficerContext");
 jest.unmock("@logion/node-api/dist/LogionLoc");
 
 import { render } from "@testing-library/react";
