@@ -122,10 +122,8 @@ function CollectionLocItemChecker(props: LocalProps) {
                     const collectionItem = await collectionItemFunction(actualId);
                     if (collectionItem) {
                         setItem(collectionItem);
-                        if(props.viewer === "LegalOfficer") {
-                            const deliveries = await getAllDeliveries(axiosFactory!(locOwner), { locId: locId.toString(), collectionItemId: itemId });
-                            setDeliveries(deliveries);
-                        }
+                        const deliveries = await getAllDeliveries(axiosFactory!(locOwner), { locId: locId.toString(), collectionItemId: itemId });
+                        setDeliveries(deliveries);
                         setState('POSITIVE');
                     } else {
                         setState('NEGATIVE');
@@ -135,7 +133,7 @@ function CollectionLocItemChecker(props: LocalProps) {
                 }
             }
         }
-    }, [ itemId, collectionItemFunction, axiosFactory, locId, locOwner, props.viewer ]);
+    }, [ itemId, collectionItemFunction, axiosFactory, locId, locOwner ]);
 
     useEffect(() => {
         if (props.collectionItem && (

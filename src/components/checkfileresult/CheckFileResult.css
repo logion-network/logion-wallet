@@ -9,7 +9,8 @@
     padding-right: 20px;
 }
 
-.CheckFileResult p {
+.CheckFileResult p,
+.CheckFileResult ul {
     margin-left: 62px;
 }
 
