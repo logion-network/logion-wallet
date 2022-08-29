@@ -75,17 +75,17 @@ export default function CheckDeliveredButton(props: Props) {
         if(hash && latestDeliveries && !checked) {
             for(const originalFileHash of Object.keys(latestDeliveries)) {
                 for(let i = 0; i < latestDeliveries[originalFileHash].length; ++i) {
-                    const latestDelivery = latestDeliveries[originalFileHash][i];
-                    if(latestDelivery.copyHash === hash.hash) {
+                    const delivery = latestDeliveries[originalFileHash][i];
+                    if(delivery.copyHash === hash.hash) {
                         props.onChecked({
                             match: {  
-                                ...latestDelivery,
+                                ...delivery,
                                 originalFileHash
                             },
-                            summary: i === 0 ? CheckResultType.POSITIVE : CheckResultType.NEGATIVE,
+                            summary: i === 0 && delivery.belongsToCurrentOwner ? CheckResultType.POSITIVE : CheckResultType.NEGATIVE,
                             logionOrigin: CheckResultType.POSITIVE,
                             latest: i === 0 ? CheckResultType.POSITIVE : CheckResultType.NEGATIVE,
-                            nftOwnership: CheckResultType.POSITIVE,
+                            nftOwnership: delivery.belongsToCurrentOwner ? CheckResultType.POSITIVE : CheckResultType.NEGATIVE,
                         });
                         return;
                     }

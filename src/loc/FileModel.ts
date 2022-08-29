@@ -130,6 +130,7 @@ export interface CheckLatestDeliveryResponse {
     copyHash: string;
     generatedOn: string;
     owner: string;
+    belongsToCurrentOwner: boolean;
 }
 
 export interface ItemDeliveriesResponse {
