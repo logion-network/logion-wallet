@@ -2,6 +2,7 @@ import { UploadableItemFile } from "@logion/client/dist/LocClient";
 import { useCommonContext } from "src/common/CommonContext";
 import Table, { DateTimeCell, EmptyTableMessage } from "src/common/Table";
 import { CheckLatestDeliveryResponse } from "src/loc/FileModel";
+import { CheckResult, CheckResultType } from "../deliverycheck/CheckDeliveredButton";
 import CellWithCopyPaste from "../table/CellWithCopyPaste";
 
 import "./ItemFileDetails.css";
@@ -9,6 +10,7 @@ import "./ItemFileDetails.css";
 export interface Props {
     file: UploadableItemFile;
     deliveries: CheckLatestDeliveryResponse[];
+    checkResult?: CheckResult;
 }
 
 export default function ItemFileDetails(props: Props) {
@@ -40,7 +42,20 @@ export default function ItemFileDetails(props: Props) {
                     ...colorTheme.table,
                     header: colorTheme.table.row
                 }}
+                rowStyle={ delivery => rowStyle(props.checkResult, delivery) }
             />
         </div>
     );
+}
+
+function rowStyle(checkResult: CheckResult | undefined, delivery: CheckLatestDeliveryResponse): string {
+    if(!checkResult || !checkResult.match || delivery.copyHash !== checkResult.match.copyHash) {
+        return "";
+    } else {
+        if(checkResult.summary === CheckResultType.POSITIVE) {
+            return "positive-match";
+        } else {
+            return "negative-match";
+        }
+    }
 }

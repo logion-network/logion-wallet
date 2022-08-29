@@ -10,3 +10,11 @@
     font-size: 0.7rem;
     font-weight: normal;
 }
+
+.ItemFileDetails .Row.positive-match {
+    border: 2px #37ad4b dashed;
+}
+
+.ItemFileDetails .Row.negative-match {
+    border: 2px #e11a25 dashed;
+}

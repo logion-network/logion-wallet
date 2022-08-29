@@ -52,6 +52,7 @@ export default function CheckDeliveredFrame(props: Props) {
                             itemId={ props.itemId }
                             onChecking={ onChecking }
                             onChecked={ onChecked }
+                            privilegedUser={ false }
                         />
                         {
                             checking &&
