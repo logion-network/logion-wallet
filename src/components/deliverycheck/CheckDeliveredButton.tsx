@@ -52,7 +52,6 @@ export default function CheckDeliveredButton(props: Props) {
     const [ fetched, setFetched ] = useState(false);
     const [ latestDeliveries, setLatestDeliveries ] = useState<ItemDeliveriesResponse | undefined>();
     const [ hash, setHash ] = useState<DocumentHash | null>(null);
-    const [ checking, setChecking ] = useState(false);
     const [ checked, setChecked ] = useState(false);
 
     useEffect(() => {
@@ -73,6 +72,7 @@ export default function CheckDeliveredButton(props: Props) {
 
     useEffect(() => {
         if(hash && latestDeliveries && !checked) {
+            setChecked(true);
             for(const originalFileHash of Object.keys(latestDeliveries)) {
                 for(let i = 0; i < latestDeliveries[originalFileHash].length; ++i) {
                     const delivery = latestDeliveries[originalFileHash][i];
@@ -98,15 +98,14 @@ export default function CheckDeliveredButton(props: Props) {
                 nftOwnership: CheckResultType.NEGATIVE,
             })
         }
-    }, [ hash, latestDeliveries, checked, checking, props ]);
+    }, [ hash, latestDeliveries, checked, props ]);
 
     const onFileSelected = useCallback(() => {
         setHash(null);
         setLatestDeliveries(undefined);
-        setChecked(false);
         setFetched(false);
+        setChecked(false);
 
-        setChecking(true);
         props.onChecking();
     }, [ props ]);
 
