@@ -1,0 +1,23 @@
+.ArchiveButton {
+    margin-right: 20px;
+}
+
+.ArchiveButton .Button {
+    height: 40px;
+    padding-top: 3px;
+}
+
+.ArchiveButton .Button img {
+    margin-right: 10px;
+}
+
+.Dialog .modal-body .check-risk {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: row;
+}
+
+.Dialog .modal-body .check-risk .Checkbox {
+    margin-right: 10px;
+}

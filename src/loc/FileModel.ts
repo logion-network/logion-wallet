@@ -24,6 +24,11 @@ export interface GetCollectionItemFileParameters extends GetFileParameters {
     collectionItemId: string,
 }
 
+export interface GetCsvParameters {
+    locId: string,
+    type: 'files' | 'links' | 'metadata'
+}
+
 export interface TypedFile {
     data: any,
     extension: string
@@ -57,6 +62,13 @@ export async function getCollectionItemFile(
     return typedFile(response);
 }
 
+export async function getCsvLoc(
+    axios: AxiosInstance,
+    parameters: GetCsvParameters,
+): Promise<TypedFile> {
+    const response = await axios.get(`/api/loc-request/${ parameters.locId }/${ parameters.type }/csv`, { responseType: 'blob' });
+    return typedFile(response);
+}
 
 function typedFile(response: AxiosResponse): TypedFile {
     const contentType: string = response.headers['content-type'];
@@ -67,7 +79,11 @@ function determineExtension(contentType: string) {
     if (!contentType || contentType.indexOf("/") < 0) {
         return "txt"
     }
-    return contentType.split("/")[1];
+    const extension = contentType.split("/")[1];
+    if (extension.indexOf(";") > 0) {
+        return extension.split(";")[0];
+    }
+    return extension;
 }
 
 export interface AddFileParameters {

@@ -494,8 +494,26 @@ exports[`ContextualizedLocDetails renders 1`] = `
               className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12 col"
             >
               <div
-                className="sof-preview"
-              />
+                className="tool-bar"
+              >
+                <div
+                  className="ArchiveButton"
+                >
+                  <button
+                    className="Button btn btn-primary"
+                    disabled={false}
+                    onClick={[Function]}
+                    style={Object {}}
+                    type="button"
+                  >
+                    <img
+                      alt="backup"
+                      src="/assets/backup.svg"
+                    />
+                    Local Backup
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
