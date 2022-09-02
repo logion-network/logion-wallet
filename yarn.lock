@@ -2622,32 +2622,32 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@logion/client@npm:^0.9.0-1":
-  version: 0.9.0-1
-  resolution: "@logion/client@npm:0.9.0-1"
+"@logion/client@npm:^0.10.0-1":
+  version: 0.10.0-1
+  resolution: "@logion/client@npm:0.10.0-1"
   dependencies:
-    "@logion/node-api": ^0.4.0
+    "@logion/node-api": ^0.4.1-1
     axios: ^0.27.2
     luxon: ^3.0.1
     mime-db: ^1.52.0
-  checksum: 6d4ce61dad22464d188b8c15d2132e95b52f45b0eea762441549e5f6fe477b75bac3f92f6c0ddbccad1ce54f465f0d9b5f9cddcc870653d5f1b5a1d35f7256b9
+  checksum: fbbe9b97aa1338713541d58f72c766f2eb16b4118181987ccf9718ca08dfe895087bc5a491361206111efea0ec2c89b92663f6e3b8a9b17ad1793c087c9d46f2
   languageName: node
   linkType: hard
 
-"@logion/extension@npm:^0.4.2-1":
-  version: 0.4.2-1
-  resolution: "@logion/extension@npm:0.4.2-1"
+"@logion/extension@npm:^0.4.3-1":
+  version: 0.4.3-1
+  resolution: "@logion/extension@npm:0.4.3-1"
   dependencies:
-    "@logion/client": ^0.9.0-1
+    "@logion/client": ^0.10.0-1
     "@polkadot/extension-compat-metamask": ^0.44.2
     "@polkadot/extension-dapp": ^0.44.2
-  checksum: 0f78bd6f2143959d97eb1aa223ee6717fb9fca6e650541919c861273c6cffb3c62eee96ea0cb19757410e78aafcc0c838b2dabfa31855334582260c6583459a7
+  checksum: 8d0cee075c757b02e765993ee101ab2f7e1b7e609dbc11624acfbb3694df739e84840a2145934f46b9974ef28891846641fdf79f0769cfd93eb032204d912596
   languageName: node
   linkType: hard
 
-"@logion/node-api@npm:^0.4.0":
-  version: 0.4.0
-  resolution: "@logion/node-api@npm:0.4.0"
+"@logion/node-api@npm:^0.4.1-1":
+  version: 0.4.1-1
+  resolution: "@logion/node-api@npm:0.4.1-1"
   dependencies:
     "@polkadot/api": ^8.14.1
     "@polkadot/util": ^10.1.1
@@ -2655,7 +2655,7 @@ __metadata:
     "@types/uuid": ^8.3.4
     fast-sha256: ^1.3.0
     uuid: ^8.3.2
-  checksum: 2016e8c06074901c85150ca0d64066567e0cb3acf2de20d00be7d67cb0bb73feab09e939c6f90b7fe3c6e008db8348644599c00009312ce6d04f31814e44b473
+  checksum: e4b0321c6d4c6ae6337c768021a7f193d044ea0c5d29eef399ea092dce45a40b0baaa10c72edcd5e2fa845a8ec0760d798e30ab7e17bf3e236a76243b87529d9
   languageName: node
   linkType: hard
 
@@ -11735,7 +11735,7 @@ __metadata:
     "@babel/preset-env": ^7.16.11
     "@babel/preset-react": ^7.16.5
     "@craco/craco": ^6.4.3
-    "@logion/extension": ^0.4.2-1
+    "@logion/extension": ^0.4.3-1
     "@popperjs/core": ^2.11.0
     "@testing-library/dom": ^8.11.3
     "@testing-library/jest-dom": ^5.16.1

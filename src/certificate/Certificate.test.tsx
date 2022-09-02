@@ -1,18 +1,18 @@
+import { LogionClient, PublicLoc, LocData } from '@logion/client';
+import { UUID } from '@logion/node-api';
+import { render, screen, waitFor } from "@testing-library/react";
 import { act } from 'react-test-renderer';
 
 import { shallowRender } from '../tests';
-import { CLOSED_IDENTITY_LOC_ID, UNPREFIXED_FILE_HASH } from '../__mocks__/@logion/node-api/dist/LogionLocMock';
 import { setParams, setSearchParams } from '../__mocks__/ReactRouterMock';
 
 import Certificate from './Certificate';
-import { render, screen, waitFor, getByText } from "@testing-library/react";
-import userEvent from '@testing-library/user-event';
-import { sha256Hex } from '../common/__mocks__/HashMock';
+import { setClientMock } from 'src/logion-chain/__mocks__/LogionChainMock';
+import { PATRICK } from 'src/common/TestData';
 
 jest.mock("react-router");
 jest.mock("react-router-dom");
 jest.mock("../logion-chain");
-jest.mock("@logion/node-api/dist/LogionLoc");
 jest.mock("../common/api");
 jest.mock("../common/hash");
 jest.mock("../common/Model");
@@ -32,37 +32,40 @@ describe("Certificate", () => {
     })
 
     it("renders found LOC", async () => {
-        setParams({locId: CLOSED_IDENTITY_LOC_ID});
+        const locId = UUID.fromDecimalStringOrThrow("95306891657235687884416897796814545554");
+
+        const loc = {
+            data: {
+                id: locId,
+                ownerAddress: PATRICK.address,
+                files: [],
+                metadata: [],
+                links: [],
+            } as unknown as LocData,
+            isLogionIdentityLoc: () => false,
+        } as PublicLoc;
+
+        const client = {
+            legalOfficers: [ PATRICK ],
+            public: {
+                findLocById: (args: { locId: UUID }) => {
+                    if(args.locId.toString() === locId.toString()) {
+                        return Promise.resolve(loc);
+                    }
+                }
+            },
+        } as LogionClient;
+
+        setClientMock(client);
+
+        setParams({ locId: locId.toString() });
         setSearchParams({
             has: () => false
         });
 
         render(<Certificate/>);
 
-        await waitFor(() => expect(screen.getByText(CLOSED_IDENTITY_LOC_ID)).toBeVisible());
+        await waitFor(() => expect(screen.getByText("Legal Officer Case")).toBeVisible());
+        expect(screen.getByRole("button", { name: "Check a document" })).toBeVisible();
     })
-
-    it("detects matching file", async () => await fileUploadTest(UNPREFIXED_FILE_HASH, "positive"))
-
-    it("does not detect unknown file", async () => await fileUploadTest("43", "negative"))
 })
-
-async function fileUploadTest(hash: string, expectedResult: string) {
-    setParams({locId: CLOSED_IDENTITY_LOC_ID});
-    setSearchParams({
-        has: () => false
-    });
-
-    sha256Hex.mockReturnValue(Promise.resolve(hash));
-
-    render(<Certificate/>);
-
-    let upload: HTMLElement | undefined = undefined;
-    await waitFor(() => upload = screen.getByTestId("FileSelectorButtonHiddenInput"));
-    await userEvent.upload(upload!, new File([''], "some-file"));
-
-    let result: HTMLElement | undefined = undefined;
-    await waitFor(() => result = screen.getByText("Check result:"));
-
-    expect(getByText(result!, expectedResult)).toBeVisible();
-}

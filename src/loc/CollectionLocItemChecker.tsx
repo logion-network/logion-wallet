@@ -1,7 +1,7 @@
 import { AxiosInstance } from "axios";
 import { useState, useCallback, useEffect } from "react";
 import { Form } from "react-bootstrap";
-import { ClosedCollectionLoc, UploadableCollectionItem } from "@logion/client";
+import { ClosedCollectionLoc, CollectionItem } from "@logion/client";
 import { UUID } from "@logion/node-api/dist/UUID";
 import { getCollectionSize } from "@logion/node-api/dist/LogionLoc";
 
@@ -29,7 +29,7 @@ import { useLegalOfficerContext } from "src/legal-officer/LegalOfficerContext";
 export interface Props {
     locId: UUID;
     locOwner: string;
-    collectionItem?: UploadableCollectionItem;
+    collectionItem?: CollectionItem;
 }
 
 export type CheckResult = 'NONE' | 'POSITIVE' | 'NEGATIVE';
@@ -41,7 +41,7 @@ export function UserCollectionLocItemChecker(props: Props) {
     const { client } = useLogionChain();
     const collection: ClosedCollectionLoc = locState as ClosedCollectionLoc;
 
-    async function collectionItemFunction(actualId: string): Promise<UploadableCollectionItem | undefined> {
+    async function collectionItemFunction(actualId: string): Promise<CollectionItem | undefined> {
         const result = await collection.checkHash(actualId)
         return result.collectionItem;
     }
@@ -89,7 +89,7 @@ export function LOCollectionLocItemChecker(props: Props) {
 interface LocalProps extends Props {
     viewer: Viewer;
     collectionSizeFunction: () => Promise<number | undefined>
-    collectionItemFunction: (actualId: string) => Promise<UploadableCollectionItem | undefined>
+    collectionItemFunction: (actualId: string) => Promise<CollectionItem | undefined>
     axiosFactory: () => AxiosInstance
 }
 
@@ -101,7 +101,7 @@ function CollectionLocItemChecker(props: LocalProps) {
     const [ state, setState ] = useState<CheckResult>('NONE');
     const [ collectionSize, setCollectionSize ] = useState<number | undefined | null>(null);
     const [ itemId, setItemId ] = useState<string>("");
-    const [ item, setItem ] = useState<UploadableCollectionItem>();
+    const [ item, setItem ] = useState<CollectionItem>();
     const [ deliveries, setDeliveries ] = useState<ItemDeliveriesResponse>();
     const [ managedCheck, setManagedCheck ] = useState<{ itemId: string, active: boolean }>();
 
@@ -233,7 +233,7 @@ interface CheckResultProps {
     locId: UUID,
     itemId?: string,
     state: CheckResult,
-    item?: UploadableCollectionItem,
+    item?: CollectionItem,
     deliveries?: ItemDeliveriesResponse,
     viewer: Viewer,
     locOwner: string,
@@ -284,8 +284,6 @@ function CheckResultFeedback(props: CheckResultProps) {
                             item={ item }
                             deliveries={ deliveries }
                             withCheck={ props.viewer === "LegalOfficer" }
-                            axiosFactory={ props.axiosFactory }
-                            locId={ props.locId.toString() }
                         />
                     }
                 </>

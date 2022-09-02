@@ -9,7 +9,8 @@ import { TEST_WALLET_USER } from 'src/wallet-user/TestData';
 import { AxiosInstance } from 'axios';
 import { Mock } from 'moq.ts';
 import Accounts, { Account } from 'src/common/types/Accounts';
-import { LogionClient } from 'src/__mocks__/@logion/client';
+import { LogionClient } from '@logion/client/dist/LogionClient';
+import { LogionClient as LogionClientMock } from '../../__mocks__/LogionClientMock';
 
 export const LogionChainContextProvider = (props: any) => null;
 
@@ -81,7 +82,7 @@ const api = {
     }
 };
 
-const client = new LogionClient();
+let client: LogionClient | LogionClientMock = new LogionClientMock();
 
 export let authenticate = jest.fn();
 
@@ -176,4 +177,8 @@ function authenticateAddress(address: string) {
         value: `some-token-value-for-${address}`,
         expirationDate: DateTime.now().toISO(),
     };
+}
+
+export function setClientMock(mock: LogionClient) {
+    client = mock;
 }

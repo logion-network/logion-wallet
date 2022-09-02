@@ -2,20 +2,15 @@ import { useEffect, useState, useMemo, useCallback } from "react";
 import { Row, Col, Container } from "react-bootstrap";
 import { useParams } from "react-router";
 import { useSearchParams } from "react-router-dom";
-
-import { UUID } from "@logion/node-api/dist/UUID";
-import { getLegalOfficerCase, getCollectionItem } from "@logion/node-api/dist/LogionLoc";
-import { LegalOfficerCase, VoidInfo } from "@logion/node-api/dist/Types";
+import { LegalOfficer, PublicLoc, CollectionItem, CheckHashResult, MergedMetadataItem, MergedFile, MergedLink } from "@logion/client";
+import { UUID } from "@logion/node-api";
 
 import { useLogionChain } from "../logion-chain";
 import Button from "../common/Button";
 import MailtoButton from "../common/MailtoButton";
 import Icon from "../common/Icon";
-import { LocFile, LocLink, LocMetadataItem, LocRequest, MergedCollectionItem } from "../common/types/ModelTypes";
-import { fetchPublicLoc, fetchPublicCollectionItem } from "../common/Model";
 import CertificateDateTimeCell from "./CertificateDateTimeCell";
 import { copyToClipBoard } from "../common/Tools";
-import { anonymousAxiosFactory } from "../common/api";
 import NewTabLink from "../common/NewTabLink";
 import DangerDialog from "../common/DangerDialog";
 import { LIGHT_MODE } from "../legal-officer/Types";
@@ -24,16 +19,15 @@ import InlineDateTime from "../common/InlineDateTime";
 import IconTextRow from "../common/IconTextRow";
 import { fullCertificateUrl } from "../PublicPaths";
 
-
 import CertificateCell from "./CertificateCell";
-import './Certificate.css'
-import CheckFileFrame, { DocumentCheckResult } from "src/components/checkfileframe/CheckFileFrame";
+import CheckFileFrame from "src/components/checkfileframe/CheckFileFrame";
 import CollectionItemCellRow from "./CollectionItemCellRow";
 import IntroductionText from "./IntroductionText";
 import LegalOfficerRow from "./LegalOfficerRow";
-import { LegalOfficer } from "@logion/client";
 import { Children } from "src/common/types/Helpers";
 import CheckDeliveredFrame from "src/components/deliverycheck/CheckDeliveredFrame";
+
+import './Certificate.css'
 
 export default function Certificate() {
 
@@ -41,135 +35,64 @@ export default function Certificate() {
     const collectionItemIdParam = useParams<"collectionItemId">().collectionItemId;
     const [ searchParams ] = useSearchParams();
     const locId: UUID = useMemo(() => UUID.fromAnyString(locIdParam)!, [ locIdParam ]);
-    const { api, client } = useLogionChain();
-    const [ loc, setLoc ] = useState<LegalOfficerCase | undefined>(undefined)
-    const [ supersededLoc, setSupersededLoc ] = useState<LegalOfficerCase | undefined>(undefined)
-    const [ supersededLocRequest, setSupersededLocRequest ] = useState<LocRequest | undefined>(undefined)
+    const { client } = useLogionChain();
+    const [ loc, setLoc ] = useState<PublicLoc | undefined>(undefined)
+    const [ supersededLoc, setSupersededLoc ] = useState<PublicLoc | undefined>(undefined)
     const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer | null>(null)
-    const [ publicLoc, setPublicLoc ] = useState<LocRequest>()
     const [ voidWarningVisible, setVoidWarningVisible ] = useState<boolean>(false);
     const [ nodeDown, setNodeDown ] = useState(false);
-    const [ checkResult, setCheckResult ] = useState<DocumentCheckResult>({result: "NONE"});
-    const [ collectionItem, setCollectionItem ] = useState<MergedCollectionItem | undefined | null>(null);
+    const [ checkResult, setCheckResult ] = useState<CheckHashResult>();
+    const [ collectionItem, setCollectionItem ] = useState<CollectionItem | undefined | null>(null);
 
-    const checkHash = useCallback((hash: string) => {
+    const checkHash = useCallback(async (hash: string) => {
         if (loc) {
-            for (let i = 0; i < loc.files!.length; ++i) {
-                const file = loc.files[i]
-                if (file?.hash === hash) {
-                    setCheckResult({
-                        result: "POSITIVE",
-                        hash
-                    });
-                    return;
-                }
-            }
-
-            for (let i = 0; i < loc.metadata!.length; ++i) {
-                const item = loc.metadata[i]
-                if (item?.value === hash) {
-                    setCheckResult({
-                        result: "POSITIVE",
-                        hash
-                    });
-                    return;
-                }
-            }
+            const result = await loc.checkHash(hash);
+            setCheckResult(result);
         }
-
-        if(collectionItem) {
-            if (collectionItem?.id === hash) {
-                setCheckResult({
-                    result: "POSITIVE",
-                    hash
-                });
-                return;
-            }
-            if (collectionItem?.description === hash) {
-                setCheckResult({
-                    result: "POSITIVE",
-                    hash
-                });
-                return;
-            }
-        }
-
-        setCheckResult({
-            result: "NEGATIVE",
-            hash
-        });
-    }, [ loc, setCheckResult, collectionItem ]);
+    }, [ loc, setCheckResult ]);
 
     useEffect(() => {
-        if (api !== null && loc === undefined && locId !== undefined && client?.legalOfficers !== undefined) {
+        if (loc === undefined && locId !== undefined && client?.legalOfficers !== undefined) {
             (async function () {
-                const legalOfficerCase = await getLegalOfficerCase({ api, locId });
-                if (legalOfficerCase) {
-                    if(legalOfficerCase.voidInfo?.replacer !== undefined && !searchParams.has("noredirect")) {
-                        window.location.href = fullCertificateUrl(legalOfficerCase.voidInfo.replacer, false, true);
-                    } else {
-                        setLoc(legalOfficerCase)
-                        const axiosFactory = anonymousAxiosFactory(client!.legalOfficers);
-                        try {
-                            setPublicLoc(await fetchPublicLoc(axiosFactory(legalOfficerCase.owner), locId.toString()));
-                        } catch(error) {
-                            setNodeDown(true);
-                        }
-                        if(legalOfficerCase.voidInfo !== undefined) {
-                            setVoidWarningVisible(true);
-                        }
-                        if(legalOfficerCase.replacerOf !== undefined) {
-                            const supersededLoc = await getLegalOfficerCase({ api, locId: legalOfficerCase.replacerOf });
-                            setSupersededLoc(supersededLoc);
-                            try {
-                                setSupersededLocRequest(await fetchPublicLoc(axiosFactory(legalOfficerCase.owner), legalOfficerCase.replacerOf.toString()));
-                            } catch(error) {
-                                setNodeDown(true);
+                try {
+                    const publicLoc = await client.public.findLocById({ locId });
+                    if (publicLoc) {
+                        const data = publicLoc.data;
+                        if(data.voidInfo?.replacer !== undefined && !searchParams.has("noredirect")) {
+                            window.location.href = fullCertificateUrl(data.voidInfo.replacer, false, true);
+                        } else {
+                            setLoc(publicLoc);
+
+                            if(publicLoc.data.voidInfo !== undefined) {
+                                setVoidWarningVisible(true);
                             }
-                        }
-                        if (collectionItemIdParam) {
-                            try {
-                                const collectionItem = await getCollectionItem({
-                                    api,
+                            if(publicLoc.data.replacerOf !== undefined) {
+                                const supersededLoc = await client.public.findLocById({ locId: publicLoc.data.replacerOf });
+                                setSupersededLoc(supersededLoc);
+                            }
+                            if (collectionItemIdParam) {
+                                const collectionItem = await client.public.findCollectionLocItemById({
                                     locId,
                                     itemId: collectionItemIdParam
-                                })
-                                if (collectionItem) {
-                                    let addedOn = undefined;
-                                    try {
-                                        const locCollectionItem = await fetchPublicCollectionItem(
-                                            axiosFactory(legalOfficerCase.owner),
-                                            locId.toString(),
-                                            collectionItemIdParam);
-                                        addedOn = locCollectionItem.addedOn;
-                                    } catch (e) {
-                                        // ignored
-                                    }
-                                    const mergedCollectionItem: MergedCollectionItem = {
-                                        ...collectionItem,
-                                        addedOn
-                                    }
-                                    setCollectionItem(mergedCollectionItem)
-                                } else {
-                                    setCollectionItem(undefined)
-                                }
-                            } catch (e) {
-                                setCollectionItem(undefined)
+                                });
+                                setCollectionItem(collectionItem);
                             }
                         }
                     }
+                } catch(e) {
+                    setNodeDown(true);
                 }
             })()
         }
-    }, [ api, locId, loc, setLoc, setPublicLoc, client, searchParams, collectionItemIdParam ])
+    }, [ locId, loc, setLoc, client, searchParams, collectionItemIdParam ]);
 
     useEffect(() => {
         if (client !== null && legalOfficer === null && loc !== undefined) {
-            setLegalOfficer(client.legalOfficers.find(legalOfficer => legalOfficer.address === loc.owner)!);
+            setLegalOfficer(client.legalOfficers.find(legalOfficer => legalOfficer.address === loc.data.ownerAddress) || null);
         }
     }, [ client, legalOfficer, setLegalOfficer, loc ])
 
-    if (api === null) {
+    if (!client) {
         return (
             <div className="Certificate">
                 <p>Connecting to node...</p>
@@ -182,7 +105,7 @@ export default function Certificate() {
             <div className="CertificateBox">
                 <Container>
                     <div className="Certificate">
-                        <CertificateCell md={ 4 } label="LOC NOT FOUND">{ locIdParam }</CertificateCell>
+                        <CertificateCell md={ 4 } label="LOC NOT FOUND">{ locId.toDecimalString() }</CertificateCell>
                     </div>
                 </Container>
             </div>
@@ -207,7 +130,7 @@ export default function Certificate() {
         return (
             <div className="Certificate">
                 <CertificateCell md={ 4 } label="LOC ID">{ locId.toDecimalString() }</CertificateCell>
-                <CertificateCell md={ 4 } label="UNKNOWN OFFICER">{ loc.owner }</CertificateCell>
+                <CertificateCell md={ 4 } label="UNKNOWN OFFICER">{ loc.data.ownerAddress }</CertificateCell>
             </div>
         )
     }
@@ -226,32 +149,8 @@ export default function Certificate() {
         return result;
     }
 
-    let createdOn = undefined;
-    let closedOn = undefined;
-    let metadata: LocMetadataItem[] = loc.metadata.map(item => ({
-        ...item,
-        addedOn: "?"
-    }));
-    let files: LocFile[] = loc.files.map(file => ({
-        ...file,
-        name: "?",
-        addedOn: "?"
-    }));
-    let links: LocLink[] = loc.links.map(link => ({
-        ...link,
-        target: link.id.toString(),
-        addedOn: "?"
-    }));
-    if (publicLoc) {
-        createdOn = publicLoc.createdOn;
-        closedOn = publicLoc.closedOn;
-        metadata = publicLoc.metadata;
-        files = publicLoc.files;
-        links = publicLoc.links;
-    }
-
     let certificateBorderColor = "#3b6cf4";
-    if(loc !== null && loc.voidInfo !== undefined) {
+    if(loc !== null && loc.data.voidInfo !== undefined) {
         certificateBorderColor = RED;
     }
 
@@ -272,10 +171,10 @@ export default function Certificate() {
                 </Container>
             }
             {
-                loc.voidInfo !== undefined &&
+                loc.data.voidInfo !== undefined &&
                 <Container>
                     <div className="void-frame">
-                        <VoidMessage left={ true } locRequest={ publicLoc } voidInfo={ loc.voidInfo } />
+                        <VoidMessage left={ true } loc={ loc } />
                     </div>
                     <div className="void-stamp">
                         <Icon icon={{id: "void_certificate_background"}} />
@@ -283,10 +182,10 @@ export default function Certificate() {
                 </Container>
             }
             {
-                supersededLoc !== undefined && supersededLocRequest !== undefined &&
+                supersededLoc !== undefined &&
                 <Container>
                     <div className="supersede-frame">
-                        <SupersedeMessage loc={ supersededLoc } supersededLocId={ loc.replacerOf! } supersededLoc={ supersededLocRequest } redirected={ searchParams.has("redirected") } />
+                        <SupersedeMessage loc={ supersededLoc } redirected={ searchParams.has("redirected") } />
                     </div>
                 </Container>
             }
@@ -299,11 +198,11 @@ export default function Certificate() {
                 </div>
                 <div className="shield-icon">
                     {
-                        loc.voidInfo === undefined &&
+                        loc.data.voidInfo === undefined &&
                         <Icon icon={ { id: "shield", category: "certificate" } } />
                     }
                     {
-                        loc.voidInfo !== undefined &&
+                        loc.data.voidInfo !== undefined &&
                         <Icon icon={ { id: "void_shield", category: "certificate" } } />
                     }
                 </div>
@@ -317,33 +216,33 @@ export default function Certificate() {
                     <Col md={ 8 }>
                         <h2>Legal Officer Case</h2>
                         <h1>CERTIFICATE</h1>
-                        <IntroductionText locId={ locId } loc={ loc } />
+                        <IntroductionText loc={ loc } />
                     </Col>
                 </Row>
                 <Row>
                     <CertificateCell md={ 5 } label="LOC ID">{ locId.toDecimalString() }</CertificateCell>
-                    <CertificateDateTimeCell md={ 3 } label="Creation Date" dateTime={ createdOn } />
-                    <CertificateDateTimeCell md={ 3 } label="Closing Date" dateTime={ closedOn } />
+                    <CertificateDateTimeCell md={ 3 } label="Creation Date" dateTime={ loc.data.createdOn } />
+                    <CertificateDateTimeCell md={ 3 } label="Closing Date" dateTime={ loc.data.closedOn } />
                 </Row>
                 <Row className="preamble-footer">
-                    { loc.requesterAddress && <CertificateCell md={ 6 } label="Requester">
-                        { loc.requesterAddress }
+                    { loc.data.requesterAddress && <CertificateCell md={ 6 } label="Requester">
+                        { loc.data.requesterAddress }
                     </CertificateCell> }
-                    { loc.requesterLocId && <CertificateCell md={ 6 } label="Requester">
-                        <NewTabLink href={ fullCertificateUrl(loc.requesterLocId) }
-                                    iconId="loc-link">{ loc.requesterLocId.toDecimalString() }</NewTabLink>
+                    { loc.data.requesterLocId && <CertificateCell md={ 6 } label="Requester">
+                        <NewTabLink href={ fullCertificateUrl(loc.data.requesterLocId) }
+                                    iconId="loc-link">{ loc.data.requesterLocId.toDecimalString() }</NewTabLink>
                         <p>Important note: this requester ID is not a standard public key but a Logion Identity LOC
                             established by the same Logion Officer mentioned in this certificate.</p>
                     </CertificateCell> }
 
                 </Row>
-                { matrix(metadata, 2).map((items, index) => (
+                { matrix(loc.data.metadata, 2).map((items, index) => (
                     <MetadataItemCellRow key={ index } items={ items } checkResult={ checkResult } />
                 )) }
-                { matrix(files, 2).map((files, index) => (
+                { matrix(loc.data.files, 2).map((files, index) => (
                     <FileCellRow key={ index } files={ files } checkResult={ checkResult } />
                 )) }
-                { matrix(links, 2).map((links, index) => (
+                { matrix(loc.data.links, 2).map((links, index) => (
                     <LinkCellRow key={ index } links={ links } />
                 )) }
                 { collectionItem !== null &&
@@ -352,10 +251,10 @@ export default function Certificate() {
                         owner={ legalOfficer.address }
                         item={ collectionItem! }
                         checkResult={ checkResult }
-                        isVoid={ loc.voidInfo !== undefined }
+                        isVoid={ loc.data.voidInfo !== undefined }
                     />
                 }
-                <LegalOfficerRow legalOfficer={ legalOfficer } loc={ loc } />
+                <LegalOfficerRow legalOfficer={ legalOfficer } />
                 <Row className="buttons">
                     <Col xl={ 2 } lg={4} md={4}>
                         <MailtoButton label="Contact" email={ legalOfficer.userIdentity.email } />
@@ -380,13 +279,13 @@ export default function Certificate() {
                     ]}
                     colors={ LIGHT_MODE.dialog }
                 >
-                    <VoidMessage left={ false } locRequest={ publicLoc } voidInfo={ loc.voidInfo! } />
+                    <VoidMessage left={ false } loc={ loc } />
                 </DangerDialog>
             </Container>
             <Container className="CertificateCheck">
                 <CheckFileFrame
                     checkHash={ checkHash }
-                    checkResult={ checkResult.result }
+                    checkResult={ checkResult === undefined ? "NONE" : ( checkResult.file || checkResult.collectionItem || checkResult.metadataItem ? "POSITIVE" : "NEGATIVE") }
                     colorTheme={ LIGHT_MODE }
                 />
             </Container>
@@ -394,9 +293,7 @@ export default function Certificate() {
                 loc && collectionItem && client &&
                 <Container className="CopyCheck">
                     <CheckDeliveredFrame
-                        collectionLocId={ locId.toString() }
-                        itemId={ collectionItem.id }
-                        axiosFactory={ () => anonymousAxiosFactory(client.legalOfficers)(legalOfficer.address) }
+                        item={ collectionItem }
                         colorTheme={ LIGHT_MODE }
                     />
                 </Container>
@@ -405,11 +302,11 @@ export default function Certificate() {
     )
 }
 
-function MetadataItemCellRow(props: { items: LocMetadataItem[], checkResult: DocumentCheckResult }) {
+function MetadataItemCellRow(props: { items: MergedMetadataItem[], checkResult: CheckHashResult | undefined }) {
     return (
         <Row>
             { props.items.map(
-                item => <CertificateCell key={ item.name } md={ 6 } label={ <ItemCellTitle text={ item.name } timestamp={ item.addedOn } /> } matched={ props.checkResult.hash === item.value } >
+                item => <CertificateCell key={ item.name } md={ 6 } label={ <ItemCellTitle text={ item.name } timestamp={ item.addedOn } /> } matched={ props.checkResult?.metadataItem?.value === item.value } >
                     <pre>{ item.value }</pre>
                 </CertificateCell>)
             }
@@ -417,7 +314,7 @@ function MetadataItemCellRow(props: { items: LocMetadataItem[], checkResult: Doc
     )
 }
 
-function ItemCellTitle(props: { text: Children, timestamp: string }) {
+function ItemCellTitle(props: { text: Children, timestamp: string | undefined }) {
     return (
         <span>
             <span>{ props.text }</span>
@@ -427,11 +324,11 @@ function ItemCellTitle(props: { text: Children, timestamp: string }) {
     );
 }
 
-function FileCellRow(props: { files: LocFile[], checkResult: DocumentCheckResult }) {
+function FileCellRow(props: { files: MergedFile[], checkResult: CheckHashResult | undefined }) {
     return (
         <Row>
             { props.files.map(
-                file => <CertificateCell key={ file.hash } md={ 6 } label={ <ItemCellTitle text={ <span>Document Hash <span className="file-nature">({ file.nature })</span></span> } timestamp={ file.addedOn } /> } matched={ props.checkResult.hash === file.hash } >
+                file => <CertificateCell key={ file.hash } md={ 6 } label={ <ItemCellTitle text={ <span>Document Hash <span className="file-nature">({ file.nature })</span></span> } timestamp={ file.addedOn } /> } matched={ props.checkResult?.file?.hash === file.hash } >
                     <p>{ file.hash }</p>
                 </CertificateCell>)
             }
@@ -439,7 +336,7 @@ function FileCellRow(props: { files: LocFile[], checkResult: DocumentCheckResult
     )
 }
 
-function LinkCellRow(props: { links: LocLink[] }) {
+function LinkCellRow(props: { links: MergedLink[] }) {
     return (
         <Row>
             { props.links.map(
@@ -452,7 +349,7 @@ function LinkCellRow(props: { links: LocLink[] }) {
     )
 }
 
-function VoidMessage(props: { locRequest: LocRequest | undefined, voidInfo: VoidInfo, left: boolean }) {
+function VoidMessage(props: { loc: PublicLoc | undefined, left: boolean }) {
     return (
         <div className={ "VoidMessage" + (props.left ? " left": "") }>
             <div className="content">
@@ -461,16 +358,16 @@ function VoidMessage(props: { locRequest: LocRequest | undefined, voidInfo: Void
                 </div>
                 <div className="text">
                     <h2>This Logion Legal Officer Case (LOC) is VOID</h2>
-                    <p><strong>This LOC and its content are VOID since the following date:</strong> <InlineDateTime dateTime={ props.locRequest?.voidInfo?.voidedOn } /></p>
+                    <p><strong>This LOC and its content are VOID since the following date:</strong> <InlineDateTime dateTime={ props.loc?.data.voidInfo?.voidedOn } /></p>
                     {
-                        props.voidInfo.replacer !== undefined &&
+                        props.loc?.data.voidInfo?.replacer !== undefined &&
                         <p><strong>This VOID LOC has been replaced by the following LOC: </strong>
                         <NewTabLink
-                            href={fullCertificateUrl(props.voidInfo.replacer, true)}
+                            href={fullCertificateUrl(props.loc?.data.voidInfo?.replacer, true)}
                             iconId="loc-link"
                             inline
                         >
-                            { props.voidInfo.replacer.toDecimalString() }
+                            { props.loc?.data.voidInfo?.replacer.toDecimalString() }
                         </NewTabLink>
                         </p>
                     }
@@ -480,7 +377,7 @@ function VoidMessage(props: { locRequest: LocRequest | undefined, voidInfo: Void
     );
 }
 
-function SupersedeMessage(props: { loc: LegalOfficerCase, supersededLocId: UUID, supersededLoc: LocRequest, redirected: boolean }) {
+function SupersedeMessage(props: { loc: PublicLoc, redirected: boolean }) {
     return (
         <div className="SupersedeMessage">
             <div className="content">
@@ -497,14 +394,14 @@ function SupersedeMessage(props: { loc: LegalOfficerCase, supersededLocId: UUID,
                         !props.redirected &&
                         <p><strong>IMPORTANT:</strong> This Logion Legal Officer Case (LOC) supersedes a previous LOC (VOID).</p>
                     }
-                    <p><strong>This LOC supersedes a previous LOC (VOID) since the following date:</strong> <InlineDateTime dateTime={ props.supersededLoc.voidInfo?.voidedOn } /></p>
+                    <p><strong>This LOC supersedes a previous LOC (VOID) since the following date:</strong> <InlineDateTime dateTime={ props.loc.data.voidInfo?.voidedOn } /></p>
                     <p><strong>For record purpose, the previous VOID LOC can be reached here: </strong>
                     <NewTabLink
-                        href={fullCertificateUrl(props.supersededLocId, true)}
+                        href={ fullCertificateUrl(props.loc.data.id, true) }
                         iconId="loc-link"
                         inline
                     >
-                        { props.supersededLocId.toDecimalString() }
+                        { props.loc.data.id.toDecimalString() }
                     </NewTabLink>
                     </p>
                 </div>

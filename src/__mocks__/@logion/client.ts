@@ -1,3 +1,5 @@
+import { CheckResultType } from "@logion/client/dist/CollectionItem";
+
 import {
     LogionClient,
     AccountTokens,
@@ -12,4 +14,5 @@ export {
     isSuccessful,
     toIsoString,
     fromIsoString,
+    CheckResultType,
 }

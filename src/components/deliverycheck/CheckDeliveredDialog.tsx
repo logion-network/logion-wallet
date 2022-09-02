@@ -1,4 +1,4 @@
-import { AxiosInstance } from 'axios';
+import { CollectionItem, CheckCertifiedCopyResult, CheckResultType } from "@logion/client";
 import { useCallback, useState } from 'react';
 import { Col, Row } from "react-bootstrap";
 import Button from 'src/common/Button';
@@ -6,26 +6,24 @@ import Button from 'src/common/Button';
 import Dialog from 'src/common/Dialog';
 import Icon from 'src/common/Icon';
 
-import CheckDeliveredButton, { CheckResult, CheckResultType, checkResultTypeSpan } from "./CheckDeliveredButton";
+import CheckDeliveredButton, { checkResultTypeSpan } from "./CheckDeliveredButton";
 
 export interface Props {
-    axiosFactory: () => AxiosInstance;
-    locId: string;
-    itemId: string;
-    onChecked: (result: CheckResult) => void;
+    item: CollectionItem;
+    onChecked: (result: CheckCertifiedCopyResult) => void;
 }
 
 export default function CheckDeliveredDialog(props: Props) {
     const [ showDialog, setShowDialog ] = useState(false);
     const [ checking, setChecking ] = useState(false);
-    const [ checkResult, setCheckResult ] = useState<CheckResult>();
+    const [ checkResult, setCheckResult ] = useState<CheckCertifiedCopyResult>();
 
     const onChecking = useCallback(() => {
         setCheckResult(undefined);
         setChecking(true);
     }, []);
 
-    const onChecked = useCallback((result: CheckResult) => {
+    const onChecked = useCallback((result: CheckCertifiedCopyResult) => {
         setCheckResult(result);
         setChecking(false);
         setShowDialog(false);
@@ -54,12 +52,9 @@ export default function CheckDeliveredDialog(props: Props) {
                         current rightful NFT owner and/or is not the currently active version.</p>
                     <p>Important: the file you submit is NOT uploaded to a server as the test is done by your browser.</p>
                     <CheckDeliveredButton
-                        axiosFactory={ props.axiosFactory }
-                        collectionLocId={ props.locId }
-                        itemId={ props.itemId }
+                        item={ props.item }
                         onChecking={ onChecking }
                         onChecked={ onChecked }
-                        privilegedUser={ true }
                     />
                 </Dialog>
             </Col>
