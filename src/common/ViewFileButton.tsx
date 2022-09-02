@@ -8,6 +8,7 @@ import Icon from "./Icon";
 import './ViewFileButton.css';
 import { Children, customClassName } from "./types/Helpers";
 import { useLogionChain } from "../logion-chain";
+import { AxiosFactory } from "./api";
 
 export interface FileInfo {
     fileName: string;
@@ -23,10 +24,10 @@ export interface ViewFileProps extends FileInfo {
 async function openFile(axios: AxiosInstance, props: ViewFileProps) {
     const file = await props.downloader(axios!);
     const url = window.URL.createObjectURL(new Blob([ file.data ]));
-    const link:HTMLAnchorElement = document.createElement('a');
+    const link: HTMLAnchorElement = document.createElement('a');
     link.href = url;
     link.target = "_blank"
-    link.setAttribute('download', `${props.fileName}.${file.extension}`);
+    link.setAttribute('download', `${ props.fileName }.${ file.extension }`);
     document.body.appendChild(link);
     link.click();
 }
@@ -51,38 +52,15 @@ export default function ViewFileButton(props: ViewFileProps) {
     )
 }
 
-export function DownloadFileButton(props: ViewFileProps) {
-    const { axiosFactory } = useLogionChain();
-    if (axiosFactory === undefined) {
-        return null;
-    }
-    return (
-        <Button onClick={ () => openFile(axiosFactory(props.nodeOwner)!, props) } className="ViewFileButton">
-            { props.children }
-        </Button>
-    )
-}
-
-export interface DownloadFilesProps {
+export interface DownloadFilesParams {
     nodeOwner: string;
     files: FileInfo[];
-    children?: Children;
+    axiosFactory: AxiosFactory
 }
 
-export function DownloadFilesButton(props: DownloadFilesProps) {
-    const { axiosFactory } = useLogionChain();
-    if (axiosFactory === undefined) {
-        return null;
+export async function openFiles(params: DownloadFilesParams) {
+    const { nodeOwner, files, axiosFactory } = params
+    for (const file of files) {
+        await openFile(axiosFactory(params.nodeOwner), { nodeOwner, ...file })
     }
-    const { nodeOwner } = props
-    const openFiles = async () => {
-        for (const file of props.files) {
-            await openFile(axiosFactory(props.nodeOwner), { nodeOwner, ...file })
-        }
-    }
-    return (
-        <Button onClick={ openFiles } className="DownloadFilesButton">
-            { props.children }
-        </Button>
-    )
 }

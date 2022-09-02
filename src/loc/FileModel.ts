@@ -57,6 +57,13 @@ export async function getCollectionItemFile(
     return typedFile(response);
 }
 
+export async function getJsonLoc(
+    axios: AxiosInstance,
+    parameters: { locId: string },
+): Promise<TypedFile> {
+    const response = await axios.get(`/api/loc-request/${ parameters.locId }`, { responseType: 'blob' });
+    return typedFile(response);
+}
 
 function typedFile(response: AxiosResponse): TypedFile {
     const contentType: string = response.headers['content-type'];
@@ -67,7 +74,11 @@ function determineExtension(contentType: string) {
     if (!contentType || contentType.indexOf("/") < 0) {
         return "txt"
     }
-    return contentType.split("/")[1];
+    const extension = contentType.split("/")[1];
+    if (extension.indexOf(";") > 0) {
+        return extension.split(";")[0];
+    }
+    return extension;
 }
 
 export interface AddFileParameters {

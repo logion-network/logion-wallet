@@ -19,6 +19,7 @@ import './CertificateAndLimits.css';
 import StatementOfFactsButton from './statement/StatementOfFactsButton';
 import StatementOfFactsRequestButton from "./statement/StatementOfFactsRequestButton";
 import { Viewer } from "./types";
+import ArchiveButton from "./archive/ArchiveButton";
 
 interface LocProps {
     closed: boolean
@@ -84,19 +85,19 @@ export default function CertificateAndLimits(props: Props) {
                     </Col>
                 }
                 {
-                    props.loc.locType === 'Collection' && props.loc.closed && !props.loc.isVoid &&
+                    props.loc.locType === 'Collection' &&
                     <Col className="col-xxxl-3 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6">
-                        <div className="api-settings">
-                            <div>
-                                <Button onClick={ () => setShowSettings(true) }><Icon icon={{id: "cog"}} height="22px"/> Get dev settings</Button>
-                            </div>
+                        <div className="tool-bar">
+                            { props.viewer === 'LegalOfficer' && <ArchiveButton/> }
+                            { props.loc.closed && !props.loc.isVoid && <Button onClick={ () => setShowSettings(true) }><Icon icon={{id: "cog"}} height="22px"/> Get dev settings</Button> }
                         </div>
                     </Col>
                 }
                 {
                     props.loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' &&
                     <Col className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12">
-                        <div className="sof-preview">
+                        <div className="tool-bar">
+                            <ArchiveButton/>
                             <StatementOfFactsButton/>
                         </div>
                     </Col>
