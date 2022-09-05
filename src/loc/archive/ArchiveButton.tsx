@@ -83,6 +83,9 @@ export default function ArchiveButton() {
                 <p>The LOC Local Backup Tool allows to download through a JSON file, all LOC data (on-chain and
                     off-chain ones), its Public Data, its Confidential Document data and its Linked LOC data, as well as
                     a copy of all related files existing in the LOC at the time of the request.</p>
+                <p>
+                    <Icon type="png" icon={ { id: "big-warning" } } width="105px"/>
+                </p>
                 <p><strong>Please use with extreme caution</strong><br />
                     By clicking on the "download" button below, you acknowledge the fact that a copy of all LOC data and
                     files will be out of the logion infrastructure to be downloaded on your computer, thus under your
