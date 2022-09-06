@@ -4,7 +4,7 @@ import { Col } from '../common/Grid';
 import Detail from "../common/Detail";
 
 import CopyPasteButton from "../common/CopyPasteButton";
-import { LegalOfficerPostalAddress } from "../common/LegalOfficerPostalAddress";
+import { LegalOfficerPostalAddressInfo } from "../common/LegalOfficerPostalAddressInfo";
 import { useLogionChain } from '../logion-chain';
 
 export interface Props {
@@ -72,7 +72,7 @@ export default function ProtectedUserDetails(props: Props) {
                 { polkadotAddress(props.request.otherLegalOfficerAddress) }
                 <Detail
                     label="Details"
-                    value={ <LegalOfficerPostalAddress address={ legalOfficer!.postalAddress } /> }
+                    value={ <LegalOfficerPostalAddressInfo address={ legalOfficer!.postalAddress } /> }
                 />
             </Col>
             <Col style={ { width: "200px" } }>&nbsp;</Col>

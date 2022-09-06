@@ -1,4 +1,4 @@
-import { DataLocType, IdentityLocType } from "@logion/node-api/dist/Types";
+import { LocType, IdentityLocType } from "@logion/node-api/dist/Types";
 import { RequestAndLoc } from "../LegalOfficerContext";
 
 export let pendingTokenizationRequests: any[] | null = null;
@@ -51,17 +51,19 @@ export function setRecoveryRequestsHistory(requests: any[]) {
     recoveryRequestsHistory = requests;
 }
 
-export let pendingLocRequests: Record<DataLocType, any[]> | null = null;
-export let rejectedLocRequests: Record<DataLocType, any[]> | null = null;
+export let pendingLocRequests: Record<LocType, any[]> | null = null;
+export let rejectedLocRequests: Record<LocType, any[]> | null = null;
 
-export let openedLocRequests: Record<DataLocType, any[]> | null = {
+export let openedLocRequests: Record<LocType, any[]> | null = {
     "Transaction": [],
-    "Collection": []
+    "Collection": [],
+    "Identity": [],
 };
 
-export let closedLocRequests: Record<DataLocType, any[]> | null = {
+export let closedLocRequests: Record<LocType, any[]> | null = {
     "Transaction": [],
-    "Collection": []
+    "Collection": [],
+    "Identity": [],
 };
 
 export let openedIdentityLocs: RequestAndLoc[] | null = null;
@@ -73,19 +75,19 @@ export let closedIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | 
 export let voidIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null = null;
 
 export function setRejectedLocRequests(requests: any[]) {
-    rejectedLocRequests = { Collection: [], Transaction: requests };
+    rejectedLocRequests = { Collection: [], Transaction: requests, Identity: [] };
 }
 
 export function setOpenedLocRequests(requests: any[]) {
-    openedLocRequests = { Collection: [], Transaction: requests };
+    openedLocRequests = { Collection: [], Transaction: requests, Identity: [] };
 }
 
 export function setPendingLocRequests(requests: any[]) {
-    pendingLocRequests = { Collection: [], Transaction: requests };
+    pendingLocRequests = { Collection: [], Transaction: requests, Identity: [] };
 }
 
 export function setClosedLocRequests(requests: any[]) {
-    closedLocRequests = { Collection: [], Transaction: requests };
+    closedLocRequests = { Collection: [], Transaction: requests, Identity: [] };
 }
 
 export function setOpenedIdentityLocs(requests: any[]) {

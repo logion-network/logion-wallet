@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { DataLocType } from "@logion/node-api/dist/Types";
+import { LocType } from "@logion/node-api/dist/Types";
 
 import { FullWidthPane } from '../../common/Dashboard';
 import Tabs from '../../common/Tabs';
@@ -15,7 +15,7 @@ import ClosedLocs from './ClosedLocs';
 import VoidLocs from './VoidLocs';
 
 export interface Props {
-    locType: DataLocType,
+    locType: LocType,
     titles: { main: string, loc: string, request: string },
     iconId: string
 }

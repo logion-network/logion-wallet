@@ -1,10 +1,10 @@
-import { PostalAddress } from "@logion/client";
+import { LegalOfficerPostalAddress } from "@logion/client";
 
 export interface Props {
-    address: PostalAddress;
+    address: LegalOfficerPostalAddress;
 }
 
-export function LegalOfficerPostalAddress(props: Props) {
+export function LegalOfficerPostalAddressInfo(props: Props) {
 
     return (
         <div className="LegalOfficerPostalAddress">

@@ -139,6 +139,22 @@ exports[`ContextualizedWallet Given connected and no metadata, when rendering, t
         "text": "Transactions",
         "to": "/user/loc/transaction",
       },
+      Object {
+        "exact": false,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
+            "id": "identity",
+          },
+        },
+        "id": "loc-identity",
+        "onClick": [Function],
+        "text": "Identity",
+        "to": "/user/loc/identity",
+      },
     ]
   }
 >
@@ -316,6 +332,22 @@ exports[`ContextualizedWallet Given connected, when rendering, then show account
         "onClick": [Function],
         "text": "Transactions",
         "to": "/user/loc/transaction",
+      },
+      Object {
+        "exact": false,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
+            "id": "identity",
+          },
+        },
+        "id": "loc-identity",
+        "onClick": [Function],
+        "text": "Identity",
+        "to": "/user/loc/identity",
       },
     ]
   }
@@ -495,6 +527,22 @@ exports[`ContextualizedWallet Given connecting, when rendering, then show accoun
         "text": "Transactions",
         "to": "/user/loc/transaction",
       },
+      Object {
+        "exact": false,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
+            "id": "identity",
+          },
+        },
+        "id": "loc-identity",
+        "onClick": [Function],
+        "text": "Identity",
+        "to": "/user/loc/identity",
+      },
     ]
   }
 >
@@ -672,6 +720,22 @@ exports[`ContextualizedWallet Given connection error, when rendering, then show 
         "onClick": [Function],
         "text": "Transactions",
         "to": "/user/loc/transaction",
+      },
+      Object {
+        "exact": false,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
+            "id": "identity",
+          },
+        },
+        "id": "loc-identity",
+        "onClick": [Function],
+        "text": "Identity",
+        "to": "/user/loc/identity",
       },
     ]
   }
@@ -852,6 +916,22 @@ exports[`ContextualizedWallet Given no injected account, when rendering, then no
         "onClick": [Function],
         "text": "Transactions",
         "to": "/user/loc/transaction",
+      },
+      Object {
+        "exact": false,
+        "icon": Object {
+          "background": Object {
+            "from": "#3b6cf4",
+            "to": "#6050dc",
+          },
+          "icon": Object {
+            "id": "identity",
+          },
+        },
+        "id": "loc-identity",
+        "onClick": [Function],
+        "text": "Identity",
+        "to": "/user/loc/identity",
       },
     ]
   }

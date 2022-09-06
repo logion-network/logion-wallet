@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { DataLocType } from "@logion/node-api/dist/Types";
+import { LocType } from "@logion/node-api/dist/Types";
 
 import { useUserContext } from "../UserContext";
 import Table, { Cell, EmptyTableMessage, DateTimeCell, ActionCell } from '../../common/Table';
@@ -13,7 +13,7 @@ import { locDetailsPath } from '../UserRouter';
 import { useResponsiveContext } from '../../common/Responsive';
 
 export interface Props {
-    locType: DataLocType
+    locType: LocType
 }
 
 export default function ClosedLocs(props: Props) {

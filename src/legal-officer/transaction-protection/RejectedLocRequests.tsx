@@ -1,4 +1,4 @@
-import { DataLocType } from "@logion/node-api/dist/Types";
+import { LocType } from "@logion/node-api/dist/Types";
 
 import Table, { Cell, DateTimeCell, EmptyTableMessage } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';
@@ -8,7 +8,7 @@ import UserIdentityNameCell from '../../common/UserIdentityNameCell';
 import LocRequestDetails from './LocRequestDetails';
 
 export interface Props {
-    locType: DataLocType;
+    locType: LocType;
 }
 
 export default function RejectedLocRequests(props: Props) {
