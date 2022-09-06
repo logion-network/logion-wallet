@@ -1,4 +1,4 @@
-import { LegalOfficer, UploadableCollectionItem, LocData, ClosedCollectionLoc } from "@logion/client";
+import { LegalOfficer, CollectionItem, PublicLoc } from "@logion/client";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { Col, OverlayTrigger } from "react-bootstrap";
@@ -30,56 +30,39 @@ import { useUserLocContext } from "./UserLocContext";
 import "./ContextualizedLocDetails.css";
 
 export default function UserContextualizedLocDetails() {
-    const { getOfficer } = useLogionChain();
+    const { getOfficer, client } = useLogionChain();
     const { colorTheme } = useCommonContext();
     const navigate = useNavigate();
-    const { locState, loc, locId, locItems, backPath, detailsPath } = useUserLocContext();
+    const { locState, loc, locId, backPath, detailsPath } = useUserLocContext();
     const [ checkResult, setCheckResult ] = useState<DocumentCheckResult>({result: "NONE"});
-    const [ collectionItem, setCollectionItem ] = useState<UploadableCollectionItem>();
+    const [ collectionItem, setCollectionItem ] = useState<CollectionItem>();
     const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer | null>(null)
-    const [ supersededLoc, setSupersededLoc ] = useState<LocData | undefined | null>(null)
+    const [ supersededLoc, setSupersededLoc ] = useState<PublicLoc | undefined | null>(null)
 
     useEffect(() => {
         if (loc && loc.replacerOf && locState && supersededLoc === null) {
-            locState.publicSupersededLoc()
+            client?.public.findLocById({ locId: loc.replacerOf })
                 .then(setSupersededLoc)
         }
-    }, [ loc, locState, supersededLoc ])
+    }, [ loc, locState, supersededLoc, client ])
 
     const checkHash = useCallback(async (hash: string) => {
-        setCollectionItem(undefined);
+        const result = await locState?.checkHash(hash);
 
-        for(let i = 0; i < locItems!.length; ++i) {
-            if(locItems[i].type === "Document" || locItems[i].type === "Data") {
-                const file = locItems[i];
-                if(file.value === hash) {
-                    setCheckResult({
-                        result: "POSITIVE",
-                        hash
-                    });
-                    return;
-                }
-            }
+        if(result?.collectionItem || result?.file || result?.metadataItem) {
+            setCheckResult({
+                result: "POSITIVE",
+                hash
+            });
+            setCollectionItem(result?.collectionItem);
+        } else {
+            setCheckResult({
+                result: "NEGATIVE",
+                hash
+            });
+            setCollectionItem(undefined);
         }
-
-        if (locState instanceof ClosedCollectionLoc) {
-            const collectionItem = (await locState.checkHash(hash)).collectionItem;
-            if (collectionItem) {
-                setCollectionItem(collectionItem);
-                setCheckResult({
-                    result: "POSITIVE",
-                    hash
-                });
-                return;
-            }
-        }
-
-        setCheckResult({
-            result: "NEGATIVE",
-            hash
-        });
-        setCollectionItem(undefined);
-    }, [ locItems, setCheckResult, setCollectionItem, locState ]);
+    }, [ setCheckResult, setCollectionItem, locState ]);
 
     useEffect(() => {
         if (legalOfficer === null && loc) {
@@ -313,7 +296,7 @@ export default function UserContextualizedLocDetails() {
                         text={
                             <>
                                 <p className="frame-title">IMPORTANT: this logion Legal Officer Case (LOC) supersedes a previous LOC (VOID)</p>
-                                <p><strong>This LOC supersedes a previous LOC (VOID) since the following date:</strong> <InlineDateTime dateTime={ supersededLoc.voidInfo?.voidedOn } /></p>
+                                <p><strong>This LOC supersedes a previous LOC (VOID) since the following date:</strong> <InlineDateTime dateTime={ supersededLoc.data.voidInfo?.voidedOn } /></p>
                                 <p><strong>For record purpose, this LOC supersedes the following LOC: </strong>
                                     <NewTabLink
                                         href={ detailsPath(loc.replacerOf!, loc.locType) }

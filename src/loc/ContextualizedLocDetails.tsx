@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router";
 import { Col, OverlayTrigger } from "react-bootstrap";
 import queryString from 'query-string';
-import { UploadableCollectionItem, ClosedCollectionLoc } from "@logion/client";
+import { CollectionItem } from "@logion/client";
 import { ProtectionRequest } from "@logion/client/dist/RecoveryClient";
 import { UUID } from "@logion/node-api/dist/UUID";
 import { isLogionIdentityLoc, isLogionDataLoc } from "@logion/node-api/dist/Types";
@@ -45,45 +45,29 @@ export default function ContextualizedLocDetails() {
     const { pendingProtectionRequests, pendingRecoveryRequests } = useLegalOfficerContext();
     const navigate = useNavigate();
     const location = useLocation();
-    const { loc, locId, locRequest, locItems, supersededLocRequest, backPath, detailsPath, locState } = useLocContext();
+    const { loc, locId, locRequest, supersededLocRequest, backPath, detailsPath, locState } = useLocContext();
     const [ checkResult, setCheckResult ] = useState<DocumentCheckResult>({ result: "NONE" });
     const [ createLoc, setCreateLoc ] = useState(false);
     const [ protectionRequest, setProtectionRequest ] = useState<ProtectionRequest | null | undefined>();
-    const [ collectionItem, setCollectionItem ] = useState<UploadableCollectionItem>();
+    const [ collectionItem, setCollectionItem ] = useState<CollectionItem>();
 
     const checkHash = useCallback(async (hash: string) => {
-        setCollectionItem(undefined);
+        const result = await locState?.checkHash(hash);
 
-        for(let i = 0; i < locItems!.length; ++i) {
-            if(locItems[i].type === "Document" || locItems[i].type === "Data") {
-                const file = locItems[i];
-                if(file.value === hash) {
-                    setCheckResult({
-                        result: "POSITIVE",
-                        hash
-                    });
-                    return;
-                }
-            }
-        }
-
-        const collection = locState as ClosedCollectionLoc;
-        const collectionItem = await collection.getCollectionItem({ itemId: hash });
-        if(collectionItem) {
-            setCollectionItem(collectionItem);
+        if(result?.collectionItem || result?.file || result?.metadataItem) {
             setCheckResult({
                 result: "POSITIVE",
                 hash
             });
-            return;
+            setCollectionItem(result?.collectionItem);
+        } else {
+            setCheckResult({
+                result: "NEGATIVE",
+                hash
+            });
+            setCollectionItem(undefined);
         }
-
-        setCheckResult({
-            result: "NEGATIVE",
-            hash
-        });
-        setCollectionItem(undefined);
-    }, [ locItems, setCheckResult, setCollectionItem, locState ]);
+    }, [ setCheckResult, setCollectionItem, locState ]);
 
     useEffect(() => {
         if(location.search) {

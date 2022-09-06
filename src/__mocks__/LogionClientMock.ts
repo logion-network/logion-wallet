@@ -1,7 +1,6 @@
 import { DateTime } from "luxon";
 import { PATRICK } from "../common/TestData";
 import { TEST_WALLET_USER } from "../wallet-user/TestData";
-import { ISubmittableResult } from "@polkadot/types/types";
 export { toIsoString, fromIsoString } from "@logion/client/dist/DateTimeUtil";
 
 export class LogionClient {

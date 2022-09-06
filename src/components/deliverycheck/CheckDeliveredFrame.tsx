@@ -1,5 +1,5 @@
+import { CollectionItem, CheckCertifiedCopyResult, CheckResultType } from "@logion/client";
 import { useCallback, useState } from "react";
-import { AxiosInstance } from 'axios';
 
 import Icon from "src/common/Icon";
 import PolkadotFrame from "src/common/PolkadotFrame";
@@ -10,14 +10,12 @@ import CheckFileResult from "src/components/checkfileresult/CheckFileResult";
 
 import { CheckLatestDeliveryResponse } from "src/loc/FileModel";
 
-import CheckDeliveredButton, { CheckResult, CheckResultType, checkResultTypeSpan } from "./CheckDeliveredButton";
+import CheckDeliveredButton, { checkResultTypeSpan } from "./CheckDeliveredButton";
 import './CheckDeliveredFrame.css';
 import InlineDateTime from "src/common/InlineDateTime";
 
 export interface Props {
-    collectionLocId: string;
-    itemId: string;
-    axiosFactory: () => AxiosInstance;
+    item: CollectionItem;
     colorTheme?: ColorTheme;
 }
 
@@ -32,7 +30,7 @@ export default function CheckDeliveredFrame(props: Props) {
         setChecked(false);
     }, []);
 
-    const onChecked = useCallback((result: CheckResult) => {
+    const onChecked = useCallback((result: CheckCertifiedCopyResult) => {
         setMatchingCopy(result.match);
         setChecked(true);
     }, []);
@@ -57,12 +55,9 @@ export default function CheckDeliveredFrame(props: Props) {
                         <p>Important: the file you submit is NOT uploaded to a server as the test is done by your browser.</p>
 
                         <CheckDeliveredButton
-                            axiosFactory={ props.axiosFactory }
-                            collectionLocId={ props.collectionLocId }
-                            itemId={ props.itemId }
+                            item={ props.item }
                             onChecking={ onChecking }
                             onChecked={ onChecked }
-                            privilegedUser={ false }
                         />
 
                         {

@@ -1,3 +1,5 @@
+import { CheckHashResult } from "@logion/client";
+
 import CertificateCell from "./CertificateCell";
 import { Row } from "../common/Grid";
 
@@ -6,7 +8,6 @@ import { Col } from "react-bootstrap";
 import MenuIcon from "../common/MenuIcon";
 import CertificateDateTimeCell from "./CertificateDateTimeCell";
 import { MergedCollectionItem } from "../common/types/ModelTypes";
-import { DocumentCheckResult } from "src/components/checkfileframe/CheckFileFrame";
 import MetaMaskClaimButton from "./MetaMaskClaimButton";
 import { UUID } from "@logion/node-api/dist/UUID";
 import { customClassName } from "src/common/types/Helpers";
@@ -15,7 +16,7 @@ export interface Props {
     locId: UUID,
     owner: string,
     item: MergedCollectionItem;
-    checkResult: DocumentCheckResult;
+    checkResult: CheckHashResult | undefined;
     isVoid: boolean;
 }
 
@@ -38,7 +39,7 @@ export default function CollectionItemCellRow(props: Props) {
                 <CertificateDateTimeCell md={ 12 } label="Collection item timestamp:" dateTime={ addedOn } />
             </Row>
             <Row>
-                <CertificateCell md={ 12 } label="Collection item identification:" matched={ props.checkResult.hash === id } >
+                <CertificateCell md={ 12 } label="Collection item identification:" matched={ props.checkResult?.collectionItem?.id === id } >
                     { id }
                 </CertificateCell>
             </Row>

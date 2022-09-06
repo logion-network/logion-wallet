@@ -1,12 +1,11 @@
 import { AxiosInstance } from 'axios';
 import { UserIdentity } from '@logion/client';
 import { ProtectionRequest, ProtectionRequestStatus } from '@logion/client/dist/RecoveryClient';
-import { UUID } from '@logion/node-api/dist/UUID';
-import { LocType, IdentityLocType, LegalOfficerCase } from '@logion/node-api/dist/Types';
+import { UUID, LocType, IdentityLocType, LegalOfficerCase } from '@logion/node-api';
 
 import {
     LocRequest,
-    LocRequestStatus, LocCollectionItem,
+    LocRequestStatus,
 } from './types/ModelTypes';
 
 export type ProtectionRequestKind = 'RECOVERY' | 'PROTECTION_ONLY' | 'ANY';
@@ -52,14 +51,6 @@ export async function fetchLocRequest(
     return response.data;
 }
 
-export async function fetchPublicLoc(
-    axios: AxiosInstance,
-    requestId: string
-): Promise<LocRequest> {
-    const response = await axios.get(`/api/loc-request/${ requestId }/public`);
-    return response.data;
-}
-
 export interface CreateLocRequest {
     ownerAddress: string;
     requesterAddress?: string;
@@ -74,19 +65,6 @@ export async function createLocRequest(
     request: CreateLocRequest,
 ): Promise<LocRequest> {
     const response = await axios.post(`/api/loc-request`, request);
-    return response.data;
-}
-
-export interface CreateSofRequest {
-    locId: string;
-    itemId?: string;
-}
-
-export async function createSofRequest(
-    axios: AxiosInstance,
-    request: CreateSofRequest,
-): Promise<LocRequest> {
-    const response = await axios.post(`/api/loc-request/sof`, request);
     return response.data;
 }
 
@@ -163,15 +141,6 @@ export async function preVoid(
     await axios.post(`/api/loc-request/${requestId}/void`, {
         reason
     });
-}
-
-export async function fetchPublicCollectionItem(
-    axios: AxiosInstance,
-    collectionLocId: string,
-    itemId: string,
-): Promise<LocCollectionItem> {
-    const response = await axios.get(`/api/collection/${ collectionLocId }/${ itemId }`);
-    return response.data;
 }
 
 export function isGrantedAccess(address: string | undefined, loc: LegalOfficerCase): boolean {

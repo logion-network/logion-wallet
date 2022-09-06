@@ -1,8 +1,7 @@
-import { UploadableItemFile } from "@logion/client/dist/LocClient";
+import { UploadableItemFile, CheckCertifiedCopyResult, CheckResultType } from "@logion/client";
 import { useCommonContext } from "src/common/CommonContext";
 import Table, { DateTimeCell, EmptyTableMessage } from "src/common/Table";
 import { CheckLatestDeliveryResponse } from "src/loc/FileModel";
-import { CheckResult, CheckResultType } from "../deliverycheck/CheckDeliveredButton";
 import CellWithCopyPaste from "../table/CellWithCopyPaste";
 
 import "./ItemFileDetails.css";
@@ -10,7 +9,7 @@ import "./ItemFileDetails.css";
 export interface Props {
     file: UploadableItemFile;
     deliveries: CheckLatestDeliveryResponse[];
-    checkResult?: CheckResult;
+    checkResult?: CheckCertifiedCopyResult;
 }
 
 export default function ItemFileDetails(props: Props) {
@@ -48,7 +47,7 @@ export default function ItemFileDetails(props: Props) {
     );
 }
 
-function rowStyle(checkResult: CheckResult | undefined, delivery: CheckLatestDeliveryResponse): string {
+function rowStyle(checkResult: CheckCertifiedCopyResult | undefined, delivery: CheckLatestDeliveryResponse): string {
     if(!checkResult || !checkResult.match || delivery.copyHash !== checkResult.match.copyHash) {
         return "";
     } else {

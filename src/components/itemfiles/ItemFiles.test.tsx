@@ -1,11 +1,10 @@
-import { UploadableCollectionItem } from "@logion/client";
-import { AxiosInstance } from "axios";
+import { CollectionItem } from "@logion/client";
 import { shallowRender } from "src/tests";
 import ItemFiles from "./ItemFiles";
 
 describe("ItemFiles", () => {
 
-    const item: UploadableCollectionItem = {
+    const item = {
         id: "eff6da24-1364-4594-965a-3b31f1e1df25",
         addedOn: "2022-08-23T07:27:46.128Z",
         description: "Some item",
@@ -23,14 +22,12 @@ describe("ItemFiles", () => {
             type: "owner",
             id: "0x900edc98db53508e6742723988b872dd08cd09c2",
         }
-    };
+    } as CollectionItem;
 
     it("renders with undefined deliveries", () => {
         const result = shallowRender(<ItemFiles
             item={ item }
             withCheck={ false }
-            axiosFactory={ () => { return {} as AxiosInstance } }
-            locId={ "eff6da24-1364-4594-965a-3b31f1e1df25" }
         />);
         expect(result).toMatchSnapshot();
     });
@@ -40,8 +37,6 @@ describe("ItemFiles", () => {
             item={ item }
             deliveries={{}}
             withCheck={ false }
-            axiosFactory={ () => { return {} as AxiosInstance } }
-            locId={ "eff6da24-1364-4594-965a-3b31f1e1df25" }
         />);
         expect(result).toMatchSnapshot();
     });
@@ -60,8 +55,6 @@ describe("ItemFiles", () => {
                 ]
             }}
             withCheck={ false }
-            axiosFactory={ () => { return {} as AxiosInstance } }
-            locId={ "eff6da24-1364-4594-965a-3b31f1e1df25" }
         />);
         expect(result).toMatchSnapshot();
     });

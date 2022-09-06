@@ -1,6 +1,4 @@
-import { UploadableCollectionItem } from "@logion/client";
-import { UploadableItemFile } from "@logion/client/dist/LocClient";
-import { AxiosInstance } from 'axios';
+import { CollectionItem, UploadableItemFile, CheckCertifiedCopyResult } from "@logion/client";
 import { useCallback, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 
@@ -12,14 +10,11 @@ import { Child } from 'src/common/types/Helpers';
 
 import ItemFileDetails from "./ItemFileDetails";
 import CheckDeliveredDialog from "../deliverycheck/CheckDeliveredDialog";
-import { CheckResult } from "../deliverycheck/CheckDeliveredButton";
 
 import "./ItemFiles.css";
 
 export interface Props {
-    locId: string;
-    axiosFactory: () => AxiosInstance;
-    item: UploadableCollectionItem;
+    item: CollectionItem;
     deliveries?: ItemDeliveriesResponse;
     withCheck: boolean;
 }
@@ -29,7 +24,7 @@ interface FileWithMatch extends UploadableItemFile {
 }
 
 export default function ItemFiles(props: Props) {
-    const [ checkResult, setCheckResult ] = useState<CheckResult>();
+    const [ checkResult, setCheckResult ] = useState<CheckCertifiedCopyResult>();
     const [ files, setFiles ] = useState<FileWithMatch[]>(props.item.files.map(file => ({ ...file, detailsExpanded: false })));
 
     let renderDetails: ((file: UploadableItemFile) => Child) | undefined;
@@ -38,7 +33,7 @@ export default function ItemFiles(props: Props) {
         renderDetails = (file) => <ItemFileDetails file={ file } deliveries={ deliveries[file.hash] || [] } checkResult={ checkResult } />;
     }
 
-    const onChecked = useCallback((result: CheckResult) => {
+    const onChecked = useCallback((result: CheckCertifiedCopyResult) => {
         setCheckResult(result);
         setFiles(props.item.files.map(file => ({
             ...file,
@@ -56,9 +51,7 @@ export default function ItemFiles(props: Props) {
                     props.withCheck &&
                     <Col xxl={ 8 }>
                         <CheckDeliveredDialog
-                            axiosFactory={ props.axiosFactory }
-                            locId={ props.locId }
-                            itemId={ props.item.id }
+                            item={ props.item }
                             onChecked={ onChecked  }
                         />
                     </Col>
