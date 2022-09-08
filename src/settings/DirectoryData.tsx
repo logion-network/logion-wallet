@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
-import { LegalOfficer, PostalAddress, UserIdentity } from "@logion/client";
+import { LegalOfficer, LegalOfficerPostalAddress, UserIdentity } from "@logion/client";
 
 import Button from "../common/Button";
 import { GREEN, RED } from "../common/ColorTheme";
@@ -236,7 +236,7 @@ export default function DirectoryData() {
         setLegalOfficer(newLegalOfficerValue);
     }
 
-    function setPostalAddressField(fieldName: keyof PostalAddress, event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    function setPostalAddressField(fieldName: keyof LegalOfficerPostalAddress, event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         const newLegalOfficerValue = { ...legalOfficer! };
         newLegalOfficerValue.postalAddress[fieldName] = event.target.value;
         setLegalOfficer(newLegalOfficerValue);

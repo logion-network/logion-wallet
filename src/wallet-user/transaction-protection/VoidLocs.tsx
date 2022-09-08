@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { DataLocType } from "@logion/node-api/dist/Types";
+import { LocType } from "@logion/node-api/dist/Types";
 
 import { useUserContext } from "../UserContext";
 import Table, { Cell, EmptyTableMessage, DateTimeCell, ActionCell } from '../../common/Table';
@@ -14,7 +14,7 @@ import { useResponsiveContext } from '../../common/Responsive';
 import { locDetailsPath } from '../UserRouter';
 
 export interface Props {
-    locType: DataLocType
+    locType: LocType
 }
 
 export default function VoidLocs(props: Props) {

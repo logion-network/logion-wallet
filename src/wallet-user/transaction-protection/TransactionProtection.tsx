@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { DataLocType } from "@logion/node-api/dist/Types";
+import { LocType } from "@logion/node-api/dist/Types";
 
 import { FullWidthPane } from '../../common/Dashboard';
 import Tabs from '../../common/Tabs';
@@ -14,24 +14,24 @@ import { SETTINGS_PATH } from '../UserRouter';
 import OpenedLocs from './OpenedLocs';
 import RequestedLocs from './RequestedLocs';
 import RejectedLocs from './RejectedLocs';
-import LocCreation from './LocCreation';
 import ClosedLocs from './ClosedLocs';
 import VoidLocs from './VoidLocs';
 
 import './TransactionProtection.css';
+import { Children } from "../../common/types/Helpers";
 
 export interface Props {
-    locType: DataLocType,
+    locType: LocType,
     titles: { main: string, loc: string, request: string },
     iconId: string,
-    requestButtonLabel: string
+    actions: Children
 }
 
 export default function TransactionProtection(props: Props) {
     const { colorTheme, nodesDown } = useCommonContext();
     const [ locTabKey, setLocTabKey ] = useState<string>('open');
     const [ requestTabKey, setRequestTabKey ] = useState<string>('pending');
-    const { locType, titles, iconId, requestButtonLabel } = props;
+    const { locType, titles, iconId } = props;
 
     return (
         <FullWidthPane
@@ -79,7 +79,7 @@ export default function TransactionProtection(props: Props) {
                             ] }
                         />
                         <div className="action-bar">
-                            <LocCreation locType={ locType } requestButtonLabel={ requestButtonLabel } />
+                            { props.actions }
                         </div>
                     </Frame>
                 </Col>

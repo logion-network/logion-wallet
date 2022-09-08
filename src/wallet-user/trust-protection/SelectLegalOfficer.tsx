@@ -3,7 +3,7 @@ import Col from "react-bootstrap/Col";
 import { LegalOfficer } from "@logion/client";
 import { ProtectionRequestStatus } from "@logion/client/dist/RecoveryClient";
 
-import { ORANGE, GREEN, RED, YELLOW } from "../../common/ColorTheme";
+import { ORANGE, GREEN, RED, YELLOW, BackgroundAndForegroundColors } from "../../common/ColorTheme";
 import Select, { OptionType } from '../../common/Select';
 import Icon from "../../common/Icon";
 import FormGroup from '../../common/FormGroup';
@@ -40,10 +40,14 @@ export interface Props {
     status?: ProtectionRequestStatus,
     label: string,
     fillEmptyOfficerDetails?: boolean,
+    colors?: BackgroundAndForegroundColors,
+    feedback?: string
 }
 
 export default function SelectLegalOfficer(props: Props) {
     const { colorTheme } = useCommonContext();
+    const colors = props.colors !== undefined ? props.colors : colorTheme.frame;
+    const feedback = props.feedback ? props.feedback : "Required and different from other legal officer";
     const { label } = props;
     const legalOfficersOptions: OptionType[] = buildOptions(props.legalOfficers);
     const legalOfficersByAddress: Record<string, LegalOfficer> = {};
@@ -100,8 +104,8 @@ export default function SelectLegalOfficer(props: Props) {
                                 statusColor={ statusColor }
                             />
                         }
-                        feedback="Required and different from other legal officer"
-                        colors={ colorTheme.frame }
+                        feedback={ feedback }
+                        colors={ colors }
                     />
                 </Col>
                 <Col md={ 4 }>
@@ -112,7 +116,7 @@ export default function SelectLegalOfficer(props: Props) {
             </Row>
             <Officer
                 officer={ props.legalOfficer }
-                colors={ colorTheme.frame }
+                colors={ colors }
                 borderColor={ statusColor }
                 fillEmptyOfficerDetails={ props.fillEmptyOfficerDetails }
             />

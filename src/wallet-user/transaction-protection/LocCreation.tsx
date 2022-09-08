@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { DataLocType } from "@logion/node-api/dist/Types";
+import { LocType } from "@logion/node-api/dist/Types";
 
 import { useCommonContext } from '../../common/CommonContext';
 import { LocsState } from "@logion/client";
@@ -30,7 +30,7 @@ function shouldShowIdentityFields(
 }
 
 export interface Props {
-    locType: DataLocType,
+    locType: LocType,
     requestButtonLabel: string
 }
 

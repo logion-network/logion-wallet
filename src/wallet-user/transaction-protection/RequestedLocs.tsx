@@ -1,4 +1,4 @@
-import { DataLocType } from "@logion/node-api/dist/Types";
+import { LocType } from "@logion/node-api/dist/Types";
 
 import { useUserContext } from "../UserContext";
 import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../../common/Table';
@@ -7,7 +7,7 @@ import LegalOfficerName from '../../common/LegalOfficerNameCell';
 import Loader from '../../common/Loader';
 
 export interface Props {
-    locType: DataLocType
+    locType: LocType
 }
 
 export default function RequestedLocs(props: Props) {

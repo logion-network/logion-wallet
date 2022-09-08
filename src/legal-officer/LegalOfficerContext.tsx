@@ -9,7 +9,7 @@ import { LIGHT_MODE } from './Types';
 import { AxiosFactory } from '../common/api';
 import { useLogionChain } from '../logion-chain';
 import { VaultApi } from '../vault/VaultApi';
-import { DataLocType, IdentityLocType, LegalOfficerCase, LocType } from "@logion/node-api/dist/Types";
+import { LocType, IdentityLocType, LegalOfficerCase } from "@logion/node-api/dist/Types";
 import { LocRequest } from "../common/types/ModelTypes";
 import { DateTime } from "luxon";
 import { UUID, toDecimalString } from "@logion/node-api/dist/UUID";
@@ -42,14 +42,14 @@ export interface LegalOfficerContext {
     vaultTransferRequestsHistory?: VaultTransferRequest[];
     settings?: Record<string, string>;
     updateSetting: (id: SettingId, value: string) => Promise<void>;
-    pendingLocRequests: Record<DataLocType, LocRequest[]> | null;
-    rejectedLocRequests: Record<DataLocType, LocRequest[]> | null;
-    openedLocRequests: Record<DataLocType, RequestAndLoc[]> | null;
-    closedLocRequests: Record<DataLocType, RequestAndLoc[]> | null;
+    pendingLocRequests: Record<LocType, LocRequest[]> | null;
+    rejectedLocRequests: Record<LocType, LocRequest[]> | null;
+    openedLocRequests: Record<LocType, RequestAndLoc[]> | null;
+    closedLocRequests: Record<LocType, RequestAndLoc[]> | null;
     openedIdentityLocs: RequestAndLoc[] | null;
     openedIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null;
     closedIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null;
-    voidTransactionLocs: Record<DataLocType, RequestAndLoc[]> | null;
+    voidTransactionLocs: Record<LocType, RequestAndLoc[]> | null;
     voidIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null;
     refreshLocs: () => void;
 }
@@ -118,14 +118,14 @@ interface Action {
     updateSetting?: (id: string, value: string) => Promise<void>;
     id?: string;
     value?: string;
-    pendingLocRequests?: Record<DataLocType, LocRequest[]>;
-    rejectedLocRequests?: Record<DataLocType, LocRequest[]>;
-    openedLocRequests?: Record<DataLocType, RequestAndLoc[]>;
-    closedLocRequests?: Record<DataLocType, RequestAndLoc[]>;
+    pendingLocRequests?: Record<LocType, LocRequest[]>;
+    rejectedLocRequests?: Record<LocType, LocRequest[]>;
+    openedLocRequests?: Record<LocType, RequestAndLoc[]>;
+    closedLocRequests?: Record<LocType, RequestAndLoc[]>;
     openedIdentityLocs?: RequestAndLoc[];
     openedIdentityLocsByType?: Record<IdentityLocType, RequestAndLoc[]>;
     closedIdentityLocsByType?: Record<IdentityLocType, RequestAndLoc[]>;
-    voidTransactionLocs?: Record<DataLocType, RequestAndLoc[]>;
+    voidTransactionLocs?: Record<LocType, RequestAndLoc[]>;
     voidIdentityLocsByType?: Record<IdentityLocType, RequestAndLoc[]>;
     refreshLocs?: (() => void);
     refreshAddress?: string;
@@ -339,6 +339,7 @@ export function LegalOfficerContextProvider(props: Props) {
 
                 const transactionLocs = await fetchRequests('Transaction');
                 const collectionLocs = await fetchRequests('Collection');
+                const identityLocs = await fetchRequests('Identity');
 
                 let locIds = transactionLocs.locIds
                     .concat(collectionLocs.locIds)
@@ -350,27 +351,33 @@ export function LegalOfficerContextProvider(props: Props) {
                     locIds
                 });
 
-                const pendingLocRequests: Record<DataLocType, LocRequest[]> = {
+                const pendingLocRequests: Record<LocType, LocRequest[]> = {
                     'Transaction': transactionLocs.pending,
-                    'Collection': collectionLocs.pending
+                    'Collection': collectionLocs.pending,
+                    'Identity': identityLocs.pending,
                 }
-                const rejectedLocRequests: Record<DataLocType, LocRequest[]> = {
+                const rejectedLocRequests: Record<LocType, LocRequest[]> = {
                     'Transaction': transactionLocs.rejected,
-                    'Collection': collectionLocs.rejected
+                    'Collection': collectionLocs.rejected,
+                    'Identity': identityLocs.rejected,
                 }
-                const openedLocRequests: Record<DataLocType, RequestAndLoc[]> = {
+                const openedLocRequests: Record<LocType, RequestAndLoc[]> = {
                     'Transaction': notVoidRequestsAndLocs(transactionLocs.opened, locs),
-                    'Collection': notVoidRequestsAndLocs(collectionLocs.opened, locs)
+                    'Collection': notVoidRequestsAndLocs(collectionLocs.opened, locs),
+                    'Identity': notVoidRequestsAndLocs(identityLocs.opened, locs),
                 }
-                const closedLocRequests: Record<DataLocType, RequestAndLoc[]> = {
+                const closedLocRequests: Record<LocType, RequestAndLoc[]> = {
                     'Transaction': notVoidRequestsAndLocs(transactionLocs.closed, locs),
-                    'Collection': notVoidRequestsAndLocs(collectionLocs.closed, locs)
+                    'Collection': notVoidRequestsAndLocs(collectionLocs.closed, locs),
+                    'Identity': notVoidRequestsAndLocs(identityLocs.closed, locs),
                 }
-                const voidTransactionLocs: Record<DataLocType, RequestAndLoc[]> = {
+                const voidTransactionLocs: Record<LocType, RequestAndLoc[]> = {
                     'Transaction': voidRequestsAndLocs(transactionLocs.opened, locs)
                         .concat(voidRequestsAndLocs(transactionLocs.closed, locs)),
                     'Collection': voidRequestsAndLocs(collectionLocs.opened, locs)
-                        .concat(voidRequestsAndLocs(collectionLocs.closed, locs))
+                        .concat(voidRequestsAndLocs(collectionLocs.closed, locs)),
+                    'Identity': voidRequestsAndLocs(identityLocs.opened, locs)
+                        .concat(voidRequestsAndLocs(identityLocs.closed, locs)),
                 }
 
                 // Identity

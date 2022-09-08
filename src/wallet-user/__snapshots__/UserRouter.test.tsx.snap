@@ -65,9 +65,14 @@ exports[`renders 1`] = `
   <Route
     element={
       <TransactionProtection
+        actions={
+          <LocCreation
+            locType="Transaction"
+            requestButtonLabel="Request a Transaction Protection"
+          />
+        }
         iconId="loc"
         locType="Transaction"
-        requestButtonLabel="Request a Transaction Protection"
         titles={
           Object {
             "loc": "Transaction Protection Case(s)",
@@ -82,9 +87,14 @@ exports[`renders 1`] = `
   <Route
     element={
       <TransactionProtection
+        actions={
+          <LocCreation
+            locType="Collection"
+            requestButtonLabel="Request a Collection Protection"
+          />
+        }
         iconId="collection"
         locType="Collection"
-        requestButtonLabel="Request a Collection Protection"
         titles={
           Object {
             "loc": "Collection Protection Case(s)",
@@ -95,6 +105,23 @@ exports[`renders 1`] = `
       />
     }
     path="/loc/collection"
+  />
+  <Route
+    element={
+      <TransactionProtection
+        actions={<IdentityLocRequest />}
+        iconId="identity"
+        locType="Identity"
+        titles={
+          Object {
+            "loc": "Identity Protection Case(s)",
+            "main": "Identity Protection Management",
+            "request": "Identity Protection Request(s)",
+          }
+        }
+      />
+    }
+    path="/loc/identity"
   />
   <Route
     element={

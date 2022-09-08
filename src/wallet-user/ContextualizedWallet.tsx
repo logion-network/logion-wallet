@@ -105,7 +105,20 @@ export default function ContextualizedWallet() {
                         background: colorTheme.topMenuItems.iconGradient,
                     },
                     onClick: refreshAll,
-                }
+                },
+                {
+                    id: "loc-identity",
+                    text: "Identity",
+                    to: locRequestsPath('Identity'),
+                    exact: false,
+                    icon: {
+                        icon: {
+                            id: 'identity'
+                        },
+                        background: colorTheme.topMenuItems.iconGradient,
+                    },
+                    onClick: refreshAll,
+                },
             ]}
             menuMiddle={[
                 {

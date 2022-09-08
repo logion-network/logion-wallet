@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
-import { DataLocType } from "@logion/node-api/dist/Types";
+import { LocType } from "@logion/node-api/dist/Types";
 
 import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';
@@ -21,7 +21,7 @@ import { useLogionChain } from '../../logion-chain';
 import { useLegalOfficerContext } from "../LegalOfficerContext";
 
 export interface Props {
-    locType: DataLocType;
+    locType: LocType;
 }
 
 export default function PendingLocRequests(props: Props) {

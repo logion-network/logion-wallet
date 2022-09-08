@@ -17,6 +17,8 @@ import TransactionProtection from "./transaction-protection/TransactionProtectio
 import Recovery from "./trust-protection/Recovery";
 import Vault from "./trust-protection/Vault";
 import { useLogionChain } from '../logion-chain';
+import LocCreation from "./transaction-protection/LocCreation";
+import IdentityLocRequest from "../components/identity/IdentityLocRequest";
 
 export const HOME_PATH = USER_PATH;
 
@@ -119,18 +121,31 @@ export default function UserRouter() {
                            request: "Transaction Protection Case Request(s)"
                        } }
                        iconId="loc"
-                       requestButtonLabel="Request a Transaction Protection"
+                       actions={ <LocCreation locType='Transaction'
+                                              requestButtonLabel="Request a Transaction Protection" /> }
                    /> } />
             <Route path={ locRequestsRelativePath('Collection') }
                    element={ <TransactionProtection
                        locType='Collection'
-                       titles={{
+                       titles={ {
                            main: "Collection Protection Management",
                            loc: "Collection Protection Case(s)",
                            request: "Collection Protection Request(s)"
-                       }}
+                       } }
                        iconId="collection"
-                       requestButtonLabel="Request a Collection Protection"
+                       actions={ <LocCreation locType='Collection'
+                                              requestButtonLabel="Request a Collection Protection" /> }
+                   /> } />
+            <Route path={ locRequestsRelativePath('Identity') }
+                   element={ <TransactionProtection
+                       locType='Identity'
+                       titles={ {
+                           main: "Identity Protection Management",
+                           loc: "Identity Protection Case(s)",
+                           request: "Identity Protection Request(s)"
+                       } }
+                       iconId="identity"
+                       actions={ <IdentityLocRequest/> }
                    /> } />
             <Route path={ dataLocDetailsRelativePath('Transaction') } element={
                 <LocDetails

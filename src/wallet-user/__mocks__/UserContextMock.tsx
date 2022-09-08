@@ -17,7 +17,7 @@ import {
     ClosedCollectionLoc,
     OpenLoc, VoidedCollectionLoc, VoidedLoc
 } from "@logion/client";
-import { DataLocType } from "@logion/node-api/dist/Types";
+import { LocType } from "@logion/node-api/dist/Types";
 
 export let createTokenRequest = () => null;
 
@@ -64,10 +64,11 @@ export let locsState: Partial<LocsState>;
 
 export function setOpenedLocRequests(requests: any[]) {
     locsState = {
-        get openLocs(): Record<DataLocType, OpenLoc[]> {
+        get openLocs(): Record<LocType, OpenLoc[]> {
             return {
                 "Transaction": requests,
-                "Collection": []
+                "Collection": [],
+                "Identity": [],
             }
         }
     }
@@ -75,10 +76,11 @@ export function setOpenedLocRequests(requests: any[]) {
 
 export function setClosedLocRequests(requests: any[]) {
     locsState = {
-        get closedLocs(): Record<DataLocType, (ClosedLoc | ClosedCollectionLoc)[]> {
+        get closedLocs(): Record<LocType, (ClosedLoc | ClosedCollectionLoc)[]> {
             return {
                 "Transaction": requests,
-                "Collection": []
+                "Collection": [],
+                "Identity": [],
             }
         }
     }
@@ -86,10 +88,11 @@ export function setClosedLocRequests(requests: any[]) {
 
 export function setVoidedLocs(requests: any[]) {
     locsState = {
-        get voidedLocs(): Record<DataLocType, (VoidedLoc | VoidedCollectionLoc)[]> {
+        get voidedLocs(): Record<LocType, (VoidedLoc | VoidedCollectionLoc)[]> {
             return {
                 "Transaction": requests,
-                "Collection": []
+                "Collection": [],
+                "Identity": [],
             }
         }
     }
@@ -97,10 +100,11 @@ export function setVoidedLocs(requests: any[]) {
 
 export function setPendingLocRequests(requests: any[]) {
     locsState = {
-        get pendingRequests(): Record<DataLocType, PendingRequest[]> {
+        get pendingRequests(): Record<LocType, PendingRequest[]> {
             return {
                 "Transaction": requests,
-                "Collection": []
+                "Collection": [],
+                "Identity": [],
             }
         }
     }
@@ -108,10 +112,11 @@ export function setPendingLocRequests(requests: any[]) {
 
 export function setRejectedLocRequests(requests: any[]) {
     locsState = {
-        get rejectedRequests(): Record<DataLocType, RejectedRequest[]> {
+        get rejectedRequests(): Record<LocType, RejectedRequest[]> {
             return {
                 "Transaction": requests,
-                "Collection": []
+                "Collection": [],
+                "Identity": [],
             }
         }
     }
