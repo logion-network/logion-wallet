@@ -114,9 +114,9 @@ exports[`renders 1`] = `
         locType="Identity"
         titles={
           Object {
-            "loc": "Identity Protection Case(s)",
-            "main": "Identity Protection Management",
-            "request": "Identity Protection Request(s)",
+            "loc": "Identity Case(s)",
+            "main": "Identity Case Management",
+            "request": "Identity Case Request(s)",
           }
         }
       />

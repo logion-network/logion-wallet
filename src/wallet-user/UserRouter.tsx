@@ -140,9 +140,9 @@ export default function UserRouter() {
                    element={ <TransactionProtection
                        locType='Identity'
                        titles={ {
-                           main: "Identity Protection Management",
-                           loc: "Identity Protection Case(s)",
-                           request: "Identity Protection Request(s)"
+                           main: "Identity Case Management",
+                           loc: "Identity Case(s)",
+                           request: "Identity Case Request(s)"
                        } }
                        iconId="identity"
                        actions={ <IdentityLocRequest/> }

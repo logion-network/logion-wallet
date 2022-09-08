@@ -58,7 +58,7 @@ export default function IdentityLocRequest() {
 
     return (
         <>
-            <Button onClick={ () => setRequestLoc(true) }>Request an Identity LOC</Button>
+            <Button onClick={ () => setRequestLoc(true) }>Request an Identity Case</Button>
             <Dialog
                 show={ requestLoc }
                 size="xl"
