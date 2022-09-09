@@ -1,0 +1,82 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders 1`] = `
+<React.Fragment>
+  <Col
+    style={
+      Object {
+        "flexGrow": 1,
+      }
+    }
+  >
+    <Detail
+      label="Account Address"
+      value="5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"
+    />
+    <Row>
+      <Col
+        style={
+          Object {
+            "flexGrow": 1,
+          }
+        }
+      >
+        <Detail
+          label="First Name"
+          value="John"
+        />
+        <Detail
+          label="E-mail"
+          value="john.doe@logion.network"
+        />
+      </Col>
+      <Col
+        style={
+          Object {
+            "flexGrow": 1,
+          }
+        }
+      >
+        <Detail
+          label="Last Name"
+          value="Doe"
+        />
+        <Detail
+          label="Phone number"
+          value="+1234"
+        />
+      </Col>
+    </Row>
+  </Col>
+  <Col
+    style={
+      Object {
+        "flexGrow": 1,
+      }
+    }
+  >
+    <Detail
+      label="Line1"
+      value="Place de le République Française, 10"
+    />
+    <Detail
+      label="Line2"
+      value="boite 15"
+    />
+    <Row>
+      <Detail
+        label="Postal Code"
+        value="4000"
+      />
+      <Detail
+        label="City"
+        value="Liège"
+      />
+    </Row>
+    <Detail
+      label="Country"
+      value="Belgium"
+    />
+  </Col>
+</React.Fragment>
+`;

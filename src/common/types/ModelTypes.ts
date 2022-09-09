@@ -1,4 +1,4 @@
-import { UserIdentity } from '@logion/client';
+import { UserIdentity, PostalAddress } from '@logion/client';
 import { File, LocType, MetadataItem, Link, CollectionItem } from '@logion/node-api/dist/Types';
 
 export interface AddedOn {
@@ -48,6 +48,7 @@ export interface LocRequest {
     status: "OPEN" | "REQUESTED" | "REJECTED" | "CLOSED";
     rejectReason?: string;
     userIdentity?: UserIdentity;
+    userPostalAddress?: PostalAddress;
     closedOn?: string;
     files: LocFile[];
     metadata: LocMetadataItem[];

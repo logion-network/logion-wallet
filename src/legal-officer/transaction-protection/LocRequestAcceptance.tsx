@@ -1,6 +1,10 @@
 import { useState, useEffect, useCallback } from 'react';
 import { UUID } from '@logion/node-api/dist/UUID';
-import { createCollectionLoc, createPolkadotTransactionLoc } from '@logion/node-api/dist/LogionLoc';
+import {
+    createCollectionLoc,
+    createPolkadotTransactionLoc,
+    createPolkadotIdentityLoc
+} from '@logion/node-api/dist/LogionLoc';
 import { ChainTime } from '@logion/node-api/dist/ChainTime';
 
 import { useLogionChain } from '../../logion-chain';
@@ -92,6 +96,17 @@ export default function LocRequestAcceptance(props: Props) {
                             lastBlock,
                             maxSize,
                             canUpload,
+                        })
+                    });
+                } else if(props.requestToAccept?.locType === 'Identity') {
+                    signAndSubmit = (setResult, setError) => signAndSend({
+                        signerId: accounts!.current!.address,
+                        callback: setResult,
+                        errorCallback: setError,
+                        submittable: createPolkadotIdentityLoc({
+                            api: api!,
+                            locId: new UUID(props.requestToAccept!.id),
+                            requester: props.requestToAccept!.requesterAddress!,
                         })
                     });
                 } else {
