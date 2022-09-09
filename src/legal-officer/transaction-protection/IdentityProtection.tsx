@@ -16,6 +16,8 @@ import Button from '../../common/Button';
 import LocCreationDialog from '../../loc/LocCreationDialog';
 import { useNavigate } from 'react-router-dom';
 import { identityLocDetailsPath } from '../LegalOfficerPaths';
+import PendingLocRequests from "./PendingLocRequests";
+import RejectedLocRequests from "./RejectedLocRequests";
 
 export default function IdentityProtection() {
     const { colorTheme } = useCommonContext();
@@ -23,6 +25,7 @@ export default function IdentityProtection() {
     const [ logionLocTabKey, setLogionLocTabKey ] = useState('open');
     const [ createLoc, setCreateLoc ] = useState(false);
     const navigate = useNavigate();
+    const [ requestTabKey, setRequestTabKey ] = useState<string>('pending');
 
     return (
         <FullWidthPane
@@ -58,6 +61,30 @@ export default function IdentityProtection() {
                                     key: "void",
                                     title: "Void",
                                     render: () => <VoidLocs locType="Identity" identityLocType="Polkadot" />
+                                }
+                            ]}
+                        />
+                    </Frame>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <Frame
+                        title="Polkadot Identity LOC Request(s)"
+                    >
+                        <Tabs
+                            activeKey={ requestTabKey }
+                            onSelect={ key => setRequestTabKey(key || 'pending') }
+                            tabs={ [
+                                {
+                                    key: "pending",
+                                    title: "Pending",
+                                    render: () => <PendingLocRequests locType="Identity" />
+                                },
+                                {
+                                    key: "rejected",
+                                    title: "Rejected",
+                                    render: () => <RejectedLocRequests locType="Identity" />
                                 }
                             ]}
                         />
