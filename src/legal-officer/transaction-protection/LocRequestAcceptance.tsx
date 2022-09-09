@@ -163,6 +163,8 @@ export default function LocRequestAcceptance(props: Props) {
         title = "Accepting Transaction Protection Request";
     } else if(props.requestToAccept.locType === 'Collection') {
         title = "Accepting Collection Protection Request";
+    } else if(props.requestToAccept.locType === 'Identity') {
+        title = "Accepting Identity Case Request";
     } else {
         throw new Error(`Unsupported LOC type ${props.requestToAccept.locType}`);
     }
@@ -184,13 +186,13 @@ export default function LocRequestAcceptance(props: Props) {
                         id: 'proceed',
                         buttonText: 'Proceed',
                         buttonVariant: 'polkadot',
-                        mayProceed: acceptState.status === AcceptStatus.NONE && (props.requestToAccept.locType === 'Transaction' || limits.areValid()),
+                        mayProceed: acceptState.status === AcceptStatus.NONE && (props.requestToAccept.locType !== 'Collection' || limits.areValid()),
                         callback: () => setStatus(AcceptStatus.LOC_CREATION_PENDING),
                     }
                 ]}
             >
                 {
-                    props.requestToAccept.locType === 'Transaction' &&
+                    props.requestToAccept.locType !== 'Collection' &&
                     <>
                     <p>You are about to create the LOC and accept the request</p>
                     <p>The LOC's creation will require your signature and may take several seconds.</p>
