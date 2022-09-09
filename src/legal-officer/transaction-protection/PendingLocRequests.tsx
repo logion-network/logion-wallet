@@ -19,8 +19,6 @@ import LocRequestDetails from './LocRequestDetails';
 import Icon from '../../common/Icon';
 import { useLogionChain } from '../../logion-chain';
 import { useLegalOfficerContext } from "../LegalOfficerContext";
-import { Child } from "../../common/types/Helpers";
-import IdentityLocRequestDetails from "./IdentityLocRequestDetails";
 
 export interface Props {
     locType: LocType;
@@ -60,14 +58,6 @@ export default function PendingLocRequests(props: Props) {
         return null;
     }
 
-    function renderDetails(request: LocRequest): Child {
-        if (request.locType === 'Identity') {
-            return <IdentityLocRequestDetails request={ request }/>
-        } else {
-            return <LocRequestDetails request={ request }/>
-        }
-    }
-
     return (
         <>
             <Table
@@ -76,7 +66,7 @@ export default function PendingLocRequests(props: Props) {
                         header: "Requester",
                         render: request => <UserIdentityNameCell userIdentity={ request.userIdentity } />,
                         align: "left",
-                        renderDetails
+                        renderDetails: request => <LocRequestDetails request={ request }/>
                     },
                     {
                         header: "Description",

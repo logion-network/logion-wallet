@@ -1,10 +1,6 @@
 import { Col, Row } from '../../common/Grid';
 import Detail from "../../common/Detail";
-import { LocRequest } from "../../common/types/ModelTypes";
-
-export interface LocRequestDetailsProps {
-    request: LocRequest,
-}
+import { LocRequestDetailsProps } from "./LocRequestDetails";
 
 export default function IdentityLocRequestDetails(props: LocRequestDetailsProps) {
 

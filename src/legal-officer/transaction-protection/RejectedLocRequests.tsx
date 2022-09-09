@@ -6,9 +6,6 @@ import { useLegalOfficerContext } from "../LegalOfficerContext";
 import UserIdentityNameCell from '../../common/UserIdentityNameCell';
 
 import LocRequestDetails from './LocRequestDetails';
-import { LocRequest } from "../../common/types/ModelTypes";
-import { Child } from "../../common/types/Helpers";
-import IdentityLocRequestDetails from "./IdentityLocRequestDetails";
 
 export interface Props {
     locType: LocType;
@@ -21,14 +18,6 @@ export default function RejectedLocRequests(props: Props) {
         return null;
     }
 
-    function renderDetails(request: LocRequest): Child {
-        if (request.locType === 'Identity') {
-            return <IdentityLocRequestDetails request={ request }/>
-        } else {
-            return <LocRequestDetails request={ request }/>
-        }
-    }
-
     return (
         <Table
             columns={[
@@ -36,7 +25,7 @@ export default function RejectedLocRequests(props: Props) {
                     header: "Requester",
                     render: request => <UserIdentityNameCell userIdentity={ request.userIdentity } />,
                     align: "left",
-                    renderDetails
+                    renderDetails: request => <LocRequestDetails request={ request }/>
                 },
                 {
                     header: "Description",
