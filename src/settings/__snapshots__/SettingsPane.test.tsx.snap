@@ -28,6 +28,15 @@ exports[`SettingsPane renders for legal officer 1`] = `
     </Row>
     <Row>
       <Col>
+        <PolkadotFrame
+          title="Chain data"
+        >
+          <ChainData />
+        </PolkadotFrame>
+      </Col>
+    </Row>
+    <Row>
+      <Col>
         <Frame
           title="Instance settings"
         >

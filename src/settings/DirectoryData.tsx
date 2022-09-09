@@ -203,23 +203,6 @@ export default function DirectoryData() {
                     />
                 </Col>
             </Row>
-            <Row>
-                <Col>
-                    <FormGroup
-                        id="node"
-                        label="Node base URL"
-                        control={ <Form.Control
-                            type="text"
-                            value={ legalOfficer?.node }
-                            onChange={ event => setLegalOfficer({
-                                ...legalOfficer!,
-                                node: event.target.value
-                            }) }
-                        /> }
-                        colors={ colorTheme.frame }
-                    />
-                </Col>
-            </Row>
             <Button onClick={ save }>
                 Save changes
             </Button>

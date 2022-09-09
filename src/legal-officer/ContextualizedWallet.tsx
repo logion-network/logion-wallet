@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 
 import Dashboard from '../common/Dashboard';
 
@@ -17,15 +17,18 @@ import {
     STATEMENT_OF_FACTS_PATH,
 } from './LegalOfficerPaths';
 import { useLegalOfficerContext } from './LegalOfficerContext';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import StatementOfFacts from '../loc/statement/StatementOfFacts';
 import { useLogionChain } from '../logion-chain';
+import WarningDialog from 'src/common/WarningDialog';
 
 export default function ContextualizedWallet() {
     const { selectAddress, accounts } = useLogionChain();
     const { colorTheme, refresh, availableLegalOfficers } = useCommonContext();
-    const { refreshRequests } = useLegalOfficerContext();
+    const { refreshRequests, missingSettings } = useLegalOfficerContext();
     const location = useLocation();
+    const [ discardSettings, setDiscardSettings ] = useState(false);
+    const navigate = useNavigate();
 
     const refreshAll = useCallback(() => {
         refresh(false);
@@ -181,6 +184,29 @@ export default function ContextualizedWallet() {
                 ]}
             >
                 <LegalOfficerRouter />
+                <WarningDialog
+                    show={ missingSettings !== undefined && !discardSettings }
+                    size='lg'
+                    actions={[
+                        {
+                            buttonText: "I will do it later",
+                            callback: () => setDiscardSettings(true),
+                            id: "discard",
+                            buttonVariant: 'secondary'
+                        },
+                        {
+                            buttonText: "Go to my settings",
+                            callback: () => { setDiscardSettings(true); navigate(SETTINGS_PATH)},
+                            id: "settings",
+                            buttonVariant: 'primary'
+                        },
+                    ]}
+                >
+                    <>
+                        Dear logion legal officer,<br/>
+                        Some of your mandatory settings are not filled-in. Please do so as soon as possible.
+                    </>
+                </WarningDialog>
             </Dashboard>
         );
     }

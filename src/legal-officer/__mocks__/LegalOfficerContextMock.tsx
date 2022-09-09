@@ -1,5 +1,9 @@
 import { LocType, IdentityLocType } from "@logion/node-api/dist/Types";
+import { AxiosInstance } from "axios";
+
+import { COLOR_THEME } from "src/common/TestData";
 import { RequestAndLoc } from "../LegalOfficerContext";
+import { LegalOfficerData } from "../LegalOfficerData";
 
 export let pendingTokenizationRequests: any[] | null = null;
 
@@ -104,4 +108,34 @@ export function setClosedIdentityLocsByType(locs: Record<IdentityLocType, Reques
 
 export function setVoidedIdentityLocsByType(locs: Record<IdentityLocType, RequestAndLoc[]>) {
     voidIdentityLocsByType = locs;
+}
+
+let onchainSettings: LegalOfficerData = {};
+
+export function setOnchainSettings(settings: LegalOfficerData) {
+    onchainSettings = settings;
+}
+
+export function useLegalOfficerContext() {
+    return {
+        pendingTokenizationRequests,
+        rejectRequest,
+        tokenizationRequestsHistory,
+        refreshRequests,
+        pendingProtectionRequests,
+        activatedProtectionRequests,
+        protectionRequestsHistory,
+        colorTheme: COLOR_THEME,
+        openedLocRequests,
+        openedIdentityLocs,
+        openedIdentityLocsByType,
+        closedLocRequests,
+        closedIdentityLocsByType,
+        pendingLocRequests,
+        rejectedLocRequests,
+        voidIdentityLocsByType,
+        refreshLocs: () => {},
+        axios: {} as AxiosInstance,
+        onchainSettings,
+    };
 }

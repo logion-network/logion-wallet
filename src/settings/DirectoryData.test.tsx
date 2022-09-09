@@ -26,7 +26,6 @@ describe("DirectoryData", () => {
         expect(screen.getByLabelText("Country")).toHaveValue(PATRICK.postalAddress.country);
 
         expect(screen.getByLabelText("Additional details")).toHaveValue(PATRICK.additionalDetails);
-        expect(screen.getByLabelText("Node base URL")).toHaveValue(PATRICK.node);
     })
 
     it("saves successfully", async () => {

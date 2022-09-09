@@ -164,5 +164,31 @@ exports[`renders 1`] = `
   }
 >
   <LegalOfficerRouter />
+  <WarningDialog
+    actions={
+      Array [
+        Object {
+          "buttonText": "I will do it later",
+          "buttonVariant": "secondary",
+          "callback": [Function],
+          "id": "discard",
+        },
+        Object {
+          "buttonText": "Go to my settings",
+          "buttonVariant": "primary",
+          "callback": [Function],
+          "id": "settings",
+        },
+      ]
+    }
+    show={false}
+    size="lg"
+  >
+    <React.Fragment>
+      Dear logion legal officer,
+      <br />
+      Some of your mandatory settings are not filled-in. Please do so as soon as possible.
+    </React.Fragment>
+  </WarningDialog>
 </Dashboard>
 `;
