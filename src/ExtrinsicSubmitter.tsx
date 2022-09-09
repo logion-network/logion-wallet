@@ -18,7 +18,7 @@ export interface SuccessfulTransaction {
 export interface Props {
     id: string,
     successMessage?: string | JSX.Element,
-    signAndSubmit?: SignAndSubmit,
+    signAndSubmit: SignAndSubmit,
     onSuccess: (id: string, result: SuccessfulTransaction) => void,
     onError: (id: string) => void,
     slim?: boolean,
@@ -31,7 +31,7 @@ export default function ExtrinsicSubmitter(props: Props) {
     const [ notified, setNotified ] = useState<boolean>(false);
 
     useEffect(() => {
-        if(!submitted && props.signAndSubmit !== undefined && props.signAndSubmit !== null) {
+        if(!submitted && props.signAndSubmit !== null) {
             flushSync(() => setSubmitted(true));
             const signAndSubmit = props.signAndSubmit;
             (async function() {

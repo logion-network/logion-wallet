@@ -11,6 +11,9 @@ import './SettingsPane.css';
 import Alert from '../common/Alert';
 import DirectoryData from '../settings/DirectoryData';
 import { ValuesFiles } from "./ValuesFiles";
+import ChainData from "./ChainData";
+import PolkadotFrame from 'src/common/PolkadotFrame';
+import DangerFrame from 'src/common/DangerFrame';
 
 function status(metadata: NodeMetadata | null): string {
     if(metadata !== null) {
@@ -22,6 +25,7 @@ function status(metadata: NodeMetadata | null): string {
 
 export interface Props {
     showContactInformation: boolean;
+    missingSettings: boolean;
 }
 
 export default function SettingsPane(props: Props) {
@@ -45,6 +49,14 @@ export default function SettingsPane(props: Props) {
             className="SettingsPane"
         >
             {
+                props.missingSettings &&
+                <DangerFrame
+                    className="missing-settings"
+                >
+                    Some mandatory settings are not filled-in, please see the forms below.
+                </DangerFrame>
+            }
+            {
                 props.showContactInformation &&
                 <>
                     <Row>
@@ -54,6 +66,15 @@ export default function SettingsPane(props: Props) {
                             >
                                 <DirectoryData />
                             </Frame>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <PolkadotFrame
+                                title="Chain data"
+                            >
+                                <ChainData />
+                            </PolkadotFrame>
                         </Col>
                     </Row>
                     <Row>

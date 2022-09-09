@@ -36,10 +36,12 @@ import './LegalOfficerRouter.css';
 import { locRequestsRelativePath, dataLocDetailsRelativePath } from "../RootPaths";
 import VaultOutRequests from './vault/VaultOutRequests';
 import { useLogionChain } from '../logion-chain';
+import { useLegalOfficerContext } from './LegalOfficerContext';
 
 export default function LegalOfficerRouter() {
     const { accounts } = useLogionChain();
     const { nodesDown, availableLegalOfficers, balanceState } = useCommonContext();
+    const { missingSettings } = useLegalOfficerContext();
 
     if(availableLegalOfficers === undefined || !(accounts?.current?.address)) {
         return null;
@@ -70,7 +72,7 @@ export default function LegalOfficerRouter() {
             <Route path={ VAULT_OUT_REQUESTS_RELATIVE_PATH } element={ <VaultOutRequests /> } />
             <Route path={ RECOVERY_REQUESTS_RELATIVE_PATH } element={ <RecoveryRequests /> } />
             <Route path={ RECOVERY_DETAILS_RELATIVE_PATH } element={ <RecoveryDetails /> } />
-            <Route path={ SETTINGS_RELATIVE_PATH } element={ <Settings showContactInformation={ true } /> } />
+            <Route path={ SETTINGS_RELATIVE_PATH } element={ <Settings showContactInformation={ true } missingSettings={ missingSettings !== undefined } /> } />
             <Route path={ WALLET_RELATIVE_PATH } element={ <Wallet
                 transactionsPath={ transactionsPath }
                 settingsPath={ SETTINGS_PATH }

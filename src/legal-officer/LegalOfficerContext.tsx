@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useReducer, Reducer, useCallback } from '
 import { AxiosInstance } from 'axios';
 import { VaultTransferRequest } from '@logion/client';
 import { ProtectionRequest } from '@logion/client/dist/RecoveryClient';
+import { LogionNodeApi } from "@logion/node-api";
 
 import { fetchProtectionRequests, FetchLocRequestSpecification, fetchLocRequests, } from '../common/Model';
 import { useCommonContext } from '../common/CommonContext';
@@ -14,6 +15,7 @@ import { LocRequest } from "../common/types/ModelTypes";
 import { DateTime } from "luxon";
 import { UUID, toDecimalString } from "@logion/node-api/dist/UUID";
 import { getLegalOfficerCasesMap } from "@logion/node-api/dist/LogionLoc";
+import { getLegalOfficerData, LegalOfficerData } from './LegalOfficerData';
 
 export const SETTINGS_KEYS = [ 'oath' ];
 
@@ -30,6 +32,11 @@ export interface RequestAndLoc {
     loc?: LegalOfficerCase;
 }
 
+export interface MissingSettings {
+    nodeId: boolean;
+    baseUrl: boolean;
+}
+
 export interface LegalOfficerContext {
     refreshRequests: ((clearBeforeRefresh: boolean) => void),
     pendingProtectionRequests: ProtectionRequest[] | null,
@@ -41,7 +48,9 @@ export interface LegalOfficerContext {
     pendingVaultTransferRequests?: VaultTransferRequest[];
     vaultTransferRequestsHistory?: VaultTransferRequest[];
     settings?: Record<string, string>;
+    onchainSettings?: LegalOfficerData;
     updateSetting: (id: SettingId, value: string) => Promise<void>;
+    missingSettings?: MissingSettings;
     pendingLocRequests: Record<LocType, LocRequest[]> | null;
     rejectedLocRequests: Record<LocType, LocRequest[]> | null;
     openedLocRequests: Record<LocType, RequestAndLoc[]> | null;
@@ -115,6 +124,8 @@ interface Action {
     pendingVaultTransferRequests?: VaultTransferRequest[];
     vaultTransferRequestsHistory?: VaultTransferRequest[];
     settings?: Record<string, string>;
+    onchainSettings?: LegalOfficerData;
+    missingSettings?: MissingSettings;
     updateSetting?: (id: string, value: string) => Promise<void>;
     id?: string;
     value?: string;
@@ -202,6 +213,8 @@ const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOffic
                     pendingVaultTransferRequests: action.pendingVaultTransferRequests!,
                     vaultTransferRequestsHistory: action.vaultTransferRequestsHistory!,
                     settings: action.settings!,
+                    onchainSettings: action.onchainSettings,
+                    missingSettings: action.missingSettings,
                 };
             } else {
                 return state;
@@ -456,7 +469,7 @@ export function LegalOfficerContextProvider(props: Props) {
     useEffect(() => {
         if(accounts !== null
                 && getOfficer !== undefined
-                && client
+                && api
                 && axiosFactory !== undefined
                 && accounts.current !== undefined
                 && contextValue.dataAddress !== accounts.current.address
@@ -465,7 +478,7 @@ export function LegalOfficerContextProvider(props: Props) {
             const currentAccount = accounts!.current!.address;
             const currentLegalOfficer = getOfficer(currentAccount);
             if(currentLegalOfficer!.node) {
-                const refreshRequests = (clear: boolean) => refreshRequestsFunction(clear, currentAccount, dispatch, axiosFactory);
+                const refreshRequests = (clear: boolean) => refreshRequestsFunction(clear, currentAccount, dispatch, axiosFactory, api);
                 const axios = axiosFactory(currentAccount);
                 const updateSettingCallback = async (id: string, value: string) => {
                     await updateSetting(axios, id, value);
@@ -485,7 +498,7 @@ export function LegalOfficerContextProvider(props: Props) {
                 refreshRequests(true);
             }
         }
-    }, [ contextValue, axiosFactory, accounts, isCurrentAuthenticated, client, getOfficer ]);
+    }, [ contextValue, axiosFactory, accounts, isCurrentAuthenticated, api, getOfficer ]);
 
     return (
         <LegalOfficerContextObject.Provider value={contextValue}>
@@ -498,7 +511,7 @@ export function useLegalOfficerContext(): LegalOfficerContext {
     return { ...useContext(LegalOfficerContextObject) };
 }
 
-function refreshRequestsFunction(clearBeforeRefresh: boolean, currentAddress: string, dispatch: React.Dispatch<Action>, axiosFactory: AxiosFactory) {
+function refreshRequestsFunction(clearBeforeRefresh: boolean, currentAddress: string, dispatch: React.Dispatch<Action>, axiosFactory: AxiosFactory, api: LogionNodeApi) {
     dispatch({
         type: "FETCH_IN_PROGRESS",
         dataAddress: currentAddress,
@@ -547,6 +560,16 @@ function refreshRequestsFunction(clearBeforeRefresh: boolean, currentAddress: st
 
         const settings = await getSettings(axios);
 
+        let missingSettings: MissingSettings | undefined;
+        let onchainSettings = await getLegalOfficerData({ api, address: currentAddress });
+
+        if(onchainSettings && (!onchainSettings.baseUrl || !onchainSettings.nodeId)) {
+            missingSettings = {
+                baseUrl: onchainSettings.baseUrl === undefined,
+                nodeId: onchainSettings.nodeId === undefined,
+            };
+        }
+
         dispatch({
             type: "SET_DATA",
             pendingProtectionRequests,
@@ -558,6 +581,8 @@ function refreshRequestsFunction(clearBeforeRefresh: boolean, currentAddress: st
             pendingVaultTransferRequests,
             vaultTransferRequestsHistory,
             settings,
+            onchainSettings,
+            missingSettings,
         });
     })();
 }

@@ -1,3 +1,4 @@
+import "@logion/node-api/dist/interfaces/types-lookup";
 import axios, { AxiosInstance } from 'axios';
 import React, { useReducer, useContext, Context, Reducer, useEffect, useCallback } from 'react';
 import { DateTime } from 'luxon';

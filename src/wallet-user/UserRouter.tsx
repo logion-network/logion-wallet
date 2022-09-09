@@ -76,7 +76,7 @@ export default function UserRouter() {
     return (
         <Routes>
             <Route path={ TRUST_PROTECTION_RELATIVE_PATH } element={ <TrustProtection />} />
-            <Route path={ SETTINGS_RELATIVE_PATH } element={ <Settings showContactInformation={ false } /> } />
+            <Route path={ SETTINGS_RELATIVE_PATH } element={ <Settings showContactInformation={ false } missingSettings={ false } /> } />
             <Route path={ RECOVERY_RELATIVE_PATH } element={ <Recovery /> } />
             <Route path={ WALLET_RELATIVE_PATH } element={ <Wallet
                     transactionsPath={ transactionsPath }
