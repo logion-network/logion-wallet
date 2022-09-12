@@ -9,8 +9,8 @@ export function locRequestsRelativePath(locType: LocType) {
         .replace(":locType", locType.toLowerCase())
 }
 
-const DATA_LOC_DETAILS_RELATIVE_PATH = LOC_REQUESTS_RELATIVE_PATH + '/:locId';
-export function dataLocDetailsRelativePath(locType: LocType) {
-    return DATA_LOC_DETAILS_RELATIVE_PATH
+const LOC_DETAILS_RELATIVE_PATH = LOC_REQUESTS_RELATIVE_PATH + '/:locId';
+export function locDetailsRelativePath(locType: LocType) {
+    return LOC_DETAILS_RELATIVE_PATH
         .replace(":locType", locType.toLowerCase())
 }

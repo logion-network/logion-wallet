@@ -1,7 +1,7 @@
 import { LocType } from '@logion/node-api/dist/Types';
 import { UUID } from '@logion/node-api/dist/UUID';
 
-import { LEGAL_OFFICER_PATH, dataLocDetailsRelativePath, locRequestsRelativePath } from '../RootPaths';
+import { LEGAL_OFFICER_PATH, locDetailsRelativePath, locRequestsRelativePath } from '../RootPaths';
 
 export const HOME_PATH = LEGAL_OFFICER_PATH;
 
@@ -34,7 +34,7 @@ export function locRequestsPath(locType: LocType) {
 }
 
 export function dataLocDetailsPath(locType: LocType, locId: string) {
-    return LEGAL_OFFICER_PATH + dataLocDetailsRelativePath(locType)
+    return LEGAL_OFFICER_PATH + locDetailsRelativePath(locType)
         .replace(":locId", locId)
 }
 
