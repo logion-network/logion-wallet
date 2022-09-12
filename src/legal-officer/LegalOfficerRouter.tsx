@@ -33,7 +33,7 @@ import { FullWidthPane } from '../common/Dashboard';
 import DangerFrame from '../common/DangerFrame';
 
 import './LegalOfficerRouter.css';
-import { locRequestsRelativePath, dataLocDetailsRelativePath } from "../RootPaths";
+import { locRequestsRelativePath, locDetailsRelativePath } from "../RootPaths";
 import VaultOutRequests from './vault/VaultOutRequests';
 import { useLogionChain } from '../logion-chain';
 import { useLegalOfficerContext } from './LegalOfficerContext';
@@ -107,14 +107,14 @@ export default function LegalOfficerRouter() {
                        }}
                        iconId="collection"
                    /> } />
-            <Route path={ dataLocDetailsRelativePath('Transaction') } element={
+            <Route path={ locDetailsRelativePath('Transaction') } element={
                 <LocDetails
                     backPath={ locRequestsPath('Transaction') }
                     detailsPath={ locDetailsPath }
                     viewer='LegalOfficer'
                 />
             } />
-            <Route path={ dataLocDetailsRelativePath('Collection') } element={
+            <Route path={ locDetailsRelativePath('Collection') } element={
                 <LocDetails
                     backPath={ locRequestsPath('Collection') }
                     detailsPath={ locDetailsPath }

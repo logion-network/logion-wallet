@@ -6,14 +6,15 @@ jest.mock('../../logion-chain');
 jest.mock('../../common/CommonContext');
 jest.setTimeout(10000);
 
-import { render, screen, waitFor, getByText, act } from "@testing-library/react";
+import { fillInForm } from "../../components/identity/IdentityFormTestHelper";
+import { render, screen, waitFor, getByText } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER, PATRICK, GUILLAUME } from "../../common/TestData";
+import { PATRICK, GUILLAUME } from "../../common/TestData";
 import { setCreateProtectionRequest } from "../__mocks__/UserContextMock";
 import { clickByName, shallowRender } from "../../tests";
 import { setActiveRecoveryInProgress } from "../../__mocks__/@logion/node-api/dist/RecoveryMock";
-import { finalizeSubmission, resetSubmitting, submitting } from "../../logion-chain/__mocks__/SignatureMock";
+import { resetSubmitting } from "../../logion-chain/__mocks__/SignatureMock";
 import { TEST_WALLET_USER2 } from "../TestData";
 
 import CreateProtectionRequestForm from "./CreateProtectionRequestForm";
@@ -119,21 +120,6 @@ describe("CreateProtectionRequestForm", () => {
         ));
     });
 });
-
-async function fillInForm() {
-    await userEvent.type(screen.getByTestId("firstName"), 'John');
-    await userEvent.type(screen.getByTestId("lastName"), 'Doe')
-    await userEvent.type(screen.getByTestId("email"), 'john.doe@logion.network')
-    await userEvent.type(screen.getByTestId("phoneNumber"), '+1234')
-
-    await userEvent.type(screen.getByTestId("line1"), 'Place de le République Française, 10')
-    await userEvent.type(screen.getByTestId("line2"), 'boite 15')
-    await userEvent.type(screen.getByTestId("postalCode"), '4000')
-    await userEvent.type(screen.getByTestId("city"), 'Liège')
-    await userEvent.type(screen.getByTestId("country"), 'Belgium')
-
-    await userEvent.click(screen.getByRole('checkbox'));
-}
 
 async function selectLegalOfficers() {
     const legalOfficer1Select = screen.getByTestId('legalOfficer1Group');

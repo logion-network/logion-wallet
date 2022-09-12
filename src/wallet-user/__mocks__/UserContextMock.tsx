@@ -150,6 +150,10 @@ export function setCreateProtectionRequest(callback: any) {
     createProtectionRequest = callback;
 }
 
+export function setMutateLocsState(callback: any) {
+    mutateLocsState = callback;
+}
+
 export function UserContextProvider() {
     return (
         <div/>

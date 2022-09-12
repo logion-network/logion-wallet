@@ -1,30 +1,35 @@
 import Button from "../../common/Button";
 import { useState, useCallback } from "react";
-import Dialog from "../../common/Dialog";
-import IdentityForm, { FormValues } from "./IdentityForm";
+import IdentityForm, { FormValues } from "../../components/identity/IdentityForm";
 import { useForm } from "react-hook-form";
 import { useCommonContext } from "../../common/CommonContext";
-import SelectLegalOfficer from "../../wallet-user/trust-protection/SelectLegalOfficer";
+import SelectLegalOfficer from "./SelectLegalOfficer";
 import { LegalOfficer, LocsState } from "@logion/client";
-import { Row, Col } from "../../common/Grid";
-import { useUserContext } from "../../wallet-user/UserContext";
+import { useUserContext } from "../UserContext";
 import Form from "react-bootstrap/Form";
 import Frame from "../../common/Frame";
 import { useLogionChain } from "../../logion-chain";
+import { FullWidthPane } from "../../common/Dashboard";
+import { useNavigate } from "react-router";
+import { Row, Col } from "react-bootstrap";
+import './IdentityLocRequest.css';
 
-export default function IdentityLocRequest() {
+export interface Props {
+    backPath: string,
+}
 
-    const [ requestLoc, setRequestLoc ] = useState(false);
+export default function IdentityLocRequest(props: Props) {
+
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>();
     const { colorTheme, availableLegalOfficers } = useCommonContext();
     const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer | null>(null);
     const { mutateLocsState } = useUserContext();
     const [ agree, setAgree ] = useState<boolean>(false);
     const { accounts } = useLogionChain();
+    const navigate = useNavigate();
 
     const clear = useCallback(() => {
         reset();
-        setRequestLoc(false);
         setLegalOfficer(null);
     }, [ reset ])
 
@@ -54,33 +59,19 @@ export default function IdentityLocRequest() {
             })).locsState();
         })
         clear();
-    }, [ mutateLocsState, legalOfficer, accounts, clear ])
+        navigate(props.backPath);
+    }, [ mutateLocsState, legalOfficer, accounts, clear, navigate, props.backPath ])
 
     return (
-        <>
-            <Button onClick={ () => setRequestLoc(true) }>Request an Identity Case</Button>
-            <Dialog
-                show={ requestLoc }
-                size="xl"
-                actions={ [
-                    {
-                        id: "cancel",
-                        callback: clear,
-                        buttonText: 'Cancel',
-                        buttonVariant: 'secondary',
-                    },
-                    {
-                        id: "submit",
-                        buttonText: 'Submit',
-                        buttonVariant: 'primary',
-                        type: 'submit',
-                        disabled: !agree,
-                    }
-                ] }
-                onSubmit={ handleSubmit(submit) }
-            >
-                <Row>
-                    <Frame altColors={ true }>
+        <FullWidthPane
+            className="IdentityLocRequest"
+            mainTitle="Request an Identity Case"
+            titleIcon={ { icon: { id: "identity" } } }
+            onBack={ () => navigate(props.backPath) }
+        >
+            <Row>
+                <Col md={ 6 }>
+                    <Frame>
                         <SelectLegalOfficer
                             legalOfficer={ legalOfficer }
                             legalOfficerNumber={ 1 }
@@ -90,28 +81,46 @@ export default function IdentityLocRequest() {
                             setLegalOfficer={ setLegalOfficer }
                             label="Select your Legal Officer"
                             fillEmptyOfficerDetails={ true }
-                            colors={ colorTheme.dialog }
                             feedback="Required"
                         />
                     </Frame>
-                    <Frame altColors={ true } disabled={ legalOfficer === null }>
-                        <Col>
+                </Col>
+                <Col md={ 6 }>
+                    <Frame disabled={ legalOfficer === null }>
+
+                        <h3>Fill in your personal information</h3>
+
+                        <Form onSubmit={ handleSubmit(submit) }>
+
                             <IdentityForm
                                 control={ control }
                                 errors={ errors }
-                                colors={ colorTheme.dialog }
+                                colors={ colorTheme.frame }
                             />
-                            <Form.Check
-                                data-testid="agree"
-                                type="checkbox"
-                                checked={ agree }
-                                onChange={ () => setAgree(!agree) }
-                                label="I agree to send my personal information to the chosen Legal Officer"
-                            />
-                        </Col>
+
+                            <div className="agree-submit">
+                                <Form.Check
+                                    data-testid="agree"
+                                    type="checkbox"
+                                    checked={ agree }
+                                    onChange={ () => setAgree(!agree) }
+                                    label="I agree to send my personal information to the chosen Legal Officer"
+                                />
+                                <Button
+                                    action={ {
+                                        id: "submit",
+                                        buttonVariant: "primary",
+                                        buttonText: "Submit",
+                                        buttonTestId: "btnSubmit",
+                                        type: 'submit',
+                                        disabled: !agree,
+                                    } }
+                                />
+                            </div>
+                        </Form>
                     </Frame>
-                </Row>
-            </Dialog>
-        </>
+                </Col>
+            </Row>
+        </FullWidthPane>
     )
 }

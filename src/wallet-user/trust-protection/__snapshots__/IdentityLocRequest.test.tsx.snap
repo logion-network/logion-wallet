@@ -1,0 +1,224 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`IdentityLocRequest renders 1`] = `
+<FullWidthPane
+  className="IdentityLocRequest"
+  mainTitle="Request an Identity Case"
+  onBack={[Function]}
+  titleIcon={
+    Object {
+      "icon": Object {
+        "id": "identity",
+      },
+    }
+  }
+>
+  <Row>
+    <Col
+      md={6}
+    >
+      <Frame>
+        <SelectLegalOfficer
+          feedback="Required"
+          fillEmptyOfficerDetails={true}
+          label="Select your Legal Officer"
+          legalOfficer={null}
+          legalOfficerNumber={1}
+          legalOfficers={
+            Array [
+              Object {
+                "additionalDetails": "",
+                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "logoUrl": "",
+                "name": "Patrick Gielen",
+                "node": "http://logion.patrick.com",
+                "postalAddress": Object {
+                  "city": "Etterbeek",
+                  "company": "MODERO",
+                  "country": "Belgique",
+                  "line1": "Huissier de Justice Etterbeek",
+                  "line2": "Rue Beckers 17",
+                  "postalCode": "1040",
+                },
+                "userIdentity": Object {
+                  "email": "patrick@logion.network",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+32 498 237 107",
+                },
+              },
+              Object {
+                "additionalDetails": "",
+                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "logoUrl": "",
+                "name": "Guillaume Grain",
+                "node": "http://logion.guillaume.com",
+                "postalAddress": Object {
+                  "city": "LYON",
+                  "company": "SELARL ADRASTEE",
+                  "country": "France",
+                  "line1": "Gare des Brotteaux",
+                  "line2": "14, place Jules Ferry",
+                  "postalCode": "69006",
+                },
+                "userIdentity": Object {
+                  "email": "g.grain@adrastee-lyon.fr",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+33 4 78 52 87 56",
+                },
+              },
+              Object {
+                "additionalDetails": "",
+                "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+                "logoUrl": "",
+                "name": "Alain Barland",
+                "node": "http://logion.alain.com",
+                "postalAddress": Object {
+                  "city": "Bourges",
+                  "company": "AUXILIA CONSEILS 18",
+                  "country": "France",
+                  "line1": "Huissiers de Justice associés",
+                  "line2": "7 rue Jean Francois Champollion Parc Comitec",
+                  "postalCode": "18000",
+                },
+                "userIdentity": Object {
+                  "email": "alain.barland@auxilia-conseils.com",
+                  "firstName": "Patrick",
+                  "lastName": "Gielen",
+                  "phoneNumber": "+33 2 48 67 50 50",
+                },
+              },
+            ]
+          }
+          mode="select"
+          otherLegalOfficer={null}
+          setLegalOfficer={[Function]}
+        />
+      </Frame>
+    </Col>
+    <Col
+      md={6}
+    >
+      <Frame
+        disabled={true}
+      >
+        <h3>
+          Fill in your personal information
+        </h3>
+        <Form
+          onSubmit={[Function]}
+        >
+          <IdentityForm
+            colors={
+              Object {
+                "altBackground": "#eff3fe",
+                "background": "#ffffff",
+                "foreground": "#000000",
+                "link": "#3b6cf426",
+              }
+            }
+            control={
+              Object {
+                "_defaultValues": Object {},
+                "_executeSchema": [Function],
+                "_fields": Object {},
+                "_formState": Object {
+                  "dirtyFields": Object {},
+                  "errors": Object {},
+                  "isDirty": false,
+                  "isSubmitSuccessful": false,
+                  "isSubmitted": false,
+                  "isSubmitting": false,
+                  "isValid": false,
+                  "isValidating": false,
+                  "submitCount": 0,
+                  "touchedFields": Object {},
+                },
+                "_formValues": Object {},
+                "_getDirty": [Function],
+                "_getFieldArray": [Function],
+                "_getWatch": [Function],
+                "_names": Object {
+                  "array": Set {},
+                  "mount": Set {},
+                  "unMount": Set {},
+                  "watch": Set {},
+                },
+                "_options": Object {
+                  "mode": "onSubmit",
+                  "reValidateMode": "onChange",
+                  "shouldFocusError": true,
+                },
+                "_proxyFormState": Object {
+                  "dirtyFields": false,
+                  "errors": "all",
+                  "isDirty": false,
+                  "isValid": false,
+                  "isValidating": false,
+                  "touchedFields": false,
+                },
+                "_removeUnmounted": [Function],
+                "_stateFlags": Object {
+                  "action": false,
+                  "mount": false,
+                  "watch": false,
+                },
+                "_subjects": Object {
+                  "array": Object {
+                    "next": [Function],
+                    "observers": Array [],
+                    "subscribe": [Function],
+                    "unsubscribe": [Function],
+                  },
+                  "state": Object {
+                    "next": [Function],
+                    "observers": Array [],
+                    "subscribe": [Function],
+                    "unsubscribe": [Function],
+                  },
+                  "watch": Object {
+                    "next": [Function],
+                    "observers": Array [],
+                    "subscribe": [Function],
+                    "unsubscribe": [Function],
+                  },
+                },
+                "_updateFieldArray": [Function],
+                "_updateValid": [Function],
+                "getFieldState": [Function],
+                "register": [Function],
+                "unregister": [Function],
+              }
+            }
+            errors={Object {}}
+          />
+          <div
+            className="agree-submit"
+          >
+            <FormCheck
+              checked={false}
+              data-testid="agree"
+              label="I agree to send my personal information to the chosen Legal Officer"
+              onChange={[Function]}
+              type="checkbox"
+            />
+            <Button
+              action={
+                Object {
+                  "buttonTestId": "btnSubmit",
+                  "buttonText": "Submit",
+                  "buttonVariant": "primary",
+                  "disabled": true,
+                  "id": "submit",
+                  "type": "submit",
+                }
+              }
+            />
+          </div>
+        </Form>
+      </Frame>
+    </Col>
+  </Row>
+</FullWidthPane>
+`;

@@ -1,8 +1,8 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { UUID } from '@logion/node-api/dist/UUID';
 import { LocType } from "@logion/node-api/dist/Types";
 
-import { USER_PATH, locRequestsRelativePath, dataLocDetailsRelativePath } from '../RootPaths';
+import { USER_PATH, locRequestsRelativePath, locDetailsRelativePath } from '../RootPaths';
 
 import Settings from "../settings/Settings";
 import Wallet from "../common/Wallet";
@@ -18,7 +18,8 @@ import Recovery from "./trust-protection/Recovery";
 import Vault from "./trust-protection/Vault";
 import { useLogionChain } from '../logion-chain';
 import LocCreation from "./transaction-protection/LocCreation";
-import IdentityLocRequest from "../components/identity/IdentityLocRequest";
+import Button from "../common/Button";
+import IdentityLocRequest from "./trust-protection/IdentityLocRequest";
 
 export const HOME_PATH = USER_PATH;
 
@@ -32,6 +33,7 @@ export const WALLET_RELATIVE_PATH = '/wallet';
 export const WALLET_PATH = USER_PATH + WALLET_RELATIVE_PATH;
 export const VAULT_RELATIVE_PATH = '/vault';
 export const VAULT_PATH = USER_PATH + VAULT_RELATIVE_PATH;
+export const IDENTITY_REQUEST_PATH = "loc/identity-request";
 
 export const TRANSACTIONS_RELATIVE_PATH = WALLET_RELATIVE_PATH + '/:coinId';
 const TRANSACTIONS_PATH = USER_PATH + TRANSACTIONS_RELATIVE_PATH;
@@ -46,7 +48,7 @@ export function vaultTransactionsPath(coinId: string): string {
 }
 
 export function dataLocDetailsPath(locType: LocType, locId: string) {
-    return USER_PATH + dataLocDetailsRelativePath(locType)
+    return USER_PATH + locDetailsRelativePath(locType)
         .replace(":locId", locId)
 }
 
@@ -68,6 +70,7 @@ export default function UserRouter() {
     const { accounts } = useLogionChain();
     const { balanceState } = useCommonContext();
     const { vaultState } = useUserContext();
+    const navigate = useNavigate();
 
     if(!balanceState || !(accounts?.current?.address)) {
         return null;
@@ -145,16 +148,16 @@ export default function UserRouter() {
                            request: "Identity Case Request(s)"
                        } }
                        iconId="identity"
-                       actions={ <IdentityLocRequest/> }
+                       actions={ <Button onClick={ () => navigate(IDENTITY_REQUEST_PATH) }>Request an Identity Case</Button> }
                    /> } />
-            <Route path={ dataLocDetailsRelativePath('Transaction') } element={
+            <Route path={ locDetailsRelativePath('Transaction') } element={
                 <LocDetails
                     backPath={ locRequestsPath('Transaction') }
                     detailsPath={ locDetailsPath }
                     viewer='User'
                 />
             } />
-            <Route path={ dataLocDetailsRelativePath('Collection') } element={
+            <Route path={ locDetailsRelativePath('Collection') } element={
                 <LocDetails
                     backPath={ locRequestsPath('Collection') }
                     detailsPath={ locDetailsPath }
@@ -162,6 +165,9 @@ export default function UserRouter() {
                 />
             } />
             <Route path="/" element={ <Home /> } />
+            <Route path={ IDENTITY_REQUEST_PATH } element={
+                <IdentityLocRequest backPath={ locRequestsPath('Identity') }/>
+            } />
         </Routes>
     );
 }
