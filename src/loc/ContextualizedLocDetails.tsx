@@ -39,6 +39,54 @@ import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
 import { format } from "../common/DateTimeFormat";
 
 import "./ContextualizedLocDetails.css";
+import { LocRequest } from "../common/types/ModelTypes";
+import Detail from "../common/Detail";
+
+interface PersonalInfoProps {
+    locRequest: LocRequest
+}
+
+function PersonalInfo(props: PersonalInfoProps) {
+    const { locRequest } = props;
+    const userIdentity = locRequest.userIdentity;
+    const userPostalAddress = locRequest.userPostalAddress;
+    const padding = "/";
+    return (
+        <Row className="PersonalInfo">
+            <Col md={ 6 }>
+                <Detail label="Account Address" value={ locRequest.requesterAddress || padding } />
+                <Row>
+                    <Col style={ { flexGrow: 1 } }>
+                        <Detail label="First Name" value={ userIdentity?.firstName || padding } />
+                        <Detail label="Email" value={ userIdentity?.email || padding } />
+                    </Col>
+                    <Col style={ { flexGrow: 1 } }>
+                        <Detail label="Last Name" value={ userIdentity?.lastName || padding } />
+                        <Detail label="Phone Number" value={ userIdentity?.phoneNumber || padding } />
+                    </Col>
+                </Row>
+            </Col>
+            <Col md={ 6 }>
+                <Detail label="Line1" value={ userPostalAddress?.line1 || padding } />
+                <Detail label="Line2" value={ userPostalAddress?.line2 || padding } />
+
+                <Row>
+                    <Col style={ { flexGrow: 1 } }>
+                        <Detail label="Postal Code" value={ userPostalAddress?.postalCode || padding } />
+                    </Col>
+                    <Col style={ { flexGrow: 2 } }>
+                        <Detail label="City" value={ userPostalAddress?.city || padding } />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col style={ { flexGrow: 1 } }>
+                        <Detail label="Country" value={ userPostalAddress?.country || padding } />
+                    </Col>
+                </Row>
+            </Col>
+        </Row>
+    )
+}
 
 export default function ContextualizedLocDetails() {
     const { colorTheme } = useCommonContext();
@@ -54,7 +102,7 @@ export default function ContextualizedLocDetails() {
     const checkHash = useCallback(async (hash: string) => {
         const result = await locState?.checkHash(hash);
 
-        if(result?.collectionItem || result?.file || result?.metadataItem) {
+        if (result?.collectionItem || result?.file || result?.metadataItem) {
             setCheckResult({
                 result: "POSITIVE",
                 hash
@@ -70,14 +118,14 @@ export default function ContextualizedLocDetails() {
     }, [ setCheckResult, setCollectionItem, locState ]);
 
     useEffect(() => {
-        if(location.search) {
+        if (location.search) {
             const params = queryString.parse(location.search);
             let requestId: string;
             let requests: ProtectionRequest[];
-            if('protection-request' in params) {
+            if ('protection-request' in params) {
                 requestId = params['protection-request'] as string;
                 requests = pendingProtectionRequests!;
-            } else if('recovery-request' in params) {
+            } else if ('recovery-request' in params) {
                 requestId = params['recovery-request'] as string;
                 requests = pendingRecoveryRequests!;
             } else {
@@ -85,9 +133,9 @@ export default function ContextualizedLocDetails() {
                 requests = [];
             }
 
-            if(protectionRequest === undefined || (protectionRequest !== null && requestId !== protectionRequest.id)) {
+            if (protectionRequest === undefined || (protectionRequest !== null && requestId !== protectionRequest.id)) {
                 const request = requests.find(request => request.id === requestId);
-                if(request !== undefined) {
+                if (request !== undefined) {
                     setProtectionRequest(request);
                 } else {
                     setProtectionRequest(null);
@@ -101,19 +149,19 @@ export default function ContextualizedLocDetails() {
     }
 
     let locTabBorderColor = BLUE;
-    if(loc.voidInfo !== undefined) {
+    if (loc.voidInfo !== undefined) {
         locTabBorderColor = RED;
-    } else if(loc.closed) {
+    } else if (loc.closed) {
         locTabBorderColor = POLKADOT;
     }
 
     let locTabBorderWidth: string | undefined = undefined;
-    if(loc.voidInfo !== undefined) {
+    if (loc.voidInfo !== undefined) {
         locTabBorderWidth = "2px";
     }
 
     let tabColors: BackgroundAndForegroundColors | undefined = undefined;
-    if(loc.voidInfo !== undefined) {
+    if (loc.voidInfo !== undefined) {
         tabColors = {
             foreground: "white",
             background: RED
@@ -122,21 +170,21 @@ export default function ContextualizedLocDetails() {
 
     let paneTitle: string = "";
     let paneIcon: string = "";
-    if(loc.locType === 'Transaction') {
+    if (loc.locType === 'Transaction') {
         paneTitle = "Transaction Protection Case";
         paneIcon = 'loc';
-    } else if(loc.locType === 'Identity') {
+    } else if (loc.locType === 'Identity') {
         paneTitle = "Identity Case";
         paneIcon = 'identity';
-    } else if(loc.locType === 'Collection') {
+    } else if (loc.locType === 'Collection') {
         paneTitle = "Collection Protection Case";
         paneIcon = 'collection';
     }
 
     let locTabTitle: string;
-    if(loc.locType === 'Transaction') {
+    if (loc.locType === 'Transaction') {
         locTabTitle = "Legal Officer Case (LOC) - Transaction";
-    } else if(loc.locType === 'Collection') {
+    } else if (loc.locType === 'Collection') {
         locTabTitle = "Legal Officer Case (LOC) - Collection";
     } else {
         if (isLogionIdentityLoc(loc)) {
@@ -145,7 +193,7 @@ export default function ContextualizedLocDetails() {
             locTabTitle = "Legal Officer Case (LOC) - Polkadot Identity";
         }
     }
-    if(loc.voidInfo !== undefined) {
+    if (loc.voidInfo !== undefined) {
         locTabTitle = "VOID " + locTabTitle;
     }
 
@@ -168,13 +216,15 @@ export default function ContextualizedLocDetails() {
                         icon={ <Icon icon={ { id: "tip" } } width="45px" /> }
                         text={
                             <p><strong>Identity Case:</strong> must be used when your client cannot have a
-                                Polkadot account to request your services. Once closed after a proper identity check,
-                                you are able to initiate legal services requests ON BEHALF of this Logion Identity LOC,
+                                Polkadot account to request your services. Once closed after a proper identity
+                                check,
+                                you are able to initiate legal services requests ON BEHALF of this Logion Identity
+                                LOC,
                                 representing - on the blockchain-, by extension, the client it refers.</p>
                         }
                         className="logion-loc-tip"
                     />
-                    <div className="upper-action-bar" >
+                    <div className="upper-action-bar">
                         { loc.closed && loc.voidInfo === undefined &&
                             <Button
                                 onClick={ () => setCreateLoc(true) }
@@ -193,10 +243,17 @@ export default function ContextualizedLocDetails() {
                     <IconTextRow
                         icon={ <Icon icon={ { id: "tip" } } width="45px" /> }
                         text={
-                            <p><strong>Protection request context:</strong> you are currently verifying the identity of a given person by collecting the
-                                required documentation. This verification must follow proper due diligence using tools and processes defined by you and under
-                                your Legal Officer responsibility. After this verification, you will be able to confirm the fact you agree to be the
-                                Legal Officer of the related person and, thus, be requested to execute protection services such as recovery or multi-signature actions.</p>
+                            <p><strong>Protection request context:</strong> you are currently verifying the identity
+                                of
+                                a given person by collecting the
+                                required documentation. This verification must follow proper due diligence using
+                                tools
+                                and processes defined by you and under
+                                your Legal Officer responsibility. After this verification, you will be able to
+                                confirm
+                                the fact you agree to be the
+                                Legal Officer of the related person and, thus, be requested to execute protection
+                                services such as recovery or multi-signature actions.</p>
                         }
                         className="logion-loc-tip"
                     />
@@ -208,10 +265,18 @@ export default function ContextualizedLocDetails() {
                     <IconTextRow
                         icon={ <Icon icon={ { id: "tip" } } width="45px" /> }
                         text={
-                            <p><strong>Recovery request context:</strong> you are currently verifying the identity of a given person by collecting the required documentation.
-                                This verification must follow proper due diligence using tools and processes defined by you and under your Legal Officer responsibility. After this
-                                verification, within this present page, you will be able to confirm the fact you are the Legal Officer of the related person and, thus, authorize the
-                                transfer of all the assets to the new account this person opened to replace his/her lost one.</p>
+                            <p><strong>Recovery request context:</strong> you are currently verifying the identity
+                                of a
+                                given person by collecting the required documentation.
+                                This verification must follow proper due diligence using tools and processes defined
+                                by
+                                you and under your Legal Officer responsibility. After this
+                                verification, within this present page, you will be able to confirm the fact you are
+                                the
+                                Legal Officer of the related person and, thus, authorize the
+                                transfer of all the assets to the new account this person opened to replace his/her
+                                lost
+                                one.</p>
                         }
                         className="logion-loc-tip"
                     />
@@ -237,12 +302,13 @@ export default function ContextualizedLocDetails() {
                         return <>
                             <Row>
                                 <Col md={ 4 }>
-                                    <LocItemDetail label="LOC ID" copyButtonText={ locId.toDecimalString() } >
+                                    <LocItemDetail label="LOC ID" copyButtonText={ locId.toDecimalString() }>
                                         <OverlayTrigger
                                             placement="top"
                                             delay={ 500 }
                                             overlay={
-                                                <Tooltip id={ locId.toDecimalString() }>{ locId.toDecimalString() }</Tooltip> }>
+                                                <Tooltip
+                                                    id={ locId.toDecimalString() }>{ locId.toDecimalString() }</Tooltip> }>
                                             <span>{ locId.toDecimalString() }</span>
                                         </OverlayTrigger>
                                     </LocItemDetail>
@@ -252,31 +318,32 @@ export default function ContextualizedLocDetails() {
                                     <LocItemDetail label="Description">{ locRequest?.description }</LocItemDetail>
                                     {
                                         locRequest.status === 'CLOSED' &&
-                                        <LocItemDetail label="Closing date" spinner={ locRequest.closedOn === undefined }>{ closingDate }</LocItemDetail>
+                                        <LocItemDetail label="Closing date"
+                                                       spinner={ locRequest.closedOn === undefined }>{ closingDate }</LocItemDetail>
                                     }
                                 </Col>
 
                                 <Col md={ 4 } className="closed-icon-container">
-                                        <LocItemDetail
-                                            label="Requested by"
-                                        >
-                                            { locRequest.userIdentity?.firstName || "" } { locRequest.userIdentity?.lastName || "" }
-                                            {
-                                                locRequest.requesterAddress !== null && locRequest.requesterAddress !== undefined &&
-                                                <>
-                                                    <OverlayTrigger
-                                                        placement="top"
-                                                        delay={ 500 }
-                                                        overlay={
-                                                            <Tooltip
-                                                                id={ locRequest.requesterAddress }>{ locRequest.requesterAddress }</Tooltip> }>
-                                                        <span><br /> { locRequest.requesterAddress }</span>
-                                                    </OverlayTrigger>
-                                                </>
-                                            }
-                                            {
-                                                locRequest.requesterIdentityLoc !== null && locRequest.requesterIdentityLoc !== undefined &&
-                                                <span><br />
+                                    <LocItemDetail
+                                        label="Requested by"
+                                    >
+                                        { locRequest.userIdentity?.firstName || "" } { locRequest.userIdentity?.lastName || "" }
+                                        {
+                                            locRequest.requesterAddress !== null && locRequest.requesterAddress !== undefined &&
+                                            <>
+                                                <OverlayTrigger
+                                                    placement="top"
+                                                    delay={ 500 }
+                                                    overlay={
+                                                        <Tooltip
+                                                            id={ locRequest.requesterAddress }>{ locRequest.requesterAddress }</Tooltip> }>
+                                                    <span><br /> { locRequest.requesterAddress }</span>
+                                                </OverlayTrigger>
+                                            </>
+                                        }
+                                        {
+                                            locRequest.requesterIdentityLoc !== null && locRequest.requesterIdentityLoc !== undefined &&
+                                            <span><br />
                                             <NewTabLink
                                                 href={ detailsPath(new UUID(locRequest.requesterIdentityLoc), 'Identity') }
                                                 iconId="loc-link"
@@ -286,8 +353,8 @@ export default function ContextualizedLocDetails() {
                                                     maxWidth="250px">{ new UUID(locRequest.requesterIdentityLoc).toDecimalString() }</Ellipsis>
                                             </NewTabLink>
                                         </span>
-                                            }
-                                        </LocItemDetail>
+                                        }
+                                    </LocItemDetail>
                                     {
                                         loc.closed && loc.voidInfo === undefined &&
                                         <div className="closed-icon">
@@ -302,20 +369,25 @@ export default function ContextualizedLocDetails() {
                                     }
                                 </Col>
                             </Row>
-                            <div className="separator" style={{ backgroundColor: locTabBorderColor }} />
+                            <div className="separator" style={ { backgroundColor: locTabBorderColor } } />
+                            { loc?.locType === "Identity" && <>
+                                <PersonalInfo locRequest={ locRequest } />
+                                <div className="separator" style={ { backgroundColor: locTabBorderColor } } />
+                            </> }
                             <LOLocItems matchedHash={ checkResult.hash } />
                             {
                                 !loc.closed && loc.voidInfo === undefined &&
                                 <Row>
-                                    <Col className="add-buttons-container" xxl={5} xl={4}>
-                                        <LOLocPublicDataButton/>
-                                        <LOLocPrivateFileButton/>
+                                    <Col className="add-buttons-container" xxl={ 5 } xl={ 4 }>
+                                        <LOLocPublicDataButton />
+                                        <LOLocPrivateFileButton />
                                     </Col>
-                                    <Col className="link-button-container" xxl={4} xl={4}>
+                                    <Col className="link-button-container" xxl={ 4 } xl={ 4 }>
                                         <LocLinkButton excludeNewIdentity={ isLogionDataLoc(loc) } />
                                     </Col>
-                                    <Col className="close-button-container" xxl={3} xl={4}>
-                                        <CloseLocButton protectionRequest={ protectionRequest } seal={ locRequest.seal }/>
+                                    <Col className="close-button-container" xxl={ 3 } xl={ 4 }>
+                                        <CloseLocButton protectionRequest={ protectionRequest }
+                                                        seal={ locRequest.seal } />
                                     </Col>
                                 </Row>
                             }
@@ -333,7 +405,8 @@ export default function ContextualizedLocDetails() {
                     className="loc-is-void"
                     title={ <span><Icon icon={ { id: 'void' } } width="45px" /> This LOC is VOID</span> }
                 >
-                    <p><strong>You have voided this LOC at the following date:</strong> <InlineDateTime dateTime={ locRequest?.voidInfo?.voidedOn } /></p>
+                    <p><strong>You have voided this LOC at the following date:</strong> <InlineDateTime
+                        dateTime={ locRequest?.voidInfo?.voidedOn } /></p>
                     <p><strong>Reason:</strong> { locRequest.voidInfo?.reason || "-" }</p>
                     {
                         loc.voidInfo.replacer !== undefined &&
@@ -349,12 +422,16 @@ export default function ContextualizedLocDetails() {
                     }
                     {
                         loc.voidInfo.replacer === undefined &&
-                        <p>Please note that its public certificate shows a "VOID" mention to warn people that the content of the LOC is not valid anymore.</p>
+                        <p>Please note that its public certificate shows a "VOID" mention to warn people that the
+                            content of the LOC is not valid anymore.</p>
                     }
                     {
                         loc.voidInfo.replacer !== undefined &&
-                        <p>Please note that its public certificate shows a "VOID" mention to warn people that the content of the LOC is not valid anymore.
-                            People will be automatically redirected to the replacing LOC when accessing to the void LOC URL and a mention of the fact that
+                        <p>Please note that its public certificate shows a "VOID" mention to warn people that the
+                            content of the LOC is not valid anymore.
+                            People will be automatically redirected to the replacing LOC when accessing to the void
+                            LOC
+                            URL and a mention of the fact that
                             the replacing LOC supersedes the void LOC will be visible on both certificates.
                         </p>
                     }
@@ -366,14 +443,17 @@ export default function ContextualizedLocDetails() {
                     className="loc-is-void"
                     title={ <span><Icon icon={ { id: 'void' } } width="45px" /> This Collection LOC with all its related Collection Items are VOID</span> }
                 >
-                    <p><strong>You have voided this Collection LOC with all its related Collection Items at the following date:</strong> <InlineDateTime dateTime={ locRequest?.voidInfo?.voidedOn } /></p>
+                    <p><strong>You have voided this Collection LOC with all its related Collection Items at the
+                        following date:</strong> <InlineDateTime dateTime={ locRequest?.voidInfo?.voidedOn } /></p>
                     <p><strong>Reason:</strong> { locRequest.voidInfo?.reason || "-" }</p>
-                    <p>Please note that related public certificates show a "VOID" mention to warn people that the content of the Collection LOC as well as its related Collection Items are not valid anymore.</p>
+                    <p>Please note that related public certificates show a "VOID" mention to warn people that the
+                        content of the Collection LOC as well as its related Collection Items are not valid
+                        anymore.</p>
                 </DangerFrame>
             }
             <CertificateAndLimits
                 locId={ locId }
-                loc={{ ...loc, isVoid: loc.voidInfo !== undefined }}
+                loc={ { ...loc, isVoid: loc.voidInfo !== undefined } }
                 viewer="LegalOfficer"
             />
             { loc.locType === 'Collection' && loc.closed &&
@@ -392,8 +472,12 @@ export default function ContextualizedLocDetails() {
                         icon={ <Icon icon={ { id: 'void_supersede' } } width="45px" /> }
                         text={
                             <>
-                                <p className="frame-title">IMPORTANT: this logion Legal Officer Case (LOC) supersedes a previous LOC (VOID)</p>
-                                <p><strong>This LOC supersedes a previous LOC (VOID) since the following date:</strong> <InlineDateTime dateTime={ supersededLocRequest?.voidInfo?.voidedOn } /></p>
+                                <p className="frame-title">IMPORTANT: this logion Legal Officer Case (LOC)
+                                    supersedes a
+                                    previous LOC (VOID)</p>
+                                <p><strong>This LOC supersedes a previous LOC (VOID) since the following
+                                    date:</strong>
+                                    <InlineDateTime dateTime={ supersededLocRequest?.voidInfo?.voidedOn } /></p>
                                 <p><strong>For record purpose, this LOC supersedes the following LOC: </strong>
                                     <NewTabLink
                                         href={ detailsPath(loc.replacerOf, loc.locType) }
@@ -425,18 +509,28 @@ export default function ContextualizedLocDetails() {
                                 {
                                     loc.locType !== 'Collection' &&
                                     <p>
-                                        This action will invalidate the present LOC: the LOC status, its public certificate will show a "VOID" mention to warn people that
-                                        the content of the LOC is not valid anymore. If another replacing LOC is set, people will be automatically redirected to
-                                        the replacing LOC when accessing the void LOC URL and a mention of the fact that the replacing LOC <strong>supersedes</strong> the void
-                                        LOC will be shared on both public certificates. <strong>PLEASE USE CAREFULLY.</strong>
+                                        This action will invalidate the present LOC: the LOC status, its public
+                                        certificate will show a "VOID" mention to warn people that
+                                        the content of the LOC is not valid anymore. If another replacing LOC is
+                                        set,
+                                        people will be automatically redirected to
+                                        the replacing LOC when accessing the void LOC URL and a mention of the fact
+                                        that
+                                        the replacing LOC <strong>supersedes</strong> the void
+                                        LOC will be shared on both public certificates. <strong>PLEASE USE
+                                        CAREFULLY.</strong>
                                     </p>
                                 }
                                 {
                                     loc.locType === 'Collection' &&
                                     <p>
-                                        This action will invalidate the present Collection LOC and all its related Collection Items: the Collection LOC and all
-                                        related Collection Items status / public certificates will show a "VOID" mention to warn people that the content of the
-                                        Collection LOC and all its related Collection Items are not valid anymore. <strong>PLEASE USE CAREFULLY.</strong>
+                                        This action will invalidate the present Collection LOC and all its related
+                                        Collection Items: the Collection LOC and all
+                                        related Collection Items status / public certificates will show a "VOID"
+                                        mention
+                                        to warn people that the content of the
+                                        Collection LOC and all its related Collection Items are not valid
+                                        anymore. <strong>PLEASE USE CAREFULLY.</strong>
                                     </p>
                                 }
                                 <ButtonGroup
@@ -456,11 +550,11 @@ export default function ContextualizedLocDetails() {
                 show={ createLoc }
                 exit={ () => setCreateLoc(false) }
                 onSuccess={ request => navigate(detailsPath(UUID.fromAnyString(request.id)!, 'Transaction')) }
-                locRequest={{
+                locRequest={ {
                     requesterIdentityLoc: locRequest.id,
                     locType: 'Transaction',
                     userIdentity: locRequest.userIdentity,
-                }}
+                } }
                 hasLinkNature={ false }
             />
         </FullWidthPane>

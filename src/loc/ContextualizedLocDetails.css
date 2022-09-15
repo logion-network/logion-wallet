@@ -77,6 +77,11 @@
     margin-top: 30px;
 }
 
+.ContextualizedLocDetails .PersonalInfo .Detail .label {
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
 @media (max-width: 1360px) {
 
     .ContextualizedLocDetails .link-button-container {
