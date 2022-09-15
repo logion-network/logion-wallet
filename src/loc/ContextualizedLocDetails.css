@@ -83,6 +83,12 @@
     margin-top: 30px;
 }
 
+.ContextualizedLocDetails .PersonalInfo .title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
 .ContextualizedLocDetails .PersonalInfo .Detail .label {
     font-weight: bold;
     font-size: 0.9rem;
