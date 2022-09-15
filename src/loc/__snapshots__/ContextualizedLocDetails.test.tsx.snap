@@ -911,7 +911,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
               >
                 <div
                   align="left"
-                  className="btn-group"
+                  className="void-buttons-container btn-group"
                   role="group"
                 >
                   <button

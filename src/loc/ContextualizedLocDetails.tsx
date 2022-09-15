@@ -535,6 +535,7 @@ export default function ContextualizedLocDetails() {
                                 }
                                 <ButtonGroup
                                     align="left"
+                                    className="void-buttons-container"
                                 >
                                     <VoidLocButton />
                                     { loc.locType !== 'Collection' && <VoidLocReplaceNewButton /> }
