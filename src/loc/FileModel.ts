@@ -7,7 +7,7 @@ export type LoFileId = typeof LO_FILE_IDS[number];
 
 export const LO_FILE_DESCRIPTION: Record<LoFileId, string> = {
     'header-logo': "Statement of facts: header logo",
-    'seal': "Statement of facts: seal",
+    'seal': "Statement of facts: page background",
     'oath-logo': "Statement of facts: oath logo"
 }
 
