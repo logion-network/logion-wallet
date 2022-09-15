@@ -40,6 +40,7 @@ interface CloseState {
 
 export interface Props {
     protectionRequest?: ProtectionRequest | null;
+    seal?: string;
 }
 
 export default function CloseLocButton(props: Props) {
@@ -52,14 +53,15 @@ export default function CloseLocButton(props: Props) {
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
     const [ disabled, setDisabled ] = useState<boolean>(false);
     const [ signAndSubmitVouch, setSignAndSubmitVouch ] = useState<SignAndSubmit>(null);
+    const seal = props.seal;
 
     useEffect(() => {
         if (closeState.status === CloseStatus.CLOSE_PENDING) {
             setCloseState({ status: CloseStatus.CLOSING });
-            const signAndSubmit: SignAndSubmit = closeExtrinsic!();
+            const signAndSubmit: SignAndSubmit = closeExtrinsic!(seal);
             setSignAndSubmit(() => signAndSubmit);
         }
-    }, [ closeExtrinsic, closeState, setCloseState ]);
+    }, [ closeExtrinsic, closeState, setCloseState, seal ]);
 
     useEffect(() => {
         if (locItems.findIndex(locItem => locItem.status === "DRAFT") < 0) {
@@ -135,7 +137,7 @@ export default function CloseLocButton(props: Props) {
                 }
             })();
         }
-    }, [ closeExtrinsic, closeState, setCloseState, accounts, axiosFactory, close, locId, navigate, props.protectionRequest, refresh, refreshRequests, refreshLocs ]);
+    }, [ closeState, setCloseState, accounts, axiosFactory, close, locId, navigate, props.protectionRequest, refresh, refreshRequests, refreshLocs ]);
 
     let closeButtonText;
     let firstStatus: CloseStatus;

@@ -315,7 +315,7 @@ export default function ContextualizedLocDetails() {
                                         <LocLinkButton excludeNewIdentity={ isLogionDataLoc(loc) } />
                                     </Col>
                                     <Col className="close-button-container" xxl={3} xl={4}>
-                                        <CloseLocButton protectionRequest={ protectionRequest } />
+                                        <CloseLocButton protectionRequest={ protectionRequest } seal={ locRequest.seal }/>
                                     </Col>
                                 </Row>
                             }

@@ -60,7 +60,7 @@ export interface LocContext {
     addFile: ((name: string, file: File, nature: string) => Promise<void>) | null
     publishFile: ((locItem: LocItem) => SignAndSubmit) | null
     close: (() => void) | null
-    closeExtrinsic: (() => SignAndSubmit) | null
+    closeExtrinsic: ((seal?: string) => SignAndSubmit) | null
     confirmFile: ((locItem: LocItem) => void) | null
     deleteFile: ((locItem: LocItem) => void) | null
     confirmLink: ((locItem: LocItem) => void) | null
@@ -138,7 +138,7 @@ interface Action {
     addFile?: (name: string, file: File, nature: string) => Promise<void>,
     publishFile?: (locItem: LocItem) => SignAndSubmit,
     close?: () => void,
-    closeExtrinsic?: () => SignAndSubmit,
+    closeExtrinsic?: (seal?: string) => SignAndSubmit,
     confirmFile?: (locItem: LocItem) => void,
     deleteFile?: (locItem: LocItem) => void,
     confirmLink?: (locItem: LocItem) => void
@@ -478,7 +478,7 @@ export function LocContextProvider(props: Props) {
         return signAndSubmit;
     }, [ api, contextValue.locId, contextValue.loc ])
 
-    const closeExtrinsicFunction = useCallback(() => {
+    const closeExtrinsicFunction = useCallback((seal?: string) => {
             const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
                 signerId: contextValue.loc!.owner,
                 callback: setResult,
@@ -486,6 +486,7 @@ export function LocContextProvider(props: Props) {
                 submittable: closeLoc({
                     locId: contextValue.locId,
                     api: api!,
+                    seal
                 })
             });
             return signAndSubmit;
@@ -494,10 +495,10 @@ export function LocContextProvider(props: Props) {
 
     const closeFunction = useCallback(() => {
             preClose(axiosFactory!(contextValue.loc!.owner)!, contextValue.locId)
-            .then(() => {
-                dispatch({ type: 'CLOSE' });
-                setRefreshCounter(MAX_REFRESH);
-            });
+                .then(() => {
+                    dispatch({ type: 'CLOSE' });
+                    setRefreshCounter(MAX_REFRESH);
+                });
         }, [ axiosFactory, contextValue.locId, dispatch, contextValue.loc ]
     )
 
