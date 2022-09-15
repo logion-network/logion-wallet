@@ -164,6 +164,13 @@ export default function UserRouter() {
                     viewer='User'
                 />
             } />
+            <Route path={ locDetailsRelativePath('Identity') } element={
+                <LocDetails
+                    backPath={ locRequestsPath('Identity') }
+                    detailsPath={ locDetailsPath }
+                    viewer='User'
+                />
+            } />
             <Route path="/" element={ <Home /> } />
             <Route path={ IDENTITY_REQUEST_PATH } element={
                 <IdentityLocRequest backPath={ locRequestsPath('Identity') }/>
