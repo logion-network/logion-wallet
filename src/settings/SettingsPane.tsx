@@ -71,7 +71,7 @@ export default function SettingsPane(props: Props) {
                     <Row>
                         <Col>
                             <PolkadotFrame
-                                title="Chain data"
+                                title="Logion node settings - on-chain data"
                             >
                                 <ChainData />
                             </PolkadotFrame>

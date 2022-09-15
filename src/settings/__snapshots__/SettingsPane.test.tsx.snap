@@ -29,7 +29,7 @@ exports[`SettingsPane renders for legal officer 1`] = `
     <Row>
       <Col>
         <PolkadotFrame
-          title="Chain data"
+          title="Logion node settings - on-chain data"
         >
           <ChainData />
         </PolkadotFrame>
