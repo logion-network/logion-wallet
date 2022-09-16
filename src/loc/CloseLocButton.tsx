@@ -21,6 +21,7 @@ import { useLogionChain } from "../logion-chain";
 import { signAndSend } from "../logion-chain/Signature";
 
 import './CloseLocButton.css';
+import { LocRequest } from "../common/types/ModelTypes";
 
 enum CloseStatus {
     NONE,
@@ -40,7 +41,7 @@ interface CloseState {
 
 export interface Props {
     protectionRequest?: ProtectionRequest | null;
-    seal?: string;
+    locRequest: LocRequest;
 }
 
 export default function CloseLocButton(props: Props) {
@@ -53,7 +54,8 @@ export default function CloseLocButton(props: Props) {
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
     const [ disabled, setDisabled ] = useState<boolean>(false);
     const [ signAndSubmitVouch, setSignAndSubmitVouch ] = useState<SignAndSubmit>(null);
-    const seal = props.seal;
+    const seal = props.locRequest.seal;
+    const locType = props.locRequest.locType;
 
     useEffect(() => {
         if (closeState.status === CloseStatus.CLOSE_PENDING) {
@@ -271,7 +273,7 @@ export default function CloseLocButton(props: Props) {
             </ProcessStep>
             <ProcessStep
                 active={ closeState.status === CloseStatus.START || closeState.status === CloseStatus.CLOSE_PENDING }
-                title="Close this Case (1/2)"
+                title={ locType !== "Identity" ? "Close this Case (1/2)" : "Close this Identity Case (1/2)" }
                 nextSteps={[
                     {
                         id: 'cancel',
@@ -290,8 +292,21 @@ export default function CloseLocButton(props: Props) {
                 ]}
             >
                 <Alert variant="info">
-                    <p>Warning: after processing and blockchain publication, this case cannot be opened again and therefore
-                        will be completely sealed.</p>
+                    { locType === "Identity" &&
+                        <p>Warning: after processing and blockchain publication, this case cannot be opened again and
+                            therefore will be completely sealed.</p>
+                    }
+                    { locType === "Identity" &&
+                        <>
+                            <p>Closing this Identity LOC will add a HASH of all identity records in the LOC. This HASH
+                                will be published and publicly available in the current LOC as follow, proving - without
+                                revealing related records - the identity verification due diligence you executed:</p>
+                            <p><strong>Verified identity records existence proof:</strong></p>
+                            <p>{ seal }</p>
+                            <p>Warning: after processing and blockchain publication, this case cannot be opened again
+                                and therefore will be completely sealed.</p>
+                        </>
+                    }
                 </Alert>
             </ProcessStep>
             <ProcessStep

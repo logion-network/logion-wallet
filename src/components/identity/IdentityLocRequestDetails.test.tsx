@@ -1,7 +1,7 @@
 import { LocRequest } from '../../common/types/ModelTypes';
 import { shallowRender } from '../../tests';
-import IdentityLocRequestDetails from "./IdentityLocRequestDetails";
 import { DEFAULT_IDENTITY, DEFAULT_ADDRESS } from "../../common/TestData";
+import IdentityLocRequestDetails from "./IdentityLocRequestDetails";
 
 test("renders", () => {
     const request: LocRequest = {
@@ -19,7 +19,7 @@ test("renders", () => {
         links: [],
     };
     const tree = shallowRender(<IdentityLocRequestDetails
-        request={ request  }
+        personalInfo={ request  }
     />);
     expect(tree).toMatchSnapshot();
 });

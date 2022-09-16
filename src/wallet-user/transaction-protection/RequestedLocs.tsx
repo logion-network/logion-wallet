@@ -1,5 +1,5 @@
 import { LocType } from "@logion/node-api/dist/Types";
-
+import IdentityLocRequestDetails from "../../components/identity/IdentityLocRequestDetails";
 import { useUserContext } from "../UserContext";
 import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';
@@ -24,6 +24,7 @@ export default function RequestedLocs(props: Props) {
                 {
                     header: "Legal officer",
                     render: request => <LegalOfficerName address={ request.ownerAddress } />,
+                    renderDetails: locType === 'Identity' ? request => <IdentityLocRequestDetails personalInfo={ request }/> : undefined,
                     align: 'left',
                 },
                 {
