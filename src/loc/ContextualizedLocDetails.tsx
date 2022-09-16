@@ -36,7 +36,7 @@ import Ellipsis from "../common/Ellipsis";
 import CertificateAndLimits from "./CertificateAndLimits";
 import { LOCollectionLocItemChecker } from "./CollectionLocItemChecker";
 import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
-import { PersonalInfo } from "./PersonalInfo";
+import { PersonalInfo } from "../components/identity/PersonalInfo";
 import "./ContextualizedLocDetails.css";
 
 export default function ContextualizedLocDetails() {

@@ -1,13 +1,7 @@
-import { Row } from "../common/Grid";
+import { Row } from "../../common/Grid";
 import { Col } from "react-bootstrap";
-import Detail from "../common/Detail";
-import { UserIdentity, PostalAddress } from "@logion/client";
-
-interface PersonalInfoProps {
-    requesterAddress: string,
-    userIdentity?: UserIdentity,
-    userPostalAddress?: PostalAddress,
-}
+import Detail from "../../common/Detail";
+import { PersonalInfoProps } from "./type";
 
 export function PersonalInfo(props: PersonalInfoProps) {
     const { requesterAddress, userIdentity, userPostalAddress } = props;

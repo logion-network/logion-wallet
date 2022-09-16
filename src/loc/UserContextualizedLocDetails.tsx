@@ -25,7 +25,7 @@ import CertificateAndLimits from "./CertificateAndLimits";
 import { UserCollectionLocItemChecker } from "./CollectionLocItemChecker";
 import ItemImporter from "./ItemImporter";
 import { useUserLocContext } from "./UserLocContext";
-import { PersonalInfo } from "./PersonalInfo";
+import { PersonalInfo } from "../components/identity/PersonalInfo";
 import "./ContextualizedLocDetails.css";
 import ButtonGroup from "src/common/ButtonGroup";
 

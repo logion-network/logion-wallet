@@ -1,16 +1,16 @@
-import { Col, Row } from '../../common/Grid';
+import { Col, Row } from "../../common/Grid";
 import Detail from "../../common/Detail";
-import { LocRequestDetailsProps } from "./LocRequestDetails";
+import { PersonalInfoProps } from "./type";
 
-export default function IdentityLocRequestDetails(props: LocRequestDetailsProps) {
+export default function IdentityLocRequestDetails(props: { personalInfo: PersonalInfoProps }) {
 
-    const userIdentity = props.request.userIdentity || {
+    const userIdentity = props.personalInfo.userIdentity || {
         firstName: "",
         lastName: "",
         email: "",
         phoneNumber: "",
     }
-    const userPostalAddress = props.request.userPostalAddress || {
+    const userPostalAddress = props.personalInfo.userPostalAddress || {
         line1: "",
         line2: "",
         postalCode: "",
@@ -24,7 +24,7 @@ export default function IdentityLocRequestDetails(props: LocRequestDetailsProps)
             >
                 <Detail
                     label="Account Address"
-                    value={ props.request.requesterAddress || "" }
+                    value={ props.personalInfo.requesterAddress || "" }
                 />
                 <Row>
                     <Col style={ { flexGrow: 1 } }>
