@@ -338,6 +338,282 @@ exports[`ContextualizedLocDetails renders 1`] = `
                 }
               />
               <div
+                className="PersonalInfo"
+              >
+                <p
+                  className="title"
+                >
+                  Identity related record(s)
+                </p>
+                <div
+                  className="Row"
+                >
+                  <div
+                    className="col-md-6"
+                  >
+                    <div
+                      className="Detail"
+                      style={
+                        Object {
+                          "color": "#000000",
+                        }
+                      }
+                    >
+                      <div
+                        className="label"
+                      >
+                        Account Address
+                      </div>
+                      <div
+                        className="value"
+                      >
+                        5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW
+                      </div>
+                    </div>
+                    <div
+                      className="Row"
+                    >
+                      <div
+                        className="col"
+                        style={
+                          Object {
+                            "flexGrow": 1,
+                          }
+                        }
+                      >
+                        <div
+                          className="Detail"
+                          style={
+                            Object {
+                              "color": "#000000",
+                            }
+                          }
+                        >
+                          <div
+                            className="label"
+                          >
+                            First Name
+                          </div>
+                          <div
+                            className="value"
+                          >
+                            /
+                          </div>
+                        </div>
+                        <div
+                          className="Detail"
+                          style={
+                            Object {
+                              "color": "#000000",
+                            }
+                          }
+                        >
+                          <div
+                            className="label"
+                          >
+                            Email
+                          </div>
+                          <div
+                            className="value"
+                          >
+                            /
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        className="col"
+                        style={
+                          Object {
+                            "flexGrow": 1,
+                          }
+                        }
+                      >
+                        <div
+                          className="Detail"
+                          style={
+                            Object {
+                              "color": "#000000",
+                            }
+                          }
+                        >
+                          <div
+                            className="label"
+                          >
+                            Last Name
+                          </div>
+                          <div
+                            className="value"
+                          >
+                            /
+                          </div>
+                        </div>
+                        <div
+                          className="Detail"
+                          style={
+                            Object {
+                              "color": "#000000",
+                            }
+                          }
+                        >
+                          <div
+                            className="label"
+                          >
+                            Phone Number
+                          </div>
+                          <div
+                            className="value"
+                          >
+                            /
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    className="col-md-6"
+                  >
+                    <div
+                      className="Detail"
+                      style={
+                        Object {
+                          "color": "#000000",
+                        }
+                      }
+                    >
+                      <div
+                        className="label"
+                      >
+                        Line1
+                      </div>
+                      <div
+                        className="value"
+                      >
+                        /
+                      </div>
+                    </div>
+                    <div
+                      className="Detail"
+                      style={
+                        Object {
+                          "color": "#000000",
+                        }
+                      }
+                    >
+                      <div
+                        className="label"
+                      >
+                        Line2
+                      </div>
+                      <div
+                        className="value"
+                      >
+                        /
+                      </div>
+                    </div>
+                    <div
+                      className="Row"
+                    >
+                      <div
+                        className="col"
+                        style={
+                          Object {
+                            "flexGrow": 1,
+                          }
+                        }
+                      >
+                        <div
+                          className="Detail"
+                          style={
+                            Object {
+                              "color": "#000000",
+                            }
+                          }
+                        >
+                          <div
+                            className="label"
+                          >
+                            Postal Code
+                          </div>
+                          <div
+                            className="value"
+                          >
+                            /
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        className="col"
+                        style={
+                          Object {
+                            "flexGrow": 2,
+                          }
+                        }
+                      >
+                        <div
+                          className="Detail"
+                          style={
+                            Object {
+                              "color": "#000000",
+                            }
+                          }
+                        >
+                          <div
+                            className="label"
+                          >
+                            City
+                          </div>
+                          <div
+                            className="value"
+                          >
+                            /
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      className="Row"
+                    >
+                      <div
+                        className="col"
+                        style={
+                          Object {
+                            "flexGrow": 1,
+                          }
+                        }
+                      >
+                        <div
+                          className="Detail"
+                          style={
+                            Object {
+                              "color": "#000000",
+                            }
+                          }
+                        >
+                          <div
+                            className="label"
+                          >
+                            Country
+                          </div>
+                          <div
+                            className="value"
+                          >
+                            /
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                className="separator"
+                style={
+                  Object {
+                    "backgroundColor": "#3b6cf4",
+                  }
+                }
+              />
+              <div
                 className="LocItems empty-loc"
               >
                 <img
@@ -644,7 +920,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
               >
                 <div
                   align="left"
-                  className="btn-group"
+                  className="void-buttons-container btn-group"
                   role="group"
                 >
                   <button

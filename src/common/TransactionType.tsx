@@ -85,6 +85,8 @@ function transactionType(transaction: Transaction, address: string): string {
             return "Metadata added to LOC";
         } else if(transaction.method === "close") {
             return "LOC closed";
+        } else if(transaction.method === "closeAndSeal") {
+            return "LOC closed and sealed";
         } else if(transaction.method === "createLoc") {
             return "LOC created";
         } else if(transaction.method === "makeVoid") {

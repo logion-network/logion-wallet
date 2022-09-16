@@ -151,6 +151,16 @@ exports[`renders 1`] = `
     path="/loc/collection/:locId"
   />
   <Route
+    element={
+      <LocDetails
+        backPath="/user/loc/identity"
+        detailsPath={[Function]}
+        viewer="User"
+      />
+    }
+    path="/loc/identity/:locId"
+  />
+  <Route
     element={<Account />}
     path="/"
   />

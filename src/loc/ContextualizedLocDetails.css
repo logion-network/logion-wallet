@@ -59,9 +59,15 @@
     height: 42px;
 }
 
+.ContextualizedLocDetails .ButtonGroup .void-buttons-container > .btn:first-child {
+    margin-left: 15px;
+}
+
+.ContextualizedLocDetails .ButtonGroup .void-buttons-container > .btn:nth-child(n+2),
 .ContextualizedLocDetails .add-buttons-container .btn:nth-child(n+2) {
     margin-left: 20px;
 }
+
 
 .ContextualizedLocDetails .link-button-container {
     display: flex;
@@ -75,6 +81,17 @@
 
 .ContextualizedLocDetails .loc-supersedes {
     margin-top: 30px;
+}
+
+.ContextualizedLocDetails .PersonalInfo .title {
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
+.ContextualizedLocDetails .PersonalInfo .Detail .label {
+    font-weight: bold;
+    font-size: 0.9rem;
 }
 
 @media (max-width: 1360px) {
