@@ -86,6 +86,15 @@ function PersonalInfo(props: PersonalInfoProps) {
                     </Row>
                 </Col>
             </Row>
+            {
+                locRequest.status === "CLOSED" &&
+                <Row>
+                    <Col>
+                        <p className="title">Related identity records existence proof</p>
+                        <p>{ locRequest.seal || "" }</p>
+                    </Col>
+                </Row>
+            }
         </div>
     )
 }

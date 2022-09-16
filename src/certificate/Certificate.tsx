@@ -242,7 +242,7 @@ export default function Certificate() {
                 {
                     loc.data.closed && loc.data.locType === "Identity" &&
                     <Row>
-                        <CertificateCell md={ 6 } label="Verified Identity records existence proof">
+                        <CertificateCell md={ 6 } label="Related identity records existence proof">
                             { loc.data.seal }
                         </CertificateCell>
                     </Row>
