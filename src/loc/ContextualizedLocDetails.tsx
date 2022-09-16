@@ -37,59 +37,8 @@ import CertificateAndLimits from "./CertificateAndLimits";
 import { LOCollectionLocItemChecker } from "./CollectionLocItemChecker";
 import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
 import { format } from "../common/DateTimeFormat";
-
+import { PersonalInfo } from "./PersonalInfo";
 import "./ContextualizedLocDetails.css";
-import { LocRequest } from "../common/types/ModelTypes";
-import Detail from "../common/Detail";
-
-interface PersonalInfoProps {
-    locRequest: LocRequest
-}
-
-function PersonalInfo(props: PersonalInfoProps) {
-    const { locRequest } = props;
-    const userIdentity = locRequest.userIdentity;
-    const userPostalAddress = locRequest.userPostalAddress;
-    const padding = "/";
-    return (
-        <div className="PersonalInfo">
-            <p className="title">Identity related record(s)</p>
-            <Row>
-                <Col md={ 6 }>
-                    <Detail label="Account Address" value={ locRequest.requesterAddress || padding } />
-                    <Row>
-                        <Col style={ { flexGrow: 1 } }>
-                            <Detail label="First Name" value={ userIdentity?.firstName || padding } />
-                            <Detail label="Email" value={ userIdentity?.email || padding } />
-                        </Col>
-                        <Col style={ { flexGrow: 1 } }>
-                            <Detail label="Last Name" value={ userIdentity?.lastName || padding } />
-                            <Detail label="Phone Number" value={ userIdentity?.phoneNumber || padding } />
-                        </Col>
-                    </Row>
-                </Col>
-                <Col md={ 6 }>
-                    <Detail label="Line1" value={ userPostalAddress?.line1 || padding } />
-                    <Detail label="Line2" value={ userPostalAddress?.line2 || padding } />
-
-                    <Row>
-                        <Col style={ { flexGrow: 1 } }>
-                            <Detail label="Postal Code" value={ userPostalAddress?.postalCode || padding } />
-                        </Col>
-                        <Col style={ { flexGrow: 2 } }>
-                            <Detail label="City" value={ userPostalAddress?.city || padding } />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col style={ { flexGrow: 1 } }>
-                            <Detail label="Country" value={ userPostalAddress?.country || padding } />
-                        </Col>
-                    </Row>
-                </Col>
-            </Row>
-        </div>
-    )
-}
 
 export default function ContextualizedLocDetails() {
     const { colorTheme } = useCommonContext();
@@ -374,7 +323,11 @@ export default function ContextualizedLocDetails() {
                             </Row>
                             <div className="separator" style={ { backgroundColor: locTabBorderColor } } />
                             { loc?.locType === "Identity" && <>
-                                <PersonalInfo locRequest={ locRequest } />
+                                <PersonalInfo
+                                    requesterAddress={ locRequest.requesterAddress || "" }
+                                    userIdentity={ locRequest.userIdentity }
+                                    userPostalAddress={ locRequest.userPostalAddress }
+                                />
                                 <div className="separator" style={ { backgroundColor: locTabBorderColor } } />
                             </> }
                             <LOLocItems matchedHash={ checkResult.hash } />

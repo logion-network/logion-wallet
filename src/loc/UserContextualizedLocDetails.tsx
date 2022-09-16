@@ -26,7 +26,7 @@ import CertificateAndLimits from "./CertificateAndLimits";
 import { UserCollectionLocItemChecker } from "./CollectionLocItemChecker";
 import ItemImporter from "./ItemImporter";
 import { useUserLocContext } from "./UserLocContext";
-
+import { PersonalInfo } from "./PersonalInfo";
 import "./ContextualizedLocDetails.css";
 
 export default function UserContextualizedLocDetails() {
@@ -204,6 +204,14 @@ export default function UserContextualizedLocDetails() {
                                 </Col>
                             </Row>
                             <div className="separator" style={{ backgroundColor: locTabBorderColor }} />
+                            { loc?.locType === "Identity" && <>
+                                <PersonalInfo
+                                    requesterAddress={ loc.requesterAddress || "" }
+                                    userIdentity={ loc.userIdentity }
+                                    userPostalAddress={ loc.userPostalAddress }
+                                />
+                                <div className="separator" style={ { backgroundColor: locTabBorderColor } } />
+                            </> }
                             <UserLocItems matchedHash={ checkResult.hash } />
                             {
                                 !loc.closed && loc.voidInfo === undefined &&
