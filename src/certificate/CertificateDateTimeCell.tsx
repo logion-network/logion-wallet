@@ -1,4 +1,4 @@
-import { format } from "../common/DateTimeFormat";
+import InlineDateTime from "src/common/InlineDateTime";
 import CertificateCell, { CertificateCellProps } from "./CertificateCell";
 
 interface Props extends CertificateCellProps {
@@ -7,14 +7,9 @@ interface Props extends CertificateCellProps {
 
 export default function CertificateDateTimeCell(props: Props) {
 
-    let value = "-";
-    if (props.dateTime) {
-        const dateTime = format(props.dateTime);
-        value = `${ dateTime.date } - ${ dateTime.time }`;
-    }
     return (
         <CertificateCell { ...props }>
-            { value }
+            <InlineDateTime dateTime={ props.dateTime } />
         </CertificateCell>
     )
 }

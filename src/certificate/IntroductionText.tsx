@@ -21,6 +21,7 @@ export default function IntroductionText(props: Props) {
                 client it refers.</p>
             <p>This Certificate is only valid when generated online by accessing its URL. A PDF or print of this
                 certificate is NOT valid.</p>
+            <p>All timestamps are displayed using Universal Time Coordinated (UTC).</p>
         </div>
     } else if (loc.data.locType === 'Collection') {
         return <div className="description">
@@ -32,6 +33,7 @@ export default function IntroductionText(props: Props) {
                 demand with regards to data and document(s) listed below.</p>
             <p>This Certificate is only valid when generated online by accessing its URL. A PDF or print of this
                 certificate is NOT valid.</p>
+            <p>All timestamps are displayed using Universal Time Coordinated (UTC).</p>
         </div>
     } else {
         return <div className="description">
@@ -41,6 +43,7 @@ export default function IntroductionText(props: Props) {
                 requester demand with regards to data and document(s) listed below.</p>
             <p>This Certificate is only valid when generated online by accessing its URL. A PDF or print of this
                 certificate is NOT valid.</p>
+            <p>All timestamps are displayed using Universal Time Coordinated (UTC).</p>
         </div>
     }
 }

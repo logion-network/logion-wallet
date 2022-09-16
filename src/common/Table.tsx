@@ -11,7 +11,7 @@ import './Table.css';
 import Icon from './Icon';
 import CopyPasteButton from "./CopyPasteButton";
 import { TableColors } from './ColorTheme';
-import { format } from './DateTimeFormat';
+import InlineDateTime from './InlineDateTime';
 
 
 export interface CellProps {
@@ -345,34 +345,29 @@ export interface DateTimeCellProps {
 export function DateTimeCell(props: DateTimeCellProps) {
 
     if (!props.dateTime) {
-        if (props.spinner) {
+        if(props.spinner) {
             return <Spinner animation="border" />
         } else {
             return <Cell content="-" align="center" />;
         }
+    } else {
+        return (
+            <div className="date-cell">
+                <InlineDateTime dateTime={ props.dateTime } separator={ <br /> } />
+            </div>
+        );
     }
-
-    const { date, time } = format(props.dateTime)
-
-    return (
-        <div className="date-cell">
-            { date }<br />
-            { time }
-        </div>
-    );
 }
 
 export function DateCell(props: DateTimeCellProps) {
 
-    if(props.dateTime === null) {
+    if(!props.dateTime) {
         return <Cell content="-" align="center" />;
+    } else {
+        return (
+            <Cell content={ <InlineDateTime dateTime={ props.dateTime } dateOnly={ true } /> }/>
+        );
     }
-
-    const { date } = format(props.dateTime)
-
-    return (
-        <Cell content={ date }/>
-    );
 }
 
 export interface ActionCellProps {

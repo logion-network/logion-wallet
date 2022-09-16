@@ -1,4 +1,4 @@
-import { format } from "./DateTimeFormat";
+import { format } from "./InlineDateTime";
 
 describe("format", () => {
 

@@ -13,13 +13,13 @@ import { fullCertificateUrl } from '../PublicPaths';
 import config from '../config';
 import NewTabLink from '../common/NewTabLink';
 import StaticLabelValue from '../common/StaticLabelValue';
-import { format } from '../common/DateTimeFormat';
 
 import './CertificateAndLimits.css';
 import StatementOfFactsButton from './statement/StatementOfFactsButton';
 import StatementOfFactsRequestButton from "./statement/StatementOfFactsRequestButton";
 import { Viewer } from "./types";
 import ArchiveButton from "./archive/ArchiveButton";
+import InlineDateTime from 'src/common/InlineDateTime';
 
 interface LocProps {
     closed: boolean
@@ -40,7 +40,7 @@ export interface Props {
 export default function CertificateAndLimits(props: Props) {
     const { api, accounts } = useLogionChain();
 
-    const [ dateLimit, setDateLimit ] = useState("-");
+    const [ dateLimit, setDateLimit ] = useState<string>();
     const [ showSettings, setShowSettings ] = useState(false);
 
     const certificateUrl = fullCertificateUrl(props.locId);
@@ -49,7 +49,7 @@ export default function CertificateAndLimits(props: Props) {
         if(api !== null && props.loc.collectionLastBlockSubmission) {
             (async function() {
                 const chainTime = await (await ChainTime.now(api)).atBlock(props.loc.collectionLastBlockSubmission!);
-                setDateLimit(format(new Date(chainTime.currentTime).toISOString()).date);
+                setDateLimit(new Date(chainTime.currentTime).toISOString());
             })();
         }
     }, [ api, props.locId, props.loc.collectionLastBlockSubmission ]);
@@ -78,7 +78,7 @@ export default function CertificateAndLimits(props: Props) {
                     props.loc.locType === 'Collection' &&
                     <Col className="col-xxxl-3 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6">
                         <div className="limits">
-                            <div><strong>Collection Date Limit:</strong> { dateLimit }</div>
+                            <div><strong>Collection Date Limit:</strong> <InlineDateTime dateTime={ dateLimit } dateOnly={ true } /></div>
                             <div><strong>Collection Item Limit:</strong> { itemLimit(props.loc) }</div>
                             <div><strong>Collection Upload Accepted:</strong> { props.loc.collectionCanUpload ? "Yes" : "No" }</div>
                         </div>
