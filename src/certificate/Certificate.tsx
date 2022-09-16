@@ -225,17 +225,28 @@ export default function Certificate() {
                     <CertificateDateTimeCell md={ 3 } label="Closing Date" dateTime={ loc.data.closedOn } />
                 </Row>
                 <Row className="preamble-footer">
-                    { loc.data.requesterAddress && <CertificateCell md={ 6 } label="Requester">
-                        { loc.data.requesterAddress }
-                    </CertificateCell> }
-                    { loc.data.requesterLocId && <CertificateCell md={ 6 } label="Requester">
-                        <NewTabLink href={ fullCertificateUrl(loc.data.requesterLocId) }
-                                    iconId="loc-link">{ loc.data.requesterLocId.toDecimalString() }</NewTabLink>
-                        <p>Important note: this requester ID is not a standard public key but a Logion Identity LOC
-                            established by the same Logion Officer mentioned in this certificate.</p>
-                    </CertificateCell> }
-
+                    { loc.data.requesterAddress &&
+                        <CertificateCell md={ 6 } label="Requester">
+                            { loc.data.requesterAddress }
+                        </CertificateCell>
+                    }
+                    { loc.data.requesterLocId &&
+                        <CertificateCell md={ 6 } label="Requester">
+                            <NewTabLink href={ fullCertificateUrl(loc.data.requesterLocId) }
+                                        iconId="loc-link">{ loc.data.requesterLocId.toDecimalString() }</NewTabLink>
+                            <p>Important note: this requester ID is not a standard public key but a Logion Identity LOC
+                                established by the same Logion Officer mentioned in this certificate.</p>
+                        </CertificateCell>
+                    }
                 </Row>
+                {
+                    loc.data.closed && loc.data.locType === "Identity" &&
+                    <Row>
+                        <CertificateCell md={ 6 } label="Related identity records existence proof">
+                            { loc.data.seal }
+                        </CertificateCell>
+                    </Row>
+                }
                 { matrix(loc.data.metadata, 2).map((items, index) => (
                     <MetadataItemCellRow key={ index } items={ items } checkResult={ checkResult } />
                 )) }

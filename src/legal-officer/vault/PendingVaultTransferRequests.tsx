@@ -21,13 +21,13 @@ import FormGroup from "../../common/FormGroup";
 import StaticLabelValue from "../../common/StaticLabelValue";
 import AmountFormat from "../../common/AmountFormat";
 import AddressFormat from "../../common/AddressFormat";
-import DateTimeFormat from "../../common/DateTimeFormat";
 
 import { VaultApi } from "../../vault/VaultApi";
 
 import VaultTransferRequestDetails from "./VaultTransferDetails";
 import { signAndSend } from "src/logion-chain/Signature";
 import { useLegalOfficerContext } from "../LegalOfficerContext";
+import InlineDateTime from "src/common/InlineDateTime";
 
 export default function PendingVaultTransferRequests() {
     const { api, axiosFactory, accounts } = useLogionChain();
@@ -207,7 +207,7 @@ export default function PendingVaultTransferRequests() {
                     <Col>
                         <StaticLabelValue
                             label="Creation date"
-                            value={ <DateTimeFormat dateTime={ requestToAccept?.createdOn } /> }
+                            value={ <InlineDateTime dateTime={ requestToAccept?.createdOn } /> }
                         />
                     </Col>
                 </Row>

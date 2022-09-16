@@ -30,3 +30,7 @@
 .ButtonGroup.left {
     text-align: left;
 }
+
+.ButtonGroup .btn-group > :not(.btn-check:first-child) + .btn, .btn-group > .btn-group:not(:first-child) {
+    margin-left: 25px;
+}

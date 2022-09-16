@@ -15,7 +15,6 @@ import NewTabLink from "../common/NewTabLink";
 import InlineDateTime from "../common/InlineDateTime";
 import IconTextRow from "../common/IconTextRow";
 import { useLogionChain } from "../logion-chain";
-import { format } from "../common/DateTimeFormat";
 
 import { UserLocPrivateFileButton } from "./LocPrivateFileButton";
 import CheckFileFrame, { DocumentCheckResult } from 'src/components/checkfileframe/CheckFileFrame';
@@ -28,6 +27,7 @@ import ItemImporter from "./ItemImporter";
 import { useUserLocContext } from "./UserLocContext";
 
 import "./ContextualizedLocDetails.css";
+import ButtonGroup from "src/common/ButtonGroup";
 
 export default function UserContextualizedLocDetails() {
     const { getOfficer, client } = useLogionChain();
@@ -147,14 +147,6 @@ export default function UserContextualizedLocDetails() {
                     key: "details",
                     title: locTabTitle,
                     render: () => {
-                        const { date, time } = format(loc.createdOn);
-                        let closingDate: string;
-                        if (loc.closedOn !== undefined) {
-                            const { date, time } = format(loc.closedOn);
-                            closingDate = `${ date } / ${ time }`;
-                        } else {
-                            closingDate = "";
-                        }
                         return <>
                             <Row>
                                 <Col md={ 4 }>
@@ -167,13 +159,17 @@ export default function UserContextualizedLocDetails() {
                                             <span>{ locId.toDecimalString() }</span>
                                         </OverlayTrigger>
                                     </LocItemDetail>
-                                    <LocItemDetail label="Creation date">{ date } / { time }</LocItemDetail>
+                                    <LocItemDetail label="Creation date">
+                                        <InlineDateTime dateTime={ loc.createdOn } />
+                                    </LocItemDetail>
                                 </Col>
                                 <Col md={ 4 }>
                                     <LocItemDetail label="Description">{ loc?.description }</LocItemDetail>
                                     {
                                         loc.status === 'CLOSED' &&
-                                        <LocItemDetail label="Closing date" spinner={ loc.closedOn === undefined }>{ closingDate }</LocItemDetail>
+                                        <LocItemDetail label="Closing date" spinner={ loc.closedOn === undefined }>
+                                            <InlineDateTime dateTime={ loc.closedOn } />
+                                        </LocItemDetail>
                                     }
                                 </Col>
 
@@ -208,9 +204,11 @@ export default function UserContextualizedLocDetails() {
                             {
                                 !loc.closed && loc.voidInfo === undefined &&
                                 <Row>
-                                    <Col className="add-buttons-container" xxl={5} xl={4}>
-                                        <UserLocPublicDataButton/>
-                                        <UserLocPrivateFileButton/>
+                                    <Col xxl={5} xl={4}>
+                                        <ButtonGroup align="left">
+                                            <UserLocPublicDataButton/>
+                                            <UserLocPrivateFileButton/>
+                                        </ButtonGroup>
                                     </Col>
                                     <Col className="link-button-container" xxl={4} xl={4}/>
                                     <Col className="close-button-container" xxl={3} xl={4}/>
