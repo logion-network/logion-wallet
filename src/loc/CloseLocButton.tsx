@@ -292,7 +292,7 @@ export default function CloseLocButton(props: Props) {
                 ]}
             >
                 <Alert variant="info">
-                    { locType === "Identity" &&
+                    { locType !== "Identity" &&
                         <p>Warning: after processing and blockchain publication, this case cannot be opened again and
                             therefore will be completely sealed.</p>
                     }
