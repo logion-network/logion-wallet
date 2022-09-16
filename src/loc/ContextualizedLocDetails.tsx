@@ -36,7 +36,6 @@ import Ellipsis from "../common/Ellipsis";
 import CertificateAndLimits from "./CertificateAndLimits";
 import { LOCollectionLocItemChecker } from "./CollectionLocItemChecker";
 import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
-import { format } from "../common/DateTimeFormat";
 import { PersonalInfo } from "./PersonalInfo";
 import "./ContextualizedLocDetails.css";
 
@@ -243,14 +242,6 @@ export default function ContextualizedLocDetails() {
                     key: "details",
                     title: locTabTitle,
                     render: () => {
-                        const { date, time } = format(locRequest.createdOn);
-                        let closingDate: string;
-                        if (locRequest.closedOn !== undefined) {
-                            const { date, time } = format(locRequest.closedOn);
-                            closingDate = `${ date } / ${ time }`;
-                        } else {
-                            closingDate = "";
-                        }
                         return <>
                             <Row>
                                 <Col md={ 4 }>
@@ -264,14 +255,17 @@ export default function ContextualizedLocDetails() {
                                             <span>{ locId.toDecimalString() }</span>
                                         </OverlayTrigger>
                                     </LocItemDetail>
-                                    <LocItemDetail label="Creation date">{ date } / { time }</LocItemDetail>
+                                    <LocItemDetail label="Creation date">
+                                        <InlineDateTime dateTime={ locRequest.createdOn } />
+                                    </LocItemDetail>
                                 </Col>
                                 <Col md={ 4 }>
                                     <LocItemDetail label="Description">{ locRequest?.description }</LocItemDetail>
                                     {
                                         locRequest.status === 'CLOSED' &&
-                                        <LocItemDetail label="Closing date"
-                                                       spinner={ locRequest.closedOn === undefined }>{ closingDate }</LocItemDetail>
+                                        <LocItemDetail label="Closing date" spinner={ locRequest.closedOn === undefined }>
+                                            <InlineDateTime dateTime={ locRequest.closedOn } />
+                                        </LocItemDetail>
                                     }
                                 </Col>
 
@@ -334,9 +328,11 @@ export default function ContextualizedLocDetails() {
                             {
                                 !loc.closed && loc.voidInfo === undefined &&
                                 <Row>
-                                    <Col className="add-buttons-container" xxl={ 5 } xl={ 4 }>
-                                        <LOLocPublicDataButton />
-                                        <LOLocPrivateFileButton />
+                                    <Col xxl={ 5 } xl={ 4 }>
+                                        <ButtonGroup align="left">
+                                            <LOLocPublicDataButton />
+                                            <LOLocPrivateFileButton />
+                                        </ButtonGroup>
                                     </Col>
                                     <Col className="link-button-container" xxl={ 4 } xl={ 4 }>
                                         <LocLinkButton excludeNewIdentity={ isLogionDataLoc(loc) } />

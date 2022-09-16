@@ -21,6 +21,9 @@ export default function StatementOfFactsTemplateEN(props: Props) {
                     background-position: center;
                     background-repeat: no-repeat;
                 }
+                .pagedjs_page .pagedjs_margin-bottom-center > .pagedjs_margin-content::after {
+                    content: "All timestamps are displayed using Universal Time Coordinated (UTC)";
+                }
             `}</style>
             <div className="header">
                 <div className="contact">

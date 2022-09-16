@@ -265,9 +265,14 @@ exports[`ContextualizedLocDetails renders 1`] = `
                       <span
                         className="value"
                       >
-                        Invalid DateTime
-                         / 
-                        Invalid DateTime
+                        <span
+                          onBlur={[Function]}
+                          onFocus={[Function]}
+                          onMouseOut={[Function]}
+                          onMouseOver={[Function]}
+                        >
+                          -
+                        </span>
                       </span>
                     </div>
                   </div>
@@ -635,44 +640,54 @@ exports[`ContextualizedLocDetails renders 1`] = `
                 className="Row"
               >
                 <div
-                  className="add-buttons-container col-xxl-5 col-xl-4"
+                  className="col-xxl-5 col-xl-4"
                 >
-                  <button
-                    className="Button btn btn-primary"
-                    disabled={false}
-                    onClick={[Function]}
-                    style={Object {}}
-                    type="button"
+                  <div
+                    className="ButtonGroup left"
                   >
-                    <img
-                      alt="add"
-                      height="19px"
-                      src="/assets/add.svg"
-                    />
-                    <span
-                      className="text"
+                    <div
+                      align="left"
+                      className="btn-group"
+                      role="group"
                     >
-                      Add a public data
-                    </span>
-                  </button>
-                  <button
-                    className="Button btn btn-primary"
-                    disabled={false}
-                    onClick={[Function]}
-                    style={Object {}}
-                    type="button"
-                  >
-                    <img
-                      alt="add"
-                      height="19px"
-                      src="/assets/add.svg"
-                    />
-                    <span
-                      className="text"
-                    >
-                      Add a confidential document
-                    </span>
-                  </button>
+                      <button
+                        className="Button btn btn-primary"
+                        disabled={false}
+                        onClick={[Function]}
+                        style={Object {}}
+                        type="button"
+                      >
+                        <img
+                          alt="add"
+                          height="19px"
+                          src="/assets/add.svg"
+                        />
+                        <span
+                          className="text"
+                        >
+                          Add a public data
+                        </span>
+                      </button>
+                      <button
+                        className="Button btn btn-primary"
+                        disabled={false}
+                        onClick={[Function]}
+                        style={Object {}}
+                        type="button"
+                      >
+                        <img
+                          alt="add"
+                          height="19px"
+                          src="/assets/add.svg"
+                        />
+                        <span
+                          className="text"
+                        >
+                          Add a confidential document
+                        </span>
+                      </button>
+                    </div>
+                  </div>
                 </div>
                 <div
                   className="link-button-container col-xxl-4 col-xl-4"

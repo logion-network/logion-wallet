@@ -4,6 +4,10 @@
     padding: 1cm 1cm;
     border: 0.5mm solid black;
 
+    @bottom-center {
+        content: "All timestamps are displayed using Universal Time Coordinated (UTC)";
+    }
+
     @bottom-right {
         content: counter(page) "/" counter(pages);
     }
