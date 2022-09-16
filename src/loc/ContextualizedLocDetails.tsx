@@ -390,7 +390,7 @@ export default function ContextualizedLocDetails() {
                                     </Col>
                                     <Col className="close-button-container" xxl={ 3 } xl={ 4 }>
                                         <CloseLocButton protectionRequest={ protectionRequest }
-                                                        seal={ locRequest.seal } />
+                                                        locRequest={ locRequest } />
                                     </Col>
                                 </Row>
                             }

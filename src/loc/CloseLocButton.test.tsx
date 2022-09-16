@@ -6,12 +6,17 @@ import { finalizeSubmission, failSubmission } from '../logion-chain/__mocks__/Si
 import { closeExtrinsicSent, resetCloseExtrinsicSent, setClose, setLocItems } from './__mocks__/LocContextMock';
 
 import CloseLocButton from './CloseLocButton';
+import { LocRequest } from "../common/types/ModelTypes";
 
 jest.mock("../logion-chain/Signature");
 jest.mock("./LocContext");
 jest.mock("../common/CommonContext");
 
 describe("CloseLocButton", () => {
+
+    const locRequest = {
+        locType: "Transaction"
+    } as LocRequest;
 
     it("does not close with draft items", async () => {
         setLocItems([
@@ -26,7 +31,7 @@ describe("CloseLocButton", () => {
             }
         ]);
 
-        render(<CloseLocButton/>);
+        render(<CloseLocButton locRequest={ locRequest } />);
         await clickByName(/Close LOC/);
 
         await expectNoDialogVisible();
@@ -48,7 +53,7 @@ describe("CloseLocButton", () => {
         const closeMock = jest.fn();
         setClose(closeMock);
 
-        render(<CloseLocButton/>);
+        render(<CloseLocButton locRequest={ locRequest } />);
         await clickByName(/Close LOC/);
         await clickByName("Proceed");
         finalizeSubmission();
@@ -74,7 +79,7 @@ describe("CloseLocButton", () => {
         setClose(closeMock);
         resetCloseExtrinsicSent();
 
-        render(<CloseLocButton/>);
+        render(<CloseLocButton locRequest={ locRequest } />);
         await clickByName(/Close LOC/);
         await clickByName("Cancel");
 
@@ -98,7 +103,7 @@ describe("CloseLocButton", () => {
         const closeMock = jest.fn();
         setClose(closeMock);
 
-        render(<CloseLocButton/>);
+        render(<CloseLocButton locRequest={ locRequest } />);
         await clickByName(/Close LOC/);
         await clickByName("Proceed");
         failSubmission();
