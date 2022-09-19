@@ -317,11 +317,7 @@ export default function ContextualizedLocDetails() {
                             </Row>
                             <div className="separator" style={ { backgroundColor: locTabBorderColor } } />
                             { loc?.locType === "Identity" && <>
-                                <PersonalInfo
-                                    requesterAddress={ locRequest.requesterAddress || "" }
-                                    userIdentity={ locRequest.userIdentity }
-                                    userPostalAddress={ locRequest.userPostalAddress }
-                                />
+                                <PersonalInfo personalAndStatusInfo={ locRequest } />
                                 <div className="separator" style={ { backgroundColor: locTabBorderColor } } />
                             </> }
                             <LOLocItems matchedHash={ checkResult.hash } />

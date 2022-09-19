@@ -2,9 +2,15 @@ import { Row } from "../../common/Grid";
 import { Col } from "react-bootstrap";
 import Detail from "../../common/Detail";
 import { PersonalInfoProps } from "./type";
+import { LocRequestStatus } from "@logion/client/dist/LocClient";
 
-export function PersonalInfo(props: PersonalInfoProps) {
-    const { requesterAddress, userIdentity, userPostalAddress } = props;
+interface PersonalAndStatusInfoProps extends PersonalInfoProps {
+    status: LocRequestStatus,
+    seal?: string
+}
+
+export function PersonalInfo(props: { personalAndStatusInfo: PersonalAndStatusInfoProps }) {
+    const { requesterAddress, userIdentity, userPostalAddress, status, seal } = props.personalAndStatusInfo;
     const padding = "/";
     return (
         <div className="PersonalInfo">
@@ -42,6 +48,15 @@ export function PersonalInfo(props: PersonalInfoProps) {
                     </Row>
                 </Col>
             </Row>
+            {
+                status === "CLOSED" &&
+                <Row>
+                    <Col>
+                        <p className="title">Related identity records existence proof</p>
+                        <p>{ seal || "" }</p>
+                    </Col>
+                </Row>
+            }
         </div>
     )
 }
