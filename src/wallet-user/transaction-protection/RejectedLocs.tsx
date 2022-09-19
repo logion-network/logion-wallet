@@ -1,4 +1,6 @@
 import { LocType } from "@logion/node-api/dist/Types";
+import { useMemo } from "react";
+
 import IdentityLocRequestDetails from "../../components/identity/IdentityLocRequestDetails";
 import { useUserContext } from "../UserContext";
 import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../../common/Table';
@@ -13,6 +15,8 @@ export interface Props {
 export default function RejectedLocs(props: Props) {
     const { locsState } = useUserContext()
     const { locType } = props
+
+    const data = useMemo(() => locsState?.rejectedRequests[locType].map(locState => locState.data()) || [], [ locsState, locType ]);
 
     if(locsState === null || locsState?.rejectedRequests === undefined) {
         return <Loader />;
@@ -49,7 +53,7 @@ export default function RejectedLocs(props: Props) {
                     align: 'center',
                 },
             ]}
-            data={ locsState.rejectedRequests[locType].map(locState => locState.data()) }
+            data={ data }
             renderEmpty={ () => <EmptyTableMessage>No LOCs</EmptyTableMessage>}
         />
     );
