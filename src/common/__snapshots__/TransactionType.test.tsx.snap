@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TransactionType generates a default type pallet/method 1`] = `
+<Cell
+  content="Other (unknownPallet.unknownMethod)"
+  overflowing={true}
+  tooltipId="transaction-undefined"
+/>
+`;
+
+exports[`TransactionType has the right type for a logion pallet/method 1`] = `
+<Cell
+  content="Item added to Collection"
+  overflowing={true}
+  tooltipId="transaction-undefined"
+/>
+`;

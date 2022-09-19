@@ -2,6 +2,14 @@ import { Transaction } from "@logion/client/dist/TransactionClient";
 
 import { Cell } from "./Table";
 import { WalletType } from "./Wallet";
+import {
+    PalletLogionLocCall,
+    PalletLogionVaultCall,
+    PalletVerifiedRecoveryCall,
+    PalletRecoveryCall,
+    PalletLoAuthorityListCall,
+    PalletMultisigCall
+} from "@polkadot/types/lookup";
 
 export interface Props {
     transaction: Transaction;
@@ -10,11 +18,73 @@ export interface Props {
     address: string;
 }
 
+type FormerLogionLocMethod = "createLoc";
+type LogionLocMethod = Uncapitalize<PalletLogionLocCall["type"]> | FormerLogionLocMethod
+const palletLogionLocMethods: Record<LogionLocMethod, string> = {
+    addCollectionItem: "Item added to Collection",
+    addFile: "File added to LOC",
+    addLink: "Link added to LOC",
+    addMetadata: "Metadata added to LOC",
+    close: "LOC closed",
+    closeAndSeal: "LOC closed and sealed",
+    createLoc: "LOC created",
+    createCollectionLoc: "Collection LOC created",
+    createLogionIdentityLoc: "Logion Identity LOC created",
+    createLogionTransactionLoc: "Logion Identity LOC created",
+    createPolkadotIdentityLoc: "Polkadot Identity LOC created",
+    createPolkadotTransactionLoc: "Polkadot Identity LOC created",
+    makeVoid: "LOC voided",
+    makeVoidAndReplace: "LOC voided and replaced"
+}
+
+const palletLogionVaultMethods: Record<Uncapitalize<PalletLogionVaultCall["type"]>, string> = {
+    approveCall: "Vault operation approved",
+    requestCall: "Vault operation requested"
+}
+
+const palletVerifiedRecoveryMethods: Record<Uncapitalize<PalletVerifiedRecoveryCall["type"]>, string> = {
+    createRecovery: "Recovery created"
+}
+
+const palletRecoveryMethods: Record<Uncapitalize<PalletRecoveryCall["type"]>, string> = {
+    asRecovered: "Recovery processed",
+    cancelRecovered: "Recovery cancelled",
+    claimRecovery: "Recovery claimed",
+    closeRecovery: "Recovery closed",
+    createRecovery: "Protection activated",
+    initiateRecovery: "Recovery initiated",
+    removeRecovery: "Recovery removed",
+    setRecovered: "Recovery vouched by Root",
+    vouchRecovery: "Recovery vouched"
+}
+
+const palletLoAuthorityListMethods: Record<Uncapitalize<PalletLoAuthorityListCall["type"]>, string> = {
+    addLegalOfficer: "Legal Officer added",
+    removeLegalOfficer: "Legal Officer removed",
+    updateLegalOfficer: "Legal Officer settings updated"
+}
+
+// Partial use of multisig pallet
+const palletMultisigMethods:Partial<Record<Uncapitalize<PalletMultisigCall["type"]>, string>> = {
+    cancelAsMulti: "Vault operation cancelled",
+}
+
+const allMethods: Record<string, Record<string, string>> = {
+    "logionLoc": palletLogionLocMethods,
+    "vault": palletLogionVaultMethods,
+    "verifiedRecovery": palletVerifiedRecoveryMethods,
+    "recovery": palletRecoveryMethods,
+    "loAuthorityList": palletLoAuthorityListMethods,
+    "multisig": palletMultisigMethods,
+}
+
 export default function TransactionType(props: Props) {
 
     return (
         <Cell
             content={ buildTransactionType(props) }
+            overflowing={ true }
+            tooltipId={ `transaction-${props.transaction.id}` }
         />
     );
 }
@@ -35,84 +105,27 @@ function enrichTransactionType(transaction: Transaction, address: string, vaultA
     }
 }
 
-function transactionType(transaction: Transaction, address: string): string {
-    if(transaction.pallet === "verifiedRecovery") {
-        if (transaction.method === "createRecovery") {
-            return "Recovery created";
-        } else {
-            return "Other";
-        }
-    } else if(transaction.pallet === "recovery") {
-        if(transaction.method === "createRecovery") {
-            return "Protection activated";
-        } else if(transaction.method === "vouchRecovery") {
-            return "Recovery vouched";
-        } else if(transaction.method === "initiateRecovery") {
-            return "Recovery initiated";
-        } else if(transaction.method === "claimRecovery") {
-            return "Recovery claimed";
-        } else if(transaction.method === "asRecovered") {
-            return "Recovery process";
-        } else {
-            return "Other";
-        }
-    } else if(transaction.pallet === "balances") {
-        if(transaction.method.startsWith("transfer")) {
-            if(transaction.from === address) {
-                return "Sent";
-            } else {
-                return "Received";
-            }
-        } else {
-            return "Other";
-        }
-    } else if(transaction.pallet === "assets") {
-        if(transaction.method === "mint") {
-            return "Asset tokens minted";
-        } else if(transaction.method === "create") {
-            return "Asset created";
-        } else if(transaction.method === "setMetadata") {
-            return "Asset metadata set";
-        } else {
-            return "Other";
-        }
-    } else if(transaction.pallet === "logionLoc") {
-        if(transaction.method === "addFile") {
-            return "File added to LOC";
-        } else if(transaction.method === "addLink") {
-            return "Link added to LOC";
-        } else if(transaction.method === "addMetadata") {
-            return "Metadata added to LOC";
-        } else if(transaction.method === "close") {
-            return "LOC closed";
-        } else if(transaction.method === "closeAndSeal") {
-            return "LOC closed and sealed";
-        } else if(transaction.method === "createLoc") {
-            return "LOC created";
-        } else if(transaction.method === "makeVoid") {
-            return "LOC voided";
-        } else if(transaction.method === "makeVoidAndReplace") {
-            return "LOC voided and replaced";
-        } else if(transaction.method === "addCollectionItem") {
-            return "Item added to Collection";
-        } else {
-            return "Other";
-        }
-    } else if(transaction.pallet === "vault") {
-        if(transaction.method === "requestCall") {
-            return "Vault operation requested";
-        } else if(transaction.method === "approveCall") {
-            return "Vault operation approved";
-        } else {
-            return "Other";
-        }
-    } else if(transaction.pallet === "multisig") {
-        if(transaction.method === "cancelAsMulti") {
-            return "Vault operation cancelled";
-        } else {
-            return "Other";
-        }
+export function transactionType(transaction: Transaction, address: string): string {
+    const palletMethods = allMethods[transaction.pallet];
+    if (palletMethods !== undefined && palletMethods[transaction.method] !== undefined) {
+        return palletMethods[transaction.method]
     } else {
-        return 'Other';
+        if (transaction.pallet === "balances") {
+                if (transaction.method.startsWith("transfer")) {
+                    if (transaction.from === address) {
+                        return "Sent";
+                    } else {
+                        return "Received";
+                    }
+                } else {
+                    return other(transaction);
+                }
+            } else {
+                return other(transaction);
+            }
     }
+}
+
+function other(transaction: Transaction): string {
+    return `Other (${ transaction.pallet }.${ transaction.method })`;
 }
