@@ -47,3 +47,17 @@ html {
 .spinner-border.text-polkadot {
     color: #e6007a;
 }
+
+.dropdown-menu {
+    background: linear-gradient(to bottom, #3b6cf4, #6050dc);
+}
+
+.dropdown-item {
+    color: white;
+    font-size: 0.9rem;
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+}

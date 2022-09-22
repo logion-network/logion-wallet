@@ -78,13 +78,13 @@ export default function ClaimAssetButton(props: Props) {
             {
                 noClaimPending && !walletType &&
                 <Dropdown>
-                    <Dropdown.Toggle className="Button" id="ClaimAssetButton-dropdown-toggle"><Icon icon={{ id: "claim" }} /> Claim your asset</Dropdown.Toggle>
+                    <Dropdown.Toggle className="Button" id="ClaimAssetButton-dropdown-toggle"><Icon icon={{ id: "claim" }} /> <span className="claim-asset-btn-text">Claim your asset</span></Dropdown.Toggle>
                     <Dropdown.Menu>
-                        <Dropdown.Item onClick={ () => claimAsset("METAMASK") }>
-                            with Metamask
+                        <Dropdown.Item onClick={ () => claimAsset("METAMASK") } className="metamask">
+                        <Icon icon={{ id: "metamask" }} height="40px" /> <span className="wallet-name">with Metamask</span>
                         </Dropdown.Item>
-                        <Dropdown.Item onClick={ () => claimAsset("CROSSMINT") }>
-                            with Crossmint
+                        <Dropdown.Item onClick={ () => claimAsset("CROSSMINT") } className="crossmint">
+                        <Icon icon={{ id: "crossmint" }} height="40px" type="png" /> <span className="wallet-name">with Crossmint</span>
                         </Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>

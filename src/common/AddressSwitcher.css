@@ -11,6 +11,7 @@
 .AddressSwitcher .dropdown-menu {
     overflow-y: auto;
     max-height: calc( 100vh - 160px );
+    background-image: none;
 }
 
 #address-switcher-toggle {
