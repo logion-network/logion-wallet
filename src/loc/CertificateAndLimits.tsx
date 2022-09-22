@@ -76,7 +76,7 @@ export default function CertificateAndLimits(props: Props) {
                 </Col>
                 {
                     props.loc.locType === 'Collection' &&
-                    <Col className="col-xxxl-3 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6">
+                    <Col className="col-xxxl-2 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6">
                         <div className="limits">
                             <div><strong>Collection Date Limit:</strong> <InlineDateTime dateTime={ dateLimit } dateOnly={ true } /></div>
                             <div><strong>Collection Item Limit:</strong> { itemLimit(props.loc) }</div>
@@ -86,7 +86,7 @@ export default function CertificateAndLimits(props: Props) {
                 }
                 {
                     props.loc.locType === 'Collection' &&
-                    <Col className="col-xxxl-3 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6">
+                    <Col className="col-xxxl-4 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6">
                         <div className="tool-bar">
                             { props.viewer === 'LegalOfficer' && <ArchiveButton/> }
                             { props.loc.closed && !props.loc.isVoid && <Button onClick={ () => setShowSettings(true) }><Icon icon={{id: "cog"}} height="22px"/> Get dev settings</Button> }

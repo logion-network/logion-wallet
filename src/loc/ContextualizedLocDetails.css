@@ -64,6 +64,10 @@
     justify-content: center;
 }
 
+.ContextualizedLocDetails .link-button-container a {
+    color: white;
+}
+
 .ContextualizedLocDetails .close-button-container {
     display: flex;
     justify-content: flex-end;

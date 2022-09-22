@@ -6,3 +6,23 @@
     height: 40px;
     width: 40px;
 }
+
+.ClaimAssetButton .claim-asset-btn-text {
+    margin-left: 20px;
+}
+
+.ClaimAssetButton .wallet-name {
+    font-weight: bold;
+}
+
+.ClaimAssetButton .metamask .wallet-name {
+    margin-left: 32px;
+}
+
+.ClaimAssetButton .crossmint {
+    margin-top: 10px;
+}
+
+.ClaimAssetButton .crossmint .wallet-name {
+    margin-left: 37px;
+}

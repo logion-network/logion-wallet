@@ -2,3 +2,8 @@
     display: block;
     text-decoration: none;
 }
+
+.Dashboard .StatementOfFactsButtonDropdownItem a {
+    color: white;
+    margin-bottom: 0;
+}

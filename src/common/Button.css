@@ -84,6 +84,7 @@
 }
 
 .Button.btn.btn-salmon:hover {
+    background-color: #e95b5b;
     text-decoration: underline;
 }
 
