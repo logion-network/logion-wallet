@@ -8,7 +8,7 @@ import { Col } from "react-bootstrap";
 import MenuIcon from "../common/MenuIcon";
 import CertificateDateTimeCell from "./CertificateDateTimeCell";
 import { MergedCollectionItem } from "../common/types/ModelTypes";
-import MetaMaskClaimButton from "./MetaMaskClaimButton";
+import ClaimAssetButton, { WalletType } from "./ClaimAssetButton";
 import { UUID } from "@logion/node-api/dist/UUID";
 import { customClassName } from "src/common/types/Helpers";
 
@@ -18,6 +18,7 @@ export interface Props {
     item: MergedCollectionItem;
     checkResult: CheckHashResult | undefined;
     isVoid: boolean;
+    walletType: string | null;
 }
 
 export default function CollectionItemCellRow(props: Props) {
@@ -77,11 +78,12 @@ export default function CollectionItemCellRow(props: Props) {
                                         <Col md={ 3 }>
                                             {
                                                 !props.isVoid &&
-                                                <MetaMaskClaimButton
+                                                <ClaimAssetButton
                                                     locId={ locId }
                                                     owner={ owner }
                                                     item={ item }
                                                     file={ file }
+                                                    walletType={ walletType(props.walletType) }
                                                 />
                                             }
                                         </Col>
@@ -97,4 +99,12 @@ export default function CollectionItemCellRow(props: Props) {
             }
         </div>
     )
+}
+
+function walletType(type: string | null | undefined): WalletType | undefined | null {
+    if(type === "CROSSMINT" || type === "METAMASK") {
+        return type;
+    } else {
+        return undefined;
+    }
 }

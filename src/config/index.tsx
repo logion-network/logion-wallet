@@ -10,6 +10,7 @@ export interface ConfigType {
     RPC: object,
     directory: string,
     edgeNodes: Node[],
+    crossmintApiKey: string,
 }
 
 export const DEFAULT_CONFIG: ConfigType = {
@@ -18,7 +19,8 @@ export const DEFAULT_CONFIG: ConfigType = {
     RPC: {
     },
     directory: "",
-    edgeNodes: []
+    edgeNodes: [],
+    crossmintApiKey: "",
 };
 
 export interface EnvConfigType extends Record<string, any> {

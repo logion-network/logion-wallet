@@ -146,6 +146,10 @@ export function setAddresses(value: Accounts | null) {
 
 export let axiosMock = new Mock<AxiosInstance>();
 
+export function resetAxiosMock() {
+    axiosMock = new Mock<AxiosInstance>();
+}
+
 let context: any = undefined;
 
 export function setContextMock(value: any) {

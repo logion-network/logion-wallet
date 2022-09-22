@@ -18,7 +18,7 @@ export class LogionClient {
         return this;
     }
 
-    tokens = null;
+    tokens = new AccountTokens();
 
     isLegalOfficer() {
         return false;
@@ -39,6 +39,10 @@ export class LogionClient {
 
             findById: () => undefined
         };
+    }
+
+    authenticate() {
+        return this;
     }
 }
 

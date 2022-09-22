@@ -8,6 +8,8 @@ build
 /.settings
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+/src/config/development.json
+
 # dependencies
 /node_modules
 /.pnp

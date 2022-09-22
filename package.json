@@ -10,6 +10,7 @@
     "license": "Apache-2.0",
     "dependencies": {
         "@craco/craco": "^6.4.5",
+        "@logion/crossmint": "^0.1.0-0",
         "@logion/extension": "^0.4.4",
         "@popperjs/core": "^2.11.6",
         "assert": "^2.0.0",
