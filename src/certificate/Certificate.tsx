@@ -263,6 +263,7 @@ export default function Certificate() {
                         item={ collectionItem! }
                         checkResult={ checkResult }
                         isVoid={ loc.data.voidInfo !== undefined }
+                        walletType={ searchParams.get("wallet") }
                     />
                 }
                 <LegalOfficerRow legalOfficer={ legalOfficer } />
