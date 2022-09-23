@@ -139,7 +139,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
     </div>
   </div>
   <div
-    className="ContentArea ContextualizedLocDetails row"
+    className="ContentArea LocPane row"
   >
     <div
       className="primary-area-col col-md-12"
@@ -148,7 +148,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
         className="PrimaryArea"
       >
         <div
-          className="Tabs"
+          className="Tabs LocDetailsTab"
         >
           <style>
             
@@ -883,7 +883,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
           </div>
         </div>
         <div
-          className="Frame DangerFrame void-loc"
+          className="Frame DangerFrame VoidFrame"
           style={
             Object {
               "backgroundColor": "#ffffff",

@@ -3,7 +3,7 @@ import { UUID } from "@logion/node-api/dist/UUID";
 import { LocType } from "@logion/node-api/dist/Types";
 import { useLogionChain } from "../logion-chain";
 import { LocItemStatus, LocItem } from "./types";
-import { metadataToLocItem, fileToLocItem, linkToLocItem } from "./LocItemFactory";
+import { createMetadataItem, createFileItem, createLinkItem } from "./LocItemFactory";
 import { fullCertificateUrl } from "../PublicPaths";
 import {
     OpenLoc,
@@ -11,13 +11,17 @@ import {
     ClosedCollectionLoc,
     LocData,
     PendingRequest,
+    PublicLoc,
+    CollectionItem,
 } from "@logion/client";
 import { useUserContext } from "../wallet-user/UserContext";
 import { ActiveLoc } from "./LocContext";
+import { DocumentCheckResult } from "src/components/checkfileframe/CheckFileFrame";
 
 export interface UserLocContext {
     locId: UUID
     loc: LocData | null
+    supersededLoc?: PublicLoc
     locState: ActiveLoc | null
     locItems: LocItem[]
     addMetadata: ((name: string, value: string) => void) | null
@@ -29,6 +33,9 @@ export interface UserLocContext {
     refresh: () => void
     requestSof: (() => void) | null
     requestSofOnCollection: ((collectionItemId: string) => void) | null
+    checkHash: (hash: string) => void
+    checkResult: DocumentCheckResult
+    collectionItem?: CollectionItem
 }
 
 function initialContextValue(locId: UUID, backPath: string, detailsPath: (locId: UUID, type: LocType) => string): UserLocContext {
@@ -47,6 +54,8 @@ function initialContextValue(locId: UUID, backPath: string, detailsPath: (locId:
         },
         requestSof: null,
         requestSofOnCollection: null,
+        checkHash: () => {},
+        checkResult: { result: "NONE" },
     }
 }
 
@@ -55,11 +64,13 @@ const UserLocContextObject: React.Context<UserLocContext> = React.createContext(
 type ActionType = 'SET_LOC'
     | 'SET_FUNCTIONS'
     | 'RESET'
+    | 'SET_CHECK_RESULT'
 
 interface Action {
     type: ActionType,
     locId?: UUID,
     locState?: ActiveLoc,
+    supersededLoc?: PublicLoc,
     locItems?: LocItem[],
     status?: LocItemStatus,
     addMetadata?: (name: string, value: string) => void,
@@ -69,6 +80,9 @@ interface Action {
     refresh?: () => void,
     requestSof?: () => void,
     requestSofOnCollection?: (collectionItemId: string) => void,
+    checkHash?: (hash: string) => void,
+    collectionItem?: CollectionItem,
+    checkResult?: DocumentCheckResult,
 }
 
 const reducer: Reducer<UserLocContext, Action> = (state: UserLocContext, action: Action): UserLocContext => {
@@ -81,6 +95,7 @@ const reducer: Reducer<UserLocContext, Action> = (state: UserLocContext, action:
                 locState: action.locState!,
                 loc: action.locState!.data(),
                 locItems: action.locItems!,
+                supersededLoc: action.supersededLoc,
             }
         case "SET_FUNCTIONS":
             return {
@@ -92,6 +107,13 @@ const reducer: Reducer<UserLocContext, Action> = (state: UserLocContext, action:
                 refresh: action.refresh!,
                 requestSof: action.requestSof!,
                 requestSofOnCollection: action.requestSofOnCollection!,
+                checkHash: action.checkHash!,
+            }
+        case "SET_CHECK_RESULT":
+            return {
+                ...state,
+                checkResult: action.checkResult!,
+                collectionItem: action.collectionItem,
             }
         default:
             throw new Error(`Unknown type: ${ action.type }`);
@@ -125,11 +147,11 @@ export function UserLocContextProvider(props: Props) {
         }
         const locOwner = loc!.ownerAddress;
         loc.metadata.forEach(item => {
-            const result = metadataToLocItem(item)
+            const result = createMetadataItem(item)
             locItems.push(result.locItem)
         })
         loc.files.forEach(item => {
-            const result = fileToLocItem(item);
+            const result = createFileItem(item);
             locItems.push(result.locItem)
         })
         for (let i = 0; i < loc.links.length; ++i) {
@@ -145,12 +167,12 @@ export function UserLocContextProvider(props: Props) {
                 } else {
                     linkDetailsPath = fullCertificateUrl(linkedLoc.id);
                 }
-                const result = linkToLocItem(
-                    item,
-                    linkedLoc.description || "- Confidential -",
-                    locOwner,
+                const result = createLinkItem({
+                    link: item,
+                    otherLocDescription: linkedLoc.description || "- Confidential -",
+                    submitter: locOwner,
                     linkDetailsPath,
-                )
+                })
                 locItems.push(result.locItem)
             }
         }
@@ -165,9 +187,14 @@ export function UserLocContextProvider(props: Props) {
     const dispatchLocAndItems = useCallback(async (promisedLoc: Promise<ActiveLoc>) => {
         const locState = await promisedLoc
         const locItems = await toLocItems(locState)
-        dispatch({ type: 'SET_LOC', locState, locItems })
-        await refreshRequests(promisedLoc!)
-    }, [ toLocItems, refreshRequests ])
+        const locData = locState.data()
+        let supersededLoc = undefined;
+        if(locData.replacerOf) {
+            supersededLoc = await client!.public.findLocById({ locId: locData.replacerOf });
+        }
+        dispatch({ type: 'SET_LOC', locState, locItems, supersededLoc })
+        await refreshRequests(promisedLoc)
+    }, [ toLocItems, refreshRequests, client ])
 
     useEffect(() => {
         if (client !== null && contextValue.locState === null) {
@@ -224,6 +251,30 @@ export function UserLocContextProvider(props: Props) {
         }
     }, [ contextValue.locState, refreshRequests ])
 
+    const checkHashFunction = useCallback(async (hash: string) => {
+        const result = await contextValue.locState?.checkHash(hash);
+
+        if (result?.collectionItem || result?.file || result?.metadataItem) {
+            dispatch({
+                type: "SET_CHECK_RESULT",
+                checkResult: {
+                    result: "POSITIVE",
+                    hash,
+                },
+                collectionItem: result?.collectionItem,
+            });
+        } else {
+            dispatch({
+                type: "SET_CHECK_RESULT",
+                checkResult: {
+                    result: "NEGATIVE",
+                    hash,
+                },
+                collectionItem: undefined,
+            });
+        }
+    }, [ contextValue.locState ]);
+
     useEffect(() => {
         if (contextValue.loc && contextValue.loc.ownerAddress !== null && contextValue.addMetadata === null) {
             const action: Action = {
@@ -235,12 +286,13 @@ export function UserLocContextProvider(props: Props) {
                 refresh: refreshFunction,
                 requestSof: requestSofFunction,
                 requestSofOnCollection: requestSofOnCollectionFunction,
+                checkHash: checkHashFunction,
             };
             dispatch(action)
         }
     }, [ contextValue.loc, contextValue.addMetadata, deleteFileFunction,
         deleteMetadataFunction, dispatch, addMetadataFunction, addFileFunction, refreshFunction, requestSofFunction,
-        requestSofOnCollectionFunction ])
+        requestSofOnCollectionFunction, checkHashFunction ])
 
     return (
         <UserLocContextObject.Provider value={ contextValue }>

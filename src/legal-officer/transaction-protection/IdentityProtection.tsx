@@ -126,7 +126,7 @@ export default function IdentityProtection() {
                         <LocCreationDialog
                             show={ createLoc }
                             exit={ () => setCreateLoc(false) }
-                            onSuccess={ request => navigate(identityLocDetailsPath(request.id)) }
+                            onSuccess={ request => navigate(identityLocDetailsPath(request.id.toString())) }
                             locRequest={{
                                 locType: 'Identity'
                             }}

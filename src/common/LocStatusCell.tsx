@@ -1,4 +1,4 @@
-import { LocRequestStatus } from './types/ModelTypes';
+import { LocRequestStatus } from '@logion/client';
 import { ORANGE, GREEN, RED } from "./ColorTheme";
 import StatusCell from "./StatusCell";
 

@@ -1,5 +1,5 @@
+import { LocRequest } from "@logion/client";
 import { CreateLocRequest } from "../Model";
-import { LocRequest } from "../types/ModelTypes";
 
 export let fetchProtectionRequests = jest.fn();
 
@@ -19,8 +19,6 @@ export async function createLocRequest(axios: any, request: CreateLocRequest): P
         status: "OPEN"
     });
 }
-
-export const fetchLocRequest = jest.fn();
 
 export const confirmLocFile = jest.fn();
 export const confirmLocLink = jest.fn();

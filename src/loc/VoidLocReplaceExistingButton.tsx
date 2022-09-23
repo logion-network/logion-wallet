@@ -17,7 +17,7 @@ export default function VoidLocReplaceExistingButton() {
     const { colorTheme, refresh } = useCommonContext();
     const { api } = useLogionChain();
     const [ visible, setVisible ] = useState(false);
-    const { locRequest, voidLocExtrinsic, voidLoc, loc } = useLocContext();
+    const { loc: locData, voidLocExtrinsic, voidLoc } = useLocContext();
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
     const [ reason, setReason ] = useState<string>("");
     const [ replacerLocId, setReplacerLocId ] = useState<string>("");
@@ -30,7 +30,7 @@ export default function VoidLocReplaceExistingButton() {
         if (!locId) {
             setReplacerLocIdError("Invalid LOC ID");
         } else {
-            if(replacerLocId === new UUID(locRequest?.id).toDecimalString()) {
+            if(replacerLocId === locData?.id.toDecimalString()) {
                 setReplacerLocIdError("Cannot be replaced by itself");
             } else {
             const replacerLoc = await getLegalOfficerCase({ locId, api: api! })
@@ -38,7 +38,7 @@ export default function VoidLocReplaceExistingButton() {
                 setReplacerLocIdError("LOC not found on chain");
             } else if(replacerLoc.voidInfo !== undefined) {
                 setReplacerLocIdError("Cannot be replaced by a VOID LOC");
-            } else if(replacerLoc.locType !== loc?.locType) {
+            } else if(replacerLoc.locType !== locData?.locType) {
                 setReplacerLocIdError(`Cannot be replaced by a LOC of type: ${replacerLoc.locType}`);
             } else {
                 setReplacerLocIdError(undefined);
@@ -51,7 +51,7 @@ export default function VoidLocReplaceExistingButton() {
             }
         }
         }
-    }, [ replacerLocId, setReplacerLocIdError, setSignAndSubmit, voidLocExtrinsic, setVoidInfo, api, reason, locRequest, loc ]);
+    }, [ replacerLocId, setReplacerLocIdError, setSignAndSubmit, voidLocExtrinsic, setVoidInfo, api, reason, locData ]);
 
     const clearAndClose = useCallback(() => {
         setReason("");
@@ -60,7 +60,7 @@ export default function VoidLocReplaceExistingButton() {
         setVisible(false);
     }, [ setReason, setReplacerLocId, setReplacerLocIdError, setVisible ]);
 
-    if(locRequest === null) {
+    if(locData === null) {
         return null;
     }
 

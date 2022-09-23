@@ -2,9 +2,10 @@ import { useCallback, useState } from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import { UUID } from "@logion/node-api/dist/UUID";
 import { LegalOfficerCase } from '@logion/node-api/dist/Types';
+import { LocData } from "@logion/client";
+import { LogionClient } from '@logion/client/dist/LogionClient';
 
-import { LocRequest } from "../common/types/ModelTypes";
-import { fetchLocRequest, resetDefaultMocks } from "../common/__mocks__/ModelMock";
+import { resetDefaultMocks } from "../common/__mocks__/ModelMock";
 import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
 import { CLOSED_IDENTITY_LOC, CLOSED_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "../__mocks__/@logion/node-api/dist/LogionLocMock";
 import { finalizeSubmission, resetSubmitting } from "../logion-chain/__mocks__/SignatureMock";
@@ -13,6 +14,7 @@ import { LocContextProvider, useLocContext } from "./LocContext"
 import { LocItemType } from "./types";
 import { addMetadata, addFile, addLink } from "./__mocks__/ModelMock";
 import { buildLocRequest } from "./TestData";
+import { setClientMock } from "src/logion-chain/__mocks__/LogionChainMock";
 
 jest.mock("@logion/node-api/dist/LogionLoc");
 jest.mock("../logion-chain/Signature");
@@ -78,10 +80,21 @@ describe("LocContext", () => {
 
 function givenRequest(locId: string, loc: LegalOfficerCase) {
     _request = buildLocRequest(UUID.fromDecimalString(locId)!, loc);
-    fetchLocRequest.mockResolvedValue(_request);
+    setClientMock({
+        locsState: () => Promise.resolve({
+            findById: () => Promise.resolve({
+                data: () => _request
+            })
+        }),
+        public: {
+            findLocById: () => Promise.resolve({
+                data: _request
+            })
+        }
+    } as unknown as LogionClient);
 }
 
-let _request: LocRequest;
+let _request: LocData;
 
 function whenRenderingInContext(locId: string, element: JSX.Element) {
     render(
@@ -92,16 +105,16 @@ function whenRenderingInContext(locId: string, element: JSX.Element) {
 }
 
 function Reader() {
-    const { loc, locRequest, locItems } = useLocContext();
+    const { loc: locData, locItems } = useLocContext();
 
-    if(!loc) {
+    if(!locData) {
         return null;
     }
 
     return (
         <div>
-            <p>{ locRequest?.id }</p>
-            <p>{ loc?.owner }</p>
+            <p>{ locData.id.toString() }</p>
+            <p>{ locData.ownerAddress }</p>
             <ul>
                 {
                     locItems.map((item, index) => <li key={ index }>
@@ -134,7 +147,7 @@ function givenOtherRequestForLink() {
     }
 }
 
-let _linkRequest: LocRequest;
+let _linkRequest: LocData;
 
 function givenAddEndpoints() {
     addMetadata.mockResolvedValue(undefined);
@@ -182,7 +195,7 @@ async function thenItemsAdded() {
 }
 
 function Closer() {
-    const { loc, closeExtrinsic, close } = useLocContext();
+    const { loc: locData, closeExtrinsic, close } = useLocContext();
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
 
     const callback = useCallback(() => {
@@ -194,14 +207,14 @@ function Closer() {
         close!();
     }, [ close ]);
 
-    if(!loc || !closeExtrinsic || !close) {
+    if(!locData || !closeExtrinsic || !close) {
         return null;
     }
 
     return (
         <div>
             <button onClick={ callback }>Go</button>
-            <p>{ loc.closed ? "Closed" : "Open" }</p>
+            <p>{ locData.closed ? "Closed" : "Open" }</p>
             <ExtrinsicSubmitter
                 id="close"
                 signAndSubmit={ signAndSubmit }
@@ -235,20 +248,23 @@ function givenDraftItemsToPublish() {
         addedOn: "",
         name: "New data",
         submitter: OPEN_IDENTITY_LOC.owner,
-        value: "Some value"
+        value: "Some value",
+        published: false,
     })
     _request.files.push({
         hash: "new-hash",
         addedOn: "",
         name: "New file",
         submitter: OPEN_IDENTITY_LOC.owner,
-        nature: "Some nature"
+        nature: "Some nature",
+        published: false,
     })
     _request.links.push({
         addedOn: "",
-        id: new UUID(_linkRequest.id),
+        id: _linkRequest.id,
         nature: "New link",
-        target: _linkRequest.id
+        target: _linkRequest.id.toString(),
+        published: false,
     })
 }
 
@@ -351,7 +367,7 @@ async function thenItemsDeleted() {
 }
 
 function Voider() {
-    const { loc, voidLocExtrinsic, voidLoc } = useLocContext();
+    const { loc: locData, voidLocExtrinsic, voidLoc } = useLocContext();
 
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
 
@@ -366,14 +382,14 @@ function Voider() {
         });
     }, [ voidLoc ]);
 
-    if(!loc) {
+    if(!locData) {
         return null;
     }
 
     return (
         <div>
             <button onClick={ callback }>Go</button>
-            <p>{ loc.voidInfo ? "Voided" : "-" }</p>
+            <p>{ locData.voidInfo ? "Voided" : "-" }</p>
             <ExtrinsicSubmitter
                 id="void"
                 signAndSubmit={ signAndSubmit }

@@ -1,7 +1,7 @@
 import { UUID } from '@logion/node-api/dist/UUID';
+import { LocRequestStatus } from '@logion/client';
 
 import { CopyPasteCell } from './Table';
-import { LocRequestStatus } from './types/ModelTypes';
 
 export interface Props {
     status: LocRequestStatus;

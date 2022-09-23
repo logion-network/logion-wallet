@@ -2,8 +2,7 @@ import { Dropdown } from "react-bootstrap";
 import { useState, useCallback } from "react";
 import LocLinkExistingDialog from "./LocLinkExistingLocDialog";
 import LocCreationDialog from "./LocCreationDialog";
-import { useLocContext } from "./LocContext";
-import { LocRequest } from "../common/types/ModelTypes";
+import { LinkTarget, useLocContext } from "./LocContext";
 
 export const enum Visible {
     NONE,
@@ -19,11 +18,11 @@ export interface Props {
 
 export default function LocLinkButton(props: Props) {
     const [ visible, setVisible ] = useState<Visible>(props.visible ? props.visible : Visible.NONE);
-    const { addLink, locRequest } = useLocContext();
+    const { addLink, loc } = useLocContext();
 
-    const linkNewLoc = useCallback((newLocRequest: LocRequest, nature: string) => {
+    const linkNewLoc = useCallback((newLocData: LinkTarget, nature: string) => {
         if (addLink !== null) {
-            addLink(newLocRequest, nature)
+            addLink(newLocData, nature)
         }
     }, [ addLink ])
 
@@ -52,11 +51,11 @@ export default function LocLinkButton(props: Props) {
             <LocCreationDialog
                 show={ visible === Visible.LINK_NEW_IDENTITY || visible === Visible.LINK_NEW_TRANSACTION }
                 exit={ () => setVisible(Visible.NONE) }
-                onSuccess={ (newLocRequest, nature) => linkNewLoc(newLocRequest, nature!) }
+                onSuccess={ (newLocData, nature) => linkNewLoc(newLocData, nature!) }
                 locRequest={{
-                    requesterAddress: locRequest!.requesterAddress,
-                    requesterIdentityLoc: locRequest!.requesterIdentityLoc,
-                    userIdentity: locRequest!.userIdentity,
+                    requesterAddress: loc!.requesterAddress,
+                    requesterIdentityLoc: loc!.requesterLocId?.toString(),
+                    userIdentity: loc!.userIdentity,
                     locType: visible === Visible.LINK_NEW_IDENTITY ? 'Identity' : 'Transaction'
                 }}
                 hasLinkNature={ true }

@@ -1,68 +1,35 @@
-import { LegalOfficer, CollectionItem, PublicLoc } from "@logion/client";
-import { useCallback, useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import { Col, OverlayTrigger } from "react-bootstrap";
-import Tooltip from 'react-bootstrap/Tooltip';
-
-import { useCommonContext } from "../common/CommonContext";
-import { FullWidthPane } from "../common/Dashboard";
-import Tabs from "../common/Tabs";
-import { Row } from "../common/Grid";
-import { POLKADOT, RED, BackgroundAndForegroundColors, BLUE } from "../common/ColorTheme";
-import Icon from "../common/Icon";
-import DangerFrame from "../common/DangerFrame";
-import NewTabLink from "../common/NewTabLink";
-import InlineDateTime from "../common/InlineDateTime";
-import IconTextRow from "../common/IconTextRow";
+import { LegalOfficer } from "@logion/client";
+import { useEffect, useState } from "react";
 import { useLogionChain } from "../logion-chain";
 
-import { UserLocPrivateFileButton } from "./LocPrivateFileButton";
-import CheckFileFrame, { DocumentCheckResult } from 'src/components/checkfileframe/CheckFileFrame';
-import { UserLocPublicDataButton } from "./LocPublicDataButton";
-import { UserLocItems } from "./LocItems";
-import LocItemDetail from "./LocItemDetail";
+import CheckFileFrame from 'src/components/checkfileframe/CheckFileFrame';
 import CertificateAndLimits from "./CertificateAndLimits";
 import { UserCollectionLocItemChecker } from "./CollectionLocItemChecker";
 import ItemImporter from "./ItemImporter";
 import { useUserLocContext } from "./UserLocContext";
-import { PersonalInfo } from "../components/identity/PersonalInfo";
-import "./ContextualizedLocDetails.css";
-import ButtonGroup from "src/common/ButtonGroup";
+import LocPane from "./LocPane";
+import LocDetailsTab from "./LocDetailsTab";
+import VoidDisclaimer from "./VoidDisclaimer";
+import SupersedesDisclaimer from "./SupersedesDisclaimer";
 
 export default function UserContextualizedLocDetails() {
-    const { getOfficer, client } = useLogionChain();
-    const { colorTheme } = useCommonContext();
-    const navigate = useNavigate();
-    const { locState, loc, locId, backPath, detailsPath } = useUserLocContext();
-    const [ checkResult, setCheckResult ] = useState<DocumentCheckResult>({result: "NONE"});
-    const [ collectionItem, setCollectionItem ] = useState<CollectionItem>();
+    const { getOfficer } = useLogionChain();
     const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer | null>(null)
-    const [ supersededLoc, setSupersededLoc ] = useState<PublicLoc | undefined | null>(null)
-
-    useEffect(() => {
-        if (loc && loc.replacerOf && locState && supersededLoc === null) {
-            client?.public.findLocById({ locId: loc.replacerOf })
-                .then(setSupersededLoc)
-        }
-    }, [ loc, locState, supersededLoc, client ])
-
-    const checkHash = useCallback(async (hash: string) => {
-        const result = await locState?.checkHash(hash);
-
-        if(result?.collectionItem || result?.file || result?.metadataItem) {
-            setCheckResult({
-                result: "POSITIVE",
-                hash
-            });
-            setCollectionItem(result?.collectionItem);
-        } else {
-            setCheckResult({
-                result: "NEGATIVE",
-                hash
-            });
-            setCollectionItem(undefined);
-        }
-    }, [ setCheckResult, setCollectionItem, locState ]);
+    const {
+        backPath,
+        detailsPath,
+        locState,
+        loc,
+        supersededLoc,
+        locItems,
+        deleteMetadata,
+        deleteFile,
+        addMetadata,
+        addFile,
+        checkHash,
+        checkResult,
+        collectionItem,
+    } = useUserLocContext();
 
     useEffect(() => {
         if (legalOfficer === null && loc) {
@@ -73,250 +40,57 @@ export default function UserContextualizedLocDetails() {
         }
     }, [ legalOfficer, loc, getOfficer, setLegalOfficer ])
 
-    if (loc === null) {
+    if (loc === null || locState === null) {
         return null;
     }
 
-    let locTabBorderColor = BLUE;
-    if(loc.voidInfo !== undefined) {
-        locTabBorderColor = RED;
-    } else if(loc.closed) {
-        locTabBorderColor = POLKADOT;
-    }
-
-    let locTabBorderWidth: string | undefined = undefined;
-    if(loc.voidInfo !== undefined) {
-        locTabBorderWidth = "2px";
-    }
-
-    let tabColors: BackgroundAndForegroundColors | undefined = undefined;
-    if(loc.voidInfo !== undefined) {
-        tabColors = {
-            foreground: "white",
-            background: RED
-        };
-    }
-
-    let paneTitle: string = "";
-    let paneIcon: string = "";
-    if(loc.locType === 'Transaction') {
-        paneTitle = "Transaction Protection Case";
-        paneIcon = 'loc';
-    } else if(loc.locType === 'Identity') {
-        paneTitle = "Identity Case";
-        paneIcon = 'identity';
-    } else if(loc.locType === 'Collection') {
-        paneTitle = "Collection Protection Case";
-        paneIcon = 'collection';
-    }
-
-    let locTabTitle: string;
-    if(loc.locType === 'Transaction') {
-        locTabTitle = "Legal Officer Case (LOC) - Transaction";
-    } else if(loc.locType === 'Collection') {
-        locTabTitle = "Legal Officer Case (LOC) - Collection";
-    } else {
-        if (locState?.isLogionIdentity()) {
-            locTabTitle = "Legal Officer Case (LOC) - Logion Identity";
-        } else {
-            locTabTitle = "Legal Officer Case (LOC) - Polkadot Identity";
-        }
-    }
-    if(loc.voidInfo !== undefined) {
-        locTabTitle = "VOID " + locTabTitle;
-    }
-
     return (
-        <FullWidthPane
-            mainTitle={ paneTitle }
-            titleIcon={ {
-                icon: {
-                    id: paneIcon
-                },
-                background: colorTheme.topMenuItems.iconGradient,
-            } }
-            onBack={ () => navigate(backPath) }
-            className="ContextualizedLocDetails"
+        <LocPane
+            backPath={ backPath }
+            loc={ loc }
+            locState={ locState }
         >
-            <Tabs
-                id="loc-content"
-                activeKey="details"
-                onSelect={ () => {
-                } }
-                tabs={ [ {
-                    key: "details",
-                    title: locTabTitle,
-                    render: () => {
-                        return <>
-                            <Row>
-                                <Col md={ 4 }>
-                                    <LocItemDetail label="LOC ID" copyButtonText={ locId.toDecimalString() } >
-                                        <OverlayTrigger
-                                            placement="top"
-                                            delay={ 500 }
-                                            overlay={
-                                                <Tooltip id={ locId.toDecimalString() }>{ locId.toDecimalString() }</Tooltip> }>
-                                            <span>{ locId.toDecimalString() }</span>
-                                        </OverlayTrigger>
-                                    </LocItemDetail>
-                                    <LocItemDetail label="Creation date">
-                                        <InlineDateTime dateTime={ loc.createdOn } />
-                                    </LocItemDetail>
-                                </Col>
-                                <Col md={ 4 }>
-                                    <LocItemDetail label="Description">{ loc?.description }</LocItemDetail>
-                                    {
-                                        loc.status === 'CLOSED' &&
-                                        <LocItemDetail label="Closing date" spinner={ loc.closedOn === undefined }>
-                                            <InlineDateTime dateTime={ loc.closedOn } />
-                                        </LocItemDetail>
-                                    }
-                                </Col>
-
-                                <Col md={ 4 } className="closed-icon-container">
-                                        <LocItemDetail label="Legal Officer in charge">
-                                            { legalOfficer?.name || "" }
-                                            <OverlayTrigger
-                                                placement="top"
-                                                delay={ 500 }
-                                                overlay={
-                                                    <Tooltip
-                                                        id={ loc?.ownerAddress }>{ loc?.ownerAddress }</Tooltip> }>
-                                                <span><br /> { loc?.ownerAddress }</span>
-                                            </OverlayTrigger>
-                                        </LocItemDetail>
-                                    {
-                                        loc.closed && loc.voidInfo === undefined &&
-                                        <div className="closed-icon">
-                                            <Icon icon={ { id: "polkadot_shield" } } />
-                                        </div>
-                                    }
-                                    {
-                                        loc.voidInfo !== undefined &&
-                                        <div className="closed-icon">
-                                            <Icon icon={ { id: "void_shield" } } />
-                                        </div>
-                                    }
-                                </Col>
-                            </Row>
-                            <div className="separator" style={{ backgroundColor: locTabBorderColor }} />
-                            { loc?.locType === "Identity" && <>
-                                <PersonalInfo personalAndStatusInfo={ loc } />
-                                <div className="separator" style={ { backgroundColor: locTabBorderColor } } />
-                            </> }
-                            <UserLocItems matchedHash={ checkResult.hash } />
-                            {
-                                !loc.closed && loc.voidInfo === undefined &&
-                                <Row>
-                                    <Col xxl={5} xl={4}>
-                                        <ButtonGroup align="left">
-                                            <UserLocPublicDataButton/>
-                                            <UserLocPrivateFileButton/>
-                                        </ButtonGroup>
-                                    </Col>
-                                    <Col className="link-button-container" xxl={4} xl={4}/>
-                                    <Col className="close-button-container" xxl={3} xl={4}/>
-                                </Row>
-                            }
-                        </>
-                    }
-                } ] }
-                borderColor={ locTabBorderColor }
-                borderWidth={ locTabBorderWidth }
-                tabColors={ tabColors }
-                flatBottom={ loc.voidInfo !== undefined }
+            <LocDetailsTab
+                loc={ loc }
+                locState={ locState }
+                locItems={ locItems }
+                addFile={ addFile }
+                addMetadata={ addMetadata }
+                checkResult={ checkResult }
+                deleteFile={ deleteFile }
+                deleteLink={ null }
+                deleteMetadata={ deleteMetadata }
+                viewer="User"
+                detailsPath={ detailsPath }
             />
-            {
-                loc.voidInfo !== undefined && loc.locType !== 'Collection' &&
-                <DangerFrame
-                    className="loc-is-void"
-                    title={ <span><Icon icon={ { id: 'void' } } width="45px" /> This LOC is VOID</span> }
-                >
-                    <p><strong>You have voided this LOC at the following date:</strong> <InlineDateTime dateTime={ loc.voidInfo?.voidedOn } /></p>
-                    <p><strong>Reason:</strong> { loc.voidInfo?.reason || "-" }</p>
-                    {
-                        loc.voidInfo.replacer !== undefined &&
-                        <p><strong>This VOID LOC has been replaced by the following LOC: </strong>
-                            <NewTabLink
-                                href={ detailsPath(loc.voidInfo.replacer, loc.locType) }
-                                iconId="loc-link"
-                                inline
-                            >
-                                { loc.voidInfo.replacer.toDecimalString() }
-                            </NewTabLink>
-                        </p>
-                    }
-                    {
-                        loc.voidInfo.replacer === undefined &&
-                        <p>Please note that its public certificate shows a "VOID" mention to warn people that the content of the LOC is not valid anymore.</p>
-                    }
-                    {
-                        loc.voidInfo.replacer !== undefined &&
-                        <p>Please note that its public certificate shows a "VOID" mention to warn people that the content of the LOC is not valid anymore.
-                            People will be automatically redirected to the replacing LOC when accessing to the void LOC URL and a mention of the fact that
-                            the replacing LOC supersedes the void LOC will be visible on both certificates.
-                        </p>
-                    }
-                </DangerFrame>
-            }
-            {
-                loc.voidInfo !== undefined && loc.locType === 'Collection' &&
-                <DangerFrame
-                    className="loc-is-void"
-                    title={ <span><Icon icon={ { id: 'void' } } width="45px" /> This Collection LOC with all its related Collection Items are VOID</span> }
-                >
-                    <p><strong>You have voided this Collection LOC with all its related Collection Items at the following date:</strong> <InlineDateTime dateTime={ loc.voidInfo?.voidedOn } /></p>
-                    <p><strong>Reason:</strong> { loc.voidInfo?.reason || "-" }</p>
-                    <p>Please note that related public certificates show a "VOID" mention to warn people that the content of the Collection LOC as well as its related Collection Items are not valid anymore.</p>
-                </DangerFrame>
-            }
+            <VoidDisclaimer
+                loc={ loc }
+                detailsPath={ detailsPath }
+            />
             <CertificateAndLimits
-                locId={ locId }
-                loc={{ ...loc, isVoid: loc.voidInfo !== undefined }}
+                locId={ loc.id }
+                loc={ loc }
                 viewer="User"
             />
             { loc.locType === 'Collection' && loc.closed &&
                 <UserCollectionLocItemChecker
-                    locId={ locId }
+                    locId={ loc.id }
                     locOwner={ loc.ownerAddress }
                     collectionItem={ collectionItem }
                 />
             }
             { loc.locType === 'Collection' && loc.closed && loc.voidInfo === undefined &&
-                <ItemImporter
-                    locId={ locId }
-                    collectionItem={ collectionItem }
-                />
+                <ItemImporter />
             }
-            {
-                supersededLoc !== null && supersededLoc !== undefined &&
-                <DangerFrame
-                    className="loc-supersedes"
-                >
-                    <IconTextRow
-                        icon={ <Icon icon={ { id: 'void_supersede' } } width="45px" /> }
-                        text={
-                            <>
-                                <p className="frame-title">IMPORTANT: this logion Legal Officer Case (LOC) supersedes a previous LOC (VOID)</p>
-                                <p><strong>This LOC supersedes a previous LOC (VOID) since the following date:</strong> <InlineDateTime dateTime={ supersededLoc.data.voidInfo?.voidedOn } /></p>
-                                <p><strong>For record purpose, this LOC supersedes the following LOC: </strong>
-                                    <NewTabLink
-                                        href={ detailsPath(loc.replacerOf!, loc.locType) }
-                                        iconId="loc-link"
-                                        inline
-                                    >
-                                        { loc.replacerOf!.toDecimalString() }
-                                    </NewTabLink>
-                                </p>
-                            </>
-                        }
-                    />
-                </DangerFrame>
-            }
+            <SupersedesDisclaimer
+                loc={ loc }
+                detailsPath={ detailsPath }
+                supersededLoc={ supersededLoc }
+            />
             <CheckFileFrame
                 checkHash={ checkHash }
                 checkResult={ checkResult.result }
             />
-        </FullWidthPane>
+        </LocPane>
     );
 }

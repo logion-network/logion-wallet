@@ -32,7 +32,7 @@ export default function ArchiveButton() {
 
     type Status = 'Idle' | 'Selected' | 'Checked';
     const [ status, setStatus ] = useState<Status>('Idle');
-    const { locItems, loc, locId } = useLocContext();
+    const { locItems, loc: locData, locId } = useLocContext();
     const { axiosFactory } = useLogionChain();
 
     const backup: TypedFileInfo = {
@@ -46,7 +46,7 @@ export default function ArchiveButton() {
             .filter(locItem => locItem.type === 'Document')
             .map(locItem => documentToTypedFileInfo(locId, locItem)))
 
-    if (!loc || !axiosFactory) {
+    if (!locData || !axiosFactory) {
         return null;
     }
 
@@ -70,7 +70,7 @@ export default function ArchiveButton() {
                         id: "submit",
                         callback: () => openFiles({
                             files,
-                            nodeOwner: loc.owner,
+                            nodeOwner: locData.ownerAddress,
                             axiosFactory
                         }),
                         buttonText: 'Download',

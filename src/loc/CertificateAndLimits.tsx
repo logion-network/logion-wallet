@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { LocData } from "@logion/client";
 import { ChainTime } from '@logion/node-api/dist/ChainTime';
-import { LocType } from '@logion/node-api/dist/Types';
 import { UUID } from '@logion/node-api/dist/UUID';
 
 import Button from '../common/Button';
@@ -21,19 +21,9 @@ import { Viewer } from "./types";
 import ArchiveButton from "./archive/ArchiveButton";
 import InlineDateTime from 'src/common/InlineDateTime';
 
-interface LocProps {
-    closed: boolean
-    requesterAddress?: string
-    locType: LocType
-    collectionLastBlockSubmission?: bigint
-    collectionMaxSize?: number
-    collectionCanUpload?: boolean
-    isVoid: boolean
-}
-
 export interface Props {
     locId: UUID
-    loc: LocProps
+    loc: LocData
     viewer: Viewer
 }
 
@@ -89,7 +79,7 @@ export default function CertificateAndLimits(props: Props) {
                     <Col className="col-xxxl-4 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6">
                         <div className="tool-bar">
                             { props.viewer === 'LegalOfficer' && <ArchiveButton/> }
-                            { props.loc.closed && !props.loc.isVoid && <Button onClick={ () => setShowSettings(true) }><Icon icon={{id: "cog"}} height="22px"/> Get dev settings</Button> }
+                            { props.loc.closed && !props.loc.voidInfo && <Button onClick={ () => setShowSettings(true) }><Icon icon={{id: "cog"}} height="22px"/> Get dev settings</Button> }
                         </div>
                     </Col>
                 }
@@ -179,6 +169,6 @@ export default function CertificateAndLimits(props: Props) {
     );
 }
 
-function itemLimit(loc: LocProps): string {
+function itemLimit(loc: LocData): string {
     return loc.collectionMaxSize ? loc.collectionMaxSize.toString() : "-";
 }

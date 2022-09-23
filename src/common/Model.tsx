@@ -1,12 +1,7 @@
 import { AxiosInstance } from 'axios';
-import { UserIdentity } from '@logion/client';
+import { UserIdentity, LocData, LocRequest, LocRequestStatus } from '@logion/client';
 import { ProtectionRequest, ProtectionRequestStatus } from '@logion/client/dist/RecoveryClient';
-import { UUID, LocType, IdentityLocType, LegalOfficerCase } from '@logion/node-api';
-
-import {
-    LocRequest,
-    LocRequestStatus,
-} from './types/ModelTypes';
+import { UUID, LocType, IdentityLocType } from '@logion/node-api';
 
 export type ProtectionRequestKind = 'RECOVERY' | 'PROTECTION_ONLY' | 'ANY';
 
@@ -41,14 +36,6 @@ export async function fetchLocRequests(
 ): Promise<LocRequest[]> {
     const response = await axios.put(`/api/loc-request`, specification);
     return response.data.requests;
-}
-
-export async function fetchLocRequest(
-    axios: AxiosInstance,
-    requestId: string
-): Promise<LocRequest> {
-    const response = await axios.get(`/api/loc-request/${ requestId }`);
-    return response.data;
 }
 
 export interface CreateLocRequest {
@@ -143,6 +130,6 @@ export async function preVoid(
     });
 }
 
-export function isGrantedAccess(address: string | undefined, loc: LegalOfficerCase): boolean {
-    return loc.owner === address || loc.requesterAddress === address;
+export function isGrantedAccess(address: string | undefined, loc: LocData): boolean {
+    return loc.ownerAddress === address || loc.requesterAddress === address;
 }

@@ -1,9 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
+import { LocRequest } from '@logion/client';
 import { UUID } from '@logion/node-api/dist/UUID';
 import { createLogionIdentityLoc, createLogionTransactionLoc, createPolkadotIdentityLoc, createPolkadotTransactionLoc } from '@logion/node-api/dist/LogionLoc';
 
 import { useLogionChain } from '../logion-chain';
-import { LocRequest } from '../common/types/ModelTypes';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../ExtrinsicSubmitter';
 import ProcessStep from '../legal-officer/ProcessStep';
 import { useLegalOfficerContext } from '../legal-officer/LegalOfficerContext';

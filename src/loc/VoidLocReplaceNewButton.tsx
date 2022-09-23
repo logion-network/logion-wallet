@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react";
 import { Form } from "react-bootstrap";
-import { UUID } from "@logion/node-api/dist/UUID";
+import { LocRequest } from "@logion/client";
+import { UUID } from "@logion/node-api";
 
 import Button from "../common/Button";
 import { useCommonContext } from "../common/CommonContext";
@@ -8,7 +9,6 @@ import DangerDialog from "../common/DangerDialog";
 import FormGroup from "../common/FormGroup";
 import Icon from "../common/Icon";
 import { createLocRequest, CreateLocRequest } from "../common/Model";
-import { LocRequest } from "../common/types/ModelTypes";
 import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
 import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
 import { FullVoidInfo, useLocContext } from "./LocContext";
@@ -20,7 +20,7 @@ export default function VoidLocReplaceNewButton() {
     const { colorTheme, refresh } = useCommonContext();
     const { axios } = useLegalOfficerContext();
     const [ visible, setVisible ] = useState(false);
-    const { locRequest, voidLocExtrinsic, voidLoc } = useLocContext();
+    const { loc: locData, voidLocExtrinsic, voidLoc } = useLocContext();
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
     const [ submissionFailed, setSubmissionFailed ] = useState<boolean>(false);
     const [ reason, setReason ] = useState<string>("");
@@ -33,15 +33,15 @@ export default function VoidLocReplaceNewButton() {
             const currentAddress = accounts!.current!.address;
             const request: CreateLocRequest = {
                 ownerAddress: currentAddress,
-                requesterAddress: locRequest!.requesterAddress ? locRequest!.requesterAddress : undefined,
-                requesterIdentityLoc: locRequest!.requesterIdentityLoc ? locRequest!.requesterIdentityLoc : undefined,
+                requesterAddress: locData!.requesterAddress ? locData!.requesterAddress : undefined,
+                requesterIdentityLoc: locData!.requesterLocId ? locData!.requesterLocId.toString() : undefined,
                 description: newLocDescription,
-                userIdentity: locRequest!.userIdentity,
-                locType: locRequest!.locType,
+                userIdentity: locData!.userIdentity,
+                locType: locData!.locType,
             }
             setNewLocRequest(await createLocRequest!(axios!, request));
         })();
-    }, [ axios, accounts, locRequest, newLocDescription ]);
+    }, [ axios, accounts, locData, newLocDescription ]);
 
     const clearAndClose = useCallback(() => {
         setVoidInfo({reason: ""});
@@ -50,7 +50,7 @@ export default function VoidLocReplaceNewButton() {
         setVisible(false)
     }, [ setVoidInfo, setSignAndSubmit, setSubmissionFailed, setVisible ]);
 
-    if(locRequest === null) {
+    if(locData === null) {
         return null;
     }
 

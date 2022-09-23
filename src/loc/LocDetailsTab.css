@@ -1,0 +1,28 @@
+.LocDetailsTab .separator {
+    height: 1px;
+    width: calc(100% + 40px);
+    margin-left: -20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.LocDetailsTab .link-button-container {
+    display: flex;
+    justify-content: center;
+}
+
+.LocDetailsTab .link-button-container a {
+    color: white;
+}
+
+.LocDetailsTab .close-button-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+@media (max-width: 1360px) {
+
+    .LocDetailsTab .link-button-container {
+        justify-content: flex-end;
+    }
+}

@@ -1,30 +1,19 @@
+import { useCallback, useState } from "react";
+import { useForm } from "react-hook-form";
+
 import Button from "../common/Button";
 import Dialog from "../common/Dialog";
 import LocPublicDataForm, { FormValues } from "./LocPublicDataForm";
 import { useCommonContext } from "../common/CommonContext";
-import { useForm } from "react-hook-form";
-import { useCallback, useState } from "react";
-import { useLocContext } from "./LocContext";
 import Icon from "../common/Icon";
 import { LocItem } from "./types";
-import { useUserLocContext } from "./UserLocContext";
 
-export function LOLocPublicDataButton() {
-    const { addMetadata, locItems } = useLocContext();
-    return <LocPublicDataButton locItems={ locItems } addMetadata={ addMetadata } />
-}
-
-export function UserLocPublicDataButton() {
-    const { addMetadata, locItems } = useUserLocContext();
-    return <LocPublicDataButton locItems={ locItems } addMetadata={ addMetadata } />
-}
-
-interface Props {
+export interface Props {
     locItems: LocItem[]
     addMetadata: ((name: string, value: string) => void) | null
 }
 
-function LocPublicDataButton(props: Props) {
+export function LocPublicDataButton(props: Props) {
 
     const { addMetadata, locItems } = props;
     const { colorTheme } = useCommonContext();

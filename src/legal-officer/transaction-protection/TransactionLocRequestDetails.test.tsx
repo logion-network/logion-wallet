@@ -1,4 +1,4 @@
-import { LocRequest } from '../../common/types/ModelTypes';
+import { LocRequest } from '@logion/client';
 import { shallowRender } from '../../tests';
 import TransactionLocRequestDetails from './TransactionLocRequestDetails';
 

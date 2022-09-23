@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { LocType } from "@logion/node-api/dist/Types";
+import { LocRequest } from "@logion/client";
 
 import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';
 import Button from '../../common/Button';
 
 import { useCommonContext } from '../../common/CommonContext';
-import { LocRequest } from '../../common/types/ModelTypes';
 import ButtonGroup from "../../common/ButtonGroup";
 import UserIdentityNameCell from '../../common/UserIdentityNameCell';
 

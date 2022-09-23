@@ -11,7 +11,6 @@ import { Mock } from 'moq.ts';
 import Accounts, { Account } from 'src/common/types/Accounts';
 import { LogionClient } from '@logion/client/dist/LogionClient';
 import { LogionClient as LogionClientMock } from '../../__mocks__/LogionClientMock';
-import { LegalOfficerData } from "src/legal-officer/LegalOfficerData";
 
 export const LogionChainContextProvider = (props: any) => null;
 

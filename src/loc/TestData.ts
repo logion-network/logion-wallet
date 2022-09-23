@@ -1,34 +1,37 @@
 import { LegalOfficerCase } from "@logion/node-api/dist/Types";
 import { UUID } from "@logion/node-api/dist/UUID";
+import { LocData } from "@logion/client";
 
-import { LocRequest } from "../common/types/ModelTypes";
-
-export function buildLocRequest(locId: UUID, loc: LegalOfficerCase): LocRequest {
+export function buildLocRequest(locId: UUID, loc: LegalOfficerCase): LocData {
     return {
         ownerAddress: loc.owner,
         requesterAddress: loc.requesterAddress,
-        requesterIdentityLoc: loc.requesterLocId?.toString(),
+        requesterLocId: loc.requesterLocId,
         description: "Description",
         locType: loc.locType,
         createdOn: "",
         decisionOn: "",
-        id: locId.toString(),
+        id: locId,
         status: loc.closed ? "CLOSED" : "OPEN",
         files: loc.files.map((locFile, index) => ({
             ...locFile,
             name: `File ${index}`,
             addedOn: "",
+            published: false,
         })),
         metadata: loc.metadata.map((locFile, index) => ({
             ...locFile,
             name: `Data ${index}`,
             addedOn: "",
+            published: false,
         })),
         links: loc.links.map((locFile, index) => ({
             ...locFile,
             name: `Link ${index}`,
             addedOn: "",
             target: locFile.id.toString(),
-        }))
+            published: false,
+        })),
+        closed: false,
     };
 }

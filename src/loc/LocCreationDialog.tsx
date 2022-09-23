@@ -1,19 +1,23 @@
- import { useCallback, useState } from 'react';
+import { LocRequest } from "@logion/client";
+import { UUID } from "@logion/node-api";
+import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
+
 import { useCommonContext } from '../common/CommonContext';
 import { CreateLocRequest, createLocRequest } from '../common/Model';
 import Dialog from '../common/Dialog';
 import LocCreationForm, { FormValues } from "./LocCreationForm";
-import { isLogionIdentityLoc, LocRequest, LocRequestFragment } from "../common/types/ModelTypes";
+import { isLogionIdentityLoc, LocRequestFragment } from "../common/types/ModelTypes";
 import LocCreationSteps from "./LocCreationSteps";
 import { useLegalOfficerContext } from '../legal-officer/LegalOfficerContext';
 import Alert from '../common/Alert';
 import { useLogionChain } from '../logion-chain';
+import { LinkTarget } from "./LocContext";
 
 export interface Props {
     show: boolean,
     exit: () => void,
-    onSuccess: (locRequest: LocRequest, nature?: string) => void,
+    onSuccess: (newLocData: LinkTarget, nature?: string) => void,
     locRequest: LocRequestFragment;
     hasLinkNature: boolean;
     defaultDescription?: string;
@@ -123,7 +127,7 @@ export default function LocCreationDialog(props: Props) {
                 <LocCreationSteps
                     requestToCreate={ newLocRequest }
                     exit={ () => { clear() ; props.exit() } }
-                    onSuccess={ () => { props.onSuccess(newLocRequest, linkNature); clear() } }
+                    onSuccess={ () => { props.onSuccess({ ...newLocRequest, id: new UUID(newLocRequest.id) }, linkNature); clear() } }
                 />
                 }
             </Dialog>

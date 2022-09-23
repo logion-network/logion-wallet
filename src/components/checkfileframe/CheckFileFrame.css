@@ -1,3 +1,7 @@
+.CheckFileFrame {
+    margin-top: 30px;
+}
+
 .CheckFileFrame .IconTextRow p.text-title {
     font-weight: bold;
 }

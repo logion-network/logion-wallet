@@ -265,7 +265,7 @@ export default function RecoveryDetails() {
             <LocCreationDialog
                 show={ visible === Visible.CREATE_NEW_LOC }
                 exit={ () => navigate(RECOVERY_REQUESTS_PATH) }
-                onSuccess={ (newLoc) => navigate({pathname: identityLocDetailsPath(newLoc.id), search: `recovery-request=${ requestId }`}) }
+                onSuccess={ (newLoc) => navigate({pathname: identityLocDetailsPath(newLoc.id.toString()), search: `recovery-request=${ requestId }`}) }
                 locRequest={{
                     requesterAddress: recoveryInfo.recoveryAccount.requesterAddress,
                     userIdentity: recoveryInfo.recoveryAccount.userIdentity,

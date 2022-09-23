@@ -4,3 +4,5 @@ export * from "@logion/node-api/dist/UUID";
 export function buildApi() {
     return new ApiPromise();
 }
+
+export * from "./dist/LogionLoc";

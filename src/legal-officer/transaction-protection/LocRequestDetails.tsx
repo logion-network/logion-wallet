@@ -1,4 +1,5 @@
-import { LocRequest } from "../../common/types/ModelTypes";
+import { LocRequest } from "@logion/client";
+
 import TransactionLocRequestDetails from "./TransactionLocRequestDetails";
 import IdentityLocRequestDetails from "../../components/identity/IdentityLocRequestDetails";
 

@@ -1,35 +1,24 @@
-import Button from "../common/Button";
 import { useState, useCallback } from "react";
+import { Spinner } from "react-bootstrap";
+import { useForm } from "react-hook-form";
+
+import Button from "../common/Button";
 import Dialog from "../common/Dialog";
 import LocPrivateFileForm, { FormValues } from "./LocPrivateFileForm";
-import { useForm } from "react-hook-form";
 import { useCommonContext } from "../common/CommonContext";
 import { sha256Hex } from "../common/hash";
-import { useLocContext } from "./LocContext";
 import { LocItem } from "./types";
 import Icon from "../common/Icon";
-import { Spinner } from "react-bootstrap";
 import { Row } from "../common/Grid";
-import { useUserLocContext } from "./UserLocContext";
 
 type Status = 'Idle' | 'UploadDialog' | 'Uploading';
 
-export function LOLocPrivateFileButton() {
-    const { addFile, locItems } = useLocContext();
-    return <LocPrivateFileButton locItems={ locItems } addFile={ addFile } />
-}
-
-export function UserLocPrivateFileButton() {
-    const { addFile, locItems } = useUserLocContext();
-    return <LocPrivateFileButton locItems={ locItems } addFile={ addFile } />
-}
-
-interface Props {
+export interface Props {
     locItems: LocItem[]
     addFile: ((name: string, file: File, nature: string) => Promise<void>) | null
 }
 
-function LocPrivateFileButton(props: Props) {
+export function LocPrivateFileButton(props: Props) {
 
     const { addFile, locItems } = props;
     const { colorTheme } = useCommonContext();
