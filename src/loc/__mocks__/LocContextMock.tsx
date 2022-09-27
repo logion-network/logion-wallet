@@ -1,7 +1,6 @@
-import { LegalOfficerCase } from "@logion/node-api/dist/Types";
+import { LocData } from "@logion/client";
 import { UUID } from "@logion/node-api/dist/UUID";
 
-import { LocRequest } from "../../common/types/ModelTypes";
 import { mockSignAndSubmit } from "../../ExtrinsicSubmitterTestUtil";
 import { LocItem } from "../types";
 
@@ -33,7 +32,7 @@ export function setLocId(id: UUID) {
     locId = id;
 }
 
-let locRequest: Partial<LocRequest> = {
+let loc: Partial<LocData> = {
     requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
     userIdentity: {
         firstName: "John",
@@ -43,15 +42,7 @@ let locRequest: Partial<LocRequest> = {
     }
 };
 
-export function setLocRequest(request: LocRequest) {
-    locRequest = request;
-}
-
-let loc: Partial<LegalOfficerCase> = {
-    requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"
-};
-
-export function setLoc(request: LegalOfficerCase) {
+export function setLocRequest(request: LocData) {
     loc = request;
 }
 
@@ -79,11 +70,10 @@ export function useLocContext() {
 
         },
         locId,
-        locRequest,
+        loc,
         locItems,
         closeExtrinsic: () => mockSignAndSubmit(() => _closeExtrinsicSent = true),
         close,
-        loc,
         refresh,
         requestSof,
         deleteMetadata,
@@ -91,5 +81,10 @@ export function useLocContext() {
         deleteLink,
         addFile,
         addMetadata,
+        checkResult: { result: "NONE" },
+        locState: {
+            isLogionIdentity: () => false,
+            isLogionData: () => true,
+        }
     };
 }

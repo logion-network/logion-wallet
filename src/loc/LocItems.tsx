@@ -1,3 +1,5 @@
+import { UUID } from "@logion/node-api";
+import { LocData } from "@logion/client";
 import { AxiosInstance } from "axios";
 
 import Table, { Cell, DateTimeCell, EmptyTableMessage, ActionCell } from "../common/Table";
@@ -21,58 +23,10 @@ import LocPrivateFileDetails from "./LocPrivateFileDetails";
 import LocPublishPrivateFileButton from "./LocPublishPrivateFileButton";
 import LocPublishPublicDataButton from "./LocPublishPublicDataButton";
 import LocPublicDataDetails from "./LocPublicDataDetails";
-import { useLocContext } from "./LocContext";
 
 import './LocItems.css';
-import { useUserLocContext } from "./UserLocContext";
-import { UUID } from "@logion/node-api";
-import { UserIdentity } from "@logion/client";
 
-export interface Props {
-    matchedHash?: string;
-}
-
-export function LOLocItems(props: Props) {
-    const { loc, locRequest, locId, locItems, deleteMetadata, deleteFile, deleteLink } = useLocContext();
-    if (loc === null) {
-        return null;
-    }
-    return <LocItems
-        matchedHash={ props.matchedHash }
-        viewer="LegalOfficer"
-        locId={ locId }
-        locItems={ locItems }
-        deleteMetadata={ deleteMetadata }
-        deleteFile={ deleteFile }
-        deleteLink={ deleteLink }
-        owner={ loc.owner }
-        closed={ loc.closed }
-        userIdentity={ locRequest?.userIdentity }
-    />
-}
-
-export function UserLocItems(props: Props) {
-    const { loc, locId, locItems, deleteMetadata, deleteFile } = useUserLocContext();
-    if (loc === null) {
-        console.log(loc, locId, locItems);
-        return null;
-    }
-    return <LocItems
-        matchedHash={ props.matchedHash }
-        viewer="User"
-        locId={ locId }
-        locItems={ locItems }
-        deleteMetadata={ deleteMetadata }
-        deleteFile={ deleteFile }
-        deleteLink={ null }
-        owner={ loc?.ownerAddress }
-        closed={ loc.closed }
-        userIdentity={ loc.userIdentity }
-    />
-
-}
-
-interface LocItemsProps {
+export interface LocItemsProps {
     matchedHash?: string;
     viewer: Viewer;
     locId: UUID
@@ -80,13 +34,11 @@ interface LocItemsProps {
     deleteMetadata: ((locItem: LocItem) => void) | null
     deleteFile: ((locItem: LocItem) => void) | null
     deleteLink: ((locItem: LocItem) => void) | null
-    owner: string
-    closed: boolean
-    userIdentity?: UserIdentity
+    loc: LocData
 }
 
-function LocItems(props: LocItemsProps) {
-    const { locId, locItems, deleteMetadata, deleteFile, deleteLink, owner, userIdentity, closed } = props;
+export function LocItems(props: LocItemsProps) {
+    const { locId, locItems, deleteMetadata, deleteFile, deleteLink, loc } = props;
     const { accounts } = useLogionChain();
 
     const { width } = useResponsiveContext();
@@ -125,23 +77,23 @@ function LocItems(props: LocItemsProps) {
             <ActionCell>
                 { locItem.type === 'Data' && <ButtonGroup>
                     { props.viewer === 'LegalOfficer' && <LocPublishPublicDataButton locItem={ locItem } /> }
-                    { canDelete(accounts?.current?.address, locItem, owner) &&
+                    { canDelete(accounts?.current?.address, locItem, loc.ownerAddress) &&
                         <DeleteButton locItem={ locItem } action={ deleteMetadata! } /> }
                 </ButtonGroup> }
                 { locItem.type === 'Linked LOC' && <ButtonGroup>
                     { props.viewer === 'LegalOfficer' && <LocPublishLinkButton locItem={ locItem } /> }
-                    { canDelete(accounts?.current?.address, locItem, owner) &&
+                    { canDelete(accounts?.current?.address, locItem, loc.ownerAddress) &&
                         <DeleteButton locItem={ locItem } action={ deleteLink! } /> }
                 </ButtonGroup> }
                 { locItem.type === 'Document' && <ButtonGroup>
                     { props.viewer === 'LegalOfficer' && <LocPublishPrivateFileButton locItem={ locItem } /> }
-                    { canDelete(accounts?.current?.address, locItem, owner) &&
+                    { canDelete(accounts?.current?.address, locItem, loc.ownerAddress) &&
                         <DeleteButton locItem={ locItem } action={ deleteFile! } /> }
                 </ButtonGroup> }
             </ActionCell>)
     }
 
-    if (locItems.length <= 0 && !closed) {
+    if (locItems.length <= 0 && !loc.closed) {
         return (
             <div className="LocItems empty-loc">
                 <img alt="empty loc" src={ process.env.PUBLIC_URL + "/assets/empty-loc.svg" } />
@@ -183,7 +135,7 @@ function LocItems(props: LocItemsProps) {
                                     <span className="item-type">{ locItem.type }</span> {
                                     locItem.type === 'Document' &&
                                     <ViewFileButton
-                                        nodeOwner={ owner }
+                                        nodeOwner={ loc.ownerAddress }
                                         fileName={ locItem.name }
                                         downloader={ (axios: AxiosInstance) => getFile(axios, {
                                             locId: locId.toString(),
@@ -202,9 +154,9 @@ function LocItems(props: LocItemsProps) {
                             header: "Submitted by",
                             render: locItem =>
                                 <>
-                                    { locItem.submitter === owner ?
+                                    { locItem.submitter === loc.ownerAddress ?
                                         <LegalOfficerName address={ locItem.submitter } /> :
-                                        <SubmitterName identity={ userIdentity } />
+                                        <SubmitterName identity={ loc.userIdentity } />
                                     }
                                 </>
                         },

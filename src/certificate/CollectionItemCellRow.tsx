@@ -1,4 +1,4 @@
-import { CheckHashResult } from "@logion/client";
+import { CheckHashResult, CollectionItem } from "@logion/client";
 
 import CertificateCell from "./CertificateCell";
 import { Row } from "../common/Grid";
@@ -7,7 +7,6 @@ import './CollectionItemCellRow.css';
 import { Col } from "react-bootstrap";
 import MenuIcon from "../common/MenuIcon";
 import CertificateDateTimeCell from "./CertificateDateTimeCell";
-import { MergedCollectionItem } from "../common/types/ModelTypes";
 import ClaimAssetButton, { WalletType } from "./ClaimAssetButton";
 import { UUID } from "@logion/node-api/dist/UUID";
 import { customClassName } from "src/common/types/Helpers";
@@ -15,7 +14,7 @@ import { customClassName } from "src/common/types/Helpers";
 export interface Props {
     locId: UUID,
     owner: string,
-    item: MergedCollectionItem;
+    item: CollectionItem;
     checkResult: CheckHashResult | undefined;
     isVoid: boolean;
     walletType: string | null;

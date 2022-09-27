@@ -1,4 +1,5 @@
-import { LocRequest } from '../../common/types/ModelTypes';
+import { LocRequest } from '@logion/client';
+
 import { shallowRender } from '../../tests';
 import { DEFAULT_IDENTITY, DEFAULT_ADDRESS } from "../../common/TestData";
 import IdentityLocRequestDetails from "./IdentityLocRequestDetails";

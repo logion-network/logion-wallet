@@ -4,6 +4,8 @@ import Detail from "../../common/Detail";
 import { PersonalInfoProps } from "./type";
 import { LocRequestStatus } from "@logion/client/dist/LocClient";
 
+import "./PersonalInfo.css";
+
 interface PersonalAndStatusInfoProps extends PersonalInfoProps {
     status: LocRequestStatus,
     seal?: string

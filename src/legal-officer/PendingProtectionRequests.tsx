@@ -335,7 +335,7 @@ export default function PendingProtectionRequests(props: Props) {
                 <LocCreationDialog
                     show={ reviewState.status === ReviewStatus.CREATE_NEW_LOC }
                     exit={ handleClose }
-                    onSuccess={ (newLoc) => navigate({pathname: identityLocDetailsPath(newLoc.id), search: `protection-request=${ reviewState.request?.id }`}) }
+                    onSuccess={ (newLoc) => navigate({pathname: identityLocDetailsPath(newLoc.id.toString()), search: `protection-request=${ reviewState.request?.id }`}) }
                     locRequest={{
                         requesterAddress: reviewState.request!.requesterAddress,
                         userIdentity: reviewState.request!.userIdentity,

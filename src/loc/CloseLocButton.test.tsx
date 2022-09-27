@@ -1,4 +1,5 @@
 import { render, screen, waitFor } from '@testing-library/react';
+import { LocData } from "@logion/client";
 
 import { clickByName } from '../tests';
 import { DEFAULT_LEGAL_OFFICER } from '../common/TestData';
@@ -6,7 +7,6 @@ import { finalizeSubmission, failSubmission } from '../logion-chain/__mocks__/Si
 import { closeExtrinsicSent, resetCloseExtrinsicSent, setClose, setLocItems } from './__mocks__/LocContextMock';
 
 import CloseLocButton from './CloseLocButton';
-import { LocRequest } from "../common/types/ModelTypes";
 
 jest.mock("../logion-chain/Signature");
 jest.mock("./LocContext");
@@ -14,9 +14,9 @@ jest.mock("../common/CommonContext");
 
 describe("CloseLocButton", () => {
 
-    const locRequest = {
+    const loc = {
         locType: "Transaction"
-    } as LocRequest;
+    } as LocData;
 
     it("does not close with draft items", async () => {
         setLocItems([
@@ -31,7 +31,7 @@ describe("CloseLocButton", () => {
             }
         ]);
 
-        render(<CloseLocButton locRequest={ locRequest } />);
+        render(<CloseLocButton loc={ loc } />);
         await clickByName(/Close LOC/);
 
         await expectNoDialogVisible();
@@ -53,7 +53,7 @@ describe("CloseLocButton", () => {
         const closeMock = jest.fn();
         setClose(closeMock);
 
-        render(<CloseLocButton locRequest={ locRequest } />);
+        render(<CloseLocButton loc={ loc } />);
         await clickByName(/Close LOC/);
         await clickByName("Proceed");
         finalizeSubmission();
@@ -79,7 +79,7 @@ describe("CloseLocButton", () => {
         setClose(closeMock);
         resetCloseExtrinsicSent();
 
-        render(<CloseLocButton locRequest={ locRequest } />);
+        render(<CloseLocButton loc={ loc } />);
         await clickByName(/Close LOC/);
         await clickByName("Cancel");
 
@@ -103,7 +103,7 @@ describe("CloseLocButton", () => {
         const closeMock = jest.fn();
         setClose(closeMock);
 
-        render(<CloseLocButton locRequest={ locRequest } />);
+        render(<CloseLocButton loc={ loc } />);
         await clickByName(/Close LOC/);
         await clickByName("Proceed");
         failSubmission();

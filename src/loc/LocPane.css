@@ -1,0 +1,18 @@
+.LocPane .closed-icon-container {
+    position: relative;
+}
+
+.LocPane .closed-icon-container .closed-icon {
+    position: absolute;
+    top: -55px;
+    right: 20px;
+}
+
+.LocPane .Row.matched {
+    border: 2px dashed #e6007a;
+}
+
+.Dashboard .LocPane .PrimaryArea p.frame-title {
+    font-size: 18px;
+    font-weight: bold;
+}

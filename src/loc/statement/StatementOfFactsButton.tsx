@@ -27,7 +27,7 @@ type Status = 'IDLE' | 'PRE-REQUISITE' | 'INPUT' | 'READY'
 
 export default function StatementOfFactsButton(props: { item?: UploadableCollectionItem }) {
     const { api, accounts, getOfficer } = useLogionChain();
-    const { loc, locId, locRequest } = useLocContext();
+    const { locId, loc: locData } = useLocContext();
     const { settings } = useLegalOfficerContext();
     const [ sofParams, setSofParams ] = useState<SofParams>(DEFAULT_SOF_PARAMS);
     const [ item, setItem ] = useState<UploadableCollectionItem>();
@@ -128,25 +128,25 @@ export default function StatementOfFactsButton(props: { item?: UploadableCollect
 
     useEffect(() => {
         if (locId.toDecimalString() !== sofParams.locId) {
-            const requester = loc?.requesterAddress ? loc.requesterAddress : loc?.requesterLocId?.toDecimalString() || ""
+            const requester = locData?.requesterAddress ? locData.requesterAddress : locData?.requesterLocId?.toDecimalString() || ""
             setSofParams({
                 ...sofParams,
                 locId: locId.toDecimalString(),
                 requester,
-                publicItems: locRequest!.metadata.map(item => ({
+                publicItems: locData!.metadata.map(item => ({
                     description: item.name,
                     content: item.value,
-                    timestamp: item.addedOn,
+                    timestamp: item.addedOn || "",
                 })),
-                privateItems: locRequest!.files.map(item => ({
+                privateItems: locData!.files.map(item => ({
                     publicDescription: item.nature,
                     privateDescription: item.name,
                     hash: item.hash,
-                    timestamp: item.addedOn,
+                    timestamp: item.addedOn || "",
                 })),
             });
         }
-    }, [ loc, locId, locRequest, sofParams, setSofParams ]);
+    }, [ locData, locId, sofParams, setSofParams ]);
 
     useEffect(() => {
         if((props.item && !item) || (!props.item && item) || (props.item && item && props.item.id !== item.id)) {
@@ -232,7 +232,7 @@ export default function StatementOfFactsButton(props: { item?: UploadableCollect
             >
 
                 <StatementOfFactsForm
-                    type={ loc!.locType }
+                    type={ locData!.locType }
                     control={ control }
                     errors={ errors }
                     language={ language || 'en' }
@@ -256,7 +256,7 @@ export default function StatementOfFactsButton(props: { item?: UploadableCollect
                     previewPath={ STATEMENT_OF_FACTS_PATH }
                     relatedLocPath={ containingLoc ? locDetailsPath(containingLoc!.id, containingLoc!.locType) : "" }
                     locId={ locId }
-                    nodeOwner={ loc!.owner }
+                    nodeOwner={ locData!.ownerAddress }
                 />
             </Dialog>
         </>

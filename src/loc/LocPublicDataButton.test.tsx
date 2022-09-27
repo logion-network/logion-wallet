@@ -1,11 +1,9 @@
 import { render, waitFor, screen } from "@testing-library/react";
-import { accounts, DEFAULT_LEGAL_OFFICER_ACCOUNT, DEFAULT_USER_ACCOUNT, setCurrentAddress } from "../logion-chain/__mocks__/LogionChainMock";
+import { DEFAULT_LEGAL_OFFICER_ACCOUNT, setCurrentAddress } from "../logion-chain/__mocks__/LogionChainMock";
 import { clickByName, typeByLabel } from "../tests";
 import { TEST_WALLET_USER } from "../wallet-user/TestData";
-import { LOLocPublicDataButton, UserLocPublicDataButton } from "./LocPublicDataButton";
+import { LocPublicDataButton } from "./LocPublicDataButton";
 import { LocItem } from "./types";
-import { setLocItems, addMetadata } from "./__mocks__/LocContextMock";
-import { setLocItems as setUserLocItems, addMetadata as addUserMetadata } from "./__mocks__/UserLocContextMock";
 
 jest.mock("./LocContext");
 jest.mock("./UserLocContext");
@@ -21,55 +19,38 @@ const existingItem: LocItem = {
     timestamp: null,
 };
 
-describe("LOLocPublicDataButton", () => {
+describe("LocPublicDataButton", () => {
 
     beforeEach(() => {
         setCurrentAddress(DEFAULT_LEGAL_OFFICER_ACCOUNT);
     });
 
     it("adds metadata", async () => {
-        await testAddsMetadata(<LOLocPublicDataButton />, addMetadata);
+        const addMetadata = jest.fn();
+        await testAddsMetadata(<LocPublicDataButton
+            addMetadata={ addMetadata }
+            locItems={ [] }
+        />, addMetadata);
     });
 
     it("does nothing on cancel", async () => {
-        await testDoesNothingOnCancel(<LOLocPublicDataButton />, addMetadata);
+        const addMetadata = jest.fn();
+        await testDoesNothingOnCancel(<LocPublicDataButton
+            addMetadata={ addMetadata }
+            locItems={ [] }
+        />, addMetadata);
     });
 
     it("does not add metadata if already exists", async () => {
-        await testDoesNotNothingIfItemExists(<LOLocPublicDataButton />, addMetadata);
+        const addMetadata = jest.fn();
+        await testDoesNotNothingIfItemExists(<LocPublicDataButton
+            addMetadata={ addMetadata }
+            locItems={ [ existingItem ] }
+        />, addMetadata);
     });
 });
-
-describe("UserLocPublicDataButton", () => {
-
-    beforeEach(() => {
-        setCurrentAddress(DEFAULT_USER_ACCOUNT);
-    });
-
-    it("adds metadata", async () => {
-        await testAddsMetadata(<UserLocPublicDataButton />, addUserMetadata);
-    });
-
-    it("does nothing on cancel", async () => {
-        await testDoesNothingOnCancel(<UserLocPublicDataButton />, addUserMetadata);
-    });
-
-    it("does not add metadata if already exists", async () => {
-        await testDoesNotNothingIfItemExists(<UserLocPublicDataButton />, addUserMetadata);
-    });
-});
-
-function setItems(items: LocItem[]) {
-    if(accounts!.current!.isLegalOfficer) {
-        setLocItems(items);
-    } else {
-        setUserLocItems(items);
-    }
-}
 
 async function testAddsMetadata(component: React.ReactElement, addMetadata: jest.Mock) {
-    setItems([]);
-
     render(component);
 
     await clickAdd();
@@ -86,8 +67,6 @@ async function clickAdd() {
 }
 
 async function testDoesNothingOnCancel(component: React.ReactElement, addMetadata: jest.Mock) {
-    setItems([]);
-
     render(component);
 
     await clickAdd();
@@ -100,8 +79,6 @@ async function testDoesNothingOnCancel(component: React.ReactElement, addMetadat
 }
 
 async function testDoesNotNothingIfItemExists(component: React.ReactElement, addMetadata: jest.Mock) {
-    setItems([ existingItem ]);
-
     render(component);
 
     await clickAdd();

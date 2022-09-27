@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useReducer, Reducer, useCallback } from 'react';
 import { AxiosInstance } from 'axios';
-import { VaultTransferRequest } from '@logion/client';
+import { VaultTransferRequest, LocRequest } from '@logion/client';
 import { ProtectionRequest } from '@logion/client/dist/RecoveryClient';
 import { LogionNodeApi } from "@logion/node-api";
 
@@ -11,7 +11,6 @@ import { AxiosFactory } from '../common/api';
 import { useLogionChain } from '../logion-chain';
 import { VaultApi } from '../vault/VaultApi';
 import { LocType, IdentityLocType, LegalOfficerCase } from "@logion/node-api/dist/Types";
-import { LocRequest } from "../common/types/ModelTypes";
 import { DateTime } from "luxon";
 import { UUID, toDecimalString } from "@logion/node-api/dist/UUID";
 import { getLegalOfficerCasesMap } from "@logion/node-api/dist/LogionLoc";

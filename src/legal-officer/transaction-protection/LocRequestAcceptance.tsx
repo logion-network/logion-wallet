@@ -6,10 +6,10 @@ import {
     createPolkadotIdentityLoc
 } from '@logion/node-api/dist/LogionLoc';
 import { ChainTime } from '@logion/node-api/dist/ChainTime';
+import { LocRequest } from '@logion/client';
 
 import { useLogionChain } from '../../logion-chain';
 import { useCommonContext } from '../../common/CommonContext';
-import { LocRequest } from '../../common/types/ModelTypes';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
 
 import { acceptLocRequest } from '../../loc/Model';

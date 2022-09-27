@@ -1,12 +1,10 @@
 import { render, waitFor, screen } from "@testing-library/react";
 import { sha256Hex } from "src/common/__mocks__/HashMock";
-import { accounts, DEFAULT_LEGAL_OFFICER_ACCOUNT, DEFAULT_USER_ACCOUNT, setCurrentAddress } from "src/logion-chain/__mocks__/LogionChainMock";
+import { DEFAULT_LEGAL_OFFICER_ACCOUNT, setCurrentAddress } from "src/logion-chain/__mocks__/LogionChainMock";
 import { clickByName, typeByLabel, uploadByTestId } from "src/tests";
 import { TEST_WALLET_USER } from "src/wallet-user/TestData";
-import { LOLocPrivateFileButton, UserLocPrivateFileButton } from "./LocPrivateFileButton";
+import { LocPrivateFileButton } from "./LocPrivateFileButton";
 import { LocItem } from "./types";
-import { setLocItems, addFile } from "./__mocks__/LocContextMock";
-import { setLocItems as setUserLocItems, addFile as addUserFile } from "./__mocks__/UserLocContextMock";
 
 jest.mock("../common/hash");
 jest.mock("./LocContext");
@@ -25,54 +23,38 @@ const existingFileItem: LocItem = {
     timestamp: null,
 };
 
-describe("LOLocPrivateFileButton", () => {
+describe("LocPrivateFileButton", () => {
 
     beforeEach(() => {
         setCurrentAddress(DEFAULT_LEGAL_OFFICER_ACCOUNT);
     });
 
     it("uploads file", async () => {
-        await testUploadsFile(<LOLocPrivateFileButton />, addFile);
+        const addFile = jest.fn();
+        await testUploadsFile(<LocPrivateFileButton
+            addFile={ addFile }
+            locItems={ [] }
+        />, addFile);
     });
 
     it("does nothing on cancel", async () => {
-        await testDoesNothingOnCancel(<LOLocPrivateFileButton />, addFile);
+        const addFile = jest.fn();
+        await testDoesNothingOnCancel(<LocPrivateFileButton
+            addFile={ addFile }
+            locItems={ [] }
+        />, addFile);
     });
 
     it("does not upload file if already exists", async () => {
-        await testDoesNotNothingIfFileExists(<LOLocPrivateFileButton />, addFile);
+        const addFile = jest.fn();
+        await testDoesNotNothingIfFileExists(<LocPrivateFileButton
+            addFile={ addFile }
+            locItems={ [ existingFileItem ] }
+        />, addFile);
     });
 });
-
-describe("UserLocPrivateFileButton", () => {
-
-    beforeEach(() => {
-        setCurrentAddress(DEFAULT_USER_ACCOUNT);
-    });
-
-    it("uploads file", async () => {
-        await testUploadsFile(<UserLocPrivateFileButton />, addUserFile);
-    });
-
-    it("does nothing on cancel", async () => {
-        await testDoesNothingOnCancel(<UserLocPrivateFileButton />, addUserFile);
-    });
-
-    it("does not upload file if already exists", async () => {
-        await testDoesNotNothingIfFileExists(<UserLocPrivateFileButton />, addUserFile);
-    });
-});
-
-function setItems(items: LocItem[]) {
-    if(accounts!.current!.isLegalOfficer) {
-        setLocItems(items);
-    } else {
-        setUserLocItems(items);
-    }
-}
 
 async function testUploadsFile(component: React.ReactElement, addFile: jest.Mock) {
-    setItems([]);
     sha256Hex.mockReturnValue(fileHash);
 
     render(component);
@@ -88,7 +70,6 @@ async function testUploadsFile(component: React.ReactElement, addFile: jest.Mock
 }
 
 async function testDoesNothingOnCancel(component: React.ReactElement, addFile: jest.Mock) {
-    setItems([]);
     sha256Hex.mockReturnValue(fileHash);
 
     render(component);
@@ -104,7 +85,6 @@ async function testDoesNothingOnCancel(component: React.ReactElement, addFile: j
 }
 
 async function testDoesNotNothingIfFileExists(component: React.ReactElement, addFile: jest.Mock) {
-    setItems([ existingFileItem ]);
     sha256Hex.mockReturnValue(fileHash);
 
     render(component);

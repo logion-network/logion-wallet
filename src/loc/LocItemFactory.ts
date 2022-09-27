@@ -1,56 +1,42 @@
-import { UUID } from "@logion/node-api/dist/UUID";
-import { File, Link, MetadataItem } from "@logion/node-api/dist/Types";
-
+import { MergedMetadataItem, MergedFile } from "@logion/client";
+import { UUID } from "@logion/node-api";
 import { LocItem } from "./types";
-import { LocFile, LocMetadataItem, LocLink } from "../common/types/ModelTypes";
-import { MergedMetadataItem, MergedFile, MergedLink } from "@logion/client";
 
-export interface MergeLocFileParameters {
-    fileFromBackend: LocFile,
-    fileFromChain?: File,
-}
-
-export interface MergeResult {
+export interface ItemAndRefreshFlag {
     locItem: LocItem,
     refreshNeeded: boolean
 }
 
-export function mergeLocFile(parameters: MergeLocFileParameters): MergeResult {
-    const { fileFromBackend, fileFromChain } = parameters;
-    if (fileFromChain) {
-        return createPublishedFileLocItem({
-            name: fileFromBackend.name,
-            timestamp: fileFromBackend.addedOn,
-            file: fileFromChain,
-        })
+export function createFileItem(file: MergedFile): ItemAndRefreshFlag {
+    if (file.published) {
+        return createPublishedFileLocItem(file)
     } else {
-        const locItem = createDraftFileLocItem({
-            name: fileFromBackend.name,
-            file: fileFromBackend,
-        }, false);
+        const locItem = createDraftFileLocItem(file, false);
         return { locItem, refreshNeeded: false };
     }
 }
 
-export interface CreateFileLocItemParameters {
-    file: File,
-    name: string
+export interface SimpleItem {
+    name: string;
+    submitter: string;
+    addedOn?: string;
 }
 
-interface Timestamp {
-    timestamp: string | null
+export interface FileItem extends SimpleItem {
+    nature: string;
+    hash: string;
 }
 
-function createPublishedFileLocItem(parameters: CreateFileLocItemParameters & Timestamp): MergeResult {
-    return publish(createDraftFileLocItem(parameters, false), parameters.timestamp)
+function createPublishedFileLocItem(parameters: FileItem): ItemAndRefreshFlag {
+    return publish(createDraftFileLocItem(parameters, false), parameters.addedOn || null)
 }
 
-export function createDraftFileLocItem(parameters: CreateFileLocItemParameters, newItem: boolean): LocItem {
+export function createDraftFileLocItem(parameters: FileItem, newItem: boolean): LocItem {
     return {
         name: parameters.name,
-        value: parameters.file.hash,
-        nature: parameters.file.nature,
-        submitter: parameters.file.submitter,
+        value: parameters.hash,
+        nature: parameters.nature,
+        submitter: parameters.submitter,
         timestamp: null,
         type: 'Document',
         status: 'DRAFT',
@@ -58,69 +44,15 @@ export function createDraftFileLocItem(parameters: CreateFileLocItemParameters, 
     };
 }
 
-export interface MergeLocMetadataItemParameters {
-    itemFromBackend: LocMetadataItem,
-    itemFromChain?: MetadataItem,
+export interface MetadataItem extends SimpleItem {
+    value: string;
 }
 
-export function mergeLocMetadataItem(parameters: MergeLocMetadataItemParameters): MergeResult {
-    const { itemFromBackend, itemFromChain } = parameters;
-    if (itemFromChain) {
-        return createPublishedMetadataLocItem({
-            metadataItem: itemFromChain,
-            timestamp: itemFromBackend.addedOn,
-        });
+export function createMetadataItem(dataItem: MergedMetadataItem): ItemAndRefreshFlag {
+    if (dataItem.published) {
+        return createPublishedMetadataLocItem(dataItem);
     } else {
-        const locItem = createDraftMetadataLocItem({
-            metadataItem: itemFromBackend,
-        }, false);
-        return { locItem, refreshNeeded: false };
-    }
-}
-
-export function metadataToLocItem(mergedMetadataItem: MergedMetadataItem): MergeResult {
-    if (mergedMetadataItem.published) {
-        return createPublishedMetadataLocItem({
-            metadataItem: mergedMetadataItem, timestamp: mergedMetadataItem.addedOn || null
-        })
-    } else {
-        const locItem = createDraftMetadataLocItem({ metadataItem: mergedMetadataItem }, false)
-        return { locItem, refreshNeeded: false };
-    }
-}
-
-export function fileToLocItem(mergedFile: MergedFile,): MergeResult {
-    if (mergedFile.published) {
-        return createPublishedFileLocItem({
-            file: mergedFile, name: mergedFile.name, timestamp: mergedFile.addedOn || null
-        })
-    } else {
-        const locItem = createDraftFileLocItem({ file: mergedFile, name: mergedFile.name }, false)
-        return { locItem, refreshNeeded: false };
-    }
-}
-
-export function linkToLocItem(
-    mergedLink: MergedLink,
-    otherLocDescription: string,
-    submitter: string,
-    linkDetailsPath: string,
-): MergeResult {
-    if (mergedLink.published) {
-        return createPublishedLinkedLocItem({
-            link: mergedLink,
-            timestamp: mergedLink.addedOn || null,
-            otherLocDescription,
-            submitter,
-            linkDetailsPath,
-        })
-    } else {
-        const locItem = createDraftLinkedLocItem({
-            link: mergedLink,
-            otherLocDescription,
-            submitter,
-            linkDetailsPath,
-        }, false)
+        const locItem = createDraftMetadataLocItem(dataItem, false);
         return { locItem, refreshNeeded: false };
     }
 }
@@ -129,12 +61,11 @@ export interface CreateLocMetadataItemParameters {
     metadataItem: MetadataItem,
 }
 
-function createPublishedMetadataLocItem(parameters: CreateLocMetadataItemParameters & Timestamp): MergeResult {
-    return publish(createDraftMetadataLocItem(parameters, false), parameters.timestamp)
+function createPublishedMetadataLocItem(parameters: MergedMetadataItem): ItemAndRefreshFlag {
+    return publish(createDraftMetadataLocItem(parameters, false), parameters.addedOn || null)
 }
 
-export function createDraftMetadataLocItem(parameters: CreateLocMetadataItemParameters, newItem: boolean): LocItem {
-    const { metadataItem } = parameters;
+export function createDraftMetadataLocItem(metadataItem: MetadataItem, newItem: boolean): LocItem {
     return {
         name: metadataItem.name,
         value: metadataItem.value,
@@ -146,26 +77,31 @@ export function createDraftMetadataLocItem(parameters: CreateLocMetadataItemPara
     }
 }
 
-export interface MergeLocLinkItemParameters {
-    linkFromBackend: LocLink,
-    linkFromChain?: Link,
+export interface SimpleLink {
+    id: UUID;
+    nature: string;
+    addedOn?: string;
+    published: boolean;
+}
+
+export interface CreateLocLinkedLocItemParameters {
+    link: SimpleLink,
     otherLocDescription: string,
     submitter: string,
     linkDetailsPath: string,
 }
 
-export function mergeLocLinkItem(parameters: MergeLocLinkItemParameters): MergeResult {
-    const { linkFromBackend, linkFromChain, otherLocDescription, submitter, linkDetailsPath } = parameters;
-    if (linkFromChain) {
+export function createLinkItem(parameters: CreateLocLinkedLocItemParameters): ItemAndRefreshFlag {
+    const { link, otherLocDescription, submitter, linkDetailsPath } = parameters;
+    if (link.published) {
         return createPublishedLinkedLocItem({
-            link: linkFromChain,
+            link,
             otherLocDescription,
             submitter,
-            timestamp: linkFromBackend.addedOn,
+            timestamp: link.addedOn!,
             linkDetailsPath,
         });
     } else {
-        const link: LocLink = { ...linkFromBackend, id: new UUID(linkFromBackend.target) }
         const locItem = createDraftLinkedLocItem({
             link,
             otherLocDescription,
@@ -174,13 +110,6 @@ export function mergeLocLinkItem(parameters: MergeLocLinkItemParameters): MergeR
         }, false);
         return { locItem, refreshNeeded: false };
     }
-}
-
-export interface CreateLocLinkedLocItemParameters {
-    link: Link,
-    otherLocDescription: string,
-    submitter: string,
-    linkDetailsPath: string,
 }
 
 export function createDraftLinkedLocItem(parameters: CreateLocLinkedLocItemParameters, newItem: boolean): LocItem {
@@ -199,11 +128,15 @@ export function createDraftLinkedLocItem(parameters: CreateLocLinkedLocItemParam
     };
 }
 
-function publish(locItem: LocItem, timestamp: string | null): MergeResult {
+function publish(locItem: LocItem, timestamp: string | null): ItemAndRefreshFlag {
     const publishedLocItem: LocItem = { ...locItem, status: 'PUBLISHED', timestamp };
     return { locItem: publishedLocItem, refreshNeeded: !locItem.timestamp };
 }
 
-function createPublishedLinkedLocItem(parameters: CreateLocLinkedLocItemParameters & Timestamp): MergeResult {
+interface Timestamp {
+    timestamp: string | null
+}
+
+function createPublishedLinkedLocItem(parameters: CreateLocLinkedLocItemParameters & Timestamp): ItemAndRefreshFlag {
     return publish(createDraftLinkedLocItem(parameters, false), parameters.timestamp);
 }

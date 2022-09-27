@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { ProtectionRequest } from "@logion/client/dist/RecoveryClient";
+import { LocData } from "@logion/client";
 import { vouchRecovery, getActiveRecovery } from "@logion/node-api/dist/Recovery";
 import { Col, Row } from "react-bootstrap";
 
@@ -21,7 +22,6 @@ import { useLogionChain } from "../logion-chain";
 import { signAndSend } from "../logion-chain/Signature";
 
 import './CloseLocButton.css';
-import { LocRequest } from "../common/types/ModelTypes";
 
 enum CloseStatus {
     NONE,
@@ -41,7 +41,7 @@ interface CloseState {
 
 export interface Props {
     protectionRequest?: ProtectionRequest | null;
-    locRequest: LocRequest;
+    loc: LocData;
 }
 
 export default function CloseLocButton(props: Props) {
@@ -54,8 +54,8 @@ export default function CloseLocButton(props: Props) {
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
     const [ disabled, setDisabled ] = useState<boolean>(false);
     const [ signAndSubmitVouch, setSignAndSubmitVouch ] = useState<SignAndSubmit>(null);
-    const seal = props.locRequest.seal;
-    const locType = props.locRequest.locType;
+    const seal = props.loc.seal;
+    const locType = props.loc.locType;
 
     useEffect(() => {
         if (closeState.status === CloseStatus.CLOSE_PENDING) {

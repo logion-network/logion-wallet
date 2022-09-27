@@ -12,7 +12,7 @@ import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
 export default function VoidLocButton() {
     const { colorTheme, refresh } = useCommonContext();
     const [ visible, setVisible ] = useState(false);
-    const { voidLocExtrinsic, voidLoc, loc } = useLocContext();
+    const { voidLocExtrinsic, voidLoc, loc: locData } = useLocContext();
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
     const [ submissionFailed, setSubmissionFailed ] = useState<boolean>(false);
     const [ voidInfo, setVoidInfo ] = useState<FullVoidInfo>({reason: ""});
@@ -50,7 +50,7 @@ export default function VoidLocButton() {
             >
                 <Icon icon={{id: 'void'}} width="31px" />
                 {
-                    loc?.locType !== 'Collection' &&
+                    locData?.locType !== 'Collection' &&
                     <>
                         <h2>Void this LOC</h2>
                         <p>This action will invalidate the present LOC: the LOC status, its public certificate will show a "VOID" mention to warn people that
@@ -61,7 +61,7 @@ export default function VoidLocButton() {
                     </>
                 }
                 {
-                    loc?.locType === 'Collection' &&
+                    locData?.locType === 'Collection' &&
                     <>
                         <h2>Void this Collection LOC</h2>
                         <p>This action will invalidate the present Collection LOC as well as ALL related Collection Items:

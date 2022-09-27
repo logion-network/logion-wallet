@@ -1,5 +1,5 @@
 import { BlockchainTypes, CrossmintEVMWalletAdapter } from "@crossmint/embed";
-import { Token, LogionClient } from "@logion/client";
+import { Token, LogionClient, MergedCollectionItem } from "@logion/client";
 import { CrossmintSigner } from "@logion/crossmint";
 import { allMetamaskAccounts, enableMetaMask } from "@logion/extension";
 import { ItemFile, UUID } from "@logion/node-api";
@@ -7,7 +7,6 @@ import { AxiosInstance } from "axios";
 import { useCallback, useState } from "react";
 import { Dropdown, Spinner } from "react-bootstrap";
 
-import { MergedCollectionItem } from "../common/types/ModelTypes";
 import Button from "../common/Button";
 import ViewFileButton from "../common/ViewFileButton";
 import { checkCanGetCollectionItemFile, getCollectionItemFile, GetCollectionItemFileParameters } from "../loc/FileModel";

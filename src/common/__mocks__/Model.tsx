@@ -1,7 +1,6 @@
 import {
     fetchProtectionRequests,
     createLocRequest,
-    fetchLocRequest,
     confirmLocFile,
     confirmLocLink,
     confirmLocMetadataItem,
@@ -16,7 +15,6 @@ import {
 export {
     fetchProtectionRequests,
     createLocRequest,
-    fetchLocRequest,
     confirmLocFile,
     confirmLocLink,
     confirmLocMetadataItem,

@@ -1,22 +1,14 @@
-import { UUID } from "@logion/node-api/dist/UUID";
-import { CollectionItem } from "@logion/node-api/dist/Types";
-
 import PolkadotFrame from "../common/PolkadotFrame";
 import { useCommonContext } from "../common/CommonContext";
 import Icon from "../common/Icon";
 import IconTextRow from "../common/IconTextRow";
-
-import "./CollectionLocItemChecker.css"
 import ImportItems from "./ImportItems";
 
-export interface Props {
-    locId: UUID;
-    collectionItem?: CollectionItem;
-}
+import "./ItemImporter.css";
 
 export type CheckResult = 'NONE' | 'POSITIVE' | 'NEGATIVE';
 
-export default function ItemImporter(props: Props) {
+export default function ItemImporter() {
     const { colorTheme } = useCommonContext();
 
     return (

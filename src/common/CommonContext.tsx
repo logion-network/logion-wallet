@@ -1,13 +1,12 @@
 import React, { useContext, useEffect, useReducer, Reducer, useCallback } from "react";
 import { DateTime } from 'luxon';
-import { LegalOfficer } from "@logion/client/dist/Types";
+import { LegalOfficer, LocRequest, BalanceState } from "@logion/client";
 import { InjectedAccount } from "@logion/extension";
+
 import { useLogionChain } from '../logion-chain';
 import { MultiSourceHttpClient, Endpoint, allUp, } from './api';
 import { Children } from './types/Helpers';
-import { LocRequest } from './types/ModelTypes';
 import { ColorTheme, DEFAULT_COLOR_THEME } from "./ColorTheme";
-import { BalanceState } from "@logion/client/dist/Balance";
 
 const DEFAULT_NOOP = () => {};
 
