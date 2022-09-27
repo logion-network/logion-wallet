@@ -81,32 +81,6 @@ function determineExtension(contentType: string) {
     return extension;
 }
 
-export interface AddFileParameters {
-    locId: string,
-    file: File,
-    fileName: string,
-    nature: string,
-    submitter: string,
-}
-
-export interface AddFileResult {
-    hash: string
-}
-
-export async function addFile(
-    axios: AxiosInstance,
-    parameters: AddFileParameters
-): Promise<AddFileResult> {
-    const formData = new FormData();
-    formData.append('file', parameters.file, parameters.fileName);
-    formData.append('nature', parameters.nature);
-    const response = await axios.post(
-        `/api/loc-request/${ parameters.locId }/files`,
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" } })
-    return response.data;
-}
-
 export interface AddLoFileParameters {
     file: File,
     fileId: LoFileId,

@@ -70,19 +70,4 @@ export async function addLink(
     await axios.post(`/api/loc-request/${ parameters.locId }/links`, { target, nature })
 }
 
-export interface AddMetadataParameters {
-    locId: string,
-    name: string,
-    value: string,
-    submitter: string,
-}
-
-export async function addMetadata(
-    axios: AxiosInstance,
-    parameters: AddMetadataParameters
-): Promise<void> {
-    const { name, value } = parameters;
-    await axios.post(`/api/loc-request/${ parameters.locId }/metadata`, { name, value })
-}
-
-export { addFile, getFile } from "./FileModel"
+export { getFile } from "./FileModel"

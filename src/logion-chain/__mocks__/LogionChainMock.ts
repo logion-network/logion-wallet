@@ -85,7 +85,7 @@ const api = {
     }
 };
 
-let client: LogionClient | LogionClientMock = new LogionClientMock();
+export let clientMock: LogionClient | LogionClientMock = new LogionClientMock();
 
 export let authenticate = jest.fn();
 
@@ -172,7 +172,7 @@ export function useLogionChain() {
             authenticate,
             getOfficer,
             saveOfficer,
-            client,
+            client: clientMock,
             isCurrentAuthenticated: () => true,
             authenticateAddress,
         };
@@ -187,5 +187,5 @@ function authenticateAddress(address: string) {
 }
 
 export function setClientMock(mock: LogionClient) {
-    client = mock;
+    clientMock = mock;
 }

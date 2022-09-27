@@ -102,10 +102,15 @@
 }
 
 .Button.btn.btn-danger-flat:hover {
-    opacity: 0.9;
+    background-color: #ea1f46;
+    opacity: 0.8;
 }
 
 .Button.btn.btn-none {
     margin: 0;
     padding: 0;
+}
+
+.Button.btn.btn-polkadot:hover {
+    opacity: 0.8;
 }
