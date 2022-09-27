@@ -26,3 +26,11 @@
 .ClaimAssetButton .crossmint .wallet-name {
     margin-left: 37px;
 }
+
+.ClaimAssetButton .download-started {
+    display: inline-block;
+    height: 58px;
+    line-height: 58px;
+    color: #37ad4b;
+    font-weight: bold;
+}

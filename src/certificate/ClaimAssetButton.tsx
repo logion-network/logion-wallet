@@ -34,6 +34,7 @@ export default function ClaimAssetButton(props: Props) {
     const [ checking, setChecking ] = useState<boolean>(false);
     const [ error, setError ] = useState<string | undefined>(undefined);
     const logionChainContext = useLogionChain();
+    const [ downloaded, setDownloaded ] = useState(false);
 
     const claimAsset = useCallback(async (walletType: WalletType) => {
         setError(undefined);
@@ -104,11 +105,12 @@ export default function ClaimAssetButton(props: Props) {
                 </Button>
             }
             {
-                downloadReady &&
+                downloadReady && !downloaded &&
                 <ViewFileButton
                     nodeOwner={ owner }
                     fileName={ file.name }
                     downloader={ (axios: AxiosInstance) => {
+                        setDownloaded(true);
                         overrideAuthorizationToken(axios, tokenForDownload);
                         return getCollectionItemFile(axios, {
                             locId: locId.toString(),
@@ -120,6 +122,10 @@ export default function ClaimAssetButton(props: Props) {
                 >
                     <Icon icon={{ id: "download_claimed" }} /> Download
                 </ViewFileButton>
+            }
+            {
+                downloadReady && downloaded &&
+                <span className="download-started">Download started</span>
             }
         </div>
     )

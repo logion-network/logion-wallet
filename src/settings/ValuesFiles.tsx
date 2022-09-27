@@ -10,20 +10,33 @@ import { SETTINGS_DESCRIPTION, SETTINGS_KEYS, useLegalOfficerContext } from "../
 import EditableCell from "src/common/EditableCell";
 import Button from "src/common/Button";
 import { useState } from "react";
+import { Spinner } from "react-bootstrap";
 
 export function ValuesFiles() {
 
     const { accounts, axiosFactory } = useLogionChain();
     const { settings, updateSetting } = useLegalOfficerContext();
     const [ newSettings, setNewSettings ] = useState<Record<string, string>>({});
+    const [ uploading, setUploading ] = useState<Record<string, boolean>>({});
 
     const nodeOwner = accounts?.current?.address;
     const fileSelectedCallback = useCallback(async (file: File, fileId: LoFileId) => {
-        await addLoFile(axiosFactory!(nodeOwner), {
-            file,
-            fileId
-        })
-    }, [ axiosFactory, nodeOwner ]);
+        setUploading({
+            ...uploading,
+            [fileId]: true,
+        });
+        try {
+            await addLoFile(axiosFactory!(nodeOwner), {
+                file,
+                fileId
+            });
+        } finally {
+            setUploading({
+                ...uploading,
+                [fileId]: false,
+            });
+        }
+    }, [ axiosFactory, nodeOwner, uploading ]);
 
     if(!accounts || !settings) {
         return null;
@@ -49,9 +62,16 @@ export function ValuesFiles() {
                             <ActionCell>
                                 <Button
                                     onClick={ () => updateSetting!(id, newSettings[id]! ) }
-                                    disabled={ !( id in newSettings ) || !(newSettings[id]) || newSettings[id] === settings[id] }
+                                    disabled={ !( id in newSettings ) || !(newSettings[id]) || newSettings[id] === settings[id] || uploading[id] }
                                 >
-                                    Update
+                                    {
+                                        uploading[id] &&
+                                        <Spinner animation="border" />
+                                    }
+                                    {
+                                        !uploading[id] &&
+                                        <>Update</>
+                                    }
                                 </Button>
                             </ActionCell>,
                         align: "center"

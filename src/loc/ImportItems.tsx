@@ -1,6 +1,6 @@
 import { ClosedCollectionLoc, UploadableCollectionItem, ItemFileWithContent, HashOrContent, MimeType, ItemTokenWithRestrictedType, isTokenType } from "@logion/client";
 import { useCallback, useState } from "react";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { OverlayTrigger, Spinner, Tooltip } from "react-bootstrap";
 
 import Dialog from "../common/Dialog";
 import FileSelectorButton from "../common/FileSelectorButton";
@@ -34,6 +34,7 @@ export default function ImportItems() {
     const [ submitters, setSubmitters ] = useState<Submitters>({});
     const [ currentItem, setCurrentItem ] = useState(0);
     const [ isBatchImport, setIsBatchImport ] = useState(false);
+    const [ uploading, setUploading ] = useState(false);
 
     const readCsvFile = useCallback(async (file: File) => {
         const collection = locState as ClosedCollectionLoc;
@@ -113,6 +114,7 @@ export default function ImportItems() {
     }, [ setIsBatchImport, setCurrentItem, submitItem, items ]);
 
     const uploadItemFile = useCallback(async (item: Item, file: File) => {
+        setUploading(true);
         const collection = locState as ClosedCollectionLoc;
         try {
             await collection.uploadCollectionItemFile({
@@ -127,9 +129,11 @@ export default function ImportItems() {
             item.upload = false;
             item.error = undefined;
             item.errorType = undefined;
+            setUploading(false);
         } catch(e) {
             item.error = String(e);
             item.errorType = "upload";
+            setUploading(false);
         }
         setItems([ ...items ]);
     }, [ locState, items, setItems ]);
@@ -212,12 +216,19 @@ export default function ImportItems() {
                                             (item.submitted && item.success && item.upload && (!item.error || item.errorType === "upload")) &&
                                             <Cell content={
                                                 <>
-                                                <FileSelectorButton
-                                                    buttonText="Upload file"
-                                                    onFileSelected={ file => uploadItemFile(item, file) }
-                                                    onlyButton={ true }
-                                                    accept={ item.files[0].contentType.mimeType }
-                                                />
+                                                {
+                                                    !uploading &&
+                                                    <FileSelectorButton
+                                                        buttonText="Upload file"
+                                                        onFileSelected={ file => uploadItemFile(item, file) }
+                                                        onlyButton={ true }
+                                                        accept={ item.files[0].contentType.mimeType }
+                                                    />
+                                                }
+                                                {
+                                                    uploading &&
+                                                    <Spinner animation="border" />
+                                                }
                                                 {
                                                     item.error &&
                                                     <span className="upload-error"><Icon icon={{ id: "ko" }} /></span>
