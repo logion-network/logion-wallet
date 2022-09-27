@@ -2,11 +2,11 @@ import { useParams } from "react-router";
 import { UUID } from "@logion/node-api/dist/UUID";
 import { LocType } from "@logion/node-api/dist/Types";
 
-import { LocContextProvider } from "./LocContext";
 import ContextualizedLocDetails from "./ContextualizedLocDetails";
 import { Viewer } from "./types";
 import { UserLocContextProvider } from "./UserLocContext";
 import UserContextualizedLocDetails from "./UserContextualizedLocDetails";
+import { LegalOfficerLocContextProvider } from "./LegalOfficerLocContext";
 
 export interface Props {
     backPath: string;
@@ -19,13 +19,13 @@ export default function LocDetails(props: Props) {
 
     if (props.viewer === "LegalOfficer") {
         return (
-            <LocContextProvider
+            <LegalOfficerLocContextProvider
                 locId={ locId }
                 backPath={ props.backPath }
                 detailsPath={ props.detailsPath }
             >
                 <ContextualizedLocDetails/>
-            </LocContextProvider>
+            </LegalOfficerLocContextProvider>
         )
     } else {
         return (

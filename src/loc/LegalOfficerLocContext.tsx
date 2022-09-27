@@ -2,8 +2,10 @@ import {
     UUID,
     LocType,
 } from "@logion/node-api";
-import { useUserContext } from "../wallet-user/UserContext";
+import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
 import { LocContextProvider, useLocContext } from "./LocContext";
+
+export type { ActiveLoc, FullVoidInfo, LinkTarget } from "./LocContext";
 
 export interface Props {
     locId: UUID
@@ -12,21 +14,21 @@ export interface Props {
     detailsPath: (locId: UUID, type: LocType) => string
 }
 
-export function UserLocContextProvider(props: Props) {
-    const { mutateLocsState, locsState } = useUserContext();
+export function LegalOfficerLocContextProvider(props: Props) {
+    const { refreshLocs } = useLegalOfficerContext();
 
     return (
         <LocContextProvider
             locId={ props.locId }
             backPath={ props.backPath }
             detailsPath={ props.detailsPath }
-            refreshLocs={ () => mutateLocsState(async () => await locsState!.refresh()) }
+            refreshLocs={ async () => refreshLocs() }
         >
             { props.children }
         </LocContextProvider>
     )
 }
 
-export function useUserLocContext() {
+export function useLegalOfficerLocContext() {
     return useLocContext();
 }

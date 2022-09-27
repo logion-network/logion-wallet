@@ -23,9 +23,7 @@ export async function createLocRequest(axios: any, request: CreateLocRequest): P
 export const confirmLocFile = jest.fn();
 export const confirmLocLink = jest.fn();
 export const confirmLocMetadataItem = jest.fn();
-export const deleteLocFile = jest.fn();
 export const deleteLocLink = jest.fn();
-export const deleteLocMetadataItem = jest.fn();
 export const preVoid = jest.fn();
 export const preClose = jest.fn();
 
@@ -33,9 +31,7 @@ export function resetDefaultMocks() {
     confirmLocFile.mockResolvedValue(undefined);
     confirmLocLink.mockResolvedValue(undefined);
     confirmLocMetadataItem.mockResolvedValue(undefined);
-    deleteLocFile.mockResolvedValue(undefined);
     deleteLocLink.mockResolvedValue(undefined);
-    deleteLocMetadataItem.mockResolvedValue(undefined);
     preVoid.mockResolvedValue(undefined);
     preClose.mockResolvedValue(undefined);
 }

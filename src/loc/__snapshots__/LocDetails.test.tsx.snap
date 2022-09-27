@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LocDetails renders for LO 1`] = `
-<LocContextProvider
+<LegalOfficerLocContextProvider
   backPath="/"
   detailsPath={[Function]}
   locId={
@@ -28,7 +28,7 @@ exports[`LocDetails renders for LO 1`] = `
   }
 >
   <ContextualizedLocDetails />
-</LocContextProvider>
+</LegalOfficerLocContextProvider>
 `;
 
 exports[`LocDetails renders for user 1`] = `

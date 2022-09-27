@@ -143,7 +143,7 @@ export default function LocDetailsTab(props: Props) {
                         </> }
                         <LocItems
                             matchedHash={ checkResult.hash }
-                            viewer="LegalOfficer"
+                            viewer={ props.viewer }
                             locId={ loc.id }
                             locItems={ locItems }
                             deleteMetadata={ deleteMetadata }
