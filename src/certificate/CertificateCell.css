@@ -2,13 +2,6 @@
     padding-left: 30px;
 }
 
-.CertificateCell .label {
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
 .CertificateCell .value {
     margin-bottom: 20px;
     word-wrap: break-word;
