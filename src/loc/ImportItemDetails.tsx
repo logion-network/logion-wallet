@@ -1,5 +1,9 @@
-import { ItemFileWithContent, ItemTokenWithRestrictedType } from "@logion/client";
-
+import {
+    ItemFileWithContent,
+    ItemTokenWithRestrictedType,
+    SpecificLicense,
+    LogionClassification
+} from "@logion/client";
 import './ImportItemDetails.css';
 
 export type ErrorType = 'validation' | 'chain' | 'upload';
@@ -16,6 +20,8 @@ export interface Item {
     failed: boolean;
     success: boolean;
     upload: boolean;
+    logionClassification?: LogionClassification,
+    specificLicense?: SpecificLicense,
 }
 
 export default function ImportItemDetails(props: { item: Item }) {
