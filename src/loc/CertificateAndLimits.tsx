@@ -22,18 +22,17 @@ import ArchiveButton from "./archive/ArchiveButton";
 import InlineDateTime from 'src/common/InlineDateTime';
 
 export interface Props {
-    locId: UUID
     loc: LocData
     viewer: Viewer
 }
 
 export default function CertificateAndLimits(props: Props) {
-    const { api, accounts } = useLogionChain();
+    const { api } = useLogionChain();
 
     const [ dateLimit, setDateLimit ] = useState<string>();
     const [ showSettings, setShowSettings ] = useState(false);
 
-    const certificateUrl = fullCertificateUrl(props.locId);
+    const certificateUrl = fullCertificateUrl(props.loc.id);
 
     useEffect(() => {
         if(api !== null && props.loc.collectionLastBlockSubmission) {
@@ -42,11 +41,7 @@ export default function CertificateAndLimits(props: Props) {
                 setDateLimit(new Date(chainTime.currentTime).toISOString());
             })();
         }
-    }, [ api, props.locId, props.loc.collectionLastBlockSubmission ]);
-
-    if(accounts?.current?.address === undefined) {
-        return null;
-    }
+    }, [ api, props.loc ]);
 
     return (
         <div
@@ -101,70 +96,73 @@ export default function CertificateAndLimits(props: Props) {
                     </Col>
                 }
             </Row>
-            <Dialog
-                className="CertificateAndLimits"
-                actions={[
-                    {
-                        id: "close",
-                        buttonText: "Close",
-                        callback: () => setShowSettings(false),
-                        buttonVariant: "primary"
-                    }
-                ]}
-                show={ showSettings }
-                size="xl"
-            >
-                <h2>Get developper settings for the requester application</h2>
-                <p>Settings available below must be communicated to the developer of the application that will send data using logion API to record it according to the current Collection LOC scope.</p>
+            {
+                props.loc.locType === "Collection" && props.loc.closed && !props.loc.voidInfo &&
+                <Dialog
+                    className="CertificateAndLimits"
+                    actions={[
+                        {
+                            id: "close",
+                            buttonText: "Close",
+                            callback: () => setShowSettings(false),
+                            buttonVariant: "primary"
+                        }
+                    ]}
+                    show={ showSettings }
+                    size="xl"
+                >
+                    <h2>Get developper settings for the requester application</h2>
+                    <p>Settings available below must be communicated to the developer of the application that will send data using logion API to record it according to the current Collection LOC scope.</p>
 
-                <StaticLabelValue
-                    label='Documentation'
-                    value={
-                        <NewTabLink
-                            href="https://github.com/logion-network/logion-collection-item-submitter#logion-collection-item-submitter"
-                        >
-                            https://github.com/logion-network/logion-collection-item-submitter
-                        </NewTabLink>
-                    }
-                />
+                    <StaticLabelValue
+                        label='Documentation'
+                        value={
+                            <NewTabLink
+                                href="https://github.com/logion-network/logion-collection-item-submitter#logion-collection-item-submitter"
+                            >
+                                https://github.com/logion-network/logion-collection-item-submitter
+                            </NewTabLink>
+                        }
+                    />
 
-                <StaticLabelValue
-                    label='Logion endpoint'
-                    value={
-                        <p>{ config.edgeNodes[0].socket }</p>
-                    }
-                />
+                    <StaticLabelValue
+                        label='Logion endpoint'
+                        value={
+                            <p>{ config.edgeNodes[0].socket }</p>
+                        }
+                    />
 
-                <StaticLabelValue
-                    label='Signature will be executed by the following public key'
-                    value={
-                        <p>{ props.loc.requesterAddress }</p>
-                    }
-                />
+                    <StaticLabelValue
+                        label='Signature will be executed by the following public key'
+                        value={
+                            <p>{ props.loc.requesterAddress }</p>
+                        }
+                    />
 
-                <StaticLabelValue
-                    label='Extrinsic'
-                    value={
-                        <p>logionLoc.addCollectionItem(collectionLocId, itemId, itemDescription)</p>
-                    }
-                />
+                    <StaticLabelValue
+                        label='Extrinsic'
+                        value={
+                            <p>logionLoc.addCollectionItem(collectionLocId, itemId, itemDescription)</p>
+                        }
+                    />
 
-                <div className="arguments">
-                    <h3>Arguments</h3>
-                    <ul>
-                        <li><strong>collectionLocId:</strong> { props.locId.toDecimalString() }</li>
-                        <li><strong>itemId:</strong> a "0x" prefixed HEX string representation of 32 bytes uniquely identifying the item in this collection. For instance, the identifier may be a SHA256 hash.</li>
-                        <li><strong>itemDescription:</strong> a UTF-8 encoded string of at most 4096 bytes</li>
-                    </ul>
-                </div>
-                <div className="limits">
-                    <h3>Collection limits</h3>
-                    <ul>
-                        <li><strong>Date limit:</strong> { dateLimit }</li>
-                        <li><strong>Item number limit:</strong> { itemLimit(props.loc) }</li>
-                    </ul>
-                </div>
-            </Dialog>
+                    <div className="arguments">
+                        <h3>Arguments</h3>
+                        <ul>
+                            <li><strong>collectionLocId:</strong> { props.loc.id.toDecimalString() }</li>
+                            <li><strong>itemId:</strong> a "0x" prefixed HEX string representation of 32 bytes uniquely identifying the item in this collection. For instance, the identifier may be a SHA256 hash.</li>
+                            <li><strong>itemDescription:</strong> a UTF-8 encoded string of at most 4096 bytes</li>
+                        </ul>
+                    </div>
+                    <div className="limits">
+                        <h3>Collection limits</h3>
+                        <ul>
+                            <li><strong>Date limit:</strong> { dateLimit }</li>
+                            <li><strong>Item number limit:</strong> { itemLimit(props.loc) }</li>
+                        </ul>
+                    </div>
+                </Dialog>
+            }
         </div>
     );
 }

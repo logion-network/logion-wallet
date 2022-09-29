@@ -19,6 +19,10 @@ export function createPolkadotTransactionLoc(parameters: any) {
     return Promise.resolve();
 }
 
+export function createCollectionLoc(parameters: any) {
+    return Promise.resolve();
+}
+
 export const CLOSED_IDENTITY_LOC_ID = "85833363768713528858922097642089825569";
 
 export const UNPREFIXED_FILE_HASH = "42";

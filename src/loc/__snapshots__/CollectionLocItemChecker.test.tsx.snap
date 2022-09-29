@@ -67,6 +67,7 @@ Object {
                   >
                     <input
                       class="form-control"
+                      data-testid="item-id"
                       id="itemId"
                       type="text"
                       value=""
@@ -162,6 +163,7 @@ Object {
                 >
                   <input
                     class="form-control"
+                    data-testid="item-id"
                     id="itemId"
                     type="text"
                     value=""

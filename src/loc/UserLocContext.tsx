@@ -27,6 +27,4 @@ export function UserLocContextProvider(props: Props) {
     )
 }
 
-export function useUserLocContext() {
-    return useLocContext();
-}
+export { useLocContext as useUserLocContext };

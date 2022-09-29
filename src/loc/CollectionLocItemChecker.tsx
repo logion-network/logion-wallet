@@ -129,6 +129,7 @@ function CollectionLocItemChecker(props: LocalProps) {
                         setState('NEGATIVE');
                     }
                 } catch (e) {
+                    console.log(e)
                     setState('NEGATIVE');
                 }
             }
@@ -189,6 +190,7 @@ function CollectionLocItemChecker(props: LocalProps) {
                                             }
                                             setItemId(value.target.value);
                                         } }
+                                        data-testid="item-id"
                                     />
                                 </Col>
                                 <Col className="buttons">
@@ -265,17 +267,15 @@ function CheckResultFeedback(props: CheckResultProps) {
                             <Icon icon={ { id: "ok" } } height='45px' />
                         </Col>
                         <Col>
-                            <p>
-                                <div id="url-header" className="url-header">Certificate Public web address (URL) for the
-                                    data covered by this Collection LOC:
+                            <div id="url-header" className="url-header">Certificate Public web address (URL) for the
+                                data covered by this Collection LOC:
+                            </div>
+                            <div className="url-copy-paste-container">
+                                <div className="url-container">
+                                    <a href={ certificateUrl } target="_blank" rel="noreferrer">{ certificateUrl }</a>
                                 </div>
-                                <div className="url-copy-paste-container">
-                                    <div className="url-container">
-                                        <a href={ certificateUrl } target="_blank" rel="noreferrer">{ certificateUrl }</a>
-                                    </div>
-                                    <CopyPasteButton value={ certificateUrl } />
-                                </div>
-                            </p>
+                                <CopyPasteButton value={ certificateUrl } />
+                            </div>
                         </Col>
                     </Row>
                     {

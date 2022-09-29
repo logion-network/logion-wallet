@@ -71,7 +71,6 @@ export default function ContextualizedLocDetails() {
         <LocPane
             backPath={ backPath }
             loc={ loc }
-            locState={ locState }
         >
             <LegalOfficerInstructions
                 loc={ loc }
@@ -98,7 +97,6 @@ export default function ContextualizedLocDetails() {
                 detailsPath={ detailsPath }
             />
             <CertificateAndLimits
-                locId={ loc.id }
                 loc={ loc }
                 viewer="LegalOfficer"
             />

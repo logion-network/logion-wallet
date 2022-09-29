@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VoidFrame renders empty if already void 1`] = `null`;
+
+exports[`VoidFrame renders for non-void collection LOC (only void without replacer) 1`] = `
+<DangerFrame
+  className="VoidFrame"
+>
+  <IconTextRow
+    icon={
+      <Icon
+        icon={
+          Object {
+            "id": "void",
+          }
+        }
+        width="31px"
+      />
+    }
+    text={
+      <React.Fragment>
+        <p
+          className="frame-title"
+        >
+           Void this LOC
+        </p>
+        <p>
+          This action will invalidate the present Collection LOC and all its related Collection Items: the Collection LOC and all related Collection Items status / public certificates will show a "VOID" mention to warn people that the content of the Collection LOC and all its related Collection Items are not valid anymore. 
+          <strong>
+            PLEASE USE CAREFULLY.
+          </strong>
+        </p>
+        <ButtonGroup
+          align="left"
+          className="void-buttons-container"
+        >
+          <VoidLocButton />
+        </ButtonGroup>
+      </React.Fragment>
+    }
+  />
+</DangerFrame>
+`;
+
+exports[`VoidFrame renders for non-void non-collection LOC 1`] = `
+<DangerFrame
+  className="VoidFrame"
+>
+  <IconTextRow
+    icon={
+      <Icon
+        icon={
+          Object {
+            "id": "void",
+          }
+        }
+        width="31px"
+      />
+    }
+    text={
+      <React.Fragment>
+        <p
+          className="frame-title"
+        >
+           Void this LOC
+        </p>
+        <p>
+          This action will invalidate the present LOC: the LOC status, its public certificate will show a "VOID" mention to warn people that the content of the LOC is not valid anymore. If another replacing LOC is set, people will be automatically redirected to the replacing LOC when accessing the void LOC URL and a mention of the fact that the replacing LOC 
+          <strong>
+            supersedes
+          </strong>
+           the void LOC will be shared on both public certificates. 
+          <strong>
+            PLEASE USE CAREFULLY.
+          </strong>
+        </p>
+        <ButtonGroup
+          align="left"
+          className="void-buttons-container"
+        >
+          <VoidLocButton />
+          <VoidLocReplaceNewButton />
+          <VoidLocReplaceExistingButton />
+        </ButtonGroup>
+      </React.Fragment>
+    }
+  />
+</DangerFrame>
+`;

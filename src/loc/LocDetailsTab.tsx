@@ -41,17 +41,6 @@ export default function LocDetailsTab(props: Props) {
     const {
         loc,
         locState,
-        viewer,
-        detailsPath,
-        legalOfficer,
-        checkResult,
-        locItems,
-        addMetadata,
-        addFile,
-        deleteFile,
-        deleteMetadata,
-        deleteLink,
-        protectionRequest,
     } = props;
 
     let locTabBorderColor = BLUE;
@@ -100,88 +89,7 @@ export default function LocDetailsTab(props: Props) {
             tabs={ [ {
                 key: "details",
                 title: locTabTitle,
-                render: () => {
-                    return <>
-                        <Row>
-                            <Col md={ 4 }>
-                                <LocItemDetail label="LOC ID" copyButtonText={ loc.id.toDecimalString() }>
-                                    <OverlayTrigger
-                                        placement="top"
-                                        delay={ 500 }
-                                        overlay={
-                                            <Tooltip
-                                                id={ loc.id.toDecimalString() }>{ loc.id.toDecimalString() }</Tooltip> }>
-                                        <span>{ loc.id.toDecimalString() }</span>
-                                    </OverlayTrigger>
-                                </LocItemDetail>
-                                <LocItemDetail label="Creation date">
-                                    <InlineDateTime dateTime={ loc.createdOn } />
-                                </LocItemDetail>
-                            </Col>
-
-                            <Col md={ 4 }>
-                                <LocItemDetail label="Description">{ loc.description }</LocItemDetail>
-                                {
-                                    loc.status === 'CLOSED' &&
-                                    <LocItemDetail label="Closing date" spinner={ loc.closedOn === undefined }>
-                                        <InlineDateTime dateTime={ loc.closedOn } />
-                                    </LocItemDetail>
-                                }
-                            </Col>
-
-                            <RequesterOrLegalOfficer
-                                loc={ loc }
-                                viewer={ viewer }
-                                detailsPath={ detailsPath }
-                                legalOfficer={ legalOfficer }
-                            />
-                        </Row>
-                        <div className="separator" style={ { backgroundColor: locTabBorderColor } } />
-                        { loc.locType === "Identity" && <>
-                            <PersonalInfo personalAndStatusInfo={ loc } />
-                            <div className="separator" style={ { backgroundColor: locTabBorderColor } } />
-                        </> }
-                        <LocItems
-                            matchedHash={ checkResult.hash }
-                            viewer={ props.viewer }
-                            locId={ loc.id }
-                            locItems={ locItems }
-                            deleteMetadata={ deleteMetadata }
-                            deleteFile={ deleteFile }
-                            deleteLink={ deleteLink }
-                            loc={ loc }
-                        />
-                        {
-                            !loc.closed && loc.voidInfo === undefined &&
-                            <Row>
-                                <Col xxl={ 5 } xl={ 4 }>
-                                    <ButtonGroup align="left">
-                                        <LocPublicDataButton
-                                            locItems={ locItems }
-                                            addMetadata={ addMetadata }
-                                        />
-                                        <LocPrivateFileButton
-                                            locItems={ locItems }
-                                            addFile={ addFile }
-                                        />
-                                    </ButtonGroup>
-                                </Col>
-                                <Col className="link-button-container" xxl={ 4 } xl={ 4 }>
-                                    {
-                                        viewer === "LegalOfficer" &&
-                                        <LocLinkButton excludeNewIdentity={ locState.isLogionData() } />
-                                    }
-                                </Col>
-                                <Col className="close-button-container" xxl={ 3 } xl={ 4 }>
-                                    {
-                                        viewer === "LegalOfficer" &&
-                                        <CloseLocButton protectionRequest={ protectionRequest } loc={ loc } />
-                                    }
-                                </Col>
-                            </Row>
-                        }
-                    </>
-                }
+                render: () => <LocDetailsTabContent { ...props } locTabBorderColor={ locTabBorderColor } />
             } ] }
             borderColor={ locTabBorderColor }
             borderWidth={ locTabBorderWidth }
@@ -189,4 +97,121 @@ export default function LocDetailsTab(props: Props) {
             flatBottom={ loc.voidInfo !== undefined }
         />
     );
+}
+
+export interface ContentProps {
+    loc: LocData;
+    locState: ActiveLoc;
+    viewer: Viewer;
+    detailsPath: (locId: UUID, type: LocType) => string;
+    legalOfficer?: LegalOfficer;
+    checkResult: DocumentCheckResult;
+    locItems: LocItem[];
+    addMetadata: ((name: string, value: string) => void) | null;
+    addFile: ((name: string, file: File, nature: string) => Promise<void>) | null;
+    deleteFile: ((locItem: LocItem) => void) | null;
+    deleteMetadata: ((locItem: LocItem) => void) | null;
+    deleteLink: ((locItem: LocItem) => void) | null;
+    protectionRequest?: ProtectionRequest | null;
+    locTabBorderColor: string;
+}
+
+export function LocDetailsTabContent(props: ContentProps) {
+    const {
+        loc,
+        locState,
+        viewer,
+        detailsPath,
+        legalOfficer,
+        checkResult,
+        locItems,
+        addMetadata,
+        addFile,
+        deleteFile,
+        deleteMetadata,
+        deleteLink,
+        protectionRequest,
+        locTabBorderColor,
+    } = props;
+
+    return (<>
+        <Row>
+            <Col md={ 4 }>
+                <LocItemDetail label="LOC ID" copyButtonText={ loc.id.toDecimalString() }>
+                    <OverlayTrigger
+                        placement="top"
+                        delay={ 500 }
+                        overlay={
+                            <Tooltip
+                                id={ loc.id.toDecimalString() }>{ loc.id.toDecimalString() }</Tooltip> }>
+                        <span>{ loc.id.toDecimalString() }</span>
+                    </OverlayTrigger>
+                </LocItemDetail>
+                <LocItemDetail label="Creation date">
+                    <InlineDateTime dateTime={ loc.createdOn } />
+                </LocItemDetail>
+            </Col>
+
+            <Col md={ 4 }>
+                <LocItemDetail label="Description">{ loc.description }</LocItemDetail>
+                {
+                    loc.status === 'CLOSED' &&
+                    <LocItemDetail label="Closing date" spinner={ loc.closedOn === undefined }>
+                        <InlineDateTime dateTime={ loc.closedOn } />
+                    </LocItemDetail>
+                }
+            </Col>
+
+            <RequesterOrLegalOfficer
+                loc={ loc }
+                viewer={ viewer }
+                detailsPath={ detailsPath }
+                legalOfficer={ legalOfficer }
+            />
+        </Row>
+        <div className="separator" style={ { backgroundColor: locTabBorderColor } } />
+        { loc.locType === "Identity" && <>
+            <PersonalInfo personalAndStatusInfo={ loc } />
+            <div className="separator" style={ { backgroundColor: locTabBorderColor } } />
+        </> }
+        <LocItems
+            matchedHash={ checkResult.hash }
+            viewer={ props.viewer }
+            locId={ loc.id }
+            locItems={ locItems }
+            deleteMetadata={ deleteMetadata }
+            deleteFile={ deleteFile }
+            deleteLink={ deleteLink }
+            loc={ loc }
+        />
+        {
+            !loc.closed && loc.voidInfo === undefined &&
+            <Row>
+                <Col xxl={ 5 } xl={ 4 }>
+                    <ButtonGroup align="left">
+                        <LocPublicDataButton
+                            locItems={ locItems }
+                            addMetadata={ addMetadata }
+                        />
+                        <LocPrivateFileButton
+                            locItems={ locItems }
+                            addFile={ addFile }
+                        />
+                    </ButtonGroup>
+                </Col>
+                <Col className="link-button-container" xxl={ 4 } xl={ 4 }>
+                    {
+                        viewer === "LegalOfficer" &&
+                        <LocLinkButton excludeNewIdentity={ locState.isLogionData() } />
+                    }
+                </Col>
+                <Col className="close-button-container" xxl={ 3 } xl={ 4 }>
+                    {
+                        viewer === "LegalOfficer" &&
+                        <CloseLocButton protectionRequest={ protectionRequest } loc={ loc } />
+                    }
+                </Col>
+            </Row>
+        }
+    </>);
 }

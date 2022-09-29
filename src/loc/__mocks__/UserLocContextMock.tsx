@@ -63,5 +63,6 @@ export function useUserLocContext() {
         locItems,
         addFile,
         addMetadata,
+        checkResult: { result: "NONE" },
     }
 }

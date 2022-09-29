@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LocPane renders collection LOC 1`] = `
+<FullWidthPane
+  className="LocPane"
+  mainTitle="Collection Protection Case"
+  onBack={[Function]}
+  titleIcon={
+    Object {
+      "background": Object {
+        "from": "#3b6cf4",
+        "to": "#6050dc",
+      },
+      "icon": Object {
+        "id": "collection",
+      },
+    }
+  }
+>
+  Some content
+</FullWidthPane>
+`;
+
+exports[`LocPane renders identity LOC 1`] = `
+<FullWidthPane
+  className="LocPane"
+  mainTitle="Identity Case"
+  onBack={[Function]}
+  titleIcon={
+    Object {
+      "background": Object {
+        "from": "#3b6cf4",
+        "to": "#6050dc",
+      },
+      "icon": Object {
+        "id": "identity",
+      },
+    }
+  }
+>
+  Some content
+</FullWidthPane>
+`;
+
+exports[`LocPane renders transaction LOC 1`] = `
+<FullWidthPane
+  className="LocPane"
+  mainTitle="Transaction Protection Case"
+  onBack={[Function]}
+  titleIcon={
+    Object {
+      "background": Object {
+        "from": "#3b6cf4",
+        "to": "#6050dc",
+      },
+      "icon": Object {
+        "id": "loc",
+      },
+    }
+  }
+>
+  Some content
+</FullWidthPane>
+`;
