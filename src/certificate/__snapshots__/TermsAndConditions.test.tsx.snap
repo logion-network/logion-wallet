@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TermsAndConditions renders with item 1`] = `
+<CertificateCell
+  label="Terms and conditions"
+  md={12}
+>
+  <div
+    className="TermsAndConditions"
+  >
+    <LogionClassification
+      item={Object {}}
+    />
+    <SpecificLicenses
+      item={Object {}}
+    />
+  </div>
+</CertificateCell>
+`;

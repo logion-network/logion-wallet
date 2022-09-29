@@ -1,0 +1,11 @@
+.CertificateLabel {
+    font-size: 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.CertificateLabel.smaller {
+    font-size: 0.9rem;
+}

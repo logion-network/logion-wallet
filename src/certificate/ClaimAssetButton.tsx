@@ -1,5 +1,5 @@
 import { BlockchainTypes, CrossmintEVMWalletAdapter } from "@crossmint/embed";
-import { Token, LogionClient, MergedCollectionItem } from "@logion/client";
+import { Token, LogionClient, CollectionItem } from "@logion/client";
 import { CrossmintSigner } from "@logion/crossmint";
 import { allMetamaskAccounts, enableMetaMask } from "@logion/extension";
 import { ItemFile, UUID } from "@logion/node-api";
@@ -22,7 +22,7 @@ export type WalletType = "METAMASK" | "CROSSMINT";
 export interface Props {
     locId: UUID,
     owner: string,
-    item: MergedCollectionItem,
+    item: CollectionItem,
     file: ItemFile,
     walletType?: WalletType | null,
 }
