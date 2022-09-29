@@ -22,6 +22,7 @@ type FormerLogionLocMethod = "createLoc";
 type LogionLocMethod = Uncapitalize<PalletLogionLocCall["type"]> | FormerLogionLocMethod
 const palletLogionLocMethods: Record<LogionLocMethod, string> = {
     addCollectionItem: "Item added to Collection",
+    addCollectionItemWithTermsAndConditions: "Item added to Collection",
     addFile: "File added to LOC",
     addLink: "Link added to LOC",
     addMetadata: "Metadata added to LOC",

@@ -1,7 +1,9 @@
-_________________________________
+________________________________________
 
-LOGION IP TRANSFER CLASSIFICATION
-_________________________________
+LOGION IP TRANSFER CLASSIFICATION (LITC)
+
+Version 1.0
+________________________________________
 
 
 The Logion intellectual property transfer classification (hereinafter “LITC”) aims to set and define the IP rights (as defined below) claimed by the Creator (as defined by the T&Cs applicable to the transaction) and that are to be transferred to the Buyer (as defined by the T&Cs applicable to the transaction), in the subject of the transaction (hereinafter referred to as the “Underlying Asset”).
