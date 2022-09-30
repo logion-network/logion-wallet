@@ -5,31 +5,33 @@ exports[`LogionTerms renders limited period 1`] = `
   className="LogionTerms"
 >
   <li>
-    <span
-      className="short-code"
-    >
-      FOR A LIMITED PERIOD OF TIME
-       (
-      TIME
-      )
-    </span>
-    <span
-      className="description"
-    >
-      Means that the license/assignment grant is limited in time as recorded by the logion infrastructure
-    </span>
-    <React.Fragment>
-      <br />
+    <span>
       <span
-        className="recorded-data"
+        className="short-code"
       >
-        &gt; Recorded data: 
-        <InlineDateTime
-          dateOnly={true}
-          dateTime="2023-01-01"
-        />
+        FOR A LIMITED PERIOD OF TIME
+         (
+        TIME
+        ): 
       </span>
-    </React.Fragment>
+      <span
+        className="description"
+      >
+        Means that the license/assignment grant is limited in time as recorded by the logion infrastructure
+      </span>
+      <React.Fragment>
+        <br />
+        <span
+          className="recorded-data"
+        >
+          &gt; Recorded data: 
+          <InlineDateTime
+            dateOnly={true}
+            dateTime="2023-01-01"
+          />
+        </span>
+      </React.Fragment>
+    </span>
   </li>
 </ul>
 `;
@@ -39,28 +41,30 @@ exports[`LogionTerms renders regional use 1`] = `
   className="LogionTerms"
 >
   <li>
-    <span
-      className="short-code"
-    >
-      COUNTRY-SPECIFIC OR REGIONAL USE
-       (
-      REG
-      )
-    </span>
-    <span
-      className="description"
-    >
-      Means that some territorial limitations apply. The list of allowed countries is recorded by the logion infrastructure.
-    </span>
-    <React.Fragment>
-      <br />
+    <span>
       <span
-        className="recorded-data"
+        className="short-code"
       >
-        &gt; Recorded data: 
-        BE - NL - LU
+        COUNTRY-SPECIFIC OR REGIONAL USE
+         (
+        REG
+        ): 
       </span>
-    </React.Fragment>
+      <span
+        className="description"
+      >
+        Means that some territorial limitations apply. The list of allowed countries is recorded by the logion infrastructure.
+      </span>
+      <React.Fragment>
+        <br />
+        <span
+          className="recorded-data"
+        >
+          &gt; Recorded data: 
+          BE - NL - LU
+        </span>
+      </React.Fragment>
+    </span>
   </li>
 </ul>
 `;
@@ -70,48 +74,54 @@ exports[`LogionTerms renders several terms 1`] = `
   className="LogionTerms"
 >
   <li>
-    <span
-      className="short-code"
-    >
-      PERSONAL, PRIVATE USE ONLY
-       (
-      PER-PRIV
-      )
-    </span>
-    <span
-      className="description"
-    >
-      Use the Underlying Asset for your personal use, exclusively in private spheres and so long as that personal use is non-commercial, i.e. does not, directly or indirectly, result in compensation, financial benefit or commercial gain, To the extent that such use is non-commercial and private, you may use, reproduce, display and as necessary perform but not modify the Underlying Asset.
-    </span>
-  </li>
-  <li>
-    <span
-      className="short-code"
-    >
-      WORLDWIDE USE
-       (
-      WW
-      )
-    </span>
-    <span
-      className="description"
-    >
-      Covers use in all countries of the world, existing and future, not limited territorially.
+    <span>
+      <span
+        className="short-code"
+      >
+        PERSONAL, PRIVATE USE ONLY
+         (
+        PER-PRIV
+        ): 
+      </span>
+      <span
+        className="description"
+      >
+        Use the Underlying Asset for your personal use, exclusively in private spheres and so long as that personal use is non-commercial, i.e. does not, directly or indirectly, result in compensation, financial benefit or commercial gain, To the extent that such use is non-commercial and private, you may use, reproduce, display and as necessary perform but not modify the Underlying Asset.
+      </span>
     </span>
   </li>
   <li>
-    <span
-      className="short-code"
-    >
-      FOR THE ENTIRE DURATION OF THE IP RIGHTS
-       (
-      NOTIME
-      )
+    <span>
+      <span
+        className="short-code"
+      >
+        WORLDWIDE USE
+         (
+        WW
+        ): 
+      </span>
+      <span
+        className="description"
+      >
+        Covers use in all countries of the world, existing and future, not limited territorially.
+      </span>
     </span>
-    <span
-      className="description"
-    >
-      The duration of the IP rights contemplated - author rights and copyright - are for the entire life of the Creator and 70 years afterward, counted from the moment the work of art has been disclosed.
+  </li>
+  <li>
+    <span>
+      <span
+        className="short-code"
+      >
+        FOR THE ENTIRE DURATION OF THE IP RIGHTS
+         (
+        NOTIME
+        ): 
+      </span>
+      <span
+        className="description"
+      >
+        The duration of the IP rights contemplated - author rights and copyright - are for the entire life of the Creator and 70 years afterward, counted from the moment the work of art has been disclosed.
+      </span>
     </span>
   </li>
 </ul>
@@ -122,18 +132,20 @@ exports[`LogionTerms renders single term 1`] = `
   className="LogionTerms"
 >
   <li>
-    <span
-      className="short-code"
-    >
-      PERSONAL, PRIVATE USE ONLY
-       (
-      PER-PRIV
-      )
-    </span>
-    <span
-      className="description"
-    >
-      Use the Underlying Asset for your personal use, exclusively in private spheres and so long as that personal use is non-commercial, i.e. does not, directly or indirectly, result in compensation, financial benefit or commercial gain, To the extent that such use is non-commercial and private, you may use, reproduce, display and as necessary perform but not modify the Underlying Asset.
+    <span>
+      <span
+        className="short-code"
+      >
+        PERSONAL, PRIVATE USE ONLY
+         (
+        PER-PRIV
+        ): 
+      </span>
+      <span
+        className="description"
+      >
+        Use the Underlying Asset for your personal use, exclusively in private spheres and so long as that personal use is non-commercial, i.e. does not, directly or indirectly, result in compensation, financial benefit or commercial gain, To the extent that such use is non-commercial and private, you may use, reproduce, display and as necessary perform but not modify the Underlying Asset.
+      </span>
     </span>
   </li>
 </ul>
