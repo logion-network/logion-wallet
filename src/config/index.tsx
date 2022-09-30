@@ -11,6 +11,7 @@ export interface ConfigType {
     directory: string,
     edgeNodes: Node[],
     crossmintApiKey: string,
+    logionClassification: string,
 }
 
 export const DEFAULT_CONFIG: ConfigType = {
@@ -21,6 +22,7 @@ export const DEFAULT_CONFIG: ConfigType = {
     directory: "",
     edgeNodes: [],
     crossmintApiKey: "",
+    logionClassification: "",
 };
 
 export interface EnvConfigType extends Record<string, any> {
