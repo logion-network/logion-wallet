@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CheckFileFrame renders no match 1`] = `
+<PolkadotFrame
+  className="CheckFileFrame"
+>
+  <IconTextRow
+    icon={
+      <Icon
+        icon={
+          Object {
+            "id": "polkadot_doc_check",
+          }
+        }
+        width="45px"
+      />
+    }
+    text={
+      <React.Fragment>
+        <p
+          className="text-title"
+        >
+          Document conformity check tool
+        </p>
+        <p>
+          Check a document to verify its conformity with a confidential document referenced in this LOC. This tool will generate the “hash” - a digital fingerprint - of the submitted document, compare it with all document “hashes” referenced in the LOC above, and will highlight (dotted square) above - if existing - the identified document. Otherwise, it will mean that the submitted file version is not part of this current transaction LOC.
+        </p>
+        <p>
+          Important: the document you submit is NOT uploaded to a server as the test is done by your browser.
+        </p>
+        <FileHasher
+          buttonText="Check a document"
+          onHash={[Function]}
+        />
+      </React.Fragment>
+    }
+  />
+</PolkadotFrame>
+`;
