@@ -64,6 +64,7 @@ const locId = new UUID("d97c99fd-9bcc-4f92-b9ea-b6be93abbbcd");
 const itemId = toItemId("test")!;
 const item = {
     files: [],
+    termsAndConditions: [],
 } as unknown as CollectionItem;
 const locState = {
     size: () => Promise.resolve(1),
