@@ -62,16 +62,9 @@ export function ValuesFiles() {
                             <ActionCell>
                                 <Button
                                     onClick={ () => updateSetting!(id, newSettings[id]! ) }
-                                    disabled={ !( id in newSettings ) || !(newSettings[id]) || newSettings[id] === settings[id] || uploading[id] }
+                                    disabled={ !( id in newSettings ) || !(newSettings[id]) || newSettings[id] === settings[id] }
                                 >
-                                    {
-                                        uploading[id] &&
-                                        <Spinner animation="border" />
-                                    }
-                                    {
-                                        !uploading[id] &&
-                                        <>Update</>
-                                    }
+                                    Update
                                 </Button>
                             </ActionCell>,
                         align: "center"
@@ -93,10 +86,18 @@ export function ValuesFiles() {
                         header: "",
                         render: fileId =>
                             <ActionCell>
-                                <FileSelectorButton
-                                    onFileSelected={ (file => fileSelectedCallback(file, fileId)) }
-                                    onlyButton
-                                />
+                                {
+                                    uploading[fileId] &&
+                                    <Spinner animation="border" />
+                                }
+                                {
+                                    !uploading[fileId] &&
+                                    <FileSelectorButton
+                                        onFileSelected={ (file => fileSelectedCallback(file, fileId)) }
+                                        onlyButton
+                                        disabled={ uploading[fileId] }
+                                    />
+                                }
                                 <ViewFileButton
                                     nodeOwner={ nodeOwner! }
                                     fileName={ fileId }
