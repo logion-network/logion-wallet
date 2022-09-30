@@ -41,7 +41,7 @@ export function setLocId(id: UUID) {
     locId = id;
 }
 
-let loc: Partial<LocData> = {
+let loc: Partial<LocData> | null = {
     id: locId,
     locType: "Identity",
     requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
@@ -53,7 +53,7 @@ let loc: Partial<LocData> = {
     }
 };
 
-export function setLocRequest(request: LocData) {
+export function setLocRequest(request: LocData | null) {
     loc = request;
 }
 

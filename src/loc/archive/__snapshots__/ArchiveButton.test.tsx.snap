@@ -1,0 +1,104 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ArchiveButton renders button with data 1`] = `
+<React.Fragment>
+  <Button
+    className="ArchiveButton"
+    onClick={[Function]}
+  >
+    <Icon
+      height="22px"
+      icon={
+        Object {
+          "id": "backup",
+        }
+      }
+    />
+    Local Backup
+  </Button>
+  <Dialog
+    actions={
+      Array [
+        Object {
+          "buttonText": "Cancel",
+          "buttonVariant": "secondary",
+          "callback": [Function],
+          "id": "cancel",
+        },
+        Object {
+          "buttonText": "Download",
+          "buttonVariant": "primary",
+          "callback": [Function],
+          "disabled": true,
+          "id": "submit",
+        },
+      ]
+    }
+    show={false}
+    size="lg"
+  >
+    <h3>
+      LOC Local Backup Tool
+    </h3>
+    <p>
+      The LOC Local Backup Tool allows to download through a JSON file, all LOC data (on-chain and off-chain ones), its Public Data, its Confidential Document data and its Linked LOC data, as well as a copy of all related files existing in the LOC at the time of the request.
+    </p>
+    <p>
+      <Icon
+        icon={
+          Object {
+            "id": "big-warning",
+          }
+        }
+        type="png"
+        width="105px"
+      />
+    </p>
+    <p>
+      <strong>
+        Please use with extreme caution
+      </strong>
+      <br />
+      By clicking on the "download" button below, you acknowledge the fact that a copy of all LOC data and files will be out of the logion infrastructure to be downloaded on your computer, thus under your entire responsibility. Any leak of the related material could severely harm your client, your own Legal Officer reputation as well as the logion project. It could also lead to judicial claims with regards to the leak-resulting damages.
+    </p>
+    <Table
+      columns={
+        Array [
+          Object {
+            "header": "Name",
+            "render": [Function],
+            "width": "450px",
+          },
+          Object {
+            "header": "Type",
+            "render": [Function],
+          },
+        ]
+      }
+      data={
+        Array [
+          Object {
+            "downloader": [Function],
+            "fileName": "8c30c432-793d-4671-8b2c-74446fd90cc0",
+            "type": "JSON Backup file",
+          },
+        ]
+      }
+      renderEmpty={[Function]}
+    />
+    <div
+      className="check-risk"
+    >
+      <Checkbox
+        checked={false}
+        setChecked={[Function]}
+      />
+      <span>
+        I understand the risks and consequences and would like to proceed.
+      </span>
+    </div>
+  </Dialog>
+</React.Fragment>
+`;
+
+exports[`ArchiveButton renders empty without data 1`] = `null`;
