@@ -11,16 +11,18 @@ exports[`LogionClassification renders classification 1`] = `
   </CertificateLabel>
   <React.Fragment>
     <p>
-      This is a human-readable summary (but not a substitute) of the Logion IP transfer classification (“LITC”):
+      This is a human-readable summary (but not a substitute) of the Logion IP transfer classification (“LITC”): 
       <NewTabLink
         href="/license/LITC-v1.0.txt"
+        inline={true}
       >
         LITC-v1.0.txt
       </NewTabLink>
-      /
+       / 
       <NewTabLink
         href="http://localhost/public/certificate/258279227474533369556245314600751520115"
         iconId="loc-link"
+        inline={true}
       >
         LITC-v1.0 certificate
       </NewTabLink>

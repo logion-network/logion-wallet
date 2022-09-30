@@ -16,22 +16,24 @@ export default function LogionTerms(props: Props) {
             {
                 terms.transferredRights.map((transferredRight, index) => (
                     <li key={ index }>
-                        <span className="short-code">{ transferredRight.shortDescription } ({ transferredRight.code })</span>
-                        <span className="description">{ transferredRight.description }</span>
-                        {
-                            transferredRight.code === "REG" &&
-                            <>
-                                <br/>
-                                <span className="recorded-data">&gt; Recorded data: { regionalLimit.join(" - ") }</span>
-                            </>
-                        }
-                        {
-                            transferredRight.code === "TIME" &&
-                            <>
-                                <br/>
-                                <span className="recorded-data">&gt; Recorded data: <InlineDateTime dateTime={ terms.expiration } dateOnly={ true } /></span>
-                            </>
-                        }
+                        <span>
+                            <span className="short-code">{ transferredRight.shortDescription } ({ transferredRight.code }): </span>
+                            <span className="description">{ transferredRight.description }</span>
+                            {
+                                transferredRight.code === "REG" &&
+                                <>
+                                    <br/>
+                                    <span className="recorded-data">&gt; Recorded data: { regionalLimit.join(" - ") }</span>
+                                </>
+                            }
+                            {
+                                transferredRight.code === "TIME" &&
+                                <>
+                                    <br/>
+                                    <span className="recorded-data">&gt; Recorded data: <InlineDateTime dateTime={ terms.expiration } dateOnly={ true } /></span>
+                                </>
+                            }
+                        </span>
                     </li>
                 ))
             }

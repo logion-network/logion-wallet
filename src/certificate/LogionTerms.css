@@ -1,3 +1,10 @@
 .LogionTerms .short-code {
     text-transform: uppercase;
+    font-weight: bold;
+}
+
+.LogionTerms li > span {
+    position: relative;
+    left: 50px;
+    padding-right: 50px;
 }
