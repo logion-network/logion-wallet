@@ -1,0 +1,211 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserContextualizedLocDetails renders 1`] = `
+<LocPane
+  loc={
+    Object {
+      "closed": false,
+      "createdOn": "",
+      "decisionOn": "",
+      "description": "Description",
+      "files": Array [],
+      "id": UUID {
+        "bytes": Array [
+          147,
+          99,
+          195,
+          214,
+          209,
+          7,
+          66,
+          26,
+          164,
+          75,
+          133,
+          199,
+          250,
+          176,
+          184,
+          67,
+        ],
+      },
+      "links": Array [],
+      "locType": "Identity",
+      "metadata": Array [],
+      "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+      "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+      "requesterLocId": undefined,
+      "status": "OPEN",
+    }
+  }
+>
+  <LocDetailsTab
+    addFile={[MockFunction]}
+    addMetadata={[MockFunction]}
+    checkResult={
+      Object {
+        "result": "NONE",
+      }
+    }
+    deleteFile={[MockFunction]}
+    deleteLink={null}
+    deleteMetadata={[MockFunction]}
+    loc={
+      Object {
+        "closed": false,
+        "createdOn": "",
+        "decisionOn": "",
+        "description": "Description",
+        "files": Array [],
+        "id": UUID {
+          "bytes": Array [
+            147,
+            99,
+            195,
+            214,
+            209,
+            7,
+            66,
+            26,
+            164,
+            75,
+            133,
+            199,
+            250,
+            176,
+            184,
+            67,
+          ],
+        },
+        "links": Array [],
+        "locType": "Identity",
+        "metadata": Array [],
+        "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "requesterLocId": undefined,
+        "status": "OPEN",
+      }
+    }
+    locItems={Array []}
+    viewer="User"
+  />
+  <VoidDisclaimer
+    loc={
+      Object {
+        "closed": false,
+        "createdOn": "",
+        "decisionOn": "",
+        "description": "Description",
+        "files": Array [],
+        "id": UUID {
+          "bytes": Array [
+            147,
+            99,
+            195,
+            214,
+            209,
+            7,
+            66,
+            26,
+            164,
+            75,
+            133,
+            199,
+            250,
+            176,
+            184,
+            67,
+          ],
+        },
+        "links": Array [],
+        "locType": "Identity",
+        "metadata": Array [],
+        "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "requesterLocId": undefined,
+        "status": "OPEN",
+      }
+    }
+  />
+  <CertificateAndLimits
+    loc={
+      Object {
+        "closed": false,
+        "createdOn": "",
+        "decisionOn": "",
+        "description": "Description",
+        "files": Array [],
+        "id": UUID {
+          "bytes": Array [
+            147,
+            99,
+            195,
+            214,
+            209,
+            7,
+            66,
+            26,
+            164,
+            75,
+            133,
+            199,
+            250,
+            176,
+            184,
+            67,
+          ],
+        },
+        "links": Array [],
+        "locType": "Identity",
+        "metadata": Array [],
+        "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "requesterLocId": undefined,
+        "status": "OPEN",
+      }
+    }
+    viewer="User"
+  />
+  <SupersedesDisclaimer
+    loc={
+      Object {
+        "closed": false,
+        "createdOn": "",
+        "decisionOn": "",
+        "description": "Description",
+        "files": Array [],
+        "id": UUID {
+          "bytes": Array [
+            147,
+            99,
+            195,
+            214,
+            209,
+            7,
+            66,
+            26,
+            164,
+            75,
+            133,
+            199,
+            250,
+            176,
+            184,
+            67,
+          ],
+        },
+        "links": Array [],
+        "locType": "Identity",
+        "metadata": Array [],
+        "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "requesterLocId": undefined,
+        "status": "OPEN",
+      }
+    }
+  />
+  <CheckFileFrame
+    checkResult="NONE"
+  />
+</LocPane>
+`;

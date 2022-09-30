@@ -27,6 +27,7 @@ export default function VoidLocReplaceNewButton() {
     const [ newLocDescription, setNewLocDescription ] = useState<string>("");
     const [ newLocRequest, setNewLocRequest ] = useState<LocRequest | null>(null);
     const [ voidInfo, setVoidInfo ] = useState<FullVoidInfo | null>(null);
+    const { refreshLocs } = useLegalOfficerContext();
 
     const createNewLocRequest = useCallback(() => {
         (async function () {
@@ -132,6 +133,7 @@ export default function VoidLocReplaceNewButton() {
                             setVisible(false);
                             voidLoc!(voidInfo)
                             refresh!(false);
+                            refreshLocs();
                         } }
                         onError={ () => setSubmissionFailed(true) }
                     />

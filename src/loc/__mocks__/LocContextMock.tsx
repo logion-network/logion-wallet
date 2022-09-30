@@ -4,6 +4,15 @@ import { UUID } from "@logion/node-api/dist/UUID";
 import { mockSignAndSubmit } from "../../ExtrinsicSubmitterTestUtil";
 import { LocItem } from "../types";
 
+let locState: any = {
+    isLogionIdentity: () => false,
+    isLogionData: () => true,
+};
+
+export function setLocState(value: any) {
+    locState = value;
+}
+
 let locItems: LocItem[] = [];
 
 export function setLocItems(items: LocItem[]) {
@@ -32,7 +41,9 @@ export function setLocId(id: UUID) {
     locId = id;
 }
 
-let loc: Partial<LocData> = {
+let loc: Partial<LocData> | null = {
+    id: locId,
+    locType: "Identity",
     requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
     userIdentity: {
         firstName: "John",
@@ -42,7 +53,7 @@ let loc: Partial<LocData> = {
     }
 };
 
-export function setLocRequest(request: LocData) {
+export function setLocRequest(request: LocData | null) {
     loc = request;
 }
 
@@ -64,6 +75,10 @@ export let addFile = jest.fn().mockResolvedValue(undefined);
 
 export let addMetadata = jest.fn().mockResolvedValue(undefined);
 
+export let addLink = jest.fn().mockResolvedValue(undefined);
+
+export let voidLoc = jest.fn();
+
 export function useLocContext() {
     return {
         linkLoc: {
@@ -81,10 +96,10 @@ export function useLocContext() {
         deleteLink,
         addFile,
         addMetadata,
+        addLink,
         checkResult: { result: "NONE" },
-        locState: {
-            isLogionIdentity: () => false,
-            isLogionData: () => true,
-        }
+        locState,
+        voidLoc,
+        voidLocExtrinsic: () => mockSignAndSubmit(() => {}),
     };
 }

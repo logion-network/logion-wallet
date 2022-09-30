@@ -1,7 +1,3 @@
-import { LegalOfficer } from "@logion/client";
-import { useEffect, useState } from "react";
-import { useLogionChain } from "../logion-chain";
-
 import CheckFileFrame from 'src/components/checkfileframe/CheckFileFrame';
 import CertificateAndLimits from "./CertificateAndLimits";
 import { UserCollectionLocItemChecker } from "./CollectionLocItemChecker";
@@ -13,8 +9,6 @@ import VoidDisclaimer from "./VoidDisclaimer";
 import SupersedesDisclaimer from "./SupersedesDisclaimer";
 
 export default function UserContextualizedLocDetails() {
-    const { getOfficer } = useLogionChain();
-    const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer | null>(null)
     const {
         backPath,
         detailsPath,
@@ -31,15 +25,6 @@ export default function UserContextualizedLocDetails() {
         collectionItem,
     } = useUserLocContext();
 
-    useEffect(() => {
-        if (legalOfficer === null && loc) {
-            const owner = getOfficer!(loc.ownerAddress);
-            if(owner !== undefined) {
-                setLegalOfficer(owner);
-            }
-        }
-    }, [ legalOfficer, loc, getOfficer, setLegalOfficer ])
-
     if (loc === null || locState === null) {
         return null;
     }
@@ -48,7 +33,6 @@ export default function UserContextualizedLocDetails() {
         <LocPane
             backPath={ backPath }
             loc={ loc }
-            locState={ locState }
         >
             <LocDetailsTab
                 loc={ loc }
@@ -68,7 +52,6 @@ export default function UserContextualizedLocDetails() {
                 detailsPath={ detailsPath }
             />
             <CertificateAndLimits
-                locId={ loc.id }
                 loc={ loc }
                 viewer="User"
             />

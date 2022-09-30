@@ -10,7 +10,7 @@ import userEvent from '@testing-library/user-event';
 
 import { shallowRender } from '../tests';
 import PendingProtectionRequests from './PendingProtectionRequests';
-import { setPendingProtectionRequests } from './__mocks__/LegalOfficerContextMock';
+import { setPendingProtectionRequests, setPendingRecoveryRequests } from './__mocks__/LegalOfficerContextMock';
 import { setAcceptProtectionRequest, setRejectProtectionRequest } from '../loc/__mocks__/ModelMock';
 import { PENDING_PROTECTION_REQUESTS } from './TestData';
 import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT, axiosMock } from '../logion-chain/__mocks__/LogionChainMock';
@@ -29,12 +29,14 @@ describe("PendingProtectionRequests", () => {
 
     it("Renders pending requests", () => {
         setPendingProtectionRequests(PENDING_PROTECTION_REQUESTS);
+        setPendingRecoveryRequests([]);
         const tree = shallowRender(<PendingProtectionRequests recovery={ false } />);
         expect(tree).toMatchSnapshot();
     });
 
     it("Click on later closes dialog", async () => {
         setPendingProtectionRequests(PENDING_PROTECTION_REQUESTS);
+        setPendingRecoveryRequests([]);
         const rejectCallback = jest.fn();
         setRejectProtectionRequest(rejectCallback);
         const acceptCallback = jest.fn();
@@ -56,6 +58,7 @@ describe("PendingProtectionRequests", () => {
 
     it("Review and reject request", async () => {
         setPendingProtectionRequests(PENDING_PROTECTION_REQUESTS);
+        setPendingRecoveryRequests([]);
         const rejectCallback = jest.fn();
         setRejectProtectionRequest(rejectCallback);
         const acceptCallback = jest.fn();
@@ -93,6 +96,7 @@ describe("PendingProtectionRequests", () => {
 
     it("Review and accept request", async () => {
         setPendingProtectionRequests(PENDING_PROTECTION_REQUESTS);
+        setPendingRecoveryRequests([]);
 
         const rejectCallback = jest.fn();
         setRejectProtectionRequest(rejectCallback);

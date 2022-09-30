@@ -21,6 +21,8 @@ export let activatedProtectionRequests: any[] | null = null;
 
 export let protectionRequestsHistory: any[] | null = null;
 
+export let pendingRecoveryRequests: any[] | null = null;
+
 export let recoveryRequestsHistory: any[] | null = null;
 
 export function setPendingRequests(requests: any[]) {
@@ -49,6 +51,10 @@ export function setActivatedProtectionRequests(requests: any[]) {
 
 export function setProtectionRequestsHistory(requests: any[]) {
     protectionRequestsHistory = requests;
+}
+
+export function setPendingRecoveryRequests(requests: any[]) {
+    pendingRecoveryRequests = requests;
 }
 
 export function setRecoveryRequestsHistory(requests: any[]) {
@@ -116,6 +122,8 @@ export function setOnchainSettings(settings: LegalOfficerData) {
     onchainSettings = settings;
 }
 
+export let refreshLocs = jest.fn();
+
 export function useLegalOfficerContext() {
     return {
         pendingTokenizationRequests,
@@ -134,8 +142,9 @@ export function useLegalOfficerContext() {
         pendingLocRequests,
         rejectedLocRequests,
         voidIdentityLocsByType,
-        refreshLocs: () => {},
         axios: {} as AxiosInstance,
         onchainSettings,
+        pendingRecoveryRequests,
+        refreshLocs,
     };
 }

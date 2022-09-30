@@ -1,0 +1,106 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RequesterOrLegalOfficer renders LO in charge for User 1`] = `
+<Col
+  className="closed-icon-container"
+  md={4}
+>
+  <LocItemDetail
+    label="Legal Officer in charge"
+  >
+    Patrick Gielen
+    <OverlayTrigger
+      defaultShow={false}
+      delay={500}
+      overlay={
+        <Tooltip
+          placement="right"
+        />
+      }
+      placement="top"
+      trigger={
+        Array [
+          "hover",
+          "focus",
+        ]
+      }
+    >
+      <span>
+        <br />
+         
+      </span>
+    </OverlayTrigger>
+  </LocItemDetail>
+</Col>
+`;
+
+exports[`RequesterOrLegalOfficer renders logion requester for LO 1`] = `
+<Col
+  className="closed-icon-container"
+  md={4}
+>
+  <LocItemDetail
+    label="Requested by"
+  >
+    John
+     
+    Doe
+    <span>
+      <br />
+      <NewTabLink
+        href=""
+        iconId="loc-link"
+        inline={true}
+      >
+        <Ellipsis
+          maxWidth="250px"
+        >
+          85833363768713528858922097642089825569
+        </Ellipsis>
+      </NewTabLink>
+    </span>
+  </LocItemDetail>
+</Col>
+`;
+
+exports[`RequesterOrLegalOfficer renders polkadot requester for LO 1`] = `
+<Col
+  className="closed-icon-container"
+  md={4}
+>
+  <LocItemDetail
+    label="Requested by"
+  >
+    John
+     
+    Doe
+    <React.Fragment>
+      <OverlayTrigger
+        defaultShow={false}
+        delay={500}
+        overlay={
+          <Tooltip
+            id="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
+            placement="right"
+          >
+            5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY
+          </Tooltip>
+        }
+        placement="top"
+        trigger={
+          Array [
+            "hover",
+            "focus",
+          ]
+        }
+      >
+        <span>
+          <br />
+           
+          5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY
+        </span>
+      </OverlayTrigger>
+    </React.Fragment>
+  </LocItemDetail>
+</Col>
+`;

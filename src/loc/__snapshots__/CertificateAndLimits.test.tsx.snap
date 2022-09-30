@@ -1,0 +1,713 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CertificateAndLimits renders certificate and buttons for non-collection LOC and LO 1`] = `
+<div
+  className="CertificateAndLimits"
+>
+  <Row>
+    <Col
+      className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12"
+    >
+      <div
+        className="certificate"
+      >
+        <h2>
+          Public web address (URL) of this Legal Officer Case related Certificate:
+        </h2>
+        <div
+          className="url-copy-paste-container"
+        >
+          <div
+            className="url-container"
+          >
+            <a
+              href="http://localhost/public/certificate/31105349912518444897773986398896608162"
+              rel="noreferrer"
+              target="_blank"
+            >
+              http://localhost/public/certificate/31105349912518444897773986398896608162
+            </a>
+          </div>
+          <CopyPasteButton
+            value="http://localhost/public/certificate/31105349912518444897773986398896608162"
+          />
+        </div>
+      </div>
+    </Col>
+    <Col
+      className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12"
+    >
+      <div
+        className="tool-bar"
+      >
+        <ArchiveButton />
+        <StatementOfFactsButton />
+      </div>
+    </Col>
+  </Row>
+</div>
+`;
+
+exports[`CertificateAndLimits renders certificate and limits for void collection LOC and User 1`] = `
+<div
+  className="CertificateAndLimits"
+>
+  <Row>
+    <Col
+      className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12"
+    >
+      <div
+        className="certificate"
+      >
+        <h2>
+          Public web address (URL) of this Legal Officer Case related Certificate:
+        </h2>
+        <div
+          className="url-copy-paste-container"
+        >
+          <div
+            className="url-container"
+          >
+            <a
+              href="http://localhost/public/certificate/31105349912518444897773986398896608162"
+              rel="noreferrer"
+              target="_blank"
+            >
+              http://localhost/public/certificate/31105349912518444897773986398896608162
+            </a>
+          </div>
+          <CopyPasteButton
+            value="http://localhost/public/certificate/31105349912518444897773986398896608162"
+          />
+        </div>
+      </div>
+    </Col>
+    <Col
+      className="col-xxxl-2 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6"
+    >
+      <div
+        className="limits"
+      >
+        <div>
+          <strong>
+            Collection Date Limit:
+          </strong>
+           
+          <InlineDateTime
+            dateOnly={true}
+          />
+        </div>
+        <div>
+          <strong>
+            Collection Item Limit:
+          </strong>
+           
+          -
+        </div>
+        <div>
+          <strong>
+            Collection Upload Accepted:
+          </strong>
+           
+          No
+        </div>
+      </div>
+    </Col>
+    <Col
+      className="col-xxxl-4 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6"
+    >
+      <div
+        className="tool-bar"
+      />
+    </Col>
+  </Row>
+</div>
+`;
+
+exports[`CertificateAndLimits renders certificate, limits and buttons for closed non-void collection LOC and LO 1`] = `
+<div
+  className="CertificateAndLimits"
+>
+  <Row>
+    <Col
+      className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12"
+    >
+      <div
+        className="certificate"
+      >
+        <h2>
+          Public web address (URL) of this Legal Officer Case related Certificate:
+        </h2>
+        <div
+          className="url-copy-paste-container"
+        >
+          <div
+            className="url-container"
+          >
+            <a
+              href="http://localhost/public/certificate/31105349912518444897773986398896608162"
+              rel="noreferrer"
+              target="_blank"
+            >
+              http://localhost/public/certificate/31105349912518444897773986398896608162
+            </a>
+          </div>
+          <CopyPasteButton
+            value="http://localhost/public/certificate/31105349912518444897773986398896608162"
+          />
+        </div>
+      </div>
+    </Col>
+    <Col
+      className="col-xxxl-2 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6"
+    >
+      <div
+        className="limits"
+      >
+        <div>
+          <strong>
+            Collection Date Limit:
+          </strong>
+           
+          <InlineDateTime
+            dateOnly={true}
+          />
+        </div>
+        <div>
+          <strong>
+            Collection Item Limit:
+          </strong>
+           
+          -
+        </div>
+        <div>
+          <strong>
+            Collection Upload Accepted:
+          </strong>
+           
+          No
+        </div>
+      </div>
+    </Col>
+    <Col
+      className="col-xxxl-4 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6"
+    >
+      <div
+        className="tool-bar"
+      >
+        <ArchiveButton />
+        <Button
+          onClick={[Function]}
+        >
+          <Icon
+            height="22px"
+            icon={
+              Object {
+                "id": "cog",
+              }
+            }
+          />
+           Get dev settings
+        </Button>
+      </div>
+    </Col>
+  </Row>
+  <Dialog
+    actions={
+      Array [
+        Object {
+          "buttonText": "Close",
+          "buttonVariant": "primary",
+          "callback": [Function],
+          "id": "close",
+        },
+      ]
+    }
+    className="CertificateAndLimits"
+    show={false}
+    size="xl"
+  >
+    <h2>
+      Get developper settings for the requester application
+    </h2>
+    <p>
+      Settings available below must be communicated to the developer of the application that will send data using logion API to record it according to the current Collection LOC scope.
+    </p>
+    <StaticLabelValue
+      label="Documentation"
+      value={
+        <NewTabLink
+          href="https://github.com/logion-network/logion-collection-item-submitter#logion-collection-item-submitter"
+        >
+          https://github.com/logion-network/logion-collection-item-submitter
+        </NewTabLink>
+      }
+    />
+    <StaticLabelValue
+      label="Logion endpoint"
+      value={
+        <p>
+          ws://localhost:9944
+        </p>
+      }
+    />
+    <StaticLabelValue
+      label="Signature will be executed by the following public key"
+      value={<p />}
+    />
+    <StaticLabelValue
+      label="Extrinsic"
+      value={
+        <p>
+          logionLoc.addCollectionItem(collectionLocId, itemId, itemDescription)
+        </p>
+      }
+    />
+    <div
+      className="arguments"
+    >
+      <h3>
+        Arguments
+      </h3>
+      <ul>
+        <li>
+          <strong>
+            collectionLocId:
+          </strong>
+           
+          31105349912518444897773986398896608162
+        </li>
+        <li>
+          <strong>
+            itemId:
+          </strong>
+           a "0x" prefixed HEX string representation of 32 bytes uniquely identifying the item in this collection. For instance, the identifier may be a SHA256 hash.
+        </li>
+        <li>
+          <strong>
+            itemDescription:
+          </strong>
+           a UTF-8 encoded string of at most 4096 bytes
+        </li>
+      </ul>
+    </div>
+    <div
+      className="limits"
+    >
+      <h3>
+        Collection limits
+      </h3>
+      <ul>
+        <li>
+          <strong>
+            Date limit:
+          </strong>
+           
+        </li>
+        <li>
+          <strong>
+            Item number limit:
+          </strong>
+           
+          -
+        </li>
+      </ul>
+    </div>
+  </Dialog>
+</div>
+`;
+
+exports[`CertificateAndLimits renders certificate, limits and buttons for open collection LOC and LO 1`] = `
+<div
+  className="CertificateAndLimits"
+>
+  <Row>
+    <Col
+      className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12"
+    >
+      <div
+        className="certificate"
+      >
+        <h2>
+          Public web address (URL) of this Legal Officer Case related Certificate:
+        </h2>
+        <div
+          className="url-copy-paste-container"
+        >
+          <div
+            className="url-container"
+          >
+            <a
+              href="http://localhost/public/certificate/31105349912518444897773986398896608162"
+              rel="noreferrer"
+              target="_blank"
+            >
+              http://localhost/public/certificate/31105349912518444897773986398896608162
+            </a>
+          </div>
+          <CopyPasteButton
+            value="http://localhost/public/certificate/31105349912518444897773986398896608162"
+          />
+        </div>
+      </div>
+    </Col>
+    <Col
+      className="col-xxxl-2 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6"
+    >
+      <div
+        className="limits"
+      >
+        <div>
+          <strong>
+            Collection Date Limit:
+          </strong>
+           
+          <InlineDateTime
+            dateOnly={true}
+          />
+        </div>
+        <div>
+          <strong>
+            Collection Item Limit:
+          </strong>
+           
+          -
+        </div>
+        <div>
+          <strong>
+            Collection Upload Accepted:
+          </strong>
+           
+          No
+        </div>
+      </div>
+    </Col>
+    <Col
+      className="col-xxxl-4 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6"
+    >
+      <div
+        className="tool-bar"
+      >
+        <ArchiveButton />
+      </div>
+    </Col>
+  </Row>
+</div>
+`;
+
+exports[`CertificateAndLimits renders certificate, limits and buttons for void collection LOC and LO 1`] = `
+<div
+  className="CertificateAndLimits"
+>
+  <Row>
+    <Col
+      className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12"
+    >
+      <div
+        className="certificate"
+      >
+        <h2>
+          Public web address (URL) of this Legal Officer Case related Certificate:
+        </h2>
+        <div
+          className="url-copy-paste-container"
+        >
+          <div
+            className="url-container"
+          >
+            <a
+              href="http://localhost/public/certificate/31105349912518444897773986398896608162"
+              rel="noreferrer"
+              target="_blank"
+            >
+              http://localhost/public/certificate/31105349912518444897773986398896608162
+            </a>
+          </div>
+          <CopyPasteButton
+            value="http://localhost/public/certificate/31105349912518444897773986398896608162"
+          />
+        </div>
+      </div>
+    </Col>
+    <Col
+      className="col-xxxl-2 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6"
+    >
+      <div
+        className="limits"
+      >
+        <div>
+          <strong>
+            Collection Date Limit:
+          </strong>
+           
+          <InlineDateTime
+            dateOnly={true}
+          />
+        </div>
+        <div>
+          <strong>
+            Collection Item Limit:
+          </strong>
+           
+          -
+        </div>
+        <div>
+          <strong>
+            Collection Upload Accepted:
+          </strong>
+           
+          No
+        </div>
+      </div>
+    </Col>
+    <Col
+      className="col-xxxl-4 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6"
+    >
+      <div
+        className="tool-bar"
+      >
+        <ArchiveButton />
+      </div>
+    </Col>
+  </Row>
+</div>
+`;
+
+exports[`CertificateAndLimits renders certificate, limits and settings button for closed non-void collection LOC and User 1`] = `
+<div
+  className="CertificateAndLimits"
+>
+  <Row>
+    <Col
+      className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12"
+    >
+      <div
+        className="certificate"
+      >
+        <h2>
+          Public web address (URL) of this Legal Officer Case related Certificate:
+        </h2>
+        <div
+          className="url-copy-paste-container"
+        >
+          <div
+            className="url-container"
+          >
+            <a
+              href="http://localhost/public/certificate/31105349912518444897773986398896608162"
+              rel="noreferrer"
+              target="_blank"
+            >
+              http://localhost/public/certificate/31105349912518444897773986398896608162
+            </a>
+          </div>
+          <CopyPasteButton
+            value="http://localhost/public/certificate/31105349912518444897773986398896608162"
+          />
+        </div>
+      </div>
+    </Col>
+    <Col
+      className="col-xxxl-2 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6"
+    >
+      <div
+        className="limits"
+      >
+        <div>
+          <strong>
+            Collection Date Limit:
+          </strong>
+           
+          <InlineDateTime
+            dateOnly={true}
+          />
+        </div>
+        <div>
+          <strong>
+            Collection Item Limit:
+          </strong>
+           
+          -
+        </div>
+        <div>
+          <strong>
+            Collection Upload Accepted:
+          </strong>
+           
+          No
+        </div>
+      </div>
+    </Col>
+    <Col
+      className="col-xxxl-4 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6"
+    >
+      <div
+        className="tool-bar"
+      >
+        <Button
+          onClick={[Function]}
+        >
+          <Icon
+            height="22px"
+            icon={
+              Object {
+                "id": "cog",
+              }
+            }
+          />
+           Get dev settings
+        </Button>
+      </div>
+    </Col>
+  </Row>
+  <Dialog
+    actions={
+      Array [
+        Object {
+          "buttonText": "Close",
+          "buttonVariant": "primary",
+          "callback": [Function],
+          "id": "close",
+        },
+      ]
+    }
+    className="CertificateAndLimits"
+    show={false}
+    size="xl"
+  >
+    <h2>
+      Get developper settings for the requester application
+    </h2>
+    <p>
+      Settings available below must be communicated to the developer of the application that will send data using logion API to record it according to the current Collection LOC scope.
+    </p>
+    <StaticLabelValue
+      label="Documentation"
+      value={
+        <NewTabLink
+          href="https://github.com/logion-network/logion-collection-item-submitter#logion-collection-item-submitter"
+        >
+          https://github.com/logion-network/logion-collection-item-submitter
+        </NewTabLink>
+      }
+    />
+    <StaticLabelValue
+      label="Logion endpoint"
+      value={
+        <p>
+          ws://localhost:9944
+        </p>
+      }
+    />
+    <StaticLabelValue
+      label="Signature will be executed by the following public key"
+      value={<p />}
+    />
+    <StaticLabelValue
+      label="Extrinsic"
+      value={
+        <p>
+          logionLoc.addCollectionItem(collectionLocId, itemId, itemDescription)
+        </p>
+      }
+    />
+    <div
+      className="arguments"
+    >
+      <h3>
+        Arguments
+      </h3>
+      <ul>
+        <li>
+          <strong>
+            collectionLocId:
+          </strong>
+           
+          31105349912518444897773986398896608162
+        </li>
+        <li>
+          <strong>
+            itemId:
+          </strong>
+           a "0x" prefixed HEX string representation of 32 bytes uniquely identifying the item in this collection. For instance, the identifier may be a SHA256 hash.
+        </li>
+        <li>
+          <strong>
+            itemDescription:
+          </strong>
+           a UTF-8 encoded string of at most 4096 bytes
+        </li>
+      </ul>
+    </div>
+    <div
+      className="limits"
+    >
+      <h3>
+        Collection limits
+      </h3>
+      <ul>
+        <li>
+          <strong>
+            Date limit:
+          </strong>
+           
+        </li>
+        <li>
+          <strong>
+            Item number limit:
+          </strong>
+           
+          -
+        </li>
+      </ul>
+    </div>
+  </Dialog>
+</div>
+`;
+
+exports[`CertificateAndLimits renders only certificate and SoF request button for non-collection LOC and User 1`] = `
+<div
+  className="CertificateAndLimits"
+>
+  <Row>
+    <Col
+      className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12"
+    >
+      <div
+        className="certificate"
+      >
+        <h2>
+          Public web address (URL) of this Legal Officer Case related Certificate:
+        </h2>
+        <div
+          className="url-copy-paste-container"
+        >
+          <div
+            className="url-container"
+          >
+            <a
+              href="http://localhost/public/certificate/31105349912518444897773986398896608162"
+              rel="noreferrer"
+              target="_blank"
+            >
+              http://localhost/public/certificate/31105349912518444897773986398896608162
+            </a>
+          </div>
+          <CopyPasteButton
+            value="http://localhost/public/certificate/31105349912518444897773986398896608162"
+          />
+        </div>
+      </div>
+    </Col>
+    <Col
+      className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12"
+    >
+      <div
+        className="sof-request"
+      >
+        <StatementOfFactsRequestButton />
+      </div>
+    </Col>
+  </Row>
+</div>
+`;

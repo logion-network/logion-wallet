@@ -3,24 +3,22 @@ import { useNavigate } from "react-router";
 
 import { useCommonContext } from "../common/CommonContext";
 import { FullWidthPane } from "../common/Dashboard";
-import { ActiveLoc } from "./LocContext";
 import { Children } from "src/common/types/Helpers";
 
 import "./LocPane.css";
 
 export interface Props {
     loc: LocData | null;
-    locState: ActiveLoc | null;
     backPath: string;
     children: Children;
 }
 
 export default function LocPane(props: Props) {
-    const { loc, locState, backPath, children } = props;
+    const { loc, backPath, children } = props;
     const { colorTheme } = useCommonContext();
     const navigate = useNavigate();
 
-    if (loc === null || locState === null) {
+    if (loc === null) {
         return null;
     }
 

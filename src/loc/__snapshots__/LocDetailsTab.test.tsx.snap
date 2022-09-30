@@ -1,0 +1,1499 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LocDetailsTab renders closed transaction LOC for LO 1`] = `
+<Tabs
+  activeKey="details"
+  borderColor="#e6007a"
+  className="LocDetailsTab"
+  flatBottom={false}
+  id="loc-content"
+  onSelect={[Function]}
+  tabs={
+    Array [
+      Object {
+        "key": "details",
+        "render": [Function],
+        "title": "Legal Officer Case (LOC) - Transaction",
+      },
+    ]
+  }
+/>
+`;
+
+exports[`LocDetailsTab renders closed transaction LOC for User 1`] = `
+<Tabs
+  activeKey="details"
+  borderColor="#e6007a"
+  className="LocDetailsTab"
+  flatBottom={false}
+  id="loc-content"
+  onSelect={[Function]}
+  tabs={
+    Array [
+      Object {
+        "key": "details",
+        "render": [Function],
+        "title": "Legal Officer Case (LOC) - Transaction",
+      },
+    ]
+  }
+/>
+`;
+
+exports[`LocDetailsTab renders open logion identity LOC for LO 1`] = `
+<Tabs
+  activeKey="details"
+  borderColor="#3b6cf4"
+  className="LocDetailsTab"
+  flatBottom={false}
+  id="loc-content"
+  onSelect={[Function]}
+  tabs={
+    Array [
+      Object {
+        "key": "details",
+        "render": [Function],
+        "title": "Legal Officer Case (LOC) - Logion Identity",
+      },
+    ]
+  }
+/>
+`;
+
+exports[`LocDetailsTab renders open logion identity LOC for User 1`] = `
+<Tabs
+  activeKey="details"
+  borderColor="#3b6cf4"
+  className="LocDetailsTab"
+  flatBottom={false}
+  id="loc-content"
+  onSelect={[Function]}
+  tabs={
+    Array [
+      Object {
+        "key": "details",
+        "render": [Function],
+        "title": "Legal Officer Case (LOC) - Logion Identity",
+      },
+    ]
+  }
+/>
+`;
+
+exports[`LocDetailsTab renders open polkadot identity LOC for LO 1`] = `
+<Tabs
+  activeKey="details"
+  borderColor="#3b6cf4"
+  className="LocDetailsTab"
+  flatBottom={false}
+  id="loc-content"
+  onSelect={[Function]}
+  tabs={
+    Array [
+      Object {
+        "key": "details",
+        "render": [Function],
+        "title": "Legal Officer Case (LOC) - Polkadot Identity",
+      },
+    ]
+  }
+/>
+`;
+
+exports[`LocDetailsTab renders open polkadot identity LOC for User 1`] = `
+<Tabs
+  activeKey="details"
+  borderColor="#3b6cf4"
+  className="LocDetailsTab"
+  flatBottom={false}
+  id="loc-content"
+  onSelect={[Function]}
+  tabs={
+    Array [
+      Object {
+        "key": "details",
+        "render": [Function],
+        "title": "Legal Officer Case (LOC) - Polkadot Identity",
+      },
+    ]
+  }
+/>
+`;
+
+exports[`LocDetailsTab renders open transaction LOC for LO 1`] = `
+<Tabs
+  activeKey="details"
+  borderColor="#3b6cf4"
+  className="LocDetailsTab"
+  flatBottom={false}
+  id="loc-content"
+  onSelect={[Function]}
+  tabs={
+    Array [
+      Object {
+        "key": "details",
+        "render": [Function],
+        "title": "Legal Officer Case (LOC) - Transaction",
+      },
+    ]
+  }
+/>
+`;
+
+exports[`LocDetailsTab renders open transaction LOC for User 1`] = `
+<Tabs
+  activeKey="details"
+  borderColor="#3b6cf4"
+  className="LocDetailsTab"
+  flatBottom={false}
+  id="loc-content"
+  onSelect={[Function]}
+  tabs={
+    Array [
+      Object {
+        "key": "details",
+        "render": [Function],
+        "title": "Legal Officer Case (LOC) - Transaction",
+      },
+    ]
+  }
+/>
+`;
+
+exports[`LocDetailsTab renders void transaction LOC for LO 1`] = `
+<Tabs
+  activeKey="details"
+  borderColor="#e11a25"
+  borderWidth="2px"
+  className="LocDetailsTab"
+  flatBottom={true}
+  id="loc-content"
+  onSelect={[Function]}
+  tabColors={
+    Object {
+      "background": "#e11a25",
+      "foreground": "white",
+    }
+  }
+  tabs={
+    Array [
+      Object {
+        "key": "details",
+        "render": [Function],
+        "title": "VOID Legal Officer Case (LOC) - Transaction",
+      },
+    ]
+  }
+/>
+`;
+
+exports[`LocDetailsTab renders void transaction LOC for User 1`] = `
+<Tabs
+  activeKey="details"
+  borderColor="#e11a25"
+  borderWidth="2px"
+  className="LocDetailsTab"
+  flatBottom={true}
+  id="loc-content"
+  onSelect={[Function]}
+  tabColors={
+    Object {
+      "background": "#e11a25",
+      "foreground": "white",
+    }
+  }
+  tabs={
+    Array [
+      Object {
+        "key": "details",
+        "render": [Function],
+        "title": "VOID Legal Officer Case (LOC) - Transaction",
+      },
+    ]
+  }
+/>
+`;
+
+exports[`LocDetailsTabContent renders closed data LOC for LO 1`] = `
+<React.Fragment>
+  <Row>
+    <Col
+      md={4}
+    >
+      <LocItemDetail
+        copyButtonText="319927178597513732689262012899997026830"
+        label="LOC ID"
+      >
+        <OverlayTrigger
+          defaultShow={false}
+          delay={500}
+          overlay={
+            <Tooltip
+              id="319927178597513732689262012899997026830"
+              placement="right"
+            >
+              319927178597513732689262012899997026830
+            </Tooltip>
+          }
+          placement="top"
+          trigger={
+            Array [
+              "hover",
+              "focus",
+            ]
+          }
+        >
+          <span>
+            319927178597513732689262012899997026830
+          </span>
+        </OverlayTrigger>
+      </LocItemDetail>
+      <LocItemDetail
+        label="Creation date"
+      >
+        <InlineDateTime
+          dateTime="2022-09-28T07:49:00.000+02:00"
+        />
+      </LocItemDetail>
+    </Col>
+    <Col
+      md={4}
+    >
+      <LocItemDetail
+        label="Description"
+      />
+      <LocItemDetail
+        label="Closing date"
+        spinner={false}
+      >
+        <InlineDateTime
+          dateTime="2022-09-28T08:49:00.000+02:00"
+        />
+      </LocItemDetail>
+    </Col>
+    <RequesterOrLegalOfficer
+      detailsPath={[Function]}
+      loc={
+        Object {
+          "closed": true,
+          "closedOn": "2022-09-28T08:49:00.000+02:00",
+          "createdOn": "2022-09-28T07:49:00.000+02:00",
+          "id": UUID {
+            "bytes": Uint8Array [
+              240,
+              175,
+              187,
+              187,
+              105,
+              109,
+              75,
+              119,
+              129,
+              112,
+              119,
+              229,
+              101,
+              136,
+              138,
+              14,
+            ],
+          },
+          "locType": "Transaction",
+          "status": "CLOSED",
+        }
+      }
+      viewer="LegalOfficer"
+    />
+  </Row>
+  <div
+    className="separator"
+    style={
+      Object {
+        "backgroundColor": "black",
+      }
+    }
+  />
+  <LocItems
+    deleteFile={[Function]}
+    deleteLink={[Function]}
+    deleteMetadata={[Function]}
+    loc={
+      Object {
+        "closed": true,
+        "closedOn": "2022-09-28T08:49:00.000+02:00",
+        "createdOn": "2022-09-28T07:49:00.000+02:00",
+        "id": UUID {
+          "bytes": Uint8Array [
+            240,
+            175,
+            187,
+            187,
+            105,
+            109,
+            75,
+            119,
+            129,
+            112,
+            119,
+            229,
+            101,
+            136,
+            138,
+            14,
+          ],
+        },
+        "locType": "Transaction",
+        "status": "CLOSED",
+      }
+    }
+    locId={
+      UUID {
+        "bytes": Uint8Array [
+          240,
+          175,
+          187,
+          187,
+          105,
+          109,
+          75,
+          119,
+          129,
+          112,
+          119,
+          229,
+          101,
+          136,
+          138,
+          14,
+        ],
+      }
+    }
+    locItems={Array []}
+    viewer="LegalOfficer"
+  />
+</React.Fragment>
+`;
+
+exports[`LocDetailsTabContent renders closed data LOC for User 1`] = `
+<React.Fragment>
+  <Row>
+    <Col
+      md={4}
+    >
+      <LocItemDetail
+        copyButtonText="319927178597513732689262012899997026830"
+        label="LOC ID"
+      >
+        <OverlayTrigger
+          defaultShow={false}
+          delay={500}
+          overlay={
+            <Tooltip
+              id="319927178597513732689262012899997026830"
+              placement="right"
+            >
+              319927178597513732689262012899997026830
+            </Tooltip>
+          }
+          placement="top"
+          trigger={
+            Array [
+              "hover",
+              "focus",
+            ]
+          }
+        >
+          <span>
+            319927178597513732689262012899997026830
+          </span>
+        </OverlayTrigger>
+      </LocItemDetail>
+      <LocItemDetail
+        label="Creation date"
+      >
+        <InlineDateTime
+          dateTime="2022-09-28T07:49:00.000+02:00"
+        />
+      </LocItemDetail>
+    </Col>
+    <Col
+      md={4}
+    >
+      <LocItemDetail
+        label="Description"
+      />
+      <LocItemDetail
+        label="Closing date"
+        spinner={false}
+      >
+        <InlineDateTime
+          dateTime="2022-09-28T08:49:00.000+02:00"
+        />
+      </LocItemDetail>
+    </Col>
+    <RequesterOrLegalOfficer
+      detailsPath={[Function]}
+      loc={
+        Object {
+          "closed": true,
+          "closedOn": "2022-09-28T08:49:00.000+02:00",
+          "createdOn": "2022-09-28T07:49:00.000+02:00",
+          "id": UUID {
+            "bytes": Uint8Array [
+              240,
+              175,
+              187,
+              187,
+              105,
+              109,
+              75,
+              119,
+              129,
+              112,
+              119,
+              229,
+              101,
+              136,
+              138,
+              14,
+            ],
+          },
+          "locType": "Transaction",
+          "status": "CLOSED",
+        }
+      }
+      viewer="User"
+    />
+  </Row>
+  <div
+    className="separator"
+    style={
+      Object {
+        "backgroundColor": "black",
+      }
+    }
+  />
+  <LocItems
+    deleteFile={[Function]}
+    deleteLink={[Function]}
+    deleteMetadata={[Function]}
+    loc={
+      Object {
+        "closed": true,
+        "closedOn": "2022-09-28T08:49:00.000+02:00",
+        "createdOn": "2022-09-28T07:49:00.000+02:00",
+        "id": UUID {
+          "bytes": Uint8Array [
+            240,
+            175,
+            187,
+            187,
+            105,
+            109,
+            75,
+            119,
+            129,
+            112,
+            119,
+            229,
+            101,
+            136,
+            138,
+            14,
+          ],
+        },
+        "locType": "Transaction",
+        "status": "CLOSED",
+      }
+    }
+    locId={
+      UUID {
+        "bytes": Uint8Array [
+          240,
+          175,
+          187,
+          187,
+          105,
+          109,
+          75,
+          119,
+          129,
+          112,
+          119,
+          229,
+          101,
+          136,
+          138,
+          14,
+        ],
+      }
+    }
+    locItems={Array []}
+    viewer="User"
+  />
+</React.Fragment>
+`;
+
+exports[`LocDetailsTabContent renders open data LOC for LO 1`] = `
+<React.Fragment>
+  <Row>
+    <Col
+      md={4}
+    >
+      <LocItemDetail
+        copyButtonText="319927178597513732689262012899997026830"
+        label="LOC ID"
+      >
+        <OverlayTrigger
+          defaultShow={false}
+          delay={500}
+          overlay={
+            <Tooltip
+              id="319927178597513732689262012899997026830"
+              placement="right"
+            >
+              319927178597513732689262012899997026830
+            </Tooltip>
+          }
+          placement="top"
+          trigger={
+            Array [
+              "hover",
+              "focus",
+            ]
+          }
+        >
+          <span>
+            319927178597513732689262012899997026830
+          </span>
+        </OverlayTrigger>
+      </LocItemDetail>
+      <LocItemDetail
+        label="Creation date"
+      >
+        <InlineDateTime
+          dateTime="2022-09-28T07:49:00.000+02:00"
+        />
+      </LocItemDetail>
+    </Col>
+    <Col
+      md={4}
+    >
+      <LocItemDetail
+        label="Description"
+      />
+    </Col>
+    <RequesterOrLegalOfficer
+      detailsPath={[Function]}
+      loc={
+        Object {
+          "closed": false,
+          "closedOn": undefined,
+          "createdOn": "2022-09-28T07:49:00.000+02:00",
+          "id": UUID {
+            "bytes": Uint8Array [
+              240,
+              175,
+              187,
+              187,
+              105,
+              109,
+              75,
+              119,
+              129,
+              112,
+              119,
+              229,
+              101,
+              136,
+              138,
+              14,
+            ],
+          },
+          "locType": "Transaction",
+          "status": "OPEN",
+        }
+      }
+      viewer="LegalOfficer"
+    />
+  </Row>
+  <div
+    className="separator"
+    style={
+      Object {
+        "backgroundColor": "black",
+      }
+    }
+  />
+  <LocItems
+    deleteFile={[Function]}
+    deleteLink={[Function]}
+    deleteMetadata={[Function]}
+    loc={
+      Object {
+        "closed": false,
+        "closedOn": undefined,
+        "createdOn": "2022-09-28T07:49:00.000+02:00",
+        "id": UUID {
+          "bytes": Uint8Array [
+            240,
+            175,
+            187,
+            187,
+            105,
+            109,
+            75,
+            119,
+            129,
+            112,
+            119,
+            229,
+            101,
+            136,
+            138,
+            14,
+          ],
+        },
+        "locType": "Transaction",
+        "status": "OPEN",
+      }
+    }
+    locId={
+      UUID {
+        "bytes": Uint8Array [
+          240,
+          175,
+          187,
+          187,
+          105,
+          109,
+          75,
+          119,
+          129,
+          112,
+          119,
+          229,
+          101,
+          136,
+          138,
+          14,
+        ],
+      }
+    }
+    locItems={Array []}
+    viewer="LegalOfficer"
+  />
+  <Row>
+    <Col
+      xl={4}
+      xxl={5}
+    >
+      <ButtonGroup
+        align="left"
+      >
+        <LocPublicDataButton
+          addMetadata={[Function]}
+          locItems={Array []}
+        />
+        <LocPrivateFileButton
+          addFile={[Function]}
+          locItems={Array []}
+        />
+      </ButtonGroup>
+    </Col>
+    <Col
+      className="link-button-container"
+      xl={4}
+      xxl={4}
+    >
+      <LocLinkButton
+        excludeNewIdentity={true}
+      />
+    </Col>
+    <Col
+      className="close-button-container"
+      xl={4}
+      xxl={3}
+    >
+      <CloseLocButton
+        loc={
+          Object {
+            "closed": false,
+            "closedOn": undefined,
+            "createdOn": "2022-09-28T07:49:00.000+02:00",
+            "id": UUID {
+              "bytes": Uint8Array [
+                240,
+                175,
+                187,
+                187,
+                105,
+                109,
+                75,
+                119,
+                129,
+                112,
+                119,
+                229,
+                101,
+                136,
+                138,
+                14,
+              ],
+            },
+            "locType": "Transaction",
+            "status": "OPEN",
+          }
+        }
+      />
+    </Col>
+  </Row>
+</React.Fragment>
+`;
+
+exports[`LocDetailsTabContent renders open data LOC for User 1`] = `
+<React.Fragment>
+  <Row>
+    <Col
+      md={4}
+    >
+      <LocItemDetail
+        copyButtonText="319927178597513732689262012899997026830"
+        label="LOC ID"
+      >
+        <OverlayTrigger
+          defaultShow={false}
+          delay={500}
+          overlay={
+            <Tooltip
+              id="319927178597513732689262012899997026830"
+              placement="right"
+            >
+              319927178597513732689262012899997026830
+            </Tooltip>
+          }
+          placement="top"
+          trigger={
+            Array [
+              "hover",
+              "focus",
+            ]
+          }
+        >
+          <span>
+            319927178597513732689262012899997026830
+          </span>
+        </OverlayTrigger>
+      </LocItemDetail>
+      <LocItemDetail
+        label="Creation date"
+      >
+        <InlineDateTime
+          dateTime="2022-09-28T07:49:00.000+02:00"
+        />
+      </LocItemDetail>
+    </Col>
+    <Col
+      md={4}
+    >
+      <LocItemDetail
+        label="Description"
+      />
+    </Col>
+    <RequesterOrLegalOfficer
+      detailsPath={[Function]}
+      loc={
+        Object {
+          "closed": false,
+          "closedOn": undefined,
+          "createdOn": "2022-09-28T07:49:00.000+02:00",
+          "id": UUID {
+            "bytes": Uint8Array [
+              240,
+              175,
+              187,
+              187,
+              105,
+              109,
+              75,
+              119,
+              129,
+              112,
+              119,
+              229,
+              101,
+              136,
+              138,
+              14,
+            ],
+          },
+          "locType": "Transaction",
+          "status": "OPEN",
+        }
+      }
+      viewer="User"
+    />
+  </Row>
+  <div
+    className="separator"
+    style={
+      Object {
+        "backgroundColor": "black",
+      }
+    }
+  />
+  <LocItems
+    deleteFile={[Function]}
+    deleteLink={[Function]}
+    deleteMetadata={[Function]}
+    loc={
+      Object {
+        "closed": false,
+        "closedOn": undefined,
+        "createdOn": "2022-09-28T07:49:00.000+02:00",
+        "id": UUID {
+          "bytes": Uint8Array [
+            240,
+            175,
+            187,
+            187,
+            105,
+            109,
+            75,
+            119,
+            129,
+            112,
+            119,
+            229,
+            101,
+            136,
+            138,
+            14,
+          ],
+        },
+        "locType": "Transaction",
+        "status": "OPEN",
+      }
+    }
+    locId={
+      UUID {
+        "bytes": Uint8Array [
+          240,
+          175,
+          187,
+          187,
+          105,
+          109,
+          75,
+          119,
+          129,
+          112,
+          119,
+          229,
+          101,
+          136,
+          138,
+          14,
+        ],
+      }
+    }
+    locItems={Array []}
+    viewer="User"
+  />
+  <Row>
+    <Col
+      xl={4}
+      xxl={5}
+    >
+      <ButtonGroup
+        align="left"
+      >
+        <LocPublicDataButton
+          addMetadata={[Function]}
+          locItems={Array []}
+        />
+        <LocPrivateFileButton
+          addFile={[Function]}
+          locItems={Array []}
+        />
+      </ButtonGroup>
+    </Col>
+    <Col
+      className="link-button-container"
+      xl={4}
+      xxl={4}
+    />
+    <Col
+      className="close-button-container"
+      xl={4}
+      xxl={3}
+    />
+  </Row>
+</React.Fragment>
+`;
+
+exports[`LocDetailsTabContent renders open identity LOC for LO 1`] = `
+<React.Fragment>
+  <Row>
+    <Col
+      md={4}
+    >
+      <LocItemDetail
+        copyButtonText="319927178597513732689262012899997026830"
+        label="LOC ID"
+      >
+        <OverlayTrigger
+          defaultShow={false}
+          delay={500}
+          overlay={
+            <Tooltip
+              id="319927178597513732689262012899997026830"
+              placement="right"
+            >
+              319927178597513732689262012899997026830
+            </Tooltip>
+          }
+          placement="top"
+          trigger={
+            Array [
+              "hover",
+              "focus",
+            ]
+          }
+        >
+          <span>
+            319927178597513732689262012899997026830
+          </span>
+        </OverlayTrigger>
+      </LocItemDetail>
+      <LocItemDetail
+        label="Creation date"
+      >
+        <InlineDateTime
+          dateTime="2022-09-28T07:49:00.000+02:00"
+        />
+      </LocItemDetail>
+    </Col>
+    <Col
+      md={4}
+    >
+      <LocItemDetail
+        label="Description"
+      />
+    </Col>
+    <RequesterOrLegalOfficer
+      detailsPath={[Function]}
+      loc={
+        Object {
+          "closed": false,
+          "closedOn": undefined,
+          "createdOn": "2022-09-28T07:49:00.000+02:00",
+          "id": UUID {
+            "bytes": Uint8Array [
+              240,
+              175,
+              187,
+              187,
+              105,
+              109,
+              75,
+              119,
+              129,
+              112,
+              119,
+              229,
+              101,
+              136,
+              138,
+              14,
+            ],
+          },
+          "locType": "Identity",
+          "status": "OPEN",
+        }
+      }
+      viewer="LegalOfficer"
+    />
+  </Row>
+  <div
+    className="separator"
+    style={
+      Object {
+        "backgroundColor": "black",
+      }
+    }
+  />
+  <React.Fragment>
+    <PersonalInfo
+      personalAndStatusInfo={
+        Object {
+          "closed": false,
+          "closedOn": undefined,
+          "createdOn": "2022-09-28T07:49:00.000+02:00",
+          "id": UUID {
+            "bytes": Uint8Array [
+              240,
+              175,
+              187,
+              187,
+              105,
+              109,
+              75,
+              119,
+              129,
+              112,
+              119,
+              229,
+              101,
+              136,
+              138,
+              14,
+            ],
+          },
+          "locType": "Identity",
+          "status": "OPEN",
+        }
+      }
+    />
+    <div
+      className="separator"
+      style={
+        Object {
+          "backgroundColor": "black",
+        }
+      }
+    />
+  </React.Fragment>
+  <LocItems
+    deleteFile={[Function]}
+    deleteLink={[Function]}
+    deleteMetadata={[Function]}
+    loc={
+      Object {
+        "closed": false,
+        "closedOn": undefined,
+        "createdOn": "2022-09-28T07:49:00.000+02:00",
+        "id": UUID {
+          "bytes": Uint8Array [
+            240,
+            175,
+            187,
+            187,
+            105,
+            109,
+            75,
+            119,
+            129,
+            112,
+            119,
+            229,
+            101,
+            136,
+            138,
+            14,
+          ],
+        },
+        "locType": "Identity",
+        "status": "OPEN",
+      }
+    }
+    locId={
+      UUID {
+        "bytes": Uint8Array [
+          240,
+          175,
+          187,
+          187,
+          105,
+          109,
+          75,
+          119,
+          129,
+          112,
+          119,
+          229,
+          101,
+          136,
+          138,
+          14,
+        ],
+      }
+    }
+    locItems={Array []}
+    viewer="LegalOfficer"
+  />
+  <Row>
+    <Col
+      xl={4}
+      xxl={5}
+    >
+      <ButtonGroup
+        align="left"
+      >
+        <LocPublicDataButton
+          addMetadata={[Function]}
+          locItems={Array []}
+        />
+        <LocPrivateFileButton
+          addFile={[Function]}
+          locItems={Array []}
+        />
+      </ButtonGroup>
+    </Col>
+    <Col
+      className="link-button-container"
+      xl={4}
+      xxl={4}
+    >
+      <LocLinkButton
+        excludeNewIdentity={false}
+      />
+    </Col>
+    <Col
+      className="close-button-container"
+      xl={4}
+      xxl={3}
+    >
+      <CloseLocButton
+        loc={
+          Object {
+            "closed": false,
+            "closedOn": undefined,
+            "createdOn": "2022-09-28T07:49:00.000+02:00",
+            "id": UUID {
+              "bytes": Uint8Array [
+                240,
+                175,
+                187,
+                187,
+                105,
+                109,
+                75,
+                119,
+                129,
+                112,
+                119,
+                229,
+                101,
+                136,
+                138,
+                14,
+              ],
+            },
+            "locType": "Identity",
+            "status": "OPEN",
+          }
+        }
+      />
+    </Col>
+  </Row>
+</React.Fragment>
+`;
+
+exports[`LocDetailsTabContent renders void data LOC for LO 1`] = `
+<React.Fragment>
+  <Row>
+    <Col
+      md={4}
+    >
+      <LocItemDetail
+        copyButtonText="319927178597513732689262012899997026830"
+        label="LOC ID"
+      >
+        <OverlayTrigger
+          defaultShow={false}
+          delay={500}
+          overlay={
+            <Tooltip
+              id="319927178597513732689262012899997026830"
+              placement="right"
+            >
+              319927178597513732689262012899997026830
+            </Tooltip>
+          }
+          placement="top"
+          trigger={
+            Array [
+              "hover",
+              "focus",
+            ]
+          }
+        >
+          <span>
+            319927178597513732689262012899997026830
+          </span>
+        </OverlayTrigger>
+      </LocItemDetail>
+      <LocItemDetail
+        label="Creation date"
+      >
+        <InlineDateTime
+          dateTime="2022-09-28T07:49:00.000+02:00"
+        />
+      </LocItemDetail>
+    </Col>
+    <Col
+      md={4}
+    >
+      <LocItemDetail
+        label="Description"
+      />
+    </Col>
+    <RequesterOrLegalOfficer
+      detailsPath={[Function]}
+      loc={
+        Object {
+          "closed": false,
+          "closedOn": undefined,
+          "createdOn": "2022-09-28T07:49:00.000+02:00",
+          "id": UUID {
+            "bytes": Uint8Array [
+              240,
+              175,
+              187,
+              187,
+              105,
+              109,
+              75,
+              119,
+              129,
+              112,
+              119,
+              229,
+              101,
+              136,
+              138,
+              14,
+            ],
+          },
+          "locType": "Transaction",
+          "status": "OPEN",
+          "voidInfo": Object {},
+        }
+      }
+      viewer="LegalOfficer"
+    />
+  </Row>
+  <div
+    className="separator"
+    style={
+      Object {
+        "backgroundColor": "black",
+      }
+    }
+  />
+  <LocItems
+    deleteFile={[Function]}
+    deleteLink={[Function]}
+    deleteMetadata={[Function]}
+    loc={
+      Object {
+        "closed": false,
+        "closedOn": undefined,
+        "createdOn": "2022-09-28T07:49:00.000+02:00",
+        "id": UUID {
+          "bytes": Uint8Array [
+            240,
+            175,
+            187,
+            187,
+            105,
+            109,
+            75,
+            119,
+            129,
+            112,
+            119,
+            229,
+            101,
+            136,
+            138,
+            14,
+          ],
+        },
+        "locType": "Transaction",
+        "status": "OPEN",
+        "voidInfo": Object {},
+      }
+    }
+    locId={
+      UUID {
+        "bytes": Uint8Array [
+          240,
+          175,
+          187,
+          187,
+          105,
+          109,
+          75,
+          119,
+          129,
+          112,
+          119,
+          229,
+          101,
+          136,
+          138,
+          14,
+        ],
+      }
+    }
+    locItems={Array []}
+    viewer="LegalOfficer"
+  />
+</React.Fragment>
+`;
+
+exports[`LocDetailsTabContent renders void data LOC for User 1`] = `
+<React.Fragment>
+  <Row>
+    <Col
+      md={4}
+    >
+      <LocItemDetail
+        copyButtonText="319927178597513732689262012899997026830"
+        label="LOC ID"
+      >
+        <OverlayTrigger
+          defaultShow={false}
+          delay={500}
+          overlay={
+            <Tooltip
+              id="319927178597513732689262012899997026830"
+              placement="right"
+            >
+              319927178597513732689262012899997026830
+            </Tooltip>
+          }
+          placement="top"
+          trigger={
+            Array [
+              "hover",
+              "focus",
+            ]
+          }
+        >
+          <span>
+            319927178597513732689262012899997026830
+          </span>
+        </OverlayTrigger>
+      </LocItemDetail>
+      <LocItemDetail
+        label="Creation date"
+      >
+        <InlineDateTime
+          dateTime="2022-09-28T07:49:00.000+02:00"
+        />
+      </LocItemDetail>
+    </Col>
+    <Col
+      md={4}
+    >
+      <LocItemDetail
+        label="Description"
+      />
+    </Col>
+    <RequesterOrLegalOfficer
+      detailsPath={[Function]}
+      loc={
+        Object {
+          "closed": false,
+          "closedOn": undefined,
+          "createdOn": "2022-09-28T07:49:00.000+02:00",
+          "id": UUID {
+            "bytes": Uint8Array [
+              240,
+              175,
+              187,
+              187,
+              105,
+              109,
+              75,
+              119,
+              129,
+              112,
+              119,
+              229,
+              101,
+              136,
+              138,
+              14,
+            ],
+          },
+          "locType": "Transaction",
+          "status": "OPEN",
+          "voidInfo": Object {},
+        }
+      }
+      viewer="User"
+    />
+  </Row>
+  <div
+    className="separator"
+    style={
+      Object {
+        "backgroundColor": "black",
+      }
+    }
+  />
+  <LocItems
+    deleteFile={[Function]}
+    deleteLink={[Function]}
+    deleteMetadata={[Function]}
+    loc={
+      Object {
+        "closed": false,
+        "closedOn": undefined,
+        "createdOn": "2022-09-28T07:49:00.000+02:00",
+        "id": UUID {
+          "bytes": Uint8Array [
+            240,
+            175,
+            187,
+            187,
+            105,
+            109,
+            75,
+            119,
+            129,
+            112,
+            119,
+            229,
+            101,
+            136,
+            138,
+            14,
+          ],
+        },
+        "locType": "Transaction",
+        "status": "OPEN",
+        "voidInfo": Object {},
+      }
+    }
+    locId={
+      UUID {
+        "bytes": Uint8Array [
+          240,
+          175,
+          187,
+          187,
+          105,
+          109,
+          75,
+          119,
+          129,
+          112,
+          119,
+          229,
+          101,
+          136,
+          138,
+          14,
+        ],
+      }
+    }
+    locItems={Array []}
+    viewer="User"
+  />
+</React.Fragment>
+`;

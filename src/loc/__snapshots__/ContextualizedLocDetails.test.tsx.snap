@@ -1,977 +1,571 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ContextualizedLocDetails renders 1`] = `
-<div
-  className="BasePane"
+<LocPane
+  loc={
+    Object {
+      "closed": false,
+      "createdOn": "",
+      "decisionOn": "",
+      "description": "Description",
+      "files": Array [],
+      "id": UUID {
+        "bytes": Array [
+          147,
+          99,
+          195,
+          214,
+          209,
+          7,
+          66,
+          26,
+          164,
+          75,
+          133,
+          199,
+          250,
+          176,
+          184,
+          67,
+        ],
+      },
+      "links": Array [],
+      "locType": "Identity",
+      "metadata": Array [],
+      "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+      "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+      "requesterLocId": undefined,
+      "status": "OPEN",
+    }
+  }
 >
-  <div
-    className="BasePaneHeader"
-  >
-    <div
-      className="TitleArea"
-    >
-      <div
-        className="Titles"
-      >
-        <h1>
-          <div
-            className="MenuIcon"
-            style={
-              Object {
-                "background": "linear-gradient(180deg, #3b6cf4 0%, #6050dc 100%)",
-                "height": "36px",
-                "width": "36px",
-              }
-            }
-          >
-            <img
-              alt="identity"
-              src="/assets/identity.svg"
-            />
-          </div>
-          Identity Case
-        </h1>
-        <div
-          className="back-button"
-        >
-          <span
-            className="Clickable"
-            onClick={[Function]}
-          >
-            <img
-              alt="back"
-              src="/assets/themes/light/back.svg"
-            />
-             Back
-          </span>
-        </div>
-      </div>
-    </div>
-    <div
-      className="AddressSwitcherArea"
-    >
-      <div
-        className="AddressSwitcher light"
-        style={
-          Object {
-            "color": "#000000",
-          }
-        }
-      >
-        <div
-          className="dropdown"
-        >
-          <button
-            aria-expanded={false}
-            className="dropdown-toggle btn btn-primary"
-            disabled={false}
-            id="address-switcher-toggle"
-            onClick={[Function]}
-            type="button"
-          >
-            <div
-              className="address-data"
-            >
-              <div
-                className="AccountAddress"
-              >
-                <div
-                  className="icon"
-                  style={
-                    Object {
-                      "backgroundColor": "#3b6cf4",
-                    }
-                  }
-                >
-                  N
-                </div>
-                <div
-                  className="text"
-                  style={
-                    Object {
-                      "justifyContent": "space-between",
-                    }
-                  }
-                >
-                  <div
-                    className="hint"
-                    style={
-                      Object {
-                        "color": "#00000099",
-                      }
-                    }
-                  >
-                    Click to select another address
-                  </div>
-                  <div
-                    className="name"
-                    style={
-                      Object {
-                        "color": "#000000",
-                      }
-                    }
-                  >
-                    name
-                  </div>
-                  <div
-                    className="address"
-                    style={
-                      Object {
-                        "color": "#000000",
-                      }
-                    }
-                  >
-                    <span
-                      onBlur={[Function]}
-                      onFocus={[Function]}
-                      onMouseOut={[Function]}
-                      onMouseOver={[Function]}
-                    >
-                      5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div
-    className="ContentArea LocPane row"
-  >
-    <div
-      className="primary-area-col col-md-12"
-    >
-      <div
-        className="PrimaryArea"
-      >
-        <div
-          className="Tabs LocDetailsTab"
-        >
-          <style>
-            
-    .Tabs .nav-tabs .nav-link {
-        border-color: #3b6cf4;
-        color: #ffffff;
-        background-color: #d8e2fd;
+  <LegalOfficerInstructions
+    loc={
+      Object {
+        "closed": false,
+        "createdOn": "",
+        "decisionOn": "",
+        "description": "Description",
+        "files": Array [],
+        "id": UUID {
+          "bytes": Array [
+            147,
+            99,
+            195,
+            214,
+            209,
+            7,
+            66,
+            26,
+            164,
+            75,
+            133,
+            199,
+            250,
+            176,
+            184,
+            67,
+          ],
+        },
+        "links": Array [],
+        "locType": "Identity",
+        "metadata": Array [],
+        "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "requesterLocId": undefined,
+        "status": "OPEN",
+      }
     }
-    .Tabs .nav-tabs .nav-link.active {
-        color: #ffffff;
-        background-color: #0c163d;
-        border-bottom-color: #0c163d;
+    locState={
+      Object {
+        "isLogionData": [Function],
+        "isLogionIdentity": [Function],
+      }
     }
-    .Tabs .tab-content {
-        color: #ffffff;
-        background-color: #0c163d;
-        border: 1px solid #3b6cf4;
+    protectionRequest={null}
+  />
+  <LocDetailsTab
+    addFile={[MockFunction]}
+    addMetadata={[MockFunction]}
+    checkResult={
+      Object {
+        "result": "NONE",
+      }
     }
-    
-          </style>
-          <ul
-            className="nav nav-tabs"
-            onKeyDown={[Function]}
-            role="tablist"
-          >
-            <li
-              className="nav-item"
-              role="presentation"
-            >
-              <button
-                aria-controls="loc-content-tabpane-details"
-                aria-selected={true}
-                className="nav-link active"
-                data-rr-ui-event-key="details"
-                disabled={false}
-                id="loc-content-tab-details"
-                onClick={[Function]}
-                role="tab"
-                type="button"
-              >
-                Legal Officer Case (LOC) - Polkadot Identity
-              </button>
-            </li>
-          </ul>
-          <div
-            className="tab-content"
-          >
-            <div
-              aria-labelledby="loc-content-tab-details"
-              className="fade tab-pane active show"
-              id="loc-content-tabpane-details"
-              role="tabpanel"
-            >
-              <div
-                className="Row"
-              >
-                <div
-                  className="col-md-4"
-                >
-                  <div
-                    className="Row LocItemDetail"
-                  >
-                    <div
-                      className="Col label"
-                    >
-                      LOC ID
-                      : 
-                    </div>
-                    <div
-                      className="Col value-container"
-                    >
-                      <span
-                        className="value"
-                      >
-                        <span
-                          onBlur={[Function]}
-                          onFocus={[Function]}
-                          onMouseOut={[Function]}
-                          onMouseOver={[Function]}
-                        >
-                          195914524858768213081425411950368569411
-                        </span>
-                      </span>
-                    </div>
-                    <div
-                      className="Col copy-paste-container"
-                    >
-                      <button
-                        className="Button CopyPasteButton small btn btn-primary"
-                        disabled={false}
-                        onClick={[Function]}
-                        style={Object {}}
-                        type="button"
-                      >
-                        <img
-                          alt="copy_paste"
-                          src="/assets/copy_paste.svg"
-                        />
-                      </button>
-                    </div>
-                  </div>
-                  <div
-                    className="Row LocItemDetail"
-                  >
-                    <div
-                      className="Col label"
-                    >
-                      Creation date
-                      : 
-                    </div>
-                    <div
-                      className="Col value-container"
-                    >
-                      <span
-                        className="value"
-                      >
-                        <span
-                          onBlur={[Function]}
-                          onFocus={[Function]}
-                          onMouseOut={[Function]}
-                          onMouseOver={[Function]}
-                        >
-                          -
-                        </span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="col-md-4"
-                >
-                  <div
-                    className="Row LocItemDetail"
-                  >
-                    <div
-                      className="Col label"
-                    >
-                      Description
-                      : 
-                    </div>
-                    <div
-                      className="Col value-container"
-                    >
-                      <span
-                        className="value"
-                      >
-                        Description
-                      </span>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="closed-icon-container col-md-4"
-                >
-                  <div
-                    className="Row LocItemDetail"
-                  >
-                    <div
-                      className="Col label"
-                    >
-                      Requested by
-                      : 
-                    </div>
-                    <div
-                      className="Col value-container"
-                    >
-                      <span
-                        className="value"
-                      >
-                         
-                        <span
-                          onBlur={[Function]}
-                          onFocus={[Function]}
-                          onMouseOut={[Function]}
-                          onMouseOver={[Function]}
-                        >
-                          <br />
-                           
-                          5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW
-                        </span>
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="separator"
-                style={
-                  Object {
-                    "backgroundColor": "#3b6cf4",
-                  }
-                }
-              />
-              <div
-                className="PersonalInfo"
-              >
-                <p
-                  className="title"
-                >
-                  Identity related record(s)
-                </p>
-                <div
-                  className="Row"
-                >
-                  <div
-                    className="col-md-6"
-                  >
-                    <div
-                      className="Detail"
-                      style={
-                        Object {
-                          "color": "#000000",
-                        }
-                      }
-                    >
-                      <div
-                        className="label"
-                      >
-                        Account Address
-                      </div>
-                      <div
-                        className="value"
-                      >
-                        5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW
-                      </div>
-                    </div>
-                    <div
-                      className="Row"
-                    >
-                      <div
-                        className="col"
-                        style={
-                          Object {
-                            "flexGrow": 1,
-                          }
-                        }
-                      >
-                        <div
-                          className="Detail"
-                          style={
-                            Object {
-                              "color": "#000000",
-                            }
-                          }
-                        >
-                          <div
-                            className="label"
-                          >
-                            First Name
-                          </div>
-                          <div
-                            className="value"
-                          >
-                            /
-                          </div>
-                        </div>
-                        <div
-                          className="Detail"
-                          style={
-                            Object {
-                              "color": "#000000",
-                            }
-                          }
-                        >
-                          <div
-                            className="label"
-                          >
-                            Email
-                          </div>
-                          <div
-                            className="value"
-                          >
-                            /
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        className="col"
-                        style={
-                          Object {
-                            "flexGrow": 1,
-                          }
-                        }
-                      >
-                        <div
-                          className="Detail"
-                          style={
-                            Object {
-                              "color": "#000000",
-                            }
-                          }
-                        >
-                          <div
-                            className="label"
-                          >
-                            Last Name
-                          </div>
-                          <div
-                            className="value"
-                          >
-                            /
-                          </div>
-                        </div>
-                        <div
-                          className="Detail"
-                          style={
-                            Object {
-                              "color": "#000000",
-                            }
-                          }
-                        >
-                          <div
-                            className="label"
-                          >
-                            Phone Number
-                          </div>
-                          <div
-                            className="value"
-                          >
-                            /
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    className="col-md-6"
-                  >
-                    <div
-                      className="Detail"
-                      style={
-                        Object {
-                          "color": "#000000",
-                        }
-                      }
-                    >
-                      <div
-                        className="label"
-                      >
-                        Line1
-                      </div>
-                      <div
-                        className="value"
-                      >
-                        /
-                      </div>
-                    </div>
-                    <div
-                      className="Detail"
-                      style={
-                        Object {
-                          "color": "#000000",
-                        }
-                      }
-                    >
-                      <div
-                        className="label"
-                      >
-                        Line2
-                      </div>
-                      <div
-                        className="value"
-                      >
-                        /
-                      </div>
-                    </div>
-                    <div
-                      className="Row"
-                    >
-                      <div
-                        className="col"
-                        style={
-                          Object {
-                            "flexGrow": 1,
-                          }
-                        }
-                      >
-                        <div
-                          className="Detail"
-                          style={
-                            Object {
-                              "color": "#000000",
-                            }
-                          }
-                        >
-                          <div
-                            className="label"
-                          >
-                            Postal Code
-                          </div>
-                          <div
-                            className="value"
-                          >
-                            /
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        className="col"
-                        style={
-                          Object {
-                            "flexGrow": 2,
-                          }
-                        }
-                      >
-                        <div
-                          className="Detail"
-                          style={
-                            Object {
-                              "color": "#000000",
-                            }
-                          }
-                        >
-                          <div
-                            className="label"
-                          >
-                            City
-                          </div>
-                          <div
-                            className="value"
-                          >
-                            /
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      className="Row"
-                    >
-                      <div
-                        className="col"
-                        style={
-                          Object {
-                            "flexGrow": 1,
-                          }
-                        }
-                      >
-                        <div
-                          className="Detail"
-                          style={
-                            Object {
-                              "color": "#000000",
-                            }
-                          }
-                        >
-                          <div
-                            className="label"
-                          >
-                            Country
-                          </div>
-                          <div
-                            className="value"
-                          >
-                            /
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                className="separator"
-                style={
-                  Object {
-                    "backgroundColor": "#3b6cf4",
-                  }
-                }
-              />
-              <div
-                className="LocItems empty-loc"
-              >
-                <img
-                  alt="empty loc"
-                  src="/assets/empty-loc.svg"
-                />
-                <p
-                  className="primary"
-                >
-                  This LOC is empty.
-                </p>
-                <p
-                  className="secondary"
-                >
-                  You can add public data and/or confidential documents.
-                </p>
-              </div>
-              <div
-                className="Row"
-              >
-                <div
-                  className="col-xxl-5 col-xl-4"
-                >
-                  <div
-                    className="ButtonGroup left"
-                  >
-                    <div
-                      align="left"
-                      className="btn-group"
-                      role="group"
-                    >
-                      <button
-                        className="Button btn btn-primary"
-                        disabled={false}
-                        onClick={[Function]}
-                        style={Object {}}
-                        type="button"
-                      >
-                        <img
-                          alt="add"
-                          height="19px"
-                          src="/assets/add.svg"
-                        />
-                        <span
-                          className="text"
-                        >
-                          Add a public data
-                        </span>
-                      </button>
-                      <button
-                        className="Button btn btn-primary"
-                        disabled={false}
-                        onClick={[Function]}
-                        style={Object {}}
-                        type="button"
-                      >
-                        <img
-                          alt="add"
-                          height="19px"
-                          src="/assets/add.svg"
-                        />
-                        <span
-                          className="text"
-                        >
-                          Add a confidential document
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  className="link-button-container col-xxl-4 col-xl-4"
-                >
-                  <div
-                    className="dropdown"
-                  >
-                    <button
-                      aria-expanded={false}
-                      className="Button dropdown-toggle btn btn-primary"
-                      disabled={false}
-                      id="LocLinkButton-dropdown-toggle"
-                      onClick={[Function]}
-                      type="button"
-                    >
-                      Link this LOC to another LOC
-                    </button>
-                  </div>
-                </div>
-                <div
-                  className="close-button-container col-xxl-3 col-xl-4"
-                >
-                  <div
-                    className="CloseLocButton"
-                  >
-                    <button
-                      className="Button close btn btn-primary"
-                      disabled={false}
-                      onClick={[Function]}
-                      style={Object {}}
-                      type="button"
-                    >
-                      <img
-                        alt="lock"
-                        height="19px"
-                        src="/assets/lock.svg"
-                      />
-                      <span
-                        className="text"
-                      >
-                        Close LOC
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className="CertificateAndLimits"
-        >
-          <div
-            className="row"
-          >
-            <div
-              className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12 col"
-            >
-              <div
-                className="certificate"
-              >
-                <h2>
-                  Public web address (URL) of this Legal Officer Case related Certificate:
-                </h2>
-                <div
-                  className="url-copy-paste-container"
-                >
-                  <div
-                    className="url-container"
-                  >
-                    <a
-                      href="http://localhost/public/certificate/195914524858768213081425411950368569411"
-                      rel="noreferrer"
-                      target="_blank"
-                    >
-                      http://localhost/public/certificate/195914524858768213081425411950368569411
-                    </a>
-                  </div>
-                  <button
-                    className="Button CopyPasteButton big btn btn-primary"
-                    disabled={false}
-                    onClick={[Function]}
-                    style={Object {}}
-                    type="button"
-                  >
-                    <img
-                      alt="copy_paste"
-                      src="/assets/copy_paste.svg"
-                    />
-                  </button>
-                </div>
-              </div>
-            </div>
-            <div
-              className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12 col"
-            >
-              <div
-                className="tool-bar"
-              >
-                <button
-                  className="Button ArchiveButton btn btn-primary"
-                  disabled={false}
-                  onClick={[Function]}
-                  style={Object {}}
-                  type="button"
-                >
-                  <img
-                    alt="backup"
-                    height="22px"
-                    src="/assets/backup.svg"
-                  />
-                  Local Backup
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className="Frame PolkadotFrame CheckFileFrame"
-          style={
-            Object {
-              "backgroundColor": "#ffffff",
-              "boxShadow": "0 0 25px #3b6cf41a",
-              "color": "#000000",
-            }
-          }
-        >
-          <style>
-            
-    .Frame a,
-    .Frame .btn-link {
-        color: #3b6cf426
+    deleteFile={[MockFunction]}
+    deleteLink={[MockFunction]}
+    deleteMetadata={[MockFunction]}
+    loc={
+      Object {
+        "closed": false,
+        "createdOn": "",
+        "decisionOn": "",
+        "description": "Description",
+        "files": Array [],
+        "id": UUID {
+          "bytes": Array [
+            147,
+            99,
+            195,
+            214,
+            209,
+            7,
+            66,
+            26,
+            164,
+            75,
+            133,
+            199,
+            250,
+            176,
+            184,
+            67,
+          ],
+        },
+        "links": Array [],
+        "locType": "Identity",
+        "metadata": Array [],
+        "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "requesterLocId": undefined,
+        "status": "OPEN",
+      }
     }
-    
-          </style>
-          <div
-            className="IconTextRow"
-          >
-            <div
-              className="icon"
-            >
-              <img
-                alt="polkadot_doc_check"
-                src="/assets/polkadot_doc_check.svg"
-                width="45px"
-              />
-            </div>
-            <div
-              className="text"
-            >
-              <p
-                className="text-title"
-              >
-                Document conformity check tool
-              </p>
-              <p>
-                Check a document to verify its conformity with a confidential document referenced in this LOC. This tool will generate the “hash” - a digital fingerprint - of the submitted document, compare it with all document “hashes” referenced in the LOC above, and will highlight (dotted square) above - if existing - the identified document. Otherwise, it will mean that the submitted file version is not part of this current transaction LOC.
-              </p>
-              <p>
-                Important: the document you submit is NOT uploaded to a server as the test is done by your browser.
-              </p>
-              <div
-                className="FileSelectorButton only-button"
-              >
-                <input
-                  className="form-control"
-                  readOnly={true}
-                  value=""
-                />
-                <button
-                  className="Button btn btn-primary"
-                  disabled={false}
-                  onClick={[Function]}
-                  style={Object {}}
-                  type="button"
-                >
-                  Check a document
-                </button>
-                <input
-                  className="form-control"
-                  data-testid="FileSelectorButtonHiddenInput"
-                  disabled={false}
-                  onChange={[Function]}
-                  style={
-                    Object {
-                      "display": "none",
-                    }
-                  }
-                  type="file"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-        <div
-          className="Frame DangerFrame VoidFrame"
-          style={
-            Object {
-              "backgroundColor": "#ffffff",
-              "boxShadow": "0 0 25px #3b6cf41a",
-              "color": "#000000",
-            }
-          }
-        >
-          <style>
-            
-    .Frame a,
-    .Frame .btn-link {
-        color: #3b6cf426
+    locItems={Array []}
+    locState={
+      Object {
+        "isLogionData": [Function],
+        "isLogionIdentity": [Function],
+      }
     }
-    
-          </style>
-          <div
-            className="IconTextRow"
-          >
-            <div
-              className="icon"
-            >
-              <img
-                alt="void"
-                src="/assets/void.svg"
-                width="31px"
-              />
-            </div>
-            <div
-              className="text"
-            >
-              <p
-                className="frame-title"
-              >
-                 Void this LOC
-              </p>
-              <p>
-                This action will invalidate the present LOC: the LOC status, its public certificate will show a "VOID" mention to warn people that the content of the LOC is not valid anymore. If another replacing LOC is set, people will be automatically redirected to the replacing LOC when accessing the void LOC URL and a mention of the fact that the replacing LOC 
-                <strong>
-                  supersedes
-                </strong>
-                 the void LOC will be shared on both public certificates. 
-                <strong>
-                  PLEASE USE CAREFULLY.
-                </strong>
-              </p>
-              <div
-                className="ButtonGroup left"
-              >
-                <div
-                  align="left"
-                  className="void-buttons-container btn-group"
-                  role="group"
-                >
-                  <button
-                    className="Button btn btn-danger"
-                    disabled={false}
-                    onClick={[Function]}
-                    style={Object {}}
-                    type="button"
-                  >
-                    Void LOC
-                  </button>
-                  <button
-                    className="Button btn btn-danger"
-                    disabled={false}
-                    onClick={[Function]}
-                    style={Object {}}
-                    type="button"
-                  >
-                    Void and replace by a NEW LOC
-                  </button>
-                  <button
-                    className="Button btn btn-danger"
-                    disabled={false}
-                    onClick={[Function]}
-                    style={Object {}}
-                    type="button"
-                  >
-                    Void and replace by an EXISTING LOC
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+    viewer="LegalOfficer"
+  />
+  <VoidDisclaimer
+    loc={
+      Object {
+        "closed": false,
+        "createdOn": "",
+        "decisionOn": "",
+        "description": "Description",
+        "files": Array [],
+        "id": UUID {
+          "bytes": Array [
+            147,
+            99,
+            195,
+            214,
+            209,
+            7,
+            66,
+            26,
+            164,
+            75,
+            133,
+            199,
+            250,
+            176,
+            184,
+            67,
+          ],
+        },
+        "links": Array [],
+        "locType": "Identity",
+        "metadata": Array [],
+        "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "requesterLocId": undefined,
+        "status": "OPEN",
+      }
+    }
+  />
+  <CertificateAndLimits
+    loc={
+      Object {
+        "closed": false,
+        "createdOn": "",
+        "decisionOn": "",
+        "description": "Description",
+        "files": Array [],
+        "id": UUID {
+          "bytes": Array [
+            147,
+            99,
+            195,
+            214,
+            209,
+            7,
+            66,
+            26,
+            164,
+            75,
+            133,
+            199,
+            250,
+            176,
+            184,
+            67,
+          ],
+        },
+        "links": Array [],
+        "locType": "Identity",
+        "metadata": Array [],
+        "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "requesterLocId": undefined,
+        "status": "OPEN",
+      }
+    }
+    viewer="LegalOfficer"
+  />
+  <SupersedesDisclaimer
+    loc={
+      Object {
+        "closed": false,
+        "createdOn": "",
+        "decisionOn": "",
+        "description": "Description",
+        "files": Array [],
+        "id": UUID {
+          "bytes": Array [
+            147,
+            99,
+            195,
+            214,
+            209,
+            7,
+            66,
+            26,
+            164,
+            75,
+            133,
+            199,
+            250,
+            176,
+            184,
+            67,
+          ],
+        },
+        "links": Array [],
+        "locType": "Identity",
+        "metadata": Array [],
+        "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "requesterLocId": undefined,
+        "status": "OPEN",
+      }
+    }
+  />
+  <CheckFileFrame
+    checkResult="NONE"
+  />
+  <VoidFrame
+    loc={
+      Object {
+        "closed": false,
+        "createdOn": "",
+        "decisionOn": "",
+        "description": "Description",
+        "files": Array [],
+        "id": UUID {
+          "bytes": Array [
+            147,
+            99,
+            195,
+            214,
+            209,
+            7,
+            66,
+            26,
+            164,
+            75,
+            133,
+            199,
+            250,
+            176,
+            184,
+            67,
+          ],
+        },
+        "links": Array [],
+        "locType": "Identity",
+        "metadata": Array [],
+        "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "requesterLocId": undefined,
+        "status": "OPEN",
+      }
+    }
+  />
+</LocPane>
+`;
+
+exports[`ContextualizedLocDetails renders empty 1`] = `
+<LocPane
+  loc={
+    Object {
+      "id": UUID {
+        "bytes": Uint8Array [
+          174,
+          212,
+          198,
+          228,
+          151,
+          158,
+          72,
+          173,
+          190,
+          110,
+          75,
+          211,
+          159,
+          185,
+          71,
+          98,
+        ],
+      },
+      "locType": "Identity",
+      "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+      "userIdentity": Object {
+        "email": "john.doe@logion.network",
+        "firstName": "John",
+        "lastName": "Doe",
+        "phoneNumber": "+1234",
+      },
+    }
+  }
+>
+  <LegalOfficerInstructions
+    loc={
+      Object {
+        "id": UUID {
+          "bytes": Uint8Array [
+            174,
+            212,
+            198,
+            228,
+            151,
+            158,
+            72,
+            173,
+            190,
+            110,
+            75,
+            211,
+            159,
+            185,
+            71,
+            98,
+          ],
+        },
+        "locType": "Identity",
+        "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "userIdentity": Object {
+          "email": "john.doe@logion.network",
+          "firstName": "John",
+          "lastName": "Doe",
+          "phoneNumber": "+1234",
+        },
+      }
+    }
+    locState={
+      Object {
+        "isLogionData": [Function],
+        "isLogionIdentity": [Function],
+      }
+    }
+    protectionRequest={null}
+  />
+  <LocDetailsTab
+    addFile={[MockFunction]}
+    addMetadata={[MockFunction]}
+    checkResult={
+      Object {
+        "result": "NONE",
+      }
+    }
+    deleteFile={[MockFunction]}
+    deleteLink={[MockFunction]}
+    deleteMetadata={[MockFunction]}
+    loc={
+      Object {
+        "id": UUID {
+          "bytes": Uint8Array [
+            174,
+            212,
+            198,
+            228,
+            151,
+            158,
+            72,
+            173,
+            190,
+            110,
+            75,
+            211,
+            159,
+            185,
+            71,
+            98,
+          ],
+        },
+        "locType": "Identity",
+        "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "userIdentity": Object {
+          "email": "john.doe@logion.network",
+          "firstName": "John",
+          "lastName": "Doe",
+          "phoneNumber": "+1234",
+        },
+      }
+    }
+    locItems={Array []}
+    locState={
+      Object {
+        "isLogionData": [Function],
+        "isLogionIdentity": [Function],
+      }
+    }
+    viewer="LegalOfficer"
+  />
+  <VoidDisclaimer
+    loc={
+      Object {
+        "id": UUID {
+          "bytes": Uint8Array [
+            174,
+            212,
+            198,
+            228,
+            151,
+            158,
+            72,
+            173,
+            190,
+            110,
+            75,
+            211,
+            159,
+            185,
+            71,
+            98,
+          ],
+        },
+        "locType": "Identity",
+        "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "userIdentity": Object {
+          "email": "john.doe@logion.network",
+          "firstName": "John",
+          "lastName": "Doe",
+          "phoneNumber": "+1234",
+        },
+      }
+    }
+  />
+  <CertificateAndLimits
+    loc={
+      Object {
+        "id": UUID {
+          "bytes": Uint8Array [
+            174,
+            212,
+            198,
+            228,
+            151,
+            158,
+            72,
+            173,
+            190,
+            110,
+            75,
+            211,
+            159,
+            185,
+            71,
+            98,
+          ],
+        },
+        "locType": "Identity",
+        "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "userIdentity": Object {
+          "email": "john.doe@logion.network",
+          "firstName": "John",
+          "lastName": "Doe",
+          "phoneNumber": "+1234",
+        },
+      }
+    }
+    viewer="LegalOfficer"
+  />
+  <SupersedesDisclaimer
+    loc={
+      Object {
+        "id": UUID {
+          "bytes": Uint8Array [
+            174,
+            212,
+            198,
+            228,
+            151,
+            158,
+            72,
+            173,
+            190,
+            110,
+            75,
+            211,
+            159,
+            185,
+            71,
+            98,
+          ],
+        },
+        "locType": "Identity",
+        "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "userIdentity": Object {
+          "email": "john.doe@logion.network",
+          "firstName": "John",
+          "lastName": "Doe",
+          "phoneNumber": "+1234",
+        },
+      }
+    }
+  />
+  <CheckFileFrame
+    checkResult="NONE"
+  />
+  <VoidFrame
+    loc={
+      Object {
+        "id": UUID {
+          "bytes": Uint8Array [
+            174,
+            212,
+            198,
+            228,
+            151,
+            158,
+            72,
+            173,
+            190,
+            110,
+            75,
+            211,
+            159,
+            185,
+            71,
+            98,
+          ],
+        },
+        "locType": "Identity",
+        "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "userIdentity": Object {
+          "email": "john.doe@logion.network",
+          "firstName": "John",
+          "lastName": "Doe",
+          "phoneNumber": "+1234",
+        },
+      }
+    }
+  />
+</LocPane>
 `;

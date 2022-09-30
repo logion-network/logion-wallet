@@ -29,6 +29,4 @@ export function LegalOfficerLocContextProvider(props: Props) {
     )
 }
 
-export function useLegalOfficerLocContext() {
-    return useLocContext();
-}
+export { useLocContext as useLegalOfficerLocContext };

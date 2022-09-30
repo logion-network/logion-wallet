@@ -62,7 +62,7 @@ export default function LegalOfficerInstructions(props: Props) {
                 </Row>
             }
             {
-                protectionRequest !== null && !protectionRequest.isRecovery &&
+                loc.locType === "Identity" && !locState.isLogionIdentity() && protectionRequest !== null && !protectionRequest.isRecovery &&
                 <Row className="LegalOfficerInstructions logion-loc-tip-container">
                     <IconTextRow
                         icon={ <Icon icon={ { id: "tip" } } width="45px" /> }
@@ -84,7 +84,7 @@ export default function LegalOfficerInstructions(props: Props) {
                 </Row>
             }
             {
-                protectionRequest !== undefined && protectionRequest !== null && protectionRequest.isRecovery &&
+                loc.locType === "Identity" && !locState.isLogionIdentity() && protectionRequest !== undefined && protectionRequest !== null && protectionRequest.isRecovery &&
                 <Row className="LegalOfficerInstructions logion-loc-tip-container">
                     <IconTextRow
                         icon={ <Icon icon={ { id: "tip" } } width="45px" /> }
@@ -106,17 +106,20 @@ export default function LegalOfficerInstructions(props: Props) {
                     />
                 </Row>
             }
-            <LocCreationDialog
-                show={ createLoc }
-                exit={ () => setCreateLoc(false) }
-                onSuccess={ request => navigate(detailsPath(request.id, 'Transaction')) }
-                locRequest={ {
-                    requesterIdentityLoc: loc.id.toString(),
-                    locType: 'Transaction',
-                    userIdentity: loc.userIdentity,
-                } }
-                hasLinkNature={ false }
-            />
+            {
+                locState.isLogionIdentity() &&
+                <LocCreationDialog
+                    show={ createLoc }
+                    exit={ () => setCreateLoc(false) }
+                    onSuccess={ request => navigate(detailsPath(request.id, 'Transaction')) }
+                    locRequest={ {
+                        requesterIdentityLoc: loc.id.toString(),
+                        locType: 'Transaction',
+                        userIdentity: loc.userIdentity,
+                    } }
+                    hasLinkNature={ false }
+                />
+            }
         </>
     );
 }
