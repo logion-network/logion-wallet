@@ -17,7 +17,7 @@ export default function SofTermsAndConditionsEN(props: Props) {
         <div>
             <h4>Terms and conditions</h4>
 
-            <p>IP rights granted with this Collection Item</p>
+            <h5>IP rights granted with this Collection Item</h5>
             {
                 !logionClassification &&
                 <p>None</p>
@@ -25,17 +25,17 @@ export default function SofTermsAndConditionsEN(props: Props) {
             {
                 logionClassification !== undefined &&
                 <>
-                <p>This is a human-readable summary (but not a substitute) of the Logion IP transfer classification (“LITC”):
-                    LITC-v1.0.txt
-                    /
-                    LITC-v1.0 certificate
+                <p>This is a human-readable summary (but not a substitute) of the Logion IP transfer classification (“LITC”):&nbsp;
+                    LITC-v1.0.txt (available here: { props.item.litcUrl })
+                    &nbsp;/&nbsp;
+                    LITC-v1.0 certificate (available here: { props.item.litcLocUrl })
                 </p>
                 <p>Should an additional license exist between the parties that shall apply to the subject of this Collection Item, the parties agreed that the LITC supersedes in case of conflict.</p>
                 <ul>
                     {
                         logionClassification.transferredRights.map((right, index) => (
                             <li key={ index }>
-                                <span>{ right.shortDescription } ({ right.code }): { right.description }</span>
+                                <span><strong>{ right.shortDescription } ({ right.code }):</strong> { right.description }</span>
                                 {
                                     right.code === "REG" &&
                                     <>
@@ -60,14 +60,14 @@ export default function SofTermsAndConditionsEN(props: Props) {
             {
                 specificLicences.length === 0 &&
                 <>
-                <p>Additional licensing terms / contract</p>
+                <h5>Additional licensing terms / contract</h5>
                 <p>None</p>
                 </>
             }
             {
                 specificLicences.map(element => (
                     <>
-                    <p>Additional licensing terms / contract</p>
+                    <h5>Additional licensing terms / contract</h5>
                     <p>The Requester provided an additional specific contract with regards to the Collection Item Underlying Asset. This contract has been recorded in a LOC with the following ID:</p>
                     <p>{ element.tcLocId.toDecimalString() }</p>
                     </> 

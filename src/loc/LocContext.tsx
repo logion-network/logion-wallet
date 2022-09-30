@@ -576,6 +576,7 @@ export function LocContextProvider(props: Props) {
     const requestSofFunction = useCallback(async () => {
         const loc = contextValue.locState;
         if (loc instanceof OpenLoc || loc instanceof ClosedLoc) {
+            await loc.requestSof();
             await props.refreshLocs();
         } else {
             throw Error("Can only request SOF on Open or Closed LOC.")
@@ -585,6 +586,7 @@ export function LocContextProvider(props: Props) {
     const requestSofOnCollectionFunction = useCallback(async (itemId: string) => {
         const loc = contextValue.locState;
         if (loc instanceof ClosedCollectionLoc) {
+            await loc.requestSof({ itemId });
             await props.refreshLocs();
         } else {
             throw Error("Can only request SOF on Closed Collection LOC.")

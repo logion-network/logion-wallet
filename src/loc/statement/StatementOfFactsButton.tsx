@@ -3,10 +3,10 @@ import { Dropdown } from "react-bootstrap";
 import { UUID } from "@logion/node-api/dist/UUID";
 import { LegalOfficerCase } from "@logion/node-api/dist/Types";
 import { getLegalOfficerCase } from "@logion/node-api/dist/LogionLoc";
-import { UploadableCollectionItem } from "@logion/client";
+import { CollectionItem } from "@logion/client";
 
 import { locDetailsPath, STATEMENT_OF_FACTS_PATH } from "../../legal-officer/LegalOfficerPaths";
-import { fullCertificateUrl } from "../../PublicPaths";
+import { fullCertificateUrl, getBaseUrl } from "../../PublicPaths";
 import { useLocContext } from "../LocContext";
 import { DEFAULT_SOF_PARAMS, SofParams, FormValues, Language, Prerequisite } from "./SofParams";
 
@@ -25,12 +25,12 @@ import { loFileUrl } from "../FileModel";
 
 type Status = 'IDLE' | 'PRE-REQUISITE' | 'INPUT' | 'READY'
 
-export default function StatementOfFactsButton(props: { item?: UploadableCollectionItem }) {
+export default function StatementOfFactsButton(props: { item?: CollectionItem }) {
     const { api, accounts, getOfficer } = useLogionChain();
     const { locId, loc: locData } = useLocContext();
     const { settings } = useLegalOfficerContext();
     const [ sofParams, setSofParams ] = useState<SofParams>(DEFAULT_SOF_PARAMS);
-    const [ item, setItem ] = useState<UploadableCollectionItem>();
+    const [ item, setItem ] = useState<CollectionItem>();
     const [ status, setStatus ] = useState<Status>('IDLE')
     const [ language, setLanguage ] = useState<Language | null>(null)
     const { control, handleSubmit, formState: { errors }, reset, setError } = useForm<FormValues>();
@@ -154,12 +154,22 @@ export default function StatementOfFactsButton(props: { item?: UploadableCollect
             setSofParams({
                 ...sofParams,
                 collectionItem: ( props.item ? {
-                    ...props.item,
+                    id: props.item.id,
+                    addedOn: props.item.addedOn,
+                    description: props.item.description,
+                    restrictedDelivery: props.item.restrictedDelivery,
+                    token: props.item.token,
                     files: props.item.files.map(file => ({
                         ...file,
                         size: file.size.toString(),
                     })),
-                    termsAndConditions: props.item.termsAndConditions,
+                    termsAndConditions: props.item.termsAndConditions.map(element => ({
+                        details: element.details,
+                        tcLocId: element.tcLocId,
+                        type: element.type,
+                    })),
+                    litcUrl: `${ getBaseUrl() }/license/LITC-v1.0.txt`,
+                    litcLocUrl: props.item.logionClassification ? fullCertificateUrl(props.item.logionClassification.tcLocId) : "",
                 } : undefined),
             });
         }

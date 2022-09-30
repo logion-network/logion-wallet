@@ -127,6 +127,7 @@ export default function StatementOfFactsTemplateFR(props: Props) {
                 <p>Le dossier numérique mentionné - { props.pathModel.locId } - étant un dossier numérique de collection (Collection Legal Officer Case), les données suivantes ont été enregistrées par le requêteur lui même sur l’infrastructure logion dans le cadre du dossier numérique susmentionné:</p>
 
                 <div className="facts">
+                    <hr/>
                     <div className="fact-container">
                         <div>Collection item ID: { props.pathModel.collectionItem.id }</div>
                         <div>Description: { props.pathModel.collectionItem.description }</div>
@@ -149,10 +150,10 @@ export default function StatementOfFactsTemplateFR(props: Props) {
                                 </>
                             ))
                         }
+                        <SofTermsAndConditionsFR item={ props.pathModel.collectionItem } />
                     </div>
+                    <hr/>
                 </div>
-
-                <SofTermsAndConditionsFR item={ props.pathModel.collectionItem } />
                 </>
             }
 
