@@ -42,6 +42,8 @@ export interface SofCollectionItem {
     token?: ItemToken;
     restrictedDelivery: boolean;
     termsAndConditions: TermsAndConditionsElement[];
+    litcUrl: string;
+    litcLocUrl: string;
 }
 
 interface LocInfo {

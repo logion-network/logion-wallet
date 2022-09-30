@@ -127,6 +127,7 @@ export default function StatementOfFactsTemplateEN(props: Props) {
                 <p>As the Legal Officer Case mentioned in the present document - { props.pathModel.locId } - is a Collection Legal Officer Case, the following informations have been recorded as “Collection Item” by the requester him/herself on the logion infrastrcuture under the scope of the related Collection Legal Officer Case:</p>
 
                 <div className="facts">
+                    <hr/>
                     <div className="fact-container">
                         <div>Collection item ID: { props.pathModel.collectionItem.id }</div>
                         <div>Description: { props.pathModel.collectionItem.description }</div>
@@ -149,10 +150,10 @@ export default function StatementOfFactsTemplateEN(props: Props) {
                                 </>
                             ))
                         }
+                        <SofTermsAndConditionsEN item={ props.pathModel.collectionItem } />
                     </div>
-                </div>
-
-                <SofTermsAndConditionsEN item={ props.pathModel.collectionItem } />
+                    <hr/>
+                </div>                
                 </>
             }
 
