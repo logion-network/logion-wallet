@@ -58,8 +58,8 @@ async function uploadCsv(): Promise<any> {
 
     render(<ImportItems />);
 
-    const file = new File([`ID,DESCRIPTION
-0x50cc7f74edfff71f51fdbffed12067a16b563bb72cab9240cd72e56234ea5dc0,package.json`], "items.csv");
+    const file = new File([`ID,DESCRIPTION,TERMS_AND_CONDITIONS TYPE,TERMS_AND_CONDITIONS PARAMETERS
+0x50cc7f74edfff71f51fdbffed12067a16b563bb72cab9240cd72e56234ea5dc0,package.json,none,`], "items.csv");
     await userEvent.upload(screen.getByTestId("FileSelectorButtonHiddenInput"), file, {applyAccept: false});
     return collection;
 }

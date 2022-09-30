@@ -29,5 +29,9 @@ export function fullCollectionItemCertificate(locId: UUID, collectionItemId?: st
         queries.push("redirected=1");
     }
     const query = queries.length === 0 ? "" : "?" + queries.join('&');
-    return `${ window.location.protocol }//${ window.location.host }${ certificatePath(locId, collectionItemId) }${ query }`;
+    return `${ getBaseUrl() }${ certificatePath(locId, collectionItemId) }${ query }`;
+}
+
+export function getBaseUrl(): string {
+    return `${ window.location.protocol }//${ window.location.host }`;
 }

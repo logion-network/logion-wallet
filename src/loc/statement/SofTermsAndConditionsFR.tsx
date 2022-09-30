@@ -15,27 +15,27 @@ export default function SofTermsAndConditionsFR(props: Props) {
 
     return (
         <div>
-            <h4>Terms and conditions</h4>
+            <h4>Conditions générales</h4>
 
-            <p>IP rights granted with this Collection Item</p>
+            <h5>Droit de propriété intellectuelle attribué avec ce Collection Item</h5>
             {
                 !logionClassification &&
-                <p>None</p>
+                <p>Aucun</p>
             }
             {
                 logionClassification !== undefined &&
                 <>
-                <p>This is a human-readable summary (but not a substitute) of the Logion IP transfer classification (“LITC”):
-                    LITC-v1.0.txt
-                    /
-                    LITC-v1.0 certificate
+                <p>Ce qui suit est une version simplifiée (mais ne remplaçant pas) la classification logion des transferts de propriété intellectuelle. La version de référence de ce texte est Logion IP Transfer Classification ("LTIC"):&nbsp;
+                    LITC-v1.0.txt (accessible à l'adresse : { props.item.litcUrl })
+                    &nbsp;/&nbsp;
+                    LITC-v1.0 certificate (accessible à l'adresse : { props.item.litcLocUrl })
                 </p>
-                <p>Should an additional license exist between the parties that shall apply to the subject of this Collection Item, the parties agreed that the LITC supersedes in case of conflict.</p>
+                <p>Dans le cas où une licence additionnelle existe entre les parties et s'applique à l'objet du Collection Item, les parties acceptent que les termes de la classification LTIC priment en cas de conflit.</p>
                 <ul>
                     {
                         logionClassification.transferredRights.map((right, index) => (
                             <li key={ index }>
-                                <span>{ DESCRIPTIONS[right.code].shortDescription } ({ right.code }): { DESCRIPTIONS[right.code].description }</span>
+                                <span><strong>{ DESCRIPTIONS[right.code].shortDescription } ({ right.code }):</strong> { DESCRIPTIONS[right.code].description }</span>
                                 {
                                     right.code === "REG" &&
                                     <>
@@ -60,15 +60,15 @@ export default function SofTermsAndConditionsFR(props: Props) {
             {
                 specificLicences.length === 0 &&
                 <>
-                <p>Additional licensing terms / contract</p>
-                <p>None</p>
+                <h5>Licence / Contrat additionnel</h5>
+                <p>Aucun</p>
                 </>
             }
             {
                 specificLicences.map(element => (
                     <>
-                    <p>Additional licensing terms / contract</p>
-                    <p>The Requester provided an additional specific contract with regards to the Collection Item Underlying Asset. This contract has been recorded in a LOC with the following ID:</p>
+                    <h5>Additional licensing terms / contract</h5>
+                    <p>Le Demandeur a fournit un contract spécifique additionnel portant sur l'objet sous-jacent sur lequel porte ce Collection Item. Ce contrat a été enregistré dans un dossier numérique logion (LOC) dont l'identifiant est:</p>
                     <p>{ element.tcLocId.toDecimalString() }</p>
                     </> 
                 ))

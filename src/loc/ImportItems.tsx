@@ -1,4 +1,14 @@
-import { ClosedCollectionLoc, UploadableCollectionItem, ItemFileWithContent, HashOrContent, MimeType, ItemTokenWithRestrictedType, isTokenType } from "@logion/client";
+import {
+    ClosedCollectionLoc,
+    UploadableCollectionItem,
+    ItemFileWithContent,
+    HashOrContent,
+    MimeType,
+    ItemTokenWithRestrictedType,
+    isTokenType,
+    LogionClassification,
+    SpecificLicense
+} from "@logion/client";
 import { useCallback, useState } from "react";
 import { OverlayTrigger, Spinner, Tooltip } from "react-bootstrap";
 
@@ -19,6 +29,8 @@ import ClientExtrinsicSubmitter, { Call, CallCallback } from "../ClientExtrinsic
 import { ActiveLoc } from "./LocContext";
 import { CsvItem, readItemsCsv } from "./ImportCsvReader";
 import Alert from "src/common/Alert";
+import { UUID } from "@logion/node-api";
+import config from "../config";
 
 type Submitters = Record<string, Call>;
 
@@ -73,6 +85,8 @@ export default function ImportItems() {
                 itemFiles: item.files,
                 restrictedDelivery: item.restrictedDelivery,
                 itemToken: item.token,
+                logionClassification: item.logionClassification,
+                specificLicenses: item.specificLicense ? [ item.specificLicense ] : undefined,
                 callback,
             })
         }
@@ -377,6 +391,13 @@ function toItems(csvItems: CsvItem[]): Item[] {
                 }
             }
 
+            let tcValidationResult: TCValidationResult = {}
+            if (error === undefined) {
+                tcValidationResult = validateTermsAndConditions(csvItem);
+                error = tcValidationResult.tcError;
+                errorType = "validation";
+            }
+
             return {
                 id: displayId,
                 error,
@@ -389,7 +410,40 @@ function toItems(csvItems: CsvItem[]): Item[] {
                 failed: false,
                 success: false,
                 upload: false,
+                logionClassification: tcValidationResult.logionClassification,
+                specificLicense: tcValidationResult.specificLicense,
             };
         }
     });
+}
+
+interface TCValidationResult {
+    logionClassification?: LogionClassification;
+    specificLicense?: SpecificLicense;
+    tcError?: string;
+}
+
+function validateTermsAndConditions(csvItem: CsvItem): TCValidationResult {
+    try {
+        if (csvItem.termsAndConditionsType === 'logion_classification') {
+            const logionClassificationLocId = UUID.fromAnyString(config.logionClassification);
+            if (logionClassificationLocId === undefined) {
+                return { tcError: "logion_classification: Logion Classification LOC id not properly configured" }
+            }
+            const logionClassification = LogionClassification.fromDetails(logionClassificationLocId, csvItem.termsAndConditionsParameters);
+            return { logionClassification }
+        } else if (csvItem.termsAndConditionsType === 'specific_license') {
+            const tcLocId = UUID.fromAnyString(csvItem.termsAndConditionsParameters);
+            if (tcLocId === undefined) {
+                return { tcError: "specific_license: Invalid Terms and Conditions LOC id found under TERM_AND_CONDITIONS parameters" }
+            }
+            const specificLicense = SpecificLicense.fromDetails(tcLocId, "");
+            return { specificLicense }
+        } else if (csvItem.termsAndConditionsType === 'none') {
+            return {}
+        }
+        return { tcError: `Invalid TERM_AND_CONDITIONS type: '${ csvItem.termsAndConditionsType }'` };
+    } catch (error) {
+        return { tcError: "" + error }
+    }
 }
