@@ -159,6 +159,7 @@ export default function StatementOfFactsButton(props: { item?: UploadableCollect
                         ...file,
                         size: file.size.toString(),
                     })),
+                    termsAndConditions: props.item.termsAndConditions,
                 } : undefined),
             });
         }

@@ -1,4 +1,5 @@
 import { ItemToken } from "@logion/node-api";
+import { TermsAndConditionsElement } from "@logion/client";
 
 export interface PublicItem {
     description: string;
@@ -40,6 +41,7 @@ export interface SofCollectionItem {
     files: SofCollectionItemFile[];
     token?: ItemToken;
     restrictedDelivery: boolean;
+    termsAndConditions: TermsAndConditionsElement[];
 }
 
 interface LocInfo {

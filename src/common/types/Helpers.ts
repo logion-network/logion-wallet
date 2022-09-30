@@ -11,3 +11,7 @@ export function customClassName(baseClassName: string, ...customClassNames: (str
     }
     return className;
 }
+
+export function toggleClass(toggle: boolean | undefined, className: string): string | undefined {
+    return toggle ? className : undefined;
+}

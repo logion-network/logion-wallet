@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { loadPagedJs } from "./PagedJS";
 import { SofParams } from "./SofParams";
+import SofTermsAndConditionsEN from "./SofTermsAndConditionsEN";
 
 export interface Props {
     pathModel: SofParams;
@@ -150,6 +151,8 @@ export default function StatementOfFactsTemplateEN(props: Props) {
                         }
                     </div>
                 </div>
+
+                <SofTermsAndConditionsEN item={ props.pathModel.collectionItem } />
                 </>
             }
 

@@ -1,0 +1,93 @@
+________________________________________
+
+LOGION IP TRANSFER CLASSIFICATION (LITC)
+
+Version 1.0
+________________________________________
+
+
+The Logion intellectual property transfer classification (hereinafter “LITC”) aims to set and define the IP rights (as defined below) claimed by the Creator (as defined by the T&Cs applicable to the transaction) and that are to be transferred to the Buyer (as defined by the T&Cs applicable to the transaction), in the subject of the transaction (hereinafter referred to as the “Underlying Asset”).
+The LITC aims at increasing awareness as to IP rights in the Underlying Asset and the legal requirement and associated security of an IP rights transfer.
+
+The LITC is a template provided by Logion, by which intermediaries in the transaction - market places, platforms, project NFTs - may set and define the existence and scope of the IP rights, as claimed by the Creator.
+
+In the event that an intermediary (hereinafter referred to as the “Requester”) requests the application of the LITC, the Requester will be required to precisely provide the information as to the existence and the scope of the IP rights, by providing required data and/or filling out the required fields and settings.  
+
+In relation to the settings selected and the information provided by the Requester, the latter acknowledges and guarantees that they are accurate, true, and sincere;  that the Requester is acting on behalf of the Creator and has been duly authorized to do so, and, therefore has obtained the Creator’s consent to the LITC and related guidelines.
+
+The Requester may therefore be liable before the Creator and the Buyer.
+
+The declaration made by the Requester does not necessarily imply and/or guarantee that such IP rights effectively exist and specifically that the Underlying Asset is protected under IP and/or author rights and/or copyright law.
+
+The LITC provides a list of settings and related human-readable definitions that aim to provide accurate information on the scope of IP rights transfer in the Underlying Asset,  which will be visible in the Logion certification.
+LITC itself does not substitute the legal requirement of a formal and complete license and/or assignment grant, adapted to the specificities of the transaction and/or Underlying Asset. It contains de minimis the intent and consent of the parties of the transaction in relation to the scope of IP rights transferred.
+
+The onus is on the Requester to ensure that any related and complete license and/or assignment grant is in full compliance with the LITC.
+
+The Requester acknowledges that (s)he is using the LITC under his/her sole responsibility and should carefully consider all settings and definitions and their consequences.
+
+The Requester also acknowledges that the LITC may not be construed as legal advice.
+
+
+Definitions:
+
+
+* IP rights: Intellectual Property rights are intangible rights that include the author and/or copyright and are distinct from and separate from the physical and/or digital artwork defined as the Underlying Asset. For the purposes of the present, they do not include personality rights, trademark, and patent rights expressly excluded. The LITC does not contemplate the moral rights of the author. 
+* Underlying Asset: is linked to and/or associated with an NFT and is the subject of the transaction and the transfer of IP rights.  The LITC contemplates literary, artistic, and photographic works of art contained in the definition of “ literary and artistic works”, whether physical, digital, phygital, in the meaning of the Berne Convention.
+* Personal Use: solely for personal purposes.
+* Commercial Use: use directly or indirectly for commercial gain, financial benefit, or compensation.
+* Private use: use in private spheres, i.e. in the home and within the family sphere.
+* Public use: use in the public sphere, i.e. outside of the private sphere and includes the professional sphere of activity.  
+
+
+________________
+
+
+Human-readable IP rights classification:
+
+The LITC uses human-readable settings and definitions to publicly set and define the scope of the IP rights transfer in the context of a Collection Item in the format provided hereafter:
+
+
+IP RIGHTS GRANTED WITH THIS COLLECTION ITEM:
+
+This is a human-readable summary (but not a substitute)  of the Logion IP transfer classification (“LITC”): LITC-v1.0.txt / LITC-v1.0  certificate. Should an additional license exist between the parties that shall apply to the subject of this Collection Item, the parties agreed that the LITC supersedes in case of conflict.
+ 
+* PERSONAL, PRIVATE USE ONLY (PER-PRIV)
+Use the Underlying Asset for your personal use, exclusively in private spheres and so long as that personal use is non-commercial, i.e. does not, directly or indirectly, result in compensation, financial benefit or commercial gain, To the extent that such use is non-commercial and private, you may use, reproduce, display and as necessary perform but not modify the Underlying Asset. All types and means of reproduction/display and performance are contemplated, known or unknown, provided they are compatible with use in a private sphere.
+
+
+* PERSONAL, PRIVATE, AND PUBLIC USE (PER-PUB)
+Use the Underlying Asset for your personal use, both in private and public spheres and so long as that personal use is non-commercial, i.e. does not, directly or indirectly, result in compensation, financial benefit, or commercial gain, Includes the right to display the Underlying Asset as a profile picture on social media and in the metaverse.  To the extent that such use is non-commercial, you may use, reproduce, display, and as necessary perform but not modify the Underlying Asset. All types and means of reproduction/display and performance are contemplated, known or unknown, provided they are non-commercial. Includes the right to sublicense the right to display to third parties, such as third-party platforms. 
+
+
+* COMMERCIAL USE WITHOUT MODIFICATION (COM-NOMOD)
+Use the Underlying Asset for commercial use, i.e. directly or indirectly, results in compensation, financial benefit, or commercial gain and may include promoting, marketing, advertising, and selling. Such commercial use includes the right to use, reproduce, display, distribute and as necessary perform, but not modify the Underlying Asset. Commercial use also confers personal, private, and public use of the Underlying Asset. Includes the right to display the Underlying Asset as a profile picture on social media and in the metaverse. Includes display on products or services using the Underlying Asset, display on sold merchandise, display in a physical or digital museum. Includes the right to sublicense such rights. All types and means of reproduction/display/performance/distribution/broadcasting are contemplated, known or unknown, without limitation.
+
+
+* COMMERCIAL USE WITH THE RIGHT TO MODIFY (COM-MOD)
+Use the Underlying Asset for commercial use, i.e. directly or indirectly, results in compensation, financial benefit, or commercial gain and may include promoting, marketing, advertising, and selling. Such commercial use includes the right to use, reproduce, display, distribute and as necessary perform and modify the Underlying Asset.  Includes the right to adapt the Underlying Asset, i.e. to recast, transform, translate or adapt, including in any form recognizably derived from the original and in so doing create derivative works of art. Commercial use also confers personal, private, and public use of the Underlying Asset. Includes the right to display the Underlying Asset as a profile picture on social media and in the metaverse. Includes display on products or services using the Underlying Asset and/or its derivatives, display on sold merchandise, display in a physical or digital museum. Includes the right to sublicense such rights. All types and means of reproduction/display/performance/distribution/broadcasting are contemplated, known or unknown, without limitation.
+
+
+* EXCLUSIVE USE (EX)
+The above-mentioned rights, as applicable, are exclusive in nature, i.e. are licensed and/or assigned to no other person or entity.
+
+
+* NON-EXCLUSIVE USE (NOEX) 
+The above-mentioned rights, as applicable, are non-exclusive in nature, i.e. they can be licensed and/or assigned to other persons or entities.
+
+
+* WORLDWIDE USE (WW)
+Covers use in all countries of the world, existing and future, not limited territorially. Is intended to be as extensive as possible. Includes use on the internet, on global networks and social media, in all virtual worlds and metaverses, known or unknown. Worldwide use should not be selected when contemplating personal, private use only.
+
+
+* COUNTRY-SPECIFIC OR REGIONAL USE (REG)
+Means that some territorial limitations apply. The list of allowed countries is recorded by the Logion infrastructure. Includes use on the internet, on global networks and social media, in all virtual worlds and metaverses, known or unknown, except when contemplating personal private use only.
+
+
+* FOR THE ENTIRE DURATION OF THE IP RIGHTS (NOTIME)
+The duration of the IP rights contemplated - author rights and copyright - is for the entire life of the Creator and 70 years afterward, counted from the moment the work of art has been disclosed.
+
+
+* FOR A LIMITED PERIOD OF TIME (TIME)
+Means that the license/assignment grant is limited in time as recorded by the Logion infrastructure.
+

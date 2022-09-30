@@ -10,6 +10,7 @@ import CertificateDateTimeCell from "./CertificateDateTimeCell";
 import ClaimAssetButton, { WalletType } from "./ClaimAssetButton";
 import { UUID } from "@logion/node-api/dist/UUID";
 import { customClassName } from "src/common/types/Helpers";
+import TermsAndConditions from "./TermsAndConditions";
 
 export interface Props {
     locId: UUID,
@@ -64,6 +65,9 @@ export default function CollectionItemCellRow(props: Props) {
                     </CertificateCell>
                 </Row>
             }
+            <Row>
+                <TermsAndConditions item={ item } />
+            </Row>
             { files && files.length > 0 &&
                 <Row>
                     <CertificateCell md={ 12 } label="Files">
