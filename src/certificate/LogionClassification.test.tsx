@@ -18,7 +18,7 @@ describe("LogionClassification", () => {
     it("renders classification", () => {
         const licenseLocId = new UUID("c24ec512-f72b-49a5-8365-68fc5ad2d973");
         const logionClassification = new LogionClassificationClass(licenseLocId, {
-            transferredRights: [ "PER-PRIV" ],
+            transferredRights: [ "PER-PRIV", "TIME", "REG" ],
             regionalLimit: [ "BE" ],
             expiration: "2023-01-01",
         });

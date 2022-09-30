@@ -17,6 +17,7 @@
 
 .ImportItemDetails .item-file,
 .ImportItemDetails .item-delivery,
+.ImportItemDetails .item-tcs,
 .ImportItemDetails .item-token {
     text-align: left;
 }
