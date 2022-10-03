@@ -7,4 +7,5 @@
     position: relative;
     left: 50px;
     padding-right: 50px;
+    display: inline-table;
 }

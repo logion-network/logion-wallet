@@ -40,14 +40,14 @@ export default function SofTermsAndConditionsFR(props: Props) {
                                     right.code === "REG" &&
                                     <>
                                         <br/>
-                                        <span className="recorded-data">&gt; Recorded data: { regionalLimit.join(" - ") }</span>
+                                        <span className="recorded-data">&gt; Donnée(s) Enregistrée(s): { regionalLimit.join(" - ") }</span>
                                     </>
                                 }
                                 {
                                     right.code === "TIME" &&
                                     <>
                                         <br/>
-                                        <span className="recorded-data">&gt; Recorded data: <InlineDateTime dateTime={ logionClassification.expiration } dateOnly={ true } /></span>
+                                        <span className="recorded-data">&gt; Donnée(s) Enregistrée(s): <InlineDateTime dateTime={ logionClassification.expiration } dateOnly={ true } /></span>
                                     </>
                                 }
                             </li>
