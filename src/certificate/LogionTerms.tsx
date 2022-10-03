@@ -14,7 +14,7 @@ export default function LogionTerms(props: Props) {
     return (
         <ul className="LogionTerms">
             {
-                terms.transferredRights.map((transferredRight, index) => (
+                terms.transferredRights().map((transferredRight, index) => (
                     <li key={ index }>
                         <span>
                             <span className="short-code">{ transferredRight.shortDescription } ({ transferredRight.code }): </span>
