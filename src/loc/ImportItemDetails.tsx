@@ -2,7 +2,7 @@ import {
     ItemFileWithContent,
     ItemTokenWithRestrictedType,
     SpecificLicense,
-    LogionClassification
+    LogionClassification, TermsAndConditionsElement
 } from "@logion/client";
 import './ImportItemDetails.css';
 
@@ -22,6 +22,16 @@ export interface Item {
     upload: boolean;
     logionClassification?: LogionClassification,
     specificLicense?: SpecificLicense,
+}
+
+function termsAncConditions(tc: TermsAndConditionsElement, locLabel: string) {
+    return (
+        <ul>
+            <li>Type : { tc.type }</li>
+            { tc.details.length > 0 && <li>Parameters : { tc.details }</li> }
+            <li>{ locLabel }: { tc.tcLocId.toDecimalString() }</li>
+        </ul>
+    )
 }
 
 export default function ImportItemDetails(props: { item: Item }) {
@@ -53,6 +63,18 @@ export default function ImportItemDetails(props: { item: Item }) {
                         <li>Type: { props.item.token.type }</li>
                         <li>ID: { props.item.token.id }</li>
                     </ul>
+                </div>
+            }
+            {
+                <div className="item-tcs">
+                    <p>Terms and Conditions:</p>
+                    { props.item.logionClassification && termsAncConditions(props.item.logionClassification, "LITC version LOC") }
+                    { props.item.specificLicense && termsAncConditions(props.item.specificLicense, "Specific License LOC") }
+                    { props.item.logionClassification === undefined && props.item.specificLicense === undefined &&
+                        <ul>
+                            <li>None</li>
+                        </ul>
+                    }
                 </div>
             }
         </div>

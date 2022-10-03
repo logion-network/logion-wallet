@@ -41,6 +41,8 @@ exports[`LogionClassification renders classification 1`] = `
             ],
             "transferredRights": Array [
               "PER-PRIV",
+              "TIME",
+              "REG",
             ],
           },
           "_tcLocId": UUID {
