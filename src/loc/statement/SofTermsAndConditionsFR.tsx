@@ -1,4 +1,4 @@
-import { LogionClassification, SpecificLicense, LogionTransferredRightCode, LogionTransferredRightDescription } from "@logion/client";
+import { LogionClassification, SpecificLicense } from "@logion/client";
 import { useMemo } from "react";
 import InlineDateTime from "src/common/InlineDateTime";
 import { SofCollectionItem } from "./SofParams";
