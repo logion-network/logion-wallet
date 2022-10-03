@@ -33,7 +33,7 @@ export default function SofTermsAndConditionsEN(props: Props) {
                 <p>Should an additional license exist between the parties that shall apply to the subject of this Collection Item, the parties agreed that the LITC supersedes in case of conflict.</p>
                 <ul>
                     {
-                        logionClassification.transferredRights.map((right, index) => (
+                        logionClassification.transferredRights('en').map((right, index) => (
                             <li key={ index }>
                                 <span><strong>{ right.shortDescription } ({ right.code }):</strong> { right.description }</span>
                                 {
