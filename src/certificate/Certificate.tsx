@@ -302,7 +302,7 @@ export default function Certificate() {
                 />
             </Container>
             {
-                loc && collectionItem && client &&
+                loc && collectionItem && client && collectionItem.restrictedDelivery &&
                 <Container className="CopyCheck">
                     <CheckDeliveredFrame
                         item={ collectionItem }
