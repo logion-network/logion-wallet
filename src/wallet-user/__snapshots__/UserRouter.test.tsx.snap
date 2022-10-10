@@ -170,7 +170,7 @@ exports[`renders 1`] = `
         backPath="/user/loc/identity"
       />
     }
-    path="loc/identity-request"
+    path="/loc/identity-request"
   />
 </Routes>
 `;

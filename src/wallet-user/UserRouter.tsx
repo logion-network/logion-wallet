@@ -33,7 +33,8 @@ export const WALLET_RELATIVE_PATH = '/wallet';
 export const WALLET_PATH = USER_PATH + WALLET_RELATIVE_PATH;
 export const VAULT_RELATIVE_PATH = '/vault';
 export const VAULT_PATH = USER_PATH + VAULT_RELATIVE_PATH;
-export const IDENTITY_REQUEST_PATH = "loc/identity-request";
+export const IDENTITY_REQUEST_RELATIVE_PATH = "/loc/identity-request";
+export const IDENTITY_REQUEST_PATH = USER_PATH + IDENTITY_REQUEST_RELATIVE_PATH;
 
 export const TRANSACTIONS_RELATIVE_PATH = WALLET_RELATIVE_PATH + '/:coinId';
 const TRANSACTIONS_PATH = USER_PATH + TRANSACTIONS_RELATIVE_PATH;
@@ -172,7 +173,7 @@ export default function UserRouter() {
                 />
             } />
             <Route path="/" element={ <Home /> } />
-            <Route path={ IDENTITY_REQUEST_PATH } element={
+            <Route path={ IDENTITY_REQUEST_RELATIVE_PATH } element={
                 <IdentityLocRequest backPath={ locRequestsPath('Identity') }/>
             } />
         </Routes>
