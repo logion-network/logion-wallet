@@ -8,11 +8,9 @@ import Button, { Action } from '../../common/Button';
 import Dialog from '../../common/Dialog';
 
 import { useUserContext } from '../UserContext';
-
+import ButtonGroup from "../../common/ButtonGroup";
 import LocCreationForm, { FormValues } from './LocCreationForm';
 import { useLogionChain } from '../../logion-chain';
-import IconTextRow from "../../common/IconTextRow";
-import Icon from "../../common/Icon";
 import { useNavigate } from "react-router-dom";
 import { IDENTITY_REQUEST_PATH } from "../UserRouter";
 import './LocCreation.css';
@@ -21,8 +19,6 @@ export interface Props {
     locType: LocType,
     requestButtonLabel: string
 }
-
-type ValidIdentityLoc = "Unknown" | "OK" | "KO";
 
 export default function LocCreation(props: Props) {
     const { getOfficer } = useLogionChain();
@@ -35,14 +31,10 @@ export default function LocCreation(props: Props) {
         defaultValues: {
             description: "",
             legalOfficer: "",
-            firstName: "",
-            lastName: "",
-            email: "",
-            phone: ""
         }
     });
     const [ selectedLegalOfficer, setSelectedLegalOfficer ] = useState<LegalOfficer | undefined>();
-    const [ validIdentityLoc, setValidIdentityLoc ] = useState<ValidIdentityLoc>("Unknown");
+    const legalOfficersWithValidIdentityLoc = locsState?.legalOfficersWithValidIdentityLoc;
 
     const clear = useCallback(() => {
         reset();
@@ -68,85 +60,73 @@ export default function LocCreation(props: Props) {
     useEffect(() => {
         if (getOfficer !== undefined && locsState !== undefined) {
             const subscription = watch(({ legalOfficer }) => {
-                const officer = getOfficer(legalOfficer);
-                setSelectedLegalOfficer(officer);
-                if (officer !== undefined) {
-                    if (locsState.hasValidIdentityLoc(officer)) {
-                        setValidIdentityLoc("OK");
-                    } else {
-                        setValidIdentityLoc("KO");
-                    }
-                } else {
-                    setValidIdentityLoc("Unknown");
-                }
+                setSelectedLegalOfficer(getOfficer(legalOfficer));
             });
             return () => subscription.unsubscribe();
         }
-    }, [ watch, getOfficer, locsState, setSelectedLegalOfficer, setValidIdentityLoc ]);
+    }, [ watch, getOfficer, locsState, setSelectedLegalOfficer ]);
 
-    const cancelSubmit: Action[] = [
-        {
-            id: "cancel",
-            callback: clear,
-            buttonText: 'Cancel',
-            buttonVariant: 'secondary',
-        },
-        {
-            id: "submit",
-            buttonText: 'Submit',
-            buttonVariant: 'primary',
-            type: 'submit',
-            disabled: validIdentityLoc !== "OK"
-        },
-    ];
+    if (legalOfficersWithValidIdentityLoc === undefined) {
+        return null;
+    }
 
-    const cancelSubmitRequest: Action[] = [ ...cancelSubmit,
-        {
-            id: "requestIdLoc",
-            callback: requestIdLoc,
-            buttonText: 'Request an Identity Case',
-            buttonVariant: 'primary',
-            type: 'button',
-        },
-    ];
-    
+    const requestIdLocAction: Action = {
+        id: "requestIdLoc",
+        callback: requestIdLoc,
+        buttonText: 'Request an Identity Case',
+        buttonVariant: 'primary',
+        type: 'button',
+    };
+
+    const cancelAction: Action = {
+        id: "cancel",
+        callback: clear,
+        buttonText: 'Cancel',
+        buttonVariant: 'secondary',
+        type: "button",
+    };
+
     return (
         <>
             <Button onClick={ () => setRequestLoc(true) }>{ requestButtonLabel }</Button>
-            <Dialog
-                className="LocCreation"
-                show={ requestLoc }
-                size="lg"
-                actions={ validIdentityLoc === "KO" ? cancelSubmitRequest : cancelSubmit }
-                onSubmit={handleSubmit(submit)}
-            >
-                <LocCreationForm
-                    control={ control }
-                    errors={ errors }
-                    colors={ colorTheme.dialog }
-                    legalOfficer={ selectedLegalOfficer?.address || null }
-                />
-                { validIdentityLoc === "OK" &&
-                    <IconTextRow icon={ <Icon icon={ { id: "ok" } } /> }
-                                 className="id-loc-status"
-                                 text={
-                                     <p>{ selectedLegalOfficer?.name } has a closed Identity Case<br />
-                                         linked to your Polkadot account.</p>
-                                 } />
-                }
-                { validIdentityLoc === "KO" &&
-                    <IconTextRow icon={ <Icon icon={ { id: "ko" } } /> }
-                                 className="id-loc-status"
-                                 text={
-                                     <p>{ selectedLegalOfficer?.name } has no closed Identity Case linked to your
-                                         Polkadot account.<br />
-                                         You can request one or choose another Legal officer.</p>
-                                 } />
-                }
-                { validIdentityLoc === "Unknown" &&
-                    <p>Please choose a Legal Officer.</p>
-                }
-            </Dialog>
+            { legalOfficersWithValidIdentityLoc?.length === 0 &&
+                <Dialog
+                    className="LocCreation"
+                    show={ requestLoc }
+                    size="lg"
+                    actions={ [ cancelAction, requestIdLocAction ] }
+                >
+                    <h3>{ locType } LOC Request</h3>
+                    <p className="info-text">To submit a { locType } LOC request, you must select a Logion Legal Officer who already executed
+                        an Identity LOC linked to your Polkadot address.</p>
+                    <p className="info-text">Please request an Identity LOC to the Logion Legal Officer of your choice:</p>
+                </Dialog>
+            }
+            { legalOfficersWithValidIdentityLoc?.length > 0 &&
+                <Dialog
+                    className="LocCreation"
+                    show={ requestLoc }
+                    size="lg"
+                    actions={ selectedLegalOfficer === undefined ? [ requestIdLocAction ] : [] }
+                >
+                    <h3>{ locType } LOC Request</h3>
+                    <LocCreationForm
+                        control={ control }
+                        errors={ errors }
+                        colors={ colorTheme.dialog }
+                        legalOfficer={ selectedLegalOfficer?.address || null }
+                    />
+                    <ButtonGroup>
+                        <Button onClick={ cancelAction.callback } variant={ cancelAction.buttonVariant }>{ cancelAction.buttonText }</Button>
+                        <Button disabled={ selectedLegalOfficer === undefined } type="submit"
+                                onClick={ handleSubmit(submit) }>Submit</Button>
+                    </ButtonGroup>
+                    { selectedLegalOfficer === undefined &&
+                        <p className="info-text">If you do not see the Logion Legal officer you are looking for, please request an Identity
+                            LOC to the Logion Legal Officer of your choice by clicking on the related button below:</p>
+                    }
+                </Dialog>
+            }
         </>
     );
 }
