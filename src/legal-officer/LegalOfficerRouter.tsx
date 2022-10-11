@@ -31,9 +31,10 @@ import IdentityProtection from './transaction-protection/IdentityProtection';
 import { useCommonContext } from '../common/CommonContext';
 import { FullWidthPane } from '../common/Dashboard';
 import DangerFrame from '../common/DangerFrame';
+import DashboardCertificateRouter from "../loc/DashboardCertificateRouter";
 
 import './LegalOfficerRouter.css';
-import { locRequestsRelativePath, locDetailsRelativePath } from "../RootPaths";
+import { locRequestsRelativePath, locDetailsRelativePath, relativeDashboardCertificateRelativePath } from "../RootPaths";
 import VaultOutRequests from './vault/VaultOutRequests';
 import { useLogionChain } from '../logion-chain';
 import { useLegalOfficerContext } from './LegalOfficerContext';
@@ -119,6 +120,13 @@ export default function LegalOfficerRouter() {
                     backPath={ locRequestsPath('Collection') }
                     detailsPath={ locDetailsPath }
                     viewer='LegalOfficer'
+                />
+            } />
+            <Route path={ relativeDashboardCertificateRelativePath('Collection') } element={
+                <DashboardCertificateRouter
+                    detailsPath={ locDetailsPath }
+                    viewer='LegalOfficer'
+                    locType='Collection'
                 />
             } />
             <Route path={ IDENTITIES_RELATIVE_PATH } element={ <IdentityProtection /> } />

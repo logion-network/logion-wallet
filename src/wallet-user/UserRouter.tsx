@@ -2,12 +2,13 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import { UUID } from '@logion/node-api/dist/UUID';
 import { LocType } from "@logion/node-api/dist/Types";
 
-import { USER_PATH, locRequestsRelativePath, locDetailsRelativePath } from '../RootPaths';
+import { USER_PATH, locRequestsRelativePath, locDetailsRelativePath, relativeDashboardCertificateRelativePath } from '../RootPaths';
 
 import Settings from "../settings/Settings";
 import Wallet from "../common/Wallet";
 import Transactions from "../common/Transactions";
 import LocDetails from '../loc/LocDetails';
+import DashboardCertificateRouter from "../loc/DashboardCertificateRouter";
 import { useCommonContext } from "../common/CommonContext";
 
 import { useUserContext } from "./UserContext";
@@ -162,6 +163,13 @@ export default function UserRouter() {
                     backPath={ locRequestsPath('Collection') }
                     detailsPath={ locDetailsPath }
                     viewer='User'
+                />
+            } />
+            <Route path={ relativeDashboardCertificateRelativePath('Collection') } element={
+                <DashboardCertificateRouter
+                    detailsPath={ locDetailsPath }
+                    viewer='User'
+                    locType='Collection'
                 />
             } />
             <Route path={ locDetailsRelativePath('Identity') } element={

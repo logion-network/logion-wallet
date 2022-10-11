@@ -35,7 +35,7 @@ Object {
             <p
               class="text-title"
             >
-              Number of Collection Item(s) recorded on logion blockchain: 
+              Collection Item(s) recorded on logion blockchain
             </p>
             <p>
               The Collection LOC content listed above shall cover all related Collection Items created using the logion import tool and/or through the logion API by an external application approved between the Legal Officer and its client under a process validated by the Legal Officer of the present Collection LOC.
@@ -97,6 +97,130 @@ Object {
             />
           </div>
         </div>
+        <div
+          class="PagedTable"
+        >
+          <div
+            class="controls"
+          >
+            <span
+              class="numbers"
+            >
+              1
+              -
+              0
+               of 
+              0
+            </span>
+            <span
+              class="control left light disabled"
+            >
+              <img
+                alt="left"
+                height="10px"
+                src="/assets/themes/light/left.svg"
+              />
+            </span>
+            <span
+              class="control right light disabled"
+            >
+              <img
+                alt="right"
+                height="10px"
+                src="/assets/themes/light/right.svg"
+              />
+            </span>
+          </div>
+          <div
+            class="Table constrained-row-height"
+          >
+            <style>
+              
+            .Table .body .Row .Col.split-after::before {
+                background-color: #152665;
+            }
+            
+            </style>
+            <div
+              class="header"
+              style="color: rgb(255, 255, 255); background-color: rgb(12, 22, 61);"
+            >
+              <div
+                class="Row"
+              >
+                <div
+                  class="Col"
+                  style="text-align: left;"
+                >
+                  Collection Item ID
+                </div>
+                <div
+                  class="Col"
+                  style="text-align: center;"
+                >
+                  Timestamp
+                </div>
+                <div
+                  class="Col"
+                  style="width: 300px; text-align: center;"
+                >
+                  Certificate
+                </div>
+                <div
+                  class="Col"
+                  style="width: 100px; text-align: center;"
+                >
+                  Details
+                </div>
+              </div>
+            </div>
+            <div
+              class="body"
+            >
+              <div
+                class="Row empty-data"
+                style="color: rgb(255, 255, 255); background-color: rgb(21, 38, 101);"
+              >
+                <div
+                  class="empty-message"
+                >
+                  No page to display
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="controls"
+          >
+            <span
+              class="numbers"
+            >
+              1
+              -
+              0
+               of 
+              0
+            </span>
+            <span
+              class="control left light disabled"
+            >
+              <img
+                alt="left"
+                height="10px"
+                src="/assets/themes/light/left.svg"
+              />
+            </span>
+            <span
+              class="control right light disabled"
+            >
+              <img
+                alt="right"
+                height="10px"
+                src="/assets/themes/light/right.svg"
+              />
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   </body>,
@@ -131,7 +255,7 @@ Object {
           <p
             class="text-title"
           >
-            Number of Collection Item(s) recorded on logion blockchain: 
+            Collection Item(s) recorded on logion blockchain
           </p>
           <p>
             The Collection LOC content listed above shall cover all related Collection Items created using the logion import tool and/or through the logion API by an external application approved between the Legal Officer and its client under a process validated by the Legal Officer of the present Collection LOC.
@@ -191,6 +315,130 @@ Object {
             class="Row CheckResultFeedback result-none"
             id="feedback-NONE"
           />
+        </div>
+      </div>
+      <div
+        class="PagedTable"
+      >
+        <div
+          class="controls"
+        >
+          <span
+            class="numbers"
+          >
+            1
+            -
+            0
+             of 
+            0
+          </span>
+          <span
+            class="control left light disabled"
+          >
+            <img
+              alt="left"
+              height="10px"
+              src="/assets/themes/light/left.svg"
+            />
+          </span>
+          <span
+            class="control right light disabled"
+          >
+            <img
+              alt="right"
+              height="10px"
+              src="/assets/themes/light/right.svg"
+            />
+          </span>
+        </div>
+        <div
+          class="Table constrained-row-height"
+        >
+          <style>
+            
+            .Table .body .Row .Col.split-after::before {
+                background-color: #152665;
+            }
+            
+          </style>
+          <div
+            class="header"
+            style="color: rgb(255, 255, 255); background-color: rgb(12, 22, 61);"
+          >
+            <div
+              class="Row"
+            >
+              <div
+                class="Col"
+                style="text-align: left;"
+              >
+                Collection Item ID
+              </div>
+              <div
+                class="Col"
+                style="text-align: center;"
+              >
+                Timestamp
+              </div>
+              <div
+                class="Col"
+                style="width: 300px; text-align: center;"
+              >
+                Certificate
+              </div>
+              <div
+                class="Col"
+                style="width: 100px; text-align: center;"
+              >
+                Details
+              </div>
+            </div>
+          </div>
+          <div
+            class="body"
+          >
+            <div
+              class="Row empty-data"
+              style="color: rgb(255, 255, 255); background-color: rgb(21, 38, 101);"
+            >
+              <div
+                class="empty-message"
+              >
+                No page to display
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="controls"
+        >
+          <span
+            class="numbers"
+          >
+            1
+            -
+            0
+             of 
+            0
+          </span>
+          <span
+            class="control left light disabled"
+          >
+            <img
+              alt="left"
+              height="10px"
+              src="/assets/themes/light/left.svg"
+            />
+          </span>
+          <span
+            class="control right light disabled"
+          >
+            <img
+              alt="right"
+              height="10px"
+              src="/assets/themes/light/right.svg"
+            />
+          </span>
         </div>
       </div>
     </div>

@@ -8,30 +8,29 @@ import IconTextRow from "src/common/IconTextRow";
 import { ColorTheme } from "src/common/ColorTheme";
 import CheckFileResult from "src/components/checkfileresult/CheckFileResult";
 
-import { CheckLatestDeliveryResponse } from "src/loc/FileModel";
-
 import CheckDeliveredButton, { checkResultTypeSpan } from "./CheckDeliveredButton";
 import './CheckDeliveredFrame.css';
 import InlineDateTime from "src/common/InlineDateTime";
 
 export interface Props {
     item: CollectionItem;
+    detailedError: boolean;
     colorTheme?: ColorTheme;
 }
 
 export default function CheckDeliveredFrame(props: Props) {
     const [ checking, setChecking ] = useState(false);
     const [ checked, setChecked ] = useState(false);
-    const [ matchingCopy, setMatchingCopy ] = useState<CheckLatestDeliveryResponse | undefined>();
+    const [ result, setResult ] = useState<CheckCertifiedCopyResult | undefined>();
 
     const onChecking = useCallback(() => {
         setChecking(true);
-        setMatchingCopy(undefined);
+        setResult(undefined);
         setChecked(false);
     }, []);
 
     const onChecked = useCallback((result: CheckCertifiedCopyResult) => {
-        setMatchingCopy(result.match);
+        setResult(result);
         setChecked(true);
     }, []);
 
@@ -70,24 +69,36 @@ export default function CheckDeliveredFrame(props: Props) {
                                     </div>
                                 }
                                 {
-                                    checked && matchingCopy !== undefined &&
+                                    checked && result?.match !== undefined &&
                                     <div>
                                         <p>Check result: <strong>{ checkResultTypeSpan(CheckResultType.POSITIVE)  }</strong></p>
                                         <p>The file you uploaded is a logion-certified file which belongs to the current rightful NTF owner.</p>
                                         <ul>
-                                            <li>File hash: { matchingCopy.copyHash }</li>
-                                            <li>Generation timestamp: <InlineDateTime dateTime={ matchingCopy.generatedOn } separator=" - " /></li>
-                                            <li>NFT owner: { matchingCopy.owner }</li>
+                                            <li>File hash: { result.match.copyHash }</li>
+                                            <li>Generation timestamp: <InlineDateTime dateTime={ result.match.generatedOn } separator=" - " /></li>
+                                            <li>NFT owner: { result.match.owner }</li>
                                         </ul>
                                         <Icon icon={{id: "ok"}} />
                                     </div>
                                 }
                                 {
-                                    checked && matchingCopy === undefined &&
+                                    checked && result !== undefined && result.summary === CheckResultType.NEGATIVE && !props.detailedError &&
                                     <div>
                                         <p>Check result: <strong>{ checkResultTypeSpan(CheckResultType.NEGATIVE)  }</strong></p>
                                         <p><strong>No match according to logion records.</strong></p>
                                         <p><strong>Please be careful and execute a deeper due diligence.</strong></p>
+                                        <Icon icon={{id: "ko"}} />
+                                    </div>
+                                }
+                                {
+                                    checked && result !== undefined && result.summary === CheckResultType.NEGATIVE && props.detailedError &&
+                                    <div>
+                                        <p>Check result: <strong>{ checkResultTypeSpan(CheckResultType.NEGATIVE)  }</strong></p>
+                                        <ul>
+                                            <li><strong>Logion origin: { checkResultTypeSpan(result.logionOrigin) }</strong></li>
+                                            <li><strong>Belongs to current NFT owner: { checkResultTypeSpan(result.nftOwnership) }</strong></li>
+                                            <li><strong>Latest generated file: { checkResultTypeSpan(result.latest) }</strong></li>
+                                        </ul>
                                         <Icon icon={{id: "ko"}} />
                                     </div>
                                 }

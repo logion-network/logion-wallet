@@ -10,7 +10,13 @@
 }
 
 .Button.btn.slim {
-    padding: 0 20px;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.Button.btn.narrow {
+    padding-left: 0;
+    padding-right: 0;
 }
 
 .Button.btn.btn-secondary:hover:before {

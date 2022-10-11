@@ -1,0 +1,38 @@
+.PagedTable .controls {
+    text-align: right;
+}
+
+.PagedTable .controls .numbers {
+    margin-right: 10px;
+}
+
+.PagedTable .control {
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+    border-radius: 16px;
+}
+
+.PagedTable .control.light:hover :not(.disabled) {
+    background-color: #eff3fe;
+}
+
+.PagedTable .control.dark:hover :not(.disabled) {
+    background-color: #0c163d;
+}
+
+.PagedTable .control img {
+    margin-bottom: 4px;
+}
+
+.PagedTable .control.left img {
+    margin-right: 4px;
+}
+
+.PagedTable .control.right img {
+    margin-right: 2px;
+}
+
+.PagedTable .control.disabled img {
+    opacity: 0.5;
+}

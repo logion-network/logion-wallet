@@ -79,3 +79,7 @@ export function isSuccessful(result: any) {
 export function setIsSuccessful(value: boolean) {
     _isSuccessful = value;
 }
+
+export class ClosedCollectionLoc {
+
+}

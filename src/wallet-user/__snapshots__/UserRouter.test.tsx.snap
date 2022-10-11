@@ -152,6 +152,16 @@ exports[`renders 1`] = `
   />
   <Route
     element={
+      <DashboardCertiticateRouter
+        detailsPath={[Function]}
+        locType="Collection"
+        viewer="User"
+      />
+    }
+    path="/loc/collection/:locId/certificate/:itemId"
+  />
+  <Route
+    element={
       <LocDetails
         backPath="/user/loc/identity"
         detailsPath={[Function]}

@@ -307,6 +307,7 @@ export default function Certificate() {
                     <CheckDeliveredFrame
                         item={ collectionItem }
                         colorTheme={ LIGHT_MODE }
+                        detailedError={ false }
                     />
                 </Container>
             }
