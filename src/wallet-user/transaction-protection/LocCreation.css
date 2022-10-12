@@ -1,9 +1,8 @@
-.LocCreation .id-loc-status {
-    margin-top: 10px;
+.LocCreation .info-text {
+    margin-top: 25px;
     text-align: left;
 }
 
-.LocCreation .id-loc-status .icon {
-    margin-top: 7px;
+.LocCreation .modal-body {
+    padding-bottom: 5px;
 }
-

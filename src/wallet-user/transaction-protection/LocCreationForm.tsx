@@ -6,15 +6,11 @@ import FormGroup from '../../common/FormGroup';
 import Select from '../../common/Select';
 
 import { buildOptions } from '../trust-protection/SelectLegalOfficer';
-import { useCommonContext } from '../../common/CommonContext';
+import { useUserContext } from "../UserContext";
 
 export interface FormValues {
     description: string;
     legalOfficer: string;
-    firstName?: string;
-    lastName?: string;
-    email?: string;
-    phone?: string;
 }
 
 export interface Props {
@@ -25,9 +21,9 @@ export interface Props {
 }
 
 export default function LocCreationForm(props: Props) {
-    const { availableLegalOfficers } = useCommonContext();
+    const { locsState } = useUserContext();
 
-    if(availableLegalOfficers === undefined) {
+    if(locsState === undefined) {
         return null;
     }
 
@@ -69,7 +65,7 @@ export default function LocCreationForm(props: Props) {
 
             <FormGroup
                 id={ `locOwner` }
-                label="Legal officer"
+                label="Please select a Logion Legal Officer who already executed an Identity LOC linked to your Polkadot address:"
                 control={
                     <Controller
                         name="legalOfficer"
@@ -86,7 +82,7 @@ export default function LocCreationForm(props: Props) {
                         render={({ field }) => (
                             <Select
                                 isInvalid={ !!props.errors.legalOfficer?.message }
-                                options={ buildOptions(availableLegalOfficers) }
+                                options={ buildOptions(locsState?.legalOfficersWithValidIdentityLoc) }
                                 value={ field.value }
                                 onChange={ field.onChange }
                             />

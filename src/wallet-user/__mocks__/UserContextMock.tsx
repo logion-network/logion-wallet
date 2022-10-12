@@ -122,9 +122,9 @@ export function setRejectedLocRequests(requests: any[]) {
     }
 }
 
-export function setHasValidIdentityLoc(legalOfficer: LegalOfficer) {
+export function setHasValidIdentityLoc(legalOfficers: LegalOfficer []) {
     locsState = {
-        hasValidIdentityLoc: (legalOfficer: LegalOfficer) => legalOfficer.address === PATRICK.address
+        legalOfficersWithValidIdentityLoc: legalOfficers
     }
 }
 
