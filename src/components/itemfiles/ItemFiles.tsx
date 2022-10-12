@@ -8,7 +8,6 @@ import { getCollectionItemFileSource, ItemDeliveriesResponse } from "src/loc/Fil
 import CellWithCopyPaste from "../table/CellWithCopyPaste";
 import { Child } from 'src/common/types/Helpers';
 import ItemFileDetails from "./ItemFileDetails";
-import CheckDeliveredDialog from "../deliverycheck/CheckDeliveredDialog";
 import FrameTitle from "../frametitle/FrameTitle";
 
 import "./ItemFiles.css";
@@ -18,7 +17,6 @@ export interface Props {
     collectionLoc: LocData;
     item: CollectionItem;
     deliveries?: ItemDeliveriesResponse;
-    withCheck: boolean;
     checkResult?: CheckCertifiedCopyResult;
 }
 
@@ -53,7 +51,7 @@ export default function ItemFiles(props: Props) {
     return (
         <div className="ItemFiles">
             <Row>
-                <Col xxl={ props.withCheck ? 4 : undefined }>
+                <Col>
                     <h3>
                         <FrameTitle
                             iconId="polkadot_check_asset"
@@ -61,15 +59,6 @@ export default function ItemFiles(props: Props) {
                         />
                     </h3>
                 </Col>
-                {
-                    props.withCheck &&
-                    <Col xxl={ 8 }>
-                        <CheckDeliveredDialog
-                            item={ props.item }
-                            onChecked={ onChecked  }
-                        />
-                    </Col>
-                }
             </Row>
             <Table
                 columns={[

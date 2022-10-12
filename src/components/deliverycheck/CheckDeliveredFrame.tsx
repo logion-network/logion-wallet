@@ -73,7 +73,7 @@ export default function CheckDeliveredFrame(props: Props) {
                                     </div>
                                 }
                                 {
-                                    checked && result?.match !== undefined &&
+                                    checked && result?.match !== undefined && !props.detailedError &&
                                     <div>
                                         <p>Check result: <strong>{ checkResultTypeSpan(CheckResultType.POSITIVE)  }</strong></p>
                                         <p>The file you uploaded is a logion-certified file which belongs to the current rightful NTF owner.</p>
@@ -95,15 +95,15 @@ export default function CheckDeliveredFrame(props: Props) {
                                     </div>
                                 }
                                 {
-                                    checked && result !== undefined && result.summary === CheckResultType.NEGATIVE && props.detailedError &&
+                                    checked && result !== undefined && props.detailedError &&
                                     <div>
-                                        <p>Check result: <strong>{ checkResultTypeSpan(CheckResultType.NEGATIVE)  }</strong></p>
+                                        <p>Check result: <strong>{ checkResultTypeSpan(result.summary)  }</strong></p>
                                         <ul>
                                             <li><strong>Logion origin: { checkResultTypeSpan(result.logionOrigin) }</strong></li>
                                             <li><strong>Belongs to current NFT owner: { checkResultTypeSpan(result.nftOwnership) }</strong></li>
                                             <li><strong>Latest generated file: { checkResultTypeSpan(result.latest) }</strong></li>
                                         </ul>
-                                        <Icon icon={{id: "ko"}} />
+                                        <Icon icon={{id: result.summary === CheckResultType.NEGATIVE ? "ko" : "ok" }} />
                                     </div>
                                 }
                             </CheckFileResult>

@@ -66,7 +66,6 @@ export default function DashboardCertificate() {
                             collectionLoc={ loc }
                             item={ collectionItem }
                             deliveries={ deliveries }
-                            withCheck={ false }
                             checkResult={ result }
                         />
                     </PolkadotFrame>

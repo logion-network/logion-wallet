@@ -1,5 +1,5 @@
 import { AxiosInstance } from "axios";
-import { useState, useCallback, useEffect } from "react";
+import { useState, useCallback, useEffect, useMemo } from "react";
 import { Form } from "react-bootstrap";
 import { ClosedCollectionLoc, CollectionItem, LocData } from "@logion/client";
 import { getCollectionSize } from "@logion/node-api/dist/LogionLoc";
@@ -21,10 +21,8 @@ import { toItemId, Viewer } from './types';
 import StatementOfFactsRequestButton from "./statement/StatementOfFactsRequestButton";
 import { useUserLocContext } from "./UserLocContext";
 import { useLocContext } from "./LocContext";
-import ItemFiles from "src/components/itemfiles/ItemFiles";
-import { getAllDeliveries, ItemDeliveriesResponse } from "./FileModel";
 import { useLegalOfficerContext } from "src/legal-officer/LegalOfficerContext";
-import PagedTable, { getPage } from "src/components/pagedtable/PagedTable";
+import PagedTable, { getPage, Page } from "src/components/pagedtable/PagedTable";
 import { ActionCell, DateTimeCell } from "src/common/Table";
 import ButtonGroup from "src/common/ButtonGroup";
 import { useNavigate } from "react-router-dom";
@@ -103,12 +101,11 @@ function CollectionLocItemChecker(props: LocalProps) {
     const { collectionLoc, collectionSizeFunction, collectionItemFunction, collectionItems } = props;
     const navigate = useNavigate();
     const { colorTheme } = useCommonContext();
-    const { accounts, axiosFactory } = useLogionChain();
+    const { accounts } = useLogionChain();
     const [ state, setState ] = useState<CheckResult>('NONE');
     const [ collectionSize, setCollectionSize ] = useState<number | undefined | null>(null);
     const [ itemId, setItemId ] = useState<string>("");
     const [ item, setItem ] = useState<CollectionItem>();
-    const [ deliveries, setDeliveries ] = useState<ItemDeliveriesResponse>();
     const [ managedCheck, setManagedCheck ] = useState<{ itemId: string, active: boolean }>();
     const [ currentPageNumber, setCurrentPageNumber ] = useState(0);
 
@@ -129,8 +126,6 @@ function CollectionLocItemChecker(props: LocalProps) {
                     const collectionItem = await collectionItemFunction(actualId);
                     if (collectionItem) {
                         setItem(collectionItem);
-                        const deliveries = await getAllDeliveries(axiosFactory!(collectionLoc.ownerAddress), { locId: collectionLoc.id.toString(), collectionItemId: itemId });
-                        setDeliveries(deliveries);
                         setState('POSITIVE');
                     } else {
                         setState('NEGATIVE');
@@ -141,7 +136,27 @@ function CollectionLocItemChecker(props: LocalProps) {
                 }
             }
         }
-    }, [ itemId, collectionItemFunction, axiosFactory, collectionLoc ]);
+    }, [ itemId, collectionItemFunction ]);
+
+    const currentPage: Page<CollectionItem> = useMemo(() => {
+        if(item) {
+            return {
+                pageNumber: 1,
+                offset: 0,
+                data: [ item ],
+                isFirst: true,
+                isLast: true
+            };
+        } else {
+            return getPage(collectionItems, currentPageNumber, 10);
+        }
+    }, [ collectionItems, currentPageNumber, item ]);
+
+    const resetCheck = useCallback(() => {
+        setManagedCheck(undefined);
+        setItemId("");
+        setState('NONE');
+    }, []);
 
     useEffect(() => {
         if (props.collectionItem && (
@@ -156,11 +171,9 @@ function CollectionLocItemChecker(props: LocalProps) {
             setItem(props.collectionItem);
             setState('POSITIVE');
         } else if (!props.collectionItem && managedCheck) {
-            setManagedCheck(undefined);
-            setItemId("");
-            setState('NONE');
+            resetCheck();
         }
-    }, [ managedCheck, setManagedCheck, props.collectionItem ]);
+    }, [ managedCheck, setManagedCheck, props.collectionItem, resetCheck ]);
 
     if (accounts?.current?.address === undefined) {
         return null;
@@ -184,6 +197,7 @@ function CollectionLocItemChecker(props: LocalProps) {
                             <Row>
                                 <Col className={ managedCheck?.active ? "matched" : undefined }>
                                     <Form.Control
+                                        className="item-id-input"
                                         type="text"
                                         value={ itemId }
                                         onChange={ value => {
@@ -198,6 +212,10 @@ function CollectionLocItemChecker(props: LocalProps) {
                                         } }
                                         data-testid="item-id"
                                     />
+                                    {
+                                        state !== "NONE" &&
+                                        <span className="clear-button" onClick={ resetCheck }><Icon icon={{ id:"clear", hasVariants: true }} height="24px" /></span>
+                                    }
                                 </Col>
                                 <Col className="buttons">
                                     <Button onClick={ checkData } disabled={ !itemId }><Icon
@@ -223,20 +241,14 @@ function CollectionLocItemChecker(props: LocalProps) {
                         colors={ colorTheme.frame }
                     />
                     <CheckResultFeedback
-                        collectionLoc={ props.collectionLoc }
-                        itemId={ toItemId(itemId) }
                         state={ state }
-                        item={ item }
-                        deliveries={ deliveries }
-                        viewer={ props.viewer }
-                        axiosFactory={ props.axiosFactory }
                     />
                 </>
                 }
             />
             <PagedTable
                 fullSize={ collectionItems.length }
-                currentPage={ getPage(collectionItems, currentPageNumber, 10) }
+                currentPage={ currentPage }
                 columns={[
                     {
                         header: "Collection Item ID",
@@ -286,17 +298,11 @@ function CollectionLocItemChecker(props: LocalProps) {
 }
 
 interface CheckResultProps {
-    collectionLoc: LocData,
-    itemId?: string,
     state: CheckResult,
-    item?: CollectionItem,
-    deliveries?: ItemDeliveriesResponse,
-    viewer: Viewer,
-    axiosFactory: () => AxiosInstance,
 }
 
 function CheckResultFeedback(props: CheckResultProps) {
-    const { itemId, state, item, deliveries, collectionLoc } = props;
+    const { state } = props;
     const { client } = useLogionChain();
 
     if(!client) {
@@ -305,7 +311,6 @@ function CheckResultFeedback(props: CheckResultProps) {
 
     switch (state) {
         case "POSITIVE":
-            const certificateUrl = fullCollectionItemCertificate(collectionLoc.id, itemId)
             return (
                 <>
                     <Row className="CheckResultFeedback result-positive" id={ `feedback-${ state }` }>
@@ -319,27 +324,7 @@ function CheckResultFeedback(props: CheckResultProps) {
                         <Col>
                             <Icon icon={ { id: "ok" } } height='45px' />
                         </Col>
-                        <Col>
-                            <div id="url-header" className="url-header">Certificate Public web address (URL) for the
-                                data covered by this Collection LOC:
-                            </div>
-                            <div className="url-copy-paste-container">
-                                <div className="url-container">
-                                    <a href={ certificateUrl } target="_blank" rel="noreferrer">{ certificateUrl }</a>
-                                </div>
-                                <CopyPasteButton value={ certificateUrl } />
-                            </div>
-                        </Col>
                     </Row>
-                    {
-                        item !== undefined && item.files.length > 0 &&
-                        <ItemFiles
-                            collectionLoc={ collectionLoc }
-                            item={ item }
-                            deliveries={ deliveries }
-                            withCheck={ props.viewer === "LegalOfficer" }
-                        />
-                    }
                 </>
             )
         case "NEGATIVE":
