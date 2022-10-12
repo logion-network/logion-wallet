@@ -18,3 +18,5 @@ export {
     CheckResultType,
     ClosedCollectionLoc,
 }
+
+export { MimeType } from "@logion/client/dist/Mime";

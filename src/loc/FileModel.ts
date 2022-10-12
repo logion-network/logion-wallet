@@ -1,5 +1,5 @@
 import { AxiosInstance, AxiosResponse } from "axios";
-import { LegalOfficer, Token } from "@logion/client";
+import { LegalOfficer, Token, MimeType } from "@logion/client";
 
 export const LO_FILE_IDS = [ 'oath-logo', 'header-logo', 'seal' ];
 
@@ -26,7 +26,7 @@ export interface GetCollectionItemFileParameters extends GetFileParameters {
 
 export interface TypedFile {
     data: any,
-    extension: string
+    mimeType: MimeType,
 }
 
 export async function getFile(
@@ -76,18 +76,10 @@ export async function getJsonLoc(
 
 function typedFile(response: AxiosResponse): TypedFile {
     const contentType: string = response.headers['content-type'];
-    return { data: response.data, extension: determineExtension(contentType) };
-}
-
-function determineExtension(contentType: string) {
-    if (!contentType || contentType.indexOf("/") < 0) {
-        return "txt"
-    }
-    const extension = contentType.split("/")[1];
-    if (extension.indexOf(";") > 0) {
-        return extension.split(";")[0];
-    }
-    return extension;
+    return {
+        data: response.data,
+        mimeType: MimeType.from(contentType),
+    };
 }
 
 export interface AddLoFileParameters {

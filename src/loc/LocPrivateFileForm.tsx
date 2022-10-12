@@ -22,7 +22,14 @@ export default function LocPrivateFileForm(props: Props) {
         <>
             <h3>Add a confidential document</h3>
             <p>Important: after publication, the only data that will be publicly available on the blockchain will be the
-                HASH of the document and its nature (which can remain empty). The document name is not published.</p>
+                HASH of the document and its nature (which can remain empty). The document name is not published.
+            </p>
+            <FormGroup
+                id="locFile"
+                label="File"
+                control={ <FileSelectorButton onFileSelected={ props.onFileSelected } /> }
+                colors={ props.colors }
+            />
             <FormGroup
                 id="locFileName"
                 label="Document Name"
@@ -43,7 +50,8 @@ export default function LocPrivateFileForm(props: Props) {
                         ) } />
 
                 }
-                colors={ props.colors } />
+                colors={ props.colors }
+            />
             <FormGroup
                 id="locFileNature"
                 label="Document Public Description"
@@ -63,12 +71,8 @@ export default function LocPrivateFileForm(props: Props) {
                         ) } />
 
                 }
-                colors={ props.colors } />
-            <FormGroup
-                id="locFile"
-                label="File"
-                control={ <FileSelectorButton onFileSelected={ props.onFileSelected } /> }
-                colors={ props.colors } />
+                colors={ props.colors }
+            />
         </>
     )
 }

@@ -23,7 +23,7 @@ export function LocPrivateFileButton(props: Props) {
     const { addFile, locItems } = props;
     const { colorTheme } = useCommonContext();
     const [ status, setStatus ] = useState<Status>('Idle');
-    const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>();
+    const { control, handleSubmit, formState: { errors }, reset, setValue } = useForm<FormValues>();
     const [ file, setFile ] = useState<File | null>(null);
     const [ existingItem, setExistingItem ] = useState<LocItem | null>(null);
     const [ duplicateHash, setDuplicateHash ] = useState<string | null>(null);
@@ -50,6 +50,11 @@ export function LocPrivateFileButton(props: Props) {
             }
         }
     }, [ file, addFile, locItems, setExistingItem ])
+
+    const handleSelectedFile = useCallback((file: File) => {
+        setFile(file);
+        setValue("fileName", file.name);
+    }, [ setValue ]);
 
     return (
         <>
@@ -85,7 +90,7 @@ export function LocPrivateFileButton(props: Props) {
                     control={ control }
                     errors={ errors }
                     colors={ colorTheme.dialog }
-                    onFileSelected={ setFile }
+                    onFileSelected={ handleSelectedFile }
                 />
                 { status === 'Uploading' &&
                     <Row>
