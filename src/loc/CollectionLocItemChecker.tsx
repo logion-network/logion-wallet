@@ -156,6 +156,7 @@ function CollectionLocItemChecker(props: LocalProps) {
         setManagedCheck(undefined);
         setItemId("");
         setState('NONE');
+        setItem(undefined);
     }, []);
 
     useEffect(() => {
