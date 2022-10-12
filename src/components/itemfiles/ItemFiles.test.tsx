@@ -34,7 +34,6 @@ describe("ItemFiles", () => {
         const result = shallowRender(<ItemFiles
             collectionLoc={ collectionLoc }
             item={ item }
-            withCheck={ false }
         />);
         expect(result).toMatchSnapshot();
     });
@@ -44,7 +43,6 @@ describe("ItemFiles", () => {
             collectionLoc={ collectionLoc }
             item={ item }
             deliveries={{}}
-            withCheck={ false }
         />);
         expect(result).toMatchSnapshot();
     });
@@ -63,7 +61,6 @@ describe("ItemFiles", () => {
                     }
                 ]
             }}
-            withCheck={ false }
         />);
         expect(result).toMatchSnapshot();
     });

@@ -2,6 +2,20 @@
     margin-top: 20px;
 }
 
+.CollectionLocItemChecker .item-id-input {
+    display: inline-block;
+    width: calc(100% - 32px);
+}
+
+.CollectionLocItemChecker .clear-button {
+    cursor: pointer;
+    margin-left: 7px;
+}
+
+.CollectionLocItemChecker .clear-button:hover {
+    opacity: 0.5;
+}
+
 .CollectionLocItemChecker .Button {
     margin-left: 20px;
 }
