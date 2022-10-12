@@ -36,7 +36,7 @@ describe("FileModel", () => {
                 responseType: "blob"
             })
         );
-        expect(typedFile.extension).toBe("jpeg");
+        expect(typedFile.mimeType.extensions[0]).toBe("jpeg");
     })
 
     it("downloads LO file", async () => {
@@ -59,7 +59,7 @@ describe("FileModel", () => {
                 responseType: "blob"
             })
         );
-        expect(typedFile.extension).toBe("jpeg");
+        expect(typedFile.mimeType.extensions[0]).toBe("jpeg");
     })
 
     it("downloads collection item file", async () => {
@@ -86,7 +86,7 @@ describe("FileModel", () => {
                 responseType: "blob"
             })
         );
-        expect(typedFile.extension).toBe("jpeg");
+        expect(typedFile.mimeType.extensions[0]).toBe("jpeg");
     })
 
     it("downloads LOC as JSON", async () => {
@@ -109,7 +109,7 @@ describe("FileModel", () => {
                 responseType: "blob"
             })
         );
-        expect(typedFile.extension).toBe("json");
+        expect(typedFile.mimeType.extensions[0]).toBe("json");
     })
 
     it("adds LO file", async () => {
