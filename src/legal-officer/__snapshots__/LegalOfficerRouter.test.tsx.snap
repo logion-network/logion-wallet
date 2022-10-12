@@ -104,6 +104,16 @@ exports[`renders 1`] = `
     path="/loc/collection/:locId"
   />
   <Route
+    element={
+      <DashboardCertiticateRouter
+        detailsPath={[Function]}
+        locType="Collection"
+        viewer="LegalOfficer"
+      />
+    }
+    path="/loc/collection/:locId/certificate/:itemId"
+  />
+  <Route
     element={<IdentityProtection />}
     path="/identities"
   />

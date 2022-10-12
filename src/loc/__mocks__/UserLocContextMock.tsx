@@ -64,5 +64,6 @@ export function useUserLocContext() {
         addFile,
         addMetadata,
         checkResult: { result: "NONE" },
+        collectionItems: [],
     }
 }

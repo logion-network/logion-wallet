@@ -22,15 +22,21 @@
 }
 
 .ButtonGroup .btn-group > .btn:not(:first-child),
-.btn-group > .btn-group:not(:first-child),
-.ButtonGroup .btn-group > .dropdown:not(:first-child) {
+.ButtonGroup .btn-group > .btn-group:not(:first-child),
+.ButtonGroup .btn-group > .dropdown:not(:first-child),
+.ButtonGroup .btn-group > :not(.btn-check:first-child) + .btn,
+.ButtonGroup .btn-group > .btn-group:not(:first-child) {
     margin-left: 25px;
+}
+
+.ButtonGroup.narrow .btn-group > .btn:not(:first-child),
+.ButtonGroup.narrow .btn-group > .btn-group:not(:first-child),
+.ButtonGroup.narrow .btn-group > .dropdown:not(:first-child),
+.ButtonGroup.narrow .btn-group > :not(.btn-check:first-child) + .btn,
+.ButtonGroup.narrow .btn-group > .btn-group:not(:first-child) {
+    margin-left: 5px;
 }
 
 .ButtonGroup.left {
     text-align: left;
-}
-
-.ButtonGroup .btn-group > :not(.btn-check:first-child) + .btn, .btn-group > .btn-group:not(:first-child) {
-    margin-left: 25px;
 }

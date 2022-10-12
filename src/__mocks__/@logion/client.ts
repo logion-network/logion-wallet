@@ -6,6 +6,7 @@ import {
     isSuccessful,
     toIsoString,
     fromIsoString,
+    ClosedCollectionLoc,
 } from '../LogionClientMock';
 
 export {
@@ -15,4 +16,5 @@ export {
     toIsoString,
     fromIsoString,
     CheckResultType,
+    ClosedCollectionLoc,
 }

@@ -88,6 +88,7 @@ export interface LocContext {
     confirmMetadata: ((locItem: LocItem) => void) | null
     voidLoc: ((voidInfo: FullVoidInfo) => void) | null
     voidLocExtrinsic?: ((voidInfo: VoidInfo) => SignAndSubmit) | null
+    collectionItems: CollectionItem[]
 }
 
 const MAX_REFRESH = 20;
@@ -122,6 +123,7 @@ function initialContextValue(locId: UUID, backPath: string, detailsPath: (locId:
         checkResult: { result: "NONE" },
         requestSof: null,
         requestSofOnCollection: null,
+        collectionItems: [],
     }
 }
 
@@ -169,6 +171,7 @@ interface Action {
     checkResult?: DocumentCheckResult,
     requestSof?: () => void,
     requestSofOnCollection?: (collectionItemId: string) => void,
+    collectionItems?: CollectionItem[],
 }
 
 const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action): LocContext => {
@@ -182,6 +185,7 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
                 locState: action.locState!,
                 loc: action.locData!,
                 locItems: action.locItems!,
+                collectionItems: action.collectionItems!,
             }
         case "SET_FUNCTIONS":
             return {
@@ -317,12 +321,17 @@ export function LocContextProvider(props: Props) {
                 supersededLoc = await client!.public.findLocById({ locId: locData.replacerOf });
             }
         }
+        let collectionItems: CollectionItem[] = [];
+        if(locState instanceof ClosedCollectionLoc) {
+            collectionItems = await locState.getCollectionItems();
+        }
         dispatch({
             type: 'SET_LOC',
             locState,
             locItems,
             supersededLoc,
             locData,
+            collectionItems,
         });
         if (triggerRefresh && refreshNeeded(locItems)) {
             startRefresh();

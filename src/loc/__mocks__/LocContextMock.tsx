@@ -101,5 +101,6 @@ export function useLocContext() {
         locState,
         voidLoc,
         voidLocExtrinsic: () => mockSignAndSubmit(() => {}),
+        collectionItems: [],
     };
 }

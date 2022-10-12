@@ -34,6 +34,7 @@ export interface Props {
     id?: string,
     "data-testid"?: string,
     slim?: boolean,
+    narrow?: boolean,
     choices?: Choice[],
     className?: string,
 }
@@ -92,6 +93,7 @@ export default function Button(props: Props) {
 
     const otherClassNames = [
         (props.slim !== undefined && props.slim) ? "slim" : undefined,
+        (props.narrow !== undefined && props.narrow) ? "narrow" : undefined,
         props.className
     ];
     let className = customClassName("Button", ...otherClassNames);

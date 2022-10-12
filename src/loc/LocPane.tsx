@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 
 import { useCommonContext } from "../common/CommonContext";
 import { FullWidthPane } from "../common/Dashboard";
-import { Children } from "src/common/types/Helpers";
+import { Children, customClassName } from "src/common/types/Helpers";
 
 import "./LocPane.css";
 
@@ -11,6 +11,7 @@ export interface Props {
     loc: LocData | null;
     backPath: string;
     children: Children;
+    className?: string;
 }
 
 export default function LocPane(props: Props) {
@@ -45,7 +46,7 @@ export default function LocPane(props: Props) {
                 background: colorTheme.topMenuItems.iconGradient,
             } }
             onBack={ () => navigate(backPath) }
-            className="LocPane"
+            className={ customClassName("LocPane", props.className) }
         >
             { children }
         </FullWidthPane>

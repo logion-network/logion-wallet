@@ -60,3 +60,10 @@
 .CollectionLocItemChecker .buttons {
     display: flex;   
 }
+
+.CollectionLocItemChecker .ViewCertificateButton {
+    padding-top: 0;
+    padding-bottom: 3px;
+    padding-left: 8px;
+    padding-right: 4px;
+}
