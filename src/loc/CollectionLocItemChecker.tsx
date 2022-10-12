@@ -1,8 +1,7 @@
 import { AxiosInstance } from "axios";
 import { useState, useCallback, useEffect } from "react";
 import { Form } from "react-bootstrap";
-import { ClosedCollectionLoc, CollectionItem } from "@logion/client";
-import { UUID } from "@logion/node-api/dist/UUID";
+import { ClosedCollectionLoc, CollectionItem, LocData } from "@logion/client";
 import { getCollectionSize } from "@logion/node-api/dist/LogionLoc";
 
 import { useLogionChain } from "../logion-chain";
@@ -33,8 +32,7 @@ import { dashboardCertificateRelativePath } from "src/RootPaths";
 import CellWithCopyPaste from "src/components/table/CellWithCopyPaste";
 
 export interface Props {
-    locId: UUID;
-    locOwner: string;
+    collectionLoc: LocData;
     collectionItem?: CollectionItem;
 }
 
@@ -42,7 +40,7 @@ export type CheckResult = 'NONE' | 'POSITIVE' | 'NEGATIVE';
 
 export function UserCollectionLocItemChecker(props: Props) {
 
-    const { locId, collectionItem, locOwner } = props;
+    const { collectionLoc, collectionItem } = props;
     const { locState, collectionItems } = useUserLocContext();
     const { client } = useLogionChain();
     const collection: ClosedCollectionLoc = locState as ClosedCollectionLoc;
@@ -59,19 +57,18 @@ export function UserCollectionLocItemChecker(props: Props) {
     return (
         <CollectionLocItemChecker
             viewer="User"
-            locId={ locId }
-            locOwner={ locOwner }
+            collectionLoc={ collectionLoc }
             collectionItem={ collectionItem }
             collectionSizeFunction={ () => collection.size() }
             collectionItemFunction={ collectionItemFunction }
-            axiosFactory={ () => client.buildAxios(client.legalOfficers.find(legalOfficer => legalOfficer.address === locOwner)!) }
+            axiosFactory={ () => client.buildAxios(client.legalOfficers.find(legalOfficer => legalOfficer.address === collectionLoc.ownerAddress)!) }
             collectionItems={ collectionItems }
         />)
 }
 
 export function LOCollectionLocItemChecker(props: Props) {
 
-    const { locId, collectionItem, locOwner } = props;
+    const { collectionLoc, collectionItem } = props;
     const { api } = useLogionChain();
     const { locState, collectionItems } = useLocContext();
     const { axios } = useLegalOfficerContext();
@@ -84,10 +81,9 @@ export function LOCollectionLocItemChecker(props: Props) {
     return (
         <CollectionLocItemChecker
             viewer="LegalOfficer"
-            locId={ locId }
-            locOwner={ locOwner }
+            collectionLoc={ collectionLoc }
             collectionItem={ collectionItem }
-            collectionSizeFunction={ () => getCollectionSize({ api, locId }) }
+            collectionSizeFunction={ () => getCollectionSize({ api, locId: collectionLoc.id }) }
             collectionItemFunction={ (actualId: string) => collection.getCollectionItem({ itemId: actualId }) }
             axiosFactory={ () => axios }
             collectionItems={ collectionItems }
@@ -104,7 +100,7 @@ interface LocalProps extends Props {
 
 function CollectionLocItemChecker(props: LocalProps) {
 
-    const { locId, collectionSizeFunction, collectionItemFunction, locOwner, collectionItems } = props;
+    const { collectionLoc, collectionSizeFunction, collectionItemFunction, collectionItems } = props;
     const navigate = useNavigate();
     const { colorTheme } = useCommonContext();
     const { accounts, axiosFactory } = useLogionChain();
@@ -133,7 +129,7 @@ function CollectionLocItemChecker(props: LocalProps) {
                     const collectionItem = await collectionItemFunction(actualId);
                     if (collectionItem) {
                         setItem(collectionItem);
-                        const deliveries = await getAllDeliveries(axiosFactory!(locOwner), { locId: locId.toString(), collectionItemId: itemId });
+                        const deliveries = await getAllDeliveries(axiosFactory!(collectionLoc.ownerAddress), { locId: collectionLoc.id.toString(), collectionItemId: itemId });
                         setDeliveries(deliveries);
                         setState('POSITIVE');
                     } else {
@@ -145,7 +141,7 @@ function CollectionLocItemChecker(props: LocalProps) {
                 }
             }
         }
-    }, [ itemId, collectionItemFunction, axiosFactory, locId, locOwner ]);
+    }, [ itemId, collectionItemFunction, axiosFactory, collectionLoc ]);
 
     useEffect(() => {
         if (props.collectionItem && (
@@ -227,13 +223,12 @@ function CollectionLocItemChecker(props: LocalProps) {
                         colors={ colorTheme.frame }
                     />
                     <CheckResultFeedback
-                        locId={ locId }
+                        collectionLoc={ props.collectionLoc }
                         itemId={ toItemId(itemId) }
                         state={ state }
                         item={ item }
                         deliveries={ deliveries }
                         viewer={ props.viewer }
-                        locOwner={ props.locOwner }
                         axiosFactory={ props.axiosFactory }
                     />
                 </>
@@ -260,11 +255,11 @@ function CollectionLocItemChecker(props: LocalProps) {
                                     narrow={ true }
                                 >
                                     <ViewCertificateButton
-                                        url={ fullCollectionItemCertificate(locId, item.id) }
+                                        url={ fullCollectionItemCertificate(collectionLoc.id, item.id) }
                                     />
                                     <CopyPasteButton
                                         className="medium"
-                                        value={ fullCollectionItemCertificate(locId, item.id) }
+                                        value={ fullCollectionItemCertificate(collectionLoc.id, item.id) }
                                     />
                                 </ButtonGroup>
                             </ActionCell>
@@ -277,7 +272,7 @@ function CollectionLocItemChecker(props: LocalProps) {
                             <ActionCell>
                                 <ButtonGroup>
                                     <Button
-                                        onClick={ () => navigate(dashboardCertificateRelativePath("Collection", locId, item.id, props.viewer)) }
+                                        onClick={ () => navigate(dashboardCertificateRelativePath("Collection", collectionLoc.id, item.id, props.viewer)) }
                                     >View</Button>
                                 </ButtonGroup>
                             </ActionCell>
@@ -291,18 +286,17 @@ function CollectionLocItemChecker(props: LocalProps) {
 }
 
 interface CheckResultProps {
-    locId: UUID,
+    collectionLoc: LocData,
     itemId?: string,
     state: CheckResult,
     item?: CollectionItem,
     deliveries?: ItemDeliveriesResponse,
     viewer: Viewer,
-    locOwner: string,
     axiosFactory: () => AxiosInstance,
 }
 
 function CheckResultFeedback(props: CheckResultProps) {
-    const { locId, itemId, state, item, deliveries } = props;
+    const { itemId, state, item, deliveries, collectionLoc } = props;
     const { client } = useLogionChain();
 
     if(!client) {
@@ -311,7 +305,7 @@ function CheckResultFeedback(props: CheckResultProps) {
 
     switch (state) {
         case "POSITIVE":
-            const certificateUrl = fullCollectionItemCertificate(locId, itemId)
+            const certificateUrl = fullCollectionItemCertificate(collectionLoc.id, itemId)
             return (
                 <>
                     <Row className="CheckResultFeedback result-positive" id={ `feedback-${ state }` }>
@@ -340,6 +334,7 @@ function CheckResultFeedback(props: CheckResultProps) {
                     {
                         item !== undefined && item.files.length > 0 &&
                         <ItemFiles
+                            collectionLoc={ collectionLoc }
                             item={ item }
                             deliveries={ deliveries }
                             withCheck={ props.viewer === "LegalOfficer" }

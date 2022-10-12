@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FrameTitle renders with icon 1`] = `
+<span
+  className="FrameTitle"
+>
+  <span
+    className="icon-container"
+  >
+    <Icon
+      icon={
+        Object {
+          "id": "ok",
+        }
+      }
+      width="45px"
+    />
+  </span>
+  <span
+    className="text-container"
+  >
+    My Title
+  </span>
+</span>
+`;
+
+exports[`FrameTitle renders without icon 1`] = `
+<span
+  className="FrameTitle"
+>
+  <span
+    className="text-container"
+  >
+    My Title
+  </span>
+</span>
+`;

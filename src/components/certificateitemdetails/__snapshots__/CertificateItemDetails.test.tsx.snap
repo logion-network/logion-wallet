@@ -1,0 +1,258 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CertificateItemDetails renders item with negative match, token and restricted delivery 1`] = `
+<React.Fragment>
+  <Row>
+    <CertificateDateTimeCell
+      dateTime="2022-10-12T10:13:00.000Z"
+      label="Collection item timestamp:"
+      md={6}
+    />
+    <CertificateCell
+      label="Collection item identification:"
+      matched={false}
+      md={6}
+    >
+      some-id
+    </CertificateCell>
+  </Row>
+  <Row>
+    <CertificateCell
+      label="Collection item description:"
+      md={12}
+    >
+      <pre>
+        Some description
+      </pre>
+    </CertificateCell>
+  </Row>
+  <Row>
+    <CertificateCell
+      label="Restricted delivery:"
+      md={12}
+    >
+      Yes
+    </CertificateCell>
+  </Row>
+  <Row>
+    <CertificateCell
+      label="Underlying Token Type:"
+      md={4}
+    >
+      owner
+    </CertificateCell>
+    <CertificateCell
+      label="Underlying Token ID:"
+      md={8}
+    >
+      <pre>
+        0x900edc98db53508e6742723988b872dd08cd09c2
+      </pre>
+    </CertificateCell>
+  </Row>
+  <Row>
+    <TermsAndConditions
+      item={
+        Object {
+          "addedOn": "2022-10-12T10:13:00.000Z",
+          "description": "Some description",
+          "id": "some-id",
+          "restrictedDelivery": true,
+          "token": Object {
+            "id": "0x900edc98db53508e6742723988b872dd08cd09c2",
+            "type": "owner",
+          },
+        }
+      }
+    />
+  </Row>
+</React.Fragment>
+`;
+
+exports[`CertificateItemDetails renders item with positive match, token and restricted delivery 1`] = `
+<React.Fragment>
+  <Row>
+    <CertificateDateTimeCell
+      dateTime="2022-10-12T10:13:00.000Z"
+      label="Collection item timestamp:"
+      md={6}
+    />
+    <CertificateCell
+      label="Collection item identification:"
+      matched={true}
+      md={6}
+    >
+      some-id
+    </CertificateCell>
+  </Row>
+  <Row>
+    <CertificateCell
+      label="Collection item description:"
+      md={12}
+    >
+      <pre>
+        Some description
+      </pre>
+    </CertificateCell>
+  </Row>
+  <Row>
+    <CertificateCell
+      label="Restricted delivery:"
+      md={12}
+    >
+      Yes
+    </CertificateCell>
+  </Row>
+  <Row>
+    <CertificateCell
+      label="Underlying Token Type:"
+      md={4}
+    >
+      owner
+    </CertificateCell>
+    <CertificateCell
+      label="Underlying Token ID:"
+      md={8}
+    >
+      <pre>
+        0x900edc98db53508e6742723988b872dd08cd09c2
+      </pre>
+    </CertificateCell>
+  </Row>
+  <Row>
+    <TermsAndConditions
+      item={
+        Object {
+          "addedOn": "2022-10-12T10:13:00.000Z",
+          "description": "Some description",
+          "id": "some-id",
+          "restrictedDelivery": true,
+          "token": Object {
+            "id": "0x900edc98db53508e6742723988b872dd08cd09c2",
+            "type": "owner",
+          },
+        }
+      }
+    />
+  </Row>
+</React.Fragment>
+`;
+
+exports[`CertificateItemDetails renders item with undefined match, no token and no restricted delivery 1`] = `
+<React.Fragment>
+  <Row>
+    <CertificateDateTimeCell
+      dateTime="2022-10-12T10:13:00.000Z"
+      label="Collection item timestamp:"
+      md={6}
+    />
+    <CertificateCell
+      label="Collection item identification:"
+      matched={false}
+      md={6}
+    >
+      some-id
+    </CertificateCell>
+  </Row>
+  <Row>
+    <CertificateCell
+      label="Collection item description:"
+      md={12}
+    >
+      <pre>
+        Some description
+      </pre>
+    </CertificateCell>
+  </Row>
+  <Row>
+    <CertificateCell
+      label="Restricted delivery:"
+      md={12}
+    >
+      No
+    </CertificateCell>
+  </Row>
+  <Row>
+    <TermsAndConditions
+      item={
+        Object {
+          "addedOn": "2022-10-12T10:13:00.000Z",
+          "description": "Some description",
+          "id": "some-id",
+          "restrictedDelivery": false,
+          "token": undefined,
+        }
+      }
+    />
+  </Row>
+</React.Fragment>
+`;
+
+exports[`CertificateItemDetails renders item with undefined match, token and restricted delivery 1`] = `
+<React.Fragment>
+  <Row>
+    <CertificateDateTimeCell
+      dateTime="2022-10-12T10:13:00.000Z"
+      label="Collection item timestamp:"
+      md={6}
+    />
+    <CertificateCell
+      label="Collection item identification:"
+      matched={false}
+      md={6}
+    >
+      some-id
+    </CertificateCell>
+  </Row>
+  <Row>
+    <CertificateCell
+      label="Collection item description:"
+      md={12}
+    >
+      <pre>
+        Some description
+      </pre>
+    </CertificateCell>
+  </Row>
+  <Row>
+    <CertificateCell
+      label="Restricted delivery:"
+      md={12}
+    >
+      Yes
+    </CertificateCell>
+  </Row>
+  <Row>
+    <CertificateCell
+      label="Underlying Token Type:"
+      md={4}
+    >
+      owner
+    </CertificateCell>
+    <CertificateCell
+      label="Underlying Token ID:"
+      md={8}
+    >
+      <pre>
+        0x900edc98db53508e6742723988b872dd08cd09c2
+      </pre>
+    </CertificateCell>
+  </Row>
+  <Row>
+    <TermsAndConditions
+      item={
+        Object {
+          "addedOn": "2022-10-12T10:13:00.000Z",
+          "description": "Some description",
+          "id": "some-id",
+          "restrictedDelivery": true,
+          "token": Object {
+            "id": "0x900edc98db53508e6742723988b872dd08cd09c2",
+            "type": "owner",
+          },
+        }
+      }
+    />
+  </Row>
+</React.Fragment>
+`;

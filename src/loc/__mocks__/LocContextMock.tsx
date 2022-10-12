@@ -1,4 +1,4 @@
-import { LocData } from "@logion/client";
+import { LocData, CollectionItem } from "@logion/client";
 import { UUID } from "@logion/node-api/dist/UUID";
 
 import { mockSignAndSubmit } from "../../ExtrinsicSubmitterTestUtil";
@@ -79,6 +79,12 @@ export let addLink = jest.fn().mockResolvedValue(undefined);
 
 export let voidLoc = jest.fn();
 
+let collectionItems: CollectionItem[] = [];
+
+export function setCollectionItems(items: CollectionItem[]) {
+    collectionItems = items;
+}
+
 export function useLocContext() {
     return {
         linkLoc: {
@@ -101,6 +107,6 @@ export function useLocContext() {
         locState,
         voidLoc,
         voidLocExtrinsic: () => mockSignAndSubmit(() => {}),
-        collectionItems: [],
+        collectionItems,
     };
 }

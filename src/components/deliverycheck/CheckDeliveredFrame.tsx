@@ -16,6 +16,7 @@ export interface Props {
     item: CollectionItem;
     detailedError: boolean;
     colorTheme?: ColorTheme;
+    onChecked?: (result: CheckCertifiedCopyResult) => void;
 }
 
 export default function CheckDeliveredFrame(props: Props) {
@@ -32,7 +33,10 @@ export default function CheckDeliveredFrame(props: Props) {
     const onChecked = useCallback((result: CheckCertifiedCopyResult) => {
         setResult(result);
         setChecked(true);
-    }, []);
+        if(props.onChecked) {
+            props.onChecked(result);
+        }
+    }, [ props ]);
 
     return (
         <PolkadotFrame

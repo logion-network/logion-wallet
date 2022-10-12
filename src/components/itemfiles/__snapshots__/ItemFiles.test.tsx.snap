@@ -7,20 +7,10 @@ exports[`ItemFiles renders with delivery  1`] = `
   <Row>
     <Col>
       <h3>
-        <Icon
-          height="45px"
-          icon={
-            Object {
-              "id": "polkadot_check_asset",
-            }
-          }
+        <FrameTitle
+          iconId="polkadot_check_asset"
+          text="List of Collection Item's file(s)"
         />
-         
-        <span
-          className="title-text"
-        >
-          List of Collection Item's file(s)
-        </span>
       </h3>
     </Col>
   </Row>
@@ -40,6 +30,11 @@ exports[`ItemFiles renders with delivery  1`] = `
         Object {
           "align": "left",
           "header": "Size (bytes)",
+          "render": [Function],
+        },
+        Object {
+          "align": "left",
+          "header": "Source",
           "render": [Function],
         },
         Object {
@@ -81,20 +76,10 @@ exports[`ItemFiles renders with empty deliveries 1`] = `
   <Row>
     <Col>
       <h3>
-        <Icon
-          height="45px"
-          icon={
-            Object {
-              "id": "polkadot_check_asset",
-            }
-          }
+        <FrameTitle
+          iconId="polkadot_check_asset"
+          text="List of Collection Item's file(s)"
         />
-         
-        <span
-          className="title-text"
-        >
-          List of Collection Item's file(s)
-        </span>
       </h3>
     </Col>
   </Row>
@@ -114,6 +99,11 @@ exports[`ItemFiles renders with empty deliveries 1`] = `
         Object {
           "align": "left",
           "header": "Size (bytes)",
+          "render": [Function],
+        },
+        Object {
+          "align": "left",
+          "header": "Source",
           "render": [Function],
         },
         Object {
@@ -155,20 +145,10 @@ exports[`ItemFiles renders with undefined deliveries 1`] = `
   <Row>
     <Col>
       <h3>
-        <Icon
-          height="45px"
-          icon={
-            Object {
-              "id": "polkadot_check_asset",
-            }
-          }
+        <FrameTitle
+          iconId="polkadot_check_asset"
+          text="List of Collection Item's file(s)"
         />
-         
-        <span
-          className="title-text"
-        >
-          List of Collection Item's file(s)
-        </span>
       </h3>
     </Col>
   </Row>
@@ -188,6 +168,11 @@ exports[`ItemFiles renders with undefined deliveries 1`] = `
         Object {
           "align": "left",
           "header": "Size (bytes)",
+          "render": [Function],
+        },
+        Object {
+          "align": "left",
+          "header": "Source",
           "render": [Function],
         },
         Object {
