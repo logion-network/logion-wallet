@@ -19,6 +19,9 @@ import LocRequestDetails from './LocRequestDetails';
 import Icon from '../../common/Icon';
 import { useLogionChain } from '../../logion-chain';
 import { useLegalOfficerContext } from "../LegalOfficerContext";
+import { useResponsiveContext } from "../../common/Responsive";
+import { useNavigate } from "react-router-dom";
+import { identityLocDetailsPath } from "../LegalOfficerPaths";
 
 export interface Props {
     locType: LocType;
@@ -33,6 +36,8 @@ export default function PendingLocRequests(props: Props) {
     const [ requestToAccept, setRequestToAccept ] = useState<LocRequest | null>(null);
     const { locType } = props;
     const handleClose = () => setRequestToReject(null);
+    const { width } = useResponsiveContext();
+    const navigate = useNavigate();
 
     if (pendingLocRequests === null || axiosFactory === undefined) {
         return null;
@@ -47,16 +52,6 @@ export default function PendingLocRequests(props: Props) {
         refreshLocs();
         setRequestToReject(null);
     };
-
-    const getLocRequest = (requestId: string): (LocRequest | null) => {
-        for(let i = 0; i < pendingLocRequests![locType].length; ++i) {
-            const request = pendingLocRequests![locType][i];
-            if(request.id === requestId) {
-                return request;
-            }
-        }
-        return null;
-    }
 
     return (
         <>
@@ -76,12 +71,18 @@ export default function PendingLocRequests(props: Props) {
                     {
                         header: "Status",
                         render: request => <LocStatusCell status={ request.status }/>,
-                        width: "140px",
+                        width: width({
+                            onSmallScreen: locType === "Identity" ? "140px" : "130px",
+                            otherwise: "140px",
+                        }),
                     },
                     {
                         header: "Creation Date",
                         render: request => <DateTimeCell dateTime={ request.createdOn || null } />,
-                        width: '200px',
+                        width: width({
+                            onSmallScreen: locType === "Identity" ? "200px" : "130",
+                            otherwise: "200px",
+                        }),
                         align: 'center',
                     },
                     {
@@ -96,15 +97,25 @@ export default function PendingLocRequests(props: Props) {
                                     <Icon icon={{id: "ko"}} height='40px' />
                                 </Button>
                                 <Button
-                                    onClick={() => setRequestToAccept(getLocRequest(request.id))}
+                                    onClick={() => setRequestToAccept(request)}
                                     data-testid={`accept-${request.id}`}
                                     variant="none"
                                 >
                                     <Icon icon={{id: "ok"}} height='40px' />
                                 </Button>
+                                { locType !== "Identity" && request.identityLoc &&
+                                    <Button
+                                        onClick={ () => navigate(identityLocDetailsPath(request.identityLoc!)) }
+                                    >
+                                        Identity LOC
+                                    </Button>
+                                }
                             </ButtonGroup>
                         ),
-                        width: "200px",
+                        width: width({
+                            onSmallScreen: locType === "Identity" ? "200px" : "280px",
+                            otherwise: locType === "Identity" ? "200px" : "320px",
+                        }),
                     }
                 ]}
                 data={ pendingLocRequests[locType] }
@@ -114,7 +125,7 @@ export default function PendingLocRequests(props: Props) {
             {
                 requestToReject !== null &&
                 <ProcessStep
-                    active={ requestToReject !== null }
+                    active={ true }
                     title={`Reject LOC request`}
                     nextSteps={[
                         {
