@@ -23,7 +23,7 @@ import { toItemId } from "./types";
 describe("CollectionLocItemChecker", () => {
 
     it("renders", () => {
-        const result = render(<LOCollectionLocItemChecker locId={ locId } locOwner={ DEFAULT_LEGAL_OFFICER } />);
+        const result = render(<LOCollectionLocItemChecker collectionLoc={ locData } />);
         expect(result).toMatchSnapshot();
     })
 })
@@ -84,12 +84,14 @@ const locState = {
     }
 };
 const locData = {
+    id: locId,
+    ownerAddress: DEFAULT_LEGAL_OFFICER,
     metadata: [],
     files: [],
 } as unknown as LocData;
 
 async function testWithItemId(itemIdText: string, elementFunction: (props: Props) => JSX.Element | null) {
-    render(elementFunction({ locId: locId, locOwner: DEFAULT_LEGAL_OFFICER }) || <div></div>);
+    render(elementFunction({ collectionLoc: locData }) || <div></div>);
     const itemIdInput = screen.getByTestId("item-id");
     await userEvent.type(itemIdInput, itemIdText);
     await clickByName(content => /Check Item ID/.test(content));

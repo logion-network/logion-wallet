@@ -1,3 +1,10 @@
-.DashboardCertificate .CheckDeliveredFrame-container {
+.DashboardCertificate .frame-container {
     margin-top: 30px;
+}
+
+.DashboardCertificate pre {
+    font-size: 1rem;
+    font-family: "Montserrat", sans-serif;
+    line-break: anywhere;
+    white-space: break-spaces;
 }

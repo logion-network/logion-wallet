@@ -5,12 +5,11 @@ import { Row } from "../common/Grid";
 
 import './CollectionItemCellRow.css';
 import { Col } from "react-bootstrap";
-import MenuIcon from "../common/MenuIcon";
-import CertificateDateTimeCell from "./CertificateDateTimeCell";
+import MenuIcon from "src/common/MenuIcon";
 import ClaimAssetButton, { WalletType } from "./ClaimAssetButton";
 import { UUID } from "@logion/node-api/dist/UUID";
 import { customClassName } from "src/common/types/Helpers";
-import TermsAndConditions from "./TermsAndConditions";
+import { CertificateItemDetails } from "src/components/certificateitemdetails/CertificateItemDetails";
 
 export interface Props {
     locId: UUID,
@@ -22,8 +21,8 @@ export interface Props {
 }
 
 export default function CollectionItemCellRow(props: Props) {
-    const { locId, owner, item } = props
-    const { id, description, addedOn, files, restrictedDelivery, token } = item
+    const { locId, owner, item } = props;
+    const files = item.files;
 
     const className = customClassName("CollectionItemCellRow", props.isVoid ? "is-void" : undefined);
 
@@ -36,38 +35,12 @@ export default function CollectionItemCellRow(props: Props) {
                         following data benefits from the present Collection LOC scope:</p>
                 </Col>
             </Row>
-            <Row>
-                <CertificateDateTimeCell md={ 12 } label="Collection item timestamp:" dateTime={ addedOn } />
-            </Row>
-            <Row>
-                <CertificateCell md={ 12 } label="Collection item identification:" matched={ props.checkResult?.collectionItem?.id === id } >
-                    { id }
-                </CertificateCell>
-            </Row>
-            <Row>
-                <CertificateCell md={ 12 } label="Collection item description:">
-                    <pre>{ description }</pre>
-                </CertificateCell>
-            </Row>
-            <Row>
-                <CertificateCell md={ 12 } label="Restricted delivery:">
-                    { restrictedDelivery ? "Yes": "No" }
-                </CertificateCell>
-            </Row>
-            {
-                token !== undefined &&
-                <Row>
-                    <CertificateCell md={ 4 } label="Underlying Token Type:">
-                        { token.type }
-                    </CertificateCell>
-                    <CertificateCell md={ 8 } label="Underlying Token ID:">
-                        <pre>{ token.id }</pre>
-                    </CertificateCell>
-                </Row>
-            }
-            <Row>
-                <TermsAndConditions item={ item } />
-            </Row>
+
+            <CertificateItemDetails
+                item={ props.item }
+                checkResult={ props.checkResult }
+            />
+
             { files && files.length > 0 &&
                 <Row>
                     <CertificateCell md={ 12 } label="Files">

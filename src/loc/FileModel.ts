@@ -33,7 +33,14 @@ export async function getFile(
     axios: AxiosInstance,
     parameters: GetFileParameters
 ): Promise<TypedFile> {
-    const response = await axios.get(`/api/loc-request/${ parameters.locId }/files/${ parameters.hash }`, { responseType: 'blob' });
+    return downloadFile(axios, `/api/loc-request/${ parameters.locId }/files/${ parameters.hash }`);
+}
+
+async function downloadFile(
+    axios: AxiosInstance,
+    url: string,
+): Promise<TypedFile> {
+    const response = await axios.get(url, { responseType: 'blob' });
     return typedFile(response);
 }
 
@@ -41,8 +48,7 @@ export async function getLoFile(
     axios: AxiosInstance,
     parameters: { fileId: LoFileId },
 ): Promise<TypedFile> {
-    const response = await axios.get(`/api/lo-file/${ parameters.fileId }`, { responseType: 'blob' });
-    return typedFile(response);
+    return downloadFile(axios, `/api/lo-file/${ parameters.fileId }`);
 }
 
 export async function getCollectionItemFile(
@@ -50,19 +56,22 @@ export async function getCollectionItemFile(
     parameters: GetCollectionItemFileParameters
 ): Promise<TypedFile> {
     const { locId, collectionItemId, hash } = parameters
-    const response = await axios.get(
-        `/api/collection/${ locId }/${ collectionItemId }/files/${ hash }`,
-        { responseType: 'blob' }
-    );
-    return typedFile(response);
+    return downloadFile(axios, `/api/collection/${ locId }/${ collectionItemId }/files/${ hash }`);
+}
+
+export async function getCollectionItemFileSource(
+    axios: AxiosInstance,
+    parameters: GetCollectionItemFileParameters
+): Promise<TypedFile> {
+    const { locId, collectionItemId, hash } = parameters
+    return downloadFile(axios, `/api/collection/${ locId }/${ collectionItemId }/files/${ hash }/source`);
 }
 
 export async function getJsonLoc(
     axios: AxiosInstance,
     parameters: { locId: string },
 ): Promise<TypedFile> {
-    const response = await axios.get(`/api/loc-request/${ parameters.locId }`, { responseType: 'blob' });
-    return typedFile(response);
+    return downloadFile(axios, `/api/loc-request/${ parameters.locId }`);
 }
 
 function typedFile(response: AxiosResponse): TypedFile {

@@ -1,22 +1,25 @@
-import { CollectionItem, UploadableItemFile, CheckCertifiedCopyResult } from "@logion/client";
-import { useCallback, useState } from "react";
+import { CollectionItem, UploadableItemFile, CheckCertifiedCopyResult, LocData } from "@logion/client";
+import { AxiosInstance } from "axios";
+import { useCallback, useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 
-import Icon from "src/common/Icon";
 import Table, { Cell, EmptyTableMessage } from "src/common/Table";
-import { ItemDeliveriesResponse } from "src/loc/FileModel";
+import { getCollectionItemFileSource, ItemDeliveriesResponse } from "src/loc/FileModel";
 import CellWithCopyPaste from "../table/CellWithCopyPaste";
 import { Child } from 'src/common/types/Helpers';
-
 import ItemFileDetails from "./ItemFileDetails";
 import CheckDeliveredDialog from "../deliverycheck/CheckDeliveredDialog";
+import FrameTitle from "../frametitle/FrameTitle";
 
 import "./ItemFiles.css";
+import ViewFileButton from "src/common/ViewFileButton";
 
 export interface Props {
+    collectionLoc: LocData;
     item: CollectionItem;
     deliveries?: ItemDeliveriesResponse;
     withCheck: boolean;
+    checkResult?: CheckCertifiedCopyResult;
 }
 
 interface FileWithMatch extends UploadableItemFile {
@@ -41,11 +44,22 @@ export default function ItemFiles(props: Props) {
         })));
     }, [ props.item.files ]);
 
+    useEffect(() => {
+        if(checkResult !== props.checkResult && props.checkResult !== undefined) {
+            onChecked(props.checkResult);
+        }
+    }, [ checkResult, props.checkResult, onChecked ]);
+
     return (
         <div className="ItemFiles">
             <Row>
                 <Col xxl={ props.withCheck ? 4 : undefined }>
-                    <h3><Icon icon={{id: "polkadot_check_asset"}} height="45px" /> <span className="title-text">List of Collection Item's file(s)</span></h3>
+                    <h3>
+                        <FrameTitle
+                            iconId="polkadot_check_asset"
+                            text="List of Collection Item's file(s)"
+                        />
+                    </h3>
                 </Col>
                 {
                     props.withCheck &&
@@ -72,6 +86,21 @@ export default function ItemFiles(props: Props) {
                     {
                         header: "Size (bytes)",
                         render: file => <Cell content={ file.size.toString() } />,
+                        align: "left",
+                    },
+                    {
+                        header: "Source",
+                        render: file => <Cell content={
+                            <ViewFileButton
+                                nodeOwner={ props.collectionLoc.ownerAddress }
+                                fileName={ file.name }
+                                downloader={ (axios: AxiosInstance) => getCollectionItemFileSource(axios, {
+                                    locId: props.collectionLoc.id.toString(),
+                                    collectionItemId: props.item.id,
+                                    hash: file.hash,
+                                }) }
+                            />
+                        } />,
                         align: "left",
                     },
                     {
