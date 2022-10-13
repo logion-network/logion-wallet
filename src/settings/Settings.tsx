@@ -3,7 +3,7 @@ import SettingsPane from './SettingsPane';
 
 export interface Props {
     showContactInformation: boolean;
-    missingSettings: boolean;
+    missingSettings?: boolean;
 }
 
 export default function Settings(props: Props) {

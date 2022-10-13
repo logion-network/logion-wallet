@@ -25,7 +25,7 @@ function status(metadata: NodeMetadata | null): string {
 
 export interface Props {
     showContactInformation: boolean;
-    missingSettings: boolean;
+    missingSettings?: boolean;
 }
 
 export default function SettingsPane(props: Props) {
@@ -49,7 +49,7 @@ export default function SettingsPane(props: Props) {
             className="SettingsPane"
         >
             {
-                props.missingSettings &&
+                props.missingSettings !== undefined && props.missingSettings &&
                 <DangerFrame
                     className="missing-settings"
                 >
@@ -77,13 +77,16 @@ export default function SettingsPane(props: Props) {
                             </PolkadotFrame>
                         </Col>
                     </Row>
-                    <Row>
-                        <Col>
-                            <Frame title="Instance settings">
-                                <ValuesFiles/>
-                            </Frame>
-                        </Col>
-                    </Row>
+                    {
+                        !props.missingSettings &&
+                        <Row>
+                            <Col>
+                                <Frame title="Instance settings">
+                                    <ValuesFiles/>
+                                </Frame>
+                            </Col>
+                        </Row>
+                    }
                 </>
             }
             <Row>

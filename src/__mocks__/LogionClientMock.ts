@@ -20,8 +20,12 @@ export class LogionClient {
 
     tokens = new AccountTokens();
 
-    isLegalOfficer() {
-        return false;
+    isLegalOfficer(address: string) {
+        return address === PATRICK.address;
+    }
+
+    isRegisteredLegalOfficer(address: string) {
+        return address === PATRICK.address;
     }
 
     legalOfficers = [ PATRICK ];

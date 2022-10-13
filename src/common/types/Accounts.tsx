@@ -18,31 +18,22 @@ export default interface Accounts {
 export function buildAccounts(
     injectedAccounts: InjectedAccount[],
     userAddress: string | undefined,
-    authenticatedClient?: LogionClient
+    authenticatedClient: LogionClient,
+    legalOfficers: Set<string>,
 ): Accounts {
-    const selectedAddress = currentOrDefaultAddress(injectedAccounts, userAddress, authenticatedClient);
+    const all = injectedAccounts.map(injectedAccount => ({
+        name: injectedAccount.meta.name!,
+        address: injectedAccount.address,
+        isLegalOfficer: legalOfficers.has(injectedAccount.address),
+        token: tokenOrUndefinedIfExpired(authenticatedClient.tokens.get(injectedAccount.address)),
+    }));
 
-    let current: Account | undefined;
-    const matchingAddress = injectedAccounts.find(injectedAccount => injectedAccount.address === selectedAddress);
-    if(selectedAddress !== undefined && matchingAddress !== undefined) {
-        current = {
-            name: matchingAddress.meta.name!,
-            address: selectedAddress!,
-            isLegalOfficer: authenticatedClient!.isLegalOfficer(selectedAddress),
-            token: tokenOrUndefinedIfExpired(authenticatedClient!.tokens.get(selectedAddress)),
-        }
-    } else {
-        current = undefined;
-    }
+    const selectedAddress = currentOrDefaultAddress(injectedAccounts, userAddress, authenticatedClient);
+    const current = all.find(account => account.address === selectedAddress);
 
     return {
         current,
-        all: injectedAccounts.map(injectedAccount => ({
-            name: injectedAccount.meta.name!,
-            address: injectedAccount.address,
-            isLegalOfficer: authenticatedClient!.isLegalOfficer(injectedAccount.address),
-            token: tokenOrUndefinedIfExpired(authenticatedClient!.tokens.get(injectedAccount.address)),
-        }))
+        all,
     }
 }
 

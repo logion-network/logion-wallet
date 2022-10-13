@@ -105,6 +105,7 @@ type ActionType = 'FETCH_IN_PROGRESS'
     | 'FETCH_LOCS_IN_PROGRESS'
     | 'SET_LOCS_DATA'
     | 'SET_REFRESH'
+    | 'SET_MISSING_SETTINGS'
 ;
 
 interface Action {
@@ -240,6 +241,12 @@ const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOffic
                 refreshLocs: action.refreshLocs!,
                 refreshAddress: action.refreshAddress!,
             };
+        case 'SET_MISSING_SETTINGS':
+            return {
+                ...state,
+                onchainSettings: action.onchainSettings!,
+                missingSettings: action.missingSettings,
+            }
         default:
             /* istanbul ignore next */
             throw new Error(`Unknown type: ${action.type}`);
@@ -473,10 +480,11 @@ export function LegalOfficerContextProvider(props: Props) {
                 && accounts.current !== undefined
                 && contextValue.dataAddress !== accounts.current.address
                 && contextValue.fetchForAddress !== accounts.current.address
-                && isCurrentAuthenticated()) {
+                && isCurrentAuthenticated()
+                && !contextValue.missingSettings) {
             const currentAccount = accounts!.current!.address;
             const currentLegalOfficer = getOfficer(currentAccount);
-            if(currentLegalOfficer!.node) {
+            if(currentLegalOfficer?.node) {
                 const refreshRequests = (clear: boolean) => refreshRequestsFunction(clear, currentAccount, dispatch, axiosFactory, api);
                 const axios = axiosFactory(currentAccount);
                 const updateSettingCallback = async (id: string, value: string) => {
@@ -495,6 +503,15 @@ export function LegalOfficerContextProvider(props: Props) {
                     updateSetting: updateSettingCallback,
                 });
                 refreshRequests(true);
+            } else {
+                (async function() {
+                    const { missingSettings, onchainSettings } = await getOnchainSettings(api, currentAccount);
+                    dispatch({
+                        type: "SET_MISSING_SETTINGS",
+                        onchainSettings,
+                        missingSettings,
+                    });
+                })();
             }
         }
     }, [ contextValue, axiosFactory, accounts, isCurrentAuthenticated, api, getOfficer ]);
@@ -558,16 +575,7 @@ function refreshRequestsFunction(clearBeforeRefresh: boolean, currentAddress: st
         const vaultTransferRequestsHistory = vaultTransferRequestsHistoryResult.sort((a, b) => b.createdOn.localeCompare(a.createdOn));
 
         const settings = await getSettings(axios);
-
-        let missingSettings: MissingSettings | undefined;
-        let onchainSettings = await getLegalOfficerData({ api, address: currentAddress });
-
-        if(onchainSettings && (!onchainSettings.baseUrl || !onchainSettings.nodeId)) {
-            missingSettings = {
-                baseUrl: onchainSettings.baseUrl === undefined,
-                nodeId: onchainSettings.nodeId === undefined,
-            };
-        }
+        const { missingSettings, onchainSettings } = await getOnchainSettings(api, currentAddress);
 
         dispatch({
             type: "SET_DATA",
@@ -593,4 +601,24 @@ async function getSettings(axios: AxiosInstance): Promise<Record<string, string>
 
 async function updateSetting(axios: AxiosInstance, id: string, value: string): Promise<void> {
     await axios.put(`/api/setting/${id}`, { value });
+}
+
+async function getOnchainSettings(api: LogionNodeApi, currentAddress: string): Promise<{
+    onchainSettings: LegalOfficerData,
+    missingSettings: MissingSettings | undefined,
+}> {
+    let missingSettings: MissingSettings | undefined;
+    let onchainSettings = await getLegalOfficerData({ api, address: currentAddress });
+
+    if(onchainSettings && (!onchainSettings.baseUrl || !onchainSettings.nodeId)) {
+        missingSettings = {
+            baseUrl: onchainSettings.baseUrl === undefined,
+            nodeId: onchainSettings.nodeId === undefined,
+        };
+    }
+
+    return {
+        onchainSettings,
+        missingSettings,
+    }
 }
