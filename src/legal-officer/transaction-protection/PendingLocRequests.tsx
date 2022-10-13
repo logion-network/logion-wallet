@@ -20,7 +20,6 @@ import Icon from '../../common/Icon';
 import { useLogionChain } from '../../logion-chain';
 import { useLegalOfficerContext } from "../LegalOfficerContext";
 import { useResponsiveContext } from "../../common/Responsive";
-import { useNavigate } from "react-router-dom";
 import { identityLocDetailsPath } from "../LegalOfficerPaths";
 
 export interface Props {
@@ -37,7 +36,6 @@ export default function PendingLocRequests(props: Props) {
     const { locType } = props;
     const handleClose = () => setRequestToReject(null);
     const { width } = useResponsiveContext();
-    const navigate = useNavigate();
 
     if (pendingLocRequests === null || axiosFactory === undefined) {
         return null;
@@ -105,7 +103,7 @@ export default function PendingLocRequests(props: Props) {
                                 </Button>
                                 { locType !== "Identity" && request.identityLoc &&
                                     <Button
-                                        onClick={ () => navigate(identityLocDetailsPath(request.identityLoc!)) }
+                                        onClick={ () => window.open(identityLocDetailsPath(request.identityLoc!), "_blank") }
                                     >
                                         Identity LOC
                                     </Button>
