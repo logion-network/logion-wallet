@@ -13,38 +13,54 @@ type SaveStatus = 'SUCCESS' | 'ERROR' | 'NONE';
 export default function DirectoryData() {
     const { accounts, getOfficer, saveOfficer } = useLogionChain();
     const { colorTheme } = useCommonContext();
-    const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer | undefined>();
+    const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer>({
+        name: "",
+        address: "",
+        additionalDetails: "",
+        logoUrl: "",
+        node: "",
+        userIdentity: {
+            firstName: "",
+            lastName: "",
+            email: "",
+            phoneNumber: "",
+        },
+        postalAddress: {
+            company: "",
+            line1: "",
+            line2: "",
+            postalCode: "",
+            city: "",
+            country: "",
+        },
+    });
     const [ saveStatus, setSaveStatus ] = useState<SaveStatus>();
-    const [ previousNode, setPreviousNode ] = useState<string>("");
-    const [ shouldRefresh, setShouldRefresh ] = useState(false);
 
     useEffect(() => {
         if(getOfficer && (!legalOfficer || legalOfficer.address !== accounts?.current?.address)) {
             const legalOfficerFromDirectory = getOfficer(accounts?.current?.address);
             if(legalOfficerFromDirectory) {
                 setLegalOfficer(legalOfficerFromDirectory);
-                setPreviousNode(legalOfficerFromDirectory.node);
             }
         }
-    }, [ accounts, legalOfficer, getOfficer, setPreviousNode ]);
+    }, [ accounts, legalOfficer, getOfficer ]);
 
     const save = useCallback(async () => {
         setSaveStatus('NONE');
-        if(legalOfficer && saveOfficer) {
+        if(saveOfficer) {
             try {
                 await saveOfficer(legalOfficer);
                 setSaveStatus('SUCCESS');
-                setShouldRefresh(legalOfficer.node !== previousNode);
-                setPreviousNode(legalOfficer.node);
             } catch(e) {
+                console.log(e);
                 setSaveStatus('ERROR');
             }
         } else {
             setSaveStatus('ERROR');
         }
-    }, [ saveOfficer, legalOfficer, setSaveStatus, setShouldRefresh, previousNode ]);
+    }, [ saveOfficer, legalOfficer, setSaveStatus ]);
 
-    if(!legalOfficer || !accounts || !accounts.current || !accounts.current.isLegalOfficer || getOfficer === undefined || saveOfficer === undefined) {
+    if(!accounts || !accounts.current || !accounts.current.isLegalOfficer || getOfficer === undefined || saveOfficer === undefined) {
         return null;
     }
 
@@ -57,7 +73,7 @@ export default function DirectoryData() {
                         label="First name"
                         control={ <Form.Control
                             type="text"
-                            value={ legalOfficer?.userIdentity.firstName }
+                            value={ legalOfficer.userIdentity.firstName }
                             onChange={ event => setUserIdentityField('firstName', event) }
                         /> }
                         colors={ colorTheme.frame }
@@ -69,7 +85,7 @@ export default function DirectoryData() {
                         label="Last name"
                         control={ <Form.Control
                             type="text"
-                            value={ legalOfficer?.userIdentity.lastName }
+                            value={ legalOfficer.userIdentity.lastName }
                             onChange={ event => setUserIdentityField('lastName', event) }
                         /> }
                         colors={ colorTheme.frame }
@@ -83,7 +99,7 @@ export default function DirectoryData() {
                         label="E-mail"
                         control={ <Form.Control
                             type="text"
-                            value={ legalOfficer?.userIdentity.email }
+                            value={ legalOfficer.userIdentity.email }
                             onChange={ event => setUserIdentityField('email', event) }
                         /> }
                         colors={ colorTheme.frame }
@@ -95,7 +111,7 @@ export default function DirectoryData() {
                         label="Phone number"
                         control={ <Form.Control
                             type="text"
-                            value={ legalOfficer?.userIdentity.phoneNumber }
+                            value={ legalOfficer.userIdentity.phoneNumber }
                             onChange={ event => setUserIdentityField('phoneNumber', event) }
                         /> }
                         colors={ colorTheme.frame }
@@ -109,7 +125,7 @@ export default function DirectoryData() {
                         label="Company"
                         control={ <Form.Control
                             type="text"
-                            value={ legalOfficer?.postalAddress.company }
+                            value={ legalOfficer.postalAddress.company }
                             onChange={ event => setPostalAddressField('company', event) }
                         /> }
                         colors={ colorTheme.frame }
@@ -123,7 +139,7 @@ export default function DirectoryData() {
                         label="Line 1"
                         control={ <Form.Control
                             type="text"
-                            value={ legalOfficer?.postalAddress.line1 }
+                            value={ legalOfficer.postalAddress.line1 }
                             onChange={ event => setPostalAddressField('line1', event) }
                         /> }
                         colors={ colorTheme.frame }
@@ -137,7 +153,7 @@ export default function DirectoryData() {
                         label="Line 2"
                         control={ <Form.Control
                             type="text"
-                            value={ legalOfficer?.postalAddress.line2 }
+                            value={ legalOfficer.postalAddress.line2 }
                             onChange={ event => setPostalAddressField('line2', event) }
                         /> }
                         colors={ colorTheme.frame }
@@ -151,7 +167,7 @@ export default function DirectoryData() {
                         label="Postal code"
                         control={ <Form.Control
                             type="text"
-                            value={ legalOfficer?.postalAddress.postalCode }
+                            value={ legalOfficer.postalAddress.postalCode }
                             onChange={ event => setPostalAddressField('postalCode', event) }
                         /> }
                         colors={ colorTheme.frame }
@@ -163,7 +179,7 @@ export default function DirectoryData() {
                         label="City"
                         control={ <Form.Control
                             type="text"
-                            value={ legalOfficer?.postalAddress.city }
+                            value={ legalOfficer.postalAddress.city }
                             onChange={ event => setPostalAddressField('city', event) }
                         /> }
                         colors={ colorTheme.frame }
@@ -177,7 +193,7 @@ export default function DirectoryData() {
                         label="Country"
                         control={ <Form.Control
                             type="text"
-                            value={ legalOfficer?.postalAddress.country }
+                            value={ legalOfficer.postalAddress.country }
                             onChange={ event => setPostalAddressField('country', event) }
                         /> }
                         colors={ colorTheme.frame }
@@ -193,9 +209,9 @@ export default function DirectoryData() {
                             type="text"
                             as="textarea"
                             style={{ height: '100px' }}
-                            value={ legalOfficer?.additionalDetails }
+                            value={ legalOfficer.additionalDetails }
                             onChange={ event => setLegalOfficer({
-                                ...legalOfficer!,
+                                ...legalOfficer,
                                 additionalDetails: event.target.value
                             }) }
                         /> }
@@ -208,19 +224,35 @@ export default function DirectoryData() {
             </Button>
             { saveStatus === "SUCCESS" && <span style={{marginLeft: "20px", color: GREEN, fontWeight: "bold"}}>Data were saved successfully</span> }
             { saveStatus === "ERROR" && <span style={{marginLeft: "20px", color: RED, fontWeight: "bold"}}>Data were not saved successfully</span> }
-            { shouldRefresh && <p>Please refresh the page in order to fully apply the changes.</p> }
-            { shouldRefresh && <Button onClick={ () => window.location.reload() }>Refresh</Button> }
         </div>
     );
 
     function setUserIdentityField(fieldName: keyof UserIdentity, event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         const newLegalOfficerValue = { ...legalOfficer! };
+        if(!newLegalOfficerValue.userIdentity) {
+            newLegalOfficerValue.userIdentity = {
+                firstName: "",
+                lastName: "",
+                email: "",
+                phoneNumber: "",
+            };
+        }
         newLegalOfficerValue.userIdentity[fieldName] = event.target.value;
         setLegalOfficer(newLegalOfficerValue);
     }
 
     function setPostalAddressField(fieldName: keyof LegalOfficerPostalAddress, event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
         const newLegalOfficerValue = { ...legalOfficer! };
+        if(!newLegalOfficerValue.postalAddress) {
+            newLegalOfficerValue.postalAddress = {
+                company: "",
+                line1: "",
+                line2: "",
+                postalCode: "",
+                city: "",
+                country: "",
+            };
+        }
         newLegalOfficerValue.postalAddress[fieldName] = event.target.value;
         setLegalOfficer(newLegalOfficerValue);
     }

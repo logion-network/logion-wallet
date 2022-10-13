@@ -1,9 +1,7 @@
-import "@logion/node-api/dist/interfaces/types-lookup";
+import { buildApi, LogionNodeApi } from '@logion/node-api';
 import axios, { AxiosInstance } from 'axios';
 import React, { useReducer, useContext, Context, Reducer, useEffect, useCallback } from 'react';
 import { DateTime } from 'luxon';
-import { ApiPromise } from '@polkadot/api';
-import { buildApi } from '@logion/node-api';
 import { AccountTokens, LegalOfficer, LogionClient } from '@logion/client';
 import { enableExtensions, ExtensionSigner, InjectedAccount, isExtensionAvailable } from '@logion/extension';
 
@@ -13,12 +11,12 @@ import { clearAll, loadCurrentAddress, loadTokens, storeCurrentAddress, storeTok
 
 import { getEndpoints, NodeMetadata } from './Connection';
 import { AxiosFactory } from '../common/api';
-import { Token } from "@logion/client/dist/Http";
+import { Token } from "@logion/client";
 
 type ConsumptionStatus = 'PENDING' | 'STARTING' | 'STARTED';
 
 export interface LogionChainContextType {
-    api: ApiPromise | null,
+    api: LogionNodeApi | null,
     injectedAccountsConsumptionState: ConsumptionStatus
     injectedAccounts: InjectedAccount[] | null,
     edgeNodes: Node[],
@@ -41,6 +39,7 @@ export interface FullLogionChainContextType extends LogionChainContextType {
     connecting: boolean,
     timer?: number,
     tokensToRefresh?: AccountTokens,
+    registeredLegalOfficers?: Set<string>,
 }
 
 const initState = (): FullLogionChainContextType => ({
@@ -81,7 +80,7 @@ type ActionType = 'SET_SELECT_ADDRESS'
 
 interface Action {
     type: ActionType,
-    api?: ApiPromise,
+    api?: LogionNodeApi,
     error?: string,
     injectedAccounts?: InjectedAccount[],
     connectedNodeMetadata?: NodeMetadata,
@@ -96,6 +95,7 @@ interface Action {
     logionClient?: LogionClient;
     authenticate?: (address: string[]) => Promise<void>;
     authenticateAddress?: (address: string) => Promise<Token | undefined>;
+    registeredLegalOfficers?: Set<string>;
 }
 
 function buildAxiosFactory(authenticatedClient?: LogionClient): AxiosFactory {
@@ -120,7 +120,8 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
                 api: action.api!,
                 client: action.client!,
                 connectedNodeMetadata: action.connectedNodeMetadata!,
-                ...buildClientHelpers(action.client!, state.injectedAccounts!),
+                registeredLegalOfficers: action.registeredLegalOfficers,
+                ...buildClientHelpers(action.client!, state.injectedAccounts!, action.registeredLegalOfficers!),
             };
 
         case 'START_INJECTED_ACCOUNTS_CONSUMPTION':
@@ -147,7 +148,7 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
             return {
                 ...state,
                 client,
-                ...buildClientHelpers(client, state.injectedAccounts!),
+                ...buildClientHelpers(client, state.injectedAccounts!, state.registeredLegalOfficers!),
             };
         }
 
@@ -165,7 +166,7 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
                 ...state,
                 client,
                 timer: undefined,
-                ...buildClientHelpers(client, state.injectedAccounts!),
+                ...buildClientHelpers(client, state.injectedAccounts!, state.registeredLegalOfficers!),
             };
         }
 
@@ -215,7 +216,7 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
                 }
                 return {
                     ...state,
-                    ...buildClientHelpers(client, state.injectedAccounts!),
+                    ...buildClientHelpers(client, state.injectedAccounts!, action.registeredLegalOfficers!),
                     client,
                 }
             }
@@ -226,7 +227,7 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
     }
 };
 
-function buildClientHelpers(client: LogionClient, injectedAccounts: InjectedAccount[]): {
+function buildClientHelpers(client: LogionClient, injectedAccounts: InjectedAccount[], legalOfficers: Set<string>): {
     axiosFactory: AxiosFactory,
     isCurrentAuthenticated: () => boolean,
     getOfficer: (owner: string | undefined) => LegalOfficer | undefined,
@@ -238,7 +239,7 @@ function buildClientHelpers(client: LogionClient, injectedAccounts: InjectedAcco
         isCurrentAuthenticated: () => client.isTokenValid(DateTime.now()),
         getOfficer: address => client.allLegalOfficers.find(legalOfficer => legalOfficer.address === address),
         saveOfficer: legalOfficer => client.directoryClient.createOrUpdate(legalOfficer),
-        accounts: buildAccounts(injectedAccounts!, client.currentAddress, client),
+        accounts: buildAccounts(injectedAccounts!, client.currentAddress, client, legalOfficers),
     }
 }
 
@@ -321,7 +322,8 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
                     logionClient,
                     connectedNodeMetadata: {
                         peerId : peerId.toString()
-                    }
+                    },
+                    registeredLegalOfficers: await buildLegalOfficersSet(client, state.injectedAccounts!),
                 });
             })();
         }
@@ -383,10 +385,11 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
                 dispatch({
                     type: 'RESET_CLIENT',
                     client,
+                    registeredLegalOfficers: await buildLegalOfficersSet(client, state.injectedAccounts!),
                 })
             })();
         }
-    }, [ state.tokensToRefresh, dispatch, state.axiosFactory, state.client, state.accounts ]);
+    }, [ state.tokensToRefresh, dispatch, state.axiosFactory, state.client, state.accounts, state.injectedAccounts ]);
 
     const authenticateCallback = useCallback(async (addresses: string[]) => {
         if(!state.client || !state.signer) {
@@ -400,8 +403,9 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
         dispatch({
             type: 'RESET_CLIENT',
             client,
+            registeredLegalOfficers: await buildLegalOfficersSet(client, state.injectedAccounts!),
         });
-    }, [ state.client, state.signer ]);
+    }, [ state.client, state.signer, state.injectedAccounts ]);
 
     const authenticateAddressCallback = useCallback(async (address: string) => {
         if(!state.client || !state.signer) {
@@ -433,6 +437,16 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
         {props.children}
     </LogionChainContext.Provider>;
 };
+
+async function buildLegalOfficersSet(client: LogionClient, accounts: InjectedAccount[]): Promise<Set<string>> {
+    const legalOfficersSet = new Set<string>();
+    for(const account of accounts) {
+        if(await client.isRegisteredLegalOfficer(account.address)) {
+            legalOfficersSet.add(account.address);
+        }
+    }
+    return legalOfficersSet;
+}
 
 const useLogionChain = () => useContext(LogionChainContext);
 
