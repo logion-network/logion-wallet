@@ -24,8 +24,7 @@ describe("VoidLocReplaceExistingButton", () => {
         await typeByLabel("Existing LOC ID", OPEN_IDENTITY_LOC_ID);
         await userEvent.click(button);
         await waitFor(() => screen.getByText("Submitting..."));
-        finalizeSubmission();
-
+        await waitFor(() => finalizeSubmission());
         await waitFor(() => expect(dialog!).not.toBeVisible());
         expect(voidLoc).toBeCalled();
         expect(refreshLocs).toBeCalled();
