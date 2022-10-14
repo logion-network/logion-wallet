@@ -49,27 +49,6 @@ exports[`IdentityLocRequest renders 1`] = `
               },
               Object {
                 "additionalDetails": "",
-                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
-                "logoUrl": "",
-                "name": "Guillaume Grain",
-                "node": "http://logion.guillaume.com",
-                "postalAddress": Object {
-                  "city": "LYON",
-                  "company": "SELARL ADRASTEE",
-                  "country": "France",
-                  "line1": "Gare des Brotteaux",
-                  "line2": "14, place Jules Ferry",
-                  "postalCode": "69006",
-                },
-                "userIdentity": Object {
-                  "email": "g.grain@adrastee-lyon.fr",
-                  "firstName": "Patrick",
-                  "lastName": "Gielen",
-                  "phoneNumber": "+33 4 78 52 87 56",
-                },
-              },
-              Object {
-                "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
                 "logoUrl": "",
                 "name": "Alain Barland",

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { LocType } from "@logion/node-api/dist/Types";
 
@@ -34,7 +34,10 @@ export default function LocCreation(props: Props) {
         }
     });
     const [ selectedLegalOfficer, setSelectedLegalOfficer ] = useState<LegalOfficer | undefined>();
-    const legalOfficersWithValidIdentityLoc = locsState?.legalOfficersWithValidIdentityLoc;
+    const legalOfficersWithValidIdentityLoc = useMemo(
+        () => locsState?.legalOfficersWithValidIdentityLoc,
+        [ locsState?.legalOfficersWithValidIdentityLoc ]
+    );
 
     const clear = useCallback(() => {
         reset();
