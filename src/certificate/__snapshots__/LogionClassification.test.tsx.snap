@@ -11,12 +11,12 @@ exports[`LogionClassification renders classification 1`] = `
   </CertificateLabel>
   <React.Fragment>
     <p>
-      This is a human-readable summary (but not a substitute) of the Logion IP transfer classification (“LITC”): 
+      This is a human-readable summary (but not a substitute) of the Logion IP rights classification (“LIRC”): 
       <NewTabLink
-        href="/license/LITC-v1.0.txt"
+        href="/license/LIRC-v1.0.txt"
         inline={true}
       >
-        LITC-v1.0.txt
+        LIRC-v1.0.txt
       </NewTabLink>
        / 
       <NewTabLink
@@ -24,12 +24,12 @@ exports[`LogionClassification renders classification 1`] = `
         iconId="loc-link"
         inline={true}
       >
-        LITC-v1.0 certificate
+        LIRC-v1.0 certificate
       </NewTabLink>
       .
     </p>
     <p>
-      Should an additional license exist between the parties that shall apply to the subject of this Collection Item, the parties agreed that the LITC supersedes in case of conflict.
+      Should an additional license exist between the parties that shall apply to the subject of this Collection Item, the parties agreed that the LIRC supersedes in case of conflict.
     </p>
     <LogionTerms
       terms={
