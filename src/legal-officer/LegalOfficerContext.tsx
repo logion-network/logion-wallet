@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useReducer, Reducer, useCallback } from 'react';
 import { AxiosInstance } from 'axios';
-import { VaultTransferRequest, LocRequest } from '@logion/client';
+import { VaultTransferRequest, LocRequest, LegalOfficer } from '@logion/client';
 import { ProtectionRequest } from '@logion/client/dist/RecoveryClient';
 import { LogionNodeApi } from "@logion/node-api";
 
@@ -32,6 +32,7 @@ export interface RequestAndLoc {
 }
 
 export interface MissingSettings {
+    directory: boolean;
     nodeId: boolean;
     baseUrl: boolean;
 }
@@ -485,7 +486,7 @@ export function LegalOfficerContextProvider(props: Props) {
             const currentAccount = accounts!.current!.address;
             const currentLegalOfficer = getOfficer(currentAccount);
             if(currentLegalOfficer?.node) {
-                const refreshRequests = (clear: boolean) => refreshRequestsFunction(clear, currentAccount, dispatch, axiosFactory, api);
+                const refreshRequests = (clear: boolean) => refreshRequestsFunction(clear, currentAccount, dispatch, axiosFactory, api, getOfficer);
                 const axios = axiosFactory(currentAccount);
                 const updateSettingCallback = async (id: string, value: string) => {
                     await updateSetting(axios, id, value);
@@ -505,7 +506,8 @@ export function LegalOfficerContextProvider(props: Props) {
                 refreshRequests(true);
             } else {
                 (async function() {
-                    const { missingSettings, onchainSettings } = await getOnchainSettings(api, currentAccount);
+                    const onchainSettings = await getLegalOfficerData({ api, address: currentAccount });
+                    const missingSettings = getMissingSettings(undefined, onchainSettings);
                     dispatch({
                         type: "SET_MISSING_SETTINGS",
                         onchainSettings,
@@ -527,7 +529,7 @@ export function useLegalOfficerContext(): LegalOfficerContext {
     return { ...useContext(LegalOfficerContextObject) };
 }
 
-function refreshRequestsFunction(clearBeforeRefresh: boolean, currentAddress: string, dispatch: React.Dispatch<Action>, axiosFactory: AxiosFactory, api: LogionNodeApi) {
+function refreshRequestsFunction(clearBeforeRefresh: boolean, currentAddress: string, dispatch: React.Dispatch<Action>, axiosFactory: AxiosFactory, api: LogionNodeApi, getOfficer: (address: string | undefined) => LegalOfficer | undefined) {
     dispatch({
         type: "FETCH_IN_PROGRESS",
         dataAddress: currentAddress,
@@ -575,7 +577,9 @@ function refreshRequestsFunction(clearBeforeRefresh: boolean, currentAddress: st
         const vaultTransferRequestsHistory = vaultTransferRequestsHistoryResult.sort((a, b) => b.createdOn.localeCompare(a.createdOn));
 
         const settings = await getSettings(axios);
-        const { missingSettings, onchainSettings } = await getOnchainSettings(api, currentAddress);
+        const legalOfficer = getOfficer(currentAddress);
+        const onchainSettings = await getLegalOfficerData({ api, address: currentAddress })
+        const missingSettings = getMissingSettings(legalOfficer, onchainSettings);
 
         dispatch({
             type: "SET_DATA",
@@ -603,22 +607,16 @@ async function updateSetting(axios: AxiosInstance, id: string, value: string): P
     await axios.put(`/api/setting/${id}`, { value });
 }
 
-async function getOnchainSettings(api: LogionNodeApi, currentAddress: string): Promise<{
-    onchainSettings: LegalOfficerData,
-    missingSettings: MissingSettings | undefined,
-}> {
+function getMissingSettings(legalOfficer: LegalOfficer | undefined, onchainSettings: LegalOfficerData): MissingSettings | undefined {
     let missingSettings: MissingSettings | undefined;
-    let onchainSettings = await getLegalOfficerData({ api, address: currentAddress });
 
-    if(onchainSettings && (!onchainSettings.baseUrl || !onchainSettings.nodeId)) {
+    if(!onchainSettings.baseUrl || !onchainSettings.nodeId || legalOfficer === undefined) {
         missingSettings = {
+            directory: legalOfficer === undefined,
             baseUrl: onchainSettings.baseUrl === undefined,
             nodeId: onchainSettings.nodeId === undefined,
         };
     }
 
-    return {
-        onchainSettings,
-        missingSettings,
-    }
+    return missingSettings;
 }
