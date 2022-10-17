@@ -1,3 +1,5 @@
+import { GUILLAUME } from "../../common/TestData";
+
 jest.mock('@logion/node-api/dist/Accounts');
 jest.mock('../UserContext');
 jest.mock('../../logion-chain');
@@ -9,7 +11,7 @@ import IdentityLocRequest from "./IdentityLocRequest";
 import { render, waitFor, screen, getByText } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { fillInForm } from "../../components/identity/IdentityFormTestHelper";
-import { setMutateLocsState } from "../__mocks__/UserContextMock";
+import { setMutateLocsState, setHasValidIdentityLoc } from "../__mocks__/UserContextMock";
 
 describe("IdentityLocRequest", () => {
 
@@ -18,6 +20,7 @@ describe("IdentityLocRequest", () => {
     beforeEach(() => {
         jest.resetAllMocks();
         setMutateLocsState(mutateLocsState);
+        setHasValidIdentityLoc([ GUILLAUME ]);
     });
 
     it("renders", () => {

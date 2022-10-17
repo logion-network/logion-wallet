@@ -1,5 +1,5 @@
 import Button from "../../common/Button";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import IdentityForm, { FormValues } from "../../components/identity/IdentityForm";
 import { useForm } from "react-hook-form";
 import { useCommonContext } from "../../common/CommonContext";
@@ -23,10 +23,14 @@ export default function IdentityLocRequest(props: Props) {
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>();
     const { colorTheme, availableLegalOfficers } = useCommonContext();
     const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer | null>(null);
-    const { mutateLocsState } = useUserContext();
+    const { locsState, mutateLocsState } = useUserContext();
     const [ agree, setAgree ] = useState<boolean>(false);
     const { accounts } = useLogionChain();
     const navigate = useNavigate();
+    const legalOfficersWithoutValidIdentityLoc = useMemo(() => {
+        const legalOfficersWithValidIdentityLoc = locsState?.legalOfficersWithValidIdentityLoc.map(lo => lo.address);
+        return availableLegalOfficers?.filter(lo => legalOfficersWithValidIdentityLoc?.includes(lo.address) === false)
+    }, [ locsState?.legalOfficersWithValidIdentityLoc, availableLegalOfficers ])
 
     const clear = useCallback(() => {
         reset();
@@ -75,7 +79,7 @@ export default function IdentityLocRequest(props: Props) {
                         <SelectLegalOfficer
                             legalOfficer={ legalOfficer }
                             legalOfficerNumber={ 1 }
-                            legalOfficers={ availableLegalOfficers || [] }
+                            legalOfficers={ legalOfficersWithoutValidIdentityLoc || [] }
                             mode="select"
                             otherLegalOfficer={ null }
                             setLegalOfficer={ setLegalOfficer }
