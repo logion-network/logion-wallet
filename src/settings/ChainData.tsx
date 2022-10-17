@@ -20,7 +20,7 @@ export default function ChainData() {
     const [ baseUrl, setBaseUrl ] = useState("");
     const [ nodeId, setNodeId ] = useState("");
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
-    const [ done, setDone ] = useState(false);
+    const [ done, setDone ] = useState<"success" | "failure">();
 
     useEffect(() => {
         if(onchainSettings) {
@@ -31,7 +31,7 @@ export default function ChainData() {
 
     const publish = useCallback(() => {
         if(accounts && api && accounts.current) {
-            setDone(false);
+            setDone(undefined);
             flushSync(() => setSignAndSubmit(null)); // Reset
 
             const legalOfficerAddress = accounts.current.address;
@@ -50,12 +50,12 @@ export default function ChainData() {
     }, [ accounts, api, baseUrl, nodeId ]);
 
     const onSuccess = useCallback(() => {
-        setDone(true);
+        setDone("success");
         refreshRequests(false);
     }, [ refreshRequests ]);
 
     const onError = useCallback(() => {
-        setDone(true);
+        setDone("failure");
     }, [  ]);
 
     const isNoChange = useMemo(() => {
