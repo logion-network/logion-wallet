@@ -58,7 +58,7 @@ export default function DirectoryData() {
             }
             setFormInitialized(true);
         }
-    }, [ accounts, formInitialized ]);
+    }, [ accounts, formInitialized, getOfficer, setValue ]);
 
     const save = useCallback(async (formValues: FormValues) => {
         setSaveStatus('NONE');
@@ -74,7 +74,7 @@ export default function DirectoryData() {
         } else {
             setSaveStatus('ERROR');
         }
-    }, [ saveOfficer, setSaveStatus ]);
+    }, [ saveOfficer, setSaveStatus, refreshRequests ]);
 
     if(!accounts || !accounts.current || !accounts.current.isLegalOfficer || getOfficer === undefined || saveOfficer === undefined) {
         return null;
