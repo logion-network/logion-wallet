@@ -2930,36 +2930,36 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@logion/client@npm:^0.14.0":
-  version: 0.14.0
-  resolution: "@logion/client@npm:0.14.0"
+"@logion/client@npm:^0.15.0-1":
+  version: 0.15.0-1
+  resolution: "@logion/client@npm:0.15.0-1"
   dependencies:
     "@logion/node-api": ^0.7.0
     axios: ^0.27.2
     luxon: ^3.0.1
     mime-db: ^1.52.0
-  checksum: 8a4295f2acc10f44410be3211eed99b53b84708e75ae766c2fe452740865f3d14ee23535e0754a80976d0d4115cfae8b3d657839e58fa1029ac9794ec2deed41
+  checksum: 9a511e28739667959f912f715d5b704328165d2a0944dca98a3df95b6fab923f2bee752789c83944e65e6b9b90f2d7a1ffd29b472f40badbd68dc4ae58f51340
   languageName: node
   linkType: hard
 
-"@logion/crossmint@npm:^0.1.1":
-  version: 0.1.1
-  resolution: "@logion/crossmint@npm:0.1.1"
+"@logion/crossmint@npm:^0.1.2-1":
+  version: 0.1.2-1
+  resolution: "@logion/crossmint@npm:0.1.2-1"
   dependencies:
     "@crossmint/embed": ^0.0.2
-    "@logion/client": ^0.14.0
-  checksum: c8dc751fc3c2d18535d119dafb9398d64546c51225b8fc8f59700958861fd0bedf95bbc67bd6c9300fddd9f0a5b5721b5abbb65b2275f1a24d60f69c16962828
+    "@logion/client": ^0.15.0-1
+  checksum: bcb3e42f34f15a3a106f26fbabbfbca274ce26bd877f1fa21b0c9f4d23c68d43fb789905a1e3d517080cdee4f0c2d94001b40496b504fb660fc1e0a4fc40add5
   languageName: node
   linkType: hard
 
-"@logion/extension@npm:^0.4.6":
-  version: 0.4.6
-  resolution: "@logion/extension@npm:0.4.6"
+"@logion/extension@npm:^0.4.7-1":
+  version: 0.4.7-1
+  resolution: "@logion/extension@npm:0.4.7-1"
   dependencies:
-    "@logion/client": ^0.14.0
+    "@logion/client": ^0.15.0-1
     "@polkadot/extension-compat-metamask": ^0.44.6
     "@polkadot/extension-dapp": ^0.44.6
-  checksum: 7f54c81a6eba26f28c54b802c1f45b42b98261d4fed1d9463e0cfa4de16c42cdeaad960da1f242fb6ec82afb514e0a6df1a8ad4c2a4d79b535b401be550775db
+  checksum: 47b10ff8f96271b434c79f5c83f74a567fdf6fcfb310044e16ffc9bb3ed5cd1f2b7120ba16c6bc75b6df3e3379c6edf3e7d65562d57fb706ebd2a3f66bf74411
   languageName: node
   linkType: hard
 
@@ -12449,8 +12449,8 @@ __metadata:
     "@babel/preset-env": ^7.19.1
     "@babel/preset-react": ^7.18.6
     "@craco/craco": ^6.4.5
-    "@logion/crossmint": ^0.1.1
-    "@logion/extension": ^0.4.6
+    "@logion/crossmint": ^0.1.2-1
+    "@logion/extension": ^0.4.7-1
     "@popperjs/core": ^2.11.6
     "@testing-library/dom": ^8.17.1
     "@testing-library/jest-dom": ^5.16.5

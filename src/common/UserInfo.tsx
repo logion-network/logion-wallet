@@ -23,6 +23,7 @@ export default function UserInfo(props: Props) {
                             {props.postalAddress.postalCode} {props.postalAddress.city} <br/>
                             {props.postalAddress.country}
                         </p>
+                        <p>Represents a company: { props.userIdentity.company ? "Yes" : "No" }</p>
                 </Collapsible>
             </>
     )

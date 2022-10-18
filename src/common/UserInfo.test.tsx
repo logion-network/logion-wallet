@@ -9,6 +9,7 @@ test("renders", () => {
                 lastName: "Doe",
                 email: "john.doe@logion.network",
                 phoneNumber: "+1234",
+                company: false,
             }}
             postalAddress={{
                 line1: "Place de le République Française, 10",

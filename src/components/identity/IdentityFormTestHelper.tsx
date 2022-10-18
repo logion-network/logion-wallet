@@ -13,6 +13,8 @@ export async function fillInForm() {
     await userEvent.type(screen.getByTestId("city"), 'Liège')
     await userEvent.type(screen.getByTestId("country"), 'Belgium')
 
-    await userEvent.click(screen.getByRole('checkbox'));
+    const checkBoxes = screen.getAllByRole('checkbox');
+    const iAgreeCheckbox = checkBoxes[1];
+    await userEvent.click(iAgreeCheckbox);
 }
 

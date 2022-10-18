@@ -15,6 +15,6 @@
             "socket": "ws://localhost:9946"
         }
     ],
-    "crossmintApiKey": ""
+    "crossmintApiKey": "",
     "logionClassification": ""
 }
