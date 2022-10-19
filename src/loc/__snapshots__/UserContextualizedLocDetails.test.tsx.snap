@@ -206,6 +206,8 @@ exports[`UserContextualizedLocDetails renders 1`] = `
   />
   <CheckFileFrame
     checkResult="NONE"
+    checkedItem="confidential document"
+    context="Identity LOC"
   />
 </LocPane>
 `;

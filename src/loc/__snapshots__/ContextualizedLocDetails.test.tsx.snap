@@ -257,6 +257,8 @@ exports[`ContextualizedLocDetails renders 1`] = `
   />
   <CheckFileFrame
     checkResult="NONE"
+    checkedItem="confidential document"
+    context="Identity LOC"
   />
   <VoidFrame
     loc={
@@ -532,6 +534,8 @@ exports[`ContextualizedLocDetails renders empty 1`] = `
   />
   <CheckFileFrame
     checkResult="NONE"
+    checkedItem="confidential document"
+    context="Identity LOC"
   />
   <VoidFrame
     loc={

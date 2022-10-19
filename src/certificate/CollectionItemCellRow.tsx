@@ -46,7 +46,7 @@ export default function CollectionItemCellRow(props: Props) {
                     <CertificateCell md={ 12 } label="Files">
                         <ul>
                             { files.map(file => (
-                                <li>
+                                <li className={ props.checkResult?.collectionItemFile?.hash === file.hash ? "matched" : ""}>
                                     <Row>
                                         <Col md={ 7 }>
                                             { file.name } ({ file.contentType }, { file.size.toString() } bytes)

@@ -15,6 +15,8 @@ describe("CheckFileFrame", () => {
         const element = shallowRender(<CheckFileFrame
             checkHash={ checkHash }
             checkResult={ checkResult }
+            context="Transaction LOC"
+            checkedItem="confidential document"
         />);
         expect(element).toMatchSnapshot();
     })
@@ -25,6 +27,8 @@ describe("CheckFileFrame", () => {
         render(<CheckFileFrame
             checkHash={ checkHash }
             checkResult="POSITIVE"
+            context="Transaction LOC"
+            checkedItem="confidential document"
         />);
         const upload = screen.getByTestId("FileSelectorButtonHiddenInput");
         await userEvent.upload(upload, new File(["test"], "some-file.txt"));
@@ -38,6 +42,8 @@ describe("CheckFileFrame", () => {
         render(<CheckFileFrame
             checkHash={ checkHash }
             checkResult="NEGATIVE"
+            context="Transaction LOC"
+            checkedItem="confidential document"
         />);
         const upload = screen.getByTestId("FileSelectorButtonHiddenInput");
         await userEvent.upload(upload, new File(["test"], "some-file.txt"));

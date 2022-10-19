@@ -15,7 +15,9 @@ export type CheckResult = 'NONE' | 'POSITIVE' | 'NEGATIVE';
 export interface Props {
     checkHash: (hash: string) => void;
     checkResult: CheckResult;
-    colorTheme?: ColorTheme
+    colorTheme?: ColorTheme;
+    context: string;
+    checkedItem: string;
 }
 
 export interface DocumentCheckResult {
@@ -24,7 +26,7 @@ export interface DocumentCheckResult {
 }
 
 export default function CheckFileFrame(props: Props) {
-    const { checkHash } = props;
+    const { checkHash, context, checkedItem } = props;
     const [ hash, setHash ] = useState<DocumentHash | null>(null);
 
     const onHash = useCallback((hash: DocumentHash) => {
@@ -42,11 +44,11 @@ export default function CheckFileFrame(props: Props) {
                 text={
                     <>
                         <p className="text-title">Document conformity check tool</p>
-                        <p>Check a document to verify its conformity with a confidential document referenced in this
-                            LOC. This tool will generate the “hash” - a digital fingerprint - of the submitted document,
-                            compare it with all document “hashes” referenced in the LOC above, and will highlight
+                        <p>Check a document to verify its conformity with a { checkedItem } referenced in this { context }.
+                            This tool will generate the “hash” - a digital fingerprint - of the submitted document,
+                            compare it with all document “hashes” referenced in the { context } above, and will highlight
                             (dotted square) above - if existing - the identified document. Otherwise, it will mean that
-                            the submitted file version is not part of this current transaction LOC.</p>
+                            the submitted file version is not part of this current { context }.</p>
                         <p>Important: the document you submit is NOT uploaded to a server as the test is done by your
                             browser.</p>
                         <FileHasher

@@ -46,10 +46,10 @@ export default function Certificate() {
 
     const checkHash = useCallback(async (hash: string) => {
         if (loc) {
-            const result = await loc.checkHash(hash);
+            const result = await loc.checkHash(hash, collectionItem?.id);
             setCheckResult(result);
         }
-    }, [ loc, setCheckResult ]);
+    }, [ loc, setCheckResult, collectionItem?.id ]);
 
     useEffect(() => {
         if (loc === undefined && locId !== undefined && client?.legalOfficers !== undefined) {
@@ -297,8 +297,10 @@ export default function Certificate() {
             <Container className="CertificateCheck">
                 <CheckFileFrame
                     checkHash={ checkHash }
-                    checkResult={ checkResult === undefined ? "NONE" : ( checkResult.file || checkResult.collectionItem || checkResult.metadataItem ? "POSITIVE" : "NEGATIVE") }
+                    checkResult={ checkResult === undefined ? "NONE" : ( checkResult.file || checkResult.collectionItem || checkResult.metadataItem || checkResult.collectionItemFile ? "POSITIVE" : "NEGATIVE") }
                     colorTheme={ LIGHT_MODE }
+                    context="Transaction LOC"
+                    checkedItem="confidential document"
                 />
             </Container>
             {
