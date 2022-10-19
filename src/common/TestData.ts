@@ -14,7 +14,6 @@ export const DEFAULT_IDENTITY: UserIdentity = {
     lastName: "Doe",
     email: "john.doe@logion.network",
     phoneNumber: "+1234",
-    company: false,
 };
 
 export const DEFAULT_ADDRESS: PostalAddress = {
@@ -174,7 +173,6 @@ export const PATRICK: LegalOfficer = {
         lastName: "Gielen",
         email: "patrick@logion.network",
         phoneNumber: "+32 498 237 107",
-        company: false,
     },
     postalAddress: {
         company: "MODERO",
@@ -197,7 +195,6 @@ export const GUILLAUME: LegalOfficer = {
         lastName: "Gielen",
         email: "g.grain@adrastee-lyon.fr",
         phoneNumber: "+33 4 78 52 87 56",
-        company: false,
     },
     postalAddress: {
         company: "SELARL ADRASTEE",
@@ -220,7 +217,6 @@ export const ALAIN: LegalOfficer = {
         lastName: "Gielen",
         email: "alain.barland@auxilia-conseils.com",
         phoneNumber: "+33 2 48 67 50 50",
-        company: false,
     },
     postalAddress: {
         company: "AUXILIA CONSEILS 18",

@@ -1,7 +1,7 @@
 import userEvent from "@testing-library/user-event";
 import { screen } from "@testing-library/react";
 
-export async function fillInForm() {
+export async function fillInForm(hasLegalEntityCheckbox: boolean) {
     await userEvent.type(screen.getByTestId("firstName"), 'John');
     await userEvent.type(screen.getByTestId("lastName"), 'Doe')
     await userEvent.type(screen.getByTestId("email"), 'john.doe@logion.network')
@@ -13,8 +13,12 @@ export async function fillInForm() {
     await userEvent.type(screen.getByTestId("city"), 'Liège')
     await userEvent.type(screen.getByTestId("country"), 'Belgium')
 
-    const checkBoxes = screen.getAllByRole('checkbox');
-    const iAgreeCheckbox = checkBoxes[1];
+    let iAgreeCheckbox: HTMLElement;
+    if(hasLegalEntityCheckbox) {
+        const checkBoxes = screen.getAllByRole('checkbox');
+        iAgreeCheckbox = checkBoxes[1];
+    } else {
+        iAgreeCheckbox = screen.getByRole("checkbox");
+    }
     await userEvent.click(iAgreeCheckbox);
 }
-

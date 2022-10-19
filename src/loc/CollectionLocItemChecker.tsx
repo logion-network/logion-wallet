@@ -6,7 +6,7 @@ import { getCollectionSize } from "@logion/node-api/dist/LogionLoc";
 
 import { useLogionChain } from "../logion-chain";
 import PolkadotFrame from "../common/PolkadotFrame";
-import { useCommonContext } from "../common/CommonContext";
+import { useCommonContext, Viewer } from "../common/CommonContext";
 import Icon from "../common/Icon";
 import IconTextRow from "../common/IconTextRow";
 import FormGroup from "../common/FormGroup";
@@ -17,7 +17,7 @@ import { fullCollectionItemCertificate } from "../PublicPaths";
 
 import "./CollectionLocItemChecker.css"
 import StatementOfFactsButton from "./statement/StatementOfFactsButton";
-import { toItemId, Viewer } from './types';
+import { toItemId } from './types';
 import StatementOfFactsRequestButton from "./statement/StatementOfFactsRequestButton";
 import { useUserLocContext } from "./UserLocContext";
 import { useLocContext } from "./LocContext";

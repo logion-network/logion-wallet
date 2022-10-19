@@ -5,6 +5,7 @@ import { PersonalInfoProps } from "./type";
 import { LocRequestStatus } from "@logion/client/dist/LocClient";
 
 import "./PersonalInfo.css";
+import LegalEntity from "./LegalEntity";
 
 interface PersonalAndStatusInfoProps extends PersonalInfoProps {
     status: LocRequestStatus,
@@ -12,14 +13,23 @@ interface PersonalAndStatusInfoProps extends PersonalInfoProps {
 }
 
 export function PersonalInfo(props: { personalAndStatusInfo: PersonalAndStatusInfoProps }) {
-    const { requesterAddress, userIdentity, userPostalAddress, status, seal } = props.personalAndStatusInfo;
+    const { requesterAddress, userIdentity, userPostalAddress, status, seal, company } = props.personalAndStatusInfo;
     const padding = "/";
     return (
         <div className="PersonalInfo">
-            <p className="title">Identity related record(s)</p>
+            <p className="title">Submitted Identity Data</p>
+            <Row>
+                <Col>
+                    <LegalEntity
+                        company={ company }
+                    />
+                </Col>
+            </Row>
             <Row>
                 <Col md={ 6 }>
-                    <Detail label="Account Address" value={ requesterAddress || padding } />
+                    <Row>
+                        <Detail label="Account Address" value={ requesterAddress || padding } />
+                    </Row>
                     <Row>
                         <Col style={ { flexGrow: 1 } }>
                             <Detail label="First Name" value={ userIdentity?.firstName || padding } />
@@ -28,11 +38,6 @@ export function PersonalInfo(props: { personalAndStatusInfo: PersonalAndStatusIn
                         <Col style={ { flexGrow: 1 } }>
                             <Detail label="Last Name" value={ userIdentity?.lastName || padding } />
                             <Detail label="Phone Number" value={ userIdentity?.phoneNumber || padding } />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <Detail label="Represents a company" value={ userIdentity?.company ? "Yes" : "No" } />
                         </Col>
                     </Row>
                 </Col>

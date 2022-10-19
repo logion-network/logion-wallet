@@ -3,10 +3,10 @@ import { UUID } from "@logion/node-api/dist/UUID";
 import { LocType } from "@logion/node-api/dist/Types";
 
 import ContextualizedLocDetails from "./ContextualizedLocDetails";
-import { Viewer } from "./types";
 import { UserLocContextProvider } from "./UserLocContext";
 import UserContextualizedLocDetails from "./UserContextualizedLocDetails";
 import { LegalOfficerLocContextProvider } from "./LegalOfficerLocContext";
+import { Viewer } from "src/common/CommonContext";
 
 export interface Props {
     backPath: string;

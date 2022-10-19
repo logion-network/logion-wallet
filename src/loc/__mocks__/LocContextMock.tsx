@@ -50,7 +50,6 @@ let loc: Partial<LocData> | null = {
         lastName: "Doe",
         email: "john.doe@logion.network",
         phoneNumber: "+1234",
-        company: false,
     }
 };
 

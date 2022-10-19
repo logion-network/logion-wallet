@@ -12,10 +12,19 @@ import { useLogionChain } from "../../logion-chain";
 import { FullWidthPane } from "../../common/Dashboard";
 import { useNavigate } from "react-router";
 import { Row, Col } from "react-bootstrap";
+import FormGroup from "src/common/FormGroup";
 import './IdentityLocRequest.css';
 
 export interface Props {
     backPath: string,
+}
+
+function getInvalidCompanyName(company: boolean, companyName: string | undefined): string | undefined {
+    if(company && !companyName) {
+        return "Required if you are representing a legal entity";
+    } else {
+        return undefined;
+    }
 }
 
 export default function IdentityLocRequest(props: Props) {
@@ -25,6 +34,9 @@ export default function IdentityLocRequest(props: Props) {
     const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer | null>(null);
     const { locsState, mutateLocsState } = useUserContext();
     const [ agree, setAgree ] = useState<boolean>(false);
+    const [ company, setCompany ] = useState<boolean>(false);
+    const [ companyName, setCompanyName ] = useState("");
+    const [ invalidCompanyName, setInvalidCompanyName ] = useState<string>();
     const { accounts } = useLogionChain();
     const navigate = useNavigate();
     const legalOfficersWithoutValidIdentityLoc = useMemo(() => {
@@ -41,12 +53,18 @@ export default function IdentityLocRequest(props: Props) {
         if (legalOfficer === null || accounts === null) {
             return
         }
+
+        const invalidCompanyName = getInvalidCompanyName(company, companyName);
+        setInvalidCompanyName(invalidCompanyName);
+        if(invalidCompanyName) {
+            return;
+        }
+
         const userIdentity: UserIdentity = {
             firstName: formValues.firstName,
             lastName: formValues.lastName,
             email: formValues.email,
             phoneNumber: formValues.phoneNumber,
-            company: formValues.company as unknown as boolean,
         };
         const userPostalAddress: PostalAddress = {
             line1: formValues.line1,
@@ -61,11 +79,12 @@ export default function IdentityLocRequest(props: Props) {
                 description: `KYC ${ userIdentity.firstName } ${ userIdentity.lastName } - ${ accounts.current?.address }`,
                 userIdentity,
                 userPostalAddress,
+                company: company ? companyName : undefined,
             })).locsState();
         })
         clear();
         navigate(props.backPath);
-    }, [ mutateLocsState, legalOfficer, accounts, clear, navigate, props.backPath ])
+    }, [ mutateLocsState, legalOfficer, accounts, clear, navigate, props.backPath, company, companyName ])
 
     return (
         <FullWidthPane
@@ -89,13 +108,46 @@ export default function IdentityLocRequest(props: Props) {
                             feedback="Required"
                         />
                     </Frame>
+
+                    <Frame className="company-frame">
+                        <p>Check the box below if you are acting on behalf and representing a company, association, fondation (the Legal Officer will request a proof of authority):</p>
+                        <div className="company-check-container">
+                            <Form.Check
+                                data-testid="company"
+                                type="checkbox"
+                                checked={ company }
+                                onChange={ () => setCompany(!company) }
+                                label="Yes, I am representing a legal entity"
+                            />
+                        </div>
+                        {
+                            company &&
+                            <div className="company-name-container">
+                                <FormGroup
+                                    id="companyName"
+                                    label="Legal entity name"
+                                    control={
+                                        <Form.Control
+                                            isInvalid={ invalidCompanyName !== undefined }
+                                            type="text"
+                                            data-testid="companyName"
+                                            value={ companyName }
+                                            onChange={ e => { setInvalidCompanyName(undefined) ; setCompanyName(e.target.value) } }
+                                        />
+                                    }
+                                    feedback={ invalidCompanyName }
+                                    colors={ colorTheme.frame }
+                                />
+                            </div>
+                        }
+                    </Frame>
                 </Col>
                 <Col md={ 6 }>
                     <Frame disabled={ legalOfficer === null }>
 
                         <h3>Fill in your personal information</h3>
 
-                        <Form onSubmit={ handleSubmit(submit) }>
+                        <Form onSubmit={ handleSubmit(submit, () => setInvalidCompanyName(getInvalidCompanyName(company, companyName))) }>
 
                             <IdentityForm
                                 control={ control }

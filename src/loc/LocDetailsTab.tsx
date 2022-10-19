@@ -16,10 +16,11 @@ import LocLinkButton from "./LocLinkButton";
 import { LocPrivateFileButton } from "./LocPrivateFileButton";
 import { LocPublicDataButton } from "./LocPublicDataButton";
 import RequesterOrLegalOfficer from "./RequesterOrLegalOfficer";
-import { LocItem, Viewer } from "./types";
+import { LocItem } from "./types";
 
 import "./LocDetailsTab.css";
 import { Row } from "src/common/Grid";
+import { Viewer } from "src/common/CommonContext";
 
 export interface Props {
     loc: LocData;

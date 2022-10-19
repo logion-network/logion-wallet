@@ -1,11 +1,11 @@
 import { LocData, LocRequestStatus } from "@logion/client";
 import { LocType, UUID } from "@logion/node-api";
+import { Viewer } from "src/common/CommonContext";
 
 import { CheckResult } from "src/components/checkfileframe/CheckFileFrame";
 import { shallowRender } from "src/tests";
 import { ActiveLoc } from "./LocContext";
 import LocDetailsTab, { LocDetailsTabContent } from "./LocDetailsTab";
-import { Viewer } from "./types";
 
 describe("LocDetailsTab", () => {
 

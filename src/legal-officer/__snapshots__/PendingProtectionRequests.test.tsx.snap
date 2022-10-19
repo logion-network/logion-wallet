@@ -58,7 +58,6 @@ exports[`PendingProtectionRequests Renders pending requests 1`] = `
           "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
           "status": "PENDING",
           "userIdentity": Object {
-            "company": false,
             "email": "john.doe@logion.network",
             "firstName": "John",
             "lastName": "Doe",

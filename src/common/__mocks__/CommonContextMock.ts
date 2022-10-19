@@ -1,5 +1,5 @@
 import { COLOR_THEME, legalOfficers } from '../TestData';
-import { CommonContext } from "../CommonContext";
+import { CommonContext, Viewer } from "../CommonContext";
 import { BalanceState } from "@logion/client/dist/Balance";
 
 export let setColorTheme = jest.fn();
@@ -12,6 +12,12 @@ export function setBalanceState(value: BalanceState | undefined) {
     balanceState = value;
 }
 
+let viewer: Viewer = "User";
+
+export function setViewer(_viewer: Viewer) {
+    viewer = _viewer;
+}
+
 export function useCommonContext() {
     const commonContext:Partial<CommonContext> = {
         balanceState,
@@ -20,7 +26,8 @@ export function useCommonContext() {
         refresh,
         nodesUp: [],
         nodesDown: [],
-        availableLegalOfficers: legalOfficers
+        availableLegalOfficers: legalOfficers,
+        viewer,
     };
     return commonContext;
 }

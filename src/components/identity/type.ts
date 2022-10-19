@@ -4,4 +4,5 @@ export interface PersonalInfoProps {
     requesterAddress?: string | null,
     userIdentity?: UserIdentity,
     userPostalAddress?: PostalAddress,
+    company?: string,
 }

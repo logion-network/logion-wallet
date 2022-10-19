@@ -14,6 +14,8 @@ export interface LegalOfficerEndpoint extends Endpoint {
     legalOfficer: string;
 }
 
+export type Viewer = 'User' | 'LegalOfficer';
+
 export interface CommonContext {
     balanceState?: BalanceState;
     colorTheme: ColorTheme;
@@ -23,6 +25,8 @@ export interface CommonContext {
     nodesDown: Endpoint[];
     availableLegalOfficers: LegalOfficer[] | undefined;
     mutateBalanceState: (mutator: ((state: BalanceState) => Promise<BalanceState>)) => Promise<void>,
+    viewer: Viewer;
+    setViewer: ((viewer: Viewer) => void) | null;
 }
 
 interface FullCommonContext extends CommonContext {
@@ -41,6 +45,8 @@ function initialContextValue(): FullCommonContext {
         nodesDown: [],
         availableLegalOfficers: undefined,
         mutateBalanceState: () => Promise.reject(),
+        viewer: "User",
+        setViewer: null,
     }
 }
 
@@ -58,6 +64,8 @@ type ActionType = 'FETCH_IN_PROGRESS'
     | 'SET_REFRESH'
     | 'SET_MUTATE_BALANCE_STATE'
     | 'MUTATE_BALANCE_STATE'
+    | 'SET_SET_VIEWER'
+    | 'SET_VIEWER'
 ;
 
 interface Action {
@@ -75,6 +83,8 @@ interface Action {
     availableLegalOfficers?: LegalOfficer[];
     mutateBalanceState?: (mutator: ((state: BalanceState) => Promise<BalanceState>)) => Promise<void>;
     client?: LogionClient;
+    viewer?: Viewer;
+    setViewer?: (viewer: Viewer) => void,
 }
 
 const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, action: Action): FullCommonContext => {
@@ -124,6 +134,16 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
             return {
                 ...state,
                 balanceState: action.balanceState!,
+            };
+        case 'SET_SET_VIEWER':
+            return {
+                ...state,
+                setViewer: action.setViewer!,
+            };
+        case 'SET_VIEWER':
+            return {
+                ...state,
+                viewer: action.viewer!,
             };
         default:
             /* istanbul ignore next */
@@ -252,6 +272,21 @@ export function CommonContextProvider(props: Props) {
             })
         }
     }, [ contextValue.mutateBalanceState, mutateBalanceStateCallback ]);
+
+    useEffect(() => {
+        if(contextValue.setViewer === null) {
+            const setViewer = (viewer: Viewer) => {
+                dispatch({
+                    type: 'SET_VIEWER',
+                    viewer,
+                })
+            }
+            dispatch({
+                type: 'SET_SET_VIEWER',
+                setViewer,
+            });
+        }
+    }, [ contextValue ]);
 
     return (
         <CommonContextObject.Provider value={contextValue}>

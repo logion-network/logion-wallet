@@ -66,7 +66,6 @@ export default function CreateProtectionRequestForm(props: Props) {
                         lastName: formValues.lastName,
                         email: formValues.email,
                         phoneNumber: formValues.phoneNumber,
-                        company: formValues.company === "on",
                     },
                     addressToRecover,
                     callback,
@@ -91,7 +90,6 @@ export default function CreateProtectionRequestForm(props: Props) {
                     lastName: formValues.lastName,
                     email: formValues.email,
                     phoneNumber: formValues.phoneNumber,
-                    company: formValues.company === "on",
                 },
                 addressToRecover: undefined,
             });

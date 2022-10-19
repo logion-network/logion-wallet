@@ -297,7 +297,7 @@ export interface Props {
 
 export function LegalOfficerContextProvider(props: Props) {
     const { api, accounts, axiosFactory, client, reconnect } = useLogionChain();
-    const { colorTheme, setColorTheme } = useCommonContext();
+    const { colorTheme, setColorTheme, viewer, setViewer } = useCommonContext();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
     const isReadyLegalOfficer = useMemo(() => {
@@ -311,6 +311,12 @@ export function LegalOfficerContextProvider(props: Props) {
             setColorTheme(LIGHT_MODE);
         }
     }, [ colorTheme, setColorTheme ]);
+
+    useEffect(() => {
+        if(viewer !== "LegalOfficer" && setViewer) {
+            setViewer("LegalOfficer");
+        }
+    }, [ viewer, setViewer ]);
 
     useEffect(() => {
         const now = DateTime.now();
