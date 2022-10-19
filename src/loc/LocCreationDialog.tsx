@@ -43,6 +43,7 @@ export default function LocCreationDialog(props: Props) {
                 lastName: formValues.lastName!,
                 email: formValues.email!,
                 phoneNumber: formValues.phone!,
+                company: false,
             }
         }
         (async function () {

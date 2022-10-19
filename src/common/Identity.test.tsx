@@ -1,14 +1,15 @@
-import { UserIdentity as IdentityType } from '@logion/client';
+import { UserIdentity } from '@logion/client';
 
 import Identity from './Identity';
 import { render } from '../tests';
 import { DEFAULT_IDENTITY, COLOR_THEME } from './TestData';
 
-const DIFFERENT_IDENTITY: IdentityType = {
+const DIFFERENT_IDENTITY: UserIdentity = {
     firstName: "John2",
     lastName: "Doe2",
     email: "john.doe@logion.network",
     phoneNumber: "+1234",
+    company: false,
 };
 
 test("renders without comparison", () => {

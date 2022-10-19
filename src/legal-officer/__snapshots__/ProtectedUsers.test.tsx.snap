@@ -41,6 +41,7 @@ exports[`renders 2 rows 1`] = `
         "requesterAddress": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
         "status": "ACTIVATED",
         "userIdentity": Object {
+          "company": false,
           "email": "john.doe@logion.network",
           "firstName": "John",
           "lastName": "Doe",
@@ -68,6 +69,7 @@ exports[`renders 2 rows 1`] = `
         "requesterAddress": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
         "status": "ACTIVATED",
         "userIdentity": Object {
+          "company": false,
           "email": "john.doe@logion.network",
           "firstName": "John",
           "lastName": "Doe",
@@ -128,6 +130,7 @@ exports[`renders one row 1`] = `
         "requesterAddress": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
         "status": "ACTIVATED",
         "userIdentity": Object {
+          "company": false,
           "email": "john.doe@logion.network",
           "firstName": "John",
           "lastName": "Doe",

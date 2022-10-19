@@ -9,6 +9,7 @@ export default function IdentityLocRequestDetails(props: { personalInfo: Persona
         lastName: "",
         email: "",
         phoneNumber: "",
+        company: false,
     }
     const userPostalAddress = props.personalInfo.userPostalAddress || {
         line1: "",
@@ -45,6 +46,14 @@ export default function IdentityLocRequestDetails(props: { personalInfo: Persona
                         <Detail
                             label="Phone number"
                             value={ userIdentity.phoneNumber }
+                        />
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <Detail
+                            label="Represents a company"
+                            value={ userIdentity.company ? "Yes" : "No" }
                         />
                     </Col>
                 </Row>

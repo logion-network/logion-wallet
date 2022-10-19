@@ -44,7 +44,8 @@ async function createsWithUserIdentity(locType: LocType, requesterAddress: strin
             firstName: "John",
             lastName: "Doe",
             email: "john@logion.network",
-            phoneNumber: "+1234"
+            phoneNumber: "+1234",
+            company: false,
         }
     };
 

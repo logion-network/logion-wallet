@@ -4,7 +4,7 @@ import IdentityForm, { FormValues } from "../../components/identity/IdentityForm
 import { useForm } from "react-hook-form";
 import { useCommonContext } from "../../common/CommonContext";
 import SelectLegalOfficer from "./SelectLegalOfficer";
-import { LegalOfficer, LocsState } from "@logion/client";
+import { LegalOfficer, LocsState, UserIdentity, PostalAddress } from "@logion/client";
 import { useUserContext } from "../UserContext";
 import Form from "react-bootstrap/Form";
 import Frame from "../../common/Frame";
@@ -41,13 +41,14 @@ export default function IdentityLocRequest(props: Props) {
         if (legalOfficer === null || accounts === null) {
             return
         }
-        const userIdentity = {
+        const userIdentity: UserIdentity = {
             firstName: formValues.firstName,
             lastName: formValues.lastName,
             email: formValues.email,
-            phoneNumber: formValues.phoneNumber
+            phoneNumber: formValues.phoneNumber,
+            company: formValues.company as unknown as boolean,
         };
-        const userPostalAddress = {
+        const userPostalAddress: PostalAddress = {
             line1: formValues.line1,
             line2: formValues.line2,
             postalCode: formValues.postalCode,

@@ -326,6 +326,7 @@ exports[`ContextualizedLocDetails renders empty 1`] = `
       "locType": "Identity",
       "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
       "userIdentity": Object {
+        "company": false,
         "email": "john.doe@logion.network",
         "firstName": "John",
         "lastName": "Doe",
@@ -360,6 +361,7 @@ exports[`ContextualizedLocDetails renders empty 1`] = `
         "locType": "Identity",
         "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
         "userIdentity": Object {
+          "company": false,
           "email": "john.doe@logion.network",
           "firstName": "John",
           "lastName": "Doe",
@@ -411,6 +413,7 @@ exports[`ContextualizedLocDetails renders empty 1`] = `
         "locType": "Identity",
         "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
         "userIdentity": Object {
+          "company": false,
           "email": "john.doe@logion.network",
           "firstName": "John",
           "lastName": "Doe",
@@ -453,6 +456,7 @@ exports[`ContextualizedLocDetails renders empty 1`] = `
         "locType": "Identity",
         "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
         "userIdentity": Object {
+          "company": false,
           "email": "john.doe@logion.network",
           "firstName": "John",
           "lastName": "Doe",
@@ -487,6 +491,7 @@ exports[`ContextualizedLocDetails renders empty 1`] = `
         "locType": "Identity",
         "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
         "userIdentity": Object {
+          "company": false,
           "email": "john.doe@logion.network",
           "firstName": "John",
           "lastName": "Doe",
@@ -522,6 +527,7 @@ exports[`ContextualizedLocDetails renders empty 1`] = `
         "locType": "Identity",
         "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
         "userIdentity": Object {
+          "company": false,
           "email": "john.doe@logion.network",
           "firstName": "John",
           "lastName": "Doe",
@@ -559,6 +565,7 @@ exports[`ContextualizedLocDetails renders empty 1`] = `
         "locType": "Identity",
         "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
         "userIdentity": Object {
+          "company": false,
           "email": "john.doe@logion.network",
           "firstName": "John",
           "lastName": "Doe",

@@ -30,6 +30,11 @@ export function PersonalInfo(props: { personalAndStatusInfo: PersonalAndStatusIn
                             <Detail label="Phone Number" value={ userIdentity?.phoneNumber || padding } />
                         </Col>
                     </Row>
+                    <Row>
+                        <Col>
+                            <Detail label="Represents a company" value={ userIdentity?.company ? "Yes" : "No" } />
+                        </Col>
+                    </Row>
                 </Col>
                 <Col md={ 6 }>
                     <Detail label="Line1" value={ userPostalAddress?.line1 || padding } />

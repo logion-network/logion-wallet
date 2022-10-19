@@ -21,22 +21,10 @@ import { SETTINGS_PATH } from '../UserRouter';
 import LegalOfficers from './LegalOfficers';
 
 import './CreateProtectionRequestForm.css';
-import IdentityForm from "../../components/identity/IdentityForm";
+import IdentityForm, { FormValues } from "../../components/identity/IdentityForm";
 
 export interface Props {
     isRecovery: boolean,
-}
-
-interface FormValues {
-    firstName: string,
-    lastName: string,
-    email: string,
-    phoneNumber: string,
-    line1: string,
-    line2: string,
-    postalCode: string,
-    city: string,
-    country: string,
 }
 
 export default function CreateProtectionRequestForm(props: Props) {
@@ -77,7 +65,8 @@ export default function CreateProtectionRequestForm(props: Props) {
                         firstName: formValues.firstName,
                         lastName: formValues.lastName,
                         email: formValues.email,
-                        phoneNumber: formValues.phoneNumber
+                        phoneNumber: formValues.phoneNumber,
+                        company: formValues.company === "on",
                     },
                     addressToRecover,
                     callback,
@@ -101,7 +90,8 @@ export default function CreateProtectionRequestForm(props: Props) {
                     firstName: formValues.firstName,
                     lastName: formValues.lastName,
                     email: formValues.email,
-                    phoneNumber: formValues.phoneNumber
+                    phoneNumber: formValues.phoneNumber,
+                    company: formValues.company === "on",
                 },
                 addressToRecover: undefined,
             });
