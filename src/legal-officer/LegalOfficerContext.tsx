@@ -1,13 +1,11 @@
-import React, { useContext, useEffect, useReducer, Reducer, useCallback } from 'react';
+import React, { useContext, useEffect, useReducer, Reducer, useCallback, useMemo } from 'react';
 import { AxiosInstance } from 'axios';
 import { VaultTransferRequest, LocRequest, LegalOfficer } from '@logion/client';
 import { ProtectionRequest } from '@logion/client/dist/RecoveryClient';
-import { LogionNodeApi } from "@logion/node-api";
 
 import { fetchProtectionRequests, FetchLocRequestSpecification, fetchLocRequests, } from '../common/Model';
 import { useCommonContext } from '../common/CommonContext';
 import { LIGHT_MODE } from './Types';
-import { AxiosFactory } from '../common/api';
 import { useLogionChain } from '../logion-chain';
 import { VaultApi } from '../vault/VaultApi';
 import { LocType, IdentityLocType, LegalOfficerCase } from "@logion/node-api/dist/Types";
@@ -61,22 +59,23 @@ export interface LegalOfficerContext {
     voidTransactionLocs: Record<LocType, RequestAndLoc[]> | null;
     voidIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null;
     refreshLocs: () => void;
+    refreshOnchainSettings: () => void;
+    legalOfficer?: LegalOfficer;
+    refreshLegalOfficer: () => void;
+    reconnected: boolean;
 }
 
 interface FullLegalOfficerContext extends LegalOfficerContext {
     dataAddress: string | null;
-    fetchForAddress: string | null;
-    locsDataAddress: string | null;
-    fetchLocsForAddress: string | null;
-    refreshAddress?: string;
+    callRefreshLocs: boolean;
+    callRefreshRequests: boolean;
+    callRefreshSettings: boolean;
+    callRefreshLegalOfficer: boolean;
 }
 
 function initialContextValue(): FullLegalOfficerContext {
     return {
         dataAddress: null,
-        fetchForAddress: null,
-        locsDataAddress: null,
-        fetchLocsForAddress: null,
         refreshRequests: DEFAULT_NOOP,
         pendingProtectionRequests: null,
         activatedProtectionRequests: null,
@@ -94,19 +93,35 @@ function initialContextValue(): FullLegalOfficerContext {
         voidTransactionLocs: null,
         voidIdentityLocsByType: null,
         refreshLocs: DEFAULT_NOOP,
+        refreshOnchainSettings: DEFAULT_NOOP,
+        callRefreshLocs: false,
+        callRefreshRequests: false,
+        callRefreshSettings: false,
+        callRefreshLegalOfficer: false,
+        refreshLegalOfficer: DEFAULT_NOOP,
+        reconnected: false,
     };
 }
 
 const LegalOfficerContextObject: React.Context<FullLegalOfficerContext> = React.createContext(initialContextValue());
 
-type ActionType = 'FETCH_IN_PROGRESS'
-    | 'SET_DATA'
-    | 'SET_CURRENT_USER'
+type ActionType =
+    'CHANGE_ADDRESS'
+    | 'SET_REQUESTS_DATA'
     | 'UPDATE_SETTING'
-    | 'FETCH_LOCS_IN_PROGRESS'
     | 'SET_LOCS_DATA'
-    | 'SET_REFRESH'
-    | 'SET_MISSING_SETTINGS'
+    | 'SET_REFRESH_LOCS'
+    | 'SET_ONCHAIN_SETTINGS'
+    | 'SET_REFRESH_ONCHAIN_SETTINGS'
+    | 'SET_REFRESH_REQUESTS'
+    | 'SET_UPDATE_SETTING'
+    | 'REFRESH_LOCS_CALLED'
+    | 'REFRESH_REQUESTS_CALLED'
+    | 'REFRESH_SETTINGS_CALLED'
+    | 'SET_LEGAL_OFFICER'
+    | 'SET_REFRESH_LEGAL_OFFICER'
+    | 'REFRESH_LEGAL_OFFICER_CALLED'
+    | 'MUST_RECONNECT'
 ;
 
 interface Action {
@@ -141,52 +156,35 @@ interface Action {
     voidIdentityLocsByType?: Record<IdentityLocType, RequestAndLoc[]>;
     refreshLocs?: (() => void);
     refreshAddress?: string;
+    refreshOnchainSettings?: () => void;
+    refreshLegalOfficer?: () => void;
+    legalOfficer?: LegalOfficer;
 }
 
 const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOfficerContext, action: Action): FullLegalOfficerContext => {
     console.log("ACTION %s", action.type)
     switch (action.type) {
-        case 'FETCH_LOCS_IN_PROGRESS':
-            if (action.clearBeforeRefresh!) {
-                return {
-                    ...state,
-                    fetchLocsForAddress: action.dataAddress!,
-                    pendingLocRequests: null,
-                    rejectedLocRequests: null,
-                    openedLocRequests: null,
-                    closedLocRequests: null,
-                    openedIdentityLocs: null,
-                    openedIdentityLocsByType: null,
-                    closedIdentityLocsByType: null,
-                    voidTransactionLocs: null,
-                    voidIdentityLocsByType: null,
-                }
-            } else {
-                return {
-                    ...state,
-                    fetchLocsForAddress: action.dataAddress!,
-                };
+        case 'CHANGE_ADDRESS':
+            return {
+                ...state,
+                dataAddress: action.dataAddress!,
+                axios: action.axios,
+                callRefreshLocs: true,
+                callRefreshRequests: true,
+                callRefreshSettings: true,
+                callRefreshLegalOfficer: true,
+                legalOfficer: undefined,
+                reconnected: false,
             }
-        case 'FETCH_IN_PROGRESS':
-            if(action.clearBeforeRefresh!) {
-                return {
-                    ...state,
-                    fetchForAddress: action.dataAddress!,
-                    pendingProtectionRequests: null,
-                    protectionRequestsHistory: null,
-                };
-            } else {
-                return {
-                    ...state,
-                    fetchForAddress: action.dataAddress!,
-                };
-            }
+        case "REFRESH_LOCS_CALLED":
+            return {
+                ...state,
+                callRefreshLocs: false,
+            };
         case "SET_LOCS_DATA":
-            if (action.dataAddress === state.fetchLocsForAddress) {
+            if (action.dataAddress === state.dataAddress) {
                 return {
                     ...state,
-                    fetchLocsForAddress: null,
-                    locsDataAddress: action.dataAddress!,
                     pendingLocRequests: action.pendingLocRequests!,
                     rejectedLocRequests: action.rejectedLocRequests!,
                     openedLocRequests: action.openedLocRequests!,
@@ -200,12 +198,15 @@ const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOffic
             } else {
                 return state;
             }
-        case 'SET_DATA':
-            if(action.dataAddress === state.fetchForAddress) {
+        case "REFRESH_REQUESTS_CALLED":
+            return {
+                ...state,
+                callRefreshRequests: false,
+            };
+        case 'SET_REQUESTS_DATA':
+            if(action.dataAddress === state.dataAddress) {
                 return {
                     ...state,
-                    fetchForAddress: null,
-                    dataAddress: action.dataAddress!,
                     pendingProtectionRequests: action.pendingProtectionRequests!,
                     protectionRequestsHistory: action.protectionRequestsHistory!,
                     activatedProtectionRequests: action.activatedProtectionRequests!,
@@ -214,20 +215,10 @@ const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOffic
                     pendingVaultTransferRequests: action.pendingVaultTransferRequests!,
                     vaultTransferRequestsHistory: action.vaultTransferRequestsHistory!,
                     settings: action.settings!,
-                    onchainSettings: action.onchainSettings,
-                    missingSettings: action.missingSettings,
                 };
             } else {
                 return state;
             }
-        case "SET_CURRENT_USER": {
-            return {
-                ...state,
-                refreshRequests: action.refreshRequests!,
-                axios: action.axios!,
-                updateSetting: action.updateSetting!,
-            };
-        }
         case "UPDATE_SETTING":
             return {
                 ...state,
@@ -236,17 +227,63 @@ const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOffic
                     [action.id!]: action.value!,
                 }
             }
-        case 'SET_REFRESH':
+        case 'SET_REFRESH_LOCS':
             return {
                 ...state,
                 refreshLocs: action.refreshLocs!,
-                refreshAddress: action.refreshAddress!,
             };
-        case 'SET_MISSING_SETTINGS':
+        case "REFRESH_SETTINGS_CALLED":
+            return {
+                ...state,
+                callRefreshSettings: false,
+            };
+        case 'SET_ONCHAIN_SETTINGS':
             return {
                 ...state,
                 onchainSettings: action.onchainSettings!,
+                legalOfficer: action.legalOfficer!,
                 missingSettings: action.missingSettings,
+            }
+        case 'SET_REFRESH_ONCHAIN_SETTINGS':
+            return {
+                ...state,
+                refreshOnchainSettings: action.refreshOnchainSettings!,
+            }
+        case 'SET_REFRESH_REQUESTS':
+            return {
+                ...state,
+                refreshRequests: action.refreshRequests!,
+            }
+        case 'SET_UPDATE_SETTING':
+            return {
+                ...state,
+                updateSetting: action.updateSetting!,
+            }
+        case "REFRESH_LEGAL_OFFICER_CALLED":
+            return {
+                ...state,
+                callRefreshLegalOfficer: false,
+            };
+        case "SET_LEGAL_OFFICER":
+            if (action.dataAddress === state.dataAddress) {
+                return {
+                    ...state,
+                    legalOfficer: action.legalOfficer!,
+                    missingSettings: action.missingSettings,
+                }
+            } else {
+                return state;
+            }
+        case 'SET_REFRESH_LEGAL_OFFICER':
+            return {
+                ...state,
+                refreshLegalOfficer: action.refreshLegalOfficer!,
+            }
+        case 'MUST_RECONNECT':
+            return {
+                ...state,
+                reconnected: true,
+                dataAddress: null,
             }
         default:
             /* istanbul ignore next */
@@ -259,9 +296,15 @@ export interface Props {
 }
 
 export function LegalOfficerContextProvider(props: Props) {
-    const { api, accounts, axiosFactory, isCurrentAuthenticated, client, getOfficer } = useLogionChain();
+    const { api, accounts, axiosFactory, client, reconnect } = useLogionChain();
     const { colorTheme, setColorTheme } = useCommonContext();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
+
+    const isReadyLegalOfficer = useMemo(() => {
+        return accounts !== null && accounts !== undefined
+            && accounts.current !== null && accounts.current !== undefined
+            && client && client.allLegalOfficers.find(legalOfficer => legalOfficer.address === accounts.current?.address && legalOfficer.node) !== undefined
+    }, [ accounts, client ]);
 
     useEffect(() => {
         if(colorTheme !== LIGHT_MODE && setColorTheme !== null) {
@@ -269,24 +312,54 @@ export function LegalOfficerContextProvider(props: Props) {
         }
     }, [ colorTheme, setColorTheme ]);
 
+    useEffect(() => {
+        const now = DateTime.now();
+        if(accounts !== null && accounts.current !== undefined
+            && client !== null && client.isTokenValid(now)
+            && axiosFactory
+            && accounts.current.address !== contextValue.dataAddress) {
+
+            const dataAddress = accounts.current.address;
+            let axios: AxiosInstance | undefined;
+            if(isReadyLegalOfficer) {
+                axios = axiosFactory(dataAddress);
+            }
+            dispatch({
+                type: "CHANGE_ADDRESS",
+                dataAddress,
+                axios,
+            });
+        }
+    }, [ accounts, client, contextValue.dataAddress, contextValue.axios, axiosFactory, isReadyLegalOfficer, contextValue.legalOfficer ]);
+
+    useEffect(() => {
+        if(contextValue.legalOfficer && contextValue.legalOfficer.address === contextValue.dataAddress && contextValue.legalOfficer?.node
+            && !isReadyLegalOfficer
+            && !contextValue.reconnected) {
+
+            dispatch({
+                type: "MUST_RECONNECT"
+            });
+            reconnect();
+        }
+    }, [ contextValue.legalOfficer, client, contextValue.reconnected, contextValue.dataAddress, reconnect, isReadyLegalOfficer ]);
+
+    // ------------------ LOCs -------------------------------
+
     const refreshLocs = useCallback(() => {
         const now = DateTime.now();
-        if(api !== null
-            && accounts !== null
-            && accounts.current !== undefined
-            && client !== null
-            && client.isTokenValid(now)
-            && axiosFactory !== undefined) {
+        if(api
+            && accounts && accounts.current
+            && client !== null && client.isTokenValid(now)
+            && axiosFactory
+            && isReadyLegalOfficer) {
 
+            dispatch({
+                type: "REFRESH_LOCS_CALLED"
+            });
             const currentAccount = accounts.current;
             const currentAddress = currentAccount.address;
-            dispatch({
-                type: "FETCH_LOCS_IN_PROGRESS",
-                dataAddress: currentAddress,
-            });
-
             (async function () {
-
                 const fetch = async (specification: Partial<FetchLocRequestSpecification>) => {
 
                     const specificationFragment: FetchLocRequestSpecification = {
@@ -433,90 +506,203 @@ export function LegalOfficerContextProvider(props: Props) {
                 });
             })();
         }
-    }, [ api, dispatch, accounts, client, axiosFactory ]);
-
-    function voidRequestsAndLocs(requests: LocRequest[], locs: Record<string, LegalOfficerCase>): RequestAndLoc[] {
-        return requests
-            .map(request => ({request, loc: locs[toDecimalString(request.id)]}))
-            .filter(requestAndLoc => requestAndLoc.loc !== undefined && requestAndLoc.loc.voidInfo !== undefined);
-    }
-
-    function notVoidRequestsAndLocs(requests: LocRequest[], locs: Record<string, LegalOfficerCase>): RequestAndLoc[] {
-        return requests
-            .map(request => ({request, loc: locs[toDecimalString(request.id)]}))
-            .filter(requestAndLoc => requestAndLoc.loc !== undefined && requestAndLoc.loc.voidInfo === undefined);
-    }
+    }, [ api, dispatch, accounts, client, axiosFactory, isReadyLegalOfficer ]);
 
     useEffect(() => {
-        if(api !== null
-            && client !== null
-            && client.isTokenValid(DateTime.now())
-            && accounts !== null
-            && accounts.current !== undefined
-            && contextValue.locsDataAddress !== accounts.current.address
-            && contextValue.fetchLocsForAddress !== accounts.current.address) {
-            refreshLocs();
-        }
-    }, [ api, contextValue, refreshLocs, accounts, client ]);
-
-    useEffect(() => {
-        if(accounts !== null
-            && accounts.current !== undefined
-            && contextValue.refreshAddress !== accounts.current.address
-            && client !== null) {
+        if(contextValue.refreshLocs !== refreshLocs) {
             dispatch({
-                type: 'SET_REFRESH',
+                type: 'SET_REFRESH_LOCS',
                 refreshLocs: refreshLocs,
-                refreshAddress: accounts.current.address,
             });
         }
-    }, [ contextValue, refreshLocs, dispatch, accounts, client ]);
-
+    }, [ contextValue.refreshLocs, refreshLocs ]);
 
     useEffect(() => {
-        if(accounts !== null
-                && getOfficer !== undefined
-                && api
-                && axiosFactory !== undefined
-                && accounts.current !== undefined
-                && contextValue.dataAddress !== accounts.current.address
-                && contextValue.fetchForAddress !== accounts.current.address
-                && isCurrentAuthenticated()
-                && !contextValue.missingSettings) {
-            const currentAccount = accounts!.current!.address;
-            const currentLegalOfficer = getOfficer(currentAccount);
-            if(currentLegalOfficer?.node) {
-                const refreshRequests = (clear: boolean) => refreshRequestsFunction(clear, currentAccount, dispatch, axiosFactory, api, getOfficer);
-                const axios = axiosFactory(currentAccount);
-                const updateSettingCallback = async (id: string, value: string) => {
-                    await updateSetting(axios, id, value);
-                    dispatch({
-                        type: "UPDATE_SETTING",
-                        id,
-                        value,
-                    })
-                };
-                dispatch({
-                    type: 'SET_CURRENT_USER',
-                    axios,
-                    currentAccount,
-                    refreshRequests,
-                    updateSetting: updateSettingCallback,
-                });
-                refreshRequests(true);
-            } else {
-                (async function() {
-                    const onchainSettings = await getLegalOfficerData({ api, address: currentAccount });
-                    const missingSettings = getMissingSettings(undefined, onchainSettings);
-                    dispatch({
-                        type: "SET_MISSING_SETTINGS",
-                        onchainSettings,
-                        missingSettings,
-                    });
-                })();
-            }
+        if(contextValue.callRefreshLocs) {
+            refreshLocs();
         }
-    }, [ contextValue, axiosFactory, accounts, isCurrentAuthenticated, api, getOfficer ]);
+    }, [ contextValue.callRefreshLocs, refreshLocs ]);
+
+    // ------------------ Settings -------------------------------
+
+    const refreshOnchainSettings = useCallback(async () => {
+        if(accounts && accounts.current && api) {
+            dispatch({
+                type: "REFRESH_SETTINGS_CALLED"
+            });
+            const currentAddress = accounts.current.address;
+            const onchainSettings = await getLegalOfficerData({ api, address: currentAddress });
+            const legalOfficer = contextValue.legalOfficer ? {
+                ...contextValue.legalOfficer,
+                node: onchainSettings.baseUrl || "",
+            } : undefined;
+            const missingSettings = getMissingSettings(legalOfficer, onchainSettings);
+            dispatch({
+                type: "SET_ONCHAIN_SETTINGS",
+                dataAddress: currentAddress,
+                onchainSettings,
+                missingSettings,
+                legalOfficer,
+            });
+        }
+    }, [ accounts, api, contextValue.legalOfficer ]);
+
+    useEffect(() => {
+        if(contextValue.refreshOnchainSettings !== refreshOnchainSettings) {
+            dispatch({
+                type: "SET_REFRESH_ONCHAIN_SETTINGS",
+                refreshOnchainSettings: refreshOnchainSettings,
+            })
+        }
+    }, [ contextValue.refreshOnchainSettings, refreshOnchainSettings ]);
+
+    useEffect(() => {
+        if(contextValue.callRefreshSettings) {
+            refreshOnchainSettings();
+        }
+    }, [ contextValue.callRefreshSettings, refreshOnchainSettings ]);
+
+    const updateSettingCallback = useCallback(async (id: string, value: string): Promise<void> => {
+        const axios = axiosFactory!(contextValue.dataAddress!);
+        await updateSetting(axios, id, value);
+        dispatch({
+            type: "UPDATE_SETTING",
+            id,
+            value,
+        })
+    }, [ contextValue.dataAddress, axiosFactory ]);
+
+    useEffect(() => {
+        if(contextValue.updateSetting !== updateSettingCallback) {
+            dispatch({
+                type: "SET_UPDATE_SETTING",
+                updateSetting: updateSettingCallback,
+            })
+        }
+    }, [ contextValue.updateSetting, updateSettingCallback ]);
+
+    // ------------------ Protection, recovery and vault -------------------------------
+
+    const refreshRequests = useCallback(() => {
+        if(accounts && accounts.current && axiosFactory && isReadyLegalOfficer) {
+            dispatch({
+                type: "REFRESH_REQUESTS_CALLED"
+            });
+            const currentAddress = accounts.current.address;
+
+            (async function() {
+                const axios = axiosFactory(currentAddress);
+                const pendingProtectionRequests = await fetchProtectionRequests(axios, {
+                    statuses: ["PENDING"],
+                    kind: 'PROTECTION_ONLY',
+                });
+                const activatedProtectionRequests = await fetchProtectionRequests(axios, {
+                    statuses: ["ACTIVATED"],
+                    kind: 'ANY',
+                });
+                const protectionRequestsHistory = await fetchProtectionRequests(axios, {
+                    statuses: ["ACCEPTED", "REJECTED", "ACTIVATED", "CANCELLED", "REJECTED_CANCELLED", "ACCEPTED_CANCELLED"],
+                    kind: 'PROTECTION_ONLY',
+                });
+        
+                const pendingRecoveryRequests = await fetchProtectionRequests(axios, {
+                    statuses: ["PENDING"],
+                    kind: 'RECOVERY',
+                });
+                const recoveryRequestsHistory = await fetchProtectionRequests(axios, {
+                    statuses: ["ACCEPTED", "REJECTED", "ACTIVATED", "CANCELLED", "REJECTED_CANCELLED", "ACCEPTED_CANCELLED"],
+                    kind: 'RECOVERY',
+                });
+        
+                const vaultSpecificationFragment = {
+                    statuses: []
+                }
+        
+                const vaultTransferRequestsResult = await new VaultApi(axios, currentAddress).getVaultTransferRequests({
+                    ...vaultSpecificationFragment,
+                    statuses: [ "PENDING" ]
+                });
+                const pendingVaultTransferRequests = vaultTransferRequestsResult.sort((a, b) => b.createdOn.localeCompare(a.createdOn));
+        
+                const vaultTransferRequestsHistoryResult = await new VaultApi(axios, currentAddress).getVaultTransferRequests({
+                    ...vaultSpecificationFragment,
+                    statuses: [ "CANCELLED", "REJECTED_CANCELLED", "REJECTED", "ACCEPTED" ]
+                });
+                const vaultTransferRequestsHistory = vaultTransferRequestsHistoryResult.sort((a, b) => b.createdOn.localeCompare(a.createdOn));
+        
+                const settings = await getSettings(axios);
+
+                dispatch({
+                    type: "SET_REQUESTS_DATA",
+                    dataAddress: currentAddress,
+                    pendingProtectionRequests,
+                    activatedProtectionRequests,
+                    protectionRequestsHistory,
+                    pendingRecoveryRequests,
+                    recoveryRequestsHistory,
+                    pendingVaultTransferRequests,
+                    vaultTransferRequestsHistory,
+                    settings,
+                });
+            })();
+        }
+    }, [ accounts, axiosFactory, isReadyLegalOfficer ]);
+
+    useEffect(() => {
+        if(contextValue.refreshRequests !== refreshRequests) {
+            dispatch({
+                type: "SET_REFRESH_REQUESTS",
+                refreshRequests,
+            })
+        }
+    }, [ contextValue.refreshRequests, refreshRequests ]);
+
+    useEffect(() => {
+        if(contextValue.callRefreshRequests) {
+            refreshRequests();
+        }
+    }, [ contextValue.callRefreshRequests, refreshRequests ]);
+
+    // ------------------ Legal Officer -------------------------------
+
+    const refreshLegalOfficer = useCallback(async () => {
+        if(accounts && accounts.current && api && client) {
+            dispatch({
+                type: "REFRESH_LEGAL_OFFICER_CALLED"
+            });
+
+            const currentAddress = accounts.current.address;
+
+            (async function() {
+                const onchainSettings = await getLegalOfficerData({ api, address: currentAddress });
+                const legalOfficer = (await client.directoryClient.getLegalOfficers()).find(legalOfficer => legalOfficer.address === currentAddress);
+                const missingSettings = getMissingSettings(legalOfficer, onchainSettings);
+                dispatch({
+                    type: "SET_LEGAL_OFFICER",
+                    dataAddress: currentAddress,
+                    legalOfficer,
+                    missingSettings,
+                });
+            })();
+        }
+    }, [ accounts, api, client ]);
+
+    useEffect(() => {
+        if(contextValue.refreshLegalOfficer !== refreshLegalOfficer) {
+            dispatch({
+                type: "SET_REFRESH_LEGAL_OFFICER",
+                refreshLegalOfficer: refreshLegalOfficer,
+            })
+        }
+    }, [ contextValue.refreshLegalOfficer, refreshLegalOfficer ]);
+
+    useEffect(() => {
+        if(contextValue.callRefreshLegalOfficer) {
+            refreshLegalOfficer();
+        }
+    }, [ contextValue.callRefreshLegalOfficer, refreshLegalOfficer ]);
+
+    // ------------------ Component -------------------------------
 
     return (
         <LegalOfficerContextObject.Provider value={contextValue}>
@@ -529,73 +715,16 @@ export function useLegalOfficerContext(): LegalOfficerContext {
     return { ...useContext(LegalOfficerContextObject) };
 }
 
-function refreshRequestsFunction(clearBeforeRefresh: boolean, currentAddress: string, dispatch: React.Dispatch<Action>, axiosFactory: AxiosFactory, api: LogionNodeApi, getOfficer: (address: string | undefined) => LegalOfficer | undefined) {
-    dispatch({
-        type: "FETCH_IN_PROGRESS",
-        dataAddress: currentAddress,
-        clearBeforeRefresh,
-    });
+function voidRequestsAndLocs(requests: LocRequest[], locs: Record<string, LegalOfficerCase>): RequestAndLoc[] {
+    return requests
+        .map(request => ({request, loc: locs[toDecimalString(request.id)]}))
+        .filter(requestAndLoc => requestAndLoc.loc !== undefined && requestAndLoc.loc.voidInfo !== undefined);
+}
 
-    (async function() {
-        const axios = axiosFactory(currentAddress);
-        const pendingProtectionRequests = await fetchProtectionRequests(axios, {
-            statuses: ["PENDING"],
-            kind: 'PROTECTION_ONLY',
-        });
-        const activatedProtectionRequests = await fetchProtectionRequests(axios, {
-            statuses: ["ACTIVATED"],
-            kind: 'ANY',
-        });
-        const protectionRequestsHistory = await fetchProtectionRequests(axios, {
-            statuses: ["ACCEPTED", "REJECTED", "ACTIVATED", "CANCELLED", "REJECTED_CANCELLED", "ACCEPTED_CANCELLED"],
-            kind: 'PROTECTION_ONLY',
-        });
-
-        const pendingRecoveryRequests = await fetchProtectionRequests(axios, {
-            statuses: ["PENDING"],
-            kind: 'RECOVERY',
-        });
-        const recoveryRequestsHistory = await fetchProtectionRequests(axios, {
-            statuses: ["ACCEPTED", "REJECTED", "ACTIVATED", "CANCELLED", "REJECTED_CANCELLED", "ACCEPTED_CANCELLED"],
-            kind: 'RECOVERY',
-        });
-
-        const vaultSpecificationFragment = {
-            statuses: []
-        }
-
-        const vaultTransferRequestsResult = await new VaultApi(axios, currentAddress).getVaultTransferRequests({
-            ...vaultSpecificationFragment,
-            statuses: [ "PENDING" ]
-        });
-        const pendingVaultTransferRequests = vaultTransferRequestsResult.sort((a, b) => b.createdOn.localeCompare(a.createdOn));
-
-        const vaultTransferRequestsHistoryResult = await new VaultApi(axios, currentAddress).getVaultTransferRequests({
-            ...vaultSpecificationFragment,
-            statuses: [ "CANCELLED", "REJECTED_CANCELLED", "REJECTED", "ACCEPTED" ]
-        });
-        const vaultTransferRequestsHistory = vaultTransferRequestsHistoryResult.sort((a, b) => b.createdOn.localeCompare(a.createdOn));
-
-        const settings = await getSettings(axios);
-        const legalOfficer = getOfficer(currentAddress);
-        const onchainSettings = await getLegalOfficerData({ api, address: currentAddress })
-        const missingSettings = getMissingSettings(legalOfficer, onchainSettings);
-
-        dispatch({
-            type: "SET_DATA",
-            pendingProtectionRequests,
-            activatedProtectionRequests,
-            protectionRequestsHistory,
-            dataAddress: currentAddress,
-            pendingRecoveryRequests,
-            recoveryRequestsHistory,
-            pendingVaultTransferRequests,
-            vaultTransferRequestsHistory,
-            settings,
-            onchainSettings,
-            missingSettings,
-        });
-    })();
+function notVoidRequestsAndLocs(requests: LocRequest[], locs: Record<string, LegalOfficerCase>): RequestAndLoc[] {
+    return requests
+        .map(request => ({request, loc: locs[toDecimalString(request.id)]}))
+        .filter(requestAndLoc => requestAndLoc.loc !== undefined && requestAndLoc.loc.voidInfo === undefined);
 }
 
 async function getSettings(axios: AxiosInstance): Promise<Record<string, string>> {

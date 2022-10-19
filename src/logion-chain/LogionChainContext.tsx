@@ -33,6 +33,7 @@ export interface LogionChainContextType {
     authenticateAddress: (address: string) => Promise<Token | undefined>,
     getOfficer?: (address: string | undefined) => LegalOfficer | undefined,
     saveOfficer?: (legalOfficer: LegalOfficer) => Promise<void>,
+    reconnect: () => void,
 }
 
 export interface FullLogionChainContextType extends LogionChainContextType {
@@ -58,6 +59,7 @@ const initState = (): FullLogionChainContextType => ({
     isCurrentAuthenticated: () => false,
     authenticate: (_: string[]) => Promise.reject(),
     authenticateAddress: (_: string) => Promise.reject(),
+    reconnect: () => {},
 });
 
 type ActionType = 'SET_SELECT_ADDRESS'
@@ -76,6 +78,8 @@ type ActionType = 'SET_SELECT_ADDRESS'
     | 'SET_AUTHENTICATE'
     | 'SET_AUTHENTICATE_ADDRESS'
     | 'RESET_CLIENT'
+    | 'RECONNECT'
+    | 'SET_RECONNECT'
 ;
 
 interface Action {
@@ -96,6 +100,7 @@ interface Action {
     authenticate?: (address: string[]) => Promise<void>;
     authenticateAddress?: (address: string) => Promise<Token | undefined>;
     registeredLegalOfficers?: Set<string>;
+    reconnect?: () => void;
 }
 
 function buildAxiosFactory(authenticatedClient?: LogionClient): AxiosFactory {
@@ -220,7 +225,18 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
                     client,
                 }
             }
-
+        case 'SET_RECONNECT':
+            return {
+                ...state,
+                reconnect: action.reconnect!
+            };
+        case 'RECONNECT':
+            return {
+                ...state,
+                client: null,
+                api: null,
+                connecting: false,
+            }
         default:
             /* istanbul ignore next */
             throw new Error(`Unknown type: ${action.type}`);
@@ -432,6 +448,19 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
             });
         }
     }, [ state.authenticateAddress, authenticateAddressCallback ]);
+
+    const reconnect = useCallback(() => dispatch({
+        type: 'RECONNECT',
+    }), []);
+
+    useEffect(() => {
+        if(state.reconnect !== reconnect) {
+            dispatch({
+                type: 'SET_RECONNECT',
+                reconnect,
+            });
+        }
+    }, [ state, reconnect ]);
 
     return <LogionChainContext.Provider value={state}>
         {props.children}

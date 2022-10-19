@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import Dashboard from '../common/Dashboard';
 
@@ -35,11 +35,13 @@ export default function ContextualizedWallet() {
         refreshRequests!(false);
     }, [ refresh, refreshRequests ]);
 
+    const currentLegalOfficerUnavailable = useMemo(
+        () => availableLegalOfficers?.find(node => node.address === accounts?.current?.address) === undefined,
+    [ availableLegalOfficers, accounts ]);
+
     if(accounts === null || selectAddress === null || availableLegalOfficers === undefined) {
         return null;
     }
-
-    const currentLegalOfficerUnavailable = availableLegalOfficers.find(node => node.address === accounts?.current?.address) === undefined;
 
     if(location.pathname.startsWith(STATEMENT_OF_FACTS_PATH)) {
         return <StatementOfFacts />;

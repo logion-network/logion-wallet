@@ -15,7 +15,7 @@ import "./ChainData.css";
 
 export default function ChainData() {
     const { colorTheme } = useCommonContext();
-    const { onchainSettings, refreshRequests } = useLegalOfficerContext();
+    const { onchainSettings, refreshOnchainSettings } = useLegalOfficerContext();
     const { api, accounts } = useLogionChain();
     const [ baseUrl, setBaseUrl ] = useState("");
     const [ nodeId, setNodeId ] = useState("");
@@ -51,8 +51,8 @@ export default function ChainData() {
 
     const onSuccess = useCallback(() => {
         setDone("success");
-        refreshRequests(false);
-    }, [ refreshRequests ]);
+        refreshOnchainSettings();
+    }, [ refreshOnchainSettings ]);
 
     const onError = useCallback(() => {
         setDone("failure");

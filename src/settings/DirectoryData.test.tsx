@@ -1,11 +1,12 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
 import { PATRICK } from 'src/common/TestData';
 import { DEFAULT_LEGAL_OFFICER_ACCOUNT, setCurrentAddress, saveOfficer } from '../logion-chain/__mocks__/LogionChainMock';
-import { clickByName } from '../tests';
+import { clickByName, typeByLabel } from '../tests';
 import DirectoryData from './DirectoryData';
 
 jest.mock("../logion-chain");
 jest.mock("../common/CommonContext");
+jest.mock("../legal-officer/LegalOfficerContext");
 
 describe("DirectoryData", () => {
 
@@ -30,8 +31,10 @@ describe("DirectoryData", () => {
 
     it("saves successfully", async () => {
         setCurrentAddress(DEFAULT_LEGAL_OFFICER_ACCOUNT);
-        
+        saveOfficer.mockImplementation(() => Promise.resolve());
+
         render(<DirectoryData/>);
+        await fillInForm();
         
         await act(() => clickByName("Save changes"));
         await waitFor(() => expect(screen.getByText("Data were saved successfully")).toBeVisible());
@@ -40,10 +43,18 @@ describe("DirectoryData", () => {
     it("shows error on failed save", async () => {
         setCurrentAddress(DEFAULT_LEGAL_OFFICER_ACCOUNT);
         saveOfficer.mockImplementation(() => Promise.reject());
-        
+
         render(<DirectoryData/>);
+        await fillInForm();
         
         await act(() => clickByName("Save changes"));
         await waitFor(() => expect(screen.getByText("Data were not saved successfully")).toBeVisible());
     })
 })
+
+async function fillInForm() {
+    await typeByLabel("First name", PATRICK.userIdentity.firstName);
+    await typeByLabel("Last name", PATRICK.userIdentity.lastName);
+    await typeByLabel("E-mail", PATRICK.userIdentity.email);
+    await typeByLabel("Phone number", PATRICK.userIdentity.phoneNumber);
+}

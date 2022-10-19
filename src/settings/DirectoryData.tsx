@@ -29,36 +29,31 @@ interface FormValues {
 }
 
 export default function DirectoryData() {
-    const { accounts, getOfficer, saveOfficer } = useLogionChain();
+    const { accounts, saveOfficer } = useLogionChain();
     const { colorTheme } = useCommonContext();
-    const [ formInitialized, setFormInitialized ] = useState(false);
-    const { control, handleSubmit, formState: { errors }, setValue } = useForm<FormValues>();
+    const { control, handleSubmit, formState: { errors }, setValue, getValues } = useForm<FormValues>();
     const [ saveStatus, setSaveStatus ] = useState<SaveStatus>();
-    const { refreshRequests } = useLegalOfficerContext();
+    const { legalOfficer, refreshLegalOfficer, missingSettings } = useLegalOfficerContext();
 
     useEffect(() => {
-        if(getOfficer && !formInitialized) {
-            const legalOfficerFromDirectory = getOfficer(accounts?.current?.address);
-            if(legalOfficerFromDirectory) {
-                setValue("address", legalOfficerFromDirectory.address);
-                setValue("logoUrl", legalOfficerFromDirectory.logoUrl);
-                setValue("additionalDetails", legalOfficerFromDirectory.additionalDetails);
+        if(legalOfficer?.address !== getValues().address && (legalOfficer || missingSettings?.directory)) {
+            setValue("address", legalOfficer?.address || "");
+            setValue("logoUrl", legalOfficer?.logoUrl || "");
+            setValue("additionalDetails", legalOfficer?.additionalDetails || "");
 
-                setValue("firstName", legalOfficerFromDirectory.userIdentity.firstName);
-                setValue("lastName", legalOfficerFromDirectory.userIdentity.lastName);
-                setValue("email", legalOfficerFromDirectory.userIdentity.email);
-                setValue("phoneNumber", legalOfficerFromDirectory.userIdentity.phoneNumber);
+            setValue("firstName", legalOfficer?.userIdentity.firstName || "");
+            setValue("lastName", legalOfficer?.userIdentity.lastName || "");
+            setValue("email", legalOfficer?.userIdentity.email || "");
+            setValue("phoneNumber", legalOfficer?.userIdentity.phoneNumber || "");
 
-                setValue("company", legalOfficerFromDirectory.postalAddress.company);
-                setValue("line1", legalOfficerFromDirectory.postalAddress.line1);
-                setValue("line2", legalOfficerFromDirectory.postalAddress.line2);
-                setValue("postalCode", legalOfficerFromDirectory.postalAddress.postalCode);
-                setValue("city", legalOfficerFromDirectory.postalAddress.city);
-                setValue("country", legalOfficerFromDirectory.postalAddress.country);
-            }
-            setFormInitialized(true);
+            setValue("company", legalOfficer?.postalAddress.company || "");
+            setValue("line1", legalOfficer?.postalAddress.line1 || "");
+            setValue("line2", legalOfficer?.postalAddress.line2 || "");
+            setValue("postalCode", legalOfficer?.postalAddress.postalCode || "");
+            setValue("city", legalOfficer?.postalAddress.city || "");
+            setValue("country", legalOfficer?.postalAddress.country || "");
         }
-    }, [ accounts, formInitialized, getOfficer, setValue ]);
+    }, [ accounts, legalOfficer, setValue, missingSettings, getValues ]);
 
     const save = useCallback(async (formValues: FormValues) => {
         setSaveStatus('NONE');
@@ -66,7 +61,7 @@ export default function DirectoryData() {
             try {
                 await saveOfficer(toLegalOfficer(formValues));
                 setSaveStatus('SUCCESS');
-                refreshRequests(false);
+                refreshLegalOfficer();
             } catch(e) {
                 console.log(e);
                 setSaveStatus('ERROR');
@@ -74,9 +69,9 @@ export default function DirectoryData() {
         } else {
             setSaveStatus('ERROR');
         }
-    }, [ saveOfficer, setSaveStatus, refreshRequests ]);
+    }, [ saveOfficer, setSaveStatus, refreshLegalOfficer ]);
 
-    if(!accounts || !accounts.current || !accounts.current.isLegalOfficer || getOfficer === undefined || saveOfficer === undefined) {
+    if(!accounts || !accounts.current || !accounts.current.isLegalOfficer || saveOfficer === undefined) {
         return null;
     }
 
