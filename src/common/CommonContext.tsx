@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useReducer, Reducer, useCallback } from "react";
 import { DateTime } from 'luxon';
-import { LegalOfficer, LocRequest, BalanceState } from "@logion/client";
+import { LegalOfficer, LocRequest, BalanceState, LogionClient } from "@logion/client";
 import { InjectedAccount } from "@logion/extension";
 
 import { useLogionChain } from '../logion-chain';
@@ -15,8 +15,6 @@ export interface LegalOfficerEndpoint extends Endpoint {
 }
 
 export interface CommonContext {
-    fetchForAddress: string | null;
-    dataAddress: string | null;
     balanceState?: BalanceState;
     colorTheme: ColorTheme;
     setColorTheme: ((colorTheme: ColorTheme) => void) | null;
@@ -28,12 +26,13 @@ export interface CommonContext {
 }
 
 interface FullCommonContext extends CommonContext {
+    dataAddress: string | null;
     refreshAddress?: string;
+    client?: LogionClient;
 }
 
 function initialContextValue(): FullCommonContext {
     return {
-        fetchForAddress: null,
         dataAddress: null,
         colorTheme: DEFAULT_COLOR_THEME,
         setColorTheme: null,
@@ -74,7 +73,8 @@ interface Action {
     nodesUp?: Endpoint[];
     nodesDown?: Endpoint[];
     availableLegalOfficers?: LegalOfficer[];
-    mutateBalanceState?: (mutator: ((state: BalanceState) => Promise<BalanceState>)) => Promise<void>,
+    mutateBalanceState?: (mutator: ((state: BalanceState) => Promise<BalanceState>)) => Promise<void>;
+    client?: LogionClient;
 }
 
 const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, action: Action): FullCommonContext => {
@@ -82,17 +82,16 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
         case 'FETCH_IN_PROGRESS':
             return {
                 ...state,
-                fetchForAddress: action.dataAddress!,
+                dataAddress: action.dataAddress!,
                 balanceState: action.clearOnRefresh ? undefined : state.balanceState,
+                client: action.client!,
             };
         case 'SET_DATA':
-            if(action.dataAddress === state.fetchForAddress) {
+            if(action.dataAddress === state.dataAddress) {
                 const nodesUp = action.nodesUp !== undefined ? action.nodesUp : state.nodesUp;
                 const nodesDown = action.nodesDown !== undefined ? action.nodesDown : state.nodesDown;
                 return {
                     ...state,
-                    fetchForAddress: null,
-                    dataAddress: action.dataAddress!,
                     balanceState: action.balanceState!,
                     availableLegalOfficers: action.availableLegalOfficers!,
                     nodesUp,
@@ -115,7 +114,6 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
             return {
                 ...state,
                 refresh: action.refresh!,
-                refreshAddress: action.refreshAddress!,
             };
         case 'SET_MUTATE_BALANCE_STATE':
             return {
@@ -150,7 +148,8 @@ export function CommonContextProvider(props: Props) {
             dispatch({
                 type: "FETCH_IN_PROGRESS",
                 dataAddress: currentAddress,
-                clearOnRefresh: clearOnRefresh !== undefined ? clearOnRefresh : true
+                clearOnRefresh: clearOnRefresh !== undefined ? clearOnRefresh : true,
+                client,
             });
 
             (async function () {
@@ -205,12 +204,10 @@ export function CommonContextProvider(props: Props) {
 
     useEffect(() => {
         if(api !== null
-                && client !== null
-                && client.isTokenValid(DateTime.now())
+                && client && client.isTokenValid(DateTime.now())
                 && accounts !== null
                 && accounts.current !== undefined
-                && contextValue.dataAddress !== accounts.current.address
-                && contextValue.fetchForAddress !== accounts.current.address) {
+                && ((contextValue.dataAddress !== accounts.current.address) || (contextValue.client !== client))) {
             refreshRequests();
         }
     }, [ api, contextValue, refreshRequests, accounts, client ]);
@@ -231,17 +228,13 @@ export function CommonContextProvider(props: Props) {
     }, [ contextValue ]);
 
     useEffect(() => {
-        if(accounts !== null
-                && accounts.current !== undefined
-                && contextValue.refreshAddress !== accounts.current.address
-                && client !== null) {
+        if(contextValue.refresh !== refreshRequests) {
             dispatch({
                 type: 'SET_REFRESH',
                 refresh: refreshRequests,
-                refreshAddress: accounts.current.address,
             });
         }
-    }, [ contextValue, refreshRequests, dispatch, accounts, client ]);
+    }, [ contextValue.refresh, refreshRequests ]);
 
     const mutateBalanceStateCallback = useCallback(async (mutator: ((state: BalanceState) => Promise<BalanceState>)) => {
         const balanceState = await mutator(contextValue.balanceState!);

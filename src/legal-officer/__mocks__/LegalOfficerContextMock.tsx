@@ -1,7 +1,7 @@
 import { LocType, IdentityLocType } from "@logion/node-api/dist/Types";
 import { AxiosInstance } from "axios";
 
-import { COLOR_THEME } from "src/common/TestData";
+import { COLOR_THEME, PATRICK } from "src/common/TestData";
 import { RequestAndLoc } from "../LegalOfficerContext";
 import { LegalOfficerData } from "../LegalOfficerData";
 
@@ -124,6 +124,12 @@ export function setOnchainSettings(settings: LegalOfficerData) {
 
 export let refreshLocs = jest.fn();
 
+let legalOfficer = PATRICK;
+
+let refreshLegalOfficer = jest.fn();
+
+let refreshOnchainSettings = jest.fn();
+
 export function useLegalOfficerContext() {
     return {
         pendingTokenizationRequests,
@@ -146,5 +152,8 @@ export function useLegalOfficerContext() {
         onchainSettings,
         pendingRecoveryRequests,
         refreshLocs,
+        legalOfficer,
+        refreshLegalOfficer,
+        refreshOnchainSettings,
     };
 }
