@@ -72,6 +72,8 @@ export default function UserContextualizedLocDetails() {
             <CheckFileFrame
                 checkHash={ checkHash }
                 checkResult={ checkResult.result }
+                context={ loc.locType + " LOC" }
+                checkedItem="confidential document"
             />
         </LocPane>
     );

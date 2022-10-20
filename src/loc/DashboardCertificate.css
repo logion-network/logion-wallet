@@ -8,3 +8,7 @@
     line-break: anywhere;
     white-space: break-spaces;
 }
+
+.DashboardCertificate .Row.matched {
+    border: 2px dashed #e6007a;
+}

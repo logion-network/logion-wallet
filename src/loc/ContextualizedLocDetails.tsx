@@ -114,6 +114,8 @@ export default function ContextualizedLocDetails() {
             <CheckFileFrame
                 checkHash={ checkHash }
                 checkResult={ checkResult.result }
+                context={ loc.locType + " LOC" }
+                checkedItem="confidential document"
             />
             <VoidFrame
                 loc={ loc }

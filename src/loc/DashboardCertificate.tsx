@@ -1,5 +1,5 @@
-import { CheckCertifiedCopyResult } from "@logion/client";
-import { useEffect, useMemo, useState } from "react";
+import { CheckCertifiedCopyResult, CheckHashResult } from "@logion/client";
+import { useEffect, useMemo, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 
 import { useCommonContext } from "src/common/CommonContext";
@@ -14,6 +14,7 @@ import { CertificateItemDetails } from "src/components/certificateitemdetails/Ce
 import FrameTitle from "src/components/frametitle/FrameTitle";
 
 import "./DashboardCertificate.css";
+import CheckFileFrame from "../components/checkfileframe/CheckFileFrame";
 
 export default function DashboardCertificate() {
     const itemId = useParams<"itemId">().itemId;
@@ -27,7 +28,8 @@ export default function DashboardCertificate() {
     const [ deliveries, setDeliveries ] = useState<ItemDeliveriesResponse>();
     const { axiosFactory } = useLogionChain();
     const { colorTheme } = useCommonContext();
-    const [ result, setResult ] = useState<CheckCertifiedCopyResult>();
+    const [ checkCertifiedCopyResult, setCheckCertifiedCopyResult ] = useState<CheckCertifiedCopyResult>();
+    const [ checkHashResult, setCheckHashResult ] = useState<CheckHashResult>();
 
     useEffect(() => {
         if(loc && itemId && deliveries === undefined) {
@@ -37,6 +39,13 @@ export default function DashboardCertificate() {
             })();
         }
     }, [ collectionItem, axiosFactory, itemId, locId, loc, deliveries ]);
+
+    const checkHash = useCallback((hash: string) => {
+        if (collectionItem) {
+            const result = collectionItem.checkHash(hash);
+            setCheckHashResult(result);
+        }
+    }, [ collectionItem ]);
 
     if(!collectionItem || !loc) {
         return null;
@@ -66,16 +75,25 @@ export default function DashboardCertificate() {
                             collectionLoc={ loc }
                             item={ collectionItem }
                             deliveries={ deliveries }
-                            checkResult={ result }
+                            checkCertifiedCopyResultResult={ checkCertifiedCopyResult }
+                            checkHashResult={ checkHashResult }
                         />
                     </PolkadotFrame>
+                </div>
+                <div className="frame-container">
+                    <CheckFileFrame
+                        checkHash={ checkHash }
+                        checkResult={ checkHashResult === undefined ? "NONE" : ( checkHashResult.collectionItemFile ? "POSITIVE" : "NEGATIVE") }
+                        context="Collection Item"
+                        checkedItem="file"
+                    />
                 </div>
                 <div className="frame-container">
                     <CheckDeliveredFrame
                         item={ collectionItem }
                         colorTheme={ colorTheme }
                         detailedError={ true }
-                        onChecked={ setResult }
+                        onChecked={ setCheckCertifiedCopyResult }
                     />
                 </div>
                 </>

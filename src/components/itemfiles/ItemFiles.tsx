@@ -1,4 +1,4 @@
-import { CollectionItem, UploadableItemFile, CheckCertifiedCopyResult, LocData } from "@logion/client";
+import { CollectionItem, UploadableItemFile, CheckCertifiedCopyResult, LocData, CheckHashResult } from "@logion/client";
 import { AxiosInstance } from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
@@ -17,7 +17,8 @@ export interface Props {
     collectionLoc: LocData;
     item: CollectionItem;
     deliveries?: ItemDeliveriesResponse;
-    checkResult?: CheckCertifiedCopyResult;
+    checkCertifiedCopyResultResult?: CheckCertifiedCopyResult;
+    checkHashResult?: CheckHashResult;
 }
 
 interface FileWithMatch extends UploadableItemFile {
@@ -25,17 +26,18 @@ interface FileWithMatch extends UploadableItemFile {
 }
 
 export default function ItemFiles(props: Props) {
-    const [ checkResult, setCheckResult ] = useState<CheckCertifiedCopyResult>();
+    const [ checkCertifiedCopyResultResult, setCheckCertifiedCopyResultResult ] = useState<CheckCertifiedCopyResult>();
+    const [ checkHashResult, setCheckHashResult ] = useState<CheckHashResult>();
     const [ files, setFiles ] = useState<FileWithMatch[]>(props.item.files.map(file => ({ ...file, detailsExpanded: false })));
 
     let renderDetails: ((file: UploadableItemFile) => Child) | undefined;
     if(props.deliveries !== undefined) {
         const deliveries = props.deliveries;
-        renderDetails = (file) => <ItemFileDetails file={ file } deliveries={ deliveries[file.hash] || [] } checkResult={ checkResult } />;
+        renderDetails = (file) => <ItemFileDetails file={ file } deliveries={ deliveries[file.hash] || [] } checkResult={ checkCertifiedCopyResultResult } />;
     }
 
     const onChecked = useCallback((result: CheckCertifiedCopyResult) => {
-        setCheckResult(result);
+        setCheckCertifiedCopyResultResult(result);
         setFiles(props.item.files.map(file => ({
             ...file,
             detailsExpanded: file.hash === result.match?.originalFileHash
@@ -43,10 +45,16 @@ export default function ItemFiles(props: Props) {
     }, [ props.item.files ]);
 
     useEffect(() => {
-        if(checkResult !== props.checkResult && props.checkResult !== undefined) {
-            onChecked(props.checkResult);
+        if(checkCertifiedCopyResultResult !== props.checkCertifiedCopyResultResult && props.checkCertifiedCopyResultResult !== undefined) {
+            onChecked(props.checkCertifiedCopyResultResult);
         }
-    }, [ checkResult, props.checkResult, onChecked ]);
+    }, [ checkCertifiedCopyResultResult, props.checkCertifiedCopyResultResult, onChecked ]);
+
+    useEffect(() => {
+        if (checkHashResult !== props.checkHashResult && props.checkHashResult !== undefined) {
+            setCheckHashResult(props.checkHashResult);
+        }
+    }, [ checkHashResult, props.checkHashResult ])
 
     return (
         <div className="ItemFiles">
@@ -107,6 +115,7 @@ export default function ItemFiles(props: Props) {
                     },
                 ]}
                 data={ files }
+                rowStyle={ file => file.hash === checkHashResult?.collectionItemFile?.hash ? "matched" : "" }
                 renderEmpty={ () => <EmptyTableMessage>No file associated with the item</EmptyTableMessage> }
             />
         </div>

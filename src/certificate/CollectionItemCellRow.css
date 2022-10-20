@@ -25,3 +25,7 @@
     font-weight: bold;
     margin-bottom: 1rem;
 }
+
+.CollectionItemCellRow .matched {
+    border: 2px dashed #e6007a;
+}
