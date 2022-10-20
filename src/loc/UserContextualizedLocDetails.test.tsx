@@ -6,6 +6,7 @@ import UserContextualizedLocDetails from "./UserContextualizedLocDetails"
 import { buildLocRequest } from "./TestData";
 import { setLoc, setLocId } from "./__mocks__/UserLocContextMock";
 
+jest.mock("../logion-chain/");
 jest.mock("./UserLocContext");
 
 describe("UserContextualizedLocDetails", () => {

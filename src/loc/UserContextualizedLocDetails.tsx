@@ -7,8 +7,10 @@ import LocPane from "./LocPane";
 import LocDetailsTab from "./LocDetailsTab";
 import VoidDisclaimer from "./VoidDisclaimer";
 import SupersedesDisclaimer from "./SupersedesDisclaimer";
+import { useLogionChain } from 'src/logion-chain';
 
 export default function UserContextualizedLocDetails() {
+    const { getOfficer } = useLogionChain();
     const {
         backPath,
         detailsPath,
@@ -25,7 +27,7 @@ export default function UserContextualizedLocDetails() {
         collectionItem,
     } = useUserLocContext();
 
-    if (loc === null || locState === null) {
+    if (loc === null || locState === null || !getOfficer) {
         return null;
     }
 
@@ -46,6 +48,7 @@ export default function UserContextualizedLocDetails() {
                 deleteMetadata={ deleteMetadata }
                 viewer="User"
                 detailsPath={ detailsPath }
+                legalOfficer={ getOfficer(loc.ownerAddress) }
             />
             <VoidDisclaimer
                 loc={ loc }
