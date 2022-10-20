@@ -13,7 +13,10 @@ exports[`renders 1`] = `
     <p
       className="title"
     >
-      Submitted Identity Data
+      Identity data (not publicly available) submitted by the following account address: 
+      <strong>
+        5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW
+      </strong>
     </p>
     <Row>
       <LegalEntity />
@@ -26,13 +29,6 @@ exports[`renders 1`] = `
           }
         }
       >
-        <Row />
-        <Row>
-          <Detail
-            label="Account Address"
-            value="5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"
-          />
-        </Row>
         <Row>
           <Col
             style={

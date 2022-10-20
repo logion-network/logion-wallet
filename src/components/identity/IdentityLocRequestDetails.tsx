@@ -26,7 +26,7 @@ export default function IdentityLocRequestDetails(props: { personalInfo: Persona
                 className="IdentityLocRequestDetails"
                 style={ { flexGrow: 1 } }
             >
-                <p className="title">Submitted Identity Data</p>
+                <p className="title">Identity data (not publicly available) submitted by the following account address: <strong>{ props.personalInfo.requesterAddress || "" }</strong></p>
                 <Row>
                     <LegalEntity
                         company={ props.personalInfo.company }
@@ -36,15 +36,6 @@ export default function IdentityLocRequestDetails(props: { personalInfo: Persona
                     <Col
                         style={ { flexGrow: 1 } }
                     >
-                        <Row>
-                            
-                        </Row>
-                        <Row>
-                            <Detail
-                                label="Account Address"
-                                value={ props.personalInfo.requesterAddress || "" }
-                            />
-                        </Row>
                         <Row>
                             <Col style={ { flexGrow: 1 } }>
                                 <Detail
