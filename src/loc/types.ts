@@ -40,9 +40,6 @@ export interface PublishProps {
     confirm: ((item: LocItem) => void) | null;
 }
 
-export type Viewer = 'User' | 'LegalOfficer';
-
-
 export function toItemId(maybeHex: string): string | undefined {
     if(maybeHex.startsWith("0x") && maybeHex.length === 66) {
         return maybeHex;

@@ -46,7 +46,6 @@ exports[`renders 1`] = `
                   "postalCode": "1040",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "patrick@logion.network",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -68,7 +67,6 @@ exports[`renders 1`] = `
                   "postalCode": "69006",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "g.grain@adrastee-lyon.fr",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -90,7 +88,6 @@ exports[`renders 1`] = `
                   "postalCode": "18000",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "alain.barland@auxilia-conseils.com",
                   "firstName": "Patrick",
                   "lastName": "Gielen",

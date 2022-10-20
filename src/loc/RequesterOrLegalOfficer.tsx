@@ -1,11 +1,11 @@
 import { LocData, LegalOfficer } from "@logion/client";
 import { LocType, UUID } from "@logion/node-api";
 import { Col, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Viewer } from "src/common/CommonContext";
 import Ellipsis from "src/common/Ellipsis";
 import Icon from "src/common/Icon";
 import NewTabLink from "src/common/NewTabLink";
 import LocItemDetail from "./LocItemDetail";
-import { Viewer } from "./types";
 
 export interface Props {
     loc: LocData;

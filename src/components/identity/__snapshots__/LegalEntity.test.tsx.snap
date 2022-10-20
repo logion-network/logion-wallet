@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LegalEntity renders empty 1`] = `null`;
+
+exports[`LegalEntity renders legal entity name for LLO 1`] = `
+<div
+  className="LegalEntity"
+>
+  <div
+    className="icon-container"
+  >
+    <Icon
+      height="45px"
+      icon={
+        Object {
+          "id": "company",
+        }
+      }
+    />
+  </div>
+  <div
+    className="text-container"
+  >
+    <p
+      className="important"
+    >
+      Important:
+    </p>
+    <p>
+      Identity LOC request done on behalf of a 
+      <strong>
+        legal entity
+      </strong>
+      , please execute your due diligence accordingly.
+    </p>
+    <p>
+      Legal entity name: 
+      <strong>
+        My company
+      </strong>
+    </p>
+  </div>
+</div>
+`;
+
+exports[`LegalEntity renders legal entity name for user 1`] = `
+<div
+  className="LegalEntity"
+>
+  <div
+    className="icon-container"
+  >
+    <Icon
+      height="45px"
+      icon={
+        Object {
+          "id": "company",
+        }
+      }
+    />
+  </div>
+  <div
+    className="text-container"
+  >
+    <p
+      className="important"
+    >
+      Important:
+    </p>
+    <p>
+      Identity LOC request done on behalf of a 
+      <strong>
+        legal entity
+      </strong>
+      , the Legal Officer due diligence will be executed accordingly.
+    </p>
+    <p>
+      Legal entity name: 
+      <strong>
+        My company
+      </strong>
+    </p>
+  </div>
+</div>
+`;

@@ -19,7 +19,6 @@ export const PENDING_PROTECTION_REQUESTS: ProtectionRequest[] = [
             lastName: "Doe",
             email: "john.doe@logion.network",
             phoneNumber: "+1234",
-            company: false,
         },
         userPostalAddress: {
             line1: "Place de le République Française, 10",
@@ -51,7 +50,6 @@ export const PROTECTION_REQUESTS_HISTORY: ProtectionRequest[] = [
             lastName: "Doe",
             email: "john.doe@logion.network",
             phoneNumber: "+1234",
-            company: false,
         },
         userPostalAddress: {
             line1: "Place de le République Française, 10",
@@ -83,7 +81,6 @@ export const RECOVERY_REQUESTS_HISTORY: ProtectionRequest[] = [
             lastName: "Doe",
             email: "john.doe@logion.network",
             phoneNumber: "+1234",
-            company: false,
         },
         userPostalAddress: {
             line1: "Place de le République Française, 10",

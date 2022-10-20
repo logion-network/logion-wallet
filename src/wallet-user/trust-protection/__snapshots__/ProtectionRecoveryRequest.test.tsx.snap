@@ -51,7 +51,6 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                 "postalCode": "1040",
               },
               "userIdentity": Object {
-                "company": false,
                 "email": "patrick@logion.network",
                 "firstName": "Patrick",
                 "lastName": "Gielen",
@@ -77,7 +76,6 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                   "postalCode": "1040",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "patrick@logion.network",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -99,7 +97,6 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                   "postalCode": "69006",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "g.grain@adrastee-lyon.fr",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -121,7 +118,6 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                   "postalCode": "18000",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "alain.barland@auxilia-conseils.com",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -147,7 +143,6 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                 "postalCode": "69006",
               },
               "userIdentity": Object {
-                "company": false,
                 "email": "g.grain@adrastee-lyon.fr",
                 "firstName": "Patrick",
                 "lastName": "Gielen",
@@ -179,7 +174,6 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                 "postalCode": "69006",
               },
               "userIdentity": Object {
-                "company": false,
                 "email": "g.grain@adrastee-lyon.fr",
                 "firstName": "Patrick",
                 "lastName": "Gielen",
@@ -205,7 +199,6 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                   "postalCode": "1040",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "patrick@logion.network",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -227,7 +220,6 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                   "postalCode": "69006",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "g.grain@adrastee-lyon.fr",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -249,7 +241,6 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                   "postalCode": "18000",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "alain.barland@auxilia-conseils.com",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -275,7 +266,6 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                 "postalCode": "1040",
               },
               "userIdentity": Object {
-                "company": false,
                 "email": "patrick@logion.network",
                 "firstName": "Patrick",
                 "lastName": "Gielen",
@@ -406,7 +396,6 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                 "postalCode": "1040",
               },
               "userIdentity": Object {
-                "company": false,
                 "email": "patrick@logion.network",
                 "firstName": "Patrick",
                 "lastName": "Gielen",
@@ -432,7 +421,6 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                   "postalCode": "1040",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "patrick@logion.network",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -454,7 +442,6 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                   "postalCode": "69006",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "g.grain@adrastee-lyon.fr",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -476,7 +463,6 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                   "postalCode": "18000",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "alain.barland@auxilia-conseils.com",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -502,7 +488,6 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                 "postalCode": "69006",
               },
               "userIdentity": Object {
-                "company": false,
                 "email": "g.grain@adrastee-lyon.fr",
                 "firstName": "Patrick",
                 "lastName": "Gielen",
@@ -534,7 +519,6 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                 "postalCode": "69006",
               },
               "userIdentity": Object {
-                "company": false,
                 "email": "g.grain@adrastee-lyon.fr",
                 "firstName": "Patrick",
                 "lastName": "Gielen",
@@ -560,7 +544,6 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                   "postalCode": "1040",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "patrick@logion.network",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -582,7 +565,6 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                   "postalCode": "69006",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "g.grain@adrastee-lyon.fr",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -604,7 +586,6 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                   "postalCode": "18000",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "alain.barland@auxilia-conseils.com",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -630,7 +611,6 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                 "postalCode": "1040",
               },
               "userIdentity": Object {
-                "company": false,
                 "email": "patrick@logion.network",
                 "firstName": "Patrick",
                 "lastName": "Gielen",
@@ -748,7 +728,6 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                 "postalCode": "1040",
               },
               "userIdentity": Object {
-                "company": false,
                 "email": "patrick@logion.network",
                 "firstName": "Patrick",
                 "lastName": "Gielen",
@@ -774,7 +753,6 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                   "postalCode": "1040",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "patrick@logion.network",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -796,7 +774,6 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                   "postalCode": "69006",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "g.grain@adrastee-lyon.fr",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -818,7 +795,6 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                   "postalCode": "18000",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "alain.barland@auxilia-conseils.com",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -844,7 +820,6 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                 "postalCode": "69006",
               },
               "userIdentity": Object {
-                "company": false,
                 "email": "g.grain@adrastee-lyon.fr",
                 "firstName": "Patrick",
                 "lastName": "Gielen",
@@ -876,7 +851,6 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                 "postalCode": "69006",
               },
               "userIdentity": Object {
-                "company": false,
                 "email": "g.grain@adrastee-lyon.fr",
                 "firstName": "Patrick",
                 "lastName": "Gielen",
@@ -902,7 +876,6 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                   "postalCode": "1040",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "patrick@logion.network",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -924,7 +897,6 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                   "postalCode": "69006",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "g.grain@adrastee-lyon.fr",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -946,7 +918,6 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                   "postalCode": "18000",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "alain.barland@auxilia-conseils.com",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -972,7 +943,6 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                 "postalCode": "1040",
               },
               "userIdentity": Object {
-                "company": false,
                 "email": "patrick@logion.network",
                 "firstName": "Patrick",
                 "lastName": "Gielen",
@@ -1103,7 +1073,6 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                 "postalCode": "1040",
               },
               "userIdentity": Object {
-                "company": false,
                 "email": "patrick@logion.network",
                 "firstName": "Patrick",
                 "lastName": "Gielen",
@@ -1129,7 +1098,6 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                   "postalCode": "1040",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "patrick@logion.network",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -1151,7 +1119,6 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                   "postalCode": "69006",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "g.grain@adrastee-lyon.fr",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -1173,7 +1140,6 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                   "postalCode": "18000",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "alain.barland@auxilia-conseils.com",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -1199,7 +1165,6 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                 "postalCode": "69006",
               },
               "userIdentity": Object {
-                "company": false,
                 "email": "g.grain@adrastee-lyon.fr",
                 "firstName": "Patrick",
                 "lastName": "Gielen",
@@ -1231,7 +1196,6 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                 "postalCode": "69006",
               },
               "userIdentity": Object {
-                "company": false,
                 "email": "g.grain@adrastee-lyon.fr",
                 "firstName": "Patrick",
                 "lastName": "Gielen",
@@ -1257,7 +1221,6 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                   "postalCode": "1040",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "patrick@logion.network",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -1279,7 +1242,6 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                   "postalCode": "69006",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "g.grain@adrastee-lyon.fr",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -1301,7 +1263,6 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                   "postalCode": "18000",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "alain.barland@auxilia-conseils.com",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -1327,7 +1288,6 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                 "postalCode": "1040",
               },
               "userIdentity": Object {
-                "company": false,
                 "email": "patrick@logion.network",
                 "firstName": "Patrick",
                 "lastName": "Gielen",
@@ -1448,7 +1408,6 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                 "postalCode": "1040",
               },
               "userIdentity": Object {
-                "company": false,
                 "email": "patrick@logion.network",
                 "firstName": "Patrick",
                 "lastName": "Gielen",
@@ -1474,7 +1433,6 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                   "postalCode": "1040",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "patrick@logion.network",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -1496,7 +1454,6 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                   "postalCode": "69006",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "g.grain@adrastee-lyon.fr",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -1518,7 +1475,6 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                   "postalCode": "18000",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "alain.barland@auxilia-conseils.com",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -1544,7 +1500,6 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                 "postalCode": "69006",
               },
               "userIdentity": Object {
-                "company": false,
                 "email": "g.grain@adrastee-lyon.fr",
                 "firstName": "Patrick",
                 "lastName": "Gielen",
@@ -1576,7 +1531,6 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                 "postalCode": "69006",
               },
               "userIdentity": Object {
-                "company": false,
                 "email": "g.grain@adrastee-lyon.fr",
                 "firstName": "Patrick",
                 "lastName": "Gielen",
@@ -1602,7 +1556,6 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                   "postalCode": "1040",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "patrick@logion.network",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -1624,7 +1577,6 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                   "postalCode": "69006",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "g.grain@adrastee-lyon.fr",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -1646,7 +1598,6 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                   "postalCode": "18000",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "alain.barland@auxilia-conseils.com",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -1672,7 +1623,6 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                 "postalCode": "1040",
               },
               "userIdentity": Object {
-                "company": false,
                 "email": "patrick@logion.network",
                 "firstName": "Patrick",
                 "lastName": "Gielen",
@@ -1795,7 +1745,6 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                 "postalCode": "1040",
               },
               "userIdentity": Object {
-                "company": false,
                 "email": "patrick@logion.network",
                 "firstName": "Patrick",
                 "lastName": "Gielen",
@@ -1821,7 +1770,6 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                   "postalCode": "1040",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "patrick@logion.network",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -1843,7 +1791,6 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                   "postalCode": "69006",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "g.grain@adrastee-lyon.fr",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -1865,7 +1812,6 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                   "postalCode": "18000",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "alain.barland@auxilia-conseils.com",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -1891,7 +1837,6 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                 "postalCode": "69006",
               },
               "userIdentity": Object {
-                "company": false,
                 "email": "g.grain@adrastee-lyon.fr",
                 "firstName": "Patrick",
                 "lastName": "Gielen",
@@ -1923,7 +1868,6 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                 "postalCode": "69006",
               },
               "userIdentity": Object {
-                "company": false,
                 "email": "g.grain@adrastee-lyon.fr",
                 "firstName": "Patrick",
                 "lastName": "Gielen",
@@ -1949,7 +1893,6 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                   "postalCode": "1040",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "patrick@logion.network",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -1971,7 +1914,6 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                   "postalCode": "69006",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "g.grain@adrastee-lyon.fr",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -1993,7 +1935,6 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                   "postalCode": "18000",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "alain.barland@auxilia-conseils.com",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -2019,7 +1960,6 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                 "postalCode": "1040",
               },
               "userIdentity": Object {
-                "company": false,
                 "email": "patrick@logion.network",
                 "firstName": "Patrick",
                 "lastName": "Gielen",

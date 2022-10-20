@@ -9,7 +9,6 @@ const DIFFERENT_IDENTITY: UserIdentity = {
     lastName: "Doe2",
     email: "john.doe@logion.network",
     phoneNumber: "+1234",
-    company: false,
 };
 
 test("renders without comparison", () => {

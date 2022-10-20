@@ -262,7 +262,7 @@ export interface Props {
 
 export function UserContextProvider(props: Props) {
     const { accounts, client, axiosFactory, signer } = useLogionChain();
-    const { colorTheme, setColorTheme, nodesUp } = useCommonContext();
+    const { colorTheme, setColorTheme, nodesUp, viewer, setViewer } = useCommonContext();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
     useEffect(() => {
@@ -270,6 +270,12 @@ export function UserContextProvider(props: Props) {
             setColorTheme(DARK_MODE);
         }
     }, [ colorTheme, setColorTheme ]);
+
+    useEffect(() => {
+        if(viewer !== "User" && setViewer) {
+            setViewer("User");
+        }
+    }, [ viewer, setViewer ]);
 
     const refreshRequests = useCallback((clearBeforeRefresh: boolean) => {
         if(client !== null) {

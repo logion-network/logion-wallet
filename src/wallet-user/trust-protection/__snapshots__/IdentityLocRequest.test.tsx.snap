@@ -41,7 +41,6 @@ exports[`IdentityLocRequest renders 1`] = `
                   "postalCode": "1040",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "patrick@logion.network",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -63,7 +62,6 @@ exports[`IdentityLocRequest renders 1`] = `
                   "postalCode": "18000",
                 },
                 "userIdentity": Object {
-                  "company": false,
                   "email": "alain.barland@auxilia-conseils.com",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
@@ -76,6 +74,24 @@ exports[`IdentityLocRequest renders 1`] = `
           otherLegalOfficer={null}
           setLegalOfficer={[Function]}
         />
+      </Frame>
+      <Frame
+        className="company-frame"
+      >
+        <p>
+          Check the box below if you are acting on behalf and representing a company, association, fondation (the Legal Officer will request a proof of authority):
+        </p>
+        <div
+          className="company-check-container"
+        >
+          <FormCheck
+            checked={false}
+            data-testid="company"
+            label="Yes, I am representing a legal entity"
+            onChange={[Function]}
+            type="checkbox"
+          />
+        </div>
       </Frame>
     </Col>
     <Col

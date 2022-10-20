@@ -2,10 +2,10 @@ import { useParams } from "react-router";
 import { UUID } from "@logion/node-api/dist/UUID";
 import { LocType } from "@logion/node-api/dist/Types";
 
-import { Viewer } from "./types";
 import { UserLocContextProvider } from "./UserLocContext";
 import { LegalOfficerLocContextProvider } from "./LegalOfficerLocContext";
 import DashboardCertificate from "./DashboardCertificate";
+import { Viewer } from "src/common/CommonContext";
 
 export interface Props {
     detailsPath: (locId: UUID, type: LocType) => string;

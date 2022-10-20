@@ -10,3 +10,15 @@
 .IdentityLocRequest .agree-submit button[type=submit] {
     margin-top: 30px;
 }
+
+.IdentityLocRequest .company-frame {
+    margin-top: 30px;
+}
+
+.IdentityLocRequest .company-check-container {
+    margin-top: 30px;
+}
+
+.IdentityLocRequest .company-name-container {
+    margin-top: 30px;
+}

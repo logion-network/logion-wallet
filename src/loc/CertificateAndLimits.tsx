@@ -16,9 +16,9 @@ import StaticLabelValue from '../common/StaticLabelValue';
 import './CertificateAndLimits.css';
 import StatementOfFactsButton from './statement/StatementOfFactsButton';
 import StatementOfFactsRequestButton from "./statement/StatementOfFactsRequestButton";
-import { Viewer } from "./types";
 import ArchiveButton from "./archive/ArchiveButton";
 import InlineDateTime from 'src/common/InlineDateTime';
+import { Viewer } from 'src/common/CommonContext';
 
 export interface Props {
     loc: LocData

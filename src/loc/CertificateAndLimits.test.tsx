@@ -1,9 +1,9 @@
 import { LocData, LocRequestStatus } from "@logion/client";
 import { UUID } from "@logion/node-api";
+import { Viewer } from "src/common/CommonContext";
 
 import { shallowRender } from "src/tests";
 import CertificateAndLimits from "./CertificateAndLimits";
-import { Viewer } from "./types";
 
 jest.mock("../logion-chain");
 

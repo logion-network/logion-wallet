@@ -1,5 +1,5 @@
 import { LocType, UUID } from "@logion/node-api";
-import { Viewer } from "./loc/types";
+import { Viewer } from "./common/CommonContext";
 
 export const LEGAL_OFFICER_PATH = "/legal-officer";
 export const USER_PATH = "/user";

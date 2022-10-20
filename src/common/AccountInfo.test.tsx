@@ -10,7 +10,6 @@ const DIFFERENT_IDENTITY: IdentityType = {
     lastName: "Doe2",
     email: "john.doe@logion.network",
     phoneNumber: "+1234",
-    company: false,
 };
 
 const DIFFERENT_ADDRESS: PostalAddressType = {

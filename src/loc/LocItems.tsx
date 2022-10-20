@@ -16,7 +16,7 @@ import SubmitterName from "../common/SubmitterName";
 import { useLogionChain } from "../logion-chain";
 
 import { getFile } from "./Model";
-import { LocItem, Viewer } from "./types";
+import { LocItem } from "./types";
 import LocLinkDetails from "./LocLinkDetails";
 import LocPublishLinkButton from "./LocPublishLinkButton";
 import LocPrivateFileDetails from "./LocPrivateFileDetails";
@@ -25,6 +25,7 @@ import LocPublishPublicDataButton from "./LocPublishPublicDataButton";
 import LocPublicDataDetails from "./LocPublicDataDetails";
 
 import './LocItems.css';
+import { Viewer } from "src/common/CommonContext";
 
 export interface LocItemsProps {
     matchedHash?: string;

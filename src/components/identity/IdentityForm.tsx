@@ -14,7 +14,6 @@ export interface FormValues {
     postalCode: string,
     city: string,
     country: string,
-    company: string, // Is actually a boolean, but does not compile
 }
 
 export interface Props {
@@ -122,31 +121,6 @@ export default function IdentityForm(props: Props) {
                             />
                         }
                         feedback={ errors.phoneNumber?.message }
-                        colors={ colors }
-                    />
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                    <FormGroup
-                        id="company"
-                        label="Company"
-                        control={
-                            <Controller
-                                name="company"
-                                control={ control }
-                                render={ ({ field }) => (
-                                    <Form.Check
-                                        type="checkbox"
-                                        isInvalid={ !!errors.company?.message }
-                                        placeholder="e.g. XYZ"
-                                        data-testid="company"
-                                        { ...field }
-                                    />
-                                ) }
-                            />
-                        }
-                        feedback={ errors.company?.message }
                         colors={ colors }
                     />
                 </Col>
