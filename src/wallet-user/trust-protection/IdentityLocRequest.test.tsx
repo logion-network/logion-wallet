@@ -65,7 +65,7 @@ describe("IdentityLocRequest", () => {
         render(<IdentityLocRequest backPath="back" />);
 
         await selectLegalOfficer();
-        await fillInForm(true);
+        await fillInForm();
 
         await clickByName("Submit");
 

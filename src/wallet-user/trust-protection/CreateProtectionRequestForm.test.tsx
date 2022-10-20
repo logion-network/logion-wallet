@@ -70,7 +70,7 @@ describe("CreateProtectionRequestForm", () => {
         render(<CreateProtectionRequestForm isRecovery={ false } />);
 
         await selectLegalOfficers();
-        await fillInForm(false);
+        await fillInForm();
 
         await clickByName("Next");
 
@@ -89,7 +89,7 @@ describe("CreateProtectionRequestForm", () => {
         await userEvent.type(screen.getByLabelText("Address to Recover"), 'toRecover');
 
         await selectLegalOfficers();
-        await fillInForm(false);
+        await fillInForm();
 
         await clickByName("Next");
 
@@ -109,7 +109,7 @@ describe("CreateProtectionRequestForm", () => {
         await userEvent.type(screen.getByLabelText("Address to Recover"), TEST_WALLET_USER2);
 
         await selectLegalOfficers();
-        await fillInForm(false);
+        await fillInForm();
 
         await clickByName("Next");
 
