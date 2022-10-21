@@ -1553,6 +1553,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@creativecommons/cc-assets@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@creativecommons/cc-assets@npm:0.1.0"
+  checksum: 8227269f128fe0ed1dadbcd297874abbcabfcab04c627557515468ef9c5979ca7ce0a9e626427ccf6ef5bac702ef2b7accec4344b52b4440d87cafd43b85ba55
+  languageName: node
+  linkType: hard
+
 "@crossmint/embed@npm:^0.0.2":
   version: 0.0.2
   resolution: "@crossmint/embed@npm:0.0.2"
@@ -12449,6 +12456,7 @@ __metadata:
     "@babel/preset-env": ^7.19.1
     "@babel/preset-react": ^7.18.6
     "@craco/craco": ^6.4.5
+    "@creativecommons/cc-assets": ^0.1.0
     "@logion/crossmint": ^0.1.2-1
     "@logion/extension": ^0.4.7-1
     "@popperjs/core": ^2.11.6

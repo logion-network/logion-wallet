@@ -2,7 +2,9 @@ import {
     ItemFileWithContent,
     ItemTokenWithRestrictedType,
     SpecificLicense,
-    LogionClassification, TermsAndConditionsElement
+    LogionClassification,
+    TermsAndConditionsElement,
+    CreativeCommons,
 } from "@logion/client";
 import './ImportItemDetails.css';
 
@@ -22,6 +24,7 @@ export interface Item {
     upload: boolean;
     logionClassification?: LogionClassification,
     specificLicense?: SpecificLicense,
+    creativeCommons?: CreativeCommons,
 }
 
 function termsAncConditions(tc: TermsAndConditionsElement, locLabel: string) {
@@ -70,6 +73,7 @@ export default function ImportItemDetails(props: { item: Item }) {
                     <p>Terms and Conditions:</p>
                     { props.item.logionClassification && termsAncConditions(props.item.logionClassification, "LITC version LOC") }
                     { props.item.specificLicense && termsAncConditions(props.item.specificLicense, "Specific License LOC") }
+                    { props.item.creativeCommons && termsAncConditions(props.item.creativeCommons, "CC Attribution LOC") }
                     { props.item.logionClassification === undefined && props.item.specificLicense === undefined &&
                         <ul>
                             <li>None</li>

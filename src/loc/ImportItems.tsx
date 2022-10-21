@@ -7,7 +7,8 @@ import {
     ItemTokenWithRestrictedType,
     isTokenType,
     LogionClassification,
-    SpecificLicense
+    SpecificLicense,
+    CreativeCommons,
 } from "@logion/client";
 import { useCallback, useState } from "react";
 import { OverlayTrigger, Spinner, Tooltip } from "react-bootstrap";
@@ -87,6 +88,7 @@ export default function ImportItems() {
                 itemToken: item.token,
                 logionClassification: item.logionClassification,
                 specificLicenses: item.specificLicense ? [ item.specificLicense ] : undefined,
+                creativeCommons: item.creativeCommons,
                 callback,
             })
         }
@@ -412,6 +414,7 @@ function toItems(csvItems: CsvItem[]): Item[] {
                 upload: false,
                 logionClassification: tcValidationResult.logionClassification,
                 specificLicense: tcValidationResult.specificLicense,
+                creativeCommons: tcValidationResult.creativeCommons,
             };
         }
     });
@@ -420,6 +423,7 @@ function toItems(csvItems: CsvItem[]): Item[] {
 interface TCValidationResult {
     logionClassification?: LogionClassification;
     specificLicense?: SpecificLicense;
+    creativeCommons?: CreativeCommons;
     tcError?: string;
 }
 
@@ -432,6 +436,13 @@ function validateTermsAndConditions(csvItem: CsvItem): TCValidationResult {
             }
             const logionClassification = LogionClassification.fromDetails(logionClassificationLocId, csvItem.termsAndConditionsParameters);
             return { logionClassification }
+        } else if (csvItem.termsAndConditionsType === 'CC4.0') {
+            const ccLocId = UUID.fromAnyString(config.creativeCommons);
+            if (ccLocId === undefined) {
+                return { tcError: "CC4.0: LOC id not properly configured" }
+            }
+            const creativeCommons = CreativeCommons.fromDetails(ccLocId, csvItem.termsAndConditionsParameters);
+            return { creativeCommons }
         } else if (csvItem.termsAndConditionsType === 'specific_license') {
             const tcLocId = UUID.fromAnyString(csvItem.termsAndConditionsParameters);
             if (tcLocId === undefined) {
