@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreativeCommonsIcon renders 1`] = `
+<img
+  alt="BY-NC"
+  className="CreativeCommonsIcon"
+  src="by_nc.eu.svg"
+/>
+`;
