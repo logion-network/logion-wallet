@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { LocType } from "@logion/node-api/dist/Types";
-import { LocRequest } from "@logion/client";
+import { LocData } from "@logion/client";
 
 import Table, { Cell, EmptyTableMessage, DateTimeCell } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';
@@ -32,7 +32,7 @@ export default function PendingLocRequests(props: Props) {
     const { pendingLocRequests, refreshLocs } = useLegalOfficerContext();
     const [ requestToReject, setRequestToReject ] = useState<string | null>(null);
     const [ reason, setReason ] = useState<string>("");
-    const [ requestToAccept, setRequestToAccept ] = useState<LocRequest | null>(null);
+    const [ requestToAccept, setRequestToAccept ] = useState<LocData | null>(null);
     const { locType } = props;
     const handleClose = () => setRequestToReject(null);
     const { width } = useResponsiveContext();
@@ -88,7 +88,7 @@ export default function PendingLocRequests(props: Props) {
                         render: request => (
                             <ButtonGroup aria-label="actions">
                                 <Button
-                                    onClick={() => setRequestToReject(request.id)}
+                                    onClick={() => setRequestToReject(request.id.toString())}
                                     data-testid={`reject-${request.id}`}
                                     variant="none"
                                 >
@@ -101,9 +101,9 @@ export default function PendingLocRequests(props: Props) {
                                 >
                                     <Icon icon={{id: "ok"}} height='40px' />
                                 </Button>
-                                { locType !== "Identity" && request.identityLoc &&
+                                { locType !== "Identity" && request.identityLocId &&
                                     <Button
-                                        onClick={ () => window.open(identityLocDetailsPath(request.identityLoc!), "_blank") }
+                                        onClick={ () => window.open(identityLocDetailsPath(request.identityLocId!.toString()), "_blank") }
                                     >
                                         Identity LOC
                                     </Button>
@@ -116,7 +116,7 @@ export default function PendingLocRequests(props: Props) {
                         }),
                     }
                 ]}
-                data={ pendingLocRequests[locType] }
+                data={ pendingLocRequests[locType].map(loc => loc.data()) }
                 renderEmpty={ () => <EmptyTableMessage>No pending LOC request</EmptyTableMessage> }
             />
 

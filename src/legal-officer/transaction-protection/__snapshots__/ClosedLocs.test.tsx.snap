@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Renders Closed Logion Identity LOCs 1`] = `
+exports[`ClosedLocs renders Closed Logion Identity LOCs 1`] = `
 <div
   className="Table constrained-row-height"
 >
@@ -319,7 +319,7 @@ exports[`Renders Closed Logion Identity LOCs 1`] = `
 </div>
 `;
 
-exports[`Renders Closed Polkadot Identity LOCs 1`] = `
+exports[`ClosedLocs renders Closed Polkadot Identity LOCs 1`] = `
 <div
   className="Table constrained-row-height"
 >
@@ -638,6 +638,6 @@ exports[`Renders Closed Polkadot Identity LOCs 1`] = `
 </div>
 `;
 
-exports[`Renders null with no data 1`] = `null`;
+exports[`ClosedLocs renders null with no data 1`] = `null`;
 
-exports[`Renders pending requests 1`] = `null`;
+exports[`ClosedLocs renders pending requests 1`] = `null`;

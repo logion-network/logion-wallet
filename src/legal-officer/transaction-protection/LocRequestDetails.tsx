@@ -1,10 +1,10 @@
-import { LocRequest } from "@logion/client";
+import { LocData } from "@logion/client";
 
 import TransactionLocRequestDetails from "./TransactionLocRequestDetails";
 import IdentityLocRequestDetails from "../../components/identity/IdentityLocRequestDetails";
 
 export interface LocRequestDetailsProps {
-    request: LocRequest,
+    request: LocData,
 }
 
 export default function LocRequestDetails(props: LocRequestDetailsProps) {

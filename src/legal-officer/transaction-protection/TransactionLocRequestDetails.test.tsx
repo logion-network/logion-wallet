@@ -1,4 +1,4 @@
-import { LocRequest } from '@logion/client';
+import { LocData } from '@logion/client';
 import { shallowRender } from '../../tests';
 import TransactionLocRequestDetails from './TransactionLocRequestDetails';
 
@@ -12,7 +12,7 @@ test("renders", () => {
         createdOn: "2021-09-24T13:30:00.000",
     };
     const tree = shallowRender(<TransactionLocRequestDetails
-        request={ request as LocRequest }
+        request={ request as LocData }
     />);
     expect(tree).toMatchSnapshot();
 });

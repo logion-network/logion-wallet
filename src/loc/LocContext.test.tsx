@@ -4,14 +4,14 @@ import { UUID } from "@logion/node-api/dist/UUID";
 import { LegalOfficerCase } from '@logion/node-api/dist/Types';
 import { LocData, OpenLoc } from "@logion/client";
 import { LogionClient } from '@logion/client/dist/LogionClient';
-import { PublicApi } from "@logion/client";
+import { PublicApi, LocRequestState } from "@logion/client";
 
 import { confirmLocFile, confirmLocLink, confirmLocMetadataItem, deleteLocLink, resetDefaultMocks } from "../common/__mocks__/ModelMock";
 import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
 import { CLOSED_IDENTITY_LOC, CLOSED_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "../__mocks__/@logion/node-api/dist/LogionLocMock";
 import { finalizeSubmission, resetSubmitting } from "../logion-chain/__mocks__/SignatureMock";
 import { clickByName } from "../tests";
-import { ActiveLoc, LocContextProvider, useLocContext } from "./LocContext"
+import { LocContextProvider, useLocContext } from "./LocContext"
 import { LocItemType } from "./types";
 import { addLink } from "./__mocks__/ModelMock";
 import { buildLocRequest } from "./TestData";
@@ -36,7 +36,6 @@ describe("LocContext", () => {
         givenRequest(OPEN_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, CLOSED_IDENTITY_LOC_ID, CLOSED_IDENTITY_LOC);
         whenRenderingInContext(OPEN_IDENTITY_LOC_ID, <ItemAdder/>);
         await waitFor(() => screen.getByText("Ready"));
-        screen.debug()
         await clickByName("Go");
         await thenItemsAdded();
     })
@@ -89,7 +88,7 @@ function givenRequest(locId: string, loc: LegalOfficerCase, linkedLocId?: string
 
     _locState.addMetadata = jest.fn().mockResolvedValue(_locState);
     _locState.deleteMetadata = jest.fn().mockResolvedValue(_locState);
-    _locState.addFile = jest.fn().mockResolvedValue({ state: _locState });
+    _locState.addFile = jest.fn().mockResolvedValue(_locState);
     _locState.deleteFile = jest.fn().mockResolvedValue( _locState);
     addLink.mockResolvedValue(undefined);
 
@@ -101,13 +100,13 @@ function givenRequest(locId: string, loc: LegalOfficerCase, linkedLocId?: string
         } as unknown as OpenLoc;
     }
 
-    locsState.findById = (arg: { locId: UUID }) => {
-        if (arg.locId.toDecimalString() === locId) {
-            return Promise.resolve(_locState);
-        } else if (linkedLocId && linkedLoc && arg.locId.toDecimalString() === linkedLocId) {
-            return Promise.resolve(_linkedLocState);
+    locsState.findById = (argLocId: UUID) => {
+        if (argLocId.toDecimalString() === locId) {
+            return _locState;
+        } else if (linkedLocId && linkedLoc && argLocId.toDecimalString() === linkedLocId) {
+            return _linkedLocState;
         } else {
-            return Promise.reject(new Error());
+            throw new Error();
         }
     }
 
@@ -136,12 +135,12 @@ function givenRequest(locId: string, loc: LegalOfficerCase, linkedLocId?: string
 let _locData: LocData;
 let _locState: OpenLoc;
 let _linkedLocData: LocData;
-let _linkedLocState: ActiveLoc;
+let _linkedLocState: LocRequestState;
 
 function whenRenderingInContext(locId: string, element: JSX.Element) {
     render(
         <LocContextProvider
-            locId={ UUID.fromDecimalString(locId)! }
+            locId={ UUID.fromDecimalStringOrThrow(locId) }
             backPath="/"
             detailsPath={() => ""}
             refreshLocs={() => Promise.resolve()}

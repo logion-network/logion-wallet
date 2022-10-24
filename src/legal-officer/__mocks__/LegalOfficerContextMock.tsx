@@ -1,8 +1,7 @@
+import { ClosedCollectionLoc, ClosedLoc, OpenLoc, PendingRequest, RejectedRequest, VoidedLoc } from "@logion/client";
 import { LocType, IdentityLocType } from "@logion/node-api/dist/Types";
 import { AxiosInstance } from "axios";
-
 import { COLOR_THEME, PATRICK } from "src/common/TestData";
-import { RequestAndLoc } from "../LegalOfficerContext";
 import { LegalOfficerData } from "../LegalOfficerData";
 
 export let pendingTokenizationRequests: any[] | null = null;
@@ -61,58 +60,58 @@ export function setRecoveryRequestsHistory(requests: any[]) {
     recoveryRequestsHistory = requests;
 }
 
-export let pendingLocRequests: Record<LocType, any[]> | null = null;
-export let rejectedLocRequests: Record<LocType, any[]> | null = null;
+export let pendingLocRequests: Record<LocType, PendingRequest[]> | null = null;
+export let rejectedLocRequests: Record<LocType, RejectedRequest[]> | null = null;
 
-export let openedLocRequests: Record<LocType, any[]> | null = {
+export let openedLocRequests: Record<LocType, OpenLoc[]> | null = {
     "Transaction": [],
     "Collection": [],
     "Identity": [],
 };
 
-export let closedLocRequests: Record<LocType, any[]> | null = {
+export let closedLocRequests: Record<LocType, (ClosedLoc | ClosedCollectionLoc)[]> | null = {
     "Transaction": [],
     "Collection": [],
     "Identity": [],
 };
 
-export let openedIdentityLocs: RequestAndLoc[] | null = null;
+export let openedIdentityLocs: OpenLoc[] | null = null;
 
-export let openedIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null = null;
+export let openedIdentityLocsByType: Record<IdentityLocType, OpenLoc[]> | null = null;
 
-export let closedIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null = null;
+export let closedIdentityLocsByType: Record<IdentityLocType, ClosedLoc[]> | null = null;
 
-export let voidIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null = null;
+export let voidIdentityLocsByType: Record<IdentityLocType, VoidedLoc[]> | null = null;
 
-export function setRejectedLocRequests(requests: any[]) {
+export function setRejectedLocRequests(requests: RejectedRequest[]) {
     rejectedLocRequests = { Collection: [], Transaction: requests, Identity: [] };
 }
 
-export function setOpenedLocRequests(requests: any[]) {
+export function setOpenedLocRequests(requests: OpenLoc[]) {
     openedLocRequests = { Collection: [], Transaction: requests, Identity: [] };
 }
 
-export function setPendingLocRequests(requests: any[]) {
+export function setPendingLocRequests(requests: PendingRequest[]) {
     pendingLocRequests = { Collection: [], Transaction: requests, Identity: [] };
 }
 
-export function setClosedLocRequests(requests: any[]) {
+export function setClosedLocRequests(requests: ClosedLoc[]) {
     closedLocRequests = { Collection: [], Transaction: requests, Identity: [] };
 }
 
-export function setOpenedIdentityLocs(requests: any[]) {
+export function setOpenedIdentityLocs(requests: OpenLoc[]) {
     openedIdentityLocs = requests;
 }
 
-export function setOpenedIdentityLocsByType(locs: Record<IdentityLocType, RequestAndLoc[]>) {
+export function setOpenedIdentityLocsByType(locs: Record<IdentityLocType, OpenLoc[]>) {
     openedIdentityLocsByType = locs;
 }
 
-export function setClosedIdentityLocsByType(locs: Record<IdentityLocType, RequestAndLoc[]>) {
+export function setClosedIdentityLocsByType(locs: Record<IdentityLocType, ClosedLoc[]>) {
     closedIdentityLocsByType = locs;
 }
 
-export function setVoidedIdentityLocsByType(locs: Record<IdentityLocType, RequestAndLoc[]>) {
+export function setVoidedIdentityLocsByType(locs: Record<IdentityLocType, VoidedLoc[]>) {
     voidIdentityLocsByType = locs;
 }
 

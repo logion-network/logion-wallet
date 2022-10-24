@@ -80,6 +80,7 @@ export default function IdentityLocRequest(props: Props) {
                 userIdentity,
                 userPostalAddress,
                 company: company ? companyName : undefined,
+                draft: false,
             })).locsState();
         })
         clear();

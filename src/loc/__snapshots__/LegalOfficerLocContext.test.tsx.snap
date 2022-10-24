@@ -4,6 +4,47 @@ exports[`LegalOfficerLocContextProvider renders 1`] = `
 <LocContextProvider
   backPath="/"
   detailsPath={[Function]}
+  fetchAllLocsParams={
+    Object {
+      "legalOfficers": Array [
+        Object {
+          "additionalDetails": "",
+          "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+          "logoUrl": "",
+          "name": "Patrick Gielen",
+          "node": "http://logion.patrick.com",
+          "postalAddress": Object {
+            "city": "Etterbeek",
+            "company": "MODERO",
+            "country": "Belgique",
+            "line1": "Huissier de Justice Etterbeek",
+            "line2": "Rue Beckers 17",
+            "postalCode": "1040",
+          },
+          "userIdentity": Object {
+            "email": "patrick@logion.network",
+            "firstName": "Patrick",
+            "lastName": "Gielen",
+            "phoneNumber": "+32 498 237 107",
+          },
+        },
+      ],
+      "spec": Object {
+        "locTypes": Array [
+          "Collection",
+          "Identity",
+          "Transaction",
+        ],
+        "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "statuses": Array [
+          "CLOSED",
+          "OPEN",
+          "REJECTED",
+          "REQUESTED",
+        ],
+      },
+    }
+  }
   locId={
     UUID {
       "bytes": Uint8Array [

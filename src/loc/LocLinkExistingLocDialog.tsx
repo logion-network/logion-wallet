@@ -38,7 +38,7 @@ export default function LocLinkExistingDialog(props: Props) {
             setError("locId", { type: "value", message: "LOC already linked" })
             return
         }
-        const locState = await (await client!.locsState()).findById({ locId });
+        const locState = (await client!.locsState()).findById(locId);
         const locData = locState!.data();
         addLink!(locData, formValues.linkNature)
         reset();
