@@ -1,10 +1,9 @@
-import { LocData, LocRequestStatus } from "@logion/client";
+import { LocData, LocRequestStatus, LocRequestState } from "@logion/client";
 import { LocType, UUID } from "@logion/node-api";
 import { Viewer } from "src/common/CommonContext";
 
 import { CheckResult } from "src/components/checkfileframe/CheckFileFrame";
 import { shallowRender } from "src/tests";
-import { ActiveLoc } from "./LocContext";
 import LocDetailsTab, { LocDetailsTabContent } from "./LocDetailsTab";
 
 describe("LocDetailsTab", () => {
@@ -172,7 +171,7 @@ const locId = new UUID("f0afbbbb-696d-4b77-8170-77e565888a0e");
 const createdOn = "2022-09-28T07:49:00.000+02:00";
 const closedOn = "2022-09-28T08:49:00.000+02:00";
 
-function buildLocMock(params: MockParameters): { loc: LocData, locState: ActiveLoc } {
+function buildLocMock(params: MockParameters): { loc: LocData, locState: LocRequestState } {
     const loc = {
         id: locId,
         status: params.status,
@@ -192,7 +191,7 @@ function buildLocMock(params: MockParameters): { loc: LocData, locState: ActiveL
 
         isLogionIdentity: () => params.isLogionIdentityLoc === true,
         isLogionData: () => params.locType === "Collection" || params.locType === "Transaction",
-    } as unknown as ActiveLoc;
+    } as unknown as LocRequestState;
 
     return { loc, locState };
 }

@@ -1,12 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
-import { UUID } from '@logion/node-api/dist/UUID';
 import {
     createCollectionLoc,
     createPolkadotTransactionLoc,
     createPolkadotIdentityLoc
 } from '@logion/node-api/dist/LogionLoc';
 import { ChainTime } from '@logion/node-api/dist/ChainTime';
-import { LocRequest } from '@logion/client';
+import { LocData } from '@logion/client';
 
 import { useLogionChain } from '../../logion-chain';
 import { useCommonContext } from '../../common/CommonContext';
@@ -35,7 +34,7 @@ interface AcceptState {
 }
 
 export interface Props {
-    requestToAccept: LocRequest | null,
+    requestToAccept: LocData | null,
     clearRequestToAccept: () => void,
 }
 
@@ -68,7 +67,7 @@ export default function LocRequestAcceptance(props: Props) {
                         errorCallback: setError,
                         submittable: createPolkadotTransactionLoc({
                             api: api!,
-                            locId: new UUID(props.requestToAccept!.id),
+                            locId: props.requestToAccept!.id,
                             requester: props.requestToAccept!.requesterAddress!,
                         })
                     });
@@ -91,7 +90,7 @@ export default function LocRequestAcceptance(props: Props) {
                         errorCallback: setError,
                         submittable: createCollectionLoc({
                             api: api!,
-                            locId: new UUID(props.requestToAccept!.id),
+                            locId: props.requestToAccept!.id,
                             requester: props.requestToAccept!.requesterAddress!,
                             lastBlock,
                             maxSize,
@@ -105,7 +104,7 @@ export default function LocRequestAcceptance(props: Props) {
                         errorCallback: setError,
                         submittable: createPolkadotIdentityLoc({
                             api: api!,
-                            locId: new UUID(props.requestToAccept!.id),
+                            locId: props.requestToAccept!.id,
                             requester: props.requestToAccept!.requesterAddress!,
                         })
                     });
@@ -132,7 +131,7 @@ export default function LocRequestAcceptance(props: Props) {
         if(acceptState.status === AcceptStatus.ACCEPTANCE_PENDING) {
             setStatus(AcceptStatus.ACCEPTING);
             (async function () {
-                await acceptLocRequest(axiosFactory!(props.requestToAccept!.ownerAddress)!, { requestId: props.requestToAccept!.id });
+                await acceptLocRequest(axiosFactory!(props.requestToAccept!.ownerAddress)!, { requestId: props.requestToAccept!.id.toString() });
                 setStatus(AcceptStatus.ACCEPTED);
             })();
         }

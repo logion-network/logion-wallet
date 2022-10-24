@@ -1,4 +1,4 @@
-import { LocData } from "@logion/client";
+import { LocData, LocRequestState } from "@logion/client";
 import { ProtectionRequest } from "@logion/client/dist/RecoveryClient";
 import { LocType, UUID } from "@logion/node-api";
 import { useState } from "react";
@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import Button from "src/common/Button";
 import Icon from "src/common/Icon";
 import IconTextRow from "src/common/IconTextRow";
-import { ActiveLoc } from "./LocContext";
 import LocCreationDialog from "./LocCreationDialog";
 import { Row } from "src/common/Grid";
 
@@ -15,7 +14,7 @@ import "./LegalOfficerInstructions.css";
 
 export interface Props {
     loc: LocData;
-    locState: ActiveLoc;
+    locState: LocRequestState;
     protectionRequest: ProtectionRequest | null;
     detailsPath: (locId: UUID, type: LocType) => string;
 }

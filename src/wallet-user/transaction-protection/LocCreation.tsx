@@ -50,6 +50,7 @@ export default function LocCreation(props: Props) {
                 legalOfficer: selectedLegalOfficer!,
                 description: formValues.description,
                 locType,
+                draft: false,
             })).locsState();
         });
         clear();

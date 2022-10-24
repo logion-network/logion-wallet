@@ -8,7 +8,7 @@ jest.mock('../../loc/Model');
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { UUID } from '@logion/node-api/dist/UUID';
-import { LocRequest } from '@logion/client';
+import { LocData } from '@logion/client';
 
 import { shallowRender, typeByLabel } from '../../tests';
 import { finalizeSubmission } from '../../logion-chain/__mocks__/SignatureMock';
@@ -25,8 +25,8 @@ describe("LocRequestAcceptance", () => {
         expect(tree).toMatchSnapshot();
     });
 
-    const REQUEST: LocRequest = {
-        id: new UUID().toString(),
+    const REQUEST = {
+        id: new UUID(),
         ownerAddress: DEFAULT_LEGAL_OFFICER_ACCOUNT.address,
         requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
         description: "LOC description",
@@ -36,7 +36,7 @@ describe("LocRequestAcceptance", () => {
         links: [],
         locType: 'Transaction',
         metadata: []
-    };
+    } as unknown as LocData;
 
     it("Click on accept and proceed accepts transaction LOC request", async () => {
         setCurrentAddress(DEFAULT_LEGAL_OFFICER_ACCOUNT);
@@ -55,7 +55,7 @@ describe("LocRequestAcceptance", () => {
         await waitFor(() => expect(acceptLocRequest).toBeCalledWith(
             axiosMock.object(),
             expect.objectContaining({
-                requestId: REQUEST.id
+                requestId: REQUEST.id.toString()
             })
         ));
 
@@ -83,7 +83,7 @@ describe("LocRequestAcceptance", () => {
         await waitFor(() => expect(acceptLocRequest).toBeCalledWith(
             axiosMock.object(),
             expect.objectContaining({
-                requestId: COLLECTION_LOC_REQUEST.id
+                requestId: COLLECTION_LOC_REQUEST.id.toString()
             })
         ));
 
@@ -91,8 +91,8 @@ describe("LocRequestAcceptance", () => {
         await userEvent.click(proceedReviewButton);
     });
 
-    const COLLECTION_LOC_REQUEST: LocRequest = {
-        id: new UUID().toString(),
+    const COLLECTION_LOC_REQUEST = {
+        id: new UUID(),
         ownerAddress: DEFAULT_LEGAL_OFFICER_ACCOUNT.address,
         requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
         description: "LOC description",
@@ -102,5 +102,5 @@ describe("LocRequestAcceptance", () => {
         links: [],
         locType: 'Collection',
         metadata: []
-    };
+    } as unknown as LocData;
 });

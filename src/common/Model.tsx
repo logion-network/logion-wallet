@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
-import { UserIdentity, LocData, LocRequest, LocRequestStatus } from '@logion/client';
+import { UserIdentity, LocData, LocRequest } from '@logion/client';
 import { ProtectionRequest, ProtectionRequestStatus } from '@logion/client/dist/RecoveryClient';
-import { UUID, LocType, IdentityLocType } from '@logion/node-api';
+import { UUID, LocType } from '@logion/node-api';
 
 export type ProtectionRequestKind = 'RECOVERY' | 'PROTECTION_ONLY' | 'ANY';
 
@@ -20,22 +20,6 @@ export async function fetchProtectionRequests(
 
 export interface FetchTransactionsSpecification {
     address: string,
-}
-
-export interface FetchLocRequestSpecification {
-    ownerAddress?: string,
-    requesterAddress?: string,
-    statuses: LocRequestStatus[],
-    locTypes: LocType[],
-    identityLocType?: IdentityLocType
-}
-
-export async function fetchLocRequests(
-    axios: AxiosInstance,
-    specification: FetchLocRequestSpecification,
-): Promise<LocRequest[]> {
-    const response = await axios.put(`/api/loc-request`, specification);
-    return response.data.requests;
 }
 
 export interface CreateLocRequest {

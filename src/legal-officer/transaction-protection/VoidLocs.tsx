@@ -33,17 +33,17 @@ export default function VoidLocs(props: Props) {
             columns={[
                 {
                     "header": "Requester",
-                    render: requestAndLoc => <UserIdentityNameCell userIdentity={ requestAndLoc.request.userIdentity }/>,
+                    render: requestAndLoc => <UserIdentityNameCell userIdentity={ requestAndLoc.userIdentity }/>,
                     align: 'left',
                 },
                 {
                     "header": "Description",
-                    render: requestAndLoc => <Cell content={ requestAndLoc.request.description } overflowing tooltipId='description-tooltip' />,
+                    render: requestAndLoc => <Cell content={ requestAndLoc.description } overflowing tooltipId='description-tooltip' />,
                     align: 'left',
                 },
                 {
                     header: "Status",
-                    render: requestAndLoc => <LocStatusCell status={ requestAndLoc.request.status } voidLoc={ true } />,
+                    render: requestAndLoc => <LocStatusCell status={ requestAndLoc.status } voidLoc={ true } />,
                     width: width({
                         onSmallScreen: '100px',
                         otherwise: '140px'
@@ -51,12 +51,12 @@ export default function VoidLocs(props: Props) {
                 },
                 {
                     header: "LOC ID",
-                    render: requestAndLoc => <LocIdCell status={ requestAndLoc.request.status } id={ requestAndLoc.request.id } />,
+                    render: requestAndLoc => <LocIdCell status={ requestAndLoc.status } id={ requestAndLoc.id } />,
                     align: "left",
                 },
                 {
                     header: "Creation date",
-                    render: requestAndLoc => <DateTimeCell dateTime={ requestAndLoc.request.createdOn || null } />,
+                    render: requestAndLoc => <DateTimeCell dateTime={ requestAndLoc.createdOn || null } />,
                     width: width({
                         onSmallScreen: '100px',
                         otherwise: '200px'
@@ -65,7 +65,7 @@ export default function VoidLocs(props: Props) {
                 },
                 {
                     header: "Voiding date",
-                    render: requestAndLoc => <DateTimeCell dateTime={ requestAndLoc.request.voidInfo?.voidedOn || null } spinner={ true } />,
+                    render: requestAndLoc => <DateTimeCell dateTime={ requestAndLoc.voidInfo?.voidedOn || null } spinner={ true } />,
                     width: width({
                         onSmallScreen: '100px',
                         otherwise: '200px'
@@ -77,7 +77,7 @@ export default function VoidLocs(props: Props) {
                     render: requestAndLoc =>
                         <ActionCell>
                             <ButtonGroup>
-                                <Button onClick={ () => navigate(locDetailsPath(requestAndLoc.request.id, props.locType)) }>View</Button>
+                                <Button onClick={ () => navigate(locDetailsPath(requestAndLoc.id, props.locType)) }>View</Button>
                             </ButtonGroup>
                         </ActionCell>
                     ,
@@ -88,7 +88,7 @@ export default function VoidLocs(props: Props) {
                     align: 'center',
                 }
             ] }
-            data={ requests }
+            data={ requests.map(request => request.data()) }
             renderEmpty={ () => <EmptyTableMessage>No LOCs</EmptyTableMessage> }
         />
     );

@@ -25,7 +25,7 @@ import WarningDialog from 'src/common/WarningDialog';
 export default function ContextualizedWallet() {
     const { selectAddress, accounts } = useLogionChain();
     const { colorTheme, refresh, availableLegalOfficers } = useCommonContext();
-    const { refreshRequests, missingSettings } = useLegalOfficerContext();
+    const { refreshRequests, missingSettings, refreshLocs } = useLegalOfficerContext();
     const location = useLocation();
     const [ discardSettings, setDiscardSettings ] = useState(false);
     const navigate = useNavigate();
@@ -33,7 +33,8 @@ export default function ContextualizedWallet() {
     const refreshAll = useCallback(() => {
         refresh(false);
         refreshRequests!(false);
-    }, [ refresh, refreshRequests ]);
+        refreshLocs();
+    }, [ refresh, refreshRequests, refreshLocs ]);
 
     const currentLegalOfficerUnavailable = useMemo(
         () => availableLegalOfficers?.find(node => node.address === accounts?.current?.address) === undefined,

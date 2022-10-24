@@ -39,7 +39,26 @@ exports[`PendingLocRequests Renders pending requests 1`] = `
     data={
       Array [
         Object {
-          "id": "1",
+          "id": UUID {
+            "bytes": Uint8Array [
+              85,
+              111,
+              65,
+              40,
+              79,
+              195,
+              79,
+              220,
+              165,
+              67,
+              116,
+              230,
+              35,
+              9,
+              17,
+              196,
+            ],
+          },
           "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
           "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
           "status": "REQUESTED",

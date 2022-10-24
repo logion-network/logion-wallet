@@ -7,7 +7,8 @@ import {
     ItemTokenWithRestrictedType,
     isTokenType,
     LogionClassification,
-    SpecificLicense
+    SpecificLicense,
+    LocRequestState,
 } from "@logion/client";
 import { useCallback, useState } from "react";
 import { OverlayTrigger, Spinner, Tooltip } from "react-bootstrap";
@@ -26,7 +27,6 @@ import ImportItemDetails, { ErrorType, Item } from "./ImportItemDetails";
 import './ImportItems.css';
 import { toItemId } from "./types";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "../ClientExtrinsicSubmitter";
-import { ActiveLoc } from "./LocContext";
 import { CsvItem, readItemsCsv } from "./ImportCsvReader";
 import Alert from "src/common/Alert";
 import { UUID } from "@logion/node-api";
@@ -324,12 +324,12 @@ function getNotSubmitted(items: Item[]): number {
     return count;
 }
 
-function shouldUpload(locState: ActiveLoc | null, existingItem: UploadableCollectionItem | undefined): boolean {
+function shouldUpload(locState: LocRequestState | null, existingItem: UploadableCollectionItem | undefined): boolean {
     const mustUpload = uploadExpected(locState);
     return mustUpload && (existingItem === undefined || (existingItem.files.length > 0 && !existingItem.files[0].uploaded));
 }
 
-function uploadExpected(locState: ActiveLoc | null): boolean {
+function uploadExpected(locState: LocRequestState | null): boolean {
     const collection = locState as ClosedCollectionLoc;
     return collection.data().collectionCanUpload !== undefined && collection.data().collectionCanUpload === true;
 }

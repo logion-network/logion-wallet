@@ -39,7 +39,26 @@ exports[`Renders rejected requests 1`] = `
     Array [
       Object {
         "bars": 1,
-        "id": "1",
+        "id": UUID {
+          "bytes": Uint8Array [
+            85,
+            111,
+            65,
+            40,
+            79,
+            195,
+            79,
+            220,
+            165,
+            67,
+            116,
+            230,
+            35,
+            9,
+            17,
+            196,
+          ],
+        },
         "legalOfficerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
         "requestedTokenName": "TOKEN1",
         "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
