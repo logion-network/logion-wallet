@@ -3,7 +3,7 @@ import { Dropdown } from "react-bootstrap";
 import { UUID } from "@logion/node-api/dist/UUID";
 import { LegalOfficerCase } from "@logion/node-api/dist/Types";
 import { getLegalOfficerCase } from "@logion/node-api/dist/LogionLoc";
-import { CollectionItem } from "@logion/client";
+import { CollectionItem, LegalOfficer } from "@logion/client";
 
 import { locDetailsPath, STATEMENT_OF_FACTS_PATH } from "../../legal-officer/LegalOfficerPaths";
 import { fullCertificateUrl, getBaseUrl } from "../../PublicPaths";
@@ -19,9 +19,9 @@ import { useLogionChain } from "../../logion-chain";
 import { clearSofParams, storeSofParams } from "../../common/Storage";
 import { PrerequisiteWizard } from "./PrerequisiteWizard";
 import { PREREQUISITE_WIZARD_STEPS } from "./WizardSteps";
-import { LegalOfficer } from "@logion/client";
 import { useLegalOfficerContext } from "../../legal-officer/LegalOfficerContext";
 import { loFileUrl } from "../FileModel";
+import { creativeCommonsBadges } from "../../components/license/CreativeCommonsIcon";
 
 type Status = 'IDLE' | 'PRE-REQUISITE' | 'INPUT' | 'READY'
 
@@ -149,31 +149,35 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
     }, [ locData, locId, sofParams, setSofParams ]);
 
     useEffect(() => {
-        if((props.item && !item) || (!props.item && item) || (props.item && item && props.item.id !== item.id)) {
+        if (language !== null && ((props.item && !item) || (!props.item && item) || (props.item && item && props.item.id !== item.id))) {
             setItem(props.item);
             setSofParams({
-                ...sofParams,
-                collectionItem: ( props.item ? {
-                    id: props.item.id,
-                    addedOn: props.item.addedOn,
-                    description: props.item.description,
-                    restrictedDelivery: props.item.restrictedDelivery,
-                    token: props.item.token,
-                    files: props.item.files.map(file => ({
-                        ...file,
-                        size: file.size.toString(),
-                    })),
-                    termsAndConditions: props.item.termsAndConditions.map(element => ({
-                        details: element.details,
-                        tcLocId: element.tcLocId,
-                        type: element.type,
-                    })),
-                    litcUrl: `${ getBaseUrl() }/license/LITC-v1.0.txt`,
-                    litcLocUrl: props.item.logionClassification ? fullCertificateUrl(props.item.logionClassification.tcLocId) : "",
-                } : undefined),
-            });
+                    ...sofParams,
+                    collectionItem: (props.item ? {
+                        id: props.item.id,
+                        addedOn: props.item.addedOn,
+                        description: props.item.description,
+                        restrictedDelivery: props.item.restrictedDelivery,
+                        token: props.item.token,
+                        files: props.item.files.map(file => ({
+                            ...file,
+                            size: file.size.toString(),
+                        })),
+                        logionClassification: props.item.logionClassification,
+                        litcUrl: `${ getBaseUrl() }/license/LITC-v1.0.txt`,
+                        litcLocUrl: props.item.logionClassification ? fullCertificateUrl(props.item.logionClassification.tcLocId) : "",
+                        specificLicenses: props.item.specificLicenses,
+                        creativeCommons: props.item.creativeCommons ?
+                            {
+                                code: props.item.creativeCommons?.parameters,
+                                url: props.item.creativeCommons.deedUrl(language),
+                                badgeUrl: creativeCommonsBadges[props.item.creativeCommons.parameters],
+                            } : undefined,
+                    } : undefined),
+                }
+            )
         }
-    }, [ props, item, setItem, sofParams, setSofParams, locId ]);
+    }, [ props, item, setItem, sofParams, setSofParams, locId, language ]);
 
     const cancelCallback = useCallback(() => {
         setStatus('IDLE')

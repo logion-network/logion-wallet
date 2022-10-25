@@ -1,4 +1,3 @@
-import { LogionClassification, SpecificLicense } from "@logion/client";
 import { useMemo } from "react";
 import InlineDateTime from "src/common/InlineDateTime";
 import { SofCollectionItem } from "./SofParams";
@@ -9,8 +8,7 @@ export interface Props {
 
 export default function SofTermsAndConditionsFR(props: Props) {
 
-    const logionClassification = useMemo(() => getLogionClassification(props.item), [ props.item ]);
-    const specificLicences = useMemo(() => getSpecificLicenses(props.item), [ props.item ]);
+    const { logionClassification, specificLicenses, creativeCommons } = props.item;
     const regionalLimit = useMemo(() => logionClassification?.regionalLimit || [], [ logionClassification ]);
 
     return (
@@ -19,7 +17,7 @@ export default function SofTermsAndConditionsFR(props: Props) {
 
             <h5>Droit de propriété intellectuelle attribué avec ce Collection Item</h5>
             {
-                !logionClassification &&
+                !logionClassification && !creativeCommons &&
                 <p>Aucun</p>
             }
             {
@@ -58,16 +56,24 @@ export default function SofTermsAndConditionsFR(props: Props) {
             }
 
             {
-                specificLicences.length === 0 &&
+                creativeCommons !== undefined &&
+                <div className="creative-commons">
+                    <img className="creative-commons-badge" src={ creativeCommons.badgeUrl } alt={ creativeCommons.code } />
+                    <p className="creative-commons-text">Ce travail est soumis aux termes de la licence <a href={ creativeCommons.url }>Creative Commons Attribution 4.0 International License</a></p>
+                </div>
+            }
+
+            {
+                (specificLicenses === undefined || specificLicenses.length === 0) &&
                 <>
                 <h5>Licence / Contrat additionnel</h5>
                 <p>Aucun</p>
                 </>
             }
             {
-                specificLicences.map(element => (
+                specificLicenses && specificLicenses.map(element => (
                     <>
-                    <h5>Additional licensing terms / contract</h5>
+                    <h5>Licence / Contrat additionnel</h5>
                     <p>Le Demandeur a fournit un contract spécifique additionnel portant sur l'objet sous-jacent sur lequel porte ce Collection Item. Ce contrat a été enregistré dans un dossier numérique logion (LOC) dont l'identifiant est:</p>
                     <p>{ element.tcLocId.toDecimalString() }</p>
                     </> 
@@ -75,19 +81,4 @@ export default function SofTermsAndConditionsFR(props: Props) {
             }
         </div>
     );
-}
-
-function getLogionClassification(item: SofCollectionItem): LogionClassification | undefined {
-    const element = item.termsAndConditions.find(element => element.type === "logion_classification");
-    if(element) {
-        return LogionClassification.fromDetails(element.tcLocId, element.details);
-    } else {
-        return undefined;
-    }
-}
-
-function getSpecificLicenses(item: SofCollectionItem): SpecificLicense[] {
-    return item.termsAndConditions
-        .filter(element => element.type === "specific_license")
-        .map(element => SpecificLicense.fromDetails(element.tcLocId, element.details));
 }

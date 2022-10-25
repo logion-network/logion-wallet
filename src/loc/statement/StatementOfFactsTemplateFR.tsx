@@ -4,7 +4,7 @@ import { SofParams } from "./SofParams";
 import SofTermsAndConditionsFR from "./SofTermsAndConditionsFR";
 
 export interface Props {
-    pathModel: SofParams;
+    sofParams: SofParams;
 }
 
 export default function StatementOfFactsTemplateFR(props: Props) {
@@ -17,7 +17,7 @@ export default function StatementOfFactsTemplateFR(props: Props) {
         <>
             <style>{`
                 .pagedjs_pagebox > .pagedjs_area > .pagedjs_page_content {
-                    background-image: url("${ props.pathModel.sealUrl }");
+                    background-image: url("${ props.sofParams.sealUrl }");
                     background-size: 100%;
                     background-position: center;
                     background-repeat: no-repeat;
@@ -29,21 +29,21 @@ export default function StatementOfFactsTemplateFR(props: Props) {
             <div className="header">
                 <div className="contact">
                     <div className="postal-address">
-                        <div>{ props.pathModel.postalAddressLine1 }</div>
-                        <div>{ props.pathModel.postalAddressLine2 }</div>
-                        <div>{ props.pathModel.postalAddressLine3 }</div>
-                        <div>{ props.pathModel.postalAddressLine4 }</div>
-                        <div>{ props.pathModel.email }</div>
+                        <div>{ props.sofParams.postalAddressLine1 }</div>
+                        <div>{ props.sofParams.postalAddressLine2 }</div>
+                        <div>{ props.sofParams.postalAddressLine3 }</div>
+                        <div>{ props.sofParams.postalAddressLine4 }</div>
+                        <div>{ props.sofParams.email }</div>
                     </div>
                 </div>
                 <div className="logo">
-                    <img src={ props.pathModel.logoUrl } alt="logo" />
+                    <img src={ props.sofParams.logoUrl } alt="logo" />
                 </div>
             </div>
 
             <div className="polkadot-address">
                 <div>Clé publique blockchain du Legal Officer:</div>
-                <div>{ props.pathModel.polkadotAddress }</div>
+                <div>{ props.sofParams.polkadotAddress }</div>
             </div>
 
             <h1 className="main-title">
@@ -51,11 +51,11 @@ export default function StatementOfFactsTemplateFR(props: Props) {
             </h1>
 
             <div className="time">
-                { props.pathModel.timestampText }
+                { props.sofParams.timestampText }
             </div>
 
             <h2 className="prerequisite-title">Prérequis</h2>
-            { props.pathModel.prerequisites.map((prerequisite, index) => <div key={ index } className="prerequisite">
+            { props.sofParams.prerequisites.map((prerequisite, index) => <div key={ index } className="prerequisite">
                     <h3>{ prerequisite.label }</h3>
                     { prerequisite.imageSrc.length > 0 &&
                         <img src={ prerequisite.imageSrc } width="100%" alt="Snapshot" />
@@ -67,32 +67,32 @@ export default function StatementOfFactsTemplateFR(props: Props) {
             ) }
 
             <h2 className="requester-title">Demandeur</h2>
-            <p>{ props.pathModel.requesterText }</p>
-            <p>Identifié par son ID : { props.pathModel.requester }</p>
+            <p>{ props.sofParams.requesterText }</p>
+            <p>Identifié par son ID : { props.sofParams.requester }</p>
 
-            <p className="intro">Je, Soussigné, Me { props.pathModel.firstName } <span className="lastName">{ props.pathModel.lastName }</span>,
-                Huissier de Justice qualifié Commissaire de Justice qualifié et Logion Legal Officer - ID Logion { props.pathModel.polkadotAddress } - au sein de
-                la société { props.pathModel.company }, titulaire d’un office d’Huissier de Justice à la résidence de { props.pathModel.shortPostalAddress } ;</p>
+            <p className="intro">Je, Soussigné, Me { props.sofParams.firstName } <span className="lastName">{ props.sofParams.lastName }</span>,
+                Huissier de Justice qualifié Commissaire de Justice qualifié et Logion Legal Officer - ID Logion { props.sofParams.polkadotAddress } - au sein de
+                la société { props.sofParams.company }, titulaire d’un office d’Huissier de Justice à la résidence de { props.sofParams.shortPostalAddress } ;</p>
 
             <p className="proceeds">Procède aux constatations suivantes&nbsp;:</p>
 
             <h2 className="facts-title">Constatations</h2>
 
-            <p>Les constatations ont été réalisées dans le respect strict du process qui a fait l’objet d’un Procès Verbal de Constat qui contient en outre l’Audit de Sécurité, le tout ayant été enregistré dans le dossier numérique (Legal Officer Case) portant l’ID suivant : { props.pathModel.containingLocId }</p>
+            <p>Les constatations ont été réalisées dans le respect strict du process qui a fait l’objet d’un Procès Verbal de Constat qui contient en outre l’Audit de Sécurité, le tout ayant été enregistré dans le dossier numérique (Legal Officer Case) portant l’ID suivant : { props.sofParams.containingLocId }</p>
 
             <p>Afin de procéder aux constatations, j’effectue les opérations suivantes:</p>
             <ul>
-                <li>Je me rends sur l’adresse { props.pathModel.nodeAddress } et procède à mon identification.</li>
-                <li>Je me rends sur le dossier numérique (Legal Officer Case) objet de la demande de procès verbal de constat dont l’identifiant est: { props.pathModel.locId }</li>
+                <li>Je me rends sur l’adresse { props.sofParams.nodeAddress } et procède à mon identification.</li>
+                <li>Je me rends sur le dossier numérique (Legal Officer Case) objet de la demande de procès verbal de constat dont l’identifiant est: { props.sofParams.locId }</li>
             </ul>
 
-            <p>Les éléments suivants sont enregistrés dans le dossier numérique (Legal Officer Case) { props.pathModel.locId }&nbsp;:</p>
+            <p>Les éléments suivants sont enregistrés dans le dossier numérique (Legal Officer Case) { props.sofParams.locId }&nbsp;:</p>
 
             <h3>1 - Données publiques</h3>
 
             <div className="facts">
                 {
-                    props.pathModel.publicItems.map(item =>
+                    props.sofParams.publicItems.map(item =>
                         <div className="fact-container">
                             <div>Description publique: { item.description }</div>
                             <div>Contenu: { item.content }</div>
@@ -108,7 +108,7 @@ export default function StatementOfFactsTemplateFR(props: Props) {
 
             <div className="facts">
                 {
-                    props.pathModel.privateItems.map(item =>
+                    props.sofParams.privateItems.map(item =>
                         <div className="fact-container">
                             <div>Description publique: { item.publicDescription }</div>
                             <div>Description privée: { item.privateDescription }</div>
@@ -120,28 +120,28 @@ export default function StatementOfFactsTemplateFR(props: Props) {
             </div>
 
             {
-                props.pathModel.collectionItem &&
+                props.sofParams.collectionItem &&
                 <>
                 <h3 className="item-title">3 - Données d’une Collection (Collection item)</h3>
 
-                <p>Le dossier numérique mentionné - { props.pathModel.locId } - étant un dossier numérique de collection (Collection Legal Officer Case), les données suivantes ont été enregistrées par le requêteur lui même sur l’infrastructure logion dans le cadre du dossier numérique susmentionné:</p>
+                <p>Le dossier numérique mentionné - { props.sofParams.locId } - étant un dossier numérique de collection (Collection Legal Officer Case), les données suivantes ont été enregistrées par le requêteur lui même sur l’infrastructure logion dans le cadre du dossier numérique susmentionné:</p>
 
                 <div className="facts">
                     <hr/>
                     <div className="fact-container">
-                        <div>Collection item ID: { props.pathModel.collectionItem.id }</div>
-                        <div>Description: { props.pathModel.collectionItem.description }</div>
-                        <div>Timestamp: { props.pathModel.collectionItem.addedOn }</div>
-                        <div>Diffusion restreinte: { props.pathModel.collectionItem.restrictedDelivery ? "Oui" : "Non" }</div>
+                        <div>Collection item ID: { props.sofParams.collectionItem.id }</div>
+                        <div>Description: { props.sofParams.collectionItem.description }</div>
+                        <div>Timestamp: { props.sofParams.collectionItem.addedOn }</div>
+                        <div>Diffusion restreinte: { props.sofParams.collectionItem.restrictedDelivery ? "Oui" : "Non" }</div>
                         {
-                            props.pathModel.collectionItem.token &&
+                            props.sofParams.collectionItem.token &&
                             <>
-                            <div>Type de token sous-jacent: { props.pathModel.collectionItem.token.type }</div>
-                            <div>ID du token sous-jacent: { props.pathModel.collectionItem.token.id }</div>
+                            <div>Type de token sous-jacent: { props.sofParams.collectionItem.token.type }</div>
+                            <div>ID du token sous-jacent: { props.sofParams.collectionItem.token.id }</div>
                             </>
                         }
                         {
-                            props.pathModel.collectionItem.files.map((file, index) => (
+                            props.sofParams.collectionItem.files.map((file, index) => (
                                 <>
                                 <div>Fichier #{index + 1} - nom: { file.name }</div>
                                 <div>Fichier #{index + 1} - type de contenu: { file.contentType }</div>
@@ -150,7 +150,7 @@ export default function StatementOfFactsTemplateFR(props: Props) {
                                 </>
                             ))
                         }
-                        <SofTermsAndConditionsFR item={ props.pathModel.collectionItem } />
+                        <SofTermsAndConditionsFR item={ props.sofParams.collectionItem } />
                     </div>
                     <hr/>
                 </div>
@@ -159,10 +159,10 @@ export default function StatementOfFactsTemplateFR(props: Props) {
 
             <p className="conclusion-first">Mes constatations terminées, je dresse le présent Procés Verbal de constat
                 et l’enregistre dans le dossier numérique (Legal Officer Case) dont l’identifiant
-                est: { props.pathModel.containingLocId } et dont une copie est conservée au rang des minutes de l’étude.</p>
+                est: { props.sofParams.containingLocId } et dont une copie est conservée au rang des minutes de l’étude.</p>
 
             <p>Adresse du certificat public en ligne du présent constat:<br/>
-                <a href={ props.pathModel.certificateUrl }>{ props.pathModel.certificateUrl }</a>
+                <a href={ props.sofParams.certificateUrl }>{ props.sofParams.certificateUrl }</a>
             </p>
 
             <p>Le certificat public en ligne mentionné permet de vérifier qu’une copie numérique du présent procès-verbal de constat est bien celle qui a fait l’objet de la requête telle que réalisée par le signataire. Cette vérification se faisant par la comparaison de l’empreinte numérique (techniquement dénommée HASH) de la copie numérique à vérifier avec l’empreinte numérique du présent document tel que enregistré dans le dossier numérique (Legal Officer Case) correspondant. En cas de litige seul l’exemplaire conservé par le Logion Legal Officer fera foi.</p>
@@ -170,7 +170,7 @@ export default function StatementOfFactsTemplateFR(props: Props) {
             <div className="footer">
                 <div>
                     <h3>Prix</h3>
-                    <pre>{ props.pathModel.amount }</pre>
+                    <pre>{ props.sofParams.amount }</pre>
                 </div>
                 <div className="signature-container">
                     <h3>Signature</h3>
@@ -182,10 +182,10 @@ export default function StatementOfFactsTemplateFR(props: Props) {
                 <h2>Prestation de serment de l’Officier en charge de ce constat</h2>
                 <div className="oath-container">
                     <div className="oath">
-                        <p>{ props.pathModel.oathText }</p>
+                        <p>{ props.sofParams.oathText }</p>
                     </div>
                     <div className="oath-logo">
-                        <img src={ props.pathModel.oathLogoUrl } alt="oath logo" />
+                        <img src={ props.sofParams.oathLogoUrl } alt="oath logo" />
                     </div>
                 </div>
             </div>

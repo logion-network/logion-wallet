@@ -1,4 +1,3 @@
-import { LogionClassification, SpecificLicense } from "@logion/client";
 import { useMemo } from "react";
 import InlineDateTime from "src/common/InlineDateTime";
 import { SofCollectionItem } from "./SofParams";
@@ -9,8 +8,7 @@ export interface Props {
 
 export default function SofTermsAndConditionsEN(props: Props) {
 
-    const logionClassification = useMemo(() => getLogionClassification(props.item), [ props.item ]);
-    const specificLicences = useMemo(() => getSpecificLicenses(props.item), [ props.item ]);
+    const { logionClassification, specificLicenses, creativeCommons } = props.item;
     const regionalLimit = useMemo(() => logionClassification?.regionalLimit || [], [ logionClassification ]);
 
     return (
@@ -58,14 +56,22 @@ export default function SofTermsAndConditionsEN(props: Props) {
             }
 
             {
-                specificLicences.length === 0 &&
+                creativeCommons !== undefined &&
+                <div className="creative-commons">
+                    <img className="creative-commons-badge" src={ creativeCommons.badgeUrl } alt={ creativeCommons.code } />
+                    <p className="creative-commons-text">This work is licensed under a <a href={ creativeCommons.url }>Creative Commons Attribution 4.0 International License</a></p>
+                </div>
+            }
+
+            {
+                (specificLicenses === undefined || specificLicenses.length === 0) &&
                 <>
                 <h5>Additional licensing terms / contract</h5>
                 <p>None</p>
                 </>
             }
             {
-                specificLicences.map(element => (
+                specificLicenses && specificLicenses.map(element => (
                     <>
                     <h5>Additional licensing terms / contract</h5>
                     <p>The Requester provided an additional specific contract with regards to the Collection Item Underlying Asset. This contract has been recorded in a LOC with the following ID:</p>
@@ -75,19 +81,4 @@ export default function SofTermsAndConditionsEN(props: Props) {
             }
         </div>
     );
-}
-
-function getLogionClassification(item: SofCollectionItem): LogionClassification | undefined {
-    const element = item.termsAndConditions.find(element => element.type === "logion_classification");
-    if(element) {
-        return LogionClassification.fromDetails(element.tcLocId, element.details);
-    } else {
-        return undefined;
-    }
-}
-
-function getSpecificLicenses(item: SofCollectionItem): SpecificLicense[] {
-    return item.termsAndConditions
-        .filter(element => element.type === "specific_license")
-        .map(element => SpecificLicense.fromDetails(element.tcLocId, element.details));
 }

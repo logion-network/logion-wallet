@@ -8,9 +8,7 @@ exports[`TermsAndConditions renders with item 1`] = `
   <div
     className="TermsAndConditions"
   >
-    <LogionClassification
-      item={Object {}}
-    />
+    <None />
     <SpecificLicenses
       item={Object {}}
     />
