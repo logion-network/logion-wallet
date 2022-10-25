@@ -1,5 +1,5 @@
 import { ItemToken } from "@logion/node-api";
-import { TermsAndConditionsElement } from "@logion/client";
+import { LogionClassification, SpecificLicense } from "@logion/client";
 
 export interface PublicItem {
     description: string;
@@ -41,9 +41,17 @@ export interface SofCollectionItem {
     files: SofCollectionItemFile[];
     token?: ItemToken;
     restrictedDelivery: boolean;
-    termsAndConditions: TermsAndConditionsElement[];
+    logionClassification?: LogionClassification;
     litcUrl: string;
     litcLocUrl: string;
+    specificLicenses?: SpecificLicense[];
+    creativeCommons?: SofCreativeCommons;
+}
+
+export interface SofCreativeCommons {
+    code: string;
+    url: string;
+    badgeUrl: string;
 }
 
 interface LocInfo {

@@ -7,7 +7,7 @@ import by_nc from "@creativecommons/cc-assets/license_badges/big/by_nc.eu.svg";
 import by_nc_sa from "@creativecommons/cc-assets/license_badges/big/by_nc_sa.eu.svg";
 import by_nc_nd from "@creativecommons/cc-assets/license_badges/big/by_nc_nd.eu.svg";
 
-const badges: Record<CreativeCommonsCode, string> = {
+export const creativeCommonsBadges: Record<CreativeCommonsCode, string> = {
     "BY": by,
     "BY-SA": by_sa,
     "BY-ND": by_nd,
@@ -23,6 +23,6 @@ interface CreativeCommonsIconProps {
 export default function CreativeCommonsIcon(props: CreativeCommonsIconProps) {
     const { code } = props;
     return (
-        <img className="CreativeCommonsIcon" src={ badges[code] } alt={ code } />
+        <img className="CreativeCommonsIcon" src={ creativeCommonsBadges[code] } alt={ code } />
     )
 }
