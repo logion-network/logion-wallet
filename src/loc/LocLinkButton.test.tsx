@@ -28,7 +28,7 @@ describe("LocLinkButton", () => {
     it("links to an existing LOC", async () => {
         setClientMock({
             locsState: () => Promise.resolve({
-                findById: () => Promise.resolve({
+                findById: () => ({
                     data: () => buildLocRequest(UUID.fromDecimalStringOrThrow(OPEN_IDENTITY_LOC_ID), OPEN_IDENTITY_LOC),
                 }),
             }) as unknown as LocsState,

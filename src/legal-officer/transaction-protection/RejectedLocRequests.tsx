@@ -49,7 +49,7 @@ export default function RejectedLocRequests(props: Props) {
                     align: 'center',
                 },
             ]}
-            data={ rejectedLocRequests[props.locType] }
+            data={ rejectedLocRequests[props.locType].map(loc => loc.data()) }
             renderEmpty={() => <EmptyTableMessage>No LOC request history</EmptyTableMessage>}
         />
     );

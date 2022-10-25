@@ -88,7 +88,7 @@ export default function ClosedLocs(props: Props) {
                     align: 'center',
                 }
             ] }
-            data={ requests.map(requestAndLoc => requestAndLoc.request) }
+            data={ requests.map(requestAndLoc => requestAndLoc.data()) }
             renderEmpty={ () => <EmptyTableMessage>No LOCs</EmptyTableMessage> }
         />
     );

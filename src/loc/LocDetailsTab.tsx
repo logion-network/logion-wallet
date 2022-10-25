@@ -1,4 +1,4 @@
-import { LocData, LegalOfficer } from "@logion/client";
+import { LocData, LegalOfficer, LocRequestState } from "@logion/client";
 import { ProtectionRequest } from "@logion/client/dist/RecoveryClient";
 import { LocType, UUID } from "@logion/node-api";
 import { Col, OverlayTrigger, Tooltip } from "react-bootstrap";
@@ -9,7 +9,6 @@ import Tabs from "src/common/Tabs";
 import { DocumentCheckResult } from "src/components/checkfileframe/CheckFileFrame";
 import { PersonalInfo } from "src/components/identity/PersonalInfo";
 import CloseLocButton from "./CloseLocButton";
-import { ActiveLoc } from "./LocContext";
 import LocItemDetail from "./LocItemDetail";
 import { LocItems } from "./LocItems";
 import LocLinkButton from "./LocLinkButton";
@@ -24,7 +23,7 @@ import { Viewer } from "src/common/CommonContext";
 
 export interface Props {
     loc: LocData;
-    locState: ActiveLoc;
+    locState: LocRequestState;
     viewer: Viewer;
     detailsPath: (locId: UUID, type: LocType) => string;
     legalOfficer?: LegalOfficer;
@@ -102,7 +101,7 @@ export default function LocDetailsTab(props: Props) {
 
 export interface ContentProps {
     loc: LocData;
-    locState: ActiveLoc;
+    locState: LocRequestState;
     viewer: Viewer;
     detailsPath: (locId: UUID, type: LocType) => string;
     legalOfficer?: LegalOfficer;

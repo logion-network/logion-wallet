@@ -1,8 +1,7 @@
-import { LocData } from "@logion/client";
+import { LocData, LocRequestState } from "@logion/client";
 import { UUID } from "@logion/node-api";
 import { shallowRender } from "src/tests"
 import LegalOfficerInstructions from "./LegalOfficerInstructions"
-import { ActiveLoc } from "./LocContext";
 import { ProtectionRequest } from "@logion/client/dist/RecoveryClient";
 
 describe("LegalOfficerInstructions", () => {
@@ -47,7 +46,7 @@ const otherProps = {
 
 const id = new UUID("274c1273-5d0e-4c81-bce4-a15518affd35");
 
-function buildLogionIdentityMock(): { loc: LocData, locState: ActiveLoc } {
+function buildLogionIdentityMock(): { loc: LocData, locState: LocRequestState } {
     const loc = {
         id,
         locType: "Identity",
@@ -58,18 +57,18 @@ function buildLogionIdentityMock(): { loc: LocData, locState: ActiveLoc } {
     } as unknown as LocData;
     const locState = {
         isLogionIdentity: () => true,
-    } as unknown as ActiveLoc;
+    } as unknown as LocRequestState;
     return { loc, locState };
 }
 
-function buildPolkadotIdentityMock(): { loc: LocData, locState: ActiveLoc } {
+function buildPolkadotIdentityMock(): { loc: LocData, locState: LocRequestState } {
     const loc = {
         id,
         locType: "Identity",
     } as unknown as LocData;
     const locState = {
         isLogionIdentity: () => false,
-    } as unknown as ActiveLoc;
+    } as unknown as LocRequestState;
     return { loc, locState };
 }
 

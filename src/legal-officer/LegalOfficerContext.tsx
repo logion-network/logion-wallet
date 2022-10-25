@@ -1,18 +1,27 @@
 import React, { useContext, useEffect, useReducer, Reducer, useCallback, useMemo } from 'react';
 import { AxiosInstance } from 'axios';
-import { VaultTransferRequest, LocRequest, LegalOfficer } from '@logion/client';
+import {
+    VaultTransferRequest,
+    LegalOfficer,
+    PendingRequest,
+    RejectedRequest,
+    OpenLoc,
+    ClosedLoc,
+    ClosedCollectionLoc,
+    VoidedLoc,
+    VoidedCollectionLoc,
+} from '@logion/client';
 import { ProtectionRequest } from '@logion/client/dist/RecoveryClient';
 
-import { fetchProtectionRequests, FetchLocRequestSpecification, fetchLocRequests, } from '../common/Model';
+import { fetchProtectionRequests } from '../common/Model';
 import { useCommonContext } from '../common/CommonContext';
 import { LIGHT_MODE } from './Types';
 import { useLogionChain } from '../logion-chain';
 import { VaultApi } from '../vault/VaultApi';
-import { LocType, IdentityLocType, LegalOfficerCase } from "@logion/node-api/dist/Types";
+import { LocType, IdentityLocType } from "@logion/node-api/dist/Types";
 import { DateTime } from "luxon";
-import { UUID, toDecimalString } from "@logion/node-api/dist/UUID";
-import { getLegalOfficerCasesMap } from "@logion/node-api/dist/LogionLoc";
 import { getLegalOfficerData, LegalOfficerData } from './LegalOfficerData';
+import { fetchAllLocsParams } from 'src/loc/LegalOfficerLocContext';
 
 export const SETTINGS_KEYS = [ 'oath' ];
 
@@ -23,11 +32,6 @@ export const SETTINGS_DESCRIPTION: Record<SettingId, string> = {
 };
 
 const DEFAULT_NOOP = () => {};
-
-export interface RequestAndLoc {
-    request: LocRequest;
-    loc?: LegalOfficerCase;
-}
 
 export interface MissingSettings {
     directory: boolean;
@@ -49,15 +53,15 @@ export interface LegalOfficerContext {
     onchainSettings?: LegalOfficerData;
     updateSetting: (id: SettingId, value: string) => Promise<void>;
     missingSettings?: MissingSettings;
-    pendingLocRequests: Record<LocType, LocRequest[]> | null;
-    rejectedLocRequests: Record<LocType, LocRequest[]> | null;
-    openedLocRequests: Record<LocType, RequestAndLoc[]> | null;
-    closedLocRequests: Record<LocType, RequestAndLoc[]> | null;
-    openedIdentityLocs: RequestAndLoc[] | null;
-    openedIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null;
-    closedIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null;
-    voidTransactionLocs: Record<LocType, RequestAndLoc[]> | null;
-    voidIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> | null;
+    pendingLocRequests: Record<LocType, PendingRequest[]> | null;
+    rejectedLocRequests: Record<LocType, RejectedRequest[]> | null;
+    openedLocRequests: Record<LocType, OpenLoc[]> | null;
+    closedLocRequests: Record<LocType, (ClosedLoc | ClosedCollectionLoc)[]> | null;
+    openedIdentityLocs: OpenLoc[] | null;
+    openedIdentityLocsByType: Record<IdentityLocType, OpenLoc[]> | null;
+    closedIdentityLocsByType: Record<IdentityLocType, ClosedLoc[]> | null;
+    voidTransactionLocs: Record<LocType, (VoidedLoc | VoidedCollectionLoc)[]> | null;
+    voidIdentityLocsByType: Record<IdentityLocType, VoidedLoc[]> | null;
     refreshLocs: () => void;
     refreshOnchainSettings: () => void;
     legalOfficer?: LegalOfficer;
@@ -145,15 +149,15 @@ interface Action {
     updateSetting?: (id: string, value: string) => Promise<void>;
     id?: string;
     value?: string;
-    pendingLocRequests?: Record<LocType, LocRequest[]>;
-    rejectedLocRequests?: Record<LocType, LocRequest[]>;
-    openedLocRequests?: Record<LocType, RequestAndLoc[]>;
-    closedLocRequests?: Record<LocType, RequestAndLoc[]>;
-    openedIdentityLocs?: RequestAndLoc[];
-    openedIdentityLocsByType?: Record<IdentityLocType, RequestAndLoc[]>;
-    closedIdentityLocsByType?: Record<IdentityLocType, RequestAndLoc[]>;
-    voidTransactionLocs?: Record<LocType, RequestAndLoc[]>;
-    voidIdentityLocsByType?: Record<IdentityLocType, RequestAndLoc[]>;
+    pendingLocRequests?: Record<LocType, PendingRequest[]> | null;
+    rejectedLocRequests?: Record<LocType, RejectedRequest[]> | null;
+    openedLocRequests?: Record<LocType, OpenLoc[]> | null;
+    closedLocRequests?: Record<LocType, (ClosedLoc | ClosedCollectionLoc)[]> | null;
+    openedIdentityLocs?: OpenLoc[] | null;
+    openedIdentityLocsByType?: Record<IdentityLocType, OpenLoc[]> | null;
+    closedIdentityLocsByType?: Record<IdentityLocType, ClosedLoc[]> | null;
+    voidTransactionLocs?: Record<LocType, (VoidedLoc | VoidedCollectionLoc)[]> | null;
+    voidIdentityLocsByType?: Record<IdentityLocType, VoidedLoc[]> | null;
     refreshLocs?: (() => void);
     refreshAddress?: string;
     refreshOnchainSettings?: () => void;
@@ -357,6 +361,7 @@ export function LegalOfficerContextProvider(props: Props) {
         if(api
             && accounts && accounts.current
             && client !== null && client.isTokenValid(now)
+            && contextValue.legalOfficer
             && axiosFactory
             && isReadyLegalOfficer) {
 
@@ -365,136 +370,30 @@ export function LegalOfficerContextProvider(props: Props) {
             });
             const currentAccount = accounts.current;
             const currentAddress = currentAccount.address;
+            const legalOfficer = contextValue.legalOfficer;
             (async function () {
-                const fetch = async (specification: Partial<FetchLocRequestSpecification>) => {
+                const locsState = await client.locsState(fetchAllLocsParams(legalOfficer));
 
-                    const specificationFragment: FetchLocRequestSpecification = {
-                        ownerAddress: currentAddress,
-                        statuses: [],
-                        locTypes: []
-                    }
-                    return await fetchLocRequests(axiosFactory(currentAccount.address), {
-                        ...specificationFragment,
-                        ...specification
-                    });
-                }
-
-                interface RequestsByType {
-                    pending: LocRequest[],
-                    rejected: LocRequest[],
-                    opened: LocRequest[],
-                    closed: LocRequest[],
-                    locIds: UUID[]
-                }
-
-                async function fetchRequests(locType: LocType): Promise<RequestsByType> {
-                    const pending = await fetch({
-                        statuses: [ "REQUESTED" ],
-                        locTypes: [ locType ]
-                    })
-                    const opened = await fetch({
-                        statuses: [ "OPEN" ],
-                        locTypes: [ locType ]
-                    })
-                    const closed = await fetch({
-                        statuses: [ "CLOSED" ],
-                        locTypes: [ locType ]
-                    })
-                    const rejected = await fetch({
-                        statuses: [ "REJECTED" ],
-                        locTypes: [ locType ]
-                    })
-
-                    let locIds = opened.map(loc => new UUID(loc.id))
-                    locIds = locIds.concat(closed.map(loc => new UUID(loc.id)));
-
-                    return { pending, rejected, opened, closed, locIds }
-                }
-
-                const openedIdentityLocsOnly = await fetch({
-                    statuses: [ "OPEN" ],
-                    locTypes: [ 'Identity' ]
-                })
-                const openedIdentityLocsOnlyPolkadot = await fetch({
-                    statuses: [ "OPEN" ],
-                    locTypes: [ 'Identity' ],
-                    identityLocType: 'Polkadot'
-                })
-                const closedIdentityLocsOnlyPolkadot = await fetch({
-                    statuses: [ "CLOSED" ],
-                    locTypes: [ 'Identity' ],
-                    identityLocType: 'Polkadot'
-                })
-                const openedIdentityLocsOnlyLogion = await fetch({
-                    statuses: [ "OPEN" ],
-                    locTypes: [ 'Identity' ],
-                    identityLocType: 'Logion'
-                })
-                const closedIdentityLocsOnlyLogion = await fetch({
-                    statuses: [ "CLOSED" ],
-                    locTypes: [ 'Identity' ],
-                    identityLocType: 'Logion'
-                })
-
-                const transactionLocs = await fetchRequests('Transaction');
-                const collectionLocs = await fetchRequests('Collection');
-                const identityLocs = await fetchRequests('Identity');
-
-                let locIds = transactionLocs.locIds
-                    .concat(collectionLocs.locIds)
-                    .concat(openedIdentityLocsOnly.map(loc => new UUID(loc.id)))
-                    .concat(closedIdentityLocsOnlyPolkadot.map(loc => new UUID(loc.id)))
-                    .concat(closedIdentityLocsOnlyLogion.map(loc => new UUID(loc.id)));
-                const locs = await getLegalOfficerCasesMap({
-                    api: api!,
-                    locIds
-                });
-
-                const pendingLocRequests: Record<LocType, LocRequest[]> = {
-                    'Transaction': transactionLocs.pending,
-                    'Collection': collectionLocs.pending,
-                    'Identity': identityLocs.pending,
-                }
-                const rejectedLocRequests: Record<LocType, LocRequest[]> = {
-                    'Transaction': transactionLocs.rejected,
-                    'Collection': collectionLocs.rejected,
-                    'Identity': identityLocs.rejected,
-                }
-                const openedLocRequests: Record<LocType, RequestAndLoc[]> = {
-                    'Transaction': notVoidRequestsAndLocs(transactionLocs.opened, locs),
-                    'Collection': notVoidRequestsAndLocs(collectionLocs.opened, locs),
-                    'Identity': notVoidRequestsAndLocs(identityLocs.opened, locs),
-                }
-                const closedLocRequests: Record<LocType, RequestAndLoc[]> = {
-                    'Transaction': notVoidRequestsAndLocs(transactionLocs.closed, locs),
-                    'Collection': notVoidRequestsAndLocs(collectionLocs.closed, locs),
-                    'Identity': notVoidRequestsAndLocs(identityLocs.closed, locs),
-                }
-                const voidTransactionLocs: Record<LocType, RequestAndLoc[]> = {
-                    'Transaction': voidRequestsAndLocs(transactionLocs.opened, locs)
-                        .concat(voidRequestsAndLocs(transactionLocs.closed, locs)),
-                    'Collection': voidRequestsAndLocs(collectionLocs.opened, locs)
-                        .concat(voidRequestsAndLocs(collectionLocs.closed, locs)),
-                    'Identity': voidRequestsAndLocs(identityLocs.opened, locs)
-                        .concat(voidRequestsAndLocs(identityLocs.closed, locs)),
-                }
+                const pendingLocRequests: Record<LocType, PendingRequest[]> = locsState.pendingRequests;
+                const rejectedLocRequests: Record<LocType, RejectedRequest[]> = locsState.rejectedRequests;
+                const openedLocRequests: Record<LocType, OpenLoc[]> = locsState.openLocs;
+                const closedLocRequests: Record<LocType, (ClosedLoc | ClosedCollectionLoc)[]> = locsState.closedLocs;
+                const voidTransactionLocs: Record<LocType, (VoidedLoc | VoidedCollectionLoc)[]> = locsState.voidedLocs;
 
                 // Identity
-                const openedIdentityLocs = notVoidRequestsAndLocs(openedIdentityLocsOnly, locs);
+                const openedIdentityLocs = locsState.openLocs["Identity"];
 
-                const openedIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> = {
-                    'Polkadot': notVoidRequestsAndLocs(openedIdentityLocsOnlyPolkadot, locs),
-                    'Logion': notVoidRequestsAndLocs(openedIdentityLocsOnlyLogion, locs)
+                const openedIdentityLocsByType: Record<IdentityLocType, OpenLoc[]> = {
+                    'Polkadot': locsState.openLocs["Identity"].filter(loc => loc.data().requesterAddress !== undefined),
+                    'Logion': locsState.openLocs["Identity"].filter(loc => loc.data().requesterAddress === undefined),
                 };
-                const closedIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> = {
-                    'Polkadot': notVoidRequestsAndLocs(closedIdentityLocsOnlyPolkadot, locs),
-                    'Logion': notVoidRequestsAndLocs(closedIdentityLocsOnlyLogion, locs)
+                const closedIdentityLocsByType: Record<IdentityLocType, ClosedLoc[]> = {
+                    'Polkadot': locsState.closedLocs["Identity"].filter(loc => loc.data().requesterAddress !== undefined).map(loc => loc as ClosedLoc),
+                    'Logion': locsState.closedLocs["Identity"].filter(loc => loc.data().requesterAddress === undefined).map(loc => loc as ClosedLoc),
                 }
-                const voidIdentityLocsByType: Record<IdentityLocType, RequestAndLoc[]> = {
-                    'Polkadot': voidRequestsAndLocs(openedIdentityLocsOnlyPolkadot, locs)
-                        .concat(voidRequestsAndLocs(closedIdentityLocsOnlyPolkadot, locs)),
-                    'Logion': voidRequestsAndLocs(openedIdentityLocsOnlyLogion, locs)
-                        .concat(voidRequestsAndLocs(closedIdentityLocsOnlyLogion, locs))
+                const voidIdentityLocsByType: Record<IdentityLocType, VoidedLoc[]> = {
+                    'Polkadot': locsState.voidedLocs["Identity"].filter(loc => loc.data().requesterAddress !== undefined).map(loc => loc as VoidedLoc),
+                    'Logion': locsState.voidedLocs["Identity"].filter(loc => loc.data().requesterAddress === undefined).map(loc => loc as VoidedLoc),
                 }
 
                 dispatch({
@@ -512,7 +411,7 @@ export function LegalOfficerContextProvider(props: Props) {
                 });
             })();
         }
-    }, [ api, dispatch, accounts, client, axiosFactory, isReadyLegalOfficer ]);
+    }, [ api, dispatch, accounts, client, axiosFactory, isReadyLegalOfficer, contextValue.legalOfficer ]);
 
     useEffect(() => {
         if(contextValue.refreshLocs !== refreshLocs) {
@@ -719,18 +618,6 @@ export function LegalOfficerContextProvider(props: Props) {
 
 export function useLegalOfficerContext(): LegalOfficerContext {
     return { ...useContext(LegalOfficerContextObject) };
-}
-
-function voidRequestsAndLocs(requests: LocRequest[], locs: Record<string, LegalOfficerCase>): RequestAndLoc[] {
-    return requests
-        .map(request => ({request, loc: locs[toDecimalString(request.id)]}))
-        .filter(requestAndLoc => requestAndLoc.loc !== undefined && requestAndLoc.loc.voidInfo !== undefined);
-}
-
-function notVoidRequestsAndLocs(requests: LocRequest[], locs: Record<string, LegalOfficerCase>): RequestAndLoc[] {
-    return requests
-        .map(request => ({request, loc: locs[toDecimalString(request.id)]}))
-        .filter(requestAndLoc => requestAndLoc.loc !== undefined && requestAndLoc.loc.voidInfo === undefined);
 }
 
 async function getSettings(axios: AxiosInstance): Promise<Record<string, string>> {

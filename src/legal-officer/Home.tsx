@@ -140,25 +140,25 @@ export default function Account() {
                                 {
                                     "header": "Requester",
                                     render: requestAndLoc => <UserIdentityNameCell
-                                        userIdentity={ requestAndLoc.request.userIdentity } />,
+                                        userIdentity={ requestAndLoc.data().userIdentity } />,
                                     align: 'left',
                                 },
                                 {
                                     "header": "Description",
-                                    render: requestAndLoc => <Cell content={ requestAndLoc.request.description }
+                                    render: requestAndLoc => <Cell content={ requestAndLoc.data().description }
                                                                    overflowing
                                                                    tooltipId='open-loc-description-tooltip' />,
                                     align: 'left',
                                 },
                                 {
                                     header: "Status",
-                                    render: requestAndLoc => <LocStatusCell status={ requestAndLoc.request.status } />,
+                                    render: requestAndLoc => <LocStatusCell status={ requestAndLoc.data().status } />,
                                     width: "140px",
                                 },
                                 {
                                     "header": "Creation date",
                                     render: requestAndLoc => <DateTimeCell
-                                        dateTime={ requestAndLoc.request.createdOn || null } />,
+                                        dateTime={ requestAndLoc.data().createdOn || null } />,
                                     width: '200px',
                                     align: 'center',
                                 },
@@ -168,7 +168,7 @@ export default function Account() {
                                         <ActionCell>
                                             <ButtonGroup>
                                                 <Button
-                                                    onClick={ () => navigate(dataLocDetailsPath(requestAndLoc.request.locType, requestAndLoc.request.id)) }>Manage
+                                                    onClick={ () => navigate(dataLocDetailsPath(requestAndLoc.data().locType, requestAndLoc.data().id.toString())) }>Manage
                                                     LOC</Button>
                                             </ButtonGroup>
                                         </ActionCell>
@@ -189,24 +189,24 @@ export default function Account() {
                             columns={ [
                                 {
                                     header: "Requester",
-                                    render: request => <UserIdentityNameCell userIdentity={ request.userIdentity } />,
+                                    render: request => <UserIdentityNameCell userIdentity={ request.data().userIdentity } />,
                                     align: "left",
-                                    renderDetails: request => <LocRequestDetails request={ request } />
+                                    renderDetails: request => <LocRequestDetails request={ request.data() } />
                                 },
                                 {
                                     "header": "Description",
-                                    render: request => <Cell content={ request.description } overflowing
+                                    render: request => <Cell content={ request.data().description } overflowing
                                                              tooltipId='loc-request-description-tooltip' />,
                                     align: 'left',
                                 },
                                 {
                                     header: "Status",
-                                    render: request => <LocStatusCell status={ request.status } />,
+                                    render: request => <LocStatusCell status={ request.data().status } />,
                                     width: "140px",
                                 },
                                 {
                                     header: "Creation date",
-                                    render: request => <DateTimeCell dateTime={ request.createdOn || null } />,
+                                    render: request => <DateTimeCell dateTime={ request.data().createdOn || null } />,
                                     width: '200px',
                                     align: 'center',
                                 }
@@ -231,25 +231,25 @@ export default function Account() {
                                 {
                                     "header": "Requester",
                                     render: requestAndLoc => <UserIdentityNameCell
-                                        userIdentity={ requestAndLoc.request.userIdentity } />,
+                                        userIdentity={ requestAndLoc.data().userIdentity } />,
                                     align: 'left',
                                 },
                                 {
                                     "header": "Description",
-                                    render: requestAndLoc => <Cell content={ requestAndLoc.request.description }
+                                    render: requestAndLoc => <Cell content={ requestAndLoc.data().description }
                                                                    overflowing
                                                                    tooltipId='open-id-loc-description-tooltip' />,
                                     align: 'left',
                                 },
                                 {
                                     header: "Status",
-                                    render: requestAndLoc => <LocStatusCell status={ requestAndLoc.request.status } />,
+                                    render: requestAndLoc => <LocStatusCell status={ requestAndLoc.data().status } />,
                                     width: "140px",
                                 },
                                 {
                                     "header": "Creation date",
                                     render: requestAndLoc => <DateTimeCell
-                                        dateTime={ requestAndLoc.request.createdOn || null } />,
+                                        dateTime={ requestAndLoc.data().createdOn || null } />,
                                     width: '200px',
                                     align: 'center',
                                 },
@@ -259,7 +259,7 @@ export default function Account() {
                                         <ActionCell>
                                             <ButtonGroup>
                                                 <Button
-                                                    onClick={ () => navigate(identityLocDetailsPath(requestAndLoc.request.id)) }>Manage
+                                                    onClick={ () => navigate(identityLocDetailsPath(requestAndLoc.data().id.toString())) }>Manage
                                                     LOC</Button>
                                             </ButtonGroup>
                                         </ActionCell>
