@@ -155,6 +155,8 @@ export function setContextMock(value: any) {
     context = value;
 }
 
+let axiosFactory = () => axiosMock.object();
+
 export function useLogionChain() {
     if(context) {
         return context;
@@ -168,7 +170,7 @@ export function useLogionChain() {
             },
             selectAddress,
             accounts,
-            axiosFactory: () => axiosMock.object(),
+            axiosFactory,
             authenticate,
             getOfficer,
             saveOfficer,

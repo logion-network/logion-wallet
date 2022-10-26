@@ -97,7 +97,9 @@ exports[`RequesterOrLegalOfficer renders polkadot requester for LO 1`] = `
         <span>
           <br />
            
-          5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY
+          <React.Fragment>
+            5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY
+          </React.Fragment>
         </span>
       </OverlayTrigger>
     </React.Fragment>

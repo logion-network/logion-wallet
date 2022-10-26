@@ -205,10 +205,10 @@ export default function ContextualizedWallet() {
                         },
                     ]}
                 >
-                    <>
+                    <p>
                         Dear logion legal officer,<br/>
                         Some of your mandatory settings are not filled-in. Please do so as soon as possible.
-                    </>
+                    </p>
                 </WarningDialog>
             </Dashboard>
         );

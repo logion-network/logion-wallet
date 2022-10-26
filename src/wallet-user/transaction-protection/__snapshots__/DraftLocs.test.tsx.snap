@@ -1,0 +1,339 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DraftLocs renders empty list 1`] = `
+<div
+  className="Table constrained-row-height"
+>
+  <style>
+    
+            .Table .body .Row .Col.split-after::before {
+                background-color: #152665;
+            }
+            
+  </style>
+  <div
+    className="header"
+    style={
+      Object {
+        "backgroundColor": "#0c163d",
+        "color": "#ffffff",
+      }
+    }
+  >
+    <div
+      className="Row"
+    >
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "left",
+            "width": "calc(( 100% - 340px ) / 3)",
+          }
+        }
+      >
+        Legal officer
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "left",
+            "width": "calc(( 100% - 340px ) / 3)",
+          }
+        }
+      >
+        Description
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "center",
+            "width": "140px",
+          }
+        }
+      >
+        Status
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "center",
+            "width": "200px",
+          }
+        }
+      >
+        Creation date
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "center",
+            "width": "calc(( 100% - 340px ) / 3)",
+          }
+        }
+      >
+        Action
+      </div>
+    </div>
+  </div>
+  <div
+    className="body"
+  >
+    <div
+      className="Row empty-data"
+      style={
+        Object {
+          "backgroundColor": "#152665",
+          "color": "#ffffff",
+        }
+      }
+    >
+      <div
+        className="empty-message"
+      >
+        No draft request
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`DraftLocs renders null with no data 1`] = `
+<div
+  className="spinner-border"
+/>
+`;
+
+exports[`DraftLocs renders pending requests 1`] = `
+<div
+  className="Table constrained-row-height"
+>
+  <style>
+    
+            .Table .body .Row .Col.split-after::before {
+                background-color: #152665;
+            }
+            
+  </style>
+  <div
+    className="header"
+    style={
+      Object {
+        "backgroundColor": "#0c163d",
+        "color": "#ffffff",
+      }
+    }
+  >
+    <div
+      className="Row"
+    >
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "left",
+            "width": "calc(( 100% - 340px ) / 3)",
+          }
+        }
+      >
+        Legal officer
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "left",
+            "width": "calc(( 100% - 340px ) / 3)",
+          }
+        }
+      >
+        Description
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "center",
+            "width": "140px",
+          }
+        }
+      >
+        Status
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "center",
+            "width": "200px",
+          }
+        }
+      >
+        Creation date
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "center",
+            "width": "calc(( 100% - 340px ) / 3)",
+          }
+        }
+      >
+        Action
+      </div>
+    </div>
+  </div>
+  <div
+    className="body"
+  >
+    <div>
+      <div
+        className="Row "
+        style={
+          Object {
+            "color": "#ffffff",
+          }
+        }
+      >
+        <div
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+              "textAlign": "left",
+              "width": "calc(( 100% - 340px ) / 3)",
+            }
+          }
+        >
+          <div
+            className="regular-cell"
+            style={Object {}}
+          >
+            Patrick Gielen
+          </div>
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+              "textAlign": "left",
+              "width": "calc(( 100% - 340px ) / 3)",
+            }
+          }
+        >
+          <div
+            className="regular-cell overflowing"
+            style={Object {}}
+          >
+            <span
+              onBlur={[Function]}
+              onFocus={[Function]}
+              onMouseOut={[Function]}
+              onMouseOver={[Function]}
+            >
+              LOC description
+            </span>
+          </div>
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+              "textAlign": "center",
+              "width": "140px",
+            }
+          }
+        >
+          <span
+            className="StatusCell"
+            style={
+              Object {
+                "borderColor": "#ff9b3f",
+              }
+            }
+          >
+            <img
+              alt="pending"
+              height="20px"
+              src="/assets/pending.svg"
+            />
+             
+            <span
+              style={
+                Object {
+                  "color": "#ff9b3f",
+                  "textTransform": undefined,
+                }
+              }
+            >
+              Pending
+            </span>
+          </span>
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+              "textAlign": "center",
+              "width": "200px",
+            }
+          }
+        >
+          <div
+            className="regular-cell"
+            style={
+              Object {
+                "textAlign": "center",
+              }
+            }
+          >
+            -
+          </div>
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+              "textAlign": "center",
+              "width": "calc(( 100% - 340px ) / 3)",
+            }
+          }
+        >
+          <div
+            className="ButtonGroup"
+          >
+            <div
+              className="btn-group"
+              role="group"
+            >
+              <button
+                className="Button btn btn-primary"
+                disabled={false}
+                onClick={[Function]}
+                style={Object {}}
+                type="button"
+              >
+                Edit
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

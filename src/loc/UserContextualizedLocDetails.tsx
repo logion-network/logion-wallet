@@ -8,6 +8,7 @@ import LocDetailsTab from "./LocDetailsTab";
 import VoidDisclaimer from "./VoidDisclaimer";
 import SupersedesDisclaimer from "./SupersedesDisclaimer";
 import { useLogionChain } from 'src/logion-chain';
+import DraftLocInstructions from './DraftLocInstructions';
 
 export default function UserContextualizedLocDetails() {
     const { getOfficer } = useLogionChain();
@@ -36,6 +37,10 @@ export default function UserContextualizedLocDetails() {
             backPath={ backPath }
             loc={ loc }
         >
+            {
+                loc.status === "DRAFT" &&
+                <DraftLocInstructions/>
+            }
             <LocDetailsTab
                 loc={ loc }
                 locState={ locState }
@@ -50,34 +55,39 @@ export default function UserContextualizedLocDetails() {
                 detailsPath={ detailsPath }
                 legalOfficer={ getOfficer(loc.ownerAddress) }
             />
-            <VoidDisclaimer
-                loc={ loc }
-                detailsPath={ detailsPath }
-            />
-            <CertificateAndLimits
-                loc={ loc }
-                viewer="User"
-            />
-            { loc.locType === 'Collection' && loc.closed &&
-                <UserCollectionLocItemChecker
-                    collectionLoc={ loc }
-                    collectionItem={ collectionItem }
+            {
+                loc.status !== "DRAFT" &&
+                <>
+                <VoidDisclaimer
+                    loc={ loc }
+                    detailsPath={ detailsPath }
                 />
+                <CertificateAndLimits
+                    loc={ loc }
+                    viewer="User"
+                />
+                { loc.locType === 'Collection' && loc.closed &&
+                    <UserCollectionLocItemChecker
+                        collectionLoc={ loc }
+                        collectionItem={ collectionItem }
+                    />
+                }
+                { loc.locType === 'Collection' && loc.closed && loc.voidInfo === undefined &&
+                    <ItemImporter />
+                }
+                <SupersedesDisclaimer
+                    loc={ loc }
+                    detailsPath={ detailsPath }
+                    supersededLoc={ supersededLoc }
+                />
+                <CheckFileFrame
+                    checkHash={ checkHash }
+                    checkResult={ checkResult.result }
+                    context={ loc.locType + " LOC" }
+                    checkedItem="confidential document"
+                />
+                </>
             }
-            { loc.locType === 'Collection' && loc.closed && loc.voidInfo === undefined &&
-                <ItemImporter />
-            }
-            <SupersedesDisclaimer
-                loc={ loc }
-                detailsPath={ detailsPath }
-                supersededLoc={ supersededLoc }
-            />
-            <CheckFileFrame
-                checkHash={ checkHash }
-                checkResult={ checkResult.result }
-                context={ loc.locType + " LOC" }
-                checkedItem="confidential document"
-            />
         </LocPane>
     );
 }

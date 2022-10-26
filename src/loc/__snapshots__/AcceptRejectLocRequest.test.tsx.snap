@@ -1,0 +1,54 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AcceptRejectLocRequest Renders pending requests 1`] = `
+<PolkadotFrame
+  className="AcceptRejectLocRequest"
+>
+  <div
+    className="text-action-container"
+  >
+    <div
+      className="question"
+    >
+      Do you accept this request and create the related 
+       LOC?
+    </div>
+    <div>
+      <ButtonGroup>
+        <Button
+          data-testid="reject-556f4128-4fc3-4fdc-a543-74e6230911c4"
+          onClick={[Function]}
+          variant="none"
+        >
+          <Icon
+            height="40px"
+            icon={
+              Object {
+                "id": "ko",
+              }
+            }
+          />
+        </Button>
+        <Button
+          data-testid="accept-556f4128-4fc3-4fdc-a543-74e6230911c4"
+          onClick={[Function]}
+          variant="none"
+        >
+          <Icon
+            height="40px"
+            icon={
+              Object {
+                "id": "ok",
+              }
+            }
+          />
+        </Button>
+      </ButtonGroup>
+    </div>
+  </div>
+  <LocRequestAcceptance
+    clearRequestToAccept={[Function]}
+    requestToAccept={null}
+  />
+</PolkadotFrame>
+`;

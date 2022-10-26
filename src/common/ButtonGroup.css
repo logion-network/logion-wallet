@@ -40,3 +40,7 @@
 .ButtonGroup.left {
     text-align: left;
 }
+
+.ButtonGroup.right {
+    text-align: right;
+}

@@ -332,6 +332,13 @@ function ItemPublisher(props: ItemPublisherProps) {
     }, [ props.itemType, locItems ]);
 
     if(!hasExpectedItem() || !publishMetadata || !publishFile || !publishLink || !confirmMetadata) {
+        console.log({
+            hasExpected: hasExpectedItem(),
+            publishMetadata,
+            publishFile,
+            publishLink,
+            confirmMetadata,
+        })
         return null;
     }
 

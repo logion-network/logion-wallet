@@ -2,6 +2,7 @@ import {
     UUID,
     LocType,
 } from "@logion/node-api";
+import { LocsState } from "@logion/client";
 import { useUserContext } from "../wallet-user/UserContext";
 import { LocContextProvider, useLocContext } from "./LocContext";
 
@@ -20,7 +21,7 @@ export function UserLocContextProvider(props: Props) {
             locId={ props.locId }
             backPath={ props.backPath }
             detailsPath={ props.detailsPath }
-            refreshLocs={ () => mutateLocsState(async () => await locsState!.refresh()) }
+            refreshLocs={ (newLocsState?: LocsState) => newLocsState ? mutateLocsState(() => Promise.resolve(newLocsState)) : mutateLocsState(async () => await locsState!.refresh()) }
         >
             { props.children }
         </LocContextProvider>

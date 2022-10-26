@@ -61,10 +61,15 @@ exports[`renders 1`] = `
         title="request"
       >
         <Tabs
-          activeKey="pending"
+          activeKey="draft"
           onSelect={[Function]}
           tabs={
             Array [
+              Object {
+                "key": "draft",
+                "render": [Function],
+                "title": "Draft",
+              },
               Object {
                 "key": "pending",
                 "render": [Function],

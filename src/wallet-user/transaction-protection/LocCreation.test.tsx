@@ -2,8 +2,11 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
 import { clickByName, typeByLabel } from '../../tests';
 import LocCreation from './LocCreation';
-import { setHasValidIdentityLoc, setMutateLocsState } from "../__mocks__/UserContextMock";
+import { setHasValidIdentityLoc, setLocsState, mutateLocsState, setMutateLocsState } from "../__mocks__/UserContextMock";
 import { PATRICK, GUILLAUME } from "../../common/TestData";
+import { DraftRequest, LocsState } from '@logion/client';
+import { UUID } from '@logion/node-api';
+import { navigate } from 'src/__mocks__/ReactRouterMock';
 
 jest.mock('../../common/CommonContext');
 jest.mock('../../common/Model');
@@ -15,11 +18,8 @@ const requestButtonLabel = "Request a Transaction Protection"
 
 describe("LocCreation", () => {
 
-    const mutateLocsState = jest.fn();
-
     beforeEach(() => {
         jest.resetAllMocks();
-        setMutateLocsState(mutateLocsState);
     });
 
     it("should disable 'Submit' when user has valid id LOC but the form is empty", async () => {
@@ -67,9 +67,22 @@ describe("LocCreation", () => {
         await waitFor(() => expect(dialog).not.toBeInTheDocument());
     })
 
-    it("should creates the request if the selected LO has a valid identity LOC", async () => {
+    it("should create the request if the selected LO has a valid identity LOC", async () => {
+        const locId = new UUID("a2b9dfa7-cbde-414b-8cda-cdd221a57643");
+        const draftRequest = {
+            locId,
+            locsState: () => locsState,
+        } as DraftRequest;
+        const locsState = {
+            legalOfficersWithValidIdentityLoc: [ PATRICK, GUILLAUME ],
+            requestLoc: () => Promise.resolve(draftRequest),
+        } as unknown as LocsState;
+        setLocsState(locsState);
+        setMutateLocsState(async (mutator: (current: LocsState) => Promise<LocsState>): Promise<void> => {
+            await mutator(locsState);
+            return Promise.resolve();
+        });
 
-        setHasValidIdentityLoc([ PATRICK, GUILLAUME ])
         await openDialog();
 
         const description = "description";
@@ -79,9 +92,7 @@ describe("LocCreation", () => {
         await waitFor(() => userEvent.click(screen.getByText("Patrick Gielen")));
         await clickByName("Submit");
 
-        const dialog = screen.getByRole("dialog");
-        await waitFor(() => expect(dialog).not.toBeInTheDocument());
-        await waitFor(() => expect(mutateLocsState).toBeCalled());
+        await waitFor(() => expect(navigate).toBeCalledWith(`/user/loc/transaction/${locId.toString()}`));
     })
 
     async function openDialog() {
@@ -89,4 +100,3 @@ describe("LocCreation", () => {
         await clickByName(requestButtonLabel);
     }
 })
-

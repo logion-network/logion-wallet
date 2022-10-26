@@ -1,0 +1,38 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DraftLocInstructions renders 1`] = `
+<Frame
+  className="DraftLocInstructions"
+>
+  <IconTextRow
+    icon={
+      <Icon
+        icon={
+          Object {
+            "id": "tip",
+          }
+        }
+        width="45px"
+      />
+    }
+    text={
+      <React.Fragment>
+        <p>
+          Please add all public data and confidential documents, you need to send to your Legal Officer.
+        </p>
+        <p>
+          After validation of this request by your Legal Officer:
+        </p>
+        <ul>
+          <li>
+            Public data will be publicly available on the logion blockchain and public certificate.
+          </li>
+          <li>
+            Confidential documents will not be publicly available and will stay confidential between you and your Legal Officer.
+          </li>
+        </ul>
+      </React.Fragment>
+    }
+  />
+</Frame>
+`;

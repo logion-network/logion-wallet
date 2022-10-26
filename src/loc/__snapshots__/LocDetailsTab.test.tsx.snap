@@ -371,6 +371,86 @@ exports[`LocDetailsTabContent renders closed data LOC for LO 1`] = `
     locItems={Array []}
     viewer="LegalOfficer"
   />
+  <WarningDialog
+    actions={
+      Array [
+        Object {
+          "buttonText": "Back",
+          "buttonVariant": "secondary",
+          "callback": [Function],
+          "id": "back",
+        },
+        Object {
+          "buttonText": <span>
+            <Icon
+              icon={
+                Object {
+                  "id": "void_inv",
+                }
+              }
+            />
+             Cancel request
+          </span>,
+          "buttonVariant": "danger",
+          "callback": [Function],
+          "id": "cancel",
+        },
+      ]
+    }
+    show={false}
+    size="lg"
+  >
+    <h3>
+      Transaction
+       LOC request
+    </h3>
+    <p>
+      You are about to cancel your request:
+    </p>
+    <p>
+      all content will be deleted.
+    </p>
+    <p>
+      This action is irreversible.
+    </p>
+  </WarningDialog>
+  <WarningDialog
+    actions={
+      Array [
+        Object {
+          "buttonText": "Back",
+          "buttonVariant": "secondary",
+          "callback": [Function],
+          "id": "back",
+        },
+        Object {
+          "buttonText": <span>
+            <Icon
+              icon={
+                Object {
+                  "id": "submit",
+                }
+              }
+            />
+             Submit request
+          </span>,
+          "buttonVariant": "primary",
+          "callback": [Function],
+          "id": "submit",
+        },
+      ]
+    }
+    show={false}
+    size="lg"
+  >
+    <h3>
+      Transaction
+       LOC request
+    </h3>
+    <p>
+      You are about to send your request for review to your Legal Officer.
+    </p>
+  </WarningDialog>
 </React.Fragment>
 `;
 
@@ -531,6 +611,86 @@ exports[`LocDetailsTabContent renders closed data LOC for User 1`] = `
     locItems={Array []}
     viewer="User"
   />
+  <WarningDialog
+    actions={
+      Array [
+        Object {
+          "buttonText": "Back",
+          "buttonVariant": "secondary",
+          "callback": [Function],
+          "id": "back",
+        },
+        Object {
+          "buttonText": <span>
+            <Icon
+              icon={
+                Object {
+                  "id": "void_inv",
+                }
+              }
+            />
+             Cancel request
+          </span>,
+          "buttonVariant": "danger",
+          "callback": [Function],
+          "id": "cancel",
+        },
+      ]
+    }
+    show={false}
+    size="lg"
+  >
+    <h3>
+      Transaction
+       LOC request
+    </h3>
+    <p>
+      You are about to cancel your request:
+    </p>
+    <p>
+      all content will be deleted.
+    </p>
+    <p>
+      This action is irreversible.
+    </p>
+  </WarningDialog>
+  <WarningDialog
+    actions={
+      Array [
+        Object {
+          "buttonText": "Back",
+          "buttonVariant": "secondary",
+          "callback": [Function],
+          "id": "back",
+        },
+        Object {
+          "buttonText": <span>
+            <Icon
+              icon={
+                Object {
+                  "id": "submit",
+                }
+              }
+            />
+             Submit request
+          </span>,
+          "buttonVariant": "primary",
+          "callback": [Function],
+          "id": "submit",
+        },
+      ]
+    }
+    show={false}
+    size="lg"
+  >
+    <h3>
+      Transaction
+       LOC request
+    </h3>
+    <p>
+      You are about to send your request for review to your Legal Officer.
+    </p>
+  </WarningDialog>
 </React.Fragment>
 `;
 
@@ -701,53 +861,135 @@ exports[`LocDetailsTabContent renders open data LOC for LO 1`] = `
         />
       </ButtonGroup>
     </Col>
-    <Col
-      className="link-button-container"
-      xl={4}
-      xxl={4}
-    >
-      <LocLinkButton
-        excludeNewIdentity={true}
-      />
-    </Col>
-    <Col
-      className="close-button-container"
-      xl={4}
-      xxl={3}
-    >
-      <CloseLocButton
-        loc={
-          Object {
-            "closed": false,
-            "closedOn": undefined,
-            "createdOn": "2022-09-28T07:49:00.000+02:00",
-            "id": UUID {
-              "bytes": Uint8Array [
-                240,
-                175,
-                187,
-                187,
-                105,
-                109,
-                75,
-                119,
-                129,
-                112,
-                119,
-                229,
-                101,
-                136,
-                138,
-                14,
-              ],
-            },
-            "locType": "Transaction",
-            "status": "OPEN",
+    <React.Fragment>
+      <Col
+        className="link-button-container"
+        xl={4}
+        xxl={4}
+      >
+        <LocLinkButton
+          excludeNewIdentity={true}
+        />
+      </Col>
+      <Col
+        className="close-button-container"
+        xl={4}
+        xxl={3}
+      >
+        <CloseLocButton
+          loc={
+            Object {
+              "closed": false,
+              "closedOn": undefined,
+              "createdOn": "2022-09-28T07:49:00.000+02:00",
+              "id": UUID {
+                "bytes": Uint8Array [
+                  240,
+                  175,
+                  187,
+                  187,
+                  105,
+                  109,
+                  75,
+                  119,
+                  129,
+                  112,
+                  119,
+                  229,
+                  101,
+                  136,
+                  138,
+                  14,
+                ],
+              },
+              "locType": "Transaction",
+              "status": "OPEN",
+            }
           }
-        }
-      />
-    </Col>
+        />
+      </Col>
+    </React.Fragment>
   </Row>
+  <WarningDialog
+    actions={
+      Array [
+        Object {
+          "buttonText": "Back",
+          "buttonVariant": "secondary",
+          "callback": [Function],
+          "id": "back",
+        },
+        Object {
+          "buttonText": <span>
+            <Icon
+              icon={
+                Object {
+                  "id": "void_inv",
+                }
+              }
+            />
+             Cancel request
+          </span>,
+          "buttonVariant": "danger",
+          "callback": [Function],
+          "id": "cancel",
+        },
+      ]
+    }
+    show={false}
+    size="lg"
+  >
+    <h3>
+      Transaction
+       LOC request
+    </h3>
+    <p>
+      You are about to cancel your request:
+    </p>
+    <p>
+      all content will be deleted.
+    </p>
+    <p>
+      This action is irreversible.
+    </p>
+  </WarningDialog>
+  <WarningDialog
+    actions={
+      Array [
+        Object {
+          "buttonText": "Back",
+          "buttonVariant": "secondary",
+          "callback": [Function],
+          "id": "back",
+        },
+        Object {
+          "buttonText": <span>
+            <Icon
+              icon={
+                Object {
+                  "id": "submit",
+                }
+              }
+            />
+             Submit request
+          </span>,
+          "buttonVariant": "primary",
+          "callback": [Function],
+          "id": "submit",
+        },
+      ]
+    }
+    show={false}
+    size="lg"
+  >
+    <h3>
+      Transaction
+       LOC request
+    </h3>
+    <p>
+      You are about to send your request for review to your Legal Officer.
+    </p>
+  </WarningDialog>
 </React.Fragment>
 `;
 
@@ -918,17 +1160,93 @@ exports[`LocDetailsTabContent renders open data LOC for User 1`] = `
         />
       </ButtonGroup>
     </Col>
-    <Col
-      className="link-button-container"
-      xl={4}
-      xxl={4}
-    />
-    <Col
-      className="close-button-container"
-      xl={4}
-      xxl={3}
-    />
+    <React.Fragment>
+      <Col
+        xl={8}
+        xxl={7}
+      />
+    </React.Fragment>
   </Row>
+  <WarningDialog
+    actions={
+      Array [
+        Object {
+          "buttonText": "Back",
+          "buttonVariant": "secondary",
+          "callback": [Function],
+          "id": "back",
+        },
+        Object {
+          "buttonText": <span>
+            <Icon
+              icon={
+                Object {
+                  "id": "void_inv",
+                }
+              }
+            />
+             Cancel request
+          </span>,
+          "buttonVariant": "danger",
+          "callback": [Function],
+          "id": "cancel",
+        },
+      ]
+    }
+    show={false}
+    size="lg"
+  >
+    <h3>
+      Transaction
+       LOC request
+    </h3>
+    <p>
+      You are about to cancel your request:
+    </p>
+    <p>
+      all content will be deleted.
+    </p>
+    <p>
+      This action is irreversible.
+    </p>
+  </WarningDialog>
+  <WarningDialog
+    actions={
+      Array [
+        Object {
+          "buttonText": "Back",
+          "buttonVariant": "secondary",
+          "callback": [Function],
+          "id": "back",
+        },
+        Object {
+          "buttonText": <span>
+            <Icon
+              icon={
+                Object {
+                  "id": "submit",
+                }
+              }
+            />
+             Submit request
+          </span>,
+          "buttonVariant": "primary",
+          "callback": [Function],
+          "id": "submit",
+        },
+      ]
+    }
+    show={false}
+    size="lg"
+  >
+    <h3>
+      Transaction
+       LOC request
+    </h3>
+    <p>
+      You are about to send your request for review to your Legal Officer.
+    </p>
+  </WarningDialog>
 </React.Fragment>
 `;
 
@@ -1140,53 +1458,135 @@ exports[`LocDetailsTabContent renders open identity LOC for LO 1`] = `
         />
       </ButtonGroup>
     </Col>
-    <Col
-      className="link-button-container"
-      xl={4}
-      xxl={4}
-    >
-      <LocLinkButton
-        excludeNewIdentity={false}
-      />
-    </Col>
-    <Col
-      className="close-button-container"
-      xl={4}
-      xxl={3}
-    >
-      <CloseLocButton
-        loc={
-          Object {
-            "closed": false,
-            "closedOn": undefined,
-            "createdOn": "2022-09-28T07:49:00.000+02:00",
-            "id": UUID {
-              "bytes": Uint8Array [
-                240,
-                175,
-                187,
-                187,
-                105,
-                109,
-                75,
-                119,
-                129,
-                112,
-                119,
-                229,
-                101,
-                136,
-                138,
-                14,
-              ],
-            },
-            "locType": "Identity",
-            "status": "OPEN",
+    <React.Fragment>
+      <Col
+        className="link-button-container"
+        xl={4}
+        xxl={4}
+      >
+        <LocLinkButton
+          excludeNewIdentity={false}
+        />
+      </Col>
+      <Col
+        className="close-button-container"
+        xl={4}
+        xxl={3}
+      >
+        <CloseLocButton
+          loc={
+            Object {
+              "closed": false,
+              "closedOn": undefined,
+              "createdOn": "2022-09-28T07:49:00.000+02:00",
+              "id": UUID {
+                "bytes": Uint8Array [
+                  240,
+                  175,
+                  187,
+                  187,
+                  105,
+                  109,
+                  75,
+                  119,
+                  129,
+                  112,
+                  119,
+                  229,
+                  101,
+                  136,
+                  138,
+                  14,
+                ],
+              },
+              "locType": "Identity",
+              "status": "OPEN",
+            }
           }
-        }
-      />
-    </Col>
+        />
+      </Col>
+    </React.Fragment>
   </Row>
+  <WarningDialog
+    actions={
+      Array [
+        Object {
+          "buttonText": "Back",
+          "buttonVariant": "secondary",
+          "callback": [Function],
+          "id": "back",
+        },
+        Object {
+          "buttonText": <span>
+            <Icon
+              icon={
+                Object {
+                  "id": "void_inv",
+                }
+              }
+            />
+             Cancel request
+          </span>,
+          "buttonVariant": "danger",
+          "callback": [Function],
+          "id": "cancel",
+        },
+      ]
+    }
+    show={false}
+    size="lg"
+  >
+    <h3>
+      Identity
+       LOC request
+    </h3>
+    <p>
+      You are about to cancel your request:
+    </p>
+    <p>
+      all content will be deleted.
+    </p>
+    <p>
+      This action is irreversible.
+    </p>
+  </WarningDialog>
+  <WarningDialog
+    actions={
+      Array [
+        Object {
+          "buttonText": "Back",
+          "buttonVariant": "secondary",
+          "callback": [Function],
+          "id": "back",
+        },
+        Object {
+          "buttonText": <span>
+            <Icon
+              icon={
+                Object {
+                  "id": "submit",
+                }
+              }
+            />
+             Submit request
+          </span>,
+          "buttonVariant": "primary",
+          "callback": [Function],
+          "id": "submit",
+        },
+      ]
+    }
+    show={false}
+    size="lg"
+  >
+    <h3>
+      Identity
+       LOC request
+    </h3>
+    <p>
+      You are about to send your request for review to your Legal Officer.
+    </p>
+  </WarningDialog>
 </React.Fragment>
 `;
 
@@ -1341,6 +1741,86 @@ exports[`LocDetailsTabContent renders void data LOC for LO 1`] = `
     locItems={Array []}
     viewer="LegalOfficer"
   />
+  <WarningDialog
+    actions={
+      Array [
+        Object {
+          "buttonText": "Back",
+          "buttonVariant": "secondary",
+          "callback": [Function],
+          "id": "back",
+        },
+        Object {
+          "buttonText": <span>
+            <Icon
+              icon={
+                Object {
+                  "id": "void_inv",
+                }
+              }
+            />
+             Cancel request
+          </span>,
+          "buttonVariant": "danger",
+          "callback": [Function],
+          "id": "cancel",
+        },
+      ]
+    }
+    show={false}
+    size="lg"
+  >
+    <h3>
+      Transaction
+       LOC request
+    </h3>
+    <p>
+      You are about to cancel your request:
+    </p>
+    <p>
+      all content will be deleted.
+    </p>
+    <p>
+      This action is irreversible.
+    </p>
+  </WarningDialog>
+  <WarningDialog
+    actions={
+      Array [
+        Object {
+          "buttonText": "Back",
+          "buttonVariant": "secondary",
+          "callback": [Function],
+          "id": "back",
+        },
+        Object {
+          "buttonText": <span>
+            <Icon
+              icon={
+                Object {
+                  "id": "submit",
+                }
+              }
+            />
+             Submit request
+          </span>,
+          "buttonVariant": "primary",
+          "callback": [Function],
+          "id": "submit",
+        },
+      ]
+    }
+    show={false}
+    size="lg"
+  >
+    <h3>
+      Transaction
+       LOC request
+    </h3>
+    <p>
+      You are about to send your request for review to your Legal Officer.
+    </p>
+  </WarningDialog>
 </React.Fragment>
 `;
 
@@ -1495,5 +1975,85 @@ exports[`LocDetailsTabContent renders void data LOC for User 1`] = `
     locItems={Array []}
     viewer="User"
   />
+  <WarningDialog
+    actions={
+      Array [
+        Object {
+          "buttonText": "Back",
+          "buttonVariant": "secondary",
+          "callback": [Function],
+          "id": "back",
+        },
+        Object {
+          "buttonText": <span>
+            <Icon
+              icon={
+                Object {
+                  "id": "void_inv",
+                }
+              }
+            />
+             Cancel request
+          </span>,
+          "buttonVariant": "danger",
+          "callback": [Function],
+          "id": "cancel",
+        },
+      ]
+    }
+    show={false}
+    size="lg"
+  >
+    <h3>
+      Transaction
+       LOC request
+    </h3>
+    <p>
+      You are about to cancel your request:
+    </p>
+    <p>
+      all content will be deleted.
+    </p>
+    <p>
+      This action is irreversible.
+    </p>
+  </WarningDialog>
+  <WarningDialog
+    actions={
+      Array [
+        Object {
+          "buttonText": "Back",
+          "buttonVariant": "secondary",
+          "callback": [Function],
+          "id": "back",
+        },
+        Object {
+          "buttonText": <span>
+            <Icon
+              icon={
+                Object {
+                  "id": "submit",
+                }
+              }
+            />
+             Submit request
+          </span>,
+          "buttonVariant": "primary",
+          "callback": [Function],
+          "id": "submit",
+        },
+      ]
+    }
+    show={false}
+    size="lg"
+  >
+    <h3>
+      Transaction
+       LOC request
+    </h3>
+    <p>
+      You are about to send your request for review to your Legal Officer.
+    </p>
+  </WarningDialog>
 </React.Fragment>
 `;
