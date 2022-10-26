@@ -28,13 +28,13 @@ describe("LocContext", () => {
 
     it("fetches LOC data", async () => {
         givenRequest(CLOSED_IDENTITY_LOC_ID, CLOSED_IDENTITY_LOC);
-        whenRenderingInContext(CLOSED_IDENTITY_LOC_ID, <Reader/>);
+        whenRenderingInContext(_locState, <Reader/>);
         await thenReaderDisplaysLocRequestAndItems();
     })
 
     it("adds items", async () => {
         givenRequest(OPEN_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, CLOSED_IDENTITY_LOC_ID, CLOSED_IDENTITY_LOC);
-        whenRenderingInContext(OPEN_IDENTITY_LOC_ID, <ItemAdder/>);
+        whenRenderingInContext(_locState, <ItemAdder/>);
         await waitFor(() => screen.getByText("Ready"));
         await clickByName("Go");
         await thenItemsAdded();
@@ -44,7 +44,7 @@ describe("LocContext", () => {
         givenRequest(OPEN_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC);
         resetDefaultMocks();
         resetSubmitting();
-        whenRenderingInContext(OPEN_IDENTITY_LOC_ID, <Closer/>);
+        whenRenderingInContext(_locState, <Closer/>);
         await clickByName("Go");
         await waitFor(() => expect(screen.getByText("Submitting...")).toBeVisible());
         finalizeSubmission();
@@ -59,7 +59,7 @@ describe("LocContext", () => {
         givenRequest(OPEN_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, CLOSED_IDENTITY_LOC_ID, CLOSED_IDENTITY_LOC);
         givenDraftItems();
         resetDefaultMocks();
-        whenRenderingInContext(OPEN_IDENTITY_LOC_ID, <ItemDeleter />);
+        whenRenderingInContext(_locState, <ItemDeleter />);
         await waitFor(() => expect(screen.getByRole("button", {name: "Go"})).not.toBeDisabled());
         await clickByName("Go");
         await thenItemsDeleted();
@@ -69,7 +69,7 @@ describe("LocContext", () => {
         givenRequest(CLOSED_IDENTITY_LOC_ID, CLOSED_IDENTITY_LOC);
         resetDefaultMocks();
         resetSubmitting();
-        whenRenderingInContext(CLOSED_IDENTITY_LOC_ID, <Voider/>);
+        whenRenderingInContext(_locState, <Voider/>);
         await clickByName("Go");
         await waitFor(() => expect(screen.getByText("Submitting...")).toBeVisible());
         finalizeSubmission();
@@ -84,6 +84,7 @@ function givenRequest(locId: string, loc: LegalOfficerCase, linkedLocId?: string
     _locState = {
         data: () => _locData,
         locsState: () => locsState,
+        refresh: () => Promise.resolve(_locState),
     } as unknown as OpenLoc;
 
     _locState.addMetadata = jest.fn().mockResolvedValue(_locState);
@@ -137,10 +138,10 @@ let _locState: OpenLoc;
 let _linkedLocData: LocData;
 let _linkedLocState: LocRequestState;
 
-function whenRenderingInContext(locId: string, element: JSX.Element) {
+function whenRenderingInContext(locState: LocRequestState, element: JSX.Element) {
     render(
         <LocContextProvider
-            locId={ UUID.fromDecimalStringOrThrow(locId) }
+            locState={ locState }
             backPath="/"
             detailsPath={() => ""}
             refreshLocs={() => Promise.resolve()}
@@ -260,7 +261,7 @@ async function publishesItem(itemType: LocItemType, confirmFunction: jest.Mock) 
     givenRequest(OPEN_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, CLOSED_IDENTITY_LOC_ID, CLOSED_IDENTITY_LOC);
     givenDraftItems();
     resetDefaultMocks();
-    whenRenderingInContext(OPEN_IDENTITY_LOC_ID, <ItemPublisher itemType={ itemType } />);
+    whenRenderingInContext(_locState, <ItemPublisher itemType={ itemType } />);
     resetSubmitting();
     await clickByName("Go");
     await waitFor(() => expect(screen.getByText("Submitting...")).toBeVisible());

@@ -32,23 +32,23 @@ export default function ArchiveButton() {
 
     type Status = 'Idle' | 'Selected' | 'Checked';
     const [ status, setStatus ] = useState<Status>('Idle');
-    const { locItems, loc: locData, locId } = useLocContext();
+    const { locItems, loc: locData } = useLocContext();
     const { axiosFactory } = useLogionChain();
-
-    const backup: TypedFileInfo = {
-        fileName: `${ locId.toString() }`,
-        downloader: (axios: AxiosInstance) => getJsonLoc(axios, { locId: locId.toString() }),
-        type: "JSON Backup file"
-    }
-
-    const files: TypedFileInfo[] = [ backup ].concat(
-        locItems
-            .filter(locItem => locItem.type === 'Document')
-            .map(locItem => documentToTypedFileInfo(locId, locItem)))
 
     if (!locData || !axiosFactory) {
         return null;
     }
+
+    const backup: TypedFileInfo = {
+        fileName: `${ locData.id.toString() }`,
+        downloader: (axios: AxiosInstance) => getJsonLoc(axios, { locId: locData.id.toString() }),
+        type: "JSON Backup file"
+    };
+
+    const files: TypedFileInfo[] = [ backup ].concat(
+        locItems
+            .filter(locItem => locItem.type === 'Document')
+            .map(locItem => documentToTypedFileInfo(locData.id, locItem)));
 
     return (
         <>

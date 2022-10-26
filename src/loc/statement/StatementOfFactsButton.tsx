@@ -27,7 +27,7 @@ type Status = 'IDLE' | 'PRE-REQUISITE' | 'INPUT' | 'READY'
 
 export default function StatementOfFactsButton(props: { item?: CollectionItem }) {
     const { api, accounts, getOfficer } = useLogionChain();
-    const { locId, loc: locData } = useLocContext();
+    const { loc: locData } = useLocContext();
     const { settings } = useLegalOfficerContext();
     const [ sofParams, setSofParams ] = useState<SofParams>(DEFAULT_SOF_PARAMS);
     const [ item, setItem ] = useState<CollectionItem>();
@@ -46,7 +46,7 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                 setError("containingLocId", { type: "value", message: "Invalid LOC ID" })
                 return
             }
-            if (containingLocId.toString() === locId.toString()) {
+            if (containingLocId.toString() === locData!.id.toString()) {
                 setError("containingLocId", { type: "value", message: "Choose a different LOC to upload Statement of Facts" })
                 return
             }
@@ -88,7 +88,7 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                 }
             }
         }
-    }, [ api, sofParams, setContainingLoc, setError, locId, language, accounts, legalOfficer, settings ])
+    }, [ api, sofParams, setContainingLoc, setError, locData, language, accounts, legalOfficer, settings ])
 
     const dropDownItem = (language: Language) => {
         return (
@@ -127,11 +127,11 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
     }, [ getOfficer, accounts, sofParams, setSofParams ]);
 
     useEffect(() => {
-        if (locId.toDecimalString() !== sofParams.locId) {
+        if (locData!.id.toDecimalString() !== sofParams.locId) {
             const requester = locData?.requesterAddress ? locData.requesterAddress : locData?.requesterLocId?.toDecimalString() || ""
             setSofParams({
                 ...sofParams,
-                locId: locId.toDecimalString(),
+                locId: locData!.id.toDecimalString(),
                 requester,
                 publicItems: locData!.metadata.map(item => ({
                     description: item.name,
@@ -146,7 +146,7 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                 })),
             });
         }
-    }, [ locData, locId, sofParams, setSofParams ]);
+    }, [ locData, sofParams, setSofParams ]);
 
     useEffect(() => {
         if (language !== null && ((props.item && !item) || (!props.item && item) || (props.item && item && props.item.id !== item.id))) {
@@ -177,7 +177,7 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                 }
             )
         }
-    }, [ props, item, setItem, sofParams, setSofParams, locId, language ]);
+    }, [ props, item, setItem, sofParams, setSofParams, locData, language ]);
 
     const cancelCallback = useCallback(() => {
         setStatus('IDLE')
@@ -197,7 +197,7 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
         setStatus('INPUT');
     }, [ sofParams ])
 
-    if(settings === undefined) {
+    if(settings === undefined || !locData) {
         return null;
     }
 
@@ -270,8 +270,8 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                 <StatementOfFactsSummary
                     previewPath={ STATEMENT_OF_FACTS_PATH }
                     relatedLocPath={ containingLoc ? locDetailsPath(containingLoc!.id, containingLoc!.locType) : "" }
-                    locId={ locId }
-                    nodeOwner={ locData!.ownerAddress }
+                    locId={ locData!.id }
+                    nodeOwner={ locData.ownerAddress }
                 />
             </Dialog>
         </>

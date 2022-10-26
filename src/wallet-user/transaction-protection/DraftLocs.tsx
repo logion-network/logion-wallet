@@ -21,7 +21,7 @@ export default function DraftLocs(props: Props) {
     const navigate = useNavigate();
     const { locType } = props;
 
-    const data = useMemo(() => locsState?.draftRequests[locType].map(locState => locState.data()) || [], [ locsState, locType ]);
+    const data = useMemo(() => locsState?.draftRequests ? locsState?.draftRequests[locType].map(locState => locState.data()) : [], [ locsState, locType ]);
 
     if(locsState === null || locsState?.draftRequests === undefined) {
         return <Loader />;

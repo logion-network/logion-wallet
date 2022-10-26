@@ -1,4 +1,4 @@
-import { ClosedCollectionLoc, ClosedLoc, OpenLoc, PendingRequest, RejectedRequest, VoidedLoc } from "@logion/client";
+import { ClosedCollectionLoc, ClosedLoc, OpenLoc, PendingRequest, RejectedRequest, VoidedLoc, LocsState } from "@logion/client";
 import { LocType, IdentityLocType } from "@logion/node-api/dist/Types";
 import { AxiosInstance } from "axios";
 import { COLOR_THEME, PATRICK } from "src/common/TestData";
@@ -129,6 +129,14 @@ let refreshLegalOfficer = jest.fn();
 
 let refreshOnchainSettings = jest.fn();
 
+let locsState: LocsState = {
+    findById: () => { throw new Error("not found") },
+} as unknown as LocsState;
+
+export function setLocsState(mock: LocsState) {
+    locsState = mock;
+}
+
 export function useLegalOfficerContext() {
     return {
         pendingTokenizationRequests,
@@ -154,5 +162,6 @@ export function useLegalOfficerContext() {
         legalOfficer,
         refreshLegalOfficer,
         refreshOnchainSettings,
+        locsState,
     };
 }

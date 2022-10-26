@@ -42,6 +42,7 @@ export interface MissingSettings {
 
 export interface LegalOfficerContext {
     refreshRequests: ((clearBeforeRefresh: boolean) => void),
+    locsState: LocsState | null,
     pendingProtectionRequests: ProtectionRequest[] | null,
     activatedProtectionRequests: ProtectionRequest[] | null,
     protectionRequestsHistory: ProtectionRequest[] | null,
@@ -82,6 +83,7 @@ function initialContextValue(): FullLegalOfficerContext {
     return {
         dataAddress: null,
         refreshRequests: DEFAULT_NOOP,
+        locsState: null,
         pendingProtectionRequests: null,
         activatedProtectionRequests: null,
         protectionRequestsHistory: null,
@@ -132,6 +134,7 @@ type ActionType =
 interface Action {
     type: ActionType;
     dataAddress?: string;
+    locsState?: LocsState;
     pendingProtectionRequests?: ProtectionRequest[];
     protectionRequestsHistory?: ProtectionRequest[];
     activatedProtectionRequests?: ProtectionRequest[];
@@ -190,6 +193,7 @@ const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOffic
             if (action.dataAddress === state.dataAddress) {
                 return {
                     ...state,
+                    locsState: action.locsState!,
                     pendingLocRequests: action.pendingLocRequests!,
                     rejectedLocRequests: action.rejectedLocRequests!,
                     openedLocRequests: action.openedLocRequests!,
@@ -645,6 +649,7 @@ function mapLocsState(locsState: LocsState) {
     }
 
     return {
+        locsState,
         pendingLocRequests,
         openedLocRequests,
         closedLocRequests,

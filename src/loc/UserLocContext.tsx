@@ -16,12 +16,16 @@ export interface Props {
 export function UserLocContextProvider(props: Props) {
     const { mutateLocsState, locsState } = useUserContext();
 
+    if(!locsState) {
+        return null;
+    }
+
     return (
         <LocContextProvider
-            locId={ props.locId }
+            locState={ locsState.findById(props.locId) }
             backPath={ props.backPath }
             detailsPath={ props.detailsPath }
-            refreshLocs={ (newLocsState?: LocsState) => newLocsState ? mutateLocsState(() => Promise.resolve(newLocsState)) : mutateLocsState(async () => await locsState!.refresh()) }
+            refreshLocs={ (newLocsState: LocsState) => mutateLocsState(async () => newLocsState) }
         >
             { props.children }
         </LocContextProvider>
