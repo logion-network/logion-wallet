@@ -2,7 +2,7 @@ import { ApiPromise } from '@polkadot/api';
 
 import { GUILLAUME, PATRICK } from "../../common/TestData";
 import { TEST_WALLET_USER } from '../TestData';
-import { AccountTokens, DirectoryClient, NoProtection, ProtectionState, LegalOfficer } from '@logion/client';
+import { AccountTokens, DirectoryClient, NoProtection, ProtectionState, LegalOfficer, DraftRequest } from '@logion/client';
 import { AxiosFactory } from '@logion/client/dist/AxiosFactory';
 import { ComponentFactory } from '@logion/client/dist/ComponentFactory';
 import { LegalOfficerEndpoint, LogionClientConfig, SharedState } from '@logion/client/dist/SharedClient';
@@ -122,10 +122,26 @@ export function setRejectedLocRequests(requests: any[]) {
     }
 }
 
+export function setDraftLocRequests(requests: any[]) {
+    locsState = {
+        get draftRequests(): Record<LocType, DraftRequest[]> {
+            return {
+                "Transaction": requests,
+                "Collection": [],
+                "Identity": [],
+            }
+        }
+    }
+}
+
 export function setHasValidIdentityLoc(legalOfficers: LegalOfficer []) {
     locsState = {
         legalOfficersWithValidIdentityLoc: legalOfficers
     }
+}
+
+export function setLocsState(locsStateMock: LocsState) {
+    locsState = locsStateMock;
 }
 
 export let mutateLocsState = jest.fn().mockReturnValue(Promise.resolve());

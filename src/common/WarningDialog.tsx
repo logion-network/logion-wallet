@@ -1,5 +1,3 @@
-import React from 'react';
-
 import Dialog, { ModalSize } from './Dialog';
 import { Action } from './Button';
 import Icon from './Icon';
@@ -30,9 +28,9 @@ export default function WarningDialog(props: Props) {
                     id: "warning"
                 }}
             />
-            <p className="dialog-text">
+            <div className="dialog-text">
                 { props.children }
-            </p>
+            </div>
         </Dialog>
     );
 }

@@ -22,10 +22,10 @@ exports[`renders 1`] = `
       }
     }
   />
-  <p
+  <div
     className="dialog-text"
   >
     Content
-  </p>
+  </div>
 </Dialog>
 `;

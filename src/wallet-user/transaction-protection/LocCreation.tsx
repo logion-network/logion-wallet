@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { LocType } from "@logion/node-api/dist/Types";
 
 import { useCommonContext } from '../../common/CommonContext';
-import { LocsState, LegalOfficer } from "@logion/client";
+import { LocsState, LegalOfficer, DraftRequest } from "@logion/client";
 import Button, { Action } from '../../common/Button';
 import Dialog from '../../common/Dialog';
 
@@ -12,12 +12,12 @@ import ButtonGroup from "../../common/ButtonGroup";
 import LocCreationForm, { FormValues } from './LocCreationForm';
 import { useLogionChain } from '../../logion-chain';
 import { useNavigate } from "react-router-dom";
-import { IDENTITY_REQUEST_PATH } from "../UserRouter";
+import { IDENTITY_REQUEST_PATH, locDetailsPath } from "../UserRouter";
 import './LocCreation.css';
 
 export interface Props {
-    locType: LocType,
-    requestButtonLabel: string
+    locType: LocType;
+    requestButtonLabel: string;
 }
 
 export default function LocCreation(props: Props) {
@@ -45,16 +45,19 @@ export default function LocCreation(props: Props) {
     }, [ reset ]);
 
     const submit = useCallback(async (formValues: FormValues) => {
+        let draftRequest: DraftRequest;
         await mutateLocsState(async (locsState: LocsState) => {
-            return (await locsState!.requestLoc({
+            draftRequest = await locsState!.requestLoc({
                 legalOfficer: selectedLegalOfficer!,
                 description: formValues.description,
                 locType,
-                draft: false,
-            })).locsState();
+                draft: true,
+            }) as DraftRequest;
+            return draftRequest.locsState();
         });
         clear();
-    }, [ selectedLegalOfficer, locType, mutateLocsState, clear ]);
+        navigate(locDetailsPath(draftRequest!.locId, locType));
+    }, [ selectedLegalOfficer, locType, mutateLocsState, clear, navigate ]);
 
     const requestIdLoc = useCallback(() => {
         clear();

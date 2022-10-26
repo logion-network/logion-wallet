@@ -5,6 +5,7 @@ import { Viewer } from "src/common/CommonContext";
 import Ellipsis from "src/common/Ellipsis";
 import Icon from "src/common/Icon";
 import NewTabLink from "src/common/NewTabLink";
+import { identityLocDetailsPath } from "src/legal-officer/LegalOfficerPaths";
 import LocItemDetail from "./LocItemDetail";
 
 export interface Props {
@@ -32,9 +33,19 @@ export default function RequesterOrLegalOfficer(props: Props) {
                                 placement="top"
                                 delay={ 500 }
                                 overlay={
-                                    <Tooltip
-                                        id={ loc.requesterAddress }>{ loc.requesterAddress }</Tooltip> }>
-                                <span><br /> { loc.requesterAddress }</span>
+                                    <Tooltip id={ loc.requesterAddress }>{ loc.requesterAddress }</Tooltip>
+                                }
+                            >
+                                <span><br /> <>
+                                {
+                                    loc.identityLocId &&
+                                    <NewTabLink href={ identityLocDetailsPath(loc.identityLocId!.toString()) }>{ loc.requesterAddress }</NewTabLink>
+                                }
+                                {
+                                    loc.identityLocId === undefined &&
+                                    loc.requesterAddress
+                                }</>
+                                </span>
                             </OverlayTrigger>
                         </>
                     }

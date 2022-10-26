@@ -87,3 +87,7 @@ export function setIsSuccessful(value: boolean) {
 export class ClosedCollectionLoc {
 
 }
+
+export class DraftRequest {
+
+}

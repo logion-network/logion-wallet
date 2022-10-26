@@ -1,11 +1,8 @@
-import { useCallback, useState } from 'react';
-import { useNavigate } from 'react-router';
-import { NoProtection } from '@logion/client';
+import { useCallback } from 'react';
 
 import { useLogionChain } from '../logion-chain';
 
 import Dashboard from '../common/Dashboard';
-import WarningDialog from '../common/WarningDialog';
 
 import UserRouter, {
     HOME_PATH,
@@ -20,10 +17,8 @@ import { useCommonContext } from '../common/CommonContext';
 
 export default function ContextualizedWallet() {
     const { selectAddress, accounts, api } = useLogionChain();
-    const { colorTheme, nodesDown, refresh } = useCommonContext();
+    const { colorTheme, refresh } = useCommonContext();
     const { protectionState, refreshRequests, vaultState } = useUserContext();
-    const [ discardProtection, setDiscardProtection ] = useState<boolean>(false);
-    const navigate = useNavigate();
 
     const refreshAll = useCallback(() => {
         refresh(false);
@@ -35,7 +30,6 @@ export default function ContextualizedWallet() {
     }
 
     const userContext = api !== null ? <UserRouter /> : null;
-    const noProtection = protectionState instanceof NoProtection;
 
     return (
         <Dashboard
@@ -166,37 +160,6 @@ export default function ContextualizedWallet() {
             ]}
         >
             {userContext}
-            <WarningDialog
-                show={ noProtection && !discardProtection && nodesDown.length === 0 }
-                size='lg'
-                actions={[
-                    {
-                        buttonText: "I will do it later",
-                        callback: () => setDiscardProtection(true),
-                        id: "discard",
-                        buttonVariant: 'secondary'
-                    },
-                    {
-                        buttonText: "Activate the logion protection",
-                        callback: () => { setDiscardProtection(true); navigate(TRUST_PROTECTION_PATH)},
-                        id: "protection",
-                        buttonVariant: 'primary'
-                    },
-                    {
-                        buttonText: "Start a recovery process",
-                        callback: () => { setDiscardProtection(true); navigate(RECOVERY_PATH) },
-                        id: "recovery",
-                        buttonVariant: 'recovery'
-                    }
-                ]}
-            >
-                <>
-                    Dear user,<br/>
-                    We strongly recommend that you activate your logion trust protection right now in order to enjoy
-                    all logion's features and benefits. You can also immediately start a recovery process if you need
-                    to recover your assets locked in another account by clicking on the related button below.
-                </>
-            </WarningDialog>
         </Dashboard>
     );
 }

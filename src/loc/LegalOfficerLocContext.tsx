@@ -1,4 +1,4 @@
-import { LegalOfficer, FetchAllLocsParams } from "@logion/client";
+import { LegalOfficer, FetchAllLocsParams, LocsState } from "@logion/client";
 import {
     UUID,
     LocType,
@@ -38,7 +38,7 @@ export function LegalOfficerLocContextProvider(props: Props) {
             locId={ props.locId }
             backPath={ props.backPath }
             detailsPath={ props.detailsPath }
-            refreshLocs={ async () => refreshLocs() }
+            refreshLocs={ async (newLocsState?: LocsState) => refreshLocs(newLocsState) }
             fetchAllLocsParams={ fetchAllLocsParams(legalOfficer) }
         >
             { props.children }

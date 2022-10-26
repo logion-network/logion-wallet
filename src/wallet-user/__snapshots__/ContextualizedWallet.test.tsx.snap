@@ -159,38 +159,6 @@ exports[`ContextualizedWallet Given connected and no metadata, when rendering, t
   }
 >
   <UserRouter />
-  <WarningDialog
-    actions={
-      Array [
-        Object {
-          "buttonText": "I will do it later",
-          "buttonVariant": "secondary",
-          "callback": [Function],
-          "id": "discard",
-        },
-        Object {
-          "buttonText": "Activate the logion protection",
-          "buttonVariant": "primary",
-          "callback": [Function],
-          "id": "protection",
-        },
-        Object {
-          "buttonText": "Start a recovery process",
-          "buttonVariant": "recovery",
-          "callback": [Function],
-          "id": "recovery",
-        },
-      ]
-    }
-    show={true}
-    size="lg"
-  >
-    <React.Fragment>
-      Dear user,
-      <br />
-      We strongly recommend that you activate your logion trust protection right now in order to enjoy all logion's features and benefits. You can also immediately start a recovery process if you need to recover your assets locked in another account by clicking on the related button below.
-    </React.Fragment>
-  </WarningDialog>
 </Dashboard>
 `;
 
@@ -353,38 +321,6 @@ exports[`ContextualizedWallet Given connected, when rendering, then show account
   }
 >
   <UserRouter />
-  <WarningDialog
-    actions={
-      Array [
-        Object {
-          "buttonText": "I will do it later",
-          "buttonVariant": "secondary",
-          "callback": [Function],
-          "id": "discard",
-        },
-        Object {
-          "buttonText": "Activate the logion protection",
-          "buttonVariant": "primary",
-          "callback": [Function],
-          "id": "protection",
-        },
-        Object {
-          "buttonText": "Start a recovery process",
-          "buttonVariant": "recovery",
-          "callback": [Function],
-          "id": "recovery",
-        },
-      ]
-    }
-    show={true}
-    size="lg"
-  >
-    <React.Fragment>
-      Dear user,
-      <br />
-      We strongly recommend that you activate your logion trust protection right now in order to enjoy all logion's features and benefits. You can also immediately start a recovery process if you need to recover your assets locked in another account by clicking on the related button below.
-    </React.Fragment>
-  </WarningDialog>
 </Dashboard>
 `;
 
@@ -547,38 +483,6 @@ exports[`ContextualizedWallet Given connecting, when rendering, then show accoun
   }
 >
   <UserRouter />
-  <WarningDialog
-    actions={
-      Array [
-        Object {
-          "buttonText": "I will do it later",
-          "buttonVariant": "secondary",
-          "callback": [Function],
-          "id": "discard",
-        },
-        Object {
-          "buttonText": "Activate the logion protection",
-          "buttonVariant": "primary",
-          "callback": [Function],
-          "id": "protection",
-        },
-        Object {
-          "buttonText": "Start a recovery process",
-          "buttonVariant": "recovery",
-          "callback": [Function],
-          "id": "recovery",
-        },
-      ]
-    }
-    show={true}
-    size="lg"
-  >
-    <React.Fragment>
-      Dear user,
-      <br />
-      We strongly recommend that you activate your logion trust protection right now in order to enjoy all logion's features and benefits. You can also immediately start a recovery process if you need to recover your assets locked in another account by clicking on the related button below.
-    </React.Fragment>
-  </WarningDialog>
 </Dashboard>
 `;
 
@@ -741,38 +645,6 @@ exports[`ContextualizedWallet Given connection error, when rendering, then show 
   }
 >
   <UserRouter />
-  <WarningDialog
-    actions={
-      Array [
-        Object {
-          "buttonText": "I will do it later",
-          "buttonVariant": "secondary",
-          "callback": [Function],
-          "id": "discard",
-        },
-        Object {
-          "buttonText": "Activate the logion protection",
-          "buttonVariant": "primary",
-          "callback": [Function],
-          "id": "protection",
-        },
-        Object {
-          "buttonText": "Start a recovery process",
-          "buttonVariant": "recovery",
-          "callback": [Function],
-          "id": "recovery",
-        },
-      ]
-    }
-    show={true}
-    size="lg"
-  >
-    <React.Fragment>
-      Dear user,
-      <br />
-      We strongly recommend that you activate your logion trust protection right now in order to enjoy all logion's features and benefits. You can also immediately start a recovery process if you need to recover your assets locked in another account by clicking on the related button below.
-    </React.Fragment>
-  </WarningDialog>
 </Dashboard>
 `;
 
@@ -937,37 +809,5 @@ exports[`ContextualizedWallet Given no injected account, when rendering, then no
   }
 >
   <UserRouter />
-  <WarningDialog
-    actions={
-      Array [
-        Object {
-          "buttonText": "I will do it later",
-          "buttonVariant": "secondary",
-          "callback": [Function],
-          "id": "discard",
-        },
-        Object {
-          "buttonText": "Activate the logion protection",
-          "buttonVariant": "primary",
-          "callback": [Function],
-          "id": "protection",
-        },
-        Object {
-          "buttonText": "Start a recovery process",
-          "buttonVariant": "recovery",
-          "callback": [Function],
-          "id": "recovery",
-        },
-      ]
-    }
-    show={true}
-    size="lg"
-  >
-    <React.Fragment>
-      Dear user,
-      <br />
-      We strongly recommend that you activate your logion trust protection right now in order to enjoy all logion's features and benefits. You can also immediately start a recovery process if you need to recover your assets locked in another account by clicking on the related button below.
-    </React.Fragment>
-  </WarningDialog>
 </Dashboard>
 `;

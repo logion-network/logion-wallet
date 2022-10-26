@@ -14,6 +14,7 @@ import VoidDisclaimer from "./VoidDisclaimer";
 import LegalOfficerInstructions from "./LegalOfficerInstructions";
 import SupersedesDisclaimer from "./SupersedesDisclaimer";
 import VoidFrame from "./VoidFrame";
+import AcceptRejectLocRequest from "./AcceptRejectLocRequest";
 
 export default function ContextualizedLocDetails() {
     const { pendingProtectionRequests, pendingRecoveryRequests } = useLegalOfficerContext();
@@ -96,10 +97,19 @@ export default function ContextualizedLocDetails() {
                 loc={ loc }
                 detailsPath={ detailsPath }
             />
-            <CertificateAndLimits
-                loc={ loc }
-                viewer="LegalOfficer"
-            />
+            {
+                loc.status !== "REQUESTED" &&
+                <CertificateAndLimits
+                    loc={ loc }
+                    viewer="LegalOfficer"
+                />
+            }
+            {
+                loc.status === "REQUESTED" &&
+                <AcceptRejectLocRequest
+                    loc={ loc }
+                />
+            }
             { loc.locType === 'Collection' && loc.closed &&
                 <LOCollectionLocItemChecker
                     collectionLoc={ loc }
@@ -117,9 +127,12 @@ export default function ContextualizedLocDetails() {
                 context={ loc.locType + " LOC" }
                 checkedItem="confidential document"
             />
-            <VoidFrame
-                loc={ loc }
-            />
+            {
+                loc.status !== "REQUESTED" &&
+                <VoidFrame
+                    loc={ loc }
+                />
+            }
         </LocPane>
     );
 }

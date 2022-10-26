@@ -12,11 +12,11 @@ export interface Props {
 export default function NewTabLink(props: Props) {
     const className = customClassName("NewTabLink", (props.inline !== undefined && props.inline ? "inline" : undefined))
     return (
-        <div className={ className }>
+        <span className={ className }>
             <a href={ props.href } target="_blank" rel="noreferrer">
                 { props.children }
                 { props.iconId && <Icon icon={ { id: props.iconId } } height="30px" /> }
             </a>
-        </div>
+        </span>
     )
 }

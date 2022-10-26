@@ -21,6 +21,8 @@ import {
     MergedLink,
     CollectionItem,
     FetchAllLocsParams,
+    DraftRequest,
+    LocsState,
 } from "@logion/client";
 
 import {
@@ -87,6 +89,8 @@ export interface LocContext {
     voidLoc: ((voidInfo: FullVoidInfo) => void) | null
     voidLocExtrinsic?: ((voidInfo: VoidInfo) => SignAndSubmit) | null
     collectionItems: CollectionItem[]
+    cancelRequest: () => Promise<void>
+    submitRequest: () => Promise<void>
 }
 
 const MAX_REFRESH = 20;
@@ -122,6 +126,8 @@ function initialContextValue(locId: UUID, backPath: string, detailsPath: (locId:
         requestSof: null,
         requestSofOnCollection: null,
         collectionItems: [],
+        cancelRequest: () => Promise.reject(new Error("undefined")),
+        submitRequest: () => Promise.reject(new Error("undefined")),
     }
 }
 
@@ -129,11 +135,34 @@ const LocContextObject: React.Context<LocContext> = React.createContext(initialC
 
 type ActionType = 'SET_LOC_REQUEST'
     | 'SET_LOC'
-    | 'SET_FUNCTIONS'
     | 'CLOSE'
     | 'VOID'
     | 'RESET'
     | 'SET_CHECK_RESULT'
+    | 'SET_PUBLISH_METADATA'
+    | 'SET_PUBLIC_LINK'
+    | 'SET_ADD_METADATA'
+    | 'SET_ADD_LINK'
+    | 'SET_PUBLISH_LINK'
+    | 'SET_ADD_FILE'
+    | 'SET_PUBLISH_FILE'
+    | 'SET_CLOSE'
+    | 'SET_CLOSE_EXTRINSIC'
+    | 'SET_CONFIRM_FILE'
+    | 'SET_DELETE_FILE'
+    | 'SET_CONFIRM_LINK'
+    | 'SET_DELETE_LINK'
+    | 'SET_CONFIRM_METADATA'
+    | 'SET_DELETE_METADATA'
+    | 'SET_VOID_LOC'
+    | 'SET_VOID_LOC_EXTRINSIC'
+    | 'SET_REFRESH'
+    | 'SET_CHECK_HASH'
+    | 'SET_REQUEST_SOF'
+    | 'SET_REQUEST_SOF_ON_COLLECTION'
+    | 'SET_CANCEL_REQUEST'
+    | 'SET_SUBMIT_REQUEST'
+;
 
 interface Action {
     type: ActionType,
@@ -170,6 +199,8 @@ interface Action {
     requestSof?: () => void,
     requestSofOnCollection?: (collectionItemId: string) => void,
     collectionItems?: CollectionItem[],
+    cancelRequest?: () => Promise<void>,
+    submitRequest?: () => Promise<void>,
 }
 
 const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action): LocContext => {
@@ -184,30 +215,6 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
                 loc: action.locData!,
                 locItems: action.locItems!,
                 collectionItems: action.collectionItems!,
-            }
-        case "SET_FUNCTIONS":
-            return {
-                ...state,
-                addMetadata: action.addMetadata!,
-                publishMetadata: action.publishMetadata!,
-                addLink: action.addLink!,
-                publishLink: action.publishLink!,
-                addFile: action.addFile!,
-                publishFile: action.publishFile!,
-                closeExtrinsic: action.closeExtrinsic!,
-                close: action.close!,
-                confirmFile: action.confirmFile!,
-                deleteFile: action.deleteFile!,
-                confirmLink: action.confirmLink!,
-                deleteLink: action.deleteLink!,
-                confirmMetadata: action.confirmMetadata!,
-                deleteMetadata: action.deleteMetadata!,
-                voidLoc: action.voidLoc!,
-                voidLocExtrinsic: action.voidLocExtrinsic!,
-                refresh: action.refresh!,
-                checkHash: action.checkHash!,
-                requestSof: action.requestSof!,
-                requestSofOnCollection: action.requestSofOnCollection!,
             }
         case "CLOSE":
             return {
@@ -235,6 +242,121 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
                 checkResult: action.checkResult!,
                 collectionItem: action.collectionItem,
             }
+        case "SET_PUBLISH_METADATA":
+            return {
+                ...state,
+                publishMetadata: action.publishMetadata!,
+            }
+        case 'SET_PUBLIC_LINK':
+            return {
+                ...state,
+                publishLink: action.publishLink!,
+            }
+        case 'SET_ADD_METADATA':
+            return {
+                ...state,
+                addMetadata: action.addMetadata!,
+            }
+        case 'SET_ADD_LINK':
+            return {
+                ...state,
+                addLink: action.addLink!,
+            }
+        case 'SET_PUBLISH_LINK':
+            return {
+                ...state,
+                publishLink: action.publishLink!,
+            }
+        case 'SET_ADD_FILE':
+            return {
+                ...state,
+                addFile: action.addFile!,
+            }
+        case 'SET_PUBLISH_FILE':
+            return {
+                ...state,
+                publishFile: action.publishFile!,
+            }
+        case 'SET_CLOSE':
+            return {
+                ...state,
+                close: action.close!,
+            }
+        case 'SET_CLOSE_EXTRINSIC':
+            return {
+                ...state,
+                closeExtrinsic: action.closeExtrinsic!,
+            }
+        case 'SET_CONFIRM_FILE':
+            return {
+                ...state,
+                confirmFile: action.confirmFile!,
+            }
+        case 'SET_DELETE_FILE':
+            return {
+                ...state,
+                deleteFile: action.deleteFile!,
+            }
+        case 'SET_CONFIRM_LINK':
+            return {
+                ...state,
+                confirmLink: action.confirmLink!,
+            }
+        case 'SET_DELETE_LINK':
+            return {
+                ...state,
+                deleteLink: action.deleteLink!,
+            }
+        case 'SET_CONFIRM_METADATA':
+            return {
+                ...state,
+                confirmMetadata: action.confirmMetadata!,
+            }
+        case 'SET_DELETE_METADATA':
+            return {
+                ...state,
+                deleteMetadata: action.deleteMetadata!,
+            }
+        case 'SET_VOID_LOC':
+            return {
+                ...state,
+                voidLoc: action.voidLoc!,
+            }
+        case 'SET_VOID_LOC_EXTRINSIC':
+            return {
+                ...state,
+                voidLocExtrinsic: action.voidLocExtrinsic!,
+            }
+        case 'SET_REFRESH':
+            return {
+                ...state,
+                refresh: action.refresh!,
+            }
+        case 'SET_CHECK_HASH':
+            return {
+                ...state,
+                checkHash: action.checkHash!,
+            }
+        case 'SET_REQUEST_SOF':
+            return {
+                ...state,
+                requestSof: action.requestSof!,
+            }
+        case 'SET_REQUEST_SOF_ON_COLLECTION':
+            return {
+                ...state,
+                requestSofOnCollection: action.requestSofOnCollection!,
+            }
+        case 'SET_CANCEL_REQUEST':
+            return {
+                ...state,
+                cancelRequest: action.cancelRequest!,
+            }
+        case 'SET_SUBMIT_REQUEST':
+            return {
+                ...state,
+                submitRequest: action.submitRequest!,
+            }
         default:
             throw new Error(`Unknown type: ${ action.type }`);
     }
@@ -245,7 +367,7 @@ export interface Props {
     children: JSX.Element | JSX.Element[] | null
     backPath: string
     detailsPath: (locId: UUID, type: LocType) => string
-    refreshLocs: () => Promise<void>
+    refreshLocs: (newLocsState?: LocsState) => Promise<void>
     fetchAllLocsParams?: FetchAllLocsParams
 }
 
@@ -269,7 +391,6 @@ export function LocContextProvider(props: Props) {
     }, [ contextValue.locId, props.locId ])
 
     const toLocItems = useCallback((locState: LocRequestState) => {
-        console.log(locState)
         const loc = locState.data();
         let locItems: LocItem[] = [];
         loc.metadata.forEach(item => {
@@ -308,7 +429,7 @@ export function LocContextProvider(props: Props) {
 
     const startRefresh = useCallback(() => {
         setRefreshCounter(MAX_REFRESH);
-    }, [ ]);
+    }, []);
 
     const dispatchLocAndItems = useCallback(async (locState: LocRequestState, triggerRefresh: boolean, refreshLocs: boolean) => {
         const locItems = toLocItems(locState);
@@ -333,28 +454,24 @@ export function LocContextProvider(props: Props) {
             locData,
             collectionItems,
         });
-        if (triggerRefresh && refreshNeeded(locItems)) {
+        if (triggerRefresh && refreshNeeded(locItems) && !(locState instanceof DraftRequest)) {
             startRefresh();
         }
-        if(refreshLocs) {
-            await props.refreshLocs();
-        }
-    }, [ toLocItems, client, contextValue.supersededLoc, props, startRefresh ])
-
-    useEffect(() => {
-        if (client !== null && contextValue.locState === null) {
-            (async function () {
-                const locState = (await client.locsState(props.fetchAllLocsParams)).findById(contextValue.locId);
-                await dispatchLocAndItems(locState!, true, false);
-            })();
-        }
-    }, [ contextValue, contextValue.locId, accounts, client, dispatchLocAndItems, props.fetchAllLocsParams ])
+        await props.refreshLocs(locState.locsState());
+    }, [ toLocItems, client, contextValue.supersededLoc, props, startRefresh ]);
 
     const refreshLocState = useCallback(async (triggerRefresh: boolean, refreshLocs: boolean): Promise<LocRequestState> => {
-        const locState = (await client!.locsState(props.fetchAllLocsParams)).findById(contextValue.locId);
+        const newLocsState = await client!.locsState(props.fetchAllLocsParams);
+        const locState = newLocsState.findById(contextValue.locId);
         await dispatchLocAndItems(locState! , triggerRefresh, refreshLocs);
         return locState!;
     }, [ contextValue.locId, client, dispatchLocAndItems, props.fetchAllLocsParams ]);
+
+    useEffect(() => {
+        if (client !== null && contextValue.locState === null) {
+            refreshLocState(true, false);
+        }
+    }, [ contextValue.locState, client, refreshLocState ]);
 
     const refreshNameTimestamp = useCallback<() => Promise<NextRefresh>>(async () => {
         if (contextValue.loc === null) {
@@ -363,7 +480,7 @@ export function LocContextProvider(props: Props) {
 
         if (allItemsOK(contextValue.locItems) && requestOK(contextValue.loc)) {
             refresh!(false);
-            props.refreshLocs();
+            props.refreshLocs(contextValue.locState!.locsState());
             return NextRefresh.STOP;
         }
 
@@ -383,10 +500,10 @@ export function LocContextProvider(props: Props) {
     }, [
         contextValue.loc,
         contextValue.locItems,
+        contextValue.locState,
         refresh,
         props,
         client,
-        contextValue.locState,
         refreshLocState
     ])
 
@@ -428,6 +545,15 @@ export function LocContextProvider(props: Props) {
         }, [ api, contextValue.loc ]
     )
 
+    useEffect(() => {
+        if(contextValue.publishMetadata !== publishMetadataFunction) {
+            dispatch({
+                type: "SET_PUBLISH_METADATA",
+                publishMetadata: publishMetadataFunction,
+            })
+        }
+    }, [ contextValue.publishMetadata, publishMetadataFunction ]);
+
     const publishFileFunction = useCallback((item: LocItem) => {
             const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
                 signerId: contextValue.loc!.ownerAddress,
@@ -445,6 +571,15 @@ export function LocContextProvider(props: Props) {
         }, [ api, contextValue.loc ]
     )
 
+    useEffect(() => {
+        if(contextValue.publishFile !== publishFileFunction) {
+            dispatch({
+                type: "SET_PUBLISH_FILE",
+                publishFile: publishFileFunction,
+            })
+        }
+    }, [ contextValue.publishFile, publishFileFunction ]);
+
     const publishLinkFunction = useCallback((item: LocItem) => {
         const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
             signerId: contextValue.loc!.ownerAddress,
@@ -459,6 +594,15 @@ export function LocContextProvider(props: Props) {
         });
         return signAndSubmit;
     }, [ api, contextValue.loc ])
+
+    useEffect(() => {
+        if(contextValue.publishLink !== publishLinkFunction) {
+            dispatch({
+                type: "SET_PUBLISH_LINK",
+                publishLink: publishLinkFunction,
+            })
+        }
+    }, [ contextValue.publishLink, publishLinkFunction ]);
 
     const closeExtrinsicFunction = useCallback((seal?: string) => {
             const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
@@ -475,39 +619,111 @@ export function LocContextProvider(props: Props) {
         }, [ api, contextValue.loc ]
     )
 
+    useEffect(() => {
+        if(contextValue.closeExtrinsic !== closeExtrinsicFunction) {
+            dispatch({
+                type: "SET_CLOSE_EXTRINSIC",
+                closeExtrinsic: closeExtrinsicFunction,
+            })
+        }
+    }, [ contextValue.closeExtrinsic, closeExtrinsicFunction ]);
+
     const closeFunction = useCallback(async () => {
         await preClose(axiosFactory!(contextValue.loc!.ownerAddress)!, contextValue.loc!.id);
         dispatch({ type: 'CLOSE' });
         startRefresh();
-    }, [ axiosFactory, dispatch, contextValue.loc, startRefresh ])
+    }, [ axiosFactory, contextValue.loc, startRefresh ])
+
+    useEffect(() => {
+        if(contextValue.close !== closeFunction) {
+            dispatch({
+                type: "SET_CLOSE",
+                close: closeFunction,
+            })
+        }
+    }, [ contextValue.close, closeFunction ]);
 
     const confirmFileFunction = useCallback(async (locItem: LocItem) => {
-        await confirmLocFile(axiosFactory!(contextValue.loc!.ownerAddress)!, contextValue.locId, locItem.value);
+        await confirmLocFile(axiosFactory!(contextValue.loc!.ownerAddress)!, contextValue.loc!.id, locItem.value);
         await refreshLocState(true, false);
-    }, [ axiosFactory, contextValue.locId, contextValue.loc, refreshLocState ])
+    }, [ axiosFactory, contextValue.loc, refreshLocState ])
+
+    useEffect(() => {
+        if(contextValue.confirmFile !== confirmFileFunction) {
+            dispatch({
+                type: "SET_CONFIRM_FILE",
+                confirmFile: confirmFileFunction,
+            })
+        }
+    }, [ contextValue.confirmFile, confirmFileFunction ]);
 
     const deleteFileFunction = useCallback(async (item: LocItem) => {
         await dispatchLocAndItems(await (contextValue.locState as OpenLoc).deleteFile({ hash: item.value }), true, false)
     }, [ dispatchLocAndItems, contextValue.locState ])
 
+    useEffect(() => {
+        if(contextValue.deleteFile !== deleteFileFunction) {
+            dispatch({
+                type: "SET_DELETE_FILE",
+                deleteFile: deleteFileFunction,
+            })
+        }
+    }, [ contextValue.deleteFile, deleteFileFunction ]);
+
     const confirmLinkFunction = useCallback(async (locItem: LocItem) => {
-        await confirmLocLink(axiosFactory!(contextValue.loc!.ownerAddress)!, contextValue.locId, locItem.target!);
+        await confirmLocLink(axiosFactory!(contextValue.loc!.ownerAddress)!, contextValue.loc!.id, locItem.target!);
         await refreshLocState(true, false);
-    }, [ axiosFactory, contextValue.locId, contextValue.loc, refreshLocState ])
+    }, [ axiosFactory, contextValue.loc, refreshLocState ])
+
+    useEffect(() => {
+        if(contextValue.confirmLink !== confirmLinkFunction) {
+            dispatch({
+                type: "SET_CONFIRM_LINK",
+                confirmLink: confirmLinkFunction,
+            })
+        }
+    }, [ contextValue.confirmLink, confirmLinkFunction ]);
 
     const deleteLinkFunction = useCallback(async (item: LocItem) => {
-        await deleteLocLink(axiosFactory!(contextValue.loc!.ownerAddress)!, contextValue.locId, item.target!)
+        await deleteLocLink(axiosFactory!(contextValue.loc!.ownerAddress)!, contextValue.loc!.id, item.target!)
         await refreshLocState(true, false);
-    }, [ axiosFactory, contextValue.locId, contextValue.loc, refreshLocState ])
+    }, [ axiosFactory, contextValue.loc, refreshLocState ])
+
+    useEffect(() => {
+        if(contextValue.deleteLink !== deleteLinkFunction) {
+            dispatch({
+                type: "SET_DELETE_LINK",
+                deleteLink: deleteLinkFunction,
+            })
+        }
+    }, [ contextValue.deleteLink, deleteLinkFunction ]);
 
     const confirmMetadataFunction = useCallback(async (locItem: LocItem) => {
-        await confirmLocMetadataItem(axiosFactory!(contextValue.loc!.ownerAddress)!, contextValue.locId, locItem.name);
+        await confirmLocMetadataItem(axiosFactory!(contextValue.loc!.ownerAddress)!, contextValue.loc!.id, locItem.name);
         await refreshLocState(true, false);
-    }, [ axiosFactory, contextValue.locId, contextValue.loc, refreshLocState ])
+    }, [ axiosFactory, contextValue.loc, refreshLocState ])
+
+    useEffect(() => {
+        if(contextValue.confirmMetadata !== confirmMetadataFunction) {
+            dispatch({
+                type: "SET_CONFIRM_METADATA",
+                confirmMetadata: confirmMetadataFunction,
+            })
+        }
+    }, [ contextValue.confirmMetadata, confirmMetadataFunction ]);
 
     const deleteMetadataFunction = useCallback(async (item: LocItem) => {
-        await dispatchLocAndItems(await (contextValue.locState as OpenLoc).deleteMetadata({ name: item.name }), true, false)
+        await dispatchLocAndItems(await (contextValue.locState as OpenLoc).deleteMetadata({ name: item.name }), false, false)
     }, [ contextValue.locState, dispatchLocAndItems ])
+
+    useEffect(() => {
+        if(contextValue.deleteMetadata !== deleteMetadataFunction) {
+            dispatch({
+                type: "SET_DELETE_METADATA",
+                deleteMetadata: deleteMetadataFunction,
+            })
+        }
+    }, [ contextValue.deleteMetadata, deleteMetadataFunction ]);
 
     const voidLocExtrinsicFunction = useCallback((voidInfo: VoidInfo) => {
         const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
@@ -523,27 +739,64 @@ export function LocContextProvider(props: Props) {
         return signAndSubmit;
     }, [ api, contextValue.loc ])
 
+    useEffect(() => {
+        if(contextValue.voidLocExtrinsic !== voidLocExtrinsicFunction) {
+            dispatch({
+                type: "SET_VOID_LOC_EXTRINSIC",
+                voidLocExtrinsic: voidLocExtrinsicFunction,
+            })
+        }
+    }, [ contextValue.voidLocExtrinsic, voidLocExtrinsicFunction ]);
+
     const voidLocFunction = useCallback(async (voidInfo: FullVoidInfo) => {
         await preVoid(axiosFactory!(contextValue.loc!.ownerAddress)!, contextValue.loc!.id, voidInfo.reason);
         dispatch({ type: 'VOID', voidInfo });
         startRefresh();
-    }, [ axiosFactory, dispatch, contextValue.loc, startRefresh ])
+    }, [ axiosFactory, contextValue.loc, startRefresh ])
+
+    useEffect(() => {
+        if(contextValue.voidLoc !== voidLocFunction) {
+            dispatch({
+                type: "SET_VOID_LOC",
+                voidLoc: voidLocFunction,
+            })
+        }
+    }, [ contextValue.voidLoc, voidLocFunction ]);
 
     const addLinkFunction = useCallback(async (otherLoc: LinkTarget, nature: string) => {
         await modelAddLink(axiosFactory!(contextValue.loc!.ownerAddress)!, {
-            locId: contextValue.locId.toString(),
+            locId: contextValue.loc!.id.toString(),
             target: otherLoc.id.toString(),
             nature
         });
         await refreshLocState(true, false);
-    }, [ axiosFactory, contextValue, refreshLocState ])
+    }, [ axiosFactory, contextValue.loc, refreshLocState ])
+
+    useEffect(() => {
+        if(contextValue.addLink !== addLinkFunction) {
+            dispatch({
+                type: "SET_ADD_LINK",
+                addLink: addLinkFunction,
+            })
+        }
+    }, [ contextValue.addLink, addLinkFunction ]);
 
     const addMetadataFunction = useCallback(async (name: string, value: string) => {
-        await dispatchLocAndItems(await (contextValue.locState as OpenLoc).addMetadata({
+        const state = await (contextValue.locState as OpenLoc).addMetadata({
             name,
             value,
-        }), true, false);
+        });
+        await dispatchLocAndItems(state, true, false);
     }, [ contextValue.locState, dispatchLocAndItems ])
+
+    useEffect(() => {
+        if(contextValue.addMetadata !== addMetadataFunction) {
+            dispatch({
+                type: "SET_ADD_METADATA",
+                addMetadata: addMetadataFunction,
+            })
+        }
+    }, [ contextValue.addMetadata, addMetadataFunction ]);
 
     const addFileFunction = useCallback(async (name: string, file: File, nature: string) => {
         const state = await (contextValue.locState as OpenLoc).addFile({
@@ -554,9 +807,27 @@ export function LocContextProvider(props: Props) {
         await dispatchLocAndItems(state, true, false);
     }, [ contextValue.locState, dispatchLocAndItems ])
 
+    useEffect(() => {
+        if(contextValue.addFile !== addFileFunction) {
+            dispatch({
+                type: "SET_ADD_FILE",
+                addFile: addFileFunction,
+            })
+        }
+    }, [ contextValue.addFile, addFileFunction ]);
+
     const refreshFunction = useCallback(() => {
         dispatch({ type: 'RESET', locId: contextValue.locId });
-    }, [ dispatch, contextValue ]);
+    }, [ dispatch, contextValue.locId ]);
+
+    useEffect(() => {
+        if(contextValue.refresh !== refreshFunction) {
+            dispatch({
+                type: "SET_REFRESH",
+                refresh: refreshFunction,
+            })
+        }
+    }, [ contextValue.refresh, refreshFunction ]);
 
     const checkHashFunction = useCallback(async (hash: string) => {
         const result = await contextValue.locState?.checkHash(hash);
@@ -582,78 +853,90 @@ export function LocContextProvider(props: Props) {
         }
     }, [ contextValue.locState ]);
 
+    useEffect(() => {
+        if(contextValue.checkHash !== checkHashFunction) {
+            dispatch({
+                type: "SET_CHECK_HASH",
+                checkHash: checkHashFunction,
+            })
+        }
+    }, [ contextValue.checkHash, checkHashFunction ]);
+
     const requestSofFunction = useCallback(async () => {
         const loc = contextValue.locState;
         if (loc instanceof OpenLoc || loc instanceof ClosedLoc) {
-            await loc.requestSof();
-            await props.refreshLocs();
+            const pendingSof = await loc.requestSof();
+            await props.refreshLocs(pendingSof.locsState());
         } else {
             throw Error("Can only request SOF on Open or Closed LOC.")
         }
     }, [ contextValue.locState, props ])
 
+    useEffect(() => {
+        if(contextValue.requestSof !== requestSofFunction) {
+            dispatch({
+                type: "SET_REQUEST_SOF",
+                requestSof: requestSofFunction,
+            })
+        }
+    }, [ contextValue.requestSof, requestSofFunction ]);
+
     const requestSofOnCollectionFunction = useCallback(async (itemId: string) => {
         const loc = contextValue.locState;
         if (loc instanceof ClosedCollectionLoc) {
-            await loc.requestSof({ itemId });
-            await props.refreshLocs();
+            const pendingSof = await loc.requestSof({ itemId });
+            await props.refreshLocs(pendingSof.locsState());
         } else {
             throw Error("Can only request SOF on Closed Collection LOC.")
         }
     }, [ contextValue.locState, props ])
 
     useEffect(() => {
-        if (contextValue.loc && contextValue.addMetadata === null) {
-            const action: Action = {
-                type: 'SET_FUNCTIONS',
-                addMetadata: addMetadataFunction,
-                addLink: addLinkFunction,
-                publishLink: publishLinkFunction,
-                publishMetadata: publishMetadataFunction,
-                addFile: addFileFunction,
-                publishFile: publishFileFunction,
-                closeExtrinsic: closeExtrinsicFunction,
-                close: closeFunction,
-                confirmFile: confirmFileFunction,
-                deleteFile: deleteFileFunction,
-                confirmLink: confirmLinkFunction,
-                deleteLink: deleteLinkFunction,
-                confirmMetadata: confirmMetadataFunction,
-                deleteMetadata: deleteMetadataFunction,
-                voidLoc: voidLocFunction,
-                voidLocExtrinsic: voidLocExtrinsicFunction,
-                refresh: refreshFunction,
-                checkHash: checkHashFunction,
-                requestSof: requestSofFunction,
+        if(contextValue.requestSofOnCollection !== requestSofOnCollectionFunction) {
+            dispatch({
+                type: "SET_REQUEST_SOF_ON_COLLECTION",
                 requestSofOnCollection: requestSofOnCollectionFunction,
-            };
-            dispatch(action)
+            })
         }
-    }, [
-        contextValue.loc,
-        contextValue.addMetadata,
-        publishMetadataFunction,
-        publishFileFunction,
-        closeFunction,
-        closeExtrinsicFunction,
-        confirmFileFunction,
-        deleteFileFunction,
-        confirmLinkFunction,
-        deleteLinkFunction,
-        confirmMetadataFunction,
-        deleteMetadataFunction,
-        dispatch,
-        publishLinkFunction,
-        voidLocFunction,
-        voidLocExtrinsicFunction,
-        addLinkFunction,
-        addMetadataFunction,
-        addFileFunction,
-        refreshFunction,
-        checkHashFunction,
-        requestSofFunction,
-        requestSofOnCollectionFunction
-    ])
+    }, [ contextValue.requestSofOnCollection, requestSofOnCollectionFunction ]);
+
+    const cancelRequestFunction = useCallback(async () => {
+        const loc = contextValue.locState;
+        if (loc instanceof DraftRequest) {
+            const newLocsState = await loc.cancel();
+            await props.refreshLocs(newLocsState);
+        } else {
+            throw Error("Can only request SOF on Closed Collection LOC.")
+        }
+    }, [ contextValue.locState, props ])
+
+    useEffect(() => {
+        if(contextValue.cancelRequest !== cancelRequestFunction) {
+            dispatch({
+                type: "SET_CANCEL_REQUEST",
+                cancelRequest: cancelRequestFunction,
+            })
+        }
+    }, [ contextValue.cancelRequest, cancelRequestFunction ]);
+
+    const submitRequestFunction = useCallback(async () => {
+        const loc = contextValue.locState;
+        if (loc instanceof DraftRequest) {
+            const newState = await loc.submit();
+            dispatchLocAndItems(newState, false, false);
+        } else {
+            throw Error("Can only request SOF on Closed Collection LOC.")
+        }
+    }, [ contextValue.locState, dispatchLocAndItems ])
+
+    useEffect(() => {
+        if(contextValue.submitRequest !== submitRequestFunction) {
+            dispatch({
+                type: "SET_SUBMIT_REQUEST",
+                submitRequest: submitRequestFunction,
+            })
+        }
+    }, [ contextValue.submitRequest, submitRequestFunction ]);
 
     return (
         <LocContextObject.Provider value={ contextValue }>

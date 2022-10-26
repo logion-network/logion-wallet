@@ -10,6 +10,7 @@ import {
     ClosedCollectionLoc,
     VoidedLoc,
     VoidedCollectionLoc,
+    LocsState,
 } from '@logion/client';
 import { ProtectionRequest } from '@logion/client/dist/RecoveryClient';
 
@@ -62,7 +63,7 @@ export interface LegalOfficerContext {
     closedIdentityLocsByType: Record<IdentityLocType, ClosedLoc[]> | null;
     voidTransactionLocs: Record<LocType, (VoidedLoc | VoidedCollectionLoc)[]> | null;
     voidIdentityLocsByType: Record<IdentityLocType, VoidedLoc[]> | null;
-    refreshLocs: () => void;
+    refreshLocs: (newLocsState?: LocsState) => void;
     refreshOnchainSettings: () => void;
     legalOfficer?: LegalOfficer;
     refreshLegalOfficer: () => void;
@@ -158,7 +159,7 @@ interface Action {
     closedIdentityLocsByType?: Record<IdentityLocType, ClosedLoc[]> | null;
     voidTransactionLocs?: Record<LocType, (VoidedLoc | VoidedCollectionLoc)[]> | null;
     voidIdentityLocsByType?: Record<IdentityLocType, VoidedLoc[]> | null;
-    refreshLocs?: (() => void);
+    refreshLocs?: (newLocsState?: LocsState) => void;
     refreshAddress?: string;
     refreshOnchainSettings?: () => void;
     refreshLegalOfficer?: () => void;
@@ -356,62 +357,39 @@ export function LegalOfficerContextProvider(props: Props) {
 
     // ------------------ LOCs -------------------------------
 
-    const refreshLocs = useCallback(() => {
-        const now = DateTime.now();
-        if(api
-            && accounts && accounts.current
-            && client !== null && client.isTokenValid(now)
-            && contextValue.legalOfficer
-            && axiosFactory
-            && isReadyLegalOfficer) {
-
+    const refreshLocs = useCallback((newLocsState?: LocsState) => {
+        if(newLocsState) {
             dispatch({
-                type: "REFRESH_LOCS_CALLED"
+                type: "SET_LOCS_DATA",
+                dataAddress: contextValue.dataAddress!,
+                ...mapLocsState(newLocsState),
             });
-            const currentAccount = accounts.current;
-            const currentAddress = currentAccount.address;
-            const legalOfficer = contextValue.legalOfficer;
-            (async function () {
-                const locsState = await client.locsState(fetchAllLocsParams(legalOfficer));
-
-                const pendingLocRequests: Record<LocType, PendingRequest[]> = locsState.pendingRequests;
-                const rejectedLocRequests: Record<LocType, RejectedRequest[]> = locsState.rejectedRequests;
-                const openedLocRequests: Record<LocType, OpenLoc[]> = locsState.openLocs;
-                const closedLocRequests: Record<LocType, (ClosedLoc | ClosedCollectionLoc)[]> = locsState.closedLocs;
-                const voidTransactionLocs: Record<LocType, (VoidedLoc | VoidedCollectionLoc)[]> = locsState.voidedLocs;
-
-                // Identity
-                const openedIdentityLocs = locsState.openLocs["Identity"];
-
-                const openedIdentityLocsByType: Record<IdentityLocType, OpenLoc[]> = {
-                    'Polkadot': locsState.openLocs["Identity"].filter(loc => loc.data().requesterAddress !== undefined),
-                    'Logion': locsState.openLocs["Identity"].filter(loc => loc.data().requesterAddress === undefined),
-                };
-                const closedIdentityLocsByType: Record<IdentityLocType, ClosedLoc[]> = {
-                    'Polkadot': locsState.closedLocs["Identity"].filter(loc => loc.data().requesterAddress !== undefined).map(loc => loc as ClosedLoc),
-                    'Logion': locsState.closedLocs["Identity"].filter(loc => loc.data().requesterAddress === undefined).map(loc => loc as ClosedLoc),
-                }
-                const voidIdentityLocsByType: Record<IdentityLocType, VoidedLoc[]> = {
-                    'Polkadot': locsState.voidedLocs["Identity"].filter(loc => loc.data().requesterAddress !== undefined).map(loc => loc as VoidedLoc),
-                    'Logion': locsState.voidedLocs["Identity"].filter(loc => loc.data().requesterAddress === undefined).map(loc => loc as VoidedLoc),
-                }
+        } else {
+            const now = DateTime.now();
+            if(api
+                && accounts && accounts.current
+                && client !== null && client.isTokenValid(now)
+                && contextValue.legalOfficer
+                && axiosFactory
+                && isReadyLegalOfficer) {
 
                 dispatch({
-                    type: "SET_LOCS_DATA",
-                    dataAddress: currentAddress,
-                    pendingLocRequests,
-                    openedLocRequests,
-                    closedLocRequests,
-                    rejectedLocRequests,
-                    openedIdentityLocs,
-                    openedIdentityLocsByType,
-                    closedIdentityLocsByType,
-                    voidTransactionLocs,
-                    voidIdentityLocsByType,
+                    type: "REFRESH_LOCS_CALLED"
                 });
-            })();
+                const currentAccount = accounts.current;
+                const currentAddress = currentAccount.address;
+                const legalOfficer = contextValue.legalOfficer;
+                (async function () {
+                    const locsState = await client.locsState(fetchAllLocsParams(legalOfficer));
+                    dispatch({
+                        type: "SET_LOCS_DATA",
+                        dataAddress: currentAddress,
+                        ...mapLocsState(locsState),
+                    });
+                })();
+            }
         }
-    }, [ api, dispatch, accounts, client, axiosFactory, isReadyLegalOfficer, contextValue.legalOfficer ]);
+    }, [ api, dispatch, accounts, client, axiosFactory, isReadyLegalOfficer, contextValue.legalOfficer, contextValue.dataAddress ]);
 
     useEffect(() => {
         if(contextValue.refreshLocs !== refreshLocs) {
@@ -641,4 +619,40 @@ function getMissingSettings(legalOfficer: LegalOfficer | undefined, onchainSetti
     }
 
     return missingSettings;
+}
+
+function mapLocsState(locsState: LocsState) {
+    const pendingLocRequests: Record<LocType, PendingRequest[]> = locsState.pendingRequests;
+    const rejectedLocRequests: Record<LocType, RejectedRequest[]> = locsState.rejectedRequests;
+    const openedLocRequests: Record<LocType, OpenLoc[]> = locsState.openLocs;
+    const closedLocRequests: Record<LocType, (ClosedLoc | ClosedCollectionLoc)[]> = locsState.closedLocs;
+    const voidTransactionLocs: Record<LocType, (VoidedLoc | VoidedCollectionLoc)[]> = locsState.voidedLocs;
+
+    // Identity
+    const openedIdentityLocs = locsState.openLocs["Identity"];
+
+    const openedIdentityLocsByType: Record<IdentityLocType, OpenLoc[]> = {
+        'Polkadot': locsState.openLocs["Identity"].filter(loc => loc.data().requesterAddress !== undefined),
+        'Logion': locsState.openLocs["Identity"].filter(loc => loc.data().requesterAddress === undefined),
+    };
+    const closedIdentityLocsByType: Record<IdentityLocType, ClosedLoc[]> = {
+        'Polkadot': locsState.closedLocs["Identity"].filter(loc => loc.data().requesterAddress !== undefined).map(loc => loc as ClosedLoc),
+        'Logion': locsState.closedLocs["Identity"].filter(loc => loc.data().requesterAddress === undefined).map(loc => loc as ClosedLoc),
+    }
+    const voidIdentityLocsByType: Record<IdentityLocType, VoidedLoc[]> = {
+        'Polkadot': locsState.voidedLocs["Identity"].filter(loc => loc.data().requesterAddress !== undefined).map(loc => loc as VoidedLoc),
+        'Logion': locsState.voidedLocs["Identity"].filter(loc => loc.data().requesterAddress === undefined).map(loc => loc as VoidedLoc),
+    }
+
+    return {
+        pendingLocRequests,
+        openedLocRequests,
+        closedLocRequests,
+        rejectedLocRequests,
+        openedIdentityLocs,
+        openedIdentityLocsByType,
+        closedIdentityLocsByType,
+        voidTransactionLocs,
+        voidIdentityLocsByType,
+    };
 }

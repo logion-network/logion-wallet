@@ -20,6 +20,12 @@ import { LocItem } from "./types";
 import "./LocDetailsTab.css";
 import { Row } from "src/common/Grid";
 import { Viewer } from "src/common/CommonContext";
+import Button from "src/common/Button";
+import Icon from "src/common/Icon";
+import { useCallback, useState } from "react";
+import WarningDialog from "src/common/WarningDialog";
+import { useLocContext } from "./LocContext";
+import { useNavigate } from "react-router-dom";
 
 export interface Props {
     loc: LocData;
@@ -63,16 +69,21 @@ export default function LocDetailsTab(props: Props) {
         };
     }
 
+    let suffix = "";
+    if(loc.status === "DRAFT") {
+        suffix = " Request";
+    }
+
     let locTabTitle: string;
     if (loc.locType === 'Transaction') {
-        locTabTitle = "Legal Officer Case (LOC) - Transaction";
+        locTabTitle = `Legal Officer Case (LOC) - Transaction${suffix}`;
     } else if (loc.locType === 'Collection') {
-        locTabTitle = "Legal Officer Case (LOC) - Collection";
+        locTabTitle = `Legal Officer Case (LOC) - Collection${suffix}`;
     } else {
         if (locState.isLogionIdentity()) {
-            locTabTitle = "Legal Officer Case (LOC) - Logion Identity";
+            locTabTitle = `Legal Officer Case (LOC) - Logion Identity${suffix}`;
         } else {
-            locTabTitle = "Legal Officer Case (LOC) - Polkadot Identity";
+            locTabTitle = `Legal Officer Case (LOC) - Polkadot Identity${suffix}`;
         }
     }
     if (loc.voidInfo !== undefined) {
@@ -133,20 +144,45 @@ export function LocDetailsTabContent(props: ContentProps) {
         protectionRequest,
         locTabBorderColor,
     } = props;
+    const [ showCancelDialog, setShowCancelDialog ] = useState(false);
+    const [ showSubmitDialog, setShowSubmitDialog ] = useState(false);
+    const { cancelRequest, backPath, submitRequest } = useLocContext();
+    const navigate = useNavigate();
+
+    const confirmCancel = useCallback(() => {
+        setShowCancelDialog(true);
+    }, []);
+
+    const cancelRequestCallback = useCallback(async () => {
+        await cancelRequest();
+        navigate(backPath);
+    }, [ cancelRequest, navigate, backPath ]);
+
+    const confirmSubmit = useCallback(() => {
+        setShowSubmitDialog(true);
+    }, []);
+
+    const submitRequestCallback = useCallback(async () => {
+        await submitRequest();
+        navigate(backPath);
+    }, [ submitRequest, navigate, backPath ]);
 
     return (<>
         <Row>
             <Col md={ 4 }>
-                <LocItemDetail label="LOC ID" copyButtonText={ loc.id.toDecimalString() }>
-                    <OverlayTrigger
-                        placement="top"
-                        delay={ 500 }
-                        overlay={
-                            <Tooltip
-                                id={ loc.id.toDecimalString() }>{ loc.id.toDecimalString() }</Tooltip> }>
-                        <span>{ loc.id.toDecimalString() }</span>
-                    </OverlayTrigger>
-                </LocItemDetail>
+                {
+                    loc.status !== "DRAFT" &&
+                    <LocItemDetail label="LOC ID" copyButtonText={ loc.id.toDecimalString() }>
+                        <OverlayTrigger
+                            placement="top"
+                            delay={ 500 }
+                            overlay={
+                                <Tooltip
+                                    id={ loc.id.toDecimalString() }>{ loc.id.toDecimalString() }</Tooltip> }>
+                            <span>{ loc.id.toDecimalString() }</span>
+                        </OverlayTrigger>
+                    </LocItemDetail>
+                }
                 <LocItemDetail label="Creation date">
                     <InlineDateTime dateTime={ loc.createdOn } />
                 </LocItemDetail>
@@ -199,19 +235,87 @@ export function LocDetailsTabContent(props: ContentProps) {
                         />
                     </ButtonGroup>
                 </Col>
-                <Col className="link-button-container" xxl={ 4 } xl={ 4 }>
-                    {
-                        viewer === "LegalOfficer" &&
+                {
+                    viewer === "LegalOfficer" &&
+                    <>
+                    <Col className="link-button-container" xxl={ 4 } xl={ 4 }>
                         <LocLinkButton excludeNewIdentity={ locState.isLogionData() } />
-                    }
-                </Col>
-                <Col className="close-button-container" xxl={ 3 } xl={ 4 }>
-                    {
-                        viewer === "LegalOfficer" &&
+                    </Col>
+                    <Col className="close-button-container" xxl={ 3 } xl={ 4 }>
                         <CloseLocButton protectionRequest={ protectionRequest } loc={ loc } />
-                    }
-                </Col>
+                    </Col>
+                    </>
+                }
+                {
+                    viewer === "User" &&
+                    <>
+                    <Col xxl={ 7 } xl={ 8 }>
+                        {
+                            loc.status === "DRAFT" &&
+                            <ButtonGroup
+                                align="right"
+                            >
+                                <Button
+                                    variant="danger"
+                                    onClick={ confirmCancel }
+                                >
+                                    <Icon icon={{ id: "void_inv" }}/> Cancel request
+                                </Button>
+                                <Button
+                                    onClick={ confirmSubmit }
+                                >
+                                    <Icon icon={{ id: "submit" }}/> Submit request
+                                </Button>
+                            </ButtonGroup>
+                        }
+                    </Col>
+                    </>
+                }
             </Row>
         }
+        <WarningDialog
+            show={ showCancelDialog }
+            size="lg"
+            actions={[
+                {
+                    id: "back",
+                    buttonText: "Back",
+                    buttonVariant: "secondary",
+                    callback: () => setShowCancelDialog(false),
+                },
+                {
+                    id: "cancel",
+                    buttonText: <span><Icon icon={{ id: "void_inv" }}/> Cancel request</span>,
+                    buttonVariant: "danger",
+                    callback: cancelRequestCallback
+                }
+            ]}
+        >
+            <h3>{ loc.locType } LOC request</h3>
+            <p>You are about to cancel your request:</p>
+            <p>all content will be deleted.</p>
+            <p>This action is irreversible.</p>
+        </WarningDialog>
+        <WarningDialog
+            show={ showSubmitDialog }
+            size="lg"
+            actions={[
+                {
+                    id: "back",
+                    buttonText: "Back",
+                    buttonVariant: "secondary",
+                    callback: () => setShowSubmitDialog(false),
+                },
+                {
+                    id: "submit",
+                    buttonText: <span><Icon icon={{ id: "submit" }}/> Submit request</span>,
+                    buttonVariant: "primary",
+                    callback: submitRequestCallback,
+                }
+            ]}
+        >
+            <h3>{ loc.locType } LOC request</h3>
+            <p>You are about to send your request for review to your Legal Officer.</p>
+        </WarningDialog>
     </>);
 }

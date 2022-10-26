@@ -184,11 +184,11 @@ exports[`renders 1`] = `
     show={false}
     size="lg"
   >
-    <React.Fragment>
+    <p>
       Dear logion legal officer,
       <br />
       Some of your mandatory settings are not filled-in. Please do so as soon as possible.
-    </React.Fragment>
+    </p>
   </WarningDialog>
 </Dashboard>
 `;

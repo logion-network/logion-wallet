@@ -1,0 +1,12 @@
+.AcceptRejectLocRequest {
+    margin-top: 30px;
+}
+
+.AcceptRejectLocRequest .text-action-container {
+    display: flex;
+}
+
+.AcceptRejectLocRequest .text-action-container .question {
+    font-size: 1.2rem;
+    flex-grow: 1;
+}

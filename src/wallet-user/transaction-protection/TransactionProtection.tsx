@@ -19,6 +19,7 @@ import VoidLocs from './VoidLocs';
 
 import './TransactionProtection.css';
 import { Children } from "../../common/types/Helpers";
+import DraftLocs from './DraftLocs';
 
 export interface Props {
     locType: LocType,
@@ -30,7 +31,7 @@ export interface Props {
 export default function TransactionProtection(props: Props) {
     const { colorTheme, nodesDown } = useCommonContext();
     const [ locTabKey, setLocTabKey ] = useState<string>('open');
-    const [ requestTabKey, setRequestTabKey ] = useState<string>('pending');
+    const [ requestTabKey, setRequestTabKey ] = useState<string>('draft');
     const { locType, titles, iconId } = props;
 
     return (
@@ -93,6 +94,11 @@ export default function TransactionProtection(props: Props) {
                             activeKey={ requestTabKey }
                             onSelect={ key => setRequestTabKey(key || 'pending') }
                             tabs={[
+                                {
+                                    key: "draft",
+                                    title: "Draft",
+                                    render: () => <DraftLocs locType={ locType } />
+                                },
                                 {
                                     key: "pending",
                                     title: "Pending",
