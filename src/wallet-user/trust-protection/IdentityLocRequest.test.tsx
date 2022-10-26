@@ -1,17 +1,19 @@
+import { UUID } from "@logion/node-api";
+import { DraftRequest, LocsState } from "@logion/client";
+import { render, waitFor, screen, getByText } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+
 import { GUILLAUME } from "../../common/TestData";
+import { shallowRender, clickByName } from "../../tests";
+import IdentityLocRequest from "./IdentityLocRequest";
+import { fillInForm } from "../../components/identity/IdentityFormTestHelper";
+import { setMutateLocsState, setHasValidIdentityLoc, setLocsState } from "../__mocks__/UserContextMock";
+import { navigate } from 'src/__mocks__/ReactRouterMock';
 
 jest.mock('@logion/node-api/dist/Accounts');
 jest.mock('../UserContext');
 jest.mock('../../logion-chain');
 jest.mock('../../common/CommonContext');
-jest.setTimeout(10000);
-
-import { shallowRender, clickByName } from "../../tests";
-import IdentityLocRequest from "./IdentityLocRequest";
-import { render, waitFor, screen, getByText } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import { fillInForm } from "../../components/identity/IdentityFormTestHelper";
-import { setMutateLocsState, setHasValidIdentityLoc } from "../__mocks__/UserContextMock";
 
 describe("IdentityLocRequest", () => {
 
@@ -62,6 +64,24 @@ describe("IdentityLocRequest", () => {
     });
 
     it("should call submit when form is correctly filled", async  () => {
+        const locId = new UUID("a2b9dfa7-cbde-414b-8cda-cdd221a57643");
+        const draftRequest = {
+            locId,
+            locsState: () => locsState,
+            data: () => ({
+                id: locId,
+            }),
+        } as DraftRequest;
+        const locsState = {
+            legalOfficersWithValidIdentityLoc: [ GUILLAUME ],
+            requestIdentityLoc: () => Promise.resolve(draftRequest),
+        } as unknown as LocsState;
+        setLocsState(locsState);
+        setMutateLocsState(async (mutator: (current: LocsState) => Promise<LocsState>): Promise<void> => {
+            await mutator(locsState);
+            return Promise.resolve();
+        });
+
         render(<IdentityLocRequest backPath="back" />);
 
         await selectLegalOfficer();
@@ -69,7 +89,7 @@ describe("IdentityLocRequest", () => {
 
         await clickByName("Submit");
 
-        await waitFor(() => expect(mutateLocsState).toBeCalled());
+        await waitFor(() => expect(navigate).toBeCalledWith(`/user/loc/identity/${locId.toString()}`));
     });
 })
 

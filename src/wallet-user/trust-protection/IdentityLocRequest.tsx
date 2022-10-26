@@ -4,7 +4,7 @@ import IdentityForm, { FormValues } from "../../components/identity/IdentityForm
 import { useForm } from "react-hook-form";
 import { useCommonContext } from "../../common/CommonContext";
 import SelectLegalOfficer from "./SelectLegalOfficer";
-import { LegalOfficer, LocsState, UserIdentity, PostalAddress } from "@logion/client";
+import { LegalOfficer, LocsState, UserIdentity, PostalAddress, DraftRequest } from "@logion/client";
 import { useUserContext } from "../UserContext";
 import Form from "react-bootstrap/Form";
 import Frame from "../../common/Frame";
@@ -14,6 +14,7 @@ import { useNavigate } from "react-router";
 import { Row, Col } from "react-bootstrap";
 import FormGroup from "src/common/FormGroup";
 import './IdentityLocRequest.css';
+import { locDetailsPath } from "../UserRouter";
 
 export interface Props {
     backPath: string,
@@ -73,19 +74,21 @@ export default function IdentityLocRequest(props: Props) {
             city: formValues.city,
             country: formValues.country,
         };
+        let draftRequest: DraftRequest;
         await mutateLocsState(async (locsState: LocsState) => {
-            return (await locsState.requestIdentityLoc({
+            draftRequest = await locsState.requestIdentityLoc({
                 legalOfficer,
                 description: `KYC ${ userIdentity.firstName } ${ userIdentity.lastName } - ${ accounts.current?.address }`,
                 userIdentity,
                 userPostalAddress,
                 company: company ? companyName : undefined,
-                draft: false,
-            })).locsState();
+                draft: true,
+            }) as DraftRequest;
+            return draftRequest.locsState();
         })
         clear();
-        navigate(props.backPath);
-    }, [ mutateLocsState, legalOfficer, accounts, clear, navigate, props.backPath, company, companyName ])
+        navigate(locDetailsPath(draftRequest!.data().id, "Identity"));
+    }, [ mutateLocsState, legalOfficer, accounts, clear, navigate, company, companyName ])
 
     return (
         <FullWidthPane

@@ -77,18 +77,18 @@ export function LocItems(props: LocItemsProps) {
         return (
             <ActionCell>
                 { locItem.type === 'Data' && <ButtonGroup>
-                    { props.viewer === 'LegalOfficer' && <LocPublishPublicDataButton locItem={ locItem } /> }
-                    { canDelete(accounts?.current?.address, locItem, loc.ownerAddress) &&
+                    { props.viewer === 'LegalOfficer' && props.loc.status === "OPEN" && <LocPublishPublicDataButton locItem={ locItem } /> }
+                    { canDelete(accounts?.current?.address, locItem, props.viewer, loc) &&
                         <DeleteButton locItem={ locItem } action={ deleteMetadata! } /> }
                 </ButtonGroup> }
                 { locItem.type === 'Linked LOC' && <ButtonGroup>
                     { props.viewer === 'LegalOfficer' && <LocPublishLinkButton locItem={ locItem } /> }
-                    { canDelete(accounts?.current?.address, locItem, loc.ownerAddress) &&
+                    { canDelete(accounts?.current?.address, locItem, props.viewer, loc) &&
                         <DeleteButton locItem={ locItem } action={ deleteLink! } /> }
                 </ButtonGroup> }
                 { locItem.type === 'Document' && <ButtonGroup>
-                    { props.viewer === 'LegalOfficer' && <LocPublishPrivateFileButton locItem={ locItem } /> }
-                    { canDelete(accounts?.current?.address, locItem, loc.ownerAddress) &&
+                    { props.viewer === 'LegalOfficer' && props.loc.status === "OPEN" && <LocPublishPrivateFileButton locItem={ locItem } /> }
+                    { canDelete(accounts?.current?.address, locItem, props.viewer, loc) &&
                         <DeleteButton locItem={ locItem } action={ deleteFile! } /> }
                 </ButtonGroup> }
             </ActionCell>)
@@ -185,14 +185,11 @@ export function LocItems(props: LocItemsProps) {
     }
 }
 
-function canDelete(address: string | undefined, item: LocItem, owner: string): boolean {
-    if (!address) {
-        return false;
-    }
-
+function canDelete(address: string | undefined, item: LocItem, viewer: Viewer, loc: LocData): boolean {
     if (item.type === "Linked LOC") {
-        return address === owner;
+        return viewer === "LegalOfficer";
     } else {
-        return address === owner || address === item.submitter;
+        return (viewer === "User" && item.submitter === address && (loc.status === "DRAFT" || loc.status === "OPEN"))
+            || (viewer === "LegalOfficer" && loc.status === "OPEN");
     }
 }
