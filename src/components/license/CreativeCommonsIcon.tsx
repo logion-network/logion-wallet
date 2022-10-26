@@ -1,4 +1,6 @@
-import { CreativeCommonsCode } from "@logion/client";
+import { CreativeCommons, CreativeCommonsCode } from "@logion/client";
+import NewTabLink from "../../common/NewTabLink";
+import "./CreativeCommonsIcon.css";
 
 import by from "@creativecommons/cc-assets/license_badges/big/by.svg";
 import by_sa from "@creativecommons/cc-assets/license_badges/big/by_sa.svg";
@@ -17,12 +19,18 @@ export const creativeCommonsBadges: Record<CreativeCommonsCode, string> = {
 }
 
 interface CreativeCommonsIconProps {
-    code: CreativeCommonsCode
+    creativeCommons: CreativeCommons
 }
 
 export default function CreativeCommonsIcon(props: CreativeCommonsIconProps) {
-    const { code } = props;
+    const { creativeCommons } = props;
     return (
-        <img className="CreativeCommonsIcon" src={ creativeCommonsBadges[code] } alt={ code } />
+        <NewTabLink
+            className="CreativeCommonsIcon"
+            href={ creativeCommons.deedUrl() }>
+            <img
+                src={ creativeCommonsBadges[creativeCommons.parameters] }
+                alt={ creativeCommons.parameters } />
+        </NewTabLink>
     )
 }
