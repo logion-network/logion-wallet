@@ -2,7 +2,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event'
 import { clickByName, typeByLabel } from '../../tests';
 import LocCreation from './LocCreation';
-import { setHasValidIdentityLoc, setLocsState, mutateLocsState, setMutateLocsState } from "../__mocks__/UserContextMock";
+import { setHasValidIdentityLoc, setLocsState, setMutateLocsState } from "../__mocks__/UserContextMock";
 import { PATRICK, GUILLAUME } from "../../common/TestData";
 import { DraftRequest, LocsState } from '@logion/client';
 import { UUID } from '@logion/node-api';

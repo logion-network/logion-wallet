@@ -224,19 +224,25 @@ export function LocDetailsTabContent(props: ContentProps) {
             !loc.closed && loc.voidInfo === undefined &&
             <Row>
                 <Col xxl={ 5 } xl={ 4 }>
-                    <ButtonGroup align="left">
-                        <LocPublicDataButton
-                            locItems={ locItems }
-                            addMetadata={ addMetadata }
-                        />
-                        <LocPrivateFileButton
-                            locItems={ locItems }
-                            addFile={ addFile }
-                        />
-                    </ButtonGroup>
+                    {
+                        (
+                            (viewer === "User" && (loc.status === "DRAFT" || loc.status === "OPEN"))
+                            || (viewer === "LegalOfficer" && loc.status === "OPEN")
+                        ) &&
+                        <ButtonGroup align="left">
+                            <LocPublicDataButton
+                                locItems={ locItems }
+                                addMetadata={ addMetadata }
+                            />
+                            <LocPrivateFileButton
+                                locItems={ locItems }
+                                addFile={ addFile }
+                            />
+                        </ButtonGroup>
+                    }
                 </Col>
                 {
-                    viewer === "LegalOfficer" &&
+                    viewer === "LegalOfficer" && loc.status === "OPEN" &&
                     <>
                     <Col className="link-button-container" xxl={ 4 } xl={ 4 }>
                         <LocLinkButton excludeNewIdentity={ locState.isLogionData() } />
