@@ -1,4 +1,6 @@
+import { LocData, LocRequestState, LocsState } from "@logion/client";
 import { UUID } from "@logion/node-api";
+import { setLocsState } from "src/legal-officer/__mocks__/LegalOfficerContextMock";
 import { shallowRender } from "src/tests"
 import { LegalOfficerLocContextProvider, useLegalOfficerLocContext } from "./LegalOfficerLocContext";
 import { useLocContext } from "./LocContext";
@@ -8,6 +10,13 @@ jest.mock("../legal-officer/LegalOfficerContext");
 describe("LegalOfficerLocContextProvider", () => {
 
     it("renders", () => {
+        setLocsState({
+            findById: () => ({
+                data: () => ({
+                    id: locId,
+                } as unknown as LocData)
+            } as unknown as LocRequestState)
+        } as unknown as LocsState);
         const element = shallowRender(<LegalOfficerLocContextProvider
             locId={ locId }
             backPath="/"

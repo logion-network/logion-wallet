@@ -45,26 +45,9 @@ exports[`LegalOfficerLocContextProvider renders 1`] = `
       },
     }
   }
-  locId={
-    UUID {
-      "bytes": Uint8Array [
-        39,
-        76,
-        18,
-        115,
-        93,
-        14,
-        76,
-        129,
-        188,
-        228,
-        161,
-        85,
-        24,
-        175,
-        253,
-        53,
-      ],
+  locState={
+    Object {
+      "data": [Function],
     }
   }
   refreshLocs={[Function]}

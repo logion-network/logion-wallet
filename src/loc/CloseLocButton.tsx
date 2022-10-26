@@ -49,7 +49,7 @@ export default function CloseLocButton(props: Props) {
     const { accounts, axiosFactory, api } = useLogionChain();
     const { refresh } = useCommonContext();
     const { refreshRequests, refreshLocs } = useLegalOfficerContext();
-    const { closeExtrinsic, close, locItems, locId } = useLocContext();
+    const { closeExtrinsic, close, locItems, loc } = useLocContext();
     const [ closeState, setCloseState ] = useState<CloseState>({ status: CloseStatus.NONE });
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
     const [ disabled, setDisabled ] = useState<boolean>(false);
@@ -119,13 +119,13 @@ export default function CloseLocButton(props: Props) {
     }, [ setCloseState, props.protectionRequest, accounts, api, close, refresh, refreshLocs, alreadyVouched ]);
 
     useEffect(() => {
-        if (closeState.status === CloseStatus.ACCEPTING) {
+        if (closeState.status === CloseStatus.ACCEPTING && loc) {
             setCloseState({ status: CloseStatus.NONE });
             (async function() {
                 const currentAddress = accounts!.current!.address;
                 await acceptProtectionRequest(axiosFactory!(currentAddress)!, {
                     requestId: props.protectionRequest!.id,
-                    locId: locId!
+                    locId: loc.id,
                 });
                 close!();
                 refresh!(false);
@@ -139,7 +139,11 @@ export default function CloseLocButton(props: Props) {
                 }
             })();
         }
-    }, [ closeState, setCloseState, accounts, axiosFactory, close, locId, navigate, props.protectionRequest, refresh, refreshRequests, refreshLocs ]);
+    }, [ closeState, setCloseState, accounts, axiosFactory, close, loc, navigate, props.protectionRequest, refresh, refreshRequests, refreshLocs ]);
+
+    if(!loc) {
+        return null;
+    }
 
     let closeButtonText;
     let firstStatus: CloseStatus;
@@ -187,7 +191,7 @@ export default function CloseLocButton(props: Props) {
                     }
                 ]}
             >
-                <p>You are about to close the identity LOC (ID: { locId.toDecimalString() }) you created with regard to a request for protection.</p>
+                <p>You are about to close the identity LOC (ID: { loc.id.toDecimalString() }) you created with regard to a request for protection.</p>
                 <p>By clicking on "Confirm" below, you will definitively accept to protect the account of the following person:</p>
 
                 <Row>

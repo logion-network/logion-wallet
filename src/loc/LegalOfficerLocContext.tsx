@@ -27,15 +27,15 @@ export function fetchAllLocsParams(legalOfficer: LegalOfficer): FetchAllLocsPara
 };
 
 export function LegalOfficerLocContextProvider(props: Props) {
-    const { refreshLocs, legalOfficer } = useLegalOfficerContext();
+    const { refreshLocs, legalOfficer, locsState } = useLegalOfficerContext();
 
-    if(!legalOfficer) {
+    if(!legalOfficer || !locsState) {
         return null;
     }
 
     return (
         <LocContextProvider
-            locId={ props.locId }
+            locState={ locsState.findById(props.locId) }
             backPath={ props.backPath }
             detailsPath={ props.detailsPath }
             refreshLocs={ async (newLocsState?: LocsState) => refreshLocs(newLocsState) }

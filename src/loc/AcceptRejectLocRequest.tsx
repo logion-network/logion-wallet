@@ -1,9 +1,10 @@
 import { LocData } from "@logion/client";
 import { useCallback, useState } from "react";
 import { Form } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+
 import Button from "src/common/Button";
 import ButtonGroup from "src/common/ButtonGroup";
-import { useCommonContext } from "src/common/CommonContext";
 import Icon from "src/common/Icon";
 import PolkadotFrame from "src/common/PolkadotFrame";
 import ProcessStep from "src/legal-officer/ProcessStep";
@@ -16,15 +17,16 @@ import "./AcceptRejectLocRequest.css";
 
 export interface Props {
     loc: LocData;
+    rejectPath: string;
 }
 
 export default function AcceptRejectLocRequest(props: Props) {
     const { axiosFactory, accounts } = useLogionChain();
-    const { refresh } = useCommonContext();
     const [ requestToReject, setRequestToReject ] = useState<string | null>(null);
     const [ reason, setReason ] = useState<string>("");
     const [ requestToAccept, setRequestToAccept ] = useState<LocData | null>(null);
     const { refresh: refreshLoc } = useLocContext();
+    const navigate = useNavigate();
 
     const clearRequestToAccept = useCallback(() => {
         refreshLoc();
@@ -42,9 +44,8 @@ export default function AcceptRejectLocRequest(props: Props) {
             requestId: requestToReject!,
             rejectReason: reason!,
         });
-        refresh(false);
-        refreshLoc();
-        setRequestToReject(null);
+        await refreshLoc();
+        navigate(props.rejectPath);
     };
 
     return (

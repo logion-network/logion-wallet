@@ -12,6 +12,7 @@ import { useLegalOfficerContext } from "../LegalOfficerContext";
 import { useResponsiveContext } from "../../common/Responsive";
 import { locDetailsPath } from "../LegalOfficerPaths";
 import { useNavigate } from 'react-router-dom';
+import { useMemo } from "react";
 
 export interface Props {
     locType: LocType;
@@ -22,6 +23,8 @@ export default function PendingLocRequests(props: Props) {
     const { locType } = props;
     const { width } = useResponsiveContext();
     const navigate = useNavigate();
+
+    const data = useMemo(() => pendingLocRequests ? pendingLocRequests[locType].map(loc => loc.data()) : [], [ pendingLocRequests, locType ]);
 
     if (pendingLocRequests === null) {
         return null;
@@ -73,7 +76,7 @@ export default function PendingLocRequests(props: Props) {
                         width: "150px",
                     }
                 ]}
-                data={ pendingLocRequests[locType].map(loc => loc.data()) }
+                data={ data }
                 renderEmpty={ () => <EmptyTableMessage>No pending LOC request</EmptyTableMessage> }
             />
         </>

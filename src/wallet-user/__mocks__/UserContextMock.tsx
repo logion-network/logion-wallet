@@ -60,7 +60,7 @@ export function setRecoveredBalanceState(state: BalanceState | undefined) {
 
 export let mutateRecoveredBalanceState = jest.fn().mockReturnValue(Promise.resolve());
 
-export let locsState: Partial<LocsState>;
+export let locsState: Partial<LocsState> = {};
 
 export function setOpenedLocRequests(requests: any[]) {
     locsState = {

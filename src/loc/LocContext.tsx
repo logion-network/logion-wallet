@@ -59,7 +59,6 @@ export interface LinkTarget {
 }
 
 export interface LocContext {
-    locId: UUID
     loc: LocData | null
     supersededLoc?: PublicLoc
     locState: LocRequestState | null
@@ -70,12 +69,12 @@ export interface LocContext {
     deleteMetadata: ((locItem: LocItem) => void) | null
     backPath: string
     detailsPath: (locId: UUID, type: LocType) => string
-    refresh: () => void
+    refresh: () => Promise<void>
     checkHash: (hash: string) => void
     checkResult: DocumentCheckResult
     collectionItem?: CollectionItem
-    requestSof: (() => void) | null
-    requestSofOnCollection: ((collectionItemId: string) => void) | null
+    requestSof: (() => Promise<void>) | null
+    requestSofOnCollection: ((collectionItemId: string) => Promise<void>) | null
     addLink: ((otherLoc: LinkTarget, nature: string) => void) | null
     publishLink: ((locItem: LocItem) => SignAndSubmit) | null
     publishMetadata: ((locItem: LocItem) => SignAndSubmit) | null
@@ -96,9 +95,10 @@ export interface LocContext {
 const MAX_REFRESH = 20;
 const REFRESH_INTERVAL = 5000;
 
-function initialContextValue(locId: UUID, backPath: string, detailsPath: (locId: UUID, type: LocType) => string): LocContext {
+function initialContextValue(locState: LocRequestState | null, backPath: string, detailsPath: (locId: UUID, type: LocType) => string): LocContext {
     return {
-        locId,
+        locState,
+        loc: locState ? locState.data() : null,
         backPath,
         detailsPath,
         locItems: [],
@@ -118,9 +118,7 @@ function initialContextValue(locId: UUID, backPath: string, detailsPath: (locId:
         deleteMetadata: null,
         voidLoc: null,
         voidLocExtrinsic: null,
-        refresh: () => {},
-        locState: null,
-        loc: null,
+        refresh: () => Promise.reject(new Error("undefined")),
         checkHash: () => {},
         checkResult: { result: "NONE" },
         requestSof: null,
@@ -131,7 +129,7 @@ function initialContextValue(locId: UUID, backPath: string, detailsPath: (locId:
     }
 }
 
-const LocContextObject: React.Context<LocContext> = React.createContext(initialContextValue(new UUID(), "", () => ""))
+const LocContextObject: React.Context<LocContext> = React.createContext(initialContextValue(null, "", () => ""))
 
 type ActionType = 'SET_LOC_REQUEST'
     | 'SET_LOC'
@@ -190,14 +188,14 @@ interface Action {
     voidInfo?: FullVoidInfo,
     voidLoc?: (voidInfo: FullVoidInfo) => void,
     voidLocExtrinsic?: (voidInfo: VoidInfo) => SignAndSubmit,
-    refresh?: () => void,
+    refresh?: () => Promise<void>,
     locState?: LocRequestState,
     locData?: LocData,
     checkHash?: (hash: string) => void,
     collectionItem?: CollectionItem,
     checkResult?: DocumentCheckResult,
-    requestSof?: () => void,
-    requestSofOnCollection?: (collectionItemId: string) => void,
+    requestSof?: () => Promise<void>,
+    requestSofOnCollection?: (collectionItemId: string) => Promise<void>,
     collectionItems?: CollectionItem[],
     cancelRequest?: () => Promise<void>,
     submitRequest?: () => Promise<void>,
@@ -206,7 +204,7 @@ interface Action {
 const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action): LocContext => {
     switch (action.type) {
         case "RESET":
-            return initialContextValue(action.locId!, state.backPath, state.detailsPath)
+            return initialContextValue(action.locState!, state.backPath, state.detailsPath)
         case "SET_LOC":
             return {
                 ...state,
@@ -363,11 +361,11 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
 }
 
 export interface Props {
-    locId: UUID
+    locState: LocRequestState
     children: JSX.Element | JSX.Element[] | null
     backPath: string
     detailsPath: (locId: UUID, type: LocType) => string
-    refreshLocs: (newLocsState?: LocsState) => Promise<void>
+    refreshLocs: (newLocsState: LocsState) => Promise<void>
     fetchAllLocsParams?: FetchAllLocsParams
 }
 
@@ -380,15 +378,15 @@ const enum NextRefresh {
 export function LocContextProvider(props: Props) {
     const { axiosFactory, accounts, api, client } = useLogionChain();
     const { refresh } = useCommonContext();
-    const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue(props.locId, props.backPath, props.detailsPath));
+    const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue(props.locState, props.backPath, props.detailsPath));
     const [ refreshing, setRefreshing ] = useState<boolean>(false);
     const [ refreshCounter, setRefreshCounter ] = useState<number>(0);
 
     useEffect(() => {
-        if (props.locId.toString() !== contextValue.locId.toString()) {
-            dispatch({ type: 'RESET', locId: props.locId });
+        if (props.locState !== contextValue.locState) {
+            dispatch({ type: 'RESET', locState: props.locState });
         }
-    }, [ contextValue.locId, props.locId ])
+    }, [ contextValue.locState, props.locState ])
 
     const toLocItems = useCallback((locState: LocRequestState) => {
         const loc = locState.data();
@@ -431,7 +429,7 @@ export function LocContextProvider(props: Props) {
         setRefreshCounter(MAX_REFRESH);
     }, []);
 
-    const dispatchLocAndItems = useCallback(async (locState: LocRequestState, triggerRefresh: boolean, refreshLocs: boolean) => {
+    const dispatchLocAndItems = useCallback(async (locState: LocRequestState, triggerRefresh: boolean) => {
         const locItems = toLocItems(locState);
         const locData = locState.data();
         let supersededLoc = undefined;
@@ -460,18 +458,17 @@ export function LocContextProvider(props: Props) {
         await props.refreshLocs(locState.locsState());
     }, [ toLocItems, client, contextValue.supersededLoc, props, startRefresh ]);
 
-    const refreshLocState = useCallback(async (triggerRefresh: boolean, refreshLocs: boolean): Promise<LocRequestState> => {
-        const newLocsState = await client!.locsState(props.fetchAllLocsParams);
-        const locState = newLocsState.findById(contextValue.locId);
-        await dispatchLocAndItems(locState! , triggerRefresh, refreshLocs);
-        return locState!;
-    }, [ contextValue.locId, client, dispatchLocAndItems, props.fetchAllLocsParams ]);
-
     useEffect(() => {
-        if (client !== null && contextValue.locState === null) {
-            refreshLocState(true, false);
+        if(contextValue.locState && mustRecomputeItems(contextValue.locState, contextValue.locItems)) {
+            dispatchLocAndItems(contextValue.locState, true);
         }
-    }, [ contextValue.locState, client, refreshLocState ]);
+    }, [ contextValue.locState, contextValue.locItems, dispatchLocAndItems ]);
+
+    const refreshLocState = useCallback(async (triggerRefresh: boolean): Promise<LocRequestState> => {
+        const locState = await contextValue.locState!.refresh();
+        await dispatchLocAndItems(locState, triggerRefresh);
+        return locState;
+    }, [ contextValue.locState, dispatchLocAndItems ]);
 
     const refreshNameTimestamp = useCallback<() => Promise<NextRefresh>>(async () => {
         if (contextValue.loc === null) {
@@ -489,7 +486,7 @@ export function LocContextProvider(props: Props) {
         }
 
         let nextRefresh = NextRefresh.SCHEDULE;
-        const locState = await refreshLocState(false, false);
+        const locState = await refreshLocState(false);
         if (refreshTimestamps(contextValue.locItems, locState)) {
             nextRefresh = NextRefresh.IMMEDIATE;
         }
@@ -645,7 +642,7 @@ export function LocContextProvider(props: Props) {
 
     const confirmFileFunction = useCallback(async (locItem: LocItem) => {
         await confirmLocFile(axiosFactory!(contextValue.loc!.ownerAddress)!, contextValue.loc!.id, locItem.value);
-        await refreshLocState(true, false);
+        await refreshLocState(true);
     }, [ axiosFactory, contextValue.loc, refreshLocState ])
 
     useEffect(() => {
@@ -658,7 +655,7 @@ export function LocContextProvider(props: Props) {
     }, [ contextValue.confirmFile, confirmFileFunction ]);
 
     const deleteFileFunction = useCallback(async (item: LocItem) => {
-        await dispatchLocAndItems(await (contextValue.locState as OpenLoc).deleteFile({ hash: item.value }), true, false)
+        await dispatchLocAndItems(await (contextValue.locState as OpenLoc).deleteFile({ hash: item.value }), true)
     }, [ dispatchLocAndItems, contextValue.locState ])
 
     useEffect(() => {
@@ -672,7 +669,7 @@ export function LocContextProvider(props: Props) {
 
     const confirmLinkFunction = useCallback(async (locItem: LocItem) => {
         await confirmLocLink(axiosFactory!(contextValue.loc!.ownerAddress)!, contextValue.loc!.id, locItem.target!);
-        await refreshLocState(true, false);
+        await refreshLocState(true);
     }, [ axiosFactory, contextValue.loc, refreshLocState ])
 
     useEffect(() => {
@@ -686,7 +683,7 @@ export function LocContextProvider(props: Props) {
 
     const deleteLinkFunction = useCallback(async (item: LocItem) => {
         await deleteLocLink(axiosFactory!(contextValue.loc!.ownerAddress)!, contextValue.loc!.id, item.target!)
-        await refreshLocState(true, false);
+        await refreshLocState(true);
     }, [ axiosFactory, contextValue.loc, refreshLocState ])
 
     useEffect(() => {
@@ -700,7 +697,7 @@ export function LocContextProvider(props: Props) {
 
     const confirmMetadataFunction = useCallback(async (locItem: LocItem) => {
         await confirmLocMetadataItem(axiosFactory!(contextValue.loc!.ownerAddress)!, contextValue.loc!.id, locItem.name);
-        await refreshLocState(true, false);
+        await refreshLocState(true);
     }, [ axiosFactory, contextValue.loc, refreshLocState ])
 
     useEffect(() => {
@@ -713,7 +710,7 @@ export function LocContextProvider(props: Props) {
     }, [ contextValue.confirmMetadata, confirmMetadataFunction ]);
 
     const deleteMetadataFunction = useCallback(async (item: LocItem) => {
-        await dispatchLocAndItems(await (contextValue.locState as OpenLoc).deleteMetadata({ name: item.name }), false, false)
+        await dispatchLocAndItems(await (contextValue.locState as OpenLoc).deleteMetadata({ name: item.name }), false)
     }, [ contextValue.locState, dispatchLocAndItems ])
 
     useEffect(() => {
@@ -769,7 +766,7 @@ export function LocContextProvider(props: Props) {
             target: otherLoc.id.toString(),
             nature
         });
-        await refreshLocState(true, false);
+        await refreshLocState(true);
     }, [ axiosFactory, contextValue.loc, refreshLocState ])
 
     useEffect(() => {
@@ -786,7 +783,7 @@ export function LocContextProvider(props: Props) {
             name,
             value,
         });
-        await dispatchLocAndItems(state, true, false);
+        await dispatchLocAndItems(state, true);
     }, [ contextValue.locState, dispatchLocAndItems ])
 
     useEffect(() => {
@@ -804,7 +801,7 @@ export function LocContextProvider(props: Props) {
             fileName: name,
             nature
         });
-        await dispatchLocAndItems(state, true, false);
+        await dispatchLocAndItems(state, true);
     }, [ contextValue.locState, dispatchLocAndItems ])
 
     useEffect(() => {
@@ -816,9 +813,9 @@ export function LocContextProvider(props: Props) {
         }
     }, [ contextValue.addFile, addFileFunction ]);
 
-    const refreshFunction = useCallback(() => {
-        dispatch({ type: 'RESET', locId: contextValue.locId });
-    }, [ dispatch, contextValue.locId ]);
+    const refreshFunction = useCallback(async () => {
+        await refreshLocState(true);
+    }, [ refreshLocState ]);
 
     useEffect(() => {
         if(contextValue.refresh !== refreshFunction) {
@@ -923,7 +920,7 @@ export function LocContextProvider(props: Props) {
         const loc = contextValue.locState;
         if (loc instanceof DraftRequest) {
             const newState = await loc.submit();
-            dispatchLocAndItems(newState, false, false);
+            dispatchLocAndItems(newState, false);
         } else {
             throw Error("Can only request SOF on Closed Collection LOC.")
         }
@@ -997,4 +994,9 @@ function refreshRequestDates(current: LocRequestState, next: LocRequestState): b
         return true;
     }
     return false;
+}
+
+function mustRecomputeItems(locState: LocRequestState, locItems: LocItem[]): boolean {
+    const locData = locState.data();
+    return (locData.files.length + locData.metadata.length + locData.links.length) !== locItems.length;
 }

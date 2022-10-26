@@ -11,6 +11,7 @@ import { setRejectLocRequest } from "./__mocks__/ModelMock";
 
 jest.mock("../logion-chain");
 jest.mock('./Model');
+jest.mock("./LocContext");
 
 describe("AcceptRejectLocRequest", () => {
 
@@ -24,7 +25,7 @@ describe("AcceptRejectLocRequest", () => {
             ownerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
             requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
             status: "REQUESTED"
-        } as LocData} />);
+        } as LocData} rejectPath="/" />);
         expect(tree).toMatchSnapshot();
     });
 
@@ -37,7 +38,7 @@ describe("AcceptRejectLocRequest", () => {
             ownerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
             requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
             status: "REQUESTED"
-        } as LocData} />);
+        } as LocData} rejectPath="/" />);
         const rejectButton = screen.getByTestId(`reject-${REQUEST_ID}`);
         await userEvent.click(rejectButton);
 
@@ -68,7 +69,7 @@ describe("AcceptRejectLocRequest", () => {
             bars: 1,
             status: "PENDING",
             locType: "Transaction"
-        } as unknown as LocData} />);
+        } as unknown as LocData} rejectPath="/" />);
 
         const acceptButton = tree.getByTestId(`accept-${REQUEST_ID}`);
         await userEvent.click(acceptButton);

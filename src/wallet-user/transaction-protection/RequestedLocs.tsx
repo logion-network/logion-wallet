@@ -16,7 +16,7 @@ export default function RequestedLocs(props: Props) {
     const { locsState } = useUserContext()
     const { locType } = props
 
-    const data = useMemo(() => locsState?.pendingRequests[locType].map(locState => locState.data()) || [], [ locsState, locType ]);
+    const data = useMemo(() => locsState?.pendingRequests ? locsState?.pendingRequests[locType].map(locState => locState.data()) : [], [ locsState, locType ]);
 
     if(locsState === null || locsState?.pendingRequests === undefined) {
         return <Loader />;

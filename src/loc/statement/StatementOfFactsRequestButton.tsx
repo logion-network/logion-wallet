@@ -2,28 +2,24 @@ import Button from "../../common/Button";
 import { useUserLocContext } from "../UserLocContext";
 import { useState, useCallback } from "react";
 import Dialog from "../../common/Dialog";
-import { useCommonContext } from "../../common/CommonContext";
 import { locRequestsPath } from "../../wallet-user/UserRouter";
 
 type Status = 'Idle' | 'Confirming' | 'Requesting' | 'Requested';
 
 export default function StatementOfFactsRequestButton(props: { itemId?: string }) {
-
     const { itemId } = props;
     const { requestSof, requestSofOnCollection } = useUserLocContext();
-    const { refresh } = useCommonContext()
     const [ status, setStatus ] = useState<Status>('Idle')
 
-    const confirmCallback = useCallback(() => {
+    const confirmCallback = useCallback(async () => {
         setStatus('Requesting')
         if (itemId) {
-            requestSofOnCollection!(itemId);
+            await requestSofOnCollection!(itemId);
         } else {
-            requestSof!();
+            await requestSof!();
         }
-        refresh(false);
         setStatus('Requested');
-    }, [ itemId, refresh, requestSof, requestSofOnCollection ])
+    }, [ itemId, requestSof, requestSofOnCollection ])
 
     return (
         <>

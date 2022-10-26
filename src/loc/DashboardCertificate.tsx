@@ -20,7 +20,6 @@ export default function DashboardCertificate() {
     const itemId = useParams<"itemId">().itemId;
     const {
         backPath,
-        locId,
         loc,
         collectionItems,
     } = useLocContext();
@@ -34,11 +33,11 @@ export default function DashboardCertificate() {
     useEffect(() => {
         if(loc && itemId && deliveries === undefined) {
             (async function() {
-                const deliveries = await getAllDeliveries(axiosFactory!(loc?.ownerAddress), { locId: locId.toString(), collectionItemId: itemId });
+                const deliveries = await getAllDeliveries(axiosFactory!(loc?.ownerAddress), { locId: loc.id.toString(), collectionItemId: itemId });
                 setDeliveries(deliveries);
             })();
         }
-    }, [ collectionItem, axiosFactory, itemId, locId, loc, deliveries ]);
+    }, [ collectionItem, axiosFactory, itemId, loc, deliveries ]);
 
     const checkHash = useCallback((hash: string) => {
         if (collectionItem) {
