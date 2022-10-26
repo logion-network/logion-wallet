@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreativeCommons renders 1`] = `
+<div
+  className="CreativeCommons"
+>
+  <CertificateLabel
+    smaller={true}
+  >
+    IP rights granted with this Collection Item
+  </CertificateLabel>
+  <Row>
+    <CreativeCommonsIcon
+      code="BY-NC-SA"
+    />
+    <p
+      className="text"
+    >
+      This work is licensed under a 
+      <NewTabLink
+        href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en"
+        inline={true}
+      >
+        Creative Commons Attribution 4.0 International License
+      </NewTabLink>
+      .
+    </p>
+  </Row>
+</div>
+`;

@@ -11,9 +11,9 @@ export default function StatementOfFacts() {
     const [ sofParams, setSofParams ] = useState<SofParams>();
 
     useEffect(() => {
-        const pathModel = loadSofParams();
-        document.title = `logion - ${ pathModel.locId }`;
-        setSofParams(pathModel);
+        const params = loadSofParams();
+        document.title = `logion - ${ params.locId }`;
+        setSofParams(params);
     }, [ location ]);
 
     if(sofParams === undefined) {
@@ -21,8 +21,8 @@ export default function StatementOfFacts() {
     }
 
     if(sofParams.language === 'fr') {
-        return <StatementOfFactsTemplateFR pathModel={ sofParams } />;
+        return <StatementOfFactsTemplateFR sofParams={ sofParams } />;
     } else {
-        return <StatementOfFactsTemplateEN pathModel={ sofParams } />;
+        return <StatementOfFactsTemplateEN sofParams={ sofParams } />;
     }
 }

@@ -12,6 +12,7 @@ export interface ConfigType {
     edgeNodes: Node[],
     crossmintApiKey: string,
     logionClassification: string,
+    creativeCommons: string,
 }
 
 export const DEFAULT_CONFIG: ConfigType = {
@@ -23,6 +24,7 @@ export const DEFAULT_CONFIG: ConfigType = {
     edgeNodes: [],
     crossmintApiKey: "",
     logionClassification: "",
+    creativeCommons: "",
 };
 
 export interface EnvConfigType extends Record<string, any> {

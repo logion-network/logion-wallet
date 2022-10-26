@@ -1553,6 +1553,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@creativecommons/cc-assets@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@creativecommons/cc-assets@npm:0.1.0"
+  checksum: 8227269f128fe0ed1dadbcd297874abbcabfcab04c627557515468ef9c5979ca7ce0a9e626427ccf6ef5bac702ef2b7accec4344b52b4440d87cafd43b85ba55
+  languageName: node
+  linkType: hard
+
 "@crossmint/embed@npm:^0.0.2":
   version: 0.0.2
   resolution: "@crossmint/embed@npm:0.0.2"
@@ -2931,14 +2938,14 @@ __metadata:
   linkType: hard
 
 "@logion/client@npm:^0.15.0-1":
-  version: 0.15.0-5
-  resolution: "@logion/client@npm:0.15.0-5"
+  version: 0.15.0-8
+  resolution: "@logion/client@npm:0.15.0-8"
   dependencies:
     "@logion/node-api": ^0.7.0
     axios: ^0.27.2
     luxon: ^3.0.1
     mime-db: ^1.52.0
-  checksum: 6dba75716ac5f37e2140edfad873bc7dfec1609d4af402cde39aeae5db75af989ed11b6aa26ddd05be83be6288c1db8c5d6d0e9d9596341959a94f6c5ba70a1e
+  checksum: 7a38d59e75bb5a95d6c252e5d065ff4bf8732d45bb6f02d5ecdbf2002904e1432ab7d5fb228077975be00dbd505040a1cd1bf92492c0d3a793a939c28dd50206
   languageName: node
   linkType: hard
 
@@ -12449,6 +12456,7 @@ __metadata:
     "@babel/preset-env": ^7.19.1
     "@babel/preset-react": ^7.18.6
     "@craco/craco": ^6.4.5
+    "@creativecommons/cc-assets": ^0.1.0
     "@logion/crossmint": ^0.1.2-1
     "@logion/extension": ^0.4.7-1
     "@popperjs/core": ^2.11.6

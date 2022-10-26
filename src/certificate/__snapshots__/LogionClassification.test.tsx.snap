@@ -9,81 +9,64 @@ exports[`LogionClassification renders classification 1`] = `
   >
     IP rights granted with this Collection Item
   </CertificateLabel>
-  <React.Fragment>
-    <p>
-      This is a human-readable summary (but not a substitute) of the Logion IP rights classification (“LIRC”): 
-      <NewTabLink
-        href="/license/LIRC-v1.0.txt"
-        inline={true}
-      >
-        LIRC-v1.0.txt
-      </NewTabLink>
-       / 
-      <NewTabLink
-        href="http://localhost/public/certificate/258279227474533369556245314600751520115"
-        iconId="loc-link"
-        inline={true}
-      >
-        LIRC-v1.0 certificate
-      </NewTabLink>
-      .
-    </p>
-    <p>
-      Should an additional license exist between the parties that shall apply to the subject of this Collection Item, the parties agreed that the LIRC supersedes in case of conflict.
-    </p>
-    <LogionTerms
-      terms={
-        LogionClassification {
-          "_parameters": Object {
-            "expiration": "2023-01-01",
-            "regionalLimit": Array [
-              "BE",
-            ],
-            "transferredRights": Array [
-              "PER-PRIV",
-              "TIME",
-              "REG",
-            ],
-          },
-          "_tcLocId": UUID {
-            "bytes": Uint8Array [
-              194,
-              78,
-              197,
-              18,
-              247,
-              43,
-              73,
-              165,
-              131,
-              101,
-              104,
-              252,
-              90,
-              210,
-              217,
-              115,
-            ],
-          },
-          "_type": "logion_classification",
-        }
-      }
-    />
-  </React.Fragment>
-</div>
-`;
-
-exports[`LogionClassification renders no classification 1`] = `
-<div
-  className="LogionClassification"
->
-  <CertificateLabel
-    smaller={true}
-  >
-    IP rights granted with this Collection Item
-  </CertificateLabel>
   <p>
-    None
+    This is a human-readable summary (but not a substitute) of the Logion IP rights classification (“LIRC”): 
+    <NewTabLink
+      href="/license/LIRC-v1.0.txt"
+      inline={true}
+    >
+      LIRC-v1.0.txt
+    </NewTabLink>
+     / 
+    <NewTabLink
+      href="http://localhost/public/certificate/258279227474533369556245314600751520115"
+      iconId="loc-link"
+      inline={true}
+    >
+      LIRC-v1.0 certificate
+    </NewTabLink>
+    .
   </p>
+  <p>
+    Should an additional license exist between the parties that shall apply to the subject of this Collection Item, the parties agreed that the LIRC supersedes in case of conflict.
+  </p>
+  <LogionTerms
+    terms={
+      LogionClassification {
+        "_parameters": Object {
+          "expiration": "2023-01-01",
+          "regionalLimit": Array [
+            "BE",
+          ],
+          "transferredRights": Array [
+            "PER-PRIV",
+            "TIME",
+            "REG",
+          ],
+        },
+        "_tcLocId": UUID {
+          "bytes": Uint8Array [
+            194,
+            78,
+            197,
+            18,
+            247,
+            43,
+            73,
+            165,
+            131,
+            101,
+            104,
+            252,
+            90,
+            210,
+            217,
+            115,
+          ],
+        },
+        "_type": "logion_classification",
+      }
+    }
+  />
 </div>
 `;
