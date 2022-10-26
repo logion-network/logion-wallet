@@ -10,6 +10,7 @@ import Button from "../../common/Button";
 import { locDetailsPath } from "../LegalOfficerPaths";
 import ButtonGroup from "../../common/ButtonGroup";
 import { useResponsiveContext } from '../../common/Responsive';
+import { useMemo } from "react";
 
 export interface Props {
     locType: LocType;
@@ -20,13 +21,21 @@ export default function VoidLocs(props: Props) {
     const { voidTransactionLocs, voidIdentityLocsByType } = useLegalOfficerContext();
     const navigate = useNavigate();
     const { width } = useResponsiveContext();
-    const { locType, identityLocType } = props
+    const { locType, identityLocType } = props;
+
+    const data = useMemo(() => {
+        if(locType === 'Identity' && voidIdentityLocsByType && identityLocType) {
+            return voidIdentityLocsByType[identityLocType].map(state => state.data());
+        } else if(voidTransactionLocs) {
+            return voidTransactionLocs[locType].map(state => state.data());
+        } else {
+            return [];
+        }
+    }, [ voidIdentityLocsByType, voidTransactionLocs, locType, identityLocType ]);
 
     if (voidTransactionLocs === null || voidIdentityLocsByType === null) {
         return null;
     }
-
-    const requests = locType === 'Identity' ? voidIdentityLocsByType[identityLocType!] : voidTransactionLocs[locType];
 
     return (
         <Table
@@ -88,7 +97,7 @@ export default function VoidLocs(props: Props) {
                     align: 'center',
                 }
             ] }
-            data={ requests.map(request => request.data()) }
+            data={ data }
             renderEmpty={ () => <EmptyTableMessage>No LOCs</EmptyTableMessage> }
         />
     );

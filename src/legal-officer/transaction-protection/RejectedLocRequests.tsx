@@ -6,6 +6,7 @@ import { useLegalOfficerContext } from "../LegalOfficerContext";
 import UserIdentityNameCell from '../../common/UserIdentityNameCell';
 
 import LocRequestDetails from './LocRequestDetails';
+import { useMemo } from "react";
 
 export interface Props {
     locType: LocType;
@@ -13,6 +14,9 @@ export interface Props {
 
 export default function RejectedLocRequests(props: Props) {
     const { rejectedLocRequests } = useLegalOfficerContext();
+    const { locType } = props;
+
+    const data = useMemo(() => rejectedLocRequests ? rejectedLocRequests[locType].map(loc => loc.data()) : [], [ rejectedLocRequests, locType ]);
 
     if(rejectedLocRequests === null) {
         return null;
@@ -49,7 +53,7 @@ export default function RejectedLocRequests(props: Props) {
                     align: 'center',
                 },
             ]}
-            data={ rejectedLocRequests[props.locType].map(loc => loc.data()) }
+            data={ data }
             renderEmpty={() => <EmptyTableMessage>No LOC request history</EmptyTableMessage>}
         />
     );
