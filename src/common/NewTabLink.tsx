@@ -7,10 +7,14 @@ export interface Props {
     children: Children
     iconId?: string
     inline?: boolean;
+    className?: string;
 }
 
 export default function NewTabLink(props: Props) {
-    const className = customClassName("NewTabLink", (props.inline !== undefined && props.inline ? "inline" : undefined))
+    const className = customClassName("NewTabLink",
+        (props.inline !== undefined && props.inline ? "inline" : undefined),
+        (props.className !== undefined && props.className ? props.className : undefined)
+    )
     return (
         <span className={ className }>
             <a href={ props.href } target="_blank" rel="noreferrer">

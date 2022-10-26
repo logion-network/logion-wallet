@@ -11,7 +11,32 @@ exports[`CreativeCommons renders 1`] = `
   </CertificateLabel>
   <Row>
     <CreativeCommonsIcon
-      code="BY-NC-SA"
+      creativeCommons={
+        CreativeCommons {
+          "_parameters": "BY-NC-SA",
+          "_tcLocId": UUID {
+            "bytes": Uint8Array [
+              194,
+              78,
+              197,
+              18,
+              247,
+              43,
+              73,
+              165,
+              131,
+              101,
+              104,
+              252,
+              90,
+              210,
+              217,
+              115,
+            ],
+          },
+          "_type": "CC4.0",
+        }
+      }
     />
     <p
       className="text"

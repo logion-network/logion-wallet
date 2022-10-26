@@ -1,9 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CreativeCommonsIcon renders 1`] = `
-<img
-  alt="BY-NC"
+<NewTabLink
   className="CreativeCommonsIcon"
-  src="by_nc.eu.svg"
-/>
+  href="https://creativecommons.org/licenses/by-nc/4.0/deed.en"
+>
+  <img
+    alt="BY-NC"
+    src="by_nc.eu.svg"
+  />
+</NewTabLink>
 `;

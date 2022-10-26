@@ -16,7 +16,7 @@ export default function CreativeCommons(props: Props) {
         <div className="CreativeCommons">
             <CertificateLabel smaller={ true }>IP rights granted with this Collection Item</CertificateLabel>
             <Row>
-                <CreativeCommonsIcon code={ creativeCommons.parameters } />
+                <CreativeCommonsIcon creativeCommons={ creativeCommons } />
                 <p className="text">This work is licensed under a&nbsp;
                     <NewTabLink href={ creativeCommons.deedUrl() } inline>
                         Creative Commons Attribution 4.0 International License
