@@ -57,7 +57,7 @@ export default function LocCreation(props: Props) {
         });
         clear();
         navigate(locDetailsPath(draftRequest!.locId, locType));
-    }, [ selectedLegalOfficer, locType, mutateLocsState, clear ]);
+    }, [ selectedLegalOfficer, locType, mutateLocsState, clear, navigate ]);
 
     const requestIdLoc = useCallback(() => {
         clear();
