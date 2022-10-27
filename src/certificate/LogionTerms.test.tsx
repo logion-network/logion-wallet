@@ -29,7 +29,7 @@ describe("LogionTerms", () => {
     it("renders regional use", () => {
         const licenseLocId = new UUID("c24ec512-f72b-49a5-8365-68fc5ad2d973");
         const terms = new LogionClassificationClass(licenseLocId, {
-            transferredRights: [ "REG" ],
+            transferredRights: [ "PER-PRIV", "REG" ],
             regionalLimit: [ "BE", "NL", "LU" ],
         });
         const element = shallowRender(<LogionTerms terms={ terms } />);
@@ -39,7 +39,7 @@ describe("LogionTerms", () => {
     it("renders limited period", () => {
         const licenseLocId = new UUID("c24ec512-f72b-49a5-8365-68fc5ad2d973");
         const terms = new LogionClassificationClass(licenseLocId, {
-            transferredRights: [ "TIME" ],
+            transferredRights: [ "PER-PRIV", "TIME" ],
             regionalLimit: [],
             expiration: "2023-01-01",
         });

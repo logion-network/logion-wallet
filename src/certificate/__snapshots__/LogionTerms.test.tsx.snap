@@ -9,6 +9,23 @@ exports[`LogionTerms renders limited period 1`] = `
       <span
         className="short-code"
       >
+        PERSONAL, PRIVATE USE ONLY
+         (
+        PER-PRIV
+        ): 
+      </span>
+      <span
+        className="description"
+      >
+        Use the Underlying Asset for your personal use, exclusively in private spheres and so long as that personal use is non-commercial, i.e. does not, directly or indirectly, result in compensation, financial benefit or commercial gain, To the extent that such use is non-commercial and private, you may use, reproduce, display and as necessary perform but not modify the Underlying Asset.
+      </span>
+    </span>
+  </li>
+  <li>
+    <span>
+      <span
+        className="short-code"
+      >
         FOR A LIMITED PERIOD OF TIME
          (
         TIME
@@ -40,6 +57,23 @@ exports[`LogionTerms renders regional use 1`] = `
 <ul
   className="LogionTerms"
 >
+  <li>
+    <span>
+      <span
+        className="short-code"
+      >
+        PERSONAL, PRIVATE USE ONLY
+         (
+        PER-PRIV
+        ): 
+      </span>
+      <span
+        className="description"
+      >
+        Use the Underlying Asset for your personal use, exclusively in private spheres and so long as that personal use is non-commercial, i.e. does not, directly or indirectly, result in compensation, financial benefit or commercial gain, To the extent that such use is non-commercial and private, you may use, reproduce, display and as necessary perform but not modify the Underlying Asset.
+      </span>
+    </span>
+  </li>
   <li>
     <span>
       <span
