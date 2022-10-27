@@ -1,9 +1,11 @@
 import { render, waitFor, screen } from "@testing-library/react";
+import { EditableRequest } from "src/__mocks__/LogionClientMock";
 import { DEFAULT_LEGAL_OFFICER_ACCOUNT, setCurrentAddress } from "../logion-chain/__mocks__/LogionChainMock";
 import { clickByName, typeByLabel } from "../tests";
 import { TEST_WALLET_USER } from "../wallet-user/TestData";
 import { LocPublicDataButton } from "./LocPublicDataButton";
 import { LocItem } from "./types";
+import { setLocItems, setLocState } from "./__mocks__/LocContextMock";
 
 jest.mock("./LocContext");
 jest.mock("./UserLocContext");
@@ -26,29 +28,29 @@ describe("LocPublicDataButton", () => {
     });
 
     it("adds metadata", async () => {
-        const addMetadata = jest.fn();
-        await testAddsMetadata(<LocPublicDataButton
-            addMetadata={ addMetadata }
-            locItems={ [] }
-        />, addMetadata);
+        const { addMetadata } = mockEditableRequest();
+        await testAddsMetadata(<LocPublicDataButton/>, addMetadata);
     });
 
     it("does nothing on cancel", async () => {
-        const addMetadata = jest.fn();
-        await testDoesNothingOnCancel(<LocPublicDataButton
-            addMetadata={ addMetadata }
-            locItems={ [] }
-        />, addMetadata);
+        const { addMetadata } = mockEditableRequest();
+        await testDoesNothingOnCancel(<LocPublicDataButton/>, addMetadata);
     });
 
     it("does not add metadata if already exists", async () => {
-        const addMetadata = jest.fn();
-        await testDoesNotNothingIfItemExists(<LocPublicDataButton
-            addMetadata={ addMetadata }
-            locItems={ [ existingItem ] }
-        />, addMetadata);
+        const { addMetadata } = mockEditableRequest();
+        setLocItems([ existingItem ]);
+        await testDoesNotNothingIfItemExists(<LocPublicDataButton/>, addMetadata);
     });
 });
+
+function mockEditableRequest(): { locState: EditableRequest, addMetadata: jest.Mock } {
+    const addMetadata = jest.fn();
+    const locState = new EditableRequest();
+    locState.addMetadata = addMetadata;
+    setLocState(locState);
+    return { addMetadata, locState };
+}
 
 async function testAddsMetadata(component: React.ReactElement, addMetadata: jest.Mock) {
     render(component);

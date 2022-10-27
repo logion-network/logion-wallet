@@ -35,7 +35,6 @@ export interface Props {
     legalOfficer?: LegalOfficer;
     checkResult: DocumentCheckResult;
     locItems: LocItem[];
-    addMetadata: ((name: string, value: string) => void) | null;
     addFile: ((name: string, file: File, nature: string) => Promise<void>) | null;
     deleteFile: ((locItem: LocItem) => void) | null;
     deleteMetadata: ((locItem: LocItem) => void) | null;
@@ -118,7 +117,6 @@ export interface ContentProps {
     legalOfficer?: LegalOfficer;
     checkResult: DocumentCheckResult;
     locItems: LocItem[];
-    addMetadata: ((name: string, value: string) => void) | null;
     addFile: ((name: string, file: File, nature: string) => Promise<void>) | null;
     deleteFile: ((locItem: LocItem) => void) | null;
     deleteMetadata: ((locItem: LocItem) => void) | null;
@@ -136,7 +134,6 @@ export function LocDetailsTabContent(props: ContentProps) {
         legalOfficer,
         checkResult,
         locItems,
-        addMetadata,
         addFile,
         deleteFile,
         deleteMetadata,
@@ -230,10 +227,7 @@ export function LocDetailsTabContent(props: ContentProps) {
                             || (viewer === "LegalOfficer" && loc.status === "OPEN")
                         ) &&
                         <ButtonGroup align="left">
-                            <LocPublicDataButton
-                                locItems={ locItems }
-                                addMetadata={ addMetadata }
-                            />
+                            <LocPublicDataButton />
                             <LocPrivateFileButton
                                 locItems={ locItems }
                                 addFile={ addFile }

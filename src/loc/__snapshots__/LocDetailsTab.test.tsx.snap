@@ -851,10 +851,7 @@ exports[`LocDetailsTabContent renders open data LOC for LO 1`] = `
       <ButtonGroup
         align="left"
       >
-        <LocPublicDataButton
-          addMetadata={[Function]}
-          locItems={Array []}
-        />
+        <LocPublicDataButton />
         <LocPrivateFileButton
           addFile={[Function]}
           locItems={Array []}
@@ -1150,10 +1147,7 @@ exports[`LocDetailsTabContent renders open data LOC for User 1`] = `
       <ButtonGroup
         align="left"
       >
-        <LocPublicDataButton
-          addMetadata={[Function]}
-          locItems={Array []}
-        />
+        <LocPublicDataButton />
         <LocPrivateFileButton
           addFile={[Function]}
           locItems={Array []}
@@ -1448,10 +1442,7 @@ exports[`LocDetailsTabContent renders open identity LOC for LO 1`] = `
       <ButtonGroup
         align="left"
       >
-        <LocPublicDataButton
-          addMetadata={[Function]}
-          locItems={Array []}
-        />
+        <LocPublicDataButton />
         <LocPrivateFileButton
           addFile={[Function]}
           locItems={Array []}

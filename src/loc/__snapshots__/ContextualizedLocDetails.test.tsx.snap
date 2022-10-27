@@ -86,7 +86,6 @@ exports[`ContextualizedLocDetails renders 1`] = `
   />
   <LocDetailsTab
     addFile={[MockFunction]}
-    addMetadata={[MockFunction]}
     checkResult={
       Object {
         "result": "NONE",
@@ -379,7 +378,6 @@ exports[`ContextualizedLocDetails renders empty 1`] = `
   />
   <LocDetailsTab
     addFile={[MockFunction]}
-    addMetadata={[MockFunction]}
     checkResult={
       Object {
         "result": "NONE",

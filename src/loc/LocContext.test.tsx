@@ -16,6 +16,7 @@ import { LocItemType } from "./types";
 import { addLink } from "./__mocks__/ModelMock";
 import { buildLocRequest } from "./TestData";
 import { setClientMock } from "src/logion-chain/__mocks__/LogionChainMock";
+import { EditableRequest } from "src/__mocks__/LogionClientMock";
 
 jest.mock("@logion/node-api/dist/LogionLoc");
 jest.mock("../logion-chain/Signature");
@@ -81,12 +82,10 @@ function givenRequest(locId: string, loc: LegalOfficerCase, linkedLocId?: string
     const locsState: any = {};
 
     _locData = buildLocRequest(UUID.fromDecimalString(locId)!, loc);
-    _locState = {
-        data: () => _locData,
-        locsState: () => locsState,
-        refresh: () => Promise.resolve(_locState),
-    } as unknown as OpenLoc;
-
+    _locState = new EditableRequest();
+    _locState.data = () => _locData;
+    _locState.locsState = () => locsState,
+    _locState.refresh = () => Promise.resolve(_locState),
     _locState.addMetadata = jest.fn().mockResolvedValue(_locState);
     _locState.deleteMetadata = jest.fn().mockResolvedValue(_locState);
     _locState.addFile = jest.fn().mockResolvedValue(_locState);
@@ -134,14 +133,14 @@ function givenRequest(locId: string, loc: LegalOfficerCase, linkedLocId?: string
 }
 
 let _locData: LocData;
-let _locState: OpenLoc;
+let _locState: EditableRequest;
 let _linkedLocData: LocData;
 let _linkedLocState: LocRequestState;
 
-function whenRenderingInContext(locState: LocRequestState, element: JSX.Element) {
+function whenRenderingInContext(locState: EditableRequest, element: JSX.Element) {
     render(
         <LocContextProvider
-            locState={ locState }
+            locState={ locState as unknown as LocRequestState }
             backPath="/"
             detailsPath={() => ""}
             refreshLocs={() => Promise.resolve()}
@@ -188,15 +187,25 @@ async function thenReaderDisplaysLocRequestAndItems() {
 }
 
 function ItemAdder() {
-    const { locItems, addMetadata, addFile, addLink, locState } = useLocContext();
+    const { locItems, addFile, addLink, locState, mutateLocState } = useLocContext();
 
-    const callback = useCallback(() => {
-        addMetadata!("New data", "value");
+    const callback = useCallback(async () => {
+        await mutateLocState(async (current) => {
+            console.log(current)
+            if(current instanceof EditableRequest) {
+                return current.addMetadata!({
+                    name: "New data",
+                    value: "value"
+                });
+            } else {
+                return current;
+            }
+        });
         addFile!("New file", new File([], "file.png"), "Some nature");
         addLink!(_linkedLocData, "Some nature");
-    }, [ addMetadata, addFile, addLink ]);
+    }, [ mutateLocState, addFile, addLink ]);
 
-    if(!addMetadata || !addFile || !addLink || !locState) {
+    if(!addFile || !addLink || !locState) {
         return null;
     }
 

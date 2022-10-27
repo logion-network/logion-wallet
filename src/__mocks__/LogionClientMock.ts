@@ -84,10 +84,24 @@ export function setIsSuccessful(value: boolean) {
     _isSuccessful = value;
 }
 
-export class ClosedCollectionLoc {
+export class LocRequestState {
+    
+}
+
+export class ClosedCollectionLoc extends LocRequestState {
 
 }
 
-export class DraftRequest {
+export class EditableRequest extends LocRequestState {
+    data: any;
+    locsState: any;
+    refresh: (() => Promise<EditableRequest>) | undefined;
+    addMetadata: jest.Mock | undefined;
+    deleteMetadata: jest.Mock | undefined;
+    addFile: jest.Mock | undefined;
+    deleteFile: jest.Mock | undefined;
+}
+
+export class DraftRequest extends EditableRequest {
 
 }

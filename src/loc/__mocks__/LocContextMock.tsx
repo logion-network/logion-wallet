@@ -85,6 +85,10 @@ export function setCollectionItems(items: CollectionItem[]) {
     collectionItems = items;
 }
 
+async function mutateLocState(mutator: (state: any) => Promise<any>): Promise<void> {
+    await mutator(locState);
+}
+
 export function useLocContext() {
     return {
         linkLoc: {
@@ -108,5 +112,6 @@ export function useLocContext() {
         voidLoc,
         voidLocExtrinsic: () => mockSignAndSubmit(() => {}),
         collectionItems,
+        mutateLocState,
     };
 }
