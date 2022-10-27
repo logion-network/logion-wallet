@@ -78,9 +78,23 @@ exports[`IdentityLocRequest renders 1`] = `
       <Frame
         className="company-frame"
       >
-        <p>
-          Check the box below if you are acting on behalf and representing a company, association, fondation (the Legal Officer will request a proof of authority):
-        </p>
+        <IconTextRow
+          icon={
+            <Icon
+              height="45px"
+              icon={
+                Object {
+                  "id": "company",
+                }
+              }
+            />
+          }
+          text={
+            <p>
+              Check the box below if you are acting on behalf and representing a company, association, fondation (the Legal Officer will request a proof of authority):
+            </p>
+          }
+        />
         <div
           className="company-check-container"
         >

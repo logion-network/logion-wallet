@@ -15,6 +15,8 @@ import { Row, Col } from "react-bootstrap";
 import FormGroup from "src/common/FormGroup";
 import './IdentityLocRequest.css';
 import { locDetailsPath } from "../UserRouter";
+import IconTextRow from "src/common/IconTextRow";
+import Icon from "src/common/Icon";
 
 export interface Props {
     backPath: string,
@@ -114,7 +116,10 @@ export default function IdentityLocRequest(props: Props) {
                     </Frame>
 
                     <Frame className="company-frame">
-                        <p>Check the box below if you are acting on behalf and representing a company, association, fondation (the Legal Officer will request a proof of authority):</p>
+                        <IconTextRow
+                            icon={ <Icon icon={{id: "company"}} height="45px" /> }
+                            text={ <p>Check the box below if you are acting on behalf and representing a company, association, fondation (the Legal Officer will request a proof of authority):</p> }
+                        />
                         <div className="company-check-container">
                             <Form.Check
                                 data-testid="company"
