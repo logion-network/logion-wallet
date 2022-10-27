@@ -43,19 +43,12 @@ import {
     createMetadataItem,
     createLinkItem
 } from "./LocItemFactory";
-import { addLink as modelAddLink } from "./Model"
 import { fullCertificateUrl } from "../PublicPaths";
 import { signAndSend } from "src/logion-chain/Signature";
 import { DocumentCheckResult } from "src/components/checkfileframe/CheckFileFrame";
 
 export interface FullVoidInfo extends VoidInfo {
     reason: string;
-}
-
-export interface LinkTarget {
-    id: UUID;
-    description: string;
-    locType: LocType;
 }
 
 export interface LocContext {
@@ -73,7 +66,6 @@ export interface LocContext {
     collectionItem?: CollectionItem
     requestSof: (() => Promise<void>) | null
     requestSofOnCollection: ((collectionItemId: string) => Promise<void>) | null
-    addLink: ((otherLoc: LinkTarget, nature: string) => void) | null
     publishLink: ((locItem: LocItem) => SignAndSubmit) | null
     publishMetadata: ((locItem: LocItem) => SignAndSubmit) | null
     publishFile: ((locItem: LocItem) => SignAndSubmit) | null
@@ -101,7 +93,6 @@ function initialContextValue(locState: LocRequestState | null, backPath: string,
         backPath,
         detailsPath,
         locItems: [],
-        addLink: null,
         publishLink: null,
         publishMetadata: null,
         publishFile: null,
@@ -137,7 +128,6 @@ type ActionType = 'SET_LOC_REQUEST'
     | 'SET_CHECK_RESULT'
     | 'SET_PUBLISH_METADATA'
     | 'SET_PUBLIC_LINK'
-    | 'SET_ADD_LINK'
     | 'SET_PUBLISH_LINK'
     | 'SET_PUBLISH_FILE'
     | 'SET_CLOSE'
@@ -168,7 +158,6 @@ interface Action {
     status?: LocItemStatus,
     name?: string,
     timestamp?: string,
-    addLink?: (otherLoc: LinkTarget, nature: string) => void,
     publishLink?: (locItem: LocItem) => SignAndSubmit,
     publishMetadata?: (locItem: LocItem) => SignAndSubmit,
     publishFile?: (locItem: LocItem) => SignAndSubmit,
@@ -245,11 +234,6 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
             return {
                 ...state,
                 publishLink: action.publishLink!,
-            }
-        case 'SET_ADD_LINK':
-            return {
-                ...state,
-                addLink: action.addLink!,
             }
         case 'SET_PUBLISH_LINK':
             return {
@@ -750,24 +734,6 @@ export function LocContextProvider(props: Props) {
             })
         }
     }, [ contextValue.voidLoc, voidLocFunction ]);
-
-    const addLinkFunction = useCallback(async (otherLoc: LinkTarget, nature: string) => {
-        await modelAddLink(axiosFactory!(contextValue.loc!.ownerAddress)!, {
-            locId: contextValue.loc!.id.toString(),
-            target: otherLoc.id.toString(),
-            nature
-        });
-        await refreshLocState(true);
-    }, [ axiosFactory, contextValue.loc, refreshLocState ])
-
-    useEffect(() => {
-        if(contextValue.addLink !== addLinkFunction) {
-            dispatch({
-                type: "SET_ADD_LINK",
-                addLink: addLinkFunction,
-            })
-        }
-    }, [ contextValue.addLink, addLinkFunction ]);
 
     const refreshFunction = useCallback(async () => {
         await refreshLocState(true);

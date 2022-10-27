@@ -3,6 +3,10 @@ import { PATRICK } from "../common/TestData";
 import { TEST_WALLET_USER } from "../wallet-user/TestData";
 export { toIsoString, fromIsoString } from "@logion/client/dist/DateTimeUtil";
 
+export const axiosMock = {
+    post: jest.fn().mockReturnValue(undefined),
+};
+
 export class LogionClient {
 
     static create() {
@@ -47,6 +51,10 @@ export class LogionClient {
 
     authenticate() {
         return this;
+    }
+
+    buildAxios() {
+        return axiosMock;
     }
 }
 

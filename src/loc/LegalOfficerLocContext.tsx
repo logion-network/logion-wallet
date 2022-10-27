@@ -6,7 +6,7 @@ import {
 import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
 import { LocContextProvider, useLocContext } from "./LocContext";
 
-export type { FullVoidInfo, LinkTarget } from "./LocContext";
+export type { FullVoidInfo } from "./LocContext";
 
 export interface Props {
     locId: UUID

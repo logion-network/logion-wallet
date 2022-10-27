@@ -56,18 +56,4 @@ export async function acceptLocRequest(
     await axios.post(`/api/loc-request/${parameters.requestId}/accept`, { });
 }
 
-export interface AddLinkParameters {
-    locId: string,
-    target: string,
-    nature: string
-}
-
-export async function addLink(
-    axios: AxiosInstance,
-    parameters: AddLinkParameters
-): Promise<void> {
-    const { target, nature } = parameters;
-    await axios.post(`/api/loc-request/${ parameters.locId }/links`, { target, nature })
-}
-
 export { getFile } from "./FileModel"

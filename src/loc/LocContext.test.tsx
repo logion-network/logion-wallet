@@ -1,10 +1,11 @@
+import { AxiosInstance } from "axios";
 import { useCallback, useState } from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import { UUID } from "@logion/node-api/dist/UUID";
 import { LegalOfficerCase } from '@logion/node-api/dist/Types';
 import { LocData, OpenLoc } from "@logion/client";
 import { LogionClient } from '@logion/client/dist/LogionClient';
-import { PublicApi, LocRequestState } from "@logion/client";
+import { PublicApi, LocRequestState, EditableRequest as RealEditableRequest } from "@logion/client";
 
 import { confirmLocFile, confirmLocLink, confirmLocMetadataItem, deleteLocLink, resetDefaultMocks } from "../common/__mocks__/ModelMock";
 import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
@@ -13,17 +14,17 @@ import { finalizeSubmission, resetSubmitting } from "../logion-chain/__mocks__/S
 import { clickByName } from "../tests";
 import { LocContextProvider, useLocContext } from "./LocContext"
 import { LocItemType } from "./types";
-import { addLink } from "./__mocks__/ModelMock";
 import { buildLocRequest } from "./TestData";
 import { setClientMock } from "src/logion-chain/__mocks__/LogionChainMock";
 import { EditableRequest } from "src/__mocks__/LogionClientMock";
+import { addLink } from "../legal-officer/client";
+import { useLogionChain } from "src/logion-chain";
 
 jest.mock("@logion/node-api/dist/LogionLoc");
 jest.mock("../logion-chain/Signature");
 jest.mock("../logion-chain");
 jest.mock("../common/CommonContext");
 jest.mock("../common/Model");
-jest.mock("./Model");
 
 describe("LocContext", () => {
 
@@ -90,7 +91,6 @@ function givenRequest(locId: string, loc: LegalOfficerCase, linkedLocId?: string
     _locState.deleteMetadata = jest.fn().mockResolvedValue(_locState);
     _locState.addFile = jest.fn().mockResolvedValue(_locState);
     _locState.deleteFile = jest.fn().mockResolvedValue( _locState);
-    addLink.mockResolvedValue(undefined);
 
     if(linkedLocId && linkedLoc) {
         _linkedLocData = buildLocRequest(UUID.fromDecimalString(linkedLocId)!, linkedLoc);
@@ -126,9 +126,14 @@ function givenRequest(locId: string, loc: LegalOfficerCase, linkedLocId?: string
         }
     } as unknown as PublicApi;
 
+    axiosMock = {
+        post: jest.fn().mockResolvedValue(undefined),
+    } as unknown as AxiosInstance;
     setClientMock({
         locsState: () => Promise.resolve(locsState),
         public: publicMock,
+        legalOfficers: [],
+        buildAxios: () => axiosMock,
     } as unknown as LogionClient);
 }
 
@@ -136,6 +141,7 @@ let _locData: LocData;
 let _locState: EditableRequest;
 let _linkedLocData: LocData;
 let _linkedLocState: LocRequestState;
+let axiosMock: AxiosInstance;
 
 function whenRenderingInContext(locState: EditableRequest, element: JSX.Element) {
     render(
@@ -187,30 +193,36 @@ async function thenReaderDisplaysLocRequestAndItems() {
 }
 
 function ItemAdder() {
-    const { locItems, addLink, locState, mutateLocState } = useLocContext();
+    const { client } = useLogionChain();
+    const { locItems, locState, mutateLocState } = useLocContext();
 
     const callback = useCallback(async () => {
         await mutateLocState(async (current) => {
             if(current instanceof EditableRequest) {
-                let next: EditableRequest;
+                let next: RealEditableRequest;
                 next = await current.addMetadata!({
                     name: "New data",
                     value: "value"
-                });
+                }) as unknown as RealEditableRequest;
                 next = await current.addFile!({
                     file: new File([], "file.png"),
                     name: "New file",
                     nature: "Some nature",
+                }) as unknown as RealEditableRequest;
+                next = await addLink({
+                    client: client!,
+                    locState: current as unknown as RealEditableRequest,
+                    target: _linkedLocData.id,
+                    nature: "Some nature"
                 });
                 return next as unknown as LocRequestState;
             } else {
                 return current;
             }
         });
-        addLink!(_linkedLocData, "Some nature");
-    }, [ mutateLocState, addLink ]);
+    }, [ mutateLocState ]);
 
-    if(!addLink || !locState) {
+    if(!client || !locState) {
         return null;
     }
 
@@ -232,7 +244,13 @@ function ItemAdder() {
 async function thenItemsAdded() {
     await waitFor(() => expect(_locState.addMetadata).toBeCalled());
     expect(_locState.addFile).toBeCalled();
-    expect(addLink).toBeCalled();
+    expect(axiosMock.post).toBeCalledWith(
+        `/api/loc-request/${ _locData.id.toString() }/links`,
+        expect.objectContaining({
+            "nature": "Some nature",
+            "target": _linkedLocData.id.toString(),
+        })
+    );
 }
 
 function Closer() {
