@@ -35,7 +35,6 @@ export interface Props {
     legalOfficer?: LegalOfficer;
     checkResult: DocumentCheckResult;
     locItems: LocItem[];
-    addFile: ((name: string, file: File, nature: string) => Promise<void>) | null;
     deleteFile: ((locItem: LocItem) => void) | null;
     deleteMetadata: ((locItem: LocItem) => void) | null;
     deleteLink: ((locItem: LocItem) => void) | null;
@@ -117,7 +116,6 @@ export interface ContentProps {
     legalOfficer?: LegalOfficer;
     checkResult: DocumentCheckResult;
     locItems: LocItem[];
-    addFile: ((name: string, file: File, nature: string) => Promise<void>) | null;
     deleteFile: ((locItem: LocItem) => void) | null;
     deleteMetadata: ((locItem: LocItem) => void) | null;
     deleteLink: ((locItem: LocItem) => void) | null;
@@ -134,7 +132,6 @@ export function LocDetailsTabContent(props: ContentProps) {
         legalOfficer,
         checkResult,
         locItems,
-        addFile,
         deleteFile,
         deleteMetadata,
         deleteLink,
@@ -228,10 +225,7 @@ export function LocDetailsTabContent(props: ContentProps) {
                         ) &&
                         <ButtonGroup align="left">
                             <LocPublicDataButton />
-                            <LocPrivateFileButton
-                                locItems={ locItems }
-                                addFile={ addFile }
-                            />
+                            <LocPrivateFileButton />
                         </ButtonGroup>
                     }
                 </Col>

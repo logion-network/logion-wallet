@@ -3,8 +3,10 @@ import { sha256Hex } from "src/common/__mocks__/HashMock";
 import { DEFAULT_LEGAL_OFFICER_ACCOUNT, setCurrentAddress } from "src/logion-chain/__mocks__/LogionChainMock";
 import { clickByName, typeByLabel, uploadByTestId } from "src/tests";
 import { TEST_WALLET_USER } from "src/wallet-user/TestData";
+import { EditableRequest } from "src/__mocks__/LogionClientMock";
 import { LocPrivateFileButton } from "./LocPrivateFileButton";
 import { LocItem } from "./types";
+import { setLocItems, setLocState } from "./__mocks__/LocContextMock";
 
 jest.mock("../common/hash");
 jest.mock("./LocContext");
@@ -30,29 +32,29 @@ describe("LocPrivateFileButton", () => {
     });
 
     it("uploads file", async () => {
-        const addFile = jest.fn();
-        await testUploadsFile(<LocPrivateFileButton
-            addFile={ addFile }
-            locItems={ [] }
-        />, addFile);
+        const { addFile } = mockEditableRequest();
+        await testUploadsFile(<LocPrivateFileButton/>, addFile);
     });
 
     it("does nothing on cancel", async () => {
-        const addFile = jest.fn();
-        await testDoesNothingOnCancel(<LocPrivateFileButton
-            addFile={ addFile }
-            locItems={ [] }
-        />, addFile);
+        const { addFile } = mockEditableRequest();
+        await testDoesNothingOnCancel(<LocPrivateFileButton/>, addFile);
     });
 
     it("does not upload file if already exists", async () => {
-        const addFile = jest.fn();
-        await testDoesNotNothingIfFileExists(<LocPrivateFileButton
-            addFile={ addFile }
-            locItems={ [ existingFileItem ] }
-        />, addFile);
+        const { addFile } = mockEditableRequest();
+        setLocItems([ existingFileItem ]);
+        await testDoesNotNothingIfFileExists(<LocPrivateFileButton/>, addFile);
     });
 });
+
+function mockEditableRequest(): { locState: EditableRequest, addFile: jest.Mock } {
+    const addFile = jest.fn();
+    const locState = new EditableRequest();
+    locState.addFile = addFile;
+    setLocState(locState);
+    return { addFile, locState };
+}
 
 async function testUploadsFile(component: React.ReactElement, addFile: jest.Mock) {
     sha256Hex.mockReturnValue(fileHash);

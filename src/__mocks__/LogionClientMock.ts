@@ -96,9 +96,9 @@ export class EditableRequest extends LocRequestState {
     data: any;
     locsState: any;
     refresh: (() => Promise<EditableRequest>) | undefined;
-    addMetadata: jest.Mock | undefined;
+    addMetadata: jest.Mock<Promise<EditableRequest>> | undefined;
     deleteMetadata: jest.Mock | undefined;
-    addFile: jest.Mock | undefined;
+    addFile: jest.Mock<Promise<EditableRequest>> | undefined;
     deleteFile: jest.Mock | undefined;
 }
 

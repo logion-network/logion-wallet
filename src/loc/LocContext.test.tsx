@@ -187,25 +187,30 @@ async function thenReaderDisplaysLocRequestAndItems() {
 }
 
 function ItemAdder() {
-    const { locItems, addFile, addLink, locState, mutateLocState } = useLocContext();
+    const { locItems, addLink, locState, mutateLocState } = useLocContext();
 
     const callback = useCallback(async () => {
         await mutateLocState(async (current) => {
-            console.log(current)
             if(current instanceof EditableRequest) {
-                return current.addMetadata!({
+                let next: EditableRequest;
+                next = await current.addMetadata!({
                     name: "New data",
                     value: "value"
                 });
+                next = await current.addFile!({
+                    file: new File([], "file.png"),
+                    name: "New file",
+                    nature: "Some nature",
+                });
+                return next as unknown as LocRequestState;
             } else {
                 return current;
             }
         });
-        addFile!("New file", new File([], "file.png"), "Some nature");
         addLink!(_linkedLocData, "Some nature");
-    }, [ mutateLocState, addFile, addLink ]);
+    }, [ mutateLocState, addLink ]);
 
-    if(!addFile || !addLink || !locState) {
+    if(!addLink || !locState) {
         return null;
     }
 

@@ -852,10 +852,7 @@ exports[`LocDetailsTabContent renders open data LOC for LO 1`] = `
         align="left"
       >
         <LocPublicDataButton />
-        <LocPrivateFileButton
-          addFile={[Function]}
-          locItems={Array []}
-        />
+        <LocPrivateFileButton />
       </ButtonGroup>
     </Col>
     <React.Fragment>
@@ -1148,10 +1145,7 @@ exports[`LocDetailsTabContent renders open data LOC for User 1`] = `
         align="left"
       >
         <LocPublicDataButton />
-        <LocPrivateFileButton
-          addFile={[Function]}
-          locItems={Array []}
-        />
+        <LocPrivateFileButton />
       </ButtonGroup>
     </Col>
     <React.Fragment>
@@ -1443,10 +1437,7 @@ exports[`LocDetailsTabContent renders open identity LOC for LO 1`] = `
         align="left"
       >
         <LocPublicDataButton />
-        <LocPrivateFileButton
-          addFile={[Function]}
-          locItems={Array []}
-        />
+        <LocPrivateFileButton />
       </ButtonGroup>
     </Col>
     <React.Fragment>

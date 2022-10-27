@@ -85,7 +85,6 @@ exports[`ContextualizedLocDetails renders 1`] = `
     protectionRequest={null}
   />
   <LocDetailsTab
-    addFile={[MockFunction]}
     checkResult={
       Object {
         "result": "NONE",
@@ -377,7 +376,6 @@ exports[`ContextualizedLocDetails renders empty 1`] = `
     protectionRequest={null}
   />
   <LocDetailsTab
-    addFile={[MockFunction]}
     checkResult={
       Object {
         "result": "NONE",

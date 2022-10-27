@@ -30,7 +30,6 @@ export default function ContextualizedLocDetails() {
         deleteMetadata,
         deleteFile,
         deleteLink,
-        addFile,
         checkHash,
         checkResult,
         collectionItem,
@@ -83,7 +82,6 @@ export default function ContextualizedLocDetails() {
                 loc={ loc }
                 locState={ locState }
                 locItems={ locItems }
-                addFile={ addFile }
                 checkResult={ checkResult }
                 deleteFile={ deleteFile }
                 deleteLink={ deleteLink }

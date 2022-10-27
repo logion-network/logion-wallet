@@ -63,7 +63,6 @@ export interface LocContext {
     supersededLoc?: PublicLoc
     locState: LocRequestState | null
     locItems: LocItem[]
-    addFile: ((name: string, file: File, nature: string) => Promise<void>) | null
     deleteFile: ((locItem: LocItem) => void) | null
     deleteMetadata: ((locItem: LocItem) => void) | null
     backPath: string
@@ -105,7 +104,6 @@ function initialContextValue(locState: LocRequestState | null, backPath: string,
         addLink: null,
         publishLink: null,
         publishMetadata: null,
-        addFile: null,
         publishFile: null,
         close: null,
         closeExtrinsic: null,
@@ -141,7 +139,6 @@ type ActionType = 'SET_LOC_REQUEST'
     | 'SET_PUBLIC_LINK'
     | 'SET_ADD_LINK'
     | 'SET_PUBLISH_LINK'
-    | 'SET_ADD_FILE'
     | 'SET_PUBLISH_FILE'
     | 'SET_CLOSE'
     | 'SET_CLOSE_EXTRINSIC'
@@ -174,7 +171,6 @@ interface Action {
     addLink?: (otherLoc: LinkTarget, nature: string) => void,
     publishLink?: (locItem: LocItem) => SignAndSubmit,
     publishMetadata?: (locItem: LocItem) => SignAndSubmit,
-    addFile?: (name: string, file: File, nature: string) => Promise<void>,
     publishFile?: (locItem: LocItem) => SignAndSubmit,
     close?: () => void,
     closeExtrinsic?: (seal?: string) => SignAndSubmit,
@@ -259,11 +255,6 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
             return {
                 ...state,
                 publishLink: action.publishLink!,
-            }
-        case 'SET_ADD_FILE':
-            return {
-                ...state,
-                addFile: action.addFile!,
             }
         case 'SET_PUBLISH_FILE':
             return {
@@ -777,24 +768,6 @@ export function LocContextProvider(props: Props) {
             })
         }
     }, [ contextValue.addLink, addLinkFunction ]);
-
-    const addFileFunction = useCallback(async (name: string, file: File, nature: string) => {
-        const state = await (contextValue.locState as OpenLoc).addFile({
-            file,
-            fileName: name,
-            nature
-        });
-        await dispatchLocAndItems(state, true);
-    }, [ contextValue.locState, dispatchLocAndItems ])
-
-    useEffect(() => {
-        if(contextValue.addFile !== addFileFunction) {
-            dispatch({
-                type: "SET_ADD_FILE",
-                addFile: addFileFunction,
-            })
-        }
-    }, [ contextValue.addFile, addFileFunction ]);
 
     const refreshFunction = useCallback(async () => {
         await refreshLocState(true);

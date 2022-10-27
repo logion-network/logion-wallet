@@ -40,7 +40,6 @@ exports[`UserContextualizedLocDetails renders 1`] = `
   }
 >
   <LocDetailsTab
-    addFile={[MockFunction]}
     checkResult={
       Object {
         "result": "NONE",

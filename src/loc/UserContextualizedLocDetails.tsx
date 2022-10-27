@@ -21,7 +21,6 @@ export default function UserContextualizedLocDetails() {
         locItems,
         deleteMetadata,
         deleteFile,
-        addFile,
         checkHash,
         checkResult,
         collectionItem,
@@ -44,7 +43,6 @@ export default function UserContextualizedLocDetails() {
                 loc={ loc }
                 locState={ locState }
                 locItems={ locItems }
-                addFile={ addFile }
                 checkResult={ checkResult }
                 deleteFile={ deleteFile }
                 deleteLink={ null }
