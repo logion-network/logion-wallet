@@ -35,5 +35,6 @@ exports[`LocPublishLinkButton renders 1`] = `
       "value": "link-value",
     }
   }
+  publishMutator={[Function]}
 />
 `;

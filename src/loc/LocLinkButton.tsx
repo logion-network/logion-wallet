@@ -30,7 +30,6 @@ export default function LocLinkButton(props: Props) {
         await mutateLocState(async current => {
             if(client && current instanceof EditableRequest) {
                 return await addLink({
-                    client,
                     locState: current,
                     target,
                     nature,

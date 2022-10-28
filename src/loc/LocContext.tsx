@@ -1,10 +1,7 @@
 import React, { useContext, useReducer, Reducer, useEffect, useCallback, useState } from "react";
 import {
     UUID,
-    addMetadata,
-    addFile,
     closeLoc,
-    addLink,
     voidLoc,
     VoidInfo,
     LocType,
@@ -26,12 +23,9 @@ import {
 } from "@logion/client";
 
 import {
-    confirmLocFile,
     preClose,
     preVoid,
     deleteLocLink,
-    confirmLocLink,
-    confirmLocMetadataItem,
     isGrantedAccess,
 } from "../common/Model";
 import { useCommonContext } from "../common/CommonContext";
@@ -65,15 +59,9 @@ export interface LocContext {
     collectionItem?: CollectionItem
     requestSof: (() => Promise<void>) | null
     requestSofOnCollection: ((collectionItemId: string) => Promise<void>) | null
-    publishLink: ((locItem: LocItem) => SignAndSubmit) | null
-    publishMetadata: ((locItem: LocItem) => SignAndSubmit) | null
-    publishFile: ((locItem: LocItem) => SignAndSubmit) | null
     close: (() => void) | null
     closeExtrinsic: ((seal?: string) => SignAndSubmit) | null
-    confirmFile: ((locItem: LocItem) => void) | null
-    confirmLink: ((locItem: LocItem) => void) | null
     deleteLink: ((locItem: LocItem) => void) | null
-    confirmMetadata: ((locItem: LocItem) => void) | null
     voidLoc: ((voidInfo: FullVoidInfo) => void) | null
     voidLocExtrinsic?: ((voidInfo: VoidInfo) => SignAndSubmit) | null
     collectionItems: CollectionItem[]
@@ -96,15 +84,9 @@ function initialContextValue(locState: LocRequestState | null, backPath: string,
         backPath,
         detailsPath,
         locItems: [],
-        publishLink: null,
-        publishMetadata: null,
-        publishFile: null,
         close: null,
         closeExtrinsic: null,
-        confirmFile: null,
-        confirmLink: null,
         deleteLink: null,
-        confirmMetadata: null,
         deleteMetadata: null,
         voidLoc: null,
         voidLocExtrinsic: null,
@@ -129,16 +111,9 @@ type ActionType = 'SET_LOC_REQUEST'
     | 'VOID'
     | 'RESET'
     | 'SET_CHECK_RESULT'
-    | 'SET_PUBLISH_METADATA'
-    | 'SET_PUBLIC_LINK'
-    | 'SET_PUBLISH_LINK'
-    | 'SET_PUBLISH_FILE'
     | 'SET_CLOSE'
     | 'SET_CLOSE_EXTRINSIC'
-    | 'SET_CONFIRM_FILE'
-    | 'SET_CONFIRM_LINK'
     | 'SET_DELETE_LINK'
-    | 'SET_CONFIRM_METADATA'
     | 'SET_DELETE_METADATA'
     | 'SET_VOID_LOC'
     | 'SET_VOID_LOC_EXTRINSIC'
@@ -160,15 +135,9 @@ interface Action {
     status?: LocItemStatus,
     name?: string,
     timestamp?: string,
-    publishLink?: (locItem: LocItem) => SignAndSubmit,
-    publishMetadata?: (locItem: LocItem) => SignAndSubmit,
-    publishFile?: (locItem: LocItem) => SignAndSubmit,
     close?: () => void,
     closeExtrinsic?: (seal?: string) => SignAndSubmit,
-    confirmFile?: (locItem: LocItem) => void,
-    confirmLink?: (locItem: LocItem) => void
     deleteLink?: (locItem: LocItem) => void,
-    confirmMetadata?: (locItem: LocItem) => void,
     deleteMetadata?: (locItem: LocItem) => void,
     voidInfo?: FullVoidInfo,
     voidLoc?: (voidInfo: FullVoidInfo) => void,
@@ -227,26 +196,6 @@ const reducer: Reducer<PrivateLocContext, Action> = (state: PrivateLocContext, a
                 checkResult: action.checkResult!,
                 collectionItem: action.collectionItem,
             }
-        case "SET_PUBLISH_METADATA":
-            return {
-                ...state,
-                publishMetadata: action.publishMetadata!,
-            }
-        case 'SET_PUBLIC_LINK':
-            return {
-                ...state,
-                publishLink: action.publishLink!,
-            }
-        case 'SET_PUBLISH_LINK':
-            return {
-                ...state,
-                publishLink: action.publishLink!,
-            }
-        case 'SET_PUBLISH_FILE':
-            return {
-                ...state,
-                publishFile: action.publishFile!,
-            }
         case 'SET_CLOSE':
             return {
                 ...state,
@@ -257,25 +206,10 @@ const reducer: Reducer<PrivateLocContext, Action> = (state: PrivateLocContext, a
                 ...state,
                 closeExtrinsic: action.closeExtrinsic!,
             }
-        case 'SET_CONFIRM_FILE':
-            return {
-                ...state,
-                confirmFile: action.confirmFile!,
-            }
-        case 'SET_CONFIRM_LINK':
-            return {
-                ...state,
-                confirmLink: action.confirmLink!,
-            }
         case 'SET_DELETE_LINK':
             return {
                 ...state,
                 deleteLink: action.deleteLink!,
-            }
-        case 'SET_CONFIRM_METADATA':
-            return {
-                ...state,
-                confirmMetadata: action.confirmMetadata!,
             }
         case 'SET_DELETE_METADATA':
             return {
@@ -496,80 +430,6 @@ export function LocContextProvider(props: Props) {
         }
     }, [ refreshNameTimestamp, refreshCounter, setRefreshCounter, refreshing, setRefreshing ])
 
-    const publishMetadataFunction = useCallback((item: LocItem) => {
-            const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
-                signerId: contextValue.loc!.ownerAddress,
-                callback: setResult,
-                errorCallback: setError,
-                submittable: addMetadata({
-                    locId: contextValue.loc!.id,
-                    api: api!,
-                    item: { name: item.name, value: item.value, submitter: item.submitter },
-                })
-            });
-            return signAndSubmit;
-        }, [ api, contextValue.loc ]
-    )
-
-    useEffect(() => {
-        if(contextValue.publishMetadata !== publishMetadataFunction) {
-            dispatch({
-                type: "SET_PUBLISH_METADATA",
-                publishMetadata: publishMetadataFunction,
-            })
-        }
-    }, [ contextValue.publishMetadata, publishMetadataFunction ]);
-
-    const publishFileFunction = useCallback((item: LocItem) => {
-            const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
-                signerId: contextValue.loc!.ownerAddress,
-                callback: setResult,
-                errorCallback: setError,
-                submittable: addFile({
-                    locId: contextValue.loc!.id,
-                    api: api!,
-                    hash: item.value,
-                    nature: item.nature || "",
-                    submitter: item.submitter,
-                })
-            });
-            return signAndSubmit;
-        }, [ api, contextValue.loc ]
-    )
-
-    useEffect(() => {
-        if(contextValue.publishFile !== publishFileFunction) {
-            dispatch({
-                type: "SET_PUBLISH_FILE",
-                publishFile: publishFileFunction,
-            })
-        }
-    }, [ contextValue.publishFile, publishFileFunction ]);
-
-    const publishLinkFunction = useCallback((item: LocItem) => {
-        const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
-            signerId: contextValue.loc!.ownerAddress,
-            callback: setResult,
-            errorCallback: setError,
-            submittable: addLink({
-                locId: contextValue.loc!.id,
-                api: api!,
-                target: item.target!,
-                nature: item.nature || "",
-            })
-        });
-        return signAndSubmit;
-    }, [ api, contextValue.loc ])
-
-    useEffect(() => {
-        if(contextValue.publishLink !== publishLinkFunction) {
-            dispatch({
-                type: "SET_PUBLISH_LINK",
-                publishLink: publishLinkFunction,
-            })
-        }
-    }, [ contextValue.publishLink, publishLinkFunction ]);
-
     const closeExtrinsicFunction = useCallback((seal?: string) => {
             const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
                 signerId: contextValue.loc!.ownerAddress,
@@ -609,34 +469,6 @@ export function LocContextProvider(props: Props) {
         }
     }, [ contextValue.close, closeFunction ]);
 
-    const confirmFileFunction = useCallback(async (locItem: LocItem) => {
-        await confirmLocFile(axiosFactory!(contextValue.loc!.ownerAddress)!, contextValue.loc!.id, locItem.value);
-        await refreshLocState(true);
-    }, [ axiosFactory, contextValue.loc, refreshLocState ])
-
-    useEffect(() => {
-        if(contextValue.confirmFile !== confirmFileFunction) {
-            dispatch({
-                type: "SET_CONFIRM_FILE",
-                confirmFile: confirmFileFunction,
-            })
-        }
-    }, [ contextValue.confirmFile, confirmFileFunction ]);
-
-    const confirmLinkFunction = useCallback(async (locItem: LocItem) => {
-        await confirmLocLink(axiosFactory!(contextValue.loc!.ownerAddress)!, contextValue.loc!.id, locItem.target!);
-        await refreshLocState(true);
-    }, [ axiosFactory, contextValue.loc, refreshLocState ])
-
-    useEffect(() => {
-        if(contextValue.confirmLink !== confirmLinkFunction) {
-            dispatch({
-                type: "SET_CONFIRM_LINK",
-                confirmLink: confirmLinkFunction,
-            })
-        }
-    }, [ contextValue.confirmLink, confirmLinkFunction ]);
-
     const deleteLinkFunction = useCallback(async (item: LocItem) => {
         await deleteLocLink(axiosFactory!(contextValue.loc!.ownerAddress)!, contextValue.loc!.id, item.target!)
         await refreshLocState(true);
@@ -650,20 +482,6 @@ export function LocContextProvider(props: Props) {
             })
         }
     }, [ contextValue.deleteLink, deleteLinkFunction ]);
-
-    const confirmMetadataFunction = useCallback(async (locItem: LocItem) => {
-        await confirmLocMetadataItem(axiosFactory!(contextValue.loc!.ownerAddress)!, contextValue.loc!.id, locItem.name);
-        await refreshLocState(true);
-    }, [ axiosFactory, contextValue.loc, refreshLocState ])
-
-    useEffect(() => {
-        if(contextValue.confirmMetadata !== confirmMetadataFunction) {
-            dispatch({
-                type: "SET_CONFIRM_METADATA",
-                confirmMetadata: confirmMetadataFunction,
-            })
-        }
-    }, [ contextValue.confirmMetadata, confirmMetadataFunction ]);
 
     const deleteMetadataFunction = useCallback(async (item: LocItem) => {
         await dispatchLocAndItems(await (contextValue.locState as OpenLoc).deleteMetadata({ name: item.name }), false)

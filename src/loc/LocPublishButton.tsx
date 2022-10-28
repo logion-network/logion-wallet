@@ -1,22 +1,26 @@
 import Button from "../common/Button";
-import React, { useState, useEffect } from "react";
-import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
+import { useState, useEffect } from "react";
 import ProcessStep from "../legal-officer/ProcessStep";
 import Alert from "../common/Alert";
 import { PublishProps, PublishState, PublishStatus } from "./types";
 import Icon from "../common/Icon";
+import { useLocContext } from "./LocContext";
+import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
 
 export default function LocPublishButton(props: PublishProps) {
     const [ publishState, setPublishState ] = useState<PublishState>({ status: PublishStatus.NONE });
-    const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
+    const [ call, setCall ] = useState<Call>();
+    const { mutateLocState } = useLocContext();
 
     useEffect(() => {
-        if (props.signAndSubmitFactory !== null && publishState.status === PublishStatus.PUBLISH_PENDING) {
+        if (publishState.status === PublishStatus.PUBLISH_PENDING) {
             setPublishState({ status: PublishStatus.PUBLISHING });
-            const signAndSubmit: SignAndSubmit = props.signAndSubmitFactory(props.locItem)
-            setSignAndSubmit(() => signAndSubmit);
+            const call: Call = async (callback: CallCallback) =>
+                mutateLocState(async current =>
+                    props.publishMutator(current, callback));
+            setCall(() => call);
         }
-    }, [ props, publishState, setPublishState ])
+    }, [ props, publishState, setPublishState, mutateLocState ]);
 
     return (
         <>
@@ -56,12 +60,10 @@ export default function LocPublishButton(props: PublishProps) {
                 title={ `Publish ${props.itemType} (2/2)` }
                 hasSideEffect
             >
-                <ExtrinsicSubmitter
-                    id="publishMetadata"
-                    signAndSubmit={ signAndSubmit }
+                <ClientExtrinsicSubmitter
+                    call={ call }
                     successMessage="LOC public data successfully published"
                     onSuccess={ () => {
-                        props.confirm!(props.locItem)
                         setPublishState({ status: PublishStatus.PUBLISHED })
                     } }
                     onError={ () => setPublishState({ status: PublishStatus.ERROR }) }

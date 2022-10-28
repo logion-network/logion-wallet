@@ -1,7 +1,8 @@
+import { LocRequestState } from "@logion/client";
 import { UUID } from "@logion/node-api/dist/UUID"
+import { CallCallback } from "src/ClientExtrinsicSubmitter";
 
 import { sha256HexFromString } from "../common/hash";
-import { SignAndSubmit } from "../ExtrinsicSubmitter"
 
 export type LocItemStatus = 'DRAFT' | 'PUBLISHED'
 
@@ -36,8 +37,7 @@ export interface PublishState {
 export interface PublishProps {
     locItem: LocItem;
     itemType: 'Public Data' | 'Document' | 'Link';
-    signAndSubmitFactory: ((item: LocItem) => SignAndSubmit) | null;
-    confirm: ((item: LocItem) => void) | null;
+    publishMutator: (current: LocRequestState, callback: CallCallback) => Promise<LocRequestState>;
 }
 
 export function toItemId(maybeHex: string): string | undefined {

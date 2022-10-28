@@ -157,6 +157,12 @@ export function setContextMock(value: any) {
 
 let axiosFactory = () => axiosMock.object();
 
+let signAndSend = jest.fn().mockResolvedValue(undefined);
+
+let signer = {
+    signAndSend,
+};
+
 export function useLogionChain() {
     if(context) {
         return context;
@@ -177,6 +183,7 @@ export function useLogionChain() {
             client: clientMock,
             isCurrentAuthenticated: () => true,
             authenticateAddress,
+            signer,
         };
     }
 }
