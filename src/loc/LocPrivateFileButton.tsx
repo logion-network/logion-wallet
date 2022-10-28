@@ -13,7 +13,7 @@ import { Row } from "../common/Grid";
 import { useLocContext } from "./LocContext";
 import { EditableRequest } from "@logion/client";
 
-type Status = 'Idle' | 'UploadDialog' | 'Uploading';
+type Status = 'Idle' | 'UploadDialog' | 'Hashing' | 'Uploading';
 
 export function LocPrivateFileButton() {
     const { mutateLocState, locItems } = useLocContext();
@@ -28,6 +28,7 @@ export function LocPrivateFileButton() {
     const submit = useCallback(async (formValues: FormValues) => {
         setUploadError("")
         if (file) {
+            setStatus('Hashing')
             const hash = "0x" + await sha256Hex(file);
             const existingItem = locItems.find(item => item.type === "Document" && item.value === hash);
             if (existingItem !== undefined) {
@@ -49,9 +50,10 @@ export function LocPrivateFileButton() {
                         }
                     });
                     setStatus('Idle');
-                } catch (error) {
+                } catch (error: any) {
                     setStatus('UploadDialog')
-                    setUploadError("" + error)
+                    const errorMessage = error?.response?.data?.errorMessage;
+                    setUploadError(`${ error }: ${ errorMessage }`)
                 }
             }
         }
@@ -87,7 +89,7 @@ export function LocPrivateFileButton() {
                         buttonText: 'Submit',
                         buttonVariant: 'primary',
                         type: 'submit',
-                        disabled: status === 'Uploading'
+                        disabled: status === 'Uploading' || status === 'Hashing'
                     }
                 ] }
                 onSubmit={ handleSubmit(submit) }
@@ -98,13 +100,19 @@ export function LocPrivateFileButton() {
                     colors={ colorTheme.dialog }
                     onFileSelected={ handleSelectedFile }
                 />
+                { status === 'Hashing' &&
+                    <Row>
+                        <Spinner animation="border" size="sm" />
+                        &nbsp;Calculating Hash
+                    </Row>
+                }
                 { status === 'Uploading' &&
                     <Row>
                         <Spinner animation="border" size="sm" />
                         &nbsp;Uploading and encrypting
                     </Row>
                 }
-                { status !== 'Uploading' &&
+                { status !== 'Hashing' && status !== 'Uploading' &&
                     <Row>{ uploadError }</Row>
                 }
             </Dialog>
