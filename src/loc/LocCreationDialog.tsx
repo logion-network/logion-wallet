@@ -1,5 +1,5 @@
 import { LocRequest } from "@logion/client";
-import { UUID } from "@logion/node-api";
+import { UUID, LocType } from "@logion/node-api";
 import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
@@ -12,7 +12,12 @@ import LocCreationSteps from "./LocCreationSteps";
 import { useLegalOfficerContext } from '../legal-officer/LegalOfficerContext';
 import Alert from '../common/Alert';
 import { useLogionChain } from '../logion-chain';
-import { LinkTarget } from "./LocContext";
+
+export interface LinkTarget {
+    id: UUID;
+    description: string;
+    locType: LocType;
+}
 
 export interface Props {
     show: boolean,

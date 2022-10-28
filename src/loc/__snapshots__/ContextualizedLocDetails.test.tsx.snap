@@ -85,14 +85,11 @@ exports[`ContextualizedLocDetails renders 1`] = `
     protectionRequest={null}
   />
   <LocDetailsTab
-    addFile={[MockFunction]}
-    addMetadata={[MockFunction]}
     checkResult={
       Object {
         "result": "NONE",
       }
     }
-    deleteFile={[MockFunction]}
     deleteLink={[MockFunction]}
     deleteMetadata={[MockFunction]}
     loc={
@@ -378,14 +375,11 @@ exports[`ContextualizedLocDetails renders empty 1`] = `
     protectionRequest={null}
   />
   <LocDetailsTab
-    addFile={[MockFunction]}
-    addMetadata={[MockFunction]}
     checkResult={
       Object {
         "result": "NONE",
       }
     }
-    deleteFile={[MockFunction]}
     deleteLink={[MockFunction]}
     deleteMetadata={[MockFunction]}
     loc={

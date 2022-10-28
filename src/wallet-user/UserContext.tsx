@@ -493,10 +493,12 @@ export function UserContextProvider(props: Props) {
 
     const mutateLocsStateCallback = useCallback(async (mutator: (current: LocsState) => Promise<LocsState>): Promise<void> => {
         const newState = await mutator(contextValue.locsState!);
-        dispatch({
-            type: "MUTATE_LOCS_STATE",
-            locsState: newState,
-        });
+        if(newState !== contextValue.locsState) {
+            dispatch({
+                type: "MUTATE_LOCS_STATE",
+                locsState: newState,
+            });
+        }
     }, [ contextValue.locsState ]);
 
     useEffect(() => {

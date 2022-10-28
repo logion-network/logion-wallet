@@ -10,17 +10,13 @@ import { sha256Hex } from "../common/hash";
 import { LocItem } from "./types";
 import Icon from "../common/Icon";
 import { Row } from "../common/Grid";
+import { useLocContext } from "./LocContext";
+import { EditableRequest } from "@logion/client";
 
 type Status = 'Idle' | 'UploadDialog' | 'Uploading';
 
-export interface Props {
-    locItems: LocItem[]
-    addFile: ((name: string, file: File, nature: string) => Promise<void>) | null
-}
-
-export function LocPrivateFileButton(props: Props) {
-
-    const { addFile, locItems } = props;
+export function LocPrivateFileButton() {
+    const { mutateLocState, locItems } = useLocContext();
     const { colorTheme } = useCommonContext();
     const [ status, setStatus ] = useState<Status>('Idle');
     const { control, handleSubmit, formState: { errors }, reset, setValue } = useForm<FormValues>();
@@ -41,7 +37,17 @@ export function LocPrivateFileButton(props: Props) {
             } else {
                 setStatus('Uploading')
                 try {
-                    await addFile!(formValues.fileName, file, formValues.nature);
+                    await mutateLocState(async current => {
+                        if(current instanceof EditableRequest) {
+                            return current.addFile({
+                                file,
+                                fileName: formValues.fileName,
+                                nature: formValues.nature,
+                            });
+                        } else {
+                            return current;
+                        }
+                    });
                     setStatus('Idle');
                 } catch (error) {
                     setStatus('UploadDialog')
@@ -49,7 +55,7 @@ export function LocPrivateFileButton(props: Props) {
                 }
             }
         }
-    }, [ file, addFile, locItems, setExistingItem ])
+    }, [ file, mutateLocState, locItems, setExistingItem ])
 
     const handleSelectedFile = useCallback((file: File) => {
         setFile(file);

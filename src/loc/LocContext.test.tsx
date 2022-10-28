@@ -1,10 +1,11 @@
+import { AxiosInstance } from "axios";
 import { useCallback, useState } from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import { UUID } from "@logion/node-api/dist/UUID";
 import { LegalOfficerCase } from '@logion/node-api/dist/Types';
 import { LocData, OpenLoc } from "@logion/client";
 import { LogionClient } from '@logion/client/dist/LogionClient';
-import { PublicApi, LocRequestState } from "@logion/client";
+import { PublicApi, LocRequestState, EditableRequest as RealEditableRequest } from "@logion/client";
 
 import { confirmLocFile, confirmLocLink, confirmLocMetadataItem, deleteLocLink, resetDefaultMocks } from "../common/__mocks__/ModelMock";
 import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
@@ -13,16 +14,17 @@ import { finalizeSubmission, resetSubmitting } from "../logion-chain/__mocks__/S
 import { clickByName } from "../tests";
 import { LocContextProvider, useLocContext } from "./LocContext"
 import { LocItemType } from "./types";
-import { addLink } from "./__mocks__/ModelMock";
 import { buildLocRequest } from "./TestData";
 import { setClientMock } from "src/logion-chain/__mocks__/LogionChainMock";
+import { EditableRequest } from "src/__mocks__/LogionClientMock";
+import { addLink } from "../legal-officer/client";
+import { useLogionChain } from "src/logion-chain";
 
 jest.mock("@logion/node-api/dist/LogionLoc");
 jest.mock("../logion-chain/Signature");
 jest.mock("../logion-chain");
 jest.mock("../common/CommonContext");
 jest.mock("../common/Model");
-jest.mock("./Model");
 
 describe("LocContext", () => {
 
@@ -81,17 +83,14 @@ function givenRequest(locId: string, loc: LegalOfficerCase, linkedLocId?: string
     const locsState: any = {};
 
     _locData = buildLocRequest(UUID.fromDecimalString(locId)!, loc);
-    _locState = {
-        data: () => _locData,
-        locsState: () => locsState,
-        refresh: () => Promise.resolve(_locState),
-    } as unknown as OpenLoc;
-
+    _locState = new EditableRequest();
+    _locState.data = () => _locData;
+    _locState.locsState = () => locsState,
+    _locState.refresh = () => Promise.resolve(_locState),
     _locState.addMetadata = jest.fn().mockResolvedValue(_locState);
     _locState.deleteMetadata = jest.fn().mockResolvedValue(_locState);
     _locState.addFile = jest.fn().mockResolvedValue(_locState);
     _locState.deleteFile = jest.fn().mockResolvedValue( _locState);
-    addLink.mockResolvedValue(undefined);
 
     if(linkedLocId && linkedLoc) {
         _linkedLocData = buildLocRequest(UUID.fromDecimalString(linkedLocId)!, linkedLoc);
@@ -127,21 +126,27 @@ function givenRequest(locId: string, loc: LegalOfficerCase, linkedLocId?: string
         }
     } as unknown as PublicApi;
 
+    axiosMock = {
+        post: jest.fn().mockResolvedValue(undefined),
+    } as unknown as AxiosInstance;
     setClientMock({
         locsState: () => Promise.resolve(locsState),
         public: publicMock,
+        legalOfficers: [],
+        buildAxios: () => axiosMock,
     } as unknown as LogionClient);
 }
 
 let _locData: LocData;
-let _locState: OpenLoc;
+let _locState: EditableRequest;
 let _linkedLocData: LocData;
 let _linkedLocState: LocRequestState;
+let axiosMock: AxiosInstance;
 
-function whenRenderingInContext(locState: LocRequestState, element: JSX.Element) {
+function whenRenderingInContext(locState: EditableRequest, element: JSX.Element) {
     render(
         <LocContextProvider
-            locState={ locState }
+            locState={ locState as unknown as LocRequestState }
             backPath="/"
             detailsPath={() => ""}
             refreshLocs={() => Promise.resolve()}
@@ -188,15 +193,36 @@ async function thenReaderDisplaysLocRequestAndItems() {
 }
 
 function ItemAdder() {
-    const { locItems, addMetadata, addFile, addLink, locState } = useLocContext();
+    const { client } = useLogionChain();
+    const { locItems, locState, mutateLocState } = useLocContext();
 
-    const callback = useCallback(() => {
-        addMetadata!("New data", "value");
-        addFile!("New file", new File([], "file.png"), "Some nature");
-        addLink!(_linkedLocData, "Some nature");
-    }, [ addMetadata, addFile, addLink ]);
+    const callback = useCallback(async () => {
+        await mutateLocState(async (current) => {
+            if(current instanceof EditableRequest) {
+                let next: RealEditableRequest;
+                next = await current.addMetadata!({
+                    name: "New data",
+                    value: "value"
+                }) as unknown as RealEditableRequest;
+                next = await current.addFile!({
+                    file: new File([], "file.png"),
+                    name: "New file",
+                    nature: "Some nature",
+                }) as unknown as RealEditableRequest;
+                next = await addLink({
+                    client: client!,
+                    locState: current as unknown as RealEditableRequest,
+                    target: _linkedLocData.id,
+                    nature: "Some nature"
+                });
+                return next as unknown as LocRequestState;
+            } else {
+                return current;
+            }
+        });
+    }, [ mutateLocState ]);
 
-    if(!addMetadata || !addFile || !addLink || !locState) {
+    if(!client || !locState) {
         return null;
     }
 
@@ -218,7 +244,13 @@ function ItemAdder() {
 async function thenItemsAdded() {
     await waitFor(() => expect(_locState.addMetadata).toBeCalled());
     expect(_locState.addFile).toBeCalled();
-    expect(addLink).toBeCalled();
+    expect(axiosMock.post).toBeCalledWith(
+        `/api/loc-request/${ _locData.id.toString() }/links`,
+        expect.objectContaining({
+            "nature": "Some nature",
+            "target": _linkedLocData.id.toString(),
+        })
+    );
 }
 
 function Closer() {
@@ -362,15 +394,23 @@ async function thenItemsPublished(confirmFunction: jest.Mock) {
 }
 
 function ItemDeleter() {
-    const { locItems, deleteMetadata, deleteFile, deleteLink } = useLocContext();
+    const { locItems, deleteMetadata, deleteLink, mutateLocState } = useLocContext();
 
-    const callback = useCallback(() => {
+    const callback = useCallback(async () => {
+        await mutateLocState(async current => {
+            if(current instanceof EditableRequest) {
+                return current.deleteFile!({
+                    hash: "new-hash",
+                }) as unknown as RealEditableRequest;
+            } else {
+                return current;
+            }
+        });
         deleteMetadata!(locItems.find(item => item.name === "New data")!);
-        deleteFile!(locItems.find(item => item.name === "New file")!);
         deleteLink!(locItems.find(item => item.nature === "New link")!);
-    }, [ locItems, deleteMetadata, deleteFile, deleteLink ]);
+    }, [ locItems, deleteMetadata, deleteLink ]);
 
-    if(!deleteMetadata || !deleteFile || !deleteLink) {
+    if(!deleteMetadata || !deleteLink) {
         return null;
     }
 

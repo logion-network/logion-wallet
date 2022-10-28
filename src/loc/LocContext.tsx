@@ -43,7 +43,6 @@ import {
     createMetadataItem,
     createLinkItem
 } from "./LocItemFactory";
-import { addLink as modelAddLink } from "./Model"
 import { fullCertificateUrl } from "../PublicPaths";
 import { signAndSend } from "src/logion-chain/Signature";
 import { DocumentCheckResult } from "src/components/checkfileframe/CheckFileFrame";
@@ -52,20 +51,11 @@ export interface FullVoidInfo extends VoidInfo {
     reason: string;
 }
 
-export interface LinkTarget {
-    id: UUID;
-    description: string;
-    locType: LocType;
-}
-
 export interface LocContext {
     loc: LocData | null
     supersededLoc?: PublicLoc
     locState: LocRequestState | null
     locItems: LocItem[]
-    addMetadata: ((name: string, value: string) => void) | null
-    addFile: ((name: string, file: File, nature: string) => Promise<void>) | null
-    deleteFile: ((locItem: LocItem) => void) | null
     deleteMetadata: ((locItem: LocItem) => void) | null
     backPath: string
     detailsPath: (locId: UUID, type: LocType) => string
@@ -75,7 +65,6 @@ export interface LocContext {
     collectionItem?: CollectionItem
     requestSof: (() => Promise<void>) | null
     requestSofOnCollection: ((collectionItemId: string) => Promise<void>) | null
-    addLink: ((otherLoc: LinkTarget, nature: string) => void) | null
     publishLink: ((locItem: LocItem) => SignAndSubmit) | null
     publishMetadata: ((locItem: LocItem) => SignAndSubmit) | null
     publishFile: ((locItem: LocItem) => SignAndSubmit) | null
@@ -90,6 +79,7 @@ export interface LocContext {
     collectionItems: CollectionItem[]
     cancelRequest: () => Promise<void>
     submitRequest: () => Promise<void>
+    mutateLocState: (mutator: (current: LocRequestState) => Promise<LocRequestState>) => Promise<void>
 }
 
 const MAX_REFRESH = 20;
@@ -102,16 +92,12 @@ function initialContextValue(locState: LocRequestState | null, backPath: string,
         backPath,
         detailsPath,
         locItems: [],
-        addMetadata: null,
-        addLink: null,
         publishLink: null,
         publishMetadata: null,
-        addFile: null,
         publishFile: null,
         close: null,
         closeExtrinsic: null,
         confirmFile: null,
-        deleteFile: null,
         confirmLink: null,
         deleteLink: null,
         confirmMetadata: null,
@@ -126,6 +112,7 @@ function initialContextValue(locState: LocRequestState | null, backPath: string,
         collectionItems: [],
         cancelRequest: () => Promise.reject(new Error("undefined")),
         submitRequest: () => Promise.reject(new Error("undefined")),
+        mutateLocState: () => Promise.reject(),
     }
 }
 
@@ -139,15 +126,11 @@ type ActionType = 'SET_LOC_REQUEST'
     | 'SET_CHECK_RESULT'
     | 'SET_PUBLISH_METADATA'
     | 'SET_PUBLIC_LINK'
-    | 'SET_ADD_METADATA'
-    | 'SET_ADD_LINK'
     | 'SET_PUBLISH_LINK'
-    | 'SET_ADD_FILE'
     | 'SET_PUBLISH_FILE'
     | 'SET_CLOSE'
     | 'SET_CLOSE_EXTRINSIC'
     | 'SET_CONFIRM_FILE'
-    | 'SET_DELETE_FILE'
     | 'SET_CONFIRM_LINK'
     | 'SET_DELETE_LINK'
     | 'SET_CONFIRM_METADATA'
@@ -160,6 +143,7 @@ type ActionType = 'SET_LOC_REQUEST'
     | 'SET_REQUEST_SOF_ON_COLLECTION'
     | 'SET_CANCEL_REQUEST'
     | 'SET_SUBMIT_REQUEST'
+    | 'SET_MUTATE_LOC_STATE'
 ;
 
 interface Action {
@@ -171,16 +155,12 @@ interface Action {
     status?: LocItemStatus,
     name?: string,
     timestamp?: string,
-    addMetadata?: (name: string, value: string) => void,
-    addLink?: (otherLoc: LinkTarget, nature: string) => void,
     publishLink?: (locItem: LocItem) => SignAndSubmit,
     publishMetadata?: (locItem: LocItem) => SignAndSubmit,
-    addFile?: (name: string, file: File, nature: string) => Promise<void>,
     publishFile?: (locItem: LocItem) => SignAndSubmit,
     close?: () => void,
     closeExtrinsic?: (seal?: string) => SignAndSubmit,
     confirmFile?: (locItem: LocItem) => void,
-    deleteFile?: (locItem: LocItem) => void,
     confirmLink?: (locItem: LocItem) => void
     deleteLink?: (locItem: LocItem) => void,
     confirmMetadata?: (locItem: LocItem) => void,
@@ -199,6 +179,7 @@ interface Action {
     collectionItems?: CollectionItem[],
     cancelRequest?: () => Promise<void>,
     submitRequest?: () => Promise<void>,
+    mutateLocState?: (mutator: (current: LocRequestState) => Promise<LocRequestState>) => Promise<void>,
 }
 
 const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action): LocContext => {
@@ -250,25 +231,10 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
                 ...state,
                 publishLink: action.publishLink!,
             }
-        case 'SET_ADD_METADATA':
-            return {
-                ...state,
-                addMetadata: action.addMetadata!,
-            }
-        case 'SET_ADD_LINK':
-            return {
-                ...state,
-                addLink: action.addLink!,
-            }
         case 'SET_PUBLISH_LINK':
             return {
                 ...state,
                 publishLink: action.publishLink!,
-            }
-        case 'SET_ADD_FILE':
-            return {
-                ...state,
-                addFile: action.addFile!,
             }
         case 'SET_PUBLISH_FILE':
             return {
@@ -289,11 +255,6 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
             return {
                 ...state,
                 confirmFile: action.confirmFile!,
-            }
-        case 'SET_DELETE_FILE':
-            return {
-                ...state,
-                deleteFile: action.deleteFile!,
             }
         case 'SET_CONFIRM_LINK':
             return {
@@ -354,6 +315,11 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
             return {
                 ...state,
                 submitRequest: action.submitRequest!,
+            }
+        case 'SET_MUTATE_LOC_STATE':
+            return {
+                ...state,
+                mutateLocState: action.mutateLocState!,
             }
         default:
             throw new Error(`Unknown type: ${ action.type }`);
@@ -654,19 +620,6 @@ export function LocContextProvider(props: Props) {
         }
     }, [ contextValue.confirmFile, confirmFileFunction ]);
 
-    const deleteFileFunction = useCallback(async (item: LocItem) => {
-        await dispatchLocAndItems(await (contextValue.locState as OpenLoc).deleteFile({ hash: item.value }), true)
-    }, [ dispatchLocAndItems, contextValue.locState ])
-
-    useEffect(() => {
-        if(contextValue.deleteFile !== deleteFileFunction) {
-            dispatch({
-                type: "SET_DELETE_FILE",
-                deleteFile: deleteFileFunction,
-            })
-        }
-    }, [ contextValue.deleteFile, deleteFileFunction ]);
-
     const confirmLinkFunction = useCallback(async (locItem: LocItem) => {
         await confirmLocLink(axiosFactory!(contextValue.loc!.ownerAddress)!, contextValue.loc!.id, locItem.target!);
         await refreshLocState(true);
@@ -759,59 +712,6 @@ export function LocContextProvider(props: Props) {
             })
         }
     }, [ contextValue.voidLoc, voidLocFunction ]);
-
-    const addLinkFunction = useCallback(async (otherLoc: LinkTarget, nature: string) => {
-        await modelAddLink(axiosFactory!(contextValue.loc!.ownerAddress)!, {
-            locId: contextValue.loc!.id.toString(),
-            target: otherLoc.id.toString(),
-            nature
-        });
-        await refreshLocState(true);
-    }, [ axiosFactory, contextValue.loc, refreshLocState ])
-
-    useEffect(() => {
-        if(contextValue.addLink !== addLinkFunction) {
-            dispatch({
-                type: "SET_ADD_LINK",
-                addLink: addLinkFunction,
-            })
-        }
-    }, [ contextValue.addLink, addLinkFunction ]);
-
-    const addMetadataFunction = useCallback(async (name: string, value: string) => {
-        const state = await (contextValue.locState as OpenLoc).addMetadata({
-            name,
-            value,
-        });
-        await dispatchLocAndItems(state, true);
-    }, [ contextValue.locState, dispatchLocAndItems ])
-
-    useEffect(() => {
-        if(contextValue.addMetadata !== addMetadataFunction) {
-            dispatch({
-                type: "SET_ADD_METADATA",
-                addMetadata: addMetadataFunction,
-            })
-        }
-    }, [ contextValue.addMetadata, addMetadataFunction ]);
-
-    const addFileFunction = useCallback(async (name: string, file: File, nature: string) => {
-        const state = await (contextValue.locState as OpenLoc).addFile({
-            file,
-            fileName: name,
-            nature
-        });
-        await dispatchLocAndItems(state, true);
-    }, [ contextValue.locState, dispatchLocAndItems ])
-
-    useEffect(() => {
-        if(contextValue.addFile !== addFileFunction) {
-            dispatch({
-                type: "SET_ADD_FILE",
-                addFile: addFileFunction,
-            })
-        }
-    }, [ contextValue.addFile, addFileFunction ]);
 
     const refreshFunction = useCallback(async () => {
         await refreshLocState(true);
@@ -934,6 +834,22 @@ export function LocContextProvider(props: Props) {
             })
         }
     }, [ contextValue.submitRequest, submitRequestFunction ]);
+
+    const mutateLocStateCallback = useCallback(async (mutator: (current: LocRequestState) => Promise<LocRequestState>): Promise<void> => {
+        const newState = await mutator(contextValue.locState!);
+        if(newState !== contextValue.locState) {
+            dispatchLocAndItems(newState, true);
+        }
+    }, [ contextValue.locState, dispatchLocAndItems ]);
+
+    useEffect(() => {
+        if (contextValue.mutateLocState !== mutateLocStateCallback) {
+            dispatch({
+                type: "SET_MUTATE_LOC_STATE",
+                mutateLocState: mutateLocStateCallback,
+            });
+        }
+    }, [ mutateLocStateCallback, contextValue.mutateLocState ]);
 
     return (
         <LocContextObject.Provider value={ contextValue }>

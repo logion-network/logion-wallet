@@ -28,10 +28,7 @@ export default function ContextualizedLocDetails() {
         supersededLoc,
         locItems,
         deleteMetadata,
-        deleteFile,
         deleteLink,
-        addMetadata,
-        addFile,
         checkHash,
         checkResult,
         collectionItem,
@@ -84,10 +81,7 @@ export default function ContextualizedLocDetails() {
                 loc={ loc }
                 locState={ locState }
                 locItems={ locItems }
-                addFile={ addFile }
-                addMetadata={ addMetadata }
                 checkResult={ checkResult }
-                deleteFile={ deleteFile }
                 deleteLink={ deleteLink }
                 deleteMetadata={ deleteMetadata }
                 viewer="LegalOfficer"

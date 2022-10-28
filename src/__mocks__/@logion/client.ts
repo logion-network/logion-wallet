@@ -8,6 +8,7 @@ import {
     fromIsoString,
     ClosedCollectionLoc,
     DraftRequest,
+    EditableRequest,
 } from '../LogionClientMock';
 
 export {
@@ -19,6 +20,7 @@ export {
     CheckResultType,
     ClosedCollectionLoc,
     DraftRequest,
+    EditableRequest,
 }
 
 export { MimeType } from "@logion/client/dist/Mime";

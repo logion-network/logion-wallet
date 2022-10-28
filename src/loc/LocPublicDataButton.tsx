@@ -7,30 +7,35 @@ import LocPublicDataForm, { FormValues } from "./LocPublicDataForm";
 import { useCommonContext } from "../common/CommonContext";
 import Icon from "../common/Icon";
 import { LocItem } from "./types";
+import { useLocContext } from "./LocContext";
+import { EditableRequest } from "@logion/client";
 
-export interface Props {
-    locItems: LocItem[]
-    addMetadata: ((name: string, value: string) => void) | null
-}
-
-export function LocPublicDataButton(props: Props) {
-
-    const { addMetadata, locItems } = props;
+export function LocPublicDataButton() {
+    const { mutateLocState, locItems } = useLocContext();
     const { colorTheme } = useCommonContext();
     const [ visible, setVisible ] = useState(false);
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>();
     const [ existingItem, setExistingItem ] = useState<LocItem | undefined>(undefined);
 
-    const submit = useCallback((formValues: FormValues) => {
+    const submit = useCallback(async (formValues: FormValues) => {
         const existingItem = locItems.find(item => item.type === "Data" && item.name === formValues.dataName);
         if (existingItem) {
             setVisible(false)
             setExistingItem(existingItem)
         } else {
-            addMetadata!(formValues.dataName, formValues.dataValue)
+            await mutateLocState(async current => {
+                if(current instanceof EditableRequest) {
+                    return current.addMetadata({
+                        name: formValues.dataName,
+                        value: formValues.dataValue,
+                    });
+                } else {
+                    return current;
+                }
+            })
             setVisible(false)
         }
-    }, [ addMetadata, locItems, setVisible ]);
+    }, [ mutateLocState, locItems, setVisible ]);
 
     return (
         <>

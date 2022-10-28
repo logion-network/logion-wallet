@@ -1,11 +1,13 @@
-import { useForm } from "react-hook-form";
 import { UUID, getLegalOfficerCase } from "@logion/node-api";
+import { EditableRequest } from "@logion/client";
+import { useCallback } from "react";
+import { useForm } from "react-hook-form";
 
 import { useLogionChain } from "../logion-chain";
 import Dialog from "../common/Dialog";
 import LocLinkExistingForm, { FormValues } from "./LocLinkExistingForm";
-import { useCallback } from "react";
 import { useLocContext } from "./LocContext";
+import { addLink } from "src/legal-officer/client";
 
 export interface Props {
     show: boolean,
@@ -14,7 +16,7 @@ export interface Props {
 
 export default function LocLinkExistingDialog(props: Props) {
     const { api, client } = useLogionChain();
-    const { addLink, locItems } = useLocContext();
+    const { mutateLocState, locItems } = useLocContext();
     const { control, handleSubmit, setError, clearErrors, formState: { errors }, reset } = useForm<FormValues>({
         defaultValues: {
             locId: ""
@@ -38,12 +40,23 @@ export default function LocLinkExistingDialog(props: Props) {
             setError("locId", { type: "value", message: "LOC already linked" })
             return
         }
-        const locState = (await client!.locsState()).findById(locId);
-        const locData = locState!.data();
-        addLink!(locData, formValues.linkNature)
+
+        await mutateLocState(async current => {
+            if(client && current instanceof EditableRequest) {
+                const locData = current.locsState().findById(locId).data();
+                return await addLink({
+                    client,
+                    locState: current,
+                    target: locData.id,
+                    nature: formValues.linkNature,
+                });
+            } else {
+                return current;
+            }
+        });
         reset();
         props.exit();
-    }, [ props, addLink, locItems, api, setError, clearErrors, reset, client ])
+    }, [ props, locItems, api, setError, clearErrors, reset, client, mutateLocState ])
 
     return (
         <>

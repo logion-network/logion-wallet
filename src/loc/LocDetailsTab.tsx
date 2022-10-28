@@ -35,9 +35,6 @@ export interface Props {
     legalOfficer?: LegalOfficer;
     checkResult: DocumentCheckResult;
     locItems: LocItem[];
-    addMetadata: ((name: string, value: string) => void) | null;
-    addFile: ((name: string, file: File, nature: string) => Promise<void>) | null;
-    deleteFile: ((locItem: LocItem) => void) | null;
     deleteMetadata: ((locItem: LocItem) => void) | null;
     deleteLink: ((locItem: LocItem) => void) | null;
     protectionRequest?: ProtectionRequest | null;
@@ -111,16 +108,10 @@ export default function LocDetailsTab(props: Props) {
 }
 
 export interface ContentProps {
-    loc: LocData;
-    locState: LocRequestState;
     viewer: Viewer;
     detailsPath: (locId: UUID, type: LocType) => string;
     legalOfficer?: LegalOfficer;
     checkResult: DocumentCheckResult;
-    locItems: LocItem[];
-    addMetadata: ((name: string, value: string) => void) | null;
-    addFile: ((name: string, file: File, nature: string) => Promise<void>) | null;
-    deleteFile: ((locItem: LocItem) => void) | null;
     deleteMetadata: ((locItem: LocItem) => void) | null;
     deleteLink: ((locItem: LocItem) => void) | null;
     protectionRequest?: ProtectionRequest | null;
@@ -129,16 +120,10 @@ export interface ContentProps {
 
 export function LocDetailsTabContent(props: ContentProps) {
     const {
-        loc,
-        locState,
         viewer,
         detailsPath,
         legalOfficer,
         checkResult,
-        locItems,
-        addMetadata,
-        addFile,
-        deleteFile,
         deleteMetadata,
         deleteLink,
         protectionRequest,
@@ -146,7 +131,7 @@ export function LocDetailsTabContent(props: ContentProps) {
     } = props;
     const [ showCancelDialog, setShowCancelDialog ] = useState(false);
     const [ showSubmitDialog, setShowSubmitDialog ] = useState(false);
-    const { cancelRequest, backPath, submitRequest } = useLocContext();
+    const { loc, locState, cancelRequest, backPath, submitRequest } = useLocContext();
     const navigate = useNavigate();
 
     const confirmCancel = useCallback(() => {
@@ -166,6 +151,10 @@ export function LocDetailsTabContent(props: ContentProps) {
         await submitRequest();
         navigate(backPath);
     }, [ submitRequest, navigate, backPath ]);
+
+    if(!loc || !locState) {
+        return null;
+    }
 
     return (<>
         <Row>
@@ -213,12 +202,8 @@ export function LocDetailsTabContent(props: ContentProps) {
         <LocItems
             matchedHash={ checkResult.hash }
             viewer={ props.viewer }
-            locId={ loc.id }
-            locItems={ locItems }
             deleteMetadata={ deleteMetadata }
-            deleteFile={ deleteFile }
             deleteLink={ deleteLink }
-            loc={ loc }
         />
         {
             !loc.closed && loc.voidInfo === undefined &&
@@ -230,14 +215,8 @@ export function LocDetailsTabContent(props: ContentProps) {
                             || (viewer === "LegalOfficer" && loc.status === "OPEN")
                         ) &&
                         <ButtonGroup align="left">
-                            <LocPublicDataButton
-                                locItems={ locItems }
-                                addMetadata={ addMetadata }
-                            />
-                            <LocPrivateFileButton
-                                locItems={ locItems }
-                                addFile={ addFile }
-                            />
+                            <LocPublicDataButton />
+                            <LocPrivateFileButton />
                         </ButtonGroup>
                     }
                 </Col>

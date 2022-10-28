@@ -5,6 +5,9 @@ import { Viewer } from "src/common/CommonContext";
 import { CheckResult } from "src/components/checkfileframe/CheckFileFrame";
 import { shallowRender } from "src/tests";
 import LocDetailsTab, { LocDetailsTabContent } from "./LocDetailsTab";
+import { setLocRequest, setLocState } from "./__mocks__/LocContextMock";
+
+jest.mock("./LocContext");
 
 describe("LocDetailsTab", () => {
 
@@ -198,9 +201,9 @@ function buildLocMock(params: MockParameters): { loc: LocData, locState: LocRequ
 
 function testRenderContent(params: TestParameters) {
     const { loc, locState } = buildLocMock(params);
+    setLocRequest(loc);
+    setLocState(locState);
     const element = shallowRender(<LocDetailsTabContent
-        loc={ loc }
-        locState={ locState }
         viewer={ params.viewer }
         locTabBorderColor={ "black" }
         { ...otherProps }

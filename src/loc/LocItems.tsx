@@ -1,5 +1,4 @@
-import { UUID } from "@logion/node-api";
-import { LocData } from "@logion/client";
+import { LocData, EditableRequest } from "@logion/client";
 import { AxiosInstance } from "axios";
 
 import Table, { Cell, DateTimeCell, EmptyTableMessage, ActionCell } from "../common/Table";
@@ -26,23 +25,38 @@ import LocPublicDataDetails from "./LocPublicDataDetails";
 
 import './LocItems.css';
 import { Viewer } from "src/common/CommonContext";
+import { useLocContext } from "./LocContext";
+import { useCallback } from "react";
 
 export interface LocItemsProps {
     matchedHash?: string;
     viewer: Viewer;
-    locId: UUID
-    locItems: LocItem[]
     deleteMetadata: ((locItem: LocItem) => void) | null
-    deleteFile: ((locItem: LocItem) => void) | null
     deleteLink: ((locItem: LocItem) => void) | null
-    loc: LocData
 }
 
 export function LocItems(props: LocItemsProps) {
-    const { locId, locItems, deleteMetadata, deleteFile, deleteLink, loc } = props;
+    const { deleteMetadata, deleteLink } = props;
+    const { mutateLocState, loc, locItems } = useLocContext();
     const { accounts } = useLogionChain();
 
     const { width } = useResponsiveContext();
+
+    const deleteFile = useCallback(async (item: LocItem) => {
+        await mutateLocState(async current => {
+            if(current instanceof EditableRequest) {
+                return current.deleteFile({
+                    hash: item.value,
+                });
+            } else {
+                return current;
+            }
+        });
+    }, [ mutateLocState ]);
+
+    if(!loc) {
+        return null;
+    }
 
     function renderDetails(locItem: LocItem): Child {
         return (
@@ -77,19 +91,19 @@ export function LocItems(props: LocItemsProps) {
         return (
             <ActionCell>
                 { locItem.type === 'Data' && <ButtonGroup>
-                    { props.viewer === 'LegalOfficer' && props.loc.status === "OPEN" && <LocPublishPublicDataButton locItem={ locItem } /> }
-                    { canDelete(accounts?.current?.address, locItem, props.viewer, loc) &&
+                    { props.viewer === 'LegalOfficer' && loc!.status === "OPEN" && <LocPublishPublicDataButton locItem={ locItem } /> }
+                    { canDelete(accounts?.current?.address, locItem, props.viewer, loc!) &&
                         <DeleteButton locItem={ locItem } action={ deleteMetadata! } /> }
                 </ButtonGroup> }
                 { locItem.type === 'Linked LOC' && <ButtonGroup>
                     { props.viewer === 'LegalOfficer' && <LocPublishLinkButton locItem={ locItem } /> }
-                    { canDelete(accounts?.current?.address, locItem, props.viewer, loc) &&
+                    { canDelete(accounts?.current?.address, locItem, props.viewer, loc!) &&
                         <DeleteButton locItem={ locItem } action={ deleteLink! } /> }
                 </ButtonGroup> }
                 { locItem.type === 'Document' && <ButtonGroup>
-                    { props.viewer === 'LegalOfficer' && props.loc.status === "OPEN" && <LocPublishPrivateFileButton locItem={ locItem } /> }
-                    { canDelete(accounts?.current?.address, locItem, props.viewer, loc) &&
-                        <DeleteButton locItem={ locItem } action={ deleteFile! } /> }
+                    { props.viewer === 'LegalOfficer' && loc!.status === "OPEN" && <LocPublishPrivateFileButton locItem={ locItem } /> }
+                    { canDelete(accounts?.current?.address, locItem, props.viewer, loc!) &&
+                        <DeleteButton locItem={ locItem } action={ deleteFile } /> }
                 </ButtonGroup> }
             </ActionCell>)
     }
@@ -139,7 +153,7 @@ export function LocItems(props: LocItemsProps) {
                                         nodeOwner={ loc.ownerAddress }
                                         fileName={ locItem.name }
                                         downloader={ (axios: AxiosInstance) => getFile(axios, {
-                                            locId: locId.toString(),
+                                            locId: loc.id.toString(),
                                             hash: locItem.value
                                         }) }
                                     />
