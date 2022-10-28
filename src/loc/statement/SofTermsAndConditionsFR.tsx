@@ -58,8 +58,14 @@ export default function SofTermsAndConditionsFR(props: Props) {
             {
                 creativeCommons !== undefined &&
                 <div className="creative-commons">
-                    <img className="creative-commons-badge" src={ creativeCommons.badgeUrl } alt={ creativeCommons.code } />
-                    <p className="creative-commons-text">Ce travail est soumis aux termes de la licence <a href={ creativeCommons.url }>Creative Commons Attribution 4.0 International License</a></p>
+                    <div className="creative-commons-main">
+                        <img className="creative-commons-badge" src={ creativeCommons.badgeUrl } alt={ creativeCommons.code } />
+                        <p className="creative-commons-text">Ce travail est soumis aux termes de la licence <a
+                            href={ creativeCommons.url }>
+                            Creative Commons Attribution 4.0 International License</a>
+                        </p>
+                    </div>
+                    <a href={ creativeCommons.url }>{ creativeCommons.url }</a>
                 </div>
             }
 
