@@ -39,6 +39,7 @@ export default function ClientExtrinsicSubmitter(props: Props) {
                     await props.call!((callbackResult: ISubmittableResult) => setResult(callbackResult));
                     setCallEnded(true);
                 } catch(e) {
+                    console.log(e);
                     setError(e);
                 }
             })();

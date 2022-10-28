@@ -7,7 +7,7 @@ import { LocData, OpenLoc } from "@logion/client";
 import { LogionClient } from '@logion/client/dist/LogionClient';
 import { PublicApi, LocRequestState, EditableRequest as RealEditableRequest } from "@logion/client";
 
-import { confirmLocFile, confirmLocLink, confirmLocMetadataItem, deleteLocLink, resetDefaultMocks } from "../common/__mocks__/ModelMock";
+import { deleteLocLink, resetDefaultMocks } from "../common/__mocks__/ModelMock";
 import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
 import { CLOSED_IDENTITY_LOC, CLOSED_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "../__mocks__/@logion/node-api/dist/LogionLocMock";
 import { finalizeSubmission, resetSubmitting } from "../logion-chain/__mocks__/SignatureMock";
@@ -17,8 +17,9 @@ import { LocItemType } from "./types";
 import { buildLocRequest } from "./TestData";
 import { setClientMock } from "src/logion-chain/__mocks__/LogionChainMock";
 import { EditableRequest } from "src/__mocks__/LogionClientMock";
-import { addLink } from "../legal-officer/client";
+import { addLink, publishFile, publishLink, publishMetadata } from "../legal-officer/client";
 import { useLogionChain } from "src/logion-chain";
+import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
 
 jest.mock("@logion/node-api/dist/LogionLoc");
 jest.mock("../logion-chain/Signature");
@@ -53,9 +54,9 @@ describe("LocContext", () => {
         await thenClosed();
     })
 
-    it("publishes metadata item", async () => publishesItem("Data", confirmLocMetadataItem))
-    it("publishes file item", async () => publishesItem("Document", confirmLocFile))
-    it("publishes link item", async () => publishesItem("Linked LOC", confirmLocLink))
+    it("publishes metadata item", async () => publishesItem("Data", "/api/loc-request/9363c3d6-d107-421a-a44b-85c7fab0b843/metadata/New%20data/confirm"))
+    it("publishes file item", async () => publishesItem("Document", "/api/loc-request/9363c3d6-d107-421a-a44b-85c7fab0b843/files/new-hash/confirm"))
+    it("publishes link item", async () => publishesItem("Linked LOC", "/api/loc-request/9363c3d6-d107-421a-a44b-85c7fab0b843/links/4092e790-a6eb-4f10-8172-90b5dd254521/confirm"))
 
     it("deletes items", async () => {
         givenRequest(OPEN_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, CLOSED_IDENTITY_LOC_ID, CLOSED_IDENTITY_LOC);
@@ -128,13 +129,16 @@ function givenRequest(locId: string, loc: LegalOfficerCase, linkedLocId?: string
 
     axiosMock = {
         post: jest.fn().mockResolvedValue(undefined),
+        put: jest.fn().mockResolvedValue(undefined),
     } as unknown as AxiosInstance;
-    setClientMock({
+    const client = {
         locsState: () => Promise.resolve(locsState),
         public: publicMock,
         legalOfficers: [],
         buildAxios: () => axiosMock,
-    } as unknown as LogionClient);
+    } as unknown as LogionClient;
+    locsState.client = client;
+    setClientMock(client);
 }
 
 let _locData: LocData;
@@ -193,7 +197,6 @@ async function thenReaderDisplaysLocRequestAndItems() {
 }
 
 function ItemAdder() {
-    const { client } = useLogionChain();
     const { locItems, locState, mutateLocState } = useLocContext();
 
     const callback = useCallback(async () => {
@@ -210,7 +213,6 @@ function ItemAdder() {
                     nature: "Some nature",
                 }) as unknown as RealEditableRequest;
                 next = await addLink({
-                    client: client!,
                     locState: current as unknown as RealEditableRequest,
                     target: _linkedLocData.id,
                     nature: "Some nature"
@@ -222,7 +224,7 @@ function ItemAdder() {
         });
     }, [ mutateLocState ]);
 
-    if(!client || !locState) {
+    if(!locState) {
         return null;
     }
 
@@ -289,7 +291,7 @@ async function thenClosed() {
     await waitFor(() => expect(screen.getByText("Closed")).toBeVisible());
 }
 
-async function publishesItem(itemType: LocItemType, confirmFunction: jest.Mock) {
+async function publishesItem(itemType: LocItemType, expectedResource: string) {
     givenRequest(OPEN_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, CLOSED_IDENTITY_LOC_ID, CLOSED_IDENTITY_LOC);
     givenDraftItems();
     resetDefaultMocks();
@@ -297,8 +299,7 @@ async function publishesItem(itemType: LocItemType, confirmFunction: jest.Mock) 
     resetSubmitting();
     await clickByName("Go");
     await waitFor(() => expect(screen.getByText("Submitting...")).toBeVisible());
-    finalizeSubmission();
-    await thenItemsPublished(confirmFunction);
+    await thenItemsPublished(expectedResource);
 }
 
 function givenDraftItems() {
@@ -331,28 +332,40 @@ export interface ItemPublisherProps {
 }
 
 function ItemPublisher(props: ItemPublisherProps) {
-    const { locItems, publishMetadata, publishFile, publishLink, confirmMetadata, confirmFile, confirmLink } = useLocContext();
-    const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
+    const { signer } = useLogionChain();
+    const { locItems, mutateLocState } = useLocContext();
+    const [ signAndSubmit, setSignAndSubmit ] = useState<Call>();
 
     const callback = useCallback(() => {
         if(props.itemType === "Data") {
-            setSignAndSubmit(() => publishMetadata!(locItems.find(item => item.name === "New data")!));
+            const item = locItems.find(item => item.name === "New data")!;
+            setSignAndSubmit(() => (callback: CallCallback) => mutateLocState(async current => publishMetadata({
+                locState: current as RealEditableRequest,
+                item,
+                callback,
+                signer: signer!,
+            })));
         } else if(props.itemType === "Document") {
-            setSignAndSubmit(() => publishFile!(locItems.find(item => item.name === "New file")!));
+            const file = locItems.find(item => item.name === "New file")!;
+            setSignAndSubmit(() => (callback: CallCallback) => mutateLocState(async current => publishFile({
+                locState: current as RealEditableRequest,
+                hash: file.value,
+                nature: file.name!,
+                submitter: file.submitter,
+                callback,
+                signer: signer!,
+            })));
         } else if(props.itemType === "Linked LOC") {
-            setSignAndSubmit(() => publishLink!(locItems.find(item => item.nature === "New link")!));
+            const link = locItems.find(item => item.nature === "New link")!;
+            setSignAndSubmit(() => (callback: CallCallback) => mutateLocState(async current => publishLink({
+                locState: current as RealEditableRequest,
+                target: link.target!,
+                nature: link.name!,
+                callback,
+                signer: signer!,
+            })));
         }
     }, [ locItems, setSignAndSubmit, publishMetadata, publishFile, publishLink ]);
-
-    const onSuccess = useCallback(() => {
-        if(props.itemType === "Data") {
-            confirmMetadata!(locItems.find(item => item.name === "New data")!)
-        } else if(props.itemType === "Document") {
-            confirmFile!(locItems.find(item => item.name === "New file")!)
-        } else if(props.itemType === "Linked LOC") {
-            confirmLink!(locItems.find(item => item.nature === "New link")!)
-        }
-    }, [ locItems, confirmMetadata, confirmFile, confirmLink ]);
 
     const hasExpectedItem = useCallback(() => {
         if(props.itemType === "Data") {
@@ -364,7 +377,7 @@ function ItemPublisher(props: ItemPublisherProps) {
         }
     }, [ props.itemType, locItems ]);
 
-    if(!hasExpectedItem() || !publishMetadata || !publishFile || !publishLink || !confirmMetadata) {
+    if(!hasExpectedItem()) {
         return null;
     }
 
@@ -378,19 +391,18 @@ function ItemPublisher(props: ItemPublisherProps) {
                     </li>)
                 }
             </ul>
-            <ExtrinsicSubmitter
-                id="publish"
-                signAndSubmit={ signAndSubmit }
+            <ClientExtrinsicSubmitter
+                call={ signAndSubmit }
                 successMessage="Successfully published"
-                onSuccess={ onSuccess }
+                onSuccess={ () => {} }
                 onError={ () => {} }
             />
         </div>
     );
 }
 
-async function thenItemsPublished(confirmFunction: jest.Mock) {
-    await waitFor(() => expect(confirmFunction).toBeCalled());
+async function thenItemsPublished(expectedResource: string) {
+    await waitFor(() => expect(axiosMock.put).toBeCalledWith(expectedResource));
 }
 
 function ItemDeleter() {

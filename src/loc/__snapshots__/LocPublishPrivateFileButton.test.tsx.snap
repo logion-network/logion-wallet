@@ -15,5 +15,6 @@ exports[`LocPublishPrivateFileButton renders 1`] = `
       "value": "file-value",
     }
   }
+  publishMutator={[Function]}
 />
 `;

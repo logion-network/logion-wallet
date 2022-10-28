@@ -21,12 +21,14 @@ describe("Legal Officer client", () => {
                 id: locId,
             }),
             refresh: () => Promise.resolve(locState),
+            locsState: () => ({
+                client,
+            }),
         } as EditableRequest;
 
         const nature = "Some link";
         const target = new UUID("8f12876b-7fde-49b0-93a4-d29ed5179151");
         await addLink({
-            client,
             locState,
             target,
             nature,

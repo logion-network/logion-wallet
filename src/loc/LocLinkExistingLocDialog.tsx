@@ -45,7 +45,6 @@ export default function LocLinkExistingDialog(props: Props) {
             if(client && current instanceof EditableRequest) {
                 const locData = current.locsState().findById(locId).data();
                 return await addLink({
-                    client,
                     locState: current,
                     target: locData.id,
                     nature: formValues.linkNature,

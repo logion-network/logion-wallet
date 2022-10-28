@@ -1,13 +1,12 @@
 import { render, waitFor, screen } from "@testing-library/react";
 import { mockSubmittableResult } from "src/logion-chain/__mocks__/SignatureMock";
 
-import { SignAndSubmit } from "../ExtrinsicSubmitter";
-import { SignedTransaction } from "../logion-chain/Signature";
 import { clickByName } from "../tests";
-import { setIsSuccessful } from "../__mocks__/LogionClientMock";
 import LocPublishButton from "./LocPublishButton";
 
 import { LocItem } from "./types";
+
+jest.mock("./LocContext");
 
 describe("LocPublishButton", () => {
 
@@ -24,14 +23,14 @@ describe("LocPublishButton", () => {
             newItem: false,
         };
         const confirm = jest.fn();
-        let setResultCallback: React.Dispatch<React.SetStateAction<SignedTransaction | null>>;
-        const signAndSubmit: SignAndSubmit = setResult => { setResultCallback = setResult };
-        const signAndSubmitFactory: ((item: LocItem) => SignAndSubmit) | null = () => signAndSubmit;
         render(<LocPublishButton
             itemType="Public Data"
             locItem={ locItem }
-            confirm={ confirm }
-            signAndSubmitFactory={ signAndSubmitFactory }
+            publishMutator={ async (current, callback) => {
+                callback(mockSubmittableResult(true));
+                confirm();
+                return current;
+            }}
         />);
 
         // When publishing
@@ -41,7 +40,6 @@ describe("LocPublishButton", () => {
         await clickByName("Publish");
 
         // Then item published
-        setResultCallback!(mockSubmittableResult(true));
         await waitFor(() => screen.getByText(/successful/i));
         expect(confirm).toBeCalled();
 
