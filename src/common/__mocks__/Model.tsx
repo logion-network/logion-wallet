@@ -1,9 +1,6 @@
 import {
     fetchProtectionRequests,
     createLocRequest,
-    confirmLocFile,
-    confirmLocLink,
-    confirmLocMetadataItem,
     deleteLocLink,
     preClose,
     preVoid,
@@ -13,9 +10,6 @@ import {
 export {
     fetchProtectionRequests,
     createLocRequest,
-    confirmLocFile,
-    confirmLocLink,
-    confirmLocMetadataItem,
     deleteLocLink,
     preClose,
     preVoid,
