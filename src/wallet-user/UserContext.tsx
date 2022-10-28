@@ -309,12 +309,7 @@ export function UserContextProvider(props: Props) {
                     recoveredBalanceState = await protectionState.recoveredBalanceState();
                 }
 
-                let locsState = contextValue.locsState;
-                if (locsState === undefined || forceStateFetch) {
-                    locsState = await client.locsState();
-                } else {
-                    locsState = await locsState.refresh();
-                }
+                const locsState = await client.locsState();
 
                 dispatch({
                     type: "SET_DATA",
@@ -327,7 +322,7 @@ export function UserContextProvider(props: Props) {
                 });
             })();
         }
-    }, [ dispatch, accounts, client, contextValue.protectionState, contextValue.dataAddress, contextValue.locsState ]);
+    }, [ dispatch, accounts, client, contextValue.protectionState, contextValue.dataAddress ]);
 
     useEffect(() => {
         if(client !== undefined

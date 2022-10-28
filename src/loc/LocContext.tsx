@@ -82,10 +82,14 @@ export interface LocContext {
     mutateLocState: (mutator: (current: LocRequestState) => Promise<LocRequestState>) => Promise<void>
 }
 
+export interface PrivateLocContext extends LocContext {
+    mustFetchCollectionItems: boolean;
+}
+
 const MAX_REFRESH = 20;
 const REFRESH_INTERVAL = 5000;
 
-function initialContextValue(locState: LocRequestState | null, backPath: string, detailsPath: (locId: UUID, type: LocType) => string): LocContext {
+function initialContextValue(locState: LocRequestState | null, backPath: string, detailsPath: (locId: UUID, type: LocType) => string): PrivateLocContext {
     return {
         locState,
         loc: locState ? locState.data() : null,
@@ -113,10 +117,11 @@ function initialContextValue(locState: LocRequestState | null, backPath: string,
         cancelRequest: () => Promise.reject(new Error("undefined")),
         submitRequest: () => Promise.reject(new Error("undefined")),
         mutateLocState: () => Promise.reject(),
+        mustFetchCollectionItems: locState instanceof ClosedCollectionLoc,
     }
 }
 
-const LocContextObject: React.Context<LocContext> = React.createContext(initialContextValue(null, "", () => ""))
+const LocContextObject: React.Context<PrivateLocContext> = React.createContext(initialContextValue(null, "", () => ""))
 
 type ActionType = 'SET_LOC_REQUEST'
     | 'SET_LOC'
@@ -182,7 +187,7 @@ interface Action {
     mutateLocState?: (mutator: (current: LocRequestState) => Promise<LocRequestState>) => Promise<void>,
 }
 
-const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action): LocContext => {
+const reducer: Reducer<PrivateLocContext, Action> = (state: PrivateLocContext, action: Action): PrivateLocContext => {
     switch (action.type) {
         case "RESET":
             return initialContextValue(action.locState!, state.backPath, state.detailsPath)
@@ -194,6 +199,7 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
                 loc: action.locData!,
                 locItems: action.locItems!,
                 collectionItems: action.collectionItems!,
+                mustFetchCollectionItems: false,
             }
         case "CLOSE":
             return {
@@ -425,10 +431,12 @@ export function LocContextProvider(props: Props) {
     }, [ toLocItems, client, contextValue.supersededLoc, props, startRefresh ]);
 
     useEffect(() => {
-        if(contextValue.locState && mustRecomputeItems(contextValue.locState, contextValue.locItems)) {
+        if(contextValue.locState && !contextValue.locState.discarded
+            && mustDispatchNewState(contextValue.locState, contextValue.locItems, contextValue.mustFetchCollectionItems)) {
+
             dispatchLocAndItems(contextValue.locState, true);
         }
-    }, [ contextValue.locState, contextValue.locItems, dispatchLocAndItems ]);
+    }, [ contextValue.locState, contextValue.locItems, contextValue.mustFetchCollectionItems, dispatchLocAndItems ]);
 
     const refreshLocState = useCallback(async (triggerRefresh: boolean): Promise<LocRequestState> => {
         const locState = await contextValue.locState!.refresh();
@@ -437,7 +445,7 @@ export function LocContextProvider(props: Props) {
     }, [ contextValue.locState, dispatchLocAndItems ]);
 
     const refreshNameTimestamp = useCallback<() => Promise<NextRefresh>>(async () => {
-        if (contextValue.loc === null) {
+        if (contextValue.loc === null || contextValue.locState === null || contextValue.locState.discarded) {
             return NextRefresh.SCHEDULE;
         }
 
@@ -445,10 +453,6 @@ export function LocContextProvider(props: Props) {
             refresh!(false);
             props.refreshLocs(contextValue.locState!.locsState());
             return NextRefresh.STOP;
-        }
-
-        if (contextValue.locState === null || !client) {
-            return NextRefresh.SCHEDULE;
         }
 
         let nextRefresh = NextRefresh.SCHEDULE;
@@ -466,7 +470,6 @@ export function LocContextProvider(props: Props) {
         contextValue.locState,
         refresh,
         props,
-        client,
         refreshLocState
     ])
 
@@ -912,7 +915,7 @@ function refreshRequestDates(current: LocRequestState, next: LocRequestState): b
     return false;
 }
 
-function mustRecomputeItems(locState: LocRequestState, locItems: LocItem[]): boolean {
+function mustDispatchNewState(locState: LocRequestState, locItems: LocItem[], mustFetchCollectionItems: boolean): boolean {
     const locData = locState.data();
-    return (locData.files.length + locData.metadata.length + locData.links.length) !== locItems.length;
+    return mustFetchCollectionItems || (locData.files.length + locData.metadata.length + locData.links.length) !== locItems.length;
 }

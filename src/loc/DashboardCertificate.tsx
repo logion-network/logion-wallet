@@ -87,14 +87,17 @@ export default function DashboardCertificate() {
                         checkedItem="file"
                     />
                 </div>
-                <div className="frame-container">
-                    <CheckDeliveredFrame
-                        item={ collectionItem }
-                        colorTheme={ colorTheme }
-                        detailedError={ true }
-                        onChecked={ setCheckCertifiedCopyResult }
-                    />
-                </div>
+                {
+                    collectionItem.restrictedDelivery &&
+                    <div className="frame-container">
+                        <CheckDeliveredFrame
+                            item={ collectionItem }
+                            colorTheme={ colorTheme }
+                            detailedError={ true }
+                            onChecked={ setCheckCertifiedCopyResult }
+                        />
+                    </div>
+                }
                 </>
             }
         </LocPane>
