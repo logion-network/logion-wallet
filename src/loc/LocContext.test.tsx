@@ -394,15 +394,23 @@ async function thenItemsPublished(confirmFunction: jest.Mock) {
 }
 
 function ItemDeleter() {
-    const { locItems, deleteMetadata, deleteFile, deleteLink } = useLocContext();
+    const { locItems, deleteMetadata, deleteLink, mutateLocState } = useLocContext();
 
-    const callback = useCallback(() => {
+    const callback = useCallback(async () => {
+        await mutateLocState(async current => {
+            if(current instanceof EditableRequest) {
+                return current.deleteFile!({
+                    hash: "new-hash",
+                }) as unknown as RealEditableRequest;
+            } else {
+                return current;
+            }
+        });
         deleteMetadata!(locItems.find(item => item.name === "New data")!);
-        deleteFile!(locItems.find(item => item.name === "New file")!);
         deleteLink!(locItems.find(item => item.nature === "New link")!);
-    }, [ locItems, deleteMetadata, deleteFile, deleteLink ]);
+    }, [ locItems, deleteMetadata, deleteLink ]);
 
-    if(!deleteMetadata || !deleteFile || !deleteLink) {
+    if(!deleteMetadata || !deleteLink) {
         return null;
     }
 

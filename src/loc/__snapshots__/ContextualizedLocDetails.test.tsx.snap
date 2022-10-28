@@ -90,7 +90,6 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "result": "NONE",
       }
     }
-    deleteFile={[MockFunction]}
     deleteLink={[MockFunction]}
     deleteMetadata={[MockFunction]}
     loc={
@@ -381,7 +380,6 @@ exports[`ContextualizedLocDetails renders empty 1`] = `
         "result": "NONE",
       }
     }
-    deleteFile={[MockFunction]}
     deleteLink={[MockFunction]}
     deleteMetadata={[MockFunction]}
     loc={

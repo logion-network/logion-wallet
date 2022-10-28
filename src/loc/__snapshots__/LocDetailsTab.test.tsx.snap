@@ -314,61 +314,8 @@ exports[`LocDetailsTabContent renders closed data LOC for LO 1`] = `
     }
   />
   <LocItems
-    deleteFile={[Function]}
     deleteLink={[Function]}
     deleteMetadata={[Function]}
-    loc={
-      Object {
-        "closed": true,
-        "closedOn": "2022-09-28T08:49:00.000+02:00",
-        "createdOn": "2022-09-28T07:49:00.000+02:00",
-        "id": UUID {
-          "bytes": Uint8Array [
-            240,
-            175,
-            187,
-            187,
-            105,
-            109,
-            75,
-            119,
-            129,
-            112,
-            119,
-            229,
-            101,
-            136,
-            138,
-            14,
-          ],
-        },
-        "locType": "Transaction",
-        "status": "CLOSED",
-      }
-    }
-    locId={
-      UUID {
-        "bytes": Uint8Array [
-          240,
-          175,
-          187,
-          187,
-          105,
-          109,
-          75,
-          119,
-          129,
-          112,
-          119,
-          229,
-          101,
-          136,
-          138,
-          14,
-        ],
-      }
-    }
-    locItems={Array []}
     viewer="LegalOfficer"
   />
   <WarningDialog
@@ -554,61 +501,8 @@ exports[`LocDetailsTabContent renders closed data LOC for User 1`] = `
     }
   />
   <LocItems
-    deleteFile={[Function]}
     deleteLink={[Function]}
     deleteMetadata={[Function]}
-    loc={
-      Object {
-        "closed": true,
-        "closedOn": "2022-09-28T08:49:00.000+02:00",
-        "createdOn": "2022-09-28T07:49:00.000+02:00",
-        "id": UUID {
-          "bytes": Uint8Array [
-            240,
-            175,
-            187,
-            187,
-            105,
-            109,
-            75,
-            119,
-            129,
-            112,
-            119,
-            229,
-            101,
-            136,
-            138,
-            14,
-          ],
-        },
-        "locType": "Transaction",
-        "status": "CLOSED",
-      }
-    }
-    locId={
-      UUID {
-        "bytes": Uint8Array [
-          240,
-          175,
-          187,
-          187,
-          105,
-          109,
-          75,
-          119,
-          129,
-          112,
-          119,
-          229,
-          101,
-          136,
-          138,
-          14,
-        ],
-      }
-    }
-    locItems={Array []}
     viewer="User"
   />
   <WarningDialog
@@ -786,61 +680,8 @@ exports[`LocDetailsTabContent renders open data LOC for LO 1`] = `
     }
   />
   <LocItems
-    deleteFile={[Function]}
     deleteLink={[Function]}
     deleteMetadata={[Function]}
-    loc={
-      Object {
-        "closed": false,
-        "closedOn": undefined,
-        "createdOn": "2022-09-28T07:49:00.000+02:00",
-        "id": UUID {
-          "bytes": Uint8Array [
-            240,
-            175,
-            187,
-            187,
-            105,
-            109,
-            75,
-            119,
-            129,
-            112,
-            119,
-            229,
-            101,
-            136,
-            138,
-            14,
-          ],
-        },
-        "locType": "Transaction",
-        "status": "OPEN",
-      }
-    }
-    locId={
-      UUID {
-        "bytes": Uint8Array [
-          240,
-          175,
-          187,
-          187,
-          105,
-          109,
-          75,
-          119,
-          129,
-          112,
-          119,
-          229,
-          101,
-          136,
-          138,
-          14,
-        ],
-      }
-    }
-    locItems={Array []}
     viewer="LegalOfficer"
   />
   <Row>
@@ -1079,61 +920,8 @@ exports[`LocDetailsTabContent renders open data LOC for User 1`] = `
     }
   />
   <LocItems
-    deleteFile={[Function]}
     deleteLink={[Function]}
     deleteMetadata={[Function]}
-    loc={
-      Object {
-        "closed": false,
-        "closedOn": undefined,
-        "createdOn": "2022-09-28T07:49:00.000+02:00",
-        "id": UUID {
-          "bytes": Uint8Array [
-            240,
-            175,
-            187,
-            187,
-            105,
-            109,
-            75,
-            119,
-            129,
-            112,
-            119,
-            229,
-            101,
-            136,
-            138,
-            14,
-          ],
-        },
-        "locType": "Transaction",
-        "status": "OPEN",
-      }
-    }
-    locId={
-      UUID {
-        "bytes": Uint8Array [
-          240,
-          175,
-          187,
-          187,
-          105,
-          109,
-          75,
-          119,
-          129,
-          112,
-          119,
-          229,
-          101,
-          136,
-          138,
-          14,
-        ],
-      }
-    }
-    locItems={Array []}
     viewer="User"
   />
   <Row>
@@ -1371,61 +1159,8 @@ exports[`LocDetailsTabContent renders open identity LOC for LO 1`] = `
     />
   </React.Fragment>
   <LocItems
-    deleteFile={[Function]}
     deleteLink={[Function]}
     deleteMetadata={[Function]}
-    loc={
-      Object {
-        "closed": false,
-        "closedOn": undefined,
-        "createdOn": "2022-09-28T07:49:00.000+02:00",
-        "id": UUID {
-          "bytes": Uint8Array [
-            240,
-            175,
-            187,
-            187,
-            105,
-            109,
-            75,
-            119,
-            129,
-            112,
-            119,
-            229,
-            101,
-            136,
-            138,
-            14,
-          ],
-        },
-        "locType": "Identity",
-        "status": "OPEN",
-      }
-    }
-    locId={
-      UUID {
-        "bytes": Uint8Array [
-          240,
-          175,
-          187,
-          187,
-          105,
-          109,
-          75,
-          119,
-          129,
-          112,
-          119,
-          229,
-          101,
-          136,
-          138,
-          14,
-        ],
-      }
-    }
-    locItems={Array []}
     viewer="LegalOfficer"
   />
   <Row>
@@ -1665,62 +1400,8 @@ exports[`LocDetailsTabContent renders void data LOC for LO 1`] = `
     }
   />
   <LocItems
-    deleteFile={[Function]}
     deleteLink={[Function]}
     deleteMetadata={[Function]}
-    loc={
-      Object {
-        "closed": false,
-        "closedOn": undefined,
-        "createdOn": "2022-09-28T07:49:00.000+02:00",
-        "id": UUID {
-          "bytes": Uint8Array [
-            240,
-            175,
-            187,
-            187,
-            105,
-            109,
-            75,
-            119,
-            129,
-            112,
-            119,
-            229,
-            101,
-            136,
-            138,
-            14,
-          ],
-        },
-        "locType": "Transaction",
-        "status": "OPEN",
-        "voidInfo": Object {},
-      }
-    }
-    locId={
-      UUID {
-        "bytes": Uint8Array [
-          240,
-          175,
-          187,
-          187,
-          105,
-          109,
-          75,
-          119,
-          129,
-          112,
-          119,
-          229,
-          101,
-          136,
-          138,
-          14,
-        ],
-      }
-    }
-    locItems={Array []}
     viewer="LegalOfficer"
   />
   <WarningDialog
@@ -1899,62 +1580,8 @@ exports[`LocDetailsTabContent renders void data LOC for User 1`] = `
     }
   />
   <LocItems
-    deleteFile={[Function]}
     deleteLink={[Function]}
     deleteMetadata={[Function]}
-    loc={
-      Object {
-        "closed": false,
-        "closedOn": undefined,
-        "createdOn": "2022-09-28T07:49:00.000+02:00",
-        "id": UUID {
-          "bytes": Uint8Array [
-            240,
-            175,
-            187,
-            187,
-            105,
-            109,
-            75,
-            119,
-            129,
-            112,
-            119,
-            229,
-            101,
-            136,
-            138,
-            14,
-          ],
-        },
-        "locType": "Transaction",
-        "status": "OPEN",
-        "voidInfo": Object {},
-      }
-    }
-    locId={
-      UUID {
-        "bytes": Uint8Array [
-          240,
-          175,
-          187,
-          187,
-          105,
-          109,
-          75,
-          119,
-          129,
-          112,
-          119,
-          229,
-          101,
-          136,
-          138,
-          14,
-        ],
-      }
-    }
-    locItems={Array []}
     viewer="User"
   />
   <WarningDialog

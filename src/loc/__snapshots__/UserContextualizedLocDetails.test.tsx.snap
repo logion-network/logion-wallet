@@ -45,7 +45,6 @@ exports[`UserContextualizedLocDetails renders 1`] = `
         "result": "NONE",
       }
     }
-    deleteFile={[MockFunction]}
     deleteLink={null}
     deleteMetadata={[MockFunction]}
     legalOfficer={

@@ -56,7 +56,6 @@ export interface LocContext {
     supersededLoc?: PublicLoc
     locState: LocRequestState | null
     locItems: LocItem[]
-    deleteFile: ((locItem: LocItem) => void) | null
     deleteMetadata: ((locItem: LocItem) => void) | null
     backPath: string
     detailsPath: (locId: UUID, type: LocType) => string
@@ -99,7 +98,6 @@ function initialContextValue(locState: LocRequestState | null, backPath: string,
         close: null,
         closeExtrinsic: null,
         confirmFile: null,
-        deleteFile: null,
         confirmLink: null,
         deleteLink: null,
         confirmMetadata: null,
@@ -133,7 +131,6 @@ type ActionType = 'SET_LOC_REQUEST'
     | 'SET_CLOSE'
     | 'SET_CLOSE_EXTRINSIC'
     | 'SET_CONFIRM_FILE'
-    | 'SET_DELETE_FILE'
     | 'SET_CONFIRM_LINK'
     | 'SET_DELETE_LINK'
     | 'SET_CONFIRM_METADATA'
@@ -164,7 +161,6 @@ interface Action {
     close?: () => void,
     closeExtrinsic?: (seal?: string) => SignAndSubmit,
     confirmFile?: (locItem: LocItem) => void,
-    deleteFile?: (locItem: LocItem) => void,
     confirmLink?: (locItem: LocItem) => void
     deleteLink?: (locItem: LocItem) => void,
     confirmMetadata?: (locItem: LocItem) => void,
@@ -259,11 +255,6 @@ const reducer: Reducer<LocContext, Action> = (state: LocContext, action: Action)
             return {
                 ...state,
                 confirmFile: action.confirmFile!,
-            }
-        case 'SET_DELETE_FILE':
-            return {
-                ...state,
-                deleteFile: action.deleteFile!,
             }
         case 'SET_CONFIRM_LINK':
             return {
@@ -628,19 +619,6 @@ export function LocContextProvider(props: Props) {
             })
         }
     }, [ contextValue.confirmFile, confirmFileFunction ]);
-
-    const deleteFileFunction = useCallback(async (item: LocItem) => {
-        await dispatchLocAndItems(await (contextValue.locState as OpenLoc).deleteFile({ hash: item.value }), true)
-    }, [ dispatchLocAndItems, contextValue.locState ])
-
-    useEffect(() => {
-        if(contextValue.deleteFile !== deleteFileFunction) {
-            dispatch({
-                type: "SET_DELETE_FILE",
-                deleteFile: deleteFileFunction,
-            })
-        }
-    }, [ contextValue.deleteFile, deleteFileFunction ]);
 
     const confirmLinkFunction = useCallback(async (locItem: LocItem) => {
         await confirmLocLink(axiosFactory!(contextValue.loc!.ownerAddress)!, contextValue.loc!.id, locItem.target!);
