@@ -13,9 +13,6 @@ import {
     ClosedCollectionLoc,
     LocData,
     PublicLoc,
-    MergedFile,
-    MergedMetadataItem,
-    MergedLink,
     CollectionItem,
     FetchAllLocsParams,
     DraftRequest,
@@ -28,7 +25,6 @@ import {
     deleteLocLink,
     isGrantedAccess,
 } from "../common/Model";
-import { useCommonContext } from "../common/CommonContext";
 import { useLogionChain } from "../logion-chain";
 import { SignAndSubmit } from "../ExtrinsicSubmitter";
 import { LocItemStatus, LocItem } from "./types";
@@ -393,7 +389,6 @@ export function LocContextProvider(props: Props) {
         contextValue.locItems,
         contextValue.locState,
         props,
-        refreshLocState
     ])
 
     useEffect(() => {
@@ -672,16 +667,6 @@ export function useLocContext() {
     return useContext(LocContextObject)
 }
 
-function findItemInLocData(locRequest: LocData, item: LocItem): MergedMetadataItem | MergedFile | MergedLink | undefined {
-    if (item.type === 'Document') {
-        return locRequest.files.find(file => file.hash === item.value)
-    } if (item.type === 'Linked LOC') {
-        return locRequest.links.find(link => UUID.fromAnyString(link.target)!.toString() === item.target!.toString())
-    } else {
-        return locRequest.metadata.find(metadata => metadata.name === item.name)
-    }
-}
-
 function allItemsOK(items: LocItem[]): boolean {
     return items.find(item => item.status === "PUBLISHED" && item.timestamp === null) === undefined;
 }
@@ -696,26 +681,6 @@ function refreshNeeded(items: LocItem[]): boolean {
         if(!item.timestamp) {
             return true;
         }
-    }
-    return false;
-}
-
-function refreshTimestamps(locItems: LocItem[], locData: LocData): boolean {
-    for(const locItem of locItems.filter(locItem => locItem.timestamp === null)) {
-        const locRequestItem = findItemInLocData(locData, locItem);
-        if (locRequestItem && locRequestItem.addedOn) {
-            return true;
-        }
-    }
-    return false;
-}
-
-function refreshRequestDates(currentData: LocData, nextData: LocData): boolean {
-    if(currentData.closedOn === undefined && nextData.closedOn) {
-        return true;
-    }
-    if(currentData.voidInfo?.voidedOn === undefined && nextData.voidInfo?.voidedOn) {
-        return true;
     }
     return false;
 }
