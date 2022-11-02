@@ -13,9 +13,6 @@ import {
     ClosedCollectionLoc,
     LocData,
     PublicLoc,
-    MergedFile,
-    MergedMetadataItem,
-    MergedLink,
     CollectionItem,
     FetchAllLocsParams,
     DraftRequest,
@@ -28,7 +25,6 @@ import {
     deleteLocLink,
     isGrantedAccess,
 } from "../common/Model";
-import { useCommonContext } from "../common/CommonContext";
 import { useLogionChain } from "../logion-chain";
 import { SignAndSubmit } from "../ExtrinsicSubmitter";
 import { LocItemStatus, LocItem } from "./types";
@@ -283,7 +279,6 @@ const enum NextRefresh {
 
 export function LocContextProvider(props: Props) {
     const { axiosFactory, accounts, api, client } = useLogionChain();
-    const { refresh } = useCommonContext();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue(props.locState, props.backPath, props.detailsPath));
     const [ refreshing, setRefreshing ] = useState<boolean>(false);
     const [ refreshCounter, setRefreshCounter ] = useState<number>(0);
@@ -384,27 +379,16 @@ export function LocContextProvider(props: Props) {
         }
 
         if (allItemsOK(contextValue.locItems) && requestOK(contextValue.loc)) {
-            refresh!(false);
-            props.refreshLocs(contextValue.locState!.locsState());
+            props.refreshLocs(contextValue.locState.locsState());
             return NextRefresh.STOP;
+        } else {
+            return NextRefresh.SCHEDULE;
         }
-
-        let nextRefresh = NextRefresh.SCHEDULE;
-        const locState = await refreshLocState(false);
-        if (refreshTimestamps(contextValue.locItems, locState)) {
-            nextRefresh = NextRefresh.IMMEDIATE;
-        }
-        if (refreshRequestDates(contextValue.locState, locState)) {
-            nextRefresh = NextRefresh.IMMEDIATE;
-        }
-        return nextRefresh;
     }, [
         contextValue.loc,
         contextValue.locItems,
         contextValue.locState,
-        refresh,
         props,
-        refreshLocState
     ])
 
     useEffect(() => {
@@ -683,16 +667,6 @@ export function useLocContext() {
     return useContext(LocContextObject)
 }
 
-function findItemInLocData(locRequest: LocData, item: LocItem): MergedMetadataItem | MergedFile | MergedLink | undefined {
-    if (item.type === 'Document') {
-        return locRequest.files.find(file => file.hash === item.value)
-    } if (item.type === 'Linked LOC') {
-        return locRequest.links.find(link => UUID.fromAnyString(link.target)!.toString() === item.target!.toString())
-    } else {
-        return locRequest.metadata.find(metadata => metadata.name === item.name)
-    }
-}
-
 function allItemsOK(items: LocItem[]): boolean {
     return items.find(item => item.status === "PUBLISHED" && item.timestamp === null) === undefined;
 }
@@ -707,28 +681,6 @@ function refreshNeeded(items: LocItem[]): boolean {
         if(!item.timestamp) {
             return true;
         }
-    }
-    return false;
-}
-
-function refreshTimestamps(locItems: LocItem[], locState: LocRequestState): boolean {
-    for(const locItem of locItems.filter(locItem => locItem.timestamp === null)) {
-        const locRequestItem = findItemInLocData(locState.data(), locItem);
-        if (locRequestItem && locRequestItem.addedOn) {
-            return true;
-        }
-    }
-    return false;
-}
-
-function refreshRequestDates(current: LocRequestState, next: LocRequestState): boolean {
-    const currentData = current.data();
-    const nextData = next.data();
-    if(currentData.closedOn === undefined && nextData.closedOn) {
-        return true;
-    }
-    if(currentData.voidInfo?.voidedOn === undefined && nextData.voidInfo?.voidedOn) {
-        return true;
     }
     return false;
 }

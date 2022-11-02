@@ -29,7 +29,7 @@ export function fetchAllLocsParams(legalOfficer: LegalOfficer): FetchAllLocsPara
 export function LegalOfficerLocContextProvider(props: Props) {
     const { refreshLocs, legalOfficer, locsState } = useLegalOfficerContext();
 
-    if(!legalOfficer || !locsState) {
+    if(!legalOfficer || !locsState || locsState.discarded) {
         return null;
     }
 
