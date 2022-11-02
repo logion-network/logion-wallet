@@ -16,7 +16,7 @@ export interface Props {
 export function UserLocContextProvider(props: Props) {
     const { mutateLocsState, locsState } = useUserContext();
 
-    if(!locsState) {
+    if(!locsState || locsState.discarded) {
         return null;
     }
 
