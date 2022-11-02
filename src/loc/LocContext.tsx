@@ -283,7 +283,6 @@ const enum NextRefresh {
 
 export function LocContextProvider(props: Props) {
     const { axiosFactory, accounts, api, client } = useLogionChain();
-    const { refresh } = useCommonContext();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue(props.locState, props.backPath, props.detailsPath));
     const [ refreshing, setRefreshing ] = useState<boolean>(false);
     const [ refreshCounter, setRefreshCounter ] = useState<number>(0);
@@ -384,25 +383,15 @@ export function LocContextProvider(props: Props) {
         }
 
         if (allItemsOK(contextValue.locItems) && requestOK(contextValue.loc)) {
-            refresh!(false);
-            props.refreshLocs(contextValue.locState!.locsState());
+            props.refreshLocs(contextValue.locState.locsState());
             return NextRefresh.STOP;
+        } else {
+            return NextRefresh.SCHEDULE;
         }
-
-        let nextRefresh = NextRefresh.SCHEDULE;
-        const locState = await refreshLocState(false);
-        if (refreshTimestamps(contextValue.locItems, locState)) {
-            nextRefresh = NextRefresh.IMMEDIATE;
-        }
-        if (refreshRequestDates(contextValue.locState, locState)) {
-            nextRefresh = NextRefresh.IMMEDIATE;
-        }
-        return nextRefresh;
     }, [
         contextValue.loc,
         contextValue.locItems,
         contextValue.locState,
-        refresh,
         props,
         refreshLocState
     ])
@@ -711,9 +700,9 @@ function refreshNeeded(items: LocItem[]): boolean {
     return false;
 }
 
-function refreshTimestamps(locItems: LocItem[], locState: LocRequestState): boolean {
+function refreshTimestamps(locItems: LocItem[], locData: LocData): boolean {
     for(const locItem of locItems.filter(locItem => locItem.timestamp === null)) {
-        const locRequestItem = findItemInLocData(locState.data(), locItem);
+        const locRequestItem = findItemInLocData(locData, locItem);
         if (locRequestItem && locRequestItem.addedOn) {
             return true;
         }
@@ -721,9 +710,7 @@ function refreshTimestamps(locItems: LocItem[], locState: LocRequestState): bool
     return false;
 }
 
-function refreshRequestDates(current: LocRequestState, next: LocRequestState): boolean {
-    const currentData = current.data();
-    const nextData = next.data();
+function refreshRequestDates(currentData: LocData, nextData: LocData): boolean {
     if(currentData.closedOn === undefined && nextData.closedOn) {
         return true;
     }
