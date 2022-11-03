@@ -1,10 +1,10 @@
 import { BlockchainTypes, CrossmintEVMWalletAdapter } from "@crossmint/embed";
-import { Token, LogionClient, CollectionItem } from "@logion/client";
+import { Token, LogionClient, CollectionItem, TokenType } from "@logion/client";
 import { CrossmintSigner } from "@logion/crossmint";
 import { allMetamaskAccounts, enableMetaMask } from "@logion/extension";
 import { ItemFile, UUID } from "@logion/node-api";
 import { AxiosInstance } from "axios";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Dropdown, Spinner } from "react-bootstrap";
 
 import Button from "../common/Button";
@@ -14,10 +14,29 @@ import { useLogionChain } from "../logion-chain";
 import Icon from "src/common/Icon";
 import config from "src/config";
 import { LogionChainContextType } from "src/logion-chain/LogionChainContext";
+import Dialog from "src/common/Dialog";
+import Select from "src/common/Select";
+import Alert from "src/common/Alert";
 
 import './ClaimAssetButton.css';
 
-export type WalletType = "METAMASK" | "CROSSMINT";
+export type WalletType = "METAMASK" | "CROSSMINT" | "POLKADOT";
+
+const ALL_WALLET_TYPES: WalletType[] = ["CROSSMINT", "METAMASK", "POLKADOT"];
+
+const WALLET_NAMES: Record<WalletType, string> = {
+    METAMASK: "Metamask",
+    CROSSMINT: "Crossmint",
+    POLKADOT: "Polkadot",
+};
+
+export function walletType(type: string | null | undefined): WalletType | undefined | null {
+    if(type === "CROSSMINT" || type === "METAMASK" || type === "POLKADOT") {
+        return type;
+    } else {
+        return undefined;
+    }
+}
 
 export interface Props {
     locId: UUID,
@@ -25,6 +44,14 @@ export interface Props {
     item: CollectionItem,
     file: ItemFile,
     walletType?: WalletType | null,
+}
+
+enum ClaimWithPolkadotState {
+    NONE,
+    SELECT_ADDRESS,
+    AUTHENTICATE,
+    AUTHENTICATING,
+    CLAIM,
 }
 
 export default function ClaimAssetButton(props: Props) {
@@ -35,15 +62,40 @@ export default function ClaimAssetButton(props: Props) {
     const [ error, setError ] = useState<string | undefined>(undefined);
     const logionChainContext = useLogionChain();
     const [ downloaded, setDownloaded ] = useState(false);
+    const [ claimWithPolkadotState, setClaimWithPolkadotState ] = useState(ClaimWithPolkadotState.NONE);
 
     const claimAsset = useCallback(async (walletType: WalletType) => {
+        if(walletType !== "POLKADOT") {
+            setError(undefined);
+            setChecking(true);
+            try {
+                const token = await getToken(walletType, logionChainContext);
+                setTokenForDownload(token);
+                const axios = logionChainContext.axiosFactory!(owner);
+                if(token && await canDownload(axios, token, { locId: locId.toString(), collectionItemId: item.id, hash: file.hash })) {
+                    setIsOwner(true);
+                    setChecking(false);
+                } else {
+                    setError("Ownership check failed");
+                    setChecking(false);
+                }
+            } catch (error) {
+                setChecking(false);
+                setError("" + (error as Error).message);
+            }
+        } else {
+            setClaimWithPolkadotState(ClaimWithPolkadotState.SELECT_ADDRESS);
+        }
+    }, [ setTokenForDownload, logionChainContext, locId, item, file, owner ]);
+
+    const claimWithCurrentAccount = useCallback(async () => {
+        setClaimWithPolkadotState(ClaimWithPolkadotState.NONE);
         setError(undefined);
         setChecking(true);
         try {
-            const token = await getToken(walletType, logionChainContext);
-            setTokenForDownload(token);
             const axios = logionChainContext.axiosFactory!(owner);
-            if(token && await canDownload(axios, token, { locId: locId.toString(), collectionItemId: item.id, hash: file.hash })) {
+            if(await checkCanGetCollectionItemFile(axios, { locId: locId.toString(), collectionItemId: item.id, hash: file.hash })) {
+                setTokenForDownload(logionChainContext.accounts!.current!.token);
                 setIsOwner(true);
                 setChecking(false);
             } else {
@@ -54,16 +106,47 @@ export default function ClaimAssetButton(props: Props) {
             setChecking(false);
             setError("" + (error as Error).message);
         }
-    }, [ setTokenForDownload, logionChainContext, locId, item, file, owner ]);
+    }, [ logionChainContext, locId, item, file, owner ]);
+
+    const tryClaimWithPolkadot = useCallback(() => {
+        if(logionChainContext.isCurrentAuthenticated()) {
+            claimWithCurrentAccount();
+        } else {
+            setClaimWithPolkadotState(ClaimWithPolkadotState.AUTHENTICATE);
+        }
+    }, [ logionChainContext, claimWithCurrentAccount ]);
+
+    useEffect(() => {
+        if(claimWithPolkadotState === ClaimWithPolkadotState.AUTHENTICATE) {
+            setClaimWithPolkadotState(ClaimWithPolkadotState.AUTHENTICATING);
+            const currentAddress = logionChainContext.accounts!.current!.address;
+            logionChainContext.authenticate([ currentAddress ]);
+        }
+    }, [ logionChainContext, claimWithPolkadotState ]);
+
+    useEffect(() => {
+        if(claimWithPolkadotState === ClaimWithPolkadotState.AUTHENTICATING
+            && logionChainContext.isCurrentAuthenticated()) {
+            claimWithCurrentAccount();
+        }
+    }, [ logionChainContext, claimWithPolkadotState, claimWithCurrentAccount ]);
 
     const reset = useCallback(() => {
         setTokenForDownload(undefined);
         setError(undefined);
     }, [])
 
+    const compatibleWallets = useMemo(() => {
+        return ALL_WALLET_TYPES.filter(walletType => walletTypeCompatibleWithItemType(walletType, item.token?.type));
+    }, [ item.token?.type ]);
+
     const walletType = props.walletType;
     const noClaimPending = !error && item.restrictedDelivery && !checking && !isOwner;
     const downloadReady = tokenForDownload && isOwner;
+
+    if(!item.token?.type) {
+        return null;
+    }
 
     return (
         <div className="ClaimAssetButton">
@@ -76,16 +159,25 @@ export default function ClaimAssetButton(props: Props) {
                 </Button>
             }
             {
-                noClaimPending && !walletType &&
+                noClaimPending && (!walletType && compatibleWallets.length === 1) &&
+                <Button
+                    onClick={ () => claimAsset(compatibleWallets[0]) }
+                >
+                    <Icon icon={{ id: "claim" }} /> Claim your asset
+                </Button>
+            }
+            {
+                noClaimPending && (!walletType && compatibleWallets.length > 1) &&
                 <Dropdown>
                     <Dropdown.Toggle className="Button" id="ClaimAssetButton-dropdown-toggle"><Icon icon={{ id: "claim" }} /> <span className="claim-asset-btn-text">Claim your asset</span></Dropdown.Toggle>
                     <Dropdown.Menu>
-                        <Dropdown.Item onClick={ () => claimAsset("METAMASK") } className="metamask">
-                        <Icon icon={{ id: "metamask" }} height="40px" /> <span className="wallet-name">with Metamask</span>
-                        </Dropdown.Item>
-                        <Dropdown.Item onClick={ () => claimAsset("CROSSMINT") } className="crossmint">
-                        <Icon icon={{ id: "crossmint" }} height="40px" type="png" /> <span className="wallet-name">with Crossmint</span>
-                        </Dropdown.Item>
+                        {
+                            compatibleWallets.map(walletType => (
+                                <Dropdown.Item key={walletType} onClick={ () => claimAsset(walletType) } className={ walletType.toLowerCase() }>
+                                    <Icon icon={{ id: walletType.toLowerCase() }} height="40px" /> <span className="wallet-name">with { WALLET_NAMES[walletType] }</span>
+                                </Dropdown.Item>
+                            ))
+                        }
                     </Dropdown.Menu>
                 </Dropdown>
             }
@@ -126,6 +218,50 @@ export default function ClaimAssetButton(props: Props) {
             {
                 downloadReady && downloaded &&
                 <span className="download-started">Download started</span>
+            }
+            {
+                claimWithPolkadotState === ClaimWithPolkadotState.SELECT_ADDRESS &&
+                <Dialog
+                    size="lg"
+                    show={ true }
+                    actions={[
+                        {
+                            id: "cancel",
+                            buttonText: "Cancel",
+                            buttonVariant: "secondary",
+                            callback: () => setClaimWithPolkadotState(ClaimWithPolkadotState.NONE),
+                        },
+                        {
+                            id: "claimWithAddress",
+                            buttonText: "Claim with selected",
+                            buttonVariant: "primary",
+                            disabled: !(logionChainContext.accounts?.current?.address),
+                            callback: tryClaimWithPolkadot,
+                        }
+                    ]}
+                >
+                    <h3>Choose a Polkadot address</h3>
+                    <p>In order to claim your asset using Polkadot, you have to select an account.</p>
+                    {
+                        (logionChainContext.accounts?.all === undefined || logionChainContext.accounts.all.length === 0) &&
+                        <Alert
+                            variant="warning"
+                        >
+                            No Polkadot account detected, please install the extension and/or add accounts to it.
+                        </Alert>
+                    }
+                    {
+                        (logionChainContext.accounts?.all !== undefined && logionChainContext.accounts.all.length > 0) &&
+                        <Select
+                            options={logionChainContext.accounts?.all.map(account => ({
+                                label: account.name,
+                                value: account.address,
+                            })) || []}
+                            onChange={ value => logionChainContext.selectAddress!(value || "") }
+                            value={ logionChainContext.accounts?.current?.address || null }
+                        />
+                    }
+                </Dialog>
             }
         </div>
     )
@@ -203,4 +339,18 @@ function overrideAuthorizationToken(axios: AxiosInstance, tokenForDownload: Toke
 async function canDownload(axios: AxiosInstance, tokenForDownload: Token, parameters: GetCollectionItemFileParameters): Promise<boolean> {
     overrideAuthorizationToken(axios, tokenForDownload);
     return checkCanGetCollectionItemFile(axios, parameters);
+}
+
+function walletTypeCompatibleWithItemType(wallet: WalletType, token?: TokenType): boolean {
+    if(!token) {
+        return false;
+    }
+
+    if(['ethereum_erc721', 'ethereum_erc1155', 'goerli_erc721', 'goerli_erc1155', 'owner'].includes(token)) {
+        return ["METAMASK", "CROSSMINT"].includes(wallet);
+    } else if(['singular_kusama', 'owner'].includes(token)) {
+        return wallet === "POLKADOT";
+    } else {
+        return false;
+    }
 }

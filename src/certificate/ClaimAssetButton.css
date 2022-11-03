@@ -27,6 +27,10 @@
     margin-left: 37px;
 }
 
+.ClaimAssetButton .polkadot .wallet-name {
+    margin-left: 47px;
+}
+
 .ClaimAssetButton .download-started {
     display: inline-block;
     height: 58px;
