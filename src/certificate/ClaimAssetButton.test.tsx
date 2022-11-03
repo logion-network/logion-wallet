@@ -1,7 +1,8 @@
 jest.mock('../logion-chain');
 
 import { AxiosResponse } from 'axios';
-import { render, waitFor, screen } from '@testing-library/react';
+import { render, waitFor, screen, getByText } from '@testing-library/react';
+import userEvent from "@testing-library/user-event";
 import { clickByName } from '../tests';
 import ClaimAssetButton, { Props } from "./ClaimAssetButton";
 import { UUID } from "@logion/node-api/dist/UUID";
@@ -27,6 +28,9 @@ const item = {
     description: "Some magnificent art work",
     files: [ itemFile ],
     restrictedDelivery: true,
+    token: {
+        type: "ethereum_erc1155"
+    }
 } as CollectionItem;
 
 describe("ClaimAssetButton with Metamask", () => {
@@ -109,6 +113,48 @@ describe("ClaimAssetButton with Crossmint", () => {
         render(<ClaimAssetButton { ...props } />);
         
         await clickByName(content => /Claim your asset/.test(content));
+        await waitFor(() => screen.getByRole("button", { name: content => /Ownership check failed/.test(content) }));
+    })
+})
+
+describe("ClaimAssetButton with Polkadot", () => {
+
+    const props: Props = {
+        locId,
+        owner: DEFAULT_LEGAL_OFFICER,
+        item,
+        file: itemFile,
+        walletType: "POLKADOT",
+    };
+
+    beforeEach(resetAxiosMock);
+
+    it("renders button for restricted delivery", () => {
+        const button = render(<ClaimAssetButton { ...props } />);
+        expect(button).toMatchSnapshot();
+    })
+
+    it("shows download to rightful owner", async () => {
+        const checkResponse = new Mock<AxiosResponse<any, any>>();
+        axiosMock.setup(instance => instance.get(`/api/collection/${ locId.toString() }/${ props.item.id }/files/${ itemFile.hash }/check`))
+            .returnsAsync(checkResponse.object());
+
+        render(<ClaimAssetButton { ...props } />);
+        await clickByName(content => /Claim your asset/.test(content));
+        await userEvent.click(screen.getByText("name"));
+        await clickByName("Claim with selected");
+        await waitFor(() => screen.getByRole("button", { name: content => /Download/.test(content) }));
+    })
+
+    it("shows error to anyone else", async () => {
+        axiosMock.setup(instance => instance.get)
+            .returns(() => Promise.reject(new Error("unauthorized")));
+
+        render(<ClaimAssetButton { ...props } />);
+
+        await clickByName(content => /Claim your asset/.test(content));
+        await userEvent.click(screen.getByText("name"));
+        await clickByName("Claim with selected");
         await waitFor(() => screen.getByRole("button", { name: content => /Ownership check failed/.test(content) }));
     })
 })

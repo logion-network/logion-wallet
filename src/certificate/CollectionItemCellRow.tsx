@@ -6,7 +6,7 @@ import { Row } from "../common/Grid";
 import './CollectionItemCellRow.css';
 import { Col } from "react-bootstrap";
 import MenuIcon from "src/common/MenuIcon";
-import ClaimAssetButton, { WalletType } from "./ClaimAssetButton";
+import ClaimAssetButton, { walletType } from "./ClaimAssetButton";
 import { UUID } from "@logion/node-api/dist/UUID";
 import { customClassName } from "src/common/types/Helpers";
 import { CertificateItemDetails } from "src/components/certificateitemdetails/CertificateItemDetails";
@@ -75,12 +75,4 @@ export default function CollectionItemCellRow(props: Props) {
             }
         </div>
     )
-}
-
-function walletType(type: string | null | undefined): WalletType | undefined | null {
-    if(type === "CROSSMINT" || type === "METAMASK") {
-        return type;
-    } else {
-        return undefined;
-    }
 }

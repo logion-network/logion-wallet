@@ -13,9 +13,13 @@ export default function ButtonGroup(props: Props) {
         props.align,
         props.narrow ? "narrow" : undefined,
     );
+    const filteredProperties = {
+        ...props,
+        narrow: undefined,
+    };
     return (
         <div className={ className }>
-            <BootStrapButtonGroup { ...props } />
+            <BootStrapButtonGroup { ...filteredProperties } />
         </div>
     );
 }
