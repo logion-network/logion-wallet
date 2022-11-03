@@ -46,7 +46,7 @@ const DEFAULT_COLLECTION_SIZE = {
     }
 }
 
-const api = {
+export const apiMock = {
     tx: {
         assets: {
             create: () => {}
@@ -168,9 +168,8 @@ export function useLogionChain() {
         return context;
     } else {
         return {
-            apiState: 'CONNECT_INIT',
             injectedAccounts: null,
-            api,
+            api: apiMock,
             connectedNodeMetadata: {
 
             },

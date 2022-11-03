@@ -18,14 +18,14 @@ import { useCommonContext } from '../common/CommonContext';
 export default function ContextualizedWallet() {
     const { selectAddress, accounts, api } = useLogionChain();
     const { colorTheme, refresh } = useCommonContext();
-    const { protectionState, refreshRequests, vaultState } = useUserContext();
+    const { refreshRequests, vaultState } = useUserContext();
 
     const refreshAll = useCallback(() => {
         refresh(false);
         refreshRequests!(false);
     }, [ refresh, refreshRequests ]);
 
-    if(selectAddress === null || accounts === null || protectionState === undefined) {
+    if(selectAddress === null || accounts === null) {
         return null;
     }
 

@@ -419,10 +419,13 @@ export function LegalOfficerContextProvider(props: Props) {
             });
             const currentAddress = accounts.current.address;
             const onchainSettings = await getLegalOfficerData({ api, address: currentAddress });
-            const legalOfficer = contextValue.legalOfficer ? {
-                ...contextValue.legalOfficer,
-                node: onchainSettings.baseUrl || "",
-            } : undefined;
+            let legalOfficer: LegalOfficer | undefined = contextValue.legalOfficer;
+            if(!legalOfficer) {
+                legalOfficer = client?.allLegalOfficers.find(legalOfficer => legalOfficer.address === currentAddress);
+            }
+            if(legalOfficer) {
+                legalOfficer.node = onchainSettings.baseUrl || "";
+            }
             const missingSettings = getMissingSettings(legalOfficer, onchainSettings);
             dispatch({
                 type: "SET_ONCHAIN_SETTINGS",
@@ -432,7 +435,7 @@ export function LegalOfficerContextProvider(props: Props) {
                 legalOfficer,
             });
         }
-    }, [ accounts, api, contextValue.legalOfficer ]);
+    }, [ accounts, api, contextValue.legalOfficer, client?.allLegalOfficers ]);
 
     useEffect(() => {
         if(contextValue.refreshOnchainSettings !== refreshOnchainSettings) {
