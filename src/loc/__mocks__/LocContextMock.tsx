@@ -19,22 +19,6 @@ export function setLocItems(items: LocItem[]) {
     locItems = items;
 }
 
-export let close = jest.fn();
-
-export function setClose(fn: jest.Mock<any, any>) {
-    close = fn;
-}
-
-export function closeExtrinsicSent(): boolean {
-    return _closeExtrinsicSent;
-}
-
-let _closeExtrinsicSent = false;
-
-export function resetCloseExtrinsicSent() {
-    _closeExtrinsicSent = false;
-}
-
 let locId = new UUID("aed4c6e4-979e-48ad-be6e-4bd39fb94762");
 
 export function setLocId(id: UUID) {
@@ -67,15 +51,7 @@ export function setRequestSof(fn: jest.Mock) {
 
 export let deleteMetadata = jest.fn();
 
-export let deleteFile = jest.fn();
-
 export let deleteLink = jest.fn();
-
-export let addFile = jest.fn().mockResolvedValue(undefined);
-
-export let addMetadata = jest.fn().mockResolvedValue(undefined);
-
-export let addLink = jest.fn().mockResolvedValue(undefined);
 
 export let voidLoc = jest.fn();
 
@@ -97,16 +73,10 @@ export function useLocContext() {
         locId,
         loc,
         locItems,
-        closeExtrinsic: () => mockSignAndSubmit(() => _closeExtrinsicSent = true),
-        close,
         refresh,
         requestSof,
         deleteMetadata,
-        deleteFile,
         deleteLink,
-        addFile,
-        addMetadata,
-        addLink,
         checkResult: { result: "NONE" },
         locState,
         voidLoc,

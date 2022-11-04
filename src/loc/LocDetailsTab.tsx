@@ -227,7 +227,7 @@ export function LocDetailsTabContent(props: ContentProps) {
                         <LocLinkButton excludeNewIdentity={ locState.isLogionData() } />
                     </Col>
                     <Col className="close-button-container" xxl={ 3 } xl={ 4 }>
-                        <CloseLocButton protectionRequest={ protectionRequest } loc={ loc } />
+                        <CloseLocButton protectionRequest={ protectionRequest } />
                     </Col>
                     </>
                 }

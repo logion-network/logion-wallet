@@ -93,17 +93,20 @@ export function setIsSuccessful(value: boolean) {
 }
 
 export class LocRequestState {
-    
+    data: any;
+    locsState: any;
+    refresh: (() => Promise<LocRequestState>) | undefined;
 }
 
 export class ClosedCollectionLoc extends LocRequestState {
 
 }
 
+export class ClosedLoc extends LocRequestState {
+
+}
+
 export class EditableRequest extends LocRequestState {
-    data: any;
-    locsState: any;
-    refresh: (() => Promise<EditableRequest>) | undefined;
     addMetadata: jest.Mock<Promise<EditableRequest>> | undefined;
     deleteMetadata: jest.Mock<Promise<EditableRequest>> | undefined;
     addFile: jest.Mock<Promise<EditableRequest>> | undefined;
@@ -112,4 +115,15 @@ export class EditableRequest extends LocRequestState {
 
 export class DraftRequest extends EditableRequest {
 
+}
+
+export class OpenLoc extends EditableRequest {
+    data: any;
+    locsState: any;
+    refresh: (() => Promise<EditableRequest>) | undefined;
+    addMetadata: jest.Mock<Promise<EditableRequest>> | undefined;
+    deleteMetadata: jest.Mock<Promise<EditableRequest>> | undefined;
+    addFile: jest.Mock<Promise<EditableRequest>> | undefined;
+    deleteFile: jest.Mock<Promise<EditableRequest>> | undefined;
+    requestSof: jest.Mock<Promise<EditableRequest>> | undefined;
 }

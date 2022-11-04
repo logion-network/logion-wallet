@@ -1,7 +1,6 @@
 import React, { useContext, useReducer, Reducer, useEffect, useCallback, useState } from "react";
 import {
     UUID,
-    closeLoc,
     voidLoc,
     VoidInfo,
     LocType,
@@ -20,7 +19,6 @@ import {
 } from "@logion/client";
 
 import {
-    preClose,
     preVoid,
     deleteLocLink,
     isGrantedAccess,
@@ -55,8 +53,6 @@ export interface LocContext {
     collectionItem?: CollectionItem
     requestSof: (() => Promise<void>) | null
     requestSofOnCollection: ((collectionItemId: string) => Promise<void>) | null
-    close: (() => void) | null
-    closeExtrinsic: ((seal?: string) => SignAndSubmit) | null
     deleteLink: ((locItem: LocItem) => void) | null
     voidLoc: ((voidInfo: FullVoidInfo) => void) | null
     voidLocExtrinsic?: ((voidInfo: VoidInfo) => SignAndSubmit) | null
@@ -80,8 +76,6 @@ function initialContextValue(locState: LocRequestState | null, backPath: string,
         backPath,
         detailsPath,
         locItems: [],
-        close: null,
-        closeExtrinsic: null,
         deleteLink: null,
         deleteMetadata: null,
         voidLoc: null,
@@ -103,12 +97,9 @@ const LocContextObject: React.Context<PrivateLocContext> = React.createContext(i
 
 type ActionType = 'SET_LOC_REQUEST'
     | 'SET_LOC'
-    | 'CLOSE'
     | 'VOID'
     | 'RESET'
     | 'SET_CHECK_RESULT'
-    | 'SET_CLOSE'
-    | 'SET_CLOSE_EXTRINSIC'
     | 'SET_DELETE_LINK'
     | 'SET_DELETE_METADATA'
     | 'SET_VOID_LOC'
@@ -131,8 +122,6 @@ interface Action {
     status?: LocItemStatus,
     name?: string,
     timestamp?: string,
-    close?: () => void,
-    closeExtrinsic?: (seal?: string) => SignAndSubmit,
     deleteLink?: (locItem: LocItem) => void,
     deleteMetadata?: (locItem: LocItem) => void,
     voidInfo?: FullVoidInfo,
@@ -166,15 +155,6 @@ const reducer: Reducer<PrivateLocContext, Action> = (state: PrivateLocContext, a
                 collectionItems: action.collectionItems!,
                 mustFetchCollectionItems: false,
             }
-        case "CLOSE":
-            return {
-                ...state,
-                loc: {
-                    ...state.loc!,
-                    closed: true,
-                    status: "CLOSED",
-                },
-            }
         case "VOID":
             return {
                 ...state,
@@ -191,16 +171,6 @@ const reducer: Reducer<PrivateLocContext, Action> = (state: PrivateLocContext, a
                 ...state,
                 checkResult: action.checkResult!,
                 collectionItem: action.collectionItem,
-            }
-        case 'SET_CLOSE':
-            return {
-                ...state,
-                close: action.close!,
-            }
-        case 'SET_CLOSE_EXTRINSIC':
-            return {
-                ...state,
-                closeExtrinsic: action.closeExtrinsic!,
             }
         case 'SET_DELETE_LINK':
             return {
@@ -413,45 +383,6 @@ export function LocContextProvider(props: Props) {
             })()
         }
     }, [ refreshNameTimestamp, refreshCounter, setRefreshCounter, refreshing, setRefreshing ])
-
-    const closeExtrinsicFunction = useCallback((seal?: string) => {
-            const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
-                signerId: contextValue.loc!.ownerAddress,
-                callback: setResult,
-                errorCallback: setError,
-                submittable: closeLoc({
-                    locId: contextValue.loc!.id,
-                    api: api!,
-                    seal
-                })
-            });
-            return signAndSubmit;
-        }, [ api, contextValue.loc ]
-    )
-
-    useEffect(() => {
-        if(contextValue.closeExtrinsic !== closeExtrinsicFunction) {
-            dispatch({
-                type: "SET_CLOSE_EXTRINSIC",
-                closeExtrinsic: closeExtrinsicFunction,
-            })
-        }
-    }, [ contextValue.closeExtrinsic, closeExtrinsicFunction ]);
-
-    const closeFunction = useCallback(async () => {
-        await preClose(axiosFactory!(contextValue.loc!.ownerAddress)!, contextValue.loc!.id);
-        dispatch({ type: 'CLOSE' });
-        startRefresh();
-    }, [ axiosFactory, contextValue.loc, startRefresh ])
-
-    useEffect(() => {
-        if(contextValue.close !== closeFunction) {
-            dispatch({
-                type: "SET_CLOSE",
-                close: closeFunction,
-            })
-        }
-    }, [ contextValue.close, closeFunction ]);
 
     const deleteLinkFunction = useCallback(async (item: LocItem) => {
         await deleteLocLink(axiosFactory!(contextValue.loc!.ownerAddress)!, contextValue.loc!.id, item.target!)

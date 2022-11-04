@@ -30,6 +30,12 @@ const WALLET_NAMES: Record<WalletType, string> = {
     POLKADOT: "Polkadot",
 };
 
+const ICON_TYPES: Record<WalletType, "svg" | "png"> = {
+    METAMASK: "svg",
+    CROSSMINT: "png",
+    POLKADOT: "svg",
+};
+
 export function walletType(type: string | null | undefined): WalletType | undefined | null {
     if(type === "CROSSMINT" || type === "METAMASK" || type === "POLKADOT") {
         return type;
@@ -174,7 +180,7 @@ export default function ClaimAssetButton(props: Props) {
                         {
                             compatibleWallets.map(walletType => (
                                 <Dropdown.Item key={walletType} onClick={ () => claimAsset(walletType) } className={ walletType.toLowerCase() }>
-                                    <Icon icon={{ id: walletType.toLowerCase() }} height="40px" /> <span className="wallet-name">with { WALLET_NAMES[walletType] }</span>
+                                    <Icon icon={{ id: walletType.toLowerCase() }} height="40px" type={ ICON_TYPES[walletType] } /> <span className="wallet-name">with { WALLET_NAMES[walletType] }</span>
                                 </Dropdown.Item>
                             ))
                         }

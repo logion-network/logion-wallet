@@ -22,12 +22,10 @@ export async function createLocRequest(axios: any, request: CreateLocRequest): P
 
 export const deleteLocLink = jest.fn();
 export const preVoid = jest.fn();
-export const preClose = jest.fn();
 
 export function resetDefaultMocks() {
     deleteLocLink.mockResolvedValue(undefined);
     preVoid.mockResolvedValue(undefined);
-    preClose.mockResolvedValue(undefined);
 }
 
 export function isGrantedAccess() {

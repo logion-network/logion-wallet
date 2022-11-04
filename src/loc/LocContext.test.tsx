@@ -3,9 +3,9 @@ import { useCallback, useState } from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import { UUID } from "@logion/node-api/dist/UUID";
 import { LegalOfficerCase } from '@logion/node-api/dist/Types';
-import { LocData, OpenLoc } from "@logion/client";
+import { LocData, OpenLoc as RealOpenLoc } from "@logion/client";
 import { LogionClient } from '@logion/client/dist/LogionClient';
-import { PublicApi, LocRequestState, EditableRequest as RealEditableRequest } from "@logion/client";
+import { PublicApi, EditableRequest as RealEditableRequest, LocRequestState as RealLocRequestState } from "@logion/client";
 
 import { deleteLocLink, resetDefaultMocks } from "../common/__mocks__/ModelMock";
 import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
@@ -16,8 +16,8 @@ import { LocContextProvider, useLocContext } from "./LocContext"
 import { LocItemType } from "./types";
 import { buildLocRequest } from "./TestData";
 import { setClientMock } from "src/logion-chain/__mocks__/LogionChainMock";
-import { EditableRequest } from "src/__mocks__/LogionClientMock";
-import { addLink, publishFile, publishLink, publishMetadata } from "../legal-officer/client";
+import { LocRequestState, EditableRequest, OpenLoc, ClosedLoc } from "src/__mocks__/LogionClientMock";
+import { addLink, closeLoc, publishFile, publishLink, publishMetadata } from "../legal-officer/client";
 import { useLogionChain } from "src/logion-chain";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
 
@@ -30,13 +30,13 @@ jest.mock("../common/Model");
 describe("LocContext", () => {
 
     it("fetches LOC data", async () => {
-        givenRequest(CLOSED_IDENTITY_LOC_ID, CLOSED_IDENTITY_LOC);
+        givenRequest(CLOSED_IDENTITY_LOC_ID, CLOSED_IDENTITY_LOC, ClosedLoc);
         whenRenderingInContext(_locState, <Reader/>);
         await thenReaderDisplaysLocRequestAndItems();
     })
 
     it("adds items", async () => {
-        givenRequest(OPEN_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, CLOSED_IDENTITY_LOC_ID, CLOSED_IDENTITY_LOC);
+        givenRequest(OPEN_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OpenLoc, CLOSED_IDENTITY_LOC_ID, CLOSED_IDENTITY_LOC);
         whenRenderingInContext(_locState, <ItemAdder/>);
         await waitFor(() => screen.getByText("Ready"));
         await clickByName("Go");
@@ -44,13 +44,11 @@ describe("LocContext", () => {
     })
 
     it("closes", async () => {
-        givenRequest(OPEN_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC);
+        givenRequest(OPEN_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OpenLoc);
         resetDefaultMocks();
-        resetSubmitting();
         whenRenderingInContext(_locState, <Closer/>);
         await clickByName("Go");
         await waitFor(() => expect(screen.getByText("Submitting...")).toBeVisible());
-        finalizeSubmission();
         await thenClosed();
     })
 
@@ -59,7 +57,7 @@ describe("LocContext", () => {
     it("publishes link item", async () => publishesItem("Linked LOC", "/api/loc-request/9363c3d6-d107-421a-a44b-85c7fab0b843/links/4092e790-a6eb-4f10-8172-90b5dd254521/confirm"))
 
     it("deletes items", async () => {
-        givenRequest(OPEN_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, CLOSED_IDENTITY_LOC_ID, CLOSED_IDENTITY_LOC);
+        givenRequest(OPEN_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OpenLoc, CLOSED_IDENTITY_LOC_ID, CLOSED_IDENTITY_LOC);
         givenDraftItems();
         resetDefaultMocks();
         whenRenderingInContext(_locState, <ItemDeleter />);
@@ -69,7 +67,7 @@ describe("LocContext", () => {
     })
 
     it("voids", async () => {
-        givenRequest(CLOSED_IDENTITY_LOC_ID, CLOSED_IDENTITY_LOC);
+        givenRequest(CLOSED_IDENTITY_LOC_ID, CLOSED_IDENTITY_LOC, ClosedLoc);
         resetDefaultMocks();
         resetSubmitting();
         whenRenderingInContext(_locState, <Voider/>);
@@ -80,25 +78,27 @@ describe("LocContext", () => {
     })
 })
 
-function givenRequest(locId: string, loc: LegalOfficerCase, linkedLocId?: string, linkedLoc?: LegalOfficerCase) {
+function givenRequest<T extends LocRequestState>(locId: string, loc: LegalOfficerCase, locStateConstructor: new () => T, linkedLocId?: string, linkedLoc?: LegalOfficerCase) {
     const locsState: any = {};
 
     _locData = buildLocRequest(UUID.fromDecimalString(locId)!, loc);
-    _locState = new EditableRequest();
+    _locState = new locStateConstructor();
     _locState.data = () => _locData;
-    _locState.locsState = () => locsState,
-    _locState.refresh = () => Promise.resolve(_locState),
-    _locState.addMetadata = jest.fn().mockResolvedValue(_locState);
-    _locState.deleteMetadata = jest.fn().mockResolvedValue(_locState);
-    _locState.addFile = jest.fn().mockResolvedValue(_locState);
-    _locState.deleteFile = jest.fn().mockResolvedValue( _locState);
+    _locState.locsState = () => locsState;
+    _locState.refresh = () => Promise.resolve(_locState);
+    if(_locState instanceof EditableRequest) {
+        _locState.addMetadata = jest.fn().mockResolvedValue(_locState);
+        _locState.deleteMetadata = jest.fn().mockResolvedValue(_locState);
+        _locState.addFile = jest.fn().mockResolvedValue(_locState);
+        _locState.deleteFile = jest.fn().mockResolvedValue( _locState);
+    }
 
     if(linkedLocId && linkedLoc) {
         _linkedLocData = buildLocRequest(UUID.fromDecimalString(linkedLocId)!, linkedLoc);
         _linkedLocState = {
             data: () => _linkedLocData,
             locsState: () => locsState,
-        } as unknown as OpenLoc;
+        } as unknown as RealOpenLoc;
     }
 
     locsState.findById = (argLocId: UUID) => {
@@ -142,15 +142,15 @@ function givenRequest(locId: string, loc: LegalOfficerCase, linkedLocId?: string
 }
 
 let _locData: LocData;
-let _locState: EditableRequest;
+let _locState: LocRequestState;
 let _linkedLocData: LocData;
 let _linkedLocState: LocRequestState;
 let axiosMock: AxiosInstance;
 
-function whenRenderingInContext(locState: EditableRequest, element: JSX.Element) {
+function whenRenderingInContext(locState: LocRequestState, element: JSX.Element) {
     render(
         <LocContextProvider
-            locState={ locState as unknown as LocRequestState }
+            locState={ locState as unknown as RealLocRequestState }
             backPath="/"
             detailsPath={() => ""}
             refreshLocs={() => Promise.resolve()}
@@ -200,7 +200,7 @@ function ItemAdder() {
     const { locItems, locState, mutateLocState } = useLocContext();
 
     const callback = useCallback(async () => {
-        await mutateLocState(async (current) => {
+        await mutateLocState(async current => {
             if(current instanceof EditableRequest) {
                 let next: RealEditableRequest;
                 next = await current.addMetadata!({
@@ -217,9 +217,9 @@ function ItemAdder() {
                     target: _linkedLocData.id,
                     nature: "Some nature"
                 });
-                return next as unknown as LocRequestState;
+                return next as unknown as RealLocRequestState;
             } else {
-                return current;
+                return current as unknown as RealLocRequestState;
             }
         });
     }, [ mutateLocState ]);
@@ -244,8 +244,8 @@ function ItemAdder() {
 }
 
 async function thenItemsAdded() {
-    await waitFor(() => expect(_locState.addMetadata).toBeCalled());
-    expect(_locState.addFile).toBeCalled();
+    await waitFor(() => expect((_locState as OpenLoc).addMetadata).toBeCalled());
+    expect((_locState as OpenLoc).addFile).toBeCalled();
     expect(axiosMock.post).toBeCalledWith(
         `/api/loc-request/${ _locData.id.toString() }/links`,
         expect.objectContaining({
@@ -256,19 +256,27 @@ async function thenItemsAdded() {
 }
 
 function Closer() {
-    const { loc: locData, closeExtrinsic, close } = useLocContext();
-    const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
+    const { signer } = useLogionChain();
+    const { loc: locData, mutateLocState } = useLocContext();
+    const [ call, setCall ] = useState<Call>();
 
-    const callback = useCallback(() => {
-        const signAndSubmit: SignAndSubmit = closeExtrinsic!();
-        setSignAndSubmit(() => signAndSubmit);
-    }, [ closeExtrinsic ]);
+    const callback = useCallback(async () => {
+        const call: Call = async callback =>
+            mutateLocState(async current => {
+                if(signer && current instanceof OpenLoc) {
+                    return closeLoc({
+                        locState: current as unknown as RealOpenLoc,
+                        signer,
+                        callback,
+                    });
+                } else {
+                    return current;
+                }
+            });
+        setCall(() => call);
+    }, [ signer, mutateLocState ]);
 
-    const onSuccess = useCallback(() => {
-        close!();
-    }, [ close ]);
-
-    if(!locData || !closeExtrinsic || !close) {
+    if(!locData || !signer) {
         return null;
     }
 
@@ -276,11 +284,10 @@ function Closer() {
         <div>
             <button onClick={ callback }>Go</button>
             <p>{ locData.closed ? "Closed" : "Open" }</p>
-            <ExtrinsicSubmitter
-                id="close"
-                signAndSubmit={ signAndSubmit }
+            <ClientExtrinsicSubmitter
+                call={ call }
                 successMessage="Successfully closed"
-                onSuccess={ onSuccess }
+                onSuccess={ () => {} }
                 onError={ () => {} }
             />
         </div>
@@ -288,15 +295,14 @@ function Closer() {
 }
 
 async function thenClosed() {
-    await waitFor(() => expect(screen.getByText("Closed")).toBeVisible());
+    await waitFor(() => expect(axiosMock.post).toBeCalledWith(`/api/loc-request/9363c3d6-d107-421a-a44b-85c7fab0b843/close`));
 }
 
 async function publishesItem(itemType: LocItemType, expectedResource: string) {
-    givenRequest(OPEN_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, CLOSED_IDENTITY_LOC_ID, CLOSED_IDENTITY_LOC);
+    givenRequest(OPEN_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OpenLoc, CLOSED_IDENTITY_LOC_ID, CLOSED_IDENTITY_LOC);
     givenDraftItems();
     resetDefaultMocks();
     whenRenderingInContext(_locState, <ItemPublisher itemType={ itemType } />);
-    resetSubmitting();
     await clickByName("Go");
     await waitFor(() => expect(screen.getByText("Submitting...")).toBeVisible());
     await thenItemsPublished(expectedResource);
@@ -441,8 +447,8 @@ function ItemDeleter() {
 }
 
 async function thenItemsDeleted() {
-    await waitFor(() => expect(_locState.deleteMetadata).toBeCalled());
-    expect(_locState.deleteFile).toBeCalled();
+    await waitFor(() => expect((_locState as OpenLoc).deleteMetadata).toBeCalled());
+    expect((_locState as OpenLoc).deleteFile).toBeCalled();
     expect(deleteLocLink).toBeCalled();
 }
 

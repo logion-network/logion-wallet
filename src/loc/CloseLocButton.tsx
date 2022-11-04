@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { ProtectionRequest } from "@logion/client/dist/RecoveryClient";
-import { LocData } from "@logion/client";
+import { OpenLoc } from "@logion/client";
 import { vouchRecovery, getActiveRecovery } from "@logion/node-api/dist/Recovery";
 import { Col, Row } from "react-bootstrap";
 
@@ -9,7 +9,6 @@ import Button from "../common/Button";
 import ProcessStep from "../legal-officer/ProcessStep";
 import Alert from "../common/Alert";
 import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
-import { useCommonContext } from "../common/CommonContext";
 
 import { useLocContext } from "./LocContext";
 import Icon from "../common/Icon";
@@ -20,6 +19,8 @@ import { PROTECTION_REQUESTS_PATH, RECOVERY_REQUESTS_PATH } from "../legal-offic
 import StaticLabelValue from "../common/StaticLabelValue";
 import { useLogionChain } from "../logion-chain";
 import { signAndSend } from "../logion-chain/Signature";
+import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
+import { closeLoc } from "src/legal-officer/client";
 
 import './CloseLocButton.css';
 
@@ -41,29 +42,36 @@ interface CloseState {
 
 export interface Props {
     protectionRequest?: ProtectionRequest | null;
-    loc: LocData;
 }
 
 export default function CloseLocButton(props: Props) {
     const navigate = useNavigate();
-    const { accounts, axiosFactory, api } = useLogionChain();
-    const { refresh } = useCommonContext();
-    const { refreshRequests, refreshLocs } = useLegalOfficerContext();
-    const { closeExtrinsic, close, locItems, loc } = useLocContext();
+    const { accounts, axiosFactory, api, signer } = useLogionChain();
+    const { refreshRequests } = useLegalOfficerContext();
+    const { mutateLocState, locItems, loc } = useLocContext();
     const [ closeState, setCloseState ] = useState<CloseState>({ status: CloseStatus.NONE });
-    const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
+    const [ call, setCall ] = useState<Call>();
     const [ disabled, setDisabled ] = useState<boolean>(false);
     const [ signAndSubmitVouch, setSignAndSubmitVouch ] = useState<SignAndSubmit>(null);
-    const seal = props.loc.seal;
-    const locType = props.loc.locType;
 
     useEffect(() => {
         if (closeState.status === CloseStatus.CLOSE_PENDING) {
             setCloseState({ status: CloseStatus.CLOSING });
-            const signAndSubmit: SignAndSubmit = closeExtrinsic!(seal);
-            setSignAndSubmit(() => signAndSubmit);
+            const call: Call = async (callback: CallCallback) =>
+                mutateLocState(async current => {
+                    if(signer && current instanceof OpenLoc) {
+                        return closeLoc({
+                            locState: current,
+                            signer,
+                            callback,
+                        });
+                    } else {
+                        return current;
+                    }
+                });
+            setCall(() => call);
         }
-    }, [ closeExtrinsic, closeState, setCloseState, seal ]);
+    }, [ mutateLocState, closeState, setCloseState, signer ]);
 
     useEffect(() => {
         if (locItems.findIndex(locItem => locItem.status === "DRAFT") < 0) {
@@ -112,11 +120,8 @@ export default function CloseLocButton(props: Props) {
             }
         } else {
             setCloseState({ status: CloseStatus.NONE });
-            close!();
-            refresh!(false);
-            refreshLocs();
         }
-    }, [ setCloseState, props.protectionRequest, accounts, api, close, refresh, refreshLocs, alreadyVouched ]);
+    }, [ setCloseState, props.protectionRequest, accounts, api, alreadyVouched ]);
 
     useEffect(() => {
         if (closeState.status === CloseStatus.ACCEPTING && loc) {
@@ -127,10 +132,7 @@ export default function CloseLocButton(props: Props) {
                     requestId: props.protectionRequest!.id,
                     locId: loc.id,
                 });
-                close!();
-                refresh!(false);
                 refreshRequests!(false);
-                refreshLocs();
 
                 if(props.protectionRequest?.isRecovery) {
                     navigate({pathname: RECOVERY_REQUESTS_PATH, search: "?tab=history"});
@@ -139,11 +141,14 @@ export default function CloseLocButton(props: Props) {
                 }
             })();
         }
-    }, [ closeState, setCloseState, accounts, axiosFactory, close, loc, navigate, props.protectionRequest, refresh, refreshRequests, refreshLocs ]);
+    }, [ closeState, setCloseState, accounts, axiosFactory, loc, navigate, props.protectionRequest, refreshRequests ]);
 
     if(!loc) {
         return null;
     }
+
+    const seal = loc.seal;
+    const locType = loc.locType;
 
     let closeButtonText;
     let firstStatus: CloseStatus;
@@ -319,9 +324,8 @@ export default function CloseLocButton(props: Props) {
                 nextSteps={[]}
                 hasSideEffect
             >
-                <ExtrinsicSubmitter
-                    id="publishMetadata"
-                    signAndSubmit={ signAndSubmit }
+                <ClientExtrinsicSubmitter
+                    call={ call }
                     onSuccess={ onCloseSuccess }
                     onError={ () => setCloseState({ status: CloseStatus.ERROR }) }
                 />

@@ -711,37 +711,7 @@ exports[`LocDetailsTabContent renders open data LOC for LO 1`] = `
         xl={4}
         xxl={3}
       >
-        <CloseLocButton
-          loc={
-            Object {
-              "closed": false,
-              "closedOn": undefined,
-              "createdOn": "2022-09-28T07:49:00.000+02:00",
-              "id": UUID {
-                "bytes": Uint8Array [
-                  240,
-                  175,
-                  187,
-                  187,
-                  105,
-                  109,
-                  75,
-                  119,
-                  129,
-                  112,
-                  119,
-                  229,
-                  101,
-                  136,
-                  138,
-                  14,
-                ],
-              },
-              "locType": "Transaction",
-              "status": "OPEN",
-            }
-          }
-        />
+        <CloseLocButton />
       </Col>
     </React.Fragment>
   </Row>
@@ -1190,37 +1160,7 @@ exports[`LocDetailsTabContent renders open identity LOC for LO 1`] = `
         xl={4}
         xxl={3}
       >
-        <CloseLocButton
-          loc={
-            Object {
-              "closed": false,
-              "closedOn": undefined,
-              "createdOn": "2022-09-28T07:49:00.000+02:00",
-              "id": UUID {
-                "bytes": Uint8Array [
-                  240,
-                  175,
-                  187,
-                  187,
-                  105,
-                  109,
-                  75,
-                  119,
-                  129,
-                  112,
-                  119,
-                  229,
-                  101,
-                  136,
-                  138,
-                  14,
-                ],
-              },
-              "locType": "Identity",
-              "status": "OPEN",
-            }
-          }
-        />
+        <CloseLocButton />
       </Col>
     </React.Fragment>
   </Row>
