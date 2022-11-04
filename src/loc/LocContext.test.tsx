@@ -17,7 +17,7 @@ import { LocItemType } from "./types";
 import { buildLocRequest } from "./TestData";
 import { setClientMock } from "src/logion-chain/__mocks__/LogionChainMock";
 import { LocRequestState, EditableRequest, OpenLoc, ClosedLoc } from "src/__mocks__/LogionClientMock";
-import { addLink, closeLoc, publishFile, publishLink, publishMetadata } from "../legal-officer/client";
+import { addLink, closeLoc, deleteLink, publishFile, publishLink, publishMetadata } from "../legal-officer/client";
 import { useLogionChain } from "src/logion-chain";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
 
@@ -130,6 +130,7 @@ function givenRequest<T extends LocRequestState>(locId: string, loc: LegalOffice
     axiosMock = {
         post: jest.fn().mockResolvedValue(undefined),
         put: jest.fn().mockResolvedValue(undefined),
+        delete: jest.fn().mockResolvedValue(undefined),
     } as unknown as AxiosInstance;
     const client = {
         locsState: () => Promise.resolve(locsState),
@@ -412,23 +413,28 @@ async function thenItemsPublished(expectedResource: string) {
 }
 
 function ItemDeleter() {
-    const { locItems, deleteMetadata, deleteLink, mutateLocState } = useLocContext();
+    const { locItems, deleteMetadata, mutateLocState } = useLocContext();
 
     const callback = useCallback(async () => {
         await mutateLocState(async current => {
             if(current instanceof EditableRequest) {
-                return current.deleteFile!({
+                let next: RealEditableRequest;
+                next = current.deleteFile!({
                     hash: "new-hash",
                 }) as unknown as RealEditableRequest;
+                next = deleteLink({
+                    locState: current as unknown as RealEditableRequest,
+                    target: locItems.find(item => item.nature === "New link")!.target!,
+                }) as unknown as RealEditableRequest;
+                return next;
             } else {
                 return current;
             }
         });
         deleteMetadata!(locItems.find(item => item.name === "New data")!);
-        deleteLink!(locItems.find(item => item.nature === "New link")!);
-    }, [ locItems, deleteMetadata, deleteLink ]);
+    }, [ locItems, deleteMetadata ]);
 
-    if(!deleteMetadata || !deleteLink) {
+    if(!deleteMetadata) {
         return null;
     }
 
@@ -449,7 +455,7 @@ function ItemDeleter() {
 async function thenItemsDeleted() {
     await waitFor(() => expect((_locState as OpenLoc).deleteMetadata).toBeCalled());
     expect((_locState as OpenLoc).deleteFile).toBeCalled();
-    expect(deleteLocLink).toBeCalled();
+    expect(axiosMock.delete).toBeCalledWith("/api/loc-request/9363c3d6-d107-421a-a44b-85c7fab0b843/links/4092e790-a6eb-4f10-8172-90b5dd254521");
 }
 
 function Voider() {

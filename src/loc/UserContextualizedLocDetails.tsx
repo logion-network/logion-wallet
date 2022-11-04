@@ -43,7 +43,6 @@ export default function UserContextualizedLocDetails() {
                 locState={ locState }
                 locItems={ locItems }
                 checkResult={ checkResult }
-                deleteLink={ null }
                 deleteMetadata={ deleteMetadata }
                 viewer="User"
                 detailsPath={ detailsPath }

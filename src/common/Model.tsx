@@ -39,16 +39,6 @@ export async function createLocRequest(
     return response.data;
 }
 
-export async function deleteLocLink(
-    axios: AxiosInstance,
-    locId: UUID,
-    targetId: UUID
-): Promise<void> {
-    const requestId = locId.toString();
-    const target = targetId.toString();
-    await axios.delete(`/api/loc-request/${requestId}/links/${target}`);
-}
-
 export async function preVoid(
     axios: AxiosInstance,
     locId: UUID,

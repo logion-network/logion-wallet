@@ -20,7 +20,6 @@ import {
 
 import {
     preVoid,
-    deleteLocLink,
     isGrantedAccess,
 } from "../common/Model";
 import { useLogionChain } from "../logion-chain";
@@ -53,7 +52,6 @@ export interface LocContext {
     collectionItem?: CollectionItem
     requestSof: (() => Promise<void>) | null
     requestSofOnCollection: ((collectionItemId: string) => Promise<void>) | null
-    deleteLink: ((locItem: LocItem) => void) | null
     voidLoc: ((voidInfo: FullVoidInfo) => void) | null
     voidLocExtrinsic?: ((voidInfo: VoidInfo) => SignAndSubmit) | null
     collectionItems: CollectionItem[]
@@ -76,7 +74,6 @@ function initialContextValue(locState: LocRequestState | null, backPath: string,
         backPath,
         detailsPath,
         locItems: [],
-        deleteLink: null,
         deleteMetadata: null,
         voidLoc: null,
         voidLocExtrinsic: null,
@@ -122,7 +119,6 @@ interface Action {
     status?: LocItemStatus,
     name?: string,
     timestamp?: string,
-    deleteLink?: (locItem: LocItem) => void,
     deleteMetadata?: (locItem: LocItem) => void,
     voidInfo?: FullVoidInfo,
     voidLoc?: (voidInfo: FullVoidInfo) => void,
@@ -171,11 +167,6 @@ const reducer: Reducer<PrivateLocContext, Action> = (state: PrivateLocContext, a
                 ...state,
                 checkResult: action.checkResult!,
                 collectionItem: action.collectionItem,
-            }
-        case 'SET_DELETE_LINK':
-            return {
-                ...state,
-                deleteLink: action.deleteLink!,
             }
         case 'SET_DELETE_METADATA':
             return {
@@ -383,20 +374,6 @@ export function LocContextProvider(props: Props) {
             })()
         }
     }, [ refreshNameTimestamp, refreshCounter, setRefreshCounter, refreshing, setRefreshing ])
-
-    const deleteLinkFunction = useCallback(async (item: LocItem) => {
-        await deleteLocLink(axiosFactory!(contextValue.loc!.ownerAddress)!, contextValue.loc!.id, item.target!)
-        await refreshLocState(true);
-    }, [ axiosFactory, contextValue.loc, refreshLocState ])
-
-    useEffect(() => {
-        if(contextValue.deleteLink !== deleteLinkFunction) {
-            dispatch({
-                type: "SET_DELETE_LINK",
-                deleteLink: deleteLinkFunction,
-            })
-        }
-    }, [ contextValue.deleteLink, deleteLinkFunction ]);
 
     const deleteMetadataFunction = useCallback(async (item: LocItem) => {
         await dispatchLocAndItems(await (contextValue.locState as OpenLoc).deleteMetadata({ name: item.name }), false)

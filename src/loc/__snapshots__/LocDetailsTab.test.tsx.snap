@@ -314,7 +314,6 @@ exports[`LocDetailsTabContent renders closed data LOC for LO 1`] = `
     }
   />
   <LocItems
-    deleteLink={[Function]}
     deleteMetadata={[Function]}
     viewer="LegalOfficer"
   />
@@ -501,7 +500,6 @@ exports[`LocDetailsTabContent renders closed data LOC for User 1`] = `
     }
   />
   <LocItems
-    deleteLink={[Function]}
     deleteMetadata={[Function]}
     viewer="User"
   />
@@ -680,7 +678,6 @@ exports[`LocDetailsTabContent renders open data LOC for LO 1`] = `
     }
   />
   <LocItems
-    deleteLink={[Function]}
     deleteMetadata={[Function]}
     viewer="LegalOfficer"
   />
@@ -890,7 +887,6 @@ exports[`LocDetailsTabContent renders open data LOC for User 1`] = `
     }
   />
   <LocItems
-    deleteLink={[Function]}
     deleteMetadata={[Function]}
     viewer="User"
   />
@@ -1129,7 +1125,6 @@ exports[`LocDetailsTabContent renders open identity LOC for LO 1`] = `
     />
   </React.Fragment>
   <LocItems
-    deleteLink={[Function]}
     deleteMetadata={[Function]}
     viewer="LegalOfficer"
   />
@@ -1340,7 +1335,6 @@ exports[`LocDetailsTabContent renders void data LOC for LO 1`] = `
     }
   />
   <LocItems
-    deleteLink={[Function]}
     deleteMetadata={[Function]}
     viewer="LegalOfficer"
   />
@@ -1520,7 +1514,6 @@ exports[`LocDetailsTabContent renders void data LOC for User 1`] = `
     }
   />
   <LocItems
-    deleteLink={[Function]}
     deleteMetadata={[Function]}
     viewer="User"
   />

@@ -12,6 +12,16 @@ export async function addLink(params: {
     return await locState.refresh() as EditableRequest;
 }
 
+export async function deleteLink(params: {
+    locState: EditableRequest,
+    target: UUID,
+}): Promise<EditableRequest> {
+    const { locState, target } = params;
+    const axios = buildAxios(locState);
+    await axios.delete(`/api/loc-request/${ locState.data().id.toString() }/links/${target}`);
+    return await locState.refresh() as EditableRequest;
+}
+
 function buildAxios(locState: LocRequestState) {
     const client = locState.locsState().client;
     return client.buildAxios(client.legalOfficers.find(legalOfficer => locState.data().ownerAddress === legalOfficer.address)!);
