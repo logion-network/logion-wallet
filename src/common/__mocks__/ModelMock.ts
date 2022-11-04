@@ -20,11 +20,9 @@ export async function createLocRequest(axios: any, request: CreateLocRequest): P
     });
 }
 
-export const deleteLocLink = jest.fn();
 export const preVoid = jest.fn();
 
 export function resetDefaultMocks() {
-    deleteLocLink.mockResolvedValue(undefined);
     preVoid.mockResolvedValue(undefined);
 }
 

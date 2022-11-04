@@ -314,7 +314,6 @@ exports[`LocDetailsTabContent renders closed data LOC for LO 1`] = `
     }
   />
   <LocItems
-    deleteMetadata={[Function]}
     viewer="LegalOfficer"
   />
   <WarningDialog
@@ -500,7 +499,6 @@ exports[`LocDetailsTabContent renders closed data LOC for User 1`] = `
     }
   />
   <LocItems
-    deleteMetadata={[Function]}
     viewer="User"
   />
   <WarningDialog
@@ -678,7 +676,6 @@ exports[`LocDetailsTabContent renders open data LOC for LO 1`] = `
     }
   />
   <LocItems
-    deleteMetadata={[Function]}
     viewer="LegalOfficer"
   />
   <Row>
@@ -887,7 +884,6 @@ exports[`LocDetailsTabContent renders open data LOC for User 1`] = `
     }
   />
   <LocItems
-    deleteMetadata={[Function]}
     viewer="User"
   />
   <Row>
@@ -1125,7 +1121,6 @@ exports[`LocDetailsTabContent renders open identity LOC for LO 1`] = `
     />
   </React.Fragment>
   <LocItems
-    deleteMetadata={[Function]}
     viewer="LegalOfficer"
   />
   <Row>
@@ -1335,7 +1330,6 @@ exports[`LocDetailsTabContent renders void data LOC for LO 1`] = `
     }
   />
   <LocItems
-    deleteMetadata={[Function]}
     viewer="LegalOfficer"
   />
   <WarningDialog
@@ -1514,7 +1508,6 @@ exports[`LocDetailsTabContent renders void data LOC for User 1`] = `
     }
   />
   <LocItems
-    deleteMetadata={[Function]}
     viewer="User"
   />
   <WarningDialog

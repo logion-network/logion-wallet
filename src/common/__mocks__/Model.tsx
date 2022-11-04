@@ -1,7 +1,6 @@
 import {
     fetchProtectionRequests,
     createLocRequest,
-    deleteLocLink,
     preVoid,
     isGrantedAccess,
 } from './ModelMock';
@@ -9,7 +8,6 @@ import {
 export {
     fetchProtectionRequests,
     createLocRequest,
-    deleteLocLink,
     preVoid,
     isGrantedAccess,
 };

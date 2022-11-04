@@ -19,7 +19,6 @@ export default function UserContextualizedLocDetails() {
         loc,
         supersededLoc,
         locItems,
-        deleteMetadata,
         checkHash,
         checkResult,
         collectionItem,
@@ -43,7 +42,6 @@ export default function UserContextualizedLocDetails() {
                 locState={ locState }
                 locItems={ locItems }
                 checkResult={ checkResult }
-                deleteMetadata={ deleteMetadata }
                 viewer="User"
                 detailsPath={ detailsPath }
                 legalOfficer={ getOfficer(loc.ownerAddress) }

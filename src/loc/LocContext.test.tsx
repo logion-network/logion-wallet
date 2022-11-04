@@ -7,7 +7,7 @@ import { LocData, OpenLoc as RealOpenLoc } from "@logion/client";
 import { LogionClient } from '@logion/client/dist/LogionClient';
 import { PublicApi, EditableRequest as RealEditableRequest, LocRequestState as RealLocRequestState } from "@logion/client";
 
-import { deleteLocLink, resetDefaultMocks } from "../common/__mocks__/ModelMock";
+import { resetDefaultMocks } from "../common/__mocks__/ModelMock";
 import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
 import { CLOSED_IDENTITY_LOC, CLOSED_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "../__mocks__/@logion/node-api/dist/LogionLocMock";
 import { finalizeSubmission, resetSubmitting } from "../logion-chain/__mocks__/SignatureMock";
@@ -413,7 +413,7 @@ async function thenItemsPublished(expectedResource: string) {
 }
 
 function ItemDeleter() {
-    const { locItems, deleteMetadata, mutateLocState } = useLocContext();
+    const { locItems, mutateLocState } = useLocContext();
 
     const callback = useCallback(async () => {
         await mutateLocState(async current => {
@@ -426,17 +426,15 @@ function ItemDeleter() {
                     locState: current as unknown as RealEditableRequest,
                     target: locItems.find(item => item.nature === "New link")!.target!,
                 }) as unknown as RealEditableRequest;
+                next = current.deleteMetadata!({
+                    hash: "New data",
+                }) as unknown as RealEditableRequest;
                 return next;
             } else {
                 return current;
             }
         });
-        deleteMetadata!(locItems.find(item => item.name === "New data")!);
-    }, [ locItems, deleteMetadata ]);
-
-    if(!deleteMetadata) {
-        return null;
-    }
+    }, [ locItems, mutateLocState ]);
 
     return (
         <div>

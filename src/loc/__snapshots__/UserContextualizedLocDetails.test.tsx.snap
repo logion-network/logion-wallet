@@ -45,7 +45,6 @@ exports[`UserContextualizedLocDetails renders 1`] = `
         "result": "NONE",
       }
     }
-    deleteMetadata={[MockFunction]}
     legalOfficer={
       Object {
         "additionalDetails": "",

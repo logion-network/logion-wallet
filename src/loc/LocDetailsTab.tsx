@@ -35,7 +35,6 @@ export interface Props {
     legalOfficer?: LegalOfficer;
     checkResult: DocumentCheckResult;
     locItems: LocItem[];
-    deleteMetadata: ((locItem: LocItem) => void) | null;
     protectionRequest?: ProtectionRequest | null;
 }
 
@@ -111,7 +110,6 @@ export interface ContentProps {
     detailsPath: (locId: UUID, type: LocType) => string;
     legalOfficer?: LegalOfficer;
     checkResult: DocumentCheckResult;
-    deleteMetadata: ((locItem: LocItem) => void) | null;
     protectionRequest?: ProtectionRequest | null;
     locTabBorderColor: string;
 }
@@ -122,7 +120,6 @@ export function LocDetailsTabContent(props: ContentProps) {
         detailsPath,
         legalOfficer,
         checkResult,
-        deleteMetadata,
         protectionRequest,
         locTabBorderColor,
     } = props;
@@ -199,7 +196,6 @@ export function LocDetailsTabContent(props: ContentProps) {
         <LocItems
             matchedHash={ checkResult.hash }
             viewer={ props.viewer }
-            deleteMetadata={ deleteMetadata }
         />
         {
             !loc.closed && loc.voidInfo === undefined &&

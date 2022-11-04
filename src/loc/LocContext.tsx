@@ -43,7 +43,6 @@ export interface LocContext {
     supersededLoc?: PublicLoc
     locState: LocRequestState | null
     locItems: LocItem[]
-    deleteMetadata: ((locItem: LocItem) => void) | null
     backPath: string
     detailsPath: (locId: UUID, type: LocType) => string
     refresh: () => Promise<void>
@@ -74,7 +73,6 @@ function initialContextValue(locState: LocRequestState | null, backPath: string,
         backPath,
         detailsPath,
         locItems: [],
-        deleteMetadata: null,
         voidLoc: null,
         voidLocExtrinsic: null,
         refresh: () => Promise.reject(new Error("undefined")),
@@ -119,7 +117,6 @@ interface Action {
     status?: LocItemStatus,
     name?: string,
     timestamp?: string,
-    deleteMetadata?: (locItem: LocItem) => void,
     voidInfo?: FullVoidInfo,
     voidLoc?: (voidInfo: FullVoidInfo) => void,
     voidLocExtrinsic?: (voidInfo: VoidInfo) => SignAndSubmit,
@@ -167,11 +164,6 @@ const reducer: Reducer<PrivateLocContext, Action> = (state: PrivateLocContext, a
                 ...state,
                 checkResult: action.checkResult!,
                 collectionItem: action.collectionItem,
-            }
-        case 'SET_DELETE_METADATA':
-            return {
-                ...state,
-                deleteMetadata: action.deleteMetadata!,
             }
         case 'SET_VOID_LOC':
             return {
@@ -374,19 +366,6 @@ export function LocContextProvider(props: Props) {
             })()
         }
     }, [ refreshNameTimestamp, refreshCounter, setRefreshCounter, refreshing, setRefreshing ])
-
-    const deleteMetadataFunction = useCallback(async (item: LocItem) => {
-        await dispatchLocAndItems(await (contextValue.locState as OpenLoc).deleteMetadata({ name: item.name }), false)
-    }, [ contextValue.locState, dispatchLocAndItems ])
-
-    useEffect(() => {
-        if(contextValue.deleteMetadata !== deleteMetadataFunction) {
-            dispatch({
-                type: "SET_DELETE_METADATA",
-                deleteMetadata: deleteMetadataFunction,
-            })
-        }
-    }, [ contextValue.deleteMetadata, deleteMetadataFunction ]);
 
     const voidLocExtrinsicFunction = useCallback((voidInfo: VoidInfo) => {
         const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
