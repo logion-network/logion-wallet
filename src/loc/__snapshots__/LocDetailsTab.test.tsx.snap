@@ -696,9 +696,7 @@ exports[`LocDetailsTabContent renders open data LOC for LO 1`] = `
         xl={4}
         xxl={4}
       >
-        <LocLinkButton
-          excludeNewIdentity={true}
-        />
+        <LocLinkButton />
       </Col>
       <Col
         className="close-button-container"
@@ -1141,9 +1139,7 @@ exports[`LocDetailsTabContent renders open identity LOC for LO 1`] = `
         xl={4}
         xxl={4}
       >
-        <LocLinkButton
-          excludeNewIdentity={false}
-        />
+        <LocLinkButton />
       </Col>
       <Col
         className="close-button-container"
