@@ -75,7 +75,7 @@ export default function LocDetailsTab(props: Props) {
     } else if (loc.locType === 'Collection') {
         locTabTitle = `Legal Officer Case (LOC) - Collection${suffix}`;
     } else {
-        if (locState.isLogionIdentity()) {
+        if (!locState.discarded && locState.isLogionIdentity()) {
             locTabTitle = `Legal Officer Case (LOC) - Logion Identity${suffix}`;
         } else {
             locTabTitle = `Legal Officer Case (LOC) - Polkadot Identity${suffix}`;
@@ -160,7 +160,7 @@ export function LocDetailsTabContent(props: ContentProps) {
         });
     }, [ mutateLocState, navigate, backPath ]);
 
-    if(!loc || !locState) {
+    if(!loc || !locState || locState.discarded) {
         return null;
     }
 

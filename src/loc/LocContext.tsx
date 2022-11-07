@@ -5,8 +5,6 @@ import {
 } from "@logion/node-api";
 import {
     LocRequestState,
-    OpenLoc,
-    ClosedLoc,
     ClosedCollectionLoc,
     LocData,
     PublicLoc,
@@ -39,8 +37,6 @@ export interface LocContext {
     checkHash: (hash: string) => void
     checkResult: DocumentCheckResult
     collectionItem?: CollectionItem
-    requestSof: (() => Promise<void>) | null
-    requestSofOnCollection: ((collectionItemId: string) => Promise<void>) | null
     collectionItems: CollectionItem[]
     mutateLocState: (mutator: (current: LocRequestState) => Promise<LocRequestState | LocsState>) => Promise<void>
 }
@@ -62,8 +58,6 @@ function initialContextValue(locState: LocRequestState | null, backPath: string,
         refresh: () => Promise.reject(new Error("undefined")),
         checkHash: () => {},
         checkResult: { result: "NONE" },
-        requestSof: null,
-        requestSofOnCollection: null,
         collectionItems: [],
         mutateLocState: () => Promise.reject(),
         mustFetchCollectionItems: locState instanceof ClosedCollectionLoc,
@@ -81,8 +75,6 @@ type ActionType = 'SET_LOC_REQUEST'
     | 'SET_DELETE_METADATA'
     | 'SET_REFRESH'
     | 'SET_CHECK_HASH'
-    | 'SET_REQUEST_SOF'
-    | 'SET_REQUEST_SOF_ON_COLLECTION'
     | 'SET_MUTATE_LOC_STATE'
 ;
 
@@ -136,16 +128,6 @@ const reducer: Reducer<PrivateLocContext, Action> = (state: PrivateLocContext, a
             return {
                 ...state,
                 checkHash: action.checkHash!,
-            }
-        case 'SET_REQUEST_SOF':
-            return {
-                ...state,
-                requestSof: action.requestSof!,
-            }
-        case 'SET_REQUEST_SOF_ON_COLLECTION':
-            return {
-                ...state,
-                requestSofOnCollection: action.requestSofOnCollection!,
             }
         case 'SET_MUTATE_LOC_STATE':
             return {
@@ -360,44 +342,6 @@ export function LocContextProvider(props: Props) {
             })
         }
     }, [ contextValue.checkHash, checkHashFunction ]);
-
-    const requestSofFunction = useCallback(async () => {
-        const loc = contextValue.locState;
-        if (loc instanceof OpenLoc || loc instanceof ClosedLoc) {
-            const pendingSof = await loc.requestSof();
-            await props.refreshLocs(pendingSof.locsState());
-        } else {
-            throw Error("Can only request SOF on Open or Closed LOC.")
-        }
-    }, [ contextValue.locState, props ])
-
-    useEffect(() => {
-        if(contextValue.requestSof !== requestSofFunction) {
-            dispatch({
-                type: "SET_REQUEST_SOF",
-                requestSof: requestSofFunction,
-            })
-        }
-    }, [ contextValue.requestSof, requestSofFunction ]);
-
-    const requestSofOnCollectionFunction = useCallback(async (itemId: string) => {
-        const loc = contextValue.locState;
-        if (loc instanceof ClosedCollectionLoc) {
-            const pendingSof = await loc.requestSof({ itemId });
-            await props.refreshLocs(pendingSof.locsState());
-        } else {
-            throw Error("Can only request SOF on Closed Collection LOC.")
-        }
-    }, [ contextValue.locState, props ])
-
-    useEffect(() => {
-        if(contextValue.requestSofOnCollection !== requestSofOnCollectionFunction) {
-            dispatch({
-                type: "SET_REQUEST_SOF_ON_COLLECTION",
-                requestSofOnCollection: requestSofOnCollectionFunction,
-            })
-        }
-    }, [ contextValue.requestSofOnCollection, requestSofOnCollectionFunction ]);
 
     const mutateLocStateCallback = useCallback(async (mutator: (current: LocRequestState) => Promise<LocRequestState | LocsState>): Promise<void> => {
         const result = await mutator(contextValue.locState!);

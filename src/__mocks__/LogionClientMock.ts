@@ -85,7 +85,7 @@ export class LocRequestState {
 }
 
 export class ClosedCollectionLoc extends LocRequestState {
-
+    requestSof: jest.Mock<Promise<EditableRequest>> | undefined;
 }
 
 export class ClosedLoc extends LocRequestState {
