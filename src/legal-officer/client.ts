@@ -1,5 +1,24 @@
-import { EditableRequest, Signer, SignCallback, LocRequestState, OpenLoc, ClosedLoc, ClosedCollectionLoc } from "@logion/client";
-import { UUID, addLink as nodeApiAddLink, addFile as nodeApiAddFile, addMetadata as nodeApiAddMetadata, MetadataItem, closeLoc as nodeApiCloseLoc } from "@logion/node-api";
+import {
+    EditableRequest,
+    Signer,
+    SignCallback,
+    LocRequestState,
+    OpenLoc,
+    ClosedLoc,
+    ClosedCollectionLoc,
+    VoidedLoc,
+    VoidedCollectionLoc,
+} from "@logion/client";
+import {
+    UUID,
+    addLink as nodeApiAddLink,
+    addFile as nodeApiAddFile,
+    addMetadata as nodeApiAddMetadata,
+    MetadataItem,
+    closeLoc as nodeApiCloseLoc,
+    voidLoc as nodeApiVoidLoc,
+    VoidInfo,
+} from "@logion/node-api";
 
 export async function addLink(params: {
     locState: EditableRequest,
@@ -144,4 +163,40 @@ export async function closeLoc(params: {
     await axios.post(`/api/loc-request/${ locId.toString() }/close`);
 
     return await locState.refresh() as ClosedLoc | ClosedCollectionLoc;
+}
+
+export interface FullVoidInfo extends VoidInfo {
+    reason: string;
+}
+
+export async function voidLoc(params: {
+    locState: LocRequestState,
+    voidInfo: FullVoidInfo,
+    signer: Signer,
+    callback: SignCallback,
+}): Promise<VoidedLoc | VoidedCollectionLoc> {
+    const { locState, voidInfo, signer, callback } = params;
+
+    const client = locState.locsState().client;
+    const api = client.nodeApi;
+    const locData = locState.data();
+    const locId = locData.id;
+    const submittable = nodeApiVoidLoc({
+        locId,
+        api,
+        voidInfo,
+    });
+    await signer.signAndSend({
+        signerId: locState.data().ownerAddress,
+        submittable,
+        callback
+    });
+
+    const axios = buildAxios(locState);
+    const reason = voidInfo.reason;
+    await axios.post(`/api/loc-request/${ locId.toString() }/void`, {
+        reason
+    });
+
+    return await locState.refresh() as VoidedLoc | VoidedCollectionLoc;
 }

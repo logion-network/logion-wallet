@@ -8,22 +8,20 @@ import { useCommonContext } from "../common/CommonContext";
 import DangerDialog from "../common/DangerDialog";
 import FormGroup from "../common/FormGroup";
 import Icon from "../common/Icon";
-import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
-import { FullVoidInfo, useLocContext } from "./LocContext";
+import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
+import { useLocContext } from "./LocContext";
 import { useLogionChain } from "../logion-chain";
-import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
+import { FullVoidInfo, voidLoc } from "src/legal-officer/client";
 
 export default function VoidLocReplaceExistingButton() {
-    const { colorTheme, refresh } = useCommonContext();
-    const { api } = useLogionChain();
+    const { colorTheme } = useCommonContext();
+    const { api, signer } = useLogionChain();
     const [ visible, setVisible ] = useState(false);
-    const { loc: locData, voidLocExtrinsic, voidLoc } = useLocContext();
-    const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
+    const { loc: locData, mutateLocState } = useLocContext();
+    const [ call, setCall ] = useState<Call>();
     const [ reason, setReason ] = useState<string>("");
     const [ replacerLocId, setReplacerLocId ] = useState<string>("");
     const [ replacerLocIdError, setReplacerLocIdError ] = useState<string | undefined>(undefined);
-    const [ voidInfo, setVoidInfo ] = useState<FullVoidInfo | null>(null);
-    const { refreshLocs } = useLegalOfficerContext();
 
     const checkAndVoid = useCallback(async () => {
         const locId = UUID.fromDecimalString(replacerLocId);
@@ -45,13 +43,23 @@ export default function VoidLocReplaceExistingButton() {
                 const voidInfo: FullVoidInfo = {
                     reason,
                     replacer: locId
-                }
-                setVoidInfo(voidInfo);
-                setSignAndSubmit(() => voidLocExtrinsic!(voidInfo));
+                };
+                setCall(() => (callback: CallCallback) => mutateLocState(async current => {
+                    if(signer) {
+                        return voidLoc({
+                            locState: current,
+                            voidInfo,
+                            signer,
+                            callback,
+                        });
+                    } else {
+                        return current;
+                    }
+                }));
             }
         }
         }
-    }, [ replacerLocId, setReplacerLocIdError, setSignAndSubmit, voidLocExtrinsic, setVoidInfo, api, reason, locData ]);
+    }, [ replacerLocId, api, reason, locData, mutateLocState, signer ]);
 
     const clearAndClose = useCallback(() => {
         setReason("");
@@ -117,17 +125,11 @@ export default function VoidLocReplaceExistingButton() {
                     feedback={ replacerLocIdError }
                 />
                 {
-                    signAndSubmit !== null && voidInfo !== null &&
-                    <ExtrinsicSubmitter
-                        id="voidLocSubmitter"
-                        signAndSubmit={ signAndSubmit }
+                    call !== undefined &&
+                    <ClientExtrinsicSubmitter
+                        call={ call }
                         successMessage="LOC successfully voided"
-                        onSuccess={ () => {
-                            setVisible(false);
-                            voidLoc!(voidInfo)
-                            refresh!(false);
-                            refreshLocs();
-                        } }
+                        onSuccess={ () => setVisible(false) }
                         onError={ () => {} }
                     />
                 }

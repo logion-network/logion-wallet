@@ -1,8 +1,6 @@
 import React, { useContext, useReducer, Reducer, useEffect, useCallback, useState } from "react";
 import {
     UUID,
-    voidLoc,
-    VoidInfo,
     LocType,
 } from "@logion/node-api";
 import {
@@ -17,13 +15,10 @@ import {
     DraftRequest,
     LocsState,
 } from "@logion/client";
-
 import {
-    preVoid,
     isGrantedAccess,
 } from "../common/Model";
 import { useLogionChain } from "../logion-chain";
-import { SignAndSubmit } from "../ExtrinsicSubmitter";
 import { LocItemStatus, LocItem } from "./types";
 import {
     createFileItem,
@@ -31,12 +26,7 @@ import {
     createLinkItem
 } from "./LocItemFactory";
 import { fullCertificateUrl } from "../PublicPaths";
-import { signAndSend } from "src/logion-chain/Signature";
 import { DocumentCheckResult } from "src/components/checkfileframe/CheckFileFrame";
-
-export interface FullVoidInfo extends VoidInfo {
-    reason: string;
-}
 
 export interface LocContext {
     loc: LocData | null
@@ -51,8 +41,6 @@ export interface LocContext {
     collectionItem?: CollectionItem
     requestSof: (() => Promise<void>) | null
     requestSofOnCollection: ((collectionItemId: string) => Promise<void>) | null
-    voidLoc: ((voidInfo: FullVoidInfo) => void) | null
-    voidLocExtrinsic?: ((voidInfo: VoidInfo) => SignAndSubmit) | null
     collectionItems: CollectionItem[]
     cancelRequest: () => Promise<void>
     submitRequest: () => Promise<void>
@@ -73,8 +61,6 @@ function initialContextValue(locState: LocRequestState | null, backPath: string,
         backPath,
         detailsPath,
         locItems: [],
-        voidLoc: null,
-        voidLocExtrinsic: null,
         refresh: () => Promise.reject(new Error("undefined")),
         checkHash: () => {},
         checkResult: { result: "NONE" },
@@ -97,8 +83,6 @@ type ActionType = 'SET_LOC_REQUEST'
     | 'SET_CHECK_RESULT'
     | 'SET_DELETE_LINK'
     | 'SET_DELETE_METADATA'
-    | 'SET_VOID_LOC'
-    | 'SET_VOID_LOC_EXTRINSIC'
     | 'SET_REFRESH'
     | 'SET_CHECK_HASH'
     | 'SET_REQUEST_SOF'
@@ -117,9 +101,6 @@ interface Action {
     status?: LocItemStatus,
     name?: string,
     timestamp?: string,
-    voidInfo?: FullVoidInfo,
-    voidLoc?: (voidInfo: FullVoidInfo) => void,
-    voidLocExtrinsic?: (voidInfo: VoidInfo) => SignAndSubmit,
     refresh?: () => Promise<void>,
     locState?: LocRequestState,
     locData?: LocData,
@@ -148,32 +129,11 @@ const reducer: Reducer<PrivateLocContext, Action> = (state: PrivateLocContext, a
                 collectionItems: action.collectionItems!,
                 mustFetchCollectionItems: false,
             }
-        case "VOID":
-            return {
-                ...state,
-                loc: {
-                    ...state.loc!,
-                    voidInfo: {
-                        replacer: action.voidInfo!.replacer,
-                        reason: action.voidInfo!.reason,
-                    }
-                },
-            }
         case "SET_CHECK_RESULT":
             return {
                 ...state,
                 checkResult: action.checkResult!,
                 collectionItem: action.collectionItem,
-            }
-        case 'SET_VOID_LOC':
-            return {
-                ...state,
-                voidLoc: action.voidLoc!,
-            }
-        case 'SET_VOID_LOC_EXTRINSIC':
-            return {
-                ...state,
-                voidLocExtrinsic: action.voidLocExtrinsic!,
             }
         case 'SET_REFRESH':
             return {
@@ -230,7 +190,7 @@ const enum NextRefresh {
 }
 
 export function LocContextProvider(props: Props) {
-    const { axiosFactory, accounts, api, client } = useLogionChain();
+    const { accounts, client } = useLogionChain();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue(props.locState, props.backPath, props.detailsPath));
     const [ refreshing, setRefreshing ] = useState<boolean>(false);
     const [ refreshCounter, setRefreshCounter ] = useState<number>(0);
@@ -372,44 +332,6 @@ export function LocContextProvider(props: Props) {
             })()
         }
     }, [ refreshNameTimestamp, refreshCounter, setRefreshCounter, refreshing, setRefreshing, refreshLocState ])
-
-    const voidLocExtrinsicFunction = useCallback((voidInfo: VoidInfo) => {
-        const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
-            signerId: contextValue.loc!.ownerAddress,
-            callback: setResult,
-            errorCallback: setError,
-            submittable: voidLoc({
-                locId: contextValue.loc!.id,
-                api: api!,
-                voidInfo
-            })
-        });
-        return signAndSubmit;
-    }, [ api, contextValue.loc ])
-
-    useEffect(() => {
-        if(contextValue.voidLocExtrinsic !== voidLocExtrinsicFunction) {
-            dispatch({
-                type: "SET_VOID_LOC_EXTRINSIC",
-                voidLocExtrinsic: voidLocExtrinsicFunction,
-            })
-        }
-    }, [ contextValue.voidLocExtrinsic, voidLocExtrinsicFunction ]);
-
-    const voidLocFunction = useCallback(async (voidInfo: FullVoidInfo) => {
-        await preVoid(axiosFactory!(contextValue.loc!.ownerAddress)!, contextValue.loc!.id, voidInfo.reason);
-        dispatch({ type: 'VOID', voidInfo });
-        startRefresh();
-    }, [ axiosFactory, contextValue.loc, startRefresh ])
-
-    useEffect(() => {
-        if(contextValue.voidLoc !== voidLocFunction) {
-            dispatch({
-                type: "SET_VOID_LOC",
-                voidLoc: voidLocFunction,
-            })
-        }
-    }, [ contextValue.voidLoc, voidLocFunction ]);
 
     const refreshFunction = useCallback(async () => {
         await refreshLocState(true);

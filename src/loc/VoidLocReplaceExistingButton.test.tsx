@@ -1,43 +1,53 @@
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { setVoidLocMock } from "src/legal-officer/__mocks__/ClientMock";
 
-import { refreshLocs } from "src/legal-officer/__mocks__/LegalOfficerContextMock";
-import { finalizeSubmission } from "src/logion-chain/__mocks__/SignatureMock";
+import { mockSubmittableResult } from "src/logion-chain/__mocks__/SignatureMock";
 import { clickByName, typeByLabel } from "src/tests";
 import { OPEN_IDENTITY_LOC_ID } from "src/__mocks__/@logion/node-api/dist/LogionLocMock";
 import VoidLocReplaceExistingButton from "./VoidLocReplaceExistingButton";
-import { voidLoc } from "./__mocks__/LocContextMock";
 
 jest.mock("../common/CommonContext");
 jest.mock("./LocContext");
 jest.mock("../legal-officer/LegalOfficerContext");
+jest.mock("../legal-officer/client");
 jest.mock("../logion-chain");
 jest.mock("../logion-chain/Signature");
 
 describe("VoidLocReplaceExistingButton", () => {
 
     it("voids LOC and replaces by existing", async () => {
+        let called = false;
+        const voidLocMock = async (params: any) => {
+            called = true;
+            params.callback(mockSubmittableResult(true));
+            return params.locState;
+        };
+        setVoidLocMock(voidLocMock);
         const dialog = await renderAndOpenDialog();
 
         const button = screen.getAllByRole("button", { name: "Void and replace by an EXISTING LOC" })[1];
         await typeByLabel("Reason", "Because");
         await typeByLabel("Existing LOC ID", OPEN_IDENTITY_LOC_ID);
         await userEvent.click(button);
-        await waitFor(() => screen.getByText("Submitting..."));
-        await waitFor(() => finalizeSubmission());
+
         await waitFor(() => expect(dialog!).not.toBeVisible());
-        expect(voidLoc).toBeCalled();
-        expect(refreshLocs).toBeCalled();
+        expect(called).toBe(true);
     });
 
     it("does not void LOC on cancel", async () => {
+        let called = false;
+        const voidLocMock = async (params: any) => {
+            called = true;
+            return params.locState;
+        };
+        setVoidLocMock(voidLocMock);
         const dialog = await renderAndOpenDialog();
 
         await clickByName("Cancel");
 
         await waitFor(() => expect(dialog!).not.toBeVisible());
-        expect(voidLoc).not.toBeCalled();
-        expect(refreshLocs).not.toBeCalled();
+        expect(called).toBe(false);
     });
 })
 

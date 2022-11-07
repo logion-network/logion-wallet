@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { UserIdentity, LocData, LocRequest } from '@logion/client';
 import { ProtectionRequest, ProtectionRequestStatus } from '@logion/client/dist/RecoveryClient';
-import { UUID, LocType } from '@logion/node-api';
+import { LocType } from '@logion/node-api';
 
 export type ProtectionRequestKind = 'RECOVERY' | 'PROTECTION_ONLY' | 'ANY';
 
@@ -37,17 +37,6 @@ export async function createLocRequest(
 ): Promise<LocRequest> {
     const response = await axios.post(`/api/loc-request`, request);
     return response.data;
-}
-
-export async function preVoid(
-    axios: AxiosInstance,
-    locId: UUID,
-    reason: string,
-): Promise<void> {
-    const requestId = locId.toString();
-    await axios.post(`/api/loc-request/${requestId}/void`, {
-        reason
-    });
 }
 
 export function isGrantedAccess(address: string | undefined, loc: LocData): boolean {

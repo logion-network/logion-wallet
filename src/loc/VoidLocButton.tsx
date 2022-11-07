@@ -1,29 +1,47 @@
 import { useCallback, useState } from "react";
 import { Form } from "react-bootstrap";
+
 import Button from "../common/Button";
 import { useCommonContext } from "../common/CommonContext";
 import DangerDialog from "../common/DangerDialog";
 import FormGroup from "../common/FormGroup";
 import Icon from "../common/Icon";
-import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
-import { FullVoidInfo, useLocContext } from "./LocContext";
-import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
+import { useLocContext } from "./LocContext";
+import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
+import { useLogionChain } from "src/logion-chain";
+import { voidLoc } from "src/legal-officer/client";
 
 export default function VoidLocButton() {
-    const { colorTheme, refresh } = useCommonContext();
+    const { colorTheme } = useCommonContext();
     const [ visible, setVisible ] = useState(false);
-    const { voidLocExtrinsic, voidLoc, loc: locData } = useLocContext();
-    const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
+    const { mutateLocState, loc: locData } = useLocContext();
+    const [ call, setCall ] = useState<Call>();
     const [ submissionFailed, setSubmissionFailed ] = useState<boolean>(false);
-    const [ voidInfo, setVoidInfo ] = useState<FullVoidInfo>({reason: ""});
-    const { refreshLocs } = useLegalOfficerContext();
+    const { signer } = useLogionChain();
+    const [ reason, setReason ] = useState<string>("");
+
+    const voidLocCallback = useCallback((callback: CallCallback) => {
+        return mutateLocState(async current => {
+            if(signer) {
+                return voidLoc({
+                    locState: current,
+                    voidInfo: {
+                        reason,
+                    },
+                    signer,
+                    callback,
+                });
+            } else {
+                return current;
+            }
+        });
+    }, [ signer, mutateLocState, reason ]);
 
     const clearAndClose = useCallback(() => {
-        setVoidInfo({reason: ""});
-        setSignAndSubmit(null);
+        setCall(undefined);
         setSubmissionFailed(false);
         setVisible(false)
-    }, [ setVoidInfo, setSignAndSubmit, setSubmissionFailed, setVisible ]);
+    }, [  ]);
 
     return (
         <>
@@ -37,14 +55,14 @@ export default function VoidLocButton() {
                         buttonText: "Cancel",
                         buttonVariant: "danger-outline",
                         callback: clearAndClose,
-                        disabled: signAndSubmit !== null && !submissionFailed
+                        disabled: call !== undefined && !submissionFailed
                     },
                     {
                         id: "void",
                         buttonText: "Void LOC",
                         buttonVariant: "danger",
-                        callback: () => { setSubmissionFailed(false); setSignAndSubmit(() => voidLocExtrinsic!(voidInfo)) },
-                        disabled: signAndSubmit !== null
+                        callback: () => { setSubmissionFailed(false); setCall(() => voidLocCallback); },
+                        disabled: call !== undefined
                     }
                 ]}
             >
@@ -78,23 +96,17 @@ export default function VoidLocButton() {
                     label="Reason"
                     control={ <Form.Control
                         type="text"
-                        value={ voidInfo.reason }
-                        onChange={ (event) => setVoidInfo({reason: event.target.value}) }
+                        value={ reason }
+                        onChange={ (event) => setReason(event.target.value) }
                     /> }
                     colors={ colorTheme.dialog }
                 />
                 {
-                    signAndSubmit !== null &&
-                    <ExtrinsicSubmitter
-                        id="voidLocSubmitter"
-                        signAndSubmit={ signAndSubmit }
+                    call !== undefined &&
+                    <ClientExtrinsicSubmitter
+                        call={ call }
                         successMessage="LOC successfully voided"
-                        onSuccess={ () => {
-                            setVisible(false);
-                            voidLoc!(voidInfo);
-                            refresh!(false);
-                            refreshLocs();
-                        } }
+                        onSuccess={ () => setVisible(false) }
                         onError={ () => setSubmissionFailed(true) }
                     />
                 }
