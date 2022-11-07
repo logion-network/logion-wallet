@@ -3,20 +3,18 @@ import { LocData } from "@logion/client";
 
 import { clickByName } from '../tests';
 import { DEFAULT_LEGAL_OFFICER } from '../common/TestData';
-import { finalizeSubmission, failSubmission } from '../logion-chain/__mocks__/SignatureMock';
-import { closeExtrinsicSent, resetCloseExtrinsicSent, setClose, setLocItems } from './__mocks__/LocContextMock';
+import { setLocItems, setLocState } from './__mocks__/LocContextMock';
 
 import CloseLocButton from './CloseLocButton';
+import { OpenLoc } from 'src/__mocks__/LogionClientMock';
+import { setCloseLocMock } from 'src/legal-officer/__mocks__/ClientMock';
+import { mockSubmittableResult } from 'src/logion-chain/__mocks__/SignatureMock';
 
-jest.mock("../logion-chain/Signature");
+jest.mock("../logion-chain");
 jest.mock("./LocContext");
-jest.mock("../common/CommonContext");
+jest.mock("../legal-officer/client");
 
 describe("CloseLocButton", () => {
-
-    const loc = {
-        locType: "Transaction"
-    } as LocData;
 
     it("does not close with draft items", async () => {
         setLocItems([
@@ -30,11 +28,25 @@ describe("CloseLocButton", () => {
                 value: "Test"
             }
         ]);
+        const locState = new OpenLoc();
+        locState.data = () => ({
+            locType: "Transaction"
+        } as LocData);
+        setLocState(locState);
 
-        render(<CloseLocButton loc={ loc } />);
+        let called = false;
+        const closeLocMock = async (params: any) => {
+            called = true;
+            params.callback(mockSubmittableResult(true));
+            return params.locState;
+        };
+        setCloseLocMock(closeLocMock);
+
+        render(<CloseLocButton />);
         await clickByName(/Close LOC/);
 
         await expectNoDialogVisible();
+        expect(called).toBe(false);
     })
 
     it("closes with all items published", async () => {
@@ -49,18 +61,26 @@ describe("CloseLocButton", () => {
                 value: "Test"
             }
         ]);
+        const locState = new OpenLoc();
+        locState.data = () => ({
+            locType: "Transaction"
+        } as LocData);
+        setLocState(locState);
 
-        const closeMock = jest.fn();
-        setClose(closeMock);
+        let called = false;
+        const closeLocMock = async (params: any) => {
+            called = true;
+            params.callback(mockSubmittableResult(true));
+            return params.locState;
+        };
+        setCloseLocMock(closeLocMock);
 
-        render(<CloseLocButton loc={ loc } />);
+        render(<CloseLocButton />);
         await clickByName(/Close LOC/);
         await clickByName("Proceed");
-        finalizeSubmission();
 
-        await waitFor(() => expect(closeExtrinsicSent()).toBe(true));
-        await waitFor(() => expect(closeMock).toBeCalled());
         await expectNoDialogVisible();
+        expect(called).toBe(true);
     })
 
     it("does not close on cancel", async () => {
@@ -75,17 +95,26 @@ describe("CloseLocButton", () => {
                 value: "Test"
             }
         ]);
-        const closeMock = jest.fn();
-        setClose(closeMock);
-        resetCloseExtrinsicSent();
+        const locState = new OpenLoc();
+        locState.data = () => ({
+            locType: "Transaction"
+        } as LocData);
+        setLocState(locState);
 
-        render(<CloseLocButton loc={ loc } />);
+        let called = false;
+        const closeLocMock = async (params: any) => {
+            called = true;
+            params.callback(mockSubmittableResult(true));
+            return params.locState;
+        };
+        setCloseLocMock(closeLocMock);
+
+        render(<CloseLocButton />);
         await clickByName(/Close LOC/);
         await clickByName("Cancel");
 
-        await waitFor(() => expect(closeExtrinsicSent()).toBe(false));
-        await waitFor(() => expect(closeMock).not.toBeCalled());
         await expectNoDialogVisible();
+        expect(called).toBe(false);
     })
 
     it("shows message on error", async () => {
@@ -100,16 +129,21 @@ describe("CloseLocButton", () => {
                 value: "Test"
             }
         ]);
-        const closeMock = jest.fn();
-        setClose(closeMock);
+        const locState = new OpenLoc();
+        locState.data = () => ({
+            locType: "Transaction"
+        } as LocData);
+        setLocState(locState);
 
-        render(<CloseLocButton loc={ loc } />);
+        const closeLocMock = async (params: any) => {
+            params.callback(mockSubmittableResult(false, "Failed", true));
+            throw new Error();
+        };
+        setCloseLocMock(closeLocMock);
+
+        render(<CloseLocButton />);
         await clickByName(/Close LOC/);
         await clickByName("Proceed");
-        failSubmission();
-
-        await waitFor(() => expect(closeExtrinsicSent()).toBe(false));
-        await waitFor(() => expect(closeMock).not.toBeCalled());
 
         await clickByName("OK");
         await expectNoDialogVisible();
@@ -117,6 +151,5 @@ describe("CloseLocButton", () => {
 })
 
 async function expectNoDialogVisible() {
-    const dialogs = screen.queryAllByRole("dialog");
-    await waitFor(() => expect(dialogs.length).toBe(0));
+    await waitFor(() => expect(screen.queryAllByRole("dialog").length).toBe(0));
 }

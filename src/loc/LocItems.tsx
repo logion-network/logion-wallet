@@ -22,6 +22,7 @@ import LocPrivateFileDetails from "./LocPrivateFileDetails";
 import LocPublishPrivateFileButton from "./LocPublishPrivateFileButton";
 import LocPublishPublicDataButton from "./LocPublishPublicDataButton";
 import LocPublicDataDetails from "./LocPublicDataDetails";
+import { deleteLink } from "../legal-officer/client";
 
 import './LocItems.css';
 import { Viewer } from "src/common/CommonContext";
@@ -31,22 +32,44 @@ import { useCallback } from "react";
 export interface LocItemsProps {
     matchedHash?: string;
     viewer: Viewer;
-    deleteMetadata: ((locItem: LocItem) => void) | null
-    deleteLink: ((locItem: LocItem) => void) | null
 }
 
 export function LocItems(props: LocItemsProps) {
-    const { deleteMetadata, deleteLink } = props;
     const { mutateLocState, loc, locItems } = useLocContext();
     const { accounts } = useLogionChain();
 
     const { width } = useResponsiveContext();
+
+    const deleteMetadata = useCallback(async (item: LocItem) => {
+        await mutateLocState(async current => {
+            if(current instanceof EditableRequest) {
+                return current.deleteMetadata({
+                    name: item.name,
+                });
+            } else {
+                return current;
+            }
+        });
+    }, [ mutateLocState ]);
 
     const deleteFile = useCallback(async (item: LocItem) => {
         await mutateLocState(async current => {
             if(current instanceof EditableRequest) {
                 return current.deleteFile({
                     hash: item.value,
+                });
+            } else {
+                return current;
+            }
+        });
+    }, [ mutateLocState ]);
+
+    const deleteLinkCallback = useCallback(async (item: LocItem) => {
+        await mutateLocState(async current => {
+            if(current instanceof EditableRequest) {
+                return deleteLink({
+                    locState: current,
+                    target: item.target!,
                 });
             } else {
                 return current;
@@ -93,12 +116,12 @@ export function LocItems(props: LocItemsProps) {
                 { locItem.type === 'Data' && <ButtonGroup>
                     { props.viewer === 'LegalOfficer' && loc!.status === "OPEN" && <LocPublishPublicDataButton locItem={ locItem } /> }
                     { canDelete(accounts?.current?.address, locItem, props.viewer, loc!) &&
-                        <DeleteButton locItem={ locItem } action={ deleteMetadata! } /> }
+                        <DeleteButton locItem={ locItem } action={ deleteMetadata } /> }
                 </ButtonGroup> }
                 { locItem.type === 'Linked LOC' && <ButtonGroup>
                     { props.viewer === 'LegalOfficer' && <LocPublishLinkButton locItem={ locItem } /> }
                     { canDelete(accounts?.current?.address, locItem, props.viewer, loc!) &&
-                        <DeleteButton locItem={ locItem } action={ deleteLink! } /> }
+                        <DeleteButton locItem={ locItem } action={ deleteLinkCallback } /> }
                 </ButtonGroup> }
                 { locItem.type === 'Document' && <ButtonGroup>
                     { props.viewer === 'LegalOfficer' && loc!.status === "OPEN" && <LocPublishPrivateFileButton locItem={ locItem } /> }

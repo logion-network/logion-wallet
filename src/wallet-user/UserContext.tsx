@@ -124,6 +124,7 @@ interface Action {
 }
 
 const reducer: Reducer<FullUserContext, Action> = (state: FullUserContext, action: Action): FullUserContext => {
+    console.log(`action: ${action.type}`);
     switch (action.type) {
         case 'FETCH_IN_PROGRESS':
             if(action.clearBeforeRefresh!) {

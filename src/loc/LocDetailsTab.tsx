@@ -35,8 +35,6 @@ export interface Props {
     legalOfficer?: LegalOfficer;
     checkResult: DocumentCheckResult;
     locItems: LocItem[];
-    deleteMetadata: ((locItem: LocItem) => void) | null;
-    deleteLink: ((locItem: LocItem) => void) | null;
     protectionRequest?: ProtectionRequest | null;
 }
 
@@ -112,8 +110,6 @@ export interface ContentProps {
     detailsPath: (locId: UUID, type: LocType) => string;
     legalOfficer?: LegalOfficer;
     checkResult: DocumentCheckResult;
-    deleteMetadata: ((locItem: LocItem) => void) | null;
-    deleteLink: ((locItem: LocItem) => void) | null;
     protectionRequest?: ProtectionRequest | null;
     locTabBorderColor: string;
 }
@@ -124,8 +120,6 @@ export function LocDetailsTabContent(props: ContentProps) {
         detailsPath,
         legalOfficer,
         checkResult,
-        deleteMetadata,
-        deleteLink,
         protectionRequest,
         locTabBorderColor,
     } = props;
@@ -202,8 +196,6 @@ export function LocDetailsTabContent(props: ContentProps) {
         <LocItems
             matchedHash={ checkResult.hash }
             viewer={ props.viewer }
-            deleteMetadata={ deleteMetadata }
-            deleteLink={ deleteLink }
         />
         {
             !loc.closed && loc.voidInfo === undefined &&
@@ -227,7 +219,7 @@ export function LocDetailsTabContent(props: ContentProps) {
                         <LocLinkButton excludeNewIdentity={ locState.isLogionData() } />
                     </Col>
                     <Col className="close-button-container" xxl={ 3 } xl={ 4 }>
-                        <CloseLocButton protectionRequest={ protectionRequest } loc={ loc } />
+                        <CloseLocButton protectionRequest={ protectionRequest } />
                     </Col>
                     </>
                 }

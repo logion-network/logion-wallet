@@ -90,8 +90,6 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "result": "NONE",
       }
     }
-    deleteLink={[MockFunction]}
-    deleteMetadata={[MockFunction]}
     loc={
       Object {
         "closed": false,
@@ -380,8 +378,6 @@ exports[`ContextualizedLocDetails renders empty 1`] = `
         "result": "NONE",
       }
     }
-    deleteLink={[MockFunction]}
-    deleteMetadata={[MockFunction]}
     loc={
       Object {
         "id": UUID {

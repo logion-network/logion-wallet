@@ -14,10 +14,12 @@ import { DateTime } from "luxon";
 import { DEFAULT_LEGAL_OFFICER } from "src/common/TestData";
 import { setLocItems, setLocRequest, setLocState } from "./__mocks__/LocContextMock";
 import { EditableRequest } from "src/__mocks__/LogionClientMock";
+import { deleteLink } from "src/legal-officer/__mocks__/ClientMock";
 
 jest.mock("../common/CommonContext");
 jest.mock("../logion-chain");
 jest.mock("./LocContext");
+jest.mock("../legal-officer/client");
 
 describe("LOLocItems", () => {
 
@@ -26,15 +28,10 @@ describe("LOLocItems", () => {
         setCurrentAddress(DEFAULT_LEGAL_OFFICER_ACCOUNT);
     });
 
-    const deleteLink = jest.fn();
-    const deleteMetadata = jest.fn();
-
     it("renders empty list", () => {
         givenOpenLoc();
         setLocItems([]);
         testRendersEmptyList(<LocItems
-            deleteLink={ deleteLink }
-            deleteMetadata={ deleteMetadata }
             viewer="LegalOfficer"
         />);
     });
@@ -44,8 +41,6 @@ describe("LOLocItems", () => {
         const items = givenMetadataItem(loc, "DRAFT");
         setLocItems(items);
         testRendersSingleDraftItem(<LocItems
-            deleteLink={ deleteLink }
-            deleteMetadata={ deleteMetadata }
             viewer="LegalOfficer"
         />);
     });
@@ -55,10 +50,8 @@ describe("LOLocItems", () => {
         const items = givenMetadataItem(loc, "DRAFT");
         setLocItems(items);
         await testDeletesDraftMetadataItem(<LocItems
-            deleteLink={ deleteLink }
-            deleteMetadata={ deleteMetadata }
             viewer="LegalOfficer"
-        />, deleteMetadata);
+        />);
     });
 
     it("cannot delete non-draft metadata item", async () => {
@@ -66,8 +59,6 @@ describe("LOLocItems", () => {
         const items = givenMetadataItem(loc, "PUBLISHED");
         setLocItems(items);
         await testCannotDeleteNonDraftMetadataItem(<LocItems
-            deleteLink={ deleteLink }
-            deleteMetadata={ deleteMetadata }
             viewer="LegalOfficer"
         />);
     });
@@ -77,8 +68,6 @@ describe("LOLocItems", () => {
         const items = givenFileItem(loc, "DRAFT");
         setLocItems(items);
         await testDeletesDraftFileItem(<LocItems
-            deleteLink={ deleteLink }
-            deleteMetadata={ deleteMetadata }
             viewer="LegalOfficer"
         />);
     });
@@ -88,8 +77,6 @@ describe("LOLocItems", () => {
         const items = givenFileItem(loc, "PUBLISHED");
         setLocItems(items);
         await testCannotDeleteNonDraftFileItem(<LocItems
-            deleteLink={ deleteLink }
-            deleteMetadata={ deleteMetadata }
             viewer="LegalOfficer"
         />);
     });
@@ -99,10 +86,8 @@ describe("LOLocItems", () => {
         const items = givenLinkItem(loc, "DRAFT");
         setLocItems(items);
         await testDeletesDraftLinkItem(<LocItems
-            deleteLink={ deleteLink }
-            deleteMetadata={ deleteMetadata }
             viewer="LegalOfficer"
-        />, deleteLink);
+        />);
     });
 
     it("cannot delete non-draft link item", async () => {
@@ -110,8 +95,6 @@ describe("LOLocItems", () => {
         const items = givenLinkItem(loc, "PUBLISHED");
         setLocItems(items);
         await testCannotDeleteNonDraftLinkItem(<LocItems
-            deleteLink={ deleteLink }
-            deleteMetadata={ deleteMetadata }
             viewer="LegalOfficer"
         />);
     });
@@ -124,15 +107,10 @@ describe("UserLocItems", () => {
         setCurrentAddress(REQUESTER_ACCOUNT);
     });
 
-    const deleteFile = jest.fn();
-    const deleteMetadata = jest.fn();
-
     it("renders empty list", () => {
         givenOpenLoc();
         setLocItems([]);
         testRendersEmptyList(<LocItems
-            deleteLink={ null }
-            deleteMetadata={ deleteMetadata }
             viewer="User"
         />);
     });
@@ -142,8 +120,6 @@ describe("UserLocItems", () => {
         const items = givenMetadataItem(loc, "DRAFT");
         setLocItems(items);
         testRendersSingleDraftItem(<LocItems
-            deleteLink={ null }
-            deleteMetadata={ deleteMetadata }
             viewer="User"
         />);
     });
@@ -153,10 +129,8 @@ describe("UserLocItems", () => {
         const items = givenMetadataItem(loc, "DRAFT");
         setLocItems(items);
         await testDeletesDraftMetadataItem(<LocItems
-            deleteLink={ null }
-            deleteMetadata={ deleteMetadata }
             viewer="User"
-        />, deleteMetadata);
+        />);
     });
 
     it("cannot delete non-draft metadata item", async () => {
@@ -164,8 +138,6 @@ describe("UserLocItems", () => {
         const items = givenMetadataItem(loc, "PUBLISHED");
         setLocItems(items);
         await testCannotDeleteNonDraftMetadataItem(<LocItems
-            deleteLink={ null }
-            deleteMetadata={ deleteMetadata }
             viewer="User"
         />);
     });
@@ -175,8 +147,6 @@ describe("UserLocItems", () => {
         const items = givenFileItem(loc, "DRAFT");
         setLocItems(items);
         await testDeletesDraftFileItem(<LocItems
-            deleteLink={ null }
-            deleteMetadata={ deleteMetadata }
             viewer="User"
         />);
     });
@@ -186,8 +156,6 @@ describe("UserLocItems", () => {
         const items = givenFileItem(loc, "PUBLISHED");
         setLocItems(items);
         await testCannotDeleteNonDraftFileItem(<LocItems
-            deleteLink={ null }
-            deleteMetadata={ deleteMetadata }
             viewer="User"
         />);
     });
@@ -213,10 +181,10 @@ function testRendersSingleDraftItem(component: React.ReactElement) {
     expect(tree).toMatchSnapshot();
 }
 
-async function testDeletesDraftMetadataItem(component: React.ReactElement, deleteMetadata: jest.Mock) {
+async function testDeletesDraftMetadataItem(component: React.ReactElement) {
     renderTesting(component);
     await clickByName(deleteButtonName);
-    await waitFor(() => expect(deleteMetadata).toBeCalled());
+    await waitFor(() => expect(_locState.deleteMetadata).toBeCalled());
 }
 
 const deleteButtonName = (content: string) => /trash/.test(content);
@@ -232,6 +200,7 @@ function givenOpenLoc() {
     setLocRequest(request);
     _locState = new EditableRequest();
     _locState.deleteFile = jest.fn().mockResolvedValue(_locState);
+    _locState.deleteMetadata = jest.fn().mockResolvedValue(_locState);
     setLocState(_locState);
     return request;
 }
@@ -288,7 +257,7 @@ function givenFileItem(request: LocData, status: LocItemStatus): LocItem[] {
     }];
 }
 
-async function testDeletesDraftLinkItem(component: React.ReactElement, deleteLink: jest.Mock) {
+async function testDeletesDraftLinkItem(component: React.ReactElement) {
     renderTesting(component);
     await clickByName(deleteButtonName);
     await waitFor(() => expect(deleteLink).toBeCalled());
