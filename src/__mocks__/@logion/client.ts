@@ -1,9 +1,9 @@
 import { CheckResultType } from "@logion/client/dist/CollectionItem";
+import { DefaultSignAndSendStrategy } from "@logion/client/dist/Signer";
 
 import {
     LogionClient,
     AccountTokens,
-    isSuccessful,
     toIsoString,
     fromIsoString,
     ClosedCollectionLoc,
@@ -15,7 +15,6 @@ import {
 export {
     LogionClient,
     AccountTokens,
-    isSuccessful,
     toIsoString,
     fromIsoString,
     CheckResultType,
@@ -23,6 +22,7 @@ export {
     DraftRequest,
     EditableRequest,
     OpenLoc,
+    DefaultSignAndSendStrategy,
 }
 
 export { MimeType } from "@logion/client/dist/Mime";

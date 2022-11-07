@@ -2,7 +2,7 @@ import { buildApi, LogionNodeApi } from '@logion/node-api';
 import axios, { AxiosInstance } from 'axios';
 import React, { useReducer, useContext, Context, Reducer, useEffect, useCallback } from 'react';
 import { DateTime } from 'luxon';
-import { AccountTokens, LegalOfficer, LogionClient } from '@logion/client';
+import { AccountTokens, LegalOfficer, LogionClient, DefaultSignAndSendStrategy } from '@logion/client';
 import { enableExtensions, ExtensionSigner, InjectedAccount, isExtensionAvailable } from '@logion/extension';
 
 import config, { Node } from '../config';
@@ -14,6 +14,8 @@ import { AxiosFactory } from '../common/api';
 import { Token } from "@logion/client";
 
 type ConsumptionStatus = 'PENDING' | 'STARTING' | 'STARTED';
+
+export const SIGN_AND_SEND_STRATEGY = new DefaultSignAndSendStrategy();
 
 export interface LogionChainContextType {
     api: LogionNodeApi | null,
@@ -270,7 +272,7 @@ async function consumeInjectedAccounts(state: LogionChainContextType, dispatch: 
         if(isExtensionAvailable()) {
             dispatch({
                 type: 'EXTENSIONS_ENABLED',
-                signer: new ExtensionSigner()
+                signer: new ExtensionSigner(SIGN_AND_SEND_STRATEGY)
             });
             register((accounts: InjectedAccount[]) => {
                 dispatch({

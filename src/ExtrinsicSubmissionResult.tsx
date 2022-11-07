@@ -1,10 +1,15 @@
+import { ISubmittableResult } from '@logion/client';
 import Spinner from 'react-bootstrap/Spinner';
-import { isSuccessful } from '@logion/client';
 
 import { SignedTransaction } from './logion-chain/Signature';
+import { SIGN_AND_SEND_STRATEGY } from './logion-chain/LogionChainContext';
 import Alert from './common/Alert';
 
 import './ExtrinsicSubmissionResult.css';
+
+export function isSuccessful(result: ISubmittableResult): boolean {
+    return !result.dispatchError && SIGN_AND_SEND_STRATEGY.canUnsub(result);
+}
 
 export interface Props {
     result?: SignedTransaction | null,

@@ -5,5 +5,5 @@ import {
 
 export {
     useLogionChain,
-    LogionChainContextProvider
+    LogionChainContextProvider,
 };

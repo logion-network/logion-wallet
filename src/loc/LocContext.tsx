@@ -226,8 +226,7 @@ export interface Props {
 
 const enum NextRefresh {
     STOP,
-    SCHEDULE,
-    IMMEDIATE
+    SCHEDULE
 }
 
 export function LocContextProvider(props: Props) {
@@ -280,6 +279,7 @@ export function LocContextProvider(props: Props) {
     }, [ accounts, props ])
 
     const startRefresh = useCallback(() => {
+        console.log("Start refreshing LOC");
         setRefreshCounter(MAX_REFRESH);
     }, []);
 
@@ -320,10 +320,16 @@ export function LocContextProvider(props: Props) {
         }
     }, [ contextValue.locState, contextValue.locItems, contextValue.mustFetchCollectionItems, dispatchLocAndItems ]);
 
-    const refreshLocState = useCallback(async (triggerRefresh: boolean): Promise<LocRequestState> => {
-        const locState = await contextValue.locState!.refresh();
-        await dispatchLocAndItems(locState, triggerRefresh);
-        return locState;
+    const refreshLocState = useCallback(async (triggerRefresh: boolean): Promise<LocRequestState | null> => {
+        if(contextValue.locState
+                && !contextValue.locState.discarded
+                && !contextValue.locState.locsState().discarded) {
+            const locState = await contextValue.locState.refresh();
+            await dispatchLocAndItems(locState, triggerRefresh);
+            return locState;
+        } else {
+            return contextValue.locState;
+        }
     }, [ contextValue.locState, dispatchLocAndItems ]);
 
     const refreshNameTimestamp = useCallback<() => Promise<NextRefresh>>(async () => {
@@ -351,21 +357,21 @@ export function LocContextProvider(props: Props) {
                 const nextRefresh = await refreshNameTimestamp();
                 switch (nextRefresh) {
                     case NextRefresh.STOP:
+                        console.log("Stop refreshing.");
                         setRefreshCounter(0);
                         setRefreshing(false)
                         break;
                     case NextRefresh.SCHEDULE:
-                        setRefreshCounter(refreshCounter - 1)
-                        setTimeout(() => setRefreshing(false), REFRESH_INTERVAL, null)
+                        console.log("Scheduling next refresh...");
+                        setRefreshCounter(refreshCounter - 1);
+                        setTimeout(() => { setRefreshing(false); refreshLocState(false); }, REFRESH_INTERVAL, null)
                         break;
-                    case NextRefresh.IMMEDIATE:
-                        setRefreshCounter(refreshCounter - 1)
-                        setRefreshing(false)
-                        break;
+                    default:
+                        throw new Error(`Unsupported next refresh ${ nextRefresh }`);
                 }
             })()
         }
-    }, [ refreshNameTimestamp, refreshCounter, setRefreshCounter, refreshing, setRefreshing ])
+    }, [ refreshNameTimestamp, refreshCounter, setRefreshCounter, refreshing, setRefreshing, refreshLocState ])
 
     const voidLocExtrinsicFunction = useCallback((voidInfo: VoidInfo) => {
         const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
@@ -565,7 +571,7 @@ function requestOK(locRequest: LocData): boolean {
 
 function refreshNeeded(items: LocItem[]): boolean {
     for(const item of items) {
-        if(!item.timestamp) {
+        if(!item.timestamp && item.status === "PUBLISHED") {
             return true;
         }
     }

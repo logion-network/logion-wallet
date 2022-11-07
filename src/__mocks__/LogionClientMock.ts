@@ -78,20 +78,6 @@ export class AccountTokens {
     }
 }
 
-let _isSuccessful: boolean | undefined = undefined;
-
-export function isSuccessful(result: any) {
-    if(_isSuccessful === undefined) {
-        return result !== null && result.isInBlock;
-    } else {
-        return _isSuccessful;
-    }
-}
-
-export function setIsSuccessful(value: boolean) {
-    _isSuccessful = value;
-}
-
 export class LocRequestState {
     data: any;
     locsState: any;
