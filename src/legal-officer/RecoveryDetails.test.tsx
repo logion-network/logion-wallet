@@ -1,4 +1,3 @@
-jest.mock('@logion/node-api/dist/LogionLoc');
 jest.mock('../logion-chain/Signature');
 jest.mock("@logion/node-api/dist/Recovery");
 jest.mock("../common/CommonContext");
@@ -18,8 +17,7 @@ import { PROTECTION_REQUESTS_HISTORY } from './TestData';
 import { axiosMock, setAddresses, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../logion-chain/__mocks__/LogionChainMock';
 import { setParams, navigate } from '../__mocks__/ReactRouterMock';
 import { refreshRequests } from './__mocks__/LegalOfficerContextMock';
-import { CLOSED_IDENTITY_LOC_ID } from '../__mocks__/@logion/node-api/dist/LogionLocMock';
-import { setIsSuccessful } from '../__mocks__/LogionClientMock';
+import { CLOSED_IDENTITY_LOC_ID, getLegalOfficerCase } from '../__mocks__/@logion/node-api/dist/LogionLocMock';
 
 describe("RecoveryDetails", () => {
 
@@ -35,7 +33,6 @@ describe("RecoveryDetails", () => {
             recoveryAccount: protectionRequest,
         };
         setFetchRecoveryInfo(jest.fn().mockResolvedValue(recoveryConfig));
-        setIsSuccessful(false);
         setParams({ requestId: protectionRequest.id });
 
         render(<RecoveryDetails />);
@@ -50,6 +47,7 @@ describe("RecoveryDetails", () => {
 
         let closedLocInput: HTMLElement;
         await waitFor(() => closedLocInput = screen.getByRole("textbox", {name: "Closed Identity LOC ID"}));
+        console.log(getLegalOfficerCase);
         await userEvent.type(closedLocInput!, CLOSED_IDENTITY_LOC_ID);
 
         let confirmButton: HTMLElement;
@@ -78,7 +76,6 @@ describe("RecoveryDetails", () => {
             recoveryAccount: protectionRequest,
         };
         setFetchRecoveryInfo(jest.fn().mockResolvedValue(recoveryConfig));
-        setIsSuccessful(false);
         setParams({ requestId: protectionRequest.id });
 
         render(<RecoveryDetails />);

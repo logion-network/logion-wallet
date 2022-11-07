@@ -1,13 +1,8 @@
-import { ISubmittableResult, isSuccessful } from '@logion/client';
+import { ISubmittableResult } from '@logion/client';
 import { useEffect, useState } from 'react';
 import { flushSync } from 'react-dom';
 
-import ExtrinsicSubmissionResult from './ExtrinsicSubmissionResult';
-
-export interface SuccessfulTransaction {
-    readonly block: string;
-    readonly index: number;
-}
+import ExtrinsicSubmissionResult, { isSuccessful } from './ExtrinsicSubmissionResult';
 
 export type CallCallback = (result: ISubmittableResult) => void;
 
@@ -16,7 +11,7 @@ export type Call = (callback: CallCallback) => Promise<void>;
 export interface Props {
     successMessage?: string | JSX.Element,
     call?: Call,
-    onSuccess?: (result: SuccessfulTransaction) => void,
+    onSuccess?: () => void,
     onError?: () => void,
     slim?: boolean,
 }
@@ -49,10 +44,7 @@ export default function ClientExtrinsicSubmitter(props: Props) {
     useEffect(() => {
         if (result !== null && isSuccessful(result) && !notified && props.onSuccess && callEnded) {
             setNotified(true);
-            props.onSuccess!({
-                block: result!.status.asInBlock.toString(),
-                index: result!.txIndex!
-            });
+            props.onSuccess!();
         }
     }, [ result, notified, setNotified, props, callEnded ]);
 

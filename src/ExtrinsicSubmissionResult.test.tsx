@@ -14,22 +14,22 @@ test("No result, error", () => {
 });
 
 test("Non-finalized result, error", () => {
-    const tree = render(<ExtrinsicSubmissionResult result={{isInBlock: false} as SignedTransaction} error={"error"} />);
+    const tree = render(<ExtrinsicSubmissionResult result={{isFinalized: false, status: {isFinalized: false}} as SignedTransaction} error={"error"} />);
     expect(tree).toMatchSnapshot();
 });
 
 test("Non-finalized result, no error", () => {
-    const tree = render(<ExtrinsicSubmissionResult result={{isInBlock: false, status: {type: "Ready"}} as SignedTransaction} error={null} />);
+    const tree = render(<ExtrinsicSubmissionResult result={{isFinalized: false, status: {type: "Ready", isFinalized: false}} as SignedTransaction} error={null} />);
     expect(tree).toMatchSnapshot();
 });
 
 test("Finalized result, no error", () => {
-    const tree = render(<ExtrinsicSubmissionResult result={{isInBlock: true} as SignedTransaction} error={null} />);
+    const tree = render(<ExtrinsicSubmissionResult result={{isFinalized: true, status: {isFinalized: true}} as SignedTransaction} error={null} />);
     expect(tree).toMatchSnapshot();
 });
 
 test("Finalized result, no error, custom message", () => {
-    const tree = render(<ExtrinsicSubmissionResult result={{isInBlock: true} as SignedTransaction} error={null} successMessage="Success" />);
+    const tree = render(<ExtrinsicSubmissionResult result={{isFinalized: true, status: {isFinalized: true}} as SignedTransaction} error={null} successMessage="Success" />);
     expect(tree).toMatchSnapshot();
 });
 

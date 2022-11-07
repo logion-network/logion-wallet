@@ -30,12 +30,16 @@ export function setSignAndSend(fn: any) {
     signAndSend = fn;
 }
 
-export function mockSubmittableResult(isInBlock: boolean, statusType?: string, isError?: boolean): ISubmittableResult {
+export function mockSubmittableResult(isFinalized: boolean, statusType?: string, isError?: boolean): ISubmittableResult {
     const result: unknown = {
-        isInBlock,
+        isFinalized,
         status: {
+            isFinalized,
             type: statusType,
             asInBlock: {
+                toString: () => "some-hex"
+            },
+            asFinalized: {
                 toString: () => "some-hex"
             },
         },

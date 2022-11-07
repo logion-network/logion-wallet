@@ -1,25 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { isSuccessful } from '@logion/client';
 
 import {
     SignedTransaction,
 } from './logion-chain/Signature';
 
-import ExtrinsicSubmissionResult from './ExtrinsicSubmissionResult';
+import ExtrinsicSubmissionResult, { isSuccessful } from './ExtrinsicSubmissionResult';
 import { flushSync } from 'react-dom';
 
 export type SignAndSubmit = ((setResult: React.Dispatch<React.SetStateAction<SignedTransaction | null>>, setError: React.Dispatch<React.SetStateAction<any>>) => void) | null;
-
-export interface SuccessfulTransaction {
-    readonly block: string;
-    readonly index: number;
-}
 
 export interface Props {
     id: string,
     successMessage?: string | JSX.Element,
     signAndSubmit: SignAndSubmit,
-    onSuccess: (id: string, result: SuccessfulTransaction) => void,
+    onSuccess: (id: string) => void,
     onError: (id: string) => void,
     slim?: boolean,
 }
@@ -45,21 +39,14 @@ export default function ExtrinsicSubmitter(props: Props) {
     useEffect(() => {
         if (result !== null && isSuccessful(result) && !notified) {
             setNotified(true);
-            (async function() {
-                props.onSuccess(props.id, {
-                    block: result!.status.asInBlock.toString(),
-                    index: result!.txIndex!
-                });
-            })();
+            props.onSuccess(props.id);
         }
     }, [ result, notified, setNotified, props ]);
 
     useEffect(() => {
         if (error !== null && !notified) {
             setNotified(true);
-            (async function() {
-                props.onError(props.id);
-            })();
+            props.onError(props.id);
         }
     }, [ notified, setNotified, props, error ]);
 

@@ -1,4 +1,3 @@
-jest.mock('@logion/node-api/dist/LogionLoc');
 jest.mock('../logion-chain/Signature');
 jest.mock('./LegalOfficerContext');
 jest.mock('../logion-chain');
