@@ -42,9 +42,7 @@ export interface LocContext {
     requestSof: (() => Promise<void>) | null
     requestSofOnCollection: ((collectionItemId: string) => Promise<void>) | null
     collectionItems: CollectionItem[]
-    cancelRequest: () => Promise<void>
-    submitRequest: () => Promise<void>
-    mutateLocState: (mutator: (current: LocRequestState) => Promise<LocRequestState>) => Promise<void>
+    mutateLocState: (mutator: (current: LocRequestState) => Promise<LocRequestState | LocsState>) => Promise<void>
 }
 
 export interface PrivateLocContext extends LocContext {
@@ -67,8 +65,6 @@ function initialContextValue(locState: LocRequestState | null, backPath: string,
         requestSof: null,
         requestSofOnCollection: null,
         collectionItems: [],
-        cancelRequest: () => Promise.reject(new Error("undefined")),
-        submitRequest: () => Promise.reject(new Error("undefined")),
         mutateLocState: () => Promise.reject(),
         mustFetchCollectionItems: locState instanceof ClosedCollectionLoc,
     }
@@ -87,8 +83,6 @@ type ActionType = 'SET_LOC_REQUEST'
     | 'SET_CHECK_HASH'
     | 'SET_REQUEST_SOF'
     | 'SET_REQUEST_SOF_ON_COLLECTION'
-    | 'SET_CANCEL_REQUEST'
-    | 'SET_SUBMIT_REQUEST'
     | 'SET_MUTATE_LOC_STATE'
 ;
 
@@ -110,9 +104,7 @@ interface Action {
     requestSof?: () => Promise<void>,
     requestSofOnCollection?: (collectionItemId: string) => Promise<void>,
     collectionItems?: CollectionItem[],
-    cancelRequest?: () => Promise<void>,
-    submitRequest?: () => Promise<void>,
-    mutateLocState?: (mutator: (current: LocRequestState) => Promise<LocRequestState>) => Promise<void>,
+    mutateLocState?: (mutator: (current: LocRequestState) => Promise<LocRequestState | LocsState>) => Promise<void>,
 }
 
 const reducer: Reducer<PrivateLocContext, Action> = (state: PrivateLocContext, action: Action): PrivateLocContext => {
@@ -154,16 +146,6 @@ const reducer: Reducer<PrivateLocContext, Action> = (state: PrivateLocContext, a
             return {
                 ...state,
                 requestSofOnCollection: action.requestSofOnCollection!,
-            }
-        case 'SET_CANCEL_REQUEST':
-            return {
-                ...state,
-                cancelRequest: action.cancelRequest!,
-            }
-        case 'SET_SUBMIT_REQUEST':
-            return {
-                ...state,
-                submitRequest: action.submitRequest!,
             }
         case 'SET_MUTATE_LOC_STATE':
             return {
@@ -417,50 +399,14 @@ export function LocContextProvider(props: Props) {
         }
     }, [ contextValue.requestSofOnCollection, requestSofOnCollectionFunction ]);
 
-    const cancelRequestFunction = useCallback(async () => {
-        const loc = contextValue.locState;
-        if (loc instanceof DraftRequest) {
-            const newLocsState = await loc.cancel();
-            await props.refreshLocs(newLocsState);
-        } else {
-            throw Error("Can only request SOF on Closed Collection LOC.")
+    const mutateLocStateCallback = useCallback(async (mutator: (current: LocRequestState) => Promise<LocRequestState | LocsState>): Promise<void> => {
+        const result = await mutator(contextValue.locState!);
+        if((result instanceof LocRequestState) && result !== contextValue.locState) {
+            dispatchLocAndItems(result, true);
+        } else if(result instanceof LocsState) {
+            props.refreshLocs(result);
         }
-    }, [ contextValue.locState, props ])
-
-    useEffect(() => {
-        if(contextValue.cancelRequest !== cancelRequestFunction) {
-            dispatch({
-                type: "SET_CANCEL_REQUEST",
-                cancelRequest: cancelRequestFunction,
-            })
-        }
-    }, [ contextValue.cancelRequest, cancelRequestFunction ]);
-
-    const submitRequestFunction = useCallback(async () => {
-        const loc = contextValue.locState;
-        if (loc instanceof DraftRequest) {
-            const newState = await loc.submit();
-            dispatchLocAndItems(newState, false);
-        } else {
-            throw Error("Can only request SOF on Closed Collection LOC.")
-        }
-    }, [ contextValue.locState, dispatchLocAndItems ])
-
-    useEffect(() => {
-        if(contextValue.submitRequest !== submitRequestFunction) {
-            dispatch({
-                type: "SET_SUBMIT_REQUEST",
-                submitRequest: submitRequestFunction,
-            })
-        }
-    }, [ contextValue.submitRequest, submitRequestFunction ]);
-
-    const mutateLocStateCallback = useCallback(async (mutator: (current: LocRequestState) => Promise<LocRequestState>): Promise<void> => {
-        const newState = await mutator(contextValue.locState!);
-        if(newState !== contextValue.locState) {
-            dispatchLocAndItems(newState, true);
-        }
-    }, [ contextValue.locState, dispatchLocAndItems ]);
+    }, [ contextValue.locState, dispatchLocAndItems, props ]);
 
     useEffect(() => {
         if (contextValue.mutateLocState !== mutateLocStateCallback) {

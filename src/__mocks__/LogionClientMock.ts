@@ -113,3 +113,6 @@ export class OpenLoc extends EditableRequest {
     deleteFile: jest.Mock<Promise<EditableRequest>> | undefined;
     requestSof: jest.Mock<Promise<EditableRequest>> | undefined;
 }
+
+export class LocsState {
+}

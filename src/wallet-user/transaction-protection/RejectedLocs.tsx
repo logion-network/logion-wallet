@@ -16,9 +16,11 @@ export default function RejectedLocs(props: Props) {
     const { locsState } = useUserContext()
     const { locType } = props
 
-    const data = useMemo(() => locsState?.rejectedRequests ? locsState?.rejectedRequests[locType].map(locState => locState.data()) : [], [ locsState, locType ]);
+    const data = useMemo(() =>
+        (locsState && !locsState.discarded) ? locsState?.rejectedRequests[locType].map(locState => locState.data()) : []
+    , [ locsState, locType ]);
 
-    if(locsState === null || locsState?.rejectedRequests === undefined) {
+    if(!locsState || locsState.discarded) {
         return <Loader />;
     }
 

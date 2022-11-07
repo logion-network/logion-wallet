@@ -1,4 +1,4 @@
-import { LocData, LegalOfficer, LocRequestState } from "@logion/client";
+import { LocData, LegalOfficer, LocRequestState, DraftRequest } from "@logion/client";
 import { ProtectionRequest } from "@logion/client/dist/RecoveryClient";
 import { LocType, UUID } from "@logion/node-api";
 import { Col, OverlayTrigger, Tooltip } from "react-bootstrap";
@@ -125,7 +125,7 @@ export function LocDetailsTabContent(props: ContentProps) {
     } = props;
     const [ showCancelDialog, setShowCancelDialog ] = useState(false);
     const [ showSubmitDialog, setShowSubmitDialog ] = useState(false);
-    const { loc, locState, cancelRequest, backPath, submitRequest } = useLocContext();
+    const { loc, locState, backPath, mutateLocState } = useLocContext();
     const navigate = useNavigate();
 
     const confirmCancel = useCallback(() => {
@@ -133,18 +133,32 @@ export function LocDetailsTabContent(props: ContentProps) {
     }, []);
 
     const cancelRequestCallback = useCallback(async () => {
-        await cancelRequest();
-        navigate(backPath);
-    }, [ cancelRequest, navigate, backPath ]);
+        await mutateLocState(async current => {
+            if(current instanceof DraftRequest) {
+                const newLocs = await current.cancel();
+                navigate(backPath);
+                return newLocs;
+            } else {
+                return current;
+            }
+        });
+    }, [ mutateLocState, navigate, backPath ]);
 
     const confirmSubmit = useCallback(() => {
         setShowSubmitDialog(true);
     }, []);
 
     const submitRequestCallback = useCallback(async () => {
-        await submitRequest();
-        navigate(backPath);
-    }, [ submitRequest, navigate, backPath ]);
+        await mutateLocState(async current => {
+            if(current instanceof DraftRequest) {
+                const next = await current.submit();
+                navigate(backPath);
+                return next;
+            } else {
+                return current;
+            }
+        });
+    }, [ mutateLocState, navigate, backPath ]);
 
     if(!loc || !locState) {
         return null;
