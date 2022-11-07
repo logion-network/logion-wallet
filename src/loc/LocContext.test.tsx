@@ -8,16 +8,14 @@ import { LogionClient } from '@logion/client/dist/LogionClient';
 import { PublicApi, EditableRequest as RealEditableRequest, LocRequestState as RealLocRequestState } from "@logion/client";
 
 import { resetDefaultMocks } from "../common/__mocks__/ModelMock";
-import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
 import { CLOSED_IDENTITY_LOC, CLOSED_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "../__mocks__/@logion/node-api/dist/LogionLocMock";
-import { finalizeSubmission, resetSubmitting } from "../logion-chain/__mocks__/SignatureMock";
 import { clickByName } from "../tests";
 import { LocContextProvider, useLocContext } from "./LocContext"
 import { LocItemType } from "./types";
 import { buildLocRequest } from "./TestData";
 import { setClientMock } from "src/logion-chain/__mocks__/LogionChainMock";
 import { LocRequestState, EditableRequest, OpenLoc, ClosedLoc } from "src/__mocks__/LogionClientMock";
-import { addLink, closeLoc, deleteLink, publishFile, publishLink, publishMetadata } from "../legal-officer/client";
+import { addLink, closeLoc, deleteLink, publishFile, publishLink, publishMetadata, voidLoc } from "../legal-officer/client";
 import { useLogionChain } from "src/logion-chain";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
 
@@ -69,11 +67,9 @@ describe("LocContext", () => {
     it("voids", async () => {
         givenRequest(CLOSED_IDENTITY_LOC_ID, CLOSED_IDENTITY_LOC, ClosedLoc);
         resetDefaultMocks();
-        resetSubmitting();
         whenRenderingInContext(_locState, <Voider/>);
         await clickByName("Go");
         await waitFor(() => expect(screen.getByText("Submitting...")).toBeVisible());
-        finalizeSubmission();
         await thenVoided();
     })
 })
@@ -457,20 +453,28 @@ async function thenItemsDeleted() {
 }
 
 function Voider() {
-    const { loc: locData, voidLocExtrinsic, voidLoc } = useLocContext();
-
-    const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
+    const { signer } = useLogionChain();
+    const { loc: locData, mutateLocState } = useLocContext();
+    const [ call, setCall ] = useState<Call>();
 
     const callback = useCallback(() => {
-        const signAndSubmit: SignAndSubmit = voidLocExtrinsic!({});
-        setSignAndSubmit(() => signAndSubmit);
-    }, [ voidLocExtrinsic ]);
-
-    const onSuccess = useCallback(() => {
-        voidLoc!({
-            reason: "Some reason"
-        });
-    }, [ voidLoc ]);
+        const call: Call = async callback =>
+            mutateLocState(async current => {
+                if(signer) {
+                    return voidLoc({
+                        locState: current,
+                        voidInfo: {
+                            reason: "Some reason"
+                        },
+                        signer,
+                        callback,
+                    });
+                } else {
+                    return current;
+                }
+            });
+        setCall(() => call);
+    }, [ mutateLocState ]);
 
     if(!locData) {
         return null;
@@ -480,11 +484,10 @@ function Voider() {
         <div>
             <button onClick={ callback }>Go</button>
             <p>{ locData.voidInfo ? "Voided" : "-" }</p>
-            <ExtrinsicSubmitter
-                id="void"
-                signAndSubmit={ signAndSubmit }
+            <ClientExtrinsicSubmitter
+                call={ call }
                 successMessage="Successfully closed"
-                onSuccess={ onSuccess }
+                onSuccess={ () => {} }
                 onError={ () => {} }
             />
         </div>
@@ -492,5 +495,10 @@ function Voider() {
 }
 
 async function thenVoided() {
-    await waitFor(() => expect(screen.getByText("Voided")).toBeVisible());
+    await waitFor(() => expect(axiosMock.post).toBeCalledWith(
+        `/api/loc-request/4092e790-a6eb-4f10-8172-90b5dd254521/void`,
+        expect.objectContaining({
+            reason: "Some reason",
+        })
+    ));
 }

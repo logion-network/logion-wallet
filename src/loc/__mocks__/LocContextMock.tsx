@@ -1,7 +1,6 @@
 import { LocData, CollectionItem } from "@logion/client";
 import { UUID } from "@logion/node-api/dist/UUID";
 
-import { mockSignAndSubmit } from "../../ExtrinsicSubmitterTestUtil";
 import { LocItem } from "../types";
 
 let locState: any = {
@@ -53,8 +52,6 @@ export let deleteMetadata = jest.fn();
 
 export let deleteLink = jest.fn();
 
-export let voidLoc = jest.fn();
-
 let collectionItems: CollectionItem[] = [];
 
 export function setCollectionItems(items: CollectionItem[]) {
@@ -79,8 +76,6 @@ export function useLocContext() {
         deleteLink,
         checkResult: { result: "NONE" },
         locState,
-        voidLoc,
-        voidLocExtrinsic: () => mockSignAndSubmit(() => {}),
         collectionItems,
         mutateLocState,
     };

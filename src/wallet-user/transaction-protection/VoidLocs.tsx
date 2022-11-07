@@ -23,7 +23,7 @@ export default function VoidLocs(props: Props) {
     const { width } = useResponsiveContext();
     const { locType } = props
 
-    if (locsState === null || locsState?.voidedLocs === undefined) {
+    if (!locsState || locsState.discarded) {
         return <Loader />;
     }
 

@@ -35,8 +35,8 @@ export default function LocCreation(props: Props) {
     });
     const [ selectedLegalOfficer, setSelectedLegalOfficer ] = useState<LegalOfficer | undefined>();
     const legalOfficersWithValidIdentityLoc = useMemo(
-        () => locsState?.legalOfficersWithValidIdentityLoc,
-        [ locsState?.legalOfficersWithValidIdentityLoc ]
+        () => (locsState && !locsState.discarded) ? locsState.legalOfficersWithValidIdentityLoc : undefined,
+        [ locsState ]
     );
 
     const clear = useCallback(() => {

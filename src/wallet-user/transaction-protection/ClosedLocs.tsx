@@ -22,7 +22,7 @@ export default function ClosedLocs(props: Props) {
     const { width } = useResponsiveContext();
     const { locType } = props
 
-    if (locsState === null || locsState?.closedLocs === undefined) {
+    if (!locsState || locsState.discarded) {
         return <Loader />;
     }
 

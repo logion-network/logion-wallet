@@ -1,7 +1,8 @@
 import { render } from "@testing-library/react";
 import StatementOfFactsRequestButton from "./StatementOfFactsRequestButton";
 import { clickByName } from "../../tests";
-import { setRequestSof, setRequestSofOnCollection } from "../__mocks__/UserLocContextMock";
+import { ClosedCollectionLoc, OpenLoc } from "src/__mocks__/LogionClientMock";
+import { setLocState } from "../__mocks__/UserLocContextMock";
 
 jest.mock("../UserLocContext");
 jest.mock("../../common/CommonContext");
@@ -9,23 +10,27 @@ jest.mock("../../common/CommonContext");
 describe("StatementOfFactsRequestButton", () => {
 
     it("requests SOF on LOC", async () => {
-        const requestSofMock = jest.fn();
-        setRequestSof(requestSofMock);
+        const locState = new OpenLoc();
+        locState.requestSof = jest.fn().mockResolvedValue(locState);
+        locState.locsState = () => {};
+        setLocState(locState);
         render(<StatementOfFactsRequestButton />);
         await clickByName("Request a Statement of Facts");
         await clickByName("Confirm");
-        expect(requestSofMock).toBeCalled();
+        expect(locState.requestSof).toBeCalled();
         await clickByName("Close");
     })
 
     it("requests SOF on Collection LOC", async () => {
-        const requestSofOnCollectionMock = jest.fn();
-        setRequestSofOnCollection(requestSofOnCollectionMock);
+        const locState = new ClosedCollectionLoc();
+        locState.requestSof = jest.fn().mockResolvedValue(locState);
+        locState.locsState = () => {};
+        setLocState(locState);
         const itemId = "ITEM_ABC";
         render(<StatementOfFactsRequestButton itemId={ itemId } />);
         await clickByName("Request a Statement of Facts");
         await clickByName("Confirm");
-        expect(requestSofOnCollectionMock).toBeCalledWith(itemId);
+        expect(locState.requestSof).toBeCalledWith(expect.objectContaining({ itemId }));
         await clickByName("Close");
     })
 })

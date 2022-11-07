@@ -9,25 +9,39 @@ import DangerDialog from "../common/DangerDialog";
 import FormGroup from "../common/FormGroup";
 import Icon from "../common/Icon";
 import { createLocRequest, CreateLocRequest } from "../common/Model";
-import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
 import { useLegalOfficerContext } from "../legal-officer/LegalOfficerContext";
-import { FullVoidInfo, useLocContext } from "./LocContext";
+import { useLocContext } from "./LocContext";
 import LocCreationSteps from "./LocCreationSteps";
 import { useLogionChain } from "../logion-chain";
+import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
+import { voidLoc, FullVoidInfo } from "src/legal-officer/client";
 
 export default function VoidLocReplaceNewButton() {
-    const { accounts } = useLogionChain();
-    const { colorTheme, refresh } = useCommonContext();
+    const { accounts, signer } = useLogionChain();
+    const { colorTheme } = useCommonContext();
     const { axios } = useLegalOfficerContext();
     const [ visible, setVisible ] = useState(false);
-    const { loc: locData, voidLocExtrinsic, voidLoc } = useLocContext();
-    const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
+    const { loc: locData, mutateLocState } = useLocContext();
+    const [ call, setCall ] = useState<Call>();
     const [ submissionFailed, setSubmissionFailed ] = useState<boolean>(false);
     const [ reason, setReason ] = useState<string>("");
     const [ newLocDescription, setNewLocDescription ] = useState<string>("");
     const [ newLocRequest, setNewLocRequest ] = useState<LocRequest | null>(null);
-    const [ voidInfo, setVoidInfo ] = useState<FullVoidInfo | null>(null);
-    const { refreshLocs } = useLegalOfficerContext();
+
+    const voidLocCallback = useCallback((callback: CallCallback, voidInfo: FullVoidInfo) => {
+        return mutateLocState(async current => {
+            if(signer) {
+                return voidLoc({
+                    locState: current,
+                    voidInfo,
+                    signer,
+                    callback,
+                });
+            } else {
+                return current;
+            }
+        });
+    }, [ signer, mutateLocState ]);
 
     const createNewLocRequest = useCallback(() => {
         (async function () {
@@ -45,11 +59,11 @@ export default function VoidLocReplaceNewButton() {
     }, [ axios, accounts, locData, newLocDescription ]);
 
     const clearAndClose = useCallback(() => {
-        setVoidInfo({reason: ""});
-        setSignAndSubmit(null);
+        setReason("");
+        setCall(undefined);
         setSubmissionFailed(false);
         setVisible(false)
-    }, [ setVoidInfo, setSignAndSubmit, setSubmissionFailed, setVisible ]);
+    }, [  ]);
 
     if(locData === null) {
         return null;
@@ -67,14 +81,14 @@ export default function VoidLocReplaceNewButton() {
                         buttonText: "Cancel",
                         buttonVariant: "danger-outline",
                         callback: clearAndClose,
-                        disabled: signAndSubmit !== null && !submissionFailed
+                        disabled: call !== undefined && !submissionFailed
                     },
                     {
                         id: "void",
                         buttonText: "Void and replace by a NEW LOC",
                         buttonVariant: "danger",
                         callback: createNewLocRequest,
-                        disabled: newLocRequest !== null || signAndSubmit !== null
+                        disabled: newLocRequest !== null || call !== undefined
                     }
                 ]}
             >
@@ -117,24 +131,17 @@ export default function VoidLocReplaceNewButton() {
                                 reason,
                                 replacer: new UUID(newLocRequest.id)
                             };
-                            setVoidInfo(voidInfo);
                             setNewLocRequest(null);
-                            setSignAndSubmit(() => voidLocExtrinsic!(voidInfo));
+                            setCall(() => (callback: CallCallback) => voidLocCallback(callback, voidInfo));
                         } }
                     />
                 }
                 {
-                    signAndSubmit !== null && voidInfo !== null &&
-                    <ExtrinsicSubmitter
-                        id="voidLocSubmitter"
-                        signAndSubmit={ signAndSubmit }
+                    call !== undefined &&
+                    <ClientExtrinsicSubmitter
+                        call={ call }
                         successMessage="LOC successfully voided"
-                        onSuccess={ () => {
-                            setVisible(false);
-                            voidLoc!(voidInfo)
-                            refresh!(false);
-                            refreshLocs();
-                        } }
+                        onSuccess={ () => setVisible(false) }
                         onError={ () => setSubmissionFailed(true) }
                     />
                 }

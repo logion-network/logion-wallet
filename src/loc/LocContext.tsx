@@ -1,14 +1,10 @@
 import React, { useContext, useReducer, Reducer, useEffect, useCallback, useState } from "react";
 import {
     UUID,
-    voidLoc,
-    VoidInfo,
     LocType,
 } from "@logion/node-api";
 import {
     LocRequestState,
-    OpenLoc,
-    ClosedLoc,
     ClosedCollectionLoc,
     LocData,
     PublicLoc,
@@ -17,13 +13,10 @@ import {
     DraftRequest,
     LocsState,
 } from "@logion/client";
-
 import {
-    preVoid,
     isGrantedAccess,
 } from "../common/Model";
 import { useLogionChain } from "../logion-chain";
-import { SignAndSubmit } from "../ExtrinsicSubmitter";
 import { LocItemStatus, LocItem } from "./types";
 import {
     createFileItem,
@@ -31,12 +24,7 @@ import {
     createLinkItem
 } from "./LocItemFactory";
 import { fullCertificateUrl } from "../PublicPaths";
-import { signAndSend } from "src/logion-chain/Signature";
 import { DocumentCheckResult } from "src/components/checkfileframe/CheckFileFrame";
-
-export interface FullVoidInfo extends VoidInfo {
-    reason: string;
-}
 
 export interface LocContext {
     loc: LocData | null
@@ -49,14 +37,8 @@ export interface LocContext {
     checkHash: (hash: string) => void
     checkResult: DocumentCheckResult
     collectionItem?: CollectionItem
-    requestSof: (() => Promise<void>) | null
-    requestSofOnCollection: ((collectionItemId: string) => Promise<void>) | null
-    voidLoc: ((voidInfo: FullVoidInfo) => void) | null
-    voidLocExtrinsic?: ((voidInfo: VoidInfo) => SignAndSubmit) | null
     collectionItems: CollectionItem[]
-    cancelRequest: () => Promise<void>
-    submitRequest: () => Promise<void>
-    mutateLocState: (mutator: (current: LocRequestState) => Promise<LocRequestState>) => Promise<void>
+    mutateLocState: (mutator: (current: LocRequestState) => Promise<LocRequestState | LocsState>) => Promise<void>
 }
 
 export interface PrivateLocContext extends LocContext {
@@ -73,16 +55,10 @@ function initialContextValue(locState: LocRequestState | null, backPath: string,
         backPath,
         detailsPath,
         locItems: [],
-        voidLoc: null,
-        voidLocExtrinsic: null,
         refresh: () => Promise.reject(new Error("undefined")),
         checkHash: () => {},
         checkResult: { result: "NONE" },
-        requestSof: null,
-        requestSofOnCollection: null,
         collectionItems: [],
-        cancelRequest: () => Promise.reject(new Error("undefined")),
-        submitRequest: () => Promise.reject(new Error("undefined")),
         mutateLocState: () => Promise.reject(),
         mustFetchCollectionItems: locState instanceof ClosedCollectionLoc,
     }
@@ -97,14 +73,8 @@ type ActionType = 'SET_LOC_REQUEST'
     | 'SET_CHECK_RESULT'
     | 'SET_DELETE_LINK'
     | 'SET_DELETE_METADATA'
-    | 'SET_VOID_LOC'
-    | 'SET_VOID_LOC_EXTRINSIC'
     | 'SET_REFRESH'
     | 'SET_CHECK_HASH'
-    | 'SET_REQUEST_SOF'
-    | 'SET_REQUEST_SOF_ON_COLLECTION'
-    | 'SET_CANCEL_REQUEST'
-    | 'SET_SUBMIT_REQUEST'
     | 'SET_MUTATE_LOC_STATE'
 ;
 
@@ -117,9 +87,6 @@ interface Action {
     status?: LocItemStatus,
     name?: string,
     timestamp?: string,
-    voidInfo?: FullVoidInfo,
-    voidLoc?: (voidInfo: FullVoidInfo) => void,
-    voidLocExtrinsic?: (voidInfo: VoidInfo) => SignAndSubmit,
     refresh?: () => Promise<void>,
     locState?: LocRequestState,
     locData?: LocData,
@@ -129,9 +96,7 @@ interface Action {
     requestSof?: () => Promise<void>,
     requestSofOnCollection?: (collectionItemId: string) => Promise<void>,
     collectionItems?: CollectionItem[],
-    cancelRequest?: () => Promise<void>,
-    submitRequest?: () => Promise<void>,
-    mutateLocState?: (mutator: (current: LocRequestState) => Promise<LocRequestState>) => Promise<void>,
+    mutateLocState?: (mutator: (current: LocRequestState) => Promise<LocRequestState | LocsState>) => Promise<void>,
 }
 
 const reducer: Reducer<PrivateLocContext, Action> = (state: PrivateLocContext, action: Action): PrivateLocContext => {
@@ -148,32 +113,11 @@ const reducer: Reducer<PrivateLocContext, Action> = (state: PrivateLocContext, a
                 collectionItems: action.collectionItems!,
                 mustFetchCollectionItems: false,
             }
-        case "VOID":
-            return {
-                ...state,
-                loc: {
-                    ...state.loc!,
-                    voidInfo: {
-                        replacer: action.voidInfo!.replacer,
-                        reason: action.voidInfo!.reason,
-                    }
-                },
-            }
         case "SET_CHECK_RESULT":
             return {
                 ...state,
                 checkResult: action.checkResult!,
                 collectionItem: action.collectionItem,
-            }
-        case 'SET_VOID_LOC':
-            return {
-                ...state,
-                voidLoc: action.voidLoc!,
-            }
-        case 'SET_VOID_LOC_EXTRINSIC':
-            return {
-                ...state,
-                voidLocExtrinsic: action.voidLocExtrinsic!,
             }
         case 'SET_REFRESH':
             return {
@@ -184,26 +128,6 @@ const reducer: Reducer<PrivateLocContext, Action> = (state: PrivateLocContext, a
             return {
                 ...state,
                 checkHash: action.checkHash!,
-            }
-        case 'SET_REQUEST_SOF':
-            return {
-                ...state,
-                requestSof: action.requestSof!,
-            }
-        case 'SET_REQUEST_SOF_ON_COLLECTION':
-            return {
-                ...state,
-                requestSofOnCollection: action.requestSofOnCollection!,
-            }
-        case 'SET_CANCEL_REQUEST':
-            return {
-                ...state,
-                cancelRequest: action.cancelRequest!,
-            }
-        case 'SET_SUBMIT_REQUEST':
-            return {
-                ...state,
-                submitRequest: action.submitRequest!,
             }
         case 'SET_MUTATE_LOC_STATE':
             return {
@@ -230,7 +154,7 @@ const enum NextRefresh {
 }
 
 export function LocContextProvider(props: Props) {
-    const { axiosFactory, accounts, api, client } = useLogionChain();
+    const { accounts, client } = useLogionChain();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue(props.locState, props.backPath, props.detailsPath));
     const [ refreshing, setRefreshing ] = useState<boolean>(false);
     const [ refreshCounter, setRefreshCounter ] = useState<number>(0);
@@ -373,44 +297,6 @@ export function LocContextProvider(props: Props) {
         }
     }, [ refreshNameTimestamp, refreshCounter, setRefreshCounter, refreshing, setRefreshing, refreshLocState ])
 
-    const voidLocExtrinsicFunction = useCallback((voidInfo: VoidInfo) => {
-        const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
-            signerId: contextValue.loc!.ownerAddress,
-            callback: setResult,
-            errorCallback: setError,
-            submittable: voidLoc({
-                locId: contextValue.loc!.id,
-                api: api!,
-                voidInfo
-            })
-        });
-        return signAndSubmit;
-    }, [ api, contextValue.loc ])
-
-    useEffect(() => {
-        if(contextValue.voidLocExtrinsic !== voidLocExtrinsicFunction) {
-            dispatch({
-                type: "SET_VOID_LOC_EXTRINSIC",
-                voidLocExtrinsic: voidLocExtrinsicFunction,
-            })
-        }
-    }, [ contextValue.voidLocExtrinsic, voidLocExtrinsicFunction ]);
-
-    const voidLocFunction = useCallback(async (voidInfo: FullVoidInfo) => {
-        await preVoid(axiosFactory!(contextValue.loc!.ownerAddress)!, contextValue.loc!.id, voidInfo.reason);
-        dispatch({ type: 'VOID', voidInfo });
-        startRefresh();
-    }, [ axiosFactory, contextValue.loc, startRefresh ])
-
-    useEffect(() => {
-        if(contextValue.voidLoc !== voidLocFunction) {
-            dispatch({
-                type: "SET_VOID_LOC",
-                voidLoc: voidLocFunction,
-            })
-        }
-    }, [ contextValue.voidLoc, voidLocFunction ]);
-
     const refreshFunction = useCallback(async () => {
         await refreshLocState(true);
     }, [ refreshLocState ]);
@@ -457,88 +343,14 @@ export function LocContextProvider(props: Props) {
         }
     }, [ contextValue.checkHash, checkHashFunction ]);
 
-    const requestSofFunction = useCallback(async () => {
-        const loc = contextValue.locState;
-        if (loc instanceof OpenLoc || loc instanceof ClosedLoc) {
-            const pendingSof = await loc.requestSof();
-            await props.refreshLocs(pendingSof.locsState());
-        } else {
-            throw Error("Can only request SOF on Open or Closed LOC.")
+    const mutateLocStateCallback = useCallback(async (mutator: (current: LocRequestState) => Promise<LocRequestState | LocsState>): Promise<void> => {
+        const result = await mutator(contextValue.locState!);
+        if((result instanceof LocRequestState) && result !== contextValue.locState) {
+            dispatchLocAndItems(result, true);
+        } else if(result instanceof LocsState) {
+            props.refreshLocs(result);
         }
-    }, [ contextValue.locState, props ])
-
-    useEffect(() => {
-        if(contextValue.requestSof !== requestSofFunction) {
-            dispatch({
-                type: "SET_REQUEST_SOF",
-                requestSof: requestSofFunction,
-            })
-        }
-    }, [ contextValue.requestSof, requestSofFunction ]);
-
-    const requestSofOnCollectionFunction = useCallback(async (itemId: string) => {
-        const loc = contextValue.locState;
-        if (loc instanceof ClosedCollectionLoc) {
-            const pendingSof = await loc.requestSof({ itemId });
-            await props.refreshLocs(pendingSof.locsState());
-        } else {
-            throw Error("Can only request SOF on Closed Collection LOC.")
-        }
-    }, [ contextValue.locState, props ])
-
-    useEffect(() => {
-        if(contextValue.requestSofOnCollection !== requestSofOnCollectionFunction) {
-            dispatch({
-                type: "SET_REQUEST_SOF_ON_COLLECTION",
-                requestSofOnCollection: requestSofOnCollectionFunction,
-            })
-        }
-    }, [ contextValue.requestSofOnCollection, requestSofOnCollectionFunction ]);
-
-    const cancelRequestFunction = useCallback(async () => {
-        const loc = contextValue.locState;
-        if (loc instanceof DraftRequest) {
-            const newLocsState = await loc.cancel();
-            await props.refreshLocs(newLocsState);
-        } else {
-            throw Error("Can only request SOF on Closed Collection LOC.")
-        }
-    }, [ contextValue.locState, props ])
-
-    useEffect(() => {
-        if(contextValue.cancelRequest !== cancelRequestFunction) {
-            dispatch({
-                type: "SET_CANCEL_REQUEST",
-                cancelRequest: cancelRequestFunction,
-            })
-        }
-    }, [ contextValue.cancelRequest, cancelRequestFunction ]);
-
-    const submitRequestFunction = useCallback(async () => {
-        const loc = contextValue.locState;
-        if (loc instanceof DraftRequest) {
-            const newState = await loc.submit();
-            dispatchLocAndItems(newState, false);
-        } else {
-            throw Error("Can only request SOF on Closed Collection LOC.")
-        }
-    }, [ contextValue.locState, dispatchLocAndItems ])
-
-    useEffect(() => {
-        if(contextValue.submitRequest !== submitRequestFunction) {
-            dispatch({
-                type: "SET_SUBMIT_REQUEST",
-                submitRequest: submitRequestFunction,
-            })
-        }
-    }, [ contextValue.submitRequest, submitRequestFunction ]);
-
-    const mutateLocStateCallback = useCallback(async (mutator: (current: LocRequestState) => Promise<LocRequestState>): Promise<void> => {
-        const newState = await mutator(contextValue.locState!);
-        if(newState !== contextValue.locState) {
-            dispatchLocAndItems(newState, true);
-        }
-    }, [ contextValue.locState, dispatchLocAndItems ]);
+    }, [ contextValue.locState, dispatchLocAndItems, props ]);
 
     useEffect(() => {
         if (contextValue.mutateLocState !== mutateLocStateCallback) {

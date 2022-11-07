@@ -11,18 +11,6 @@ export function setLocState(value: any) {
 
 export let refresh = jest.fn();
 
-let requestSof = jest.fn();
-
-export function setRequestSof(fn: jest.Mock) {
-    requestSof = fn;
-}
-
-let requestSofOnCollection = jest.fn();
-
-export function setRequestSofOnCollection(fn: jest.Mock) {
-    requestSofOnCollection = fn;
-}
-
 let locId: UUID;
 
 export function setLocId(id: UUID) {
@@ -49,13 +37,15 @@ export let addFile = jest.fn().mockResolvedValue(undefined);
 
 export let addMetadata = jest.fn().mockResolvedValue(undefined);
 
+async function mutateLocState(mutator: (state: any) => Promise<any>): Promise<void> {
+    await mutator(locState);
+}
+
 export function useUserLocContext() {
 
     return {
         refresh,
         locState,
-        requestSof,
-        requestSofOnCollection,
         locId,
         loc,
         deleteMetadata,
@@ -65,5 +55,6 @@ export function useUserLocContext() {
         addMetadata,
         checkResult: { result: "NONE" },
         collectionItems: [],
+        mutateLocState,
     }
 }

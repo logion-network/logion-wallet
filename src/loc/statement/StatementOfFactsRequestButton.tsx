@@ -1,6 +1,8 @@
+import { ClosedLoc, OpenLoc, ClosedCollectionLoc } from "@logion/client";
+import { useState, useCallback } from "react";
+
 import Button from "../../common/Button";
 import { useUserLocContext } from "../UserLocContext";
-import { useState, useCallback } from "react";
 import Dialog from "../../common/Dialog";
 import { locRequestsPath } from "../../wallet-user/UserRouter";
 
@@ -8,18 +10,32 @@ type Status = 'Idle' | 'Confirming' | 'Requesting' | 'Requested';
 
 export default function StatementOfFactsRequestButton(props: { itemId?: string }) {
     const { itemId } = props;
-    const { requestSof, requestSofOnCollection } = useUserLocContext();
+    const { mutateLocState } = useUserLocContext();
     const [ status, setStatus ] = useState<Status>('Idle')
 
     const confirmCallback = useCallback(async () => {
         setStatus('Requesting')
         if (itemId) {
-            await requestSofOnCollection!(itemId);
+            await mutateLocState(async current => {
+                if (current instanceof ClosedCollectionLoc) {
+                    const pendingSof = await current.requestSof({ itemId });
+                    return pendingSof.locsState();
+                } else {
+                    return current;
+                }
+            });
         } else {
-            await requestSof!();
+            await mutateLocState(async current => {
+                if (current instanceof OpenLoc || current instanceof ClosedLoc) {
+                    const pendingSof = await current.requestSof();
+                    return pendingSof.locsState();
+                } else {
+                    return current;
+                }
+            });
         }
         setStatus('Requested');
-    }, [ itemId, requestSof, requestSofOnCollection ])
+    }, [ itemId, mutateLocState ])
 
     return (
         <>

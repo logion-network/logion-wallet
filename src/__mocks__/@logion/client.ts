@@ -10,6 +10,8 @@ import {
     DraftRequest,
     EditableRequest,
     OpenLoc,
+    LocRequestState,
+    LocsState,
 } from '../LogionClientMock';
 
 export {
@@ -23,6 +25,8 @@ export {
     EditableRequest,
     OpenLoc,
     DefaultSignAndSendStrategy,
+    LocRequestState,
+    LocsState,
 }
 
 export { MimeType } from "@logion/client/dist/Mime";

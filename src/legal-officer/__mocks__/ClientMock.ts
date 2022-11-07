@@ -5,3 +5,9 @@ export function setCloseLocMock(mock: any) {
 }
 
 export let deleteLink = jest.fn().mockResolvedValue(undefined);
+
+export let voidLoc = jest.fn().mockResolvedValue(undefined);
+
+export function setVoidLocMock(mock: any) {
+    voidLoc = mock;
+}
