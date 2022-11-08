@@ -24,7 +24,7 @@ describe("Legal Officer client", () => {
             locsState: () => ({
                 client,
             }),
-        } as EditableRequest;
+        } as unknown as EditableRequest;
 
         const nature = "Some link";
         const target = new UUID("8f12876b-7fde-49b0-93a4-d29ed5179151");

@@ -30,7 +30,8 @@ describe("CloseLocButton", () => {
         ]);
         const locState = new OpenLoc();
         locState.data = () => ({
-            locType: "Transaction"
+            locType: "Transaction",
+            status: "OPEN",
         } as LocData);
         setLocState(locState);
 
@@ -63,7 +64,8 @@ describe("CloseLocButton", () => {
         ]);
         const locState = new OpenLoc();
         locState.data = () => ({
-            locType: "Transaction"
+            locType: "Transaction",
+            status: "OPEN",
         } as LocData);
         setLocState(locState);
 
@@ -97,7 +99,8 @@ describe("CloseLocButton", () => {
         ]);
         const locState = new OpenLoc();
         locState.data = () => ({
-            locType: "Transaction"
+            locType: "Transaction",
+            status: "OPEN",
         } as LocData);
         setLocState(locState);
 
@@ -131,7 +134,8 @@ describe("CloseLocButton", () => {
         ]);
         const locState = new OpenLoc();
         locState.data = () => ({
-            locType: "Transaction"
+            locType: "Transaction",
+            status: "OPEN",
         } as LocData);
         setLocState(locState);
 
