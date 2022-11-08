@@ -229,13 +229,13 @@ export function LocDetailsTabContent(props: ContentProps) {
                 <>
                 <Col className="link-button-container" xxl={ 4 } xl={ 4 }>
                     {
-                        viewer === "LegalOfficer" && !loc.voidInfo && loc.status === "OPEN" &&
+                        !loc.voidInfo && loc.status === "OPEN" &&
                         <LocLinkButton />
                     }
                 </Col>
                 <Col className="close-button-container" xxl={ 3 } xl={ 4 }>
                     {
-                        viewer === "LegalOfficer" && !loc.voidInfo &&
+                        !loc.voidInfo &&
                         <CloseLocButton protectionRequest={ protectionRequest } />
                     }
                 </Col>
