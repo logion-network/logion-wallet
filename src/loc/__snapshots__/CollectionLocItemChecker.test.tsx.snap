@@ -9,14 +9,6 @@ Object {
         class="Frame PolkadotFrame CollectionLocItemChecker"
         style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); box-shadow: 0 0 25px #3b6cf41a;"
       >
-        <style>
-          
-    .Frame a,
-    .Frame .btn-link {
-        color: #3b6cf426
-    }
-    
-        </style>
         <div
           class="IconTextRow"
         >
@@ -229,14 +221,6 @@ Object {
       class="Frame PolkadotFrame CollectionLocItemChecker"
       style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); box-shadow: 0 0 25px #3b6cf41a;"
     >
-      <style>
-        
-    .Frame a,
-    .Frame .btn-link {
-        color: #3b6cf426
-    }
-    
-      </style>
       <div
         class="IconTextRow"
       >

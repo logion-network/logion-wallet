@@ -121,7 +121,7 @@ export default function CloseLocButton(props: Props) {
         } else {
             setCloseState({ status: CloseStatus.NONE });
         }
-    }, [ setCloseState, props.protectionRequest, accounts, api, alreadyVouched ]);
+    }, [ props.protectionRequest, accounts, api, alreadyVouched ]);
 
     useEffect(() => {
         if (closeState.status === CloseStatus.ACCEPTING && loc) {
@@ -169,13 +169,16 @@ export default function CloseLocButton(props: Props) {
 
     return (
         <div className="CloseLocButton">
-            <Button
-                onClick={ () => setCloseState({ status: firstStatus }) }
-                className="close"
-                disabled={ disabled }
-            >
-                <Icon icon={{ id: iconId }} height="19px" /><span className="text">{ closeButtonText }</span>
-            </Button>
+            {
+                !loc.closed &&
+                <Button
+                    onClick={ () => setCloseState({ status: firstStatus }) }
+                    className="close"
+                    disabled={ disabled }
+                >
+                    <Icon icon={{ id: iconId }} height="19px" /><span className="text">{ closeButtonText }</span>
+                </Button>
+            }
             <ProcessStep
                 active={ closeState.status === CloseStatus.ACCEPT }
                 title="Protection request approval"

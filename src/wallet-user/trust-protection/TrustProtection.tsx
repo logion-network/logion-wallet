@@ -17,7 +17,7 @@ import { FullWidthPane } from '../../common/Dashboard';
 export default function TrustProtection() {
     const { protectionState } = useUserContext();
 
-    if (!protectionState) {
+    if (!protectionState || protectionState.discarded) {
         return (
             <FullWidthPane
                 mainTitle="My Logion Protection"

@@ -44,7 +44,7 @@ export default function ClientExtrinsicSubmitter(props: Props) {
     useEffect(() => {
         if (result !== null && isSuccessful(result) && !notified && props.onSuccess && callEnded) {
             setNotified(true);
-            props.onSuccess!();
+            props.onSuccess();
         }
     }, [ result, notified, setNotified, props, callEnded ]);
 

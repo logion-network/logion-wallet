@@ -230,7 +230,7 @@ export function LocContextProvider(props: Props) {
             locData,
             collectionItems,
         });
-        if (triggerRefresh && refreshNeeded(locItems) && !(locState instanceof DraftRequest)) {
+        if (triggerRefresh && refreshNeeded(locData, locItems) && !(locState instanceof DraftRequest)) {
             startRefresh();
         }
         await props.refreshLocs(locState.locsState());
@@ -381,13 +381,13 @@ function requestOK(locRequest: LocData): boolean {
         && (locRequest.voidInfo === undefined || locRequest.voidInfo.voidedOn !== undefined);
 }
 
-function refreshNeeded(items: LocItem[]): boolean {
+function refreshNeeded(locData: LocData, items: LocItem[]): boolean {
     for(const item of items) {
         if(!item.timestamp && item.status === "PUBLISHED") {
             return true;
         }
     }
-    return false;
+    return (locData.closed && !locData.closedOn) || (locData.voidInfo !== undefined && !locData.voidInfo.voidedOn);
 }
 
 function mustDispatchNewState(locState: LocRequestState, locItems: LocItem[], mustFetchCollectionItems: boolean): boolean {

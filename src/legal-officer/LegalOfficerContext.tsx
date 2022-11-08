@@ -32,7 +32,7 @@ export const SETTINGS_DESCRIPTION: Record<SettingId, string> = {
     oath: "Statement of facts: oath text"
 };
 
-const DEFAULT_NOOP = () => {};
+const DEFAULT_NOOP = () => Promise.resolve();
 
 export interface MissingSettings {
     directory: boolean;
@@ -64,7 +64,7 @@ export interface LegalOfficerContext {
     closedIdentityLocsByType: Record<IdentityLocType, ClosedLoc[]> | null;
     voidTransactionLocs: Record<LocType, (VoidedLoc | VoidedCollectionLoc)[]> | null;
     voidIdentityLocsByType: Record<IdentityLocType, VoidedLoc[]> | null;
-    refreshLocs: (newLocsState?: LocsState) => void;
+    refreshLocs: (newLocsState?: LocsState) => Promise<void>;
     refreshOnchainSettings: () => void;
     legalOfficer?: LegalOfficer;
     refreshLegalOfficer: () => void;
@@ -162,7 +162,7 @@ interface Action {
     closedIdentityLocsByType?: Record<IdentityLocType, ClosedLoc[]> | null;
     voidTransactionLocs?: Record<LocType, (VoidedLoc | VoidedCollectionLoc)[]> | null;
     voidIdentityLocsByType?: Record<IdentityLocType, VoidedLoc[]> | null;
-    refreshLocs?: (newLocsState?: LocsState) => void;
+    refreshLocs?: (newLocsState?: LocsState) => Promise<void>;
     refreshAddress?: string;
     refreshOnchainSettings?: () => void;
     refreshLegalOfficer?: () => void;
@@ -361,7 +361,7 @@ export function LegalOfficerContextProvider(props: Props) {
 
     // ------------------ LOCs -------------------------------
 
-    const refreshLocs = useCallback((newLocsState?: LocsState) => {
+    const refreshLocs = useCallback(async (newLocsState?: LocsState) => {
         if(newLocsState) {
             dispatch({
                 type: "SET_LOCS_DATA",
@@ -380,17 +380,17 @@ export function LegalOfficerContextProvider(props: Props) {
                 dispatch({
                     type: "REFRESH_LOCS_CALLED"
                 });
+
                 const currentAccount = accounts.current;
                 const currentAddress = currentAccount.address;
                 const legalOfficer = contextValue.legalOfficer;
-                (async function () {
-                    const locsState = await client.locsState(fetchAllLocsParams(legalOfficer));
-                    dispatch({
-                        type: "SET_LOCS_DATA",
-                        dataAddress: currentAddress,
-                        ...mapLocsState(locsState),
-                    });
-                })();
+                const locsState = await client.locsState(fetchAllLocsParams(legalOfficer));
+
+                dispatch({
+                    type: "SET_LOCS_DATA",
+                    dataAddress: currentAddress,
+                    ...mapLocsState(locsState),
+                });
             }
         }
     }, [ api, dispatch, accounts, client, axiosFactory, isReadyLegalOfficer, contextValue.legalOfficer, contextValue.dataAddress ]);

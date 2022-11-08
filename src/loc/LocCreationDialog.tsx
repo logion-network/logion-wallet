@@ -30,7 +30,7 @@ export interface Props {
 
 export default function LocCreationDialog(props: Props) {
     const { accounts } = useLogionChain();
-    const { colorTheme, refresh } = useCommonContext();
+    const { colorTheme } = useCommonContext();
     const { axios, refreshLocs } = useLegalOfficerContext();
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>({
         defaultValues: {
@@ -64,16 +64,25 @@ export default function LocCreationDialog(props: Props) {
             if(props.hasLinkNature) {
                 setLinkNature(formValues.linkNature);
             }
-            refresh(false);
-            refreshLocs();
         })();
-    }, [ axios, accounts, props.locRequest, refresh, refreshLocs, props.hasLinkNature ]);
+    }, [ axios, accounts, props.locRequest, props.hasLinkNature ]);
 
     const clear = useCallback(() => {
         reset();
         setNewLocRequest(null);
         setLinkNature(undefined);
     }, [ reset, setNewLocRequest, setLinkNature ]);
+
+    const onSuccess = useCallback(async () => {
+        await refreshLocs();
+        if(newLocRequest) {
+            props.onSuccess({
+                ...newLocRequest,
+                id: new UUID(newLocRequest.id),
+            }, linkNature);
+            clear();
+        }
+    }, [ refreshLocs, clear, props, newLocRequest, linkNature ]);
 
     return (
         <>
@@ -132,7 +141,7 @@ export default function LocCreationDialog(props: Props) {
                 <LocCreationSteps
                     requestToCreate={ newLocRequest }
                     exit={ () => { clear() ; props.exit() } }
-                    onSuccess={ () => { props.onSuccess({ ...newLocRequest, id: new UUID(newLocRequest.id) }, linkNature); clear() } }
+                    onSuccess={ onSuccess }
                 />
                 }
             </Dialog>
