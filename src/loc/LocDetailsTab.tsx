@@ -125,7 +125,7 @@ export function LocDetailsTabContent(props: ContentProps) {
     } = props;
     const [ showCancelDialog, setShowCancelDialog ] = useState(false);
     const [ showSubmitDialog, setShowSubmitDialog ] = useState(false);
-    const { loc, locState, backPath, mutateLocState } = useLocContext();
+    const { loc, backPath, mutateLocState } = useLocContext();
     const navigate = useNavigate();
 
     const confirmCancel = useCallback(() => {
@@ -160,7 +160,7 @@ export function LocDetailsTabContent(props: ContentProps) {
         });
     }, [ mutateLocState, navigate, backPath ]);
 
-    if(!loc || !locState || locState.discarded) {
+    if(!loc) {
         return null;
     }
 
@@ -211,59 +211,57 @@ export function LocDetailsTabContent(props: ContentProps) {
             matchedHash={ checkResult.hash }
             viewer={ props.viewer }
         />
-        {
-            !loc.closed && loc.voidInfo === undefined &&
-            <Row>
-                <Col xxl={ 5 } xl={ 4 }>
+        <Row>
+            <Col xxl={ 5 } xl={ 4 }>
+                {
+                    (
+                        (viewer === "User" && (!loc.voidInfo && (loc.status === "DRAFT" || loc.status === "OPEN")))
+                        || (viewer === "LegalOfficer" && (!loc.voidInfo && loc.status === "OPEN"))
+                    ) &&
+                    <ButtonGroup align="left">
+                        <LocPublicDataButton />
+                        <LocPrivateFileButton />
+                    </ButtonGroup>
+                }
+            </Col>
+            <Col className="link-button-container" xxl={ 4 } xl={ 4 }>
+                {
+                    viewer === "LegalOfficer" && !loc.voidInfo && loc.status === "OPEN" &&
+                    <LocLinkButton />
+                }
+            </Col>
+            <Col className="close-button-container" xxl={ 3 } xl={ 4 }>
+                {
+                    viewer === "LegalOfficer" && !loc.voidInfo &&
+                    <CloseLocButton protectionRequest={ protectionRequest } />
+                }
+            </Col>
+            {
+                viewer === "User" &&
+                <>
+                <Col xxl={ 7 } xl={ 8 }>
                     {
-                        (
-                            (viewer === "User" && (loc.status === "DRAFT" || loc.status === "OPEN"))
-                            || (viewer === "LegalOfficer" && loc.status === "OPEN")
-                        ) &&
-                        <ButtonGroup align="left">
-                            <LocPublicDataButton />
-                            <LocPrivateFileButton />
+                        loc.status === "DRAFT" &&
+                        <ButtonGroup
+                            align="right"
+                        >
+                            <Button
+                                variant="danger"
+                                onClick={ confirmCancel }
+                            >
+                                <Icon icon={{ id: "void_inv" }}/> Cancel request
+                            </Button>
+                            <Button
+                                onClick={ confirmSubmit }
+                            >
+                                <Icon icon={{ id: "submit" }}/> Submit request
+                            </Button>
                         </ButtonGroup>
                     }
                 </Col>
-                {
-                    viewer === "LegalOfficer" && loc.status === "OPEN" &&
-                    <>
-                    <Col className="link-button-container" xxl={ 4 } xl={ 4 }>
-                        <LocLinkButton />
-                    </Col>
-                    <Col className="close-button-container" xxl={ 3 } xl={ 4 }>
-                        <CloseLocButton protectionRequest={ protectionRequest } />
-                    </Col>
-                    </>
-                }
-                {
-                    viewer === "User" &&
-                    <>
-                    <Col xxl={ 7 } xl={ 8 }>
-                        {
-                            loc.status === "DRAFT" &&
-                            <ButtonGroup
-                                align="right"
-                            >
-                                <Button
-                                    variant="danger"
-                                    onClick={ confirmCancel }
-                                >
-                                    <Icon icon={{ id: "void_inv" }}/> Cancel request
-                                </Button>
-                                <Button
-                                    onClick={ confirmSubmit }
-                                >
-                                    <Icon icon={{ id: "submit" }}/> Submit request
-                                </Button>
-                            </ButtonGroup>
-                        }
-                    </Col>
-                    </>
-                }
-            </Row>
-        }
+                </>
+            }
+        </Row>
         <WarningDialog
             show={ showCancelDialog }
             size="lg"

@@ -15,7 +15,7 @@ import {
 export default function Recovery() {
     const { protectionState } = useUserContext();
 
-    if (!protectionState) {
+    if (!protectionState || protectionState.discarded) {
         return null;
     }
 

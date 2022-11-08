@@ -1,6 +1,8 @@
 import { Dropdown } from "react-bootstrap";
 import { Children } from "./types/Helpers";
 
+import "./MultiChoiceButton.css";
+
 export interface Choice {
     text: string;
     onClick: () => void;
@@ -14,7 +16,7 @@ export interface Props {
 export default function MultiChoiceButton(props: Props) {
 
     return (
-        <Dropdown>
+        <Dropdown className="MultiChoiceButton">
             <Dropdown.Toggle className="Button">{ props.text }</Dropdown.Toggle>
             <Dropdown.Menu>
                 {

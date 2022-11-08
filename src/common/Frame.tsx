@@ -28,12 +28,6 @@ export default function Frame(props: Props) {
         (props.altColors !== undefined && props.altColors) ?
             colorTheme.frame.altBackground :
             colorTheme.frame.background;
-    const inlineCss = `
-    .Frame a,
-    .Frame .btn-link {
-        color: ${colorTheme.frame.link}
-    }
-    `;
 
     let className = "Frame";
     if(props.className !== undefined) {
@@ -58,9 +52,6 @@ export default function Frame(props: Props) {
                 boxShadow: `0 0 25px ${colorTheme.shadowColor}`,
             }}
         >
-            <style>
-            { inlineCss }
-            </style>
             {
                 props.title !== undefined &&
                 <div className="title">{ props.title }</div>
