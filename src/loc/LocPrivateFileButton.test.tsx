@@ -1,9 +1,8 @@
 import { render, waitFor, screen } from "@testing-library/react";
-import { sha256Hex } from "src/common/__mocks__/HashMock";
 import { DEFAULT_LEGAL_OFFICER_ACCOUNT, setCurrentAddress } from "src/logion-chain/__mocks__/LogionChainMock";
 import { clickByName, typeByLabel, uploadByTestId } from "src/tests";
 import { TEST_WALLET_USER } from "src/wallet-user/TestData";
-import { EditableRequest } from "src/__mocks__/LogionClientMock";
+import { EditableRequest, setExpectedFileHash } from "src/__mocks__/LogionClientMock";
 import { LocPrivateFileButton } from "./LocPrivateFileButton";
 import { LocItem } from "./types";
 import { setLocItems, setLocState } from "./__mocks__/LocContextMock";
@@ -44,6 +43,7 @@ describe("LocPrivateFileButton", () => {
     it("does not upload file if already exists", async () => {
         const { addFile } = mockEditableRequest();
         setLocItems([ existingFileItem ]);
+        setExpectedFileHash("0x" + fileHash);
         await testDoesNotNothingIfFileExists(<LocPrivateFileButton/>, addFile);
     });
 });
@@ -57,8 +57,6 @@ function mockEditableRequest(): { locState: EditableRequest, addFile: jest.Mock 
 }
 
 async function testUploadsFile(component: React.ReactElement, addFile: jest.Mock) {
-    sha256Hex.mockReturnValue(fileHash);
-
     render(component);
 
     await clickByName(content => /add a confidential document/i.test(content));
@@ -72,8 +70,6 @@ async function testUploadsFile(component: React.ReactElement, addFile: jest.Mock
 }
 
 async function testDoesNothingOnCancel(component: React.ReactElement, addFile: jest.Mock) {
-    sha256Hex.mockReturnValue(fileHash);
-
     render(component);
 
     await clickByName(content => /add a confidential document/i.test(content));
@@ -87,8 +83,6 @@ async function testDoesNothingOnCancel(component: React.ReactElement, addFile: j
 }
 
 async function testDoesNotNothingIfFileExists(component: React.ReactElement, addFile: jest.Mock) {
-    sha256Hex.mockReturnValue(fileHash);
-
     render(component);
 
     await clickByName(content => /add a confidential document/i.test(content));
