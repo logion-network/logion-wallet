@@ -321,18 +321,20 @@ exports[`LocDetailsTabContent renders closed data LOC for LO 1`] = `
       xl={4}
       xxl={5}
     />
-    <Col
-      className="link-button-container"
-      xl={4}
-      xxl={4}
-    />
-    <Col
-      className="close-button-container"
-      xl={4}
-      xxl={3}
-    >
-      <CloseLocButton />
-    </Col>
+    <React.Fragment>
+      <Col
+        className="link-button-container"
+        xl={4}
+        xxl={4}
+      />
+      <Col
+        className="close-button-container"
+        xl={4}
+        xxl={3}
+      >
+        <CloseLocButton />
+      </Col>
+    </React.Fragment>
   </Row>
   <WarningDialog
     actions={
@@ -523,16 +525,6 @@ exports[`LocDetailsTabContent renders closed data LOC for User 1`] = `
     <Col
       xl={4}
       xxl={5}
-    />
-    <Col
-      className="link-button-container"
-      xl={4}
-      xxl={4}
-    />
-    <Col
-      className="close-button-container"
-      xl={4}
-      xxl={3}
     />
     <React.Fragment>
       <Col
@@ -730,20 +722,22 @@ exports[`LocDetailsTabContent renders open data LOC for LO 1`] = `
         <LocPrivateFileButton />
       </ButtonGroup>
     </Col>
-    <Col
-      className="link-button-container"
-      xl={4}
-      xxl={4}
-    >
-      <LocLinkButton />
-    </Col>
-    <Col
-      className="close-button-container"
-      xl={4}
-      xxl={3}
-    >
-      <CloseLocButton />
-    </Col>
+    <React.Fragment>
+      <Col
+        className="link-button-container"
+        xl={4}
+        xxl={4}
+      >
+        <LocLinkButton />
+      </Col>
+      <Col
+        className="close-button-container"
+        xl={4}
+        xxl={3}
+      >
+        <CloseLocButton />
+      </Col>
+    </React.Fragment>
   </Row>
   <WarningDialog
     actions={
@@ -934,16 +928,6 @@ exports[`LocDetailsTabContent renders open data LOC for User 1`] = `
         <LocPrivateFileButton />
       </ButtonGroup>
     </Col>
-    <Col
-      className="link-button-container"
-      xl={4}
-      xxl={4}
-    />
-    <Col
-      className="close-button-container"
-      xl={4}
-      xxl={3}
-    />
     <React.Fragment>
       <Col
         xl={8}
@@ -1181,20 +1165,22 @@ exports[`LocDetailsTabContent renders open identity LOC for LO 1`] = `
         <LocPrivateFileButton />
       </ButtonGroup>
     </Col>
-    <Col
-      className="link-button-container"
-      xl={4}
-      xxl={4}
-    >
-      <LocLinkButton />
-    </Col>
-    <Col
-      className="close-button-container"
-      xl={4}
-      xxl={3}
-    >
-      <CloseLocButton />
-    </Col>
+    <React.Fragment>
+      <Col
+        className="link-button-container"
+        xl={4}
+        xxl={4}
+      >
+        <LocLinkButton />
+      </Col>
+      <Col
+        className="close-button-container"
+        xl={4}
+        xxl={3}
+      >
+        <CloseLocButton />
+      </Col>
+    </React.Fragment>
   </Row>
   <WarningDialog
     actions={
@@ -1379,16 +1365,18 @@ exports[`LocDetailsTabContent renders void data LOC for LO 1`] = `
       xl={4}
       xxl={5}
     />
-    <Col
-      className="link-button-container"
-      xl={4}
-      xxl={4}
-    />
-    <Col
-      className="close-button-container"
-      xl={4}
-      xxl={3}
-    />
+    <React.Fragment>
+      <Col
+        className="link-button-container"
+        xl={4}
+        xxl={4}
+      />
+      <Col
+        className="close-button-container"
+        xl={4}
+        xxl={3}
+      />
+    </React.Fragment>
   </Row>
   <WarningDialog
     actions={
@@ -1572,16 +1560,6 @@ exports[`LocDetailsTabContent renders void data LOC for User 1`] = `
     <Col
       xl={4}
       xxl={5}
-    />
-    <Col
-      className="link-button-container"
-      xl={4}
-      xxl={4}
-    />
-    <Col
-      className="close-button-container"
-      xl={4}
-      xxl={3}
     />
     <React.Fragment>
       <Col

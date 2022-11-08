@@ -170,7 +170,7 @@ export default function CloseLocButton(props: Props) {
     return (
         <div className="CloseLocButton">
             {
-                !loc.closed &&
+                loc.status === "OPEN" &&
                 <Button
                     onClick={ () => setCloseState({ status: firstStatus }) }
                     className="close"

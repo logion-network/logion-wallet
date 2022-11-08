@@ -10,6 +10,12 @@ let locState: any = {
 
 export function setLocState(value: any) {
     locState = value;
+    if(value.data) {
+        loc = {
+            ...loc,
+            ...locState.data(),
+        }
+    }
 }
 
 let locItems: LocItem[] = [];

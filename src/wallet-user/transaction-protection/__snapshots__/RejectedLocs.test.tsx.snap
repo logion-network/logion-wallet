@@ -28,7 +28,7 @@ exports[`RejectedLocs Renders empty list 1`] = `
         style={
           Object {
             "textAlign": "left",
-            "width": "calc(( 100% - 340px ) / 3)",
+            "width": "calc(( 100% - 470px ) / 3)",
           }
         }
       >
@@ -39,7 +39,7 @@ exports[`RejectedLocs Renders empty list 1`] = `
         style={
           Object {
             "textAlign": "left",
-            "width": "calc(( 100% - 340px ) / 3)",
+            "width": "calc(( 100% - 470px ) / 3)",
           }
         }
       >
@@ -61,7 +61,7 @@ exports[`RejectedLocs Renders empty list 1`] = `
         style={
           Object {
             "textAlign": "left",
-            "width": "calc(( 100% - 340px ) / 3)",
+            "width": "calc(( 100% - 470px ) / 3)",
           }
         }
       >
@@ -77,6 +77,17 @@ exports[`RejectedLocs Renders empty list 1`] = `
         }
       >
         Creation date
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "center",
+            "width": "130px",
+          }
+        }
+      >
+        Submit again?
       </div>
     </div>
   </div>
@@ -136,7 +147,7 @@ exports[`RejectedLocs Renders rejected requests 1`] = `
         style={
           Object {
             "textAlign": "left",
-            "width": "calc(( 100% - 340px ) / 3)",
+            "width": "calc(( 100% - 470px ) / 3)",
           }
         }
       >
@@ -147,7 +158,7 @@ exports[`RejectedLocs Renders rejected requests 1`] = `
         style={
           Object {
             "textAlign": "left",
-            "width": "calc(( 100% - 340px ) / 3)",
+            "width": "calc(( 100% - 470px ) / 3)",
           }
         }
       >
@@ -169,7 +180,7 @@ exports[`RejectedLocs Renders rejected requests 1`] = `
         style={
           Object {
             "textAlign": "left",
-            "width": "calc(( 100% - 340px ) / 3)",
+            "width": "calc(( 100% - 470px ) / 3)",
           }
         }
       >
@@ -185,6 +196,17 @@ exports[`RejectedLocs Renders rejected requests 1`] = `
         }
       >
         Creation date
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "center",
+            "width": "130px",
+          }
+        }
+      >
+        Submit again?
       </div>
     </div>
   </div>
@@ -207,7 +229,7 @@ exports[`RejectedLocs Renders rejected requests 1`] = `
               "backgroundColor": "#152665",
               "fontSize": undefined,
               "textAlign": "left",
-              "width": "calc(( 100% - 340px ) / 3)",
+              "width": "calc(( 100% - 470px ) / 3)",
             }
           }
         >
@@ -225,7 +247,7 @@ exports[`RejectedLocs Renders rejected requests 1`] = `
               "backgroundColor": "#152665",
               "fontSize": undefined,
               "textAlign": "left",
-              "width": "calc(( 100% - 340px ) / 3)",
+              "width": "calc(( 100% - 470px ) / 3)",
             }
           }
         >
@@ -282,7 +304,7 @@ exports[`RejectedLocs Renders rejected requests 1`] = `
               "backgroundColor": "#152665",
               "fontSize": undefined,
               "textAlign": "left",
-              "width": "calc(( 100% - 340px ) / 3)",
+              "width": "calc(( 100% - 470px ) / 3)",
             }
           }
         >
@@ -318,6 +340,54 @@ exports[`RejectedLocs Renders rejected requests 1`] = `
             }
           >
             -
+          </div>
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#152665",
+              "fontSize": undefined,
+              "textAlign": "center",
+              "width": "130px",
+            }
+          }
+        >
+          <div
+            className="ButtonGroup"
+          >
+            <div
+              aria-label="actions"
+              className="btn-group"
+              role="group"
+            >
+              <button
+                className="Button btn btn-none"
+                disabled={false}
+                onClick={[Function]}
+                style={Object {}}
+                type="button"
+              >
+                <img
+                  alt="ko"
+                  height="40px"
+                  src="/assets/ko.svg"
+                />
+              </button>
+              <button
+                className="Button btn btn-none"
+                disabled={false}
+                onClick={[Function]}
+                style={Object {}}
+                type="button"
+              >
+                <img
+                  alt="ok"
+                  height="40px"
+                  src="/assets/ok.svg"
+                />
+              </button>
+            </div>
           </div>
         </div>
       </div>
