@@ -12,6 +12,7 @@ import {
     OpenLoc,
     LocRequestState,
     LocsState,
+    HashOrContent,
 } from '../LogionClientMock';
 
 export {
@@ -27,6 +28,7 @@ export {
     DefaultSignAndSendStrategy,
     LocRequestState,
     LocsState,
+    HashOrContent,
 }
 
 export { MimeType } from "@logion/client/dist/Mime";

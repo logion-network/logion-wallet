@@ -134,6 +134,7 @@ exports[`IdentityLocRequest renders 1`] = `
                 "_defaultValues": Object {},
                 "_executeSchema": [Function],
                 "_fields": Object {},
+                "_focusError": [Function],
                 "_formState": Object {
                   "dirtyFields": Object {},
                   "errors": Object {},

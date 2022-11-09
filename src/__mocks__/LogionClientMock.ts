@@ -116,3 +116,38 @@ export class OpenLoc extends EditableRequest {
 
 export class LocsState {
 }
+
+let expectedFileHash = "";
+
+export function setExpectedFileHash(hash: string) {
+    expectedFileHash = hash;
+}
+
+export class HashOrContent {
+
+    static async fromContentFinalized(file: File) {
+        return new HashOrContent(file);
+    }
+
+    static fromContent(file: File) {
+        return new HashOrContent(file);
+    }
+
+    constructor(file: File) {
+        this.file = file;
+    }
+
+    private file: File;
+
+    get contentHash(): string {
+        return expectedFileHash;
+    }
+
+    get content(): File {
+        return this.file;
+    }
+
+    finalize() {
+
+    }
+}

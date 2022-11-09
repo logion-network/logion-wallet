@@ -87,7 +87,7 @@ exports[`RejectedLocs Renders empty list 1`] = `
           }
         }
       >
-        Submit again?
+        Re-open as draft?
       </div>
     </div>
   </div>
@@ -206,7 +206,7 @@ exports[`RejectedLocs Renders rejected requests 1`] = `
           }
         }
       >
-        Submit again?
+        Re-open as draft?
       </div>
     </div>
   </div>

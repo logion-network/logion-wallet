@@ -6,12 +6,11 @@ import Button from "../common/Button";
 import Dialog from "../common/Dialog";
 import LocPrivateFileForm, { FormValues } from "./LocPrivateFileForm";
 import { useCommonContext } from "../common/CommonContext";
-import { sha256Hex } from "../common/hash";
 import { LocItem } from "./types";
 import Icon from "../common/Icon";
 import { Row } from "../common/Grid";
 import { useLocContext } from "./LocContext";
-import { EditableRequest } from "@logion/client";
+import { EditableRequest, HashOrContent } from "@logion/client";
 
 type Status = 'Idle' | 'UploadDialog' | 'Hashing' | 'Uploading';
 
@@ -29,7 +28,8 @@ export function LocPrivateFileButton() {
         setUploadError("")
         if (file) {
             setStatus('Hashing')
-            const hash = "0x" + await sha256Hex(file);
+            const content = await HashOrContent.fromContentFinalized(file);
+            const hash = content.contentHash;
             const existingItem = locItems.find(item => item.type === "Document" && item.value === hash);
             if (existingItem !== undefined) {
                 setStatus('Idle');
@@ -41,7 +41,7 @@ export function LocPrivateFileButton() {
                     await mutateLocState(async current => {
                         if(current instanceof EditableRequest) {
                             return current.addFile({
-                                file,
+                                file: content,
                                 fileName: formValues.fileName,
                                 nature: formValues.nature,
                             });
@@ -109,7 +109,7 @@ export function LocPrivateFileButton() {
                 { status === 'Uploading' &&
                     <Row>
                         <Spinner animation="border" size="sm" />
-                        &nbsp;Uploading and encrypting
+                        &nbsp;Uploading, checking hash and encrypting
                     </Row>
                 }
                 { status !== 'Hashing' && status !== 'Uploading' &&

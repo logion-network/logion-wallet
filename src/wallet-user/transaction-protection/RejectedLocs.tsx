@@ -12,6 +12,8 @@ import ButtonGroup from "src/common/ButtonGroup";
 import Button from "src/common/Button";
 import Icon from "src/common/Icon";
 import Dialog from "src/common/Dialog";
+import { useNavigate } from "react-router-dom";
+import { locDetailsPath } from "../UserRouter";
 
 export interface Props {
     locType: LocType
@@ -21,6 +23,7 @@ export default function RejectedLocs(props: Props) {
     const { locsState, mutateLocsState } = useUserContext();
     const { locType } = props;
     const [ requestToCancel, setRequestToCancel ] = useState<LocData>();
+    const navigate = useNavigate();
 
     const data = useMemo(() =>
         (locsState && !locsState.discarded) ? locsState?.rejectedRequests[locType].map(locState => locState.data()) : []
@@ -48,7 +51,8 @@ export default function RejectedLocs(props: Props) {
                 return current;
             }
         });
-    }, [ mutateLocsState ]);
+        navigate(locDetailsPath(request.id, request.locType));
+    }, [ mutateLocsState, navigate ]);
 
     if(!locsState || locsState.discarded) {
         return <Loader />;
@@ -86,7 +90,7 @@ export default function RejectedLocs(props: Props) {
                     align: 'center',
                 },
                 {
-                    header: "Submit again?",
+                    header: "Re-open as draft?",
                     render: request => (
                         <ButtonGroup aria-label="actions">
                             <Button

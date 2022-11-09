@@ -1,3 +1,4 @@
+import { HashOrContent } from "@logion/client";
 import Table, { ActionCell } from "../common/Table";
 import FileSelectorButton from "../common/FileSelectorButton";
 import { useCallback } from "react";
@@ -27,7 +28,7 @@ export function ValuesFiles() {
         });
         try {
             await addLoFile(axiosFactory!(nodeOwner), {
-                file,
+                file: HashOrContent.fromContent(file),
                 fileId
             });
         } finally {
