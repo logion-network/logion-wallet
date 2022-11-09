@@ -1,5 +1,5 @@
 import { AxiosInstance, AxiosResponse } from "axios";
-import { LegalOfficer, Token, MimeType } from "@logion/client";
+import { LegalOfficer, Token, MimeType, HashOrContent } from "@logion/client";
 
 export const LO_FILE_IDS = [ 'oath-logo', 'header-logo', 'seal' ];
 
@@ -83,7 +83,7 @@ function typedFile(response: AxiosResponse): TypedFile {
 }
 
 export interface AddLoFileParameters {
-    file: File,
+    file: HashOrContent,
     fileId: LoFileId,
 }
 
@@ -91,8 +91,10 @@ export async function addLoFile(
     axios: AxiosInstance,
     parameters: AddLoFileParameters
 ): Promise<void> {
+    await parameters.file.finalize();
     const formData = new FormData();
-    formData.append('file', parameters.file, parameters.fileId);
+    formData.append('file', parameters.file.content as File, parameters.fileId);
+    formData.append('hash', parameters.file.contentHash);
     await axios.put(
         `/api/lo-file/${ parameters.fileId }`,
         formData,

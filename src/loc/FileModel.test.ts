@@ -1,4 +1,4 @@
-import { Token } from "@logion/client";
+import { Token, HashOrContent } from "@logion/client";
 import { AxiosInstance } from "axios";
 import { PATRICK } from "src/common/TestData";
 import { addLoFile, checkCanGetCollectionItemFile, getAllDeliveries, getCollectionItemFile, getFile, getJsonLoc, getLatestDeliveries, getLoFile, loFileUrl } from "./FileModel";
@@ -121,7 +121,7 @@ describe("FileModel", () => {
         const file = new File(["test"], "some-logo.jpeg");
         await addLoFile(axios, {
             fileId,
-            file,
+            file: HashOrContent.fromContent(file),
         });
 
         expect(axios.put).toBeCalledWith(
