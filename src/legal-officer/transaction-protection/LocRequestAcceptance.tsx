@@ -2,7 +2,9 @@ import { useState, useEffect, useCallback } from 'react';
 import {
     createCollectionLoc,
     createPolkadotTransactionLoc,
-    createPolkadotIdentityLoc
+    createPolkadotIdentityLoc,
+    createLogionTransactionLoc,
+    createLogionIdentityLoc
 } from '@logion/node-api/dist/LogionLoc';
 import { ChainTime } from '@logion/node-api/dist/ChainTime';
 import { LocData } from '@logion/client';
@@ -60,7 +62,7 @@ export default function LocRequestAcceptance(props: Props) {
             setStatus(AcceptStatus.CREATING_LOC);
             (async function() {
                 let signAndSubmit: SignAndSubmit;
-                if(props.requestToAccept?.locType === 'Transaction') {
+                if(props.requestToAccept!.requesterAddress && props.requestToAccept!.locType === 'Transaction') {
                     signAndSubmit = (setResult, setError) => signAndSend({
                         signerId: accounts!.current!.address,
                         callback: setResult,
@@ -69,6 +71,17 @@ export default function LocRequestAcceptance(props: Props) {
                             api: api!,
                             locId: props.requestToAccept!.id,
                             requester: props.requestToAccept!.requesterAddress!,
+                        })
+                    });
+                } else if(props.requestToAccept!.requesterLocId && props.requestToAccept!.locType === 'Transaction') {
+                    signAndSubmit = (setResult, setError) => signAndSend({
+                        signerId: accounts!.current!.address,
+                        callback: setResult,
+                        errorCallback: setError,
+                        submittable: createLogionTransactionLoc({
+                            api: api!,
+                            locId: props.requestToAccept!.id,
+                            requesterLocId: props.requestToAccept!.requesterLocId!,
                         })
                     });
                 } else if(props.requestToAccept?.locType === 'Collection') {
@@ -97,7 +110,7 @@ export default function LocRequestAcceptance(props: Props) {
                             canUpload,
                         })
                     });
-                } else if(props.requestToAccept?.locType === 'Identity') {
+                } else if(props.requestToAccept!.requesterAddress && props.requestToAccept?.locType === 'Identity') {
                     signAndSubmit = (setResult, setError) => signAndSend({
                         signerId: accounts!.current!.address,
                         callback: setResult,
@@ -108,8 +121,19 @@ export default function LocRequestAcceptance(props: Props) {
                             requester: props.requestToAccept!.requesterAddress!,
                         })
                     });
+                } else if(!props.requestToAccept!.requesterAddress && props.requestToAccept?.locType === 'Identity') {
+                    signAndSubmit = (setResult, setError) => signAndSend({
+                        signerId: accounts!.current!.address,
+                        callback: setResult,
+                        errorCallback: setError,
+                        submittable: createLogionIdentityLoc({
+                            api: api!,
+                            locId: props.requestToAccept!.id,
+                        })
+                    });
                 } else {
-                    throw new Error(`Unsupported LOC type ${props.requestToAccept?.locType}`);
+                    setError(true);
+                    throw new Error(`Unsupported LOC type ${props.requestToAccept?.locType} / ${props.requestToAccept?.requesterAddress} / ${props.requestToAccept?.requesterLocId}`);
                 }
 
                 setSignAndSubmit(() => signAndSubmit);

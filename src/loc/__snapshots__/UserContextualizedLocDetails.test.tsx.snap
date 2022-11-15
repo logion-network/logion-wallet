@@ -36,6 +36,7 @@ exports[`UserContextualizedLocDetails renders 1`] = `
       "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
       "requesterLocId": undefined,
       "status": "OPEN",
+      "verifiedThirdParty": false,
     }
   }
 >
@@ -102,6 +103,7 @@ exports[`UserContextualizedLocDetails renders 1`] = `
         "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
         "requesterLocId": undefined,
         "status": "OPEN",
+        "verifiedThirdParty": false,
       }
     }
     locItems={Array []}
@@ -143,6 +145,7 @@ exports[`UserContextualizedLocDetails renders 1`] = `
           "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
           "requesterLocId": undefined,
           "status": "OPEN",
+          "verifiedThirdParty": false,
         }
       }
     />
@@ -181,6 +184,7 @@ exports[`UserContextualizedLocDetails renders 1`] = `
           "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
           "requesterLocId": undefined,
           "status": "OPEN",
+          "verifiedThirdParty": false,
         }
       }
       viewer="User"
@@ -220,6 +224,7 @@ exports[`UserContextualizedLocDetails renders 1`] = `
           "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
           "requesterLocId": undefined,
           "status": "OPEN",
+          "verifiedThirdParty": false,
         }
       }
     />

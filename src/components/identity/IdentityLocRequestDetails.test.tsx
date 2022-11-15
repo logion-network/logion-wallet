@@ -15,6 +15,7 @@ test("renders", () => {
         userIdentity: DEFAULT_IDENTITY,
         userPostalAddress: DEFAULT_ADDRESS,
         locType: "Identity",
+        verifiedThirdParty: false,
         files: [],
         metadata: [],
         links: [],
