@@ -1,0 +1,41 @@
+import { render } from "@testing-library/react";
+import Nominate from "./Nominate";
+import { expectNoDialogVisible, shallowRender } from "../../tests";
+import { ClosedLoc } from "../../__mocks__/LogionClientMock";
+import { LocData } from "@logion/client";
+import { setLocState } from "../__mocks__/LocContextMock";
+
+jest.mock("../../logion-chain");
+jest.mock("../LocContext");
+jest.mock("../../legal-officer/client");
+
+describe("Nominate", () => {
+
+    it("shows no dialog at startup", () => {
+        render(<Nominate />);
+        expectNoDialogVisible();
+    })
+
+    it("renders unchecked with nomination info when not verified third party", () => {
+        const locState = new ClosedLoc();
+        locState.data = () => ({
+            locType: "Identity",
+            status: "CLOSED",
+            verifiedThirdParty: false
+        } as LocData);
+        setLocState(locState);
+        expect(shallowRender(<Nominate />)).toMatchSnapshot();
+    })
+
+    it("renders checked with dismissal info when verified third party", () => {
+        const locState = new ClosedLoc();
+        locState.data = () => ({
+            locType: "Identity",
+            status: "CLOSED",
+            verifiedThirdParty: true
+        } as LocData);
+        setLocState(locState);
+        expect(shallowRender(<Nominate />)).toMatchSnapshot();
+    })
+})
+

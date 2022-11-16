@@ -19,6 +19,8 @@ import StatementOfFactsRequestButton from "./statement/StatementOfFactsRequestBu
 import ArchiveButton from "./archive/ArchiveButton";
 import InlineDateTime from 'src/common/InlineDateTime';
 import { Viewer } from 'src/common/CommonContext';
+import { isLogionIdentityLoc } from "../common/types/ModelTypes";
+import Nominate from "./vtp/Nominate";
 
 export interface Props {
     loc: LocData
@@ -81,6 +83,7 @@ export default function CertificateAndLimits(props: Props) {
                     props.loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' &&
                     <Col className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12">
                         <div className="tool-bar">
+                            { props.loc.locType === 'Identity' && !isLogionIdentityLoc(props.loc) && props.loc.status ==='CLOSED' && <Nominate/> }
                             <ArchiveButton/>
                             <StatementOfFactsButton/>
                         </div>

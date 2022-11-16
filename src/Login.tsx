@@ -5,7 +5,7 @@ import Container from 'react-bootstrap/Container';
 
 import { useLogionChain } from './logion-chain';
 import Button from './common/Button';
-import Checkbox from './common/Checkbox';
+import Checkbox from './components/toggle/Checkbox';
 
 import AbsoluteLogo from './AbsoluteLogo';
 

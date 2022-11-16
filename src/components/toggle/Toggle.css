@@ -1,0 +1,28 @@
+.Toggle {
+    content: " ";
+    position: relative;
+    height: 27px;
+    width: 64px;
+}
+
+.Toggle.clickable {
+    cursor: pointer;
+}
+
+.Toggle.checked:after {
+    background-image: url("../../img/toggle-on.svg");
+}
+.Toggle:not(.checked):after {
+    background-image: url("../../img/toggle-off.svg");
+}
+
+.Toggle:after {
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+}

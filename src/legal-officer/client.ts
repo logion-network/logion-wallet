@@ -200,3 +200,16 @@ export async function voidLoc(params: {
 
     return await locState.refresh() as VoidedLoc | VoidedCollectionLoc;
 }
+
+export async function setVerifiedThirdParty(params: {
+        locState: ClosedLoc,
+        isVerifiedThirdParty: boolean;
+    }
+): Promise<ClosedLoc> {
+    const { locState, isVerifiedThirdParty } = params;
+    const axios = buildAxios(locState);
+    await axios.put(`/api/loc-request/${locState.data().id.toString()}/verified-third-party`, {
+        isVerifiedThirdParty
+    });
+    return await locState.refresh() as ClosedLoc;
+}

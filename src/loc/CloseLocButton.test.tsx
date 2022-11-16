@@ -1,7 +1,7 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import { LocData } from "@logion/client";
 
-import { clickByName } from '../tests';
+import { clickByName, expectNoDialogVisible } from '../tests';
 import { DEFAULT_LEGAL_OFFICER } from '../common/TestData';
 import { setLocItems, setLocState } from './__mocks__/LocContextMock';
 
@@ -153,7 +153,3 @@ describe("CloseLocButton", () => {
         await expectNoDialogVisible();
     })
 })
-
-async function expectNoDialogVisible() {
-    await waitFor(() => expect(screen.queryAllByRole("dialog").length).toBe(0));
-}

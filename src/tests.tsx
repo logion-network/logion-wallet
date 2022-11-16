@@ -53,3 +53,7 @@ export async function uploadByTestId(testId: string, file: File) {
 export function waitForButtonEnabled(name: ButtonName) {
     return waitFor(() => expect(screen.getByRole("button", { name })).not.toBeDisabled());
 }
+
+export async function expectNoDialogVisible() {
+    await waitFor(() => expect(screen.queryAllByRole("dialog").length).toBe(0));
+}
