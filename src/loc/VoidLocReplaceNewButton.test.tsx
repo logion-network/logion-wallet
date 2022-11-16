@@ -8,6 +8,7 @@ import VoidLocReplaceNewButton from "./VoidLocReplaceNewButton";
 
 jest.mock("../common/CommonContext");
 jest.mock("../common/Model");
+jest.mock("./Model");
 jest.mock("./LocContext");
 jest.mock("../legal-officer/LegalOfficerContext");
 jest.mock("../legal-officer/client");

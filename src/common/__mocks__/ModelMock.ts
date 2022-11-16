@@ -16,7 +16,8 @@ export async function createLocRequest(axios: any, request: CreateLocRequest): P
         id: "671e65cf-42c3-435b-a222-be008e7fb3d1",
         links: [],
         metadata: [],
-        status: "OPEN"
+        status: "OPEN",
+        verifiedThirdParty: false,
     });
 }
 

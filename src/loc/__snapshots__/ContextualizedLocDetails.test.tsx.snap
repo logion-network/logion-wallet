@@ -36,6 +36,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
       "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
       "requesterLocId": undefined,
       "status": "OPEN",
+      "verifiedThirdParty": false,
     }
   }
 >
@@ -74,6 +75,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
         "requesterLocId": undefined,
         "status": "OPEN",
+        "verifiedThirdParty": false,
       }
     }
     locState={
@@ -124,6 +126,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
         "requesterLocId": undefined,
         "status": "OPEN",
+        "verifiedThirdParty": false,
       }
     }
     locItems={Array []}
@@ -170,6 +173,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
         "requesterLocId": undefined,
         "status": "OPEN",
+        "verifiedThirdParty": false,
       }
     }
   />
@@ -208,6 +212,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
         "requesterLocId": undefined,
         "status": "OPEN",
+        "verifiedThirdParty": false,
       }
     }
     viewer="LegalOfficer"
@@ -247,6 +252,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
         "requesterLocId": undefined,
         "status": "OPEN",
+        "verifiedThirdParty": false,
       }
     }
   />
@@ -290,6 +296,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
         "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
         "requesterLocId": undefined,
         "status": "OPEN",
+        "verifiedThirdParty": false,
       }
     }
   />

@@ -9,6 +9,7 @@ import ProcessStep from '../legal-officer/ProcessStep';
 import { useLegalOfficerContext } from '../legal-officer/LegalOfficerContext';
 import Alert from '../common/Alert';
 import { signAndSend } from '../logion-chain/Signature';
+import { acceptLocRequest } from "./Model";
 
 enum CreationStatus {
     NONE,
@@ -123,6 +124,11 @@ export default function LocCreationSteps(props: Props) {
         }
     }, [ creationState, clear, onSuccess ])
 
+    const accept = useCallback(async () => {
+        await acceptLocRequest(axios!, { requestId: requestToCreate!.id })
+        setStatus(CreationStatus.LOC_CREATED);
+    }, [ axios, requestToCreate, setStatus ])
+
     if (requestToCreate === null) {
         return null;
     }
@@ -139,7 +145,7 @@ export default function LocCreationSteps(props: Props) {
                     id="metadata"
                     signAndSubmit={ signAndSubmit }
                     successMessage="LOC successfully created."
-                    onSuccess={ () => setStatus(CreationStatus.LOC_CREATED) }
+                    onSuccess={ accept }
                     onError={ () => setStatus(CreationStatus.LOC_CREATION_FAILED) }
                 />
             </ProcessStep>
