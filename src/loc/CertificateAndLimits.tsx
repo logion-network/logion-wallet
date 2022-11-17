@@ -49,15 +49,12 @@ export default function CertificateAndLimits(props: Props) {
             className="CertificateAndLimits"
         >
             <Row>
-                <Col className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12">
+                <Col className="col-xxxl-5 col-xxl-10 col-xl-10 col-lg-10 col-md-10 col-sd-10 col-xs-10">
                     <div className="certificate">
-                        <h2>Public web address (URL) of this Legal Officer Case related Certificate:</h2>
-                        <div className="url-copy-paste-container">
-                            <div className="url-container">
-                                <a href={ certificateUrl } target="_blank" rel="noreferrer">{ certificateUrl }</a>
-                            </div>
+                        <h2>LOC Certificate public web address (URL):
+                            <ViewCertificateButton url={ certificateUrl }/>
                             <CopyPasteButton value={ certificateUrl } />
-                        </div>
+                        </h2>
                     </div>
                 </Col>
                 {
@@ -72,7 +69,7 @@ export default function CertificateAndLimits(props: Props) {
                 }
                 {
                     props.loc.locType === 'Collection' &&
-                    <Col className="col-xxxl-4 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6">
+                    <Col className="col-xxxl-5 col-xxl-8 col-xl-8 col-lg-8 col-md-8 col-sd-8 col-xs-8">
                         <div className="tool-bar">
                             { props.viewer === 'LegalOfficer' && <ArchiveButton/> }
                             { props.loc.closed && !props.loc.voidInfo && <Button onClick={ () => setShowSettings(true) }><Icon icon={{id: "cog"}} height="22px"/> Get dev settings</Button> }
@@ -81,7 +78,7 @@ export default function CertificateAndLimits(props: Props) {
                 }
                 {
                     props.loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' &&
-                    <Col className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12">
+                    <Col className="col-xxxl-7 col-xxl-14 col-xl-14 col-lg-14 col-md-14 col-sd-14 col-xs-14">
                         <div className="tool-bar">
                             { props.loc.locType === 'Identity' && !isLogionIdentityLoc(props.loc) && props.loc.status ==='CLOSED' && <Nominate/> }
                             <ArchiveButton/>
@@ -91,7 +88,7 @@ export default function CertificateAndLimits(props: Props) {
                 }
                 {
                     props.loc.locType !== 'Collection' && props.viewer === 'User' &&
-                    <Col className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12">
+                    <Col className="col-xxxl-7 col-xxl-14 col-xl-14 col-lg-14 col-md-14 col-sd-14 col-xs-14">
                         <div className="sof-request">
                             <StatementOfFactsRequestButton/>
                         </div>
@@ -172,3 +169,12 @@ export default function CertificateAndLimits(props: Props) {
 function itemLimit(loc: LocData): string {
     return loc.collectionMaxSize ? loc.collectionMaxSize.toString() : "-";
 }
+
+function ViewCertificateButton(props: { url: string }) {
+    return (
+        <Button className="ViewCertificateButton" onClick={ () => window.open(props.url, "_blank") }>
+            <Icon icon={{ id:"view-certificate" }} height="20px" />
+        </Button>
+    );
+}
+

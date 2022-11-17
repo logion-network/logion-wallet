@@ -6,36 +6,24 @@ exports[`CertificateAndLimits renders certificate and buttons for non-collection
 >
   <Row>
     <Col
-      className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12"
+      className="col-xxxl-5 col-xxl-10 col-xl-10 col-lg-10 col-md-10 col-sd-10 col-xs-10"
     >
       <div
         className="certificate"
       >
         <h2>
-          Public web address (URL) of this Legal Officer Case related Certificate:
-        </h2>
-        <div
-          className="url-copy-paste-container"
-        >
-          <div
-            className="url-container"
-          >
-            <a
-              href="http://localhost/public/certificate/31105349912518444897773986398896608162"
-              rel="noreferrer"
-              target="_blank"
-            >
-              http://localhost/public/certificate/31105349912518444897773986398896608162
-            </a>
-          </div>
+          LOC Certificate public web address (URL):
+          <ViewCertificateButton
+            url="http://localhost/public/certificate/31105349912518444897773986398896608162"
+          />
           <CopyPasteButton
             value="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
-        </div>
+        </h2>
       </div>
     </Col>
     <Col
-      className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12"
+      className="col-xxxl-7 col-xxl-14 col-xl-14 col-lg-14 col-md-14 col-sd-14 col-xs-14"
     >
       <div
         className="tool-bar"
@@ -54,32 +42,20 @@ exports[`CertificateAndLimits renders certificate and limits for void collection
 >
   <Row>
     <Col
-      className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12"
+      className="col-xxxl-5 col-xxl-10 col-xl-10 col-lg-10 col-md-10 col-sd-10 col-xs-10"
     >
       <div
         className="certificate"
       >
         <h2>
-          Public web address (URL) of this Legal Officer Case related Certificate:
-        </h2>
-        <div
-          className="url-copy-paste-container"
-        >
-          <div
-            className="url-container"
-          >
-            <a
-              href="http://localhost/public/certificate/31105349912518444897773986398896608162"
-              rel="noreferrer"
-              target="_blank"
-            >
-              http://localhost/public/certificate/31105349912518444897773986398896608162
-            </a>
-          </div>
+          LOC Certificate public web address (URL):
+          <ViewCertificateButton
+            url="http://localhost/public/certificate/31105349912518444897773986398896608162"
+          />
           <CopyPasteButton
             value="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
-        </div>
+        </h2>
       </div>
     </Col>
     <Col
@@ -114,7 +90,7 @@ exports[`CertificateAndLimits renders certificate and limits for void collection
       </div>
     </Col>
     <Col
-      className="col-xxxl-4 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6"
+      className="col-xxxl-5 col-xxl-8 col-xl-8 col-lg-8 col-md-8 col-sd-8 col-xs-8"
     >
       <div
         className="tool-bar"
@@ -130,32 +106,20 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for closed
 >
   <Row>
     <Col
-      className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12"
+      className="col-xxxl-5 col-xxl-10 col-xl-10 col-lg-10 col-md-10 col-sd-10 col-xs-10"
     >
       <div
         className="certificate"
       >
         <h2>
-          Public web address (URL) of this Legal Officer Case related Certificate:
-        </h2>
-        <div
-          className="url-copy-paste-container"
-        >
-          <div
-            className="url-container"
-          >
-            <a
-              href="http://localhost/public/certificate/31105349912518444897773986398896608162"
-              rel="noreferrer"
-              target="_blank"
-            >
-              http://localhost/public/certificate/31105349912518444897773986398896608162
-            </a>
-          </div>
+          LOC Certificate public web address (URL):
+          <ViewCertificateButton
+            url="http://localhost/public/certificate/31105349912518444897773986398896608162"
+          />
           <CopyPasteButton
             value="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
-        </div>
+        </h2>
       </div>
     </Col>
     <Col
@@ -190,7 +154,7 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for closed
       </div>
     </Col>
     <Col
-      className="col-xxxl-4 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6"
+      className="col-xxxl-5 col-xxl-8 col-xl-8 col-lg-8 col-md-8 col-sd-8 col-xs-8"
     >
       <div
         className="tool-bar"
@@ -323,32 +287,20 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for open c
 >
   <Row>
     <Col
-      className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12"
+      className="col-xxxl-5 col-xxl-10 col-xl-10 col-lg-10 col-md-10 col-sd-10 col-xs-10"
     >
       <div
         className="certificate"
       >
         <h2>
-          Public web address (URL) of this Legal Officer Case related Certificate:
-        </h2>
-        <div
-          className="url-copy-paste-container"
-        >
-          <div
-            className="url-container"
-          >
-            <a
-              href="http://localhost/public/certificate/31105349912518444897773986398896608162"
-              rel="noreferrer"
-              target="_blank"
-            >
-              http://localhost/public/certificate/31105349912518444897773986398896608162
-            </a>
-          </div>
+          LOC Certificate public web address (URL):
+          <ViewCertificateButton
+            url="http://localhost/public/certificate/31105349912518444897773986398896608162"
+          />
           <CopyPasteButton
             value="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
-        </div>
+        </h2>
       </div>
     </Col>
     <Col
@@ -383,7 +335,7 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for open c
       </div>
     </Col>
     <Col
-      className="col-xxxl-4 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6"
+      className="col-xxxl-5 col-xxl-8 col-xl-8 col-lg-8 col-md-8 col-sd-8 col-xs-8"
     >
       <div
         className="tool-bar"
@@ -401,32 +353,20 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for void c
 >
   <Row>
     <Col
-      className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12"
+      className="col-xxxl-5 col-xxl-10 col-xl-10 col-lg-10 col-md-10 col-sd-10 col-xs-10"
     >
       <div
         className="certificate"
       >
         <h2>
-          Public web address (URL) of this Legal Officer Case related Certificate:
-        </h2>
-        <div
-          className="url-copy-paste-container"
-        >
-          <div
-            className="url-container"
-          >
-            <a
-              href="http://localhost/public/certificate/31105349912518444897773986398896608162"
-              rel="noreferrer"
-              target="_blank"
-            >
-              http://localhost/public/certificate/31105349912518444897773986398896608162
-            </a>
-          </div>
+          LOC Certificate public web address (URL):
+          <ViewCertificateButton
+            url="http://localhost/public/certificate/31105349912518444897773986398896608162"
+          />
           <CopyPasteButton
             value="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
-        </div>
+        </h2>
       </div>
     </Col>
     <Col
@@ -461,7 +401,7 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for void c
       </div>
     </Col>
     <Col
-      className="col-xxxl-4 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6"
+      className="col-xxxl-5 col-xxl-8 col-xl-8 col-lg-8 col-md-8 col-sd-8 col-xs-8"
     >
       <div
         className="tool-bar"
@@ -479,32 +419,20 @@ exports[`CertificateAndLimits renders certificate, limits and settings button fo
 >
   <Row>
     <Col
-      className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12"
+      className="col-xxxl-5 col-xxl-10 col-xl-10 col-lg-10 col-md-10 col-sd-10 col-xs-10"
     >
       <div
         className="certificate"
       >
         <h2>
-          Public web address (URL) of this Legal Officer Case related Certificate:
-        </h2>
-        <div
-          className="url-copy-paste-container"
-        >
-          <div
-            className="url-container"
-          >
-            <a
-              href="http://localhost/public/certificate/31105349912518444897773986398896608162"
-              rel="noreferrer"
-              target="_blank"
-            >
-              http://localhost/public/certificate/31105349912518444897773986398896608162
-            </a>
-          </div>
+          LOC Certificate public web address (URL):
+          <ViewCertificateButton
+            url="http://localhost/public/certificate/31105349912518444897773986398896608162"
+          />
           <CopyPasteButton
             value="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
-        </div>
+        </h2>
       </div>
     </Col>
     <Col
@@ -539,7 +467,7 @@ exports[`CertificateAndLimits renders certificate, limits and settings button fo
       </div>
     </Col>
     <Col
-      className="col-xxxl-4 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6"
+      className="col-xxxl-5 col-xxl-8 col-xl-8 col-lg-8 col-md-8 col-sd-8 col-xs-8"
     >
       <div
         className="tool-bar"
@@ -671,36 +599,24 @@ exports[`CertificateAndLimits renders only certificate and SoF request button fo
 >
   <Row>
     <Col
-      className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12"
+      className="col-xxxl-5 col-xxl-10 col-xl-10 col-lg-10 col-md-10 col-sd-10 col-xs-10"
     >
       <div
         className="certificate"
       >
         <h2>
-          Public web address (URL) of this Legal Officer Case related Certificate:
-        </h2>
-        <div
-          className="url-copy-paste-container"
-        >
-          <div
-            className="url-container"
-          >
-            <a
-              href="http://localhost/public/certificate/31105349912518444897773986398896608162"
-              rel="noreferrer"
-              target="_blank"
-            >
-              http://localhost/public/certificate/31105349912518444897773986398896608162
-            </a>
-          </div>
+          LOC Certificate public web address (URL):
+          <ViewCertificateButton
+            url="http://localhost/public/certificate/31105349912518444897773986398896608162"
+          />
           <CopyPasteButton
             value="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
-        </div>
+        </h2>
       </div>
     </Col>
     <Col
-      className="col-xxxl-6 col-xxl-12 col-xl-12 col-lg-12 col-md-12 col-sd-12 col-xs-12"
+      className="col-xxxl-7 col-xxl-14 col-xl-14 col-lg-14 col-md-14 col-sd-14 col-xs-14"
     >
       <div
         className="sof-request"
