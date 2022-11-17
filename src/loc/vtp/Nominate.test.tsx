@@ -1,6 +1,6 @@
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import Nominate from "./Nominate";
-import { expectNoDialogVisible, shallowRender } from "../../tests";
+import { expectNoDialogVisible, shallowRender, clickByName } from "../../tests";
 import { ClosedLoc } from "../../__mocks__/LogionClientMock";
 import { LocData } from "@logion/client";
 import { setLocState } from "../__mocks__/LocContextMock";
@@ -16,7 +16,7 @@ describe("Nominate", () => {
         expectNoDialogVisible();
     })
 
-    it("renders unchecked with nomination info when not verified third party", () => {
+    it("renders unchecked with nomination info when not verified third party", async () => {
         const locState = new ClosedLoc();
         locState.data = () => ({
             locType: "Identity",
@@ -24,10 +24,12 @@ describe("Nominate", () => {
             verifiedThirdParty: false
         } as LocData);
         setLocState(locState);
-        expect(shallowRender(<Nominate />)).toMatchSnapshot();
+        render(<Nominate />);
+        await clickByName(/Verified Third Party/);
+        expect(screen.getByText("Verified Third Party Nomination")).toBeDefined();
     })
 
-    it("renders checked with dismissal info when verified third party", () => {
+    it("renders checked with dismissal info when verified third party", async () => {
         const locState = new ClosedLoc();
         locState.data = () => ({
             locType: "Identity",
@@ -35,7 +37,9 @@ describe("Nominate", () => {
             verifiedThirdParty: true
         } as LocData);
         setLocState(locState);
-        expect(shallowRender(<Nominate />)).toMatchSnapshot();
+        render(<Nominate />);
+        await clickByName(/Verified Third Party/);
+        expect(screen.getByText("Verified Third Party Dismissal")).toBeDefined();
     })
 })
 

@@ -15,6 +15,7 @@ export default function Nominate() {
     const { loc, mutateLocState } = useLocContext();
     const { client } = useLogionChain();
     const [ vtp, setVtp ] = useState<boolean>(loc?.verifiedThirdParty || false);
+    const [ showDismissal, setShowDismissal ] = useState<boolean>(false);
     const [ status, setStatus ] = useState<Status>('Idle');
     const changeVtp = useCallback(async (newValue: boolean) => {
         setStatus('Confirming');
@@ -31,7 +32,10 @@ export default function Nominate() {
 
     return (
         <>
-            <Button id="NominateButton" onClick={ () => setStatus('Selected') }>
+            <Button id="NominateButton" onClick={ () => {
+                setStatus('Selected');
+                setShowDismissal(vtp)}
+            }>
                 <Icon icon={ { id: "vtp" } } />
                 Verified Third Party
                 <Checkbox checked={ vtp } skin="Toggle" />
@@ -55,7 +59,7 @@ export default function Nominate() {
                     }
                 ] }
             >
-                { !vtp && <>
+                { !showDismissal && <>
                     <h3>Verified Third Party Nomination</h3>
                     <p>The person linked to this Identity LOC is about to have the status of Verified Third Party.</p>
                     <p>With that status, you (and only you) will be able to select that nominated Verified Third Party
@@ -63,11 +67,15 @@ export default function Nominate() {
                         still have to validate these contributions before blockchain publication.</p>
                     <p>Do you confirm you want to make this person a Verified Third Party?</p>
                 </> }
-                { vtp && <>
+                { showDismissal && <>
                     <h3>Verified Third Party Dismissal</h3>
                     <p>The person linked to this Identity LOC has the status of Verified Third Party.</p>
-                    <p>You are about to cancel this status: this person will not be able to contribute to all the LOC
-                        (s)he is currently involved with.</p>
+                    <p>
+                        <Icon type="png" icon={ { id: "big-warning" } } width="105px"/>
+                    </p>
+                    <p>You are about to cancel this status:<br />
+                        <strong>this person will not be able to contribute to all the LOC
+                            (s)he is currently involved with.</strong></p>
                     <p>Do you confirm you want to cancel the Verified Third Party status for this person?</p>
                 </> }
             </Dialog>
