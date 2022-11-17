@@ -1,0 +1,15 @@
+#NominateButton {
+    margin-right: 20px;
+    padding: 4px 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#NominateButton img {
+    margin-right: 10px;
+}
+
+#NominateButton .Toggle {
+    margin-left: 10px;
+}

@@ -9,7 +9,7 @@ import { getFile, getJsonLoc } from "../FileModel";
 import { UUID } from "@logion/node-api/dist/UUID";
 import Dialog from "../../common/Dialog";
 import Table, { EmptyTableMessage } from "../../common/Table";
-import Checkbox from "../../common/Checkbox";
+import Checkbox from "../../components/toggle/Checkbox";
 import { useLogionChain } from "../../logion-chain";
 import Icon from "../../common/Icon";
 
