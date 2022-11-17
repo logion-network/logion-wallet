@@ -21,6 +21,7 @@ import { useLogionChain } from '../logion-chain';
 import LocCreation from "./transaction-protection/LocCreation";
 import Button from "../common/Button";
 import IdentityLocRequest from "./trust-protection/IdentityLocRequest";
+import VTPDashboard from "./vtp/VTPDashboard";
 
 export const HOME_PATH = USER_PATH;
 
@@ -36,6 +37,8 @@ export const VAULT_RELATIVE_PATH = '/vault';
 export const VAULT_PATH = USER_PATH + VAULT_RELATIVE_PATH;
 export const IDENTITY_REQUEST_RELATIVE_PATH = "/loc/identity-request";
 export const IDENTITY_REQUEST_PATH = USER_PATH + IDENTITY_REQUEST_RELATIVE_PATH;
+export const VTP_RELATIVE_PATH = '/vtp';
+export const VTP_PATH = USER_PATH + VTP_RELATIVE_PATH;
 
 export const TRANSACTIONS_RELATIVE_PATH = WALLET_RELATIVE_PATH + '/:coinId';
 const TRANSACTIONS_PATH = USER_PATH + TRANSACTIONS_RELATIVE_PATH;
@@ -183,6 +186,9 @@ export default function UserRouter() {
             <Route path="/" element={ <Home /> } />
             <Route path={ IDENTITY_REQUEST_RELATIVE_PATH } element={
                 <IdentityLocRequest backPath={ locRequestsPath('Identity') }/>
+            } />
+            <Route path={ VTP_RELATIVE_PATH } element={
+                <VTPDashboard/>
             } />
         </Routes>
     );

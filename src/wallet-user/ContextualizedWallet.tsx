@@ -10,7 +10,9 @@ import UserRouter, {
     SETTINGS_PATH,
     RECOVERY_PATH,
     WALLET_PATH,
-    locRequestsPath, VAULT_PATH,
+    locRequestsPath,
+    VAULT_PATH,
+    VTP_PATH,
 } from "./UserRouter";
 import { useUserContext } from "./UserContext";
 import { useCommonContext } from '../common/CommonContext';
@@ -18,7 +20,7 @@ import { useCommonContext } from '../common/CommonContext';
 export default function ContextualizedWallet() {
     const { selectAddress, accounts, api } = useLogionChain();
     const { colorTheme, refresh } = useCommonContext();
-    const { refreshRequests, vaultState } = useUserContext();
+    const { refreshRequests, vaultState, locsState } = useUserContext();
 
     const refreshAll = useCallback(() => {
         refresh(false);
@@ -31,89 +33,107 @@ export default function ContextualizedWallet() {
 
     const userContext = api !== null ? <UserRouter /> : null;
 
+    let menuTop = [
+        {
+            id: "home",
+            text: "Home",
+            to: HOME_PATH,
+            exact: true,
+            icon: {
+                icon: {
+                    id: 'home'
+                },
+                background: colorTheme.topMenuItems.iconGradient,
+            },
+            onClick: refreshAll,
+        },
+        {
+            id: "wallet",
+            text: "Wallet",
+            to: WALLET_PATH,
+            exact: false,
+            icon: {
+                icon: {
+                    id: 'wallet'
+                },
+                background: colorTheme.topMenuItems.iconGradient,
+            },
+            onClick: refreshAll,
+        },
+        {
+            id: "vault",
+            text: "Vault",
+            to: VAULT_PATH,
+            exact: false,
+            icon: {
+                icon: {
+                    id: 'vault'
+                },
+                background: colorTheme.topMenuItems.iconGradient,
+            },
+            onClick: refreshAll,
+            disabled: !vaultState,
+        },
+        {
+            id: "loc-collection",
+            text: "Collections",
+            to: locRequestsPath('Collection'),
+            exact: false,
+            icon: {
+                icon: {
+                    id: 'collection'
+                },
+                background: colorTheme.topMenuItems.iconGradient,
+            },
+            onClick: refreshAll,
+        },
+        {
+            id: "loc-transaction",
+            text: "Transactions",
+            to: locRequestsPath('Transaction'),
+            exact: false,
+            icon: {
+                icon: {
+                    id: 'loc'
+                },
+                background: colorTheme.topMenuItems.iconGradient,
+            },
+            onClick: refreshAll,
+        },
+        {
+            id: "loc-identity",
+            text: "Identity",
+            to: locRequestsPath('Identity'),
+            exact: false,
+            icon: {
+                icon: {
+                    id: 'identity'
+                },
+                background: colorTheme.topMenuItems.iconGradient,
+            },
+            onClick: refreshAll,
+        },
+    ];
+
+    if (locsState?.isVerifiedThirdParty) {
+        menuTop.push({
+                id: "vtp",
+                text: "Third Party LOC",
+                to: VTP_PATH,
+                exact: false,
+                icon: {
+                    icon: {
+                        id: 'vtp-icon'
+                    },
+                    background: colorTheme.topMenuItems.iconGradient,
+                },
+                onClick: refreshAll,
+            }
+        )
+    }
     return (
         <Dashboard
-            menuTop={[
-                {
-                    id: "home",
-                    text: "Home",
-                    to: HOME_PATH,
-                    exact: true,
-                    icon: {
-                        icon: {
-                            id: 'home'
-                        },
-                        background: colorTheme.topMenuItems.iconGradient,
-                    },
-                    onClick: refreshAll,
-                },
-                {
-                    id: "wallet",
-                    text: "Wallet",
-                    to: WALLET_PATH,
-                    exact: false,
-                    icon: {
-                        icon: {
-                            id: 'wallet'
-                        },
-                        background: colorTheme.topMenuItems.iconGradient,
-                    },
-                    onClick: refreshAll,
-                },
-                {
-                    id: "vault",
-                    text: "Vault",
-                    to: VAULT_PATH,
-                    exact: false,
-                    icon: {
-                        icon: {
-                            id: 'vault'
-                        },
-                        background: colorTheme.topMenuItems.iconGradient,
-                    },
-                    onClick: refreshAll,
-                    disabled: !vaultState,
-                },
-                {
-                    id: "loc-collection",
-                    text: "Collections",
-                    to: locRequestsPath('Collection'),
-                    exact: false,
-                    icon: {
-                        icon: {
-                            id: 'collection'
-                        },
-                        background: colorTheme.topMenuItems.iconGradient,
-                    },
-                    onClick: refreshAll,
-                },
-                {
-                    id: "loc-transaction",
-                    text: "Transactions",
-                    to: locRequestsPath('Transaction'),
-                    exact: false,
-                    icon: {
-                        icon: {
-                            id: 'loc'
-                        },
-                        background: colorTheme.topMenuItems.iconGradient,
-                    },
-                    onClick: refreshAll,
-                },
-                {
-                    id: "loc-identity",
-                    text: "Identity",
-                    to: locRequestsPath('Identity'),
-                    exact: false,
-                    icon: {
-                        icon: {
-                            id: 'identity'
-                        },
-                        background: colorTheme.topMenuItems.iconGradient,
-                    },
-                    onClick: refreshAll,
-                },
-            ]}
+            menuTop={ menuTop }
             menuMiddle={[
                 {
                     id: "protection",
