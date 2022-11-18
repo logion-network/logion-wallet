@@ -1,3 +1,5 @@
+import { setLocsState } from "./__mocks__/UserContextMock";
+
 jest.mock('../logion-chain');
 jest.mock('../common/CommonContext');
 jest.mock('./UserContext');
@@ -6,8 +8,11 @@ import ContextualizedWallet from './ContextualizedWallet';
 import { apiMock, setContextMock } from '../logion-chain/__mocks__/LogionChainMock';
 import { shallowRender, mockAccount } from '../tests';
 import { Account } from 'src/common/types/Accounts';
+import { LocsState } from "@logion/client";
 
 describe("ContextualizedWallet", () => {
+
+    setLocsState({} as LocsState)
 
     const account = mockAccount("address", "Account name") as unknown as Account;
 

@@ -16,6 +16,7 @@ import UserRouter, {
 } from "./UserRouter";
 import { useUserContext } from "./UserContext";
 import { useCommonContext } from '../common/CommonContext';
+import Loader from "../common/Loader";
 
 export default function ContextualizedWallet() {
     const { selectAddress, accounts, api } = useLogionChain();
@@ -29,6 +30,10 @@ export default function ContextualizedWallet() {
 
     if(selectAddress === null || accounts === null) {
         return null;
+    }
+
+    if(!locsState || locsState.discarded) {
+        return <Loader />;
     }
 
     const userContext = api !== null ? <UserRouter /> : null;
