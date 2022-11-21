@@ -6,6 +6,7 @@ import {
     OpenLoc,
     ClosedLoc,
     ClosedCollectionLoc,
+    VerifiedThirdParty,
     VoidedLoc,
     VoidedCollectionLoc,
 } from "@logion/client";
@@ -212,4 +213,43 @@ export async function setVerifiedThirdParty(params: {
         isVerifiedThirdParty
     });
     return await locState.refresh() as ClosedLoc;
+}
+
+export interface VerifiedThirdPartySelection extends VerifiedThirdParty {
+    selected: boolean;
+}
+
+export async function getVerifiedThirdPartySelections(params: { locState: OpenLoc } ): Promise<VerifiedThirdPartySelection[]> {
+    const { locState } = params
+    const axios = buildAxios(locState);
+    const response = await axios.get("/api/verified-third-parties");
+    const allVerifiedThirdParties: VerifiedThirdParty[] = response.data.verifiedThirdParties;
+
+    const selectedParties = locState.data().selectedParties;
+
+    return allVerifiedThirdParties
+        .map(vtp => selectedParties.find(selected => selected.identityLocId === vtp.identityLocId) ?
+            { ...vtp, selected: true } :
+            { ...vtp, selected: false }
+        )
+        .sort((vtp1, vtp2) => vtp1.lastName.localeCompare(vtp2.lastName));
+}
+
+export interface SelectPartiesParams {
+    locState: OpenLoc;
+    partyId: string;
+}
+
+export async function selectParties(params: SelectPartiesParams): Promise<void> {
+    const { locState, partyId } = params;
+    const axios = buildAxios(locState);
+    await axios.post(`/api/loc-request/${locState.locId.toString()}/selected-parties`, {
+        identityLocId: partyId
+    })
+}
+
+export async function unselectParties(params: SelectPartiesParams): Promise<void> {
+    const { locState, partyId } = params;
+    const axios = buildAxios(locState);
+    await axios.delete(`/api/loc-request/${ locState.locId.toString() }/selected-parties/${ partyId }`)
 }

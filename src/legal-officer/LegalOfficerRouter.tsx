@@ -15,7 +15,7 @@ import {
     locDetailsPath,
     IDENTITIES_PATH,
     locRequestsPath,
-    VAULT_OUT_REQUESTS_RELATIVE_PATH,
+    VAULT_OUT_REQUESTS_RELATIVE_PATH, locSelectVTPPath,
 } from './LegalOfficerPaths';
 
 import Home from './Home';
@@ -38,6 +38,7 @@ import { locRequestsRelativePath, locDetailsRelativePath, relativeDashboardCerti
 import VaultOutRequests from './vault/VaultOutRequests';
 import { useLogionChain } from '../logion-chain';
 import { useLegalOfficerContext } from './LegalOfficerContext';
+import VTPSelection from "../loc/vtp/VTPSelection";
 
 export default function LegalOfficerRouter() {
     const { accounts } = useLogionChain();
@@ -137,6 +138,18 @@ export default function LegalOfficerRouter() {
                     viewer='LegalOfficer'
                 />
             } />
+            <Route path={ locSelectVTPPath('Transaction') } element={
+                <VTPSelection
+                    detailsPath={ locDetailsPath }
+                    locType='Transaction'
+                />
+            }/>
+            <Route path={ locSelectVTPPath('Collection') } element={
+                <VTPSelection
+                    detailsPath={ locDetailsPath }
+                    locType='Collection'
+                />
+            }/>
             <Route path="" element={ currentLegalOfficerUnavailable ? <Navigate to={ SETTINGS_PATH }/> : <Home /> } />
         </Routes>
     );

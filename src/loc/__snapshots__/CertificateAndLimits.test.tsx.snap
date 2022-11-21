@@ -340,6 +340,7 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for open c
       <div
         className="tool-bar"
       >
+        <VTPSelectionButton />
         <ArchiveButton />
       </div>
     </Col>

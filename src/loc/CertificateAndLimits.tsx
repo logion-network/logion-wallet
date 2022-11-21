@@ -21,6 +21,7 @@ import InlineDateTime from 'src/common/InlineDateTime';
 import { Viewer } from 'src/common/CommonContext';
 import { isLogionIdentityLoc } from "../common/types/ModelTypes";
 import Nominate from "./vtp/Nominate";
+import VTPSelectionButton from "./vtp/VTPSelectionButton";
 
 export interface Props {
     loc: LocData
@@ -71,6 +72,7 @@ export default function CertificateAndLimits(props: Props) {
                     props.loc.locType === 'Collection' &&
                     <Col className="col-xxxl-5 col-xxl-8 col-xl-8 col-lg-8 col-md-8 col-sd-8 col-xs-8">
                         <div className="tool-bar">
+                            { props.viewer === 'LegalOfficer' && props.loc.status ==='OPEN' && <VTPSelectionButton/> }
                             { props.viewer === 'LegalOfficer' && <ArchiveButton/> }
                             { props.loc.closed && !props.loc.voidInfo && <Button onClick={ () => setShowSettings(true) }><Icon icon={{id: "cog"}} height="22px"/> Get dev settings</Button> }
                         </div>
@@ -81,6 +83,7 @@ export default function CertificateAndLimits(props: Props) {
                     <Col className="col-xxxl-7 col-xxl-14 col-xl-14 col-lg-14 col-md-14 col-sd-14 col-xs-14">
                         <div className="tool-bar">
                             { props.loc.locType === 'Identity' && !isLogionIdentityLoc(props.loc) && props.loc.status ==='CLOSED' && <Nominate/> }
+                            { props.loc.locType === 'Transaction' && props.loc.status ==='OPEN' && <VTPSelectionButton/> }
                             <ArchiveButton/>
                             <StatementOfFactsButton/>
                         </div>
