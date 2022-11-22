@@ -34,5 +34,6 @@ export function buildLocRequest(locId: UUID, loc: LegalOfficerCase): LocData {
         })),
         closed: false,
         verifiedThirdParty: false,
+        selectedParties: [],
     };
 }

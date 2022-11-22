@@ -128,6 +128,24 @@ exports[`renders 1`] = `
     path="/identities/:locId"
   />
   <Route
+    element={
+      <VTPSelection
+        detailsPath={[Function]}
+        locType="Transaction"
+      />
+    }
+    path="/loc/transaction/:locId/vtp"
+  />
+  <Route
+    element={
+      <VTPSelection
+        detailsPath={[Function]}
+        locType="Collection"
+      />
+    }
+    path="/loc/collection/:locId/vtp"
+  />
+  <Route
     element={<Account />}
     path=""
   />

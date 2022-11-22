@@ -1,7 +1,12 @@
 import { LocType } from '@logion/node-api/dist/Types';
 import { UUID } from '@logion/node-api/dist/UUID';
 
-import { LEGAL_OFFICER_PATH, locDetailsRelativePath, locRequestsRelativePath } from '../RootPaths';
+import {
+    LEGAL_OFFICER_PATH,
+    locDetailsRelativePath,
+    locRequestsRelativePath,
+    LOC_REQUESTS_RELATIVE_PATH
+} from '../RootPaths';
 
 export const HOME_PATH = LEGAL_OFFICER_PATH;
 
@@ -62,3 +67,10 @@ export const VAULT_OUT_REQUESTS_PATH = LEGAL_OFFICER_PATH + VAULT_OUT_REQUESTS_R
 
 export const STATEMENT_OF_FACTS_RELATIVE_PATH = '/statement';
 export const STATEMENT_OF_FACTS_PATH = LEGAL_OFFICER_PATH + STATEMENT_OF_FACTS_RELATIVE_PATH;
+
+const LOC_SELECT_VTP_RELATIVE_PATH = LOC_REQUESTS_RELATIVE_PATH + '/:locId/vtp';
+export function locSelectVTPPath(locType: LocType) {
+    return LOC_SELECT_VTP_RELATIVE_PATH
+        .replace(":locType", locType.toLowerCase())
+}
+
