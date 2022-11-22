@@ -9,11 +9,13 @@ import './VTPSelectionFrame.css';
 import VTPSelectionCheckbox from "./VTPSelectionCheckbox";
 import Button from "../../common/Button";
 import { identityLocDetailsPath } from "../../legal-officer/LegalOfficerPaths";
+import { useCommonContext } from "../../common/CommonContext";
 
 export default function VTPSelectionFrame() {
 
     const { locState } = useLocContext();
     const [ vtpSelections, setVtpSelections ] = useState<VerifiedThirdPartySelection[]>([]);
+    const { colorTheme } = useCommonContext();
 
     useEffect(() => {
         if (locState !== null && locState instanceof OpenLoc) {
@@ -23,7 +25,16 @@ export default function VTPSelectionFrame() {
     }, [ locState ]);
 
     return (
-        <Frame className="VTPSelectionFrame">
+        <Frame
+            className="VTPSelectionFrame"
+            title="Verified Third Party management for this LOC"
+            titleIcon={ {
+                icon: {
+                    id: 'vtp-icon'
+                },
+                background: colorTheme.topMenuItems.iconGradient,
+            } }
+        >
             <Table
                 columns={ [
                     {

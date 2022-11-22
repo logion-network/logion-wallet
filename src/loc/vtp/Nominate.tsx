@@ -38,7 +38,7 @@ export default function Nominate() {
             }>
                 <Icon icon={ { id: "vtp" } } />
                 Verified Third Party
-                <Checkbox checked={ vtp } skin="Toggle" />
+                <Checkbox checked={ vtp } skin="Toggle white" />
             </Button>
             <Dialog
                 show={ status !== 'Idle' }

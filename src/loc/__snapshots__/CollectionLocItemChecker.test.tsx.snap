@@ -10,6 +10,9 @@ Object {
         style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); box-shadow: 0 0 25px #3b6cf41a;"
       >
         <div
+          class="title-area"
+        />
+        <div
           class="IconTextRow"
         >
           <div
@@ -221,6 +224,9 @@ Object {
       class="Frame PolkadotFrame CollectionLocItemChecker"
       style="background-color: rgb(255, 255, 255); color: rgb(0, 0, 0); box-shadow: 0 0 25px #3b6cf41a;"
     >
+      <div
+        class="title-area"
+      />
       <div
         class="IconTextRow"
       >

@@ -45,7 +45,7 @@ export default function VTPSelectionCheckbox(props: Props) {
 
     return (<>
         <Checkbox
-            skin="Toggle"
+            skin="Toggle black"
             checked={ vtpSelection.selected }
             setChecked={ () => {
                 setStatus('Selected');

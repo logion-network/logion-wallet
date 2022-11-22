@@ -2,7 +2,8 @@ import { Children } from './types/Helpers';
 import { useCommonContext } from './CommonContext';
 
 import './Frame.css';
-import { ColorTheme } from "./ColorTheme";
+import { ColorTheme, MenuIcon as MenuIconType } from "./ColorTheme";
+import MenuIcon from "./MenuIcon";
 
 export interface Props {
     children: Children,
@@ -12,7 +13,8 @@ export interface Props {
     altColors?: boolean,
     title?: Children,
     fillHeight?: boolean,
-    colorTheme?: ColorTheme
+    colorTheme?: ColorTheme,
+    titleIcon?: MenuIconType,
 }
 
 export default function Frame(props: Props) {
@@ -52,10 +54,18 @@ export default function Frame(props: Props) {
                 boxShadow: `0 0 25px ${colorTheme.shadowColor}`,
             }}
         >
+            <div className="title-area">
+            {
+                props.titleIcon !== undefined &&
+                <MenuIcon
+                    { ...props.titleIcon }
+                />
+            }
             {
                 props.title !== undefined &&
                 <div className="title">{ props.title }</div>
             }
+            </div>
             { props.children }
         </div>
     );
