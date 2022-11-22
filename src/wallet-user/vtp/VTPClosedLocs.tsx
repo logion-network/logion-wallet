@@ -10,18 +10,25 @@ import { useResponsiveContext } from '../../common/Responsive';
 import UserIdentityNameCell from "../../common/UserIdentityNameCell";
 import { fullCertificateUrl } from "../../PublicPaths";
 import { LocData } from "@logion/client";
+import { useMemo } from "react";
+import { merge } from "./VTPUtils";
 
 export default function VTPClosedLocs() {
     const { locsState } = useUserContext()
     const { width } = useResponsiveContext();
 
-    if(!locsState || locsState.discarded) {
+    const data: LocData[] = useMemo(
+        () => merge(locsState?.closedVerifiedThirdPartyLocs),
+        [ locsState ]
+    );
+
+    if (!locsState || locsState.discarded) {
         return <Loader />;
     }
 
     return (
         <Table
-            columns={[
+            columns={ [
                 {
                     "header": "Legal Officer",
                     render: locData => <LegalOfficerName address={ locData.ownerAddress } />,
@@ -29,28 +36,29 @@ export default function VTPClosedLocs() {
                 },
                 {
                     "header": "Requester",
-                    render: locData => <UserIdentityNameCell userIdentity={ locData.userIdentity }/>,
+                    render: locData => <UserIdentityNameCell userIdentity={ locData.userIdentity } />,
                     align: 'left',
                 },
                 {
                     "header": "Type",
-                    render: locData => <Cell content={ locData.locType }/>,
+                    render: locData => <Cell content={ locData.locType } />,
                     align: 'left',
-                    width: "100px",
+                    width: "110px",
                 },
                 {
                     "header": "Description",
-                    render: locData => <Cell content={ locData.description } overflowing tooltipId='description-tooltip' />,
+                    render: locData => <Cell content={ locData.description } overflowing
+                                             tooltipId='description-tooltip' />,
                     align: 'left',
                 },
                 {
                     header: "Status",
-                    render: locData => <LocStatusCell status={ locData.status }/>,
+                    render: locData => <LocStatusCell status={ locData.status } />,
                     width: "140px",
                 },
                 {
                     header: "LOC ID",
-                    render: locData => <LocIdCell status={ locData.status } id={ locData.id }/>,
+                    render: locData => <LocIdCell status={ locData.status } id={ locData.id } />,
                     align: "left",
                 },
                 {
@@ -76,7 +84,8 @@ export default function VTPClosedLocs() {
                     render: locData =>
                         <ActionCell>
                             <ButtonGroup>
-                                <Button className="ViewCertificateButton" onClick={ () => window.open(fullCertificateUrl(locData.id), "_blank") }>
+                                <Button className="ViewCertificateButton"
+                                        onClick={ () => window.open(fullCertificateUrl(locData.id), "_blank") }>
                                     View
                                 </Button>
                             </ButtonGroup>
@@ -88,10 +97,9 @@ export default function VTPClosedLocs() {
                     }),
                     align: 'center',
                 },
-            ]}
-            // TODO Display all Closed LOCs (any type) current user is vtp for.
-            data={ [] as LocData[] }
-            renderEmpty={ () => <EmptyTableMessage>No LOCs</EmptyTableMessage>}
+            ] }
+            data={ data }
+            renderEmpty={ () => <EmptyTableMessage>No LOCs</EmptyTableMessage> }
         />
     );
 }

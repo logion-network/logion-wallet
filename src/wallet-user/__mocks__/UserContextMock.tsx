@@ -134,6 +134,30 @@ export function setDraftLocRequests(requests: any[]) {
     }
 }
 
+export function setOpenVerifiedThirdPartyLocs(transactions: any[], collections: any[]) {
+    locsState = {
+        get openVerifiedThirdPartyLocs(): Record<LocType, OpenLoc[]> {
+            return {
+                "Transaction": transactions,
+                "Collection": collections,
+                "Identity": [],
+            }
+        }
+    }
+}
+export function setClosedVerifiedThirdPartyLocs(transactions: any[], collections: any[]) {
+    locsState = {
+        get closedVerifiedThirdPartyLocs(): Record<LocType, ClosedLoc[]> {
+            return {
+                "Transaction": transactions,
+                "Collection": collections,
+                "Identity": [],
+            }
+        }
+    }
+}
+
+
 export function setHasValidIdentityLoc(legalOfficers: LegalOfficer []) {
     locsState = {
         legalOfficersWithValidIdentityLoc: legalOfficers
