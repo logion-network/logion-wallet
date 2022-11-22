@@ -16,13 +16,7 @@ import LocStatusCell from '../common/LocStatusCell';
 import ButtonGroup from '../common/ButtonGroup';
 
 
-import {
-    IDENTITIES_PATH,
-    WALLET_PATH,
-    dataLocDetailsPath,
-    identityLocDetailsPath,
-    locRequestsPath
-} from './LegalOfficerPaths';
+import { WALLET_PATH, dataLocDetailsPath, identityLocDetailsPath, locRequestsPath } from './LegalOfficerPaths';
 
 import './Home.css';
 import UserIdentityNameCell from '../common/UserIdentityNameCell';
@@ -220,7 +214,7 @@ export default function Account() {
                         title="Last open Identity LOC"
                     >
                         <Button
-                            onClick={ () => navigate(IDENTITIES_PATH) }
+                            onClick={ () => navigate(locRequestsPath('Identity')) }
                             slim={ true }
                             className="identities-button"
                         >

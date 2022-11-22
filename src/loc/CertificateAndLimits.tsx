@@ -83,7 +83,7 @@ export default function CertificateAndLimits(props: Props) {
                     <Col className="col-xxxl-7 col-xxl-14 col-xl-14 col-lg-14 col-md-14 col-sd-14 col-xs-14">
                         <div className="tool-bar">
                             { props.loc.locType === 'Identity' && !isLogionIdentityLoc(props.loc) && props.loc.status ==='CLOSED' && <Nominate/> }
-                            { props.loc.locType === 'Transaction' && props.loc.status ==='OPEN' && <VTPSelectionButton/> }
+                            { !isLogionIdentityLoc(props.loc) && props.loc.status ==='OPEN' && <VTPSelectionButton/> }
                             <ArchiveButton/>
                             <StatementOfFactsButton/>
                         </div>

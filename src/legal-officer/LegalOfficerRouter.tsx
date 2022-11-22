@@ -9,13 +9,11 @@ import {
     WALLET_PATH,
     transactionsPath,
     TRANSACTIONS_RELATIVE_PATH,
-    IDENTITIES_RELATIVE_PATH,
     SETTINGS_PATH,
-    IDENTITY_LOC_DETAILS_RELATIVE_PATH,
     locDetailsPath,
-    IDENTITIES_PATH,
     locRequestsPath,
-    VAULT_OUT_REQUESTS_RELATIVE_PATH, locSelectVTPPath,
+    VAULT_OUT_REQUESTS_RELATIVE_PATH,
+    locSelectVTPPath,
 } from './LegalOfficerPaths';
 
 import Home from './Home';
@@ -34,7 +32,11 @@ import DangerFrame from '../common/DangerFrame';
 import DashboardCertificateRouter from "../loc/DashboardCertificateRouter";
 
 import './LegalOfficerRouter.css';
-import { locRequestsRelativePath, locDetailsRelativePath, relativeDashboardCertificateRelativePath } from "../RootPaths";
+import {
+    locRequestsRelativePath,
+    locDetailsRelativePath,
+    relativeDashboardCertificateRelativePath
+} from "../RootPaths";
 import VaultOutRequests from './vault/VaultOutRequests';
 import { useLogionChain } from '../logion-chain';
 import { useLegalOfficerContext } from './LegalOfficerContext';
@@ -130,10 +132,10 @@ export default function LegalOfficerRouter() {
                     locType='Collection'
                 />
             } />
-            <Route path={ IDENTITIES_RELATIVE_PATH } element={ <IdentityProtection /> } />
-            <Route path={ IDENTITY_LOC_DETAILS_RELATIVE_PATH } element={
+            <Route path={ locRequestsRelativePath('Identity') } element={ <IdentityProtection /> } />
+            <Route path={ locDetailsRelativePath('Identity') } element={
                 <LocDetails
-                    backPath={ IDENTITIES_PATH }
+                    backPath={ locRequestsPath('Identity') }
                     detailsPath={ locDetailsPath }
                     viewer='LegalOfficer'
                 />
@@ -148,6 +150,12 @@ export default function LegalOfficerRouter() {
                 <VTPSelection
                     detailsPath={ locDetailsPath }
                     locType='Collection'
+                />
+            }/>
+            <Route path={ locSelectVTPPath('Identity') } element={
+                <VTPSelection
+                    detailsPath={ locDetailsPath }
+                    locType='Identity'
                 />
             }/>
             <Route path="" element={ currentLegalOfficerUnavailable ? <Navigate to={ SETTINGS_PATH }/> : <Home /> } />

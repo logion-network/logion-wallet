@@ -43,13 +43,8 @@ export function dataLocDetailsPath(locType: LocType, locId: string) {
         .replace(":locId", locId)
 }
 
-export const IDENTITIES_RELATIVE_PATH = '/identities';
-export const IDENTITIES_PATH = LEGAL_OFFICER_PATH + IDENTITIES_RELATIVE_PATH;
-
-export const IDENTITY_LOC_DETAILS_RELATIVE_PATH = IDENTITIES_RELATIVE_PATH + '/:locId';
-export const IDENTITY_LOC_TRANSACTION_DETAILS_PATH = LEGAL_OFFICER_PATH + IDENTITY_LOC_DETAILS_RELATIVE_PATH;
 export function identityLocDetailsPath(locId: string) {
-    return IDENTITY_LOC_TRANSACTION_DETAILS_PATH.replace(":locId", locId)
+    return locDetailsPath(locId, 'Identity');
 }
 
 export function locDetailsPath(locId: string | UUID, locType: LocType) {
@@ -59,7 +54,7 @@ export function locDetailsPath(locId: string | UUID, locType: LocType) {
     } else {
         stringId = locId;
     }
-    return locType === 'Identity' ? identityLocDetailsPath(stringId) : dataLocDetailsPath(locType, stringId);
+    return dataLocDetailsPath(locType, stringId);
 }
 
 export const VAULT_OUT_REQUESTS_RELATIVE_PATH = '/vault';
