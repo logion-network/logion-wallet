@@ -15,7 +15,7 @@ import LegalOfficerInstructions from "./LegalOfficerInstructions";
 import SupersedesDisclaimer from "./SupersedesDisclaimer";
 import VoidFrame from "./VoidFrame";
 import AcceptRejectLocRequest from "./AcceptRejectLocRequest";
-import { IDENTITIES_PATH } from "src/legal-officer/LegalOfficerPaths";
+import { locRequestsPath } from "src/legal-officer/LegalOfficerPaths";
 
 export default function ContextualizedLocDetails() {
     const { pendingProtectionRequests, pendingRecoveryRequests } = useLegalOfficerContext();
@@ -99,7 +99,7 @@ export default function ContextualizedLocDetails() {
                 loc.status === "REQUESTED" &&
                 <AcceptRejectLocRequest
                     loc={ loc }
-                    rejectPath={ IDENTITIES_PATH }
+                    rejectPath={ locRequestsPath('Identity') }
                 />
             }
             { loc.locType === 'Collection' && loc.closed &&

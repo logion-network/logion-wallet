@@ -115,17 +115,17 @@ exports[`renders 1`] = `
   />
   <Route
     element={<IdentityProtection />}
-    path="/identities"
+    path="/loc/identity"
   />
   <Route
     element={
       <LocDetails
-        backPath="/legal-officer/identities"
+        backPath="/legal-officer/loc/identity"
         detailsPath={[Function]}
         viewer="LegalOfficer"
       />
     }
-    path="/identities/:locId"
+    path="/loc/identity/:locId"
   />
   <Route
     element={
@@ -144,6 +144,15 @@ exports[`renders 1`] = `
       />
     }
     path="/loc/collection/:locId/vtp"
+  />
+  <Route
+    element={
+      <VTPSelection
+        detailsPath={[Function]}
+        locType="Identity"
+      />
+    }
+    path="/loc/identity/:locId/vtp"
   />
   <Route
     element={<Account />}

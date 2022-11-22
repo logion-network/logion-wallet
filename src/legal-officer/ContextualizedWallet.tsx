@@ -11,7 +11,6 @@ import {
     RECOVERY_REQUESTS_PATH,
     SETTINGS_PATH,
     WALLET_PATH,
-    IDENTITIES_PATH,
     locRequestsPath,
     VAULT_OUT_REQUESTS_PATH,
     STATEMENT_OF_FACTS_PATH,
@@ -109,7 +108,7 @@ export default function ContextualizedWallet() {
                     {
                         id: "identity",
                         text: "Identities",
-                        to: IDENTITIES_PATH,
+                        to: locRequestsPath('Identity'),
                         exact: false,
                         icon: {
                             icon: {
