@@ -9,11 +9,18 @@
     cursor: pointer;
 }
 
-.Toggle.checked:after {
-    background-image: url("../../img/toggle-on.svg");
+.Toggle.white.checked:after {
+    background-image: url("../../img/toggle-on-white.svg");
 }
-.Toggle:not(.checked):after {
-    background-image: url("../../img/toggle-off.svg");
+.Toggle.white:not(.checked):after {
+    background-image: url("../../img/toggle-off-white.svg");
+}
+
+.Toggle.black.checked:after {
+    background-image: url("../../img/toggle-on-black.svg");
+}
+.Toggle.black:not(.checked):after {
+    background-image: url("../../img/toggle-off-black.svg");
 }
 
 .Toggle:after {
