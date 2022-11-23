@@ -1,6 +1,23 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`renders 1`] = `
+exports[`Frame renders 1`] = `
+<div
+  className="Frame"
+  style={
+    Object {
+      "backgroundColor": "#152665",
+      "boxShadow": "0 0 25px #3b6cf433",
+      "color": "#ffffff",
+    }
+  }
+>
+  <p>
+    Some children
+  </p>
+</div>
+`;
+
+exports[`Frame renders with title 1`] = `
 <div
   className="Frame"
   style={
@@ -13,6 +30,48 @@ exports[`renders 1`] = `
 >
   <div
     className="title-area"
-  />
+  >
+    <div
+      className="title"
+    >
+      Some title
+    </div>
+  </div>
+  <p>
+    Some children
+  </p>
+</div>
+`;
+
+exports[`Frame renders with title and icon 1`] = `
+<div
+  className="Frame"
+  style={
+    Object {
+      "backgroundColor": "#152665",
+      "boxShadow": "0 0 25px #3b6cf433",
+      "color": "#ffffff",
+    }
+  }
+>
+  <div
+    className="title-area"
+  >
+    <MenuIcon
+      icon={
+        Object {
+          "id": "vtp-icon",
+        }
+      }
+    />
+    <div
+      className="title"
+    >
+      Some title
+    </div>
+  </div>
+  <p>
+    Some children
+  </p>
 </div>
 `;
