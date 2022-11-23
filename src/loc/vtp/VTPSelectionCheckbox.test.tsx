@@ -13,6 +13,7 @@ describe("VTPSelectionCheckbox", () => {
             firstName: "Scott",
             lastName: "Tiger",
             identityLocId: "123",
+            address: "address-123",
             selected,
         }
     }

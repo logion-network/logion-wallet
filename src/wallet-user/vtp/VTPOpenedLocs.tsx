@@ -7,7 +7,7 @@ import LegalOfficerName from '../../common/LegalOfficerNameCell';
 import ButtonGroup from "../../common/ButtonGroup";
 import Button from "../../common/Button";
 import Loader from '../../common/Loader';
-import { locDetailsPath } from '../UserRouter';
+import { vtpDetailsPath } from '../UserRouter';
 import { useResponsiveContext } from '../../common/Responsive';
 import UserIdentityNameCell from "../../common/UserIdentityNameCell";
 import { LocData } from "@logion/client";
@@ -78,8 +78,7 @@ export default function VTPOpenedLocs() {
                         <ActionCell>
                             <ButtonGroup>
                                 <Button
-                                    disabled={ true }
-                                    onClick={ () => navigate(locDetailsPath(locData.id, locData.locType)) }>Contribute</Button>
+                                    onClick={ () => navigate(vtpDetailsPath(locData.id)) }>Contribute</Button>
                             </ButtonGroup>
                         </ActionCell>
                     ,

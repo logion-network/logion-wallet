@@ -11,11 +11,19 @@ jest.mock("./UserLocContext");
 
 describe("UserContextualizedLocDetails", () => {
 
-    it("renders", () => {
+    it("renders for requester", () => {
         const uuid = UUID.fromDecimalString(OPEN_IDENTITY_LOC_ID)!;
         setLocId(uuid);
         setLoc(buildLocRequest(uuid, OPEN_IDENTITY_LOC));
-        const tree = shallowRender(<UserContextualizedLocDetails />);
+        const tree = shallowRender(<UserContextualizedLocDetails contributionMode="Requester" />);
+        expect(tree).toMatchSnapshot();
+    })
+
+    it("renders for VTP", () => {
+        const uuid = UUID.fromDecimalString(OPEN_IDENTITY_LOC_ID)!;
+        setLocId(uuid);
+        setLoc(buildLocRequest(uuid, OPEN_IDENTITY_LOC));
+        const tree = shallowRender(<UserContextualizedLocDetails contributionMode="VTP" />);
         expect(tree).toMatchSnapshot();
     })
 })

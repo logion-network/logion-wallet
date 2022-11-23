@@ -2,12 +2,17 @@ import { Routes, Route, useNavigate } from 'react-router-dom';
 import { UUID } from '@logion/node-api/dist/UUID';
 import { LocType } from "@logion/node-api/dist/Types";
 
-import { USER_PATH, locRequestsRelativePath, locDetailsRelativePath, relativeDashboardCertificateRelativePath } from '../RootPaths';
+import {
+    USER_PATH,
+    locRequestsRelativePath,
+    locDetailsRelativePath,
+    relativeDashboardCertificateRelativePath
+} from '../RootPaths';
 
 import Settings from "../settings/Settings";
 import Wallet from "../common/Wallet";
 import Transactions from "../common/Transactions";
-import LocDetails from '../loc/LocDetails';
+import { UserLocDetails } from '../loc/LocDetails';
 import DashboardCertificateRouter from "../loc/DashboardCertificateRouter";
 import { useCommonContext } from "../common/CommonContext";
 
@@ -39,6 +44,12 @@ export const IDENTITY_REQUEST_RELATIVE_PATH = "/loc/identity-request";
 export const IDENTITY_REQUEST_PATH = USER_PATH + IDENTITY_REQUEST_RELATIVE_PATH;
 export const VTP_RELATIVE_PATH = '/vtp';
 export const VTP_PATH = USER_PATH + VTP_RELATIVE_PATH;
+export const VTP_DETAILS_RELATIVE_PATH = VTP_RELATIVE_PATH + '/:locId';
+
+export function vtpDetailsPath(locId: UUID | string) {
+    return USER_PATH + VTP_DETAILS_RELATIVE_PATH
+        .replace(":locId", locId.toString())
+}
 
 export const TRANSACTIONS_RELATIVE_PATH = WALLET_RELATIVE_PATH + '/:coinId';
 const TRANSACTIONS_PATH = USER_PATH + TRANSACTIONS_RELATIVE_PATH;
@@ -156,17 +167,17 @@ export default function UserRouter() {
                        actions={ <Button onClick={ () => navigate(IDENTITY_REQUEST_PATH) }>Request an Identity Case</Button> }
                    /> } />
             <Route path={ locDetailsRelativePath('Transaction') } element={
-                <LocDetails
+                <UserLocDetails
                     backPath={ locRequestsPath('Transaction') }
                     detailsPath={ locDetailsPath }
-                    viewer='User'
+                    contributionMode='Requester'
                 />
             } />
             <Route path={ locDetailsRelativePath('Collection') } element={
-                <LocDetails
+                <UserLocDetails
                     backPath={ locRequestsPath('Collection') }
                     detailsPath={ locDetailsPath }
-                    viewer='User'
+                    contributionMode='Requester'
                 />
             } />
             <Route path={ relativeDashboardCertificateRelativePath('Collection') } element={
@@ -177,10 +188,10 @@ export default function UserRouter() {
                 />
             } />
             <Route path={ locDetailsRelativePath('Identity') } element={
-                <LocDetails
+                <UserLocDetails
                     backPath={ locRequestsPath('Identity') }
                     detailsPath={ locDetailsPath }
-                    viewer='User'
+                    contributionMode='Requester'
                 />
             } />
             <Route path="/" element={ <Home /> } />
@@ -189,6 +200,13 @@ export default function UserRouter() {
             } />
             <Route path={ VTP_RELATIVE_PATH } element={
                 <VTPDashboard/>
+            } />
+            <Route path={ VTP_DETAILS_RELATIVE_PATH } element={
+                <UserLocDetails
+                    backPath={ VTP_PATH }
+                    detailsPath={ (locId: UUID, type: LocType) => vtpDetailsPath(locId) }
+                    contributionMode='VTP'
+                />
             } />
         </Routes>
     );

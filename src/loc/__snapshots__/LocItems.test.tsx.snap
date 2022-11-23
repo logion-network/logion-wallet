@@ -572,7 +572,9 @@ exports[`UserLocItems renders with single draft item 1`] = `
               className="regular-cell"
               style={Object {}}
             >
-              !! Unknown submitter !!
+              <div>
+                !! Unknown submitter !!
+              </div>
             </div>
           </div>
           <div

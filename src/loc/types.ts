@@ -49,3 +49,5 @@ export function toItemId(maybeHex: string): string | undefined {
         return `0x${sha256HexFromString(maybeHex)}`;
     }
 }
+
+export type ContributionMode = 'Requester' | 'VTP';

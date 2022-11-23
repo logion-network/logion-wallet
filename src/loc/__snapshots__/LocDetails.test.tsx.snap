@@ -31,7 +31,7 @@ exports[`LocDetails renders for LO 1`] = `
 </LegalOfficerLocContextProvider>
 `;
 
-exports[`LocDetails renders for user 1`] = `
+exports[`LocDetails renders for user as Requester 1`] = `
 <UserLocContextProvider
   backPath="/"
   detailsPath={[Function]}
@@ -58,6 +58,41 @@ exports[`LocDetails renders for user 1`] = `
     }
   }
 >
-  <UserContextualizedLocDetails />
+  <UserContextualizedLocDetails
+    contributionMode="Requester"
+  />
+</UserLocContextProvider>
+`;
+
+exports[`LocDetails renders for user as VTP 1`] = `
+<UserLocContextProvider
+  backPath="/"
+  detailsPath={[Function]}
+  locId={
+    UUID {
+      "bytes": Uint8Array [
+        174,
+        212,
+        198,
+        228,
+        151,
+        158,
+        72,
+        173,
+        190,
+        110,
+        75,
+        211,
+        159,
+        185,
+        71,
+        98,
+      ],
+    }
+  }
+>
+  <UserContextualizedLocDetails
+    contributionMode="VTP"
+  />
 </UserLocContextProvider>
 `;

@@ -6,36 +6,41 @@ import ContextualizedLocDetails from "./ContextualizedLocDetails";
 import { UserLocContextProvider } from "./UserLocContext";
 import UserContextualizedLocDetails from "./UserContextualizedLocDetails";
 import { LegalOfficerLocContextProvider } from "./LegalOfficerLocContext";
-import { Viewer } from "src/common/CommonContext";
+import { ContributionMode } from "./types";
 
-export interface Props {
+export interface LocDetailsProps {
     backPath: string;
     detailsPath: (locId: UUID, type: LocType) => string;
-    viewer: Viewer;
 }
 
-export default function LocDetails(props: Props) {
+export default function LocDetails(props: LocDetailsProps) {
     const locId: UUID = new UUID(useParams<"locId">().locId);
+    return (
+        <LegalOfficerLocContextProvider
+            locId={ locId }
+            backPath={ props.backPath }
+            detailsPath={ props.detailsPath }
+        >
+            <ContextualizedLocDetails />
+        </LegalOfficerLocContextProvider>
+    )
+}
 
-    if (props.viewer === "LegalOfficer") {
-        return (
-            <LegalOfficerLocContextProvider
-                locId={ locId }
-                backPath={ props.backPath }
-                detailsPath={ props.detailsPath }
-            >
-                <ContextualizedLocDetails/>
-            </LegalOfficerLocContextProvider>
-        )
-    } else {
-        return (
-            <UserLocContextProvider
-                locId={ locId }
-                backPath={ props.backPath }
-                detailsPath={ props.detailsPath }
-            >
-                <UserContextualizedLocDetails/>
-            </UserLocContextProvider>
-        )
-    }
+export interface UserLocDetailsProps extends LocDetailsProps {
+    contributionMode: ContributionMode
+}
+
+export function UserLocDetails(props: UserLocDetailsProps) {
+    const locId: UUID = new UUID(useParams<"locId">().locId);
+    return (
+        <UserLocContextProvider
+            locId={ locId }
+            backPath={ props.backPath }
+            detailsPath={ props.detailsPath }
+        >
+            <UserContextualizedLocDetails
+                contributionMode={ props.contributionMode }
+            />
+        </UserLocContextProvider>
+    )
 }
