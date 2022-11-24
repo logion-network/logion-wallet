@@ -1,3 +1,4 @@
+import { DateTime } from 'luxon';
 import { Navigate, useLocation } from 'react-router-dom';
 
 import { LOGIN_PATH, LocationState } from './Login';
@@ -8,11 +9,14 @@ export interface Props {
 }
 
 export default function RenderOrRedirectToLogin(props: Props) {
-    const { accounts } = useLogionChain();
+    const { client } = useLogionChain();
     const location = useLocation();
 
-    if(accounts !== null
-            && accounts.all.find(address => address.token !== undefined) === undefined) {
+    if(!client) {
+        return null;
+    }
+
+    if(!client.isTokenValid(DateTime.now())) {
         const state: LocationState = {
             referrer: location.pathname
         };

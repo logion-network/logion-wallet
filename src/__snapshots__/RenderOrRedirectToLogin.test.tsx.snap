@@ -1,6 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Given no logged account, when rendering, then redirecting to login with referrer 1`] = `
+exports[`RenderOrRedirectToLogin empty without client 1`] = `null`;
+
+exports[`RenderOrRedirectToLogin redirects to login with referrer if not logged in 1`] = `
 <Navigate
   state={
     Object {
