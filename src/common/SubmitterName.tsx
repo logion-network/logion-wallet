@@ -3,6 +3,8 @@ import { Cell } from "./Table";
 import { LocItem } from "../loc/types";
 import LegalOfficerName from "./LegalOfficerNameCell";
 import Icon from "./Icon";
+import OverlayTrigger from "react-bootstrap/OverlayTrigger";
+import Tooltip from "react-bootstrap/Tooltip";
 
 export interface Props {
     loc: LocData
@@ -32,12 +34,30 @@ export default function SubmitterName(props: Props) {
                 <div>
                     { format(identity) }
                     { locItem.submitter !== loc.requesterAddress && <>
-                        &nbsp;
-                        <Icon icon={ { id: "vtp-badge" } } />
+                        <VTPBadge />
                     </> }
                 </div>
             }
             />
         )
     }
+}
+
+function VTPBadge() {
+    return (
+        <OverlayTrigger
+            placement="bottom-end"
+            delay={ 500 }
+            overlay={
+                <Tooltip id={ Math.random().toString() }>
+                    contributed by this Verified Third Party at the request of the Legal Officer in charge
+                </Tooltip>
+            }
+        >
+            <span>
+                &nbsp;
+                <Icon icon={ { id: "vtp-badge" } } />
+            </span>
+        </OverlayTrigger>
+    )
 }
