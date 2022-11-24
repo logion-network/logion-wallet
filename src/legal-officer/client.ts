@@ -215,11 +215,7 @@ export async function setVerifiedThirdParty(params: {
     return await locState.refresh() as ClosedLoc;
 }
 
-export interface VerifiedThirdPartySelection extends VerifiedThirdParty {
-    selected: boolean;
-}
-
-export async function getVerifiedThirdPartySelections(params: { locState: OpenLoc } ): Promise<VerifiedThirdPartySelection[]> {
+export async function getVerifiedThirdPartySelections(params: { locState: OpenLoc } ): Promise<VerifiedThirdParty[]> {
     const { locState } = params
     const axios = buildAxios(locState);
     const response = await axios.get("/api/verified-third-parties");
@@ -228,7 +224,7 @@ export async function getVerifiedThirdPartySelections(params: { locState: OpenLo
     const selectedParties = locState.data().selectedParties;
 
     return allVerifiedThirdParties
-        .map(vtp => selectedParties.find(selected => selected.identityLocId === vtp.identityLocId) ?
+        .map(vtp => selectedParties.find(selectedParty => selectedParty.identityLocId === vtp.identityLocId && selectedParty.selected) ?
             { ...vtp, selected: true } :
             { ...vtp, selected: false }
         )

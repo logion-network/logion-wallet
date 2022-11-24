@@ -1,5 +1,4 @@
-import { VerifiedThirdPartySelection } from "../client";
-import { OpenLoc } from "@logion/client";
+import { OpenLoc, VerifiedThirdParty } from "@logion/client";
 
 export let closeLoc = jest.fn().mockResolvedValue(undefined);
 
@@ -15,12 +14,12 @@ export function setVoidLocMock(mock: any) {
     voidLoc = mock;
 }
 
-let vtpSelections: VerifiedThirdPartySelection[] = [];
+let vtpSelections: VerifiedThirdParty[] = [];
 
-export async function getVerifiedThirdPartySelections(params: { locState: OpenLoc } ): Promise<VerifiedThirdPartySelection[]> {
+export async function getVerifiedThirdPartySelections(params: { locState: OpenLoc } ): Promise<VerifiedThirdParty[]> {
     return Promise.resolve(vtpSelections);
 }
 
-export function setVerifiedThirdPartySelections(mock: VerifiedThirdPartySelection[]) {
+export function setVerifiedThirdPartySelections(mock: VerifiedThirdParty[]) {
     vtpSelections = mock;
 }

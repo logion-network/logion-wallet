@@ -56,6 +56,7 @@ export default function UserContextualizedLocDetails(props: Props) {
                 viewer="User"
                 detailsPath={ detailsPath }
                 legalOfficer={ getOfficer(loc.ownerAddress) }
+                contributionMode={ props.contributionMode }
             />
             {
                 loc.status !== "DRAFT" &&

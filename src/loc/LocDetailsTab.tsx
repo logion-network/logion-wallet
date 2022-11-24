@@ -15,7 +15,7 @@ import LocLinkButton from "./LocLinkButton";
 import { LocPrivateFileButton } from "./LocPrivateFileButton";
 import { LocPublicDataButton } from "./LocPublicDataButton";
 import RequesterOrLegalOfficer from "./RequesterOrLegalOfficer";
-import { LocItem } from "./types";
+import { LocItem, ContributionMode } from "./types";
 
 import "./LocDetailsTab.css";
 import { Row } from "src/common/Grid";
@@ -31,6 +31,7 @@ export interface Props {
     loc: LocData;
     locState: LocRequestState;
     viewer: Viewer;
+    contributionMode?: ContributionMode;
     detailsPath: (locId: UUID, type: LocType) => string;
     legalOfficer?: LegalOfficer;
     checkResult: DocumentCheckResult;
@@ -107,6 +108,7 @@ export default function LocDetailsTab(props: Props) {
 
 export interface ContentProps {
     viewer: Viewer;
+    contributionMode?: ContributionMode;
     detailsPath: (locId: UUID, type: LocType) => string;
     legalOfficer?: LegalOfficer;
     checkResult: DocumentCheckResult;
@@ -210,6 +212,7 @@ export function LocDetailsTabContent(props: ContentProps) {
         <LocItems
             matchedHash={ checkResult.hash }
             viewer={ props.viewer }
+            contributionMode={ props.contributionMode }
         />
         <Row>
             <Col xxl={ 5 } xl={ 4 }>
