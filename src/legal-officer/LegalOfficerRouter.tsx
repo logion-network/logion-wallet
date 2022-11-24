@@ -115,14 +115,12 @@ export default function LegalOfficerRouter() {
                 <LocDetails
                     backPath={ locRequestsPath('Transaction') }
                     detailsPath={ locDetailsPath }
-                    viewer='LegalOfficer'
                 />
             } />
             <Route path={ locDetailsRelativePath('Collection') } element={
                 <LocDetails
                     backPath={ locRequestsPath('Collection') }
                     detailsPath={ locDetailsPath }
-                    viewer='LegalOfficer'
                 />
             } />
             <Route path={ relativeDashboardCertificateRelativePath('Collection') } element={
@@ -137,7 +135,6 @@ export default function LegalOfficerRouter() {
                 <LocDetails
                     backPath={ locRequestsPath('Identity') }
                     detailsPath={ locDetailsPath }
-                    viewer='LegalOfficer'
                 />
             } />
             <Route path={ locSelectVTPPath('Transaction') } element={

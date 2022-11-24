@@ -6,16 +6,18 @@ import { FullWidthPane } from "../common/Dashboard";
 import { Children, customClassName } from "src/common/types/Helpers";
 
 import "./LocPane.css";
+import { ContributionMode } from "./types";
 
 export interface Props {
     loc: LocData | null;
     backPath: string;
     children: Children;
     className?: string;
+    contributionMode?: ContributionMode;
 }
 
 export default function LocPane(props: Props) {
-    const { loc, backPath, children } = props;
+    const { loc, backPath, children, contributionMode } = props;
     const { colorTheme } = useCommonContext();
     const navigate = useNavigate();
 
@@ -25,7 +27,10 @@ export default function LocPane(props: Props) {
 
     let paneTitle: string = "";
     let paneIcon: string = "";
-    if (loc.locType === 'Transaction') {
+    if (contributionMode === 'VTP') {
+        paneTitle = "Third Party LOC Management";
+        paneIcon = 'vtp-icon';
+    } else if (loc.locType === 'Transaction') {
         paneTitle = "Transaction Protection Case";
         paneIcon = 'loc';
     } else if (loc.locType === 'Identity') {

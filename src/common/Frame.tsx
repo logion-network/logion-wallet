@@ -54,18 +54,20 @@ export default function Frame(props: Props) {
                 boxShadow: `0 0 25px ${colorTheme.shadowColor}`,
             }}
         >
-            <div className="title-area">
-            {
-                props.titleIcon !== undefined &&
-                <MenuIcon
-                    { ...props.titleIcon }
-                />
+            { (props.titleIcon !== undefined || props.title !== undefined) &&
+                <div className="title-area">
+                    {
+                        props.titleIcon !== undefined &&
+                        <MenuIcon
+                            { ...props.titleIcon }
+                        />
+                    }
+                    {
+                        props.title !== undefined &&
+                        <div className="title">{ props.title }</div>
+                    }
+                </div>
             }
-            {
-                props.title !== undefined &&
-                <div className="title">{ props.title }</div>
-            }
-            </div>
             { props.children }
         </div>
     );

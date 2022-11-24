@@ -21,12 +21,14 @@ describe("VTPSelectionFrame", () => {
                 firstName: "John",
                 lastName: "Doe",
                 identityLocId: "123",
+                address: "address-123",
                 selected: false,
             },
             {
                 firstName: "Scott",
                 lastName: "Tiger",
                 identityLocId: "456",
+                address: "address-456",
                 selected: true,
             },
         ])

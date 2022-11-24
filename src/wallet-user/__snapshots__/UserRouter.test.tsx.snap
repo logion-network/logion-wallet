@@ -131,20 +131,20 @@ exports[`renders 1`] = `
   />
   <Route
     element={
-      <LocDetails
+      <UserLocDetails
         backPath="/user/loc/transaction"
+        contributionMode="Requester"
         detailsPath={[Function]}
-        viewer="User"
       />
     }
     path="/loc/transaction/:locId"
   />
   <Route
     element={
-      <LocDetails
+      <UserLocDetails
         backPath="/user/loc/collection"
+        contributionMode="Requester"
         detailsPath={[Function]}
-        viewer="User"
       />
     }
     path="/loc/collection/:locId"
@@ -161,10 +161,10 @@ exports[`renders 1`] = `
   />
   <Route
     element={
-      <LocDetails
+      <UserLocDetails
         backPath="/user/loc/identity"
+        contributionMode="Requester"
         detailsPath={[Function]}
-        viewer="User"
       />
     }
     path="/loc/identity/:locId"
@@ -184,6 +184,16 @@ exports[`renders 1`] = `
   <Route
     element={<VTPDashboard />}
     path="/vtp"
+  />
+  <Route
+    element={
+      <UserLocDetails
+        backPath="/user/vtp"
+        contributionMode="VTP"
+        detailsPath={[Function]}
+      />
+    }
+    path="/vtp/:locId"
   />
 </Routes>
 `;

@@ -3,7 +3,6 @@ import { AxiosInstance } from "axios";
 
 import Table, { Cell, DateTimeCell, EmptyTableMessage, ActionCell } from "../common/Table";
 import StatusCell from "../common/StatusCell";
-import LegalOfficerName from "../common/LegalOfficerNameCell";
 import ButtonGroup from "../common/ButtonGroup";
 import Button from "../common/Button";
 import { POLKADOT } from "../common/ColorTheme";
@@ -190,13 +189,7 @@ export function LocItems(props: LocItemsProps) {
                         },
                         {
                             header: "Submitted by",
-                            render: locItem =>
-                                <>
-                                    { locItem.submitter === loc.ownerAddress ?
-                                        <LegalOfficerName address={ locItem.submitter } /> :
-                                        <SubmitterName identity={ loc.userIdentity } />
-                                    }
-                                </>
+                            render: locItem => <SubmitterName loc={ loc } locItem={ locItem} />
                         },
                         {
                             header: "",

@@ -1,6 +1,6 @@
 import { shallowRender } from "../tests";
 import { setParams } from "../__mocks__/ReactRouterMock";
-import LocDetails from "./LocDetails";
+import LocDetails, { UserLocDetails } from "./LocDetails";
 
 jest.mock("react-router");
 
@@ -11,17 +11,29 @@ describe("LocDetails", () => {
         const result = shallowRender(<LocDetails
             backPath="/"
             detailsPath={() => "/details"}
-            viewer="LegalOfficer"
+        />);
+        expect(result).toMatchSnapshot();
+    })
+})
+
+describe("LocDetails", () => {
+
+    it("renders for user as Requester", () => {
+        setParams({"locId": "aed4c6e4-979e-48ad-be6e-4bd39fb94762"})
+        const result = shallowRender(<UserLocDetails
+            backPath="/"
+            detailsPath={() => "/details"}
+            contributionMode='Requester'
         />);
         expect(result).toMatchSnapshot();
     })
 
-    it("renders for user", () => {
+    it("renders for user as VTP", () => {
         setParams({"locId": "aed4c6e4-979e-48ad-be6e-4bd39fb94762"})
-        const result = shallowRender(<LocDetails
+        const result = shallowRender(<UserLocDetails
             backPath="/"
             detailsPath={() => "/details"}
-            viewer="User"
+            contributionMode='VTP'
         />);
         expect(result).toMatchSnapshot();
     })

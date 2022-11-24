@@ -9,8 +9,14 @@ import VoidDisclaimer from "./VoidDisclaimer";
 import SupersedesDisclaimer from "./SupersedesDisclaimer";
 import { useLogionChain } from 'src/logion-chain';
 import DraftLocInstructions from './DraftLocInstructions';
+import { ContributionMode } from "./types";
+import VTPInfo from "../wallet-user/vtp/VTPInfo";
 
-export default function UserContextualizedLocDetails() {
+export interface Props {
+    contributionMode: ContributionMode;
+}
+
+export default function UserContextualizedLocDetails(props: Props) {
     const { getOfficer } = useLogionChain();
     const {
         backPath,
@@ -32,10 +38,15 @@ export default function UserContextualizedLocDetails() {
         <LocPane
             backPath={ backPath }
             loc={ loc }
+            contributionMode={ props.contributionMode }
         >
             {
                 loc.status === "DRAFT" &&
                 <DraftLocInstructions/>
+            }
+            {
+                props.contributionMode === "VTP" &&
+                <VTPInfo/>
             }
             <LocDetailsTab
                 loc={ loc }
