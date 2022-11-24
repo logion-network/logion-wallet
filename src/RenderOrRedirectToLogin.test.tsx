@@ -4,28 +4,35 @@ jest.mock('./logion-chain');
 import { shallowRender, act } from './tests';
 
 import RenderOrRedirectToLogin from './RenderOrRedirectToLogin';
-import { setAddresses, setCurrentAddress, DEFAULT_USER_ACCOUNT } from './logion-chain/__mocks__/LogionChainMock';
-import { Account } from './common/types/Accounts';
-import { TEST_WALLET_USER } from './wallet-user/TestData';
+import { setClientMock } from './logion-chain/__mocks__/LogionChainMock';
+import { LogionClient } from '@logion/client';
 
-test('Given no logged account, when rendering, then redirecting to login with referrer', () => {
-    const notLoggedAccount: Account = {
-        name: "name",
-        address: TEST_WALLET_USER,
-        isLegalOfficer: false,
-    };
-    setAddresses({
-        all: [ notLoggedAccount ],
+describe("RenderOrRedirectToLogin", () => {
+
+    it('redirects to login with referrer if not logged in', () => {
+        setClientMock(buildClientMock(false));
+        const render = jest.fn();
+        const tree = shallowRender( <RenderOrRedirectToLogin render={ render } /> );
+        expect(tree).toMatchSnapshot();
     });
-    const render = jest.fn();
-    let tree: any;
-    act(() => { tree = shallowRender( <RenderOrRedirectToLogin render={ render } /> )});
-    expect(tree).toMatchSnapshot();
+
+    it('renders if logged in', () => {
+        setClientMock(buildClientMock(true));
+        const render = jest.fn();
+        act(() => { shallowRender( <RenderOrRedirectToLogin render={ render } /> )});
+        expect(render).toBeCalled();
+    });
+
+    it('empty without client', () => {
+        setClientMock(null);
+        const render = jest.fn();
+        const tree = shallowRender( <RenderOrRedirectToLogin render={ render } /> );
+        expect(tree).toMatchSnapshot();
+    });
 });
 
-test('Given logged account, when rendering, then rendering', () => {
-    setCurrentAddress(DEFAULT_USER_ACCOUNT);
-    const render = jest.fn();
-    act(() => { shallowRender( <RenderOrRedirectToLogin render={ render } /> )});
-    expect(render).toBeCalled();
-});
+function buildClientMock(authenticated: boolean): LogionClient {
+    return {
+        isTokenValid: () => authenticated,
+    } as unknown as LogionClient;
+}

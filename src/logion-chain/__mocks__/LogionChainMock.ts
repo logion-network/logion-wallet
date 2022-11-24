@@ -85,7 +85,7 @@ export const apiMock = {
     }
 };
 
-export let clientMock: LogionClient | LogionClientMock = new LogionClientMock();
+export let clientMock: LogionClient | LogionClientMock | null = new LogionClientMock();
 
 export let authenticate = jest.fn();
 
@@ -194,6 +194,6 @@ function authenticateAddress(address: string) {
     };
 }
 
-export function setClientMock(mock: LogionClient) {
+export function setClientMock(mock: LogionClient | null) {
     clientMock = mock;
 }
