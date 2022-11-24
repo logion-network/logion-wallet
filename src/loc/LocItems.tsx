@@ -14,7 +14,7 @@ import SubmitterName from "../common/SubmitterName";
 import { useLogionChain } from "../logion-chain";
 
 import { getFile } from "./Model";
-import { LocItem } from "./types";
+import { LocItem, ContributionMode } from "./types";
 import LocLinkDetails from "./LocLinkDetails";
 import LocPublishLinkButton from "./LocPublishLinkButton";
 import LocPrivateFileDetails from "./LocPrivateFileDetails";
@@ -31,6 +31,7 @@ import { useCallback } from "react";
 export interface LocItemsProps {
     matchedHash?: string;
     viewer: Viewer;
+    contributionMode?: ContributionMode;
 }
 
 export function LocItems(props: LocItemsProps) {
@@ -170,7 +171,7 @@ export function LocItems(props: LocItemsProps) {
                             render: locItem => <Cell content={
                                 <>
                                     <span className="item-type">{ locItem.type }</span> {
-                                    locItem.type === 'Document' &&
+                                    locItem.type === 'Document' && canViewFile(accounts?.current?.address, locItem, props.contributionMode) &&
                                     <ViewFileButton
                                         nodeOwner={ loc.ownerAddress }
                                         fileName={ locItem.name }
@@ -222,4 +223,8 @@ function canDelete(address: string | undefined, item: LocItem, viewer: Viewer, l
         return (viewer === "User" && item.submitter === address && (loc.status === "DRAFT" || loc.status === "OPEN"))
             || (viewer === "LegalOfficer" && loc.status === "OPEN");
     }
+}
+
+function canViewFile(address: string | undefined, item: LocItem, contributionMode?: ContributionMode): boolean {
+    return (contributionMode !== 'VTP' || item.submitter === address);
 }

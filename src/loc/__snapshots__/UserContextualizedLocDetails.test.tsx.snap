@@ -49,6 +49,7 @@ exports[`UserContextualizedLocDetails renders for VTP 1`] = `
         "result": "NONE",
       }
     }
+    contributionMode="VTP"
     legalOfficer={
       Object {
         "additionalDetails": "",
@@ -292,6 +293,7 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
         "result": "NONE",
       }
     }
+    contributionMode="Requester"
     legalOfficer={
       Object {
         "additionalDetails": "",
