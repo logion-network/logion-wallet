@@ -1,17 +1,16 @@
 import Checkbox from "../../components/toggle/Checkbox";
 import {
-    VerifiedThirdPartySelection,
     SelectPartiesParams,
     selectParties,
     unselectParties
 } from "../../legal-officer/client";
 import { useCallback, useState } from "react";
-import { OpenLoc } from "@logion/client";
+import { OpenLoc, VerifiedThirdParty } from "@logion/client";
 import { useLocContext } from "../LocContext";
 import Dialog from "../../common/Dialog";
 
 export interface Props {
-    vtpSelection: VerifiedThirdPartySelection
+    vtpSelection: VerifiedThirdParty
 }
 
 export default function VTPSelectionCheckbox(props: Props) {
@@ -46,10 +45,10 @@ export default function VTPSelectionCheckbox(props: Props) {
     return (<>
         <Checkbox
             skin="Toggle black"
-            checked={ vtpSelection.selected }
+            checked={ vtpSelection.selected || false }
             setChecked={ () => {
                 setStatus('Selected');
-                setShowUnselect(vtpSelection.selected);
+                setShowUnselect(vtpSelection.selected || false);
             } } />
         <Dialog
             show={ status !== 'Idle' }
