@@ -186,6 +186,16 @@ export default function ImportItems() {
 
                 { items.length > 0 &&
                     <>
+                    <div className="import-all-container">
+                        <Button
+                            variant="polkadot"
+                            onClick={ importAll }
+                            disabled={ getNotSubmitted(items) === 0 || isBatchImport }
+                        >
+                            <Icon icon={{id: "import_items"}} height="23px" /> Import all
+                        </Button>
+                    </div>
+
                     <Table
                         columns={[
                             {

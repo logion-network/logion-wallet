@@ -19,8 +19,9 @@ describe("ImportItems", () => {
     it("imports all CSV", async () => {
         const collection = await uploadCsv();
 
-        await waitFor(() => screen.getByRole("button", { name: /Import all/ }));
-        await clickByName(/Import all/);
+        await waitFor(() => screen.getAllByRole("button", { name: /Import all/ }));
+        const importAllButton = screen.getAllByRole("button", { name: /Import all/ })[0];
+        await userEvent.click(importAllButton);
         await waitFor(() => expect(collection.addCollectionItem).toBeCalled());
 
         await waitFor(() => expect(screen.getByAltText("ok")).toBeVisible());
@@ -31,8 +32,8 @@ describe("ImportItems", () => {
     it("imports one CSV row", async () => {
         const collection = await uploadCsv();
 
-        await waitFor(() => expect(screen.getAllByRole("button", { name: /Import/ }).length).toBe(3));
-        const importButton = screen.getAllByRole("button", { name: /Import/ })[1];
+        await waitFor(() => expect(screen.getAllByRole("button", { name: /Import/ }).length).toBe(4));
+        const importButton = screen.getAllByRole("button", { name: /Import/ })[2];
         await userEvent.click(importButton);
         await waitFor(() => expect(collection.addCollectionItem).toBeCalled());
 

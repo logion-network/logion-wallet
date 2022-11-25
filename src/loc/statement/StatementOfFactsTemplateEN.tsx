@@ -147,6 +147,14 @@ export default function StatementOfFactsTemplateEN(props: Props) {
                                 <div>File #{index + 1} Content Type: { file.contentType }</div>
                                 <div>File #{index + 1} Hash: { file.hash }</div>
                                 <div>File #{index + 1} Size: { file.size.toString() } bytes</div>
+                                {
+                                    file.deliveries.map((delivery, deliveryIndex) => (
+                                        <>
+                                        <div>File #{index + 1} - Delivery #{ deliveryIndex + 1 } Copy Hash: { delivery.hash }</div>
+                                        <div>File #{index + 1} - Delivery #{ deliveryIndex + 1 } Owner: { delivery.owner }</div>
+                                        </>
+                                    ))
+                                }
                                 </>
                             ))
                         }

@@ -6,4 +6,5 @@
 .Dashboard .StatementOfFactsButtonDropdownItem a {
     color: white;
     margin-bottom: 0;
+    line-height: 1.1rem;
 }

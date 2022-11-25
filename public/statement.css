@@ -93,6 +93,7 @@
 
     .fact-container {
         padding-bottom: 5mm;
+        word-break: break-all;
     }
 
     h3 {
