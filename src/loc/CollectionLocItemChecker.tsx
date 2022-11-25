@@ -221,23 +221,9 @@ function CollectionLocItemChecker(props: LocalProps) {
                                     }
                                 </Col>
                                 <Col className="buttons">
-                                    <Button onClick={ checkData } disabled={ !itemId }><Icon
-                                        icon={ { id: "search" } } /> Check Item ID</Button>
-                                    {
-                                        state === "POSITIVE" && item !== undefined &&
-                                        (
-                                            (props.viewer === 'LegalOfficer' &&
-                                                <StatementOfFactsButton
-                                                    item={ item }
-                                                />
-                                            ) ||
-                                            (props.viewer === 'User' &&
-                                                <StatementOfFactsRequestButton
-                                                    itemId={ toItemId(itemId) }
-                                                />
-                                            )
-                                        )
-                                    }
+                                    <Button onClick={ checkData } disabled={ !itemId }>
+                                        <Icon icon={ { id: "search" } } /> Check Item ID
+                                    </Button>
                                 </Col>
                             </Row>
                         }
@@ -286,10 +272,15 @@ function CollectionLocItemChecker(props: LocalProps) {
                         }),
                     },
                     {
-                        header: "Details",
+                        header: "",
                         render: item => (
                             <ActionCell>
                                 <ButtonGroup>
+                                    <Button
+                                        onClick={ () => navigate(dashboardCertificateRelativePath("Collection", collectionLoc.id, item.id, props.viewer)) }
+                                    >
+                                        View
+                                    </Button>
                                     {
                                         (props.viewer === 'LegalOfficer' &&
                                             <StatementOfFactsButton
@@ -302,9 +293,6 @@ function CollectionLocItemChecker(props: LocalProps) {
                                             />
                                         )
                                     }
-                                    <Button
-                                        onClick={ () => navigate(dashboardCertificateRelativePath("Collection", collectionLoc.id, item.id, props.viewer)) }
-                                    >View</Button>
                                 </ButtonGroup>
                             </ActionCell>
                         ),
