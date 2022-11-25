@@ -1,0 +1,30 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SubmitterName renders when submitter is Legal Officer 1`] = `
+<LegalOfficerName
+  address="5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"
+/>
+`;
+
+exports[`SubmitterName renders when submitter is Requester 1`] = `
+<Cell
+  content={
+    <div>
+      John Doe
+    </div>
+  }
+/>
+`;
+
+exports[`SubmitterName renders when submitter is VTP 1`] = `
+<Cell
+  content={
+    <div>
+      Scott Tiger
+      <React.Fragment>
+        <VTPBadge />
+      </React.Fragment>
+    </div>
+  }
+/>
+`;
