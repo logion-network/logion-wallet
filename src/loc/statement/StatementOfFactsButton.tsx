@@ -162,7 +162,10 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                         size: file.size.toString(),
                         deliveries: toSofDeliveries(file, deliveries),
                     })),
-                    logionClassification: props.item.logionClassification,
+                    logionClassification: props.item.logionClassification ? {
+                        locId: props.item.logionClassification.tcLocId.toString(),
+                        details: props.item.logionClassification.details,
+                    } : undefined,
                     litcUrl: `${ getBaseUrl() }/license/LITC-v1.0.txt`,
                     litcLocUrl: props.item.logionClassification ? fullCertificateUrl(props.item.logionClassification.tcLocId) : "",
                     specificLicenses: props.item.specificLicenses,
@@ -194,20 +197,21 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
     }, [ sofParams, setSofParams, locData, language, props.item, deliveries, accounts, legalOfficer, settings ]);
 
     const cancelCallback = useCallback(() => {
-        setStatus('IDLE')
-        setLanguage(null)
+        clearSofParams();
+        setSofParams(DEFAULT_SOF_PARAMS);
+        setStatus('IDLE');
+        setLanguage(null);
     }, [ setStatus, setLanguage ])
 
     const previousCallback = useCallback(() => {
-        setStatus('PRE-REQUISITE')
+        setStatus('PRE-REQUISITE');
     }, [ setStatus ])
 
     const prerequisitesDoneCallback = useCallback((prerequisites: Prerequisite[]) => {
         setSofParams({
-                ...sofParams,
-                prerequisites,
-            }
-        )
+            ...sofParams,
+            prerequisites,
+        });
         setStatus('INPUT');
     }, [ sofParams ])
 

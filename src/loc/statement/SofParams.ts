@@ -1,5 +1,5 @@
 import { ItemToken } from "@logion/node-api";
-import { LogionClassification, SpecificLicense } from "@logion/client";
+import { SpecificLicense } from "@logion/client";
 
 export interface PublicItem {
     description: string;
@@ -40,6 +40,11 @@ export interface SofCollectionItemFile {
     deliveries: SofCollectionItemFileDelivery[];
 }
 
+export interface SofLogionClassification {
+    locId: string;
+    details: string,
+}
+
 export interface SofCollectionItem {
     id: string;
     description: string;
@@ -47,7 +52,7 @@ export interface SofCollectionItem {
     files: SofCollectionItemFile[];
     token?: ItemToken;
     restrictedDelivery: boolean;
-    logionClassification?: LogionClassification;
+    logionClassification?: SofLogionClassification;
     litcUrl: string;
     litcLocUrl: string;
     specificLicenses?: SpecificLicense[];
