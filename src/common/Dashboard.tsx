@@ -12,7 +12,6 @@ import MenuIcon from './MenuIcon';
 import Clickable from './Clickable';
 import Icon from './Icon';
 import { useCommonContext } from './CommonContext';
-import { useLogionChain } from '../logion-chain';
 
 import './Dashboard.css';
 
@@ -101,8 +100,6 @@ export interface BasePaneProps extends TitlesProps {
 }
 
 function BasePane(props: BasePaneProps) {
-    const { selectAddress } = useLogionChain();
-
     let contentAreaClass = "ContentArea";
     if(props.className !== undefined) {
         contentAreaClass = contentAreaClass + " " + props.className;
@@ -115,9 +112,7 @@ function BasePane(props: BasePaneProps) {
                     <Titles {...props} />
                 </div>
                 <div className="AddressSwitcherArea">
-                    <AddressSwitcher
-                        selectAddress={ selectAddress }
-                    />
+                    <AddressSwitcher />
                 </div>
             </div>
             {

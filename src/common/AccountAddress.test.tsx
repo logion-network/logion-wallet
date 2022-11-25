@@ -6,7 +6,7 @@ test("renders", () => {
     const result = shallowRender(
         <AccountAddress
             hint="My hint"
-            address={{
+            account={{
                 name: "Name 1",
                 address: "address1",
                 isLegalOfficer: false,

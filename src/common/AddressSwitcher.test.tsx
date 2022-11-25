@@ -38,9 +38,7 @@ describe("AddressSwitcher", () => {
     it("renders", () => {
         setAddresses(ADDRESSES);
         const result = shallowRender(
-            <AddressSwitcher
-                selectAddress={ () => {} }
-            />
+            <AddressSwitcher />
         );
         expect(result).toMatchSnapshot();
     });
@@ -48,9 +46,7 @@ describe("AddressSwitcher", () => {
     it("enables log-in given unautenticated yet user", async () => {
         setAddresses(ADDRESSES);
         render(
-            <AddressSwitcher
-                selectAddress={ () => {} }
-            />
+            <AddressSwitcher />
         );
 
         await userEvent.click(screen.getByText("Click to select another address"));

@@ -22,7 +22,7 @@ import { useLogionChain } from '../logion-chain';
 import WarningDialog from 'src/common/WarningDialog';
 
 export default function ContextualizedWallet() {
-    const { selectAddress, accounts } = useLogionChain();
+    const { accounts } = useLogionChain();
     const { colorTheme, refresh, availableLegalOfficers } = useCommonContext();
     const { refreshRequests, missingSettings, refreshLocs } = useLegalOfficerContext();
     const location = useLocation();
@@ -39,7 +39,7 @@ export default function ContextualizedWallet() {
         () => availableLegalOfficers?.find(node => node.address === accounts?.current?.address) === undefined,
     [ availableLegalOfficers, accounts ]);
 
-    if(accounts === null || selectAddress === null || availableLegalOfficers === undefined) {
+    if(accounts === null || availableLegalOfficers === undefined) {
         return null;
     }
 

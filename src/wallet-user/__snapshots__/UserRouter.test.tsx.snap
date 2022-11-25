@@ -22,7 +22,9 @@ exports[`renders 1`] = `
     element={
       <Wallet
         address="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
+        balances={Array []}
         settingsPath="/user/settings"
+        transactions={Array []}
         transactionsPath={[Function]}
       />
     }
@@ -33,6 +35,8 @@ exports[`renders 1`] = `
       <Transactions
         address="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
         backPath="/user/wallet"
+        balances={Array []}
+        transactions={Array []}
         type="Wallet"
       />
     }

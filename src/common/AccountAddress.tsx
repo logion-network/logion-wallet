@@ -10,7 +10,7 @@ import './AccountAddress.css';
 
 export interface Props {
     hint?: string;
-    address: Account;
+    account: Account;
     disabled: boolean;
     login?: () => void;
 }
@@ -20,7 +20,7 @@ export default function AccountAddress(props: Props) {
 
     let style: CSSProperties = {};
     const icon = colorTheme.accounts.legalOfficerIcon;
-    if(props.address.isLegalOfficer) {
+    if(props.account.isLegalOfficer) {
         style['backgroundImage'] = `url("${process.env.PUBLIC_URL}/assets/${icon.id}.svg")`;
         style['backgroundRepeat'] = 'no-repeat';
         style['backgroundPositionX'] = '6px';
@@ -35,7 +35,7 @@ export default function AccountAddress(props: Props) {
                 className="icon"
                 style={ style }
             >
-                { props.address.name.substring(0, 1).toUpperCase() }
+                { props.account.name.substring(0, 1).toUpperCase() }
             </div>
             <div
                 className="text"
@@ -60,7 +60,7 @@ export default function AccountAddress(props: Props) {
                         color: colorTheme.accounts.foreground,
                     }}
                 >
-                    { props.address.name }
+                    { props.account.name }
                 </div>
                 <div
                     className="address"
@@ -72,17 +72,17 @@ export default function AccountAddress(props: Props) {
                       placement="bottom"
                       delay={ 500 }
                       overlay={
-                        <Tooltip id={`tooltip-${props.address.address}`}>
-                          { props.address.address }
+                        <Tooltip id={`tooltip-${props.account.address}`}>
+                          { props.account.address }
                         </Tooltip>
                       }
                     >
-                      <span>{ props.address.address }</span>
+                      <span>{ props.account.address }</span>
                     </OverlayTrigger>
                 </div>
             </div>
             {
-                props.login !== undefined && props.address.token === undefined &&
+                props.login !== undefined && props.account.token === undefined &&
                 <div
                     className="login"
                 >

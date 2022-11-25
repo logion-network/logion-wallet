@@ -170,7 +170,6 @@ interface Action {
 }
 
 const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOfficerContext, action: Action): FullLegalOfficerContext => {
-    console.log("ACTION %s", action.type)
     switch (action.type) {
         case 'CHANGE_ADDRESS':
             return {
