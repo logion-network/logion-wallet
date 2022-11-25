@@ -88,7 +88,7 @@ export default function UserRouter() {
     const { vaultState } = useUserContext();
     const navigate = useNavigate();
 
-    if(!balanceState || !(accounts?.current?.address)) {
+    if(!(accounts?.current?.address)) {
         return null;
     }
 
@@ -100,8 +100,8 @@ export default function UserRouter() {
             <Route path={ WALLET_RELATIVE_PATH } element={ <Wallet
                     transactionsPath={ transactionsPath }
                     settingsPath={ SETTINGS_PATH }
-                    balances={ balanceState.balances }
-                    transactions={ balanceState.transactions }
+                    balances={ balanceState?.balances || [] }
+                    transactions={ balanceState?.transactions || [] }
                     vaultAddress = { vaultState?.vaultAddress || undefined }
                     address={ accounts.current.address }
                 />
@@ -109,8 +109,8 @@ export default function UserRouter() {
             <Route path={ TRANSACTIONS_RELATIVE_PATH } element={ <Transactions
                     address={ accounts!.current?.address! }
                     backPath={ WALLET_PATH }
-                    balances={ balanceState.balances }
-                    transactions={ balanceState.transactions }
+                    balances={ balanceState?.balances || [] }
+                    transactions={ balanceState?.transactions || [] }
                     type="Wallet"
                     vaultAddress={ vaultState?.vaultAddress || undefined }
                 />

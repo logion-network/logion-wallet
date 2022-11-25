@@ -21,7 +21,7 @@ exports[`AddressSwitcher renders 1`] = `
         className="address-data"
       >
         <AccountAddress
-          address={
+          account={
             Object {
               "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
               "isLegalOfficer": false,
@@ -51,7 +51,7 @@ exports[`AddressSwitcher renders 1`] = `
         onClick={[Function]}
       >
         <AccountAddress
-          address={
+          account={
             Object {
               "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
               "isLegalOfficer": true,

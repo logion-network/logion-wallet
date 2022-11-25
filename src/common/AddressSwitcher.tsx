@@ -1,39 +1,24 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
-
-import './AddressSwitcher.css';
 import AccountAddress from './AccountAddress';
 import { useCommonContext } from './CommonContext';
 import Button from './Button';
 import Dialog from './Dialog';
-import { useNavigate } from "react-router";
-import { Account } from "./types/Accounts";
-import { LEGAL_OFFICER_PATH, USER_PATH } from "../RootPaths";
 import { useLogionChain } from '../logion-chain';
+import './AddressSwitcher.css';
 
-export interface Props {
-    selectAddress: ((userAddress: string) => void) | null,
-}
-
-export default function AddressSwitcher(props: Props) {
-    const { logout, accounts, authenticate } = useLogionChain();
+export default function AddressSwitcher() {
+    const { logout, accounts, authenticate, selectAddress } = useLogionChain();
     const { colorTheme } = useCommonContext();
     const [ confirm, setConfirm ] = useState<boolean>(false);
-    const navigate = useNavigate();
 
-    if(accounts === null || props.selectAddress === null || accounts.current === undefined) {
+    const authenticateCallback = useCallback(async (address: string) => {
+        await authenticate([ address ]);
+        selectAddress!(address);
+    }, [ authenticate, selectAddress ]);
+
+    if(accounts === null || selectAddress === null || accounts.current === undefined) {
         return null;
-    }
-
-    function selectAddress(address: Account) {
-        if (address.token !== undefined) {
-            props.selectAddress!(address.address)
-            if (address.isLegalOfficer) {
-                navigate(LEGAL_OFFICER_PATH)
-            } else {
-                navigate(USER_PATH)
-            }
-        }
     }
 
     return (
@@ -48,7 +33,7 @@ export default function AddressSwitcher(props: Props) {
                     <div className="address-data">
                         <AccountAddress
                             hint="Click to select another address"
-                            address={ accounts.current }
+                            account={ accounts.current }
                             disabled={ accounts.current.token === undefined }
                         />
                     </div>
@@ -62,16 +47,16 @@ export default function AddressSwitcher(props: Props) {
                 >
                     {
                         accounts.all
-                            .filter(address => address.address !== accounts!.current!.address)
-                            .map(address => (
+                            .filter(account => account.address !== accounts!.current!.address)
+                            .map(account => (
                             <Dropdown.Item
-                                key={ address.address }
-                                onClick={ () => selectAddress(address) }
+                                key={ account.address }
+                                onClick={ () => account.token ? selectAddress(account.address) : undefined }
                             >
                                 <AccountAddress
-                                    address={ address }
-                                    disabled={ address.token === undefined }
-                                    login={ () => authenticate([ address.address ]) }
+                                    account={ account }
+                                    disabled={ account.token === undefined }
+                                    login={ () => authenticateCallback(account.address) }
                                 />
                             </Dropdown.Item>
                         ))

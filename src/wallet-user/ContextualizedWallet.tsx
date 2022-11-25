@@ -16,10 +16,9 @@ import UserRouter, {
 } from "./UserRouter";
 import { useUserContext } from "./UserContext";
 import { useCommonContext } from '../common/CommonContext';
-import Loader from "../common/Loader";
 
 export default function ContextualizedWallet() {
-    const { selectAddress, accounts, api } = useLogionChain();
+    const { accounts, api } = useLogionChain();
     const { colorTheme, refresh } = useCommonContext();
     const { refreshRequests, vaultState, locsState } = useUserContext();
 
@@ -28,12 +27,8 @@ export default function ContextualizedWallet() {
         refreshRequests!(false);
     }, [ refresh, refreshRequests ]);
 
-    if(selectAddress === null || accounts === null) {
+    if(accounts === null) {
         return null;
-    }
-
-    if(!locsState || locsState.discarded) {
-        return <Loader />;
     }
 
     const userContext = api !== null ? <UserRouter /> : null;
@@ -120,7 +115,7 @@ export default function ContextualizedWallet() {
         },
     ];
 
-    if (locsState?.isVerifiedThirdParty) {
+    if (locsState && !locsState.discarded && locsState?.isVerifiedThirdParty) {
         menuTop.push({
                 id: "vtp",
                 text: "Third Party LOC",

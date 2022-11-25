@@ -138,7 +138,15 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
             return { ...state, injectedAccountsConsumptionState: 'STARTED' };
 
         case 'SET_INJECTED_ACCOUNTS':
-            return { ...state, injectedAccounts: action.injectedAccounts! };
+            let helpers = {};
+            if(state.client && state.registeredLegalOfficers) {
+                helpers = buildClientHelpers(state.client!, action.injectedAccounts!, state.registeredLegalOfficers!);
+            }
+            return {
+                ...state,
+                injectedAccounts: action.injectedAccounts!,
+                ...helpers,
+            };
 
         case 'EXTENSIONS_ENABLED':
             return { ...state, extensionsEnabled: true, signer: action.signer || null };
@@ -213,13 +221,20 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
             };
 
         case 'RESET_CLIENT':
-            const client = action.client!;
+            let client = action.client!;
             if(client === state.client) {
                 return state;
             } else {
                 storeTokens(client.tokens);
-                if(client.currentAddress !== undefined && client.currentAddress !== state.accounts?.current?.address) {
+                if(client.currentAddress && !(state.accounts?.current?.address)) {
                     storeCurrentAddress(client.currentAddress);
+                } else if(state.accounts?.current?.address && state.accounts.current.address !== client.currentAddress) {
+                    const clientWithCurrentAddress = client.withCurrentAddress(state.accounts.current.address);
+                    if(clientWithCurrentAddress.isTokenValid(DateTime.now())) {
+                        client = clientWithCurrentAddress;
+                    } else if(client.currentAddress) {
+                        storeCurrentAddress(client.currentAddress);
+                    }
                 }
                 return {
                     ...state,
@@ -257,7 +272,7 @@ function buildClientHelpers(client: LogionClient, injectedAccounts: InjectedAcco
         isCurrentAuthenticated: () => client.isTokenValid(DateTime.now()),
         getOfficer: address => client.allLegalOfficers.find(legalOfficer => legalOfficer.address === address),
         saveOfficer: legalOfficer => client.directoryClient.createOrUpdate(legalOfficer),
-        accounts: buildAccounts(injectedAccounts!, client.currentAddress, client, legalOfficers),
+        accounts: buildAccounts(injectedAccounts, client.currentAddress, client, legalOfficers),
     }
 }
 
@@ -347,24 +362,25 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
         }
     }, [ state.injectedAccounts, state.client, state.connecting ]);
 
+    const selectAddressCallback = useCallback((address: string) => {
+        dispatch({
+            type: 'SELECT_ADDRESS',
+            newAddress: address,
+        })
+    }, []);
+
+    useEffect(() => {
+        if(state.selectAddress !== selectAddressCallback) {
+            dispatch({
+                type: 'SET_SELECT_ADDRESS',
+                selectAddress: selectAddressCallback,
+            });
+        }
+    }, [ state, selectAddressCallback ]);
+
     const logout = useCallback(() => dispatch({
         type: 'LOGOUT',
     }), []);
-
-    useEffect(() => {
-        if(state.selectAddress === null && state.client !== null) {
-            const selectAddress = (address: string) => {
-                dispatch({
-                    type: 'SELECT_ADDRESS',
-                    newAddress: address,
-                })
-            }
-            dispatch({
-                type: 'SET_SELECT_ADDRESS',
-                selectAddress,
-            });
-        }
-    }, [ state ]);
 
     useEffect(() => {
         if(state.logout !== logout) {
@@ -384,7 +400,7 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
                 dispatch({
                     type: 'REFRESH_TOKENS'
                 });
-            }, timeoutInS * 1000);
+            }, timeoutInS * 10000);
             dispatch({
                 type: 'SCHEDULE_TOKEN_REFRESH',
                 timer
