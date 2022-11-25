@@ -1,3 +1,5 @@
+import { LogionClassification } from "@logion/client";
+import { UUID } from "@logion/node-api";
 import { useMemo } from "react";
 import InlineDateTime from "src/common/InlineDateTime";
 import { SofCollectionItem } from "./SofParams";
@@ -9,7 +11,12 @@ export interface Props {
 export default function SofTermsAndConditionsFR(props: Props) {
 
     const { logionClassification, specificLicenses, creativeCommons } = props.item;
-    const regionalLimit = useMemo(() => logionClassification?.regionalLimit || [], [ logionClassification ]);
+
+    const actualLogionClassification = useMemo(() => logionClassification ?
+        LogionClassification.fromDetails(new UUID(logionClassification.locId), logionClassification.details) : undefined
+    , [ logionClassification ]);
+
+    const regionalLimit = useMemo(() => actualLogionClassification?.regionalLimit || [], [ actualLogionClassification ]);
 
     return (
         <div>
@@ -17,11 +24,11 @@ export default function SofTermsAndConditionsFR(props: Props) {
 
             <h5>Droit de propriété intellectuelle attribué avec ce Collection Item</h5>
             {
-                !logionClassification && !creativeCommons &&
+                !actualLogionClassification && !creativeCommons &&
                 <p>Aucun</p>
             }
             {
-                logionClassification !== undefined &&
+                actualLogionClassification !== undefined &&
                 <>
                 <p>Ce qui suit est une version simplifiée (mais ne remplaçant pas) la classification logion des transferts de propriété intellectuelle. La version de référence de ce texte est Logion IP Transfer Classification ("LTIC"):&nbsp;
                     LITC-v1.0.txt (accessible à l'adresse : { props.item.litcUrl })
@@ -31,7 +38,7 @@ export default function SofTermsAndConditionsFR(props: Props) {
                 <p>Dans le cas où une licence additionnelle existe entre les parties et s'applique à l'objet du Collection Item, les parties acceptent que les termes de la classification LTIC priment en cas de conflit.</p>
                 <ul>
                     {
-                        logionClassification.transferredRights('fr').map((right, index) => (
+                        actualLogionClassification.transferredRights('fr').map((right, index) => (
                             <li key={ index }>
                                 <span><strong>{ right.shortDescription } ({ right.code }):</strong> { right.description }</span>
                                 {
@@ -45,7 +52,7 @@ export default function SofTermsAndConditionsFR(props: Props) {
                                     right.code === "TIME" &&
                                     <>
                                         <br/>
-                                        <span className="recorded-data">&gt; Donnée(s) Enregistrée(s): <InlineDateTime dateTime={ logionClassification.expiration } dateOnly={ true } /></span>
+                                        <span className="recorded-data">&gt; Donnée(s) Enregistrée(s): <InlineDateTime dateTime={ actualLogionClassification.expiration } dateOnly={ true } /></span>
                                     </>
                                 }
                             </li>

@@ -1,3 +1,5 @@
+import { LogionClassification } from "@logion/client";
+import { UUID } from "@logion/node-api";
 import { useMemo } from "react";
 import InlineDateTime from "src/common/InlineDateTime";
 import { SofCollectionItem } from "./SofParams";
@@ -9,7 +11,12 @@ export interface Props {
 export default function SofTermsAndConditionsEN(props: Props) {
 
     const { logionClassification, specificLicenses, creativeCommons } = props.item;
-    const regionalLimit = useMemo(() => logionClassification?.regionalLimit || [], [ logionClassification ]);
+
+    const actualLogionClassification = useMemo(() => logionClassification ?
+        LogionClassification.fromDetails(new UUID(logionClassification.locId), logionClassification.details) : undefined
+    , [ logionClassification ]);
+
+    const regionalLimit = useMemo(() => actualLogionClassification?.regionalLimit || [], [ actualLogionClassification ]);
 
     return (
         <div>
@@ -17,11 +24,11 @@ export default function SofTermsAndConditionsEN(props: Props) {
 
             <h5>IP rights granted with this Collection Item</h5>
             {
-                !logionClassification &&
+                !actualLogionClassification && !creativeCommons &&
                 <p>None</p>
             }
             {
-                logionClassification !== undefined &&
+                actualLogionClassification !== undefined &&
                 <>
                 <p>This is a human-readable summary (but not a substitute) of the Logion IP transfer classification (“LITC”):&nbsp;
                     LITC-v1.0.txt (available here: { props.item.litcUrl })
@@ -31,7 +38,7 @@ export default function SofTermsAndConditionsEN(props: Props) {
                 <p>Should an additional license exist between the parties that shall apply to the subject of this Collection Item, the parties agreed that the LITC supersedes in case of conflict.</p>
                 <ul>
                     {
-                        logionClassification.transferredRights('en').map((right, index) => (
+                        actualLogionClassification.transferredRights('en').map((right, index) => (
                             <li key={ index }>
                                 <span><strong>{ right.shortDescription } ({ right.code }):</strong> { right.description }</span>
                                 {
@@ -45,7 +52,7 @@ export default function SofTermsAndConditionsEN(props: Props) {
                                     right.code === "TIME" &&
                                     <>
                                         <br/>
-                                        <span className="recorded-data">&gt; Recorded data: <InlineDateTime dateTime={ logionClassification.expiration } dateOnly={ true } /></span>
+                                        <span className="recorded-data">&gt; Recorded data: <InlineDateTime dateTime={ actualLogionClassification.expiration } dateOnly={ true } /></span>
                                     </>
                                 }
                             </li>
