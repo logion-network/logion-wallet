@@ -13,6 +13,10 @@
     border-radius: 16px;
 }
 
+.PagedTable .control:not(.disabled) {
+    cursor: pointer;
+}
+
 .PagedTable .control.light:hover :not(.disabled) {
     background-color: #eff3fe;
 }

@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useCommonContext } from "src/common/CommonContext";
 import Icon from "src/common/Icon";
 import Table, { Column, EmptyTableMessage } from "src/common/Table";
@@ -44,29 +45,31 @@ export interface Props<T> {
     currentPage: Page<T>,
     goToPage: (page: number) => void,
     columns: Column<T>[],
+    constrainedRowHeight?: boolean,
 }
 
 export default function PagedTable<T>(props: Props<T>) {
 
     return (
         <div className="PagedTable">
-            <Controls page={ props.currentPage } fullSize={ props.fullSize } />
+            <Controls page={ props.currentPage } fullSize={ props.fullSize } goToPage={ props.goToPage } />
             <Table
                 columns={ props.columns }
                 data={ props.currentPage.data }
                 renderEmpty={ () => <EmptyTableMessage>No page to display</EmptyTableMessage> }
+                constrainedRowHeight={ props.constrainedRowHeight }
             />
-            <Controls page={ props.currentPage } fullSize={ props.fullSize } />
+            <Controls page={ props.currentPage } fullSize={ props.fullSize } goToPage={ props.goToPage } />
         </div>
     );
 }
 
-function Controls<T>(props: { page: Page<T>, fullSize: number }) {
+function Controls<T>(props: { page: Page<T>, fullSize: number, goToPage: (page: number) => void, }) {
     return (
         <div className="controls">
             <span className="numbers">{props.page.offset + 1}-{props.page.offset + props.page.data.length} of {props.fullSize}</span>
-            <Control iconId="left" onClick={ () => {} } side="left" disabled={ props.page.isFirst } />
-            <Control iconId="right" onClick={ () => {} } side="right" disabled={ props.page.isLast } />
+            <Control iconId="left" onClick={ () => props.goToPage(props.page.pageNumber - 1) } side="left" disabled={ props.page.isFirst } />
+            <Control iconId="right" onClick={ () => props.goToPage(props.page.pageNumber + 1) } side="right" disabled={ props.page.isLast } />
         </div>
     );
 }
@@ -74,7 +77,13 @@ function Controls<T>(props: { page: Page<T>, fullSize: number }) {
 function Control(props: { iconId: string, onClick: () => void, side: "left" | "right", disabled: boolean }) {
     const { colorTheme } = useCommonContext();
 
+    const onClick = useCallback(() => {
+        if(!props.disabled) {
+            props.onClick();
+        }
+    }, [ props ]);
+
     return (
-        <span className={`control ${props.side} ${colorTheme.type}${ props.disabled ? " disabled" : "" }`} onClick={ props.onClick }><Icon icon={{ id: props.iconId, hasVariants: true }} height="10px" /></span>
+        <span className={`control ${props.side} ${colorTheme.type}${ props.disabled ? " disabled" : "" }`} onClick={ onClick }><Icon icon={{ id: props.iconId, hasVariants: true }} height="10px" /></span>
     );
 }

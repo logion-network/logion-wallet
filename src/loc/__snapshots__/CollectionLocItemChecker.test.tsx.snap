@@ -127,7 +127,7 @@ Object {
             </span>
           </div>
           <div
-            class="Table constrained-row-height"
+            class="Table"
           >
             <style>
               
@@ -163,7 +163,7 @@ Object {
                 </div>
                 <div
                   class="Col"
-                  style="width: 100px; text-align: center;"
+                  style="width: 400px; text-align: center;"
                 >
                   Details
                 </div>
@@ -342,7 +342,7 @@ Object {
           </span>
         </div>
         <div
-          class="Table constrained-row-height"
+          class="Table"
         >
           <style>
             
@@ -378,7 +378,7 @@ Object {
               </div>
               <div
                 class="Col"
-                style="width: 100px; text-align: center;"
+                style="width: 400px; text-align: center;"
               >
                 Details
               </div>

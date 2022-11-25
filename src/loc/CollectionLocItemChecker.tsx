@@ -28,6 +28,7 @@ import ButtonGroup from "src/common/ButtonGroup";
 import { useNavigate } from "react-router-dom";
 import { dashboardCertificateRelativePath } from "src/RootPaths";
 import CellWithCopyPaste from "src/components/table/CellWithCopyPaste";
+import { useResponsiveContext } from "src/common/Responsive";
 
 export interface Props {
     collectionLoc: LocData;
@@ -108,6 +109,7 @@ function CollectionLocItemChecker(props: LocalProps) {
     const [ item, setItem ] = useState<CollectionItem>();
     const [ managedCheck, setManagedCheck ] = useState<{ itemId: string, active: boolean }>();
     const [ currentPageNumber, setCurrentPageNumber ] = useState(0);
+    const { width } = useResponsiveContext();
 
     useEffect(() => {
         if (collectionSize === null) {
@@ -250,6 +252,7 @@ function CollectionLocItemChecker(props: LocalProps) {
             <PagedTable
                 fullSize={ collectionItems.length }
                 currentPage={ currentPage }
+                constrainedRowHeight={ false }
                 columns={[
                     {
                         header: "Collection Item ID",
@@ -277,20 +280,38 @@ function CollectionLocItemChecker(props: LocalProps) {
                                 </ButtonGroup>
                             </ActionCell>
                         ),
-                        width: "300px",
+                        width: width({
+                            onSmallScreen: "100px",
+                            otherwise: "300px",
+                        }),
                     },
                     {
                         header: "Details",
                         render: item => (
                             <ActionCell>
                                 <ButtonGroup>
+                                    {
+                                        (props.viewer === 'LegalOfficer' &&
+                                            <StatementOfFactsButton
+                                                item={ item }
+                                            />
+                                        ) ||
+                                        (props.viewer === 'User' &&
+                                            <StatementOfFactsRequestButton
+                                                itemId={ item.id }
+                                            />
+                                        )
+                                    }
                                     <Button
                                         onClick={ () => navigate(dashboardCertificateRelativePath("Collection", collectionLoc.id, item.id, props.viewer)) }
                                     >View</Button>
                                 </ButtonGroup>
                             </ActionCell>
                         ),
-                        width: "100px",
+                        width: width({
+                            onSmallScreen: "360px",
+                            otherwise: "400px",
+                        }),
                     },
                 ]}
                 goToPage={ setCurrentPageNumber }

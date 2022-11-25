@@ -3,12 +3,12 @@ import { Dropdown } from "react-bootstrap";
 import { UUID } from "@logion/node-api/dist/UUID";
 import { LegalOfficerCase } from "@logion/node-api/dist/Types";
 import { getLegalOfficerCase } from "@logion/node-api/dist/LogionLoc";
-import { CollectionItem, LegalOfficer } from "@logion/client";
+import { CollectionItem, LegalOfficer, UploadableItemFile } from "@logion/client";
 
 import { locDetailsPath, STATEMENT_OF_FACTS_PATH } from "../../legal-officer/LegalOfficerPaths";
 import { fullCertificateUrl, getBaseUrl } from "../../PublicPaths";
 import { useLocContext } from "../LocContext";
-import { DEFAULT_SOF_PARAMS, SofParams, FormValues, Language, Prerequisite } from "./SofParams";
+import { DEFAULT_SOF_PARAMS, SofParams, FormValues, Language, Prerequisite, SofCollectionItemFileDelivery } from "./SofParams";
 
 import './StatementOfFactsButton.css';
 import Dialog from "../../common/Dialog";
@@ -20,17 +20,25 @@ import { clearSofParams, storeSofParams } from "../../common/Storage";
 import { PrerequisiteWizard } from "./PrerequisiteWizard";
 import { PREREQUISITE_WIZARD_STEPS } from "./WizardSteps";
 import { useLegalOfficerContext } from "../../legal-officer/LegalOfficerContext";
-import { loFileUrl } from "../FileModel";
+import { getAllDeliveries, ItemDeliveriesResponse, loFileUrl } from "../FileModel";
 import { creativeCommonsBadges } from "../../components/license/CreativeCommonsIcon";
 
 type Status = 'IDLE' | 'PRE-REQUISITE' | 'INPUT' | 'READY'
 
+const PLACEHOLDERS = {
+    certificateUrl: "",
+    prerequisites: [],
+    containingLocId: "",
+    amount: "",
+    requesterText: "",
+    timestampText: "",
+};
+
 export default function StatementOfFactsButton(props: { item?: CollectionItem }) {
-    const { api, accounts, getOfficer } = useLogionChain();
+    const { api, accounts, getOfficer, axiosFactory } = useLogionChain();
     const { loc: locData } = useLocContext();
     const { settings } = useLegalOfficerContext();
     const [ sofParams, setSofParams ] = useState<SofParams>(DEFAULT_SOF_PARAMS);
-    const [ item, setItem ] = useState<CollectionItem>();
     const [ status, setStatus ] = useState<Status>('IDLE')
     const [ language, setLanguage ] = useState<Language | null>(null)
     const { control, handleSubmit, formState: { errors }, reset, setError } = useForm<FormValues>();
@@ -38,15 +46,16 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
     const [ containingLoc, setContainingLoc ] = useState<ContainingLoc | null | undefined>(null)
     const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer>();
     const [ submitError, setSubmitError ] = useState<string | undefined>(undefined);
+    const [ deliveries, setDeliveries ] = useState<ItemDeliveriesResponse | null | undefined>();
 
     const submit = useCallback(async (formValues: FormValues) => {
-        if (api) {
+        if (api && locData) {
             const containingLocId = UUID.fromAnyString(formValues.containingLocId);
             if (!containingLocId) {
                 setError("containingLocId", { type: "value", message: "Invalid LOC ID" })
                 return
             }
-            if (containingLocId.toString() === locData!.id.toString()) {
+            if (containingLocId.toString() === locData.id.toString()) {
                 setError("containingLocId", { type: "value", message: "Choose a different LOC to upload Statement of Facts" })
                 return
             }
@@ -66,11 +75,6 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                     ...sofParams,
                     ...formValues,
                     certificateUrl: fullCertificateUrl(containingLocId),
-                    language: language || 'en',
-                    logoUrl: loFileUrl(legalOfficer!, 'header-logo', accounts!.current!.token!),
-                    oathLogoUrl: loFileUrl(legalOfficer!, 'oath-logo', accounts!.current!.token!),
-                    sealUrl: loFileUrl(legalOfficer!, 'seal', accounts!.current!.token!),
-                    oathText: settings!['oath'] || "-"
                 })
                 try {
                     clearSofParams();
@@ -88,7 +92,7 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                 }
             }
         }
-    }, [ api, sofParams, setContainingLoc, setError, locData, language, accounts, legalOfficer, settings ])
+    }, [ api, sofParams, setContainingLoc, setError, locData ])
 
     const dropDownItem = (language: Language) => {
         return (
@@ -104,80 +108,90 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
     useEffect(() => {
         if (getOfficer !== undefined
             && accounts?.current?.address !== undefined
-            && accounts.current.address !== sofParams.polkadotAddress) {
+            && (!legalOfficer || accounts.current.address !== legalOfficer.address)) {
             const polkadotAddress = accounts.current.address;
             const legalOfficer = getOfficer(polkadotAddress);
             setLegalOfficer(legalOfficer);
-            setSofParams({
-                ...sofParams,
-                polkadotAddress,
-                postalAddressLine1: legalOfficer?.postalAddress.company || "",
-                postalAddressLine2: legalOfficer?.postalAddress.line1 || "",
-                postalAddressLine3: legalOfficer?.postalAddress.line2 || "",
-                postalAddressLine4: `${legalOfficer?.postalAddress.postalCode} ${legalOfficer?.postalAddress.city}`,
-                email: legalOfficer?.userIdentity.email || "",
-                firstName: legalOfficer?.userIdentity.firstName || "",
-                lastName: legalOfficer?.userIdentity.lastName || "",
-                company: legalOfficer?.postalAddress.company || "",
-                shortPostalAddress: `${legalOfficer?.postalAddress.postalCode} ${legalOfficer?.postalAddress.city}, ${legalOfficer?.postalAddress.line1}, ${legalOfficer?.postalAddress.line2}`,
-                nodeAddress: legalOfficer?.node || "",
-                logoUrl: legalOfficer?.logoUrl || "",
-            });
         }
-    }, [ getOfficer, accounts, sofParams, setSofParams ]);
+    }, [ getOfficer, accounts, legalOfficer ]);
 
     useEffect(() => {
-        if (locData!.id.toDecimalString() !== sofParams.locId) {
-            const requester = locData?.requesterAddress ? locData.requesterAddress : locData?.requesterLocId?.toDecimalString() || ""
+        if(props.item && locData && deliveries === undefined) {
+            setDeliveries(null);
+            (async function() {
+                const deliveries = await getAllDeliveries(axiosFactory!(locData.ownerAddress), {
+                    locId: locData.id.toString(),
+                    collectionItemId: props.item!.id
+                });
+                setDeliveries(deliveries);
+            })();
+        }
+    }, [ axiosFactory, props.item, locData, deliveries ]);
+
+    useEffect(() => {
+        if (language
+                && locData
+                && legalOfficer
+                && accounts?.current?.token
+                && (deliveries !== null && deliveries !== undefined)
+                && sofParams.locId !== locData.id.toDecimalString()) {
+            const requester = locData.requesterAddress ? locData.requesterAddress : locData.requesterLocId?.toDecimalString() || "";
             setSofParams({
-                ...sofParams,
-                locId: locData!.id.toDecimalString(),
+                ...PLACEHOLDERS,
+                locId: locData.id.toDecimalString(),
                 requester,
-                publicItems: locData!.metadata.map(item => ({
+                publicItems: locData.metadata.map(item => ({
                     description: item.name,
                     content: item.value,
                     timestamp: item.addedOn || "",
                 })),
-                privateItems: locData!.files.map(item => ({
+                privateItems: locData.files.map(item => ({
                     publicDescription: item.nature,
                     privateDescription: item.name,
                     hash: item.hash,
                     timestamp: item.addedOn || "",
                 })),
+                collectionItem: (props.item ? {
+                    id: props.item.id,
+                    addedOn: props.item.addedOn,
+                    description: props.item.description,
+                    restrictedDelivery: props.item.restrictedDelivery,
+                    token: props.item.token,
+                    files: props.item.files.map(file => ({
+                        ...file,
+                        size: file.size.toString(),
+                        deliveries: toSofDeliveries(file, deliveries),
+                    })),
+                    logionClassification: props.item.logionClassification,
+                    litcUrl: `${ getBaseUrl() }/license/LITC-v1.0.txt`,
+                    litcLocUrl: props.item.logionClassification ? fullCertificateUrl(props.item.logionClassification.tcLocId) : "",
+                    specificLicenses: props.item.specificLicenses,
+                    creativeCommons: props.item.creativeCommons ?
+                        {
+                            code: props.item.creativeCommons?.parameters,
+                            url: props.item.creativeCommons.deedUrl(language),
+                            badgeUrl: creativeCommonsBadges[props.item.creativeCommons.parameters],
+                        } : undefined,
+                } : undefined),
+                polkadotAddress: legalOfficer.address,
+                postalAddressLine1: legalOfficer.postalAddress.company || "",
+                postalAddressLine2: legalOfficer.postalAddress.line1 || "",
+                postalAddressLine3: legalOfficer.postalAddress.line2 || "",
+                postalAddressLine4: `${legalOfficer.postalAddress.postalCode} ${legalOfficer.postalAddress.city}`,
+                email: legalOfficer.userIdentity.email || "",
+                firstName: legalOfficer.userIdentity.firstName || "",
+                lastName: legalOfficer.userIdentity.lastName || "",
+                company: legalOfficer.postalAddress.company || "",
+                shortPostalAddress: `${legalOfficer.postalAddress.postalCode} ${legalOfficer.postalAddress.city}, ${legalOfficer.postalAddress.line1}, ${legalOfficer.postalAddress.line2}`,
+                nodeAddress: legalOfficer.node || "",
+                language: language || 'en',
+                logoUrl: loFileUrl(legalOfficer, 'header-logo', accounts.current.token),
+                oathLogoUrl: loFileUrl(legalOfficer, 'oath-logo', accounts.current.token),
+                sealUrl: loFileUrl(legalOfficer, 'seal', accounts.current.token),
+                oathText: settings!['oath'] || "-",
             });
         }
-    }, [ locData, sofParams, setSofParams ]);
-
-    useEffect(() => {
-        if (language !== null && ((props.item && !item) || (!props.item && item) || (props.item && item && props.item.id !== item.id))) {
-            setItem(props.item);
-            setSofParams({
-                    ...sofParams,
-                    collectionItem: (props.item ? {
-                        id: props.item.id,
-                        addedOn: props.item.addedOn,
-                        description: props.item.description,
-                        restrictedDelivery: props.item.restrictedDelivery,
-                        token: props.item.token,
-                        files: props.item.files.map(file => ({
-                            ...file,
-                            size: file.size.toString(),
-                        })),
-                        logionClassification: props.item.logionClassification,
-                        litcUrl: `${ getBaseUrl() }/license/LITC-v1.0.txt`,
-                        litcLocUrl: props.item.logionClassification ? fullCertificateUrl(props.item.logionClassification.tcLocId) : "",
-                        specificLicenses: props.item.specificLicenses,
-                        creativeCommons: props.item.creativeCommons ?
-                            {
-                                code: props.item.creativeCommons?.parameters,
-                                url: props.item.creativeCommons.deedUrl(language),
-                                badgeUrl: creativeCommonsBadges[props.item.creativeCommons.parameters],
-                            } : undefined,
-                    } : undefined),
-                }
-            )
-        }
-    }, [ props, item, setItem, sofParams, setSofParams, locData, language ]);
+    }, [ sofParams, setSofParams, locData, language, props.item, deliveries, accounts, legalOfficer, settings ]);
 
     const cancelCallback = useCallback(() => {
         setStatus('IDLE')
@@ -276,4 +290,14 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
             </Dialog>
         </>
     );
+}
+
+function toSofDeliveries(file: UploadableItemFile, deliveries: ItemDeliveriesResponse): SofCollectionItemFileDelivery[] {
+    const hash = file.hash;
+    const fileDeliveries = deliveries[hash];
+    if(!fileDeliveries) {
+        return [];
+    } else {
+        return fileDeliveries.map(delivery => ({ hash: delivery.copyHash, owner: delivery.owner }));
+    }
 }

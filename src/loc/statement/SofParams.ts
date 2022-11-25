@@ -27,11 +27,17 @@ export interface FormValues {
     amount: string;
 }
 
+export interface SofCollectionItemFileDelivery {
+    hash: string;
+    owner: string;
+}
+
 export interface SofCollectionItemFile {
     name: string;
     contentType: string;
     size: string;
     hash: string;
+    deliveries: SofCollectionItemFileDelivery[];
 }
 
 export interface SofCollectionItem {
