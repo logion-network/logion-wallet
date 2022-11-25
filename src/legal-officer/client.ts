@@ -224,6 +224,7 @@ export async function getVerifiedThirdPartySelections(params: { locState: OpenLo
     const selectedParties = locState.data().selectedParties;
 
     return allVerifiedThirdParties
+        .filter(vtp => vtp.address !== locState.data().requesterAddress)
         .map(vtp => selectedParties.find(selectedParty => selectedParty.identityLocId === vtp.identityLocId && selectedParty.selected) ?
             { ...vtp, selected: true } :
             { ...vtp, selected: false }
