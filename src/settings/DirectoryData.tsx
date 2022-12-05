@@ -391,6 +391,7 @@ function toLegalOfficer(formValues: FormValues): LegalOfficer {
             lastName: formValues.lastName,
             email: formValues.email,
             phoneNumber: formValues.phoneNumber,
-        }
+        },
+        nodeId: "",
     }
 }

@@ -82,7 +82,8 @@ export const apiMock = {
                 return Promise.resolve(DEFAULT_COLLECTION_ITEM)
             }
         }
-    }
+    },
+    createType: () => {},
 };
 
 export let clientMock: LogionClient | LogionClientMock | null = new LogionClientMock();

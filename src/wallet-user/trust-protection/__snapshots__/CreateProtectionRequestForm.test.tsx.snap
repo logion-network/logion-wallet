@@ -37,6 +37,7 @@ exports[`renders 1`] = `
                 "logoUrl": "",
                 "name": "Patrick Gielen",
                 "node": "http://logion.patrick.com",
+                "nodeId": "",
                 "postalAddress": Object {
                   "city": "Etterbeek",
                   "company": "MODERO",
@@ -58,6 +59,7 @@ exports[`renders 1`] = `
                 "logoUrl": "",
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
+                "nodeId": "",
                 "postalAddress": Object {
                   "city": "LYON",
                   "company": "SELARL ADRASTEE",
@@ -79,6 +81,7 @@ exports[`renders 1`] = `
                 "logoUrl": "",
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
+                "nodeId": "",
                 "postalAddress": Object {
                   "city": "Bourges",
                   "company": "AUXILIA CONSEILS 18",
