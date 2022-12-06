@@ -12,7 +12,7 @@ export const LO_FILE_DESCRIPTION: Record<LoFileId, string> = {
 }
 
 export function loFileUrl(legalOfficer: LegalOfficer, file: LoFileId, token: Token): string {
-    return `${ legalOfficer!.node }/api/lo-file/${ file }?jwt_token=${ token.value }`;
+    return `${ legalOfficer.node }/api/lo-file/${ legalOfficer.address }/${ file }?jwt_token=${ token.value }`;
 }
 
 export interface GetFileParameters {
@@ -45,10 +45,13 @@ async function downloadFile(
 }
 
 export async function getLoFile(
-    axios: AxiosInstance,
-    parameters: { fileId: LoFileId },
+    parameters: {
+        axios: AxiosInstance,
+        legalOfficer: string,
+        fileId: LoFileId,
+    },
 ): Promise<TypedFile> {
-    return downloadFile(axios, `/api/lo-file/${ parameters.fileId }`);
+    return downloadFile(parameters.axios, `/api/lo-file/${ parameters.legalOfficer }/${ parameters.fileId }`);
 }
 
 export async function getCollectionItemFile(
@@ -83,20 +86,21 @@ function typedFile(response: AxiosResponse): TypedFile {
 }
 
 export interface AddLoFileParameters {
+    axios: AxiosInstance,
+    legalOfficer: string,
     file: HashOrContent,
     fileId: LoFileId,
 }
 
 export async function addLoFile(
-    axios: AxiosInstance,
     parameters: AddLoFileParameters
 ): Promise<void> {
     await parameters.file.finalize();
     const formData = new FormData();
     formData.append('file', parameters.file.content as File, parameters.fileId);
     formData.append('hash', parameters.file.contentHash);
-    await axios.put(
-        `/api/lo-file/${ parameters.fileId }`,
+    await parameters.axios.put(
+        `/api/lo-file/${ parameters.legalOfficer }/${ parameters.fileId }`,
         formData,
         { headers: { "Content-Type": "multipart/form-data" } })
 }

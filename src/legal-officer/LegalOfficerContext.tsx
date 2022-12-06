@@ -423,7 +423,7 @@ export function LegalOfficerContextProvider(props: Props) {
                 legalOfficer = client?.allLegalOfficers.find(legalOfficer => legalOfficer.address === currentAddress);
             }
             if(legalOfficer) {
-                legalOfficer.node = onchainSettings.baseUrl || "";
+                legalOfficer.node = onchainSettings.hostData?.baseUrl || "";
             }
             const missingSettings = getMissingSettings(legalOfficer, onchainSettings);
             dispatch({
@@ -453,7 +453,7 @@ export function LegalOfficerContextProvider(props: Props) {
 
     const updateSettingCallback = useCallback(async (id: string, value: string): Promise<void> => {
         const axios = axiosFactory!(contextValue.dataAddress!);
-        await updateSetting(axios, id, value);
+        await updateSetting(axios, contextValue.dataAddress!, id, value);
         dispatch({
             type: "UPDATE_SETTING",
             id,
@@ -519,7 +519,7 @@ export function LegalOfficerContextProvider(props: Props) {
                 });
                 const vaultTransferRequestsHistory = vaultTransferRequestsHistoryResult.sort((a, b) => b.createdOn.localeCompare(a.createdOn));
         
-                const settings = await getSettings(axios);
+                const settings = await getSettings(axios, currentAddress);
 
                 dispatch({
                     type: "SET_REQUESTS_DATA",
@@ -604,23 +604,23 @@ export function useLegalOfficerContext(): LegalOfficerContext {
     return { ...useContext(LegalOfficerContextObject) };
 }
 
-async function getSettings(axios: AxiosInstance): Promise<Record<string, string>> {
-    const response = await axios.get('/api/setting');
+async function getSettings(axios: AxiosInstance, legalOfficer: string): Promise<Record<string, string>> {
+    const response = await axios.get(`/api/setting/${ legalOfficer }`);
     return response.data.settings;
 }
 
-async function updateSetting(axios: AxiosInstance, id: string, value: string): Promise<void> {
-    await axios.put(`/api/setting/${id}`, { value });
+async function updateSetting(axios: AxiosInstance, legalOfficer: string, id: string, value: string): Promise<void> {
+    await axios.put(`/api/setting/${ legalOfficer }/${ id }`, { value });
 }
 
 function getMissingSettings(legalOfficer: LegalOfficer | undefined, onchainSettings: LegalOfficerData): MissingSettings | undefined {
     let missingSettings: MissingSettings | undefined;
 
-    if(!onchainSettings.baseUrl || !onchainSettings.nodeId || legalOfficer === undefined) {
+    if(!onchainSettings.hostData?.baseUrl || !onchainSettings.hostData?.nodeId || legalOfficer === undefined) {
         missingSettings = {
             directory: legalOfficer === undefined,
-            baseUrl: onchainSettings.baseUrl === undefined,
-            nodeId: onchainSettings.nodeId === undefined,
+            baseUrl: onchainSettings.hostData?.baseUrl === undefined,
+            nodeId: onchainSettings.hostData?.nodeId === undefined,
         };
     }
 

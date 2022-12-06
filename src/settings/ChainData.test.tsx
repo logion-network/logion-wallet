@@ -17,27 +17,33 @@ describe("ChainData", () => {
     it("renders", async () => {
         setCurrentAddress(DEFAULT_LEGAL_OFFICER_ACCOUNT);
         const settings: LegalOfficerData = {
-            nodeId: "12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2",
-            baseUrl: "https://node.logion.network"
+            isHost: true,
+            hostData: {
+                nodeId: "12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2",
+                baseUrl: "https://node.logion.network",
+            }
         };
         setOnchainSettings(settings);
 
         render(<ChainData/>);
 
-        await waitFor(() => expect(screen.getByLabelText("Node Base URL")).toHaveValue(settings.baseUrl));
-        expect(screen.getByLabelText("Node ID")).toHaveValue(settings.nodeId);
+        await waitFor(() => expect(screen.getByLabelText("Node Base URL")).toHaveValue(settings.hostData?.baseUrl));
+        expect(screen.getByLabelText("Node ID")).toHaveValue(settings.hostData?.nodeId);
     });
 
     it("saves successfully", async () => {
         setCurrentAddress(DEFAULT_LEGAL_OFFICER_ACCOUNT);
 
         const settings: LegalOfficerData = {
-            nodeId: "12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2",
-            baseUrl: "https://node.logion.network"
+            isHost: true,
+            hostData: {
+                nodeId: "12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2",
+                baseUrl: "https://node.logion.network",
+            }
         };
         setOnchainSettings(settings);
         render(<ChainData/>);
-        await waitFor(() => expect(screen.getByLabelText("Node Base URL")).toHaveValue(settings.baseUrl));
+        await waitFor(() => expect(screen.getByLabelText("Node Base URL")).toHaveValue(settings.hostData?.baseUrl));
 
         await typeByLabel("Node Base URL", "https://another-node.logion.network");
         await act(() => clickByName("Publish to blockchain"));

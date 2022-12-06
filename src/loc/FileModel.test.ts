@@ -1,6 +1,6 @@
 import { Token, HashOrContent } from "@logion/client";
 import { AxiosInstance } from "axios";
-import { PATRICK } from "src/common/TestData";
+import { DEFAULT_LEGAL_OFFICER, PATRICK } from "src/common/TestData";
 import { addLoFile, checkCanGetCollectionItemFile, getAllDeliveries, getCollectionItemFile, getFile, getJsonLoc, getLatestDeliveries, getLoFile, loFileUrl } from "./FileModel";
 
 describe("FileModel", () => {
@@ -11,7 +11,7 @@ describe("FileModel", () => {
             value: "some-token",
         } as Token;
         const url = loFileUrl(PATRICK, file, token);
-        expect(url).toBe(`${ PATRICK.node }/api/lo-file/${ file }?jwt_token=${ token.value }`);
+        expect(url).toBe(`${ PATRICK.node }/api/lo-file/${ PATRICK.address }/${ file }?jwt_token=${ token.value }`);
     })
 
     it("downloads LOC file", async () => {
@@ -48,13 +48,16 @@ describe("FileModel", () => {
             }),
         } as unknown as AxiosInstance;
 
+        const legalOfficer = DEFAULT_LEGAL_OFFICER;
         const fileId = "header-logo";
-        const typedFile = await getLoFile(axios, {
+        const typedFile = await getLoFile({
+            axios,
+            legalOfficer,
             fileId,
         });
 
         expect(axios.get).toBeCalledWith(
-            `/api/lo-file/${fileId}`,
+            `/api/lo-file/${legalOfficer}/${fileId}`,
             expect.objectContaining({
                 responseType: "blob"
             })
@@ -117,15 +120,18 @@ describe("FileModel", () => {
             put: jest.fn().mockResolvedValue(undefined),
         } as unknown as AxiosInstance;
 
+        const legalOfficer = DEFAULT_LEGAL_OFFICER;
         const fileId = "header-logo";
         const file = new File(["test"], "some-logo.jpeg");
-        await addLoFile(axios, {
+        await addLoFile({
+            axios,
+            legalOfficer,
             fileId,
             file: HashOrContent.fromContent(file),
         });
 
         expect(axios.put).toBeCalledWith(
-            `/api/lo-file/${ fileId }`,
+            `/api/lo-file/${ legalOfficer }/${ fileId }`,
             expect.any(FormData),
             expect.objectContaining({ headers: { "Content-Type": "multipart/form-data" } }),
         );
