@@ -5,8 +5,15 @@ import { u8aToHex, stringToU8a } from "@polkadot/util";
 import { PalletLoAuthorityListLegalOfficerData } from "@polkadot/types/lookup";
 
 export interface LegalOfficerData {
-    nodeId?: string;
-    baseUrl?: string;
+    hostData?: Partial<HostData>;
+    isHost?: boolean;
+    hostAddress?: string;
+    guests?: string[];
+}
+
+export interface HostData {
+    nodeId: string;
+    baseUrl: string;
 }
 
 export async function getLegalOfficerData(args: { api: LogionNodeApi, address: string }): Promise<LegalOfficerData> {
@@ -14,27 +21,58 @@ export async function getLegalOfficerData(args: { api: LogionNodeApi, address: s
     let onchainSettings: LegalOfficerData = {};
     const legalOfficerData = await api.query.loAuthorityList.legalOfficerSet(address);
     if(legalOfficerData.isSome) {
-        let nodeId: string | undefined;
-        if(legalOfficerData.unwrap().asHost.nodeId.isSome) {
-            const opaquePeerId = legalOfficerData.unwrap().asHost.nodeId.unwrap();
-            nodeId = base58Encode(opaquePeerId);
+        const someLegalOfficerData = legalOfficerData.unwrap();
+        if(someLegalOfficerData.isHost) {
+            const hostData = toHostData(someLegalOfficerData);
+            onchainSettings = {
+                hostData,
+                isHost: true,
+                guests: await getGuestsOf({ api, address }),
+            };
+        } else {
+            const hostAddress = someLegalOfficerData.asGuest.toString();
+            const hostLegalOfficerData = await api.query.loAuthorityList.legalOfficerSet(hostAddress);
+            const hostData = toHostData(hostLegalOfficerData.unwrap());
+            onchainSettings = {
+                hostData,
+                isHost: false,
+                hostAddress,
+            };
         }
-
-        let baseUrl: string | undefined;
-        if(legalOfficerData.unwrap().asHost.baseUrl.isSome) {
-            const urlBytes = legalOfficerData.unwrap().asHost.baseUrl.unwrap();
-            baseUrl = urlBytes.toUtf8();
-        }
-
-        onchainSettings = { baseUrl, nodeId };
     }
     return onchainSettings;
+}
+
+function toHostData(legalOfficerData: PalletLoAuthorityListLegalOfficerData): Partial<HostData> {
+    let nodeId: string | undefined;
+    if(legalOfficerData.asHost.nodeId.isSome) {
+        const opaquePeerId = legalOfficerData.asHost.nodeId.unwrap();
+        nodeId = base58Encode(opaquePeerId);
+    }
+
+    let baseUrl: string | undefined;
+    if(legalOfficerData.asHost.baseUrl.isSome) {
+        const urlBytes = legalOfficerData.asHost.baseUrl.unwrap();
+        baseUrl = urlBytes.toUtf8();
+    }
+
+    return { baseUrl, nodeId };
+}
+
+async function getGuestsOf(args: { api: LogionNodeApi, address: string }): Promise<string[]> {
+    const { api, address } = args;
+    const legalOfficerData = await api.query.loAuthorityList.legalOfficerSet.entries();
+    return legalOfficerData
+        .filter(entry => entry[1].isSome)
+        .filter(entry => entry[1].unwrap().isGuest)
+        .filter(entry => entry[1].unwrap().asGuest.toString() === address)
+        .map(entry => entry[0].args[0].toString());
 }
 
 export function updateLegalOfficerDataExtrinsic(args: {
     api: LogionNodeApi,
     address: string,
-    legalOfficerData: LegalOfficerData,
+    legalOfficerData: HostData,
 }): SubmittableExtrinsic {
     const { api, address, legalOfficerData } = args;
 

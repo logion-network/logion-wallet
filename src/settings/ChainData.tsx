@@ -12,11 +12,12 @@ import { useLogionChain } from "src/logion-chain";
 import { updateLegalOfficerDataExtrinsic } from "src/legal-officer/LegalOfficerData";
 
 import "./ChainData.css";
+import Table, { Cell, EmptyTableMessage } from "src/common/Table";
 
 export default function ChainData() {
     const { colorTheme } = useCommonContext();
     const { onchainSettings, refreshOnchainSettings } = useLegalOfficerContext();
-    const { api, accounts } = useLogionChain();
+    const { api, accounts, getOfficer } = useLogionChain();
     const [ baseUrl, setBaseUrl ] = useState("");
     const [ nodeId, setNodeId ] = useState("");
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
@@ -24,8 +25,8 @@ export default function ChainData() {
 
     useEffect(() => {
         if(onchainSettings) {
-            setBaseUrl(onchainSettings.baseUrl || "");
-            setNodeId(onchainSettings.nodeId || "");
+            setBaseUrl(onchainSettings.hostData?.baseUrl || "");
+            setNodeId(onchainSettings.hostData?.nodeId || "");
         }
     }, [ onchainSettings ]);
 
@@ -59,8 +60,8 @@ export default function ChainData() {
     }, [  ]);
 
     const isNoChange = useMemo(() => {
-        return baseUrl === (onchainSettings?.baseUrl || "")
-            && nodeId === (onchainSettings?.nodeId || "");
+        return baseUrl === (onchainSettings?.hostData?.baseUrl || "")
+            && nodeId === (onchainSettings?.hostData?.nodeId || "");
     }, [ baseUrl, nodeId, onchainSettings ]);
 
     return (
@@ -75,6 +76,7 @@ export default function ChainData() {
                             value={ baseUrl }
                             onChange={ event => setBaseUrl(event.target.value) }
                             isInvalid={ !baseUrl }
+                            disabled={ onchainSettings?.isHost === false }
                         /> }
                         colors={ colorTheme.frame }
                         feedback={ baseUrl ? undefined : "The node base URL must be set" }
@@ -91,27 +93,69 @@ export default function ChainData() {
                             value={ nodeId }
                             onChange={ event => setNodeId(event.target.value) }
                             isInvalid={ !nodeId }
+                            disabled={ onchainSettings?.isHost === false }
                         /> }
                         colors={ colorTheme.frame }
                         feedback={ nodeId ? undefined : "The node ID must be set" }
                     />
                 </Col>
             </Row>
-            <Button
-                variant="polkadot"
-                onClick={ publish }
-                disabled={ (signAndSubmit !== null && !done) || isNoChange }
-            >
-                Publish to blockchain
-            </Button>
-            <div className="submitter-container">
-                <ExtrinsicSubmitter
-                    id="publish"
-                    signAndSubmit={ signAndSubmit }
-                    onSuccess={ onSuccess }
-                    onError={ onError }
-                />
-            </div>
+            {
+                onchainSettings?.isHost === false &&
+                <Row>
+                    <Col>
+                        <FormGroup
+                            id="hostAddress"
+                            label="Host address"
+                            control={ <Form.Control
+                                type="text"
+                                value={ onchainSettings.hostAddress || "" }
+                                disabled={ true }
+                            /> }
+                            colors={ colorTheme.frame }
+                        />
+                    </Col>
+                </Row>
+            }
+            {
+                onchainSettings?.isHost === true &&
+                <>
+                <Button
+                    variant="polkadot"
+                    onClick={ publish }
+                    disabled={ (signAndSubmit !== null && !done) || isNoChange }
+                >
+                    Publish to blockchain
+                </Button>
+                <div className="submitter-container">
+                    <ExtrinsicSubmitter
+                        id="publish"
+                        signAndSubmit={ signAndSubmit }
+                        onSuccess={ onSuccess }
+                        onError={ onError }
+                    />
+                </div>
+                <Row>
+                    <Col>
+                        <div className="title">Guests</div>
+                        <Table
+                            columns={[
+                                {
+                                    header: "Address",
+                                    render: guest => <Cell content={ guest } />
+                                },
+                                {
+                                    header: "Name",
+                                    render: guest => <Cell content={ getOfficer ? getOfficer(guest)?.name || "-" : "-" } />
+                                },
+                            ]}
+                            data={ onchainSettings.guests || [] }
+                            renderEmpty={ () => <EmptyTableMessage>No guest</EmptyTableMessage> }
+                        />
+                    </Col>
+                </Row>
+                </>
+            }
         </div>
     );
 }

@@ -20,14 +20,16 @@ export function ValuesFiles() {
     const [ newSettings, setNewSettings ] = useState<Record<string, string>>({});
     const [ uploading, setUploading ] = useState<Record<string, boolean>>({});
 
-    const nodeOwner = accounts?.current?.address;
+    const legalOfficer = accounts?.current?.address;
     const fileSelectedCallback = useCallback(async (file: File, fileId: LoFileId) => {
         setUploading({
             ...uploading,
             [fileId]: true,
         });
         try {
-            await addLoFile(axiosFactory!(nodeOwner), {
+            await addLoFile({
+                axios: axiosFactory!(legalOfficer),
+                legalOfficer: legalOfficer!,
                 file: HashOrContent.fromContent(file),
                 fileId
             });
@@ -37,9 +39,9 @@ export function ValuesFiles() {
                 [fileId]: false,
             });
         }
-    }, [ axiosFactory, nodeOwner, uploading ]);
+    }, [ axiosFactory, legalOfficer, uploading ]);
 
-    if(!accounts || !settings) {
+    if(!settings || !legalOfficer) {
         return null;
     }
 
@@ -100,9 +102,9 @@ export function ValuesFiles() {
                                     />
                                 }
                                 <ViewFileButton
-                                    nodeOwner={ nodeOwner! }
+                                    nodeOwner={ legalOfficer }
                                     fileName={ fileId }
-                                    downloader={ (axios: AxiosInstance) => getLoFile(axios, { fileId }) }
+                                    downloader={ (axios: AxiosInstance) => getLoFile({ axios, legalOfficer, fileId }) }
                                 />
                             </ActionCell>,
                         align: "center"
