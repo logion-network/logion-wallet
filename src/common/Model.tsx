@@ -6,6 +6,7 @@ import { LocType } from '@logion/node-api';
 export type ProtectionRequestKind = 'RECOVERY' | 'PROTECTION_ONLY' | 'ANY';
 
 export interface FetchProtectionRequestSpecification {
+    legalOfficerAddress?: string,
     requesterAddress?: string,
     kind: ProtectionRequestKind,
     statuses?: ProtectionRequestStatus[],

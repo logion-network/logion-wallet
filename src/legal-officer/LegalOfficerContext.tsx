@@ -482,31 +482,37 @@ export function LegalOfficerContextProvider(props: Props) {
             (async function() {
                 const axios = axiosFactory(currentAddress);
                 const pendingProtectionRequests = await fetchProtectionRequests(axios, {
+                    legalOfficerAddress: currentAddress,
                     statuses: ["PENDING"],
                     kind: 'PROTECTION_ONLY',
                 });
                 const activatedProtectionRequests = await fetchProtectionRequests(axios, {
+                    legalOfficerAddress: currentAddress,
                     statuses: ["ACTIVATED"],
                     kind: 'ANY',
                 });
                 const protectionRequestsHistory = await fetchProtectionRequests(axios, {
+                    legalOfficerAddress: currentAddress,
                     statuses: ["ACCEPTED", "REJECTED", "ACTIVATED", "CANCELLED", "REJECTED_CANCELLED", "ACCEPTED_CANCELLED"],
                     kind: 'PROTECTION_ONLY',
                 });
         
                 const pendingRecoveryRequests = await fetchProtectionRequests(axios, {
+                    legalOfficerAddress: currentAddress,
                     statuses: ["PENDING"],
                     kind: 'RECOVERY',
                 });
                 const recoveryRequestsHistory = await fetchProtectionRequests(axios, {
+                    legalOfficerAddress: currentAddress,
                     statuses: ["ACCEPTED", "REJECTED", "ACTIVATED", "CANCELLED", "REJECTED_CANCELLED", "ACCEPTED_CANCELLED"],
                     kind: 'RECOVERY',
                 });
-        
+
                 const vaultSpecificationFragment = {
+                    legalOfficerAddress: currentAddress,
                     statuses: []
                 }
-        
+
                 const vaultTransferRequestsResult = await new VaultApi(axios, currentAddress).getVaultTransferRequests({
                     ...vaultSpecificationFragment,
                     statuses: [ "PENDING" ]

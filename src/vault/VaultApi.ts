@@ -12,7 +12,7 @@ export class VaultApi {
 
     private readonly legalOfficerAddress: string;
 
-    async getVaultTransferRequests(fetch: FetchVaultTransferRequest): Promise<VaultTransferRequest[]> {
+    async getVaultTransferRequests(fetch: FetchVaultTransferRequest & { legalOfficerAddress: string }): Promise<VaultTransferRequest[]> {
         const requests = (await this.axios.put("/api/vault-transfer-request", fetch)
             .then(response => response.data.requests)) as VaultTransferRequest[];
         return requests.map(request => ({
