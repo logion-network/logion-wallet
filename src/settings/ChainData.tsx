@@ -13,6 +13,7 @@ import { updateLegalOfficerDataExtrinsic } from "src/legal-officer/LegalOfficerD
 
 import "./ChainData.css";
 import Table, { Cell, EmptyTableMessage } from "src/common/Table";
+import StaticLabelValue from "src/common/StaticLabelValue";
 
 export default function ChainData() {
     const { colorTheme } = useCommonContext();
@@ -68,51 +69,63 @@ export default function ChainData() {
         <div className="ChainData">
             <Row>
                 <Col>
-                    <FormGroup
-                        id="baseUrl"
-                        label="Node Base URL"
-                        control={ <Form.Control
-                            type="text"
+                    {
+                        onchainSettings?.isHost === false &&
+                        <StaticLabelValue
+                            label="Node Base URL"
                             value={ baseUrl }
-                            onChange={ event => setBaseUrl(event.target.value) }
-                            isInvalid={ !baseUrl }
-                            disabled={ onchainSettings?.isHost === false }
-                        /> }
-                        colors={ colorTheme.frame }
-                        feedback={ baseUrl ? undefined : "The node base URL must be set" }
-                    />
+                        />
+                    }
+                    {
+                        onchainSettings?.isHost === true &&
+                        <FormGroup
+                            id="baseUrl"
+                            label="Node Base URL"
+                            control={ <Form.Control
+                                type="text"
+                                value={ baseUrl }
+                                onChange={ event => setBaseUrl(event.target.value) }
+                                isInvalid={ !baseUrl }
+                            /> }
+                            colors={ colorTheme.frame }
+                            feedback={ baseUrl ? undefined : "The node base URL must be set" }
+                        />
+                    }
                 </Col>
             </Row>
             <Row>
                 <Col>
-                    <FormGroup
-                        id="nodeId"
-                        label="Node ID"
-                        control={ <Form.Control
-                            type="text"
+                    {
+                        onchainSettings?.isHost === false &&
+                        <StaticLabelValue
+                            label="Node ID"
                             value={ nodeId }
-                            onChange={ event => setNodeId(event.target.value) }
-                            isInvalid={ !nodeId }
-                            disabled={ onchainSettings?.isHost === false }
-                        /> }
-                        colors={ colorTheme.frame }
-                        feedback={ nodeId ? undefined : "The node ID must be set" }
-                    />
+                        />
+                    }
+                    {
+                        onchainSettings?.isHost === true &&
+                        <FormGroup
+                            id="nodeId"
+                            label="Node ID"
+                            control={ <Form.Control
+                                type="text"
+                                value={ nodeId }
+                                onChange={ event => setNodeId(event.target.value) }
+                                isInvalid={ !nodeId }
+                            /> }
+                            colors={ colorTheme.frame }
+                            feedback={ nodeId ? undefined : "The node ID must be set" }
+                        />
+                    }
                 </Col>
             </Row>
             {
                 onchainSettings?.isHost === false &&
                 <Row>
                     <Col>
-                        <FormGroup
-                            id="hostAddress"
+                        <StaticLabelValue
                             label="Host address"
-                            control={ <Form.Control
-                                type="text"
-                                value={ onchainSettings.hostAddress || "" }
-                                disabled={ true }
-                            /> }
-                            colors={ colorTheme.frame }
+                            value={ onchainSettings.hostAddress || "" }
                         />
                     </Col>
                 </Row>
