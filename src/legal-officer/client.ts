@@ -9,6 +9,8 @@ import {
     VerifiedThirdParty,
     VoidedLoc,
     VoidedCollectionLoc,
+    LogionClient,
+    LegalOfficer,
 } from "@logion/client";
 import {
     UUID,
@@ -20,6 +22,7 @@ import {
     voidLoc as nodeApiVoidLoc,
     VoidInfo,
 } from "@logion/node-api";
+import { fetchAllLocsParams } from "../loc/LegalOfficerLocContext";
 
 export async function addLink(params: {
     locState: EditableRequest,
@@ -44,7 +47,11 @@ export async function deleteLink(params: {
 
 function buildAxios(locState: LocRequestState) {
     const client = locState.locsState().client;
-    return client.buildAxios(client.legalOfficers.find(legalOfficer => locState.data().ownerAddress === legalOfficer.address)!);
+    return client.buildAxios(getLegalOfficer(client, locState.data().ownerAddress));
+}
+
+function getLegalOfficer(client: LogionClient, address: string): LegalOfficer {
+    return client.legalOfficers.find(legalOfficer => address === legalOfficer.address)!;
 }
 
 export async function publishLink(params: {
@@ -154,16 +161,24 @@ export async function closeLoc(params: {
         api,
         seal,
     });
+    const signerId = locState.data().ownerAddress;
     await signer.signAndSend({
-        signerId: locState.data().ownerAddress,
+        signerId,
         submittable,
         callback
     });
 
-    const axios = buildAxios(locState);
+    let refreshedLocState;
+    if(locState.discarded) {
+        refreshedLocState = (await client.locsState(fetchAllLocsParams(getLegalOfficer(client, signerId)))).findById(locId);
+    } else {
+        refreshedLocState = locState;
+    }
+
+    const axios = buildAxios(refreshedLocState);
     await axios.post(`/api/loc-request/${ locId.toString() }/close`);
 
-    return await locState.refresh() as ClosedLoc | ClosedCollectionLoc;
+    return await refreshedLocState.refresh() as ClosedLoc | ClosedCollectionLoc;
 }
 
 export interface FullVoidInfo extends VoidInfo {
