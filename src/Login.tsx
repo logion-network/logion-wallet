@@ -39,7 +39,7 @@ function referrer(location: Location): string {
 export default function Login() {
     const location = useLocation();
     const navigate = useNavigate();
-    const { connectedNodeMetadata, accounts, axiosFactory, authenticate } = useLogionChain();
+    const { connectedNodeMetadata, accounts, authenticate } = useLogionChain();
     const [ selectedAddresses, setSelectedAddresses ] = useState<string[]>(getSelectedAddresses(location));
 
     const startLogin = useCallback(async () => {
@@ -47,7 +47,7 @@ export default function Login() {
         navigate(referrer(location));
     }, [ selectedAddresses, navigate, location, authenticate ]);
 
-    if(accounts === null || connectedNodeMetadata === null || axiosFactory === undefined) {
+    if(accounts === null || connectedNodeMetadata === null) {
         return null;
     }
 

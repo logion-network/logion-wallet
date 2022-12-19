@@ -27,6 +27,7 @@ import LocCreation from "./transaction-protection/LocCreation";
 import Button from "../common/Button";
 import IdentityLocRequest from "./trust-protection/IdentityLocRequest";
 import VTPDashboard from "./vtp/VTPDashboard";
+import IdenfyVerificationResult from './IdenfyVerificationResult';
 
 export const HOME_PATH = USER_PATH;
 
@@ -45,6 +46,8 @@ export const IDENTITY_REQUEST_PATH = USER_PATH + IDENTITY_REQUEST_RELATIVE_PATH;
 export const VTP_RELATIVE_PATH = '/vtp';
 export const VTP_PATH = USER_PATH + VTP_RELATIVE_PATH;
 export const VTP_DETAILS_RELATIVE_PATH = VTP_RELATIVE_PATH + '/:locId';
+export const IDENFY_RELATIVE_PATH = '/idenfy';
+export const IDENFY_PATH = USER_PATH + IDENFY_RELATIVE_PATH;
 
 export function vtpDetailsPath(locId: UUID | string) {
     return USER_PATH + VTP_DETAILS_RELATIVE_PATH
@@ -206,6 +209,11 @@ export default function UserRouter() {
                     backPath={ VTP_PATH }
                     detailsPath={ (locId: UUID, type: LocType) => vtpDetailsPath(locId) }
                     contributionMode='VTP'
+                />
+            } />
+            <Route path={ IDENFY_RELATIVE_PATH } element={
+                <IdenfyVerificationResult
+                    detailsPath={ locDetailsPath }
                 />
             } />
         </Routes>

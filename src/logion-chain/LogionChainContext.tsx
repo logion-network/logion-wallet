@@ -10,12 +10,13 @@ import Accounts, { buildAccounts } from '../common/types/Accounts';
 import { clearAll, loadCurrentAddress, loadTokens, storeCurrentAddress, storeTokens } from '../common/Storage';
 
 import { getEndpoints, NodeMetadata } from './Connection';
-import { AxiosFactory } from '../common/api';
 import { Token } from "@logion/client";
 
 type ConsumptionStatus = 'PENDING' | 'STARTING' | 'STARTED';
 
 export const SIGN_AND_SEND_STRATEGY = new DefaultSignAndSendStrategy();
+
+export type AxiosFactory = (legalOfficerAddress: string | undefined) => AxiosInstance;
 
 export interface LogionChainContextType {
     api: LogionNodeApi | null,

@@ -1,12 +1,17 @@
 import React, { useContext, useEffect, useReducer, Reducer, useCallback } from "react";
 import { DateTime } from 'luxon';
-import { LegalOfficer, LocRequest, BalanceState, LogionClient } from "@logion/client";
+import { LegalOfficer, BalanceState, LogionClient, Endpoint, MultiResponse } from "@logion/client";
 import { InjectedAccount } from "@logion/extension";
 
 import { useLogionChain } from '../logion-chain';
-import { MultiSourceHttpClient, Endpoint, allUp, } from './api';
 import { Children } from './types/Helpers';
 import { ColorTheme, DEFAULT_COLOR_THEME } from "./ColorTheme";
+
+export interface BackendConfig {
+    integrations: {
+        iDenfy: boolean;
+    };
+}
 
 const DEFAULT_NOOP = () => {};
 
@@ -27,6 +32,7 @@ export interface CommonContext {
     mutateBalanceState: (mutator: ((state: BalanceState) => Promise<BalanceState>)) => Promise<void>,
     viewer: Viewer;
     setViewer: ((viewer: Viewer) => void) | null;
+    backendConfig: Record<string, BackendConfig>;
 }
 
 interface FullCommonContext extends CommonContext {
@@ -47,6 +53,7 @@ function initialContextValue(): FullCommonContext {
         mutateBalanceState: () => Promise.reject(),
         viewer: "User",
         setViewer: null,
+        backendConfig: {},
     }
 }
 
@@ -84,7 +91,8 @@ interface Action {
     mutateBalanceState?: (mutator: ((state: BalanceState) => Promise<BalanceState>)) => Promise<void>;
     client?: LogionClient;
     viewer?: Viewer;
-    setViewer?: (viewer: Viewer) => void,
+    setViewer?: (viewer: Viewer) => void;
+    backendConfig?: Record<string, BackendConfig>;
 }
 
 const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, action: Action): FullCommonContext => {
@@ -104,6 +112,7 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                     ...state,
                     balanceState: action.balanceState!,
                     availableLegalOfficers: action.availableLegalOfficers!,
+                    backendConfig: action.backendConfig!,
                     nodesUp,
                     nodesDown,
                 };
@@ -175,40 +184,15 @@ export function CommonContextProvider(props: Props) {
             (async function () {
                 const balanceState = await client.balanceState();
 
-                let initialState;
-                if(currentAccount.isLegalOfficer) {
-                    initialState = allUp<LegalOfficerEndpoint>(client.legalOfficers
-                        .filter(legalOfficer => legalOfficer.address === currentAccount.address)
-                        .map(legalOfficer => ({url: legalOfficer.node, legalOfficer: legalOfficer.address})));
-                } else {
-                    initialState = allUp<LegalOfficerEndpoint>(client.legalOfficers
-                        .filter(legalOfficer => legalOfficer.node)
-                        .map(legalOfficer => ({ url: legalOfficer.node, legalOfficer: legalOfficer.address })));
-                }
+                const multiClient = client.buildMultiSourceHttpClient();
+                const multiResponse = await multiClient.fetch<BackendConfig>(async axios => (await axios.get("/api/config")).data);
+                const backendConfig = aggregateBackendConfig(multiResponse, client.legalOfficers);
+                client.updateNetworkState(multiClient);
 
-                const multiClient = new MultiSourceHttpClient<LegalOfficerEndpoint, LocRequest[]>(initialState, currentAccount.token?.value);
-
-                let nodesUp: Endpoint[] | undefined;
-                let nodesDown: Endpoint[] | undefined;
-                const resultingState = multiClient.getState();
-                if(!currentAccount.isLegalOfficer) {
-                    nodesUp = resultingState.nodesUp;
-                    nodesDown = resultingState.nodesDown;
-                } else if(resultingState.nodesDown.length > 0) {
-                    nodesDown = resultingState.nodesDown;
-                    const legalOfficerNode = nodesDown[0];
-                    nodesUp = client.legalOfficers
-                        .filter(legalOfficer => legalOfficer.node !== legalOfficerNode.url)
-                        .map(legalOfficer => ({url: legalOfficer.node}));
-                }
-
-                let availableLegalOfficers: LegalOfficer[];
-                if(nodesDown) {
-                    const unavailableNodesSet = new Set(nodesDown.map(endpoint => endpoint.url));
-                    availableLegalOfficers = client.legalOfficers.filter(legalOfficer => legalOfficer.node && !unavailableNodesSet.has(legalOfficer.node));
-                } else {
-                    availableLegalOfficers = client.legalOfficers;
-                }
+                const networkState = client.networkState;
+                const nodesDown = networkState.nodesDown;
+                const nodesUp = networkState.nodesUp;
+                const availableLegalOfficers = client.legalOfficers;
 
                 dispatch({
                     type: "SET_DATA",
@@ -217,6 +201,7 @@ export function CommonContextProvider(props: Props) {
                     nodesUp,
                     nodesDown,
                     availableLegalOfficers,
+                    backendConfig,
                 });
             })();
         }
@@ -297,4 +282,15 @@ export function CommonContextProvider(props: Props) {
 
 export function useCommonContext(): CommonContext {
     return useContext(CommonContextObject);
+}
+
+function aggregateBackendConfig(response: MultiResponse<BackendConfig>, legalOfficers: LegalOfficer[]): Record<string, BackendConfig> {
+    const config: Record<string, BackendConfig> = {};
+    for(const url in response) {
+        const legalOfficer = legalOfficers.find(legalOfficer => legalOfficer.node === url);
+        if(legalOfficer) {
+            config[legalOfficer.address] = response[url];
+        }
+    }
+    return config;
 }

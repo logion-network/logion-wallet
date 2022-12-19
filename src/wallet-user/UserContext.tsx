@@ -11,15 +11,13 @@ import {
     UserIdentity,
     SignCallback,
     AcceptedProtection,
-    PendingRecovery, RejectedProtection
+    PendingRecovery,
+    RejectedProtection,
 } from "@logion/client";
 import { VaultState } from "@logion/client";
 
-import { useLogionChain } from '../logion-chain';
+import { useLogionChain, AxiosFactory } from '../logion-chain';
 import { Children } from '../common/types/Helpers';
-import {
-    AxiosFactory,
-} from '../common/api';
 
 import { useCommonContext } from '../common/CommonContext';
 import { DARK_MODE } from './Types';
