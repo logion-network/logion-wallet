@@ -249,7 +249,7 @@ export function LocDetailsTabContent(props: ContentProps) {
                 <>
                 <Col xxl={ 7 } xl={ 8 }>
                     {
-                        loc.status === "DRAFT" &&
+                        loc.status === "DRAFT" && loc.iDenfy?.status !== "PENDING" &&
                         <ButtonGroup
                             align="right"
                         >

@@ -287,8 +287,8 @@ export function useCommonContext(): CommonContext {
 function aggregateBackendConfig(response: MultiResponse<BackendConfig>, legalOfficers: LegalOfficer[]): Record<string, BackendConfig> {
     const config: Record<string, BackendConfig> = {};
     for(const url in response) {
-        const legalOfficer = legalOfficers.find(legalOfficer => legalOfficer.node === url);
-        if(legalOfficer) {
+        const legalOfficersOnNode = legalOfficers.filter(legalOfficer => legalOfficer.node === url);
+        for(const legalOfficer of legalOfficersOnNode) {
             config[legalOfficer.address] = response[url];
         }
     }
