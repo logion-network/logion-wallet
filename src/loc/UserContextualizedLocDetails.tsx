@@ -12,7 +12,7 @@ import DraftLocInstructions from './DraftLocInstructions';
 import { ContributionMode } from "./types";
 import VTPInfo from "../wallet-user/vtp/VTPInfo";
 import { useCommonContext } from 'src/common/CommonContext';
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import IdenfyVerification from './IdenfyVerification';
 
 export interface Props {
