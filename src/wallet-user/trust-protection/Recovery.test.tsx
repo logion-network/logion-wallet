@@ -6,7 +6,7 @@ import Recovery from "./Recovery";
 import { setProtectionState } from '../__mocks__/UserContextMock';
 import { PENDING_RECOVERY_REQUESTS, ACCEPTED_RECOVERY_REQUESTS, ACTIVATED_RECOVERY_REQUESTS } from "./TestData";
 import { PendingProtection, AcceptedProtection, PendingRecovery, ClaimedRecovery } from "@logion/client";
-import { RecoverySharedState } from "@logion/client/dist/Recovery";
+import { RecoverySharedState } from "@logion/client/dist/Recovery.js";
 import { GUILLAUME, PATRICK } from "src/common/TestData";
 
 test("renders", () => {

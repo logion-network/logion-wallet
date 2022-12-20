@@ -3,12 +3,12 @@ import userEvent from '@testing-library/user-event';
 import { clickByName } from '../tests';
 import ImportItems from './ImportItems';
 import { setLocState, refresh } from "./__mocks__/UserLocContextMock";
-import { CollectionItem } from "@logion/node-api/dist/Types";
+import { CollectionItem } from "@logion/node-api/dist/Types.js";
 import { AddCollectionItemParams } from "@logion/client";
 import { mockSubmittableResult } from "../logion-chain/__mocks__/SignatureMock";
 
 jest.mock("../common/CommonContext");
-jest.mock("@logion/node-api/dist/LogionLoc");
+jest.mock("@logion/node-api/dist/LogionLoc.js");
 jest.mock("@logion/client");
 jest.mock("../logion-chain/Signature");
 jest.mock("../logion-chain");

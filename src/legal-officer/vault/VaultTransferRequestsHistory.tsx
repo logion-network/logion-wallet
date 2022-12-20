@@ -1,4 +1,4 @@
-import { prefixedLogBalance, SYMBOL } from "@logion/node-api/dist/Balances";
+import { prefixedLogBalance, SYMBOL } from "@logion/node-api/dist/Balances.js";
 
 import AmountCell from "../../common/AmountCell";
 import { useResponsiveContext } from "../../common/Responsive";

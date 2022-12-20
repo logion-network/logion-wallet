@@ -1,5 +1,5 @@
 import { ClosedCollectionLoc, ClosedLoc, OpenLoc, PendingRequest, RejectedRequest, VoidedLoc, LocsState } from "@logion/client";
-import { LocType, IdentityLocType } from "@logion/node-api/dist/Types";
+import { LocType, IdentityLocType } from "@logion/node-api/dist/Types.js";
 import { AxiosInstance } from "axios";
 import { COLOR_THEME, PATRICK } from "src/common/TestData";
 import { LegalOfficerData } from "../LegalOfficerData";

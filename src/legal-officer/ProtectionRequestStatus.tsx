@@ -1,4 +1,4 @@
-import { ProtectionRequestStatus as ProtectionRequestStatusType } from '@logion/client/dist/RecoveryClient';
+import { ProtectionRequestStatus as ProtectionRequestStatusType } from '@logion/client/dist/RecoveryClient.js';
 
 import Icon from "../common/Icon";
 import { ORANGE, GREEN, RED, YELLOW } from "../common/ColorTheme";

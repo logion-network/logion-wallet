@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import queryString from 'query-string';
-import { ProtectionRequest } from "@logion/client/dist/RecoveryClient";
+import { ProtectionRequest } from "@logion/client/dist/RecoveryClient.js";
 
 import { useLocContext } from "./LocContext";
 import CheckFileFrame from 'src/components/checkfileframe/CheckFileFrame';

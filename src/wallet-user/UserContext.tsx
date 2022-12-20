@@ -21,7 +21,7 @@ import { Children } from '../common/types/Helpers';
 
 import { useCommonContext } from '../common/CommonContext';
 import { DARK_MODE } from './Types';
-import { BalanceState } from "@logion/client/dist/Balance";
+import { BalanceState } from "@logion/client/dist/Balance.js";
 import { LocsState } from "@logion/client";
 
 export interface CreateProtectionRequestParams {

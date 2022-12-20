@@ -1,5 +1,5 @@
 import React from "react";
-import { UUID } from "@logion/node-api/dist/UUID";
+import { UUID } from "@logion/node-api/dist/UUID.js";
 
 import Button from "../../common/Button";
 import Icon from "../../common/Icon";

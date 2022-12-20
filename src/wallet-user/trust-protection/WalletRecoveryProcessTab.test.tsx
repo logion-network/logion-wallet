@@ -1,14 +1,14 @@
 import userEvent from '@testing-library/user-event';
 import { render, screen, waitFor, getByRole } from '@testing-library/react';
-import { PrefixedNumber, MILLI } from "@logion/node-api/dist/numbers";
-import { CoinBalance } from "@logion/node-api/dist/Balances";
+import { PrefixedNumber, MILLI } from "@logion/node-api/dist/numbers.js";
+import { CoinBalance } from "@logion/node-api/dist/Balances.js";
 
 import { mutateRecoveredBalanceState, setProtectionState, setRecoveredBalanceState } from '../__mocks__/UserContextMock';
 
 import WalletRecoveryProcessTab from "./WalletRecoveryProcessTab";
 import { ClaimedRecovery } from '@logion/client';
-import { ProtectionParameters } from '@logion/client/dist/Recovery';
-import { BalanceState } from '@logion/client/dist/Balance';
+import { ProtectionParameters } from '@logion/client/dist/Recovery.js';
+import { BalanceState } from '@logion/client/dist/Balance.js';
 
 jest.mock('../../logion-chain');
 jest.mock('../../common/CommonContext');

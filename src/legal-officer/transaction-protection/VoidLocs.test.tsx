@@ -1,6 +1,6 @@
 jest.mock('../LegalOfficerContext');
 jest.mock('../../logion-chain');
-import { IdentityLocType } from "@logion/node-api/dist/Types";
+import { IdentityLocType } from "@logion/node-api/dist/Types.js";
 
 import VoidLocs from "./VoidLocs";
 import { shallowRender, render } from '../../tests';

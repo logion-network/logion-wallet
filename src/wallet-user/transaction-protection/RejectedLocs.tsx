@@ -1,5 +1,5 @@
 import { LocData, RejectedRequest } from "@logion/client";
-import { LocType } from "@logion/node-api/dist/Types";
+import { LocType } from "@logion/node-api/dist/Types.js";
 import { useCallback, useMemo, useState } from "react";
 
 import IdentityLocRequestDetails from "../../components/identity/IdentityLocRequestDetails";

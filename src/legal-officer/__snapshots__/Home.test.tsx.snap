@@ -85,7 +85,7 @@ exports[`renders 1`] = `
                 level={0.1}
                 readingDecimalPart="00"
                 readingIntegerPart="42"
-                unit="aundefined"
+                unit="aLGNT"
               />
               <Button
                 onClick={[Function]}

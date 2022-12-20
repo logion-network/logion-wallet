@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import { useNavigate } from "react-router-dom";
-import { UUID } from '@logion/node-api/dist/UUID';
-import { ProtectionRequest } from '@logion/client/dist/RecoveryClient';
+import { UUID } from '@logion/node-api/dist/UUID.js';
+import { ProtectionRequest } from '@logion/client/dist/RecoveryClient.js';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Form from 'react-bootstrap/Form';
 

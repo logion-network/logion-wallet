@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
-import { LocType } from "@logion/node-api/dist/Types";
+import { LocType } from "@logion/node-api/dist/Types.js";
 
 import { useCommonContext } from '../../common/CommonContext';
 import { LocsState, LegalOfficer, DraftRequest } from "@logion/client";

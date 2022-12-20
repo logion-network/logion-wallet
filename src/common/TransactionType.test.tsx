@@ -1,6 +1,6 @@
 import { shallowRender } from "../tests";
 import TransactionType from "./TransactionType";
-import { Transaction } from "@logion/client/dist/TransactionClient";
+import { Transaction } from "@logion/client/dist/TransactionClient.js";
 
 describe("TransactionType", () => {
 

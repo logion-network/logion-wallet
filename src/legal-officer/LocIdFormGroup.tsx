@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react';
 import { Form } from 'react-bootstrap';
-import { getLegalOfficerCase } from '@logion/node-api/dist/LogionLoc';
-import { LocType } from '@logion/node-api/dist/Types';
-import { UUID } from '@logion/node-api/dist/UUID';
+import { getLegalOfficerCase } from '@logion/node-api';
+import { LocType } from '@logion/node-api/dist/Types.js';
+import { UUID } from '@logion/node-api/dist/UUID.js';
 
 import Alert from '../common/Alert';
 import { BackgroundAndForegroundColors } from '../common/ColorTheme';

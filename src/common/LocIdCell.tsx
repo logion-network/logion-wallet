@@ -1,4 +1,4 @@
-import { UUID } from '@logion/node-api/dist/UUID';
+import { UUID } from '@logion/node-api/dist/UUID.js';
 import { LocRequestStatus } from '@logion/client';
 
 import { CopyPasteCell } from './Table';

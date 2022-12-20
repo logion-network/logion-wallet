@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 import { InjectedAccount } from '@logion/extension';
-import { Token } from '@logion/client/dist/Http';
+import { Token } from '@logion/client/dist/Http.js';
 import { LogionClient } from '@logion/client';
 
 export interface Account {

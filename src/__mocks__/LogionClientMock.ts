@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import { PATRICK } from "../common/TestData";
 import { TEST_WALLET_USER } from "../wallet-user/TestData";
-export { toIsoString, fromIsoString } from "@logion/client/dist/DateTimeUtil";
+export { toIsoString, fromIsoString } from "@logion/client/dist/DateTimeUtil.js";
 
 export const axiosMock = {
     post: jest.fn().mockReturnValue(undefined),

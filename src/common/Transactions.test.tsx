@@ -7,7 +7,7 @@ import Transactions from './Transactions';
 import { setBalanceState } from './__mocks__/CommonContextMock';
 import { setParams } from '../__mocks__/ReactRouterMock';
 import { DEFAULT_COIN_BALANCE, DEFAULT_TRANSACTION, DEFAULT_FAILED_TRANSACTION } from './TestData';
-import { BalanceState } from '@logion/client/dist/Balance';
+import { BalanceState } from '@logion/client/dist/Balance.js';
 
 test('renders null with missing data', () => {
     const result = shallowRender(<Transactions

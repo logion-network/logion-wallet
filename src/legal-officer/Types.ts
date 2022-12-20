@@ -1,4 +1,4 @@
-import { ProtectionRequest } from '@logion/client/dist/RecoveryClient';
+import { ProtectionRequest } from '@logion/client/dist/RecoveryClient.js';
 
 import { ColorTheme, rgbaToHex } from '../common/ColorTheme';
 

@@ -1,5 +1,5 @@
-import { CheckResultType } from "@logion/client/dist/CollectionItem";
-import { DefaultSignAndSendStrategy } from "@logion/client/dist/Signer";
+import { CheckResultType } from "@logion/client/dist/CollectionItem.js";
+import { DefaultSignAndSendStrategy } from "@logion/client/dist/Signer.js";
 
 import {
     LogionClient,
@@ -31,4 +31,4 @@ export {
     HashOrContent,
 }
 
-export { MimeType } from "@logion/client/dist/Mime";
+export { MimeType } from "@logion/client/dist/Mime.js";

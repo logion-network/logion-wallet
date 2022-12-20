@@ -2,7 +2,7 @@ import { LocData, LocRequestState } from "@logion/client";
 import { UUID } from "@logion/node-api";
 import { shallowRender } from "src/tests"
 import LegalOfficerInstructions from "./LegalOfficerInstructions"
-import { ProtectionRequest } from "@logion/client/dist/RecoveryClient";
+import { ProtectionRequest } from "@logion/client/dist/RecoveryClient.js";
 
 describe("LegalOfficerInstructions", () => {
 

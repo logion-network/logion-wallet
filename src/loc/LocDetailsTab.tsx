@@ -1,5 +1,5 @@
 import { LocData, LegalOfficer, LocRequestState, DraftRequest } from "@logion/client";
-import { ProtectionRequest } from "@logion/client/dist/RecoveryClient";
+import { ProtectionRequest } from "@logion/client/dist/RecoveryClient.js";
 import { LocType, UUID } from "@logion/node-api";
 import { Col, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ButtonGroup from "src/common/ButtonGroup";

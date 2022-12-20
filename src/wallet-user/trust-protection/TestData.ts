@@ -1,4 +1,4 @@
-import { ProtectionRequest, ProtectionRequestStatus } from '@logion/client/dist/RecoveryClient';
+import { ProtectionRequest, ProtectionRequestStatus } from '@logion/client/dist/RecoveryClient.js';
 
 import { DEFAULT_IDENTITY, DEFAULT_ADDRESS, DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from '../../common/TestData';
 import { TEST_WALLET_USER } from '../TestData';

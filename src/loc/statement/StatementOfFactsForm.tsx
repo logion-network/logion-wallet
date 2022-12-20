@@ -1,6 +1,6 @@
 import { Controller, Control, FieldErrors } from "react-hook-form";
 import Form from "react-bootstrap/Form";
-import { LocType } from "@logion/node-api/dist/Types";
+import { LocType } from "@logion/node-api/dist/Types.js";
 
 import FormGroup from "../../common/FormGroup";
 import { useCommonContext } from "../../common/CommonContext";

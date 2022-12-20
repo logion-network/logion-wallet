@@ -1,6 +1,6 @@
 import { AxiosInstance } from 'axios';
 import { UserIdentity, LocData, LocRequest } from '@logion/client';
-import { ProtectionRequest, ProtectionRequestStatus } from '@logion/client/dist/RecoveryClient';
+import { ProtectionRequest, ProtectionRequestStatus } from '@logion/client/dist/RecoveryClient.js';
 import { LocType } from '@logion/node-api';
 
 export type ProtectionRequestKind = 'RECOVERY' | 'PROTECTION_ONLY' | 'ANY';

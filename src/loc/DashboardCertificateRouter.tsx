@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
-import { UUID } from "@logion/node-api/dist/UUID";
-import { LocType } from "@logion/node-api/dist/Types";
+import { UUID } from "@logion/node-api/dist/UUID.js";
+import { LocType } from "@logion/node-api/dist/Types.js";
 
 import { UserLocContextProvider } from "./UserLocContext";
 import { LegalOfficerLocContextProvider } from "./LegalOfficerLocContext";

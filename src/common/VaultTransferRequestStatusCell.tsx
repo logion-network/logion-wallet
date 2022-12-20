@@ -1,4 +1,4 @@
-import { VaultTransferRequestStatus } from "@logion/client/dist/VaultClient";
+import { VaultTransferRequestStatus } from "@logion/client/dist/VaultClient.js";
 import { GREEN, ORANGE, RED } from "./ColorTheme";
 import StatusCell from "./StatusCell";
 

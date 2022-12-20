@@ -1,5 +1,5 @@
 import { LocData, LocRequestState } from "@logion/client";
-import { ProtectionRequest } from "@logion/client/dist/RecoveryClient";
+import { ProtectionRequest } from "@logion/client/dist/RecoveryClient.js";
 import { LocType, UUID } from "@logion/node-api";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
