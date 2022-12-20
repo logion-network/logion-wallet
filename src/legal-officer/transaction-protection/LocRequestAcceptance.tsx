@@ -140,7 +140,6 @@ export default function LocRequestAcceptance(props: Props) {
             })();
         }
     }, [
-        axiosFactory,
         acceptState,
         setStatus,
         setAcceptState,

@@ -184,6 +184,11 @@ export function useLogionChain() {
             isCurrentAuthenticated: () => true,
             authenticateAddress,
             signer,
+            backendConfig: {
+                [DEFAULT_LEGAL_OFFICER]: {
+                    iDenfy: false,
+                }
+            }
         };
     }
 }

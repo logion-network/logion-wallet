@@ -11,6 +11,9 @@ import { useLogionChain } from 'src/logion-chain';
 import DraftLocInstructions from './DraftLocInstructions';
 import { ContributionMode } from "./types";
 import VTPInfo from "../wallet-user/vtp/VTPInfo";
+import { useCommonContext } from 'src/common/CommonContext';
+import { useMemo } from 'react';
+import IdenfyVerification from './IdenfyVerification';
 
 export interface Props {
     contributionMode: ContributionMode;
@@ -18,6 +21,7 @@ export interface Props {
 
 export default function UserContextualizedLocDetails(props: Props) {
     const { getOfficer } = useLogionChain();
+    const { backendConfig } = useCommonContext();
     const {
         backPath,
         detailsPath,
@@ -29,6 +33,11 @@ export default function UserContextualizedLocDetails(props: Props) {
         checkResult,
         collectionItem,
     } = useUserLocContext();
+
+    const hasIdenfyIntegration = useMemo(() => {
+        const legalOfficer = loc?.ownerAddress;
+        return legalOfficer !== undefined && backendConfig[legalOfficer] && backendConfig[legalOfficer].integrations.iDenfy;
+    }, [ loc, backendConfig ]);
 
     if (loc === null || locState === null || !getOfficer) {
         return null;
@@ -43,6 +52,10 @@ export default function UserContextualizedLocDetails(props: Props) {
             {
                 loc.status === "DRAFT" &&
                 <DraftLocInstructions/>
+            }
+            {
+                hasIdenfyIntegration &&
+                <IdenfyVerification/>
             }
             {
                 props.contributionMode === "VTP" &&

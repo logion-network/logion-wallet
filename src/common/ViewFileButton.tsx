@@ -7,8 +7,7 @@ import Icon from "./Icon";
 
 import './ViewFileButton.css';
 import { Children, customClassName } from "./types/Helpers";
-import { useLogionChain } from "../logion-chain";
-import { AxiosFactory } from "./api";
+import { useLogionChain, AxiosFactory } from "../logion-chain";
 import { MimeType } from "@logion/client";
 
 export interface FileInfo {
