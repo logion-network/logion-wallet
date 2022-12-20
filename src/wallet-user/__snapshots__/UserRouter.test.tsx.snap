@@ -199,5 +199,13 @@ exports[`renders 1`] = `
     }
     path="/vtp/:locId"
   />
+  <Route
+    element={
+      <IdenfyVerificationResult
+        detailsPath={[Function]}
+      />
+    }
+    path="/idenfy"
+  />
 </Routes>
 `;

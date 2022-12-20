@@ -14,7 +14,6 @@ import { URLSearchParams } from 'url';
 jest.mock("react-router");
 jest.mock("react-router-dom");
 jest.mock("../logion-chain");
-jest.mock("../common/api");
 jest.mock("../common/hash");
 jest.mock("../common/Model");
 
