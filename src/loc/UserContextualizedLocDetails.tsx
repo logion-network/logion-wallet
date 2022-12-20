@@ -54,7 +54,7 @@ export default function UserContextualizedLocDetails(props: Props) {
                 <DraftLocInstructions/>
             }
             {
-                hasIdenfyIntegration &&
+                hasIdenfyIntegration && loc.iDenfy?.status !== "APPROVED" &&
                 <IdenfyVerification/>
             }
             {
