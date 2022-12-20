@@ -10,7 +10,7 @@ import { fillInForm } from "../../components/identity/IdentityFormTestHelper";
 import { setMutateLocsState, setHasValidIdentityLoc, setLocsState } from "../__mocks__/UserContextMock";
 import { navigate } from 'src/__mocks__/ReactRouterMock';
 
-jest.mock('@logion/node-api/dist/Accounts');
+jest.mock('@logion/node-api/dist/Accounts.js');
 jest.mock('../UserContext');
 jest.mock('../../logion-chain');
 jest.mock('../../common/CommonContext');

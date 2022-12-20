@@ -5,7 +5,7 @@ import { render, waitFor, screen, getByText } from '@testing-library/react';
 import userEvent from "@testing-library/user-event";
 import { clickByName } from '../tests';
 import ClaimAssetButton, { Props } from "./ClaimAssetButton";
-import { UUID } from "@logion/node-api/dist/UUID";
+import { UUID } from "@logion/node-api/dist/UUID.js";
 import { DEFAULT_LEGAL_OFFICER } from "../common/TestData";
 import { setMetamaskEnabled } from '../__mocks__/PolkadotExtensionDappMock';
 import { axiosMock, resetAxiosMock } from 'src/logion-chain/__mocks__/LogionChainMock';

@@ -1,7 +1,7 @@
 import { shallowRender } from "../tests";
 import CreativeCommons from "./CreativeCommons";
 import { UUID } from "@logion/node-api";
-import { CreativeCommons as CreativeCommonsType } from "@logion/client/dist/license/CreativeCommons";
+import { CreativeCommons as CreativeCommonsType } from "@logion/client/dist/license/CreativeCommons.js";
 
 describe("CreativeCommons", () => {
 

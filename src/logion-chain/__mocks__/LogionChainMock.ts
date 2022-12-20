@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
 import BN from 'bn.js'
-import { UUID } from "@logion/node-api/dist/UUID";
+import { UUID } from "@logion/node-api/dist/UUID.js";
 
 import { mockCompact } from "../../__mocks__/PolkadotApiMock";
 import { LegalOfficer } from '@logion/client';
@@ -9,7 +9,7 @@ import { TEST_WALLET_USER } from 'src/wallet-user/TestData';
 import { AxiosInstance } from 'axios';
 import { Mock } from 'moq.ts';
 import Accounts, { Account } from 'src/common/types/Accounts';
-import { LogionClient } from '@logion/client/dist/LogionClient';
+import { LogionClient } from '@logion/client/dist/LogionClient.js';
 import { LogionClient as LogionClientMock } from '../../__mocks__/LogionClientMock';
 
 export const LogionChainContextProvider = (props: any) => null;

@@ -25,7 +25,7 @@ import { SETTINGS_PATH } from '../UserRouter';
 import SelectLegalOfficer from './SelectLegalOfficer';
 
 import './ProtectionRecoveryRequest.css';
-import { ProtectionRequestStatus } from '@logion/client/dist/RecoveryClient';
+import { ProtectionRequestStatus } from '@logion/client/dist/RecoveryClient.js';
 import ProtectionRefusal from "./ProtectionRefusal";
 import RecoveryRefusal from "./RecoveryRefusal";
 import ButtonGroup from "../../common/ButtonGroup";

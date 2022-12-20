@@ -7,7 +7,7 @@ import { shallowRender } from "../../tests";
 import TrustProtection from "./TrustProtection";
 import { PENDING_PROTECTION_REQUESTS, ACCEPTED_PROTECTION_REQUESTS, ACTIVATED_PROTECTION_REQUESTS } from './TestData';
 import { PendingProtection, AcceptedProtection, ActiveProtection } from "@logion/client";
-import { RecoverySharedState } from "@logion/client/dist/Recovery";
+import { RecoverySharedState } from "@logion/client/dist/Recovery.js";
 import { GUILLAUME, PATRICK } from "src/common/TestData";
 
 test("renders empty", () => {

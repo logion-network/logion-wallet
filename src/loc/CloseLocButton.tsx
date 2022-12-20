@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { ProtectionRequest } from "@logion/client/dist/RecoveryClient";
+import { ProtectionRequest } from "@logion/client/dist/RecoveryClient.js";
 import { OpenLoc } from "@logion/client";
-import { vouchRecovery, getActiveRecovery } from "@logion/node-api/dist/Recovery";
+import { vouchRecovery, getActiveRecovery } from "@logion/node-api/dist/Recovery.js";
 import { Col, Row } from "react-bootstrap";
 
 import Button from "../common/Button";

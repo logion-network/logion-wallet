@@ -1,11 +1,11 @@
 jest.mock("react-router");
 jest.mock("../common/CommonContext");
-jest.mock("@logion/node-api/dist/Balances");
+jest.mock("@logion/node-api/dist/Balances.js");
 jest.mock("../logion-chain");
 jest.mock('./LegalOfficerContext');
 
 import { LocData, OpenLoc, PendingRequest } from "@logion/client";
-import { BalanceState } from "@logion/client/dist/Balance";
+import { BalanceState } from "@logion/client/dist/Balance.js";
 import { DEFAULT_COIN_BALANCE, DEFAULT_TRANSACTION } from "../common/TestData";
 import { setBalanceState, } from "../common/__mocks__/CommonContextMock";
 import {

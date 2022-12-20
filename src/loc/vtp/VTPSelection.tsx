@@ -1,7 +1,7 @@
-import { UUID } from "@logion/node-api/dist/UUID";
+import { UUID } from "@logion/node-api/dist/UUID.js";
 import { useParams } from "react-router";
 import { LegalOfficerLocContextProvider } from "../LegalOfficerLocContext";
-import { LocType } from "@logion/node-api/dist/Types";
+import { LocType } from "@logion/node-api/dist/Types.js";
 import VTPSelectionPane from "./VTPSelectionPane";
 
 export interface Props {

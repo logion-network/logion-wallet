@@ -1,5 +1,5 @@
 import { UUID } from "@logion/node-api";
-import { LogionClassification as LogionClassificationClass } from "@logion/client/dist/license/LogionClassification";
+import { LogionClassification as LogionClassificationClass } from "@logion/client/dist/license/LogionClassification.js";
 
 import { shallowRender } from "src/tests"
 import LogionTerms from "./LogionTerms"

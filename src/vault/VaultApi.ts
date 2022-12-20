@@ -1,4 +1,4 @@
-import { FetchVaultTransferRequest, VaultTransferRequest } from "@logion/client/dist/VaultClient";
+import { FetchVaultTransferRequest, VaultTransferRequest } from "@logion/client/dist/VaultClient.js";
 import { AxiosInstance } from "axios";
 
 export class VaultApi {

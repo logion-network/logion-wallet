@@ -2,7 +2,7 @@ jest.mock('../../common/CommonContext');
 jest.mock('../LegalOfficerContext');
 
 import { ClosedLoc, LocData } from "@logion/client";
-import { IdentityLocType } from "@logion/node-api/dist/Types";
+import { IdentityLocType } from "@logion/node-api/dist/Types.js";
 import { shallowRender, render } from '../../tests';
 import ClosedLocs from './ClosedLocs';
 import { setClosedLocRequests, setClosedIdentityLocsByType } from "../__mocks__/LegalOfficerContextMock";

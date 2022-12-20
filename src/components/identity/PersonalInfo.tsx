@@ -2,7 +2,7 @@ import { Row } from "../../common/Grid";
 import { Col } from "react-bootstrap";
 import Detail from "../../common/Detail";
 import { PersonalInfoProps } from "./type";
-import { LocRequestStatus } from "@logion/client/dist/LocClient";
+import { LocRequestStatus } from "@logion/client/dist/LocClient.js";
 
 import "./PersonalInfo.css";
 import LegalEntity from "./LegalEntity";

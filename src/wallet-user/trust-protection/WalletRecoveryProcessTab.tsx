@@ -1,8 +1,8 @@
 import { useState, useCallback } from "react";
 import { Spinner } from "react-bootstrap";
-import { CoinBalance } from "@logion/node-api/dist/Balances";
-import { PrefixedNumber, NONE } from "@logion/node-api/dist/numbers";
-import { BalanceState } from "@logion/client/dist/Balance";
+import { CoinBalance } from "@logion/node-api/dist/Balances.js";
+import { PrefixedNumber, NONE } from "@logion/node-api/dist/numbers.js";
+import { BalanceState } from "@logion/client/dist/Balance.js";
 
 import Table, { Cell, EmptyTableMessage } from "../../common/Table";
 import Icon from "../../common/Icon";

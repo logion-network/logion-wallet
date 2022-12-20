@@ -1,4 +1,4 @@
-import { Transaction } from "@logion/client/dist/TransactionClient";
+import { Transaction } from "@logion/client/dist/TransactionClient.js";
 
 import Icon from "./Icon";
 import Detail from "./Detail";

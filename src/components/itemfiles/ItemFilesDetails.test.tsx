@@ -1,4 +1,4 @@
-import { UploadableItemFile } from "@logion/client/dist/LocClient";
+import { UploadableItemFile } from "@logion/client/dist/LocClient.js";
 import { shallowRender } from "src/tests";
 import ItemFileDetails from "./ItemFileDetails";
 

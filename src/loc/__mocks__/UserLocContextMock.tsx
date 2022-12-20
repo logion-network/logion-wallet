@@ -1,4 +1,4 @@
-import { UUID } from "@logion/node-api/dist/UUID";
+import { UUID } from "@logion/node-api/dist/UUID.js";
 import { LocData } from "@logion/client";
 
 import { LocItem } from "../types";

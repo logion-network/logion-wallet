@@ -1,6 +1,6 @@
 import { COLOR_THEME, legalOfficers } from '../TestData';
 import { CommonContext, Viewer } from "../CommonContext";
-import { BalanceState } from "@logion/client/dist/Balance";
+import { BalanceState } from "@logion/client/dist/Balance.js";
 
 export let setColorTheme = jest.fn();
 

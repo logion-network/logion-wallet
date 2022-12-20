@@ -3,12 +3,12 @@ import { ApiPromise } from '@polkadot/api';
 import { GUILLAUME, PATRICK } from "../../common/TestData";
 import { TEST_WALLET_USER } from '../TestData';
 import { AccountTokens, DirectoryClient, NoProtection, ProtectionState, LegalOfficer, DraftRequest } from '@logion/client';
-import { AxiosFactory } from '@logion/client/dist/AxiosFactory';
-import { ComponentFactory } from '@logion/client/dist/ComponentFactory';
-import { LegalOfficerEndpoint, LogionClientConfig, SharedState } from '@logion/client/dist/SharedClient';
-import { NetworkState } from '@logion/client/dist/NetworkState';
+import { AxiosFactory } from '@logion/client/dist/AxiosFactory.js';
+import { ComponentFactory } from '@logion/client/dist/ComponentFactory.js';
+import { LegalOfficerEndpoint, LogionClientConfig, SharedState } from '@logion/client/dist/SharedClient.js';
+import { NetworkState } from '@logion/client/dist/NetworkState.js';
 import { UserContext } from '../UserContext';
-import { BalanceState } from '@logion/client/dist/Balance';
+import { BalanceState } from '@logion/client/dist/Balance.js';
 import {
     LocsState,
     PendingRequest,
@@ -17,7 +17,7 @@ import {
     ClosedCollectionLoc,
     OpenLoc, VoidedCollectionLoc, VoidedLoc
 } from "@logion/client";
-import { LocType } from "@logion/node-api/dist/Types";
+import { LocType } from "@logion/node-api/dist/Types.js";
 
 export let createTokenRequest = () => null;
 

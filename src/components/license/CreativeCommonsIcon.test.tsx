@@ -1,6 +1,6 @@
 import { shallowRender } from "../../tests";
 import CreativeCommonsIcon from "./CreativeCommonsIcon";
-import { CreativeCommons } from "@logion/client/dist/license/CreativeCommons";
+import { CreativeCommons } from "@logion/client/dist/license/CreativeCommons.js";
 import { UUID } from "@logion/node-api";
 
 describe("CreativeCommonsIcon", () => {

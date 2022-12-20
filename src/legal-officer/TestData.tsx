@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 import { toIsoString } from "@logion/client";
-import { ProtectionRequest } from '@logion/client/dist/RecoveryClient';
+import { ProtectionRequest } from '@logion/client/dist/RecoveryClient.js';
 
 import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from "../common/TestData";
 

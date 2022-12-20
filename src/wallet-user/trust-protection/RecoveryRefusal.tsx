@@ -5,7 +5,7 @@ import { useCommonContext } from "../../common/CommonContext";
 import './RecoveryRefusal.css';
 import { RED } from "../../common/ColorTheme";
 import ButtonGroup from "../../common/ButtonGroup";
-import { LegalOfficerProtectionState } from "@logion/client/dist/Recovery";
+import { LegalOfficerProtectionState } from "@logion/client/dist/Recovery.js";
 import { Refusal } from "./ProtectionRecoveryRequest";
 
 export interface Props {
