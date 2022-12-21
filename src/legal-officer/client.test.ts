@@ -1,7 +1,9 @@
-import { EditableRequest, LogionClient, OpenLoc, VerifiedThirdParty } from "@logion/client";
+import { EditableRequest, LogionClient, OpenLoc, VerifiedThirdParty, ClosedLoc, Signer, SuccessfulSubmission } from "@logion/client";
 import { UUID } from "@logion/node-api";
 import { AxiosInstance } from "axios";
-import { addLink, getVerifiedThirdPartySelections } from "./client";
+import { DEFAULT_ADDRESS, DEFAULT_LEGAL_OFFICER } from "src/common/TestData";
+import { ApiPromise } from "src/__mocks__/PolkadotApiMock";
+import { addLink, getVerifiedThirdPartySelections, requestVote } from "./client";
 
 describe("Legal Officer client", () => {
 
@@ -91,5 +93,58 @@ describe("Legal Officer client", () => {
         expect(verifiedThirdParties[0]).toEqual({ ...NOT_SELECTED, selected: false });
         expect(verifiedThirdParties[1]).toEqual({ ...SELECTED, selected: true });
         expect(verifiedThirdParties[2]).toEqual({ ...FORMERLY_SELECTED, selected: false });
-    })
+    });
+
+    it("requests a vote", async () => {
+        const submittable = {};
+        const nodeApi = {
+            tx: {
+                vote: {
+                    createVoteForAllLegalOfficers: jest.fn().mockResolvedValue(submittable),
+                }
+            }
+        } as unknown as ApiPromise;
+
+        const client = {
+            nodeApi,
+        } as unknown as LogionClient;
+
+        const locId = new UUID("0e16421a-2550-4be5-a6a8-1ab2239b7dc4");
+        const locState = {
+            data: () => ({
+                id: locId,
+                ownerAddress: DEFAULT_LEGAL_OFFICER,
+            }),
+            locsState: () => ({
+                client,
+            }),
+        } as unknown as ClosedLoc;
+
+        const result = {
+            events: [
+                {
+                    name: "VoteCreated",
+                    section: "vote",
+                    data: {
+                        voteId: "42"
+                    },
+                }
+            ],
+        } as unknown as SuccessfulSubmission;
+        const signer = {
+            signAndSend: jest.fn().mockResolvedValue(result),
+        } as Signer;
+        const callback = jest.fn();
+
+        await requestVote({
+            locState,
+            signer,
+            callback,
+        });
+
+        expect(nodeApi.tx.vote.createVoteForAllLegalOfficers).toBeCalledWith(locId.toDecimalString());
+        expect(signer.signAndSend).toBeCalledWith(expect.objectContaining({
+            signerId: DEFAULT_LEGAL_OFFICER,
+        }));
+    });
 });

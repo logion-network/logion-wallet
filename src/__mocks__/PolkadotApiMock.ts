@@ -234,6 +234,9 @@ export class ApiPromise {
         verifiedRecovery: {
             createRecovery: jest.fn().mockResolvedValue(() => {}),
         },
+        vote: {
+            createVoteForAllLegalOfficers: jest.fn().mockResolvedValue(() => {}),
+        },
     }
 }
 

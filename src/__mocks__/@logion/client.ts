@@ -13,6 +13,7 @@ import {
     LocRequestState,
     LocsState,
     HashOrContent,
+    ClosedLoc,
 } from '../LogionClientMock';
 
 export {
@@ -29,6 +30,7 @@ export {
     LocRequestState,
     LocsState,
     HashOrContent,
+    ClosedLoc,
 }
 
 export { MimeType } from "@logion/client/dist/Mime.js";

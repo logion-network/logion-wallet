@@ -8,8 +8,9 @@ import { Children } from './types/Helpers';
 import { ColorTheme, DEFAULT_COLOR_THEME } from "./ColorTheme";
 
 export interface BackendConfig {
-    integrations: {
+    features: {
         iDenfy: boolean;
+        vote: boolean;
     };
 }
 

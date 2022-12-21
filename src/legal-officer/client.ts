@@ -21,7 +21,9 @@ import {
     closeLoc as nodeApiCloseLoc,
     voidLoc as nodeApiVoidLoc,
     VoidInfo,
+    asString,
 } from "@logion/node-api";
+import { AnyJson } from "@polkadot/types-codec/types/helpers.js";
 import { fetchAllLocsParams } from "../loc/LegalOfficerLocContext";
 
 export async function addLink(params: {
@@ -264,4 +266,29 @@ export async function unselectParties(params: SelectPartiesParams): Promise<void
     const { locState, partyId } = params;
     const axios = buildAxios(locState);
     await axios.delete(`/api/loc-request/${ locState.locId.toString() }/selected-parties/${ partyId }`)
+}
+
+export async function requestVote(params: {
+    locState: ClosedLoc | ClosedCollectionLoc,
+    signer: Signer,
+    callback: SignCallback,
+}): Promise<string> {
+    const { locState, signer, callback } = params;
+
+    const client = locState.locsState().client;
+    const api = client.nodeApi;
+    const locData = locState.data();
+    const locId = locData.id;
+    const submittable = api.tx.vote.createVoteForAllLegalOfficers(locId.toDecimalString());
+    const result = await signer.signAndSend({
+        signerId: locState.data().ownerAddress,
+        submittable,
+        callback
+    });
+    const voteCreated = result.events.find(event => event.name === "VoteCreated" && event.section === "vote");
+    if(!voteCreated) {
+        throw new Error("Unable to retrieve vote ID");
+    }
+    const voteCreatedData = voteCreated.data as AnyJson[];
+    return asString(voteCreatedData[0]);
 }

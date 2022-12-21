@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { LocData } from "@logion/client";
 import { ChainTime } from '@logion/node-api/dist/ChainTime.js';
@@ -18,10 +18,12 @@ import StatementOfFactsButton from './statement/StatementOfFactsButton';
 import StatementOfFactsRequestButton from "./statement/StatementOfFactsRequestButton";
 import ArchiveButton from "./archive/ArchiveButton";
 import InlineDateTime from 'src/common/InlineDateTime';
-import { Viewer } from 'src/common/CommonContext';
+import { useCommonContext, Viewer } from 'src/common/CommonContext';
 import { isLogionIdentityLoc } from "../common/types/ModelTypes";
 import Nominate from "./vtp/Nominate";
 import VTPSelectionButton from "./vtp/VTPSelectionButton";
+import ButtonGroup from 'src/common/ButtonGroup';
+import RequestVoteButton from './RequestVoteButton';
 
 export interface Props {
     loc: LocData
@@ -30,6 +32,7 @@ export interface Props {
 
 export default function CertificateAndLimits(props: Props) {
     const { api } = useLogionChain();
+    const { backendConfig } = useCommonContext();
 
     const [ dateLimit, setDateLimit ] = useState<string>();
     const [ showSettings, setShowSettings ] = useState(false);
@@ -44,6 +47,11 @@ export default function CertificateAndLimits(props: Props) {
             })();
         }
     }, [ api, props.loc ]);
+
+    const hasVoteFeature = useMemo(() => {
+        const legalOfficer = props.loc.ownerAddress;
+        return legalOfficer !== undefined && backendConfig[legalOfficer] && backendConfig[legalOfficer].features && backendConfig[legalOfficer].features.vote;
+    }, [ props.loc, backendConfig ]);
 
     return (
         <div
@@ -60,7 +68,7 @@ export default function CertificateAndLimits(props: Props) {
                 </Col>
                 {
                     props.loc.locType === 'Collection' &&
-                    <Col className="col-xxxl-2 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6">
+                    <Col className="col-xxxl-2 col-xxl-6 col-xl-4 col-lg-6 col-md-6 col-sd-6 col-xs-6">
                         <div className="limits">
                             <div><strong>Collection Date Limit:</strong> <InlineDateTime dateTime={ dateLimit } dateOnly={ true } /></div>
                             <div><strong>Collection Item Limit:</strong> { itemLimit(props.loc) }</div>
@@ -71,22 +79,28 @@ export default function CertificateAndLimits(props: Props) {
                 {
                     props.loc.locType === 'Collection' &&
                     <Col className="col-xxxl-5 col-xxl-8 col-xl-8 col-lg-8 col-md-8 col-sd-8 col-xs-8">
-                        <div className="tool-bar">
+                        <ButtonGroup
+                            align="right"
+                        >
                             { props.viewer === 'LegalOfficer' && props.loc.status ==='OPEN' && <VTPSelectionButton/> }
                             { props.viewer === 'LegalOfficer' && <ArchiveButton/> }
+                            { props.viewer === 'LegalOfficer' && props.loc.status === "CLOSED" && hasVoteFeature && <RequestVoteButton/> }
                             { props.loc.closed && !props.loc.voidInfo && <Button onClick={ () => setShowSettings(true) }><Icon icon={{id: "cog"}} height="22px"/> Get dev settings</Button> }
-                        </div>
+                        </ButtonGroup>
                     </Col>
                 }
                 {
                     props.loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' &&
                     <Col className="col-xxxl-7 col-xxl-14 col-xl-14 col-lg-14 col-md-14 col-sd-14 col-xs-14">
-                        <div className="tool-bar">
+                        <ButtonGroup
+                            align="right"
+                        >
                             { props.loc.locType === 'Identity' && !isLogionIdentityLoc(props.loc) && props.loc.status ==='CLOSED' && <Nominate/> }
                             { props.loc.status ==='OPEN' && <VTPSelectionButton/> }
+                            { props.loc.status ==='CLOSED' && hasVoteFeature && <RequestVoteButton/> }
                             <ArchiveButton/>
                             <StatementOfFactsButton/>
-                        </div>
+                        </ButtonGroup>
                     </Col>
                 }
                 {
