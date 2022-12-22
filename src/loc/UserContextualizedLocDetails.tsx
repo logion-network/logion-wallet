@@ -36,8 +36,7 @@ export default function UserContextualizedLocDetails(props: Props) {
     } = useUserLocContext();
 
     const hasIdenfyIntegration = useMemo(() => {
-        const legalOfficer = loc?.ownerAddress;
-        return legalOfficer !== undefined && backendConfig[legalOfficer] && backendConfig[legalOfficer].features.iDenfy;
+        return backendConfig(loc?.ownerAddress).features.iDenfy;
     }, [ loc, backendConfig ]);
 
     const isReadOnly = useMemo(() => {

@@ -50,8 +50,7 @@ export default function CertificateAndLimits(props: Props) {
     }, [ api, props.loc ]);
 
     const hasVoteFeature = useMemo(() => {
-        const legalOfficer = props.loc.ownerAddress;
-        return legalOfficer !== undefined && backendConfig[legalOfficer] && backendConfig[legalOfficer].features && backendConfig[legalOfficer].features.vote;
+        return backendConfig(props.loc.ownerAddress).features.vote;
     }, [ props.loc, backendConfig ]);
 
     return (

@@ -43,8 +43,7 @@ export default function ContextualizedWallet() {
     [ availableLegalOfficers, accounts ]);
 
     const hasVoteFeature = useMemo(() => {
-        const legalOfficer = accounts?.current?.address;
-        return legalOfficer !== undefined && backendConfig[legalOfficer] && backendConfig[legalOfficer].features && backendConfig[legalOfficer].features.vote;
+        return backendConfig(accounts?.current?.address).features.vote;
     }, [ accounts, backendConfig ]);
 
     if(accounts === null || availableLegalOfficers === undefined) {
