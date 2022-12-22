@@ -28,6 +28,7 @@ export function useCommonContext() {
         nodesDown: [],
         availableLegalOfficers: legalOfficers,
         viewer,
+        backendConfig: () => ({ features:{ iDenfy: false, vote: false }}),
     };
     return commonContext;
 }

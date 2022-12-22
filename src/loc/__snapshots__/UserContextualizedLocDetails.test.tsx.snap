@@ -157,6 +157,7 @@ exports[`UserContextualizedLocDetails renders for VTP 1`] = `
       }
     />
     <CertificateAndLimits
+      isReadOnly={false}
       loc={
         Object {
           "closed": false,
@@ -402,6 +403,7 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
       }
     />
     <CertificateAndLimits
+      isReadOnly={false}
       loc={
         Object {
           "closed": false,

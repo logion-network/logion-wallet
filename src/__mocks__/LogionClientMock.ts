@@ -151,3 +151,7 @@ export class HashOrContent {
 
     }
 }
+
+export class ReadOnlyLocState extends LocRequestState {
+
+}

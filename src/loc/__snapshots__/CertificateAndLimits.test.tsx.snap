@@ -25,12 +25,12 @@ exports[`CertificateAndLimits renders certificate and buttons for non-collection
     <Col
       className="col-xxxl-7 col-xxl-14 col-xl-14 col-lg-14 col-md-14 col-sd-14 col-xs-14"
     >
-      <div
-        className="tool-bar"
+      <ButtonGroup
+        align="right"
       >
         <ArchiveButton />
         <StatementOfFactsButton />
-      </div>
+      </ButtonGroup>
     </Col>
   </Row>
 </div>
@@ -59,7 +59,7 @@ exports[`CertificateAndLimits renders certificate and limits for void collection
       </div>
     </Col>
     <Col
-      className="col-xxxl-2 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6"
+      className="col-xxxl-2 col-xxl-6 col-xl-4 col-lg-6 col-md-6 col-sd-6 col-xs-6"
     >
       <div
         className="limits"
@@ -92,8 +92,8 @@ exports[`CertificateAndLimits renders certificate and limits for void collection
     <Col
       className="col-xxxl-5 col-xxl-8 col-xl-8 col-lg-8 col-md-8 col-sd-8 col-xs-8"
     >
-      <div
-        className="tool-bar"
+      <ButtonGroup
+        align="right"
       />
     </Col>
   </Row>
@@ -123,7 +123,7 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for closed
       </div>
     </Col>
     <Col
-      className="col-xxxl-2 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6"
+      className="col-xxxl-2 col-xxl-6 col-xl-4 col-lg-6 col-md-6 col-sd-6 col-xs-6"
     >
       <div
         className="limits"
@@ -156,8 +156,8 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for closed
     <Col
       className="col-xxxl-5 col-xxl-8 col-xl-8 col-lg-8 col-md-8 col-sd-8 col-xs-8"
     >
-      <div
-        className="tool-bar"
+      <ButtonGroup
+        align="right"
       >
         <ArchiveButton />
         <Button
@@ -173,7 +173,7 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for closed
           />
            Get dev settings
         </Button>
-      </div>
+      </ButtonGroup>
     </Col>
   </Row>
   <Dialog
@@ -304,7 +304,7 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for open c
       </div>
     </Col>
     <Col
-      className="col-xxxl-2 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6"
+      className="col-xxxl-2 col-xxl-6 col-xl-4 col-lg-6 col-md-6 col-sd-6 col-xs-6"
     >
       <div
         className="limits"
@@ -337,12 +337,12 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for open c
     <Col
       className="col-xxxl-5 col-xxl-8 col-xl-8 col-lg-8 col-md-8 col-sd-8 col-xs-8"
     >
-      <div
-        className="tool-bar"
+      <ButtonGroup
+        align="right"
       >
         <VTPSelectionButton />
         <ArchiveButton />
-      </div>
+      </ButtonGroup>
     </Col>
   </Row>
 </div>
@@ -371,7 +371,7 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for void c
       </div>
     </Col>
     <Col
-      className="col-xxxl-2 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6"
+      className="col-xxxl-2 col-xxl-6 col-xl-4 col-lg-6 col-md-6 col-sd-6 col-xs-6"
     >
       <div
         className="limits"
@@ -404,11 +404,11 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for void c
     <Col
       className="col-xxxl-5 col-xxl-8 col-xl-8 col-lg-8 col-md-8 col-sd-8 col-xs-8"
     >
-      <div
-        className="tool-bar"
+      <ButtonGroup
+        align="right"
       >
         <ArchiveButton />
-      </div>
+      </ButtonGroup>
     </Col>
   </Row>
 </div>
@@ -437,7 +437,7 @@ exports[`CertificateAndLimits renders certificate, limits and settings button fo
       </div>
     </Col>
     <Col
-      className="col-xxxl-2 col-xxl-6 col-xl-6 col-lg-6 col-md-6 col-sd-6 col-xs-6"
+      className="col-xxxl-2 col-xxl-6 col-xl-4 col-lg-6 col-md-6 col-sd-6 col-xs-6"
     >
       <div
         className="limits"
@@ -470,8 +470,8 @@ exports[`CertificateAndLimits renders certificate, limits and settings button fo
     <Col
       className="col-xxxl-5 col-xxl-8 col-xl-8 col-lg-8 col-md-8 col-sd-8 col-xs-8"
     >
-      <div
-        className="tool-bar"
+      <ButtonGroup
+        align="right"
       >
         <Button
           onClick={[Function]}
@@ -486,7 +486,7 @@ exports[`CertificateAndLimits renders certificate, limits and settings button fo
           />
            Get dev settings
         </Button>
-      </div>
+      </ButtonGroup>
     </Col>
   </Row>
   <Dialog

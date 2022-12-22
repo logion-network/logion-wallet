@@ -14,6 +14,9 @@ import {
     locRequestsPath,
     VAULT_OUT_REQUESTS_RELATIVE_PATH,
     locSelectVTPPath,
+    VOTES_RELATIVE_PATH,
+    VOTES_PATH,
+    VOTE_LOC_RELATIVE_PATH,
 } from './LegalOfficerPaths';
 
 import Home from './Home';
@@ -24,7 +27,7 @@ import RecoveryDetails from "./RecoveryDetails";
 import Wallet from "../common/Wallet";
 import Transactions from "../common/Transactions";
 import TransactionProtection from './transaction-protection/TransactionProtection';
-import LocDetails from "../loc/LocDetails";
+import LocDetails, { VoterLocDetails } from "../loc/LocDetails";
 import IdentityProtection from './transaction-protection/IdentityProtection';
 import { useCommonContext } from '../common/CommonContext';
 import { FullWidthPane } from '../common/Dashboard';
@@ -35,12 +38,13 @@ import './LegalOfficerRouter.css';
 import {
     locRequestsRelativePath,
     locDetailsRelativePath,
-    relativeDashboardCertificateRelativePath
+    relativeDashboardCertificateRelativePath,
 } from "../RootPaths";
 import VaultOutRequests from './vault/VaultOutRequests';
 import { useLogionChain } from '../logion-chain';
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import VTPSelection from "../loc/vtp/VTPSelection";
+import Votes from './Votes';
 
 export default function LegalOfficerRouter() {
     const { accounts } = useLogionChain();
@@ -155,6 +159,13 @@ export default function LegalOfficerRouter() {
                     locType='Identity'
                 />
             }/>
+            <Route path={ VOTES_RELATIVE_PATH } element={ <Votes />} />
+            <Route path={ VOTE_LOC_RELATIVE_PATH } element={
+                <VoterLocDetails
+                    backPath={ VOTES_PATH }
+                    detailsPath={ locDetailsPath }
+                />
+            } />
             <Route path="" element={ currentLegalOfficerUnavailable ? <Navigate to={ SETTINGS_PATH }/> : <Home /> } />
         </Routes>
     );

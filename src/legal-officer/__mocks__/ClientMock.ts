@@ -23,3 +23,9 @@ export async function getVerifiedThirdPartySelections(params: { locState: OpenLo
 export function setVerifiedThirdPartySelections(mock: VerifiedThirdParty[]) {
     vtpSelections = mock;
 }
+
+export let requestVote = jest.fn().mockResolvedValue(undefined);
+
+export function setRequestVoteMock(mock: any) {
+    requestVote = mock;
+}

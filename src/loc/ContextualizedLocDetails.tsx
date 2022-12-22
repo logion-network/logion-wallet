@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLocation } from "react-router";
 import queryString from 'query-string';
 import { ProtectionRequest } from "@logion/client/dist/RecoveryClient.js";
@@ -16,6 +16,7 @@ import SupersedesDisclaimer from "./SupersedesDisclaimer";
 import VoidFrame from "./VoidFrame";
 import AcceptRejectLocRequest from "./AcceptRejectLocRequest";
 import { locRequestsPath } from "src/legal-officer/LegalOfficerPaths";
+import { ReadOnlyLocState } from "@logion/client";
 
 export default function ContextualizedLocDetails() {
     const { pendingProtectionRequests, pendingRecoveryRequests } = useLegalOfficerContext();
@@ -60,6 +61,10 @@ export default function ContextualizedLocDetails() {
         }
     }, [ location, pendingProtectionRequests, protectionRequest, setProtectionRequest, pendingRecoveryRequests ]);
 
+    const isReadOnly = useMemo(() => {
+        return locState !== null && locState instanceof ReadOnlyLocState;
+    }, [ locState ]);
+
     if (loc === null || locState === null) {
         return null;
     }
@@ -93,6 +98,7 @@ export default function ContextualizedLocDetails() {
                 <CertificateAndLimits
                     loc={ loc }
                     viewer="LegalOfficer"
+                    isReadOnly={ isReadOnly }
                 />
             }
             {
@@ -120,7 +126,7 @@ export default function ContextualizedLocDetails() {
                 checkedItem="confidential document"
             />
             {
-                loc.status !== "REQUESTED" &&
+                loc.status !== "REQUESTED" && !isReadOnly &&
                 <VoidFrame
                     loc={ loc }
                 />

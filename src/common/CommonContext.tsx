@@ -8,8 +8,9 @@ import { Children } from './types/Helpers';
 import { ColorTheme, DEFAULT_COLOR_THEME } from "./ColorTheme";
 
 export interface BackendConfig {
-    integrations: {
+    features: {
         iDenfy: boolean;
+        vote: boolean;
     };
 }
 
@@ -32,7 +33,7 @@ export interface CommonContext {
     mutateBalanceState: (mutator: ((state: BalanceState) => Promise<BalanceState>)) => Promise<void>,
     viewer: Viewer;
     setViewer: ((viewer: Viewer) => void) | null;
-    backendConfig: Record<string, BackendConfig>;
+    backendConfig: ((legalOfficerAddress: string | undefined) => BackendConfig);
 }
 
 interface FullCommonContext extends CommonContext {
@@ -40,6 +41,13 @@ interface FullCommonContext extends CommonContext {
     refreshAddress?: string;
     client?: LogionClient;
 }
+
+const DEFAULT_BACKEND_CONFIG: BackendConfig = {
+    features: {
+        iDenfy: false,
+        vote: false,
+    }
+};
 
 function initialContextValue(): FullCommonContext {
     return {
@@ -53,7 +61,7 @@ function initialContextValue(): FullCommonContext {
         mutateBalanceState: () => Promise.reject(),
         viewer: "User",
         setViewer: null,
-        backendConfig: {},
+        backendConfig: () => DEFAULT_BACKEND_CONFIG,
     }
 }
 
@@ -92,7 +100,7 @@ interface Action {
     client?: LogionClient;
     viewer?: Viewer;
     setViewer?: (viewer: Viewer) => void;
-    backendConfig?: Record<string, BackendConfig>;
+    backendConfig?: ((legalOfficerAddress: string | undefined) => BackendConfig);
 }
 
 const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, action: Action): FullCommonContext => {
@@ -186,8 +194,16 @@ export function CommonContextProvider(props: Props) {
 
                 const multiClient = client.buildMultiSourceHttpClient();
                 const multiResponse = await multiClient.fetch<BackendConfig>(async axios => (await axios.get("/api/config")).data);
-                const backendConfig = aggregateBackendConfig(multiResponse, client.legalOfficers);
+                const backendConfigs = aggregateBackendConfig(multiResponse, client.legalOfficers);
                 client.updateNetworkState(multiClient);
+
+                const backendConfig = (legalOfficerAddress: string | undefined) => {
+                    if(legalOfficerAddress !== undefined && legalOfficerAddress in backendConfigs) {
+                        return backendConfigs[legalOfficerAddress];
+                    } else {
+                        return DEFAULT_BACKEND_CONFIG;
+                    }
+                };
 
                 const networkState = client.networkState;
                 const nodesDown = networkState.nodesDown;

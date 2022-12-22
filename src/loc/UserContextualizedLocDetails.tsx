@@ -14,6 +14,7 @@ import VTPInfo from "../wallet-user/vtp/VTPInfo";
 import { useCommonContext } from 'src/common/CommonContext';
 import { useMemo } from 'react';
 import IdenfyVerification from './IdenfyVerification';
+import { ReadOnlyLocState } from '@logion/client';
 
 export interface Props {
     contributionMode: ContributionMode;
@@ -35,9 +36,12 @@ export default function UserContextualizedLocDetails(props: Props) {
     } = useUserLocContext();
 
     const hasIdenfyIntegration = useMemo(() => {
-        const legalOfficer = loc?.ownerAddress;
-        return legalOfficer !== undefined && backendConfig[legalOfficer] && backendConfig[legalOfficer].integrations.iDenfy;
+        return backendConfig(loc?.ownerAddress).features.iDenfy;
     }, [ loc, backendConfig ]);
+
+    const isReadOnly = useMemo(() => {
+        return locState !== null && locState instanceof ReadOnlyLocState;
+    }, [ locState ]);
 
     if (loc === null || locState === null || !getOfficer) {
         return null;
@@ -54,7 +58,7 @@ export default function UserContextualizedLocDetails(props: Props) {
                 <DraftLocInstructions/>
             }
             {
-                hasIdenfyIntegration && loc.iDenfy?.status !== "APPROVED" &&
+                hasIdenfyIntegration && loc.iDenfy?.status !== "APPROVED" && loc.locType === "Identity" &&
                 <IdenfyVerification/>
             }
             {
@@ -81,6 +85,7 @@ export default function UserContextualizedLocDetails(props: Props) {
                 <CertificateAndLimits
                     loc={ loc }
                     viewer="User"
+                    isReadOnly={ isReadOnly }
                 />
                 { loc.locType === 'Collection' && loc.closed &&
                     <UserCollectionLocItemChecker
