@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { useCommonContext } from "src/common/CommonContext";
 import { FullWidthPane } from "src/common/Dashboard";
 import Frame from "src/common/Frame";
-import Table, { Cell, EmptyTableMessage } from "src/common/Table";
+import Table, { Cell, DateTimeCell, EmptyTableMessage } from "src/common/Table";
 import { useLegalOfficerContext } from "./LegalOfficerContext";
 import { voteLocPath } from "./LegalOfficerPaths";
 
@@ -27,6 +27,10 @@ export default function Votes() {
                         {
                             header: "ID",
                             render: vote => <Cell content={ vote.voteId }/>,
+                        },
+                        {
+                            header: "Creation date",
+                            render: vote => <DateTimeCell dateTime={ vote.createdOn }/>,
                         },
                         {
                             header: "LOC",
