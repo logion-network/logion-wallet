@@ -5,7 +5,7 @@ import { LocType } from "@logion/node-api/dist/Types.js";
 import ContextualizedLocDetails from "./ContextualizedLocDetails";
 import { UserLocContextProvider } from "./UserLocContext";
 import UserContextualizedLocDetails from "./UserContextualizedLocDetails";
-import { LegalOfficerLocContextProvider } from "./LegalOfficerLocContext";
+import { LegalOfficerLocContextProvider, VoterLocContextProvider } from "./LegalOfficerLocContext";
 import { ContributionMode } from "./types";
 
 export interface LocDetailsProps {
@@ -42,5 +42,23 @@ export function UserLocDetails(props: UserLocDetailsProps) {
                 contributionMode={ props.contributionMode }
             />
         </UserLocContextProvider>
+    )
+}
+
+export interface VoterLocDetailsProps {
+    backPath: string;
+    detailsPath: (locId: UUID, type: LocType) => string;
+}
+
+export function VoterLocDetails(props: LocDetailsProps) {
+    const locId: UUID = new UUID(useParams<"locId">().locId);
+    return (
+        <VoterLocContextProvider
+            locId={ locId }
+            backPath={ props.backPath }
+            detailsPath={ props.detailsPath }
+        >
+            <ContextualizedLocDetails />
+        </VoterLocContextProvider>
     )
 }

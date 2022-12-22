@@ -69,3 +69,15 @@ export function locSelectVTPPath(locType: LocType) {
         .replace(":locType", locType.toLowerCase())
 }
 
+export const VOTES_RELATIVE_PATH = '/votes';
+export const VOTES_PATH = LEGAL_OFFICER_PATH + VOTES_RELATIVE_PATH;
+
+export const VOTE_LOC_RELATIVE_PATH = VOTES_RELATIVE_PATH + '/loc/:locId';
+export function voteLocRelativePath(locId: UUID) {
+    return VOTE_LOC_RELATIVE_PATH
+        .replace(":locId", locId.toString());
+}
+
+export function voteLocPath(locId: UUID) {
+    return LEGAL_OFFICER_PATH + voteLocRelativePath(locId);
+}

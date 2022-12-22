@@ -14,17 +14,19 @@ import {
     locRequestsPath,
     VAULT_OUT_REQUESTS_PATH,
     STATEMENT_OF_FACTS_PATH,
+    VOTES_PATH,
 } from './LegalOfficerPaths';
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import { useLocation, useNavigate } from 'react-router-dom';
 import StatementOfFacts from '../loc/statement/StatementOfFacts';
 import { useLogionChain } from '../logion-chain';
 import WarningDialog from 'src/common/WarningDialog';
+import { MenuItemData } from 'src/common/MenuItem';
 
 export default function ContextualizedWallet() {
     const { accounts } = useLogionChain();
-    const { colorTheme, refresh, availableLegalOfficers } = useCommonContext();
-    const { refreshRequests, missingSettings, refreshLocs } = useLegalOfficerContext();
+    const { colorTheme, refresh, availableLegalOfficers, backendConfig } = useCommonContext();
+    const { refreshRequests, missingSettings, refreshLocs, refreshVotes } = useLegalOfficerContext();
     const location = useLocation();
     const [ discardSettings, setDiscardSettings ] = useState(false);
     const navigate = useNavigate();
@@ -33,11 +35,17 @@ export default function ContextualizedWallet() {
         refresh(false);
         refreshRequests!(false);
         refreshLocs();
-    }, [ refresh, refreshRequests, refreshLocs ]);
+        refreshVotes();
+    }, [ refresh, refreshRequests, refreshLocs, refreshVotes ]);
 
     const currentLegalOfficerUnavailable = useMemo(
         () => availableLegalOfficers?.find(node => node.address === accounts?.current?.address) === undefined,
     [ availableLegalOfficers, accounts ]);
+
+    const hasVoteFeature = useMemo(() => {
+        const legalOfficer = accounts?.current?.address;
+        return legalOfficer !== undefined && backendConfig[legalOfficer] && backendConfig[legalOfficer].features && backendConfig[legalOfficer].features.vote;
+    }, [ accounts, backendConfig ]);
 
     if(accounts === null || availableLegalOfficers === undefined) {
         return null;
@@ -46,80 +54,97 @@ export default function ContextualizedWallet() {
     if(location.pathname.startsWith(STATEMENT_OF_FACTS_PATH)) {
         return <StatementOfFacts />;
     } else {
+        const menuTop: MenuItemData[] = [
+            {
+                id: "home",
+                text: "Home",
+                to: HOME_PATH,
+                exact: true,
+                icon: {
+                    icon: {
+                        id: 'home'
+                    },
+                    background: colorTheme.topMenuItems.iconGradient,
+                },
+                onClick: refreshAll,
+                disabled: currentLegalOfficerUnavailable,
+            },
+            {
+                id: "wallet",
+                text: "Wallet",
+                to: WALLET_PATH,
+                exact: false,
+                icon: {
+                    icon: {
+                        id: 'wallet'
+                    },
+                    background: colorTheme.topMenuItems.iconGradient,
+                },
+                onClick: refreshAll,
+                disabled: currentLegalOfficerUnavailable,
+            },
+            {
+                id: "loc-collection",
+                text: "Collections",
+                to: locRequestsPath('Collection'),
+                exact: false,
+                icon: {
+                    icon: {
+                        id: 'collection'
+                    },
+                    background: colorTheme.topMenuItems.iconGradient,
+                },
+                onClick: refreshAll,
+                disabled: currentLegalOfficerUnavailable,
+            },
+            {
+                id: "loc-transaction",
+                text: "Transactions",
+                to: locRequestsPath('Transaction'),
+                exact: false,
+                icon: {
+                    icon: {
+                        id: 'loc'
+                    },
+                    background: colorTheme.topMenuItems.iconGradient,
+                },
+                onClick: refreshAll,
+                disabled: currentLegalOfficerUnavailable,
+            },
+            {
+                id: "identity",
+                text: "Identities",
+                to: locRequestsPath('Identity'),
+                exact: false,
+                icon: {
+                    icon: {
+                        id: 'identity'
+                    },
+                    background: colorTheme.topMenuItems.iconGradient,
+                },
+                onClick: refreshAll,
+                disabled: currentLegalOfficerUnavailable,
+            }
+        ];
+        if(hasVoteFeature) {
+            menuTop.push({
+                id: "votes",
+                text: "Votes",
+                to: VOTES_PATH,
+                exact: false,
+                icon: {
+                    icon: {
+                        id: 'identity'
+                    },
+                    background: colorTheme.topMenuItems.iconGradient,
+                },
+                onClick: refreshAll,
+                disabled: currentLegalOfficerUnavailable,
+            });
+        }
         return (
             <Dashboard
-                menuTop={[
-                    {
-                        id: "home",
-                        text: "Home",
-                        to: HOME_PATH,
-                        exact: true,
-                        icon: {
-                            icon: {
-                                id: 'home'
-                            },
-                            background: colorTheme.topMenuItems.iconGradient,
-                        },
-                        onClick: refreshAll,
-                        disabled: currentLegalOfficerUnavailable,
-                    },
-                    {
-                        id: "wallet",
-                        text: "Wallet",
-                        to: WALLET_PATH,
-                        exact: false,
-                        icon: {
-                            icon: {
-                                id: 'wallet'
-                            },
-                            background: colorTheme.topMenuItems.iconGradient,
-                        },
-                        onClick: refreshAll,
-                        disabled: currentLegalOfficerUnavailable,
-                    },
-                    {
-                        id: "loc-collection",
-                        text: "Collections",
-                        to: locRequestsPath('Collection'),
-                        exact: false,
-                        icon: {
-                            icon: {
-                                id: 'collection'
-                            },
-                            background: colorTheme.topMenuItems.iconGradient,
-                        },
-                        onClick: refreshAll,
-                        disabled: currentLegalOfficerUnavailable,
-                    },
-                    {
-                        id: "loc-transaction",
-                        text: "Transactions",
-                        to: locRequestsPath('Transaction'),
-                        exact: false,
-                        icon: {
-                            icon: {
-                                id: 'loc'
-                            },
-                            background: colorTheme.topMenuItems.iconGradient,
-                        },
-                        onClick: refreshAll,
-                        disabled: currentLegalOfficerUnavailable,
-                    },
-                    {
-                        id: "identity",
-                        text: "Identities",
-                        to: locRequestsPath('Identity'),
-                        exact: false,
-                        icon: {
-                            icon: {
-                                id: 'identity'
-                            },
-                            background: colorTheme.topMenuItems.iconGradient,
-                        },
-                        onClick: refreshAll,
-                        disabled: currentLegalOfficerUnavailable,
-                    }
-                ]}
+                menuTop={ menuTop }
                 menuMiddle={[
                     {
                         id: "protection",

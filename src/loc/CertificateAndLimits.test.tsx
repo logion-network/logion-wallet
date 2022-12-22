@@ -55,7 +55,7 @@ function transactionLocMock(): LocData {
 }
 
 function testCertiticateAndLimits(loc: LocData, viewer: Viewer) {
-    const element = shallowRender(<CertificateAndLimits loc={ loc } viewer={ viewer } />);
+    const element = shallowRender(<CertificateAndLimits loc={ loc } viewer={ viewer } isReadOnly={ false } />);
     expect(element).toMatchSnapshot();
 }
 

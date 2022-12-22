@@ -160,7 +160,6 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for closed
         align="right"
       >
         <ArchiveButton />
-        <RequestVoteButton />
         <Button
           onClick={[Function]}
         >
@@ -409,7 +408,6 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for void c
         align="right"
       >
         <ArchiveButton />
-        <RequestVoteButton />
       </ButtonGroup>
     </Col>
   </Row>

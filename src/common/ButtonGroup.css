@@ -22,6 +22,7 @@
 }
 
 .ButtonGroup .btn-group > .btn:not(:first-child),
+.ButtonGroup .btn-group > div:not(:first-child),
 .ButtonGroup .btn-group > .btn-group:not(:first-child),
 .ButtonGroup .btn-group > .dropdown:not(:first-child),
 .ButtonGroup .btn-group > :not(.btn-check:first-child) + .btn,

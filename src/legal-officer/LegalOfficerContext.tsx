@@ -23,6 +23,7 @@ import { LocType, IdentityLocType } from "@logion/node-api/dist/Types.js";
 import { DateTime } from "luxon";
 import { getLegalOfficerData, LegalOfficerData } from './LegalOfficerData';
 import { fetchAllLocsParams } from 'src/loc/LegalOfficerLocContext';
+import { getVotes, Vote } from './client';
 
 export const SETTINGS_KEYS = [ 'oath' ];
 
@@ -69,6 +70,8 @@ export interface LegalOfficerContext {
     legalOfficer?: LegalOfficer;
     refreshLegalOfficer: () => void;
     reconnected: boolean;
+    votes: Vote[];
+    refreshVotes: () => Promise<void>;
 }
 
 interface FullLegalOfficerContext extends LegalOfficerContext {
@@ -77,6 +80,7 @@ interface FullLegalOfficerContext extends LegalOfficerContext {
     callRefreshRequests: boolean;
     callRefreshSettings: boolean;
     callRefreshLegalOfficer: boolean;
+    callRefreshVotes: boolean;
 }
 
 function initialContextValue(): FullLegalOfficerContext {
@@ -105,8 +109,11 @@ function initialContextValue(): FullLegalOfficerContext {
         callRefreshRequests: false,
         callRefreshSettings: false,
         callRefreshLegalOfficer: false,
+        callRefreshVotes: false,
         refreshLegalOfficer: DEFAULT_NOOP,
         reconnected: false,
+        votes: [],
+        refreshVotes: DEFAULT_NOOP,
     };
 }
 
@@ -129,6 +136,9 @@ type ActionType =
     | 'SET_REFRESH_LEGAL_OFFICER'
     | 'REFRESH_LEGAL_OFFICER_CALLED'
     | 'MUST_RECONNECT'
+    | 'SET_REFRESH_VOTES'
+    | 'REFRESH_VOTES_CALLED'
+    | 'SET_VOTES'
 ;
 
 interface Action {
@@ -167,6 +177,8 @@ interface Action {
     refreshOnchainSettings?: () => void;
     refreshLegalOfficer?: () => void;
     legalOfficer?: LegalOfficer;
+    votes?: Vote[];
+    refreshVotes?: () => Promise<void>;
 }
 
 const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOfficerContext, action: Action): FullLegalOfficerContext => {
@@ -180,6 +192,7 @@ const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOffic
                 callRefreshRequests: true,
                 callRefreshSettings: true,
                 callRefreshLegalOfficer: true,
+                callRefreshVotes: true,
                 legalOfficer: undefined,
                 reconnected: false,
             }
@@ -292,6 +305,25 @@ const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOffic
                 ...state,
                 reconnected: true,
                 dataAddress: null,
+            }
+        case 'SET_REFRESH_VOTES':
+            return {
+                ...state,
+                refreshVotes: action.refreshVotes!,
+            }
+        case "REFRESH_VOTES_CALLED":
+            return {
+                ...state,
+                callRefreshVotes: false,
+            };
+        case "SET_VOTES":
+            if (action.dataAddress === state.dataAddress) {
+                return {
+                    ...state,
+                    votes: action.votes!,
+                }
+            } else {
+                return state;
             }
         default:
             /* istanbul ignore next */
@@ -596,6 +628,41 @@ export function LegalOfficerContextProvider(props: Props) {
             refreshLegalOfficer();
         }
     }, [ contextValue.callRefreshLegalOfficer, refreshLegalOfficer ]);
+
+    // ------------------ Votes -------------------------------
+
+    const refreshVotes = useCallback(async () => {
+        const now = DateTime.now();
+        if(accounts && accounts.current && client && client.isTokenValid(now)) {
+            dispatch({
+                type: "REFRESH_VOTES_CALLED"
+            });
+
+            const currentAddress = accounts.current.address;
+            const votes = await getVotes(client);
+
+            dispatch({
+                type: "SET_VOTES",
+                dataAddress: currentAddress,
+                votes,
+            });
+        }
+    }, [ accounts, client ]);
+
+    useEffect(() => {
+        if(contextValue.refreshVotes !== refreshVotes) {
+            dispatch({
+                type: 'SET_REFRESH_VOTES',
+                refreshVotes: refreshVotes,
+            });
+        }
+    }, [ contextValue.refreshVotes, refreshVotes ]);
+
+    useEffect(() => {
+        if(contextValue.callRefreshVotes) {
+            refreshVotes();
+        }
+    }, [ contextValue.callRefreshVotes, refreshVotes ]);
 
     // ------------------ Component -------------------------------
 

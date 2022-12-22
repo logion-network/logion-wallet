@@ -182,6 +182,7 @@ exports[`ContextualizedLocDetails renders 1`] = `
     }
   />
   <CertificateAndLimits
+    isReadOnly={false}
     loc={
       Object {
         "closed": false,
@@ -468,6 +469,7 @@ exports[`ContextualizedLocDetails renders empty 1`] = `
     }
   />
   <CertificateAndLimits
+    isReadOnly={false}
     loc={
       Object {
         "id": UUID {

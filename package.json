@@ -49,7 +49,7 @@
         "start": "GENERATE_SOURCEMAP=false craco start",
         "build": "craco build",
         "test": "craco test --transformIgnorePatterns \"/node_modules/(?!(@polkadot|@babel|react-calendar|react-date-picker|pagedjs|@creativecommons|@logion)/).*\"",
-        "report-test-coverage": "craco test --transformIgnorePatterns \"/node_modules/(?!(@polkadot|@babel|react-calendar|react-date-picker|pagedjs|@creativecommons)/).*\" --coverage --watchAll",
+        "report-test-coverage": "craco test --transformIgnorePatterns \"/node_modules/(?!(@polkadot|@babel|react-calendar|react-date-picker|pagedjs|@creativecommons|@logion)/).*\" --coverage --watchAll",
         "eject": "react-scripts eject",
         "pre-release": "scripty",
         "analyze": "source-map-explorer 'build/static/js/*.js'"

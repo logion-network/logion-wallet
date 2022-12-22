@@ -28,6 +28,9 @@ export function useCommonContext() {
         nodesDown: [],
         availableLegalOfficers: legalOfficers,
         viewer,
+        backendConfig: {
+            
+        }
     };
     return commonContext;
 }

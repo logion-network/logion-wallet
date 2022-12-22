@@ -292,3 +292,19 @@ export async function requestVote(params: {
     const voteCreatedData = voteCreated.data as AnyJson[];
     return asString(voteCreatedData[0]);
 }
+
+export interface Vote {
+    voteId: string;
+    createdOn: string;
+    locId: UUID;
+}
+
+export async function getVotes(client: LogionClient): Promise<Vote[]> {
+    const onChain = await client.nodeApi.query.vote.votes.entries();
+    const votes = onChain.map(entry => ({
+        voteId: entry[0].args[0].toString(),
+        createdOn: "",
+        locId: UUID.fromDecimalStringOrThrow(entry[1].unwrap().locId.toString()),
+    }));
+    return votes.sort((v1, v2) => v2.voteId.localeCompare(v1.voteId));
+}

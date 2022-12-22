@@ -125,9 +125,10 @@ describe("Legal Officer client", () => {
                 {
                     name: "VoteCreated",
                     section: "vote",
-                    data: {
-                        voteId: "42"
-                    },
+                    data: [
+                        "42",
+                        [ DEFAULT_LEGAL_OFFICER ],
+                    ],
                 }
             ],
         } as unknown as SuccessfulSubmission;

@@ -26,8 +26,9 @@ import ButtonGroup from 'src/common/ButtonGroup';
 import RequestVoteButton from './RequestVoteButton';
 
 export interface Props {
-    loc: LocData
-    viewer: Viewer
+    loc: LocData;
+    viewer: Viewer;
+    isReadOnly: boolean;
 }
 
 export default function CertificateAndLimits(props: Props) {
@@ -84,7 +85,7 @@ export default function CertificateAndLimits(props: Props) {
                         >
                             { props.viewer === 'LegalOfficer' && props.loc.status ==='OPEN' && <VTPSelectionButton/> }
                             { props.viewer === 'LegalOfficer' && <ArchiveButton/> }
-                            { props.viewer === 'LegalOfficer' && props.loc.status === "CLOSED" && hasVoteFeature && <RequestVoteButton/> }
+                            { props.viewer === 'LegalOfficer' && props.loc.status === "CLOSED" && hasVoteFeature && !props.loc.voteId && <RequestVoteButton/> }
                             { props.loc.closed && !props.loc.voidInfo && <Button onClick={ () => setShowSettings(true) }><Icon icon={{id: "cog"}} height="22px"/> Get dev settings</Button> }
                         </ButtonGroup>
                     </Col>
@@ -95,11 +96,11 @@ export default function CertificateAndLimits(props: Props) {
                         <ButtonGroup
                             align="right"
                         >
-                            { props.loc.locType === 'Identity' && !isLogionIdentityLoc(props.loc) && props.loc.status ==='CLOSED' && <Nominate/> }
+                            { props.loc.locType === 'Identity' && !isLogionIdentityLoc(props.loc) && props.loc.status ==='CLOSED' && !props.isReadOnly && <Nominate/> }
                             { props.loc.status ==='OPEN' && <VTPSelectionButton/> }
-                            { props.loc.status ==='CLOSED' && hasVoteFeature && <RequestVoteButton/> }
-                            <ArchiveButton/>
-                            <StatementOfFactsButton/>
+                            { props.loc.status ==='CLOSED' && hasVoteFeature && !props.isReadOnly && !props.loc.voteId && <RequestVoteButton/> }
+                            { !props.isReadOnly && <ArchiveButton/> }
+                            { !props.isReadOnly && <StatementOfFactsButton/> }
                         </ButtonGroup>
                     </Col>
                 }
