@@ -49,7 +49,11 @@ export async function deleteLink(params: {
 
 function buildAxios(locState: LocRequestState) {
     const client = locState.locsState().client;
-    return client.buildAxios(getLegalOfficer(client, locState.data().ownerAddress));
+    return buildAxiosWithClient(client, locState.data().ownerAddress);
+}
+
+function buildAxiosWithClient(client: LogionClient, legalOfficerAddress: string) {
+    return client.buildAxios(getLegalOfficer(client, legalOfficerAddress));
 }
 
 function getLegalOfficer(client: LogionClient, address: string): LegalOfficer {
@@ -293,6 +297,12 @@ export async function requestVote(params: {
     return asString(voteCreatedData[0]);
 }
 
+interface BackendVote {
+    voteId: string;
+    createdOn: string;
+    locId: string;
+}
+
 export interface Vote {
     voteId: string;
     createdOn: string;
@@ -300,11 +310,15 @@ export interface Vote {
 }
 
 export async function getVotes(client: LogionClient): Promise<Vote[]> {
-    const onChain = await client.nodeApi.query.vote.votes.entries();
-    const votes = onChain.map(entry => ({
-        voteId: entry[0].args[0].toString(),
-        createdOn: "",
-        locId: UUID.fromDecimalStringOrThrow(entry[1].unwrap().locId.toString()),
-    }));
-    return votes.sort((v1, v2) => v2.voteId.localeCompare(v1.voteId));
+    const currentAddress = client.currentAddress;
+    if(!currentAddress) {
+        throw new Error("Not authenticated");
+    }
+    const axios = buildAxiosWithClient(client, client.currentAddress);
+    const response = await axios.get(`/api/vote/${ currentAddress }`);
+    const votes: BackendVote[] = response.data.votes;
+    return votes.map(backendVote => ({
+        ...backendVote,
+        locId: new UUID(backendVote.locId),
+    })).sort((v1, v2) => v2.voteId.localeCompare(v1.voteId));
 }
