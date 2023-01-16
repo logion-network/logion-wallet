@@ -76,6 +76,27 @@
     min-height: 20px;
 }
 
+@media screen and (max-width: 1878px) {
+    .CertificateAndLimits .col-xxxl-5 {
+        width: 36%;
+    }
+    .CertificateAndLimits .col-xxxl-7 {
+        width: 64%;
+    }
+}
+
+@media screen and (max-width: 1788px) {
+    .CertificateAndLimits .col-xxxl-5 {
+        width: 100%;
+    }
+    .CertificateAndLimits .col-xxxl-7 {
+        margin-top: 20px;
+        width: 100%;
+    }
+    .CertificateAndLimits .col-xxxl-7 .ButtonGroup.right {
+        text-align: center;
+    }
+}
 
 @media screen and (max-width: 1600px) {
     .CertificateAndLimits .limits,
