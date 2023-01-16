@@ -3,6 +3,7 @@ import { useCallback, useState } from "react";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
 import Button from "src/common/Button";
 import Dialog from "src/common/Dialog";
+import Icon from "src/common/Icon";
 import { requestVote } from "src/legal-officer/client";
 import { useLogionChain } from "src/logion-chain";
 import { useLocContext } from "./LocContext";
@@ -47,7 +48,7 @@ export default function RequestVoteButton() {
                 onClick={ () => setSubmissionInProgress(true) }
                 disabled={ call !== undefined }
             >
-                Request a vote
+                <Icon icon={{id: "vote"}} /> Request a vote
             </Button>
             {
                 submissionInProgress &&
