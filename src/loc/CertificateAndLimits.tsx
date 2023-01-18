@@ -58,7 +58,7 @@ export default function CertificateAndLimits(props: Props) {
             className="CertificateAndLimits"
         >
             <Row>
-                <Col className="col-xxxl-5 col-xxl-10 col-xl-10 col-lg-10 col-md-10 col-sd-10 col-xs-10">
+                <Col>
                     <div className="certificate">
                         <h2>LOC Certificate public web address (URL):
                             <ViewCertificateButton url={ certificateUrl }/>
@@ -68,7 +68,7 @@ export default function CertificateAndLimits(props: Props) {
                 </Col>
                 {
                     props.loc.locType === 'Collection' &&
-                    <Col className="col-xxxl-2 col-xxl-6 col-xl-4 col-lg-6 col-md-6 col-sd-6 col-xs-6">
+                    <Col>
                         <div className="limits">
                             <div><strong>Collection Date Limit:</strong> <InlineDateTime dateTime={ dateLimit } dateOnly={ true } /></div>
                             <div><strong>Collection Item Limit:</strong> { itemLimit(props.loc) }</div>
@@ -76,41 +76,29 @@ export default function CertificateAndLimits(props: Props) {
                         </div>
                     </Col>
                 }
-                {
-                    props.loc.locType === 'Collection' &&
-                    <Col className="col-xxxl-5 col-xxl-8 col-xl-8 col-lg-8 col-md-8 col-sd-8 col-xs-8">
+            </Row>
+            <Row>
+                <Col>
+                    <div className="buttons-row">
                         <ButtonGroup
-                            align="right"
+                            align="center"
                         >
-                            { props.viewer === 'LegalOfficer' && props.loc.status ==='OPEN' && <VTPSelectionButton/> }
-                            { props.viewer === 'LegalOfficer' && <ArchiveButton/> }
-                            { props.viewer === 'LegalOfficer' && props.loc.status === "CLOSED" && hasVoteFeature && !props.loc.voteId && <RequestVoteButton/> }
-                            { props.loc.closed && !props.loc.voidInfo && <Button onClick={ () => setShowSettings(true) }><Icon icon={{id: "cog"}} height="22px"/> Get dev settings</Button> }
+                            { props.loc.locType === 'Collection' && props.loc.closed && !props.loc.voidInfo && <Button onClick={ () => setShowSettings(true) }><Icon icon={{id: "cog"}} height="22px"/> Get dev settings</Button> }
+
+                            { props.loc.locType === 'Collection' && props.viewer === 'LegalOfficer' && props.loc.status ==='OPEN' && <VTPSelectionButton/> }
+                            { props.loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' && props.loc.status ==='OPEN' && <VTPSelectionButton/> }
+                            { props.loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' && props.loc.locType === 'Identity' && !isLogionIdentityLoc(props.loc) && props.loc.status ==='CLOSED' && !props.isReadOnly && <Nominate/> }
+
+                            { props.loc.locType === 'Identity' && !isLogionIdentityLoc(props.loc) && props.viewer === 'LegalOfficer' && props.loc.status === "CLOSED" && hasVoteFeature && !props.loc.voteId && !props.isReadOnly && <RequestVoteButton/> }
+
+                            { props.loc.locType === 'Collection' && props.viewer === 'LegalOfficer' && <ArchiveButton/> }
+                            { props.loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' && !props.isReadOnly && <ArchiveButton/> }
+
+                            { props.loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' && !props.isReadOnly && <StatementOfFactsButton/> }
+                            { props.loc.locType !== 'Collection' && props.viewer === 'User' && <StatementOfFactsRequestButton/> }
                         </ButtonGroup>
-                    </Col>
-                }
-                {
-                    props.loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' &&
-                    <Col className="col-xxxl-7 col-xxl-14 col-xl-14 col-lg-14 col-md-14 col-sd-14 col-xs-14">
-                        <ButtonGroup
-                            align="right"
-                        >
-                            { props.loc.locType === 'Identity' && !isLogionIdentityLoc(props.loc) && props.loc.status ==='CLOSED' && !props.isReadOnly && <Nominate/> }
-                            { props.loc.status ==='OPEN' && <VTPSelectionButton/> }
-                            { props.loc.status ==='CLOSED' && hasVoteFeature && !props.isReadOnly && !props.loc.voteId && <RequestVoteButton/> }
-                            { !props.isReadOnly && <ArchiveButton/> }
-                            { !props.isReadOnly && <StatementOfFactsButton/> }
-                        </ButtonGroup>
-                    </Col>
-                }
-                {
-                    props.loc.locType !== 'Collection' && props.viewer === 'User' &&
-                    <Col className="col-xxxl-7 col-xxl-14 col-xl-14 col-lg-14 col-md-14 col-sd-14 col-xs-14">
-                        <div className="sof-request">
-                            <StatementOfFactsRequestButton/>
-                        </div>
-                    </Col>
-                }
+                    </div>
+                </Col>
             </Row>
             {
                 props.loc.locType === "Collection" && props.loc.closed && !props.loc.voidInfo &&

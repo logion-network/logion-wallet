@@ -17,11 +17,6 @@
     flex-shrink: 0;
 }
 
-.Dashboard .CertificateAndLimits a {
-    margin-bottom: 18px;
-    color: #0d6efd;
-}
-
 .CertificateAndLimits .CopyPasteButton {
     margin-left: 10px;
 }
@@ -48,13 +43,6 @@
     font-size: 1rem;
 }
 
-.CertificateAndLimits .sof-request {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-}
-
 .CertificateAndLimits .certificate h2 {
     height: 100%;
     display: flex;
@@ -76,31 +64,6 @@
     min-height: 20px;
 }
 
-@media screen and (max-width: 1926px) {
-    .CertificateAndLimits .col-xxxl-5 {
-        width: 36%;
-    }
-    .CertificateAndLimits .col-xxxl-7 {
-        width: 64%;
-    }
-}
-
-@media screen and (max-width: 1788px) {
-    .CertificateAndLimits .col-xxxl-5 {
-        width: 100%;
-    }
-    .CertificateAndLimits .col-xxxl-7 {
-        margin-top: 20px;
-        width: 100%;
-    }
-    .CertificateAndLimits .col-xxxl-7 .ButtonGroup.right {
-        text-align: center;
-    }
-}
-
-@media screen and (max-width: 1600px) {
-    .CertificateAndLimits .limits,
-    .CertificateAndLimits .tool-bar {
-        margin-top: 20px;
-    }
+.CertificateAndLimits .buttons-row {
+    margin-top: 20px;
 }

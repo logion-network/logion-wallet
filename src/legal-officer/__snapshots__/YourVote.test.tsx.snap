@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`YourVote renders buttons if not yet voted 1`] = `
+<ButtonGroup>
+  <Button
+    onClick={[Function]}
+    variant="none"
+  >
+    <Icon
+      height="40px"
+      icon={
+        Object {
+          "id": "ok",
+        }
+      }
+    />
+  </Button>
+  <Button
+    onClick={[Function]}
+    variant="none"
+  >
+    <Icon
+      height="40px"
+      icon={
+        Object {
+          "id": "ko",
+        }
+      }
+    />
+  </Button>
+</ButtonGroup>
+`;
+
+exports[`YourVote renders result if voted no 1`] = `
+<div
+  className="YourVote"
+>
+  <Icon
+    height="40px"
+    icon={
+      Object {
+        "id": "lock_black",
+      }
+    }
+  />
+  <Icon
+    height="40px"
+    icon={
+      Object {
+        "id": "ko",
+      }
+    }
+  />
+</div>
+`;
+
+exports[`YourVote renders result if voted yes 1`] = `
+<div
+  className="YourVote"
+>
+  <Icon
+    height="40px"
+    icon={
+      Object {
+        "id": "lock_black",
+      }
+    }
+  />
+  <Icon
+    height="40px"
+    icon={
+      Object {
+        "id": "ok",
+      }
+    }
+  />
+</div>
+`;

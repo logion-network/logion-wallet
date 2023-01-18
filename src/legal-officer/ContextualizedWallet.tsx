@@ -133,7 +133,7 @@ export default function ContextualizedWallet() {
                 exact: false,
                 icon: {
                     icon: {
-                        id: 'identity'
+                        id: 'vote'
                     },
                     background: colorTheme.topMenuItems.iconGradient,
                 },
