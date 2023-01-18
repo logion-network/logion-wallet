@@ -11,6 +11,7 @@ import {
     VoidedLoc,
     VoidedCollectionLoc,
     LocsState,
+    SignCallback,
 } from '@logion/client';
 import { ProtectionRequest } from '@logion/client/dist/RecoveryClient.js';
 
@@ -23,7 +24,7 @@ import { LocType, IdentityLocType } from "@logion/node-api/dist/Types.js";
 import { DateTime } from "luxon";
 import { getLegalOfficerData, LegalOfficerData } from './LegalOfficerData';
 import { fetchAllLocsParams } from 'src/loc/LegalOfficerLocContext';
-import { getVotes, Vote } from './client';
+import { getVotes, Vote, VoteResult, vote as clientVote } from './client';
 
 export const SETTINGS_KEYS = [ 'oath' ];
 
@@ -72,6 +73,7 @@ export interface LegalOfficerContext {
     reconnected: boolean;
     votes: Vote[];
     refreshVotes: () => Promise<void>;
+    vote: (params: { targetVote: Vote, myVote: VoteResult, callback: SignCallback }) => Promise<void>;
 }
 
 interface FullLegalOfficerContext extends LegalOfficerContext {
@@ -114,6 +116,7 @@ function initialContextValue(): FullLegalOfficerContext {
         reconnected: false,
         votes: [],
         refreshVotes: DEFAULT_NOOP,
+        vote: DEFAULT_NOOP,
     };
 }
 
@@ -139,6 +142,7 @@ type ActionType =
     | 'SET_REFRESH_VOTES'
     | 'REFRESH_VOTES_CALLED'
     | 'SET_VOTES'
+    | 'SET_VOTE'
 ;
 
 interface Action {
@@ -179,6 +183,7 @@ interface Action {
     legalOfficer?: LegalOfficer;
     votes?: Vote[];
     refreshVotes?: () => Promise<void>;
+    vote?: (params: { targetVote: Vote, myVote: VoteResult, callback: SignCallback }) => Promise<void>;
 }
 
 const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOfficerContext, action: Action): FullLegalOfficerContext => {
@@ -325,6 +330,11 @@ const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOffic
             } else {
                 return state;
             }
+        case 'SET_VOTE':
+            return {
+                ...state,
+                vote: action.vote!,
+            }
         default:
             /* istanbul ignore next */
             throw new Error(`Unknown type: ${action.type}`);
@@ -336,7 +346,7 @@ export interface Props {
 }
 
 export function LegalOfficerContextProvider(props: Props) {
-    const { api, accounts, axiosFactory, client, reconnect } = useLogionChain();
+    const { api, accounts, axiosFactory, client, reconnect, signer } = useLogionChain();
     const { colorTheme, setColorTheme, viewer, setViewer } = useCommonContext();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
@@ -663,6 +673,38 @@ export function LegalOfficerContextProvider(props: Props) {
             refreshVotes();
         }
     }, [ contextValue.callRefreshVotes, refreshVotes ]);
+
+    const voteCallback = useCallback(async (params: {
+        targetVote: Vote,
+        myVote: VoteResult,
+        callback: SignCallback
+    }) => {
+        const { targetVote, myVote, callback } = params;
+        if(client && signer) {
+            const newVote = await clientVote({
+                vote: targetVote,
+                myVote,
+                client,
+                signer,
+                callback,
+            });
+            const newVotes = contextValue.votes.map(vote => vote.voteId === targetVote.voteId ? newVote : vote);
+            dispatch({
+                type: "SET_VOTES",
+                dataAddress: client.currentAddress,
+                votes: newVotes,
+            });
+        }
+    }, [ client, signer, contextValue.votes ]);
+
+    useEffect(() => {
+        if(contextValue.vote !== voteCallback) {
+            dispatch({
+                type: 'SET_VOTE',
+                vote: voteCallback,
+            });
+        }
+    }, [ contextValue.vote, voteCallback ]);
 
     // ------------------ Component -------------------------------
 

@@ -1,0 +1,35 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Votes renders votes 1`] = `
+<FullWidthPane
+  className="Votes"
+  mainTitle="Votes"
+  titleIcon={
+    Object {
+      "background": Object {
+        "from": "#3b6cf4",
+        "to": "#6050dc",
+      },
+      "icon": Object {
+        "id": "vote",
+      },
+    }
+  }
+>
+  <Frame>
+    <Tabs
+      activeKey="pending"
+      onSelect={[Function]}
+      tabs={
+        Array [
+          Object {
+            "key": "pending",
+            "render": [Function],
+            "title": "Pending",
+          },
+        ]
+      }
+    />
+  </Frame>
+</FullWidthPane>
+`;

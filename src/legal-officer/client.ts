@@ -23,6 +23,7 @@ import {
     VoidInfo,
     asString,
 } from "@logion/node-api";
+import { ISubmittableResult } from '@polkadot/types/types';
 import { AnyJson } from "@polkadot/types-codec/types/helpers.js";
 import { fetchAllLocsParams } from "../loc/LegalOfficerLocContext";
 
@@ -301,12 +302,22 @@ interface BackendVote {
     voteId: string;
     createdOn: string;
     locId: string;
+    status?: "PENDING" | "APPROVED" | "REJECTED";
+    ballots?: {
+        [key: string]: ("Yes" | "No") | undefined;
+    };
 }
+
+export type VoteResult = "Yes" | "No";
 
 export interface Vote {
     voteId: string;
     createdOn: string;
     locId: UUID;
+    status: "PENDING" | "APPROVED" | "REJECTED";
+    ballots: {
+        [key: string]: (VoteResult | undefined);
+    };
 }
 
 export async function getVotes(client: LogionClient): Promise<Vote[]> {
@@ -320,5 +331,40 @@ export async function getVotes(client: LogionClient): Promise<Vote[]> {
     return votes.map(backendVote => ({
         ...backendVote,
         locId: new UUID(backendVote.locId),
+        status: backendVote.status || "PENDING",
+        ballots: backendVote.ballots || {},
     })).sort((v1, v2) => v2.voteId.localeCompare(v1.voteId));
+}
+
+export async function vote(params: {
+    client: LogionClient,
+    vote: Vote,
+    myVote: VoteResult,
+    signer: Signer,
+    callback: SignCallback,
+}): Promise<Vote> {
+    const { client, vote, myVote, callback } = params;
+
+    // TODO sign and submit extrinsic
+    return new Promise<Vote>((resolve, reject) => {
+        setTimeout(() => {
+            const currentAddress = client.currentAddress;
+            if(!currentAddress) {
+                reject("Not authenticated");
+            } else {
+                const ballots = vote.ballots;
+                ballots[client.currentAddress] = myVote;
+
+                callback({
+                    status: {
+                        isFinalized: true,
+                    }
+                } as ISubmittableResult);
+                resolve({
+                    ...vote,
+                    ballots,
+                });
+            }
+        }, 3000);
+    });
 }

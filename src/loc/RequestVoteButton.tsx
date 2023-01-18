@@ -3,6 +3,8 @@ import { useCallback, useState } from "react";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
 import Button from "src/common/Button";
 import Dialog from "src/common/Dialog";
+import Icon from "src/common/Icon";
+import Select from "src/common/Select";
 import { requestVote } from "src/legal-officer/client";
 import { useLogionChain } from "src/logion-chain";
 import { useLocContext } from "./LocContext";
@@ -47,7 +49,7 @@ export default function RequestVoteButton() {
                 onClick={ () => setSubmissionInProgress(true) }
                 disabled={ call !== undefined }
             >
-                Request a vote
+                <Icon icon={{id: "vote"}} /> Request a vote
             </Button>
             {
                 submissionInProgress &&
@@ -75,9 +77,19 @@ export default function RequestVoteButton() {
                     {
                         call === undefined &&
                         <p>You are about to request a vote on this closed LOC. <strong>All voters will then have access to the content of this LOC,
-                            including the confiential documents.</strong> Please make sure that this is actually what you want.
+                            including the confidential documents.</strong> Please make sure that this is actually what you want.
                         </p>
                     }
+                    <Select
+                        options={[
+                            {
+                                label: "Non-Collator Logion Guardian nomination vote",
+                                value: "guest-lo"
+                            }
+                        ]}
+                        onChange={() => {}}
+                        value="guest-lo"
+                    />
                     <ClientExtrinsicSubmitter
                         call={ call }
                         onSuccess={ () => completeOnSuccessCallback() }

@@ -22,9 +22,8 @@ describe("RequestVoteButton", () => {
         };
         setRequestVoteMock(requestVoteMock);
         render(<RequestVoteButton />);
+        await clickByName((_, element) => /Request a vote/.test(element.textContent || ""));
         await clickByName("Request a vote");
-        const buttons = screen.getAllByRole("button", { name: "Request a vote" });
-        await userEvent.click(buttons[1]);
         await waitFor(() => screen.getByText("42"));
         const dialog = screen.getByRole("dialog");
         await clickByName("Close");
@@ -40,9 +39,8 @@ describe("RequestVoteButton", () => {
         };
         setRequestVoteMock(requestVoteMock);
         render(<RequestVoteButton />);
+        await clickByName((_, element) => /Request a vote/.test(element.textContent || ""));
         await clickByName("Request a vote");
-        const buttons = screen.getAllByRole("button", { name: "Request a vote" });
-        await userEvent.click(buttons[1]);
         await waitFor(() => screen.getByText(/Submission failed/));
         const dialog = screen.getByRole("dialog");
         await clickByName("Close");

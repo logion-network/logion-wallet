@@ -1,0 +1,8 @@
+.YourVote {
+    display: inline-flex;
+    text-align: center;
+}
+
+.YourVote > img:not(:first-child) {
+    margin-left: 25px;
+}

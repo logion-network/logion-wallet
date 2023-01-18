@@ -1,7 +1,9 @@
-import { ClosedCollectionLoc, ClosedLoc, OpenLoc, PendingRequest, RejectedRequest, VoidedLoc, LocsState } from "@logion/client";
+import { ClosedCollectionLoc, ClosedLoc, OpenLoc, PendingRequest, RejectedRequest, VoidedLoc, LocsState, SignCallback } from "@logion/client";
 import { LocType, IdentityLocType } from "@logion/node-api/dist/Types.js";
+import { ISubmittableResult } from '@polkadot/types/types';
 import { AxiosInstance } from "axios";
 import { COLOR_THEME, PATRICK } from "src/common/TestData";
+import { Vote, VoteResult } from "../client";
 import { LegalOfficerData } from "../LegalOfficerData";
 
 export let pendingTokenizationRequests: any[] | null = null;
@@ -137,6 +139,25 @@ export function setLocsState(mock: LocsState) {
     locsState = mock;
 }
 
+async function vote(params: {
+    targetVote: Vote,
+    myVote: VoteResult,
+    callback: SignCallback
+}): Promise<Vote> {
+    params.callback({
+        status: {
+            isFinalized: true,
+        }
+    } as ISubmittableResult);
+    return params.targetVote;
+}
+
+let votes: Vote[] = [];
+
+export function setVotes(value: Vote[]) {
+    votes = value;
+}
+
 export function useLegalOfficerContext() {
     return {
         pendingTokenizationRequests,
@@ -163,5 +184,7 @@ export function useLegalOfficerContext() {
         refreshLegalOfficer,
         refreshOnchainSettings,
         locsState,
+        votes,
+        vote,
     };
 }
