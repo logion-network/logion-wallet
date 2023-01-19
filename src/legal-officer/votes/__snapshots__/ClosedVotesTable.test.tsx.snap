@@ -1,0 +1,260 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ClosedVotesTable renders 1`] = `
+<div
+  className="Table constrained-row-height"
+>
+  <style>
+    
+            .Table .body .Row .Col.split-after::before {
+                background-color: #0c163d;
+            }
+            
+  </style>
+  <div
+    className="header"
+    style={
+      Object {
+        "backgroundColor": "#152665",
+        "color": "#ffffff",
+      }
+    }
+  >
+    <div
+      className="Row"
+    >
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "center",
+            "width": "150px",
+          }
+        }
+      >
+        ID
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "center",
+            "width": "150px",
+          }
+        }
+      >
+        Creation date
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "center",
+            "width": "calc(( 100% - 750px ) / 2)",
+          }
+        }
+      >
+        LOC
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "center",
+            "width": "150px",
+          }
+        }
+      >
+        Your vote
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "center",
+            "width": "calc(( 100% - 750px ) / 2)",
+          }
+        }
+      >
+        Description
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "center",
+            "width": "150px",
+          }
+        }
+      >
+        Vote Result
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "center",
+            "width": "150px",
+          }
+        }
+      >
+        Details
+      </div>
+    </div>
+  </div>
+  <div
+    className="body"
+  >
+    <div>
+      <div
+        className="Row "
+        style={
+          Object {
+            "color": "#ffffff",
+          }
+        }
+      >
+        <div
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#0c163d",
+              "fontSize": undefined,
+              "textAlign": "center",
+              "width": "150px",
+            }
+          }
+        >
+          <div
+            className="regular-cell"
+            style={Object {}}
+          >
+            2
+          </div>
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#0c163d",
+              "fontSize": undefined,
+              "textAlign": "center",
+              "width": "150px",
+            }
+          }
+        >
+          <div
+            className="regular-cell"
+            style={
+              Object {
+                "textAlign": "center",
+              }
+            }
+          >
+            -
+          </div>
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#0c163d",
+              "fontSize": undefined,
+              "textAlign": "center",
+              "width": "calc(( 100% - 750px ) / 2)",
+            }
+          }
+        >
+          <div
+            className="regular-cell overflowing"
+            style={Object {}}
+          >
+            <div />
+          </div>
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#0c163d",
+              "fontSize": undefined,
+              "textAlign": "center",
+              "width": "150px",
+            }
+          }
+        >
+          <div
+            className="regular-cell"
+            style={Object {}}
+          >
+            <img
+              alt="ko"
+              src="/assets/ko.svg"
+            />
+          </div>
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#0c163d",
+              "fontSize": undefined,
+              "textAlign": "center",
+              "width": "calc(( 100% - 750px ) / 2)",
+            }
+          }
+        >
+          <div
+            className="regular-cell overflowing"
+            style={Object {}}
+          >
+            <span
+              onBlur={[Function]}
+              onFocus={[Function]}
+              onMouseOut={[Function]}
+              onMouseOver={[Function]}
+            >
+              Non-Collator Logion Guardian nomination vote
+            </span>
+          </div>
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#0c163d",
+              "fontSize": undefined,
+              "textAlign": "center",
+              "width": "150px",
+            }
+          }
+        >
+          <img
+            alt="ok"
+            height="40px"
+            src="/assets/ok.svg"
+          />
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#0c163d",
+              "fontSize": undefined,
+              "textAlign": "center",
+              "width": "150px",
+            }
+          }
+        >
+          <div
+            className="regular-cell"
+            style={Object {}}
+          >
+            2/2
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+`;

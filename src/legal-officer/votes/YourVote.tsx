@@ -4,8 +4,8 @@ import Button from "src/common/Button";
 import ButtonGroup from "src/common/ButtonGroup";
 import Icon from "src/common/Icon";
 import { useLogionChain } from "src/logion-chain";
-import { Vote, VoteResult } from "./client";
-import { useLegalOfficerContext } from "./LegalOfficerContext";
+import { Vote, VoteResult } from "../client";
+import { useLegalOfficerContext } from "../LegalOfficerContext";
 import "./YourVote.css";
 
 export interface Props {

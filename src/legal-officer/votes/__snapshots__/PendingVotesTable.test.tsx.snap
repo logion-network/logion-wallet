@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`VotesTable renders 1`] = `
+exports[`PendingVotesTable renders 1`] = `
 <div
   className="Table constrained-row-height"
 >
@@ -28,7 +28,7 @@ exports[`VotesTable renders 1`] = `
         style={
           Object {
             "textAlign": "center",
-            "width": "calc(( 100% - 0px ) / 5)",
+            "width": "150px",
           }
         }
       >
@@ -39,7 +39,7 @@ exports[`VotesTable renders 1`] = `
         style={
           Object {
             "textAlign": "center",
-            "width": "calc(( 100% - 0px ) / 5)",
+            "width": "150px",
           }
         }
       >
@@ -50,7 +50,7 @@ exports[`VotesTable renders 1`] = `
         style={
           Object {
             "textAlign": "center",
-            "width": "calc(( 100% - 0px ) / 5)",
+            "width": "calc(( 100% - 300px ) / 3)",
           }
         }
       >
@@ -61,7 +61,7 @@ exports[`VotesTable renders 1`] = `
         style={
           Object {
             "textAlign": "center",
-            "width": "calc(( 100% - 0px ) / 5)",
+            "width": "calc(( 100% - 300px ) / 3)",
           }
         }
       >
@@ -72,7 +72,7 @@ exports[`VotesTable renders 1`] = `
         style={
           Object {
             "textAlign": "center",
-            "width": "calc(( 100% - 0px ) / 5)",
+            "width": "calc(( 100% - 300px ) / 3)",
           }
         }
       >
@@ -99,7 +99,7 @@ exports[`VotesTable renders 1`] = `
               "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "center",
-              "width": "calc(( 100% - 0px ) / 5)",
+              "width": "150px",
             }
           }
         >
@@ -117,7 +117,7 @@ exports[`VotesTable renders 1`] = `
               "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "center",
-              "width": "calc(( 100% - 0px ) / 5)",
+              "width": "150px",
             }
           }
         >
@@ -139,7 +139,7 @@ exports[`VotesTable renders 1`] = `
               "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "center",
-              "width": "calc(( 100% - 0px ) / 5)",
+              "width": "calc(( 100% - 300px ) / 3)",
             }
           }
         >
@@ -157,7 +157,7 @@ exports[`VotesTable renders 1`] = `
               "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "center",
-              "width": "calc(( 100% - 0px ) / 5)",
+              "width": "calc(( 100% - 300px ) / 3)",
             }
           }
         >
@@ -182,7 +182,7 @@ exports[`VotesTable renders 1`] = `
               "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "center",
-              "width": "calc(( 100% - 0px ) / 5)",
+              "width": "calc(( 100% - 300px ) / 3)",
             }
           }
         >

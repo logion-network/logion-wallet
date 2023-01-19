@@ -1,7 +1,7 @@
 import { shallowRender } from "src/tests";
 import Votes from "./Votes";
 
-jest.mock("./LegalOfficerContext");
+jest.mock("../LegalOfficerContext");
 
 describe("Votes", () => {
 
