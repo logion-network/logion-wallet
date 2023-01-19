@@ -4,6 +4,7 @@ import { FullWidthPane } from "src/common/Dashboard";
 import Frame from "src/common/Frame";
 import Tabs from "src/common/Tabs";
 import { useLegalOfficerContext } from "../LegalOfficerContext";
+import ClosedVotesTable from "./ClosedVotesTable";
 import PendingVotesTable from "./PendingVotesTable";
 
 export default function Votes() {
@@ -32,6 +33,11 @@ export default function Votes() {
                                 key: "pending",
                                 title: "Pending",
                                 render: () => <PendingVotesTable votes={votes}/>
+                            },
+                            {
+                                key: "closed",
+                                title: "Closed (results)",
+                                render: () => <ClosedVotesTable votes={votes}/>
                             }
                         ]
                     }

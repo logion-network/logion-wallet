@@ -363,6 +363,7 @@ export async function vote(params: {
                 resolve({
                     ...vote,
                     ballots,
+                    status: myVote === "Yes" ? "APPROVED" : "REJECTED",
                 });
             }
         }, 3000);

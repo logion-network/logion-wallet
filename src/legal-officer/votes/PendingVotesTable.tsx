@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import Table, { Cell, DateTimeCell, EmptyTableMessage } from "src/common/Table";
 import { Vote } from "../client";
@@ -9,16 +10,23 @@ export interface Props {
 }
 
 export default function PendingVotesTable(props: Props) {
+
+    const pendingVotes = useMemo(() => {
+        return props.votes.filter(vote => vote.status === "PENDING");
+    }, [ props.votes ]);
+
     return (
         <Table
             columns={[
                 {
                     header: "ID",
                     render: vote => <Cell content={ vote.voteId }/>,
+                    width: "150px",
                 },
                 {
                     header: "Creation date",
                     render: vote => <DateTimeCell dateTime={ vote.createdOn }/>,
+                    width: "150px",
                 },
                 {
                     header: "LOC",
@@ -43,8 +51,8 @@ export default function PendingVotesTable(props: Props) {
                     render: vote => <YourVote vote={vote}/>,
                 }
             ]}
-            data={ props.votes }
-            renderEmpty={ () => <EmptyTableMessage>No vote to display</EmptyTableMessage> }
+            data={ pendingVotes }
+            renderEmpty={ () => <EmptyTableMessage>No pending vote to display</EmptyTableMessage> }
         />
     );
 }

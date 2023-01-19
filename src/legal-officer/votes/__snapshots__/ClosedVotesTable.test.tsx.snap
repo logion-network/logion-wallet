@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PendingVotesTable renders 1`] = `
+exports[`ClosedVotesTable renders 1`] = `
 <div
   className="Table constrained-row-height"
 >
@@ -50,7 +50,7 @@ exports[`PendingVotesTable renders 1`] = `
         style={
           Object {
             "textAlign": "center",
-            "width": "calc(( 100% - 300px ) / 3)",
+            "width": "calc(( 100% - 750px ) / 2)",
           }
         }
       >
@@ -61,7 +61,18 @@ exports[`PendingVotesTable renders 1`] = `
         style={
           Object {
             "textAlign": "center",
-            "width": "calc(( 100% - 300px ) / 3)",
+            "width": "150px",
+          }
+        }
+      >
+        Your vote
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "center",
+            "width": "calc(( 100% - 750px ) / 2)",
           }
         }
       >
@@ -72,11 +83,22 @@ exports[`PendingVotesTable renders 1`] = `
         style={
           Object {
             "textAlign": "center",
-            "width": "calc(( 100% - 300px ) / 3)",
+            "width": "150px",
           }
         }
       >
-        Your Vote
+        Vote Result
+      </div>
+      <div
+        className="Col"
+        style={
+          Object {
+            "textAlign": "center",
+            "width": "150px",
+          }
+        }
+      >
+        Details
       </div>
     </div>
   </div>
@@ -107,7 +129,7 @@ exports[`PendingVotesTable renders 1`] = `
             className="regular-cell"
             style={Object {}}
           >
-            1
+            2
           </div>
         </div>
         <div
@@ -139,7 +161,7 @@ exports[`PendingVotesTable renders 1`] = `
               "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "center",
-              "width": "calc(( 100% - 300px ) / 3)",
+              "width": "calc(( 100% - 750px ) / 2)",
             }
           }
         >
@@ -157,7 +179,28 @@ exports[`PendingVotesTable renders 1`] = `
               "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "center",
-              "width": "calc(( 100% - 300px ) / 3)",
+              "width": "150px",
+            }
+          }
+        >
+          <div
+            className="regular-cell"
+            style={Object {}}
+          >
+            <img
+              alt="ko"
+              src="/assets/ko.svg"
+            />
+          </div>
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#0c163d",
+              "fontSize": undefined,
+              "textAlign": "center",
+              "width": "calc(( 100% - 750px ) / 2)",
             }
           }
         >
@@ -182,44 +225,32 @@ exports[`PendingVotesTable renders 1`] = `
               "backgroundColor": "#0c163d",
               "fontSize": undefined,
               "textAlign": "center",
-              "width": "calc(( 100% - 300px ) / 3)",
+              "width": "150px",
+            }
+          }
+        >
+          <img
+            alt="ok"
+            height="40px"
+            src="/assets/ok.svg"
+          />
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "backgroundColor": "#0c163d",
+              "fontSize": undefined,
+              "textAlign": "center",
+              "width": "150px",
             }
           }
         >
           <div
-            className="ButtonGroup"
+            className="regular-cell"
+            style={Object {}}
           >
-            <div
-              className="btn-group"
-              role="group"
-            >
-              <button
-                className="Button btn btn-none"
-                disabled={false}
-                onClick={[Function]}
-                style={Object {}}
-                type="button"
-              >
-                <img
-                  alt="ok"
-                  height="40px"
-                  src="/assets/ok.svg"
-                />
-              </button>
-              <button
-                className="Button btn btn-none"
-                disabled={false}
-                onClick={[Function]}
-                style={Object {}}
-                type="button"
-              >
-                <img
-                  alt="ko"
-                  height="40px"
-                  src="/assets/ko.svg"
-                />
-              </button>
-            </div>
+            2/2
           </div>
         </div>
       </div>

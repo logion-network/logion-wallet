@@ -27,6 +27,11 @@ exports[`Votes renders votes 1`] = `
             "render": [Function],
             "title": "Pending",
           },
+          Object {
+            "key": "closed",
+            "render": [Function],
+            "title": "Closed (results)",
+          },
         ]
       }
     />
