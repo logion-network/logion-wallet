@@ -44,7 +44,7 @@ import VaultOutRequests from './vault/VaultOutRequests';
 import { useLogionChain } from '../logion-chain';
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import VTPSelection from "../loc/vtp/VTPSelection";
-import Votes from './Votes';
+import Votes from './votes/Votes';
 
 export default function LegalOfficerRouter() {
     const { accounts } = useLogionChain();

@@ -1,13 +1,13 @@
 import { UUID } from "@logion/node-api";
-import { shallowRender } from "../tests";
-import { Vote, VoteResult } from "./client";
+import { shallowRender } from "../../tests";
+import { Vote, VoteResult } from "../client";
 import YourVote from "./YourVote";
-import { TEST_WALLET_USER } from "../wallet-user/TestData";
+import { TEST_WALLET_USER } from "../../wallet-user/TestData";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-jest.mock("../logion-chain");
-jest.mock("./LegalOfficerContext");
+jest.mock("../../logion-chain");
+jest.mock("../LegalOfficerContext");
 
 describe("YourVote", () => {
 

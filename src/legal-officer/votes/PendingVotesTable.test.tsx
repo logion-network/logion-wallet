@@ -1,11 +1,11 @@
 import { UUID } from "@logion/node-api";
 import { render } from "src/tests";
-import { Vote } from "./client";
-import VotesTable from "./VotesTable";
+import { Vote } from "../client";
+import PendingVotesTable from "./PendingVotesTable";
 
-jest.mock("./LegalOfficerContext");
+jest.mock("../LegalOfficerContext");
 
-describe("VotesTable", () => {
+describe("PendingVotesTable", () => {
 
     it("renders", () => {
         const votes: Vote[] = [
@@ -17,7 +17,7 @@ describe("VotesTable", () => {
                 ballots: {}
             }
         ];
-        const result = render(<VotesTable votes={votes}/>);
+        const result = render(<PendingVotesTable votes={votes}/>);
         expect(result).toMatchSnapshot();
     });
 });

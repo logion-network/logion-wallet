@@ -3,8 +3,8 @@ import { useCommonContext } from "src/common/CommonContext";
 import { FullWidthPane } from "src/common/Dashboard";
 import Frame from "src/common/Frame";
 import Tabs from "src/common/Tabs";
-import { useLegalOfficerContext } from "./LegalOfficerContext";
-import VotesTable from "./VotesTable";
+import { useLegalOfficerContext } from "../LegalOfficerContext";
+import PendingVotesTable from "./PendingVotesTable";
 
 export default function Votes() {
     const { colorTheme } = useCommonContext();
@@ -31,7 +31,7 @@ export default function Votes() {
                             {
                                 key: "pending",
                                 title: "Pending",
-                                render: () => <VotesTable votes={votes}/>
+                                render: () => <PendingVotesTable votes={votes}/>
                             }
                         ]
                     }

@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
 import Table, { Cell, DateTimeCell, EmptyTableMessage } from "src/common/Table";
-import { Vote } from "./client";
-import { voteLocPath } from "./LegalOfficerPaths";
+import { Vote } from "../client";
+import { voteLocPath } from "../LegalOfficerPaths";
 import YourVote from "./YourVote";
 
 export interface Props {
     votes: Vote[];
 }
 
-export default function VotesTable(props: Props) {
+export default function PendingVotesTable(props: Props) {
     return (
         <Table
             columns={[
