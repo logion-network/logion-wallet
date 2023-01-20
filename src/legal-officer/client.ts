@@ -23,7 +23,6 @@ import {
     VoidInfo,
     asString,
 } from "@logion/node-api";
-import { ISubmittableResult } from '@polkadot/types/types';
 import { AnyJson } from "@polkadot/types-codec/types/helpers.js";
 import { fetchAllLocsParams } from "../loc/LegalOfficerLocContext";
 
@@ -345,34 +344,34 @@ export async function vote(params: {
 }): Promise<Vote> {
     const { client, vote, myVote, signer, callback } = params;
 
+    const currentAddress = client.currentAddress;
+    if(!currentAddress) {
+        throw Error("Not authenticated");
+    }
     const api = client.nodeApi;
     const submittable = api.tx.vote.vote(vote.voteId, myVote === "Yes");
-    await signer.signAndSend({
-        signerId: client.currentAddress!,
+    const result = await signer.signAndSend({
+        signerId: currentAddress,
         submittable,
         callback
     });
-
-    return new Promise<Vote>((resolve, reject) => {
-        setTimeout(() => {
-            const currentAddress = client.currentAddress;
-            if(!currentAddress) {
-                reject("Not authenticated");
-            } else {
-                const ballots = vote.ballots;
-                ballots[client.currentAddress] = myVote;
-
-                callback({
-                    status: {
-                        isFinalized: true,
-                    }
-                } as ISubmittableResult);
-                resolve({
-                    ...vote,
-                    ballots,
-                    status: myVote === "Yes" ? "APPROVED" : "REJECTED",
-                });
-            }
-        }, 3000);
-    });
+    const voteUpdated = result.events.find(event => event.name === "VoteUpdated" && event.section === "vote");
+    if(!voteUpdated) {
+        throw new Error("Unable to retrieve vote ID");
+    }
+    const voteUpdatedData = voteUpdated.data as AnyJson[];
+    const closed: boolean = asString(voteUpdatedData[2]) === "true";
+    const approved: boolean = asString(voteUpdatedData[3]) === "true";
+    const ballots = vote.ballots;
+    ballots[currentAddress] = myVote;
+    let status: Vote['status'] = "PENDING";
+    if (closed && approved) {
+        status = "APPROVED";
+    } else if (closed && approved) {
+        status = "REJECTED";
+    }
+    return {
+        ...vote,
+        status,
+    };
 }
