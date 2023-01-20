@@ -343,9 +343,16 @@ export async function vote(params: {
     signer: Signer,
     callback: SignCallback,
 }): Promise<Vote> {
-    const { client, vote, myVote, callback } = params;
+    const { client, vote, myVote, signer, callback } = params;
 
-    // TODO sign and submit extrinsic
+    const api = client.nodeApi;
+    const submittable = api.tx.vote.vote(vote.voteId, myVote === "Yes");
+    await signer.signAndSend({
+        signerId: client.currentAddress!,
+        submittable,
+        callback
+    });
+
     return new Promise<Vote>((resolve, reject) => {
         setTimeout(() => {
             const currentAddress = client.currentAddress;

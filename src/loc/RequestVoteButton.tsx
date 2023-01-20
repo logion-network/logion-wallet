@@ -75,21 +75,24 @@ export default function RequestVoteButton() {
                 >
                     <h3>Request a vote</h3>
                     {
-                        call === undefined &&
-                        <p>You are about to request a vote on this closed LOC. <strong>All voters will then have access to the content of this LOC,
-                            including the confidential documents.</strong> Please make sure that this is actually what you want.
-                        </p>
+                        call === undefined && <>
+                            <p>You are about to request a vote on this closed LOC. <strong>All voters will then have access
+                                to the content of this LOC, including the confidential documents.</strong> Please make
+                                sure that this is actually what you want.
+                            </p>
+                            <Select
+                                options={ [
+                                    {
+                                        label: "Non-Collator Logion Guardian nomination vote",
+                                        value: "guest-lo"
+                                    }
+                                ] }
+                                onChange={ () => {
+                                } }
+                                value="guest-lo"
+                            />
+                        </>
                     }
-                    <Select
-                        options={[
-                            {
-                                label: "Non-Collator Logion Guardian nomination vote",
-                                value: "guest-lo"
-                            }
-                        ]}
-                        onChange={() => {}}
-                        value="guest-lo"
-                    />
                     <ClientExtrinsicSubmitter
                         call={ call }
                         onSuccess={ () => completeOnSuccessCallback() }
