@@ -359,19 +359,7 @@ export async function vote(params: {
     if(!voteUpdated) {
         throw new Error("Unable to retrieve vote ID");
     }
-    const voteUpdatedData = voteUpdated.data as AnyJson[];
-    const closed: boolean = asString(voteUpdatedData[2]) === "true";
-    const approved: boolean = asString(voteUpdatedData[3]) === "true";
     const ballots = vote.ballots;
     ballots[currentAddress] = myVote;
-    let status: Vote['status'] = "PENDING";
-    if (closed && approved) {
-        status = "APPROVED";
-    } else if (closed && approved) {
-        status = "REJECTED";
-    }
-    return {
-        ...vote,
-        status,
-    };
+    return vote;
 }
