@@ -361,5 +361,8 @@ export async function vote(params: {
     }
     const ballots = vote.ballots;
     ballots[currentAddress] = myVote;
-    return vote;
+    return {
+        ...vote,
+        ballots
+    };
 }
