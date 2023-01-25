@@ -24,3 +24,9 @@
     background-repeat: no-repeat;
     background-position: center;
 }
+
+.Checkbox.disabled,
+.Checkbox.clickable.disabled {
+    cursor: default;
+    opacity: 0.5;
+}

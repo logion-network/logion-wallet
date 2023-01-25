@@ -33,3 +33,9 @@
     background-repeat: no-repeat;
     background-position: center;
 }
+
+.Toggle.disabled,
+.Toggle.clickable.disabled {
+    cursor: default;
+    opacity: 0.5;
+}
