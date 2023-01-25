@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RestrictedDeliveryCell renders 1`] = `
+<Cell
+  content={
+    <div
+      className="RestrictedDeliveryCell checkbox-container"
+    >
+      <OverlayTrigger
+        defaultShow={false}
+        delay={500}
+        overlay={
+          <Tooltip
+            id="RestrictedDeliveryCell-tooltip-some-hash"
+            placement="right"
+          >
+            When the restricted delivery is activated, Collection-related NFT owners will be able to download a copy of the document.
+          </Tooltip>
+        }
+        placement="bottom"
+        trigger={
+          Array [
+            "hover",
+            "focus",
+          ]
+        }
+      >
+        <div>
+          <Checkbox
+            checked={false}
+            disabled={false}
+            setChecked={[Function]}
+            skin="Toggle black"
+          />
+        </div>
+      </OverlayTrigger>
+    </div>
+  }
+/>
+`;

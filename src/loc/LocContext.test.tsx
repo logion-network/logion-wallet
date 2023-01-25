@@ -320,6 +320,7 @@ function givenDraftItems() {
         submitter: OPEN_IDENTITY_LOC.owner,
         nature: "Some nature",
         published: false,
+        restrictedDelivery: false,
     })
     _locData.links.push({
         addedOn: "",

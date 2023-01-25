@@ -5,7 +5,6 @@ import { setRequestVoteMock } from "src/legal-officer/__mocks__/ClientMock";
 import { mockSubmittableResult } from "src/logion-chain/__mocks__/SignatureMock";
 import { ClosedLoc } from "src/__mocks__/@logion/client";
 import { setLocState } from "./__mocks__/LocContextMock";
-import userEvent from "@testing-library/user-event";
 
 jest.mock("./LocContext");
 jest.mock("../legal-officer/client");

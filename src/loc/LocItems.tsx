@@ -1,7 +1,7 @@
 import { LocData, EditableRequest } from "@logion/client";
 import { AxiosInstance } from "axios";
 
-import Table, { Cell, DateTimeCell, EmptyTableMessage, ActionCell } from "../common/Table";
+import Table, { Cell, DateTimeCell, EmptyTableMessage, ActionCell, Column } from "../common/Table";
 import StatusCell from "../common/StatusCell";
 import ButtonGroup from "../common/ButtonGroup";
 import Button from "../common/Button";
@@ -27,6 +27,7 @@ import './LocItems.css';
 import { Viewer } from "src/common/CommonContext";
 import { useLocContext } from "./LocContext";
 import { useCallback } from "react";
+import RestrictedDeliveryCell from "./RestricedDeliveryCell";
 
 export interface LocItemsProps {
     matchedHash?: string;
@@ -140,74 +141,86 @@ export function LocItems(props: LocItemsProps) {
             </div>
         );
     } else {
+        let columns: Column<LocItem>[] = [
+            {
+                header: "Name",
+                render: locItem => <Cell content={ locItem.name } />,
+                renderDetails: locItem => renderDetails(locItem),
+                detailsExpanded: locItem => locItem.newItem,
+                align: "left",
+                width: width({
+                    onSmallScreen: '150px',
+                    otherwise: '250px'
+                }),
+            },
+            {
+                header: "Timestamp",
+                render: locItem => <DateTimeCell
+                    dateTime={ locItem.timestamp }
+                    spinner={ locItem.status === 'PUBLISHED' } />,
+                width: width({
+                    onSmallScreen: '100px',
+                    otherwise: '200px'
+                }),
+            },
+            {
+                header: "Type",
+                render: locItem => <Cell content={
+                    <>
+                        <span className="item-type">{ locItem.type }</span> {
+                        locItem.type === 'Document' && canViewFile(accounts?.current?.address, locItem, props.contributionMode) &&
+                        <ViewFileButton
+                            nodeOwner={ loc.ownerAddress }
+                            fileName={ locItem.name }
+                            downloader={ (axios: AxiosInstance) => getFile(axios, {
+                                locId: loc.id.toString(),
+                                hash: locItem.value
+                            }) }
+                        />
+                    }
+                    </> } />,
+                width: width({
+                    onSmallScreen: '145px',
+                    otherwise: '160px'
+                }),
+                align: "left"
+            },
+            {
+                header: "Submitted by",
+                render: locItem => <SubmitterName loc={ loc } locItem={ locItem} />
+            }
+        ];
+
+        if(loc.locType === "Collection" && props.viewer === "LegalOfficer") {
+            columns.push({
+                header: "Restricted Delivery?",
+                render: locItem => locItem.type === "Document" ? <RestrictedDeliveryCell hash={ locItem.value }/> : null,
+                width: "150px",
+            });
+        }
+
+        columns = columns.concat([
+            {
+                header: "",
+                render: locItem => {
+                    if (locItem.status === 'DRAFT') {
+                        return renderActions(locItem)
+                    } else {
+                        return (
+                            <StatusCell icon={ { id: 'published' } } text="Published" color={ POLKADOT } />)
+                    }
+                },
+                width: width({
+                    onSmallScreen: props.viewer === "LegalOfficer" ? '345px' : '145px',
+                    otherwise: '400px'
+                }),
+            }
+        ]);
         return (
             <div className="LocItems">
                 <Table
                     data={ locItems }
-                    columns={ [
-                        {
-                            header: "Name",
-                            render: locItem => <Cell content={ locItem.name } />,
-                            renderDetails: locItem => renderDetails(locItem),
-                            detailsExpanded: locItem => locItem.newItem,
-                            align: "left",
-                            width: width({
-                                onSmallScreen: '150px',
-                                otherwise: '250px'
-                            }),
-                        },
-                        {
-                            header: "Timestamp",
-                            render: locItem => <DateTimeCell
-                                dateTime={ locItem.timestamp }
-                                spinner={ locItem.status === 'PUBLISHED' } />,
-                            width: width({
-                                onSmallScreen: '100px',
-                                otherwise: '200px'
-                            }),
-                        },
-                        {
-                            header: "Type",
-                            render: locItem => <Cell content={
-                                <>
-                                    <span className="item-type">{ locItem.type }</span> {
-                                    locItem.type === 'Document' && canViewFile(accounts?.current?.address, locItem, props.contributionMode) &&
-                                    <ViewFileButton
-                                        nodeOwner={ loc.ownerAddress }
-                                        fileName={ locItem.name }
-                                        downloader={ (axios: AxiosInstance) => getFile(axios, {
-                                            locId: loc.id.toString(),
-                                            hash: locItem.value
-                                        }) }
-                                    />
-                                }
-                                </> } />,
-                            width: width({
-                                onSmallScreen: '145px',
-                                otherwise: '160px'
-                            }),
-                            align: "left"
-                        },
-                        {
-                            header: "Submitted by",
-                            render: locItem => <SubmitterName loc={ loc } locItem={ locItem} />
-                        },
-                        {
-                            header: "",
-                            render: locItem => {
-                                if (locItem.status === 'DRAFT') {
-                                    return renderActions(locItem)
-                                } else {
-                                    return (
-                                        <StatusCell icon={ { id: 'published' } } text="Published" color={ POLKADOT } />)
-                                }
-                            },
-                            width: width({
-                                onSmallScreen: props.viewer === "LegalOfficer" ? '345px' : '145px',
-                                otherwise: '400px'
-                            }),
-                        }
-                    ] }
+                    columns={ columns }
                     renderEmpty={ () => <EmptyTableMessage>No public data nor private documents</EmptyTableMessage> }
                     rowStyle={ item => (item.type === "Document" && item.value === props.matchedHash) ? "matched" : "" }
                 />

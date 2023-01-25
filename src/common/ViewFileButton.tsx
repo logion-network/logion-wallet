@@ -9,6 +9,8 @@ import './ViewFileButton.css';
 import { Children, customClassName } from "./types/Helpers";
 import { useLogionChain, AxiosFactory } from "../logion-chain";
 import { MimeType } from "@logion/client";
+import { useCallback, useMemo, useState } from "react";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 export interface FileInfo {
     fileName: string;
@@ -47,22 +49,58 @@ function fixFileName(fileName: string, mimeType: MimeType): string {
 
 export default function ViewFileButton(props: ViewFileProps) {
     const { axiosFactory } = useLogionChain();
-    if (axiosFactory === undefined) {
-        return null;
-    }
+    const [ downloadStarted, setDownloadStarted ] = useState(false);
 
-    const children = props.children !== undefined ?
-        props.children :
-        <Icon icon={ { id: 'view' } } />
+    const onClickCallback = useCallback(() => {
+        if(!downloadStarted && axiosFactory) {
+            setDownloadStarted(true);
+            openFile(axiosFactory(props.nodeOwner)!, props);
+        }
+    }, [ props, axiosFactory, downloadStarted ]);
+
+    const children = useMemo(() => {
+        if(props.children !== undefined) {
+            return props.children;
+        } else {
+            let iconId: string;
+            if(downloadStarted) {
+                iconId = 'file_download_started';
+            } else {
+                iconId = 'file_download';
+            }
+            return <Icon icon={ { id: iconId } } />;
+        }
+    }, [ props.children, downloadStarted ]);
 
     const limitIconSize = (props.limitIconSize === undefined || props.limitIconSize);
 
-    const className = customClassName("ViewFileButton", (limitIconSize ? "limit-icon-size" : undefined))
-    return (
-        <Button onClick={ () => openFile(axiosFactory(props.nodeOwner)!, props) } className={ className }>
-            { children }
-        </Button>
-    )
+    const className = customClassName("ViewFileButton", (limitIconSize ? "limit-icon-size" : undefined));
+    if(downloadStarted) {
+        return (
+            <OverlayTrigger
+                delay={1000}
+                overlay={
+                    <Tooltip id={`ViewFileButton-tooltip-${props.fileName}`}>
+                        If you want to try to download the file again, please refresh the page.
+                        Note that with larger files, there may be a delay between the moment you click on the button and
+                        the moment the download is actually queued by your browser.
+                    </Tooltip>
+                }
+            >
+                <span className="tooltip-trigger">
+                    <Button onClick={ onClickCallback } className={ className } disabled={downloadStarted}>
+                        { children }
+                    </Button>
+                </span>
+            </OverlayTrigger>
+        )
+    } else {
+        return (
+            <Button onClick={ onClickCallback } className={ className }>
+                { children }
+            </Button>
+        );
+    }
 }
 
 export interface DownloadFilesParams {

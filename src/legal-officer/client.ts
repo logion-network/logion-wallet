@@ -366,3 +366,18 @@ export async function vote(params: {
         ballots
     };
 }
+
+export async function setCollectionFileRestrictedDelivery(params: {
+    locState: LocRequestState,
+    hash: string,
+    restrictedDelivery: boolean,
+}): Promise<LocRequestState> {
+    const { locState, hash, restrictedDelivery } = params;
+
+    const axios = buildAxios(locState);
+    await axios.put(`/api/collection/${ locState.data().id.toString() }/files/${ hash }`, {
+        restrictedDelivery
+    });
+
+    return locState.refresh();
+}
