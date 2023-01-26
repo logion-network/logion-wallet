@@ -387,9 +387,12 @@ function toItems(csvItems: CsvItem[]): Item[] {
             }
 
             let restrictedDelivery = false;
-            let token: ItemTokenWithRestrictedType | undefined = undefined;
             if("restrictedDelivery" in csvItem) {
                 restrictedDelivery = csvItem.restrictedDelivery;
+            }
+
+            let token: ItemTokenWithRestrictedType | undefined = undefined;
+            if("tokenType" in csvItem) {
                 if(csvItem.tokenType && csvItem.tokenId) {
                     if(isTokenType(csvItem.tokenType)) {
                         token = {

@@ -58,7 +58,11 @@ export default function CollectionItemCellRow(props: Props) {
                                                     locId={ locId }
                                                     owner={ owner }
                                                     item={ item }
-                                                    file={ file }
+                                                    file={{
+                                                        hash: file.hash,
+                                                        name: file.name,
+                                                        type: "Item",
+                                                    }}
                                                     walletType={ walletType(props.walletType) }
                                                 />
                                             }

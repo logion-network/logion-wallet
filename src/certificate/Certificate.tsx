@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo, useCallback } from "react";
 import { Row, Col, Container } from "react-bootstrap";
 import { useParams } from "react-router";
 import { useSearchParams } from "react-router-dom";
-import { LegalOfficer, PublicLoc, CollectionItem, CheckHashResult, MergedMetadataItem, MergedFile, MergedLink } from "@logion/client";
+import { LegalOfficer, PublicLoc, CollectionItem, CheckHashResult, MergedMetadataItem, MergedFile, MergedLink, LocData } from "@logion/client";
 import { UUID } from "@logion/node-api";
 
 import { useLogionChain } from "../logion-chain";
@@ -26,6 +26,7 @@ import IntroductionText from "./IntroductionText";
 import LegalOfficerRow from "./LegalOfficerRow";
 import { Children } from "src/common/types/Helpers";
 import CheckDeliveredFrame from "src/components/deliverycheck/CheckDeliveredFrame";
+import ClaimAssetButton, { walletType } from "./ClaimAssetButton";
 
 import './Certificate.css'
 
@@ -251,7 +252,7 @@ export default function Certificate() {
                     <MetadataItemCellRow key={ index } items={ items } checkResult={ checkResult } />
                 )) }
                 { matrix(loc.data.files, 2).map((files, index) => (
-                    <FileCellRow key={ index } files={ files } checkResult={ checkResult } />
+                    <FileCellRow key={ index } files={ files } checkResult={ checkResult } loc={ loc.data } item={ collectionItem } />
                 )) }
                 { matrix(loc.data.links, 2).map((links, index) => (
                     <LinkCellRow key={ index } links={ links } />
@@ -339,12 +340,30 @@ function ItemCellTitle(props: { text: Children, timestamp: string | undefined })
     );
 }
 
-function FileCellRow(props: { files: MergedFile[], checkResult: CheckHashResult | undefined }) {
+function FileCellRow(props: { loc: LocData, files: MergedFile[], checkResult: CheckHashResult | undefined, item?: CollectionItem | null }) {
+    const [ searchParams ] = useSearchParams();
+
     return (
         <Row>
             { props.files.map(
                 file => <CertificateCell key={ file.hash } md={ 6 } label={ <ItemCellTitle text={ <span>Document Hash <span className="file-nature">({ file.nature })</span></span> } timestamp={ file.addedOn } /> } matched={ props.checkResult?.file?.hash === file.hash } >
                     <p>{ file.hash }</p>
+                    {
+                        file.restrictedDelivery && props.item &&
+                        <div className="collection-claim-container">
+                            <ClaimAssetButton
+                                locId={ props.loc.id }
+                                item={ props.item }
+                                file={{
+                                    hash: file.hash,
+                                    name: file.nature,
+                                    type: "Collection",
+                                }}
+                                owner={ props.loc.ownerAddress }
+                                walletType={ walletType(searchParams.get("wallet")) }
+                            />
+                        </div>
+                    }
                 </CertificateCell>)
             }
         </Row>

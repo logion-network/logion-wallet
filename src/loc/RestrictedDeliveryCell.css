@@ -1,3 +1,7 @@
+.RestrictedDeliveryCell.checkbox-container {
+    margin-top: 7px;
+}
+
 .RestrictedDeliveryCell.checkbox-container > * {
     width: 64px;
     margin-left: auto;
