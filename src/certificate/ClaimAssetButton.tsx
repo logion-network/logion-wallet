@@ -2,14 +2,14 @@ import { BlockchainTypes, CrossmintEVMWalletAdapter } from "@crossmint/embed";
 import { Token, LogionClient, CollectionItem, TokenType } from "@logion/client";
 import { CrossmintSigner } from "@logion/crossmint";
 import { allMetamaskAccounts, enableMetaMask } from "@logion/extension";
-import { ItemFile, UUID } from "@logion/node-api";
+import { UUID } from "@logion/node-api";
 import { AxiosInstance } from "axios";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Dropdown, Spinner } from "react-bootstrap";
 
 import Button from "../common/Button";
 import ViewFileButton from "../common/ViewFileButton";
-import { checkCanGetCollectionItemFile, getCollectionItemFile, GetCollectionItemFileParameters } from "../loc/FileModel";
+import { checkCanGetCollectionFile, checkCanGetCollectionItemFile, getCollectionFile, getCollectionItemFile, GetCollectionItemFileParameters, TypedFile } from "../loc/FileModel";
 import { useLogionChain } from "../logion-chain";
 import Icon from "src/common/Icon";
 import config from "src/config";
@@ -44,11 +44,19 @@ export function walletType(type: string | null | undefined): WalletType | undefi
     }
 }
 
+export type ClaimedFileType = "Collection" | "Item";
+
+export interface ClaimedFile {
+    name: string;
+    hash: string;
+    type: ClaimedFileType;
+}
+
 export interface Props {
     locId: UUID,
     owner: string,
     item: CollectionItem,
-    file: ItemFile,
+    file: ClaimedFile,
     walletType?: WalletType | null,
 }
 
@@ -78,7 +86,7 @@ export default function ClaimAssetButton(props: Props) {
                 const token = await getToken(walletType, logionChainContext);
                 setTokenForDownload(token);
                 const axios = logionChainContext.axiosFactory!(owner);
-                if(token && await canDownload(axios, token, { locId: locId.toString(), collectionItemId: item.id, hash: file.hash })) {
+                if(token && await canDownload(axios, token, file.type, { locId: locId.toString(), collectionItemId: item.id, hash: file.hash })) {
                     setIsOwner(true);
                     setChecking(false);
                 } else {
@@ -100,7 +108,7 @@ export default function ClaimAssetButton(props: Props) {
         setChecking(true);
         try {
             const axios = logionChainContext.axiosFactory!(owner);
-            if(await checkCanGetCollectionItemFile(axios, { locId: locId.toString(), collectionItemId: item.id, hash: file.hash })) {
+            if(await canDownload(axios, undefined, file.type, { locId: locId.toString(), collectionItemId: item.id, hash: file.hash })) {
                 setTokenForDownload(logionChainContext.accounts!.current!.token);
                 setIsOwner(true);
                 setChecking(false);
@@ -147,7 +155,7 @@ export default function ClaimAssetButton(props: Props) {
     }, [ item.token?.type ]);
 
     const walletType = props.walletType;
-    const noClaimPending = !error && item.restrictedDelivery && !checking && !isOwner;
+    const noClaimPending = !error && (item.restrictedDelivery || props.file.type === "Collection") && !checking && !isOwner;
     const downloadReady = tokenForDownload && isOwner;
 
     if(!item.token?.type) {
@@ -161,7 +169,7 @@ export default function ClaimAssetButton(props: Props) {
                 <Button
                     onClick={ () => claimAsset(walletType) }
                 >
-                    <Icon icon={{ id: "claim" }} /> Claim your asset
+                    <Icon icon={{ id: "claim" }} /> { buttonText(props.file.type) }
                 </Button>
             }
             {
@@ -169,13 +177,13 @@ export default function ClaimAssetButton(props: Props) {
                 <Button
                     onClick={ () => claimAsset(compatibleWallets[0]) }
                 >
-                    <Icon icon={{ id: "claim" }} /> Claim your asset
+                    <Icon icon={{ id: "claim" }} /> { buttonText(props.file.type) }
                 </Button>
             }
             {
                 noClaimPending && (!walletType && compatibleWallets.length > 1) &&
                 <Dropdown>
-                    <Dropdown.Toggle className="Button" id="ClaimAssetButton-dropdown-toggle"><Icon icon={{ id: "claim" }} /> <span className="claim-asset-btn-text">Claim your asset</span></Dropdown.Toggle>
+                    <Dropdown.Toggle className="Button" id="ClaimAssetButton-dropdown-toggle"><Icon icon={{ id: "claim" }} /> <span className="claim-asset-btn-text">{ buttonText(props.file.type) }</span></Dropdown.Toggle>
                     <Dropdown.Menu>
                         {
                             compatibleWallets.map(walletType => (
@@ -210,11 +218,15 @@ export default function ClaimAssetButton(props: Props) {
                     downloader={ (axios: AxiosInstance) => {
                         setDownloaded(true);
                         overrideAuthorizationToken(axios, tokenForDownload);
-                        return getCollectionItemFile(axios, {
-                            locId: locId.toString(),
-                            collectionItemId: item.id,
-                            hash: file.hash,
-                        })
+                        return getClaimedFile(
+                            axios,
+                            file.type,
+                            {
+                                locId: locId.toString(),
+                                collectionItemId: item.id,
+                                hash: file.hash,
+                            }
+                        )
                     }}
                     limitIconSize={ false }
                 >
@@ -247,7 +259,7 @@ export default function ClaimAssetButton(props: Props) {
                     ]}
                 >
                     <h3>Choose a Polkadot address</h3>
-                    <p>In order to claim your asset using Polkadot, you have to select an account.</p>
+                    <p>In order to claim the file using Polkadot, you have to select an account.</p>
                     {
                         (logionChainContext.accounts?.all === undefined || logionChainContext.accounts.all.length === 0) &&
                         <Alert
@@ -342,9 +354,27 @@ function overrideAuthorizationToken(axios: AxiosInstance, tokenForDownload: Toke
     });
 }
 
-async function canDownload(axios: AxiosInstance, tokenForDownload: Token, parameters: GetCollectionItemFileParameters): Promise<boolean> {
-    overrideAuthorizationToken(axios, tokenForDownload);
-    return checkCanGetCollectionItemFile(axios, parameters);
+async function canDownload(axios: AxiosInstance, tokenForDownload: Token | undefined, fileType: ClaimedFileType, parameters: GetCollectionItemFileParameters): Promise<boolean> {
+    if(tokenForDownload) {
+        overrideAuthorizationToken(axios, tokenForDownload);
+    }
+    if(fileType === "Item") {
+        return checkCanGetCollectionItemFile(axios, parameters);
+    } else {
+        return checkCanGetCollectionFile(axios, parameters);
+    }
+}
+
+async function getClaimedFile(
+    axios: AxiosInstance,
+    fileType: ClaimedFileType,
+    parameters: GetCollectionItemFileParameters
+): Promise<TypedFile> {
+    if(fileType === "Item") {
+        return getCollectionItemFile(axios, parameters);
+    } else {
+        return getCollectionFile(axios, parameters);
+    }
 }
 
 function walletTypeCompatibleWithItemType(wallet: WalletType, token?: TokenType): boolean {
@@ -358,5 +388,13 @@ function walletTypeCompatibleWithItemType(wallet: WalletType, token?: TokenType)
         return wallet === "POLKADOT";
     } else {
         return false;
+    }
+}
+
+function buttonText(fileType: ClaimedFileType) {
+    if(fileType === "Item") {
+        return "Claim your asset";
+    } else {
+        return "Claim document";
     }
 }

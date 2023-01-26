@@ -1,18 +1,83 @@
-jest.mock('../logion-chain');
-
 import { AxiosResponse } from 'axios';
-import { render, waitFor, screen, getByText } from '@testing-library/react';
-import userEvent from "@testing-library/user-event";
+import { render, waitFor, screen } from '@testing-library/react';
 import { clickByName } from '../tests';
-import ClaimAssetButton, { Props } from "./ClaimAssetButton";
+import ClaimAssetButton, { ClaimedFile, ClaimedFileType, Props } from "./ClaimAssetButton";
 import { UUID } from "@logion/node-api/dist/UUID.js";
 import { DEFAULT_LEGAL_OFFICER } from "../common/TestData";
 import { setMetamaskEnabled } from '../__mocks__/PolkadotExtensionDappMock';
 import { axiosMock, resetAxiosMock } from 'src/logion-chain/__mocks__/LogionChainMock';
-import { Mock } from 'moq.ts';
+import { It, Mock } from 'moq.ts';
 import { CollectionItem, UploadableItemFile } from '@logion/client';
 
-const locId = UUID.fromDecimalString("47931143565261666716783459922004958297") || new UUID();
+jest.mock('../logion-chain');
+
+describe("ClaimAssetButton with Metamask", () => {
+
+    beforeEach(() => {
+        resetAxiosMock();
+        setMetamaskEnabled(true);
+    });
+
+    it("renders button for restricted delivery of item asset", () => testRender(metamaskAssetProps));
+    it("shows download to rightful owner of item asset", () => testEthDownload(metamaskAssetProps));
+    it("shows error to anyone else for item asset", () => testEthDownloadFail(metamaskAssetProps));
+
+    it("renders button for restricted delivery of collection file", () => testRender(metamaskCollectionFileProps));
+    it("shows download to rightful owner of collection file", () => testEthDownload(metamaskCollectionFileProps));
+    it("shows error to anyone else for collection file", () => testEthDownloadFail(metamaskCollectionFileProps));
+})
+
+describe("ClaimAssetButton with Crossmint", () => {
+
+    beforeEach(resetAxiosMock);
+
+    it("renders button for restricted delivery of item asset", () => testRender(crossmintAssetProps));
+    it("shows download to rightful owner of item asset", () => testEthDownload(crossmintAssetProps));
+    it("shows error to anyone else for item asset", () => testEthDownloadFail(crossmintAssetProps));
+
+    it("renders button for restricted delivery of collection file", () => testRender(crossmintCollectionFileProps));
+    it("shows download to rightful owner of collection file", () => testEthDownload(crossmintCollectionFileProps));
+    it("shows error to anyone else for collection file", () => testEthDownloadFail(crossmintCollectionFileProps));
+})
+
+describe("ClaimAssetButton with Polkadot", () => {
+
+    beforeEach(resetAxiosMock);
+
+    it("renders button for restricted delivery of item asset", () => testRender(polkadotAssetProps))
+
+    it("shows download to rightful owner of item asset", async () => {
+        mockAxiosForCheckSuccess("Item");
+        await renderAndClaim(polkadotAssetProps);
+        await clickByName("Claim with selected");
+        await expectDownloadButton();
+    })
+
+    it("shows error to anyone else for item asset", async () => {
+        mockAxiosForCheckFailure();
+        await renderAndClaim(polkadotAssetProps);
+        await clickByName("Claim with selected");
+        await expectOwnershipCheckFailure();
+    })
+
+    it("renders button for restricted delivery of collection file", () => testRender(polkadotCollectionFileProps))
+
+    it("shows download to rightful owner of collection file", async () => {
+        mockAxiosForCheckSuccess("Collection");
+        await renderAndClaim(polkadotCollectionFileProps);
+        await clickByName("Claim with selected");
+        await expectDownloadButton();
+    })
+
+    it("shows error to anyone else for collection file", async () => {
+        mockAxiosForCheckFailure();
+        await renderAndClaim(polkadotCollectionFileProps);
+        await clickByName("Claim with selected");
+        await expectOwnershipCheckFailure();
+    })
+})
+
+const locId = UUID.fromDecimalStringOrThrow("47931143565261666716783459922004958297");
 
 const itemFile: UploadableItemFile = {
     hash: "0x546b3a31d340681f4c80d84ab317bbd85870e340d3c2feb24d0aceddf6f2fd31",
@@ -20,6 +85,12 @@ const itemFile: UploadableItemFile = {
     name: "ArtWork.png",
     contentType: "image/png",
     uploaded: true,
+};
+
+const claimedAsset: ClaimedFile = {
+    hash: itemFile.hash,
+    name: itemFile.name,
+    type: 'Item',
 };
 
 const item = {
@@ -33,128 +104,105 @@ const item = {
     }
 } as CollectionItem;
 
-describe("ClaimAssetButton with Metamask", () => {
+const assetProps = {
+    locId,
+    owner: DEFAULT_LEGAL_OFFICER,
+    item,
+    file: claimedAsset,
+};
 
-    const props: Props = {
-        locId,
-        owner: DEFAULT_LEGAL_OFFICER,
-        item,
-        file: itemFile,
-        walletType: "METAMASK",
-    };
+const metamaskAssetProps: Props = {
+    ...assetProps,
+    walletType: "METAMASK",
+};
 
-    beforeEach(resetAxiosMock);
+const crossmintAssetProps: Props = {
+    ...assetProps,
+    walletType: "CROSSMINT",
+};
 
-    it("renders button for restricted delivery", () => {
-        const button = render(<ClaimAssetButton { ...props } />);
-        expect(button).toMatchSnapshot();
-    })
+const polkadotAssetProps: Props = {
+    ...assetProps,
+    walletType: "POLKADOT",
+};
 
-    it("shows download to rightful owner", async () => {
-        setMetamaskEnabled(true);
-        axiosMock.setup(instance => instance.interceptors.request.use()).returns(0);
-        const checkResponse = new Mock<AxiosResponse<any, any>>();
-        axiosMock.setup(instance => instance.get(`/api/collection/${ locId.toString() }/${ props.item.id }/files/${ itemFile.hash }/check`))
-            .returnsAsync(checkResponse.object());
+const claimedCollectionFile: ClaimedFile = {
+    hash: itemFile.hash,
+    name: itemFile.name,
+    type: 'Collection',
+};
 
-        render(<ClaimAssetButton { ...props } />);
-        
+const collectionFileProps = {
+    locId,
+    owner: DEFAULT_LEGAL_OFFICER,
+    item,
+    file: claimedCollectionFile,
+};
+
+const metamaskCollectionFileProps: Props = {
+    ...collectionFileProps,
+    walletType: "METAMASK",
+};
+
+const crossmintCollectionFileProps: Props = {
+    ...collectionFileProps,
+    walletType: "CROSSMINT",
+};
+
+const polkadotCollectionFileProps: Props = {
+    ...collectionFileProps,
+    walletType: "POLKADOT",
+};
+
+function testRender(props: Props) {
+    const button = render(<ClaimAssetButton { ...props } />);
+    expect(button).toMatchSnapshot();
+}
+
+async function testEthDownload(props: Props) {
+    mockAxiosForCheckSuccess(props.file.type);
+    await renderAndClaim(props);
+    await expectDownloadButton();
+}
+
+async function renderAndClaim(props: Props) {
+    render(<ClaimAssetButton { ...props } />);
+    if(props.file.type === "Item") {
         await clickByName(content => /Claim your asset/.test(content));
-        await waitFor(() => screen.getByRole("button", { name: content => /Download/.test(content) }));
-    })
+    } else {
+        await clickByName(content => /Claim document/.test(content));
+    }
+}
 
-    it("shows error to anyone else", async () => {
-        setMetamaskEnabled(true);
-        axiosMock.setup(instance => instance.interceptors.request.use()).returns(0);
-        axiosMock.setup(instance => instance.get)
-            .returns(() => Promise.reject(new Error("unauthorized")));
+async function expectDownloadButton() {
+    await waitFor(() => screen.getByRole("button", { name: content => /Download/.test(content) }));
+}
 
-        render(<ClaimAssetButton { ...props } />);
-        
-        await clickByName(content => /Claim your asset/.test(content));
-        await waitFor(() => screen.getByRole("button", { name: content => /Ownership check failed/.test(content) }));
-    })
-})
+function mockAxiosForCheckSuccess(fileType: ClaimedFileType) {
+    axiosMock.setup(instance => instance.interceptors.request.use()).returns(0);
+    let expectedUrl: string;
+    if(fileType === "Item") {
+        expectedUrl = `/api/collection/${ locId.toString() }/${ item.id }/files/${ itemFile.hash }/check`;
+    } else {
+        expectedUrl = `/api/collection/${ locId.toString() }/files/${ itemFile.hash }/${ item.id }/check`;
+    }
+    const checkResponse = new Mock<AxiosResponse>();
+    axiosMock.setup(instance => instance.get)
+        .returns(url => url === expectedUrl ? Promise.resolve(checkResponse.object() as any) : Promise.reject(new Error("")));
+}
 
-describe("ClaimAssetButton with Crossmint", () => {
+async function testEthDownloadFail(props: Props) {
+    mockAxiosForCheckFailure();
+    await renderAndClaim(props);
+    await expectOwnershipCheckFailure();
+}
 
-    const props: Props = {
-        locId,
-        owner: DEFAULT_LEGAL_OFFICER,
-        item,
-        file: itemFile,
-        walletType: "CROSSMINT",
-    };
+async function expectOwnershipCheckFailure() {
+    await waitFor(() => screen.getByRole("button", { name: content => /Ownership check failed/.test(content) }));
+}
 
-    beforeEach(resetAxiosMock);
-
-    it("renders button for restricted delivery", () => {
-        const button = render(<ClaimAssetButton { ...props } />);
-        expect(button).toMatchSnapshot();
-    })
-
-    it("shows download to rightful owner", async () => {
-        axiosMock.setup(instance => instance.interceptors.request.use()).returns(0);
-        const checkResponse = new Mock<AxiosResponse<any, any>>();
-        axiosMock.setup(instance => instance.get(`/api/collection/${ locId.toString() }/${ props.item.id }/files/${ itemFile.hash }/check`))
-            .returnsAsync(checkResponse.object());
-
-        render(<ClaimAssetButton { ...props } />);
-        
-        await clickByName(content => /Claim your asset/.test(content));
-        await waitFor(() => screen.getByRole("button", { name: content => /Download/.test(content) }));
-    })
-
-    it("shows error to anyone else", async () => {
-        axiosMock.setup(instance => instance.interceptors.request.use()).returns(0);
-        axiosMock.setup(instance => instance.get)
-            .returns(() => Promise.reject(new Error("unauthorized")));
-
-        render(<ClaimAssetButton { ...props } />);
-        
-        await clickByName(content => /Claim your asset/.test(content));
-        await waitFor(() => screen.getByRole("button", { name: content => /Ownership check failed/.test(content) }));
-    })
-})
-
-describe("ClaimAssetButton with Polkadot", () => {
-
-    const props: Props = {
-        locId,
-        owner: DEFAULT_LEGAL_OFFICER,
-        item,
-        file: itemFile,
-        walletType: "POLKADOT",
-    };
-
-    beforeEach(resetAxiosMock);
-
-    it("renders button for restricted delivery", () => {
-        const button = render(<ClaimAssetButton { ...props } />);
-        expect(button).toMatchSnapshot();
-    })
-
-    it("shows download to rightful owner", async () => {
-        const checkResponse = new Mock<AxiosResponse<any, any>>();
-        axiosMock.setup(instance => instance.get(`/api/collection/${ locId.toString() }/${ props.item.id }/files/${ itemFile.hash }/check`))
-            .returnsAsync(checkResponse.object());
-
-        render(<ClaimAssetButton { ...props } />);
-        await clickByName(content => /Claim your asset/.test(content));
-        await userEvent.click(screen.getByText("name"));
-        await clickByName("Claim with selected");
-        await waitFor(() => screen.getByRole("button", { name: content => /Download/.test(content) }));
-    })
-
-    it("shows error to anyone else", async () => {
-        axiosMock.setup(instance => instance.get)
-            .returns(() => Promise.reject(new Error("unauthorized")));
-
-        render(<ClaimAssetButton { ...props } />);
-
-        await clickByName(content => /Claim your asset/.test(content));
-        await userEvent.click(screen.getByText("name"));
-        await clickByName("Claim with selected");
-        await waitFor(() => screen.getByRole("button", { name: content => /Ownership check failed/.test(content) }));
-    })
-})
+function mockAxiosForCheckFailure() {
+    axiosMock.setup(instance => instance.interceptors.request.use()).returns(0);
+    axiosMock.setup(instance => instance.get)
+        .returns(() => Promise.reject(new Error("unauthorized")));
+}

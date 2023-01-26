@@ -152,3 +152,24 @@ export async function getAllDeliveries(
     const response = await axios.get(`/api/collection/${ locId }/${ collectionItemId }/all-deliveries`);
     return response.data;
 }
+
+export async function checkCanGetCollectionFile(
+    axios: AxiosInstance,
+    parameters: GetCollectionItemFileParameters
+): Promise<boolean> {
+    const { locId, collectionItemId, hash } = parameters
+    try {
+        await axios.get(`/api/collection/${ locId }/files/${ hash }/${ collectionItemId }/check`);
+        return true;
+    } catch(e) {
+        return false;
+    }
+}
+
+export async function getCollectionFile(
+    axios: AxiosInstance,
+    parameters: GetCollectionItemFileParameters
+): Promise<TypedFile> {
+    const { locId, collectionItemId, hash } = parameters
+    return downloadFile(axios, `/api/collection/${ locId }/files/${ hash }/${ collectionItemId }`);
+}

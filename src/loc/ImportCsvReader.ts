@@ -17,17 +17,26 @@ export interface CsvItemWithFile extends CsvItemWithoutFile {
     fileHash: string;
 }
 
-export interface CsvItemWithFileAndToken extends CsvItemWithFile {
-    restrictedDelivery: boolean;
+interface CsvItemToken {
     tokenType: string;
     tokenId: string;
 }
 
-export type CsvItem = CsvItemWithoutFile | CsvItemWithFile | CsvItemWithFileAndToken;
+export interface CsvItemWithFileAndToken extends CsvItemWithFile, CsvItemToken {
+    restrictedDelivery: boolean;
+}
+
+export interface CsvItemWithToken extends CsvItemWithoutFile, CsvItemToken {
+    
+}
+
+export type CsvItem = CsvItemWithoutFile | CsvItemWithFile | CsvItemWithFileAndToken | CsvItemWithToken;
 
 const COLUMNS_WITHOUT_FILE = ['ID', 'DESCRIPTION', 'TERMS_AND_CONDITIONS TYPE', 'TERMS_AND_CONDITIONS PARAMETERS'] as const;
 const COLUMNS_WITH_FILE = [ ...COLUMNS_WITHOUT_FILE, 'FILE NAME', 'FILE CONTENT TYPE', 'FILE SIZE', 'FILE HASH'] as const;
-const COLUMNS_WITH_FILE_AND_TOKEN = [ ...COLUMNS_WITH_FILE, 'RESTRICTED', 'TOKEN TYPE', 'TOKEN ID'] as const;
+const TOKEN_COLUMNS = ['TOKEN TYPE', 'TOKEN ID'] as const;
+const COLUMNS_WITH_FILE_AND_TOKEN = [ ...COLUMNS_WITH_FILE, 'RESTRICTED', ...TOKEN_COLUMNS] as const;
+const COLUMNS_WITH_TOKEN = [ ...COLUMNS_WITHOUT_FILE, ...TOKEN_COLUMNS] as const;
 
 type RowWithoutFile = {
     [K in typeof COLUMNS_WITHOUT_FILE[number]]: string
@@ -41,13 +50,27 @@ type RowWithFileAndToken = {
     [K in typeof COLUMNS_WITH_FILE_AND_TOKEN[number]]: string
 }
 
+type RowWithToken = {
+    [K in typeof COLUMNS_WITH_TOKEN[number]]: string
+}
+
 export enum CsvRowType {
     WithoutFile,
     WithFile,
     WithFileAndToken,
+    WithToken,
 }
 
-type CsvRow = RowWithoutFile | RowWithFile | RowWithFileAndToken;
+const CSV_ROW_TYPE_VALUES = [ CsvRowType.WithoutFile, CsvRowType.WithFile, CsvRowType.WithFileAndToken, CsvRowType.WithToken ];
+
+const columsByType: Record<CsvRowType, readonly string[]> = {
+    [CsvRowType.WithoutFile]: COLUMNS_WITHOUT_FILE,
+    [CsvRowType.WithFile]: COLUMNS_WITH_FILE,
+    [CsvRowType.WithFileAndToken]: COLUMNS_WITH_FILE_AND_TOKEN,
+    [CsvRowType.WithToken]: COLUMNS_WITH_TOKEN,
+};
+
+type CsvRow = RowWithoutFile | RowWithFile | RowWithFileAndToken | RowWithToken;
 
 export interface SuccessfulReadItemsCsv {
     items: CsvItem[];
@@ -102,12 +125,17 @@ export async function readItemsCsv(file: File): Promise<ReadItemsCsvResult> {
                         itemWithFile.fileHash = dataWithFile['FILE HASH'];
                     }
 
+                    if(rowType === CsvRowType.WithFileAndToken || rowType === CsvRowType.WithToken) {
+                        const dataWithToken: RowWithToken = data as RowWithToken;
+                        const itemWithToken = item as CsvItemWithToken;
+                        itemWithToken.tokenType = dataWithToken['TOKEN TYPE'];
+                        itemWithToken.tokenId = dataWithToken['TOKEN ID'];
+                    }
+
                     if(rowType === CsvRowType.WithFileAndToken) {
                         const dataWithToken: RowWithFileAndToken = data as RowWithFileAndToken;
                         const itemWithToken = item as CsvItemWithFileAndToken;
                         itemWithToken.restrictedDelivery = isTrue(dataWithToken['RESTRICTED']);
-                        itemWithToken.tokenType = dataWithToken['TOKEN TYPE'];
-                        itemWithToken.tokenId = dataWithToken['TOKEN ID'];
                     }
 
                     rows.push(item);
@@ -130,22 +158,23 @@ export async function readItemsCsv(file: File): Promise<ReadItemsCsvResult> {
 }
 
 function validateColumns(data: CsvRow): CsvRowType | undefined {
-    const keys = Object.keys(data);
-    if(keys.length === COLUMNS_WITHOUT_FILE.length) {
-        return validateColumnsGivenType(data, COLUMNS_WITHOUT_FILE, CsvRowType.WithoutFile);
-    } else if(keys.length === COLUMNS_WITH_FILE.length) {
-        return validateColumnsGivenType(data, COLUMNS_WITH_FILE, CsvRowType.WithFile);
-    } else if(keys.length === COLUMNS_WITH_FILE_AND_TOKEN.length) {
-        return validateColumnsGivenType(data, COLUMNS_WITH_FILE_AND_TOKEN, CsvRowType.WithFileAndToken);
-    } else {
-        return undefined;
+    let detectedType: CsvRowType | undefined;
+    let detectedTypeColumns = 0;
+    for(const rowType of CSV_ROW_TYPE_VALUES) {
+        const columns = columsByType[rowType];
+        const candidateType = validateColumnsGivenType(data, columns, rowType);
+        if(candidateType !== undefined && columns.length > detectedTypeColumns) {
+            detectedType = candidateType;
+            detectedTypeColumns = columns.length;
+        }
     }
+    return detectedType;
 }
 
 function validateColumnsGivenType(data: CsvRow, expectedKeys: ReadonlyArray<string>, expectedType: CsvRowType): CsvRowType | undefined {
     const keys = Object.keys(data);
-    for(const key of keys) {
-        if(!expectedKeys.includes(key as any)) {
+    for(const key of expectedKeys) {
+        if(!keys.includes(key)) {
             return undefined;
         }
     }
