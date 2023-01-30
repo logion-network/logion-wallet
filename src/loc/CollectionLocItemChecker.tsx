@@ -260,7 +260,6 @@ function CollectionLocItemChecker(props: LocalProps) {
                                         url={ fullCollectionItemCertificate(collectionLoc.id, item.id) }
                                     />
                                     <CopyPasteButton
-                                        className="medium"
                                         value={ fullCollectionItemCertificate(collectionLoc.id, item.id) }
                                     />
                                 </ButtonGroup>
@@ -363,7 +362,7 @@ function CheckResultFeedback(props: CheckResultProps) {
 function ViewCertificateButton(props: { url: string }) {
     return (
         <Button className="ViewCertificateButton" onClick={ () => window.open(props.url, "_blank") }>
-            <Icon icon={{ id:"view-certificate" }} width="12px" />
+            <Icon icon={{ id:"view-certificate" }} width="20px" />
         </Button>
     );
 }

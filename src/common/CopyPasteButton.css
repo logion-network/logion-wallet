@@ -2,10 +2,12 @@
     padding: 4px;
     padding-right: 5px;
     padding-left: 5px;
+    height: 40px;
+    width: 40px;
 }
 
 .CopyPasteButton.Button.btn.big img {
-    height: 1rem;
+    height: 20px;
 }
 
 .CopyPasteButton.Button.btn.small {

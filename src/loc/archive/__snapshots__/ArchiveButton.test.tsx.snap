@@ -7,7 +7,7 @@ exports[`ArchiveButton renders button with data 1`] = `
     onClick={[Function]}
   >
     <Icon
-      height="22px"
+      height="23px"
       icon={
         Object {
           "id": "backup",
