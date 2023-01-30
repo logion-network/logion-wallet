@@ -29,13 +29,13 @@ export default function DocumentClaimHistory() {
             (async function() {
                 const deliveries = await getAllCollectionDeliveries(axiosFactory!(loc?.ownerAddress), { locId: loc.id.toString(), hash });
                 setDeliveries({
-                    [hash]: deliveries.items,
+                    [hash]: deliveries.deliveries,
                 });
             })();
         }
     }, [ hash, axiosFactory, loc, deliveries ]);
 
-    const checkCertifiedCopy = useCallback(async (fileHash: string) => {
+    const checkCertifiedCopy = useCallback(async (fileHash: string): Promise<CheckCertifiedCopyResult> => {
         if(deliveries && hash && hash in deliveries) {
             const fileDeliveries = deliveries[hash];
             for(let i = 0; i < fileDeliveries.length; ++i) {
@@ -46,6 +46,11 @@ export default function DocumentClaimHistory() {
                         logionOrigin: CheckResultType.POSITIVE,
                         nftOwnership: CheckResultType.POSITIVE,
                         summary: CheckResultType.POSITIVE,
+                        match: {
+                            ...delivery,
+                            belongsToCurrentOwner: false,
+                            originalFileHash: fileHash,
+                        }
                     };
                 }
             }

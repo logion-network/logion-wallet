@@ -175,7 +175,7 @@ export async function getCollectionFile(
 }
 
 export interface CollectionDeliveriesResponse {
-    items: CheckLatestDeliveryResponse[];
+    deliveries: CheckLatestDeliveryResponse[];
 }
 
 export async function getAllCollectionDeliveries(
