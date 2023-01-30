@@ -1,4 +1,5 @@
 import { CheckCertifiedCopyResult, CheckHashResult } from "@logion/client";
+import { AxiosInstance } from "axios";
 import { useEffect, useMemo, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 
@@ -7,7 +8,7 @@ import PolkadotFrame from "src/common/PolkadotFrame";
 import CheckDeliveredFrame from "src/components/deliverycheck/CheckDeliveredFrame";
 import ItemFiles from "src/components/itemfiles/ItemFiles";
 import { useLogionChain } from "src/logion-chain";
-import { getAllDeliveries, ItemDeliveriesResponse } from "./FileModel";
+import { getAllDeliveries, getCollectionItemFileSource, ItemDeliveriesResponse } from "./FileModel";
 import { useLocContext } from "./LocContext";
 import LocPane from "./LocPane";
 import { CertificateItemDetails } from "src/components/certificateitemdetails/CertificateItemDetails";
@@ -72,10 +73,17 @@ export default function DashboardCertificate() {
                     <PolkadotFrame>
                         <ItemFiles
                             collectionLoc={ loc }
-                            item={ collectionItem }
+                            files={ collectionItem.files }
                             deliveries={ deliveries }
                             checkCertifiedCopyResultResult={ checkCertifiedCopyResult }
                             checkHashResult={ checkHashResult }
+                            downloader={ (axios: AxiosInstance, hash: string) => getCollectionItemFileSource(axios, {
+                                locId: loc.id.toString(),
+                                collectionItemId: collectionItem.id,
+                                hash,
+                            }) }
+                            icon="polkadot_check_asset"
+                            title="List of Collection Item's file(s)"
                         />
                     </PolkadotFrame>
                 </div>
@@ -91,10 +99,13 @@ export default function DashboardCertificate() {
                     collectionItem.restrictedDelivery &&
                     <div className="frame-container">
                         <CheckDeliveredFrame
-                            item={ collectionItem }
+                            checkCertifiedCopy={ hash => collectionItem.checkCertifiedCopy(hash) }
                             colorTheme={ colorTheme }
                             detailedError={ true }
                             onChecked={ setCheckCertifiedCopyResult }
+                            icon="polkadot_check_asset"
+                            title="NFT Underlying Asset Check Tool"
+                            buttonText="Check NFT Asset"
                         />
                     </div>
                 }

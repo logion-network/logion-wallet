@@ -1,4 +1,4 @@
-import { UploadableItemFile, CheckCertifiedCopyResult, CheckResultType } from "@logion/client";
+import { CheckCertifiedCopyResult, CheckResultType } from "@logion/client";
 import { useCommonContext } from "src/common/CommonContext";
 import Table, { DateTimeCell, EmptyTableMessage } from "src/common/Table";
 import { CheckLatestDeliveryResponse } from "src/loc/FileModel";
@@ -7,7 +7,6 @@ import CellWithCopyPaste from "../table/CellWithCopyPaste";
 import "./ItemFileDetails.css";
 
 export interface Props {
-    file: UploadableItemFile;
     deliveries: CheckLatestDeliveryResponse[];
     checkResult?: CheckCertifiedCopyResult;
 }

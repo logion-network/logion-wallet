@@ -1,38 +1,63 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`LocPrivateFileDetails renders 1`] = `
-<Col
-  className="LocItemDetails"
-  style={
-    Object {
-      "width": "100%",
+<React.Fragment>
+  <Col
+    className="LocItemDetails"
+    style={
+      Object {
+        "width": "50%",
+      }
     }
-  }
->
-  <div
-    className="frame"
   >
     <div
-      className="frame-title"
+      className="frame"
     >
-      Document related data to be published
+      <div
+        className="frame-title"
+      >
+        Document related data to be published
+      </div>
+      <LocItemDetail
+        copyButtonText="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
+        label="Submitter ID"
+      >
+        5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY
+      </LocItemDetail>
+      <LocItemDetail
+        label="Document Hash"
+      >
+        0xfb45e95061306e90fd154272ba3b4d67bb6d295feeccdc3a34572995f08e268a
+      </LocItemDetail>
+      <LocItemDetail
+        label="Public Description"
+      >
+        File's nature
+      </LocItemDetail>
     </div>
-    <LocItemDetail
-      copyButtonText="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
-      label="Submitter ID"
-    >
-      5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY
-    </LocItemDetail>
-    <LocItemDetail
-      label="Document Hash"
-    >
-      0xfb45e95061306e90fd154272ba3b4d67bb6d295feeccdc3a34572995f08e268a
-    </LocItemDetail>
-    <LocItemDetail
-      label="Public Description"
-    >
-      File's nature
-    </LocItemDetail>
-  </div>
-</Col>
+  </Col>
+  <Col
+    className="LocItemDetails claim"
+    style={
+      Object {
+        "width": "50%",
+      }
+    }
+  >
+    <div>
+      <Button
+        onClick={[Function]}
+      >
+        <Icon
+          icon={
+            Object {
+              "id": "claim",
+            }
+          }
+        />
+         View document claim history
+      </Button>
+    </div>
+  </Col>
+</React.Fragment>
 `;

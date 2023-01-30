@@ -30,10 +30,15 @@ describe("ItemFiles", () => {
         }
     } as CollectionItem;
 
+    const downloader = jest.fn();
+
     it("renders with undefined deliveries", () => {
         const result = shallowRender(<ItemFiles
             collectionLoc={ collectionLoc }
-            item={ item }
+            files={ item.files }
+            downloader={downloader}
+            icon="polkadot_check_asset"
+            title="List of Collection Item's file(s)"
         />);
         expect(result).toMatchSnapshot();
     });
@@ -41,8 +46,11 @@ describe("ItemFiles", () => {
     it("renders with empty deliveries", () => {
         const result = shallowRender(<ItemFiles
             collectionLoc={ collectionLoc }
-            item={ item }
+            files={ item.files }
             deliveries={{}}
+            downloader={downloader}
+            icon="polkadot_check_asset"
+            title="List of Collection Item's file(s)"
         />);
         expect(result).toMatchSnapshot();
     });
@@ -50,7 +58,7 @@ describe("ItemFiles", () => {
     it("renders with delivery ", () => {
         const result = shallowRender(<ItemFiles
             collectionLoc={ collectionLoc }
-            item={ item }
+            files={ item.files }
             deliveries={{
                 "0xa025ca5f086f3b6df1ca96c235c4daff57083bbd4c9320a3013e787849f9fffa": [
                     {
@@ -61,6 +69,9 @@ describe("ItemFiles", () => {
                     }
                 ]
             }}
+            downloader={downloader}
+            icon="polkadot_check_asset"
+            title="List of Collection Item's file(s)"
         />);
         expect(result).toMatchSnapshot();
     });

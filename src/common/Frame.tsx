@@ -1,3 +1,4 @@
+import { Property } from "csstype";
 import { Children } from './types/Helpers';
 import { useCommonContext } from './CommonContext';
 
@@ -15,6 +16,7 @@ export interface Props {
     fillHeight?: boolean,
     colorTheme?: ColorTheme,
     titleIcon?: MenuIconType,
+    border?: Property.Border,
 }
 
 export default function Frame(props: Props) {
@@ -52,6 +54,7 @@ export default function Frame(props: Props) {
                 backgroundColor,
                 color: colorTheme.frame.foreground,
                 boxShadow: `0 0 25px ${colorTheme.shadowColor}`,
+                border: props.border,
             }}
         >
             { (props.titleIcon !== undefined || props.title !== undefined) &&

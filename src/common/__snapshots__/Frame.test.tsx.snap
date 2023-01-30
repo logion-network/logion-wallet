@@ -6,6 +6,7 @@ exports[`Frame renders 1`] = `
   style={
     Object {
       "backgroundColor": "#152665",
+      "border": undefined,
       "boxShadow": "0 0 25px #3b6cf433",
       "color": "#ffffff",
     }
@@ -23,6 +24,7 @@ exports[`Frame renders with title 1`] = `
   style={
     Object {
       "backgroundColor": "#152665",
+      "border": undefined,
       "boxShadow": "0 0 25px #3b6cf433",
       "color": "#ffffff",
     }
@@ -49,6 +51,7 @@ exports[`Frame renders with title and icon 1`] = `
   style={
     Object {
       "backgroundColor": "#152665",
+      "border": undefined,
       "boxShadow": "0 0 25px #3b6cf433",
       "color": "#ffffff",
     }

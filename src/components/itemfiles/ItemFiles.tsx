@@ -1,10 +1,10 @@
-import { CollectionItem, UploadableItemFile, CheckCertifiedCopyResult, LocData, CheckHashResult } from "@logion/client";
+import { CheckCertifiedCopyResult, LocData, CheckHashResult } from "@logion/client";
 import { AxiosInstance } from "axios";
 import { useCallback, useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 
 import Table, { Cell, EmptyTableMessage } from "src/common/Table";
-import { getCollectionItemFileSource, ItemDeliveriesResponse } from "src/loc/FileModel";
+import { ItemDeliveriesResponse, TypedFile } from "src/loc/FileModel";
 import CellWithCopyPaste from "../table/CellWithCopyPaste";
 import { Child } from 'src/common/types/Helpers';
 import ItemFileDetails from "./ItemFileDetails";
@@ -13,36 +13,47 @@ import FrameTitle from "../frametitle/FrameTitle";
 import "./ItemFiles.css";
 import ViewFileButton from "src/common/ViewFileButton";
 
+export interface DeliveredFile {
+    name: string;
+    contentType: string;
+    hash: string;
+    size: bigint;
+}
+
 export interface Props {
     collectionLoc: LocData;
-    item: CollectionItem;
+    files: DeliveredFile[];
     deliveries?: ItemDeliveriesResponse;
     checkCertifiedCopyResultResult?: CheckCertifiedCopyResult;
     checkHashResult?: CheckHashResult;
+    downloader: (axios: AxiosInstance, hash: string) => Promise<TypedFile>;
+    defaultExpanded?: boolean;
+    icon: string;
+    title: string;
 }
 
-interface FileWithMatch extends UploadableItemFile {
+interface FileWithMatch extends DeliveredFile {
     detailsExpanded: boolean;
 }
 
 export default function ItemFiles(props: Props) {
     const [ checkCertifiedCopyResultResult, setCheckCertifiedCopyResultResult ] = useState<CheckCertifiedCopyResult>();
     const [ checkHashResult, setCheckHashResult ] = useState<CheckHashResult>();
-    const [ files, setFiles ] = useState<FileWithMatch[]>(props.item.files.map(file => ({ ...file, detailsExpanded: false })));
+    const [ files, setFiles ] = useState<FileWithMatch[]>(props.files.map(file => ({ ...file, detailsExpanded: props.defaultExpanded || false })));
 
-    let renderDetails: ((file: UploadableItemFile) => Child) | undefined;
+    let renderDetails: ((file: FileWithMatch) => Child) | undefined;
     if(props.deliveries !== undefined) {
         const deliveries = props.deliveries;
-        renderDetails = (file) => <ItemFileDetails file={ file } deliveries={ deliveries[file.hash] || [] } checkResult={ checkCertifiedCopyResultResult } />;
+        renderDetails = (file) => <ItemFileDetails deliveries={ deliveries[file.hash] || [] } checkResult={ checkCertifiedCopyResultResult } />;
     }
 
     const onChecked = useCallback((result: CheckCertifiedCopyResult) => {
         setCheckCertifiedCopyResultResult(result);
-        setFiles(props.item.files.map(file => ({
+        setFiles(props.files.map(file => ({
             ...file,
-            detailsExpanded: file.hash === result.match?.originalFileHash
+            detailsExpanded: props.defaultExpanded || false || file.hash === result.match?.originalFileHash
         })));
-    }, [ props.item.files ]);
+    }, [ props.files, props.defaultExpanded ]);
 
     useEffect(() => {
         if(checkCertifiedCopyResultResult !== props.checkCertifiedCopyResultResult && props.checkCertifiedCopyResultResult !== undefined) {
@@ -62,8 +73,8 @@ export default function ItemFiles(props: Props) {
                 <Col>
                     <h3>
                         <FrameTitle
-                            iconId="polkadot_check_asset"
-                            text="List of Collection Item's file(s)"
+                            iconId={props.icon}
+                            text={props.title}
                         />
                     </h3>
                 </Col>
@@ -82,7 +93,7 @@ export default function ItemFiles(props: Props) {
                     },
                     {
                         header: "Size (bytes)",
-                        render: file => <Cell content={ file.size.toString() } />,
+                        render: file => <Cell content={ file.size >= 0 ? file.size.toString() : "n/a" } />,
                         align: "left",
                     },
                     {
@@ -91,11 +102,7 @@ export default function ItemFiles(props: Props) {
                             <ViewFileButton
                                 nodeOwner={ props.collectionLoc.ownerAddress }
                                 fileName={ file.name }
-                                downloader={ (axios: AxiosInstance) => getCollectionItemFileSource(axios, {
-                                    locId: props.collectionLoc.id.toString(),
-                                    collectionItemId: props.item.id,
-                                    hash: file.hash,
-                                }) }
+                                downloader={ (axios) => props.downloader(axios, file.hash) }
                             />
                         } />,
                         align: "left",
@@ -111,7 +118,8 @@ export default function ItemFiles(props: Props) {
                         render: file => <Cell content={ numberOfClaims(file, props.deliveries) } />,
                         width: "150px",
                         renderDetails,
-                        detailsExpanded: file => file.detailsExpanded
+                        detailsExpanded: file => file.detailsExpanded,
+                        hideExpand: () => true,
                     },
                 ]}
                 data={ files }
@@ -122,7 +130,7 @@ export default function ItemFiles(props: Props) {
     );
 }
 
-function numberOfClaims(file: UploadableItemFile, deliveries?: ItemDeliveriesResponse): string {
+function numberOfClaims(file: DeliveredFile, deliveries?: ItemDeliveriesResponse): string {
     if(deliveries !== undefined) {
         const fileDeliveries = deliveries[file.hash];
         if(fileDeliveries) {

@@ -1,7 +1,6 @@
 import { useCallback, useState } from "react";
 
 import Icon from "../../common/Icon";
-import PolkadotFrame from "../../common/PolkadotFrame";
 import IconTextRow from "../../common/IconTextRow";
 import { ColorTheme, GREEN, RED } from "../../common/ColorTheme";
 
@@ -9,6 +8,7 @@ import CheckFileResult from "../checkfileresult/CheckFileResult";
 import FileHasher, { DocumentHash } from "../filehasher/FileHasher";
 
 import './CheckFileFrame.css';
+import Frame from "src/common/Frame";
 
 export type CheckResult = 'NONE' | 'POSITIVE' | 'NEGATIVE';
 
@@ -28,6 +28,7 @@ export interface DocumentCheckResult {
 export default function CheckFileFrame(props: Props) {
     const { checkHash, context, checkedItem } = props;
     const [ hash, setHash ] = useState<DocumentHash | null>(null);
+    const [ checking, setChecking ] = useState(false);
 
     const onHash = useCallback((hash: DocumentHash) => {
         setHash(hash);
@@ -35,12 +36,13 @@ export default function CheckFileFrame(props: Props) {
     }, [ setHash, checkHash ]);
 
     return (
-        <PolkadotFrame
+        <Frame
             className="CheckFileFrame"
             colorTheme={ props.colorTheme }
+            border="2px solid #3B6CF4"
         >
             <IconTextRow
-                icon={ <Icon icon={{id: "polkadot_doc_check"}} width="45px" /> }
+                icon={ <Icon icon={{id: "doc_check"}} width="45px" /> }
                 text={
                     <>
                         <p className="text-title">Document conformity check tool</p>
@@ -54,12 +56,19 @@ export default function CheckFileFrame(props: Props) {
                         <FileHasher
                             onHash={ onHash }
                             buttonText="Check a document"
+                            onFileSelected={() => setChecking(true)}
                         />
                         {
-                            props.checkResult !== "NONE" && hash !== null &&
+                            checking &&
                             <CheckFileResult>
                                 {
-                                    props.checkResult === "POSITIVE" &&
+                                    (!hash || props.checkResult === "NONE") &&
+                                    <div>
+                                        <p>Hashing file and checking...</p>
+                                    </div>
+                                }
+                                {
+                                    hash && props.checkResult === "POSITIVE" &&
                                     <>
                                         <p><strong>Check result: <span style={{color: GREEN}}>positive</span></strong></p>
                                         <p>The document you uploaded has the following "hash":<br/><strong>{hash.hash}</strong><br/>
@@ -68,7 +77,7 @@ export default function CheckFileFrame(props: Props) {
                                     </>
                                 }
                                 {
-                                    props.checkResult === "NEGATIVE" &&
+                                    hash && props.checkResult === "NEGATIVE" &&
                                     <>
                                         <p><strong>Check result: <span style={{color: RED}}>negative</span></strong></p>
                                         <p>The document you uploaded has the following "hash":<br/><strong>{hash.hash}</strong><br/>
@@ -81,6 +90,6 @@ export default function CheckFileFrame(props: Props) {
                     </>
                 }
             />
-        </PolkadotFrame>
+        </Frame>
     )
 }

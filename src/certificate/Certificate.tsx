@@ -308,9 +308,12 @@ export default function Certificate() {
                 loc && collectionItem && client && collectionItem.restrictedDelivery &&
                 <Container className="CopyCheck">
                     <CheckDeliveredFrame
-                        item={ collectionItem }
+                        checkCertifiedCopy={ hash => collectionItem.checkCertifiedCopy(hash) }
                         colorTheme={ LIGHT_MODE }
                         detailedError={ false }
+                        icon="polkadot_check_asset"
+                        title="NFT Underlying Asset Check Tool"
+                        buttonText="Check NFT Asset"
                     />
                 </Container>
             }

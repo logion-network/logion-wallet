@@ -90,6 +90,7 @@ export interface Column<T> {
     renderDetails?: (element: T) => Child,
     align?: Css.Property.TextAlign,
     detailsExpanded?: (element: T) => boolean,
+    hideExpand?: (element: T) => boolean,
 }
 
 function fontSize<T>(column: Column<T>): (string | undefined) {
@@ -279,7 +280,7 @@ export default function Table<T>(props: Props<T>) {
                                         >
                                             { col.render(item) }
                                             {
-                                                col.renderDetails !== undefined &&
+                                                col.renderDetails !== undefined && (col.hideExpand === undefined || !col.hideExpand(item)) &&
                                                 <ShowDetailsButton
                                                     expanded={ detailsExpanded[itemIndex] }
                                                     onClick={ () => toggle(itemIndex) }

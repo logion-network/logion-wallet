@@ -38,12 +38,13 @@ describe("CheckDeliveredButton", () => {
 });
 
 async function testFindsMatch(hash: string, expectedResult: CheckCertifiedCopyResult) {
-    const { onChecking, onChecked, item } = given(hash);
+    const { onChecking, onChecked } = given(hash);
 
     render(<CheckDeliveredButton
-        item={ item }
+        checkCertifiedCopy={ checkCertifiedCopy }
         onChecking={ onChecking }
         onChecked={ onChecked }
+        buttonText="Check NFT Asset"
     />);
 
     await uploadByTestId("FileSelectorButtonHiddenInput", deliveredFile);
@@ -53,18 +54,17 @@ async function testFindsMatch(hash: string, expectedResult: CheckCertifiedCopyRe
     expect(onChecked).toBeCalledTimes(1);
 }
 
-function given(fileHash: string): { onChecking: () => void, onChecked: (result: CheckCertifiedCopyResult) => void, item: CollectionItem } {
+function given(fileHash: string): { onChecking: () => void, onChecked: (result: CheckCertifiedCopyResult) => void } {
     setExpectedHash(fileHash);
-    const item = {
-        checkCertifiedCopy: (hash: string) => {
-            if(hash === `0x${ copyHash }`) {
-                return Promise.resolve(matchFoundResult);
-            } else {
-                return Promise.resolve(matchNotFoundResult);
-            }
-        }
-    } as CollectionItem;
     const onChecking = jest.fn();
     const onChecked = jest.fn();
-    return { onChecking, onChecked, item };
+    return { onChecking, onChecked };
+}
+
+function checkCertifiedCopy(hash: string) {
+    if(hash === `0x${ copyHash }`) {
+        return Promise.resolve(matchFoundResult);
+    } else {
+        return Promise.resolve(matchNotFoundResult);
+    }
 }

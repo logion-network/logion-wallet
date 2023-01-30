@@ -6,7 +6,8 @@ import {
     USER_PATH,
     locRequestsRelativePath,
     locDetailsRelativePath,
-    relativeDashboardCertificateRelativePath
+    relativeDashboardCertificateRelativePath,
+    LOC_DETAILS_RELATIVE_PATH
 } from '../RootPaths';
 
 import Settings from "../settings/Settings";
@@ -28,6 +29,7 @@ import Button from "../common/Button";
 import IdentityLocRequest from "./trust-protection/IdentityLocRequest";
 import VTPDashboard from "./vtp/VTPDashboard";
 import IdenfyVerificationResult from './IdenfyVerificationResult';
+import { UserDocumentClaimHistory } from 'src/loc/DocumentClaimHistory';
 
 export const HOME_PATH = USER_PATH;
 
@@ -83,6 +85,14 @@ export function locDetailsPath(locId: string | UUID, locType: LocType) {
         stringId = locId;
     }
     return dataLocDetailsPath(locType, stringId);
+}
+
+export const DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH = LOC_DETAILS_RELATIVE_PATH + "/claims/:hash";
+export function documentClaimHistoryPath(locId: UUID, hash: string) {
+    return USER_PATH + DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH
+        .replace(":locType", "Collection")
+        .replace(":locId", locId.toString())
+        .replace(":hash", hash);
 }
 
 export default function UserRouter() {
@@ -216,6 +226,7 @@ export default function UserRouter() {
                     detailsPath={ locDetailsPath }
                 />
             } />
+            <Route path={ DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH } element={ <UserDocumentClaimHistory/> } />
         </Routes>
     );
 }

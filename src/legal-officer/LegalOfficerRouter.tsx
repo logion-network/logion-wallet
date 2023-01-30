@@ -17,6 +17,7 @@ import {
     VOTES_RELATIVE_PATH,
     VOTES_PATH,
     VOTE_LOC_RELATIVE_PATH,
+    DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH,
 } from './LegalOfficerPaths';
 
 import Home from './Home';
@@ -45,6 +46,7 @@ import { useLogionChain } from '../logion-chain';
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import VTPSelection from "../loc/vtp/VTPSelection";
 import Votes from './votes/Votes';
+import { GuardianDocumentClaimHistory } from 'src/loc/DocumentClaimHistory';
 
 export default function LegalOfficerRouter() {
     const { accounts } = useLogionChain();
@@ -166,6 +168,7 @@ export default function LegalOfficerRouter() {
                     detailsPath={ locDetailsPath }
                 />
             } />
+            <Route path={ DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH } element={ <GuardianDocumentClaimHistory/> } />
             <Route path="" element={ currentLegalOfficerUnavailable ? <Navigate to={ SETTINGS_PATH }/> : <Home /> } />
         </Routes>
     );
