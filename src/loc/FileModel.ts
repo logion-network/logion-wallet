@@ -174,18 +174,33 @@ export async function getCollectionFile(
     return downloadFile(axios, `/api/collection/${ locId }/files/${ hash }/${ collectionItemId }`);
 }
 
-export interface CollectionDeliveriesResponse {
+export interface CollectionFileDeliveriesResponse {
     deliveries: CheckLatestDeliveryResponse[];
+}
+
+export async function getAllCollectionFileDeliveries(
+    axios: AxiosInstance,
+    parameters: {
+        locId: string,
+        hash: string,
+    }
+): Promise<CollectionFileDeliveriesResponse> {
+    const { locId, hash } = parameters
+    const response = await axios.get(`/api/collection/${ locId }/file-deliveries/${hash}`);
+    return response.data;
+}
+
+export interface CollectionDeliveriesResponse {
+    [key: string]: CheckLatestDeliveryResponse[];
 }
 
 export async function getAllCollectionDeliveries(
     axios: AxiosInstance,
     parameters: {
         locId: string,
-        hash: string,
     }
 ): Promise<CollectionDeliveriesResponse> {
-    const { locId, hash } = parameters
-    const response = await axios.get(`/api/collection/${ locId }/file-deliveries/${hash}`);
+    const { locId } = parameters
+    const response = await axios.get(`/api/collection/${ locId }/file-deliveries`);
     return response.data;
 }

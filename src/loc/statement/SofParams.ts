@@ -12,6 +12,7 @@ export interface PrivateItem {
     privateDescription: string;
     hash: string;
     timestamp: string;
+    deliveries: SofFileDelivery[];
 }
 
 export type Language = 'en' | 'fr';
@@ -27,7 +28,7 @@ export interface FormValues {
     amount: string;
 }
 
-export interface SofCollectionItemFileDelivery {
+export interface SofFileDelivery {
     hash: string;
     owner: string;
 }
@@ -37,7 +38,7 @@ export interface SofCollectionItemFile {
     contentType: string;
     size: string;
     hash: string;
-    deliveries: SofCollectionItemFileDelivery[];
+    deliveries: SofFileDelivery[];
 }
 
 export interface SofLogionClassification {

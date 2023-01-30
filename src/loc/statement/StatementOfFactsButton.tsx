@@ -3,12 +3,12 @@ import { Dropdown } from "react-bootstrap";
 import { UUID } from "@logion/node-api/dist/UUID.js";
 import { LegalOfficerCase } from "@logion/node-api/dist/Types.js";
 import { getLegalOfficerCase } from "@logion/node-api";
-import { CollectionItem, LegalOfficer, UploadableItemFile } from "@logion/client";
+import { CollectionItem, LegalOfficer } from "@logion/client";
 
 import { locDetailsPath, STATEMENT_OF_FACTS_PATH } from "../../legal-officer/LegalOfficerPaths";
 import { fullCertificateUrl, getBaseUrl } from "../../PublicPaths";
 import { useLocContext } from "../LocContext";
-import { DEFAULT_SOF_PARAMS, SofParams, FormValues, Language, Prerequisite, SofCollectionItemFileDelivery } from "./SofParams";
+import { DEFAULT_SOF_PARAMS, SofParams, FormValues, Language, Prerequisite, SofFileDelivery } from "./SofParams";
 
 import './StatementOfFactsButton.css';
 import Dialog from "../../common/Dialog";
@@ -20,7 +20,7 @@ import { clearSofParams, storeSofParams } from "../../common/Storage";
 import { PrerequisiteWizard } from "./PrerequisiteWizard";
 import { PREREQUISITE_WIZARD_STEPS } from "./WizardSteps";
 import { useLegalOfficerContext } from "../../legal-officer/LegalOfficerContext";
-import { getAllDeliveries, ItemDeliveriesResponse, loFileUrl } from "../FileModel";
+import { getAllCollectionDeliveries, getAllDeliveries, ItemDeliveriesResponse, loFileUrl } from "../FileModel";
 import { creativeCommonsBadges } from "../../components/license/CreativeCommonsIcon";
 
 type Status = 'IDLE' | 'PRE-REQUISITE' | 'INPUT' | 'READY'
@@ -47,6 +47,7 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
     const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer>();
     const [ submitError, setSubmitError ] = useState<string | undefined>(undefined);
     const [ deliveries, setDeliveries ] = useState<ItemDeliveriesResponse | null | undefined>();
+    const [ collectionDeliveries, setCollectionDeliveries ] = useState<ItemDeliveriesResponse | null | undefined>();
 
     const submit = useCallback(async (formValues: FormValues) => {
         if (api && locData) {
@@ -129,11 +130,24 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
     }, [ axiosFactory, props.item, locData, deliveries ]);
 
     useEffect(() => {
+        if(props.item && locData && collectionDeliveries === undefined) {
+            setCollectionDeliveries(null);
+            (async function() {
+                const deliveries = await getAllCollectionDeliveries(axiosFactory!(locData.ownerAddress), {
+                    locId: locData.id.toString(),
+                });
+                setCollectionDeliveries(deliveries);
+            })();
+        }
+    }, [ axiosFactory, props.item, locData, collectionDeliveries ]);
+
+    useEffect(() => {
         if (language
                 && locData
                 && legalOfficer
                 && accounts?.current?.token
                 && (deliveries !== null && deliveries !== undefined)
+                && (collectionDeliveries !== null && collectionDeliveries !== undefined)
                 && sofParams.locId !== locData.id.toDecimalString()) {
             const requester = locData.requesterAddress ? locData.requesterAddress : locData.requesterLocId?.toDecimalString() || "";
             setSofParams({
@@ -150,6 +164,7 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                     privateDescription: item.name,
                     hash: item.hash,
                     timestamp: item.addedOn || "",
+                    deliveries: toSofDeliveries(item, collectionDeliveries),
                 })),
                 collectionItem: (props.item ? {
                     id: props.item.id,
@@ -194,7 +209,7 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                 oathText: settings!['oath'] || "-",
             });
         }
-    }, [ sofParams, setSofParams, locData, language, props.item, deliveries, accounts, legalOfficer, settings ]);
+    }, [ sofParams, setSofParams, locData, language, props.item, deliveries, accounts, legalOfficer, settings, collectionDeliveries ]);
 
     const cancelCallback = useCallback(() => {
         clearSofParams();
@@ -296,7 +311,7 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
     );
 }
 
-function toSofDeliveries(file: UploadableItemFile, deliveries: ItemDeliveriesResponse): SofCollectionItemFileDelivery[] {
+function toSofDeliveries(file: { hash: string }, deliveries: ItemDeliveriesResponse): SofFileDelivery[] {
     const hash = file.hash;
     const fileDeliveries = deliveries[hash];
     if(!fileDeliveries) {
