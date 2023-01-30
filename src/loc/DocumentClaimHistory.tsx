@@ -78,7 +78,7 @@ export default function DocumentClaimHistory() {
                     collectionLoc={loc}
                     deliveries={ deliveries }
                     checkCertifiedCopyResultResult={ checkCertifiedCopyResult }
-                    files={ loc.files.map(file => ({
+                    files={ loc.files.filter(file => file.hash === hash).map(file => ({
                         ...file,
                         size: BigInt(-1),
                     })) }
