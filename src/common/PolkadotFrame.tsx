@@ -1,6 +1,5 @@
 import Frame from "./Frame";
 
-import './PolkadotFrame.css';
 import { Children } from "./types/Helpers";
 import { ColorTheme } from "./ColorTheme";
 
@@ -21,6 +20,7 @@ export default function PolkadotFrame(props: Props) {
             className={ className }
             title={ props.title }
             colorTheme={ props.colorTheme }
+            border="2px solid #e6007a"
         >
             { props.children }
         </Frame>

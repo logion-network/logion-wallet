@@ -5,7 +5,8 @@ import {
     LEGAL_OFFICER_PATH,
     locDetailsRelativePath,
     locRequestsRelativePath,
-    LOC_REQUESTS_RELATIVE_PATH
+    LOC_REQUESTS_RELATIVE_PATH,
+    LOC_DETAILS_RELATIVE_PATH,
 } from '../RootPaths';
 
 export const HOME_PATH = LEGAL_OFFICER_PATH;
@@ -80,4 +81,12 @@ export function voteLocRelativePath(locId: UUID) {
 
 export function voteLocPath(locId: UUID) {
     return LEGAL_OFFICER_PATH + voteLocRelativePath(locId);
+}
+
+export const DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH = LOC_DETAILS_RELATIVE_PATH + "/claims/:hash";
+export function documentClaimHistoryPath(locId: UUID, hash: string) {
+    return LEGAL_OFFICER_PATH + DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH
+        .replace(":locType", "Collection")
+        .replace(":locId", locId.toString())
+        .replace(":hash", hash);
 }

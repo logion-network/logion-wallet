@@ -173,3 +173,19 @@ export async function getCollectionFile(
     const { locId, collectionItemId, hash } = parameters
     return downloadFile(axios, `/api/collection/${ locId }/files/${ hash }/${ collectionItemId }`);
 }
+
+export interface CollectionDeliveriesResponse {
+    items: CheckLatestDeliveryResponse[];
+}
+
+export async function getAllCollectionDeliveries(
+    axios: AxiosInstance,
+    parameters: {
+        locId: string,
+        hash: string,
+    }
+): Promise<CollectionDeliveriesResponse> {
+    const { locId, hash } = parameters
+    const response = await axios.get(`/api/collection/${ locId }/file-deliveries/${hash}`);
+    return response.data;
+}

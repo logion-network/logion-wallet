@@ -1,7 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CheckFileFrame renders no match 1`] = `
-<PolkadotFrame
+<Frame
+  border="2px solid #3B6CF4"
   className="CheckFileFrame"
 >
   <IconTextRow
@@ -9,7 +10,7 @@ exports[`CheckFileFrame renders no match 1`] = `
       <Icon
         icon={
           Object {
-            "id": "polkadot_doc_check",
+            "id": "doc_check",
           }
         }
         width="45px"
@@ -38,10 +39,11 @@ exports[`CheckFileFrame renders no match 1`] = `
         </p>
         <FileHasher
           buttonText="Check a document"
+          onFileSelected={[Function]}
           onHash={[Function]}
         />
       </React.Fragment>
     }
   />
-</PolkadotFrame>
+</Frame>
 `;

@@ -11,3 +11,13 @@
 .LocItemDetails .linked-loc .label,.LocItemDetails .linked-loc .value {
     line-height: 32px;
 }
+
+.LocItemDetails.claim {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.LocItemDetails.claim > div {
+    text-align: center;
+}

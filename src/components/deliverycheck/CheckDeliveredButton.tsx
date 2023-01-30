@@ -1,4 +1,4 @@
-import { CollectionItem, CheckCertifiedCopyResult, CheckResultType } from "@logion/client";
+import { CheckCertifiedCopyResult, CheckResultType } from "@logion/client";
 import { useCallback, useEffect, useState } from "react";
 
 import FileHasher, { DocumentHash } from "../filehasher/FileHasher";
@@ -22,9 +22,10 @@ export function checkResultTypeColor(type: CheckResultType): string {
 }
 
 export interface Props {
-    item: CollectionItem;
+    checkCertifiedCopy: (hash: string) => Promise<CheckCertifiedCopyResult>;
     onChecked: (result: CheckCertifiedCopyResult) => void;
     onChecking: () => void;
+    buttonText: string;
 }
 
 export default function CheckDeliveredButton(props: Props) {
@@ -35,7 +36,7 @@ export default function CheckDeliveredButton(props: Props) {
         if(hash && !checked) {
             setChecked(true);
             (async function() {
-                const result = await props.item.checkCertifiedCopy(hash.hash);
+                const result = await props.checkCertifiedCopy(hash.hash);
                 props.onChecked(result);
             })();
         }
@@ -53,7 +54,7 @@ export default function CheckDeliveredButton(props: Props) {
             <FileHasher
                 onFileSelected={ onFileSelected }
                 onHash={ setHash }
-                buttonText={ <span><Icon icon={{ id: "search" }} /> Check NFT Asset</span> }
+                buttonText={ <span><Icon icon={{ id: "search" }} /> {props.buttonText}</span> }
             />
         </div>
     );

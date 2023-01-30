@@ -165,6 +165,10 @@ exports[`renders 1`] = `
     path="/votes/loc/:locId"
   />
   <Route
+    element={<GuardianDocumentClaimHistory />}
+    path="/loc/:locType/:locId/claims/:hash"
+  />
+  <Route
     element={<Account />}
     path=""
   />

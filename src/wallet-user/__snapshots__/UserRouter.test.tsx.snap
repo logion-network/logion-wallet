@@ -207,5 +207,9 @@ exports[`renders 1`] = `
     }
     path="/idenfy"
   />
+  <Route
+    element={<UserDocumentClaimHistory />}
+    path="/loc/:locType/:locId/claims/:hash"
+  />
 </Routes>
 `;

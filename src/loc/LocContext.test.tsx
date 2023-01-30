@@ -321,6 +321,7 @@ function givenDraftItems() {
         nature: "Some nature",
         published: false,
         restrictedDelivery: false,
+        contentType: "text/plain",
     })
     _locData.links.push({
         addedOn: "",

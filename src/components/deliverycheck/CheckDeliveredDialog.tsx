@@ -52,9 +52,10 @@ export default function CheckDeliveredDialog(props: Props) {
                         current rightful NFT owner and/or is not the currently active version.</p>
                     <p>Important: the file you submit is NOT uploaded to a server as the test is done by your browser.</p>
                     <CheckDeliveredButton
-                        item={ props.item }
+                        checkCertifiedCopy={hash => props.item.checkCertifiedCopy(hash)}
                         onChecking={ onChecking }
                         onChecked={ onChecked }
+                        buttonText="Check NFT Asset"
                     />
                 </Dialog>
             </Col>

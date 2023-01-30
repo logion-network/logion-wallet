@@ -246,6 +246,7 @@ function givenFileItem(request: LocData, status: LocItemStatus): LocItem[] {
         hash: "0xfb45e95061306e90fd154272ba3b4d67bb6d295feeccdc3a34572995f08e268a",
         published: status === "PUBLISHED",
         restrictedDelivery: false,
+        contentType: "text/plain",
     });
     return [{
         name: "Name",

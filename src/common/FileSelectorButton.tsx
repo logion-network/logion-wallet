@@ -36,7 +36,7 @@ export default function FileSelectorButton(props: Props) {
     return (
         <div className={ className }>
             <Form.Control value={ fileName } readOnly />
-            <Button onClick={ () => fileSelector.current?.click() }>
+            <Button onClick={ () => fileSelector.current?.click() } disabled={ props.disabled }>
                 { props.buttonText ? props.buttonText : "Upload"}
             </Button>
             <Form.Control

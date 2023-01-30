@@ -46,6 +46,7 @@ exports[`ItemFiles renders with delivery  1`] = `
         Object {
           "detailsExpanded": [Function],
           "header": "# of claim(s)",
+          "hideExpand": [Function],
           "render": [Function],
           "renderDetails": [Function],
           "width": "150px",
@@ -116,6 +117,7 @@ exports[`ItemFiles renders with empty deliveries 1`] = `
         Object {
           "detailsExpanded": [Function],
           "header": "# of claim(s)",
+          "hideExpand": [Function],
           "render": [Function],
           "renderDetails": [Function],
           "width": "150px",
@@ -186,6 +188,7 @@ exports[`ItemFiles renders with undefined deliveries 1`] = `
         Object {
           "detailsExpanded": [Function],
           "header": "# of claim(s)",
+          "hideExpand": [Function],
           "render": [Function],
           "renderDetails": undefined,
           "width": "150px",

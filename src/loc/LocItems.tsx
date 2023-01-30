@@ -86,7 +86,7 @@ export function LocItems(props: LocItemsProps) {
         return (
             <>
                 { locItem.type === 'Data' && <LocPublicDataDetails item={ locItem } /> }
-                { locItem.type === 'Document' && <LocPrivateFileDetails item={ locItem } /> }
+                { locItem.type === 'Document' && <LocPrivateFileDetails item={ locItem } viewer={ props.viewer } /> }
                 { locItem.type === 'Linked LOC' && <LocLinkDetails item={ locItem } /> }
             </>
         )
