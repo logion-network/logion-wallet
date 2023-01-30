@@ -7,7 +7,7 @@ export default function VTPSelectionButton() {
     const navigate = useNavigate();
     return (
         <Button id="NominateButton" onClick={ () => { navigate("./vtp")} }>
-            <Icon icon={ { id: "vtp" } } />
+            <Icon icon={ { id: "vtp" } } height="25px"/>
             Verified Third Party
         </Button>
     )

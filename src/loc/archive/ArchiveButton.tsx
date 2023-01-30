@@ -53,7 +53,7 @@ export default function ArchiveButton() {
     return (
         <>
             <Button className="ArchiveButton" onClick={ () => setStatus('Selected') }>
-                <Icon icon={ { id: "backup" } } height="22px" />
+                <Icon icon={ { id: "backup" } } height="23px" />
                 Local Backup
             </Button>
             <Dialog

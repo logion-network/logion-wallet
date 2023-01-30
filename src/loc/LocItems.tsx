@@ -144,7 +144,7 @@ export function LocItems(props: LocItemsProps) {
         let columns: Column<LocItem>[] = [
             {
                 header: "Name",
-                render: locItem => <Cell content={ locItem.name } />,
+                render: locItem => <Cell content={ locItem.name } overflowing tooltipId={`${loc.id}-name-tooltip`}/>,
                 renderDetails: locItem => renderDetails(locItem),
                 detailsExpanded: locItem => locItem.newItem,
                 align: "left",
@@ -179,10 +179,7 @@ export function LocItems(props: LocItemsProps) {
                         />
                     }
                     </> } />,
-                width: width({
-                    onSmallScreen: '145px',
-                    otherwise: '160px'
-                }),
+                width: "160px",
                 align: "left"
             },
             {
@@ -195,7 +192,7 @@ export function LocItems(props: LocItemsProps) {
             columns.push({
                 header: "Restricted Delivery?",
                 render: locItem => locItem.type === "Document" ? <RestrictedDeliveryCell hash={ locItem.value }/> : null,
-                width: "150px",
+                width: "130px",
             });
         }
 

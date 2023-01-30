@@ -126,10 +126,17 @@ exports[`LOLocItems renders with single draft item 1`] = `
             }
           >
             <div
-              className="regular-cell"
+              className="regular-cell overflowing"
               style={Object {}}
             >
-              Name
+              <span
+                onBlur={[Function]}
+                onFocus={[Function]}
+                onMouseOut={[Function]}
+                onMouseOver={[Function]}
+              >
+                Name
+              </span>
             </div>
             <div
               className="ShowDetailsButton"
@@ -497,10 +504,17 @@ exports[`UserLocItems renders with single draft item 1`] = `
             }
           >
             <div
-              className="regular-cell"
+              className="regular-cell overflowing"
               style={Object {}}
             >
-              Name
+              <span
+                onBlur={[Function]}
+                onFocus={[Function]}
+                onMouseOut={[Function]}
+                onMouseOver={[Function]}
+              >
+                Name
+              </span>
             </div>
             <div
               className="ShowDetailsButton"

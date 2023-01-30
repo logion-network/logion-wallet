@@ -36,7 +36,7 @@ export default function Nominate() {
                 setStatus('Selected');
                 setShowDismissal(vtp)}
             }>
-                <Icon icon={ { id: "vtp" } } />
+                <Icon icon={ { id: "vtp" } }/>
                 Verified Third Party
                 <Checkbox checked={ vtp } skin="Toggle white" />
             </Button>
