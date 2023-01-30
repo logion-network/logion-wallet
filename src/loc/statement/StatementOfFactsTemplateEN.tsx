@@ -90,34 +90,42 @@ export default function StatementOfFactsTemplateEN(props: Props) {
 
             <h3>1 - Public data</h3>
 
-            <div className="facts">
-                {
-                    props.sofParams.publicItems.map(item =>
-                        <div className="fact-container">
-                            <div>Public description: { item.description }</div>
-                            <div>Content: { item.content }</div>
-                            <div>Timestamp: { item.timestamp }</div>
-                        </div>
-                    )
-                }
-            </div>
+            {
+                props.sofParams.publicItems.map(item =>
+                    <div className="fact-container">
+                        <div>Public description: { item.description }</div>
+                        <div>Content: { item.content }</div>
+                        <div>Timestamp: { item.timestamp }</div>
+                    </div>
+                )
+            }
 
             <h3 className="confidential-title">2 - Confidential documents</h3>
 
             <p>With regard to confidential documents, only the digital fingerprints - made using the HASH / SHA256 technique - have been published on the logion blockchain. Confidential document related files from which digital fingerprints (HASH-SHA256) have been made in this Legal Officer Case are the following:</p>
 
-            <div className="facts">
-                {
-                    props.sofParams.privateItems.map(item =>
-                        <div className="fact-container">
-                            <div>Public description: { item.publicDescription }</div>
-                            <div>Private description: { item.privateDescription }</div>
-                            <div>Hash: { item.hash }</div>
-                            <div>Timestamp: { item.timestamp }</div>
-                        </div>
-                    )
-                }
-            </div>
+            {
+                props.sofParams.privateItems.map(item =>
+                    <div className="fact-container">
+                        <div>Public description: { item.publicDescription }</div>
+                        <div>Private description: { item.privateDescription }</div>
+                        <div>Hash: { item.hash }</div>
+                        <div>Timestamp: { item.timestamp }</div>
+                        {
+                            item.deliveries.length > 0 &&
+                            <div>Claimed copies:</div>
+                        }
+                        {
+                            item.deliveries.map((delivery, deliveryIndex) => (
+                                <>
+                                <div className="large-value">Delivery #{ deliveryIndex + 1 } Copy Hash: { delivery.hash }</div>
+                                <div className="large-value">Delivery #{ deliveryIndex + 1 } Owner: { delivery.owner }</div>
+                                </>
+                            ))
+                        }
+                    </div>
+                )
+            }
 
             {
                 props.sofParams.collectionItem &&
@@ -126,42 +134,44 @@ export default function StatementOfFactsTemplateEN(props: Props) {
 
                 <p>As the Legal Officer Case mentioned in the present document - { props.sofParams.locId } - is a Collection Legal Officer Case, the following informations have been recorded as “Collection Item” by the requester him/herself on the logion infrastrcuture under the scope of the related Collection Legal Officer Case:</p>
 
-                <div className="facts">
-                    <hr/>
-                    <div className="fact-container">
-                        <div>Collection item ID: { props.sofParams.collectionItem.id }</div>
-                        <div>Description: { props.sofParams.collectionItem.description }</div>
-                        <div>Timestamp: { props.sofParams.collectionItem.addedOn }</div>
-                        <div>Restricted delivery: { props.sofParams.collectionItem.restrictedDelivery ? "Yes" : "No" }</div>
+                <hr/>
+                <div><strong>Description</strong></div>
+                <div className="large-value">Collection item ID: { props.sofParams.collectionItem.id }</div>
+                <div>Description: { props.sofParams.collectionItem.description }</div>
+                <div>Timestamp: { props.sofParams.collectionItem.addedOn }</div>
+                <div>Restricted delivery: { props.sofParams.collectionItem.restrictedDelivery ? "Yes" : "No" }</div>
+                {
+                    props.sofParams.collectionItem.token &&
+                    <>
+                    <div>Underlying Token Type: { props.sofParams.collectionItem.token.type }</div>
+                    <div>Underlying Token ID: { props.sofParams.collectionItem.token.id }</div>
+                    </>
+                }
+                {
+                    props.sofParams.collectionItem.files.map((file, index) => (
+                        <>
+                        <div className="section-name"><strong>Underlying asset #{index + 1}</strong></div>
+                        <div>Name: { file.name }</div>
+                        <div>Content Type: { file.contentType }</div>
+                        <div className="large-value">Hash: { file.hash }</div>
+                        <div>Size: { file.size.toString() } bytes</div>
                         {
-                            props.sofParams.collectionItem.token &&
-                            <>
-                            <div>Underlying Token Type: { props.sofParams.collectionItem.token.type }</div>
-                            <div>Underlying Token ID: { props.sofParams.collectionItem.token.id }</div>
-                            </>
+                            file.deliveries.length > 0 &&
+                            <div>Claimed copies:</div>
                         }
                         {
-                            props.sofParams.collectionItem.files.map((file, index) => (
+                            file.deliveries.map((delivery, deliveryIndex) => (
                                 <>
-                                <div>File #{index + 1} Name: { file.name }</div>
-                                <div>File #{index + 1} Content Type: { file.contentType }</div>
-                                <div>File #{index + 1} Hash: { file.hash }</div>
-                                <div>File #{index + 1} Size: { file.size.toString() } bytes</div>
-                                {
-                                    file.deliveries.map((delivery, deliveryIndex) => (
-                                        <>
-                                        <div>File #{index + 1} - Delivery #{ deliveryIndex + 1 } Copy Hash: { delivery.hash }</div>
-                                        <div>File #{index + 1} - Delivery #{ deliveryIndex + 1 } Owner: { delivery.owner }</div>
-                                        </>
-                                    ))
-                                }
+                                <div className="large-value">Delivery #{ deliveryIndex + 1 } Copy Hash: { delivery.hash }</div>
+                                <div className="large-value">Delivery #{ deliveryIndex + 1 } Owner: { delivery.owner }</div>
                                 </>
                             ))
                         }
-                        <SofTermsAndConditionsEN item={ props.sofParams.collectionItem } />
-                    </div>
-                    <hr/>
-                </div>                
+                        </>
+                    ))
+                }
+                <SofTermsAndConditionsEN item={ props.sofParams.collectionItem } />
+                <hr/>
                 </>
             }
 

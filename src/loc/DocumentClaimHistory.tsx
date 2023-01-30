@@ -9,7 +9,7 @@ import ItemFiles from "src/components/itemfiles/ItemFiles";
 import { locDetailsPath } from "src/legal-officer/LegalOfficerPaths";
 import { useLogionChain } from "src/logion-chain";
 import { locDetailsPath as userLocDetailsPath } from "src/wallet-user/UserRouter";
-import { getAllCollectionDeliveries, getFile, ItemDeliveriesResponse } from "./FileModel";
+import { getAllCollectionFileDeliveries, getFile, ItemDeliveriesResponse } from "./FileModel";
 import { LegalOfficerLocContextProvider } from "./LegalOfficerLocContext";
 import { useLocContext } from "./LocContext";
 import LocPane from "./LocPane";
@@ -27,7 +27,7 @@ export default function DocumentClaimHistory() {
     useEffect(() => {
         if(loc && hash && deliveries === undefined) {
             (async function() {
-                const deliveries = await getAllCollectionDeliveries(axiosFactory!(loc?.ownerAddress), { locId: loc.id.toString(), hash });
+                const deliveries = await getAllCollectionFileDeliveries(axiosFactory!(loc?.ownerAddress), { locId: loc.id.toString(), hash });
                 setDeliveries({
                     [hash]: deliveries.deliveries,
                 });

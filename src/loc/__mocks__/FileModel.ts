@@ -1,1 +1,1 @@
-export { getAllDeliveries } from './FileModelMock';
+export { getAllDeliveries, getAllCollectionDeliveries } from './FileModelMock';
