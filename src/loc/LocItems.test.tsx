@@ -247,6 +247,7 @@ function givenFileItem(request: LocData, status: LocItemStatus): LocItem[] {
         published: status === "PUBLISHED",
         restrictedDelivery: false,
         contentType: "text/plain",
+        size: "42",
     });
     return [{
         name: "Name",

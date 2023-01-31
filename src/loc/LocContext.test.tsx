@@ -322,6 +322,7 @@ function givenDraftItems() {
         published: false,
         restrictedDelivery: false,
         contentType: "text/plain",
+        size: "42",
     })
     _locData.links.push({
         addedOn: "",

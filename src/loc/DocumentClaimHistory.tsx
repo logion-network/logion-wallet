@@ -80,7 +80,7 @@ export default function DocumentClaimHistory() {
                     checkCertifiedCopyResultResult={ checkCertifiedCopyResult }
                     files={ loc.files.filter(file => file.hash === hash).map(file => ({
                         ...file,
-                        size: BigInt(-1),
+                        size: BigInt(file.size),
                     })) }
                     downloader={(axios, hash) => getFile(axios, {
                         hash,
