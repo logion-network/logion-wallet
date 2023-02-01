@@ -1,4 +1,4 @@
-import { PrefixedNumber } from "@logion/node-api/dist/numbers.js";
+import { PrefixedNumber } from "@logion/node-api";
 import AmountFormat from "./AmountFormat";
 import { Cell } from "./Table";
 

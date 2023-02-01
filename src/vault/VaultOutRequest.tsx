@@ -1,8 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
-import { SYMBOL } from "@logion/node-api/dist/Balances.js";
-import { NONE, PrefixedNumber } from "@logion/node-api/dist/numbers.js";
+import { SYMBOL, NONE, PrefixedNumber } from "@logion/node-api";
 import { LegalOfficer, VaultState } from "@logion/client";
 
 import AmountControl, { Amount, validateAmount } from "../common/AmountControl";

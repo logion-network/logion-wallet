@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { prefixedLogBalance, SYMBOL } from "@logion/node-api/dist/Balances.js";
+import { prefixedLogBalance, SYMBOL } from "@logion/node-api";
 import { VaultState, VaultTransferRequest } from "@logion/client";
 
 import { useLogionChain } from "../logion-chain";

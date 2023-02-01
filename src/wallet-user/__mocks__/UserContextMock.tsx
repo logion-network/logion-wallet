@@ -17,7 +17,7 @@ import {
     ClosedCollectionLoc,
     OpenLoc, VoidedCollectionLoc, VoidedLoc
 } from "@logion/client";
-import { LocType } from "@logion/node-api/dist/Types.js";
+import { LocType } from "@logion/node-api";
 
 export let createTokenRequest = () => null;
 

@@ -1,4 +1,4 @@
-import { LocType } from "@logion/node-api/dist/Types.js";
+import { LocType } from "@logion/node-api";
 
 import Table, { Cell, DateTimeCell, EmptyTableMessage } from '../../common/Table';
 import LocStatusCell from '../../common/LocStatusCell';

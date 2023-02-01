@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { render, waitFor, screen } from '@testing-library/react';
 import { clickByName } from '../tests';
 import ClaimAssetButton, { ClaimedFile, ClaimedFileType, Props } from "./ClaimAssetButton";
-import { UUID } from "@logion/node-api/dist/UUID.js";
+import { UUID } from "@logion/node-api";
 import { DEFAULT_LEGAL_OFFICER } from "../common/TestData";
 import { setMetamaskEnabled } from '../__mocks__/PolkadotExtensionDappMock';
 import { axiosMock, resetAxiosMock } from 'src/logion-chain/__mocks__/LogionChainMock';

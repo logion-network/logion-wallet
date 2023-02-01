@@ -4,9 +4,9 @@ import {
     createPolkadotTransactionLoc,
     createPolkadotIdentityLoc,
     createLogionTransactionLoc,
-    createLogionIdentityLoc
-} from '@logion/node-api/dist/LogionLoc.js';
-import { ChainTime } from '@logion/node-api/dist/ChainTime.js';
+    createLogionIdentityLoc,
+    ChainTime
+} from '@logion/node-api';
 import { LocData } from '@logion/client';
 
 import { useLogionChain } from '../../logion-chain';

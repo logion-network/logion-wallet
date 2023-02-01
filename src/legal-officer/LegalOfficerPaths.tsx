@@ -1,5 +1,4 @@
-import { LocType } from '@logion/node-api/dist/Types.js';
-import { UUID } from '@logion/node-api/dist/UUID.js';
+import { LocType, UUID } from '@logion/node-api';
 
 import {
     LEGAL_OFFICER_PATH,

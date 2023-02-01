@@ -1,9 +1,7 @@
 jest.mock("../logion-chain");
-jest.unmock("@logion/node-api/dist/Balances.js");
 
 import { shallowRender } from '../tests';
-import { getCoin } from "@logion/node-api/dist/Balances.js";
-import { PrefixedNumber, MILLI } from '@logion/node-api/dist/numbers.js';
+import { getCoin, PrefixedNumber, MILLI } from '@logion/node-api';
 
 import WalletGauge from './WalletGauge';
 

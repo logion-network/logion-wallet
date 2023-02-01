@@ -1,8 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { Dropdown } from "react-bootstrap";
-import { UUID } from "@logion/node-api/dist/UUID.js";
-import { LegalOfficerCase } from "@logion/node-api/dist/Types.js";
-import { getLegalOfficerCase } from "@logion/node-api";
+import { UUID, LegalOfficerCase, getLegalOfficerCase } from "@logion/node-api";
 import { CollectionItem, LegalOfficer } from "@logion/client";
 
 import { locDetailsPath, STATEMENT_OF_FACTS_PATH } from "../../legal-officer/LegalOfficerPaths";

@@ -5,12 +5,11 @@ jest.mock("./UserLocContext");
 jest.mock("./FileModel");
 jest.mock("./LocContext");
 jest.mock("src/legal-officer/LegalOfficerContext");
-jest.unmock("@logion/node-api/dist/LogionLoc.js");
 
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { LocData } from "@logion/client";
-import { UUID } from "@logion/node-api/dist/UUID.js";
+import { UUID } from "@logion/node-api";
 
 import { LOCollectionLocItemChecker, UserCollectionLocItemChecker, Props } from "./CollectionLocItemChecker";
 import { DEFAULT_LEGAL_OFFICER } from "src/common/TestData";

@@ -1,4 +1,4 @@
-import { UUID } from "@logion/node-api/dist/UUID.js";
+import { UUID } from "@logion/node-api";
 import { render, screen, waitFor } from "@testing-library/react";
 
 import { shallowRender } from "../tests";

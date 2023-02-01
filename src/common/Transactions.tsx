@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Tooltip from 'react-bootstrap/Tooltip';
 import { Transaction } from '@logion/client/dist/TransactionClient.js';
-import { Coin, CoinBalance } from '@logion/node-api/dist/Balances.js';
+import { Coin, CoinBalance } from '@logion/node-api';
 
 import { FullWidthPane } from './Dashboard';
 import Frame from './Frame';

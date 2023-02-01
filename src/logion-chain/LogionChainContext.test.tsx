@@ -1,6 +1,5 @@
 jest.mock('@polkadot/api');
 jest.mock('@logion/extension');
-jest.mock('@logion/node-api');
 jest.mock('@logion/client');
 
 import { useLogionChain, LogionChainContextProvider } from './LogionChainContext';

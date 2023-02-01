@@ -1,5 +1,5 @@
 import { LocData, CollectionItem } from "@logion/client";
-import { UUID } from "@logion/node-api/dist/UUID.js";
+import { UUID } from "@logion/node-api";
 
 import { LocItem } from "../types";
 

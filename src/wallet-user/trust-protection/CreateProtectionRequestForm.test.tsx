@@ -1,5 +1,3 @@
-jest.mock('@logion/node-api/dist/Accounts.js');
-jest.mock('@logion/node-api/dist/Recovery.js');
 jest.mock('../../logion-chain/Signature');
 jest.mock('../UserContext');
 jest.mock('../../logion-chain');

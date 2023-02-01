@@ -1,4 +1,4 @@
-import { LocType } from "@logion/node-api/dist/Types.js";
+import { LocType } from "@logion/node-api";
 import { useMemo } from "react";
 
 import IdentityLocRequestDetails from "../../components/identity/IdentityLocRequestDetails";

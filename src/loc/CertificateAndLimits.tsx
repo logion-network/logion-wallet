@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { LocData } from "@logion/client";
-import { ChainTime } from '@logion/node-api/dist/ChainTime.js';
+import { ChainTime } from '@logion/node-api';
 
 import Button from '../common/Button';
 import CopyPasteButton from '../common/CopyPasteButton';

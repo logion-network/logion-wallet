@@ -1,7 +1,7 @@
 jest.mock('../../common/CommonContext');
 jest.mock('../LegalOfficerContext');
 
-import { IdentityLocType } from "@logion/node-api/dist/Types.js";
+import { IdentityLocType } from "@logion/node-api";
 import { shallowRender, render } from '../../tests';
 import OpenedLocs from './OpenedLocs';
 import { setOpenedLocRequests, setOpenedIdentityLocsByType } from "../__mocks__/LegalOfficerContextMock";

@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { LocRequest } from '@logion/client';
-import { UUID } from '@logion/node-api/dist/UUID.js';
-import { createLogionIdentityLoc, createLogionTransactionLoc, createPolkadotIdentityLoc, createPolkadotTransactionLoc } from '@logion/node-api/dist/LogionLoc.js';
+import { UUID, createLogionIdentityLoc, createLogionTransactionLoc, createPolkadotIdentityLoc, createPolkadotTransactionLoc } from '@logion/node-api';
 
 import { useLogionChain } from '../logion-chain';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../ExtrinsicSubmitter';

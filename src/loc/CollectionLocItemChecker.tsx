@@ -2,7 +2,7 @@ import { AxiosInstance } from "axios";
 import { useState, useCallback, useEffect, useMemo } from "react";
 import { Form } from "react-bootstrap";
 import { ClosedCollectionLoc, CollectionItem, LocData } from "@logion/client";
-import { getCollectionSize } from "@logion/node-api/dist/LogionLoc.js";
+import { getCollectionSize } from "@logion/node-api";
 
 import { useLogionChain } from "../logion-chain";
 import PolkadotFrame from "../common/PolkadotFrame";

@@ -1,8 +1,7 @@
 import { useState, useCallback } from 'react';
 import { Form, Spinner, InputGroup, DropdownButton, Dropdown } from 'react-bootstrap';
 import { BalanceState } from '@logion/client/dist/Balance.js';
-import { ATTO, FEMTO, MICRO, MILLI, NANO, NONE, PICO, PrefixedNumber } from '@logion/node-api/dist/numbers.js';
-import { Coin, SYMBOL } from '@logion/node-api/dist/Balances.js';
+import { ATTO, FEMTO, MICRO, MILLI, NANO, NONE, PICO, PrefixedNumber, Coin, SYMBOL } from '@logion/node-api';
 
 import { useLogionChain } from '../logion-chain';
 import ClientExtrinsicSubmitter, { Call, CallCallback } from '../ClientExtrinsicSubmitter';

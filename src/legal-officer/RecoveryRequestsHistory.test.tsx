@@ -1,5 +1,4 @@
 jest.mock('./LegalOfficerContext');
-jest.mock('@logion/node-api');
 jest.mock('./Model');
 
 import { shallowRender } from '../tests';

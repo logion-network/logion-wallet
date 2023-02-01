@@ -1,4 +1,4 @@
-import { LegalOfficerCase } from '@logion/node-api/dist/Types.js';
+import { LegalOfficerCase } from '@logion/node-api';
 
 import { DEFAULT_LEGAL_OFFICER } from '../../../../common/TestData';
 import { TEST_WALLET_USER } from '../../../../wallet-user/TestData';
