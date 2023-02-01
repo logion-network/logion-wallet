@@ -1,7 +1,6 @@
 import { useCallback, useState } from "react";
 import { Form } from "react-bootstrap";
-import { getLegalOfficerCase } from "@logion/node-api";
-import { UUID } from "@logion/node-api/dist/UUID.js";
+import { getLegalOfficerCase, UUID } from "@logion/node-api";
 
 import Button from "../common/Button";
 import { useCommonContext } from "../common/CommonContext";

@@ -1,8 +1,7 @@
 import { AxiosInstance } from "axios";
 import { useCallback, useState } from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import { UUID } from "@logion/node-api/dist/UUID.js";
-import { LegalOfficerCase } from '@logion/node-api/dist/Types.js';
+import { UUID, LegalOfficerCase } from '@logion/node-api';
 import { LocData, OpenLoc as RealOpenLoc } from "@logion/client";
 import { LogionClient } from '@logion/client/dist/LogionClient.js';
 import { PublicApi, EditableRequest as RealEditableRequest, LocRequestState as RealLocRequestState } from "@logion/client";
@@ -19,7 +18,6 @@ import { addLink, closeLoc, deleteLink, publishFile, publishLink, publishMetadat
 import { useLogionChain } from "src/logion-chain";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
 
-jest.mock("@logion/node-api/dist/LogionLoc.js");
 jest.mock("../logion-chain/Signature");
 jest.mock("../logion-chain");
 jest.mock("../common/CommonContext");

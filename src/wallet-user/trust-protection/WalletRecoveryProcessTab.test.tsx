@@ -1,7 +1,6 @@
 import userEvent from '@testing-library/user-event';
 import { render, screen, waitFor, getByRole } from '@testing-library/react';
-import { PrefixedNumber, MILLI } from "@logion/node-api/dist/numbers.js";
-import { CoinBalance } from "@logion/node-api/dist/Balances.js";
+import { PrefixedNumber, MILLI, CoinBalance } from "@logion/node-api";
 
 import { mutateRecoveredBalanceState, setProtectionState, setRecoveredBalanceState } from '../__mocks__/UserContextMock';
 

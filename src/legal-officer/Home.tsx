@@ -1,6 +1,6 @@
 import { Col, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
-import { prefixedLogBalance, SYMBOL } from '@logion/node-api/dist/Balances.js';
+import { prefixedLogBalance, SYMBOL } from '@logion/node-api';
 import { useLegalOfficerContext } from "./LegalOfficerContext";
 import { useCommonContext } from "../common/CommonContext";
 import { FullWidthPane } from '../common/Dashboard';

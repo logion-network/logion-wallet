@@ -1,5 +1,4 @@
 jest.mock('../logion-chain/Signature');
-jest.mock("@logion/node-api/dist/Recovery.js");
 jest.mock("../common/CommonContext");
 jest.mock("../loc/Model");
 jest.mock("./Model");

@@ -6,7 +6,7 @@ import { FileInfo, openFiles } from "../../common/ViewFileButton";
 import { LocItem } from "../types";
 import { AxiosInstance } from "axios";
 import { getFile, getJsonLoc } from "../FileModel";
-import { UUID } from "@logion/node-api/dist/UUID.js";
+import { UUID } from "@logion/node-api";
 import Dialog from "../../common/Dialog";
 import Table, { EmptyTableMessage } from "../../common/Table";
 import Checkbox from "../../components/toggle/Checkbox";

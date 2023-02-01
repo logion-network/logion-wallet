@@ -1,6 +1,5 @@
 jest.mock("react-router");
 jest.mock("../common/CommonContext");
-jest.mock("@logion/node-api/dist/Balances.js");
 jest.mock("../logion-chain");
 jest.mock('./LegalOfficerContext');
 

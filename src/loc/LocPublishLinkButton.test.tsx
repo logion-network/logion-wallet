@@ -1,5 +1,5 @@
 jest.mock("./LocContext");
-import { UUID } from "@logion/node-api/dist/UUID.js";
+import { UUID } from "@logion/node-api";
 
 import { LocItem } from "./types";
 import { shallowRender } from "../tests";

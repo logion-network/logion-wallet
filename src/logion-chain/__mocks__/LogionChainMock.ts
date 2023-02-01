@@ -1,6 +1,6 @@
 import { DateTime } from "luxon";
 import BN from 'bn.js'
-import { UUID } from "@logion/node-api/dist/UUID.js";
+import { UUID } from "@logion/node-api";
 
 import { mockCompact } from "../../__mocks__/PolkadotApiMock";
 import { LegalOfficer } from '@logion/client';

@@ -1,13 +1,12 @@
 jest.mock('../../common/CommonContext');
 jest.mock('../LegalOfficerContext');
 jest.mock('../../logion-chain');
-jest.mock('@logion/node-api/dist/LogionLoc.js');
 jest.mock('../../logion-chain/Signature');
 jest.mock('../../loc/Model');
 
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { UUID } from '@logion/node-api/dist/UUID.js';
+import { UUID } from '@logion/node-api';
 import { LocData } from '@logion/client';
 
 import { shallowRender, typeByLabel } from '../../tests';

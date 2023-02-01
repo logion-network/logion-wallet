@@ -14,7 +14,6 @@ jest.mock("../legal-officer/LegalOfficerContext");
 jest.mock("../legal-officer/client");
 jest.mock("../logion-chain");
 jest.mock("../logion-chain/Signature");
-jest.mock('@logion/node-api/dist/LogionLoc.js');
 
 describe("VoidLocReplaceNewButton", () => {
 

@@ -1,4 +1,4 @@
-import { LocType } from "@logion/node-api/dist/Types.js";
+import { LocType } from "@logion/node-api";
 import { useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 

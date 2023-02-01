@@ -1,5 +1,4 @@
 import { BN } from "bn.js";
-import { UUID } from "@logion/node-api/dist/UUID.js";
 
 export class WsProvider {
     constructor(socket: string) {
@@ -51,7 +50,7 @@ export const DEFAULT_LOC = {
     ],
     links: [
         {
-            id: new UUID("90fcde7e-a255-404e-8b15-32963a4e64c0"),
+            id: "192721802929298783694726613018147185856", // 90fcde7e-a255-404e-8b15-32963a4e64c0
             nature: "file-nature"
         }
     ],
@@ -158,7 +157,7 @@ export class ApiPromise {
                     links: {
                         toArray: () => DEFAULT_LOC.links.map(link => ({
                             id: {
-                                toString: () => link.id.toDecimalString()
+                                toString: () => link.id,
                             },
                             nature: {
                                 toUtf8: () => link.nature

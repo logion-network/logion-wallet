@@ -1,6 +1,5 @@
 import { Transaction } from "@logion/client/dist/TransactionClient.js";
-import { prefixedLogBalance } from "@logion/node-api/dist/Balances.js";
-import { NONE, PrefixedNumber } from "@logion/node-api/dist/numbers.js";
+import { prefixedLogBalance, NONE, PrefixedNumber } from "@logion/node-api";
 
 import { GREEN, RED } from "./ColorTheme";
 import Icon from "./Icon";

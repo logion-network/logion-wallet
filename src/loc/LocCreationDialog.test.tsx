@@ -1,5 +1,5 @@
 import { render, screen, waitFor } from "@testing-library/react";
-import { LocType } from "@logion/node-api/dist/Types.js";
+import { LocType } from "@logion/node-api";
 
 import { LocRequestFragment } from "../common/types/ModelTypes";
 import { finalizeSubmission } from "../logion-chain/__mocks__/SignatureMock";
@@ -8,7 +8,6 @@ import { TEST_WALLET_USER } from "../wallet-user/TestData";
 
 import LocCreationDialog from "./LocCreationDialog";
 
-jest.mock("@logion/node-api/dist/LogionLoc.js");
 jest.mock("../logion-chain/Signature");
 jest.mock("../common/CommonContext");
 jest.mock("../common/Model");

@@ -20,7 +20,7 @@ import { useCommonContext } from '../common/CommonContext';
 import { LIGHT_MODE } from './Types';
 import { useLogionChain } from '../logion-chain';
 import { VaultApi } from '../vault/VaultApi';
-import { LocType, IdentityLocType } from "@logion/node-api/dist/Types.js";
+import { LocType, IdentityLocType } from "@logion/node-api";
 import { DateTime } from "luxon";
 import { getLegalOfficerData, LegalOfficerData } from './LegalOfficerData';
 import { fetchAllLocsParams } from 'src/loc/LegalOfficerLocContext';

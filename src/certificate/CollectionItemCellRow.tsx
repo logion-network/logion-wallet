@@ -1,4 +1,5 @@
 import { CheckHashResult, CollectionItem } from "@logion/client";
+import { UUID } from "@logion/node-api";
 
 import CertificateCell from "./CertificateCell";
 import { Row } from "../common/Grid";
@@ -7,7 +8,6 @@ import './CollectionItemCellRow.css';
 import { Col } from "react-bootstrap";
 import MenuIcon from "src/common/MenuIcon";
 import ClaimAssetButton, { walletType } from "./ClaimAssetButton";
-import { UUID } from "@logion/node-api/dist/UUID.js";
 import { customClassName } from "src/common/types/Helpers";
 import { CertificateItemDetails } from "src/components/certificateitemdetails/CertificateItemDetails";
 

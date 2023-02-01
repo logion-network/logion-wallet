@@ -1,4 +1,4 @@
-import { UUID } from "@logion/node-api/dist/UUID.js";
+import { UUID } from "@logion/node-api";
 import { LocData } from "@logion/client";
 import { render as renderTesting, waitFor, screen } from "@testing-library/react";
 

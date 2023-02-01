@@ -1,7 +1,6 @@
 import { LegalOfficer, PostalAddress, UserIdentity } from '@logion/client';
 import { Transaction } from '@logion/client/dist/TransactionClient.js';
-import { Coin, CoinBalance, SYMBOL } from '@logion/node-api/dist/Balances.js';
-import { PrefixedNumber, ATTO } from '@logion/node-api/dist/numbers.js';
+import { Coin, CoinBalance, SYMBOL, PrefixedNumber, ATTO } from '@logion/node-api';
 
 import { ColorTheme, rgbaToHex } from './ColorTheme';
 

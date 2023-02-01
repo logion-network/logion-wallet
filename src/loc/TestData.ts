@@ -1,5 +1,4 @@
-import { LegalOfficerCase } from "@logion/node-api/dist/Types.js";
-import { UUID } from "@logion/node-api/dist/UUID.js";
+import { LegalOfficerCase, UUID } from "@logion/node-api";
 import { LocData } from "@logion/client";
 
 export function buildLocRequest(locId: UUID, loc: LegalOfficerCase): LocData {

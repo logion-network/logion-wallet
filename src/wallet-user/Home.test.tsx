@@ -1,5 +1,4 @@
 jest.mock("react-router");
-jest.mock("@logion/node-api/dist/Balances.js");
 jest.mock("../common/CommonContext");
 
 import { BalanceState } from "@logion/client/dist/Balance.js";
