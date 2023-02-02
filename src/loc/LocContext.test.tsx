@@ -92,7 +92,8 @@ function givenRequest<T extends LocRequestState>(locId: string, loc: LegalOffice
         _linkedLocState = {
             data: () => _linkedLocData,
             locsState: () => locsState,
-        } as unknown as RealOpenLoc;
+            refresh: () => Promise.resolve(_linkedLocData),
+        } as unknown as OpenLoc;
     }
 
     locsState.findById = (argLocId: UUID) => {
