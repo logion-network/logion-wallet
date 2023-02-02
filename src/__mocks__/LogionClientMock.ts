@@ -82,6 +82,9 @@ export class LocRequestState {
     data: any;
     locsState: any;
     refresh: (() => Promise<LocRequestState>) | undefined;
+    getCurrentState() {
+        return this;
+    }
 }
 
 export class ClosedCollectionLoc extends LocRequestState {

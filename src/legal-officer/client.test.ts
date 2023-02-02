@@ -1,7 +1,7 @@
 import { EditableRequest, LogionClient, OpenLoc, VerifiedThirdParty, ClosedLoc, Signer, SuccessfulSubmission } from "@logion/client";
 import { UUID } from "@logion/node-api";
 import { AxiosInstance } from "axios";
-import { DEFAULT_ADDRESS, DEFAULT_LEGAL_OFFICER } from "src/common/TestData";
+import { DEFAULT_LEGAL_OFFICER } from "src/common/TestData";
 import { ApiPromise } from "src/__mocks__/PolkadotApiMock";
 import { addLink, getVerifiedThirdPartySelections, requestVote } from "./client";
 
@@ -26,6 +26,7 @@ describe("Legal Officer client", () => {
             locsState: () => ({
                 client,
             }),
+            getCurrentState: () => locState,
         } as unknown as EditableRequest;
 
         const nature = "Some link";
@@ -83,6 +84,7 @@ describe("Legal Officer client", () => {
             locsState: () => ({
                 client,
             }),
+            getCurrentState: () => locState,
         } as unknown as OpenLoc;
 
         const verifiedThirdParties: VerifiedThirdParty[] = await getVerifiedThirdPartySelections({ locState });
@@ -107,6 +109,8 @@ describe("Legal Officer client", () => {
 
         const client = {
             nodeApi,
+            legalOfficers: [],
+            buildAxios: () => {},
         } as unknown as LogionClient;
 
         const locId = new UUID("0e16421a-2550-4be5-a6a8-1ab2239b7dc4");
@@ -118,6 +122,7 @@ describe("Legal Officer client", () => {
             locsState: () => ({
                 client,
             }),
+            getCurrentState: () => locState,
         } as unknown as ClosedLoc;
 
         const result = {
