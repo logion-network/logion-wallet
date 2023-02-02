@@ -6,7 +6,7 @@ import { UUID } from "@logion/node-api";
 import { DEFAULT_LEGAL_OFFICER } from "../common/TestData";
 import { setMetamaskEnabled } from '../__mocks__/PolkadotExtensionDappMock';
 import { axiosMock, resetAxiosMock } from 'src/logion-chain/__mocks__/LogionChainMock';
-import { It, Mock } from 'moq.ts';
+import { Mock } from 'moq.ts';
 import { CollectionItem, UploadableItemFile } from '@logion/client';
 
 jest.mock('../logion-chain');

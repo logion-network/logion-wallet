@@ -1569,16 +1569,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@crossmint/embed@npm:^0.0.2":
-  version: 0.0.2
-  resolution: "@crossmint/embed@npm:0.0.2"
+"@crossmint/connect@npm:^0.0.8":
+  version: 0.0.8
+  resolution: "@crossmint/connect@npm:0.0.8"
   dependencies:
     "@solana/wallet-adapter-base": ^0.9.7
     "@solana/web3.js": ^1.47.3
     ethers: ^5.6.9
     react: ^18.2.0
     store2: ^2.13.2
-  checksum: a265f8aaaf237df4e723d74fb909355f00bcfc583489f7bee0ce69e5925f51cc242ef3e05372b14faa46025b44c3cc380f78798e254a5351dd2170da402f7c3a
+  checksum: 99f30dc6947c0780cfe1abc185ece65b16d09fd583c77f8edd85e47a47549237c74611bb5563fcfb3858022d2703e529af47aaabc3396955818ed2090773fcb8
   languageName: node
   linkType: hard
 
@@ -2996,13 +2996,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@logion/crossmint@npm:^0.1.8-1":
-  version: 0.1.8-1
-  resolution: "@logion/crossmint@npm:0.1.8-1"
+"@logion/client@npm:^0.20.0-6":
+  version: 0.20.0-6
+  resolution: "@logion/client@npm:0.20.0-6"
   dependencies:
-    "@crossmint/embed": ^0.0.2
-    "@logion/client": ^0.20.0-1
-  checksum: ee25d7386a0ad8ed78d5fc8f0a4fe72e8e5608f6fc131c1b635feafbb53023211258cbb588101f6bf483a894004392a8c676f1e7ff30a700ed36e59cc2ebbbf6
+    "@logion/node-api": ^0.10.1-2
+    axios: ^0.27.2
+    luxon: ^3.0.1
+    mime-db: ^1.52.0
+  checksum: 7bf9a25bfe225c8d6ff2ad4b34247c3a0cf5ee3f3d3283534e36fb02008ff14481bcee379a85e4fbd58690b4bea36679d5a8c5bb392d68a1ac6e3ee27f413975
+  languageName: node
+  linkType: hard
+
+"@logion/crossmint@npm:^0.1.8-2":
+  version: 0.1.8-2
+  resolution: "@logion/crossmint@npm:0.1.8-2"
+  dependencies:
+    "@crossmint/connect": ^0.0.8
+    "@logion/client": ^0.20.0-6
+  checksum: 6fe8d6e1d53ae25fc6c7465d1ceefbed8bc29788549a60f4263e3d5590c21d1ec79da47dc7aa649146a05862ac6f1084a1e05e81e0794efe363b88756132d185
   languageName: node
   linkType: hard
 
@@ -12712,7 +12724,7 @@ __metadata:
     "@babel/preset-react": ^7.18.6
     "@craco/craco": ^6.4.5
     "@creativecommons/cc-assets": ^0.1.0
-    "@logion/crossmint": ^0.1.8-1
+    "@logion/crossmint": ^0.1.8-2
     "@logion/extension": ^0.5.6-1
     "@popperjs/core": ^2.11.6
     "@testing-library/dom": ^8.17.1

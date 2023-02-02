@@ -1,4 +1,4 @@
-import { BlockchainTypes, CrossmintEVMWalletAdapter } from "@crossmint/embed";
+import { BlockchainTypes, CrossmintEVMWalletAdapter } from "@crossmint/connect";
 import { Token, LogionClient, CollectionItem, TokenType } from "@logion/client";
 import { CrossmintSigner } from "@logion/crossmint";
 import { allMetamaskAccounts, enableMetaMask } from "@logion/extension";
