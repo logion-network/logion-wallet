@@ -81,7 +81,9 @@ export class AccountTokens {
 export class LocRequestState {
     data: any;
     locsState: any;
-    refresh: (() => Promise<LocRequestState>) | undefined;
+    async refresh(): Promise<LocRequestState> {
+        return this;
+    }
     getCurrentState() {
         return this;
     }
@@ -109,7 +111,6 @@ export class DraftRequest extends EditableRequest {
 export class OpenLoc extends EditableRequest {
     data: any;
     locsState: any;
-    refresh: (() => Promise<EditableRequest>) | undefined;
     addMetadata: jest.Mock<Promise<EditableRequest>> | undefined;
     deleteMetadata: jest.Mock<Promise<EditableRequest>> | undefined;
     addFile: jest.Mock<Promise<EditableRequest>> | undefined;
