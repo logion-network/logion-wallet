@@ -194,7 +194,7 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for closed
     size="xl"
   >
     <h2>
-      Get developper settings for the requester application
+      Get developer settings for the requester application
     </h2>
     <p>
       Settings available below must be communicated to the developer of the application that will send data using logion API to record it according to the current Collection LOC scope.
@@ -202,11 +202,35 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for closed
     <StaticLabelValue
       label="Documentation"
       value={
-        <NewTabLink
-          href="https://github.com/logion-network/logion-collection-item-submitter#logion-collection-item-submitter"
-        >
-          https://github.com/logion-network/logion-collection-item-submitter
-        </NewTabLink>
+        <ul>
+          <li>
+            <strong>
+              API to logion network:
+            </strong>
+             
+            <NewTabLink
+              href="https://logion-network.github.io/logion-api/"
+            />
+          </li>
+          <li>
+            <strong>
+              Details on Collection items:
+            </strong>
+             
+            <NewTabLink
+              href="https://logion-network.github.io/logion-api/docs/client/loc#collection-item"
+            />
+          </li>
+          <li>
+            <strong>
+              How to import tokens into a collection:
+            </strong>
+             
+            <NewTabLink
+              href="https://github.com/logion-network/logion-solidity/#importing-tokens-into-a-logion-collection"
+            />
+          </li>
+        </ul>
       }
     />
     <StaticLabelValue
@@ -221,14 +245,6 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for closed
       label="Signature will be executed by the following public key"
       value={<p />}
     />
-    <StaticLabelValue
-      label="Extrinsic"
-      value={
-        <p>
-          logionLoc.addCollectionItem(collectionLocId, itemId, itemDescription)
-        </p>
-      }
-    />
     <div
       className="arguments"
     >
@@ -242,18 +258,6 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for closed
           </strong>
            
           31105349912518444897773986398896608162
-        </li>
-        <li>
-          <strong>
-            itemId:
-          </strong>
-           a "0x" prefixed HEX string representation of 32 bytes uniquely identifying the item in this collection. For instance, the identifier may be a SHA256 hash.
-        </li>
-        <li>
-          <strong>
-            itemDescription:
-          </strong>
-           a UTF-8 encoded string of at most 4096 bytes
         </li>
       </ul>
     </div>
@@ -507,7 +511,7 @@ exports[`CertificateAndLimits renders certificate, limits and settings button fo
     size="xl"
   >
     <h2>
-      Get developper settings for the requester application
+      Get developer settings for the requester application
     </h2>
     <p>
       Settings available below must be communicated to the developer of the application that will send data using logion API to record it according to the current Collection LOC scope.
@@ -515,11 +519,35 @@ exports[`CertificateAndLimits renders certificate, limits and settings button fo
     <StaticLabelValue
       label="Documentation"
       value={
-        <NewTabLink
-          href="https://github.com/logion-network/logion-collection-item-submitter#logion-collection-item-submitter"
-        >
-          https://github.com/logion-network/logion-collection-item-submitter
-        </NewTabLink>
+        <ul>
+          <li>
+            <strong>
+              API to logion network:
+            </strong>
+             
+            <NewTabLink
+              href="https://logion-network.github.io/logion-api/"
+            />
+          </li>
+          <li>
+            <strong>
+              Details on Collection items:
+            </strong>
+             
+            <NewTabLink
+              href="https://logion-network.github.io/logion-api/docs/client/loc#collection-item"
+            />
+          </li>
+          <li>
+            <strong>
+              How to import tokens into a collection:
+            </strong>
+             
+            <NewTabLink
+              href="https://github.com/logion-network/logion-solidity/#importing-tokens-into-a-logion-collection"
+            />
+          </li>
+        </ul>
       }
     />
     <StaticLabelValue
@@ -534,14 +562,6 @@ exports[`CertificateAndLimits renders certificate, limits and settings button fo
       label="Signature will be executed by the following public key"
       value={<p />}
     />
-    <StaticLabelValue
-      label="Extrinsic"
-      value={
-        <p>
-          logionLoc.addCollectionItem(collectionLocId, itemId, itemDescription)
-        </p>
-      }
-    />
     <div
       className="arguments"
     >
@@ -555,18 +575,6 @@ exports[`CertificateAndLimits renders certificate, limits and settings button fo
           </strong>
            
           31105349912518444897773986398896608162
-        </li>
-        <li>
-          <strong>
-            itemId:
-          </strong>
-           a "0x" prefixed HEX string representation of 32 bytes uniquely identifying the item in this collection. For instance, the identifier may be a SHA256 hash.
-        </li>
-        <li>
-          <strong>
-            itemDescription:
-          </strong>
-           a UTF-8 encoded string of at most 4096 bytes
         </li>
       </ul>
     </div>
