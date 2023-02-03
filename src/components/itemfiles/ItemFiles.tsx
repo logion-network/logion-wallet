@@ -119,7 +119,7 @@ export default function ItemFiles(props: Props) {
                         width: "150px",
                         renderDetails,
                         detailsExpanded: file => file.detailsExpanded,
-                        hideExpand: file => numberOfClaims(file, props.deliveries).hideExpand,
+                        hideExpand: file => props.defaultExpanded || numberOfClaims(file, props.deliveries).hideExpand,
                     },
                 ]}
                 data={ files }
