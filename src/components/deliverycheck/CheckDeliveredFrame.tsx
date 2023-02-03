@@ -81,7 +81,7 @@ export default function CheckDeliveredFrame(props: Props) {
                                     checked && result?.match !== undefined && !props.detailedError &&
                                     <div>
                                         <p>Check result: <strong>{ checkResultTypeSpan(CheckResultType.POSITIVE)  }</strong></p>
-                                        <p>The file you uploaded is a logion-certified file which belongs to the current rightful NTF owner.</p>
+                                        <p>The file you uploaded is a logion-certified file which belongs to a current rightful NTF owner.</p>
                                         <ul>
                                             <li>File hash: { result.match.copyHash }</li>
                                             <li>Generation timestamp: <InlineDateTime dateTime={ result.match.generatedOn } separator=" - " /></li>

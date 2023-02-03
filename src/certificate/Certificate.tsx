@@ -37,7 +37,7 @@ import LegalOfficerRow from "./LegalOfficerRow";
 import { Children } from "src/common/types/Helpers";
 import CheckDeliveredFrame from "src/components/deliverycheck/CheckDeliveredFrame";
 import ClaimAssetButton, { walletType } from "./ClaimAssetButton";
-import { CheckCertifiedCopyResult } from "@logion/client/dist/CollectionItem.js";
+import { CheckCertifiedCopyResult } from "@logion/client";
 import './Certificate.css'
 
 export default function Certificate() {
@@ -161,7 +161,7 @@ export default function Certificate() {
     }
 
     function hasRestrictedDeliveryCheckTool(loc: PublicLoc, collectionItem: CollectionItem | null | undefined): boolean {
-        const isCollectionFileDelivery = loc.data.files.find(file => file.restrictedDelivery) !== undefined;
+        const isCollectionFileDelivery = loc.data.files.length > 0;
         return isCollectionFileDelivery || isItemFileDelivery(collectionItem);
     }
 
@@ -170,9 +170,12 @@ export default function Certificate() {
     }
 
     async function checkCertifiedCopy(loc: PublicLoc, collectionItem: CollectionItem | null | undefined, hash: string): Promise<CheckCertifiedCopyResult> {
+        setCheckResult(undefined);
         if (isItemFileDelivery(collectionItem)) {
             const result = await collectionItem!.checkCertifiedCopy(hash);
             if (result.summary === CheckResultType.POSITIVE) {
+                const collectionItemFile = collectionItem?.files.find(file => file.hash === result.match?.originalFileHash);
+                setCheckResult({ collectionItemFile });
                 return result;
             }
         }
@@ -180,8 +183,6 @@ export default function Certificate() {
         if (result.summary === CheckResultType.POSITIVE) {
             const file = loc.data.files.find(file => file.hash === result.match?.originalFileHash);
             setCheckResult({ file })
-        } else {
-            setCheckResult(undefined);
         }
         return result;
     }
@@ -336,7 +337,7 @@ export default function Certificate() {
                     checkHash={ checkHash }
                     checkResult={ checkResult === undefined ? "NONE" : ( checkResult.file || checkResult.collectionItem || checkResult.metadataItem || checkResult.collectionItemFile ? "POSITIVE" : "NEGATIVE") }
                     colorTheme={ LIGHT_MODE }
-                    context="Transaction LOC"
+                    context="LOC"
                     checkedItem="confidential document"
                 />
             </Container>
