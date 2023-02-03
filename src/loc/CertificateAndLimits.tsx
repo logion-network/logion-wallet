@@ -115,20 +115,19 @@ export default function CertificateAndLimits(props: Props) {
                     show={ showSettings }
                     size="xl"
                 >
-                    <h2>Get developper settings for the requester application</h2>
+                    <h2>Get developer settings for the requester application</h2>
                     <p>Settings available below must be communicated to the developer of the application that will send data using logion API to record it according to the current Collection LOC scope.</p>
 
                     <StaticLabelValue
                         label='Documentation'
                         value={
-                            <NewTabLink
-                                href="https://github.com/logion-network/logion-collection-item-submitter#logion-collection-item-submitter"
-                            >
-                                https://github.com/logion-network/logion-collection-item-submitter
-                            </NewTabLink>
+                        <ul>
+                            <li><strong>API to logion network:</strong> <NewTabLink href="https://logion-network.github.io/logion-api/"/></li>
+                            <li><strong>Details on Collection items:</strong> <NewTabLink href="https://logion-network.github.io/logion-api/docs/client/loc#collection-item"/></li>
+                            <li><strong>How to import tokens into a collection:</strong> <NewTabLink href="https://github.com/logion-network/logion-solidity/#importing-tokens-into-a-logion-collection"/></li>
+                        </ul>
                         }
                     />
-
                     <StaticLabelValue
                         label='Logion endpoint'
                         value={
@@ -143,19 +142,10 @@ export default function CertificateAndLimits(props: Props) {
                         }
                     />
 
-                    <StaticLabelValue
-                        label='Extrinsic'
-                        value={
-                            <p>logionLoc.addCollectionItem(collectionLocId, itemId, itemDescription)</p>
-                        }
-                    />
-
                     <div className="arguments">
                         <h3>Arguments</h3>
                         <ul>
                             <li><strong>collectionLocId:</strong> { props.loc.id.toDecimalString() }</li>
-                            <li><strong>itemId:</strong> a "0x" prefixed HEX string representation of 32 bytes uniquely identifying the item in this collection. For instance, the identifier may be a SHA256 hash.</li>
-                            <li><strong>itemDescription:</strong> a UTF-8 encoded string of at most 4096 bytes</li>
                         </ul>
                     </div>
                     <div className="limits">

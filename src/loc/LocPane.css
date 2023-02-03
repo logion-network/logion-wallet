@@ -9,7 +9,7 @@
 }
 
 .LocPane .Row.matched {
-    border: 2px dashed #e6007a;
+    border: 2px solid #37ad4b;
 }
 
 .Dashboard .LocPane .PrimaryArea p.frame-title {
