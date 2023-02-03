@@ -115,11 +115,11 @@ export default function ItemFiles(props: Props) {
                     },
                     {
                         header: "# of claim(s)",
-                        render: file => <Cell content={ numberOfClaims(file, props.deliveries) } />,
+                        render: file => <Cell content={ numberOfClaims(file, props.deliveries).value } />,
                         width: "150px",
                         renderDetails,
                         detailsExpanded: file => file.detailsExpanded,
-                        hideExpand: () => true,
+                        hideExpand: file => props.defaultExpanded || numberOfClaims(file, props.deliveries).hideExpand,
                     },
                 ]}
                 data={ files }
@@ -130,15 +130,16 @@ export default function ItemFiles(props: Props) {
     );
 }
 
-function numberOfClaims(file: DeliveredFile, deliveries?: ItemDeliveriesResponse): string {
-    if(deliveries !== undefined) {
+function numberOfClaims(file: DeliveredFile, deliveries?: ItemDeliveriesResponse): { value: string, hideExpand: boolean } {
+    if (deliveries !== undefined) {
         const fileDeliveries = deliveries[file.hash];
-        if(fileDeliveries) {
-            return fileDeliveries.length.toString();
+        if (fileDeliveries) {
+            const length = fileDeliveries.length;
+            return { value: length.toString(), hideExpand: length === 0 };
         } else {
-            return "0";
+            return { value: "0", hideExpand: true };
         }
     } else {
-        return "-";
+        return { value: "-", hideExpand: true };
     }
 }

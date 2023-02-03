@@ -2,7 +2,17 @@ import { useEffect, useState, useMemo, useCallback } from "react";
 import { Row, Col, Container } from "react-bootstrap";
 import { useParams } from "react-router";
 import { useSearchParams } from "react-router-dom";
-import { LegalOfficer, PublicLoc, CollectionItem, CheckHashResult, MergedMetadataItem, MergedFile, MergedLink, LocData } from "@logion/client";
+import {
+    LegalOfficer,
+    PublicLoc,
+    CollectionItem,
+    CheckHashResult,
+    MergedMetadataItem,
+    MergedFile,
+    MergedLink,
+    LocData,
+    CheckResultType
+} from "@logion/client";
 import { UUID } from "@logion/node-api";
 
 import { useLogionChain } from "../logion-chain";
@@ -27,7 +37,7 @@ import LegalOfficerRow from "./LegalOfficerRow";
 import { Children } from "src/common/types/Helpers";
 import CheckDeliveredFrame from "src/components/deliverycheck/CheckDeliveredFrame";
 import ClaimAssetButton, { walletType } from "./ClaimAssetButton";
-
+import { CheckCertifiedCopyResult } from "@logion/client";
 import './Certificate.css'
 
 export default function Certificate() {
@@ -146,6 +156,33 @@ export default function Certificate() {
                 row++
             }
             result[row].push(elements[i])
+        }
+        return result;
+    }
+
+    function hasRestrictedDeliveryCheckTool(loc: PublicLoc, collectionItem: CollectionItem | null | undefined): boolean {
+        const isCollectionFileDelivery = loc.data.files.length > 0;
+        return isCollectionFileDelivery || isItemFileDelivery(collectionItem);
+    }
+
+    function isItemFileDelivery(collectionItem: CollectionItem | null | undefined): boolean {
+        return collectionItem !== undefined && collectionItem !== null && collectionItem.restrictedDelivery;
+    }
+
+    async function checkCertifiedCopy(loc: PublicLoc, collectionItem: CollectionItem | null | undefined, hash: string): Promise<CheckCertifiedCopyResult> {
+        setCheckResult(undefined);
+        if (isItemFileDelivery(collectionItem)) {
+            const result = await collectionItem!.checkCertifiedCopy(hash);
+            if (result.summary === CheckResultType.POSITIVE) {
+                const collectionItemFile = collectionItem?.files.find(file => file.hash === result.match?.originalFileHash);
+                setCheckResult({ collectionItemFile });
+                return result;
+            }
+        }
+        const result = await loc.checkCertifiedCopy(hash);
+        if (result.summary === CheckResultType.POSITIVE) {
+            const file = loc.data.files.find(file => file.hash === result.match?.originalFileHash);
+            setCheckResult({ file })
         }
         return result;
     }
@@ -300,19 +337,19 @@ export default function Certificate() {
                     checkHash={ checkHash }
                     checkResult={ checkResult === undefined ? "NONE" : ( checkResult.file || checkResult.collectionItem || checkResult.metadataItem || checkResult.collectionItemFile ? "POSITIVE" : "NEGATIVE") }
                     colorTheme={ LIGHT_MODE }
-                    context="Transaction LOC"
+                    context="LOC"
                     checkedItem="confidential document"
                 />
             </Container>
             {
-                loc && collectionItem && client && collectionItem.restrictedDelivery &&
+                client && hasRestrictedDeliveryCheckTool(loc, collectionItem) &&
                 <Container className="CopyCheck">
                     <CheckDeliveredFrame
-                        checkCertifiedCopy={ hash => collectionItem.checkCertifiedCopy(hash) }
+                        checkCertifiedCopy={ hash => checkCertifiedCopy(loc, collectionItem, hash) }
                         colorTheme={ LIGHT_MODE }
                         detailedError={ false }
                         icon="polkadot_check_asset"
-                        title="NFT Underlying Asset Check Tool"
+                        title="Restricted Download Check Tool"
                         buttonText="Check NFT Asset"
                     />
                 </Container>

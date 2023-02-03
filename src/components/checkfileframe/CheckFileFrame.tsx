@@ -45,12 +45,14 @@ export default function CheckFileFrame(props: Props) {
                 icon={ <Icon icon={{id: "doc_check"}} width="45px" /> }
                 text={
                     <>
-                        <p className="text-title">Document conformity check tool</p>
-                        <p>Check a document to verify its conformity with a { checkedItem } referenced in this { context }.
-                            This tool will generate the “hash” - a digital fingerprint - of the submitted document,
-                            compare it with all document “hashes” referenced in the { context } above, and will highlight
-                            (dotted square) above - if existing - the identified document. Otherwise, it will mean that
-                            the submitted file version is not part of this current { context }.</p>
+                        <p className="text-title">Document Conformity Check Tool</p>
+                        <p>Some documents referenced in this Legal Officer Case (LOC) are not downloadable through this
+                            certificate. However, you can still check such a document you own to verify its conformity
+                            with a { checkedItem } referenced in this { context }.</p>
+                        <p>This tool will generate the “hash” - a digital fingerprint - of the submitted document,
+                            compare it with all document “hashes” referenced in the LOC above, and will highlight
+                            (dotted square) - if existing - the identified document. Otherwise, it will mean that the
+                            submitted file version is not part of this current LOC.</p>
                         <p>Important: the document you submit is NOT uploaded to a server as the test is done by your
                             browser.</p>
                         <FileHasher
