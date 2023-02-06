@@ -50,9 +50,9 @@ export default function CheckFileFrame(props: Props) {
                             certificate. However, you can still check such a document you own to verify its conformity
                             with a { checkedItem } referenced in this { context }.</p>
                         <p>This tool will generate the “hash” - a digital fingerprint - of the submitted document,
-                            compare it with all document “hashes” referenced in the LOC above, and will highlight
-                            (dotted square) - if existing - the identified document. Otherwise, it will mean that the
-                            submitted file version is not part of this current LOC.</p>
+                            compare it with all document “hashes” referenced in the LOC above, and will highlight, using
+                            a green border, the identified document - if existing - within the certificate above.
+                            Otherwise, it will mean that the submitted file version is not part of this current LOC.</p>
                         <p>Important: the document you submit is NOT uploaded to a server as the test is done by your
                             browser.</p>
                         <FileHasher
