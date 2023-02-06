@@ -74,7 +74,7 @@ export default function CheckFileFrame(props: Props) {
                                     <>
                                         <p><strong>Check result: <span style={{color: GREEN}}>positive</span></strong></p>
                                         <p>The document you uploaded has the following "hash":<br/><strong>{hash.hash}</strong><br/>
-                                        and is referenced in the above LOC at the line <strong>with a dotted pink border</strong>.</p>
+                                        and is referenced in the above LOC at the line <strong>with a green border</strong>.</p>
                                         <Icon icon={{id: "ok"}} />
                                     </>
                                 }
