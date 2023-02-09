@@ -1,0 +1,61 @@
+.Authenticate {
+    border: 2px solid #3b6cf4;
+    height: 100%;
+    padding: 15px 30px;
+}
+
+.Authenticate h3 {
+    font-weight: bold;
+    font-size: 1.6rem;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.Authenticate .Clickable {
+    text-decoration: underline;
+}
+
+.Authenticate .Clickable:hover {
+    font-weight: bold;
+}
+
+#ok-message {
+    color: #37ad4b;
+}
+
+#ko-message {
+    color: #eA1f46;
+}
+
+.Authenticate .check-ongoing img {
+    vertical-align: top;
+}
+
+.Authenticate .check-ongoing .spinner-border {
+    height: 40px;
+    width: 40px;
+}
+
+.Authenticate .claim-asset-btn-text {
+    margin-left: 20px;
+}
+
+.Authenticate .wallet-name {
+    font-weight: bold;
+}
+
+.Authenticate .metamask .wallet-name {
+    margin-left: 32px;
+}
+
+.Authenticate .crossmint {
+    margin-top: 10px;
+}
+
+.Authenticate .crossmint .wallet-name {
+    margin-left: 37px;
+}
+
+.Authenticate .polkadot .wallet-name {
+    margin-left: 47px;
+}
