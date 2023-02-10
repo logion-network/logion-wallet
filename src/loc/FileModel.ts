@@ -112,19 +112,6 @@ export async function addLoFile(
         { headers: { "Content-Type": "multipart/form-data" } })
 }
 
-export async function checkCanGetCollectionItemFile(
-    axios: AxiosInstance,
-    parameters: GetCollectionItemFileParameters
-): Promise<boolean> {
-    const { locId, collectionItemId, hash } = parameters
-    try {
-        await axios.get(`/api/collection/${ locId }/${ collectionItemId }/files/${ hash }/check`);
-        return true;
-    } catch(e) {
-        return false;
-    }
-}
-
 export interface CheckLatestDeliveryResponse {
     copyHash: string;
     generatedOn: string;
@@ -158,19 +145,6 @@ export async function getAllDeliveries(
     const { locId, collectionItemId } = parameters
     const response = await axios.get(`/api/collection/${ locId }/${ collectionItemId }/all-deliveries`);
     return response.data;
-}
-
-export async function checkCanGetCollectionFile(
-    axios: AxiosInstance,
-    parameters: GetCollectionItemFileParameters
-): Promise<boolean> {
-    const { locId, collectionItemId, hash } = parameters
-    try {
-        await axios.get(`/api/collection/${ locId }/files/${ hash }/${ collectionItemId }/check`);
-        return true;
-    } catch(e) {
-        return false;
-    }
 }
 
 export async function getCollectionFile(
