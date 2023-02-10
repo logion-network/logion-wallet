@@ -16,7 +16,7 @@ type ConsumptionStatus = 'PENDING' | 'STARTING' | 'STARTED';
 
 export const SIGN_AND_SEND_STRATEGY = new DefaultSignAndSendStrategy();
 
-export type AxiosFactory = (legalOfficerAddress: string | undefined) => AxiosInstance;
+export type AxiosFactory = (legalOfficerAddress: string | undefined, token?: Token) => AxiosInstance;
 
 export interface LogionChainContextType {
     api: LogionNodeApi | null,
@@ -110,9 +110,19 @@ function buildAxiosFactory(authenticatedClient?: LogionClient): AxiosFactory {
     if(authenticatedClient === undefined) {
         return () => axios.create();
     } else {
-        return (owner?: string): AxiosInstance => {
+        return (owner?: string, token?: Token): AxiosInstance => {
             const legalOfficer = authenticatedClient.legalOfficers.find(legalOfficer => legalOfficer.address === owner)!;
-            return authenticatedClient.buildAxios(legalOfficer);
+            const axios = authenticatedClient.buildAxios(legalOfficer);
+            if (token) {
+                axios.interceptors.request.use((config) => {
+                    if (!config.headers) {
+                        config.headers = {};
+                    }
+                    config.headers['Authorization'] = `Bearer ${ token.value }`;
+                    return config;
+                });
+            }
+            return axios;
         };
     }
 }

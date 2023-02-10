@@ -15,14 +15,21 @@ export function loFileUrl(legalOfficer: LegalOfficer, file: LoFileId, token: Tok
     return `${ legalOfficer.node }/api/lo-file/${ legalOfficer.address }/${ file }?jwt_token=${ token.value }`;
 }
 
-export interface GetFileParameters {
+interface HasLocId {
     locId: string,
+}
+
+export interface GetFileParameters extends HasLocId {
     hash: string
 }
 
-export interface GetCollectionItemFileParameters extends GetFileParameters {
+interface HasCollectionItem {
     collectionItemId: string,
 }
+
+export interface GetCollectionItemFileParameters extends GetFileParameters, HasCollectionItem {}
+
+export interface CheckOwnershipParameters extends HasLocId, HasCollectionItem {}
 
 export interface TypedFile {
     data: any,
@@ -203,4 +210,17 @@ export async function getAllCollectionDeliveries(
     const { locId } = parameters
     const response = await axios.get(`/api/collection/${ locId }/file-deliveries`);
     return response.data;
+}
+
+export async function isTokenOwner(
+    axios: AxiosInstance,
+    parameters: CheckOwnershipParameters
+): Promise<boolean> {
+    const { locId, collectionItemId } = parameters
+    try {
+        await axios.get(`/api/collection/${ locId }/items/${ collectionItemId }/check`);
+        return true;
+    } catch(e) {
+        return false;
+    }
 }

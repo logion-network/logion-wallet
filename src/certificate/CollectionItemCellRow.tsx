@@ -1,4 +1,4 @@
-import { CheckHashResult, CollectionItem } from "@logion/client";
+import { CheckHashResult, CollectionItem, Token } from "@logion/client";
 import { UUID } from "@logion/node-api";
 
 import CertificateCell from "./CertificateCell";
@@ -7,7 +7,7 @@ import { Row } from "../common/Grid";
 import './CollectionItemCellRow.css';
 import { Col } from "react-bootstrap";
 import MenuIcon from "src/common/MenuIcon";
-import ClaimAssetButton, { walletType } from "./ClaimAssetButton";
+import ClaimAssetButton from "./ClaimAssetButton";
 import { customClassName } from "src/common/types/Helpers";
 import { CertificateItemDetails } from "src/components/certificateitemdetails/CertificateItemDetails";
 
@@ -17,11 +17,11 @@ export interface Props {
     item: CollectionItem;
     checkResult: CheckHashResult | undefined;
     isVoid: boolean;
-    walletType: string | null;
+    tokenForDownload: Token | undefined;
 }
 
 export default function CollectionItemCellRow(props: Props) {
-    const { locId, owner, item } = props;
+    const { locId, owner, item, tokenForDownload } = props;
     const files = item.files;
 
     const className = customClassName("CollectionItemCellRow", props.isVoid ? "is-void" : undefined);
@@ -53,7 +53,7 @@ export default function CollectionItemCellRow(props: Props) {
                                         </Col>
                                         <Col md={ 3 }>
                                             {
-                                                !props.isVoid &&
+                                                !props.isVoid && props.item.restrictedDelivery &&
                                                 <ClaimAssetButton
                                                     locId={ locId }
                                                     owner={ owner }
@@ -63,7 +63,7 @@ export default function CollectionItemCellRow(props: Props) {
                                                         name: file.name,
                                                         type: "Item",
                                                     }}
-                                                    walletType={ walletType(props.walletType) }
+                                                    tokenForDownload={ tokenForDownload }
                                                 />
                                             }
                                         </Col>

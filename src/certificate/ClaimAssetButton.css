@@ -1,36 +1,3 @@
-.ClaimAssetButton .check-ongoing img {
-    vertical-align: top;
-}
-
-.ClaimAssetButton .check-ongoing .spinner-border {
-    height: 40px;
-    width: 40px;
-}
-
-.ClaimAssetButton .claim-asset-btn-text {
-    margin-left: 20px;
-}
-
-.ClaimAssetButton .wallet-name {
-    font-weight: bold;
-}
-
-.ClaimAssetButton .metamask .wallet-name {
-    margin-left: 32px;
-}
-
-.ClaimAssetButton .crossmint {
-    margin-top: 10px;
-}
-
-.ClaimAssetButton .crossmint .wallet-name {
-    margin-left: 37px;
-}
-
-.ClaimAssetButton .polkadot .wallet-name {
-    margin-left: 47px;
-}
-
 .ClaimAssetButton .download-started {
     display: inline-block;
     height: 58px;

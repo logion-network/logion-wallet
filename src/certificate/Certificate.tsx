@@ -11,7 +11,9 @@ import {
     MergedFile,
     MergedLink,
     LocData,
-    CheckResultType
+    CheckResultType,
+    Token,
+    CheckCertifiedCopyResult
 } from "@logion/client";
 import { UUID } from "@logion/node-api";
 
@@ -36,8 +38,8 @@ import IntroductionText from "./IntroductionText";
 import LegalOfficerRow from "./LegalOfficerRow";
 import { Children } from "src/common/types/Helpers";
 import CheckDeliveredFrame from "src/components/deliverycheck/CheckDeliveredFrame";
-import ClaimAssetButton, { walletType } from "./ClaimAssetButton";
-import { CheckCertifiedCopyResult } from "@logion/client";
+import ClaimAssetButton from "./ClaimAssetButton";
+import Authenticate from "./Authenticate";
 import './Certificate.css'
 
 export default function Certificate() {
@@ -54,6 +56,7 @@ export default function Certificate() {
     const [ nodeDown, setNodeDown ] = useState(false);
     const [ checkResult, setCheckResult ] = useState<CheckHashResult>();
     const [ collectionItem, setCollectionItem ] = useState<CollectionItem | undefined | null>(null);
+    const [ tokenForDownload, setTokenForDownload ] = useState<Token | undefined>(undefined);
 
     const checkHash = useCallback(async (hash: string) => {
         if (loc) {
@@ -188,9 +191,11 @@ export default function Certificate() {
     }
 
     let certificateBorderColor = "#3b6cf4";
-    if(loc !== null && loc.data.voidInfo !== undefined) {
+    if (loc !== null && loc.data.voidInfo !== undefined) {
         certificateBorderColor = RED;
     }
+
+    const tokenGated: boolean = collectionItem?.token?.type !== undefined;
 
     return (
         <div className="CertificateBox">
@@ -199,7 +204,7 @@ export default function Certificate() {
                 <Container>
                     <div className="network-frame">
                         <IconTextRow
-                            icon={ <Icon icon={{id: "ko"}} /> }
+                            icon={ <Icon icon={ { id: "ko" } } /> }
                             text={
                                 <p>The logion network is partially unavailable. As a consequence, some data may be temporarily
                                 unavailable.</p>
@@ -254,9 +259,33 @@ export default function Certificate() {
                     <Col md={ 8 }>
                         <h2>Legal Officer Case</h2>
                         <h1>CERTIFICATE</h1>
-                        <IntroductionText loc={ loc } />
                     </Col>
                 </Row>
+                { tokenGated &&
+                    <Row>
+                        <Col md={ 5 }>
+                            <Authenticate
+                                walletType={ searchParams.get("wallet") }
+                                locId={ loc.data.id }
+                                item={ collectionItem! }
+                                owner={ loc.data.ownerAddress }
+                                setTokenForDownload={ setTokenForDownload }
+                            />
+                        </Col>
+                        <Col md={ 7 }>
+                            <IntroductionText loc={ loc } tokenGated={ true } />
+                        </Col>
+                    </Row>
+                }
+                { !tokenGated &&
+                    <Row>
+                        <Col md={ 2 }/>
+                        <Col md={ 8 }>
+                            <IntroductionText loc={ loc } tokenGated={ false } />
+                        </Col>
+                    </Row>
+                }
+
                 <Row>
                     <CertificateCell md={ 5 } label="LOC ID">{ locId.toDecimalString() }</CertificateCell>
                     <CertificateDateTimeCell md={ 3 } label="Creation Date" dateTime={ loc.data.createdOn } />
@@ -289,7 +318,8 @@ export default function Certificate() {
                     <MetadataItemCellRow key={ index } items={ items } checkResult={ checkResult } />
                 )) }
                 { matrix(loc.data.files, 2).map((files, index) => (
-                    <FileCellRow key={ index } files={ files } checkResult={ checkResult } loc={ loc.data } item={ collectionItem } />
+                    <FileCellRow key={ index } files={ files } checkResult={ checkResult } loc={ loc.data }
+                                 item={ collectionItem } tokenForDownload={ tokenForDownload } />
                 )) }
                 { matrix(loc.data.links, 2).map((links, index) => (
                     <LinkCellRow key={ index } links={ links } />
@@ -301,7 +331,7 @@ export default function Certificate() {
                         item={ collectionItem! }
                         checkResult={ checkResult }
                         isVoid={ loc.data.voidInfo !== undefined }
-                        walletType={ searchParams.get("wallet") }
+                        tokenForDownload={ tokenForDownload }
                     />
                 }
                 <LegalOfficerRow legalOfficer={ legalOfficer } />
@@ -380,13 +410,13 @@ function ItemCellTitle(props: { text: Children, timestamp: string | undefined })
     );
 }
 
-function FileCellRow(props: { loc: LocData, files: MergedFile[], checkResult: CheckHashResult | undefined, item?: CollectionItem | null }) {
-    const [ searchParams ] = useSearchParams();
-
+function FileCellRow(props: { loc: LocData, files: MergedFile[], checkResult: CheckHashResult | undefined, item?: CollectionItem | null, tokenForDownload: Token | undefined }) {
     return (
         <Row>
             { props.files.map(
-                file => <CertificateCell key={ file.hash } md={ 6 } label={ <ItemCellTitle text={ <span>Document Hash <span className="file-nature">({ file.nature })</span></span> } timestamp={ file.addedOn } /> } matched={ props.checkResult?.file?.hash === file.hash } >
+                file => <CertificateCell key={ file.hash } md={ 6 } label={ <ItemCellTitle
+                    text={ <span>Document Hash <span className="file-nature">({ file.nature })</span></span> }
+                    timestamp={ file.addedOn } /> } matched={ props.checkResult?.file?.hash === file.hash }>
                     <p>{ file.hash }</p>
                     {
                         file.restrictedDelivery && props.item &&
@@ -400,7 +430,7 @@ function FileCellRow(props: { loc: LocData, files: MergedFile[], checkResult: Ch
                                     type: "Collection",
                                 }}
                                 owner={ props.loc.ownerAddress }
-                                walletType={ walletType(searchParams.get("wallet")) }
+                                tokenForDownload={ props.tokenForDownload }
                             />
                         </div>
                     }
