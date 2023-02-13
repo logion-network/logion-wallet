@@ -1,7 +1,17 @@
 import { Token, HashOrContent } from "@logion/client";
 import { AxiosInstance } from "axios";
 import { DEFAULT_LEGAL_OFFICER, PATRICK } from "src/common/TestData";
-import { addLoFile, checkCanGetCollectionItemFile, getAllDeliveries, getCollectionItemFile, getFile, getJsonLoc, getLatestDeliveries, getLoFile, loFileUrl } from "./FileModel";
+import {
+    addLoFile,
+    getAllDeliveries,
+    getCollectionItemFile,
+    getFile,
+    getJsonLoc,
+    getLatestDeliveries,
+    getLoFile,
+    loFileUrl,
+    isTokenOwner
+} from "./FileModel";
 
 describe("FileModel", () => {
 
@@ -144,14 +154,12 @@ describe("FileModel", () => {
 
         const locId = "0e16421a-2550-4be5-a6a8-1ab2239b7dc4";
         const collectionItemId = "0xf35e4bcbc1b0ce85af90914e04350cce472a2f01f00c0f7f8bc5c7ba04da2bf2";
-        const hash = "0x7d79c63f350826b018d2981259eddcdb224d9a974199750d5f5f833635c65d6c";
-        const result = await checkCanGetCollectionItemFile(axios, {
+        const result = await isTokenOwner(axios, {
             locId,
             collectionItemId,
-            hash,
         });
 
-        expect(axios.get).toBeCalledWith(`/api/collection/${ locId }/${ collectionItemId }/files/${ hash }/check`);
+        expect(axios.get).toBeCalledWith(`/api/collection/${ locId }/items/${ collectionItemId }/check`);
         expect(result).toBe(true);
     })
 
