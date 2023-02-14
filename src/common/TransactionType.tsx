@@ -35,7 +35,11 @@ const palletLogionLocMethods: Record<LogionLocMethod, string> = {
     createPolkadotIdentityLoc: "Polkadot Identity LOC created",
     createPolkadotTransactionLoc: "Polkadot Identity LOC created",
     makeVoid: "LOC voided",
-    makeVoidAndReplace: "LOC voided and replaced"
+    makeVoidAndReplace: "LOC voided and replaced",
+    addTokensRecord: "Tokens record added",
+    dismissIssuer: "Issuer dismissed",
+    nominateIssuer: "Issuer nominated",
+    setIssuerSelection: "Issuer selected",
 }
 
 const palletLogionVaultMethods: Record<Uncapitalize<PalletLogionVaultCall["type"]>, string> = {

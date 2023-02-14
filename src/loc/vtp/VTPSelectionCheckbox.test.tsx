@@ -1,14 +1,14 @@
 import { render, waitFor, screen } from "@testing-library/react";
 import VTPSelectionCheckbox from "./VTPSelectionCheckbox";
-import { VerifiedThirdParty } from "@logion/client";
 import { clickByName, expectNoDialogVisible } from "../../tests";
 import userEvent from "@testing-library/user-event";
+import { VerifiedThirdPartyWithSelect } from "../../legal-officer/client";
 
 jest.mock("../LocContext");
 
 describe("VTPSelectionCheckbox", () => {
 
-    function vtpSelection(selected: boolean): VerifiedThirdParty {
+    function vtpSelection(selected: boolean): VerifiedThirdPartyWithSelect {
         return {
             firstName: "Scott",
             lastName: "Tiger",
