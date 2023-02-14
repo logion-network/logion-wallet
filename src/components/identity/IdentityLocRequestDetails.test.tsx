@@ -15,11 +15,9 @@ test("renders", () => {
         userIdentity: DEFAULT_IDENTITY,
         userPostalAddress: DEFAULT_ADDRESS,
         locType: "Identity",
-        verifiedThirdParty: false,
         files: [],
         metadata: [],
         links: [],
-        selectedParties: []
     };
     const tree = shallowRender(<IdentityLocRequestDetails
         personalInfo={ request  }

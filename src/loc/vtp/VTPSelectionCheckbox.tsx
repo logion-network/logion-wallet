@@ -2,45 +2,59 @@ import Checkbox from "../../components/toggle/Checkbox";
 import {
     SelectPartiesParams,
     selectParties,
-    unselectParties
+    unselectParties,
+    VerifiedThirdPartyWithSelect
 } from "../../legal-officer/client";
-import { useCallback, useState } from "react";
-import { OpenLoc, VerifiedThirdParty } from "@logion/client";
+import { useCallback, useMemo, useState } from "react";
+import { OpenLoc } from "@logion/client";
 import { useLocContext } from "../LocContext";
 import Dialog from "../../common/Dialog";
+import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
+import { useLogionChain } from "src/logion-chain";
 
 export interface Props {
-    vtpSelection: VerifiedThirdParty
+    vtpSelection: VerifiedThirdPartyWithSelect
 }
 
-export default function VTPSelectionCheckbox(props: Props) {
+type Status = 'Idle' | 'Selected' | 'Confirming' | 'Error';
 
-    type Status = 'Idle' | 'Selected' | 'Confirming';
+export default function VTPSelectionCheckbox(props: Props) {
     const { vtpSelection } = props;
+    const { signer } = useLogionChain();
     const { mutateLocState } = useLocContext();
     const [ status, setStatus ] = useState<Status>('Idle');
     const [ showUnselect, setShowUnselect ] = useState<boolean>(false);
+    const [ call, setCall ] = useState<Call>();
+
     const toggleSelection = useCallback(async () => {
         setStatus('Confirming');
-        await mutateLocState(async current => {
-            if (current instanceof OpenLoc) {
+        const call = async (callback: CallCallback) => mutateLocState(async current => {
+            if(signer && current instanceof OpenLoc) {
                 const params: SelectPartiesParams = {
                     locState: current,
-                    partyId: vtpSelection.identityLocId,
+                    issuer: vtpSelection.address,
+                    signer,
+                    callback,
                 }
                 if (vtpSelection.selected) {
                     await unselectParties(params);
                 } else {
                     await selectParties(params);
                 }
-                setStatus('Idle');
                 return current.refresh();
             } else {
                 return current;
             }
-        })
-    }, [ mutateLocState, vtpSelection.identityLocId, vtpSelection.selected ]);
-    const vtpName = `${ vtpSelection.firstName } ${ vtpSelection.lastName }`;
+        });
+        setCall(() => call);
+    }, [ mutateLocState, vtpSelection, signer ]);
+
+    const clearState = useCallback(async () => {
+        setStatus('Idle');
+        setCall(undefined);
+    }, []);
+
+    const vtpName = useMemo(() => `${ vtpSelection.firstName } ${ vtpSelection.lastName }`, [vtpSelection]);
 
     return (<>
         <Checkbox
@@ -49,23 +63,25 @@ export default function VTPSelectionCheckbox(props: Props) {
             setChecked={ () => {
                 setStatus('Selected');
                 setShowUnselect(vtpSelection.selected || false);
-            } } />
+            } }
+        />
         <Dialog
             show={ status !== 'Idle' }
             size="lg"
             actions={ [
                 {
                     id: "cancel",
-                    callback: () => setStatus('Idle'),
+                    callback: clearState,
                     buttonText: 'Cancel',
                     buttonVariant: 'secondary',
+                    disabled: status === 'Confirming',
                 },
                 {
                     id: "submit",
                     callback: toggleSelection,
                     buttonText: 'Confirm',
-                    buttonVariant: 'primary',
-                    disabled: status === 'Confirming'
+                    buttonVariant: 'polkadot',
+                    disabled: status === 'Confirming' || status === 'Error'
                 }
             ] }
         >
@@ -88,6 +104,11 @@ export default function VTPSelectionCheckbox(props: Props) {
                 <p>Do you confirm you want to cancel the status of { vtpName } as a Verified Third Party <strong>for
                     this LOC</strong>?</p>
             </> }
+            <ClientExtrinsicSubmitter
+                call={call}
+                onSuccess={clearState}
+                onError={() => setStatus('Error')}
+            />
         </Dialog>
     </>)
 }

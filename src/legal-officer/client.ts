@@ -12,6 +12,7 @@ import {
     LogionClient,
     LegalOfficer,
     LocData,
+    VerifiedIssuerIdentity,
 } from "@logion/client";
 import {
     UUID,
@@ -25,6 +26,7 @@ import {
     asString,
     LogionNodeApi,
 } from "@logion/node-api";
+import type { SubmittableExtrinsic } from '@polkadot/api/promise/types';
 import { AnyJson } from "@polkadot/types-codec/types/helpers.js";
 import { AxiosInstance } from "axios";
 
@@ -230,56 +232,100 @@ export async function voidLoc(params: {
 }
 
 export async function setVerifiedThirdParty(params: {
-        locState: ClosedLoc,
-        isVerifiedThirdParty: boolean;
-    }
-): Promise<ClosedLoc> {
-    const { locState, isVerifiedThirdParty } = params;
+    locState: ClosedLoc,
+    isVerifiedThirdParty: boolean,
+    signer: Signer,
+    callback: SignCallback,
+}): Promise<ClosedLoc> {
+    const { locState, isVerifiedThirdParty, signer, callback } = params;
     const currentLocState = getCurrent(locState);
-    const { data, axios } = inspectState(currentLocState);
-    await axios.put(`/api/loc-request/${data.id.toString()}/verified-third-party`, {
-        isVerifiedThirdParty
+    const { data, api } = inspectState(currentLocState);
+
+    if(!data.requesterAddress) {
+        throw new Error("Identity LOC has no Polkadot requester");
+    }
+
+    let submittable: SubmittableExtrinsic;
+    if(isVerifiedThirdParty) {
+        submittable = api.tx.logionLoc.nominateIssuer(data.requesterAddress, data.id.toDecimalString());
+    } else {
+        submittable = api.tx.logionLoc.dismissIssuer(data.requesterAddress);
+    }
+    await signer.signAndSend({
+        signerId: data.ownerAddress,
+        submittable,
+        callback
     });
+
     return await getCurrent(currentLocState).refresh() as ClosedLoc;
 }
 
-export async function getVerifiedThirdPartySelections(params: { locState: OpenLoc } ): Promise<VerifiedThirdParty[]> {
+export type VerifiedThirdPartyWithSelect = VerifiedThirdParty & { selected: boolean };
+
+export async function getVerifiedThirdPartySelections(params: { locState: OpenLoc } ): Promise<VerifiedThirdPartyWithSelect[]> {
     const { locState } = params
     const currentLocState = getCurrent(locState);
     const { data, axios } = inspectState(currentLocState);
-    const response = await axios.get("/api/verified-third-parties");
-    const allVerifiedThirdParties: VerifiedThirdParty[] = response.data.verifiedThirdParties;
 
+    const allVerifiedThirdParties: VerifiedIssuerIdentity[] = (await axios.get("/api/issuers-identity")).data.issuers;
     const selectedParties = data.selectedParties;
 
     return allVerifiedThirdParties
         .filter(vtp => vtp.address !== data.requesterAddress)
-        .map(vtp => selectedParties.find(selectedParty => selectedParty.identityLocId === vtp.identityLocId && selectedParty.selected) ?
-            { ...vtp, selected: true } :
-            { ...vtp, selected: false }
-        )
+        .map(vtp => {
+            const selected = selectedParties.find(selectedParty => selectedParty.address === vtp.address);
+            if(selected) {
+                return {
+                    firstName: selected.firstName,
+                    lastName: selected.lastName,
+                    identityLocId: selected.identityLocId,
+                    address: selected.address,
+                    selected: true,
+                };
+            } else {
+                return {
+                    firstName: vtp.identity.firstName,
+                    lastName: vtp.identity.lastName,
+                    identityLocId: vtp.identityLocId,
+                    address: vtp.address,
+                    selected: false,
+                };
+            }
+        })
         .sort((vtp1, vtp2) => vtp1.lastName.localeCompare(vtp2.lastName));
 }
 
 export interface SelectPartiesParams {
     locState: OpenLoc;
-    partyId: string;
+    issuer: string;
+    signer: Signer;
+    callback: SignCallback;
 }
 
 export async function selectParties(params: SelectPartiesParams): Promise<void> {
-    const { locState, partyId } = params;
+    return setIssuerSelection({
+        ...params,
+        selected: true,
+    });
+}
+
+async function setIssuerSelection(params: SelectPartiesParams & { selected: boolean }): Promise<void> {
+    const { locState, issuer, signer, callback, selected } = params;
     const currentLocState = getCurrent(locState);
-    const { axios, data } = inspectState(currentLocState);
-    await axios.post(`/api/loc-request/${data.id.toString()}/selected-parties`, {
-        identityLocId: partyId
-    })
+    const { data, api } = inspectState(currentLocState);
+    const submittable = api.tx.logionLoc.setIssuerSelection(data.id.toDecimalString(), issuer, selected);
+    await signer.signAndSend({
+        signerId: data.ownerAddress,
+        submittable,
+        callback
+    });
 }
 
 export async function unselectParties(params: SelectPartiesParams): Promise<void> {
-    const { locState, partyId } = params;
-    const currentLocState = getCurrent(locState);
-    const { axios, data } = inspectState(currentLocState);
-    await axios.delete(`/api/loc-request/${data.id.toString()}/selected-parties/${partyId}`)
+    return setIssuerSelection({
+        ...params,
+        selected: false,
+    });
 }
 
 export async function requestVote(params: {

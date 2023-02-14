@@ -1,9 +1,9 @@
-import { EditableRequest, LogionClient, OpenLoc, VerifiedThirdParty, ClosedLoc, Signer, SuccessfulSubmission } from "@logion/client";
+import { EditableRequest, LogionClient, OpenLoc, VerifiedThirdParty, ClosedLoc, Signer, SuccessfulSubmission, VerifiedIssuerIdentity } from "@logion/client";
 import { UUID } from "@logion/node-api";
 import { AxiosInstance } from "axios";
 import { DEFAULT_LEGAL_OFFICER } from "src/common/TestData";
 import { ApiPromise } from "src/__mocks__/PolkadotApiMock";
-import { addLink, getVerifiedThirdPartySelections, requestVote } from "./client";
+import { addLink, getVerifiedThirdPartySelections, requestVote, VerifiedThirdPartyWithSelect } from "./client";
 
 describe("Legal Officer client", () => {
 
@@ -63,7 +63,16 @@ describe("Legal Officer client", () => {
         const FORMERLY_SELECTED = verifiedThirdParty(4);
 
         const axios = {
-            get: jest.fn().mockResolvedValue({ data: { verifiedThirdParties: [ FORMERLY_SELECTED, REQUESTER, SELECTED, NOT_SELECTED ] } }),
+            get: jest.fn().mockResolvedValue({
+                data: {
+                    issuers: [
+                        toVerifiedIssuerIdentity(FORMERLY_SELECTED),
+                        toVerifiedIssuerIdentity(REQUESTER),
+                        toVerifiedIssuerIdentity(SELECTED),
+                        toVerifiedIssuerIdentity(NOT_SELECTED),
+                    ]
+                }
+            }),
         } as unknown as AxiosInstance;
 
         const client = {
@@ -77,8 +86,12 @@ describe("Legal Officer client", () => {
                 id: locId,
                 requesterAddress: REQUESTER.address,
                 selectedParties: [
-                    { ...SELECTED, selected: true },
-                    { ...FORMERLY_SELECTED, selected: false }
+                    {
+                        firstName: SELECTED.firstName,
+                        lastName: SELECTED.lastName,
+                        identityLocId: SELECTED.identityLocId,
+                        address: SELECTED.address,
+                    }
                 ],
             }),
             locsState: () => ({
@@ -87,9 +100,9 @@ describe("Legal Officer client", () => {
             getCurrentState: () => locState,
         } as unknown as OpenLoc;
 
-        const verifiedThirdParties: VerifiedThirdParty[] = await getVerifiedThirdPartySelections({ locState });
+        const verifiedThirdParties: VerifiedThirdPartyWithSelect[] = await getVerifiedThirdPartySelections({ locState });
 
-        expect(axios.get).toBeCalledWith("/api/verified-third-parties");
+        expect(axios.get).toBeCalledWith("/api/issuers-identity");
 
         expect(verifiedThirdParties.length).toEqual(3);
         expect(verifiedThirdParties[0]).toEqual({ ...NOT_SELECTED, selected: false });
@@ -154,3 +167,16 @@ describe("Legal Officer client", () => {
         }));
     });
 });
+
+function toVerifiedIssuerIdentity(vtp: VerifiedThirdParty): VerifiedIssuerIdentity {
+    return {
+        address: vtp.address,
+        identityLocId: vtp.identityLocId,
+        identity: {
+            firstName: vtp.firstName,
+            lastName: vtp.lastName,
+            email: "",
+            phoneNumber: "",
+        }
+    };
+}

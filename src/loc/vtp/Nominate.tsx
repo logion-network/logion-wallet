@@ -1,5 +1,5 @@
 import Checkbox from "../../components/toggle/Checkbox";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import Button from "../../common/Button";
 import Icon from "../../common/Icon";
 import Dialog from "../../common/Dialog";
@@ -8,37 +8,46 @@ import { useLogionChain } from "../../logion-chain";
 import { ClosedLoc } from "@logion/client";
 import { setVerifiedThirdParty } from "../../legal-officer/client";
 import './Nominate.css';
+import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
+
+type Status = 'Idle' | 'Selected' | 'Confirming' | 'Error';
 
 export default function Nominate() {
-
-    type Status = 'Idle' | 'Selected' | 'Confirming';
     const { loc, mutateLocState } = useLocContext();
-    const { client } = useLogionChain();
-    const [ vtp, setVtp ] = useState<boolean>(loc?.verifiedThirdParty || false);
-    const [ showDismissal, setShowDismissal ] = useState<boolean>(false);
+    const { signer } = useLogionChain();
     const [ status, setStatus ] = useState<Status>('Idle');
-    const changeVtp = useCallback(async (newValue: boolean) => {
+    const [ call, setCall ] = useState<Call>();
+
+    const isIssuer = useMemo(() => loc?.verifiedThirdParty || false, [ loc ]);
+
+    const changeVtp = useCallback(async () => {
         setStatus('Confirming');
-        await mutateLocState(async current => {
-            if (client && current instanceof ClosedLoc) {
-                return setVerifiedThirdParty({ locState: current, isVerifiedThirdParty: newValue })
+        const call = async (callback: CallCallback) => mutateLocState(async current => {
+            if(signer && current instanceof ClosedLoc) {
+                return setVerifiedThirdParty({
+                    locState: current,
+                    isVerifiedThirdParty: !isIssuer,
+                    signer,
+                    callback,
+                });
             } else {
-                return current
+                return current;
             }
-        })
+        });
+        setCall(() => call);
+    }, [ mutateLocState, isIssuer, signer ]);
+
+    const clearState = useCallback(async () => {
         setStatus('Idle');
-        setVtp(newValue);
-    }, [ client, mutateLocState ]);
+        setCall(undefined);
+    }, []);
 
     return (
         <>
-            <Button id="NominateButton" onClick={ () => {
-                setStatus('Selected');
-                setShowDismissal(vtp)}
-            }>
+            <Button id="NominateButton" onClick={ () => setStatus('Selected') }>
                 <Icon icon={ { id: "vtp" } }/>
                 Verified Third Party
-                <Checkbox checked={ vtp } skin="Toggle white" />
+                <Checkbox checked={ isIssuer } skin="Toggle white" />
             </Button>
             <Dialog
                 show={ status !== 'Idle' }
@@ -46,20 +55,21 @@ export default function Nominate() {
                 actions={ [
                     {
                         id: "cancel",
-                        callback: () => setStatus('Idle'),
+                        callback: clearState,
                         buttonText: 'Cancel',
                         buttonVariant: 'secondary',
+                        disabled: status === 'Confirming'
                     },
                     {
                         id: "submit",
-                        callback: () => changeVtp(!vtp),
+                        callback: () => changeVtp(),
                         buttonText: 'Confirm',
-                        buttonVariant: 'primary',
-                        disabled: status === 'Confirming'
+                        buttonVariant: 'polkadot',
+                        disabled: status === 'Confirming' || status === 'Error'
                     }
                 ] }
             >
-                { !showDismissal && <>
+                { !isIssuer && <>
                     <h3>Verified Third Party Nomination</h3>
                     <p>The person linked to this Identity LOC is about to have the status of Verified Third Party.</p>
                     <p>With that status, you (and only you) will be able to select that nominated Verified Third Party
@@ -67,7 +77,7 @@ export default function Nominate() {
                         still have to validate these contributions before blockchain publication.</p>
                     <p>Do you confirm you want to make this person a Verified Third Party?</p>
                 </> }
-                { showDismissal && <>
+                { isIssuer && <>
                     <h3>Verified Third Party Dismissal</h3>
                     <p>The person linked to this Identity LOC has the status of Verified Third Party.</p>
                     <p>
@@ -78,6 +88,11 @@ export default function Nominate() {
                             (s)he is currently involved with.</strong></p>
                     <p>Do you confirm you want to cancel the Verified Third Party status for this person?</p>
                 </> }
+                <ClientExtrinsicSubmitter
+                    call={call}
+                    onSuccess={clearState}
+                    onError={() => setStatus('Error')}
+                />
             </Dialog>
         </>
     )
