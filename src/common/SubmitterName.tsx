@@ -11,8 +11,8 @@ export interface Props {
     locItem: LocItem
 }
 
-function format(identity: { firstName: string, lastName: string } | undefined): string {
-    return identity ? identity.firstName + " " + identity.lastName : "!! Unknown submitter !!";
+function format(identity: { firstName: string, lastName: string } | undefined, address: string): string {
+    return identity ? identity.firstName + " " + identity.lastName : address;
 }
 
 function findVTP(loc: LocData, address: string): VerifiedThirdParty | undefined {
@@ -32,7 +32,7 @@ export default function SubmitterName(props: Props) {
         return (
             <Cell content={
                 <div>
-                    { format(identity) }
+                    { format(identity, locItem.submitter) }
                     { locItem.submitter !== loc.requesterAddress && <>
                         <VTPBadge />
                     </> }
