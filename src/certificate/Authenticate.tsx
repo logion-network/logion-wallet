@@ -351,7 +351,7 @@ function walletTypeCompatibleWithItemType(wallet: WalletType, token?: TokenType)
         return false;
     }
 
-    if ([ 'ethereum_erc721', 'ethereum_erc1155', 'goerli_erc721', 'goerli_erc1155', 'owner' ].includes(token)) {
+    if ([ 'ethereum_erc721', 'ethereum_erc1155', 'goerli_erc721', 'goerli_erc1155', 'polygon_erc721', 'polygon_erc1155', 'polygon_mumbai_erc721', 'polygon_mumbai_erc1155', 'owner' ].includes(token)) {
         return [ "METAMASK", "CROSSMINT" ].includes(wallet);
     } else if ([ 'singular_kusama', 'owner' ].includes(token)) {
         return wallet === "POLKADOT";
