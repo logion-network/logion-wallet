@@ -14,7 +14,7 @@ describe("SubmitterName", () => {
         ownerAddress: DEFAULT_LEGAL_OFFICER,
         requesterAddress: REQUESTER,
         userIdentity: DEFAULT_IDENTITY,
-        selectedParties: [ {
+        issuers: [ {
             address: VTP,
             firstName: "Scott",
             lastName: "Tiger",
