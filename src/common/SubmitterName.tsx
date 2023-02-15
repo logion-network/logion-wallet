@@ -16,7 +16,7 @@ function format(identity: { firstName: string, lastName: string } | undefined, a
 }
 
 function findVTP(loc: LocData, address: string): VerifiedThirdParty | undefined {
-    return loc.selectedParties.find(vtp => vtp.address === address);
+    return loc.issuers.find(vtp => vtp.address === address);
 }
 
 export default function SubmitterName(props: Props) {

@@ -18,6 +18,7 @@ test("renders", () => {
         files: [],
         metadata: [],
         links: [],
+        selectedIssuers: [],
     };
     const tree = shallowRender(<IdentityLocRequestDetails
         personalInfo={ request  }

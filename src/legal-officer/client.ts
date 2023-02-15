@@ -268,13 +268,13 @@ export async function getVerifiedThirdPartySelections(params: { locState: OpenLo
     const { data, axios } = inspectState(currentLocState);
 
     const allVerifiedThirdParties: VerifiedIssuerIdentity[] = (await axios.get("/api/issuers-identity")).data.issuers;
-    const selectedParties = data.selectedParties;
+    const selectedParties = data.issuers;
 
     return allVerifiedThirdParties
         .filter(vtp => vtp.address !== data.requesterAddress)
         .map(vtp => {
             const selected = selectedParties.find(selectedParty => selectedParty.address === vtp.address);
-            if(selected) {
+            if(selected && selected.firstName && selected.lastName) {
                 return {
                     firstName: selected.firstName,
                     lastName: selected.lastName,
@@ -288,7 +288,7 @@ export async function getVerifiedThirdPartySelections(params: { locState: OpenLo
                     lastName: vtp.identity.lastName,
                     identityLocId: vtp.identityLocId,
                     address: vtp.address,
-                    selected: false,
+                    selected: selected !== undefined,
                 };
             }
         })

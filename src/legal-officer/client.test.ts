@@ -85,7 +85,7 @@ describe("Legal Officer client", () => {
             data: () => ({
                 id: locId,
                 requesterAddress: REQUESTER.address,
-                selectedParties: [
+                issuers: [
                     {
                         firstName: SELECTED.firstName,
                         lastName: SELECTED.lastName,
