@@ -2,7 +2,7 @@ import { TokensRecord } from "@logion/client";
 import { useMemo, useState } from "react";
 import { useCommonContext } from "src/common/CommonContext";
 import SubmitterName from "src/common/SubmitterName";
-import Table, { Cell, DateTimeCell, EmptyTableMessage } from "src/common/Table";
+import { Cell, DateTimeCell, EmptyTableMessage } from "src/common/Table";
 import ViewFileButton from "src/common/ViewFileButton";
 import PagedTable, { getPage, Page } from "src/components/pagedtable/PagedTable";
 import { getTokensRecordFileSource } from "../FileModel";
@@ -21,7 +21,7 @@ export default function TokensRecordTable(props: Props) {
 
     const currentPage: Page<TokensRecord> = useMemo(() => {
         return getPage(records, currentPageNumber, 10);
-    }, [ props.records, currentPageNumber ]);
+    }, [ props.records, currentPageNumber, records ]);
 
     if(!loc) {
         return null;

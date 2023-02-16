@@ -26,7 +26,7 @@ export default function TokensRecordButton(props: { contributionMode?: Contribut
         } else {
             return "";
         }
-    }, [ loc, viewer ]);
+    }, [ loc, viewer, props.contributionMode ]);
 
     return (
         <Button

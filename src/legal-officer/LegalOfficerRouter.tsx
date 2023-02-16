@@ -20,7 +20,6 @@ import {
     DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH,
     TOKENS_RECORD_RELATIVE_PATH,
     tokensRecordPath,
-    recordsSelectVTPPath,
     TOKENS_RECORD_VTP_RELATIVE_PATH,
 } from './LegalOfficerPaths';
 
