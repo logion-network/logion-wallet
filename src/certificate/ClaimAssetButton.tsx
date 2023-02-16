@@ -1,14 +1,21 @@
-import { Token, CollectionItem } from "@logion/client";
+import { Token, CollectionItem, TokensRecord } from "@logion/client";
 import { UUID } from "@logion/node-api";
 import { AxiosInstance } from "axios";
 import { useState, useEffect } from "react";
 import ViewFileButton from "../common/ViewFileButton";
-import { getCollectionFile, getCollectionItemFile, GetCollectionItemFileParameters, TypedFile } from "../loc/FileModel";
+import {
+    getCollectionFile,
+    getCollectionItemFile,
+    GetCollectionItemFileParameters,
+    GetTokensRecordFileParameters,
+    TypedFile,
+    getTokensRecordFile
+} from "../loc/FileModel";
 import Icon from "src/common/Icon";
 
 import './ClaimAssetButton.css';
 
-export type ClaimedFileType = "Collection" | "Item";
+export type ClaimedFileType = "Collection" | "Item" | "TokensRecord";
 
 export interface ClaimedFile {
     name: string;
@@ -20,12 +27,13 @@ export interface Props {
     locId: UUID,
     owner: string,
     item: CollectionItem,
+    record?: TokensRecord,
     file: ClaimedFile,
     tokenForDownload: Token | undefined,
 }
 
 export default function ClaimAssetButton(props: Props) {
-    const { locId, owner, item, file, tokenForDownload } = props;
+    const { locId, owner, item, file, tokenForDownload, record } = props;
     const [ downloaded, setDownloaded ] = useState(false);
 
     useEffect(() => {
@@ -51,6 +59,7 @@ export default function ClaimAssetButton(props: Props) {
                                 locId: locId.toString(),
                                 collectionItemId: item.id,
                                 hash: file.hash,
+                                recordId: record?.id
                             }
                         )
                     }}
@@ -70,12 +79,14 @@ export default function ClaimAssetButton(props: Props) {
 async function getClaimedFile(
     axios: AxiosInstance,
     fileType: ClaimedFileType,
-    parameters: GetCollectionItemFileParameters
+    parameters: GetCollectionItemFileParameters | GetTokensRecordFileParameters
 ): Promise<TypedFile> {
     if(fileType === "Item") {
         return getCollectionItemFile(axios, parameters);
-    } else {
+    } else if (fileType === "Collection") {
         return getCollectionFile(axios, parameters);
+    } else {
+        return getTokensRecordFile(axios, parameters as GetTokensRecordFileParameters);
     }
 }
 

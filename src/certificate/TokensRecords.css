@@ -1,0 +1,25 @@
+.TokensRecords {
+    margin-top: 20px;
+    border: 2px solid #3b6cf4;
+    padding: 20px 30px;
+}
+
+.TokensRecords h2 {
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.TokensRecords .MenuIcon {
+    display: inline-block;
+    font-size: 1rem;
+    vertical-align: top;
+}
+
+.TokensRecords .TokensRecordCell {
+    margin-bottom: 20px;
+}
+
+.TokensRecords .TokensRecordCell .TokensRecordFileCell {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
