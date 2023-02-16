@@ -8,11 +8,12 @@ import Frame from "src/common/Frame";
 import Icon from "src/common/Icon";
 import IconTextRow from "src/common/IconTextRow";
 import { useLocContext } from "../LocContext";
+import { ContributionMode } from "../types";
 import VTPSelectionButton from "../vtp/VTPSelectionButton";
 import AddTokensRecordButton from "./AddTokensRecordButton";
 import TokensRecordTable from "./TokensRecordTable";
 
-export default function TokensRecordFrame() {
+export default function TokensRecordFrame(props: { contributionMode?: ContributionMode }) {
     const { viewer } = useCommonContext();
     const { locState } = useLocContext();
     const [ records, setRecords ] = useState<TokensRecord[]>();
@@ -52,7 +53,7 @@ export default function TokensRecordFrame() {
             {
                 records !== undefined &&
                 <>
-                    <TokensRecordTable records={records}/>
+                    <TokensRecordTable records={records} contributionMode={props.contributionMode}/>
                     <ButtonGroup
                         align="left"
                     >

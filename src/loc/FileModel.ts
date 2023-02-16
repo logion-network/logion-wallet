@@ -211,6 +211,18 @@ export async function getTokensRecordFileSource(
     return downloadFile(axios, `/api/records/${ locId }/${ recordId }/files-sources/${ hash }`);
 }
 
+export async function getTokensRecordDeliveries(
+    axios: AxiosInstance,
+    parameters: {
+        locId: string,
+        recordId: string,
+    }
+): Promise<ItemDeliveriesResponse> {
+    const { locId, recordId } = parameters
+    const response = await axios.get(`/api/records/${ locId }/${ recordId }/deliveries`);
+    return response.data;
+}
+
 export interface GetTokensRecordFileParameters extends GetCollectionItemFileParameters {
     recordId: string,
 }
@@ -222,4 +234,3 @@ export async function getTokensRecordFile(
     const { locId, recordId, hash, collectionItemId } = parameters
     return downloadFile(axios, `/api/records/${ locId }/${ recordId }/files/${ hash }/${ collectionItemId }`);
 }
-

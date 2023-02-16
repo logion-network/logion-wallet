@@ -8,12 +8,12 @@ exports[`FrameTitle renders with icon 1`] = `
     className="icon-container"
   >
     <Icon
+      height="36px"
       icon={
         Object {
           "id": "ok",
         }
       }
-      width="45px"
     />
   </span>
   <span

@@ -1,12 +1,7 @@
-import { LocData } from "@logion/client";
 import { useNavigate } from "react-router-dom";
 import Button from "src/common/Button";
-import { Viewer } from "src/common/CommonContext";
 import Icon from "src/common/Icon";
-import { documentClaimHistoryPath } from "src/legal-officer/LegalOfficerPaths";
-import { documentClaimHistoryPath as userDocumentClaimHistoryPath } from "src/wallet-user/UserRouter";
 import { Col } from "../common/Grid";
-import { useLocContext } from "./LocContext";
 import LocItemDetail from "./LocItemDetail";
 
 import './LocItemDetails.css'
@@ -14,11 +9,10 @@ import { LocItem } from "./types";
 
 export interface Props {
     item: LocItem;
-    viewer: Viewer;
+    documentClaimHistory: string;
 }
 
 export default function LocPrivateFileDetails(props: Props) {
-    const { loc } = useLocContext();
     const navigate = useNavigate();
 
     return (
@@ -36,7 +30,7 @@ export default function LocPrivateFileDetails(props: Props) {
             <Col className="LocItemDetails claim" style={{width: "50%"}}>
                 <div>
                     <Button
-                        onClick={ () => navigate(documentClaimHistory(props.viewer, loc, props.item.value)) }
+                        onClick={ () => navigate(props.documentClaimHistory) }
                     >
                         <Icon icon={{ id: "claim" }} /> View document claim history
                     </Button>
@@ -44,14 +38,4 @@ export default function LocPrivateFileDetails(props: Props) {
             </Col>
         </>
     )
-}
-
-function documentClaimHistory(viewer: Viewer, loc: LocData | null, hash: string) {
-    if(!loc) {
-        return "";
-    } else if(viewer === "LegalOfficer") {
-        return documentClaimHistoryPath(loc.id, hash);
-    } else {
-        return userDocumentClaimHistoryPath(loc.id, hash);
-    }
 }

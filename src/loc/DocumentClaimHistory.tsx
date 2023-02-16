@@ -1,45 +1,54 @@
-import { CheckCertifiedCopyResult, CheckResultType } from "@logion/client";
+import { CheckCertifiedCopyResult, CheckResultType, LocData, TokensRecord, ClosedCollectionLoc } from "@logion/client";
 import { UUID } from "@logion/node-api";
-import { useCallback, useEffect, useState } from "react";
+import { AxiosInstance } from "axios";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useCommonContext } from "src/common/CommonContext";
 import Frame from "src/common/Frame";
 import CheckDeliveredFrame from "src/components/deliverycheck/CheckDeliveredFrame";
-import ItemFiles from "src/components/itemfiles/ItemFiles";
-import { locDetailsPath } from "src/legal-officer/LegalOfficerPaths";
+import ItemFiles, { DeliveredFile } from "src/components/itemfiles/ItemFiles";
+import { locDetailsPath, tokensRecordPath } from "src/legal-officer/LegalOfficerPaths";
 import { useLogionChain } from "src/logion-chain";
-import { locDetailsPath as userLocDetailsPath } from "src/wallet-user/UserRouter";
-import { getAllCollectionFileDeliveries, getFile, ItemDeliveriesResponse } from "./FileModel";
+import { locDetailsPath as userLocDetailsPath, tokensRecordPath as requesterTokensRecordPath, vtpTokensRecordPath } from "src/wallet-user/UserRouter";
+import { CheckLatestDeliveryResponse, getAllCollectionFileDeliveries, getFile, getTokensRecordDeliveries, getTokensRecordFileSource, TypedFile } from "./FileModel";
 import { LegalOfficerLocContextProvider } from "./LegalOfficerLocContext";
 import { useLocContext } from "./LocContext";
 import LocPane from "./LocPane";
 import { UserLocContextProvider } from "./UserLocContext";
 import "./DocumentClaimHistory.css";
+import { ContributionMode } from "./types";
 
-export default function DocumentClaimHistory() {
+export interface Props {
+    hash: string;
+    icon: string;
+    title: string;
+    file: (loc: LocData) => DeliveredFile;
+    getFileDeliveries: (axios: AxiosInstance, loc: LocData) => Promise<CheckLatestDeliveryResponse[]>;
+    getFile: (axios: AxiosInstance, loc: LocData) => Promise<TypedFile>;
+    contributionMode?: ContributionMode;
+}
+
+export default function DocumentClaimHistory(props: Props) {
+    const { hash } = props;
     const { loc, backPath } = useLocContext();
-    const hash = useParams<"hash">().hash;
-    const [ deliveries, setDeliveries ] = useState<ItemDeliveriesResponse>();
+    const [ deliveries, setDeliveries ] = useState<CheckLatestDeliveryResponse[]>();
     const [ checkCertifiedCopyResult, setCheckCertifiedCopyResult ] = useState<CheckCertifiedCopyResult>();
     const { axiosFactory } = useLogionChain();
     const { colorTheme } = useCommonContext();
 
     useEffect(() => {
-        if(loc && hash && deliveries === undefined) {
+        if(axiosFactory && loc && hash && deliveries === undefined) {
             (async function() {
-                const deliveries = await getAllCollectionFileDeliveries(axiosFactory!(loc?.ownerAddress), { locId: loc.id.toString(), hash });
-                setDeliveries({
-                    [hash]: deliveries.deliveries,
-                });
+                const deliveries = await props.getFileDeliveries(axiosFactory(loc.ownerAddress), loc);
+                setDeliveries(deliveries);
             })();
         }
-    }, [ hash, axiosFactory, loc, deliveries ]);
+    }, [ props, hash, axiosFactory, loc, deliveries ]);
 
     const checkCertifiedCopy = useCallback(async (fileHash: string): Promise<CheckCertifiedCopyResult> => {
-        if(deliveries && hash && hash in deliveries) {
-            const fileDeliveries = deliveries[hash];
-            for(let i = 0; i < fileDeliveries.length; ++i) {
-                const delivery = fileDeliveries[i];
+        if(deliveries) {
+            for(let i = 0; i < deliveries.length; ++i) {
+                const delivery = deliveries[i];
                 if(delivery.copyHash === fileHash) {
                     return {
                         latest: i === 0 ? CheckResultType.POSITIVE : CheckResultType.NEGATIVE,
@@ -61,7 +70,15 @@ export default function DocumentClaimHistory() {
             nftOwnership: CheckResultType.NEGATIVE,
             summary: CheckResultType.NEGATIVE,
         };
-    }, [ deliveries, hash ]);
+    }, [ deliveries ]);
+
+    const files = useMemo(() => {
+        if(loc) {
+            return [ props.file(loc) ];
+        } else {
+            return [];
+        }
+    }, [ loc, props ]);
 
     if(!loc) {
         return null;
@@ -72,23 +89,21 @@ export default function DocumentClaimHistory() {
             backPath={backPath}
             loc={loc}
             className="DocumentClaimHistory"
+            contributionMode={props.contributionMode}
         >
             <Frame>
                 <ItemFiles
                     collectionLoc={loc}
-                    deliveries={ deliveries }
+                    deliveries={{ [hash]: (deliveries || []) }}
                     checkCertifiedCopyResultResult={ checkCertifiedCopyResult }
-                    files={ loc.files.filter(file => file.hash === hash).map(file => ({
-                        ...file,
-                        size: BigInt(file.size),
-                    })) }
+                    files={ files }
                     downloader={(axios, hash) => getFile(axios, {
                         hash,
                         locId: loc.id.toString(),
                     })}
                     defaultExpanded={true}
-                    icon="check_document"
-                    title="Document claim history"
+                    icon={props.icon}
+                    title={props.title}
                 />
             </Frame>
             <div className="check-delivered-container">
@@ -108,26 +123,159 @@ export default function DocumentClaimHistory() {
 
 export function GuardianDocumentClaimHistory() {
     const locId = new UUID(useParams<"locId">().locId);
+    const hash = useParams<"hash">().hash || "";
+
     return (
         <LegalOfficerLocContextProvider
             locId={ locId }
             backPath={ locDetailsPath(locId, "Collection") }
             detailsPath={ locDetailsPath }
         >
-            <DocumentClaimHistory />
+            <CollectionDocumentClaimHistory hash={hash}/>
         </LegalOfficerLocContextProvider>
     )
 }
 
+function CollectionDocumentClaimHistory(props: { hash: string }) {
+    const { hash } = props;
+    return (
+        <DocumentClaimHistory
+            hash={hash}
+            icon="check_document"
+            title="Document claim history"
+            getFileDeliveries={ (axios, loc) => getCollectionFileDeliveries(axios, { locId: loc.id.toString(), hash }) }
+            getFile={ (axios, loc) => getFile(axios, { locId: loc.id.toString(), hash }) }
+            file={ (loc) => loc.files.filter(file => file.hash === hash).map(file => ({
+                ...file,
+                size: BigInt(file.size),
+            }))[0]}
+        />
+    );
+}
+
+async function getCollectionFileDeliveries(axios: AxiosInstance, parameters: {
+    locId: string,
+    hash: string,
+}): Promise<CheckLatestDeliveryResponse[]> {
+    const { locId, hash } = parameters;
+    const deliveries = await getAllCollectionFileDeliveries(axios, { locId, hash });
+    return deliveries.deliveries;
+}
+
 export function UserDocumentClaimHistory() {
     const locId = new UUID(useParams<"locId">().locId);
+    const hash = useParams<"hash">().hash || "";
+
     return (
         <UserLocContextProvider
             locId={ locId }
             backPath={ userLocDetailsPath(locId, "Collection") }
             detailsPath={ userLocDetailsPath }
         >
-            <DocumentClaimHistory />
+            <CollectionDocumentClaimHistory hash={hash}/>
         </UserLocContextProvider>
     )
+}
+
+export function LegalOfficerTokensRecordDocumentClaimHistory() {
+    const locId = new UUID(useParams<"locId">().locId);
+    const recordId = useParams<"recordId">().recordId || "";
+    const hash = useParams<"hash">().hash || "";
+
+    return (
+        <LegalOfficerLocContextProvider
+            locId={ locId }
+            backPath={ tokensRecordPath(locId) }
+            detailsPath={ locDetailsPath }
+        >
+            <TokensRecordDocumentClaimHistory recordId={recordId} hash={hash}/>
+        </LegalOfficerLocContextProvider>
+    )
+}
+
+function TokensRecordDocumentClaimHistory(props: { recordId: string, hash: string, contributionMode?: ContributionMode }) {
+    const { recordId, hash } = props;
+    const [ record, setRecord ] = useState<TokensRecord>();
+    const { locState } = useLocContext();
+
+    useEffect(() => {
+        if(record === undefined && locState instanceof ClosedCollectionLoc) {
+            (async function() {
+                const record = await locState.getTokensRecord({ recordId });
+                setRecord(record);
+            })();
+        }
+    }, [ recordId, record, locState ]);
+
+    if(!record) {
+        return null;
+    }
+
+    return (
+        <DocumentClaimHistory
+            hash={hash}
+            icon="records_blue"
+            title="Tokens record claim history"
+            getFileDeliveries={ (axios, loc) => getTokensRecordFileDeliveries(axios, { locId: loc.id.toString(), recordId, hash })}
+            getFile={ (axios, loc) => getTokensRecordFileSource(axios, { locId: loc.id.toString(), recordId, hash }) }
+            file={ () => getRecordFile(record, hash) }
+            contributionMode={ props.contributionMode }
+        />
+    );
+}
+
+async function getTokensRecordFileDeliveries(axios: AxiosInstance, parameters: {
+    locId: string,
+    recordId: string,
+    hash: string,
+}): Promise<CheckLatestDeliveryResponse[]> {
+    const { locId, recordId, hash } = parameters;
+    const allDeliveries = await getTokensRecordDeliveries(axios, { locId, recordId });
+    if(hash in allDeliveries) {
+        return allDeliveries[hash];
+    } else {
+        return [];
+    }
+}
+
+function getRecordFile(record: TokensRecord | undefined, hash: string): DeliveredFile {
+    if(!record) {
+        return emptyDeliveredFile(hash);
+    } else {
+        const file = record.files.find(file => file.hash === hash);
+        return file || emptyDeliveredFile(hash);
+    }
+}
+
+function emptyDeliveredFile(hash: string): DeliveredFile {
+    return {
+        contentType: "",
+        hash,
+        name: "",
+        size: 0n,
+    };
+};
+
+export function UserTokensRecordDocumentClaimHistory(props: { contributionMode: ContributionMode }) {
+    const locId = new UUID(useParams<"locId">().locId);
+    const recordId = useParams<"recordId">().recordId || "";
+    const hash = useParams<"hash">().hash || "";
+
+    return (
+        <UserLocContextProvider
+            locId={ locId }
+            backPath={ userTokensRecordPath(props.contributionMode, locId) }
+            detailsPath={ userLocDetailsPath }
+        >
+            <TokensRecordDocumentClaimHistory recordId={recordId} hash={hash} contributionMode={props.contributionMode}/>
+        </UserLocContextProvider>
+    )
+}
+
+function userTokensRecordPath(contributionMode: ContributionMode, locId: UUID): string {
+    if(contributionMode === "Requester") {
+        return requesterTokensRecordPath(locId);
+    } else {
+        return vtpTokensRecordPath(locId);
+    }
 }

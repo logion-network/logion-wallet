@@ -16,7 +16,7 @@ describe("LocPrivateFileDetails", () => {
             nature: "File's nature",
             newItem: false,
         };
-        const element = shallowRender(<LocPrivateFileDetails item={ item } viewer="LegalOfficer"/>);
+        const element = shallowRender(<LocPrivateFileDetails item={ item } documentClaimHistory=""/>);
         expect(element).toMatchSnapshot();
     });
 });
