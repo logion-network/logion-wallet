@@ -2,7 +2,6 @@ import { shallowRender } from "../tests";
 import SubmitterName from "./SubmitterName";
 import { DEFAULT_LEGAL_OFFICER, DEFAULT_IDENTITY } from "./TestData";
 import { LocData } from "@logion/client";
-import { LocItem } from "../loc/types";
 
 jest.mock('../logion-chain');
 
@@ -22,22 +21,17 @@ describe("SubmitterName", () => {
     } as LocData;
 
     it("renders when submitter is Legal Officer", () => {
-
-        const locItem = { submitter: DEFAULT_LEGAL_OFFICER } as LocItem;
-        const tree = shallowRender(<SubmitterName loc={ loc } locItem={ locItem } />);
+        const tree = shallowRender(<SubmitterName loc={ loc } submitter={ DEFAULT_LEGAL_OFFICER } />);
         expect(tree).toMatchSnapshot()
     })
 
     it("renders when submitter is Requester", () => {
-        const locItem = { submitter: REQUESTER } as LocItem;
-        const tree = shallowRender(<SubmitterName loc={ loc } locItem={ locItem } />);
+        const tree = shallowRender(<SubmitterName loc={ loc } submitter={ REQUESTER } />);
         expect(tree).toMatchSnapshot()
     })
 
     it("renders when submitter is VTP", () => {
-        const locItem = { submitter: VTP } as LocItem;
-        const tree = shallowRender(<SubmitterName loc={ loc } locItem={ locItem } />);
+        const tree = shallowRender(<SubmitterName loc={ loc } submitter={ VTP } />);
         expect(tree).toMatchSnapshot()
     })
-
 })

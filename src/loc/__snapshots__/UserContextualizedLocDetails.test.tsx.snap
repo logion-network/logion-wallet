@@ -157,6 +157,7 @@ exports[`UserContextualizedLocDetails renders for VTP 1`] = `
       }
     />
     <CertificateAndLimits
+      contributionMode="VTP"
       isReadOnly={false}
       loc={
         Object {
@@ -403,6 +404,7 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
       }
     />
     <CertificateAndLimits
+      contributionMode="Requester"
       isReadOnly={false}
       loc={
         Object {

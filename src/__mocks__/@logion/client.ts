@@ -1,4 +1,4 @@
-import { CheckResultType } from "@logion/client/dist/CollectionItem.js";
+import { CheckResultType } from "@logion/client/dist/Deliveries.js";
 import { DefaultSignAndSendStrategy } from "@logion/client/dist/Signer.js";
 
 import {

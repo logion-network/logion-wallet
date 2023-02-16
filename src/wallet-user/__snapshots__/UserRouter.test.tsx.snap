@@ -211,5 +211,21 @@ exports[`renders 1`] = `
     element={<UserDocumentClaimHistory />}
     path="/loc/:locType/:locId/claims/:hash"
   />
+  <Route
+    element={
+      <UserTokensRecordPane
+        contributionMode="Requester"
+      />
+    }
+    path="/loc/:locType/:locId/records"
+  />
+  <Route
+    element={
+      <UserTokensRecordPane
+        contributionMode="VTP"
+      />
+    }
+    path="/vtp/:locId/records"
+  />
 </Routes>
 `;

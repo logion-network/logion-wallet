@@ -86,6 +86,7 @@ export default function UserContextualizedLocDetails(props: Props) {
                     loc={ loc }
                     viewer="User"
                     isReadOnly={ isReadOnly }
+                    contributionMode={ props.contributionMode }
                 />
                 { loc.locType === 'Collection' && loc.closed &&
                     <UserCollectionLocItemChecker

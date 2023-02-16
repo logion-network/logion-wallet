@@ -262,7 +262,9 @@ export async function setVerifiedThirdParty(params: {
 
 export type VerifiedThirdPartyWithSelect = VerifiedThirdParty & { selected: boolean };
 
-export async function getVerifiedThirdPartySelections(params: { locState: OpenLoc } ): Promise<VerifiedThirdPartyWithSelect[]> {
+export type LocWithSelectableIssuers = OpenLoc | ClosedCollectionLoc;
+
+export async function getVerifiedThirdPartySelections(params: { locState: LocWithSelectableIssuers } ): Promise<VerifiedThirdPartyWithSelect[]> {
     const { locState } = params
     const currentLocState = getCurrent(locState);
     const { data, axios } = inspectState(currentLocState);
@@ -296,7 +298,7 @@ export async function getVerifiedThirdPartySelections(params: { locState: OpenLo
 }
 
 export interface SelectPartiesParams {
-    locState: OpenLoc;
+    locState: LocWithSelectableIssuers;
     issuer: string;
     signer: Signer;
     callback: SignCallback;

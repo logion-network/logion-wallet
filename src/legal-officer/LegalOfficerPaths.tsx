@@ -89,3 +89,17 @@ export function documentClaimHistoryPath(locId: UUID, hash: string) {
         .replace(":locId", locId.toString())
         .replace(":hash", hash);
 }
+
+export const TOKENS_RECORD_RELATIVE_PATH = LOC_DETAILS_RELATIVE_PATH + "/records";
+export function tokensRecordPath(locId: UUID) {
+    return LEGAL_OFFICER_PATH + TOKENS_RECORD_RELATIVE_PATH
+        .replace(":locType", "Collection")
+        .replace(":locId", locId.toString());
+}
+
+export const TOKENS_RECORD_VTP_RELATIVE_PATH = TOKENS_RECORD_RELATIVE_PATH + "/vtp";
+export function recordsSelectVTPPath(locId: UUID) {
+    return LEGAL_OFFICER_PATH + TOKENS_RECORD_VTP_RELATIVE_PATH
+        .replace(":locType", "Collection")
+        .replace(":locId", locId.toString());
+}

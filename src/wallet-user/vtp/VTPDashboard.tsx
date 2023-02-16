@@ -34,7 +34,7 @@ export default function VTPDashboard() {
                         },
                         {
                             key: "closed",
-                            title: "History",
+                            title: "Closed",
                             render: () => <VTPClosedLocs/>
                         },
                     ] }

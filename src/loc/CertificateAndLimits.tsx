@@ -24,11 +24,14 @@ import Nominate from "./vtp/Nominate";
 import VTPSelectionButton from "./vtp/VTPSelectionButton";
 import ButtonGroup from 'src/common/ButtonGroup';
 import RequestVoteButton from './RequestVoteButton';
+import TokensRecordButton from './record/TokensRecordButton';
+import { ContributionMode } from './types';
 
 export interface Props {
     loc: LocData;
     viewer: Viewer;
     isReadOnly: boolean;
+    contributionMode?: ContributionMode;
 }
 
 export default function CertificateAndLimits(props: Props) {
@@ -83,6 +86,7 @@ export default function CertificateAndLimits(props: Props) {
                         <ButtonGroup
                             align="center"
                         >
+                            { props.loc.locType === 'Collection' && props.loc.closed && !props.loc.voidInfo && <TokensRecordButton contributionMode={props.contributionMode}/> }
                             { props.loc.locType === 'Collection' && props.loc.closed && !props.loc.voidInfo && <Button onClick={ () => setShowSettings(true) }><Icon icon={{id: "cog"}} height="22px"/> Get dev settings</Button> }
 
                             { props.loc.locType === 'Collection' && props.viewer === 'LegalOfficer' && props.loc.status ==='OPEN' && <VTPSelectionButton/> }

@@ -1,7 +1,7 @@
 import { useLocContext } from "../LocContext";
 import { useState, useEffect } from "react";
 import { getVerifiedThirdPartySelections, VerifiedThirdPartyWithSelect } from "../../legal-officer/client";
-import { OpenLoc } from "@logion/client";
+import { OpenLoc, ClosedCollectionLoc } from "@logion/client";
 import Table, { EmptyTableMessage, Cell, ActionCell } from "../../common/Table";
 import ButtonGroup from "../../common/ButtonGroup";
 import Frame from "../../common/Frame";
@@ -18,7 +18,7 @@ export default function VTPSelectionFrame() {
     const { colorTheme } = useCommonContext();
 
     useEffect(() => {
-        if (locState !== null && locState instanceof OpenLoc) {
+        if (locState !== null && (locState instanceof OpenLoc || locState instanceof ClosedCollectionLoc)) {
             getVerifiedThirdPartySelections({ locState })
                 .then(setVtpSelections)
         }

@@ -127,8 +127,8 @@ exports[`renders 1`] = `
   <Route
     element={
       <VTPSelection
+        backPath={[Function]}
         detailsPath={[Function]}
-        locType="Transaction"
       />
     }
     path="/loc/transaction/:locId/vtp"
@@ -136,8 +136,8 @@ exports[`renders 1`] = `
   <Route
     element={
       <VTPSelection
+        backPath={[Function]}
         detailsPath={[Function]}
-        locType="Collection"
       />
     }
     path="/loc/collection/:locId/vtp"
@@ -145,8 +145,8 @@ exports[`renders 1`] = `
   <Route
     element={
       <VTPSelection
+        backPath={[Function]}
         detailsPath={[Function]}
-        locType="Identity"
       />
     }
     path="/loc/identity/:locId/vtp"
@@ -167,6 +167,19 @@ exports[`renders 1`] = `
   <Route
     element={<GuardianDocumentClaimHistory />}
     path="/loc/:locType/:locId/claims/:hash"
+  />
+  <Route
+    element={<LegalOfficerTokensRecordPane />}
+    path="/loc/:locType/:locId/records"
+  />
+  <Route
+    element={
+      <VTPSelection
+        backPath={[Function]}
+        detailsPath={[Function]}
+      />
+    }
+    path="/loc/:locType/:locId/records/vtp"
   />
   <Route
     element={<Account />}

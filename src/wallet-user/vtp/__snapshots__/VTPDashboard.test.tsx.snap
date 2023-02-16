@@ -33,7 +33,7 @@ exports[`VTPDashboard renders 1`] = `
           Object {
             "key": "closed",
             "render": [Function],
-            "title": "History",
+            "title": "Closed",
           },
         ]
       }

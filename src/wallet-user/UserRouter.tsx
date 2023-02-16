@@ -29,6 +29,7 @@ import IdentityLocRequest from "./trust-protection/IdentityLocRequest";
 import VTPDashboard from "./vtp/VTPDashboard";
 import IdenfyVerificationResult from './IdenfyVerificationResult';
 import { UserDocumentClaimHistory } from 'src/loc/DocumentClaimHistory';
+import { UserTokensRecordPane } from 'src/loc/record/TokensRecordPane';
 
 export const HOME_PATH = USER_PATH;
 
@@ -92,6 +93,20 @@ export function documentClaimHistoryPath(locId: UUID, hash: string) {
         .replace(":locType", "Collection")
         .replace(":locId", locId.toString())
         .replace(":hash", hash);
+}
+
+export const TOKENS_RECORD_RELATIVE_PATH = LOC_DETAILS_RELATIVE_PATH + "/records";
+export function tokensRecordPath(locId: UUID) {
+    return USER_PATH + TOKENS_RECORD_RELATIVE_PATH
+        .replace(":locType", "Collection")
+        .replace(":locId", locId.toString());
+}
+
+export const VTP_TOKENS_RECORD_RELATIVE_PATH = VTP_DETAILS_RELATIVE_PATH + "/records";
+export function vtpTokensRecordPath(locId: UUID) {
+    return USER_PATH + VTP_TOKENS_RECORD_RELATIVE_PATH
+        .replace(":locType", "Collection")
+        .replace(":locId", locId.toString());
 }
 
 export default function UserRouter() {
@@ -226,6 +241,8 @@ export default function UserRouter() {
                 />
             } />
             <Route path={ DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH } element={ <UserDocumentClaimHistory/> } />
+            <Route path={ TOKENS_RECORD_RELATIVE_PATH } element={ <UserTokensRecordPane contributionMode='Requester'/> }/>
+            <Route path={ VTP_TOKENS_RECORD_RELATIVE_PATH } element={ <UserTokensRecordPane contributionMode='VTP'/> }/>
         </Routes>
     );
 }

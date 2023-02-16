@@ -5,7 +5,7 @@ import VTPSelectionPane from "./VTPSelectionPane";
 
 export interface Props {
     detailsPath: (locId: UUID, type: LocType) => string;
-    locType: LocType;
+    backPath: (locId: UUID) => string;
 }
 
 export default function VTPSelection(props: Props) {
@@ -15,7 +15,7 @@ export default function VTPSelection(props: Props) {
     return (
         <LegalOfficerLocContextProvider
             locId={ locId }
-            backPath={ props.detailsPath(locId, props.locType) }
+            backPath={ props.backPath(locId) }
             detailsPath={ props.detailsPath }
         >
             <VTPSelectionPane/>

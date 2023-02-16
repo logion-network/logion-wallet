@@ -160,6 +160,7 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for closed
         <ButtonGroup
           align="center"
         >
+          <TokensRecordButton />
           <Button
             onClick={[Function]}
           >
@@ -478,6 +479,7 @@ exports[`CertificateAndLimits renders certificate, limits and settings button fo
         <ButtonGroup
           align="center"
         >
+          <TokensRecordButton />
           <Button
             onClick={[Function]}
           >
