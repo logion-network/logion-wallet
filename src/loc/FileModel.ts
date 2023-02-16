@@ -198,3 +198,15 @@ export async function isTokenOwner(
         return false;
     }
 }
+
+export interface GetTokensRecordFileParameters extends GetFileParameters {
+    recordId: string;
+}
+
+export async function getTokensRecordFileSource(
+    axios: AxiosInstance,
+    parameters: GetTokensRecordFileParameters
+): Promise<TypedFile> {
+    const { locId, recordId, hash } = parameters
+    return downloadFile(axios, `/api/records/${ locId }/${ recordId }/files-sources/${ hash }`);
+}

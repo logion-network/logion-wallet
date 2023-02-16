@@ -184,7 +184,7 @@ export function LocItems(props: LocItemsProps) {
             },
             {
                 header: "Submitted by",
-                render: locItem => <SubmitterName loc={ loc } locItem={ locItem} />
+                render: locItem => <SubmitterName loc={ loc } submitter={ locItem.submitter } />
             }
         ];
 

@@ -2,269 +2,207 @@
 
 exports[`VTPClosedLocs renders closed VTP LOCS 1`] = `
 <div
-  className="Table constrained-row-height"
+  className="VTPClosedLocs"
 >
-  <style>
-    
+  <div
+    className="Table constrained-row-height"
+  >
+    <style>
+      
             .Table .body .Row .Col.split-after::before {
                 background-color: #152665;
             }
             
-  </style>
-  <div
-    className="header"
-    style={
-      Object {
-        "backgroundColor": "#0c163d",
-        "color": "#ffffff",
-      }
-    }
-  >
+    </style>
     <div
-      className="Row"
+      className="header"
+      style={
+        Object {
+          "backgroundColor": "#0c163d",
+          "color": "#ffffff",
+        }
+      }
     >
       <div
-        className="Col"
-        style={
-          Object {
-            "textAlign": "left",
-            "width": "calc(( 100% - 650px ) / 4)",
-          }
-        }
-      >
-        Legal Officer
-      </div>
-      <div
-        className="Col"
-        style={
-          Object {
-            "textAlign": "left",
-            "width": "calc(( 100% - 650px ) / 4)",
-          }
-        }
-      >
-        Requester
-      </div>
-      <div
-        className="Col"
-        style={
-          Object {
-            "textAlign": "left",
-            "width": "110px",
-          }
-        }
-      >
-        Type
-      </div>
-      <div
-        className="Col"
-        style={
-          Object {
-            "textAlign": "left",
-            "width": "calc(( 100% - 650px ) / 4)",
-          }
-        }
-      >
-        Description
-      </div>
-      <div
-        className="Col"
-        style={
-          Object {
-            "textAlign": "center",
-            "width": "140px",
-          }
-        }
-      >
-        Status
-      </div>
-      <div
-        className="Col"
-        style={
-          Object {
-            "textAlign": "left",
-            "width": "calc(( 100% - 650px ) / 4)",
-          }
-        }
-      >
-        LOC ID
-      </div>
-      <div
-        className="Col"
-        style={
-          Object {
-            "textAlign": "center",
-            "width": "140px",
-          }
-        }
-      >
-        Creation date
-      </div>
-      <div
-        className="Col"
-        style={
-          Object {
-            "textAlign": "center",
-            "width": "140px",
-          }
-        }
-      >
-        Closing date
-      </div>
-      <div
-        className="Col"
-        style={
-          Object {
-            "textAlign": "center",
-            "width": "120px",
-          }
-        }
-      >
-        Action
-      </div>
-    </div>
-  </div>
-  <div
-    className="body"
-  >
-    <div>
-      <div
-        className="Row "
-        style={
-          Object {
-            "color": "#ffffff",
-          }
-        }
+        className="Row"
       >
         <div
           className="Col"
           style={
             Object {
-              "backgroundColor": "#152665",
-              "fontSize": undefined,
               "textAlign": "left",
               "width": "calc(( 100% - 650px ) / 4)",
             }
           }
         >
-          <div
-            className="regular-cell"
-            style={Object {}}
-          >
-            Patrick Gielen
-          </div>
+          Legal Officer
         </div>
         <div
           className="Col"
           style={
             Object {
-              "backgroundColor": "#152665",
-              "fontSize": undefined,
               "textAlign": "left",
               "width": "calc(( 100% - 650px ) / 4)",
             }
           }
         >
-          <div
-            className="regular-cell"
-            style={Object {}}
-          >
-            undefined undefined
-          </div>
+          Requester
         </div>
         <div
           className="Col"
           style={
             Object {
-              "backgroundColor": "#152665",
-              "fontSize": undefined,
               "textAlign": "left",
               "width": "110px",
             }
           }
         >
-          <div
-            className="regular-cell"
-            style={Object {}}
-          >
-            Transaction
-          </div>
+          Type
         </div>
         <div
           className="Col"
           style={
             Object {
-              "backgroundColor": "#152665",
-              "fontSize": undefined,
               "textAlign": "left",
               "width": "calc(( 100% - 650px ) / 4)",
             }
           }
         >
-          <div
-            className="regular-cell overflowing"
-            style={Object {}}
-          >
-            <span
-              onBlur={[Function]}
-              onFocus={[Function]}
-              onMouseOut={[Function]}
-              onMouseOver={[Function]}
-            >
-              TRANSACTION description
-            </span>
-          </div>
+          Description
         </div>
         <div
           className="Col"
           style={
             Object {
-              "backgroundColor": "#152665",
-              "fontSize": undefined,
               "textAlign": "center",
               "width": "140px",
             }
           }
         >
-          <span
-            className="StatusCell"
-            style={
-              Object {
-                "borderColor": "#37ad4b",
-              }
-            }
-          >
-            <img
-              alt="activated"
-              height="20px"
-              src="/assets/activated.svg"
-            />
-             
-            <span
-              style={
-                Object {
-                  "color": "#37ad4b",
-                  "textTransform": undefined,
-                }
-              }
-            >
-              Closed
-            </span>
-          </span>
+          Status
         </div>
         <div
           className="Col"
           style={
             Object {
-              "backgroundColor": "#152665",
-              "fontSize": undefined,
               "textAlign": "left",
               "width": "calc(( 100% - 650px ) / 4)",
             }
           }
         >
+          LOC ID
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "textAlign": "center",
+              "width": "140px",
+            }
+          }
+        >
+          Creation date
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "textAlign": "center",
+              "width": "140px",
+            }
+          }
+        >
+          Closing date
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "textAlign": "center",
+              "width": "120px",
+            }
+          }
+        >
+          Action
+        </div>
+      </div>
+    </div>
+    <div
+      className="body"
+    >
+      <div>
+        <div
+          className="Row "
+          style={
+            Object {
+              "color": "#ffffff",
+            }
+          }
+        >
           <div
-            className="Row"
+            className="Col"
+            style={
+              Object {
+                "backgroundColor": "#152665",
+                "fontSize": undefined,
+                "textAlign": "left",
+                "width": "calc(( 100% - 650px ) / 4)",
+              }
+            }
+          >
+            <div
+              className="regular-cell"
+              style={Object {}}
+            >
+              Patrick Gielen
+            </div>
+          </div>
+          <div
+            className="Col"
+            style={
+              Object {
+                "backgroundColor": "#152665",
+                "fontSize": undefined,
+                "textAlign": "left",
+                "width": "calc(( 100% - 650px ) / 4)",
+              }
+            }
+          >
+            <div
+              className="regular-cell"
+              style={Object {}}
+            >
+              undefined undefined
+            </div>
+          </div>
+          <div
+            className="Col"
+            style={
+              Object {
+                "backgroundColor": "#152665",
+                "fontSize": undefined,
+                "textAlign": "left",
+                "width": "110px",
+              }
+            }
+          >
+            <div
+              className="regular-cell"
+              style={Object {}}
+            >
+              Transaction
+            </div>
+          </div>
+          <div
+            className="Col"
+            style={
+              Object {
+                "backgroundColor": "#152665",
+                "fontSize": undefined,
+                "textAlign": "left",
+                "width": "calc(( 100% - 650px ) / 4)",
+              }
+            }
           >
             <div
               className="regular-cell overflowing"
@@ -276,245 +214,256 @@ exports[`VTPClosedLocs renders closed VTP LOCS 1`] = `
                 onMouseOut={[Function]}
                 onMouseOver={[Function]}
               >
-                132220282317401326589608735112778827114
+                TRANSACTION description
               </span>
             </div>
-            <button
-              className="Button CopyPasteButton medium btn btn-primary"
-              disabled={false}
-              onClick={[Function]}
-              style={Object {}}
-              type="button"
-            >
-              <img
-                alt="copy_paste"
-                src="/assets/copy_paste.svg"
-              />
-            </button>
           </div>
-        </div>
-        <div
-          className="Col"
-          style={
-            Object {
-              "backgroundColor": "#152665",
-              "fontSize": undefined,
-              "textAlign": "center",
-              "width": "140px",
-            }
-          }
-        >
           <div
-            className="date-cell"
-          >
-            <span
-              onBlur={[Function]}
-              onFocus={[Function]}
-              onMouseOut={[Function]}
-              onMouseOver={[Function]}
-            >
-              Invalid DateTime
-              <br />
-              Invalid DateTime
-            </span>
-          </div>
-        </div>
-        <div
-          className="Col"
-          style={
-            Object {
-              "backgroundColor": "#152665",
-              "fontSize": undefined,
-              "textAlign": "center",
-              "width": "140px",
-            }
-          }
-        >
-          <div
-            className="regular-cell"
+            className="Col"
             style={
               Object {
+                "backgroundColor": "#152665",
+                "fontSize": undefined,
                 "textAlign": "center",
+                "width": "140px",
               }
             }
           >
-            -
+            <span
+              className="StatusCell"
+              style={
+                Object {
+                  "borderColor": "#37ad4b",
+                }
+              }
+            >
+              <img
+                alt="activated"
+                height="20px"
+                src="/assets/activated.svg"
+              />
+               
+              <span
+                style={
+                  Object {
+                    "color": "#37ad4b",
+                    "textTransform": undefined,
+                  }
+                }
+              >
+                Closed
+              </span>
+            </span>
           </div>
-        </div>
-        <div
-          className="Col"
-          style={
-            Object {
-              "backgroundColor": "#152665",
-              "fontSize": undefined,
-              "textAlign": "center",
-              "width": "120px",
-            }
-          }
-        >
           <div
-            className="action-cell"
+            className="Col"
+            style={
+              Object {
+                "backgroundColor": "#152665",
+                "fontSize": undefined,
+                "textAlign": "left",
+                "width": "calc(( 100% - 650px ) / 4)",
+              }
+            }
           >
             <div
-              className="ButtonGroup"
+              className="Row"
             >
               <div
-                className="btn-group"
-                role="group"
+                className="regular-cell overflowing"
+                style={Object {}}
               >
-                <button
-                  className="Button ViewCertificateButton btn btn-primary"
-                  disabled={false}
-                  onClick={[Function]}
-                  style={Object {}}
-                  type="button"
+                <span
+                  onBlur={[Function]}
+                  onFocus={[Function]}
+                  onMouseOut={[Function]}
+                  onMouseOver={[Function]}
                 >
-                  View
-                </button>
+                  132220282317401326589608735112778827114
+                </span>
+              </div>
+              <button
+                className="Button CopyPasteButton medium btn btn-primary"
+                disabled={false}
+                onClick={[Function]}
+                style={Object {}}
+                type="button"
+              >
+                <img
+                  alt="copy_paste"
+                  src="/assets/copy_paste.svg"
+                />
+              </button>
+            </div>
+          </div>
+          <div
+            className="Col"
+            style={
+              Object {
+                "backgroundColor": "#152665",
+                "fontSize": undefined,
+                "textAlign": "center",
+                "width": "140px",
+              }
+            }
+          >
+            <div
+              className="date-cell"
+            >
+              <span
+                onBlur={[Function]}
+                onFocus={[Function]}
+                onMouseOut={[Function]}
+                onMouseOver={[Function]}
+              >
+                Invalid DateTime
+                <br />
+                Invalid DateTime
+              </span>
+            </div>
+          </div>
+          <div
+            className="Col"
+            style={
+              Object {
+                "backgroundColor": "#152665",
+                "fontSize": undefined,
+                "textAlign": "center",
+                "width": "140px",
+              }
+            }
+          >
+            <div
+              className="regular-cell"
+              style={
+                Object {
+                  "textAlign": "center",
+                }
+              }
+            >
+              -
+            </div>
+          </div>
+          <div
+            className="Col"
+            style={
+              Object {
+                "backgroundColor": "#152665",
+                "fontSize": undefined,
+                "textAlign": "center",
+                "width": "120px",
+              }
+            }
+          >
+            <div
+              className="action-cell"
+            >
+              <div
+                className="ButtonGroup"
+              >
+                <div
+                  className="btn-group"
+                  role="group"
+                >
+                  <div
+                    onBlur={[Function]}
+                    onFocus={[Function]}
+                    onMouseOut={[Function]}
+                    onMouseOver={[Function]}
+                  >
+                    <button
+                      className="Button view-certificate btn btn-primary"
+                      disabled={false}
+                      onClick={[Function]}
+                      style={Object {}}
+                      type="button"
+                    >
+                      <img
+                        alt="view-certificate"
+                        height="24px"
+                        src="/assets/view-certificate.svg"
+                      />
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div>
-      <div
-        className="Row "
-        style={
-          Object {
-            "color": "#ffffff",
-          }
-        }
-      >
+      <div>
         <div
-          className="Col"
+          className="Row "
           style={
             Object {
-              "backgroundColor": "#152665",
-              "fontSize": undefined,
-              "textAlign": "left",
-              "width": "calc(( 100% - 650px ) / 4)",
+              "color": "#ffffff",
             }
           }
         >
           <div
-            className="regular-cell"
-            style={Object {}}
-          >
-            Patrick Gielen
-          </div>
-        </div>
-        <div
-          className="Col"
-          style={
-            Object {
-              "backgroundColor": "#152665",
-              "fontSize": undefined,
-              "textAlign": "left",
-              "width": "calc(( 100% - 650px ) / 4)",
-            }
-          }
-        >
-          <div
-            className="regular-cell"
-            style={Object {}}
-          >
-            undefined undefined
-          </div>
-        </div>
-        <div
-          className="Col"
-          style={
-            Object {
-              "backgroundColor": "#152665",
-              "fontSize": undefined,
-              "textAlign": "left",
-              "width": "110px",
-            }
-          }
-        >
-          <div
-            className="regular-cell"
-            style={Object {}}
-          >
-            Collection
-          </div>
-        </div>
-        <div
-          className="Col"
-          style={
-            Object {
-              "backgroundColor": "#152665",
-              "fontSize": undefined,
-              "textAlign": "left",
-              "width": "calc(( 100% - 650px ) / 4)",
-            }
-          }
-        >
-          <div
-            className="regular-cell overflowing"
-            style={Object {}}
-          >
-            <span
-              onBlur={[Function]}
-              onFocus={[Function]}
-              onMouseOut={[Function]}
-              onMouseOver={[Function]}
-            >
-              COLLECTION description
-            </span>
-          </div>
-        </div>
-        <div
-          className="Col"
-          style={
-            Object {
-              "backgroundColor": "#152665",
-              "fontSize": undefined,
-              "textAlign": "center",
-              "width": "140px",
-            }
-          }
-        >
-          <span
-            className="StatusCell"
+            className="Col"
             style={
               Object {
-                "borderColor": "#37ad4b",
+                "backgroundColor": "#152665",
+                "fontSize": undefined,
+                "textAlign": "left",
+                "width": "calc(( 100% - 650px ) / 4)",
               }
             }
           >
-            <img
-              alt="activated"
-              height="20px"
-              src="/assets/activated.svg"
-            />
-             
-            <span
-              style={
-                Object {
-                  "color": "#37ad4b",
-                  "textTransform": undefined,
-                }
-              }
+            <div
+              className="regular-cell"
+              style={Object {}}
             >
-              Closed
-            </span>
-          </span>
-        </div>
-        <div
-          className="Col"
-          style={
-            Object {
-              "backgroundColor": "#152665",
-              "fontSize": undefined,
-              "textAlign": "left",
-              "width": "calc(( 100% - 650px ) / 4)",
-            }
-          }
-        >
+              Patrick Gielen
+            </div>
+          </div>
           <div
-            className="Row"
+            className="Col"
+            style={
+              Object {
+                "backgroundColor": "#152665",
+                "fontSize": undefined,
+                "textAlign": "left",
+                "width": "calc(( 100% - 650px ) / 4)",
+              }
+            }
+          >
+            <div
+              className="regular-cell"
+              style={Object {}}
+            >
+              undefined undefined
+            </div>
+          </div>
+          <div
+            className="Col"
+            style={
+              Object {
+                "backgroundColor": "#152665",
+                "fontSize": undefined,
+                "textAlign": "left",
+                "width": "110px",
+              }
+            }
+          >
+            <div
+              className="regular-cell"
+              style={Object {}}
+            >
+              Collection
+            </div>
+          </div>
+          <div
+            className="Col"
+            style={
+              Object {
+                "backgroundColor": "#152665",
+                "fontSize": undefined,
+                "textAlign": "left",
+                "width": "calc(( 100% - 650px ) / 4)",
+              }
+            }
           >
             <div
               className="regular-cell overflowing"
@@ -526,101 +475,177 @@ exports[`VTPClosedLocs renders closed VTP LOCS 1`] = `
                 onMouseOut={[Function]}
                 onMouseOver={[Function]}
               >
-                132220282317401326589608735112778827114
+                COLLECTION description
               </span>
             </div>
-            <button
-              className="Button CopyPasteButton medium btn btn-primary"
-              disabled={false}
-              onClick={[Function]}
-              style={Object {}}
-              type="button"
-            >
-              <img
-                alt="copy_paste"
-                src="/assets/copy_paste.svg"
-              />
-            </button>
           </div>
-        </div>
-        <div
-          className="Col"
-          style={
-            Object {
-              "backgroundColor": "#152665",
-              "fontSize": undefined,
-              "textAlign": "center",
-              "width": "140px",
-            }
-          }
-        >
           <div
-            className="date-cell"
-          >
-            <span
-              onBlur={[Function]}
-              onFocus={[Function]}
-              onMouseOut={[Function]}
-              onMouseOver={[Function]}
-            >
-              Invalid DateTime
-              <br />
-              Invalid DateTime
-            </span>
-          </div>
-        </div>
-        <div
-          className="Col"
-          style={
-            Object {
-              "backgroundColor": "#152665",
-              "fontSize": undefined,
-              "textAlign": "center",
-              "width": "140px",
-            }
-          }
-        >
-          <div
-            className="regular-cell"
+            className="Col"
             style={
               Object {
+                "backgroundColor": "#152665",
+                "fontSize": undefined,
                 "textAlign": "center",
+                "width": "140px",
               }
             }
           >
-            -
+            <span
+              className="StatusCell"
+              style={
+                Object {
+                  "borderColor": "#37ad4b",
+                }
+              }
+            >
+              <img
+                alt="activated"
+                height="20px"
+                src="/assets/activated.svg"
+              />
+               
+              <span
+                style={
+                  Object {
+                    "color": "#37ad4b",
+                    "textTransform": undefined,
+                  }
+                }
+              >
+                Closed
+              </span>
+            </span>
           </div>
-        </div>
-        <div
-          className="Col"
-          style={
-            Object {
-              "backgroundColor": "#152665",
-              "fontSize": undefined,
-              "textAlign": "center",
-              "width": "120px",
-            }
-          }
-        >
           <div
-            className="action-cell"
+            className="Col"
+            style={
+              Object {
+                "backgroundColor": "#152665",
+                "fontSize": undefined,
+                "textAlign": "left",
+                "width": "calc(( 100% - 650px ) / 4)",
+              }
+            }
           >
             <div
-              className="ButtonGroup"
+              className="Row"
             >
               <div
-                className="btn-group"
-                role="group"
+                className="regular-cell overflowing"
+                style={Object {}}
               >
-                <button
-                  className="Button ViewCertificateButton btn btn-primary"
-                  disabled={false}
-                  onClick={[Function]}
-                  style={Object {}}
-                  type="button"
+                <span
+                  onBlur={[Function]}
+                  onFocus={[Function]}
+                  onMouseOut={[Function]}
+                  onMouseOver={[Function]}
                 >
-                  View
-                </button>
+                  132220282317401326589608735112778827114
+                </span>
+              </div>
+              <button
+                className="Button CopyPasteButton medium btn btn-primary"
+                disabled={false}
+                onClick={[Function]}
+                style={Object {}}
+                type="button"
+              >
+                <img
+                  alt="copy_paste"
+                  src="/assets/copy_paste.svg"
+                />
+              </button>
+            </div>
+          </div>
+          <div
+            className="Col"
+            style={
+              Object {
+                "backgroundColor": "#152665",
+                "fontSize": undefined,
+                "textAlign": "center",
+                "width": "140px",
+              }
+            }
+          >
+            <div
+              className="date-cell"
+            >
+              <span
+                onBlur={[Function]}
+                onFocus={[Function]}
+                onMouseOut={[Function]}
+                onMouseOver={[Function]}
+              >
+                Invalid DateTime
+                <br />
+                Invalid DateTime
+              </span>
+            </div>
+          </div>
+          <div
+            className="Col"
+            style={
+              Object {
+                "backgroundColor": "#152665",
+                "fontSize": undefined,
+                "textAlign": "center",
+                "width": "140px",
+              }
+            }
+          >
+            <div
+              className="regular-cell"
+              style={
+                Object {
+                  "textAlign": "center",
+                }
+              }
+            >
+              -
+            </div>
+          </div>
+          <div
+            className="Col"
+            style={
+              Object {
+                "backgroundColor": "#152665",
+                "fontSize": undefined,
+                "textAlign": "center",
+                "width": "120px",
+              }
+            }
+          >
+            <div
+              className="action-cell"
+            >
+              <div
+                className="ButtonGroup"
+              >
+                <div
+                  className="btn-group"
+                  role="group"
+                >
+                  <div
+                    onBlur={[Function]}
+                    onFocus={[Function]}
+                    onMouseOut={[Function]}
+                    onMouseOver={[Function]}
+                  >
+                    <button
+                      className="Button view-records btn btn-primary"
+                      disabled={false}
+                      onClick={[Function]}
+                      style={Object {}}
+                      type="button"
+                    >
+                      <img
+                        alt="records_white"
+                        src="/assets/records_white.svg"
+                      />
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

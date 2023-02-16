@@ -1,7 +1,7 @@
 import { shallowRender } from "src/tests";
 import ItemFileDetails from "./ItemFileDetails";
 
-describe("ItemFilesDetails", () => {
+describe("ItemFileDetails", () => {
 
     it("renders without deliveries", () => {
         const result = shallowRender(<ItemFileDetails

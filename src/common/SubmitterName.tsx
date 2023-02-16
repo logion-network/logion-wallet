@@ -1,6 +1,5 @@
 import { LocData, VerifiedThirdParty } from "@logion/client";
 import { Cell } from "./Table";
-import { LocItem } from "../loc/types";
 import LegalOfficerName from "./LegalOfficerNameCell";
 import Icon from "./Icon";
 import OverlayTrigger from "react-bootstrap/OverlayTrigger";
@@ -8,7 +7,7 @@ import Tooltip from "react-bootstrap/Tooltip";
 
 export interface Props {
     loc: LocData
-    locItem: LocItem
+    submitter: string;
 }
 
 function format(identity: { firstName: string, lastName: string } | undefined, address: string): string {
@@ -20,20 +19,20 @@ function findVTP(loc: LocData, address: string): VerifiedThirdParty | undefined 
 }
 
 export default function SubmitterName(props: Props) {
-    const { loc, locItem } = props;
-    if (locItem.submitter === loc.ownerAddress) {
+    const { loc, submitter } = props;
+    if (submitter === loc.ownerAddress) {
         return (
-            <LegalOfficerName address={ locItem.submitter } />
+            <LegalOfficerName address={ submitter } />
         )
     } else {
-        const identity = locItem.submitter === loc.requesterAddress ?
+        const identity = submitter === loc.requesterAddress ?
             loc.userIdentity :
-            findVTP(loc, locItem.submitter);
+            findVTP(loc, submitter);
         return (
             <Cell content={
                 <div>
-                    { format(identity, locItem.submitter) }
-                    { locItem.submitter !== loc.requesterAddress && <>
+                    { format(identity, submitter) }
+                    { submitter !== loc.requesterAddress && <>
                         <VTPBadge />
                     </> }
                 </div>

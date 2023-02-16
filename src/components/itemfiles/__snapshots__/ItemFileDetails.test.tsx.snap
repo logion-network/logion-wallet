@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ItemFilesDetails renders with deliveries 1`] = `
+exports[`ItemFileDetails renders with deliveries 1`] = `
 <div
   className="ItemFileDetails"
 >
@@ -54,7 +54,7 @@ exports[`ItemFilesDetails renders with deliveries 1`] = `
 </div>
 `;
 
-exports[`ItemFilesDetails renders without deliveries 1`] = `
+exports[`ItemFileDetails renders without deliveries 1`] = `
 <div
   className="ItemFileDetails"
 >

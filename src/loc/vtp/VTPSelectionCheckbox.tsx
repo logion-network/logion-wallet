@@ -6,7 +6,7 @@ import {
     VerifiedThirdPartyWithSelect
 } from "../../legal-officer/client";
 import { useCallback, useMemo, useState } from "react";
-import { OpenLoc } from "@logion/client";
+import { OpenLoc, ClosedCollectionLoc } from "@logion/client";
 import { useLocContext } from "../LocContext";
 import Dialog from "../../common/Dialog";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
@@ -29,7 +29,7 @@ export default function VTPSelectionCheckbox(props: Props) {
     const toggleSelection = useCallback(async () => {
         setStatus('Confirming');
         const call = async (callback: CallCallback) => mutateLocState(async current => {
-            if(signer && current instanceof OpenLoc) {
+            if(signer && (current instanceof OpenLoc || current instanceof ClosedCollectionLoc)) {
                 const params: SelectPartiesParams = {
                     locState: current,
                     issuer: vtpSelection.address,

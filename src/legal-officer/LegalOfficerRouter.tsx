@@ -18,6 +18,9 @@ import {
     VOTES_PATH,
     VOTE_LOC_RELATIVE_PATH,
     DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH,
+    TOKENS_RECORD_RELATIVE_PATH,
+    tokensRecordPath,
+    TOKENS_RECORD_VTP_RELATIVE_PATH,
 } from './LegalOfficerPaths';
 
 import Home from './Home';
@@ -47,6 +50,7 @@ import { useLegalOfficerContext } from './LegalOfficerContext';
 import VTPSelection from "../loc/vtp/VTPSelection";
 import Votes from './votes/Votes';
 import { GuardianDocumentClaimHistory } from 'src/loc/DocumentClaimHistory';
+import { LegalOfficerTokensRecordPane } from 'src/loc/record/TokensRecordPane';
 
 export default function LegalOfficerRouter() {
     const { accounts } = useLogionChain();
@@ -146,19 +150,19 @@ export default function LegalOfficerRouter() {
             <Route path={ locSelectVTPPath('Transaction') } element={
                 <VTPSelection
                     detailsPath={ locDetailsPath }
-                    locType='Transaction'
+                    backPath={ locId => locDetailsPath(locId, 'Transaction') }
                 />
             }/>
             <Route path={ locSelectVTPPath('Collection') } element={
                 <VTPSelection
                     detailsPath={ locDetailsPath }
-                    locType='Collection'
+                    backPath={ locId => locDetailsPath(locId, 'Collection') }
                 />
             }/>
             <Route path={ locSelectVTPPath('Identity') } element={
                 <VTPSelection
                     detailsPath={ locDetailsPath }
-                    locType='Identity'
+                    backPath={ locId => locDetailsPath(locId, 'Identity') }
                 />
             }/>
             <Route path={ VOTES_RELATIVE_PATH } element={ <Votes />} />
@@ -169,6 +173,13 @@ export default function LegalOfficerRouter() {
                 />
             } />
             <Route path={ DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH } element={ <GuardianDocumentClaimHistory/> } />
+            <Route path={ TOKENS_RECORD_RELATIVE_PATH } element={ <LegalOfficerTokensRecordPane/> }/>
+            <Route path={ TOKENS_RECORD_VTP_RELATIVE_PATH } element={
+                <VTPSelection
+                    detailsPath={ locDetailsPath }
+                    backPath={ locId => tokensRecordPath(locId) }
+                />
+            }/>
             <Route path="" element={ currentLegalOfficerUnavailable ? <Navigate to={ SETTINGS_PATH }/> : <Home /> } />
         </Routes>
     );

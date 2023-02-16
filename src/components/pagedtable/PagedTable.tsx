@@ -2,6 +2,7 @@ import { useCallback } from "react";
 import { useCommonContext } from "src/common/CommonContext";
 import Icon from "src/common/Icon";
 import Table, { Column, EmptyTableMessage } from "src/common/Table";
+import { Children } from "src/common/types/Helpers";
 
 import "./PagedTable.css";
 
@@ -46,6 +47,7 @@ export interface Props<T> {
     goToPage: (page: number) => void,
     columns: Column<T>[],
     constrainedRowHeight?: boolean,
+    renderEmpty?: () => Children,
 }
 
 export default function PagedTable<T>(props: Props<T>) {
@@ -56,7 +58,7 @@ export default function PagedTable<T>(props: Props<T>) {
             <Table
                 columns={ props.columns }
                 data={ props.currentPage.data }
-                renderEmpty={ () => <EmptyTableMessage>No page to display</EmptyTableMessage> }
+                renderEmpty={ props.renderEmpty !== undefined ? props.renderEmpty : () => <EmptyTableMessage>No page to display</EmptyTableMessage> }
                 constrainedRowHeight={ props.constrainedRowHeight }
             />
             <Controls page={ props.currentPage } fullSize={ props.fullSize } goToPage={ props.goToPage } />
