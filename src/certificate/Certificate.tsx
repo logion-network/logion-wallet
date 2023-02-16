@@ -13,7 +13,7 @@ import {
     LocData,
     CheckResultType,
     Token,
-    CheckCertifiedCopyResult
+    CheckCertifiedCopyResult,
 } from "@logion/client";
 import { UUID } from "@logion/node-api";
 
@@ -40,6 +40,7 @@ import { Children } from "src/common/types/Helpers";
 import CheckDeliveredFrame from "src/components/deliverycheck/CheckDeliveredFrame";
 import ClaimAssetButton from "./ClaimAssetButton";
 import Authenticate from "./Authenticate";
+import TokensRecords from "./TokensRecords";
 import './Certificate.css'
 
 export default function Certificate() {
@@ -333,6 +334,13 @@ export default function Certificate() {
                         isVoid={ loc.data.voidInfo !== undefined }
                         tokenForDownload={ tokenForDownload }
                     />
+                }
+                { collectionItem !== null && tokenForDownload !== undefined &&
+                    <TokensRecords
+                        locId={ locId }
+                        owner={ legalOfficer.address }
+                        collectionItem={ collectionItem! }
+                        tokenForDownload={ tokenForDownload } />
                 }
                 <LegalOfficerRow legalOfficer={ legalOfficer } />
                 <Row className="buttons">

@@ -48,7 +48,7 @@ export default function CollectionItemCellRow(props: Props) {
                             { files.map(file => (
                                 <li className={ props.checkResult?.collectionItemFile?.hash === file.hash ? "matched" : ""}>
                                     <Row>
-                                        <Col md={ 7 }>
+                                        <Col md={ 8 }>
                                             { file.name } ({ file.contentType }, { file.size.toString() } bytes)
                                         </Col>
                                         <Col md={ 3 }>
