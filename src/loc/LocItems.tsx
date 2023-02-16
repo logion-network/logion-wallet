@@ -28,6 +28,8 @@ import { Viewer } from "src/common/CommonContext";
 import { useLocContext } from "./LocContext";
 import { useCallback } from "react";
 import RestrictedDeliveryCell from "./RestricedDeliveryCell";
+import { documentClaimHistoryPath } from "src/legal-officer/LegalOfficerPaths";
+import { documentClaimHistoryPath as userDocumentClaimHistoryPath } from "src/wallet-user/UserRouter";
 
 export interface LocItemsProps {
     matchedHash?: string;
@@ -86,7 +88,7 @@ export function LocItems(props: LocItemsProps) {
         return (
             <>
                 { locItem.type === 'Data' && <LocPublicDataDetails item={ locItem } /> }
-                { locItem.type === 'Document' && <LocPrivateFileDetails item={ locItem } viewer={ props.viewer } /> }
+                { locItem.type === 'Document' && <LocPrivateFileDetails item={ locItem } documentClaimHistory={ documentClaimHistory(props.viewer, loc, locItem.value)} /> }
                 { locItem.type === 'Linked LOC' && <LocLinkDetails item={ locItem } /> }
             </>
         )
@@ -237,4 +239,14 @@ function canDelete(address: string | undefined, item: LocItem, viewer: Viewer, l
 
 function canViewFile(address: string | undefined, item: LocItem, contributionMode?: ContributionMode): boolean {
     return (contributionMode !== 'VTP' || item.submitter === address);
+}
+
+function documentClaimHistory(viewer: Viewer, loc: LocData | null, hash: string) {
+    if(!loc) {
+        return "";
+    } else if(viewer === "LegalOfficer") {
+        return documentClaimHistoryPath(loc.id, hash);
+    } else {
+        return userDocumentClaimHistoryPath(loc.id, hash);
+    }
 }

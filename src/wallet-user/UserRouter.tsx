@@ -28,7 +28,7 @@ import Button from "../common/Button";
 import IdentityLocRequest from "./trust-protection/IdentityLocRequest";
 import VTPDashboard from "./vtp/VTPDashboard";
 import IdenfyVerificationResult from './IdenfyVerificationResult';
-import { UserDocumentClaimHistory } from 'src/loc/DocumentClaimHistory';
+import { UserDocumentClaimHistory, UserTokensRecordDocumentClaimHistory } from 'src/loc/DocumentClaimHistory';
 import { UserTokensRecordPane } from 'src/loc/record/TokensRecordPane';
 
 export const HOME_PATH = USER_PATH;
@@ -107,6 +107,24 @@ export function vtpTokensRecordPath(locId: UUID) {
     return USER_PATH + VTP_TOKENS_RECORD_RELATIVE_PATH
         .replace(":locType", "Collection")
         .replace(":locId", locId.toString());
+}
+
+export const TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH = LOC_DETAILS_RELATIVE_PATH + "/records/:recordId/claims/:hash";
+export function tokensRecordDocumentClaimHistoryPath(locId: UUID, recordId: string, hash: string) {
+    return USER_PATH + TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH
+        .replace(":locType", "Collection")
+        .replace(":locId", locId.toString())
+        .replace(":recordId", recordId)
+        .replace(":hash", hash);
+}
+
+export const VTP_TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH = VTP_DETAILS_RELATIVE_PATH + "/records/:recordId/claims/:hash";
+export function vtpTokensRecordDocumentClaimHistoryPath(locId: UUID, recordId: string, hash: string) {
+    return USER_PATH + VTP_TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH
+        .replace(":locType", "Collection")
+        .replace(":locId", locId.toString())
+        .replace(":recordId", recordId)
+        .replace(":hash", hash);
 }
 
 export default function UserRouter() {
@@ -243,6 +261,8 @@ export default function UserRouter() {
             <Route path={ DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH } element={ <UserDocumentClaimHistory/> } />
             <Route path={ TOKENS_RECORD_RELATIVE_PATH } element={ <UserTokensRecordPane contributionMode='Requester'/> }/>
             <Route path={ VTP_TOKENS_RECORD_RELATIVE_PATH } element={ <UserTokensRecordPane contributionMode='VTP'/> }/>
+            <Route path={ TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH } element={ <UserTokensRecordDocumentClaimHistory contributionMode='Requester'/> } />
+            <Route path={ VTP_TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH } element={ <UserTokensRecordDocumentClaimHistory contributionMode='VTP'/> } />
         </Routes>
     );
 }

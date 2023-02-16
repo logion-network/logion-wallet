@@ -210,3 +210,15 @@ export async function getTokensRecordFileSource(
     const { locId, recordId, hash } = parameters
     return downloadFile(axios, `/api/records/${ locId }/${ recordId }/files-sources/${ hash }`);
 }
+
+export async function getTokensRecordDeliveries(
+    axios: AxiosInstance,
+    parameters: {
+        locId: string,
+        recordId: string,
+    }
+): Promise<ItemDeliveriesResponse> {
+    const { locId, recordId } = parameters
+    const response = await axios.get(`/api/records/${ locId }/${ recordId }/deliveries`);
+    return response.data;
+}

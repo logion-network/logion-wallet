@@ -1,16 +1,20 @@
-import { TokensRecord } from "@logion/client";
+import { LocData, TokensRecord } from "@logion/client";
 import { useMemo, useState } from "react";
-import { useCommonContext } from "src/common/CommonContext";
+import { useCommonContext, Viewer } from "src/common/CommonContext";
 import SubmitterName from "src/common/SubmitterName";
 import { Cell, DateTimeCell, EmptyTableMessage } from "src/common/Table";
 import ViewFileButton from "src/common/ViewFileButton";
 import PagedTable, { getPage, Page } from "src/components/pagedtable/PagedTable";
+import { tokensRecordDocumentClaimHistoryPath } from "src/legal-officer/LegalOfficerPaths";
 import { getTokensRecordFileSource } from "../FileModel";
 import { useLocContext } from "../LocContext";
 import LocPrivateFileDetails from "../LocPrivateFileDetails";
+import { ContributionMode } from "../types";
+import { tokensRecordDocumentClaimHistoryPath as requesterTokensRecordDocumentClaimHistoryPath, vtpTokensRecordDocumentClaimHistoryPath } from "src/wallet-user/UserRouter";
 
 export interface Props {
     records: TokensRecord[];
+    contributionMode?: ContributionMode;
 }
 
 export default function TokensRecordTable(props: Props) {
@@ -21,7 +25,7 @@ export default function TokensRecordTable(props: Props) {
 
     const currentPage: Page<TokensRecord> = useMemo(() => {
         return getPage(records, currentPageNumber, 10);
-    }, [ props.records, currentPageNumber, records ]);
+    }, [ records, currentPageNumber ]);
 
     if(!loc) {
         return null;
@@ -44,7 +48,7 @@ export default function TokensRecordTable(props: Props) {
                             value: record.files[0].hash,
                             nature: record.description,
                         }}
-                        viewer={viewer}
+                        documentClaimHistory={ documentClaimHistory(viewer, loc, record, props.contributionMode) }
                     />,
                 },
                 {
@@ -85,4 +89,16 @@ export default function TokensRecordTable(props: Props) {
             renderEmpty={ () => <EmptyTableMessage>No records to display</EmptyTableMessage> }
         />
     );
+}
+
+function documentClaimHistory(viewer: Viewer, loc: LocData, record: TokensRecord, contributionMode?: ContributionMode): string {
+    if(viewer === "LegalOfficer") {
+        return tokensRecordDocumentClaimHistoryPath(loc.id, record.id, record.files[0].hash);
+    } else if(contributionMode === "Requester") {
+        return requesterTokensRecordDocumentClaimHistoryPath(loc.id, record.id, record.files[0].hash);
+    } else if(contributionMode === "VTP") {
+        return vtpTokensRecordDocumentClaimHistoryPath(loc.id, record.id, record.files[0].hash);
+    } else {
+        return "";
+    }
 }

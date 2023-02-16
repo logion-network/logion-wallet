@@ -21,6 +21,7 @@ import {
     TOKENS_RECORD_RELATIVE_PATH,
     tokensRecordPath,
     TOKENS_RECORD_VTP_RELATIVE_PATH,
+    TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH,
 } from './LegalOfficerPaths';
 
 import Home from './Home';
@@ -49,7 +50,7 @@ import { useLogionChain } from '../logion-chain';
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import VTPSelection from "../loc/vtp/VTPSelection";
 import Votes from './votes/Votes';
-import { GuardianDocumentClaimHistory } from 'src/loc/DocumentClaimHistory';
+import { GuardianDocumentClaimHistory, LegalOfficerTokensRecordDocumentClaimHistory } from 'src/loc/DocumentClaimHistory';
 import { LegalOfficerTokensRecordPane } from 'src/loc/record/TokensRecordPane';
 
 export default function LegalOfficerRouter() {
@@ -180,6 +181,7 @@ export default function LegalOfficerRouter() {
                     backPath={ locId => tokensRecordPath(locId) }
                 />
             }/>
+            <Route path={ TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH } element={ <LegalOfficerTokensRecordDocumentClaimHistory/> } />
             <Route path="" element={ currentLegalOfficerUnavailable ? <Navigate to={ SETTINGS_PATH }/> : <Home /> } />
         </Routes>
     );

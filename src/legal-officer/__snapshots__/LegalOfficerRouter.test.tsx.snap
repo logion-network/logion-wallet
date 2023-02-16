@@ -182,6 +182,10 @@ exports[`renders 1`] = `
     path="/loc/:locType/:locId/records/vtp"
   />
   <Route
+    element={<LegalOfficerTokensRecordDocumentClaimHistory />}
+    path="/loc/:locType/:locId/records/:recordId/claims/:hash"
+  />
+  <Route
     element={<Account />}
     path=""
   />

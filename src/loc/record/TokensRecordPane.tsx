@@ -22,7 +22,7 @@ export default function TokensRecordPane(props: Props) {
             backPath={ backPath }
             contributionMode={ props.contributionMode }
         >
-            <TokensRecordFrame/>
+            <TokensRecordFrame contributionMode={ props.contributionMode }/>
         </LocPane>
     );
 }
