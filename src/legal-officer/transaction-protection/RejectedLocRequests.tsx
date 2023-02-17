@@ -7,6 +7,7 @@ import UserIdentityNameCell from '../../common/UserIdentityNameCell';
 
 import LocRequestDetails from './LocRequestDetails';
 import { useMemo } from "react";
+import { Spinner } from "react-bootstrap";
 
 export interface Props {
     locType: LocType;
@@ -19,7 +20,7 @@ export default function RejectedLocRequests(props: Props) {
     const data = useMemo(() => rejectedLocRequests ? rejectedLocRequests[locType].map(loc => loc.data()) : [], [ rejectedLocRequests, locType ]);
 
     if(rejectedLocRequests === null) {
-        return null;
+        return <Spinner animation="border"/>;
     }
 
     return (

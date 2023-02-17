@@ -10,6 +10,7 @@ import Button from "../../common/Button";
 import { locDetailsPath } from "../LegalOfficerPaths";
 import ButtonGroup from "../../common/ButtonGroup";
 import { useResponsiveContext } from '../../common/Responsive';
+import { Spinner } from "react-bootstrap";
 
 export interface Props {
     locType: LocType;
@@ -23,7 +24,7 @@ export default function OpenedLocs(props: Props) {
     const { locType, identityLocType } = props
 
     if (openedLocRequests === null || openedIdentityLocsByType === null) {
-        return null;
+        return <Spinner animation="border"/>;
     }
 
     const requests = locType === 'Identity' ? openedIdentityLocsByType[identityLocType!] : openedLocRequests[locType];

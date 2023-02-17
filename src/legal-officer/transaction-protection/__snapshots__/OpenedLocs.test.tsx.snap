@@ -562,6 +562,14 @@ exports[`OpenedLocs renders Open Polkadot Identity LOCs 1`] = `
 </div>
 `;
 
-exports[`OpenedLocs renders null with no data 1`] = `null`;
+exports[`OpenedLocs renders null with no data 1`] = `
+<Spinner
+  animation="border"
+/>
+`;
 
-exports[`OpenedLocs renders open locs 1`] = `null`;
+exports[`OpenedLocs renders open locs 1`] = `
+<Spinner
+  animation="border"
+/>
+`;

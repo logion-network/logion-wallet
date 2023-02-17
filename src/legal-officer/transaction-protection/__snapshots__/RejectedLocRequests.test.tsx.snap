@@ -1,6 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Renders null with no data 1`] = `null`;
+exports[`Renders null with no data 1`] = `
+<Spinner
+  animation="border"
+/>
+`;
 
 exports[`Renders rejected requests 1`] = `
 <Table

@@ -11,6 +11,7 @@ import { locDetailsPath } from "../LegalOfficerPaths";
 import ButtonGroup from "../../common/ButtonGroup";
 import { useResponsiveContext } from '../../common/Responsive';
 import { useMemo } from "react";
+import { Spinner } from "react-bootstrap";
 
 export interface Props {
     locType: LocType;
@@ -34,7 +35,7 @@ export default function VoidLocs(props: Props) {
     }, [ voidIdentityLocsByType, voidTransactionLocs, locType, identityLocType ]);
 
     if (voidTransactionLocs === null || voidIdentityLocsByType === null) {
-        return null;
+        return <Spinner animation="border"/>;
     }
 
     return (

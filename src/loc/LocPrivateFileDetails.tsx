@@ -9,18 +9,20 @@ import { LocItem } from "./types";
 
 export interface Props {
     item: LocItem;
-    documentClaimHistory: string;
+    documentClaimHistory?: string;
     fileName?: string;
     fileSize?: string;
     fileType?: string;
 }
 
 export default function LocPrivateFileDetails(props: Props) {
+    const { documentClaimHistory } = props;
     const navigate = useNavigate();
 
+    const leftPaneWidth = documentClaimHistory !== undefined ? "50%" : "100%";
     return (
         <>
-            <Col className="LocItemDetails" style={{ width: "50%" }}>
+            <Col className="LocItemDetails" style={{ width: leftPaneWidth }}>
                 <div className="frame">
                     <div className="frame-title">{ props.item.status === "DRAFT" ? "Document related data to be published" : "Published document related data" }</div>
                     {
@@ -42,15 +44,18 @@ export default function LocPrivateFileDetails(props: Props) {
                     <LocItemDetail label="Public Description">{ props.item.nature }</LocItemDetail>
                 </div>
             </Col>
-            <Col className="LocItemDetails claim" style={{width: "50%"}}>
-                <div>
-                    <Button
-                        onClick={ () => navigate(props.documentClaimHistory) }
-                    >
-                        <Icon icon={{ id: "claim" }} /> View document claim history
-                    </Button>
-                </div>
-            </Col>
+            {
+                documentClaimHistory !== undefined &&
+                <Col className="LocItemDetails claim" style={{width: "50%"}}>
+                    <div>
+                        <Button
+                            onClick={ () => navigate(documentClaimHistory) }
+                        >
+                            <Icon icon={{ id: "claim" }} /> View document claim history
+                        </Button>
+                    </div>
+                </Col>
+            }
         </>
     )
 }

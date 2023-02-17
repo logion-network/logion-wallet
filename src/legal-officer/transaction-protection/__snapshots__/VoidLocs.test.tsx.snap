@@ -624,4 +624,8 @@ exports[`VoidLocs renders Void Polkadot Identity LOCs 1`] = `
 </div>
 `;
 
-exports[`VoidLocs renders null with no data 1`] = `null`;
+exports[`VoidLocs renders null with no data 1`] = `
+<Spinner
+  animation="border"
+/>
+`;

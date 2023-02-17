@@ -638,6 +638,14 @@ exports[`ClosedLocs renders Closed Polkadot Identity LOCs 1`] = `
 </div>
 `;
 
-exports[`ClosedLocs renders null with no data 1`] = `null`;
+exports[`ClosedLocs renders null with no data 1`] = `
+<Spinner
+  animation="border"
+/>
+`;
 
-exports[`ClosedLocs renders pending requests 1`] = `null`;
+exports[`ClosedLocs renders pending requests 1`] = `
+<Spinner
+  animation="border"
+/>
+`;

@@ -1,6 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`PendingLocRequests renders null with no data 1`] = `null`;
+exports[`PendingLocRequests renders null with no data 1`] = `
+<Spinner
+  animation="border"
+/>
+`;
 
 exports[`PendingLocRequests renders pending requests 1`] = `
 <React.Fragment>

@@ -13,6 +13,7 @@ import { useResponsiveContext } from "../../common/Responsive";
 import { locDetailsPath } from "../LegalOfficerPaths";
 import { useNavigate } from 'react-router-dom';
 import { useMemo } from "react";
+import { Spinner } from "react-bootstrap";
 
 export interface Props {
     locType: LocType;
@@ -27,7 +28,7 @@ export default function PendingLocRequests(props: Props) {
     const data = useMemo(() => pendingLocRequests ? pendingLocRequests[locType].map(loc => loc.data()) : [], [ pendingLocRequests, locType ]);
 
     if (pendingLocRequests === null) {
-        return null;
+        return <Spinner animation="border"/>;
     }
 
     return (
