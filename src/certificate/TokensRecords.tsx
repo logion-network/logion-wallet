@@ -35,7 +35,7 @@ export default function TokensRecords(props: TokensRecordsProps) {
         <div className="TokensRecords">
             <Row>
                 <Col>
-                    <h2><MenuIcon icon={ { id: "records_polka" } } width="88px" /> Tokens record(s)</h2>
+                    <h2><MenuIcon icon={ { id: "records_polka" } } height="40px" width="70px" /> Tokens record(s)</h2>
                     <p>The following Tokens Records, shared with all the owners of tokens declared in this LOC, are
                         signed by logion Verified Issuers.</p>
                 </Col>

@@ -22,6 +22,7 @@ export interface ViewFileProps extends FileInfo {
     token?: Token;
     children?: Children;
     limitIconSize?: boolean;
+    noPaddingOverride?: boolean;
 }
 
 async function openFile(axios: AxiosInstance, props: ViewFileProps) {
@@ -75,7 +76,7 @@ export default function ViewFileButton(props: ViewFileProps) {
 
     const limitIconSize = (props.limitIconSize === undefined || props.limitIconSize);
 
-    const className = customClassName("ViewFileButton", (limitIconSize ? "limit-icon-size" : undefined));
+    const className = customClassName("ViewFileButton", (limitIconSize ? "limit-icon-size" : undefined), props.noPaddingOverride ? "no-padding-override" : undefined);
     if(downloadStarted) {
         return (
             <OverlayTrigger

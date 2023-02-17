@@ -64,8 +64,9 @@ export default function ClaimAssetButton(props: Props) {
                         )
                     }}
                     limitIconSize={ false }
+                    noPaddingOverride={ true }
                 >
-                    <Icon icon={{ id: "download_claimed" }} />{ buttonText(file.type) }
+                    <Icon icon={{ id: "download_claimed" }} height="24px" /> { buttonText(file.type) }
                 </ViewFileButton>
             }
             {
