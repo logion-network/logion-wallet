@@ -38,7 +38,7 @@ export default function LocPrivateFileDetails(props: Props) {
                     <LocItemDetail label="Submitter ID" copyButtonText={ props.item.submitter }>
                         { props.item.submitter }
                     </LocItemDetail>
-                    <LocItemDetail label="Document Hash">{ props.item.value }</LocItemDetail>
+                    <LocItemDetail label="Document Hash" copyButtonText={ props.item.value }>{ props.item.value }</LocItemDetail>
                     <LocItemDetail label="Public Description">{ props.item.nature }</LocItemDetail>
                 </div>
             </Col>

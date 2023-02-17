@@ -8,6 +8,7 @@ import { useCommonContext } from "src/common/CommonContext";
 import Dialog from "src/common/Dialog";
 import FileSelectorButton from "src/common/FileSelectorButton";
 import FormGroup from "src/common/FormGroup";
+import Icon from "src/common/Icon";
 import { useLogionChain } from "src/logion-chain";
 import { useLocContext } from "../LocContext";
 
@@ -118,7 +119,15 @@ export default function AddTokensRecordDialog(props: Props) {
             onSubmit={handleSubmit(submit)}
         >
             <h3>Add a tokens record</h3>
-            <p><strong>Warning:</strong> after processing and blockchain publication, the related data (recorded on the logion blockchain) and the document will be available through the logion public certificate for all token owners recorded in this Collection LOC.</p>
+            <Icon icon={{id: "big-warning"}} type="png" height="50px"/>
+
+            <div style={{textAlign: "left"}}>
+                <p><strong>Warning:</strong></p>
+                <ul>
+                    <li style={{marginBottom: "20px"}}>After publication, the only data that will be publicly available on the blockchain will be the HASH of the document, the file name, and its type. With regards to the name of the file, it's your responsibility to check if the file name does not show any personal (eg: private name, social security number, etc.), inappropriate or confidential information.</li>
+                    <li>After processing and blockchain publication, the related data (recorded on the logion blockchain) and the document file(s) will be available through the logion public certificate for all token owners recorded in this Collection LOC. It's your responsibility to check if you have the required rights with regard to the assets you are about to record in this LOC.</li>
+                </ul>
+            </div>
 
             <FormGroup
                 id="locFile"

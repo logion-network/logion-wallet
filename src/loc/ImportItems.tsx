@@ -177,12 +177,18 @@ export default function ImportItems() {
                 size="xl"
             >
                 <h3>Collection Items import tool</h3>
+                <Icon icon={{id: "big-warning"}} type="png" height="50px"/>
 
-                <p>Please double-check the items that you are about to add to your Collection LOC: related data will be recorded on
-                    the logion blockchain. <strong>Further deletion will NOT be possible.</strong>
-                </p>
+                <div style={{textAlign: "left", marginTop: "10px"}}>
+                    <p><strong>Please double-check the items that you are about to add to your Collection LOC:</strong></p>
 
-                <p><strong>If you did not prefix the ID with "0x" in the CSV file, we hashed the provided value for you.</strong></p>
+                    <ul>
+                        <li>ALL data below will be recorded on the logion blockchain. Further deletion will NOT be possible.</li>
+                        <li>It's your responsibility to check if you do not publicly publish any personal (eg: private name, social security number, etc.), inappropriate, or confidential information and if you have the required rights with regard to the assets you are about to record in this LOC.</li>
+                    </ul>
+
+                    <p><strong>If you did not prefix the ID with "0x" in the CSV file, we hashed the provided value for you.</strong></p>
+                </div>
 
                 { items.length > 0 &&
                     <>
@@ -209,7 +215,7 @@ export default function ImportItems() {
                             },
                             {
                                 header: "Description",
-                                render: item => <Cell content={ item.description } overflowing />,
+                                render: item => <Cell content={ item.description } overflowing tooltipId={`item-${item.id}-description`}/>,
                                 align: "left",
                                 renderDetails: item => <ImportItemDetails item={ item } />,
                                 detailsExpanded: item => item.error !== undefined,

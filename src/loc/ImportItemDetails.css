@@ -12,9 +12,9 @@
     font-family: "Montserrat", sans-serif;
     line-break: anywhere;
     white-space: break-spaces;
-    margin-bottom: 0;
 }
 
+.ImportItemDetails .item-description,
 .ImportItemDetails .item-file,
 .ImportItemDetails .item-delivery,
 .ImportItemDetails .item-tcs,

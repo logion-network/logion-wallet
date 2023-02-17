@@ -44,19 +44,22 @@ export default function ImportItemDetails(props: { item: Item }) {
                 props.item.error &&
                 <p className="error-message">{ props.item.error }</p>
             }
-            <pre>{ props.item.description }</pre>
-            {
-                props.item.files.length > 0 &&
-                <div className="item-file">
-                    <p>Attached file:</p>
-                    <ul>
-                        <li>Name: { props.item.files[0].name }</li>
-                        <li>Content type: { props.item.files[0].contentType.mimeType }</li>
-                        <li>Hash: { props.item.files[0].hashOrContent.contentHash }</li>
-                        <li>Size: { props.item.files[0].size.toString() } bytes</li>
-                    </ul>
-                </div>
-            }
+            <div className="item-description">
+                <p>Item description:</p>
+                <pre>{ props.item.description }</pre>
+                {
+                    props.item.files.length > 0 &&
+                    <div className="item-file">
+                        <p>Attached file:</p>
+                        <ul>
+                            <li>Name: { props.item.files[0].name }</li>
+                            <li>Content type: { props.item.files[0].contentType.mimeType }</li>
+                            <li>Hash: { props.item.files[0].hashOrContent.contentHash }</li>
+                            <li>Size: { props.item.files[0].size.toString() } bytes</li>
+                        </ul>
+                    </div>
+                }
+            </div>
             <p className="item-delivery">Restricted delivery: { props.item.restrictedDelivery ? "Yes" : "No" }</p>
             {
                 props.item.token &&
