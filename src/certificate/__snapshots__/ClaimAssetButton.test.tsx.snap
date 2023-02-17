@@ -147,13 +147,15 @@ Object {
         class="ClaimAssetButton"
       >
         <button
-          class="Button ViewFileButton btn btn-primary"
+          class="Button ViewFileButton no-padding-override btn btn-primary"
           type="button"
         >
           <img
             alt="download_claimed"
+            height="24px"
             src="/assets/download_claimed.svg"
           />
+           
           Claim document
         </button>
       </div>
@@ -164,13 +166,15 @@ Object {
       class="ClaimAssetButton"
     >
       <button
-        class="Button ViewFileButton btn btn-primary"
+        class="Button ViewFileButton no-padding-override btn btn-primary"
         type="button"
       >
         <img
           alt="download_claimed"
+          height="24px"
           src="/assets/download_claimed.svg"
         />
+         
         Claim document
       </button>
     </div>
@@ -238,13 +242,15 @@ Object {
         class="ClaimAssetButton"
       >
         <button
-          class="Button ViewFileButton btn btn-primary"
+          class="Button ViewFileButton no-padding-override btn btn-primary"
           type="button"
         >
           <img
             alt="download_claimed"
+            height="24px"
             src="/assets/download_claimed.svg"
           />
+           
           Claim your asset
         </button>
       </div>
@@ -255,13 +261,15 @@ Object {
       class="ClaimAssetButton"
     >
       <button
-        class="Button ViewFileButton btn btn-primary"
+        class="Button ViewFileButton no-padding-override btn btn-primary"
         type="button"
       >
         <img
           alt="download_claimed"
+          height="24px"
           src="/assets/download_claimed.svg"
         />
+         
         Claim your asset
       </button>
     </div>
