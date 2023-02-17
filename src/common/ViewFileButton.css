@@ -1,4 +1,4 @@
-.Button.ViewFileButton.btn::not(.no-padding-override) {
+.Button.ViewFileButton.btn:not(.no-padding-override) {
     padding: 9px 10px;
 }
 
