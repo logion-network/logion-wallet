@@ -8,7 +8,7 @@ export default function VTPSelectionButton() {
     return (
         <Button id="NominateButton" onClick={ () => { navigate("./vtp")} }>
             <Icon icon={ { id: "vtp" } } height="25px"/>
-            Verified Third Party
+            Verified Issuer
         </Button>
     )
 }

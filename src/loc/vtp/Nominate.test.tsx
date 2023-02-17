@@ -25,8 +25,8 @@ describe("Nominate", () => {
         } as LocData);
         setLocState(locState);
         render(<Nominate />);
-        await clickByName(/Verified Third Party/);
-        expect(screen.getByText("Verified Third Party Nomination")).toBeDefined();
+        await clickByName(/Verified Issuer/);
+        expect(screen.getByText("Verified Issuer Nomination")).toBeDefined();
     })
 
     it("renders checked with dismissal info when verified third party", async () => {
@@ -38,8 +38,8 @@ describe("Nominate", () => {
         } as LocData);
         setLocState(locState);
         render(<Nominate />);
-        await clickByName(/Verified Third Party/);
-        expect(screen.getByText("Verified Third Party Dismissal")).toBeDefined();
+        await clickByName(/Verified Issuer/);
+        expect(screen.getByText("Verified Issuer Dismissal")).toBeDefined();
     })
 })
 

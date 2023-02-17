@@ -86,22 +86,22 @@ export default function VTPSelectionCheckbox(props: Props) {
             ] }
         >
             { !showUnselect && <>
-                <h3>Verified Third Party Selection</h3>
-                <p>You are about to select <strong>{ vtpName }</strong>, a Verified Third Party you previously
-                    nominated, as Verified Third Party <strong>for this LOC</strong>.</p>
+                <h3>Verified Issuer Selection</h3>
+                <p>You are about to select <strong>{ vtpName }</strong>, a Verified Issuer you previously
+                    nominated, as Verified Issuer <strong>for this LOC</strong>.</p>
                 <p>With that status, <strong>{ vtpName }</strong> will be able to contribute as a trustable source
                     of public data and confidential documents. You will still have to validate these contributions
                     before blockchain publication.</p>
-                <p>Do you confirm you want to make { vtpName } a Verified Third Party <strong>for this
+                <p>Do you confirm you want to make { vtpName } a Verified Issuer <strong>for this
                     LOC</strong> ?
                 </p>
             </> }
             { showUnselect && <>
-                <h3>Verified Third Party Dismissal</h3>
+                <h3>Verified Issuer Dismissal</h3>
                 <p>You are about to cancel the status of <strong>{ vtpName }</strong> as a Verified Third
                     Party <strong>for this LOC</strong>.</p>
                 <p>After confirmation, { vtpName } will not be able to contribute or access this LOC anymore.</p>
-                <p>Do you confirm you want to cancel the status of { vtpName } as a Verified Third Party <strong>for
+                <p>Do you confirm you want to cancel the status of { vtpName } as a Verified Issuer <strong>for
                     this LOC</strong>?</p>
             </> }
             <ClientExtrinsicSubmitter

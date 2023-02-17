@@ -118,7 +118,7 @@ export default function ContextualizedWallet() {
     if (locsState && !locsState.discarded && locsState?.isVerifiedThirdParty) {
         menuTop.push({
                 id: "vtp",
-                text: "Third Party LOC",
+                text: "Issuer LOC",
                 to: VTP_PATH,
                 exact: false,
                 icon: {

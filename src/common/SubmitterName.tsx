@@ -49,7 +49,7 @@ function VTPBadge() {
             delay={ 500 }
             overlay={
                 <Tooltip id={ Math.random().toString() }>
-                    contributed by this Verified Third Party at the request of the Legal Officer in charge
+                    contributed by this Verified Issuer at the request of the Legal Officer in charge
                 </Tooltip>
             }
         >

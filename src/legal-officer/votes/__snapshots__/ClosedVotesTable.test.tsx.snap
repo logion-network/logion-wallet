@@ -214,7 +214,7 @@ exports[`ClosedVotesTable renders 1`] = `
               onMouseOut={[Function]}
               onMouseOver={[Function]}
             >
-              Non-Collator Logion Guardian nomination vote
+              Non-Collator Logion Legal Officer nomination vote
             </span>
           </div>
         </div>

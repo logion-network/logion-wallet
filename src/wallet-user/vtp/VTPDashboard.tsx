@@ -13,7 +13,7 @@ export default function VTPDashboard() {
     return (
         <FullWidthPane
             className="VTPDashboard"
-            mainTitle={ "Third Party LOC Management" }
+            mainTitle={ "Verified Issuer LOC Management" }
             titleIcon={ {
                 icon: {
                     id: 'vtp-icon'
@@ -22,7 +22,7 @@ export default function VTPDashboard() {
             } }
         >
             <VTPInfo/>
-            <Frame title="Third party LOC list">
+            <Frame title="Verified Issuer LOC list">
                 <Tabs
                     activeKey={ locTabKey }
                     onSelect={ key => setLocTabKey(key || 'open') }

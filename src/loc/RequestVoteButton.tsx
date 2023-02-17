@@ -83,7 +83,7 @@ export default function RequestVoteButton() {
                             <Select
                                 options={ [
                                     {
-                                        label: "Non-Collator Logion Guardian nomination vote",
+                                        label: "Non-Collator Logion Legal Officer nomination vote",
                                         value: "guest-lo"
                                     }
                                 ] }

@@ -28,7 +28,7 @@ export default function LocPane(props: Props) {
     let paneTitle: string = "";
     let paneIcon: string = "";
     if (contributionMode === 'VTP') {
-        paneTitle = "Third Party LOC Management";
+        paneTitle = "Verified Issuer LOC Management";
         paneIcon = 'vtp-icon';
     } else if (loc.locType === 'Transaction') {
         paneTitle = "Transaction Protection Case";

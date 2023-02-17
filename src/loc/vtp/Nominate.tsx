@@ -46,7 +46,7 @@ export default function Nominate() {
         <>
             <Button id="NominateButton" onClick={ () => setStatus('Selected') }>
                 <Icon icon={ { id: "vtp" } }/>
-                Verified Third Party
+                Verified Issuer
                 <Checkbox checked={ isIssuer } skin="Toggle white" />
             </Button>
             <Dialog
@@ -70,23 +70,23 @@ export default function Nominate() {
                 ] }
             >
                 { !isIssuer && <>
-                    <h3>Verified Third Party Nomination</h3>
-                    <p>The person linked to this Identity LOC is about to have the status of Verified Third Party.</p>
-                    <p>With that status, you (and only you) will be able to select that nominated Verified Third Party
+                    <h3>Verified Issuer Nomination</h3>
+                    <p>The person linked to this Identity LOC is about to have the status of Verified Issuer.</p>
+                    <p>With that status, you (and only you) will be able to select that nominated Verified Issuer
                         in a LOC to contribute as a trustable source of public data and confidential documents. You will
                         still have to validate these contributions before blockchain publication.</p>
-                    <p>Do you confirm you want to make this person a Verified Third Party?</p>
+                    <p>Do you confirm you want to make this person a Verified Issuer?</p>
                 </> }
                 { isIssuer && <>
-                    <h3>Verified Third Party Dismissal</h3>
-                    <p>The person linked to this Identity LOC has the status of Verified Third Party.</p>
+                    <h3>Verified Issuer Dismissal</h3>
+                    <p>The person linked to this Identity LOC has the status of Verified Issuer.</p>
                     <p>
                         <Icon type="png" icon={ { id: "big-warning" } } width="105px"/>
                     </p>
                     <p>You are about to cancel this status:<br />
                         <strong>this person will not be able to contribute to all the LOC
                             (s)he is currently involved with.</strong></p>
-                    <p>Do you confirm you want to cancel the Verified Third Party status for this person?</p>
+                    <p>Do you confirm you want to cancel the Verified Issuer status for this person?</p>
                 </> }
                 <ClientExtrinsicSubmitter
                     call={call}

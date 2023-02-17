@@ -41,7 +41,7 @@ export default function PendingVotesTable(props: Props) {
                 {
                     header: "Description",
                     render: vote => <Cell
-                        content="Non-Collator Logion Guardian nomination vote"
+                        content="Non-Collator Logion Legal Officer nomination vote"
                         overflowing
                         tooltipId={`${vote.voteId}-loc-id-tt`}
                     />,

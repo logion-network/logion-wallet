@@ -9,7 +9,7 @@ export default function VTPInfo() {
             icon={ <Icon icon={ { id: 'tip' } } width="45px" /> }
             text={
                 <p>
-                    You have been nominated as <strong>“Verified Third Party”</strong> by at least one Logion Legal
+                    You have been nominated as <strong>“Verified Issuer”</strong> by at least one Logion Legal
                     Officer.<br />
                     This means that you have the responsibility to contribute either public data and/or confidential
                     documents in Legal Officer Cases (LOC) managed by related Logion Legal Officers.<br />

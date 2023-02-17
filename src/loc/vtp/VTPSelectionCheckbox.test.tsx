@@ -33,12 +33,12 @@ describe("VTPSelectionCheckbox", () => {
     it("unselects a previously selected third party", async () => {
         render(<VTPSelectionCheckbox vtpSelection={ vtpSelection(true) } />)
         await openDialogAndConfirm();
-        expect(screen.getByText("Verified Third Party Dismissal")).toBeDefined();
+        expect(screen.getByText("Verified Issuer Dismissal")).toBeDefined();
     })
 
     it("selects a previously unselected third party", async () => {
         render(<VTPSelectionCheckbox vtpSelection={ vtpSelection(false) } />)
         await openDialogAndConfirm();
-        expect(screen.getByText("Verified Third Party Selection")).toBeDefined();
+        expect(screen.getByText("Verified Issuer Selection")).toBeDefined();
     })
 })

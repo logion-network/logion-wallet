@@ -27,7 +27,7 @@ export default function VTPSelectionFrame() {
     return (
         <Frame
             className="VTPSelectionFrame"
-            title="Verified Third Party management for this LOC"
+            title="Verified Issuer management for this LOC"
             titleIcon={ {
                 icon: {
                     id: 'vtp-icon'
