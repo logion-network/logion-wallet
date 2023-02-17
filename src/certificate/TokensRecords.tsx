@@ -1,34 +1,26 @@
-import { TokensRecord, UploadableItemFile, Token, CollectionItem } from "@logion/client";
+import { TokensRecord, UploadableItemFile, Token, CollectionItem, CheckHashResult } from "@logion/client";
 import MenuIcon from "../common/MenuIcon";
 import InlineDateTime from "../common/InlineDateTime";
 import "./TokensRecords.css";
 import { UUID } from "@logion/node-api";
 import ClaimAssetButton from "./ClaimAssetButton";
-import { useState, useEffect } from "react";
-import { useLogionChain } from "../logion-chain";
 import { Row } from "../common/Grid";
 import { Col } from "react-bootstrap";
+import { customClassName } from "src/common/types/Helpers";
 
 export interface TokensRecordsProps {
     locId: UUID,
     owner: string,
     collectionItem: CollectionItem,
     tokenForDownload: Token,
+    tokensRecords: TokensRecord[];
+    checkResult?: CheckHashResult;
 }
 
 export default function TokensRecords(props: TokensRecordsProps) {
-    const { locId, tokenForDownload } = props;
-    const { client } = useLogionChain();
-    const [ tokensRecords, setTokensRecords ] = useState<TokensRecord[] | null>(null);
+    const { tokensRecords } = props;
 
-    useEffect(() => {
-        if (client && tokensRecords === null) {
-            client.public.getTokensRecords({ locId, jwtToken: tokenForDownload })
-                .then(setTokensRecords)
-        }
-    }, [ client, locId, tokensRecords, tokenForDownload ]);
-
-    if (tokensRecords === null || tokensRecords.length === 0) {
+    if (tokensRecords.length === 0) {
         return null;
     }
     return (
@@ -43,7 +35,7 @@ export default function TokensRecords(props: TokensRecordsProps) {
             { tokensRecords.map((tokensRecord, index) => (
                 <>
                     { index > 0 && <hr /> }
-                    <TokensRecordCell { ...props } tokensRecord={ tokensRecord } />
+                    <TokensRecordCell key={ index } { ...props } tokensRecord={ tokensRecord }/>
                 </>
             )) }
         </div>
@@ -63,13 +55,9 @@ function TokensRecordCell(props: TokensRecordCellProps) {
                 <InlineDateTime dateTime={ tokensRecord.addedOn } />
             </TRCell>
             <TRCell label="Issuer">{ tokensRecord.issuer }</TRCell>
-            <ul>
-                { tokensRecord.files.map(tokensRecordFile => (
-                    <li>
-                        <TokensRecordFileCell { ...props } tokensRecordFile={ tokensRecordFile } />
-                    </li>
-                )) }
-            </ul>
+            { tokensRecord.files.map(tokensRecordFile => (
+                <TokensRecordFileCell { ...props } tokensRecordFile={ tokensRecordFile }/>
+            )) }
         </div>
     )
 }
@@ -79,9 +67,10 @@ interface TokensRecordFileCellProps extends TokensRecordCellProps {
 }
 
 function TokensRecordFileCell(props: TokensRecordFileCellProps) {
-    const { locId, owner, tokensRecord, tokensRecordFile, collectionItem, tokenForDownload } = props;
+    const { locId, owner, tokensRecord, tokensRecordFile, collectionItem, tokenForDownload, checkResult } = props;
+    const className = customClassName("TokensRecordFileCell", checkResult?.recordFile?.hash === tokensRecordFile.hash ? "matched" : undefined);
     return (
-        <Row className="TokensRecordFileCell">
+        <Row className={className}>
             <Col md={ 8 }>
                 <strong>{ tokensRecordFile.name }</strong>
                 <TRCell label="File type">{ tokensRecordFile.contentType }</TRCell>

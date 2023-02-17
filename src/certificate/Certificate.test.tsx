@@ -117,8 +117,9 @@ function mockClient(loc: PublicLoc, item?: CollectionItem): LogionClient {
                     return Promise.resolve(loc);
                 }
             },
+            getTokensRecords: () => Promise.resolve([]),
         },
-    } as LogionClient;
+    } as unknown as LogionClient;
 
     if(item) {
         client.public.findCollectionLocItemById = (args: { locId: UUID, itemId: string }) => {

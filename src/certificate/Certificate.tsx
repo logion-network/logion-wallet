@@ -14,6 +14,7 @@ import {
     CheckResultType,
     Token,
     CheckCertifiedCopyResult,
+    TokensRecord,
 } from "@logion/client";
 import { UUID } from "@logion/node-api";
 
@@ -58,6 +59,7 @@ export default function Certificate() {
     const [ checkResult, setCheckResult ] = useState<CheckHashResult>();
     const [ collectionItem, setCollectionItem ] = useState<CollectionItem | undefined | null>(null);
     const [ tokenForDownload, setTokenForDownload ] = useState<Token | undefined>(undefined);
+    const [ tokensRecords, setTokensRecords ] = useState<TokensRecord[] | null>(null);
 
     const checkHash = useCallback(async (hash: string) => {
         if (loc) {
@@ -105,7 +107,14 @@ export default function Certificate() {
         if (client !== null && legalOfficer === null && loc !== undefined) {
             setLegalOfficer(client.legalOfficers.find(legalOfficer => legalOfficer.address === loc.data.ownerAddress) || null);
         }
-    }, [ client, legalOfficer, setLegalOfficer, loc ])
+    }, [ client, legalOfficer, setLegalOfficer, loc ]);
+
+    useEffect(() => {
+        if (client && tokensRecords === null) {
+            client.public.getTokensRecords({ locId, jwtToken: tokenForDownload })
+                .then(setTokensRecords)
+        }
+    }, [ client, locId, tokensRecords, tokenForDownload ]);
 
     if (!client) {
         return (
@@ -173,7 +182,7 @@ export default function Certificate() {
         return collectionItem !== undefined && collectionItem !== null && collectionItem.restrictedDelivery;
     }
 
-    async function checkCertifiedCopy(loc: PublicLoc, collectionItem: CollectionItem | null | undefined, hash: string): Promise<CheckCertifiedCopyResult> {
+    async function checkCertifiedCopy(hash: string): Promise<CheckCertifiedCopyResult> {
         setCheckResult(undefined);
         if (isItemFileDelivery(collectionItem)) {
             const result = await collectionItem!.checkCertifiedCopy(hash);
@@ -183,12 +192,30 @@ export default function Certificate() {
                 return result;
             }
         }
-        const result = await loc.checkCertifiedCopy(hash);
-        if (result.summary === CheckResultType.POSITIVE) {
-            const file = loc.data.files.find(file => file.hash === result.match?.originalFileHash);
-            setCheckResult({ file })
+        if(loc) {
+            const result = await loc.checkCertifiedCopy(hash);
+            if (result.summary === CheckResultType.POSITIVE) {
+                const file = loc.data.files.find(file => file.hash === result.match?.originalFileHash);
+                setCheckResult({ file })
+                return result;
+            }
         }
-        return result;
+        if(tokensRecords) {
+            for(const record of tokensRecords) {
+                const result = await record.checkCertifiedCopy(hash);
+                if (result.summary === CheckResultType.POSITIVE) {
+                    const recordFile = record.files.find(file => file.hash === result.match?.originalFileHash);
+                    setCheckResult({ recordFile });
+                    return result;
+                }
+            }
+        }
+        return {
+            summary: CheckResultType.NEGATIVE,
+            latest: CheckResultType.NEGATIVE,
+            logionOrigin: CheckResultType.NEGATIVE,
+            nftOwnership: CheckResultType.NEGATIVE,
+        };
     }
 
     let certificateBorderColor = "#3b6cf4";
@@ -340,7 +367,10 @@ export default function Certificate() {
                         locId={ locId }
                         owner={ legalOfficer.address }
                         collectionItem={ collectionItem! }
-                        tokenForDownload={ tokenForDownload } />
+                        tokenForDownload={ tokenForDownload }
+                        tokensRecords={ tokensRecords || [] }
+                        checkResult={ checkResult }
+                    />
                 }
                 <LegalOfficerRow legalOfficer={ legalOfficer } />
                 <Row className="buttons">
@@ -383,7 +413,7 @@ export default function Certificate() {
                 client && hasRestrictedDeliveryCheckTool(loc, collectionItem) &&
                 <Container className="CopyCheck">
                     <CheckDeliveredFrame
-                        checkCertifiedCopy={ hash => checkCertifiedCopy(loc, collectionItem, hash) }
+                        checkCertifiedCopy={ checkCertifiedCopy }
                         colorTheme={ LIGHT_MODE }
                         detailedError={ false }
                         icon="polkadot_check_asset"
