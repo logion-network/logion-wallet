@@ -36,7 +36,7 @@ export default function TokensRecordTable(props: Props) {
             columns={[
                 {
                     header: "Name",
-                    render: record => <Cell content={record.files[0].name}/>,
+                    render: record => <Cell content={record.files[0].name} tooltipId={`record-${record.id}-filename`} overflowing/>,
                     renderDetails: record => <LocPrivateFileDetails
                         item={{
                             name: record.files[0].name,
@@ -49,6 +49,9 @@ export default function TokensRecordTable(props: Props) {
                             nature: record.description,
                         }}
                         documentClaimHistory={ documentClaimHistory(viewer, loc, record, props.contributionMode) }
+                        fileName={record.files[0].name}
+                        fileSize={record.files[0].size.toString()}
+                        fileType={record.files[0].contentType}
                     />,
                 },
                 {

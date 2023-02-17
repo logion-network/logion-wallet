@@ -10,6 +10,9 @@ import { LocItem } from "./types";
 export interface Props {
     item: LocItem;
     documentClaimHistory: string;
+    fileName?: string;
+    fileSize?: string;
+    fileType?: string;
 }
 
 export default function LocPrivateFileDetails(props: Props) {
@@ -20,6 +23,18 @@ export default function LocPrivateFileDetails(props: Props) {
             <Col className="LocItemDetails" style={{ width: "50%" }}>
                 <div className="frame">
                     <div className="frame-title">{ props.item.status === "DRAFT" ? "Document related data to be published" : "Published document related data" }</div>
+                    {
+                        props.fileName !== undefined &&
+                        <LocItemDetail label="File name">{ props.fileName }</LocItemDetail>
+                    }
+                    {
+                        props.fileSize !== undefined &&
+                        <LocItemDetail label="File size (bytes)">{ props.fileSize }</LocItemDetail>
+                    }
+                    {
+                        props.fileName !== undefined &&
+                        <LocItemDetail label="File type">{ props.fileType }</LocItemDetail>
+                    }
                     <LocItemDetail label="Submitter ID" copyButtonText={ props.item.submitter }>
                         { props.item.submitter }
                     </LocItemDetail>
