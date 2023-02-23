@@ -110,7 +110,7 @@ export default function Certificate() {
     }, [ client, legalOfficer, setLegalOfficer, loc ]);
 
     useEffect(() => {
-        if (client && tokensRecords === null) {
+        if (client && tokenForDownload && tokensRecords === null) {
             client.public.getTokensRecords({ locId, jwtToken: tokenForDownload })
                 .then(setTokensRecords)
         }
