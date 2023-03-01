@@ -12,3 +12,11 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.StaticLabelValue.form-style .label {
+    font-weight: normal;
+}
+
+.StaticLabelValue.form-style .value {
+    font-weight: bold;
+}

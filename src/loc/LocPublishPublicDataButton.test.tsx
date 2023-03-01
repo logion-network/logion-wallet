@@ -1,6 +1,6 @@
 jest.mock("./LocContext");
 
-import { LocItem } from "./types";
+import { LocItem } from "./LocItem";
 import { shallowRender } from "../tests";
 import LocPublishPublicDataButton from "./LocPublishPublicDataButton";
 
@@ -15,6 +15,7 @@ describe("LocPublishPublicDataButton", () => {
         nature: "data-nature",
         timestamp: null,
         newItem: false,
+        template: false,
     }
 
     it("renders", () => {

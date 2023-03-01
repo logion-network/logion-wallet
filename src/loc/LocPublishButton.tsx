@@ -2,7 +2,7 @@ import Button from "../common/Button";
 import { useState, useEffect } from "react";
 import ProcessStep from "../legal-officer/ProcessStep";
 import Alert from "../common/Alert";
-import { PublishProps, PublishState, PublishStatus } from "./types";
+import { PublishProps, PublishState, PublishStatus } from "./LocItem";
 import Icon from "../common/Icon";
 import { useLocContext } from "./LocContext";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
@@ -28,7 +28,7 @@ export default function LocPublishButton(props: PublishProps) {
                 onClick={ () => setPublishState({ status: PublishStatus.START }) }
                 variant="polkadot"
             >
-                <Icon icon={{ id:"publish" }} height="20px" /> Publish to the blockchain
+                <Icon icon={{ id:"publish" }} height="20px" /> Publish
             </Button>
             <ProcessStep
                 active={ publishState.status === PublishStatus.START || publishState.status === PublishStatus.PUBLISH_PENDING }

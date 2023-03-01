@@ -1,7 +1,7 @@
 import { UUID } from "@logion/node-api";
 import { LocData } from "@logion/client";
 
-import { LocItem } from "../types";
+import { LocItem } from "../LocItem";
 
 let locState: any;
 

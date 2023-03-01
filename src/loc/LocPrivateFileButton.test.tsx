@@ -4,7 +4,7 @@ import { clickByName, typeByLabel, uploadByTestId } from "src/tests";
 import { TEST_WALLET_USER } from "src/wallet-user/TestData";
 import { EditableRequest, setExpectedFileHash } from "src/__mocks__/LogionClientMock";
 import { LocPrivateFileButton } from "./LocPrivateFileButton";
-import { LocItem } from "./types";
+import { LocItem } from "./LocItem";
 import { setLocItems, setLocState } from "./__mocks__/LocContextMock";
 
 jest.mock("../common/hash");
@@ -22,6 +22,7 @@ const existingFileItem: LocItem = {
     type: "Document",
     value: "0x" + fileHash,
     timestamp: null,
+    template: false,
 };
 
 describe("LocPrivateFileButton", () => {
@@ -32,19 +33,19 @@ describe("LocPrivateFileButton", () => {
 
     it("uploads file", async () => {
         const { addFile } = mockEditableRequest();
-        await testUploadsFile(<LocPrivateFileButton/>, addFile);
+        await testUploadsFile(<LocPrivateFileButton text="Add a confidential document"/>, addFile);
     });
 
     it("does nothing on cancel", async () => {
         const { addFile } = mockEditableRequest();
-        await testDoesNothingOnCancel(<LocPrivateFileButton/>, addFile);
+        await testDoesNothingOnCancel(<LocPrivateFileButton text="Add a confidential document"/>, addFile);
     });
 
     it("does not upload file if already exists", async () => {
         const { addFile } = mockEditableRequest();
         setLocItems([ existingFileItem ]);
         setExpectedFileHash("0x" + fileHash);
-        await testDoesNotNothingIfFileExists(<LocPrivateFileButton/>, addFile);
+        await testDoesNotNothingIfFileExists(<LocPrivateFileButton text="Add a confidential document"/>, addFile);
     });
 });
 

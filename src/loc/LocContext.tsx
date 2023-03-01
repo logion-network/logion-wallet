@@ -13,17 +13,13 @@ import {
     DraftRequest,
     LocsState,
 } from "@logion/client";
-import {
-    isGrantedAccess,
-} from "../common/Model";
 import { useLogionChain } from "../logion-chain";
-import { LocItemStatus, LocItem } from "./types";
+import { LocItemStatus, LocItem, getLinkData } from "./LocItem";
 import {
     createFileItem,
     createMetadataItem,
     createLinkItem
 } from "./LocItemFactory";
-import { fullCertificateUrl } from "../PublicPaths";
 import { DocumentCheckResult } from "src/components/checkfileframe/CheckFileFrame";
 
 export interface LocContext {
@@ -180,21 +176,13 @@ export function LocContextProvider(props: Props) {
         for (let i = 0; i < loc.links.length; ++i) {
             const item = loc.links[i];
 
-            const linkedLocState = locState.locsState().findById(item.id);
-            const linkedLoc = linkedLocState?.data();
-
-            if (linkedLoc) {
-                let linkDetailsPath: string;
-                if (isGrantedAccess(accounts?.current?.address, linkedLoc)) {
-                    linkDetailsPath = props.detailsPath(linkedLoc.id, linkedLoc.locType);
-                } else {
-                    linkDetailsPath = fullCertificateUrl(linkedLoc.id);
-                }
+            const linkData = getLinkData(accounts?.current?.address, locState.locsState(), item, props.detailsPath);
+            if (linkData) {
                 const result = createLinkItem({
                     link: item,
-                    otherLocDescription: linkedLoc.description || "- Confidential -",
+                    otherLocDescription: linkData.linkedLoc.description || "- Confidential -",
                     submitter: locOwner,
-                    linkDetailsPath,
+                    linkDetailsPath: linkData.linkDetailsPath,
                 })
                 locItems.push(result.locItem)
             }

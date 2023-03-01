@@ -30,6 +30,7 @@ exports[`LocPublishLinkButton renders 1`] = `
           78,
         ],
       },
+      "template": false,
       "timestamp": null,
       "type": "Linked LOC",
       "value": "link-value",

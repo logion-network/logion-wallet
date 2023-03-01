@@ -15,17 +15,22 @@ import LocLinkButton from "./LocLinkButton";
 import { LocPrivateFileButton } from "./LocPrivateFileButton";
 import { LocPublicDataButton } from "./LocPublicDataButton";
 import RequesterOrLegalOfficer from "./RequesterOrLegalOfficer";
-import { LocItem, ContributionMode } from "./types";
+import { ContributionMode } from "./types";
 
 import "./LocDetailsTab.css";
 import { Row } from "src/common/Grid";
 import { Viewer } from "src/common/CommonContext";
 import Button from "src/common/Button";
 import Icon from "src/common/Icon";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import WarningDialog from "src/common/WarningDialog";
 import { useLocContext } from "./LocContext";
 import { useNavigate } from "react-router-dom";
+import { getTemplate, LocTemplate } from "./Template";
+import LocTemplateItems from "./LocTemplateItems";
+import { canAdd, getLinkData, LinkData, LocItem } from "./LocItem";
+import { createDocumentTemplateItem, createLinkTemplateItem, createMetadataTemplateItem } from "./LocItemFactory";
+import { useLogionChain } from "src/logion-chain";
 
 export interface Props {
     loc: LocData;
@@ -127,8 +132,68 @@ export function LocDetailsTabContent(props: ContentProps) {
     } = props;
     const [ showCancelDialog, setShowCancelDialog ] = useState(false);
     const [ showSubmitDialog, setShowSubmitDialog ] = useState(false);
-    const { loc, backPath, mutateLocState } = useLocContext();
+    const { loc, backPath, mutateLocState, locItems, locState } = useLocContext();
     const navigate = useNavigate();
+    const [ template, setTemplate ] = useState<LocTemplate>();
+    const [ templateItems, setTemplateItems ] = useState<LocItem[]>([]);
+    const [ customItems, setCustomItems ] = useState<LocItem[]>([]);
+    const { accounts } = useLogionChain();
+
+    useEffect(() => {
+        if(loc && locState) {
+            const theTemplate = getTemplate(loc.locType, loc.template);
+            if(theTemplate) {
+                setTemplate(theTemplate);
+                const items: LocItem[] = [];
+
+                const templateDocuments = new Set();
+                for(const documentTemplate of theTemplate.documents) {
+                    const file = loc.files.find(item => item.nature === documentTemplate.publicDescription);
+                    if(file) {
+                        templateDocuments.add(file.hash);
+                    }
+                    items.push(createDocumentTemplateItem(documentTemplate, file));
+                }
+
+                const templateItems = new Set();
+                for(const dataTemplate of theTemplate.metadata) {
+                    const data = loc.metadata.find(item => item.name === dataTemplate.name);
+                    if(data) {
+                        templateItems.add(data.name);
+                    }
+                    items.push(createMetadataTemplateItem(dataTemplate, data));
+                }
+
+                const templateLinks = new Set();
+                for(const linkTemplate of theTemplate.links) {
+                    const link = loc.links.find(item => item.nature === linkTemplate.publicDescription);
+                    let linkData: LinkData | undefined;
+                    if(link) {
+                        templateLinks.add(link.nature);
+                        linkData = getLinkData(accounts?.current?.address, locState.locsState(), link, detailsPath);
+                    }
+                    items.push(createLinkTemplateItem(loc.ownerAddress, linkTemplate, link, linkData));
+                }
+
+                setTemplateItems(items);
+
+                const customItems = locItems.filter(item =>
+                    item.type === "Linked LOC"
+                    || (item.type === "Data" && !templateItems.has(item.name))
+                    || (item.type === "Document" && !templateDocuments.has(item.value))
+                );
+                setCustomItems(customItems);
+            } else {
+                setTemplate(undefined);
+                setTemplateItems([]);
+                setCustomItems(locItems);
+            }
+        } else {
+            setTemplate(undefined);
+            setTemplateItems([]);
+            setCustomItems(locItems);
+        }
+    }, [ loc, template, locItems, accounts, detailsPath, locState ]);
 
     const confirmCancel = useCallback(() => {
         setShowCancelDialog(true);
@@ -185,12 +250,25 @@ export function LocDetailsTabContent(props: ContentProps) {
                 <LocItemDetail label="Creation date">
                     <InlineDateTime dateTime={ loc.createdOn } />
                 </LocItemDetail>
+                {
+                    viewer === "LegalOfficer" && loc.status === 'CLOSED' && template &&
+                    <LocItemDetail label="Closing date" spinner={ loc.closedOn === undefined }>
+                        <InlineDateTime dateTime={ loc.closedOn } />
+                    </LocItemDetail>
+                }
             </Col>
 
             <Col md={ 4 }>
                 <LocItemDetail label="Description">{ loc.description }</LocItemDetail>
                 {
-                    loc.status === 'CLOSED' &&
+                    viewer === "LegalOfficer" && template &&
+                    <div>
+                        <LocItemDetail label="Project type">{ template.name }</LocItemDetail>
+                        <Icon icon={ template.icon } width="64px"/>
+                    </div>
+                }
+                {
+                    loc.status === 'CLOSED' && (viewer !== "LegalOfficer" || !template) &&
                     <LocItemDetail label="Closing date" spinner={ loc.closedOn === undefined }>
                         <InlineDateTime dateTime={ loc.closedOn } />
                     </LocItemDetail>
@@ -209,21 +287,36 @@ export function LocDetailsTabContent(props: ContentProps) {
             <PersonalInfo personalAndStatusInfo={ loc } />
             <div className="separator" style={ { backgroundColor: locTabBorderColor } } />
         </> }
-        <LocItems
-            matchedHash={ checkResult.hash }
-            viewer={ props.viewer }
-            contributionMode={ props.contributionMode }
-        />
+        {
+            templateItems.length > 0 &&
+            <>
+            <LocTemplateItems
+                templateItems={ templateItems }
+            />
+            <div className="separator" style={ { backgroundColor: locTabBorderColor } } />
+            </>
+        }
+        {
+            <LocItems
+                matchedHash={ checkResult.hash }
+                viewer={ props.viewer }
+                contributionMode={ props.contributionMode }
+                locItems={ customItems }
+                isEmpty={ locItems.length === 0 }
+                hideHeader={ templateItems.length > 0 }
+            />
+        }
         <Row>
             <Col xxl={ 5 } xl={ 4 }>
                 {
-                    (
-                        (viewer === "User" && (!loc.voidInfo && (loc.status === "DRAFT" || loc.status === "OPEN")))
-                        || (viewer === "LegalOfficer" && (!loc.voidInfo && loc.status === "OPEN"))
-                    ) &&
+                    canAdd(viewer, loc) &&
                     <ButtonGroup align="left">
-                        <LocPublicDataButton />
-                        <LocPrivateFileButton />
+                        <LocPublicDataButton
+                            text="Add a public data"
+                        />
+                        <LocPrivateFileButton
+                            text="Add a confidential document"
+                        />
                     </ButtonGroup>
                 }
             </Col>
@@ -233,7 +326,7 @@ export function LocDetailsTabContent(props: ContentProps) {
                 <Col className="link-button-container" xxl={ 4 } xl={ 4 }>
                     {
                         !loc.voidInfo && loc.status === "OPEN" &&
-                        <LocLinkButton />
+                        <LocLinkButton text="Link to an existing LOC"/>
                     }
                 </Col>
                 <Col className="close-button-container" xxl={ 3 } xl={ 4 }>

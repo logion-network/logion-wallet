@@ -3,7 +3,7 @@ import "./ArchiveButton.css";
 import { useState } from "react";
 import { useLocContext } from "../LocContext";
 import { FileInfo, openFiles } from "../../common/ViewFileButton";
-import { LocItem } from "../types";
+import { LocItem } from "../LocItem";
 import { AxiosInstance } from "axios";
 import { getFile, getJsonLoc } from "../FileModel";
 import { UUID } from "@logion/node-api";

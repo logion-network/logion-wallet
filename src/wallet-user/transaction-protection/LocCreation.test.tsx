@@ -24,7 +24,7 @@ describe("LocCreation", () => {
 
     it("should disable 'Submit' when user has valid id LOC but the form is empty", async () => {
         setHasValidIdentityLoc([ PATRICK ])
-        await openDialog();
+        await openDialog(true);
 
         await waitFor(() => {
             expect(screen.getByRole("button", { name: "Cancel" })).toBeEnabled();
@@ -35,7 +35,7 @@ describe("LocCreation", () => {
 
     it("should enable 'Submit' and remove 'Request an Identity Case' when an LO is selected", async () => {
         setHasValidIdentityLoc([ GUILLAUME ])
-        await openDialog();
+        await openDialog(true);
 
         await userEvent.click(screen.getByText("Select..."));
         await waitFor(() => userEvent.click(screen.getByText("Guillaume Grain")));
@@ -49,7 +49,7 @@ describe("LocCreation", () => {
 
     it("should remove 'Submit' and enable 'Request an Identity Case' when there are no LO's", async () => {
         setHasValidIdentityLoc([ ])
-        await openDialog();
+        await openDialog(false);
 
         await waitFor(() => {
             expect(screen.getByRole("button", { name: "Cancel" })).toBeEnabled();
@@ -60,7 +60,7 @@ describe("LocCreation", () => {
 
     it("should close dialog and not create a request when cancel is pressed", async () => {
         setHasValidIdentityLoc([ PATRICK ])
-        await openDialog();
+        await openDialog(true);
 
         const dialog = screen.getByRole("dialog");
         await clickByName("Cancel");
@@ -83,7 +83,7 @@ describe("LocCreation", () => {
             return Promise.resolve();
         });
 
-        await openDialog();
+        await openDialog(true);
 
         const description = "description";
         await typeByLabel("Description", description)
@@ -95,8 +95,17 @@ describe("LocCreation", () => {
         await waitFor(() => expect(navigate).toBeCalledWith(`/user/loc/transaction/${locId.toString()}`));
     })
 
-    async function openDialog() {
+    async function openDialog(selectProject: boolean) {
         render(<LocCreation locType="Transaction" requestButtonLabel={ requestButtonLabel } />);
         await clickByName(requestButtonLabel);
+        if(selectProject) {
+            await selectProjectType();
+        }
     }
+
+    async function selectProjectType() {
+        await userEvent.click(screen.getByText("Please select your project type"));
+        await userEvent.click(screen.getByText("Specific"));
+        await clickByName("Submit");
+    }    
 })

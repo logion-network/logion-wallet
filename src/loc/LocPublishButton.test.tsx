@@ -4,7 +4,7 @@ import { mockSubmittableResult } from "src/logion-chain/__mocks__/SignatureMock"
 import { clickByName } from "../tests";
 import LocPublishButton from "./LocPublishButton";
 
-import { LocItem } from "./types";
+import { LocItem } from "./LocItem";
 
 jest.mock("./LocContext");
 
@@ -21,6 +21,7 @@ describe("LocPublishButton", () => {
             nature: "data-nature",
             timestamp: null,
             newItem: false,
+            template: false,
         };
         const confirm = jest.fn();
         render(<LocPublishButton

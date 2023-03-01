@@ -2,7 +2,7 @@ import { Col, Row } from "../common/Grid";
 import LocItemDetail from "./LocItemDetail";
 
 import './LocItemDetails.css'
-import { LocItem } from "./types";
+import { LocItem } from "./LocItem";
 import NewTabLink from "../common/NewTabLink";
 import CopyPasteButton from "../common/CopyPasteButton";
 

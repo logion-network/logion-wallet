@@ -1,7 +1,7 @@
 jest.mock("./LocContext");
 import { UUID } from "@logion/node-api";
 
-import { LocItem } from "./types";
+import { LocItem } from "./LocItem";
 import { shallowRender } from "../tests";
 import LocPublishLinkButton from "./LocPublishLinkButton";
 
@@ -17,6 +17,7 @@ describe("LocPublishLinkButton", () => {
         nature: "link-nature",
         timestamp: null,
         newItem: false,
+        template: false,
     }
 
     it("renders", () => {

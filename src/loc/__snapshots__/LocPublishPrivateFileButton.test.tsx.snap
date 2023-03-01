@@ -10,6 +10,7 @@ exports[`LocPublishPrivateFileButton renders 1`] = `
       "newItem": false,
       "status": "DRAFT",
       "submitter": "file-submitter",
+      "template": false,
       "timestamp": null,
       "type": "Document",
       "value": "file-value",

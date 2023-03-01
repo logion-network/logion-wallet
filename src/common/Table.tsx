@@ -108,6 +108,7 @@ export interface Props<T> {
     rowStyle?: (item: T, index?: number) => string;
     color?: TableColors;
     constrainedRowHeight?: boolean;
+    hideHeader?: boolean;
 }
 
 function columnClassName<T>(column: Column<T>): (string | undefined) {
@@ -230,28 +231,31 @@ export default function Table<T>(props: Props<T>) {
             `
             }
             </style>
-            <div
-                className="header"
-                style={{
-                    color: color.header.foreground,
-                    backgroundColor: color.header.background,
-                }}
-            >
-                <Row>
-                    {
-                        props.columns.map((column, index) => (
-                            <Col
-                                key={ index }
-                                style={{
-                                    width: headerComputedWidths[index],
-                                    textAlign: column.align === undefined ? 'center' : column.align,
-                                }}>
-                                { column.header }
-                            </Col>
-                        ))
-                    }
-                </Row>
-            </div>
+            {
+                !props.hideHeader &&
+                <div
+                    className="header"
+                    style={{
+                        color: color.header.foreground,
+                        backgroundColor: color.header.background,
+                    }}
+                >
+                    <Row>
+                        {
+                            props.columns.map((column, index) => (
+                                <Col
+                                    key={ index }
+                                    style={{
+                                        width: headerComputedWidths[index],
+                                        textAlign: column.align === undefined ? 'center' : column.align,
+                                    }}>
+                                    { column.header }
+                                </Col>
+                            ))
+                        }
+                    </Row>
+                </div>
+            }
             <div className="body">
                 {
                     props.data.length > 0 &&

@@ -1,7 +1,7 @@
 import { shallowRender } from "../tests";
 import { TEST_WALLET_USER } from "../wallet-user/TestData";
 import LocPrivateFileDetails from "./LocPrivateFileDetails";
-import { LocItem } from "./types";
+import { LocItem } from "./LocItem";
 
 describe("LocPrivateFileDetails", () => {
 
@@ -15,6 +15,7 @@ describe("LocPrivateFileDetails", () => {
             status: "DRAFT",
             nature: "File's nature",
             newItem: false,
+            template: false,
         };
         const element = shallowRender(<LocPrivateFileDetails item={ item } documentClaimHistory=""/>);
         expect(element).toMatchSnapshot();

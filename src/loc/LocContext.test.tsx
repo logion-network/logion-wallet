@@ -10,7 +10,7 @@ import { resetDefaultMocks } from "../common/__mocks__/ModelMock";
 import { CLOSED_IDENTITY_LOC, CLOSED_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "../__mocks__/@logion/node-api/dist/LogionLocMock";
 import { clickByName } from "../tests";
 import { LocContextProvider, useLocContext } from "./LocContext"
-import { LocItemType } from "./types";
+import { LocItemType } from "./LocItem";
 import { buildLocRequest } from "./TestData";
 import { setClientMock } from "src/logion-chain/__mocks__/LogionChainMock";
 import { LocRequestState, EditableRequest, OpenLoc, ClosedLoc } from "src/__mocks__/LogionClientMock";

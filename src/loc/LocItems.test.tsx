@@ -6,13 +6,13 @@ import { OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "../__mocks__/@logion/no
 import { clickByName, render } from "../tests";
 import { LocItems } from "./LocItems";
 import { buildLocRequest } from "./TestData";
-import { LocItem, LocItemStatus } from "./types";
+import { LocItem, LocItemStatus } from "./LocItem";
 import React from "react";
 import { accounts, DEFAULT_LEGAL_OFFICER_ACCOUNT, setCurrentAddress } from "src/logion-chain/__mocks__/LogionChainMock";
 import { Account } from "src/common/types/Accounts";
 import { DateTime } from "luxon";
 import { DEFAULT_LEGAL_OFFICER } from "src/common/TestData";
-import { setLocItems, setLocRequest, setLocState } from "./__mocks__/LocContextMock";
+import { setLocRequest, setLocState } from "./__mocks__/LocContextMock";
 import { EditableRequest } from "src/__mocks__/LogionClientMock";
 import { deleteLink } from "src/legal-officer/__mocks__/ClientMock";
 
@@ -30,72 +30,80 @@ describe("LOLocItems", () => {
 
     it("renders empty list", () => {
         givenOpenLoc();
-        setLocItems([]);
         testRendersEmptyList(<LocItems
             viewer="LegalOfficer"
+            locItems={[]}
+            isEmpty={true}
         />);
     });
 
     it("renders with single draft item", () => {
         const loc = givenOpenLoc();
         const items = givenMetadataItem(loc, "DRAFT");
-        setLocItems(items);
         testRendersSingleDraftItem(<LocItems
             viewer="LegalOfficer"
+            locItems={items}
+            isEmpty={false}
         />);
     });
 
     it("deletes draft metadata item", async () => {
         const loc = givenOpenLoc();
         const items = givenMetadataItem(loc, "DRAFT");
-        setLocItems(items);
         await testDeletesDraftMetadataItem(<LocItems
             viewer="LegalOfficer"
+            locItems={items}
+            isEmpty={false}
         />);
     });
 
     it("cannot delete non-draft metadata item", async () => {
         const loc = givenOpenLoc();
         const items = givenMetadataItem(loc, "PUBLISHED");
-        setLocItems(items);
         await testCannotDeleteNonDraftMetadataItem(<LocItems
             viewer="LegalOfficer"
+            locItems={items}
+            isEmpty={false}
         />);
     });
 
     it("deletes draft file item", async () => {
         const loc = givenOpenLoc();
         const items = givenFileItem(loc, "DRAFT");
-        setLocItems(items);
         await testDeletesDraftFileItem(<LocItems
             viewer="LegalOfficer"
+            locItems={items}
+            isEmpty={false}
         />);
     });
 
     it("cannot delete non-draft file item", async () => {
         const loc = givenOpenLoc();
         const items = givenFileItem(loc, "PUBLISHED");
-        setLocItems(items);
         await testCannotDeleteNonDraftFileItem(<LocItems
             viewer="LegalOfficer"
+            locItems={items}
+            isEmpty={false}
         />);
     });
 
     it("deletes draft link item", async () => {
         const loc = givenOpenLoc();
         const items = givenLinkItem(loc, "DRAFT");
-        setLocItems(items);
         await testDeletesDraftLinkItem(<LocItems
             viewer="LegalOfficer"
+            locItems={items}
+            isEmpty={false}
         />);
     });
 
     it("cannot delete non-draft link item", async () => {
         const loc = givenOpenLoc();
         const items = givenLinkItem(loc, "PUBLISHED");
-        setLocItems(items);
         await testCannotDeleteNonDraftLinkItem(<LocItems
             viewer="LegalOfficer"
+            locItems={items}
+            isEmpty={false}
         />);
     });
 });
@@ -109,54 +117,60 @@ describe("UserLocItems", () => {
 
     it("renders empty list", () => {
         givenOpenLoc();
-        setLocItems([]);
         testRendersEmptyList(<LocItems
             viewer="User"
+            locItems={[]}
+            isEmpty={true}
         />);
     });
 
     it("renders with single draft item", () => {
         const loc = givenOpenLoc();
         const items = givenMetadataItem(loc, "DRAFT");
-        setLocItems(items);
         testRendersSingleDraftItem(<LocItems
             viewer="User"
+            locItems={items}
+            isEmpty={false}
         />);
     });
 
     it("deletes draft metadata item", async () => {
         const loc = givenOpenLoc();
         const items = givenMetadataItem(loc, "DRAFT");
-        setLocItems(items);
         await testDeletesDraftMetadataItem(<LocItems
             viewer="User"
+            locItems={items}
+            isEmpty={false}
         />);
     });
 
     it("cannot delete non-draft metadata item", async () => {
         const loc = givenOpenLoc();
         const items = givenMetadataItem(loc, "PUBLISHED");
-        setLocItems(items);
         await testCannotDeleteNonDraftMetadataItem(<LocItems
             viewer="User"
+            locItems={items}
+            isEmpty={false}
         />);
     });
 
     it("deletes draft file item", async () => {
         const loc = givenOpenLoc();
         const items = givenFileItem(loc, "DRAFT");
-        setLocItems(items);
         await testDeletesDraftFileItem(<LocItems
             viewer="User"
+            locItems={items}
+            isEmpty={false}
         />);
     });
 
     it("cannot delete non-draft file item", async () => {
         const loc = givenOpenLoc();
         const items = givenFileItem(loc, "PUBLISHED");
-        setLocItems(items);
         await testCannotDeleteNonDraftFileItem(<LocItems
             viewer="User"
+            locItems={items}
+            isEmpty={false}
         />);
     });
 });
@@ -222,7 +236,8 @@ function givenMetadataItem(request: LocData, status: LocItemStatus): LocItem[] {
         submitter: accounts!.current!.address,
         timestamp: null,
         type: "Data",
-        value: "Value"
+        value: "Value",
+        template: false,
     }];
 }
 
@@ -257,6 +272,7 @@ function givenFileItem(request: LocData, status: LocItemStatus): LocItem[] {
         timestamp: null,
         type: "Document",
         value: "0xfb45e95061306e90fd154272ba3b4d67bb6d295feeccdc3a34572995f08e268a",
+        template: false,
     }];
 }
 
@@ -291,6 +307,7 @@ function givenLinkItem(request: LocData, status: LocItemStatus): LocItem[] {
             timestamp: null,
             type: "Linked LOC",
             value: targetId.toDecimalString(),
+            template: false,
         }
     ];
 }

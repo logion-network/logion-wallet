@@ -15,7 +15,7 @@ jest.mock("../common/Model");
 describe("LocLinkButton", () => {
 
     it("renders", () => {
-        const tree = shallowRender(<LocLinkButton />)
+        const tree = shallowRender(<LocLinkButton text="Link to an existing LOC"/>)
         expect(tree).toMatchSnapshot();
     })
 
@@ -28,7 +28,7 @@ describe("LocLinkButton", () => {
             }) as unknown as LocsState,
         } as unknown as LogionClient)
 
-        render(<LocLinkButton />);
+        render(<LocLinkButton text="Link to an existing LOC"/>);
         await clickByName(content => /Link to an existing LOC/i.test(content));
         let dialog: HTMLElement;
         await waitFor(() => dialog = screen.getByRole("dialog"));

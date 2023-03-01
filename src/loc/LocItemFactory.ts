@@ -1,6 +1,7 @@
-import { MergedMetadataItem, MergedFile } from "@logion/client";
+import { MergedMetadataItem, MergedFile, MergedLink } from "@logion/client";
 import { UUID } from "@logion/node-api";
-import { LocItem } from "./types";
+import { LinkData, LocItem } from "./LocItem";
+import { LocTemplateDocumentOrLink, LocTemplateMetadataItem } from "./Template";
 
 export interface ItemAndRefreshFlag {
     locItem: LocItem,
@@ -41,6 +42,7 @@ export function createDraftFileLocItem(parameters: FileItem, newItem: boolean): 
         type: 'Document',
         status: 'DRAFT',
         newItem,
+        template: false,
     };
 }
 
@@ -73,7 +75,8 @@ export function createDraftMetadataLocItem(metadataItem: MetadataItem, newItem: 
         timestamp: metadataItem.addedOn || null,
         type: 'Data',
         status: 'DRAFT',
-        newItem
+        newItem,
+        template: false,
     }
 }
 
@@ -125,6 +128,7 @@ export function createDraftLinkedLocItem(parameters: CreateLocLinkedLocItemParam
         nature: link.nature,
         linkDetailsPath,
         newItem,
+        template: false,
     };
 }
 
@@ -139,4 +143,54 @@ interface Timestamp {
 
 function createPublishedLinkedLocItem(parameters: CreateLocLinkedLocItemParameters & Timestamp): ItemAndRefreshFlag {
     return publish(createDraftLinkedLocItem(parameters, false), parameters.timestamp);
+}
+
+export function createDocumentTemplateItem(templateItem: LocTemplateDocumentOrLink, locItem?: MergedFile): LocItem {
+    return {
+        name: locItem ? locItem.name : "-",
+        value: locItem ? locItem.hash : "-",
+        newItem: false,
+        status: locItem && locItem.published ? "PUBLISHED" : "DRAFT",
+        submitter: locItem ? locItem.submitter : "",
+        timestamp: locItem?.addedOn || null,
+        type: "Document",
+        template: true,
+        nature: templateItem.publicDescription,
+        isSet: locItem !== undefined,
+    }
+}
+
+export function createMetadataTemplateItem(templateItem: LocTemplateMetadataItem, locItem?: MergedMetadataItem): LocItem {
+    return {
+        name: templateItem.name,
+        value: locItem ? locItem.value : "-",
+        newItem: false,
+        status: locItem && locItem.published ? "PUBLISHED" : "DRAFT",
+        submitter: locItem ? locItem.submitter : "",
+        timestamp: locItem?.addedOn || null,
+        type: "Data",
+        template: true,
+        isSet: locItem !== undefined,
+    }
+}
+
+export function createLinkTemplateItem(
+    submitter: string,
+    templateItem: LocTemplateDocumentOrLink,
+    locItem?: MergedLink,
+    linkData?: LinkData,
+): LocItem {
+    return {
+        name: linkData ? linkData.linkedLoc.description : "-",
+        value: locItem ? locItem.id.toDecimalString() : "-",
+        newItem: false,
+        status: locItem && locItem.published ? "PUBLISHED" : "DRAFT",
+        submitter,
+        timestamp: locItem?.addedOn || null,
+        type: "Linked LOC",
+        template: true,
+        nature: templateItem.publicDescription,
+        isSet: locItem !== undefined,
+        linkDetailsPath: linkData?.linkDetailsPath,
+    }
 }

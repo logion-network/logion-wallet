@@ -15,6 +15,7 @@ export interface Props {
     disabled?: boolean,
     statusColor?: string,
     name?: string | undefined;
+    placeholder?: string;
 }
 
 function buildStyles(colors: SelectColors, statusColor?: string, isInvalid?: boolean): StylesConfig<OptionType, false, GroupBase<OptionType>> {
@@ -114,6 +115,7 @@ export default function Select(props: Props) {
                 styles={ buildStyles(colorTheme.select, props.statusColor, props.isInvalid) }
                 isDisabled={ props.disabled }
                 name={ props.name }
+                placeholder={ props.placeholder }
             />
         </>
     );

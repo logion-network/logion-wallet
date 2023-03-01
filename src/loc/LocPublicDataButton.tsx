@@ -6,11 +6,16 @@ import Dialog from "../common/Dialog";
 import LocPublicDataForm, { FormValues } from "./LocPublicDataForm";
 import { useCommonContext } from "../common/CommonContext";
 import Icon from "../common/Icon";
-import { LocItem } from "./types";
+import { LocItem } from "./LocItem";
 import { useLocContext } from "./LocContext";
 import { EditableRequest } from "@logion/client";
 
-export function LocPublicDataButton() {
+export interface Props {
+    text: string;
+    dataName?: string;
+}
+
+export function LocPublicDataButton(props: Props) {
     const { mutateLocState, locItems } = useLocContext();
     const { colorTheme } = useCommonContext();
     const [ visible, setVisible ] = useState(false);
@@ -26,7 +31,7 @@ export function LocPublicDataButton() {
             await mutateLocState(async current => {
                 if(current instanceof EditableRequest) {
                     return current.addMetadata({
-                        name: formValues.dataName,
+                        name: props.dataName ? props.dataName : formValues.dataName,
                         value: formValues.dataValue,
                     });
                 } else {
@@ -35,14 +40,14 @@ export function LocPublicDataButton() {
             })
             setVisible(false)
         }
-    }, [ mutateLocState, locItems, setVisible ]);
+    }, [ mutateLocState, locItems, setVisible, props.dataName ]);
 
     return (
         <>
             <Button onClick={ () => {
                 reset();
                 setVisible(true)
-            } }><Icon icon={ { id: "add" } } height="19px" /><span className="text">Add a public data</span></Button>
+            } }><Icon icon={ { id: "add" } } height="19px" /><span className="text">{ props.text }</span></Button>
             <Dialog
                 show={ visible }
                 size={ "lg" }
@@ -66,6 +71,7 @@ export function LocPublicDataButton() {
                     control={ control }
                     errors={ errors }
                     colors={ colorTheme.dialog }
+                    dataName={ props.dataName }
                 />
             </Dialog>
             <Dialog

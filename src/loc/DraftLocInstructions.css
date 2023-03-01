@@ -1,3 +1,11 @@
 .DraftLocInstructions {
     margin-bottom: 30px;
 }
+
+.DraftLocInstructions .project-type {
+    text-align: center;
+}
+
+.DraftLocInstructions .project-type p {
+    margin-top: 10px;
+}
