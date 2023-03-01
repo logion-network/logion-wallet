@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { Dropdown } from "react-bootstrap";
 import { UUID, LegalOfficerCase, getLegalOfficerCase } from "@logion/node-api";
-import { CollectionItem, LegalOfficer } from "@logion/client";
+import { CollectionItem, LegalOfficer, ClosedCollectionLoc, TokensRecord } from "@logion/client";
 
 import { locDetailsPath, STATEMENT_OF_FACTS_PATH } from "../../legal-officer/LegalOfficerPaths";
 import { fullCertificateUrl, getBaseUrl } from "../../PublicPaths";
@@ -18,7 +18,13 @@ import { clearSofParams, storeSofParams } from "../../common/Storage";
 import { PrerequisiteWizard } from "./PrerequisiteWizard";
 import { PREREQUISITE_WIZARD_STEPS } from "./WizardSteps";
 import { useLegalOfficerContext } from "../../legal-officer/LegalOfficerContext";
-import { getAllCollectionDeliveries, getAllDeliveries, ItemDeliveriesResponse, loFileUrl } from "../FileModel";
+import {
+    getAllCollectionDeliveries,
+    getAllDeliveries,
+    ItemDeliveriesResponse,
+    loFileUrl,
+    getTokensRecordDeliveries
+} from "../FileModel";
 import { creativeCommonsBadges } from "../../components/license/CreativeCommonsIcon";
 
 type Status = 'IDLE' | 'PRE-REQUISITE' | 'INPUT' | 'READY'
@@ -34,7 +40,7 @@ const PLACEHOLDERS = {
 
 export default function StatementOfFactsButton(props: { item?: CollectionItem }) {
     const { api, accounts, getOfficer, axiosFactory } = useLogionChain();
-    const { loc: locData } = useLocContext();
+    const { loc: locData, locState } = useLocContext();
     const { settings } = useLegalOfficerContext();
     const [ sofParams, setSofParams ] = useState<SofParams>(DEFAULT_SOF_PARAMS);
     const [ status, setStatus ] = useState<Status>('IDLE')
@@ -46,6 +52,8 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
     const [ submitError, setSubmitError ] = useState<string | undefined>(undefined);
     const [ deliveries, setDeliveries ] = useState<ItemDeliveriesResponse | null | undefined>();
     const [ collectionDeliveries, setCollectionDeliveries ] = useState<ItemDeliveriesResponse | null | undefined>();
+    const [ tokensRecords, setTokensRecords ] = useState<TokensRecord[] | null | undefined>();
+    const [ tokensRecordFileDeliveries, setTokensRecordFileDeliveries ] = useState<Record<string, ItemDeliveriesResponse>>();
 
     const submit = useCallback(async (formValues: FormValues) => {
         if (api && locData) {
@@ -83,8 +91,7 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                     let message = "" + error;
                     if (message.startsWith("QuotaExceededError")) {
                         message = `The overall screen capture file size quota has been exceeded.\nPlease try to reduce each file size to not exceed 10Mo.`
-                    }
-                    else {
+                    } else {
                         message = `Failed to store SOF info to Local Storage\n ${ message }`;
                     }
                     setSubmitError(message)
@@ -115,7 +122,7 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
     }, [ getOfficer, accounts, legalOfficer ]);
 
     useEffect(() => {
-        if(props.item && locData && deliveries === undefined) {
+        if (props.item && locData && deliveries === undefined) {
             setDeliveries(null);
             (async function() {
                 const deliveries = await getAllDeliveries(axiosFactory!(locData.ownerAddress), {
@@ -140,13 +147,33 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
     }, [ axiosFactory, props.item, locData, collectionDeliveries ]);
 
     useEffect(() => {
+        if (tokensRecords === undefined && locData && locState instanceof ClosedCollectionLoc) {
+            setTokensRecords(null);
+            (async function () {
+                const records = await locState.getTokensRecords();
+                setTokensRecords(records);
+                const deliveries: Record<string, ItemDeliveriesResponse> = {};
+                for (const record of records) {
+                    deliveries[record.id] = await getTokensRecordDeliveries(axiosFactory!(locData.ownerAddress), {
+                        locId: locData.id.toString(),
+                        recordId: record.id,
+                    })
+                }
+                setTokensRecordFileDeliveries(deliveries);
+            })();
+        }
+    }, [ tokensRecords, locState, axiosFactory, tokensRecordFileDeliveries, locData ]);
+
+    useEffect(() => {
         if (language
-                && locData
-                && legalOfficer
-                && accounts?.current?.token
-                && (deliveries !== null && deliveries !== undefined)
-                && (collectionDeliveries !== null && collectionDeliveries !== undefined)
-                && sofParams.locId !== locData.id.toDecimalString()) {
+            && locData
+            && legalOfficer
+            && accounts?.current?.token
+            && (deliveries !== null && deliveries !== undefined)
+            && (collectionDeliveries !== null && collectionDeliveries !== undefined)
+            && sofParams.locId !== locData.id.toDecimalString()
+            && (tokensRecords !== undefined && tokensRecords !== null)
+            && tokensRecordFileDeliveries) {
             const requester = locData.requesterAddress ? locData.requesterAddress : locData.requesterLocId?.toDecimalString() || "";
             setSofParams({
                 ...PLACEHOLDERS,
@@ -205,9 +232,20 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                 oathLogoUrl: loFileUrl(legalOfficer, 'oath-logo', accounts.current.token),
                 sealUrl: loFileUrl(legalOfficer, 'seal', accounts.current.token),
                 oathText: settings!['oath'] || "-",
+                tokensRecords: tokensRecords.map(record => ({
+                    id: record.id,
+                    description: record.description,
+                    issuer: record.issuer,
+                    addedOn: record.addedOn,
+                    files: record.files.map(file => ({
+                        ...file,
+                        size: file.size.toString(),
+                        deliveries: toSofDeliveries(file, tokensRecordFileDeliveries[record.id]),
+                    })),
+                }))
             });
         }
-    }, [ sofParams, setSofParams, locData, language, props.item, deliveries, accounts, legalOfficer, settings, collectionDeliveries ]);
+    }, [ sofParams, setSofParams, locData, language, props.item, deliveries, accounts, legalOfficer, settings, collectionDeliveries, tokensRecords, tokensRecordFileDeliveries ]);
 
     const cancelCallback = useCallback(() => {
         clearSofParams();
