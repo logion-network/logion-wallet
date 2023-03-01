@@ -174,7 +174,7 @@ export default function Certificate() {
     }
 
     function hasRestrictedDeliveryCheckTool(loc: PublicLoc, collectionItem: CollectionItem | null | undefined): boolean {
-        const isCollectionFileDelivery = loc.data.files.length > 0;
+        const isCollectionFileDelivery = loc.data.locType === "Collection" && (loc.data.files.length > 0);
         return isCollectionFileDelivery || isItemFileDelivery(collectionItem);
     }
 
