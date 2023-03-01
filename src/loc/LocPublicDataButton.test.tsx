@@ -4,7 +4,7 @@ import { DEFAULT_LEGAL_OFFICER_ACCOUNT, setCurrentAddress } from "../logion-chai
 import { clickByName, typeByLabel } from "../tests";
 import { TEST_WALLET_USER } from "../wallet-user/TestData";
 import { LocPublicDataButton } from "./LocPublicDataButton";
-import { LocItem } from "./types";
+import { LocItem } from "./LocItem";
 import { setLocItems, setLocState } from "./__mocks__/LocContextMock";
 
 jest.mock("./LocContext");
@@ -19,6 +19,7 @@ const existingItem: LocItem = {
     type: "Data",
     value,
     timestamp: null,
+    template: false,
 };
 
 describe("LocPublicDataButton", () => {
@@ -29,18 +30,18 @@ describe("LocPublicDataButton", () => {
 
     it("adds metadata", async () => {
         const { addMetadata } = mockEditableRequest();
-        await testAddsMetadata(<LocPublicDataButton/>, addMetadata);
+        await testAddsMetadata(<LocPublicDataButton text="Add a public data"/>, addMetadata);
     });
 
     it("does nothing on cancel", async () => {
         const { addMetadata } = mockEditableRequest();
-        await testDoesNothingOnCancel(<LocPublicDataButton/>, addMetadata);
+        await testDoesNothingOnCancel(<LocPublicDataButton text="Add a public data"/>, addMetadata);
     });
 
     it("does not add metadata if already exists", async () => {
         const { addMetadata } = mockEditableRequest();
         setLocItems([ existingItem ]);
-        await testDoesNotNothingIfItemExists(<LocPublicDataButton/>, addMetadata);
+        await testDoesNotNothingIfItemExists(<LocPublicDataButton text="Add a public data"/>, addMetadata);
     });
 });
 

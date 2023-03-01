@@ -10,8 +10,10 @@ import { useLocContext } from "./LocContext";
 import { addLink } from "src/legal-officer/client";
 
 export interface Props {
-    show: boolean,
-    exit: () => void
+    show: boolean;
+    exit: () => void;
+    text: string;
+    nature?: string;
 }
 
 export default function LocLinkExistingDialog(props: Props) {
@@ -47,7 +49,7 @@ export default function LocLinkExistingDialog(props: Props) {
                 return await addLink({
                     locState: current,
                     target: locData.id,
-                    nature: formValues.linkNature,
+                    nature: props.nature ? props.nature : formValues.linkNature,
                 });
             } else {
                 return current;
@@ -84,6 +86,7 @@ export default function LocLinkExistingDialog(props: Props) {
                 <LocLinkExistingForm
                     control={ control }
                     errors={ errors }
+                    nature={ props.nature }
                 />
             </Dialog>
         </>

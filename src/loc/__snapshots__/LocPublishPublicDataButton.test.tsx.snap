@@ -10,6 +10,7 @@ exports[`LocPublishPublicDataButton renders 1`] = `
       "newItem": false,
       "status": "DRAFT",
       "submitter": "data-submitter",
+      "template": false,
       "timestamp": null,
       "type": "Data",
       "value": "data-value",

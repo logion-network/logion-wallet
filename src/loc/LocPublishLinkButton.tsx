@@ -1,6 +1,6 @@
 import { EditableRequest } from "@logion/client";
 
-import { LocItem } from "./types";
+import { LocItem } from "./LocItem";
 import LocPublishButton from "./LocPublishButton";
 import { publishLink } from "src/legal-officer/client";
 import { useLogionChain } from "src/logion-chain";

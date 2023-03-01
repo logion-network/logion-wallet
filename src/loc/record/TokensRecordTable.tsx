@@ -47,6 +47,7 @@ export default function TokensRecordTable(props: Props) {
                             type: "Document",
                             value: record.files[0].hash,
                             nature: record.description,
+                            template: false,
                         }}
                         documentClaimHistory={ documentClaimHistory(viewer, loc, record, props.contributionMode) }
                         fileName={record.files[0].name}

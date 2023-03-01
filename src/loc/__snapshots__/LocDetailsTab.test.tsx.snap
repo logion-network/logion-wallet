@@ -314,6 +314,9 @@ exports[`LocDetailsTabContent renders closed data LOC for LO 1`] = `
     }
   />
   <LocItems
+    hideHeader={false}
+    isEmpty={true}
+    locItems={Array []}
     viewer="LegalOfficer"
   />
   <Row>
@@ -519,6 +522,9 @@ exports[`LocDetailsTabContent renders closed data LOC for User 1`] = `
     }
   />
   <LocItems
+    hideHeader={false}
+    isEmpty={true}
+    locItems={Array []}
     viewer="User"
   />
   <Row>
@@ -708,6 +714,9 @@ exports[`LocDetailsTabContent renders open data LOC for LO 1`] = `
     }
   />
   <LocItems
+    hideHeader={false}
+    isEmpty={true}
+    locItems={Array []}
     viewer="LegalOfficer"
   />
   <Row>
@@ -718,8 +727,12 @@ exports[`LocDetailsTabContent renders open data LOC for LO 1`] = `
       <ButtonGroup
         align="left"
       >
-        <LocPublicDataButton />
-        <LocPrivateFileButton />
+        <LocPublicDataButton
+          text="Add a public data"
+        />
+        <LocPrivateFileButton
+          text="Add a confidential document"
+        />
       </ButtonGroup>
     </Col>
     <React.Fragment>
@@ -728,7 +741,9 @@ exports[`LocDetailsTabContent renders open data LOC for LO 1`] = `
         xl={4}
         xxl={4}
       >
-        <LocLinkButton />
+        <LocLinkButton
+          text="Link to an existing LOC"
+        />
       </Col>
       <Col
         className="close-button-container"
@@ -914,6 +929,9 @@ exports[`LocDetailsTabContent renders open data LOC for User 1`] = `
     }
   />
   <LocItems
+    hideHeader={false}
+    isEmpty={true}
+    locItems={Array []}
     viewer="User"
   />
   <Row>
@@ -924,8 +942,12 @@ exports[`LocDetailsTabContent renders open data LOC for User 1`] = `
       <ButtonGroup
         align="left"
       >
-        <LocPublicDataButton />
-        <LocPrivateFileButton />
+        <LocPublicDataButton
+          text="Add a public data"
+        />
+        <LocPrivateFileButton
+          text="Add a confidential document"
+        />
       </ButtonGroup>
     </Col>
     <React.Fragment>
@@ -1151,6 +1173,9 @@ exports[`LocDetailsTabContent renders open identity LOC for LO 1`] = `
     />
   </React.Fragment>
   <LocItems
+    hideHeader={false}
+    isEmpty={true}
+    locItems={Array []}
     viewer="LegalOfficer"
   />
   <Row>
@@ -1161,8 +1186,12 @@ exports[`LocDetailsTabContent renders open identity LOC for LO 1`] = `
       <ButtonGroup
         align="left"
       >
-        <LocPublicDataButton />
-        <LocPrivateFileButton />
+        <LocPublicDataButton
+          text="Add a public data"
+        />
+        <LocPrivateFileButton
+          text="Add a confidential document"
+        />
       </ButtonGroup>
     </Col>
     <React.Fragment>
@@ -1171,7 +1200,9 @@ exports[`LocDetailsTabContent renders open identity LOC for LO 1`] = `
         xl={4}
         xxl={4}
       >
-        <LocLinkButton />
+        <LocLinkButton
+          text="Link to an existing LOC"
+        />
       </Col>
       <Col
         className="close-button-container"
@@ -1358,6 +1389,9 @@ exports[`LocDetailsTabContent renders void data LOC for LO 1`] = `
     }
   />
   <LocItems
+    hideHeader={false}
+    isEmpty={true}
+    locItems={Array []}
     viewer="LegalOfficer"
   />
   <Row>
@@ -1554,6 +1588,9 @@ exports[`LocDetailsTabContent renders void data LOC for User 1`] = `
     }
   />
   <LocItems
+    hideHeader={false}
+    isEmpty={true}
+    locItems={Array []}
     viewer="User"
   />
   <Row>

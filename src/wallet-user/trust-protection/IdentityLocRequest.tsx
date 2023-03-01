@@ -17,13 +17,15 @@ import './IdentityLocRequest.css';
 import { locDetailsPath } from "../UserRouter";
 import IconTextRow from "src/common/IconTextRow";
 import Icon from "src/common/Icon";
+import { useSearchParams } from "react-router-dom";
+import { backendTemplate } from "src/loc/Template";
 
 export interface Props {
     backPath: string,
 }
 
-function getInvalidCompanyName(company: boolean, companyName: string | undefined): string | undefined {
-    if(company && !companyName) {
+function getInvalidCompanyName(company: boolean, companyIdentityLoc: boolean, companyName: string | undefined): string | undefined {
+    if((company || companyIdentityLoc) && !companyName) {
         return "Required if you are representing a legal entity";
     } else {
         return undefined;
@@ -31,7 +33,7 @@ function getInvalidCompanyName(company: boolean, companyName: string | undefined
 }
 
 export default function IdentityLocRequest(props: Props) {
-
+    const [ search ] = useSearchParams();
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>();
     const { colorTheme, availableLegalOfficers } = useCommonContext();
     const [ legalOfficer, setLegalOfficer ] = useState<LegalOfficer | null>(null);
@@ -45,7 +47,9 @@ export default function IdentityLocRequest(props: Props) {
     const legalOfficersWithoutValidIdentityLoc = useMemo(() => {
         const legalOfficersWithValidIdentityLoc = locsState?.legalOfficersWithValidIdentityLoc.map(lo => lo.address);
         return availableLegalOfficers?.filter(lo => legalOfficersWithValidIdentityLoc?.includes(lo.address) === false)
-    }, [ locsState?.legalOfficersWithValidIdentityLoc, availableLegalOfficers ])
+    }, [ locsState?.legalOfficersWithValidIdentityLoc, availableLegalOfficers ]);
+    const templateId = useMemo(() => backendTemplate(search.get("templateId") || undefined), [ search ]);
+    const companyIdentityLoc = useMemo(() => templateId === "company_identity", [ templateId ]);
 
     const clear = useCallback(() => {
         reset();
@@ -57,7 +61,7 @@ export default function IdentityLocRequest(props: Props) {
             return
         }
 
-        const invalidCompanyName = getInvalidCompanyName(company, companyName);
+        const invalidCompanyName = getInvalidCompanyName(company, companyIdentityLoc, companyName);
         setInvalidCompanyName(invalidCompanyName);
         if(invalidCompanyName) {
             return;
@@ -83,14 +87,15 @@ export default function IdentityLocRequest(props: Props) {
                 description: `KYC ${ userIdentity.firstName } ${ userIdentity.lastName } - ${ accounts.current?.address }`,
                 userIdentity,
                 userPostalAddress,
-                company: company ? companyName : undefined,
+                company: (company || companyIdentityLoc) ? companyName : undefined,
                 draft: true,
+                template: templateId,
             }) as DraftRequest;
             return draftRequest.locsState();
         })
         clear();
         navigate(locDetailsPath(draftRequest!.data().id, "Identity"));
-    }, [ mutateLocsState, legalOfficer, accounts, clear, navigate, company, companyName ])
+    }, [ mutateLocsState, legalOfficer, accounts, clear, navigate, company, companyName, companyIdentityLoc, templateId ])
 
     return (
         <FullWidthPane
@@ -124,13 +129,14 @@ export default function IdentityLocRequest(props: Props) {
                             <Form.Check
                                 data-testid="company"
                                 type="checkbox"
-                                checked={ company }
+                                checked={ company || companyIdentityLoc }
                                 onChange={ () => setCompany(!company) }
                                 label="Yes, I am representing a legal entity"
+                                disabled={ templateId !== undefined }
                             />
                         </div>
                         {
-                            company &&
+                            (company || companyIdentityLoc) &&
                             <div className="company-name-container">
                                 <FormGroup
                                     id="companyName"
@@ -156,7 +162,7 @@ export default function IdentityLocRequest(props: Props) {
 
                         <h3>Fill in your personal information</h3>
 
-                        <Form onSubmit={ handleSubmit(submit, () => setInvalidCompanyName(getInvalidCompanyName(company, companyName))) }>
+                        <Form onSubmit={ handleSubmit(submit, () => setInvalidCompanyName(getInvalidCompanyName(company, companyIdentityLoc, companyName))) }>
 
                             <IdentityForm
                                 control={ control }

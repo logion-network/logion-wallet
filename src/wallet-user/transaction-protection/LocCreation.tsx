@@ -12,8 +12,11 @@ import ButtonGroup from "../../common/ButtonGroup";
 import LocCreationForm, { FormValues } from './LocCreationForm';
 import { useLogionChain } from '../../logion-chain';
 import { useNavigate } from "react-router-dom";
-import { IDENTITY_REQUEST_PATH, locDetailsPath } from "../UserRouter";
+import { locDetailsPath } from "../UserRouter";
 import './LocCreation.css';
+import { autoSelectTemplate, backendTemplate } from 'src/loc/Template';
+import LocTemplateChooser from 'src/loc/LocTemplateChooser';
+import IdentityLocCreation from '../IdentityLocCreation';
 
 export interface Props {
     locType: LocType;
@@ -34,15 +37,26 @@ export default function LocCreation(props: Props) {
         }
     });
     const [ selectedLegalOfficer, setSelectedLegalOfficer ] = useState<LegalOfficer | undefined>();
+    const [ selectedTemplateId, setSelectedTemplateId ] = useState<string | undefined>();
+    const [ currentLocType, setCurrentLocType ] = useState<LocType>();
+
     const legalOfficersWithValidIdentityLoc = useMemo(
         () => (locsState && !locsState.discarded) ? locsState.legalOfficersWithValidIdentityLoc : undefined,
         [ locsState ]
     );
 
+    useEffect(() => {
+        if(currentLocType !== props.locType) {
+            setCurrentLocType(props.locType);
+            setSelectedTemplateId(autoSelectTemplate(props.locType))
+        }
+    }, [ currentLocType, props.locType ]);
+
     const clear = useCallback(() => {
         reset();
-        setRequestLoc(false)
-    }, [ reset ]);
+        setRequestLoc(false);
+        setSelectedTemplateId(autoSelectTemplate(props.locType));
+    }, [ reset, props.locType ]);
 
     const submit = useCallback(async (formValues: FormValues) => {
         let draftRequest: DraftRequest;
@@ -52,17 +66,13 @@ export default function LocCreation(props: Props) {
                 description: formValues.description,
                 locType,
                 draft: true,
+                template: backendTemplate(selectedTemplateId),
             }) as DraftRequest;
             return draftRequest.locsState();
         });
         clear();
         navigate(locDetailsPath(draftRequest!.locId, locType));
-    }, [ selectedLegalOfficer, locType, mutateLocsState, clear, navigate ]);
-
-    const requestIdLoc = useCallback(() => {
-        clear();
-        navigate(IDENTITY_REQUEST_PATH);
-    }, [ clear, navigate ])
+    }, [ selectedLegalOfficer, locType, mutateLocsState, clear, navigate, selectedTemplateId ]);
 
     useEffect(() => {
         if (getOfficer !== undefined && locsState !== undefined) {
@@ -77,13 +87,7 @@ export default function LocCreation(props: Props) {
         return null;
     }
 
-    const requestIdLocAction: Action = {
-        id: "requestIdLoc",
-        callback: requestIdLoc,
-        buttonText: 'Request an Identity Case',
-        buttonVariant: 'primary',
-        type: 'button',
-    };
+    const requestIdLocAction = <IdentityLocCreation onSelect={ clear }/>;
 
     const cancelAction: Action = {
         id: "cancel",
@@ -109,7 +113,16 @@ export default function LocCreation(props: Props) {
                     <p className="info-text">Please request an Identity LOC to the Logion Legal Officer of your choice:</p>
                 </Dialog>
             }
-            { legalOfficersWithValidIdentityLoc?.length > 0 &&
+            { legalOfficersWithValidIdentityLoc?.length > 0 && requestLoc && selectedTemplateId === undefined &&
+                <LocTemplateChooser
+                    show={ legalOfficersWithValidIdentityLoc?.length > 0 && requestLoc && selectedTemplateId === undefined }
+                    locType={ props.locType }
+                    onCancel={ clear }
+                    onSelect={ value => setSelectedTemplateId(value) }
+                    selected={ selectedTemplateId }
+                />
+            }
+            { legalOfficersWithValidIdentityLoc?.length > 0 && selectedTemplateId !== undefined &&
                 <Dialog
                     className="LocCreation"
                     show={ requestLoc }

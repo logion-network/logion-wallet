@@ -1,4 +1,5 @@
 import { render, screen, waitFor } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { LocType } from "@logion/node-api";
 
 import { LocRequestFragment } from "../common/types/ModelTypes";
@@ -56,9 +57,16 @@ async function createsWithUserIdentity(locType: LocType, requesterAddress: strin
         locRequest={ requestFragment }
     />);
 
+    await selectProjectType();
     await typeByLabel("LOC Private Description", "Test");
 
     await submitAndExpectSuccess(exit, onSuccess);
+}
+
+async function selectProjectType() {
+    await userEvent.click(screen.getByText("Please select your project type"));
+    await userEvent.click(screen.getByText("Specific"));
+    await clickByName("Submit");
 }
 
 async function submitAndExpectSuccess(exit: jest.Mock<any, any>, onSuccess: jest.Mock<any, any>) {
@@ -90,6 +98,7 @@ async function createsWithoutUserIdentity(locType: LocType, requesterAddress: st
         locRequest={ requestFragment }
     />);
 
+    await selectProjectType();
     await typeByLabel("LOC Private Description", "Test");
     await fillInUserIdentityForm();
 
@@ -120,6 +129,7 @@ async function failsWithoutUserIdentity(locType: LocType, requesterAddress: stri
         locRequest={ requestFragment }
     />);
 
+    await selectProjectType();
     await typeByLabel("LOC Private Description", "Test");
 
     await submitAndExpectFailure(exit, onSuccess);

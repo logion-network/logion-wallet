@@ -1,4 +1,4 @@
-import { Routes, Route, useNavigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { UUID, LocType } from '@logion/node-api';
 
 import {
@@ -24,12 +24,12 @@ import Recovery from "./trust-protection/Recovery";
 import Vault from "./trust-protection/Vault";
 import { useLogionChain } from '../logion-chain';
 import LocCreation from "./transaction-protection/LocCreation";
-import Button from "../common/Button";
 import IdentityLocRequest from "./trust-protection/IdentityLocRequest";
 import VTPDashboard from "./vtp/VTPDashboard";
 import IdenfyVerificationResult from './IdenfyVerificationResult';
 import { UserDocumentClaimHistory, UserTokensRecordDocumentClaimHistory } from 'src/loc/DocumentClaimHistory';
 import { UserTokensRecordPane } from 'src/loc/record/TokensRecordPane';
+import IdentityLocCreation from './IdentityLocCreation';
 
 export const HOME_PATH = USER_PATH;
 
@@ -131,7 +131,6 @@ export default function UserRouter() {
     const { accounts } = useLogionChain();
     const { balanceState } = useCommonContext();
     const { vaultState } = useUserContext();
-    const navigate = useNavigate();
 
     if(!(accounts?.current?.address)) {
         return null;
@@ -209,7 +208,7 @@ export default function UserRouter() {
                            request: "Identity Case Request(s)"
                        } }
                        iconId="identity"
-                       actions={ <Button onClick={ () => navigate(IDENTITY_REQUEST_PATH) }>Request an Identity Case</Button> }
+                       actions={ <IdentityLocCreation/> }
                    /> } />
             <Route path={ locDetailsRelativePath('Transaction') } element={
                 <UserLocDetails

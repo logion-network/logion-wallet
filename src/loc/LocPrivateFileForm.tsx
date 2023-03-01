@@ -3,6 +3,7 @@ import FormGroup from "../common/FormGroup";
 import { Controller, Control, FieldErrors } from "react-hook-form";
 import Form from "react-bootstrap/Form";
 import { BackgroundAndForegroundColors } from "../common/ColorTheme";
+import StaticLabelValue from "src/common/StaticLabelValue";
 
 export interface FormValues {
     fileName: string;
@@ -14,6 +15,7 @@ export interface Props {
     errors: FieldErrors<FormValues>;
     colors: BackgroundAndForegroundColors;
     onFileSelected: (file: File) => void;
+    nature?: string;
 }
 
 export default function LocPrivateFileForm(props: Props) {
@@ -52,27 +54,38 @@ export default function LocPrivateFileForm(props: Props) {
                 }
                 colors={ props.colors }
             />
-            <FormGroup
-                id="locFileNature"
-                label="Document Public Description"
-                control={
-                    <Controller
-                        name="nature"
-                        control={ props.control }
-                        defaultValue=""
-                        rules={ { maxLength: 255 } }
-                        render={ ({ field }) => (
-                            <Form.Control
-                                isInvalid={ !!props.errors.nature?.message }
-                                type="text" placeholder="e.g. XYZ"
-                                aria-describedby="locFileNature"
-                                { ...field }
-                            />
-                        ) } />
+            {
+                props.nature !== undefined &&
+                <StaticLabelValue
+                    label="Document Public Description"
+                    value={ props.nature }
+                    formStyle={ true }
+                />
+            }
+            {
+                !props.nature &&
+                <FormGroup
+                    id="locFileNature"
+                    label="Document Public Description"
+                    control={
+                        <Controller
+                            name="nature"
+                            control={ props.control }
+                            defaultValue=""
+                            rules={ { maxLength: 255 } }
+                            render={ ({ field }) => (
+                                <Form.Control
+                                    isInvalid={ !!props.errors.nature?.message }
+                                    type="text" placeholder="e.g. XYZ"
+                                    aria-describedby="locFileNature"
+                                    { ...field }
+                                />
+                            ) } />
 
-                }
-                colors={ props.colors }
-            />
+                    }
+                    colors={ props.colors }
+                />
+            }
         </>
     )
 }

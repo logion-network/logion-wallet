@@ -103,6 +103,7 @@ exports[`IdentityLocRequest renders 1`] = `
           <FormCheck
             checked={false}
             data-testid="company"
+            disabled={false}
             label="Yes, I am representing a legal entity"
             onChange={[Function]}
             type="checkbox"

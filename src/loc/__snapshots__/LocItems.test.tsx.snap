@@ -249,7 +249,7 @@ exports[`LOLocItems renders with single draft item 1`] = `
                       height="20px"
                       src="/assets/publish.svg"
                     />
-                     Publish to the blockchain
+                     Publish
                   </button>
                   <button
                     className="Button btn btn-danger-flat"

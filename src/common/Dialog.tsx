@@ -2,7 +2,7 @@ import React from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 
-import Button, { Action } from './Button';
+import Button, { Action, isAction } from './Button';
 import { Children, customClassName } from './types/Helpers';
 import { useCommonContext } from './CommonContext';
 
@@ -15,7 +15,7 @@ export interface Props {
     show: boolean,
     children: Children,
     "data-testid"?: string,
-    actions: Action[],
+    actions: (Action | React.ReactNode)[],
     size: ModalSize,
     onSubmit?: () => void,
     className?: string,
@@ -63,12 +63,16 @@ export default function Dialog(props: Props) {
                 </Modal.Body>
                 <Modal.Footer>
                     {
-                        props.actions.map(action => (
-                            <Button
-                                key={ action.id }
-                                action={ action }
-                            />
-                        ))
+                        props.actions.map(action => {
+                            if(isAction(action)) {
+                                return <Button
+                                    key={ action.id }
+                                    action={ action }
+                                />
+                            } else {
+                                return action;
+                            }
+                        })
                     }
                 </Modal.Footer>
             </Form>

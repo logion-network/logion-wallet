@@ -30,6 +30,7 @@ export interface CreateLocRequest {
     description: string;
     locType: LocType;
     userIdentity?: UserIdentity;
+    template?: string;
 }
 
 export async function createLocRequest(

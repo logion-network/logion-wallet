@@ -2,6 +2,7 @@ import FormGroup from "../common/FormGroup";
 import { Controller, Control, FieldErrors } from "react-hook-form";
 import Form from "react-bootstrap/Form";
 import { useCommonContext } from "../common/CommonContext";
+import StaticLabelValue from "src/common/StaticLabelValue";
 
 export interface FormValues {
     locId: string;
@@ -11,6 +12,7 @@ export interface FormValues {
 export interface Props {
     control: Control<FormValues>;
     errors: FieldErrors<FormValues>;
+    nature?: string;
 }
 
 export default function LocLinkExistingForm(props: Props) {
@@ -48,33 +50,44 @@ export default function LocLinkExistingForm(props: Props) {
                 colors={ colorTheme.dialog }
                 feedback={ props.errors.locId?.message }
             />
-            <FormGroup
-                id="linkNature"
-                label="Link Public Description"
-                control={
-                    <Controller
-                        name="linkNature"
-                        control={ props.control }
-                        defaultValue=""
-                        rules={{
-                            maxLength: {
-                                value: 255,
-                                message: 'The description must contain at most 255 characters'
-                            }
-                        }}
-                        render={({ field }) => (
-                            <Form.Control
-                                isInvalid={!!props.errors.linkNature?.message}
-                                type="text" placeholder="e.g. XYZ"
-                                aria-describedby="linkNature"
-                                { ...field }
-                            />
-                        )}
-                      />
-                }
-                colors={ colorTheme.dialog }
-                feedback={ props.errors.linkNature?.message }
-            />
+            {
+                props.nature !== undefined &&
+                <StaticLabelValue
+                    label="Link Public Description"
+                    value={ props.nature }
+                    formStyle={ true }
+                />
+            }
+            {
+                !props.nature &&
+                <FormGroup
+                    id="linkNature"
+                    label="Link Public Description"
+                    control={
+                        <Controller
+                            name="linkNature"
+                            control={ props.control }
+                            defaultValue=""
+                            rules={{
+                                maxLength: {
+                                    value: 255,
+                                    message: 'The description must contain at most 255 characters'
+                                }
+                            }}
+                            render={({ field }) => (
+                                <Form.Control
+                                    isInvalid={!!props.errors.linkNature?.message}
+                                    type="text" placeholder="e.g. XYZ"
+                                    aria-describedby="linkNature"
+                                    { ...field }
+                                />
+                            )}
+                        />
+                    }
+                    colors={ colorTheme.dialog }
+                    feedback={ props.errors.linkNature?.message }
+                />
+            }
         </>
     )
 }

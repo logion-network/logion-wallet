@@ -6,7 +6,7 @@ import Button from "../common/Button";
 import Dialog from "../common/Dialog";
 import LocPrivateFileForm, { FormValues } from "./LocPrivateFileForm";
 import { useCommonContext } from "../common/CommonContext";
-import { LocItem } from "./types";
+import { LocItem } from "./LocItem";
 import Icon from "../common/Icon";
 import { Row } from "../common/Grid";
 import { useLocContext } from "./LocContext";
@@ -14,7 +14,12 @@ import { EditableRequest, HashOrContent } from "@logion/client";
 
 type Status = 'Idle' | 'UploadDialog' | 'Hashing' | 'Uploading';
 
-export function LocPrivateFileButton() {
+export interface Props {
+    text: string;
+    nature?: string;
+}
+
+export function LocPrivateFileButton(props: Props) {
     const { mutateLocState, locItems } = useLocContext();
     const { colorTheme } = useCommonContext();
     const [ status, setStatus ] = useState<Status>('Idle');
@@ -43,7 +48,7 @@ export function LocPrivateFileButton() {
                             return current.addFile({
                                 file: content,
                                 fileName: formValues.fileName,
-                                nature: formValues.nature,
+                                nature: props.nature ? props.nature : formValues.nature,
                             });
                         } else {
                             return current;
@@ -57,7 +62,7 @@ export function LocPrivateFileButton() {
                 }
             }
         }
-    }, [ file, mutateLocState, locItems, setExistingItem ])
+    }, [ file, mutateLocState, locItems, setExistingItem, props.nature ])
 
     const handleSelectedFile = useCallback((file: File) => {
         setFile(file);
@@ -72,7 +77,7 @@ export function LocPrivateFileButton() {
                 setUploadError("")
                 setStatus('UploadDialog')
             } }>
-                <Icon icon={ { id: "add" } } height="19px" /><span className="text">Add a confidential document</span>
+                <Icon icon={ { id: "add" } } height="19px" /><span className="text">{ props.text }</span>
             </Button>
             <Dialog
                 show={ status !== 'Idle' }
@@ -99,6 +104,7 @@ export function LocPrivateFileButton() {
                     errors={ errors }
                     colors={ colorTheme.dialog }
                     onFileSelected={ handleSelectedFile }
+                    nature={ props.nature }
                 />
                 { status === 'Hashing' &&
                     <Row>

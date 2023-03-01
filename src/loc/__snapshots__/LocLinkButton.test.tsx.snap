@@ -22,6 +22,7 @@ exports[`LocLinkButton renders 1`] = `
   <LocLinkExistingDialog
     exit={[Function]}
     show={false}
+    text="Link to an existing LOC"
   />
 </React.Fragment>
 `;

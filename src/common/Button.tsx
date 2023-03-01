@@ -23,6 +23,12 @@ export interface Action {
     choices?: Choice[],
 }
 
+export function isAction(action: any): action is Action {
+    return "id" in action
+        && "buttonVariant" in action
+        && "buttonText" in action;
+}
+
 export interface Props {
     action?: Action,
     type?: ButtonType,

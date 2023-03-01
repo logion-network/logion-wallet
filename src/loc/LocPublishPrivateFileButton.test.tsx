@@ -1,7 +1,7 @@
 
 jest.mock("./LocContext");
 
-import { LocItem } from "./types";
+import { LocItem } from "./LocItem";
 import { shallowRender } from "../tests";
 import LocPublishPrivateFileButton from "./LocPublishPrivateFileButton";
 
@@ -16,6 +16,7 @@ describe("LocPublishPrivateFileButton", () => {
         nature: "file-nature",
         timestamp: null,
         newItem: false,
+        template: false,
     }
 
     it("renders", () => {

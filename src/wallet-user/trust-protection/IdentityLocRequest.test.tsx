@@ -8,7 +8,7 @@ import { shallowRender, clickByName } from "../../tests";
 import IdentityLocRequest from "./IdentityLocRequest";
 import { fillInForm } from "../../components/identity/IdentityFormTestHelper";
 import { setMutateLocsState, setHasValidIdentityLoc, setLocsState } from "../__mocks__/UserContextMock";
-import { navigate } from 'src/__mocks__/ReactRouterMock';
+import { navigate, setSearchParams } from 'src/__mocks__/ReactRouterMock';
 
 jest.mock('../UserContext');
 jest.mock('../../logion-chain');
@@ -22,6 +22,9 @@ describe("IdentityLocRequest", () => {
         jest.resetAllMocks();
         setMutateLocsState(mutateLocsState);
         setHasValidIdentityLoc([ GUILLAUME ]);
+        setSearchParams({
+            get: () => undefined,
+        })
     });
 
     it("renders", () => {

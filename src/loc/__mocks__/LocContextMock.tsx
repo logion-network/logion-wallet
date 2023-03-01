@@ -1,7 +1,7 @@
 import { LocData, CollectionItem } from "@logion/client";
 import { UUID } from "@logion/node-api";
 
-import { LocItem } from "../types";
+import { LocItem } from "../LocItem";
 
 let locState: any = {
     isLogionIdentity: () => false,

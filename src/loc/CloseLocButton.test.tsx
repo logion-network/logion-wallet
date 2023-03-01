@@ -25,7 +25,8 @@ describe("CloseLocButton", () => {
                 submitter: DEFAULT_LEGAL_OFFICER,
                 timestamp: null,
                 type: 'Data',
-                value: "Test"
+                value: "Test",
+                template: false,
             }
         ]);
         const locState = new OpenLoc();
@@ -59,7 +60,8 @@ describe("CloseLocButton", () => {
                 submitter: DEFAULT_LEGAL_OFFICER,
                 timestamp: null,
                 type: 'Data',
-                value: "Test"
+                value: "Test",
+                template: false,
             }
         ]);
         const locState = new OpenLoc();
@@ -94,7 +96,8 @@ describe("CloseLocButton", () => {
                 submitter: DEFAULT_LEGAL_OFFICER,
                 timestamp: null,
                 type: 'Data',
-                value: "Test"
+                value: "Test",
+                template: false,
             }
         ]);
         const locState = new OpenLoc();
@@ -129,7 +132,8 @@ describe("CloseLocButton", () => {
                 submitter: DEFAULT_LEGAL_OFFICER,
                 timestamp: null,
                 type: 'Data',
-                value: "Test"
+                value: "Test",
+                template: false,
             }
         ]);
         const locState = new OpenLoc();
