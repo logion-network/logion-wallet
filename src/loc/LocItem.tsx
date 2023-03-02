@@ -82,7 +82,7 @@ export function buildItemTableColumns(args: {
             header: "Public description",
             render: locItem => <Cell content={ locItem.nature || "-" } overflowing tooltipId={`${loc.id}-name-tooltip`}/>,
             renderDetails: locItem => renderDetails(loc, locItem, viewer),
-            detailsExpanded: locItem => locItem.newItem || (locItem.template && viewer !== "LegalOfficer"),
+            detailsExpanded: locItem => locItem.newItem || (locItem.template && (viewer !== "LegalOfficer" || locItem.status !== "PUBLISHED")),
             hideExpand: locItem => locItem.template && viewer !== "LegalOfficer",
             align: "left",
             width: width({

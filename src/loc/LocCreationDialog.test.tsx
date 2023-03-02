@@ -65,7 +65,7 @@ async function createsWithUserIdentity(locType: LocType, requesterAddress: strin
 
 async function selectProjectType() {
     await userEvent.click(screen.getByText("Please select your project type"));
-    await userEvent.click(screen.getByText("Specific"));
+    await userEvent.click(screen.getByText("Custom LOC"));
     await clickByName("Submit");
 }
 
