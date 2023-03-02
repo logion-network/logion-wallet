@@ -33,7 +33,7 @@ export interface SofFileDelivery {
     owner: string;
 }
 
-export interface SofCollectionItemFile {
+export interface SofDeliverableFile {
     name: string;
     contentType: string;
     size: string;
@@ -50,7 +50,7 @@ export interface SofCollectionItem {
     id: string;
     description: string;
     addedOn: string;
-    files: SofCollectionItemFile[];
+    files: SofDeliverableFile[];
     token?: ItemToken;
     restrictedDelivery: boolean;
     logionClassification?: SofLogionClassification;
@@ -85,6 +85,7 @@ interface LocInfo {
     publicItems: PublicItem[];
     privateItems: PrivateItem[];
     collectionItem?: SofCollectionItem;
+    tokensRecords: SofTokensRecord[];
 }
 
 interface SettingsData {
@@ -92,6 +93,14 @@ interface SettingsData {
     sealUrl: string;
     oathText: string;
     oathLogoUrl: string;
+}
+
+export interface SofTokensRecord {
+    id: string;
+    description: string;
+    addedOn: string;
+    files: SofDeliverableFile[];
+    issuer: string;
 }
 
 export interface SofParams extends Prerequisites, LocInfo, FormValues, SettingsData {
@@ -124,6 +133,7 @@ export const DEFAULT_SOF_PARAMS: SofParams = {
     oathText: "",
     oathLogoUrl: "",
     sealUrl: "",
+    tokensRecords: [],
 }
 
 export interface Prerequisite {

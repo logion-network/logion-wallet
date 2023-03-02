@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { loadPagedJs } from "./PagedJS";
 import { SofParams } from "./SofParams";
 import SofTermsAndConditionsEN from "./SofTermsAndConditionsEN";
+import SofTokensRecordEN from "./SofTokensRecordEN";
+import SofFilesAndDeliveriesEN from "./SofFilesAndDeliveriesEN";
 
 export interface Props {
     sofParams: SofParams;
@@ -147,34 +149,25 @@ export default function StatementOfFactsTemplateEN(props: Props) {
                     <div>Underlying Token ID: { props.sofParams.collectionItem.token.id }</div>
                     </>
                 }
-                {
-                    props.sofParams.collectionItem.files.map((file, index) => (
-                        <>
-                        <div className="section-name"><strong>Underlying asset #{index + 1}</strong></div>
-                        <div>Name: { file.name }</div>
-                        <div>Content Type: { file.contentType }</div>
-                        <div className="large-value">Hash: { file.hash }</div>
-                        <div>Size: { file.size.toString() } bytes</div>
-                        {
-                            file.deliveries.length > 0 &&
-                            <div>Claimed copies:</div>
-                        }
-                        {
-                            file.deliveries.map((delivery, deliveryIndex) => (
-                                <>
-                                <div className="large-value">Delivery #{ deliveryIndex + 1 } Copy Hash: { delivery.hash }</div>
-                                <div className="large-value">Delivery #{ deliveryIndex + 1 } Owner: { delivery.owner }</div>
-                                </>
-                            ))
-                        }
-                        </>
-                    ))
-                }
+                <SofFilesAndDeliveriesEN files={ props.sofParams.collectionItem.files } />
                 <SofTermsAndConditionsEN item={ props.sofParams.collectionItem } />
                 <hr/>
                 </>
             }
-
+            {
+                props.sofParams.tokensRecords.length > 0 &&
+                <>
+                    <h3 className="item-title">4 - Tokens Records</h3>
+                    {
+                        props.sofParams.tokensRecords.map((tokensRecord, i) => (
+                            <>
+                                { i > 0 && <hr /> }
+                                <SofTokensRecordEN tokensRecords={ tokensRecord } />
+                            </>
+                        ))
+                    }
+                </>
+            }
             <p className="conclusion-first">As I concluded my observations, I create the present Statement of Facts and
                 record it in the following Legal Officer Case: { props.sofParams.containingLocId } , a copy of which is
                 archived at my office location.</p>

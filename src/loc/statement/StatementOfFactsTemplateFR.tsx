@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { loadPagedJs } from "./PagedJS";
 import { SofParams } from "./SofParams";
 import SofTermsAndConditionsFR from "./SofTermsAndConditionsFR";
+import SofTokensRecordFR from "./SofTokensRecordFR";
+import SofFilesAndDeliveriesFR from "./SofFilesAndDeliveriesFR";
 
 export interface Props {
     sofParams: SofParams;
@@ -147,34 +149,25 @@ export default function StatementOfFactsTemplateFR(props: Props) {
                     <div>ID du token sous-jacent: { props.sofParams.collectionItem.token.id }</div>
                     </>
                 }
-                {
-                    props.sofParams.collectionItem.files.map((file, index) => (
-                        <>
-                        <div className="section-name"><strong>Contenu sous-jacent #{index + 1}</strong></div>
-                        <div>Nom: { file.name }</div>
-                        <div>Type de contenu: { file.contentType }</div>
-                        <div className="large-value">Hash: { file.hash }</div>
-                        <div>Taille: { file.size.toString() } octets</div>
-                        {
-                            file.deliveries.length > 0 &&
-                            <div>Copies réclamées:</div>
-                        }
-                        {
-                            file.deliveries.map((delivery, deliveryIndex) => (
-                                <>
-                                <div className="large-value">Copie #{ deliveryIndex + 1 } - hash de la copie: { delivery.hash }</div>
-                                <div className="large-value">Copie #{ deliveryIndex + 1 } - détenteur: { delivery.owner }</div>
-                                </>
-                            ))
-                        }
-                        </>
-                    ))
-                }
+                <SofFilesAndDeliveriesFR files={ props.sofParams.collectionItem.files } />
                 <SofTermsAndConditionsFR item={ props.sofParams.collectionItem } />
                 <hr/>
                 </>
             }
-
+            {
+                props.sofParams.tokensRecords.length > 0 &&
+                <>
+                    <h3 className="item-title">4 - Enregistrements liés aux jetons</h3>
+                    {
+                        props.sofParams.tokensRecords.map((tokensRecord, i) => (
+                            <>
+                                { i > 0 && <hr /> }
+                                <SofTokensRecordFR tokensRecords={ tokensRecord } />
+                            </>
+                        ))
+                    }
+                </>
+            }
             <p className="conclusion-first">Mes constatations terminées, je dresse le présent Procés Verbal de constat
                 et l’enregistre dans le dossier numérique (Legal Officer Case) dont l’identifiant
                 est: { props.sofParams.containingLocId } et dont une copie est conservée au rang des minutes de l’étude.</p>
