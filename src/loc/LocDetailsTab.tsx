@@ -153,7 +153,7 @@ export function LocDetailsTabContent(props: ContentProps) {
                     for(const documentTemplate of theTemplate.documents) {
                         const file = loc.files.find(item => item.nature === documentTemplate.publicDescription);
                         if(file) {
-                            templateDocuments.add(file.hash);
+                            templateDocuments.add(file.nature);
                         }
                         items.push(createDocumentTemplateItem(documentTemplate, file));
                     }
@@ -180,9 +180,9 @@ export function LocDetailsTabContent(props: ContentProps) {
                 setTemplateItems(items);
 
                 const customItems = locItems.filter(item =>
-                    item.type === "Linked LOC"
+                    (item.type === "Linked LOC" && !templateLinks.has(item.nature))
                     || (item.type === "Data" && !templateItems.has(item.name))
-                    || (item.type === "Document" && !templateDocuments.has(item.value))
+                    || (item.type === "Document" && !templateDocuments.has(item.nature))
                 );
                 setCustomItems(customItems);
             } else {
