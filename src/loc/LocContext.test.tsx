@@ -346,17 +346,21 @@ function ItemPublisher(props: ItemPublisherProps) {
             const item = locItems.find(item => item.name === "New data")!;
             setSignAndSubmit(() => (callback: CallCallback) => mutateLocState(async current => publishMetadata({
                 locState: current as RealEditableRequest,
-                item,
-                callback,
+                item: {
+                    name: item.name!,
+                    value: item.value!,
+                    submitter: item.submitter!,
+                },
                 signer: signer!,
+                callback,
             })));
         } else if(props.itemType === "Document") {
             const file = locItems.find(item => item.name === "New file")!;
             setSignAndSubmit(() => (callback: CallCallback) => mutateLocState(async current => publishFile({
                 locState: current as RealEditableRequest,
-                hash: file.value,
+                hash: file.value!,
                 nature: file.name!,
-                submitter: file.submitter,
+                submitter: file.submitter!,
                 callback,
                 signer: signer!,
             })));

@@ -62,7 +62,7 @@ async function testUploadsFile(component: React.ReactElement, addFile: jest.Mock
 
     await clickByName(content => /add a confidential document/i.test(content));
     const modal = screen.getByRole("dialog");
-    await typeByLabel("Document Name", existingFileItem.name);
+    await typeByLabel("Document Name", existingFileItem.name!);
     await typeByLabel("Document Public Description", existingFileItem.nature || "");
     await uploadByTestId("FileSelectorButtonHiddenInput", file);
     await clickByName("Submit");
@@ -75,7 +75,7 @@ async function testDoesNothingOnCancel(component: React.ReactElement, addFile: j
 
     await clickByName(content => /add a confidential document/i.test(content));
     const modal = screen.getByRole("dialog");
-    await typeByLabel("Document Name", existingFileItem.name);
+    await typeByLabel("Document Name", existingFileItem.name!);
     await typeByLabel("Document Public Description", existingFileItem.nature || "");
     await uploadByTestId("FileSelectorButtonHiddenInput", file);
     await clickByName("Cancel");
@@ -88,7 +88,7 @@ async function testDoesNotNothingIfFileExists(component: React.ReactElement, add
 
     await clickByName(content => /add a confidential document/i.test(content));
     const modal = screen.getByRole("dialog");
-    await typeByLabel("Document Name", existingFileItem.name);
+    await typeByLabel("Document Name", existingFileItem.name!);
     await typeByLabel("Document Public Description", existingFileItem.nature || "");
     await uploadByTestId("FileSelectorButtonHiddenInput", file);
     await clickByName("Submit");

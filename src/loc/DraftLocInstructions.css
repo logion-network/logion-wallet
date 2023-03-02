@@ -1,5 +1,6 @@
 .DraftLocInstructions {
     margin-bottom: 30px;
+    min-height: 177px;
 }
 
 .DraftLocInstructions .project-type {
@@ -8,4 +9,8 @@
 
 .DraftLocInstructions .project-type p {
     margin-top: 10px;
+}
+
+.DraftLocInstructions .Frame {
+    height: 100%;
 }

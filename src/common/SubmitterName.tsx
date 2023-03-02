@@ -7,11 +7,16 @@ import Tooltip from "react-bootstrap/Tooltip";
 
 export interface Props {
     loc: LocData
-    submitter: string;
+    submitter: string | undefined;
 }
 
-function format(identity: { firstName: string, lastName: string } | undefined, address: string): string {
-    return identity ? identity.firstName + " " + identity.lastName : address;
+interface Identity {
+    firstName: string;
+    lastName: string;
+}
+
+function format(identity: Identity | undefined, address: string | undefined): string {
+    return identity ? identity.firstName + " " + identity.lastName : address || "-";
 }
 
 function findVTP(loc: LocData, address: string): VerifiedThirdParty | undefined {
@@ -25,20 +30,29 @@ export default function SubmitterName(props: Props) {
             <LegalOfficerName address={ submitter } />
         )
     } else {
-        const identity = submitter === loc.requesterAddress ?
-            loc.userIdentity :
-            findVTP(loc, submitter);
+        const identity = getIdentity(submitter, loc);
         return (
             <Cell content={
                 <div>
                     { format(identity, submitter) }
-                    { submitter !== loc.requesterAddress && <>
+                    {
+                        submitter && submitter !== loc.requesterAddress &&
                         <VTPBadge />
-                    </> }
+                    }
                 </div>
             }
             />
         )
+    }
+}
+
+function getIdentity(submitter: string | undefined, loc: LocData): Identity | undefined {
+    if(submitter === loc.requesterAddress) {
+        return loc.userIdentity;
+    } else if(submitter) {
+        return findVTP(loc, submitter);
+    } else {
+        return undefined;
     }
 }
 

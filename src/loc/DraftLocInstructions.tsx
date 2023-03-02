@@ -41,7 +41,7 @@ export default function DraftLocInstructions(props: Props) {
                     instructionsWidth < 12 && template &&
                     <Col>
                         <Frame className="project-type">
-                            <Icon icon={ template.icon } width="138px"/>
+                            <Icon icon={ template.icon } height="89px"/>
                             <p><strong>Project type:</strong> { template.name }</p>
                         </Frame>
                     </Col>

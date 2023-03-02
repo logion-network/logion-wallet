@@ -58,8 +58,8 @@ async function testAddsMetadata(component: React.ReactElement, addMetadata: jest
 
     await clickAdd();
     const modal = screen.getByRole("dialog");
-    await typeByLabel("Data Name (No confidential or personal information)", existingItem.name);
-    await typeByLabel("Data (No confidential or personal information)", existingItem.value);
+    await typeByLabel("Data Name (No confidential or personal information)", existingItem.name!);
+    await typeByLabel("Data (No confidential or personal information)", existingItem.value!);
     await clickByName("Submit");
     await waitFor(() => expect(addMetadata).toBeCalled());
     await waitFor(() => expect(modal).not.toBeInTheDocument());
@@ -74,8 +74,8 @@ async function testDoesNothingOnCancel(component: React.ReactElement, addMetadat
 
     await clickAdd();
     const modal = screen.getByRole("dialog");
-    await typeByLabel("Data Name (No confidential or personal information)", existingItem.name);
-    await typeByLabel("Data (No confidential or personal information)", existingItem.value);
+    await typeByLabel("Data Name (No confidential or personal information)", existingItem.name!);
+    await typeByLabel("Data (No confidential or personal information)", existingItem.value!);
     await clickByName("Cancel");
     expect(addMetadata).not.toBeCalled();
     await waitFor(() => expect(modal).not.toBeInTheDocument());
@@ -86,8 +86,8 @@ async function testDoesNotNothingIfItemExists(component: React.ReactElement, add
 
     await clickAdd();
     const modal = screen.getByRole("dialog");
-    await typeByLabel("Data Name (No confidential or personal information)", existingItem.name);
-    await typeByLabel("Data (No confidential or personal information)", existingItem.value);
+    await typeByLabel("Data Name (No confidential or personal information)", existingItem.name!);
+    await typeByLabel("Data (No confidential or personal information)", existingItem.value!);
     await clickByName("Submit");
     await waitFor(() => expect(addMetadata).not.toBeCalled());
     await waitFor(() => expect(modal).not.toBeInTheDocument());

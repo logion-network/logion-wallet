@@ -1,4 +1,4 @@
-import { Col, Row } from "../common/Grid";
+import { Col } from "../common/Grid";
 import LocItemDetail from "./LocItemDetail";
 
 import './LocItemDetails.css'
@@ -16,13 +16,11 @@ export default function LocLinkDetails(props: Props) {
             <div className="frame">
                 <div className="frame-title">{ props.item.status === "DRAFT" ? "Data to be published" : "Published data" }</div>
                 <LocItemDetail label="Submitter ID" copyButtonText={ props.item.submitter }>
-                    { props.item.submitter }
+                    { props.item.submitter || "-" }
                 </LocItemDetail>
                 <LocItemDetail label="Linked LOC" className="linked-loc">
-                    <Row>
-                    <NewTabLink href={ props.item.linkDetailsPath! } iconId="loc-link">{ props.item.value }</NewTabLink>
+                    <NewTabLink href={ props.item.linkDetailsPath } iconId="loc-link">{ props.item.value }</NewTabLink>
                     <CopyPasteButton value={ props.item.value } className="medium"/>
-                    </Row>
                 </LocItemDetail>
                 {
                     props.item.nature !== undefined &&

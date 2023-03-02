@@ -347,6 +347,9 @@ exports[`LOLocItems renders with single draft item 1`] = `
                     Name
                   </span>
                 </div>
+                <div
+                  className="Col copy-paste-container"
+                />
               </div>
               <div
                 className="Row LocItemDetail"
@@ -368,6 +371,9 @@ exports[`LOLocItems renders with single draft item 1`] = `
                     </pre>
                   </span>
                 </div>
+                <div
+                  className="Col copy-paste-container"
+                />
               </div>
             </div>
           </div>
@@ -708,6 +714,9 @@ exports[`UserLocItems renders with single draft item 1`] = `
                     Name
                   </span>
                 </div>
+                <div
+                  className="Col copy-paste-container"
+                />
               </div>
               <div
                 className="Row LocItemDetail"
@@ -729,6 +738,9 @@ exports[`UserLocItems renders with single draft item 1`] = `
                     </pre>
                   </span>
                 </div>
+                <div
+                  className="Col copy-paste-container"
+                />
               </div>
             </div>
           </div>

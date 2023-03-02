@@ -147,11 +147,11 @@ function createPublishedLinkedLocItem(parameters: CreateLocLinkedLocItemParamete
 
 export function createDocumentTemplateItem(templateItem: LocTemplateDocumentOrLink, locItem?: MergedFile): LocItem {
     return {
-        name: locItem ? locItem.name : "-",
-        value: locItem ? locItem.hash : "-",
+        name: locItem?.name,
+        value: locItem?.hash,
         newItem: false,
         status: locItem && locItem.published ? "PUBLISHED" : "DRAFT",
-        submitter: locItem ? locItem.submitter : "",
+        submitter: locItem?.submitter,
         timestamp: locItem?.addedOn || null,
         type: "Document",
         template: true,
@@ -163,10 +163,10 @@ export function createDocumentTemplateItem(templateItem: LocTemplateDocumentOrLi
 export function createMetadataTemplateItem(templateItem: LocTemplateMetadataItem, locItem?: MergedMetadataItem): LocItem {
     return {
         name: templateItem.name,
-        value: locItem ? locItem.value : "-",
+        value: locItem?.value,
         newItem: false,
         status: locItem && locItem.published ? "PUBLISHED" : "DRAFT",
-        submitter: locItem ? locItem.submitter : "",
+        submitter: locItem?.submitter,
         timestamp: locItem?.addedOn || null,
         type: "Data",
         template: true,
@@ -175,17 +175,17 @@ export function createMetadataTemplateItem(templateItem: LocTemplateMetadataItem
 }
 
 export function createLinkTemplateItem(
-    submitter: string,
+    ownerAddress: string,
     templateItem: LocTemplateDocumentOrLink,
     locItem?: MergedLink,
     linkData?: LinkData,
 ): LocItem {
     return {
-        name: linkData ? linkData.linkedLoc.description : "-",
-        value: locItem ? locItem.id.toDecimalString() : "-",
+        name: linkData?.linkedLoc.description,
+        value: locItem?.id.toDecimalString(),
         newItem: false,
         status: locItem && locItem.published ? "PUBLISHED" : "DRAFT",
-        submitter,
+        submitter: locItem ? ownerAddress : undefined,
         timestamp: locItem?.addedOn || null,
         type: "Linked LOC",
         template: true,

@@ -19,6 +19,13 @@ exports[`LocItemDetail accepts custom class names 1`] = `
       Some content
     </span>
   </Col>
+  <Col
+    className="copy-paste-container"
+  >
+    <CopyPasteButton
+      className="small"
+    />
+  </Col>
 </Row>
 `;
 
@@ -40,6 +47,13 @@ exports[`LocItemDetail shows children without spinner 1`] = `
     >
       Some content
     </span>
+  </Col>
+  <Col
+    className="copy-paste-container"
+  >
+    <CopyPasteButton
+      className="small"
+    />
   </Col>
 </Row>
 `;
@@ -90,6 +104,13 @@ exports[`LocItemDetail shows spinner instead of children when enabled 1`] = `
     <Spinner
       animation="border"
       size="sm"
+    />
+  </Col>
+  <Col
+    className="copy-paste-container"
+  >
+    <CopyPasteButton
+      className="small"
     />
   </Col>
 </Row>

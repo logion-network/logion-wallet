@@ -27,11 +27,11 @@ export type LocItemStatus = 'DRAFT' | 'PUBLISHED'
 export type LocItemType = 'Data' | 'Document' | 'Linked LOC'
 
 export interface LocItem {
-    name: string,
-    value: string,
+    name: string | undefined,
+    value: string | undefined,
     timestamp: string | null,
     type: LocItemType,
-    submitter: string,
+    submitter: string | undefined,
     status: LocItemStatus,
     nature?: string,
     target?: UUID,
@@ -79,7 +79,7 @@ export function buildItemTableColumns(args: {
     let columns: Column<LocItem>[] = [
         {
             header: "Name",
-            render: locItem => <Cell content={ locItem.name } overflowing tooltipId={`${loc.id}-name-tooltip`}/>,
+            render: locItem => <Cell content={ locItem.name || "-" } overflowing tooltipId={`${loc.id}-name-tooltip`}/>,
             renderDetails: locItem => renderDetails(loc, locItem, viewer),
             detailsExpanded: locItem => locItem.newItem || (locItem.template && viewer !== "LegalOfficer"),
             hideExpand: locItem => locItem.template && viewer !== "LegalOfficer",
@@ -104,13 +104,13 @@ export function buildItemTableColumns(args: {
             render: locItem => <Cell content={
                 <>
                     <span className="item-type">{ locItem.type }</span> {
-                    locItem.type === 'Document' && canViewFile(currentAddress, locItem, contributionMode) &&
+                    locItem.type === 'Document' && locItem.name && canViewFile(currentAddress, locItem, contributionMode) &&
                     <ViewFileButton
                         nodeOwner={ loc.ownerAddress }
                         fileName={ locItem.name }
                         downloader={ (axios: AxiosInstance) => getFile(axios, {
                             locId: loc.id.toString(),
-                            hash: locItem.value
+                            hash: locItem.value || ""
                         }) }
                     />
                 }
@@ -120,14 +120,14 @@ export function buildItemTableColumns(args: {
         },
         {
             header: "Submitted by",
-            render: locItem => isSet(locItem) && <SubmitterName loc={ loc } submitter={ locItem.submitter } />,
+            render: locItem => <SubmitterName loc={ loc } submitter={ locItem.submitter } />,
         }
     ];
 
     if(loc.locType === "Collection" && viewer === "LegalOfficer") {
         columns.push({
             header: "Restricted Delivery?",
-            render: locItem => locItem.type === "Document" ? <RestrictedDeliveryCell hash={ locItem.value }/> : null,
+            render: locItem => locItem.type === "Document" && locItem.value ? <RestrictedDeliveryCell hash={ locItem.value }/> : null,
             width: "130px",
         });
     }
@@ -156,7 +156,7 @@ function renderDetails(loc: LocData | undefined, locItem: LocItem, viewer: Viewe
     return (
         <>
             { locItem.type === 'Data' && <LocPublicDataDetails item={ locItem } /> }
-            { locItem.type === 'Document' && <LocPrivateFileDetails item={ locItem } documentClaimHistory={ loc?.locType === "Collection" && !locItem.template ? documentClaimHistory(viewer, loc, locItem.value) : undefined} /> }
+            { locItem.type === 'Document' && <LocPrivateFileDetails item={ locItem } documentClaimHistory={ loc?.locType === "Collection" && locItem.value && !locItem.template ? documentClaimHistory(viewer, loc, locItem.value) : undefined} /> }
             { locItem.type === 'Linked LOC' && <LocLinkDetails item={ locItem } /> }
         </>
     )
@@ -185,7 +185,7 @@ export function useDeleteMetadataCallback(mutateLocState: (mutator: (current: Lo
         await mutateLocState(async current => {
             if(current instanceof EditableRequest) {
                 return current.deleteMetadata({
-                    name: item.name,
+                    name: item.name || "",
                 });
             } else {
                 return current;
@@ -199,7 +199,7 @@ export function useDeleteFileCallback(mutateLocState: (mutator: (current: LocReq
         await mutateLocState(async current => {
             if(current instanceof EditableRequest) {
                 return current.deleteFile({
-                    hash: item.value,
+                    hash: item.value || "",
                 });
             } else {
                 return current;

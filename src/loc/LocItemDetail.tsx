@@ -11,7 +11,7 @@ export interface DetailProps {
     children?: Children,
     className?: string,
     spinner?: boolean,
-    copyButtonText?: string,
+    copyButtonText?: string | null,
 }
 
 export default function LocItemDetail(props: DetailProps) {
@@ -30,10 +30,9 @@ export default function LocItemDetail(props: DetailProps) {
             <Col className="value-container">
                 { value }
             </Col>
-            { props.copyButtonText !== undefined &&
-                <Col className="copy-paste-container">
-                    <CopyPasteButton value={ props.copyButtonText } className="small" />
-                </Col> }
+            <Col className="copy-paste-container">
+                <CopyPasteButton value={ props.copyButtonText } className="small" />
+            </Col>
         </Row>
     )
 }
