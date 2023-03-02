@@ -6,10 +6,10 @@ export interface Props {
 
 export default function SofFilesAndDeliveriesFR(props: Props) {
     return (
-        <>
+        <ul>
             {
                 props.files.map((file, index) => (
-                    <>
+                    <li>
                         <div className="section-name"><strong>Contenu sous-jacent #{ index + 1 }</strong></div>
                         <div>Nom: { file.name }</div>
                         <div>Type de contenu: { file.contentType }</div>
@@ -31,9 +31,9 @@ export default function SofFilesAndDeliveriesFR(props: Props) {
                                 </>
                             ))
                         }
-                    </>
+                    </li>
                 ))
             }
-        </>
+        </ul>
     )
 }

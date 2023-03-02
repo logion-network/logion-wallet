@@ -6,10 +6,10 @@ export interface Props {
 
 export default function SofFilesAndDeliveriesEN(props: Props) {
     return (
-        <>
+        <ul>
             {
                 props.files.map((file, index) => (
-                    <>
+                    <li>
                         <div className="section-name"><strong>Underlying asset #{index + 1}</strong></div>
                         <div>Name: { file.name }</div>
                         <div>Content Type: { file.contentType }</div>
@@ -26,14 +26,14 @@ export default function SofFilesAndDeliveriesEN(props: Props) {
                                         Delivery #{ deliveryIndex + 1 } Copy Hash: { delivery.hash }
                                     </div>
                                     <div className="large-value">
-                                        elivery #{ deliveryIndex + 1 } Owner: { delivery.owner }
+                                        Delivery #{ deliveryIndex + 1 } Owner: { delivery.owner }
                                     </div>
                                 </>
                             ))
                         }
-                    </>
+                    </li>
                 ))
             }
-        </>
+        </ul>
     )
 }
