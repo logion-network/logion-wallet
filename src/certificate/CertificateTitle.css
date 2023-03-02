@@ -1,0 +1,82 @@
+.CertificateTitle {
+    display: flex;
+    justify-content: center;
+}
+
+.CertificateTitle h1 {
+    font-size: 4rem;
+    font-weight: 600;
+}
+
+.CertificateTitle h2 {
+    font-size: 3.6rem;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.CertificateTitle .text {
+    text-align: center;
+}
+
+.CertificateTitle.with-template .icon-container {
+    display: flex;
+}
+
+.CertificateTitle.with-template .text {
+    margin-left: 20px;
+    text-align: left;
+}
+
+.CertificateTitle.with-template .art_nft img {
+    width: 215px;
+}
+
+.CertificateTitle.with-template .real_estate img {
+    width: 215px;
+}
+
+.CertificateTitle.with-template .identity_loc img {
+    width: 215px;
+}
+
+.CertificateTitle.with-template .sof_loc img {
+    width: 215px;
+}
+
+@media (max-width: 1600px) {
+    .CertificateTitle.with-template .art_nft img {
+        width: 200px;
+    }
+
+    .CertificateTitle.with-template .real_estate img {
+        width: 200px;
+    }
+
+    .CertificateTitle.with-template .identity_loc img {
+        width: 200px;
+    }
+
+    .CertificateTitle.with-template .sof_loc img {
+        width: 200px;
+    }
+}
+
+@media (max-width: 1400px) {
+    .CertificateTitle.with-template {
+        flex-direction: column;
+    }
+
+    .CertificateTitle.with-template .icon-container {
+        justify-content: center;
+    }
+
+    .CertificateTitle.with-template .text {
+        text-align: center;
+    }    
+}
+
+@media (max-width: 1200px) {
+    .CertificateTitle.with-template .icon-container {
+        display: none;
+    }
+}

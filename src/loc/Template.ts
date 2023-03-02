@@ -18,13 +18,15 @@ export interface LocTemplateMetadataItem {
     name: string;
 }
 
-export const CUSTOM_LOC_TEMPLATE_ID = "specific";
+export const CUSTOM_LOC_TEMPLATE_ID = "custom";
+
+export const FALLBACK_ICON_ID = "empty-loc";
 
 export const CUSTOM_LOC_TEMPLATE = {
     id: CUSTOM_LOC_TEMPLATE_ID,
     name: "Custom LOC",
     icon: {
-        id: "empty-loc",
+        id: FALLBACK_ICON_ID,
     },
     documents: [],
     metadata: [],
@@ -37,7 +39,7 @@ export const TEMPLATES: Record<LocType, LocTemplate[]> = {
             id: "individual_identity",
             name: "Identity LOC for individuals",
             icon: {
-                id: "empty-loc",
+                id: "identity_loc",
             },
             documents: [
                 {
@@ -54,7 +56,7 @@ export const TEMPLATES: Record<LocType, LocTemplate[]> = {
             id: "company_identity",
             name: "Identity LOC for companies",
             icon: {
-                id: "empty-loc",
+                id: "identity_loc",
             },
             documents: [
                 {
@@ -77,7 +79,7 @@ export const TEMPLATES: Record<LocType, LocTemplate[]> = {
             id: "issuer_identity",
             name: "Identity LOC for Verified Issuers",
             icon: {
-                id: "empty-loc",
+                id: "identity_loc",
             },
             documents: [
                 {
@@ -168,7 +170,7 @@ export const TEMPLATES: Record<LocType, LocTemplate[]> = {
             id: "statement_of_facts",
             name: "Statement of Facts",
             icon: {
-                id: "empty-loc",
+                id: "sof_loc",
             },
             documents: [
                 {
