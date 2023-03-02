@@ -34,7 +34,7 @@ export default function LocPublicDataForm(props: Props) {
                 props.dataName === undefined &&
                 <FormGroup
                     id="locDataName"
-                    label="Data Name (No confidential or personal information)"
+                    label="Public data name (No confidential or personal information)"
                     control={
                         <Controller
                             name="dataName"
@@ -67,7 +67,7 @@ export default function LocPublicDataForm(props: Props) {
             }
             <FormGroup
                 id="locDataValue"
-                label="Data (No confidential or personal information)"
+                label="Public data (No confidential or personal information)"
                 control={
                     <Controller
                         name="dataValue"

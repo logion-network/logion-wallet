@@ -70,6 +70,7 @@ function createPublishedMetadataLocItem(parameters: MergedMetadataItem): ItemAnd
 export function createDraftMetadataLocItem(metadataItem: MetadataItem, newItem: boolean): LocItem {
     return {
         name: metadataItem.name,
+        nature: metadataItem.name,
         value: metadataItem.value,
         submitter: metadataItem.submitter,
         timestamp: metadataItem.addedOn || null,
@@ -163,6 +164,7 @@ export function createDocumentTemplateItem(templateItem: LocTemplateDocumentOrLi
 export function createMetadataTemplateItem(templateItem: LocTemplateMetadataItem, locItem?: MergedMetadataItem): LocItem {
     return {
         name: templateItem.name,
+        nature: templateItem.name,
         value: locItem?.value,
         newItem: false,
         status: locItem && locItem.published ? "PUBLISHED" : "DRAFT",

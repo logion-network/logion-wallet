@@ -15,6 +15,7 @@ export default function LocLinkDetails(props: Props) {
         <Col className="LocItemDetails" style={ { width: "100%" } }>
             <div className="frame">
                 <div className="frame-title">{ props.item.status === "DRAFT" ? "Data to be published" : "Published data" }</div>
+                <LocItemDetail label="Public Description">{ props.item.nature }</LocItemDetail>
                 <LocItemDetail label="Submitter ID" copyButtonText={ props.item.submitter }>
                     { props.item.submitter || "-" }
                 </LocItemDetail>
@@ -22,10 +23,6 @@ export default function LocLinkDetails(props: Props) {
                     <NewTabLink href={ props.item.linkDetailsPath } iconId="loc-link">{ props.item.value }</NewTabLink>
                     <CopyPasteButton value={ props.item.value } className="medium"/>
                 </LocItemDetail>
-                {
-                    props.item.nature !== undefined &&
-                    <LocItemDetail label="Public Description">{ props.item.nature }</LocItemDetail>
-                }
             </div>
         </Col>
     )

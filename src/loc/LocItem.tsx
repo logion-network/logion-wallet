@@ -12,6 +12,7 @@ import SubmitterName from "src/common/SubmitterName";
 import { Cell, Column, DateTimeCell } from "src/common/Table";
 import { Child } from "src/common/types/Helpers";
 import ViewFileButton from "src/common/ViewFileButton";
+import { deleteLink } from "src/legal-officer/client";
 import { documentClaimHistoryPath } from "src/legal-officer/LegalOfficerPaths";
 import { fullCertificateUrl } from "src/PublicPaths";
 import { documentClaimHistoryPath as userDocumentClaimHistoryPath } from "src/wallet-user/UserRouter";
@@ -78,8 +79,8 @@ export function buildItemTableColumns(args: {
     } = args;
     let columns: Column<LocItem>[] = [
         {
-            header: "Name",
-            render: locItem => <Cell content={ locItem.name || "-" } overflowing tooltipId={`${loc.id}-name-tooltip`}/>,
+            header: "Public description",
+            render: locItem => <Cell content={ locItem.nature || "-" } overflowing tooltipId={`${loc.id}-name-tooltip`}/>,
             renderDetails: locItem => renderDetails(loc, locItem, viewer),
             detailsExpanded: locItem => locItem.newItem || (locItem.template && viewer !== "LegalOfficer"),
             hideExpand: locItem => locItem.template && viewer !== "LegalOfficer",
@@ -208,6 +209,20 @@ export function useDeleteFileCallback(mutateLocState: (mutator: (current: LocReq
     }, [ mutateLocState ]);
 }
 
+export function useDeleteLinkCallback(mutateLocState: (mutator: (current: LocRequestState) => Promise<LocRequestState | LocsState>) => Promise<void>) {
+    return useCallback(async (item: LocItem) => {
+        await mutateLocState(async current => {
+            if(current instanceof EditableRequest) {
+                return deleteLink({
+                    locState: current,
+                    target: item.target!,
+                });
+            } else {
+                return current;
+            }
+        });
+    }, [ mutateLocState ]);
+}
 
 export function canDelete(address: string | undefined, item: LocItem, viewer: Viewer, loc: LocData): boolean {
     if (item.type === "Linked LOC") {

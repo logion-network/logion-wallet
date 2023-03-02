@@ -25,6 +25,7 @@ export default function LocPrivateFileDetails(props: Props) {
             <Col className="LocItemDetails" style={{ width: leftPaneWidth }}>
                 <div className="frame">
                     <div className="frame-title">{ props.item.status === "DRAFT" ? "Document related data to be published" : "Published document related data" }</div>
+                    <LocItemDetail label="Public Description">{ props.item.nature }</LocItemDetail>
                     {
                         props.fileName !== undefined &&
                         <LocItemDetail label="File name">{ props.fileName }</LocItemDetail>
@@ -41,7 +42,6 @@ export default function LocPrivateFileDetails(props: Props) {
                         { props.item.submitter || "-" }
                     </LocItemDetail>
                     <LocItemDetail label="Document Hash" copyButtonText={ props.item.value }>{ props.item.value || "-" }</LocItemDetail>
-                    <LocItemDetail label="Public Description">{ props.item.nature }</LocItemDetail>
                 </div>
             </Col>
             {

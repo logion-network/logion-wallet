@@ -14,6 +14,10 @@
     margin-bottom: 10px;
 }
 
+.Table.double-space-rows .body .Row {
+    margin-bottom: 20px;
+}
+
 .Table .body .Row .Col {
     position: relative;
     padding: 10px;

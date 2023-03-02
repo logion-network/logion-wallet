@@ -14,11 +14,11 @@ export default function LocPublicDataDetails(props: Props) {
         <Col className="LocItemDetails" style={{ width: "100%" }}>
             <div className="frame">
                 <div className="frame-title">{ props.item.status === "DRAFT" ? "Data to be published" : "Published data" }</div>
+                <LocItemDetail label="Public name">{ props.item.name || "-" }</LocItemDetail>
                 <LocItemDetail label="Submitter ID" copyButtonText={ props.item.submitter }>
                     { props.item.submitter || "-" }
                 </LocItemDetail>
-                <LocItemDetail label="Name">{ props.item.name || "-" }</LocItemDetail>
-                <LocItemDetail label="Value"><pre>{ props.item.value || "-" }</pre></LocItemDetail>
+                <LocItemDetail label="Public data"><pre>{ props.item.value || "-" }</pre></LocItemDetail>
             </div>
         </Col>
     )
