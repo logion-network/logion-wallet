@@ -1,3 +1,4 @@
+import { ReactNode, useCallback } from "react";
 import Button from "src/common/Button";
 import ButtonGroup from "src/common/ButtonGroup";
 import { useCommonContext } from "src/common/CommonContext";
@@ -6,10 +7,11 @@ import { useResponsiveContext } from "src/common/Responsive";
 import Table from "src/common/Table";
 import { useLogionChain } from "src/logion-chain";
 import { useLocContext } from "./LocContext";
-import { buildItemTableColumns, canAdd, canDelete, canPublish, LocItem, useDeleteFileCallback, useDeleteMetadataCallback } from "./LocItem";
+import { buildItemTableColumns, canAdd, canDelete, canPublish, LocItem, useDeleteFileCallback, useDeleteLinkCallback, useDeleteMetadataCallback } from "./LocItem";
 import LocLinkButton from "./LocLinkButton";
 import { LocPrivateFileButton } from "./LocPrivateFileButton";
 import { LocPublicDataButton } from "./LocPublicDataButton";
+import LocPublishLinkButton from "./LocPublishLinkButton";
 import LocPublishPrivateFileButton from "./LocPublishPrivateFileButton";
 import LocPublishPublicDataButton from "./LocPublishPublicDataButton";
 import { ContributionMode } from "./types";
@@ -26,6 +28,17 @@ export default function LocTemplateItems(props: Props) {
     const { width } = useResponsiveContext();
     const deleteMetadata = useDeleteMetadataCallback(mutateLocState);
     const deleteFile = useDeleteFileCallback(mutateLocState);
+    const deleteLink = useDeleteLinkCallback(mutateLocState);
+
+    const deleteItem = useCallback((item: LocItem) => {
+        if(item.type === "Data") {
+            deleteMetadata(item);
+        } else if(item.type === "Document") {
+            deleteFile(item);
+        } else if(item.type === "Linked LOC") {
+            deleteLink(item);
+        }
+    }, [ deleteMetadata, deleteFile, deleteLink ]);
 
     if(!loc) {
         return null;
@@ -46,61 +59,67 @@ export default function LocTemplateItems(props: Props) {
                 data={ props.templateItems }
                 columns={ columns }
                 renderEmpty={ () => null }
+                doubleSpaceRows={ viewer !== "LegalOfficer" }
             />
         </div>
     );
 
     function renderActions(item: LocItem) {
-        if(loc && item.isSet && canDelete(currentAddress, item, viewer, loc) && canPublish(viewer, loc)) {
-            return (
-                <ButtonGroup
-                    className="actions"
-                >
-                    {
-                        item.type === "Data" &&
-                        <LocPublishPublicDataButton locItem={ item } />
-                    }
-                    {
-                        item.type === "Document" &&
-                        <LocPublishPrivateFileButton locItem={ item } />
-                    }
+        const buttons: ReactNode[] = [];
+        let key = 0;
+        if(!loc) {
+            return null;
+        }
+
+        if(item.isSet) {
+            if(canPublish(viewer, loc)) {
+                if(item.type === "Data") {
+                    buttons.push(<LocPublishPublicDataButton key={++key} locItem={ item } />);
+                } else if(item.type === "Document") {
+                    buttons.push(<LocPublishPrivateFileButton key={++key} locItem={ item } />);
+                } else if(item.type === "Linked LOC") {
+                    buttons.push(<LocPublishLinkButton key={++key} locItem={ item } />);
+                }
+            }
+
+            if(canDelete(currentAddress, item, viewer, loc)) {
+                buttons.push(
                     <Button
-                        onClick={() => item.type === "Data" ? deleteMetadata(item) : deleteFile(item)}
+                        key={++key}
+                        onClick={() => deleteItem(item)}
                     >
                         <InlineIconText icon={ { id: "clear", hasVariants: true } } height="19px" colorThemeType="dark" text="Clear"/>
                     </Button>
-                </ButtonGroup>
-            );
-        } else if(loc && canAdd(viewer, loc)) {
-            return (
-                <ButtonGroup
-                    className="actions"
-                >
-                    {
-                        item.type === "Document" &&
-                        <LocPrivateFileButton
-                            text="Set document"
-                            nature={ item.nature }
-                        />
-                    }
-                    {
-                        item.type === "Data" &&
-                        <LocPublicDataButton
-                            text="Set public data"
-                            dataName={ item.name }
-                        />
-                    }
-                    {
-                        item.type === "Linked LOC" && viewer === "LegalOfficer" &&
-                        <LocLinkButton
-                            text="Set link"
-                            nature={ item.nature }
-                        />
-                    }
-                </ButtonGroup>
-            );
-        } else {
-            return null;
+                );
+            }
+        } else if(canAdd(viewer, loc)) {
+            if(item.type === "Data") {
+                buttons.push(<LocPublicDataButton
+                    key={++key}
+                    text="Set public data"
+                    dataName={ item.name }
+                />);
+            } else if(item.type === "Document") {
+                buttons.push(<LocPrivateFileButton
+                    key={++key}
+                    text="Set document"
+                    nature={ item.nature }
+                />);
+            } else if(item.type === "Linked LOC" && viewer === "LegalOfficer") {
+                buttons.push(<LocLinkButton
+                    key={++key}
+                    text="Set link"
+                    nature={ item.nature }
+                />);
+            }
         }
+
+        return (
+            <ButtonGroup
+                className="actions"
+            >
+                { buttons }
+            </ButtonGroup>
+        );
     }
 }

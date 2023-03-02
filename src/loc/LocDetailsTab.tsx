@@ -147,32 +147,34 @@ export function LocDetailsTabContent(props: ContentProps) {
                 const items: LocItem[] = [];
 
                 const templateDocuments = new Set();
-                for(const documentTemplate of theTemplate.documents) {
-                    const file = loc.files.find(item => item.nature === documentTemplate.publicDescription);
-                    if(file) {
-                        templateDocuments.add(file.hash);
-                    }
-                    items.push(createDocumentTemplateItem(documentTemplate, file));
-                }
-
                 const templateItems = new Set();
-                for(const dataTemplate of theTemplate.metadata) {
-                    const data = loc.metadata.find(item => item.name === dataTemplate.name);
-                    if(data) {
-                        templateItems.add(data.name);
-                    }
-                    items.push(createMetadataTemplateItem(dataTemplate, data));
-                }
-
                 const templateLinks = new Set();
-                for(const linkTemplate of theTemplate.links) {
-                    const link = loc.links.find(item => item.nature === linkTemplate.publicDescription);
-                    let linkData: LinkData | undefined;
-                    if(link) {
-                        templateLinks.add(link.nature);
-                        linkData = getLinkData(accounts?.current?.address, locState.locsState(), link, detailsPath);
+                if(loc.status !== "CLOSED") {
+                    for(const documentTemplate of theTemplate.documents) {
+                        const file = loc.files.find(item => item.nature === documentTemplate.publicDescription);
+                        if(file) {
+                            templateDocuments.add(file.hash);
+                        }
+                        items.push(createDocumentTemplateItem(documentTemplate, file));
                     }
-                    items.push(createLinkTemplateItem(loc.ownerAddress, linkTemplate, link, linkData));
+
+                    for(const dataTemplate of theTemplate.metadata) {
+                        const data = loc.metadata.find(item => item.name === dataTemplate.name);
+                        if(data) {
+                            templateItems.add(data.name);
+                        }
+                        items.push(createMetadataTemplateItem(dataTemplate, data));
+                    }
+
+                    for(const linkTemplate of theTemplate.links) {
+                        const link = loc.links.find(item => item.nature === linkTemplate.publicDescription);
+                        let linkData: LinkData | undefined;
+                        if(link) {
+                            templateLinks.add(link.nature);
+                            linkData = getLinkData(accounts?.current?.address, locState.locsState(), link, detailsPath);
+                        }
+                        items.push(createLinkTemplateItem(loc.ownerAddress, linkTemplate, link, linkData));
+                    }
                 }
 
                 setTemplateItems(items);
@@ -296,16 +298,14 @@ export function LocDetailsTabContent(props: ContentProps) {
             <div className="separator" style={ { backgroundColor: locTabBorderColor } } />
             </>
         }
-        {
-            <LocItems
-                matchedHash={ checkResult.hash }
-                viewer={ props.viewer }
-                contributionMode={ props.contributionMode }
-                locItems={ customItems }
-                isEmpty={ locItems.length === 0 }
-                hideHeader={ templateItems.length > 0 }
-            />
-        }
+        <LocItems
+            matchedHash={ checkResult.hash }
+            viewer={ props.viewer }
+            contributionMode={ props.contributionMode }
+            locItems={ customItems }
+            isEmpty={ locItems.length === 0 }
+            hideHeader={ templateItems.length > 0 }
+        />
         <Row>
             <Col xxl={ 5 } xl={ 4 }>
                 {

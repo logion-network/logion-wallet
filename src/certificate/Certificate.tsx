@@ -43,6 +43,7 @@ import ClaimAssetButton from "./ClaimAssetButton";
 import Authenticate from "./Authenticate";
 import TokensRecords from "./TokensRecords";
 import './Certificate.css'
+import CertificateTitle from "./CertificateTitle";
 
 export default function Certificate() {
 
@@ -285,8 +286,7 @@ export default function Certificate() {
                         <img className="logo" src={ process.env.PUBLIC_URL + "/logo_black.png" } alt="logo" />
                     </Col>
                     <Col md={ 8 }>
-                        <h2>Legal Officer Case</h2>
-                        <h1>CERTIFICATE</h1>
+                        <CertificateTitle loc={ loc }/>
                     </Col>
                 </Row>
                 { tokenGated &&

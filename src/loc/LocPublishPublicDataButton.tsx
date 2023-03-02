@@ -16,7 +16,11 @@ export default function LocPublishPublicDataButton(props: Props) {
         <LocPublishButton
             locItem={ props.locItem }
             publishMutator={ async (current, callback) => {
-                if(current instanceof EditableRequest) {
+                if(current instanceof EditableRequest
+                    && props.locItem.name
+                    && props.locItem.value
+                    && props.locItem.submitter) {
+
                     return await publishMetadata({
                         locState: current,
                         item: {

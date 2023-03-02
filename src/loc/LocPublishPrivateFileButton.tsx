@@ -16,7 +16,10 @@ export default function LocPublishPrivateFileButton(props: Props) {
         <LocPublishButton
             locItem={ props.locItem }
             publishMutator={ async (current, callback) => {
-                if(current instanceof EditableRequest) {
+                if(current instanceof EditableRequest
+                    && props.locItem.value
+                    && props.locItem.submitter) {
+
                     return await publishFile({
                         locState: current,
                         hash: props.locItem.value,

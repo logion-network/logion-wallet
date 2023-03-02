@@ -109,6 +109,7 @@ export interface Props<T> {
     color?: TableColors;
     constrainedRowHeight?: boolean;
     hideHeader?: boolean;
+    doubleSpaceRows?: boolean;
 }
 
 function columnClassName<T>(column: Column<T>): (string | undefined) {
@@ -219,7 +220,11 @@ export default function Table<T>(props: Props<T>) {
     }, [ props, data, setDetailsExpanded, setData ]);
 
     const constrainedRowHeight = props.constrainedRowHeight === undefined || props.constrainedRowHeight;
-    const className = customClassName("Table", (constrainedRowHeight ? "constrained-row-height" : undefined));
+    const className = customClassName(
+        "Table",
+        (constrainedRowHeight ? "constrained-row-height" : undefined),
+        props.doubleSpaceRows ? "double-space-rows" : undefined
+    );
     return (
         <div className={ className }>
             <style>

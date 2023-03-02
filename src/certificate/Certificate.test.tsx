@@ -71,6 +71,7 @@ function mockPublicLoc(locId: UUID): PublicLoc {
             files: [],
             metadata: [],
             links: [],
+            locType: "Transaction",
         } as unknown as LocData,
         isLogionIdentityLoc: () => false,
     } as PublicLoc;

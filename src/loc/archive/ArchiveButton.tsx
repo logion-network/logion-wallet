@@ -18,11 +18,19 @@ interface TypedFileInfo extends FileInfo {
 }
 
 function documentToTypedFileInfo(locId: UUID, locItem: LocItem): TypedFileInfo {
+    const name = locItem.name;
+    if(!name) {
+        throw new Error("Incomplete item");
+    }
+    const value = locItem.value;
+    if(!value) {
+        throw new Error("Incomplete item");
+    }
     return {
-        fileName: locItem.name,
+        fileName: name,
         downloader: (axios: AxiosInstance) => getFile(axios, {
             locId: locId.toString(),
-            hash: locItem.value
+            hash: value
         }),
         type: "Document file"
     }
@@ -48,6 +56,7 @@ export default function ArchiveButton() {
     const files: TypedFileInfo[] = [ backup ].concat(
         locItems
             .filter(locItem => locItem.type === 'Document')
+            .filter(locItem => locItem.name && locItem.value)
             .map(locItem => documentToTypedFileInfo(locData.id, locItem)));
 
     return (

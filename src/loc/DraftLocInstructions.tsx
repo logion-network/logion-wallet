@@ -6,7 +6,7 @@ import Icon from "src/common/Icon";
 import IconTextRow from "src/common/IconTextRow";
 
 import "./DraftLocInstructions.css";
-import { getTemplate, SPECIFIC_TEMPLATE } from "./Template";
+import { getTemplate, CUSTOM_LOC_TEMPLATE } from "./Template";
 
 export interface Props {
     locType: LocType;
@@ -15,7 +15,7 @@ export interface Props {
 
 export default function DraftLocInstructions(props: Props) {
     const template = useMemo(() => getTemplate(props.locType, props.template), [ props.locType, props.template ]);
-    const instructionsWidth = useMemo(() => template === undefined || template === SPECIFIC_TEMPLATE ? 12 : 8, [ template ]);
+    const instructionsWidth = useMemo(() => template === undefined || template === CUSTOM_LOC_TEMPLATE ? 12 : 8, [ template ]);
 
     return (
         <div className="DraftLocInstructions">
@@ -41,7 +41,7 @@ export default function DraftLocInstructions(props: Props) {
                     instructionsWidth < 12 && template &&
                     <Col>
                         <Frame className="project-type">
-                            <Icon icon={ template.icon } width="138px"/>
+                            <Icon icon={ template.icon } height="89px"/>
                             <p><strong>Project type:</strong> { template.name }</p>
                         </Frame>
                     </Col>

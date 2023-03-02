@@ -3,9 +3,9 @@ import './NewTabLink.css'
 import Icon from "./Icon";
 
 export interface Props {
-    href: string
-    children?: Children
-    iconId?: string
+    href: string | undefined;
+    children?: Children;
+    iconId?: string;
     inline?: boolean;
     className?: string;
 }
@@ -19,8 +19,8 @@ export default function NewTabLink(props: Props) {
         <span className={ className }>
             <a href={ props.href } target="_blank" rel="noreferrer">
                 { props.children !== undefined && props.children }
-                { props.children === undefined && props.href }
-                { props.iconId && <Icon icon={ { id: props.iconId } } height="30px" /> }
+                { props.children === undefined && "-" }
+                { props.iconId && props.href && <Icon icon={ { id: props.iconId } } height="30px" /> }
             </a>
         </span>
     )

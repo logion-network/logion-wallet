@@ -18,13 +18,15 @@ export interface LocTemplateMetadataItem {
     name: string;
 }
 
-export const SPECIFIC_TEMPLATE_ID = "specific";
+export const CUSTOM_LOC_TEMPLATE_ID = "custom";
 
-export const SPECIFIC_TEMPLATE = {
-    id: SPECIFIC_TEMPLATE_ID,
-    name: "Specific",
+export const FALLBACK_ICON_ID = "empty-loc";
+
+export const CUSTOM_LOC_TEMPLATE = {
+    id: CUSTOM_LOC_TEMPLATE_ID,
+    name: "Custom LOC",
     icon: {
-        id: "empty-loc",
+        id: FALLBACK_ICON_ID,
     },
     documents: [],
     metadata: [],
@@ -37,7 +39,7 @@ export const TEMPLATES: Record<LocType, LocTemplate[]> = {
             id: "individual_identity",
             name: "Identity LOC for individuals",
             icon: {
-                id: "empty-loc",
+                id: "identity_loc",
             },
             documents: [
                 {
@@ -54,7 +56,7 @@ export const TEMPLATES: Record<LocType, LocTemplate[]> = {
             id: "company_identity",
             name: "Identity LOC for companies",
             icon: {
-                id: "empty-loc",
+                id: "identity_loc",
             },
             documents: [
                 {
@@ -77,7 +79,7 @@ export const TEMPLATES: Record<LocType, LocTemplate[]> = {
             id: "issuer_identity",
             name: "Identity LOC for Verified Issuers",
             icon: {
-                id: "empty-loc",
+                id: "identity_loc",
             },
             documents: [
                 {
@@ -93,7 +95,7 @@ export const TEMPLATES: Record<LocType, LocTemplate[]> = {
             metadata: [],
             links: [],
         },
-        SPECIFIC_TEMPLATE
+        CUSTOM_LOC_TEMPLATE
     ],
     Collection: [
         {
@@ -116,9 +118,6 @@ export const TEMPLATES: Record<LocType, LocTemplate[]> = {
                 },
                 {
                     name: "Requester address bound to smart contract",
-                },
-                {
-                    name: "Requester address bound to token minting",
                 },
                 {
                     name: "Requester address bound to token minting",
@@ -164,14 +163,14 @@ export const TEMPLATES: Record<LocType, LocTemplate[]> = {
                 }
             ]
         },
-        SPECIFIC_TEMPLATE
+        CUSTOM_LOC_TEMPLATE
     ],
     Transaction: [
         {
             id: "statement_of_facts",
             name: "Statement of Facts",
             icon: {
-                id: "empty-loc",
+                id: "sof_loc",
             },
             documents: [
                 {
@@ -184,21 +183,21 @@ export const TEMPLATES: Record<LocType, LocTemplate[]> = {
             metadata: [],
             links: [],
         },
-        SPECIFIC_TEMPLATE
+        CUSTOM_LOC_TEMPLATE
     ],
 };
 
 export function autoSelectTemplate(locType: LocType): string | undefined {
     const templates = TEMPLATES[locType];
-    if(templates.length === 1 && templates[0].id === SPECIFIC_TEMPLATE_ID) {
-        return SPECIFIC_TEMPLATE_ID;
+    if(templates.length === 1 && templates[0].id === CUSTOM_LOC_TEMPLATE_ID) {
+        return CUSTOM_LOC_TEMPLATE_ID;
     } else {
         return undefined;
     }
 }
 
 export function backendTemplate(templateId: string | undefined): string | undefined {
-    return templateId === SPECIFIC_TEMPLATE_ID ? undefined : templateId;
+    return templateId === CUSTOM_LOC_TEMPLATE_ID ? undefined : templateId;
 }
 
 export function getTemplate(locType: LocType, templateId: string | undefined): LocTemplate | undefined {

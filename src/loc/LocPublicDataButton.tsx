@@ -12,7 +12,7 @@ import { EditableRequest } from "@logion/client";
 
 export interface Props {
     text: string;
-    dataName?: string;
+    dataName?: string | null;
 }
 
 export function LocPublicDataButton(props: Props) {
@@ -71,7 +71,7 @@ export function LocPublicDataButton(props: Props) {
                     control={ control }
                     errors={ errors }
                     colors={ colorTheme.dialog }
-                    dataName={ props.dataName }
+                    dataName={ props.dataName || undefined }
                 />
             </Dialog>
             <Dialog

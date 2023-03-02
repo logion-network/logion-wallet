@@ -56,7 +56,7 @@ exports[`LOLocItems renders with single draft item 1`] = `
             }
           }
         >
-          Name
+          Public description
         </div>
         <div
           className="Col"
@@ -135,7 +135,7 @@ exports[`LOLocItems renders with single draft item 1`] = `
                 onMouseOut={[Function]}
                 onMouseOver={[Function]}
               >
-                Name
+                -
               </span>
             </div>
             <div
@@ -300,6 +300,28 @@ exports[`LOLocItems renders with single draft item 1`] = `
                 <div
                   className="Col label"
                 >
+                  Public name
+                  : 
+                </div>
+                <div
+                  className="Col value-container"
+                >
+                  <span
+                    className="value"
+                  >
+                    Name
+                  </span>
+                </div>
+                <div
+                  className="Col copy-paste-container"
+                />
+              </div>
+              <div
+                className="Row LocItemDetail"
+              >
+                <div
+                  className="Col label"
+                >
                   Submitter ID
                   : 
                 </div>
@@ -335,26 +357,7 @@ exports[`LOLocItems renders with single draft item 1`] = `
                 <div
                   className="Col label"
                 >
-                  Name
-                  : 
-                </div>
-                <div
-                  className="Col value-container"
-                >
-                  <span
-                    className="value"
-                  >
-                    Name
-                  </span>
-                </div>
-              </div>
-              <div
-                className="Row LocItemDetail"
-              >
-                <div
-                  className="Col label"
-                >
-                  Value
+                  Public data
                   : 
                 </div>
                 <div
@@ -368,6 +371,9 @@ exports[`LOLocItems renders with single draft item 1`] = `
                     </pre>
                   </span>
                 </div>
+                <div
+                  className="Col copy-paste-container"
+                />
               </div>
             </div>
           </div>
@@ -434,7 +440,7 @@ exports[`UserLocItems renders with single draft item 1`] = `
             }
           }
         >
-          Name
+          Public description
         </div>
         <div
           className="Col"
@@ -513,7 +519,7 @@ exports[`UserLocItems renders with single draft item 1`] = `
                 onMouseOut={[Function]}
                 onMouseOver={[Function]}
               >
-                Name
+                -
               </span>
             </div>
             <div
@@ -661,6 +667,28 @@ exports[`UserLocItems renders with single draft item 1`] = `
                 <div
                   className="Col label"
                 >
+                  Public name
+                  : 
+                </div>
+                <div
+                  className="Col value-container"
+                >
+                  <span
+                    className="value"
+                  >
+                    Name
+                  </span>
+                </div>
+                <div
+                  className="Col copy-paste-container"
+                />
+              </div>
+              <div
+                className="Row LocItemDetail"
+              >
+                <div
+                  className="Col label"
+                >
                   Submitter ID
                   : 
                 </div>
@@ -696,26 +724,7 @@ exports[`UserLocItems renders with single draft item 1`] = `
                 <div
                   className="Col label"
                 >
-                  Name
-                  : 
-                </div>
-                <div
-                  className="Col value-container"
-                >
-                  <span
-                    className="value"
-                  >
-                    Name
-                  </span>
-                </div>
-              </div>
-              <div
-                className="Row LocItemDetail"
-              >
-                <div
-                  className="Col label"
-                >
-                  Value
+                  Public data
                   : 
                 </div>
                 <div
@@ -729,6 +738,9 @@ exports[`UserLocItems renders with single draft item 1`] = `
                     </pre>
                   </span>
                 </div>
+                <div
+                  className="Col copy-paste-container"
+                />
               </div>
             </div>
           </div>

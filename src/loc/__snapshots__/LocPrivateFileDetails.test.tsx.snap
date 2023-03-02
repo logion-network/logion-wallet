@@ -19,6 +19,11 @@ exports[`LocPrivateFileDetails renders 1`] = `
         Document related data to be published
       </div>
       <LocItemDetail
+        label="Public Description"
+      >
+        File's nature
+      </LocItemDetail>
+      <LocItemDetail
         copyButtonText="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
         label="Submitter ID"
       >
@@ -29,11 +34,6 @@ exports[`LocPrivateFileDetails renders 1`] = `
         label="Document Hash"
       >
         0xfb45e95061306e90fd154272ba3b4d67bb6d295feeccdc3a34572995f08e268a
-      </LocItemDetail>
-      <LocItemDetail
-        label="Public Description"
-      >
-        File's nature
       </LocItemDetail>
     </div>
   </Col>

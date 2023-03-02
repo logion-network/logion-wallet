@@ -21,9 +21,7 @@ exports[`SubmitterName renders when submitter is VTP 1`] = `
   content={
     <div>
       Scott Tiger
-      <React.Fragment>
-        <VTPBadge />
-      </React.Fragment>
+      <VTPBadge />
     </div>
   }
 />

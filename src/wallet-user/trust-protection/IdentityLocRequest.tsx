@@ -18,7 +18,7 @@ import { locDetailsPath } from "../UserRouter";
 import IconTextRow from "src/common/IconTextRow";
 import Icon from "src/common/Icon";
 import { useSearchParams } from "react-router-dom";
-import { backendTemplate } from "src/loc/Template";
+import { backendTemplate, CUSTOM_LOC_TEMPLATE_ID } from "src/loc/Template";
 
 export interface Props {
     backPath: string,
@@ -120,42 +120,45 @@ export default function IdentityLocRequest(props: Props) {
                         />
                     </Frame>
 
-                    <Frame className="company-frame">
-                        <IconTextRow
-                            icon={ <Icon icon={{id: "company"}} height="45px" /> }
-                            text={ <p>Check the box below if you are acting on behalf and representing a company, association, fondation (the Legal Officer will request a proof of authority):</p> }
-                        />
-                        <div className="company-check-container">
-                            <Form.Check
-                                data-testid="company"
-                                type="checkbox"
-                                checked={ company || companyIdentityLoc }
-                                onChange={ () => setCompany(!company) }
-                                label="Yes, I am representing a legal entity"
-                                disabled={ templateId !== undefined }
+                    {
+                        (templateId === undefined || templateId === CUSTOM_LOC_TEMPLATE_ID || templateId === "company_identity") &&
+                        <Frame className="company-frame">
+                            <IconTextRow
+                                icon={ <Icon icon={{id: "company"}} height="45px" /> }
+                                text={ <p>Check the box below if you are acting on behalf and representing a company, association, fondation (the Legal Officer will request a proof of authority):</p> }
                             />
-                        </div>
-                        {
-                            (company || companyIdentityLoc) &&
-                            <div className="company-name-container">
-                                <FormGroup
-                                    id="companyName"
-                                    label="Legal entity name"
-                                    control={
-                                        <Form.Control
-                                            isInvalid={ invalidCompanyName !== undefined }
-                                            type="text"
-                                            data-testid="companyName"
-                                            value={ companyName }
-                                            onChange={ e => { setInvalidCompanyName(undefined) ; setCompanyName(e.target.value) } }
-                                        />
-                                    }
-                                    feedback={ invalidCompanyName }
-                                    colors={ colorTheme.frame }
+                            <div className="company-check-container">
+                                <Form.Check
+                                    data-testid="company"
+                                    type="checkbox"
+                                    checked={ company || companyIdentityLoc }
+                                    onChange={ () => setCompany(!company) }
+                                    label="Yes, I am representing a legal entity"
+                                    disabled={ templateId !== undefined }
                                 />
                             </div>
-                        }
-                    </Frame>
+                            {
+                                (company || companyIdentityLoc) &&
+                                <div className="company-name-container">
+                                    <FormGroup
+                                        id="companyName"
+                                        label="Legal entity name"
+                                        control={
+                                            <Form.Control
+                                                isInvalid={ invalidCompanyName !== undefined }
+                                                type="text"
+                                                data-testid="companyName"
+                                                value={ companyName }
+                                                onChange={ e => { setInvalidCompanyName(undefined) ; setCompanyName(e.target.value) } }
+                                            />
+                                        }
+                                        feedback={ invalidCompanyName }
+                                        colors={ colorTheme.frame }
+                                    />
+                                </div>
+                            }
+                        </Frame>
+                    }
                 </Col>
                 <Col md={ 6 }>
                     <Frame disabled={ legalOfficer === null }>

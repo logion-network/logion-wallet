@@ -1,4 +1,4 @@
-import { CSSProperties } from 'react';
+import { CSSProperties, Key } from 'react';
 import { ButtonVariant } from 'react-bootstrap/types';
 import BootstrapButton from 'react-bootstrap/Button';
 import { ButtonType } from '@restart/ui/esm/Button';
@@ -30,9 +30,9 @@ export function isAction(action: any): action is Action {
 }
 
 export interface Props {
+    key?: Key | null | undefined;
     action?: Action,
     type?: ButtonType,
-    key?: string,
     variant?: LogionButtonVariant,
     disabled?: boolean,
     children?: Children,

@@ -1,5 +1,3 @@
-import { EditableRequest } from "@logion/client";
-
 import Table, { EmptyTableMessage, ActionCell, Column } from "../common/Table";
 import ButtonGroup from "../common/ButtonGroup";
 import Button from "../common/Button";
@@ -12,13 +10,11 @@ import { ContributionMode } from "./types";
 import LocPublishLinkButton from "./LocPublishLinkButton";
 import LocPublishPrivateFileButton from "./LocPublishPrivateFileButton";
 import LocPublishPublicDataButton from "./LocPublishPublicDataButton";
-import { deleteLink } from "../legal-officer/client";
 
 import './LocItems.css';
 import { Viewer } from "src/common/CommonContext";
 import { useLocContext } from "./LocContext";
-import { useCallback } from "react";
-import { buildItemTableColumns, LocItem, useDeleteMetadataCallback, useDeleteFileCallback, canDelete, canPublish } from "./LocItem";
+import { buildItemTableColumns, LocItem, useDeleteMetadataCallback, useDeleteFileCallback, canDelete, canPublish, useDeleteLinkCallback } from "./LocItem";
 
 export interface LocItemsProps {
     matchedHash?: string;
@@ -36,19 +32,7 @@ export function LocItems(props: LocItemsProps) {
     const { width } = useResponsiveContext();
     const deleteMetadata = useDeleteMetadataCallback(mutateLocState);
     const deleteFile = useDeleteFileCallback(mutateLocState);
-
-    const deleteLinkCallback = useCallback(async (item: LocItem) => {
-        await mutateLocState(async current => {
-            if(current instanceof EditableRequest) {
-                return deleteLink({
-                    locState: current,
-                    target: item.target!,
-                });
-            } else {
-                return current;
-            }
-        });
-    }, [ mutateLocState ]);
+    const deleteLinkCallback = useDeleteLinkCallback(mutateLocState);
 
     if(!loc) {
         return null;
