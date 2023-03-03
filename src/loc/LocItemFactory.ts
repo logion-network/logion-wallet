@@ -194,5 +194,6 @@ export function createLinkTemplateItem(
         nature: templateItem.publicDescription,
         isSet: locItem !== undefined,
         linkDetailsPath: linkData?.linkDetailsPath,
+        target: linkData?.linkedLoc.id,
     }
 }
