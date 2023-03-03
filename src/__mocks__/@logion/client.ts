@@ -16,6 +16,7 @@ import {
     ClosedLoc,
     ReadOnlyLocState,
 } from '../LogionClientMock';
+import { isTokenCompatibleWith } from "@logion/client/dist/Token.js";
 
 export {
     LogionClient,
@@ -33,6 +34,7 @@ export {
     HashOrContent,
     ClosedLoc,
     ReadOnlyLocState,
+    isTokenCompatibleWith,
 }
 
 export { MimeType } from "@logion/client/dist/Mime.js";
