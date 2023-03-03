@@ -96,19 +96,19 @@ export default function LocTemplateItems(props: Props) {
             if(item.type === "Data") {
                 buttons.push(<LocPublicDataButton
                     key={++key}
-                    text="Set public data"
+                    text="Set"
                     dataName={ item.name }
                 />);
             } else if(item.type === "Document") {
                 buttons.push(<LocPrivateFileButton
                     key={++key}
-                    text="Set document"
+                    text="Set"
                     nature={ item.nature }
                 />);
             } else if(item.type === "Linked LOC" && viewer === "LegalOfficer") {
                 buttons.push(<LocLinkButton
                     key={++key}
-                    text="Set link"
+                    text="Set"
                     nature={ item.nature }
                 />);
             }

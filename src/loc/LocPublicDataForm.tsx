@@ -25,7 +25,7 @@ export default function LocPublicDataForm(props: Props) {
             {
                 props.dataName !== undefined &&
                 <StaticLabelValue
-                    label="Data Name (No confidential or personal information)"
+                    label="Public data Name (No confidential or personal information)"
                     value={ props.dataName }
                     formStyle={ true }
                 />
@@ -41,14 +41,14 @@ export default function LocPublicDataForm(props: Props) {
                             control={ props.control }
                             defaultValue=""
                             rules={{
-                                required: 'The Data Name is required',
+                                required: 'The public data Name is required',
                                 minLength: {
                                     value: 3,
-                                    message: 'The Data Name must contain at least 3 characters'
+                                    message: 'The public data Name must contain at least 3 characters'
                                 },
                                 maxLength: {
                                     value: 40,
-                                    message: 'The Data Name must contain at most 40 characters'
+                                    message: 'The public data Name must contain at most 40 characters'
                                 }
                             } }
                             render={ ({ field }) => (

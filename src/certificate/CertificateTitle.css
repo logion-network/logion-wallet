@@ -6,6 +6,7 @@
 .CertificateTitle h1 {
     font-size: 4rem;
     font-weight: 600;
+    margin-bottom: 0;
 }
 
 .CertificateTitle h2 {
@@ -20,6 +21,8 @@
 
 .CertificateTitle.with-template .icon-container {
     display: flex;
+    flex-flow: column;
+    justify-content: flex-end;
 }
 
 .CertificateTitle.with-template .text {
@@ -27,12 +30,17 @@
     text-align: left;
 }
 
+.CertificateTitle.with-template .icon-container img {
+    display: block;
+    margin-bottom: 0.9rem;
+}
+
 .CertificateTitle.with-template .art_nft img {
     width: 215px;
 }
 
 .CertificateTitle.with-template .real_estate img {
-    width: 215px;
+    width: 203px;
 }
 
 .CertificateTitle.with-template .identity_loc img {
@@ -67,6 +75,7 @@
     }
 
     .CertificateTitle.with-template .icon-container {
+        flex-flow: row;
         justify-content: center;
     }
 
@@ -75,7 +84,7 @@
     }    
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1199px) {
     .CertificateTitle.with-template .icon-container {
         display: none;
     }
