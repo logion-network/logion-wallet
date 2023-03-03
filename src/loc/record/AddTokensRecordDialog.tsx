@@ -48,6 +48,7 @@ export default function AddTokensRecordDialog(props: Props) {
     }, []);
 
     const clear = useCallback(() => {
+        setCall(undefined);
         setStatus('Idle');
         setUploadError("");
         reset();
