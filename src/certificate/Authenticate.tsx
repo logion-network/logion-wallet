@@ -1,5 +1,5 @@
 import { BlockchainTypes, CrossmintEVMWalletAdapter } from "@crossmint/connect";
-import { Token, LogionClient, CollectionItem, TokenType } from "@logion/client";
+import { Token, LogionClient, CollectionItem, TokenType, isTokenCompatibleWith } from "@logion/client";
 import { CrossmintSigner } from "@logion/crossmint";
 import { allMetamaskAccounts, enableMetaMask } from "@logion/extension";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -350,24 +350,9 @@ function walletTypeCompatibleWithItemType(wallet: WalletType, token?: TokenType)
     if (!token) {
         return false;
     }
-
-    if ([
-        'ethereum_erc721',
-        'ethereum_erc1155',
-        'goerli_erc721',
-        'goerli_erc1155',
-        'polygon_erc721',
-        'polygon_erc1155',
-        'polygon_mumbai_erc721',
-        'polygon_mumbai_erc1155',
-        'owner',
-        'ethereum_erc20',
-        'goerli_erc20',
-        'polygon_erc20',
-        'polygon_mumbai_erc20'
-    ].includes(token)) {
+    if (isTokenCompatibleWith(token, 'ETHEREUM')) {
         return [ "METAMASK", "CROSSMINT" ].includes(wallet);
-    } else if ([ 'singular_kusama', 'owner' ].includes(token)) {
+    } else if (isTokenCompatibleWith(token, 'POLKADOT')) {
         return wallet === "POLKADOT";
     } else {
         return false;
