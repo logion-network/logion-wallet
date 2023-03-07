@@ -26,6 +26,8 @@ import ButtonGroup from 'src/common/ButtonGroup';
 import RequestVoteButton from './RequestVoteButton';
 import TokensRecordButton from './record/TokensRecordButton';
 import { ContributionMode } from './types';
+import ViewQrCodeButton from './ViewQrCodeButton';
+import ViewCertificateButton from './ViewCertificateButton';
 
 export interface Props {
     loc: LocData;
@@ -66,6 +68,7 @@ export default function CertificateAndLimits(props: Props) {
                         <h2>LOC Certificate public web address (URL):
                             <ViewCertificateButton url={ certificateUrl }/>
                             <CopyPasteButton value={ certificateUrl } />
+                            <ViewQrCodeButton certificateUrl={ certificateUrl } />
                         </h2>
                     </div>
                 </Col>
@@ -168,12 +171,3 @@ export default function CertificateAndLimits(props: Props) {
 function itemLimit(loc: LocData): string {
     return loc.collectionMaxSize ? loc.collectionMaxSize.toString() : "-";
 }
-
-function ViewCertificateButton(props: { url: string }) {
-    return (
-        <Button className="ViewCertificateButton" onClick={ () => window.open(props.url, "_blank") }>
-            <Icon icon={{ id:"view-certificate" }} height="20px" />
-        </Button>
-    );
-}
-

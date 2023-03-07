@@ -44,7 +44,6 @@ import Authenticate from "./Authenticate";
 import TokensRecords from "./TokensRecords";
 import './Certificate.css'
 import CertificateTitle from "./CertificateTitle";
-import QrCode from "src/components/qrcode/QrCode";
 
 export default function Certificate() {
 
@@ -314,13 +313,6 @@ export default function Certificate() {
                         </Col>
                     </Row>
                 }
-                <Row>
-                    <Col>
-                        <div className="qrcode-container">
-                            <QrCode data={ fullCertificateUrl(loc.data.id) } width="200px"/>
-                        </div>
-                    </Col>
-                </Row>
                 <Row>
                     <CertificateCell md={ 5 } label="LOC ID">{ locId.toDecimalString() }</CertificateCell>
                     <CertificateDateTimeCell md={ 3 } label="Creation Date" dateTime={ loc.data.createdOn } />

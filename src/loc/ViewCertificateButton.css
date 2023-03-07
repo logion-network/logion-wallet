@@ -1,0 +1,8 @@
+.Button.ViewCertificateButton.btn {
+    padding-top: 0;
+    padding-bottom: 3px;
+    padding-left: 8px;
+    padding-right: 4px;
+    height: 40px;
+    width: 40px;
+}
