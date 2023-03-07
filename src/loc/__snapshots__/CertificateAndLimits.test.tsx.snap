@@ -17,6 +17,9 @@ exports[`CertificateAndLimits renders certificate and buttons for non-collection
           <CopyPasteButton
             value="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
+          <ViewQrCodeButton
+            certificateUrl="http://localhost/public/certificate/31105349912518444897773986398896608162"
+          />
         </h2>
       </div>
     </Col>
@@ -54,6 +57,9 @@ exports[`CertificateAndLimits renders certificate and limits for void collection
           />
           <CopyPasteButton
             value="http://localhost/public/certificate/31105349912518444897773986398896608162"
+          />
+          <ViewQrCodeButton
+            certificateUrl="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
         </h2>
       </div>
@@ -118,6 +124,9 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for closed
           />
           <CopyPasteButton
             value="http://localhost/public/certificate/31105349912518444897773986398896608162"
+          />
+          <ViewQrCodeButton
+            certificateUrl="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
         </h2>
       </div>
@@ -305,6 +314,9 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for open c
           <CopyPasteButton
             value="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
+          <ViewQrCodeButton
+            certificateUrl="http://localhost/public/certificate/31105349912518444897773986398896608162"
+          />
         </h2>
       </div>
     </Col>
@@ -372,6 +384,9 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for void c
           <CopyPasteButton
             value="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
+          <ViewQrCodeButton
+            certificateUrl="http://localhost/public/certificate/31105349912518444897773986398896608162"
+          />
         </h2>
       </div>
     </Col>
@@ -437,6 +452,9 @@ exports[`CertificateAndLimits renders certificate, limits and settings button fo
           />
           <CopyPasteButton
             value="http://localhost/public/certificate/31105349912518444897773986398896608162"
+          />
+          <ViewQrCodeButton
+            certificateUrl="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
         </h2>
       </div>
@@ -622,6 +640,9 @@ exports[`CertificateAndLimits renders only certificate and SoF request button fo
           />
           <CopyPasteButton
             value="http://localhost/public/certificate/31105349912518444897773986398896608162"
+          />
+          <ViewQrCodeButton
+            certificateUrl="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
         </h2>
       </div>

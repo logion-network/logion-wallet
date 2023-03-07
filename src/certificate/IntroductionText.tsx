@@ -1,4 +1,6 @@
 import { PublicLoc } from "@logion/client";
+import QrCode from "src/components/qrcode/QrCode";
+import { fullCertificateUrl } from "src/PublicPaths";
 
 export interface Props {
     loc: PublicLoc
@@ -20,9 +22,11 @@ export default function IntroductionText(props: Props) {
                 services. The Legal Officer is able to initiate legal services requests ON BEHALF of
                 this Logion Identity LOC, representing - on the blockchain-, by extension, the
                 client it refers.</p>
-            <p>This Certificate is only valid when generated online by accessing its URL. A PDF or print of this
-                certificate is NOT valid.</p>
             <p>All timestamps are displayed using Universal Time Coordinated (UTC).</p>
+            <p>A PDF or print of this certificate is NOT valid. This Certificate is only valid when generated online by accessing its URL or through the following QR CODE:</p>
+            <div className="qrcode-container">
+                <QrCode data={ fullCertificateUrl(loc.data.id) } width="200px"/>
+            </div>
         </div>
     } else if (loc.data.locType === 'Collection' && !tokenGated) {
         return <div className="description">
@@ -32,9 +36,11 @@ export default function IntroductionText(props: Props) {
             <p>This Certificate constitutes proof that a Logion Legal Officer, owner of that LOC and mentioned on this
                 document, executed a verification process according to his/her professional standards at the requester
                 demand with regards to data and document(s) listed below.</p>
-            <p>This Certificate is only valid when generated online by accessing its URL. A PDF or print of this
-                certificate is NOT valid.</p>
             <p>All timestamps are displayed using Universal Time Coordinated (UTC).</p>
+            <p>A PDF or print of this certificate is NOT valid. This Certificate is only valid when generated online by accessing its URL or through the following QR CODE:</p>
+            <div className="qrcode-container">
+                <QrCode data={ fullCertificateUrl(loc.data.id) } width="200px"/>
+            </div>
         </div>
     } else if (loc.data.locType === 'Collection' && tokenGated) {
         return <div className="description">
@@ -44,9 +50,11 @@ export default function IntroductionText(props: Props) {
             <p>This Certificate constitutes proof that a Logion Legal Officer, owner of that LOC and mentioned on this
                 document, executed a verification process according to his/her professional standards at the requester
                 demand with regards to data and document(s) listed below.</p>
-            <p>This Certificate is only valid when generated online by accessing its URL. A PDF or print of this
-                certificate is NOT valid.</p>
             <p>All timestamps are displayed using Universal Time Coordinated (UTC).</p>
+            <p>A PDF or print of this certificate is NOT valid. This Certificate is only valid when generated online by accessing its URL or through the following QR CODE:</p>
+            <div className="qrcode-container">
+                <QrCode data={ fullCertificateUrl(loc.data.id) } width="200px"/>
+            </div>
         </div>
     } else {
         return <div className="description">
@@ -54,9 +62,11 @@ export default function IntroductionText(props: Props) {
                 proof that a Logion Legal Officer, owner of that LOC and mentioned on this document,
                 executed a verification process according to his/her professional standards at the
                 requester demand with regards to data and document(s) listed below.</p>
-            <p>This Certificate is only valid when generated online by accessing its URL. A PDF or print of this
-                certificate is NOT valid.</p>
             <p>All timestamps are displayed using Universal Time Coordinated (UTC).</p>
+            <p>A PDF or print of this certificate is NOT valid. This Certificate is only valid when generated online by accessing its URL or through the following QR CODE:</p>
+            <div className="qrcode-container">
+                <QrCode data={ fullCertificateUrl(loc.data.id) } width="200px"/>
+            </div>
         </div>
     }
 }

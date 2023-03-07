@@ -29,6 +29,8 @@ import { useNavigate } from "react-router-dom";
 import { dashboardCertificateRelativePath } from "src/RootPaths";
 import CellWithCopyPaste from "src/components/table/CellWithCopyPaste";
 import { useResponsiveContext } from "src/common/Responsive";
+import ViewCertificateButton from "./ViewCertificateButton";
+import ViewQrCodeButton from "./ViewQrCodeButton";
 
 export interface Props {
     collectionLoc: LocData;
@@ -256,12 +258,9 @@ function CollectionLocItemChecker(props: LocalProps) {
                                 <ButtonGroup
                                     narrow={ true }
                                 >
-                                    <ViewCertificateButton
-                                        url={ fullCollectionItemCertificate(collectionLoc.id, item.id) }
-                                    />
-                                    <CopyPasteButton
-                                        value={ fullCollectionItemCertificate(collectionLoc.id, item.id) }
-                                    />
+                                    <ViewCertificateButton url={ fullCollectionItemCertificate(collectionLoc.id, item.id) } />
+                                    <CopyPasteButton value={ fullCollectionItemCertificate(collectionLoc.id, item.id) } />
+                                    <ViewQrCodeButton certificateUrl={ fullCollectionItemCertificate(collectionLoc.id, item.id) } />
                                 </ButtonGroup>
                             </ActionCell>
                         ),
@@ -357,12 +356,4 @@ function CheckResultFeedback(props: CheckResultProps) {
                 <Row className="CheckResultFeedback result-none" children="" id={ `feedback-${ state }` } />
             )
     }
-}
-
-function ViewCertificateButton(props: { url: string }) {
-    return (
-        <Button className="ViewCertificateButton" onClick={ () => window.open(props.url, "_blank") }>
-            <Icon icon={{ id:"view-certificate" }} width="20px" />
-        </Button>
-    );
 }
