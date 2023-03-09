@@ -18,23 +18,27 @@ Object {
           To get access, if you are the owner of the token recorded in this certificate, please authenticate yourself with the method you used to get your token by clicking on the button below.
         </p>
         <div
-          class="ButtonGroup"
+          class="btn-group-container"
         >
           <div
-            class="btn-group"
-            role="group"
+            class="ButtonGroup"
           >
-            <button
-              class="Button btn btn-primary"
-              type="button"
+            <div
+              class="btn-group"
+              role="group"
             >
-              <img
-                alt="claim"
-                src="/assets/claim.svg"
-              />
-               
-              Connect & claim
-            </button>
+              <button
+                class="Button btn btn-primary"
+                type="button"
+              >
+                <img
+                  alt="claim"
+                  src="/assets/claim.svg"
+                />
+                 
+                Connect & claim
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -54,23 +58,27 @@ Object {
         To get access, if you are the owner of the token recorded in this certificate, please authenticate yourself with the method you used to get your token by clicking on the button below.
       </p>
       <div
-        class="ButtonGroup"
+        class="btn-group-container"
       >
         <div
-          class="btn-group"
-          role="group"
+          class="ButtonGroup"
         >
-          <button
-            class="Button btn btn-primary"
-            type="button"
+          <div
+            class="btn-group"
+            role="group"
           >
-            <img
-              alt="claim"
-              src="/assets/claim.svg"
-            />
-             
-            Connect & claim
-          </button>
+            <button
+              class="Button btn btn-primary"
+              type="button"
+            >
+              <img
+                alt="claim"
+                src="/assets/claim.svg"
+              />
+               
+              Connect & claim
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -147,23 +155,27 @@ Object {
           To get access, if you are the owner of the token recorded in this certificate, please authenticate yourself with the method you used to get your token by clicking on the button below.
         </p>
         <div
-          class="ButtonGroup"
+          class="btn-group-container"
         >
           <div
-            class="btn-group"
-            role="group"
+            class="ButtonGroup"
           >
-            <button
-              class="Button btn btn-primary"
-              type="button"
+            <div
+              class="btn-group"
+              role="group"
             >
-              <img
-                alt="claim"
-                src="/assets/claim.svg"
-              />
-               
-              Connect & claim
-            </button>
+              <button
+                class="Button btn btn-primary"
+                type="button"
+              >
+                <img
+                  alt="claim"
+                  src="/assets/claim.svg"
+                />
+                 
+                Connect & claim
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -183,23 +195,27 @@ Object {
         To get access, if you are the owner of the token recorded in this certificate, please authenticate yourself with the method you used to get your token by clicking on the button below.
       </p>
       <div
-        class="ButtonGroup"
+        class="btn-group-container"
       >
         <div
-          class="btn-group"
-          role="group"
+          class="ButtonGroup"
         >
-          <button
-            class="Button btn btn-primary"
-            type="button"
+          <div
+            class="btn-group"
+            role="group"
           >
-            <img
-              alt="claim"
-              src="/assets/claim.svg"
-            />
-             
-            Connect & claim
-          </button>
+            <button
+              class="Button btn btn-primary"
+              type="button"
+            >
+              <img
+                alt="claim"
+                src="/assets/claim.svg"
+              />
+               
+              Connect & claim
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -276,23 +292,27 @@ Object {
           To get access, if you are the owner of the token recorded in this certificate, please authenticate yourself with the method you used to get your token by clicking on the button below.
         </p>
         <div
-          class="ButtonGroup"
+          class="btn-group-container"
         >
           <div
-            class="btn-group"
-            role="group"
+            class="ButtonGroup"
           >
-            <button
-              class="Button btn btn-primary"
-              type="button"
+            <div
+              class="btn-group"
+              role="group"
             >
-              <img
-                alt="claim"
-                src="/assets/claim.svg"
-              />
-               
-              Connect & claim
-            </button>
+              <button
+                class="Button btn btn-primary"
+                type="button"
+              >
+                <img
+                  alt="claim"
+                  src="/assets/claim.svg"
+                />
+                 
+                Connect & claim
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -312,23 +332,27 @@ Object {
         To get access, if you are the owner of the token recorded in this certificate, please authenticate yourself with the method you used to get your token by clicking on the button below.
       </p>
       <div
-        class="ButtonGroup"
+        class="btn-group-container"
       >
         <div
-          class="btn-group"
-          role="group"
+          class="ButtonGroup"
         >
-          <button
-            class="Button btn btn-primary"
-            type="button"
+          <div
+            class="btn-group"
+            role="group"
           >
-            <img
-              alt="claim"
-              src="/assets/claim.svg"
-            />
-             
-            Connect & claim
-          </button>
+            <button
+              class="Button btn btn-primary"
+              type="button"
+            >
+              <img
+                alt="claim"
+                src="/assets/claim.svg"
+              />
+               
+              Connect & claim
+            </button>
+          </div>
         </div>
       </div>
     </div>

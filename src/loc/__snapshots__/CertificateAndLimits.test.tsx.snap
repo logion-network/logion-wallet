@@ -15,6 +15,7 @@ exports[`CertificateAndLimits renders certificate and buttons for non-collection
             url="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
           <CopyPasteButton
+            tooltip="Copy certificate URL to clipboard"
             value="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
           <ViewQrCodeButton
@@ -56,6 +57,7 @@ exports[`CertificateAndLimits renders certificate and limits for void collection
             url="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
           <CopyPasteButton
+            tooltip="Copy certificate URL to clipboard"
             value="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
           <ViewQrCodeButton
@@ -123,6 +125,7 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for closed
             url="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
           <CopyPasteButton
+            tooltip="Copy certificate URL to clipboard"
             value="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
           <ViewQrCodeButton
@@ -312,6 +315,7 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for open c
             url="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
           <CopyPasteButton
+            tooltip="Copy certificate URL to clipboard"
             value="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
           <ViewQrCodeButton
@@ -382,6 +386,7 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for void c
             url="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
           <CopyPasteButton
+            tooltip="Copy certificate URL to clipboard"
             value="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
           <ViewQrCodeButton
@@ -451,6 +456,7 @@ exports[`CertificateAndLimits renders certificate, limits and settings button fo
             url="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
           <CopyPasteButton
+            tooltip="Copy certificate URL to clipboard"
             value="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
           <ViewQrCodeButton
@@ -639,6 +645,7 @@ exports[`CertificateAndLimits renders only certificate and SoF request button fo
             url="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
           <CopyPasteButton
+            tooltip="Copy certificate URL to clipboard"
             value="http://localhost/public/certificate/31105349912518444897773986398896608162"
           />
           <ViewQrCodeButton

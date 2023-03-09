@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import Button from "src/common/Button";
 import Dialog from "src/common/Dialog";
 import Icon from "src/common/Icon";
@@ -14,31 +15,43 @@ export default function ViewQrCodeButton(props: Props) {
 
     return (
         <>
-            <Button
-                className="ViewQrCodeButton"
-                onClick={ () => setDialogVisible(true) }
+            <OverlayTrigger
+                placement="bottom"
+                delay={ 500 }
+                overlay={
+                    <Tooltip id={`view-qr-code-${props.certificateUrl}`}>
+                        QR code of the certificate
+                    </Tooltip>
+                }
             >
-                <Icon icon={{ id: "qr" }}/>
-            </Button>
-            <Dialog
-                show={ dialogVisible }
-                actions={[
-                    {
-                        id: "close",
-                        buttonText: "Close",
-                        buttonVariant: "primary",
-                        callback: () => setDialogVisible(false),
-                    }
-                ]}
-                size="lg"
-            >
-                <h3>Certificate QR code</h3>
-                <p>This QR code below leads to the web address of the current public certificate. This QR code is a picture: you can right-click on it and copy - to paste it into a document or an email - or save it for future usage.</p>
-                <QrCode
-                    data={ props.certificateUrl }
-                    width="200px"
-                />
-            </Dialog>
+                <span className="Button-container">
+                    <Button
+                        className="ViewQrCodeButton"
+                        onClick={ () => setDialogVisible(true) }
+                    >
+                        <Icon icon={{ id: "qr" }}/>
+                    </Button>
+                    <Dialog
+                        show={ dialogVisible }
+                        actions={[
+                            {
+                                id: "close",
+                                buttonText: "Close",
+                                buttonVariant: "primary",
+                                callback: () => setDialogVisible(false),
+                            }
+                        ]}
+                        size="lg"
+                    >
+                        <h3>Certificate QR code</h3>
+                        <p>This QR code below leads to the web address of the current public certificate. This QR code is a picture: you can right-click on it and copy - to paste it into a document or an email - or save it for future usage.</p>
+                        <QrCode
+                            data={ props.certificateUrl }
+                            width="200px"
+                        />
+                    </Dialog>
+                </span>
+            </OverlayTrigger>
         </>
     );
 }
