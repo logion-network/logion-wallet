@@ -3,11 +3,13 @@
     text-align: center;
 }
 
-.ButtonGroup .Button {
+.ButtonGroup .Button,
+.ButtonGroup .Button-container {
     margin-left: 25px;
 }
 
-.ButtonGroup .Button:first-child {
+.ButtonGroup .Button:first-child,
+.ButtonGroup .Button-container:first-child {
     margin-left: 0;
 }
 

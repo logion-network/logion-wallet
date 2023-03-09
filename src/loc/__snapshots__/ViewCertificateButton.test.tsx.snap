@@ -1,17 +1,41 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`ViewCertificateButton renders 1`] = `
-<Button
-  className="ViewCertificateButton"
-  onClick={[Function]}
+<OverlayTrigger
+  defaultShow={false}
+  delay={500}
+  overlay={
+    <Tooltip
+      id="view-certificate-https://certificate.logion.network/public/certificate/134441747622015457578768231713467035151"
+      placement="right"
+    >
+      Open certificate in another tab
+    </Tooltip>
+  }
+  placement="bottom"
+  trigger={
+    Array [
+      "hover",
+      "focus",
+    ]
+  }
 >
-  <Icon
-    height="20px"
-    icon={
-      Object {
-        "id": "view-certificate",
-      }
-    }
-  />
-</Button>
+  <span
+    className="Button-container"
+  >
+    <Button
+      className="ViewCertificateButton"
+      onClick={[Function]}
+    >
+      <Icon
+        height="20px"
+        icon={
+          Object {
+            "id": "view-certificate",
+          }
+        }
+      />
+    </Button>
+  </span>
+</OverlayTrigger>
 `;

@@ -7,6 +7,8 @@ export interface Props {
     tokenGated: boolean
 }
 
+const QR_CODE_WIDTH = "150px";
+
 export default function IntroductionText(props: Props) {
     const { loc, tokenGated } = props
 
@@ -25,7 +27,7 @@ export default function IntroductionText(props: Props) {
             <p>All timestamps are displayed using Universal Time Coordinated (UTC).</p>
             <p>A PDF or print of this certificate is NOT valid. This Certificate is only valid when generated online by accessing its URL or through the following QR CODE:</p>
             <div className="qrcode-container">
-                <QrCode data={ fullCertificateUrl(loc.data.id) } width="200px"/>
+                <QrCode data={ fullCertificateUrl(loc.data.id) } width={ QR_CODE_WIDTH }/>
             </div>
         </div>
     } else if (loc.data.locType === 'Collection' && !tokenGated) {
@@ -39,7 +41,7 @@ export default function IntroductionText(props: Props) {
             <p>All timestamps are displayed using Universal Time Coordinated (UTC).</p>
             <p>A PDF or print of this certificate is NOT valid. This Certificate is only valid when generated online by accessing its URL or through the following QR CODE:</p>
             <div className="qrcode-container">
-                <QrCode data={ fullCertificateUrl(loc.data.id) } width="200px"/>
+                <QrCode data={ fullCertificateUrl(loc.data.id) } width={ QR_CODE_WIDTH }/>
             </div>
         </div>
     } else if (loc.data.locType === 'Collection' && tokenGated) {
@@ -53,7 +55,7 @@ export default function IntroductionText(props: Props) {
             <p>All timestamps are displayed using Universal Time Coordinated (UTC).</p>
             <p>A PDF or print of this certificate is NOT valid. This Certificate is only valid when generated online by accessing its URL or through the following QR CODE:</p>
             <div className="qrcode-container">
-                <QrCode data={ fullCertificateUrl(loc.data.id) } width="200px"/>
+                <QrCode data={ fullCertificateUrl(loc.data.id) } width={ QR_CODE_WIDTH }/>
             </div>
         </div>
     } else {
@@ -65,7 +67,7 @@ export default function IntroductionText(props: Props) {
             <p>All timestamps are displayed using Universal Time Coordinated (UTC).</p>
             <p>A PDF or print of this certificate is NOT valid. This Certificate is only valid when generated online by accessing its URL or through the following QR CODE:</p>
             <div className="qrcode-container">
-                <QrCode data={ fullCertificateUrl(loc.data.id) } width="200px"/>
+                <QrCode data={ fullCertificateUrl(loc.data.id) } width={ QR_CODE_WIDTH }/>
             </div>
         </div>
     }

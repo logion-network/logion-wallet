@@ -169,72 +169,74 @@ export default function Authenticate(props: Props) {
                     <p>Please try <Clickable onClick={ reset }>again</Clickable>.</p>
                 </>
             }
-            <ButtonGroup>
-                {
-                    status === 'IDLE' &&
-                    <ConnectAndClaim walletType={ walletType } compatibleWallets={ compatibleWallets }
-                                     claimAsset={ claimAsset } />
-                }
-                {
-                    status === 'CHECKING' &&
-                    <div className="check-ongoing">
-                        <Icon icon={ { id: "ownership_check_ongoing" } } />
-                        <Spinner animation="border" variant="polkadot" />
-                    </div>
-                }
-                {
-                    status === 'OWNER_KO' &&
-                    <Icon icon={ { id: "ko" } } height="60px" />
-                }
-                {
-                    status === 'OWNER_OK' &&
-                    <Icon icon={ { id: "ok" } } height="60px" />
-                }
-                {
-                    claimWithPolkadotState === ClaimWithPolkadotState.SELECT_ADDRESS &&
-                    <Dialog
-                        size="lg"
-                        show={ true }
-                        actions={ [
+            <div className="btn-group-container">
+                <ButtonGroup>
+                    {
+                        status === 'IDLE' &&
+                        <ConnectAndClaim walletType={ walletType } compatibleWallets={ compatibleWallets }
+                                        claimAsset={ claimAsset } />
+                    }
+                    {
+                        status === 'CHECKING' &&
+                        <div className="check-ongoing">
+                            <Icon icon={ { id: "ownership_check_ongoing" } } />
+                            <Spinner animation="border" variant="polkadot" />
+                        </div>
+                    }
+                    {
+                        status === 'OWNER_KO' &&
+                        <Icon icon={ { id: "ko" } } height="60px" />
+                    }
+                    {
+                        status === 'OWNER_OK' &&
+                        <Icon icon={ { id: "ok" } } height="60px" />
+                    }
+                    {
+                        claimWithPolkadotState === ClaimWithPolkadotState.SELECT_ADDRESS &&
+                        <Dialog
+                            size="lg"
+                            show={ true }
+                            actions={ [
+                                {
+                                    id: "cancel",
+                                    buttonText: "Cancel",
+                                    buttonVariant: "secondary",
+                                    callback: () => setClaimWithPolkadotState(ClaimWithPolkadotState.NONE),
+                                },
+                                {
+                                    id: "claimWithAddress",
+                                    buttonText: "Claim with selected",
+                                    buttonVariant: "primary",
+                                    disabled: !(logionChainContext.accounts?.current?.address),
+                                    callback: tryClaimWithPolkadot,
+                                }
+                            ] }
+                        >
+                            <h3>Choose a Polkadot address</h3>
+                            <p>In order to claim the file using Polkadot, you have to select an account.</p>
                             {
-                                id: "cancel",
-                                buttonText: "Cancel",
-                                buttonVariant: "secondary",
-                                callback: () => setClaimWithPolkadotState(ClaimWithPolkadotState.NONE),
-                            },
-                            {
-                                id: "claimWithAddress",
-                                buttonText: "Claim with selected",
-                                buttonVariant: "primary",
-                                disabled: !(logionChainContext.accounts?.current?.address),
-                                callback: tryClaimWithPolkadot,
+                                (logionChainContext.accounts?.all === undefined || logionChainContext.accounts.all.length === 0) &&
+                                <Alert
+                                    variant="warning"
+                                >
+                                    No Polkadot account detected, please install the extension and/or add accounts to it.
+                                </Alert>
                             }
-                        ] }
-                    >
-                        <h3>Choose a Polkadot address</h3>
-                        <p>In order to claim the file using Polkadot, you have to select an account.</p>
-                        {
-                            (logionChainContext.accounts?.all === undefined || logionChainContext.accounts.all.length === 0) &&
-                            <Alert
-                                variant="warning"
-                            >
-                                No Polkadot account detected, please install the extension and/or add accounts to it.
-                            </Alert>
-                        }
-                        {
-                            (logionChainContext.accounts?.all !== undefined && logionChainContext.accounts.all.length > 0) &&
-                            <Select
-                                options={ logionChainContext.accounts?.all.map(account => ({
-                                    label: account.name,
-                                    value: account.address,
-                                })) || [] }
-                                onChange={ value => logionChainContext.selectAddress!(value || "") }
-                                value={ logionChainContext.accounts?.current?.address || null }
-                            />
-                        }
-                    </Dialog>
-                }
-            </ButtonGroup>
+                            {
+                                (logionChainContext.accounts?.all !== undefined && logionChainContext.accounts.all.length > 0) &&
+                                <Select
+                                    options={ logionChainContext.accounts?.all.map(account => ({
+                                        label: account.name,
+                                        value: account.address,
+                                    })) || [] }
+                                    onChange={ value => logionChainContext.selectAddress!(value || "") }
+                                    value={ logionChainContext.accounts?.current?.address || null }
+                                />
+                            }
+                        </Dialog>
+                    }
+                </ButtonGroup>
+            </div>
         </div>
     )
 }

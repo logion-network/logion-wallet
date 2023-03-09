@@ -259,7 +259,7 @@ function CollectionLocItemChecker(props: LocalProps) {
                                     narrow={ true }
                                 >
                                     <ViewCertificateButton url={ fullCollectionItemCertificate(collectionLoc.id, item.id) } />
-                                    <CopyPasteButton value={ fullCollectionItemCertificate(collectionLoc.id, item.id) } />
+                                    <CopyPasteButton value={ fullCollectionItemCertificate(collectionLoc.id, item.id) } tooltip="Copy certificate URL to clipboard" />
                                     <ViewQrCodeButton certificateUrl={ fullCollectionItemCertificate(collectionLoc.id, item.id) } />
                                 </ButtonGroup>
                             </ActionCell>

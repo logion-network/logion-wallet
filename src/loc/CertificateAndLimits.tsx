@@ -67,7 +67,7 @@ export default function CertificateAndLimits(props: Props) {
                     <div className="certificate">
                         <h2>LOC Certificate public web address (URL):
                             <ViewCertificateButton url={ certificateUrl }/>
-                            <CopyPasteButton value={ certificateUrl } />
+                            <CopyPasteButton value={ certificateUrl } tooltip="Copy certificate URL to clipboard" />
                             <ViewQrCodeButton certificateUrl={ certificateUrl } />
                         </h2>
                     </div>
