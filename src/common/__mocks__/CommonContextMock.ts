@@ -1,4 +1,4 @@
-import { COLOR_THEME, legalOfficers } from '../TestData';
+import { COLOR_THEME, threeLegalOfficers } from '../TestData';
 import { CommonContext, Viewer } from "../CommonContext";
 import { BalanceState } from "@logion/client/dist/Balance.js";
 
@@ -26,7 +26,7 @@ export function useCommonContext() {
         refresh,
         nodesUp: [],
         nodesDown: [],
-        availableLegalOfficers: legalOfficers,
+        availableLegalOfficers: threeLegalOfficers,
         viewer,
         backendConfig: () => ({ features:{ iDenfy: false, vote: false }}),
     };

@@ -20,7 +20,7 @@ import {
 } from './TestData';
 import { DEFAULT_SHARED_STATE, setProtectionState, activateProtection } from '../__mocks__/UserContextMock';
 import { AcceptedProtection, ActiveProtection, ClaimedRecovery, PendingProtection, PendingRecovery } from '@logion/client';
-import { GUILLAUME, PATRICK } from 'src/common/TestData';
+import { GUILLAUME, PATRICK, twoLegalOfficers } from 'src/common/TestData';
 
 describe("ProtectionRecoveryRequest", () => {
 
@@ -32,7 +32,7 @@ describe("ProtectionRecoveryRequest", () => {
             allRequests: ACTIVATED_PROTECTION_REQUESTS,
             rejectedProtectionRequests: [],
             cancelledProtectionRequests: [],
-            selectedLegalOfficers: [ PATRICK, GUILLAUME ]
+            selectedLegalOfficers: twoLegalOfficers
         });
         setProtectionState(state);
         const tree = shallowRender(<ProtectionRecoveryRequest type='activated'/>)
@@ -47,7 +47,7 @@ describe("ProtectionRecoveryRequest", () => {
             allRequests: PENDING_PROTECTION_REQUESTS,
             rejectedProtectionRequests: [],
             cancelledProtectionRequests: [],
-            selectedLegalOfficers: [ PATRICK, GUILLAUME ]
+            selectedLegalOfficers: twoLegalOfficers
         });
         setProtectionState(state);
         const tree = shallowRender(<ProtectionRecoveryRequest type='activated'/>)
@@ -62,7 +62,7 @@ describe("ProtectionRecoveryRequest", () => {
             allRequests: ACTIVATED_RECOVERY_REQUESTS,
             rejectedProtectionRequests: [],
             cancelledProtectionRequests: [],
-            selectedLegalOfficers: [ PATRICK, GUILLAUME ]
+            selectedLegalOfficers: twoLegalOfficers
         });
         setProtectionState(state);
         const tree = shallowRender(<ProtectionRecoveryRequest type='activated'/>)
@@ -77,7 +77,7 @@ describe("ProtectionRecoveryRequest", () => {
             allRequests: ACCEPTED_RECOVERY_REQUESTS,
             rejectedProtectionRequests: [],
             cancelledProtectionRequests: [],
-            selectedLegalOfficers: [ PATRICK, GUILLAUME ]
+            selectedLegalOfficers: twoLegalOfficers
         });
         setProtectionState(state);
         const tree = shallowRender(<ProtectionRecoveryRequest type='activated'/>)
@@ -92,7 +92,7 @@ describe("ProtectionRecoveryRequest", () => {
             allRequests: ACCEPTED_PROTECTION_REQUESTS,
             rejectedProtectionRequests: [],
             cancelledProtectionRequests: [],
-            selectedLegalOfficers: [ PATRICK, GUILLAUME ]
+            selectedLegalOfficers: twoLegalOfficers
         });
         setProtectionState(state);
         render(<ProtectionRecoveryRequest type='accepted' />);
@@ -111,7 +111,7 @@ describe("ProtectionRecoveryRequest", () => {
             allRequests: PENDING_PROTECTION_REQUESTS,
             rejectedProtectionRequests: [],
             cancelledProtectionRequests: [],
-            selectedLegalOfficers: [ PATRICK, GUILLAUME ]
+            selectedLegalOfficers: twoLegalOfficers
         });
         setProtectionState(state);
         const tree = shallowRender(<ProtectionRecoveryRequest type='pending' />)
@@ -126,7 +126,7 @@ describe("ProtectionRecoveryRequest", () => {
             allRequests: PENDING_RECOVERY_REQUESTS,
             rejectedProtectionRequests: [],
             cancelledProtectionRequests: [],
-            selectedLegalOfficers: [ PATRICK, GUILLAUME ]
+            selectedLegalOfficers: twoLegalOfficers
         });
         setProtectionState(state);
         const tree = shallowRender(<ProtectionRecoveryRequest type='pending' />)

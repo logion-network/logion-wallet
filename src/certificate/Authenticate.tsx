@@ -12,7 +12,6 @@ import { LogionChainContextType } from "src/logion-chain/LogionChainContext";
 import Dialog from "src/common/Dialog";
 import Select from "src/common/Select";
 import Alert from "src/common/Alert";
-import { isTokenOwner } from "../loc/FileModel";
 import { UUID } from "@logion/node-api";
 import ButtonGroup from 'src/common/ButtonGroup';
 import Clickable from "src/common/Clickable";
@@ -44,7 +43,6 @@ function toWalletType(type: string | null | undefined): WalletType | undefined {
 
 export interface Props {
     locId: UUID,
-    owner: string,
     item: CollectionItem,
     walletType: string | null,
     setTokenForDownload: (token: Token | undefined) => void,
@@ -60,26 +58,23 @@ enum ClaimWithPolkadotState {
 type Status = 'IDLE' | 'CHECKING' | 'OWNER_OK' | 'OWNER_KO';
 
 export default function Authenticate(props: Props) {
-    const { locId, owner, item, setTokenForDownload } = props;
+    const { locId, item, setTokenForDownload } = props;
     const [ error, setError ] = useState<string | undefined>(undefined);
     const logionChainContext = useLogionChain();
     const [ claimWithPolkadotState, setClaimWithPolkadotState ] = useState(ClaimWithPolkadotState.NONE);
     const [ status, setStatus ] = useState<Status>('IDLE');
 
-    const checkOwnership = useCallback(async (jwtToken: Token) => {
-        const axios = logionChainContext.axiosFactory!(owner, jwtToken);
-        const isOwner = await isTokenOwner(axios, {
-            locId: locId.toString(),
-            collectionItemId: item.id
-        });
+    const checkOwnership = useCallback(async (client: LogionClient) => {
+        const newItem = await client.public.findCollectionLocItemById({ locId, itemId: item.id});
+        const isOwner = newItem && await newItem.isAuthenticatedTokenOwner();
         if (isOwner) {
-            setTokenForDownload(jwtToken);
+            setTokenForDownload(client.tokens.get(client.currentAddress || ""));
             setStatus('OWNER_OK');
         } else {
             setStatus('OWNER_KO');
             setError("The address you used does not own a token bind to this certificate.");
         }
-    }, [ item.id, locId, owner, setTokenForDownload, logionChainContext.axiosFactory ]);
+    }, [ item, locId, setTokenForDownload ]);
 
     const claimAsset = useCallback(async (walletType: WalletType) => {
         setTokenForDownload(undefined);
@@ -87,8 +82,8 @@ export default function Authenticate(props: Props) {
             setError(undefined);
             setStatus('CHECKING')
             try {
-                const jwtToken = await getToken(walletType, logionChainContext);
-                await checkOwnership(jwtToken);
+                const client = await getClient(walletType, logionChainContext);
+                await checkOwnership(client);
             } catch (error) {
                 setStatus('OWNER_KO');
                 setError("" + (error as Error).message);
@@ -103,8 +98,8 @@ export default function Authenticate(props: Props) {
         setError(undefined);
         setStatus('CHECKING');
         try {
-            const jwtToken = logionChainContext.accounts!.current!.token;
-            await checkOwnership(jwtToken!);
+            const client = logionChainContext.client;
+            await checkOwnership(client!);
         } catch (error) {
             setStatus('OWNER_KO');
             setError("" + (error as Error).message);
@@ -289,12 +284,9 @@ function ConnectAndClaim(props: ConnectAndClaimProperties) {
     </>)
 }
 
-async function getToken(walletType: WalletType, context: LogionChainContextType): Promise<Token> {
+async function getClient(walletType: WalletType, context: LogionChainContextType): Promise<LogionClient> {
     if (walletType === "CROSSMINT") {
-        if (!context.client) {
-            throw new Error("No Logion client available");
-        }
-        return authenticateWithCrossmint(context.client);
+        return authenticateWithCrossmint(context);
     } else if (walletType === "METAMASK") {
         return authenticateWithMetamask(context);
     } else {
@@ -302,7 +294,7 @@ async function getToken(walletType: WalletType, context: LogionChainContextType)
     }
 }
 
-async function authenticateWithCrossmint(client: LogionClient): Promise<Token> {
+async function authenticateWithCrossmint(context: LogionChainContextType): Promise<LogionClient> {
     const crossmint = new CrossmintEVMWalletAdapter({
         apiKey: config.crossmintApiKey,
         chain: BlockchainTypes.ETHEREUM,
@@ -315,17 +307,16 @@ async function authenticateWithCrossmint(client: LogionClient): Promise<Token> {
     console.log(`Detected Crossmint address ${ address }`);
 
     const signer = new CrossmintSigner(crossmint);
-    let authenticatedClient = await client.authenticate([ address ], signer);
-    const token = authenticatedClient.tokens.get(address);
-    if (!token) {
+    let authenticatedClient = await context.authenticateAddress(address, signer);
+    if (!authenticatedClient) {
         throw new Error("Unable to authenticate");
     }
-    return token;
+    return authenticatedClient;
 }
 
 let metaMaskEnabled = false;
 
-async function authenticateWithMetamask(context: LogionChainContextType): Promise<Token> {
+async function authenticateWithMetamask(context: LogionChainContextType): Promise<LogionClient> {
     if (!metaMaskEnabled) {
         metaMaskEnabled = await enableMetaMask(config.APP_NAME);
         if (!metaMaskEnabled) {
@@ -338,11 +329,11 @@ async function authenticateWithMetamask(context: LogionChainContextType): Promis
 
     if (accounts.length > 0) {
         const metaMaskAddress = accounts[0].address;
-        const token = await context.authenticateAddress(metaMaskAddress);
-        if (!token) {
+        const authenticatedClient = await context.authenticateAddress(metaMaskAddress);
+        if (!authenticatedClient) {
             throw new Error("Unable to authenticate");
         }
-        return token;
+        return authenticatedClient;
     } else {
         throw new Error("No MetaMask account available");
     }

@@ -2,13 +2,12 @@ import { AxiosInstance } from "axios";
 
 import Button from "./Button";
 
-import { TypedFile } from "../loc/FileModel";
 import Icon from "./Icon";
 
 import './ViewFileButton.css';
 import { Children, customClassName } from "./types/Helpers";
 import { useLogionChain, AxiosFactory } from "../logion-chain";
-import { MimeType, Token } from "@logion/client";
+import { MimeType, Token, TypedFile } from "@logion/client";
 import { useCallback, useMemo, useState } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 

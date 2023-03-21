@@ -1,4 +1,4 @@
-import { CheckCertifiedCopyResult, CheckResultType, LocData, TokensRecord, ClosedCollectionLoc } from "@logion/client";
+import { CheckCertifiedCopyResult, CheckResultType, LocData, TokensRecord, ClosedCollectionLoc, TypedFile, LocRequestState } from "@logion/client";
 import { UUID } from "@logion/node-api";
 import { AxiosInstance } from "axios";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -10,7 +10,7 @@ import ItemFiles, { DeliveredFile } from "src/components/itemfiles/ItemFiles";
 import { locDetailsPath, tokensRecordPath } from "src/legal-officer/LegalOfficerPaths";
 import { useLogionChain } from "src/logion-chain";
 import { locDetailsPath as userLocDetailsPath, tokensRecordPath as requesterTokensRecordPath, vtpTokensRecordPath } from "src/wallet-user/UserRouter";
-import { CheckLatestDeliveryResponse, getAllCollectionFileDeliveries, getFile, getTokensRecordDeliveries, getTokensRecordFileSource, TypedFile } from "./FileModel";
+import { CheckLatestDeliveryResponse, getAllCollectionFileDeliveries, getTokensRecordDeliveries, getTokensRecordFileSource } from "./FileModel";
 import { LegalOfficerLocContextProvider } from "./LegalOfficerLocContext";
 import { useLocContext } from "./LocContext";
 import LocPane from "./LocPane";
@@ -24,13 +24,13 @@ export interface Props {
     title: string;
     file: (loc: LocData) => DeliveredFile;
     getFileDeliveries: (axios: AxiosInstance, loc: LocData) => Promise<CheckLatestDeliveryResponse[]>;
-    getFile: (axios: AxiosInstance, loc: LocData) => Promise<TypedFile>;
+    getFile: (loc: LocRequestState) => Promise<TypedFile>;
     contributionMode?: ContributionMode;
 }
 
 export default function DocumentClaimHistory(props: Props) {
     const { hash } = props;
-    const { loc, backPath } = useLocContext();
+    const { loc, locState, backPath } = useLocContext();
     const [ deliveries, setDeliveries ] = useState<CheckLatestDeliveryResponse[]>();
     const [ checkCertifiedCopyResult, setCheckCertifiedCopyResult ] = useState<CheckCertifiedCopyResult>();
     const { axiosFactory } = useLogionChain();
@@ -80,7 +80,7 @@ export default function DocumentClaimHistory(props: Props) {
         }
     }, [ loc, props ]);
 
-    if(!loc) {
+    if(!loc || !locState) {
         return null;
     }
 
@@ -97,10 +97,7 @@ export default function DocumentClaimHistory(props: Props) {
                     deliveries={{ [hash]: (deliveries || []) }}
                     checkCertifiedCopyResultResult={ checkCertifiedCopyResult }
                     files={ files }
-                    downloader={(axios, hash) => getFile(axios, {
-                        hash,
-                        locId: loc.id.toString(),
-                    })}
+                    downloader={ hash => locState.getFile(hash)}
                     defaultExpanded={true}
                     icon={props.icon}
                     title={props.title}
@@ -144,7 +141,7 @@ function CollectionDocumentClaimHistory(props: { hash: string }) {
             icon="check_document"
             title="Document claim history"
             getFileDeliveries={ (axios, loc) => getCollectionFileDeliveries(axios, { locId: loc.id.toString(), hash }) }
-            getFile={ (axios, loc) => getFile(axios, { locId: loc.id.toString(), hash }) }
+            getFile={ loc => loc.getFile(hash)}
             file={ (loc) => loc.files.filter(file => file.hash === hash).map(file => ({
                 ...file,
                 size: BigInt(file.size),
@@ -217,7 +214,7 @@ function TokensRecordDocumentClaimHistory(props: { recordId: string, hash: strin
             icon="records_blue"
             title="Tokens record claim history"
             getFileDeliveries={ (axios, loc) => getTokensRecordFileDeliveries(axios, { locId: loc.id.toString(), recordId, hash })}
-            getFile={ (axios, loc) => getTokensRecordFileSource(axios, { locId: loc.id.toString(), recordId, hash }) }
+            getFile={ loc => getTokensRecordFileSource(loc.owner.buildAxiosToNode(), { locId: loc.data().id.toString(), recordId, hash }) }
             file={ () => getRecordFile(record, hash) }
             contributionMode={ props.contributionMode }
         />

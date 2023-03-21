@@ -4,7 +4,7 @@ import IdentityForm, { FormValues } from "../../components/identity/IdentityForm
 import { useForm } from "react-hook-form";
 import { useCommonContext } from "../../common/CommonContext";
 import SelectLegalOfficer from "./SelectLegalOfficer";
-import { LegalOfficer, LocsState, UserIdentity, PostalAddress, DraftRequest } from "@logion/client";
+import { LegalOfficer, LegalOfficerClass, LocsState, UserIdentity, PostalAddress, DraftRequest } from "@logion/client";
 import { useUserContext } from "../UserContext";
 import Form from "react-bootstrap/Form";
 import Frame from "../../common/Frame";
@@ -57,7 +57,7 @@ export default function IdentityLocRequest(props: Props) {
     }, [ reset ])
 
     const submit = useCallback(async (formValues: FormValues) => {
-        if (legalOfficer === null || accounts === null) {
+        if (legalOfficer === null || !(legalOfficer instanceof LegalOfficerClass) || accounts === null) {
             return
         }
 

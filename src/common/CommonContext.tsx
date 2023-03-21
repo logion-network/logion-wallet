@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useReducer, Reducer, useCallback } from "react";
 import { DateTime } from 'luxon';
-import { LegalOfficer, BalanceState, LogionClient, Endpoint, MultiResponse } from "@logion/client";
+import { LegalOfficerClass, BalanceState, LogionClient, Endpoint, MultiResponse } from "@logion/client";
 import { InjectedAccount } from "@logion/extension";
 
 import { useLogionChain } from '../logion-chain';
@@ -29,7 +29,7 @@ export interface CommonContext {
     refresh: (clearOnRefresh: boolean) => void;
     nodesUp: Endpoint[];
     nodesDown: Endpoint[];
-    availableLegalOfficers: LegalOfficer[] | undefined;
+    availableLegalOfficers: LegalOfficerClass[] | undefined;
     mutateBalanceState: (mutator: ((state: BalanceState) => Promise<BalanceState>)) => Promise<void>,
     viewer: Viewer;
     setViewer: ((viewer: Viewer) => void) | null;
@@ -95,7 +95,7 @@ interface Action {
     clearOnRefresh?: boolean;
     nodesUp?: Endpoint[];
     nodesDown?: Endpoint[];
-    availableLegalOfficers?: LegalOfficer[];
+    availableLegalOfficers?: LegalOfficerClass[];
     mutateBalanceState?: (mutator: ((state: BalanceState) => Promise<BalanceState>)) => Promise<void>;
     client?: LogionClient;
     viewer?: Viewer;
@@ -300,7 +300,7 @@ export function useCommonContext(): CommonContext {
     return useContext(CommonContextObject);
 }
 
-function aggregateBackendConfig(response: MultiResponse<BackendConfig>, legalOfficers: LegalOfficer[]): Record<string, BackendConfig> {
+function aggregateBackendConfig(response: MultiResponse<BackendConfig>, legalOfficers: LegalOfficerClass[]): Record<string, BackendConfig> {
     const config: Record<string, BackendConfig> = {};
     for(const url in response) {
         const legalOfficersOnNode = legalOfficers.filter(legalOfficer => legalOfficer.node === url);

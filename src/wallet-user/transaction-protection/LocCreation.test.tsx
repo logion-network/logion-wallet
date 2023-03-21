@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { clickByName, typeByLabel } from '../../tests';
 import LocCreation from './LocCreation';
 import { setHasValidIdentityLoc, setLocsState, setMutateLocsState } from "../__mocks__/UserContextMock";
-import { PATRICK, GUILLAUME } from "../../common/TestData";
+import { PATRICK, GUILLAUME, oneLegalOfficer, twoLegalOfficers } from "../../common/TestData";
 import { DraftRequest, LocsState } from '@logion/client';
 import { UUID } from '@logion/node-api';
 import { navigate } from 'src/__mocks__/ReactRouterMock';
@@ -23,7 +23,7 @@ describe("LocCreation", () => {
     });
 
     it("should disable 'Submit' when user has valid id LOC but the form is empty", async () => {
-        setHasValidIdentityLoc([ PATRICK ])
+        setHasValidIdentityLoc(oneLegalOfficer)
         await openDialog(true);
 
         await waitFor(() => {
@@ -34,7 +34,7 @@ describe("LocCreation", () => {
     })
 
     it("should enable 'Submit' and remove 'Request an Identity Case' when an LO is selected", async () => {
-        setHasValidIdentityLoc([ GUILLAUME ])
+        setHasValidIdentityLoc([ twoLegalOfficers[1] ])
         await openDialog(true);
 
         await userEvent.click(screen.getByText("Select..."));
@@ -59,7 +59,7 @@ describe("LocCreation", () => {
     })
 
     it("should close dialog and not create a request when cancel is pressed", async () => {
-        setHasValidIdentityLoc([ PATRICK ])
+        setHasValidIdentityLoc(oneLegalOfficer)
         await openDialog(true);
 
         const dialog = screen.getByRole("dialog");

@@ -23,7 +23,7 @@ export interface Props {
 
 export default function LocTemplateItems(props: Props) {
     const { viewer } = useCommonContext();
-    const { loc, mutateLocState } = useLocContext();
+    const { loc, locState, mutateLocState } = useLocContext();
     const { accounts } = useLogionChain();
     const { width } = useResponsiveContext();
     const deleteMetadata = useDeleteMetadataCallback(mutateLocState);
@@ -40,7 +40,7 @@ export default function LocTemplateItems(props: Props) {
         }
     }, [ deleteMetadata, deleteFile, deleteLink ]);
 
-    if(!loc) {
+    if(!loc || !locState) {
         return null;
     }
 
@@ -51,6 +51,7 @@ export default function LocTemplateItems(props: Props) {
         renderActions,
         viewer,
         loc,
+        locState,
         width,
     });
     return (

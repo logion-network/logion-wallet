@@ -193,11 +193,8 @@ export function useLogionChain() {
     }
 }
 
-function authenticateAddress(address: string) {
-    return {
-        value: `some-token-value-for-${address}`,
-        expirationDate: DateTime.now().toISO(),
-    };
+function authenticateAddress() {
+    return clientMock;
 }
 
 export function setClientMock(mock: LogionClient | null) {

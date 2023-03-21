@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { LocType } from "@logion/node-api";
 
 import { useCommonContext } from '../../common/CommonContext';
-import { LocsState, LegalOfficer, DraftRequest } from "@logion/client";
+import { LocsState, LegalOfficerClass, DraftRequest } from "@logion/client";
 import Button, { Action } from '../../common/Button';
 import Dialog from '../../common/Dialog';
 
@@ -36,7 +36,7 @@ export default function LocCreation(props: Props) {
             legalOfficer: "",
         }
     });
-    const [ selectedLegalOfficer, setSelectedLegalOfficer ] = useState<LegalOfficer | undefined>();
+    const [ selectedLegalOfficer, setSelectedLegalOfficer ] = useState<LegalOfficerClass | undefined>();
     const [ selectedTemplateId, setSelectedTemplateId ] = useState<string | undefined>();
     const [ currentLocType, setCurrentLocType ] = useState<LocType>();
 

@@ -3,7 +3,7 @@ import { DraftRequest, LocsState } from "@logion/client";
 import { render, waitFor, screen, getByText } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { GUILLAUME } from "../../common/TestData";
+import { GUILLAUME, oneLegalOfficer } from "../../common/TestData";
 import { shallowRender, clickByName } from "../../tests";
 import IdentityLocRequest from "./IdentityLocRequest";
 import { fillInForm } from "../../components/identity/IdentityFormTestHelper";
@@ -21,7 +21,7 @@ describe("IdentityLocRequest", () => {
     beforeEach(() => {
         jest.resetAllMocks();
         setMutateLocsState(mutateLocsState);
-        setHasValidIdentityLoc([ GUILLAUME ]);
+        setHasValidIdentityLoc(oneLegalOfficer);
         setSearchParams({
             get: () => undefined,
         })

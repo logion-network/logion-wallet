@@ -4,6 +4,7 @@ import {
     ActiveProtection,
     ClaimedRecovery,
     LegalOfficer,
+    LegalOfficerClass,
     NoProtection,
     PendingProtection,
     PostalAddress,
@@ -25,7 +26,7 @@ import { BalanceState } from "@logion/client/dist/Balance.js";
 import { LocsState } from "@logion/client";
 
 export interface CreateProtectionRequestParams {
-    legalOfficers: LegalOfficer[],
+    legalOfficers: LegalOfficerClass[],
     postalAddress: PostalAddress,
     userIdentity: UserIdentity,
     addressToRecover?: string,

@@ -1,5 +1,5 @@
-import { AxiosInstance, AxiosResponse } from "axios";
-import { LegalOfficer, Token, MimeType, HashOrContent } from "@logion/client";
+import { AxiosInstance } from "axios";
+import { LegalOfficer, Token, HashOrContent, downloadFile, TypedFile } from "@logion/client";
 
 export const LO_FILE_IDS = [ 'oath-logo', 'header-logo', 'seal' ];
 
@@ -31,26 +31,6 @@ export interface GetCollectionItemFileParameters extends GetFileParameters, HasC
 
 export interface CheckOwnershipParameters extends HasLocId, HasCollectionItem {}
 
-export interface TypedFile {
-    data: any,
-    mimeType: MimeType,
-}
-
-export async function getFile(
-    axios: AxiosInstance,
-    parameters: GetFileParameters
-): Promise<TypedFile> {
-    return downloadFile(axios, `/api/loc-request/${ parameters.locId }/files/${ parameters.hash }`);
-}
-
-async function downloadFile(
-    axios: AxiosInstance,
-    url: string,
-): Promise<TypedFile> {
-    const response = await axios.get(url, { responseType: 'blob' });
-    return typedFile(response);
-}
-
 export async function getLoFile(
     parameters: {
         axios: AxiosInstance,
@@ -69,27 +49,11 @@ export async function getCollectionItemFile(
     return downloadFile(axios, `/api/collection/${ locId }/${ collectionItemId }/files/${ hash }`);
 }
 
-export async function getCollectionItemFileSource(
-    axios: AxiosInstance,
-    parameters: GetCollectionItemFileParameters
-): Promise<TypedFile> {
-    const { locId, collectionItemId, hash } = parameters
-    return downloadFile(axios, `/api/collection/${ locId }/${ collectionItemId }/files/${ hash }/source`);
-}
-
 export async function getJsonLoc(
     axios: AxiosInstance,
     parameters: { locId: string },
 ): Promise<TypedFile> {
     return downloadFile(axios, `/api/loc-request/${ parameters.locId }`);
-}
-
-function typedFile(response: AxiosResponse): TypedFile {
-    const contentType: string = response.headers['content-type'];
-    return {
-        data: response.data,
-        mimeType: MimeType.from(contentType),
-    };
 }
 
 export interface AddLoFileParameters {
@@ -184,19 +148,6 @@ export async function getAllCollectionDeliveries(
     const { locId } = parameters
     const response = await axios.get(`/api/collection/${ locId }/file-deliveries`);
     return response.data;
-}
-
-export async function isTokenOwner(
-    axios: AxiosInstance,
-    parameters: CheckOwnershipParameters
-): Promise<boolean> {
-    const { locId, collectionItemId } = parameters
-    try {
-        await axios.get(`/api/collection/${ locId }/items/${ collectionItemId }/check`);
-        return true;
-    } catch(e) {
-        return false;
-    }
 }
 
 export interface GetTokensRecordFileSourceParameters extends GetFileParameters {

@@ -1,10 +1,9 @@
-import { CheckCertifiedCopyResult, LocData, CheckHashResult } from "@logion/client";
-import { AxiosInstance } from "axios";
+import { CheckCertifiedCopyResult, LocData, CheckHashResult, TypedFile } from "@logion/client";
 import { useCallback, useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 
 import Table, { Cell, EmptyTableMessage } from "src/common/Table";
-import { ItemDeliveriesResponse, TypedFile } from "src/loc/FileModel";
+import { ItemDeliveriesResponse } from "src/loc/FileModel";
 import CellWithCopyPaste from "../table/CellWithCopyPaste";
 import { Child } from 'src/common/types/Helpers';
 import ItemFileDetails from "./ItemFileDetails";
@@ -26,7 +25,7 @@ export interface Props {
     deliveries?: ItemDeliveriesResponse;
     checkCertifiedCopyResultResult?: CheckCertifiedCopyResult;
     checkHashResult?: CheckHashResult;
-    downloader: (axios: AxiosInstance, hash: string) => Promise<TypedFile>;
+    downloader: (hash: string) => Promise<TypedFile>;
     defaultExpanded?: boolean;
     icon: string;
     title: string;
@@ -102,7 +101,7 @@ export default function ItemFiles(props: Props) {
                             <ViewFileButton
                                 nodeOwner={ props.collectionLoc.ownerAddress }
                                 fileName={ file.name }
-                                downloader={ (axios) => props.downloader(axios, file.hash) }
+                                downloader={ () => props.downloader(file.hash) }
                             />
                         } />,
                         align: "left",

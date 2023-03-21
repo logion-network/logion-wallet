@@ -55,5 +55,3 @@ export async function acceptLocRequest(
 ): Promise<void> {
     await axios.post(`/api/loc-request/${parameters.requestId}/accept`, { });
 }
-
-export { getFile } from "./FileModel"

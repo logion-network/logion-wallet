@@ -1,5 +1,4 @@
 import { CheckCertifiedCopyResult, CheckHashResult } from "@logion/client";
-import { AxiosInstance } from "axios";
 import { useEffect, useMemo, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 
@@ -8,7 +7,7 @@ import PolkadotFrame from "src/common/PolkadotFrame";
 import CheckDeliveredFrame from "src/components/deliverycheck/CheckDeliveredFrame";
 import ItemFiles from "src/components/itemfiles/ItemFiles";
 import { useLogionChain } from "src/logion-chain";
-import { getAllDeliveries, getCollectionItemFileSource, ItemDeliveriesResponse } from "./FileModel";
+import { getAllDeliveries, ItemDeliveriesResponse } from "./FileModel";
 import { useLocContext } from "./LocContext";
 import LocPane from "./LocPane";
 import { CertificateItemDetails } from "src/components/certificateitemdetails/CertificateItemDetails";
@@ -77,11 +76,7 @@ export default function DashboardCertificate() {
                             deliveries={ deliveries }
                             checkCertifiedCopyResultResult={ checkCertifiedCopyResult }
                             checkHashResult={ checkHashResult }
-                            downloader={ (axios: AxiosInstance, hash: string) => getCollectionItemFileSource(axios, {
-                                locId: loc.id.toString(),
-                                collectionItemId: collectionItem.id,
-                                hash,
-                            }) }
+                            downloader={ (hash: string) => collectionItem.getFile(hash) }
                             icon="polkadot_check_asset"
                             title="List of Collection Item's file(s)"
                         />
