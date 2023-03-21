@@ -1,6 +1,5 @@
 import { LocRequestState, LocData, LocsState, EditableRequest, MergedLink } from "@logion/client";
 import { UUID, LocType } from "@logion/node-api"
-import { AxiosInstance } from "axios";
 import { useCallback } from "react";
 import { CallCallback } from "src/ClientExtrinsicSubmitter";
 import { POLKADOT } from "src/common/ColorTheme";
