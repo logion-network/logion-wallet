@@ -1,6 +1,5 @@
 import { LocRequestState, LocData, LocsState, EditableRequest, MergedLink } from "@logion/client";
 import { UUID, LocType } from "@logion/node-api"
-import { AxiosInstance } from "axios";
 import { useCallback } from "react";
 import { CallCallback } from "src/ClientExtrinsicSubmitter";
 import { POLKADOT } from "src/common/ColorTheme";
@@ -16,7 +15,6 @@ import { deleteLink } from "src/legal-officer/client";
 import { documentClaimHistoryPath } from "src/legal-officer/LegalOfficerPaths";
 import { fullCertificateUrl } from "src/PublicPaths";
 import { documentClaimHistoryPath as userDocumentClaimHistoryPath } from "src/wallet-user/UserRouter";
-import { getFile } from "./FileModel";
 import LocLinkDetails from "./LocLinkDetails";
 import LocPrivateFileDetails from "./LocPrivateFileDetails";
 import LocPublicDataDetails from "./LocPublicDataDetails";
@@ -63,6 +61,7 @@ export interface PublishProps {
 
 export function buildItemTableColumns(args: {
     loc: LocData,
+    locState: LocRequestState,
     width: (rule: Rules) => string,
     currentAddress: string | undefined,
     contributionMode: ContributionMode | undefined,
@@ -71,6 +70,7 @@ export function buildItemTableColumns(args: {
 }): Column<LocItem>[] {
     const {
         loc,
+        locState,
         width,
         currentAddress,
         contributionMode,
@@ -109,10 +109,7 @@ export function buildItemTableColumns(args: {
                     <ViewFileButton
                         nodeOwner={ loc.ownerAddress }
                         fileName={ locItem.name }
-                        downloader={ (axios: AxiosInstance) => getFile(axios, {
-                            locId: loc.id.toString(),
-                            hash: locItem.value || ""
-                        }) }
+                        downloader={ () => locState?.getFile(locItem.value || "") }
                     />
                 }
                 </> } />,

@@ -8,7 +8,7 @@ import { fillInForm } from "../../components/identity/IdentityFormTestHelper";
 import { render, screen, waitFor, getByText } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { PATRICK, GUILLAUME } from "../../common/TestData";
+import { twoLegalOfficers } from "../../common/TestData";
 import { setCreateProtectionRequest } from "../__mocks__/UserContextMock";
 import { clickByName, shallowRender } from "../../tests";
 import { setActiveRecoveryInProgress } from "../../__mocks__/@logion/node-api/dist/RecoveryMock";
@@ -74,7 +74,7 @@ describe("CreateProtectionRequestForm", () => {
 
         await waitFor(() => expect(createProtectionRequest).toBeCalledWith(
             expect.objectContaining({
-                legalOfficers: [ PATRICK, GUILLAUME ],
+                legalOfficers: twoLegalOfficers,
             })
         ));
     });
@@ -93,7 +93,7 @@ describe("CreateProtectionRequestForm", () => {
 
         await waitFor(() => expect(createProtectionRequest).toBeCalledWith(
             expect.objectContaining({
-                legalOfficers: [ PATRICK, GUILLAUME ],
+                legalOfficers: twoLegalOfficers,
             })
         ));
     });
@@ -113,7 +113,7 @@ describe("CreateProtectionRequestForm", () => {
 
         await waitFor(() => expect(createProtectionRequest).toBeCalledWith(
             expect.objectContaining({
-                legalOfficers: [ PATRICK, GUILLAUME ],
+                legalOfficers: twoLegalOfficers,
             })
         ));
     });

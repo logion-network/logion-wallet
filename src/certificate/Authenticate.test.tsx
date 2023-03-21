@@ -1,20 +1,18 @@
-import { AxiosResponse } from 'axios';
 import { render } from '@testing-library/react';
 import { clickByName } from '../tests';
 import { UUID } from "@logion/node-api";
 import { DEFAULT_LEGAL_OFFICER } from "../common/TestData";
 import { setMetamaskEnabled } from '../__mocks__/PolkadotExtensionDappMock';
-import { axiosMock, resetAxiosMock } from 'src/logion-chain/__mocks__/LogionChainMock';
-import { Mock } from 'moq.ts';
+import { setClientMock } from 'src/logion-chain/__mocks__/LogionChainMock';
 import { CollectionItem, UploadableItemFile, Token } from '@logion/client';
 import Authenticate, { Props } from "./Authenticate";
+import { LogionClient } from 'src/__mocks__/LogionClientMock';
 
 jest.mock('../logion-chain');
 
 describe("Authenticate with Metamask", () => {
 
     beforeEach(() => {
-        resetAxiosMock();
         tokenForDownload = undefined;
         setMetamaskEnabled(true);
     });
@@ -22,7 +20,8 @@ describe("Authenticate with Metamask", () => {
     it("renders button for restricted delivery of item asset", () => testRender(metamaskAssetProps));
     it("gets token for rightful owner of item", () => testOwnershipCheckSuccess(
         metamaskAssetProps,
-        { token: "some-token-value-for-0xa6db31d1aee06a3ad7e4e56de3775e80d2f5ea84" }
+        { token: "some-token-value-for-0xa6db31d1aee06a3ad7e4e56de3775e80d2f5ea84" },
+        "0xa6db31d1aee06a3ad7e4e56de3775e80d2f5ea84"
     ));
     it("does not get token if anyone else", () => testOwnershipCheckFailure(metamaskAssetProps));
 })
@@ -30,14 +29,14 @@ describe("Authenticate with Metamask", () => {
 describe("Authenticate with Crossmint", () => {
 
     beforeEach(() => {
-        resetAxiosMock();
         tokenForDownload = undefined;
     });
 
     it("renders button for restricted delivery of item asset", () => testRender(crossmintAssetProps));
     it("gets token for rightful owner of item", async () => testOwnershipCheckSuccess(
         crossmintAssetProps,
-        { token: "some-token" }
+        { token: "some-token-value-for-0xa6db31d1aee06a3ad7e4e56de3775e80d2f5ea84" },
+        "0xa6db31d1aee06a3ad7e4e56de3775e80d2f5ea84"
     ));
     it("does not get token if anyone else", async () => testOwnershipCheckFailure(crossmintAssetProps));
 })
@@ -45,14 +44,14 @@ describe("Authenticate with Crossmint", () => {
 describe("Authenticate with Polkadot", () => {
 
     beforeEach(() => {
-        resetAxiosMock();
         tokenForDownload = undefined;
     });
 
     it("renders button for restricted delivery of item asset", () => testRender(polkadotAssetProps))
     it("gets token for rightful owner of item", async () => testOwnershipCheckSuccess(
-        crossmintAssetProps,
-        { token: "some-token" }
+        polkadotAssetProps,
+        { token: "some-token-value-for-5FniDvPw22DMW1TLee9N8zBjzwKXaKB2DcvZZCQU5tjmv1kb" },
+        "5FniDvPw22DMW1TLee9N8zBjzwKXaKB2DcvZZCQU5tjmv1kb"
     ));
     it("does not get token if anyone else", async () => testOwnershipCheckFailure(crossmintAssetProps));
 })
@@ -120,16 +119,20 @@ function expectTokenSet(value: string) {
     expect(tokenForDownload?.value).toEqual(value);
 }
 
-function mockAxiosForCheckSuccess() {
-    axiosMock.setup(instance => instance.interceptors.request.use()).returns(0);
-    const expectedUrl = `/api/collection/${ locId.toString() }/items/${ item.id }/check`;
-    const checkResponse = new Mock<AxiosResponse>();
-    axiosMock.setup(instance => instance.get)
-        .returns(url => url === expectedUrl ? Promise.resolve(checkResponse.object() as any) : Promise.reject(new Error("")));
+function mockForCheckSuccess(address: string) {
+    const clientMock = new LogionClient();
+    clientMock.currentAddress = address;
+    const item = {
+        isAuthenticatedTokenOwner: () => true,
+    };
+    clientMock.public = {
+        findCollectionLocItemById: () => item,
+    };
+    setClientMock(clientMock as any);
 }
 
 async function testOwnershipCheckFailure(props: Props) {
-    mockAxiosForCheckFailure();
+    mockForCheckFailure();
     await renderAndClaim(props);
     if (props.walletType === 'POLKADOT') {
         await clickByName("Claim with selected");
@@ -137,8 +140,8 @@ async function testOwnershipCheckFailure(props: Props) {
     await expectOwnershipCheckFailure();
 }
 
-async function testOwnershipCheckSuccess(props: Props, params: { token: string }) {
-    mockAxiosForCheckSuccess();
+async function testOwnershipCheckSuccess(props: Props, params: { token: string }, address: string) {
+    mockForCheckSuccess(address);
     await renderAndClaim(props);
     if (props.walletType === 'POLKADOT') {
         await clickByName("Claim with selected");
@@ -150,8 +153,13 @@ async function expectOwnershipCheckFailure() {
     expect(tokenForDownload).toBeUndefined();
 }
 
-function mockAxiosForCheckFailure() {
-    axiosMock.setup(instance => instance.interceptors.request.use()).returns(0);
-    axiosMock.setup(instance => instance.get)
-        .returns(() => Promise.reject(new Error("unauthorized")));
+function mockForCheckFailure() {
+    const clientMock = new LogionClient();
+    const item = {
+        isAuthenticatedTokenOwner: () => false,
+    };
+    clientMock.public = {
+        findCollectionLocItemById: () => item,
+    };
+    setClientMock(clientMock as any);
 }

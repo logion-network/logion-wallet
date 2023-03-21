@@ -1,8 +1,8 @@
 import { ApiPromise } from '@polkadot/api';
 
-import { GUILLAUME, PATRICK } from "../../common/TestData";
+import { twoLegalOfficers } from "../../common/TestData";
 import { TEST_WALLET_USER } from '../TestData';
-import { AccountTokens, DirectoryClient, NoProtection, ProtectionState, LegalOfficer, DraftRequest } from '@logion/client';
+import { AccountTokens, DirectoryClient, NoProtection, ProtectionState, LegalOfficerClass, DraftRequest } from '@logion/client';
 import { AxiosFactory } from '@logion/client/dist/AxiosFactory.js';
 import { ComponentFactory } from '@logion/client/dist/ComponentFactory.js';
 import { LegalOfficerEndpoint, LogionClientConfig, SharedState } from '@logion/client/dist/SharedClient.js';
@@ -38,8 +38,8 @@ export const DEFAULT_SHARED_STATE: SharedState = {
 
     } as LogionClientConfig,
     directoryClient: {} as DirectoryClient,
-    legalOfficers: [ PATRICK, GUILLAUME ],
-    allLegalOfficers: [ PATRICK, GUILLAUME ],
+    legalOfficers: twoLegalOfficers,
+    allLegalOfficers: twoLegalOfficers,
     networkState: {} as NetworkState<LegalOfficerEndpoint>,
     nodeApi: api,
     tokens: {} as AccountTokens,
@@ -158,7 +158,7 @@ export function setClosedVerifiedThirdPartyLocs(transactions: any[], collections
 }
 
 
-export function setHasValidIdentityLoc(legalOfficers: LegalOfficer []) {
+export function setHasValidIdentityLoc(legalOfficers: LegalOfficerClass[]) {
     locsState = {
         legalOfficersWithValidIdentityLoc: legalOfficers
     }

@@ -1,4 +1,5 @@
 import { LegalOfficer, PostalAddress, UserIdentity } from '@logion/client';
+import { LegalOfficerClass } from "@logion/client/dist/Types.js";
 import { Transaction } from '@logion/client/dist/TransactionClient.js';
 import { Coin, CoinBalance, SYMBOL, PrefixedNumber, ATTO } from '@logion/node-api';
 
@@ -236,4 +237,18 @@ export const legalOfficers: LegalOfficer[] = [
     PATRICK,
     GUILLAUME,
     ALAIN
+];
+
+export const oneLegalOfficer: LegalOfficerClass[] = [
+    new LegalOfficerClass({ legalOfficer: PATRICK, axiosFactory: { buildAxiosInstance: jest.fn() } }),
+];
+
+export const twoLegalOfficers: LegalOfficerClass[] = [
+    oneLegalOfficer[0],
+    new LegalOfficerClass({ legalOfficer: GUILLAUME, axiosFactory: { buildAxiosInstance: jest.fn() } }),
+];
+
+export const threeLegalOfficers: LegalOfficerClass[] = [
+    ...twoLegalOfficers,
+    new LegalOfficerClass({ legalOfficer: ALAIN, axiosFactory: { buildAxiosInstance: jest.fn() } }),
 ];

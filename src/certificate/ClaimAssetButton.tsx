@@ -1,4 +1,4 @@
-import { Token, CollectionItem, TokensRecord } from "@logion/client";
+import { Token, CollectionItem, TokensRecord, TypedFile } from "@logion/client";
 import { UUID } from "@logion/node-api";
 import { AxiosInstance } from "axios";
 import { useState, useEffect } from "react";
@@ -8,7 +8,6 @@ import {
     getCollectionItemFile,
     GetCollectionItemFileParameters,
     GetTokensRecordFileParameters,
-    TypedFile,
     getTokensRecordFile
 } from "../loc/FileModel";
 import Icon from "src/common/Icon";

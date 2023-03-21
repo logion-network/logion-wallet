@@ -26,31 +26,38 @@ exports[`IdentityLocRequest renders 1`] = `
           legalOfficerNumber={1}
           legalOfficers={
             Array [
-              Object {
+              LegalOfficerClass {
                 "additionalDetails": "",
-                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "axiosFactory": Object {
+                  "buildAxiosInstance": [MockFunction],
+                },
                 "logoUrl": "",
-                "name": "Patrick Gielen",
-                "node": "http://logion.patrick.com",
+                "name": "Guillaume Grain",
+                "node": "http://logion.guillaume.com",
                 "nodeId": "",
                 "postalAddress": Object {
-                  "city": "Etterbeek",
-                  "company": "MODERO",
-                  "country": "Belgique",
-                  "line1": "Huissier de Justice Etterbeek",
-                  "line2": "Rue Beckers 17",
-                  "postalCode": "1040",
+                  "city": "LYON",
+                  "company": "SELARL ADRASTEE",
+                  "country": "France",
+                  "line1": "Gare des Brotteaux",
+                  "line2": "14, place Jules Ferry",
+                  "postalCode": "69006",
                 },
+                "token": undefined,
                 "userIdentity": Object {
-                  "email": "patrick@logion.network",
+                  "email": "g.grain@adrastee-lyon.fr",
                   "firstName": "Patrick",
                   "lastName": "Gielen",
-                  "phoneNumber": "+32 498 237 107",
+                  "phoneNumber": "+33 4 78 52 87 56",
                 },
               },
-              Object {
+              LegalOfficerClass {
                 "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+                "axiosFactory": Object {
+                  "buildAxiosInstance": [MockFunction],
+                },
                 "logoUrl": "",
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
@@ -63,6 +70,7 @@ exports[`IdentityLocRequest renders 1`] = `
                   "line2": "7 rue Jean Francois Champollion Parc Comitec",
                   "postalCode": "18000",
                 },
+                "token": undefined,
                 "userIdentity": Object {
                   "email": "alain.barland@auxilia-conseils.com",
                   "firstName": "Patrick",

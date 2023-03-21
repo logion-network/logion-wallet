@@ -56,6 +56,9 @@ export class LogionClient {
     buildAxios() {
         return axiosMock;
     }
+
+    public = {};
+    currentAddress = TEST_WALLET_USER;
 }
 
 export class AccountTokens {
@@ -70,9 +73,9 @@ export class AccountTokens {
 
     addresses = [ TEST_WALLET_USER ];
 
-    get() {
+    get(address: string) {
         return ({
-            value: "some-token",
+            value: `some-token-value-for-${address}`,
             expirationDateTime: DateTime.now().plus({hours: 1})
         });
     }

@@ -2,7 +2,7 @@ import { buildApi, LogionNodeApi } from '@logion/node-api';
 import axios, { AxiosInstance } from 'axios';
 import React, { useReducer, useContext, Context, Reducer, useEffect, useCallback } from 'react';
 import { DateTime } from 'luxon';
-import { AccountTokens, LegalOfficer, LogionClient, DefaultSignAndSendStrategy } from '@logion/client';
+import { AccountTokens, LegalOfficer, LegalOfficerClass, LogionClient, DefaultSignAndSendStrategy, Token, RawSigner } from '@logion/client';
 import { enableExtensions, ExtensionSigner, InjectedAccount, isExtensionAvailable } from '@logion/extension';
 
 import config, { Node } from '../config';
@@ -10,7 +10,6 @@ import Accounts, { buildAccounts } from '../common/types/Accounts';
 import { clearAll, loadCurrentAddress, loadTokens, storeCurrentAddress, storeTokens } from '../common/Storage';
 
 import { getEndpoints, NodeMetadata } from './Connection';
-import { Token } from "@logion/client";
 
 type ConsumptionStatus = 'PENDING' | 'STARTING' | 'STARTED';
 
@@ -33,8 +32,8 @@ export interface LogionChainContextType {
     axiosFactory?: AxiosFactory,
     isCurrentAuthenticated: () => boolean,
     authenticate: (address: string[]) => Promise<void>,
-    authenticateAddress: (address: string) => Promise<Token | undefined>,
-    getOfficer?: (address: string | undefined) => LegalOfficer | undefined,
+    authenticateAddress: (address: string, signer?: RawSigner) => Promise<LogionClient | undefined>,
+    getOfficer?: (address: string | undefined) => LegalOfficerClass | undefined,
     saveOfficer?: (legalOfficer: LegalOfficer) => Promise<void>,
     reconnect: () => void,
 }
@@ -101,7 +100,7 @@ interface Action {
     logout?: () => void;
     logionClient?: LogionClient;
     authenticate?: (address: string[]) => Promise<void>;
-    authenticateAddress?: (address: string) => Promise<Token | undefined>;
+    authenticateAddress?: (address: string) => Promise<LogionClient | undefined>;
     registeredLegalOfficers?: Set<string>;
     reconnect?: () => void;
 }
@@ -274,7 +273,7 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
 function buildClientHelpers(client: LogionClient, injectedAccounts: InjectedAccount[], legalOfficers: Set<string>): {
     axiosFactory: AxiosFactory,
     isCurrentAuthenticated: () => boolean,
-    getOfficer: (owner: string | undefined) => LegalOfficer | undefined,
+    getOfficer: (owner: string | undefined) => LegalOfficerClass | undefined,
     saveOfficer: (legalOfficer: LegalOfficer) => Promise<void>,
     accounts: Accounts,
 } {
@@ -452,13 +451,19 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
         });
     }, [ state.client, state.signer, state.injectedAccounts ]);
 
-    const authenticateAddressCallback = useCallback(async (address: string) => {
+    const authenticateAddressCallback = useCallback(async (address: string, signer?: RawSigner) => {
         if(!state.client || !state.signer) {
             return undefined;
         }
-        let client = await state.client.authenticate([ address ], state.signer);
-        return client.tokens.get(address)
-    }, [ state.client, state.signer ]);
+        let client = await state.client.authenticate([ address ], signer ? signer : state.signer);
+        client = client.withCurrentAddress(address);
+        dispatch({
+            type: 'RESET_CLIENT',
+            client,
+            registeredLegalOfficers: await buildLegalOfficersSet(client, state.injectedAccounts!),
+        });
+        return client;
+    }, [ state.client, state.signer, state.injectedAccounts ]);
 
     useEffect(() => {
         if(state.authenticate !== authenticateCallback) {

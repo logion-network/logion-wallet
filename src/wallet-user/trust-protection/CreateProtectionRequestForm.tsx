@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Row, Col } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { useForm } from 'react-hook-form';
-import { LegalOfficer } from "@logion/client";
+import { LegalOfficer, LegalOfficerClass } from "@logion/client";
 
 import Button from "../../common/Button";
 import { FullWidthPane } from "../../common/Dashboard";
@@ -41,7 +41,8 @@ export default function CreateProtectionRequestForm(props: Props) {
     const [ agree, setAgree ] = useState<boolean>(false);
 
     const submit = async (formValues: FormValues) => {
-        if(legalOfficer1 === null || legalOfficer2 === null
+        if((legalOfficer1 === null || !(legalOfficer1 instanceof LegalOfficerClass))
+            || (legalOfficer2 === null || !(legalOfficer2 instanceof LegalOfficerClass))
             || !agree
             || (props.isRecovery && addressToRecoverError !== "")) {
             return;

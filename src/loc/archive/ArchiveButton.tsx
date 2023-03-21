@@ -1,3 +1,4 @@
+import { LocRequestState } from "@logion/client";
 import Button from "../../common/Button";
 import "./ArchiveButton.css";
 import { useState } from "react";
@@ -5,8 +6,7 @@ import { useLocContext } from "../LocContext";
 import { FileInfo, openFiles } from "../../common/ViewFileButton";
 import { LocItem } from "../LocItem";
 import { AxiosInstance } from "axios";
-import { getFile, getJsonLoc } from "../FileModel";
-import { UUID } from "@logion/node-api";
+import { getJsonLoc } from "../FileModel";
 import Dialog from "../../common/Dialog";
 import Table, { EmptyTableMessage } from "../../common/Table";
 import Checkbox from "../../components/toggle/Checkbox";
@@ -17,7 +17,7 @@ interface TypedFileInfo extends FileInfo {
     type: string
 }
 
-function documentToTypedFileInfo(locId: UUID, locItem: LocItem): TypedFileInfo {
+function documentToTypedFileInfo(locItem: LocItem, locState: LocRequestState): TypedFileInfo {
     const name = locItem.name;
     if(!name) {
         throw new Error("Incomplete item");
@@ -28,10 +28,7 @@ function documentToTypedFileInfo(locId: UUID, locItem: LocItem): TypedFileInfo {
     }
     return {
         fileName: name,
-        downloader: (axios: AxiosInstance) => getFile(axios, {
-            locId: locId.toString(),
-            hash: value
-        }),
+        downloader: () => locState.getFile(value),
         type: "Document file"
     }
 }
@@ -40,10 +37,10 @@ export default function ArchiveButton() {
 
     type Status = 'Idle' | 'Selected' | 'Checked';
     const [ status, setStatus ] = useState<Status>('Idle');
-    const { locItems, loc: locData } = useLocContext();
+    const { locItems, loc: locData, locState } = useLocContext();
     const { axiosFactory } = useLogionChain();
 
-    if (!locData || !axiosFactory) {
+    if (!locData || !locState || !axiosFactory) {
         return null;
     }
 
@@ -57,7 +54,7 @@ export default function ArchiveButton() {
         locItems
             .filter(locItem => locItem.type === 'Document')
             .filter(locItem => locItem.name && locItem.value)
-            .map(locItem => documentToTypedFileInfo(locData.id, locItem)));
+            .map(locItem => documentToTypedFileInfo(locItem, locState)));
 
     return (
         <>

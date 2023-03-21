@@ -27,14 +27,14 @@ export interface LocItemsProps {
 
 export function LocItems(props: LocItemsProps) {
     const { locItems } = props;
-    const { mutateLocState, loc } = useLocContext();
+    const { mutateLocState, loc, locState } = useLocContext();
     const { accounts } = useLogionChain();
     const { width } = useResponsiveContext();
     const deleteMetadata = useDeleteMetadataCallback(mutateLocState);
     const deleteFile = useDeleteFileCallback(mutateLocState);
     const deleteLinkCallback = useDeleteLinkCallback(mutateLocState);
 
-    if(!loc) {
+    if(!loc || !locState) {
         return null;
     }
 
@@ -91,6 +91,7 @@ export function LocItems(props: LocItemsProps) {
             currentAddress: accounts?.current?.address,
             viewer: props.viewer,
             loc,
+            locState,
             renderActions,
             width,
         });

@@ -296,7 +296,6 @@ export default function Certificate() {
                                 walletType={ searchParams.get("wallet") }
                                 locId={ loc.data.id }
                                 item={ collectionItem! }
-                                owner={ loc.data.ownerAddress }
                                 setTokenForDownload={ setTokenForDownload }
                             />
                         </Col>

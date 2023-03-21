@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { CoinBalance, PrefixedNumber, NONE } from "@logion/node-api";
-import { LegalOfficer, ProtectionState, VaultState, VaultTransferRequest } from "@logion/client";
+import { LegalOfficerClass, ProtectionState, VaultState, VaultTransferRequest } from "@logion/client";
 
 import { useLogionChain } from "../../logion-chain";
 
@@ -46,7 +46,7 @@ export default function VaultRecoveryProcessTab() {
     const [ status, setStatus ] = useState<Status>(Status.IDLE);
     const [ requestSignAndSubmit, setRequestSignAndSubmit ] = useState<Call>();
     const [ requestFailed, setRequestFailed ] = useState<boolean>(false);
-    const [ candidates, setCandidates ] = useState<LegalOfficer[]>([]);
+    const [ candidates, setCandidates ] = useState<LegalOfficerClass[]>([]);
     const [ requestToCancel, setRequestToCancel ] = useState<VaultTransferRequest | null>(null);
     const [ cancelSignAndSubmit, setCancelSignAndSubmit ] = useState<Call>();
     const [ cancelFailed, setCancelFailed ] = useState(false);

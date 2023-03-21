@@ -1,5 +1,7 @@
+import { AxiosInstance } from "axios";
 import { CheckResultType } from "@logion/client/dist/Deliveries.js";
 import { DefaultSignAndSendStrategy } from "@logion/client/dist/Signer.js";
+import { MimeType } from "@logion/client/dist/Mime.js";
 
 import {
     LogionClient,
@@ -17,6 +19,7 @@ import {
     ReadOnlyLocState,
 } from '../LogionClientMock';
 import { isTokenCompatibleWith } from "@logion/client/dist/Token.js";
+import { LegalOfficerClass } from "@logion/client/dist/Types.js";
 
 export {
     LogionClient,
@@ -35,6 +38,15 @@ export {
     ClosedLoc,
     ReadOnlyLocState,
     isTokenCompatibleWith,
+    LegalOfficerClass,
 }
 
 export { MimeType } from "@logion/client/dist/Mime.js";
+
+export function downloadFile(axios: AxiosInstance, url: string) {
+    const data = axios.get(url, { responseType: "blob" });
+    return {
+        data,
+        mimeType: MimeType.from("image/jpeg"),
+    };
+}

@@ -31,9 +31,12 @@ exports[`renders 1`] = `
           legalOfficer2={null}
           legalOfficers={
             Array [
-              Object {
+              LegalOfficerClass {
                 "additionalDetails": "",
                 "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "axiosFactory": Object {
+                  "buildAxiosInstance": [MockFunction],
+                },
                 "logoUrl": "",
                 "name": "Patrick Gielen",
                 "node": "http://logion.patrick.com",
@@ -46,6 +49,7 @@ exports[`renders 1`] = `
                   "line2": "Rue Beckers 17",
                   "postalCode": "1040",
                 },
+                "token": undefined,
                 "userIdentity": Object {
                   "email": "patrick@logion.network",
                   "firstName": "Patrick",
@@ -53,9 +57,12 @@ exports[`renders 1`] = `
                   "phoneNumber": "+32 498 237 107",
                 },
               },
-              Object {
+              LegalOfficerClass {
                 "additionalDetails": "",
                 "address": "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty",
+                "axiosFactory": Object {
+                  "buildAxiosInstance": [MockFunction],
+                },
                 "logoUrl": "",
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
@@ -68,6 +75,7 @@ exports[`renders 1`] = `
                   "line2": "14, place Jules Ferry",
                   "postalCode": "69006",
                 },
+                "token": undefined,
                 "userIdentity": Object {
                   "email": "g.grain@adrastee-lyon.fr",
                   "firstName": "Patrick",
@@ -75,9 +83,12 @@ exports[`renders 1`] = `
                   "phoneNumber": "+33 4 78 52 87 56",
                 },
               },
-              Object {
+              LegalOfficerClass {
                 "additionalDetails": "",
                 "address": "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y",
+                "axiosFactory": Object {
+                  "buildAxiosInstance": [MockFunction],
+                },
                 "logoUrl": "",
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
@@ -90,6 +101,7 @@ exports[`renders 1`] = `
                   "line2": "7 rue Jean Francois Champollion Parc Comitec",
                   "postalCode": "18000",
                 },
+                "token": undefined,
                 "userIdentity": Object {
                   "email": "alain.barland@auxilia-conseils.com",
                   "firstName": "Patrick",
