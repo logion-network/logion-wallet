@@ -38,6 +38,7 @@ export interface LocItem {
     linkDetailsPath?: string,
     template: boolean,
     isSet?: boolean,
+    size?: bigint,
 }
 
 export enum PublishStatus {

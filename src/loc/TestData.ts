@@ -19,7 +19,7 @@ export function buildLocRequest(locId: UUID, loc: LegalOfficerCase): LocData {
             published: false,
             restrictedDelivery: false,
             contentType: "text/plain",
-            size: "42",
+            size: 42n,
         })),
         metadata: loc.metadata.map((locFile, index) => ({
             ...locFile,

@@ -321,7 +321,7 @@ function givenDraftItems() {
         published: false,
         restrictedDelivery: false,
         contentType: "text/plain",
-        size: "42",
+        size: 42n,
     })
     _locData.links.push({
         addedOn: "",
@@ -361,6 +361,7 @@ function ItemPublisher(props: ItemPublisherProps) {
                 hash: file.value!,
                 nature: file.name!,
                 submitter: file.submitter!,
+                size: file.size!,
                 callback,
                 signer: signer!,
             })));

@@ -25,6 +25,7 @@ export default function LocPublishPrivateFileButton(props: Props) {
                         hash: props.locItem.value,
                         nature: props.locItem.nature!,
                         submitter: props.locItem.submitter,
+                        size: props.locItem.size!,
                         signer: signer!,
                         callback,
                     });
