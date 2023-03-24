@@ -8,7 +8,7 @@ export type ProtectionRequestKind = 'RECOVERY' | 'PROTECTION_ONLY' | 'ANY';
 export interface FetchProtectionRequestSpecification {
     legalOfficerAddress?: string,
     requesterAddress?: string,
-    kind: ProtectionRequestKind,
+    kind?: ProtectionRequestKind,
     statuses?: ProtectionRequestStatus[],
 }
 
