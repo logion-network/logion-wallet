@@ -26,6 +26,7 @@ export interface SimpleItem {
 export interface FileItem extends SimpleItem {
     nature: string;
     hash: string;
+    size: bigint;
 }
 
 function createPublishedFileLocItem(parameters: FileItem): ItemAndRefreshFlag {
@@ -43,6 +44,7 @@ export function createDraftFileLocItem(parameters: FileItem, newItem: boolean): 
         status: 'DRAFT',
         newItem,
         template: false,
+        size: parameters.size,
     };
 }
 

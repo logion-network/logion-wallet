@@ -119,10 +119,11 @@ export async function publishFile(params: {
     hash: string,
     nature: string,
     submitter: string,
+    size: bigint,
     signer: Signer,
     callback: SignCallback,
 }): Promise<EditableRequest> {
-    const { locState, hash, nature, submitter, signer, callback } = params;
+    const { locState, hash, nature, submitter, size, signer, callback } = params;
 
     const currentLocState = getCurrent(locState);
     const { data, axios, api } = inspectState(currentLocState);
@@ -133,6 +134,7 @@ export async function publishFile(params: {
         hash,
         nature,
         submitter,
+        size,
     });
     await signer.signAndSend({
         signerId: data.ownerAddress,
