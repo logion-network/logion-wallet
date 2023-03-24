@@ -523,50 +523,28 @@ export function LegalOfficerContextProvider(props: Props) {
 
             (async function() {
                 const axios = axiosFactory(currentAddress);
-                const pendingProtectionRequests = await fetchProtectionRequests(axios, {
-                    legalOfficerAddress: currentAddress,
-                    statuses: ["PENDING"],
-                    kind: 'PROTECTION_ONLY',
-                });
-                const activatedProtectionRequests = await fetchProtectionRequests(axios, {
-                    legalOfficerAddress: currentAddress,
-                    statuses: ["ACTIVATED"],
-                    kind: 'ANY',
-                });
-                const protectionRequestsHistory = await fetchProtectionRequests(axios, {
-                    legalOfficerAddress: currentAddress,
-                    statuses: ["ACCEPTED", "REJECTED", "ACTIVATED", "CANCELLED", "REJECTED_CANCELLED", "ACCEPTED_CANCELLED"],
-                    kind: 'PROTECTION_ONLY',
-                });
-        
-                const pendingRecoveryRequests = await fetchProtectionRequests(axios, {
-                    legalOfficerAddress: currentAddress,
-                    statuses: ["PENDING"],
-                    kind: 'RECOVERY',
-                });
-                const recoveryRequestsHistory = await fetchProtectionRequests(axios, {
-                    legalOfficerAddress: currentAddress,
-                    statuses: ["ACCEPTED", "REJECTED", "ACTIVATED", "CANCELLED", "REJECTED_CANCELLED", "ACCEPTED_CANCELLED"],
-                    kind: 'RECOVERY',
-                });
 
-                const vaultSpecificationFragment = {
+                const allRequests = await fetchProtectionRequests(axios, {
                     legalOfficerAddress: currentAddress,
-                    statuses: []
-                }
+                });
+                const pendingProtectionRequests = allRequests.filter(request => ["PENDING"].includes(request.status) && !request.isRecovery);
+                const activatedProtectionRequests = allRequests.filter(request => ["ACTIVATED"].includes(request.status));
+                const pendingRecoveryRequests = allRequests.filter(request => ["PENDING"].includes(request.status) && request.isRecovery);
+                const protectionRequestsHistory = allRequests.filter(request =>
+                    ["ACCEPTED", "REJECTED", "ACTIVATED", "CANCELLED", "REJECTED_CANCELLED", "ACCEPTED_CANCELLED"].includes(request.status)
+                    && !request.isRecovery
+                );
+                const recoveryRequestsHistory = allRequests.filter(request =>
+                    ["ACCEPTED", "REJECTED", "ACTIVATED", "CANCELLED", "REJECTED_CANCELLED", "ACCEPTED_CANCELLED"].includes(request.status)
+                    && request.isRecovery
+                );
 
-                const vaultTransferRequestsResult = await new VaultApi(axios, currentAddress).getVaultTransferRequests({
-                    ...vaultSpecificationFragment,
-                    statuses: [ "PENDING" ]
-                });
-                const pendingVaultTransferRequests = vaultTransferRequestsResult.sort((a, b) => b.createdOn.localeCompare(a.createdOn));
-        
-                const vaultTransferRequestsHistoryResult = await new VaultApi(axios, currentAddress).getVaultTransferRequests({
-                    ...vaultSpecificationFragment,
-                    statuses: [ "CANCELLED", "REJECTED_CANCELLED", "REJECTED", "ACCEPTED" ]
-                });
-                const vaultTransferRequestsHistory = vaultTransferRequestsHistoryResult.sort((a, b) => b.createdOn.localeCompare(a.createdOn));
-        
+                const allVaultTransferRequestsResult = (await new VaultApi(axios, currentAddress).getVaultTransferRequests({
+                    legalOfficerAddress: currentAddress,
+                })).sort((a, b) => b.createdOn.localeCompare(a.createdOn));
+                const pendingVaultTransferRequests = allVaultTransferRequestsResult.filter(request => request.status === "PENDING");
+                const vaultTransferRequestsHistory = allVaultTransferRequestsResult.filter(request => [ "CANCELLED", "REJECTED_CANCELLED", "REJECTED", "ACCEPTED" ].includes(request.status));
+
                 const settings = await getSettings(axios, currentAddress);
 
                 dispatch({
