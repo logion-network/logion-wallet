@@ -48,10 +48,10 @@ export default function TokensRecordTable(props: Props) {
                             value: record.files[0].hash,
                             nature: record.description,
                             template: false,
+                            size: record.files[0].size,
                         }}
                         documentClaimHistory={ documentClaimHistory(viewer, loc, record, props.contributionMode) }
                         fileName={record.files[0].name}
-                        fileSize={record.files[0].size.toString()}
                         fileType={record.files[0].contentType}
                     />,
                 },

@@ -11,13 +11,13 @@ export interface Props {
     item: LocItem;
     documentClaimHistory?: string;
     fileName?: string;
-    fileSize?: string;
     fileType?: string;
 }
 
 export default function LocPrivateFileDetails(props: Props) {
     const { documentClaimHistory } = props;
     const navigate = useNavigate();
+    const fileSize = props.item.size === undefined || props.item.size === 0n ? "N/A" : props.item.size.toString();
 
     const leftPaneWidth = documentClaimHistory !== undefined ? "50%" : "100%";
     return (
@@ -30,10 +30,7 @@ export default function LocPrivateFileDetails(props: Props) {
                         props.fileName !== undefined &&
                         <LocItemDetail label="File name">{ props.fileName }</LocItemDetail>
                     }
-                    {
-                        props.fileSize !== undefined &&
-                        <LocItemDetail label="File size (bytes)">{ props.fileSize }</LocItemDetail>
-                    }
+                    <LocItemDetail label="File size (bytes)">{ fileSize }</LocItemDetail>
                     {
                         props.fileName !== undefined &&
                         <LocItemDetail label="File type">{ props.fileType }</LocItemDetail>
