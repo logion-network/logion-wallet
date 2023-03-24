@@ -1,5 +1,73 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`LocPrivateFileDetails renders 0-sized file 1`] = `
+<React.Fragment>
+  <Col
+    className="LocItemDetails"
+    style={
+      Object {
+        "width": "50%",
+      }
+    }
+  >
+    <div
+      className="frame"
+    >
+      <div
+        className="frame-title"
+      >
+        Document related data to be published
+      </div>
+      <LocItemDetail
+        label="Public Description"
+      >
+        File's nature
+      </LocItemDetail>
+      <LocItemDetail
+        label="File size (bytes)"
+      >
+        N/A
+      </LocItemDetail>
+      <LocItemDetail
+        copyButtonText="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
+        label="Submitter ID"
+      >
+        5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY
+      </LocItemDetail>
+      <LocItemDetail
+        copyButtonText="0xfb45e95061306e90fd154272ba3b4d67bb6d295feeccdc3a34572995f08e268a"
+        label="Document Hash"
+      >
+        0xfb45e95061306e90fd154272ba3b4d67bb6d295feeccdc3a34572995f08e268a
+      </LocItemDetail>
+    </div>
+  </Col>
+  <Col
+    className="LocItemDetails claim"
+    style={
+      Object {
+        "width": "50%",
+      }
+    }
+  >
+    <div>
+      <Button
+        onClick={[Function]}
+      >
+        <Icon
+          icon={
+            Object {
+              "id": "claim",
+            }
+          }
+        />
+         View document claim history
+      </Button>
+    </div>
+  </Col>
+</React.Fragment>
+`;
+
 exports[`LocPrivateFileDetails renders 1`] = `
 <React.Fragment>
   <Col
@@ -22,6 +90,11 @@ exports[`LocPrivateFileDetails renders 1`] = `
         label="Public Description"
       >
         File's nature
+      </LocItemDetail>
+      <LocItemDetail
+        label="File size (bytes)"
+      >
+        42
       </LocItemDetail>
       <LocItemDetail
         copyButtonText="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
