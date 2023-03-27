@@ -23,7 +23,7 @@ import { useUserLocContext } from "./UserLocContext";
 import { useLocContext } from "./LocContext";
 import { useLegalOfficerContext } from "src/legal-officer/LegalOfficerContext";
 import PagedTable, { getPage, Page } from "src/components/pagedtable/PagedTable";
-import { ActionCell, DateTimeCell } from "src/common/Table";
+import Table, { ActionCell, Column, DateTimeCell, EmptyTableMessage } from "src/common/Table";
 import ButtonGroup from "src/common/ButtonGroup";
 import { useNavigate } from "react-router-dom";
 import { dashboardCertificateRelativePath } from "src/RootPaths";
@@ -128,8 +128,8 @@ function CollectionLocItemChecker(props: LocalProps) {
             } else {
                 try {
                     const collectionItem = await collectionItemFunction(actualId);
+                    setItem(collectionItem);
                     if (collectionItem) {
-                        setItem(collectionItem);
                         setState('POSITIVE');
                     } else {
                         setState('NEGATIVE');
@@ -184,6 +184,66 @@ function CollectionLocItemChecker(props: LocalProps) {
         return null;
     }
 
+    const columns: Column<CollectionItem>[] = [
+        {
+            header: "Collection Item ID",
+            render: item => <CellWithCopyPaste content={ item.id } />,
+            align: "left",
+        },
+        {
+            header: "Timestamp",
+            render: item => <DateTimeCell dateTime={ item.addedOn } />,
+        },
+        {
+            header: "Certificate",
+            render: item => (
+                <ActionCell>
+                    <ButtonGroup
+                        narrow={ true }
+                    >
+                        <ViewCertificateButton url={ fullCollectionItemCertificate(collectionLoc.id, item.id) } />
+                        <CopyPasteButton value={ fullCollectionItemCertificate(collectionLoc.id, item.id) } tooltip="Copy certificate URL to clipboard" />
+                        <ViewQrCodeButton certificateUrl={ fullCollectionItemCertificate(collectionLoc.id, item.id) } />
+                    </ButtonGroup>
+                </ActionCell>
+            ),
+            width: width({
+                onSmallScreen: "100px",
+                otherwise: "300px",
+            }),
+        },
+        {
+            header: "",
+            render: item => (
+                <ActionCell>
+                    <ButtonGroup>
+                        <Button
+                            onClick={ () => navigate(dashboardCertificateRelativePath("Collection", collectionLoc.id, item.id, props.viewer)) }
+                        >
+                            View
+                        </Button>
+                        {
+                            (props.viewer === 'LegalOfficer' &&
+                                <StatementOfFactsButton
+                                    item={ item }
+                                />
+                            ) ||
+                            (props.viewer === 'User' &&
+                                <StatementOfFactsRequestButton
+                                    itemId={ item.id }
+                                />
+                            )
+                        }
+                    </ButtonGroup>
+                </ActionCell>
+            ),
+            width: width({
+                onSmallScreen: "360px",
+                otherwise: "400px",
+            }),
+        },
+    ];
+
     return (
         <PolkadotFrame className="CollectionLocItemChecker" colorTheme={ colorTheme }>
             <IconTextRow
@@ -237,73 +297,28 @@ function CollectionLocItemChecker(props: LocalProps) {
                 </>
                 }
             />
-            <PagedTable
-                fullSize={ collectionItems.length }
-                currentPage={ currentPage }
-                constrainedRowHeight={ false }
-                columns={[
-                    {
-                        header: "Collection Item ID",
-                        render: item => <CellWithCopyPaste content={ item.id } />,
-                        align: "left",
-                    },
-                    {
-                        header: "Timestamp",
-                        render: item => <DateTimeCell dateTime={ item.addedOn } />,
-                    },
-                    {
-                        header: "Certificate",
-                        render: item => (
-                            <ActionCell>
-                                <ButtonGroup
-                                    narrow={ true }
-                                >
-                                    <ViewCertificateButton url={ fullCollectionItemCertificate(collectionLoc.id, item.id) } />
-                                    <CopyPasteButton value={ fullCollectionItemCertificate(collectionLoc.id, item.id) } tooltip="Copy certificate URL to clipboard" />
-                                    <ViewQrCodeButton certificateUrl={ fullCollectionItemCertificate(collectionLoc.id, item.id) } />
-                                </ButtonGroup>
-                            </ActionCell>
-                        ),
-                        width: width({
-                            onSmallScreen: "100px",
-                            otherwise: "300px",
-                        }),
-                    },
-                    {
-                        header: "",
-                        render: item => (
-                            <ActionCell>
-                                <ButtonGroup>
-                                    <Button
-                                        onClick={ () => navigate(dashboardCertificateRelativePath("Collection", collectionLoc.id, item.id, props.viewer)) }
-                                    >
-                                        View
-                                    </Button>
-                                    {
-                                        (props.viewer === 'LegalOfficer' &&
-                                            <StatementOfFactsButton
-                                                item={ item }
-                                            />
-                                        ) ||
-                                        (props.viewer === 'User' &&
-                                            <StatementOfFactsRequestButton
-                                                itemId={ item.id }
-                                            />
-                                        )
-                                    }
-                                </ButtonGroup>
-                            </ActionCell>
-                        ),
-                        width: width({
-                            onSmallScreen: "360px",
-                            otherwise: "400px",
-                        }),
-                    },
-                ]}
-                goToPage={ setCurrentPageNumber }
-            />
+            {
+                collectionSize !== null && collectionSize !== undefined && collectionSize <= LARGE_COLLECTION_SIZE &&
+                <PagedTable
+                    fullSize={ collectionItems.length }
+                    currentPage={ currentPage }
+                    constrainedRowHeight={ false }
+                    columns={ columns }
+                    goToPage={ setCurrentPageNumber }
+                />
+            }
+            {
+                collectionSize !== null && collectionSize !== undefined && collectionSize > LARGE_COLLECTION_SIZE && item !== undefined &&
+                <Table
+                    columns={ columns }
+                    data={ [ item ] }
+                    renderEmpty={ () => <EmptyTableMessage>No item found</EmptyTableMessage> }
+                />
+            }
         </PolkadotFrame>)
 }
+
+const LARGE_COLLECTION_SIZE = 1000;
 
 interface CheckResultProps {
     state: CheckResult,
