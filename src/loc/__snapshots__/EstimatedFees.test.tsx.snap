@@ -1,0 +1,159 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EstimatedFees renders fees with storage 1`] = `
+<div
+  className="EstimatedFees"
+>
+  <h3>
+    Estimated fees (LGNT)
+  </h3>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          Blockchain record
+        </td>
+        <td>
+          <AmountFormat
+            amount={
+              PrefixedNumber {
+                "_prefix": Object {
+                  "symbol": "a",
+                  "tenExponent": -18,
+                },
+                "_scientificNumber": ScientificNumber {
+                  "_normalized": NormalizedNumber {
+                    "_decimalPart": "",
+                    "_integerPart": "42",
+                    "_negative": false,
+                    "_normalized": "42.",
+                  },
+                  "_tenExponent": -18,
+                },
+              }
+            }
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          File storage
+        </td>
+        <td>
+          <AmountFormat
+            amount={
+              PrefixedNumber {
+                "_prefix": Object {
+                  "symbol": "a",
+                  "tenExponent": -18,
+                },
+                "_scientificNumber": ScientificNumber {
+                  "_normalized": NormalizedNumber {
+                    "_decimalPart": "",
+                    "_integerPart": "32",
+                    "_negative": false,
+                    "_normalized": "32.",
+                  },
+                  "_tenExponent": -18,
+                },
+              }
+            }
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Total
+        </td>
+        <td>
+          <AmountFormat
+            amount={
+              PrefixedNumber {
+                "_prefix": Object {
+                  "symbol": "a",
+                  "tenExponent": -18,
+                },
+                "_scientificNumber": ScientificNumber {
+                  "_normalized": NormalizedNumber {
+                    "_decimalPart": "",
+                    "_integerPart": "74",
+                    "_negative": false,
+                    "_normalized": "74.",
+                  },
+                  "_tenExponent": -18,
+                },
+              }
+            }
+          />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
+
+exports[`EstimatedFees renders fees without storage 1`] = `
+<div
+  className="EstimatedFees"
+>
+  <h3>
+    Estimated fees (LGNT)
+  </h3>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          Blockchain record
+        </td>
+        <td>
+          <AmountFormat
+            amount={
+              PrefixedNumber {
+                "_prefix": Object {
+                  "symbol": "a",
+                  "tenExponent": -18,
+                },
+                "_scientificNumber": ScientificNumber {
+                  "_normalized": NormalizedNumber {
+                    "_decimalPart": "",
+                    "_integerPart": "42",
+                    "_negative": false,
+                    "_normalized": "42.",
+                  },
+                  "_tenExponent": -18,
+                },
+              }
+            }
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Total
+        </td>
+        <td>
+          <AmountFormat
+            amount={
+              PrefixedNumber {
+                "_prefix": Object {
+                  "symbol": "a",
+                  "tenExponent": -18,
+                },
+                "_scientificNumber": ScientificNumber {
+                  "_normalized": NormalizedNumber {
+                    "_decimalPart": "",
+                    "_integerPart": "42",
+                    "_negative": false,
+                    "_normalized": "42.",
+                  },
+                  "_tenExponent": -18,
+                },
+              }
+            }
+          />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;

@@ -2,6 +2,7 @@
 
 exports[`LocPublishPublicDataButton renders 1`] = `
 <LocPublishButton
+  feesEstimator={[Function]}
   itemType="Public Data"
   locItem={
     Object {

@@ -1,12 +1,14 @@
-
 jest.mock("./LocContext");
+jest.mock("src/logion-chain");
 
+import { UUID } from "@logion/node-api";
 import { LocItem } from "./LocItem";
 import { shallowRender } from "../tests";
 import LocPublishPrivateFileButton from "./LocPublishPrivateFileButton";
 
 describe("LocPublishPrivateFileButton", () => {
 
+    const locId = new UUID("62e3ea0e-eee5-4295-819e-ed01b55472f0");
     const locItem:LocItem = {
         name: "file-name",
         type: "Document",
@@ -20,7 +22,7 @@ describe("LocPublishPrivateFileButton", () => {
     }
 
     it("renders", () => {
-        const tree = shallowRender(<LocPublishPrivateFileButton locItem={ locItem } />)
+        const tree = shallowRender(<LocPublishPrivateFileButton locItem={ locItem } locId={ locId } />)
         expect(tree).toMatchSnapshot();
     })
 })

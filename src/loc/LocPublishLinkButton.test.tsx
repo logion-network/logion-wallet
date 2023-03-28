@@ -1,12 +1,14 @@
 jest.mock("./LocContext");
-import { UUID } from "@logion/node-api";
+jest.mock("src/logion-chain");
 
+import { UUID } from "@logion/node-api";
 import { LocItem } from "./LocItem";
 import { shallowRender } from "../tests";
 import LocPublishLinkButton from "./LocPublishLinkButton";
 
 describe("LocPublishLinkButton", () => {
 
+    const locId = new UUID("62e3ea0e-eee5-4295-819e-ed01b55472f0");
     const locItem:LocItem = {
         name: "link-name",
         type: "Linked LOC",
@@ -21,7 +23,7 @@ describe("LocPublishLinkButton", () => {
     }
 
     it("renders", () => {
-        const tree = shallowRender(<LocPublishLinkButton locItem={ locItem } />)
+        const tree = shallowRender(<LocPublishLinkButton locItem={ locItem } locId={ locId } />)
         expect(tree).toMatchSnapshot();
     })
 })
