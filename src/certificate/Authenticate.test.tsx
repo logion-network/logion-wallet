@@ -126,6 +126,10 @@ function mockForCheckSuccess(address: string) {
         isAuthenticatedTokenOwner: () => true,
     };
     clientMock.public = {
+        fees: {
+            estimateWithoutStorage: () => Promise.resolve({ inclusionFee: 42n, totalFee: 42n }),
+            estimateAddFile: () => Promise.resolve({ inclusionFee: 42n, storageFee: 32n, totalFee: 74n }),
+        },
         findCollectionLocItemById: () => item,
     };
     setClientMock(clientMock as any);
@@ -159,6 +163,10 @@ function mockForCheckFailure() {
         isAuthenticatedTokenOwner: () => false,
     };
     clientMock.public = {
+        fees: {
+            estimateWithoutStorage: () => Promise.resolve({ inclusionFee: 42n, totalFee: 42n }),
+            estimateAddFile: () => Promise.resolve({ inclusionFee: 42n, storageFee: 32n, totalFee: 74n }),
+        },
         findCollectionLocItemById: () => item,
     };
     setClientMock(clientMock as any);

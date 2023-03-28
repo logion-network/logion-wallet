@@ -61,7 +61,8 @@ export class LogionClient {
         fees: {
             estimateWithoutStorage: () => Promise.resolve({ inclusionFee: 42n, totalFee: 42n }),
             estimateAddFile: () => Promise.resolve({ inclusionFee: 42n, storageFee: 32n, totalFee: 74n }),
-        }
+        },
+        findCollectionLocItemById: () => { isAuthenticatedTokenOwner: () => true },
     };
     currentAddress = TEST_WALLET_USER;
 }
