@@ -1,12 +1,13 @@
 import { render, waitFor, screen } from "@testing-library/react";
 import { mockSubmittableResult } from "src/logion-chain/__mocks__/SignatureMock";
-
 import { clickByName } from "../tests";
 import LocPublishButton from "./LocPublishButton";
-
 import { LocItem } from "./LocItem";
+import { Fees } from "@logion/client";
 
 jest.mock("./LocContext");
+jest.unmock("@logion/client");
+jest.unmock("@logion/node-api");
 
 describe("LocPublishButton", () => {
 
@@ -32,11 +33,13 @@ describe("LocPublishButton", () => {
                 confirm();
                 return current;
             }}
+            feesEstimator={ async () => new Fees(42n) }
         />);
 
         // When publishing
         await clickByName(content => /publish/i.test(content));
         const dialog = screen.getByRole("dialog");
+        await waitFor(() => screen.getByText("Estimated fees (LGNT)"));
         await waitFor(() => screen.getByRole("button", { name: "Publish" }));
         await clickByName("Publish");
 

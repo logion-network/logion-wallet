@@ -1,4 +1,4 @@
-import { LocRequestState, LocData, LocsState, EditableRequest, MergedLink } from "@logion/client";
+import { LocRequestState, LocData, LocsState, EditableRequest, MergedLink, Fees } from "@logion/client";
 import { UUID, LocType } from "@logion/node-api"
 import { useCallback } from "react";
 import { CallCallback } from "src/ClientExtrinsicSubmitter";
@@ -58,6 +58,7 @@ export interface PublishProps {
     locItem: LocItem;
     itemType: 'Public Data' | 'Document' | 'Link';
     publishMutator: (current: LocRequestState, callback: CallCallback) => Promise<LocRequestState>;
+    feesEstimator: () => Promise<Fees>;
 }
 
 export function buildItemTableColumns(args: {
@@ -67,7 +68,7 @@ export function buildItemTableColumns(args: {
     currentAddress: string | undefined,
     contributionMode: ContributionMode | undefined,
     viewer: Viewer,
-    renderActions: (locItem: LocItem) => Child,
+    renderActions: (locItem: LocItem, locId: UUID) => Child,
 }): Column<LocItem>[] {
     const {
         loc,
@@ -136,7 +137,7 @@ export function buildItemTableColumns(args: {
             header: "",
             render: locItem => {
                 if (locItem.status === 'DRAFT') {
-                    return renderActions(locItem)
+                    return renderActions(locItem, loc.id)
                 } else {
                     return (
                         <StatusCell icon={ { id: 'published' } } text="Published" color={ POLKADOT } />)

@@ -57,7 +57,12 @@ export class LogionClient {
         return axiosMock;
     }
 
-    public = {};
+    public = {
+        fees: {
+            estimateWithoutStorage: () => Promise.resolve({ inclusionFee: 42n, totalFee: 42n }),
+            estimateAddFile: () => Promise.resolve({ inclusionFee: 42n, storageFee: 32n, totalFee: 74n }),
+        }
+    };
     currentAddress = TEST_WALLET_USER;
 }
 

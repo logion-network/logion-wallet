@@ -1,4 +1,5 @@
 import { EditableRequest } from "@logion/client";
+import { addMetadata, UUID } from "@logion/node-api";
 
 import { LocItem } from "./LocItem";
 import LocPublishButton from "./LocPublishButton";
@@ -6,11 +7,16 @@ import { publishMetadata } from "src/legal-officer/client";
 import { useLogionChain } from "src/logion-chain";
 
 export interface Props {
+    locId: UUID;
     locItem: LocItem;
 }
 
 export default function LocPublishPublicDataButton(props: Props) {
-    const { signer } = useLogionChain();
+    const { signer, client } = useLogionChain();
+
+    if(!client) {
+        return null;
+    }
 
     return (
         <LocPublishButton
@@ -35,6 +41,18 @@ export default function LocPublishPublicDataButton(props: Props) {
                     return current;
                 }
             }}
+            feesEstimator={ () => client.public.fees.estimateWithoutStorage({
+                origin: client.currentAddress || "",
+                submittable: addMetadata({
+                    api: client.nodeApi,
+                    locId: props.locId,
+                    item: {
+                        name: props.locItem.name || "",
+                        value: props.locItem.value || "",
+                        submitter: props.locItem.submitter || "",
+                    },
+                })
+            }) }
             itemType="Public Data"
         />
     )

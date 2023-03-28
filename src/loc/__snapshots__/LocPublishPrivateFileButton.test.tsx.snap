@@ -2,6 +2,7 @@
 
 exports[`LocPublishPrivateFileButton renders 1`] = `
 <LocPublishButton
+  feesEstimator={[Function]}
   itemType="Document"
   locItem={
     Object {

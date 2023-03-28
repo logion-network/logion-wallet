@@ -1,0 +1,14 @@
+.EstimatedFees table {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.EstimatedFees td:first-child {
+    font-weight: bold;
+    text-align: left;
+}
+
+.EstimatedFees td:nth-child(2) {
+    text-align: right;
+    width: 200px;
+}

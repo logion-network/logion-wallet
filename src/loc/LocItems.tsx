@@ -1,3 +1,4 @@
+import { UUID } from "@logion/node-api";
 import Table, { EmptyTableMessage, ActionCell, Column } from "../common/Table";
 import ButtonGroup from "../common/ButtonGroup";
 import Button from "../common/Button";
@@ -56,21 +57,21 @@ export function LocItems(props: LocItemsProps) {
         );
     }
 
-    function renderActions(locItem: LocItem): Child {
+    function renderActions(locItem: LocItem, locId: UUID): Child {
         return (
             <ActionCell>
                 { locItem.type === 'Data' && <ButtonGroup>
-                    { canPublish(props.viewer, loc!) && <LocPublishPublicDataButton locItem={ locItem } /> }
+                    { canPublish(props.viewer, loc!) && <LocPublishPublicDataButton locItem={ locItem } locId={ locId } /> }
                     { canDelete(accounts?.current?.address, locItem, props.viewer, loc!) &&
                         <DeleteButton locItem={ locItem } action={ deleteMetadata } /> }
                 </ButtonGroup> }
                 { locItem.type === 'Linked LOC' && <ButtonGroup>
-                    { canPublish(props.viewer, loc!) && <LocPublishLinkButton locItem={ locItem } /> }
+                    { canPublish(props.viewer, loc!) && <LocPublishLinkButton locItem={ locItem } locId={ locId } /> }
                     { canDelete(accounts?.current?.address, locItem, props.viewer, loc!) &&
                         <DeleteButton locItem={ locItem } action={ deleteLinkCallback } /> }
                 </ButtonGroup> }
                 { locItem.type === 'Document' && <ButtonGroup>
-                    { canPublish(props.viewer, loc!) && <LocPublishPrivateFileButton locItem={ locItem } /> }
+                    { canPublish(props.viewer, loc!) && <LocPublishPrivateFileButton locItem={ locItem } locId={ locId } /> }
                     { canDelete(accounts?.current?.address, locItem, props.viewer, loc!) &&
                         <DeleteButton locItem={ locItem } action={ deleteFile } /> }
                 </ButtonGroup> }

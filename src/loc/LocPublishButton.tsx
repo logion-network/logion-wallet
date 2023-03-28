@@ -1,3 +1,4 @@
+import { Fees } from "@logion/client";
 import Button from "../common/Button";
 import { useState, useEffect } from "react";
 import ProcessStep from "../legal-officer/ProcessStep";
@@ -6,11 +7,13 @@ import { PublishProps, PublishState, PublishStatus } from "./LocItem";
 import Icon from "../common/Icon";
 import { useLocContext } from "./LocContext";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
+import EstimatedFees from "./EstimatedFees";
 
 export default function LocPublishButton(props: PublishProps) {
     const [ publishState, setPublishState ] = useState<PublishState>({ status: PublishStatus.NONE });
     const [ call, setCall ] = useState<Call>();
     const { mutateLocState } = useLocContext();
+    const [ fees, setFees ] = useState<Fees | undefined | null>();
 
     useEffect(() => {
         if (publishState.status === PublishStatus.PUBLISH_PENDING) {
@@ -21,6 +24,15 @@ export default function LocPublishButton(props: PublishProps) {
             setCall(() => call);
         }
     }, [ props, publishState, setPublishState, mutateLocState ]);
+
+    useEffect(() => {
+        if(fees === undefined) {
+            setFees(null);
+            (async function() {
+                setFees(await props.feesEstimator());
+            })();
+        }
+    }, [ fees, props ]);
 
     return (
         <>
@@ -54,6 +66,9 @@ export default function LocPublishButton(props: PublishProps) {
                     <p>Warning: after processing and blockchain publication, these data will be definitely and publicly
                         available on the blockchain.</p>
                 </Alert>
+                <EstimatedFees
+                    fees={ fees }
+                />
             </ProcessStep>
             <ProcessStep
                 active={ publishState.status === PublishStatus.PUBLISHING }

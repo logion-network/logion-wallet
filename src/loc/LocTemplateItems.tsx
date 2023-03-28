@@ -1,3 +1,4 @@
+import { UUID } from "@logion/node-api";
 import { ReactNode, useCallback } from "react";
 import Button from "src/common/Button";
 import ButtonGroup from "src/common/ButtonGroup";
@@ -65,7 +66,7 @@ export default function LocTemplateItems(props: Props) {
         </div>
     );
 
-    function renderActions(item: LocItem) {
+    function renderActions(item: LocItem, locId: UUID) {
         const buttons: ReactNode[] = [];
         let key = 0;
         if(!loc) {
@@ -75,11 +76,11 @@ export default function LocTemplateItems(props: Props) {
         if(item.isSet) {
             if(canPublish(viewer, loc)) {
                 if(item.type === "Data") {
-                    buttons.push(<LocPublishPublicDataButton key={++key} locItem={ item } />);
+                    buttons.push(<LocPublishPublicDataButton key={++key} locItem={ item } locId={ locId } />);
                 } else if(item.type === "Document") {
-                    buttons.push(<LocPublishPrivateFileButton key={++key} locItem={ item } />);
+                    buttons.push(<LocPublishPrivateFileButton key={++key} locItem={ item } locId={ locId } />);
                 } else if(item.type === "Linked LOC") {
-                    buttons.push(<LocPublishLinkButton key={++key} locItem={ item } />);
+                    buttons.push(<LocPublishLinkButton key={++key} locItem={ item } locId={ locId } />);
                 }
             }
 
