@@ -249,10 +249,9 @@ function CollectionLocItemChecker(props: LocalProps) {
             <IconTextRow
                 icon={ <Icon icon={ { id: "polkadot_collection" } } width="45px" /> }
                 text={ <>
-                    <p className="text-title">Collection Item(s) recorded on logion blockchain</p>
-                    <p>The Collection LOC content listed above shall cover all related Collection Items created using the logion import
-                        tool and/or through the logion API by an external application approved between the Legal Officer and its client
-                        under a process validated by the Legal Officer of the present Collection LOC.</p>
+                    <p className="text-title">Collection Item(s) recorded within this LOC: { collectionSize ? collectionSize : "-" }</p>
+                    <p>All Collection Items created within this LOC - using the logion import tool and/or through the logion API by an
+                        external application - are governed by the public data and confidential documents recorded above.</p>
                     <p>To check if a Collection Item is covered by this Collection LOC and get its online public
                         certificate, just submit the related Collection Item ID in the input field below:</p>
                     <FormGroup
