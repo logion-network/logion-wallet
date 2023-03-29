@@ -1,4 +1,4 @@
-import { Fees } from "@logion/client";
+import { Fees } from "@logion/node-api";
 import { shallowRender } from "src/tests";
 import EstimatedFees from "./EstimatedFees";
 

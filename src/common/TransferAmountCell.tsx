@@ -53,7 +53,7 @@ export function transferBalance(address: string, transaction: Transaction): Pref
 }
 
 export function fees(address: string, transaction: Transaction): PrefixedNumber {
-    const amount = prefixedLogBalance(transaction.fee);
+    const amount = prefixedLogBalance(transaction.fees.total);
     if(transaction.from === address) {
         return amount;
     } else {

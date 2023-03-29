@@ -58,7 +58,10 @@ exports[`renders 1`] = `
                 Array [
                   Object {
                     "createdOn": "2021-07-28T12:30:00.000",
-                    "fee": "125000",
+                    "fees": Object {
+                      "inclusion": "125000",
+                      "total": "125000",
+                    },
                     "from": "from",
                     "id": "id",
                     "method": "method",

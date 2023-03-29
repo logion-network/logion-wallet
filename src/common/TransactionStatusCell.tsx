@@ -1,10 +1,12 @@
-import { Transaction } from "@logion/client/dist/TransactionClient.js";
+import { Transaction } from "@logion/client";
+import { Fees } from "@logion/node-api";
 
 import Icon from "./Icon";
 import Detail from "./Detail";
 import './TransactionStatusCell.css';
 import { Row, Col } from "./Grid";
 import Alert from "./Alert";
+import EstimatedFees from "src/loc/EstimatedFees";
 
 export interface StatusCellProps {
     transaction: Transaction
@@ -22,8 +24,11 @@ export function TransactionStatusCellDetails(props: StatusCellProps) {
     if (props.transaction.successful) {
         return (
             <>
-                <Col>
+                <Col style={{width: "50%"}}>
                     <Detail label="Description" value="This transaction has been executed." />
+                </Col>
+                <Col style={{width: "50%"}}>
+                    <Detail label="Fees (LGNT)" value={ <EstimatedFees fees={ new Fees(BigInt(props.transaction.fees.inclusion), props.transaction.fees.storage ? BigInt(props.transaction.fees.storage) : undefined) } hideTitle={ true } /> } />
                 </Col>
             </>
         );

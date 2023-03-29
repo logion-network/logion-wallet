@@ -145,7 +145,10 @@ export const DEFAULT_TRANSACTION: Transaction = {
     method: "method",
     transferValue: "420",
     tip: "0",
-    fee: "125000",
+    fees: {
+        inclusion: "125000",
+        total: "125000",
+    },
     reserved: "0",
     total: "125420",
     createdOn: "2021-07-28T12:30:00.000",

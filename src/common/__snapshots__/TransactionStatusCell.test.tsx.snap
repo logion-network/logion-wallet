@@ -69,29 +69,91 @@ exports[`renders status details of failed transaction 1`] = `
 `;
 
 exports[`renders status details of successful transaction 1`] = `
-<div
-  className="Col"
->
+Array [
   <div
-    className="Detail"
+    className="Col"
     style={
       Object {
-        "color": "#ffffff",
+        "width": "50%",
       }
     }
   >
     <div
-      className="label"
+      className="Detail"
+      style={
+        Object {
+          "color": "#ffffff",
+        }
+      }
     >
-      Description
+      <div
+        className="label"
+      >
+        Description
+      </div>
+      <div
+        className="value"
+      >
+        This transaction has been executed.
+      </div>
     </div>
+  </div>,
+  <div
+    className="Col"
+    style={
+      Object {
+        "width": "50%",
+      }
+    }
+  >
     <div
-      className="value"
+      className="Detail"
+      style={
+        Object {
+          "color": "#ffffff",
+        }
+      }
     >
-      This transaction has been executed.
+      <div
+        className="label"
+      >
+        Fees (LGNT)
+      </div>
+      <div
+        className="value"
+      >
+        <div
+          className="EstimatedFees"
+        >
+          <table>
+            <tbody>
+              <tr>
+                <td>
+                  Blockchain record
+                </td>
+                <td>
+                  <span>
+                    125.00 f
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Total
+                </td>
+                <td>
+                  <span>
+                    125.00 f
+                  </span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
+  </div>,
+]
 `;
 
 exports[`renders status of failed transaction 1`] = `

@@ -1,9 +1,9 @@
+import { Fees } from "@logion/node-api";
 import { render, waitFor, screen } from "@testing-library/react";
 import { mockSubmittableResult } from "src/logion-chain/__mocks__/SignatureMock";
 import { clickByName } from "../tests";
 import LocPublishButton from "./LocPublishButton";
 import { LocItem } from "./LocItem";
-import { Fees } from "@logion/client";
 
 jest.mock("./LocContext");
 jest.unmock("@logion/client");

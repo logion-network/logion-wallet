@@ -105,7 +105,7 @@ export function Content() {
                                         {
                                             header: "Paid fees",
                                             render: transaction => <AmountCell
-                                                amount={ prefixedLogBalance(transaction.fee) } />,
+                                                amount={ prefixedLogBalance(transaction.fees.total) } />,
                                             align: 'right',
                                             width: "120px",
                                         }
