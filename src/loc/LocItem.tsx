@@ -1,5 +1,5 @@
-import { LocRequestState, LocData, LocsState, EditableRequest, MergedLink, Fees } from "@logion/client";
-import { UUID, LocType } from "@logion/node-api"
+import { LocRequestState, LocData, LocsState, EditableRequest, MergedLink } from "@logion/client";
+import { UUID, LocType, Fees } from "@logion/node-api";
 import { useCallback } from "react";
 import { CallCallback } from "src/ClientExtrinsicSubmitter";
 import { POLKADOT } from "src/common/ColorTheme";

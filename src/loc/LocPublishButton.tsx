@@ -1,4 +1,4 @@
-import { Fees } from "@logion/client";
+import { Fees } from "@logion/node-api";
 import Button from "../common/Button";
 import { useState, useEffect } from "react";
 import ProcessStep from "../legal-officer/ProcessStep";
@@ -68,6 +68,7 @@ export default function LocPublishButton(props: PublishProps) {
                 </Alert>
                 <EstimatedFees
                     fees={ fees }
+                    centered={ true }
                 />
             </ProcessStep>
             <ProcessStep
