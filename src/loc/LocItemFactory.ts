@@ -160,6 +160,7 @@ export function createDocumentTemplateItem(templateItem: LocTemplateDocumentOrLi
         template: true,
         nature: templateItem.publicDescription,
         isSet: locItem !== undefined,
+        size: locItem?.size,
     }
 }
 
