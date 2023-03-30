@@ -7,6 +7,7 @@ export interface Props {
     fees: Fees | undefined | null;
     hideTitle?: boolean;
     centered?: boolean;
+    storageFeePaidBy?: string;
 }
 
 export default function EstimatedFees(props: Props) {
@@ -23,16 +24,19 @@ export default function EstimatedFees(props: Props) {
                     <tr>
                         <td>Blockchain record</td>
                         <td><AmountFormat amount={ new PrefixedNumber(props.fees.inclusionFee.toString(), LGNT_SMALLEST_UNIT).optimizeScale(3) } /></td>
+                        { props.storageFeePaidBy !== undefined && <td></td> }
                     </tr>
                     { props.fees.storageFee !== undefined && 
                         <tr>
                             <td>File storage</td>
                             <td><AmountFormat amount={ new PrefixedNumber(props.fees.storageFee.toString(), LGNT_SMALLEST_UNIT).optimizeScale(3) } /></td>
+                            { props.storageFeePaidBy !== undefined && <td>{ props.storageFeePaidBy }</td> }
                         </tr>
                     }
                     <tr>
                         <td>Total</td>
                         <td><AmountFormat amount={ new PrefixedNumber(props.fees.totalFee.toString(), LGNT_SMALLEST_UNIT).optimizeScale(3) } /></td>
+                        { props.storageFeePaidBy !== undefined && <td></td> }
                     </tr>
                 </tbody>
             </table>

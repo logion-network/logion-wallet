@@ -21,6 +21,7 @@ describe("LocPrivateFileDetails", () => {
         const element = shallowRender(<LocPrivateFileDetails
             item={ { ...item, size: 42n } }
             documentClaimHistory=""
+            storageFeePaidByRequester={ true }
         />);
         expect(element).toMatchSnapshot();
     });
@@ -29,6 +30,7 @@ describe("LocPrivateFileDetails", () => {
         const element = shallowRender(<LocPrivateFileDetails
             item={ { ...item, size: 0n } }
             documentClaimHistory=""
+            storageFeePaidByRequester={ true }
         />);
         expect(element).toMatchSnapshot();
     });

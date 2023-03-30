@@ -3,6 +3,7 @@ import LocItemDetail from "./LocItemDetail";
 
 import './LocItemDetails.css'
 import { LocItem } from "./LocItem";
+import EstimatedFees from "./EstimatedFees";
 
 export interface Props {
     item: LocItem
@@ -19,6 +20,19 @@ export default function LocPublicDataDetails(props: Props) {
                     { props.item.submitter || "-" }
                 </LocItemDetail>
                 <LocItemDetail label="Public data"><pre>{ props.item.value || "-" }</pre></LocItemDetail>
+                {
+                    props.item.fees &&
+                    <>
+                        <div className="separator"></div>
+                        <LocItemDetail label="Paid fees (LGNT)">
+                            <EstimatedFees
+                                fees={ props.item.fees }
+                                centered={ false }
+                                hideTitle={ true }
+                            />
+                        </LocItemDetail>
+                    </>
+                }
             </div>
         </Col>
     )

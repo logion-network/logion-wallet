@@ -1,5 +1,5 @@
-import { MergedMetadataItem, MergedFile, MergedLink } from "@logion/client";
-import { UUID } from "@logion/node-api";
+import { MergedMetadataItem, MergedFile, MergedLink, Fees as ClientFees } from "@logion/client";
+import { UUID, Fees } from "@logion/node-api";
 import { LinkData, LocItem } from "./LocItem";
 import { LocTemplateDocumentOrLink, LocTemplateMetadataItem } from "./Template";
 
@@ -27,10 +27,12 @@ export interface FileItem extends SimpleItem {
     nature: string;
     hash: string;
     size: bigint;
+    fees?: ClientFees;
+    storageFeePaidBy?: string;
 }
 
 function createPublishedFileLocItem(parameters: FileItem): ItemAndRefreshFlag {
-    return publish(createDraftFileLocItem(parameters, false), parameters.addedOn || null)
+    return publish(createDraftFileLocItem(parameters, false), parameters.addedOn || null, parameters.fees, parameters.storageFeePaidBy)
 }
 
 export function createDraftFileLocItem(parameters: FileItem, newItem: boolean): LocItem {
@@ -66,7 +68,7 @@ export interface CreateLocMetadataItemParameters {
 }
 
 function createPublishedMetadataLocItem(parameters: MergedMetadataItem): ItemAndRefreshFlag {
-    return publish(createDraftMetadataLocItem(parameters, false), parameters.addedOn || null)
+    return publish(createDraftMetadataLocItem(parameters, false), parameters.addedOn || null, parameters.fees)
 }
 
 export function createDraftMetadataLocItem(metadataItem: MetadataItem, newItem: boolean): LocItem {
@@ -88,6 +90,7 @@ export interface SimpleLink {
     nature: string;
     addedOn?: string;
     published: boolean;
+    fees?: ClientFees;
 }
 
 export interface CreateLocLinkedLocItemParameters {
@@ -135,9 +138,18 @@ export function createDraftLinkedLocItem(parameters: CreateLocLinkedLocItemParam
     };
 }
 
-function publish(locItem: LocItem, timestamp: string | null): ItemAndRefreshFlag {
-    const publishedLocItem: LocItem = { ...locItem, status: 'PUBLISHED', timestamp };
-    return { locItem: publishedLocItem, refreshNeeded: !locItem.timestamp };
+function publish(locItem: LocItem, timestamp: string | null, fees?: ClientFees, storageFeePaidBy?: string): ItemAndRefreshFlag {
+    const publishedLocItem: LocItem = {
+        ...locItem,
+        status: 'PUBLISHED',
+        timestamp,
+        fees: toFeesClass(fees),
+        storageFeePaidBy,
+    };
+    return {
+        locItem: publishedLocItem,
+        refreshNeeded: !locItem.timestamp
+    };
 }
 
 interface Timestamp {
@@ -145,7 +157,7 @@ interface Timestamp {
 }
 
 function createPublishedLinkedLocItem(parameters: CreateLocLinkedLocItemParameters & Timestamp): ItemAndRefreshFlag {
-    return publish(createDraftLinkedLocItem(parameters, false), parameters.timestamp);
+    return publish(createDraftLinkedLocItem(parameters, false), parameters.timestamp, parameters.link.fees);
 }
 
 export function createDocumentTemplateItem(templateItem: LocTemplateDocumentOrLink, locItem?: MergedFile): LocItem {
@@ -161,6 +173,19 @@ export function createDocumentTemplateItem(templateItem: LocTemplateDocumentOrLi
         nature: templateItem.publicDescription,
         isSet: locItem !== undefined,
         size: locItem?.size,
+        fees: toFeesClass(locItem?.fees),
+        storageFeePaidBy: locItem?.storageFeePaidBy,
+    }
+}
+
+function toFeesClass(fees: ClientFees | undefined): Fees | undefined {
+    if(fees) {
+        return new Fees(
+            BigInt(fees.inclusion),
+            fees.storage ? BigInt(fees.storage) : undefined,
+        );
+    } else {
+        return undefined;
     }
 }
 
@@ -176,6 +201,7 @@ export function createMetadataTemplateItem(templateItem: LocTemplateMetadataItem
         type: "Data",
         template: true,
         isSet: locItem !== undefined,
+        fees: toFeesClass(locItem?.fees),
     }
 }
 
@@ -198,5 +224,6 @@ export function createLinkTemplateItem(
         isSet: locItem !== undefined,
         linkDetailsPath: linkData?.linkDetailsPath,
         target: linkData?.linkedLoc.id,
+        fees: toFeesClass(locItem?.fees),
     }
 }

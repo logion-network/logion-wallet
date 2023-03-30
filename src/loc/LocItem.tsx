@@ -39,6 +39,8 @@ export interface LocItem {
     template: boolean,
     isSet?: boolean,
     size?: bigint,
+    fees?: Fees,
+    storageFeePaidBy?: string;
 }
 
 export enum PublishStatus {
@@ -156,7 +158,14 @@ function renderDetails(loc: LocData | undefined, locItem: LocItem, viewer: Viewe
     return (
         <>
             { locItem.type === 'Data' && <LocPublicDataDetails item={ locItem } /> }
-            { locItem.type === 'Document' && <LocPrivateFileDetails item={ locItem } documentClaimHistory={ loc?.locType === "Collection" && locItem.value && !locItem.template ? documentClaimHistory(viewer, loc, locItem.value) : undefined} /> }
+            {
+                locItem.type === 'Document' &&
+                <LocPrivateFileDetails
+                    item={ locItem }
+                    documentClaimHistory={ loc?.locType === "Collection" && locItem.value && !locItem.template ? documentClaimHistory(viewer, loc, locItem.value) : undefined }
+                    storageFeePaidByRequester={ loc?.requesterLocId === undefined }
+                />
+            }
             { locItem.type === 'Linked LOC' && <LocLinkDetails item={ locItem } /> }
         </>
     )
