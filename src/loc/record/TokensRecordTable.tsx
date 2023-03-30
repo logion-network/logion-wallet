@@ -53,6 +53,7 @@ export default function TokensRecordTable(props: Props) {
                         documentClaimHistory={ documentClaimHistory(viewer, loc, record, props.contributionMode) }
                         fileName={record.files[0].name}
                         fileType={record.files[0].contentType}
+                        storageFeePaidByRequester={ false }
                     />,
                 },
                 {
