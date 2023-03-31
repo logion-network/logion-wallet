@@ -50,7 +50,8 @@ export default function LocPrivateFileDetails(props: Props) {
                                     fees={ props.item.fees }
                                     centered={ false }
                                     hideTitle={ true }
-                                    storageFeePaidBy={ props.storageFeePaidByRequester ? "paid by requester" : "paid by owner" }
+                                    inclusionFeePaidBy="paid by Legal Officer"
+                                    storageFeePaidBy={ props.storageFeePaidByRequester ? "paid by requester" : "paid by Legal Officer" }
                                 />
                             </LocItemDetail>
                         </>
