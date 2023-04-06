@@ -7,27 +7,26 @@ import { FullWidthPane } from '../common/Dashboard';
 import Icon from '../common/Icon';
 import Frame from '../common/Frame';
 import Loader from '../common/Loader';
-import Table, { ActionCell, Cell, DateCell, DateTimeCell, EmptyTableMessage } from '../common/Table';
+import Table, { DateCell, EmptyTableMessage } from '../common/Table';
 import TransferAmountCell, { transferBalance } from '../common/TransferAmountCell';
 import AmountCell from '../common/AmountCell';
 import Reading from '../common/Reading';
 import Button from '../common/Button';
-import LegalOfficerName from '../common/LegalOfficerNameCell';
-import LocStatusCell from '../common/LocStatusCell';
-import ButtonGroup from '../common/ButtonGroup';
 import { TransactionStatusCell } from "../common/TransactionStatusCell";
 import NetworkWarning from '../common/NetworkWarning';
-import { useResponsiveContext } from '../common/Responsive';
 import { useLogionChain } from '../logion-chain';
 
-import { SETTINGS_PATH, WALLET_PATH, dataLocDetailsPath, locRequestsPath } from './UserRouter';
+import { SETTINGS_PATH, WALLET_PATH } from './UserRouter';
 
 import './Home.css';
 import TransactionType from 'src/common/TransactionType';
 import { useUserContext } from "./UserContext";
-
-const MAX_OPEN_LOCS = 3;
-const MAX_PENDING_LOCS = 3;
+import Shortcut from 'src/components/shortcuts/Shortcut';
+import Shortcuts from 'src/components/shortcuts/Shortcuts';
+import IdentityLocCreation from './IdentityLocCreation';
+import LocCreation from './transaction-protection/LocCreation';
+import { useMemo } from 'react';
+import { COLLECTION_ART_NFT_TEMPLATE_ID, COLLECTION_REAL_ESTATE_TEMPLATE_ID } from 'src/loc/Template';
 
 export default function Account() {
     const { colorTheme } = useCommonContext();
@@ -53,7 +52,11 @@ export function Content() {
     const { balanceState, nodesDown } = useCommonContext();
     const { locsState } = useUserContext();
     const navigate = useNavigate();
-    const { width } = useResponsiveContext();
+
+    const legalOfficersWithValidIdentityLoc = useMemo(
+        () => (locsState && !locsState.discarded) ? locsState.legalOfficersWithValidIdentityLoc : undefined,
+        [ locsState ]
+    );
 
     if (!balanceState || !(accounts?.current?.address) || locsState === undefined) {
         return <Loader />;
@@ -133,100 +136,44 @@ export function Content() {
                         </Row>
                     </Frame>
 
-                    <Frame
-                        className="transactions"
-                        title="Last open Transaction LOC"
-                    >
-                        <Button
-                            onClick={ () => navigate(locRequestsPath('Transaction')) }
-                            slim={ true }
-                            className="my-transactions"
-                        >
-                            <Icon icon={ { id: "loc" } } /> Go to my transactions
-                        </Button>
-                        <Table
-                            columns={ [
-                                {
-                                    "header": "Legal Officer",
-                                    render: request => <LegalOfficerName address={ request.ownerAddress } />,
-                                    align: 'left',
-                                },
-                                {
-                                    "header": "Description",
-                                    render: request => <Cell content={ request.description }
-                                                             overflowing
-                                                             tooltipId='open-loc-description-tooltip' />,
-                                    align: 'left',
-                                },
-                                {
-                                    header: "Status",
-                                    render: request => <LocStatusCell status={ request.status } />,
-                                    width: "140px",
-                                },
-                                {
-                                    "header": "Creation date",
-                                    render: request => <DateTimeCell dateTime={ request.createdOn || null } />,
-                                    width: width({
-                                        onSmallScreen: "150px",
-                                        otherwise: "200px"
-                                    }),
-                                    align: 'center',
-                                },
-                                {
-                                    header: "Action",
-                                    render: request =>
-                                        <ActionCell>
-                                            <ButtonGroup>
-                                                <Button
-                                                    onClick={ () => navigate(dataLocDetailsPath(request.locType, request.id.toString())) }>View</Button>
-                                            </ButtonGroup>
-                                        </ActionCell>
-                                    ,
-                                    width: width({
-                                        onSmallScreen: "100px",
-                                        otherwise: "200px"
-                                    }),
-                                    align: 'center',
-                                },
-                            ] }
-                            data={ locsState.openLocs['Transaction'].map(locState => locState.data()).slice(0, MAX_OPEN_LOCS) }
-                            renderEmpty={ () => <EmptyTableMessage>No open LOC yet</EmptyTableMessage> }
-                        />
-                    </Frame>
-
-                    <Frame
-                        className="transactions"
-                        title="Last Transaction LOC requests"
-                    >
-                        <Table
-                            columns={ [
-                                {
-                                    header: "Legal officer",
-                                    render: request => <LegalOfficerName address={ request.ownerAddress } />,
-                                    align: 'left',
-                                },
-                                {
-                                    "header": "Description",
-                                    render: request => <Cell content={ request.description } overflowing
-                                                             tooltipId='loc-request-description-tooltip' />,
-                                    align: 'left',
-                                },
-                                {
-                                    header: "Status",
-                                    render: request => <LocStatusCell status={ request.status } />,
-                                    width: "140px",
-                                },
-                                {
-                                    header: "Creation date",
-                                    render: request => <DateTimeCell dateTime={ request.createdOn || null } />,
-                                    width: '200px',
-                                    align: 'center',
-                                }
-                            ] }
-                            data={ locsState.pendingRequests['Transaction'].map(locsState => locsState.data()).slice(0, MAX_PENDING_LOCS) }
-                            renderEmpty={ () => <EmptyTableMessage>No requested LOC yet</EmptyTableMessage> }
-                        />
-                    </Frame>
+                    <div className="shortcuts">
+                        <Frame>
+                            <Shortcuts
+                                description={ <span>What shall logion <strong>protect</strong> for you?</span> }
+                            >
+                                <IdentityLocCreation
+                                    renderButton={onClick => <Shortcut
+                                        onClick={ onClick }
+                                        iconId="shortcut_identity"
+                                        text={ <span>Identity<br/><span style={{ display: "inline-block" }}></span></span> }
+                                    />}
+                                />
+                                <LocCreation
+                                    locType='Collection'
+                                    templateId={ COLLECTION_REAL_ESTATE_TEMPLATE_ID }
+                                    renderButton={ onClick => <Shortcut
+                                        onClick={ onClick }
+                                        iconId="shortcut_realestate"
+                                        text={ <span>Real Estate<br/> Tokenization</span> }
+                                        disabled={ legalOfficersWithValidIdentityLoc?.length === 0 }
+                                    /> }
+                                />
+                                <LocCreation
+                                    locType='Collection'
+                                    templateId={ COLLECTION_ART_NFT_TEMPLATE_ID }
+                                    renderButton={ onClick => <Shortcut
+                                        onClick={ onClick }
+                                        iconId="shortcut_art"
+                                        text={ <span>Art<br/> Tokenization</span> }
+                                        disabled={ legalOfficersWithValidIdentityLoc?.length === 0 }
+                                    /> }
+                                />
+                            </Shortcuts>
+                        </Frame>
+                        <div className="shortcuts-character-container">
+                            <Icon icon={ { id: "shortcuts-character" } }/>
+                        </div>
+                    </div>
                 </Col>
                 <Col
                     md={ 2 }

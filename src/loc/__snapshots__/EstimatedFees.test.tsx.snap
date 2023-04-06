@@ -23,10 +23,10 @@ exports[`EstimatedFees renders fees with storage 1`] = `
                 },
                 "_scientificNumber": ScientificNumber {
                   "_normalized": NormalizedNumber {
-                    "_decimalPart": "0000000000000000042",
+                    "_decimalPart": "000000000000000042",
                     "_integerPart": "",
                     "_negative": false,
-                    "_normalized": ".0000000000000000042",
+                    "_normalized": ".000000000000000042",
                   },
                   "_tenExponent": 0,
                 },
@@ -50,10 +50,10 @@ exports[`EstimatedFees renders fees with storage 1`] = `
                 },
                 "_scientificNumber": ScientificNumber {
                   "_normalized": NormalizedNumber {
-                    "_decimalPart": "0000000000000000032",
+                    "_decimalPart": "000000000000000032",
                     "_integerPart": "",
                     "_negative": false,
-                    "_normalized": ".0000000000000000032",
+                    "_normalized": ".000000000000000032",
                   },
                   "_tenExponent": 0,
                 },
@@ -77,10 +77,10 @@ exports[`EstimatedFees renders fees with storage 1`] = `
                 },
                 "_scientificNumber": ScientificNumber {
                   "_normalized": NormalizedNumber {
-                    "_decimalPart": "0000000000000000074",
+                    "_decimalPart": "000000000000000074",
                     "_integerPart": "",
                     "_negative": false,
-                    "_normalized": ".0000000000000000074",
+                    "_normalized": ".000000000000000074",
                   },
                   "_tenExponent": 0,
                 },
@@ -118,10 +118,10 @@ exports[`EstimatedFees renders fees without storage 1`] = `
                 },
                 "_scientificNumber": ScientificNumber {
                   "_normalized": NormalizedNumber {
-                    "_decimalPart": "0000000000000000042",
+                    "_decimalPart": "000000000000000042",
                     "_integerPart": "",
                     "_negative": false,
-                    "_normalized": ".0000000000000000042",
+                    "_normalized": ".000000000000000042",
                   },
                   "_tenExponent": 0,
                 },
@@ -145,10 +145,10 @@ exports[`EstimatedFees renders fees without storage 1`] = `
                 },
                 "_scientificNumber": ScientificNumber {
                   "_normalized": NormalizedNumber {
-                    "_decimalPart": "0000000000000000042",
+                    "_decimalPart": "000000000000000042",
                     "_integerPart": "",
                     "_negative": false,
-                    "_normalized": ".0000000000000000042",
+                    "_normalized": ".000000000000000042",
                   },
                   "_tenExponent": 0,
                 },

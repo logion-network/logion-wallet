@@ -7,6 +7,7 @@ import Button from '../common/Button';
 
 export interface Props {
     onSelect?: () => void;
+    renderButton?: (onClick: () => void) => React.ReactNode;
 }
 
 export default function IdentityLocCreation(props: Props) {
@@ -45,7 +46,14 @@ export default function IdentityLocCreation(props: Props) {
 
     return (
         <>
-            <Button onClick={ () => setRequestLoc(true) }>Request an Identity Case</Button>
+            {
+                props.renderButton === undefined &&
+                <Button onClick={ () => setRequestLoc(true) }>Request an Identity Case</Button>
+            }
+            {
+                props.renderButton !== undefined &&
+                props.renderButton(() => setRequestLoc(true))
+            }
             { requestLoc && selectedTemplateId === undefined &&
                 <LocTemplateChooser
                     show={ requestLoc && selectedTemplateId === undefined }

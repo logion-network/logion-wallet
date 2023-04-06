@@ -1,0 +1,16 @@
+.Shortcut .shortcut-text {
+    margin-top: 10px;
+}
+
+.Shortcut .Button.shortcut-btn {
+    display: block;
+    width: 200px;
+    height: 200px;
+}
+
+@media (max-width: 1410px) {
+    .Shortcut .Button.shortcut-btn {
+        width: 160px;
+        height: 160px;
+    }
+}
