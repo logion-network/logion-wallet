@@ -33,6 +33,9 @@ export const CUSTOM_LOC_TEMPLATE = {
     links: [],
 };
 
+export const COLLECTION_ART_NFT_TEMPLATE_ID = "art_nft";
+export const COLLECTION_REAL_ESTATE_TEMPLATE_ID = "real_estate";
+
 export const TEMPLATES: Record<LocType, LocTemplate[]> = {
     Identity: [
         {
@@ -99,7 +102,7 @@ export const TEMPLATES: Record<LocType, LocTemplate[]> = {
     ],
     Collection: [
         {
-            id: "art_nft",
+            id: COLLECTION_ART_NFT_TEMPLATE_ID,
             name: "Art NFT",
             icon: {
                 id: "art_nft",
@@ -130,7 +133,7 @@ export const TEMPLATES: Record<LocType, LocTemplate[]> = {
             ]
         },
         {
-            id: "real_estate",
+            id: COLLECTION_REAL_ESTATE_TEMPLATE_ID,
             name: "Real Estate Tokenization",
             icon: {
                 id: "real_estate",

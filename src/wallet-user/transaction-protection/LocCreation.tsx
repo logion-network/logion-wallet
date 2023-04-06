@@ -20,7 +20,9 @@ import IdentityLocCreation from '../IdentityLocCreation';
 
 export interface Props {
     locType: LocType;
-    requestButtonLabel: string;
+    requestButtonLabel?: string;
+    renderButton?: (onClick: () => void) => React.ReactNode;
+    templateId?: string;
 }
 
 export default function LocCreation(props: Props) {
@@ -46,11 +48,11 @@ export default function LocCreation(props: Props) {
     );
 
     useEffect(() => {
-        if(currentLocType !== props.locType) {
+        if(currentLocType !== props.locType || (props.templateId && selectedTemplateId !== props.templateId)) {
             setCurrentLocType(props.locType);
-            setSelectedTemplateId(autoSelectTemplate(props.locType))
+            setSelectedTemplateId(props.templateId || autoSelectTemplate(props.locType));
         }
-    }, [ currentLocType, props.locType ]);
+    }, [ currentLocType, selectedTemplateId, props.locType, props.templateId ]);
 
     const clear = useCallback(() => {
         reset();
@@ -99,7 +101,14 @@ export default function LocCreation(props: Props) {
 
     return (
         <>
-            <Button onClick={ () => setRequestLoc(true) }>{ requestButtonLabel }</Button>
+            {
+                props.renderButton === undefined &&
+                <Button onClick={ () => setRequestLoc(true) }>{ requestButtonLabel }</Button>
+            }
+            {
+                props.renderButton !== undefined &&
+                props.renderButton(() => setRequestLoc(true))
+            }
             { legalOfficersWithValidIdentityLoc?.length === 0 &&
                 <Dialog
                     className="LocCreation"

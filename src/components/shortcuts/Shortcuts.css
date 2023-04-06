@@ -1,0 +1,47 @@
+.Shortcuts {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.Shortcuts .shortcuts-description {
+    font-size: 1.2rem;
+    margin-top: 30px;
+    width: 180px;
+    height: 180px;
+    flex-shrink: 0;
+}
+
+.Shortcuts .shortcuts-buttons-area {
+    display: flex;
+    flex-grow: 1;
+    justify-content: center;
+}
+
+.Shortcuts .shortcuts-buttons-container {
+    display: flex;
+}
+
+.Shortcuts .shortcuts-buttons-container .Shortcut:nth-child(n+1) {
+    padding-left: 20px;
+}
+
+@media (max-width: 1410px) {
+    .Shortcuts .shortcuts-description {
+        width: 160px;
+        height: 160px;
+    }
+}
+
+@media (max-width: 1282px) {
+    .Shortcuts {
+        flex-direction: row;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 1245px) {
+    .Shortcuts .shortcuts-description {
+        height: auto;
+        padding-bottom: 30px;
+    }
+}

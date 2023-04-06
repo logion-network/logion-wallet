@@ -1,6 +1,6 @@
 .UserHome .character-container img {
-    position: fixed;
-    right: 10px;
+    position: absolute;
+    right: 0;
     bottom: 0;
 }
 
@@ -18,19 +18,21 @@
     display: block;
 }
 
-.UserHome .transactions {
+.UserHome .shortcuts {
+    position: relative;
     margin-top: 30px;
+    padding-bottom: 284px;
 }
 
-.UserHome .my-transactions {
+.UserHome .shortcuts-character-container {
     position: absolute;
-    top: 25px;
-    right: 25px;
+    bottom: -30px;
+    left: 40px;
 }
 
-@media (max-width: 1350px) {
-    .UserHome .character-container img {
-        width: 150px;
+@media (max-width: 1221px) {
+    .UserHome .shortcuts-character-container {
+        left: 20px;
     }
 }
 
@@ -38,4 +40,18 @@
     .UserHome .reading-container .Reading {
         margin-top: 0;
     }
+}
+
+@media (max-width: 1350px) {
+    .UserHome .character-container img {
+        width: 150px;
+    }
+
+    .UserHome .shortcuts {
+        padding-bottom: 160px;
+    }
+
+    .UserHome .shortcuts-character-container img {
+        height: 300px;
+    }    
 }
