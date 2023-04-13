@@ -8,6 +8,7 @@ import { clickByName, typeByLabel } from "../tests";
 import { TEST_WALLET_USER } from "../wallet-user/TestData";
 
 import LocCreationDialog from "./LocCreationDialog";
+import { setAuthenticatedUser } from "src/common/__mocks__/ModelMock";
 
 jest.mock("../logion-chain/Signature");
 jest.mock("../common/CommonContext");
@@ -17,6 +18,10 @@ jest.mock("../legal-officer/LegalOfficerContext");
 jest.mock("../logion-chain");
 
 describe("LocCreationDialog", () => {
+
+    beforeAll(() => {
+        setAuthenticatedUser(TEST_WALLET_USER);
+    });
   
     it("create Polkadot Identity LOC with user identity", async () => createsWithUserIdentity('Identity', TEST_WALLET_USER.address, undefined));
     it("create Logion Identity LOC with user identity", async () => createsWithUserIdentity('Identity', undefined, undefined));

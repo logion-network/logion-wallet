@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { LocRequest } from '@logion/client';
-import { UUID, createLogionIdentityLoc, createLogionTransactionLoc, createPolkadotIdentityLoc, createPolkadotTransactionLoc } from '@logion/node-api';
+import { UUID, createLogionIdentityLoc, createLogionTransactionLoc, createPolkadotIdentityLoc, createOtherIdentityLoc, createPolkadotTransactionLoc } from '@logion/node-api';
 
 import { useLogionChain } from '../logion-chain';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../ExtrinsicSubmitter';
@@ -57,10 +57,10 @@ export default function LocCreationSteps(props: Props) {
                         submittable: createPolkadotTransactionLoc({
                             api: api!,
                             locId: new UUID(requestToCreate!.id),
-                            requester: requestToCreate!.requesterAddress!,
+                            requester: requestToCreate!.requesterAddress!.address,
                         })
                     });
-                } else if(requestToCreate!.requesterAddress && requestToCreate!.locType === 'Identity') {
+                } else if(requestToCreate!.requesterAddress && requestToCreate!.requesterAddress.type === "Polkadot" && requestToCreate!.locType === 'Identity') {
                     signAndSubmit = (setResult, setError) => signAndSend({
                         signerId: accounts!.current!.accountId.address,
                         callback: setResult,
@@ -68,7 +68,18 @@ export default function LocCreationSteps(props: Props) {
                         submittable: createPolkadotIdentityLoc({
                             api: api!,
                             locId: new UUID(requestToCreate!.id),
-                            requester: requestToCreate!.requesterAddress!,
+                            requester: requestToCreate!.requesterAddress!.address,
+                        })
+                    });
+                } else if(requestToCreate!.requesterAddress && requestToCreate!.requesterAddress.type === "Ethereum" && requestToCreate!.locType === 'Identity') {
+                    signAndSubmit = (setResult, setError) => signAndSend({
+                        signerId: accounts!.current!.accountId.address,
+                        callback: setResult,
+                        errorCallback: setError,
+                        submittable: createOtherIdentityLoc({
+                            api: api!,
+                            locId: new UUID(requestToCreate!.id),
+                            requester: requestToCreate!.requesterAddress!.toOtherAccountId(),
                         })
                     });
                 } else if(requestToCreate!.requesterIdentityLoc && requestToCreate!.locType === 'Transaction') {
@@ -93,6 +104,7 @@ export default function LocCreationSteps(props: Props) {
                         })
                     });
                 } else {
+                    console.log(requestToCreate)
                     throw new Error("Unexpected LOC request state");
                 }
                 setSignAndSubmit(() => signAndSubmit);
