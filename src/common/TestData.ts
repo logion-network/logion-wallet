@@ -5,9 +5,8 @@ import { Coin, CoinBalance, SYMBOL, PrefixedNumber, ATTO } from '@logion/node-ap
 
 import { ColorTheme, rgbaToHex } from './ColorTheme';
 
-export const DEFAULT_LEGAL_OFFICER = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"; // Alice
-export const ANOTHER_LEGAL_OFFICER = "5FHneW46xGXgs5mUiveU4sbTyGBzmstUspZC92UhjJM694ty"; // Bob
-export const A_THIRD_LEGAL_OFFICER = "5FLSigC9HGRKVhB9FiEo4Y3koPsNmBmLJbpXg2mp1hXcS59Y"; // Charlie
+import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER, A_THIRD_LEGAL_OFFICER } from "../__mocks__/@logion/node-api/Mocks";
+export { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER, A_THIRD_LEGAL_OFFICER };
 
 export const DEFAULT_IDENTITY: UserIdentity = {
     firstName: "John",
@@ -169,7 +168,7 @@ export const DEFAULT_FAILED_TRANSACTION:Transaction = {
 
 export const PATRICK: LegalOfficer = {
     name: "Patrick Gielen",
-    address: DEFAULT_LEGAL_OFFICER,
+    address: DEFAULT_LEGAL_OFFICER.address,
     additionalDetails: "",
     userIdentity: {
         firstName: "Patrick",
@@ -192,7 +191,7 @@ export const PATRICK: LegalOfficer = {
 
 export const GUILLAUME: LegalOfficer = {
     name: "Guillaume Grain",
-    address: ANOTHER_LEGAL_OFFICER,
+    address: ANOTHER_LEGAL_OFFICER.address,
     additionalDetails: "",
     userIdentity: {
         firstName: "Patrick",
@@ -215,7 +214,7 @@ export const GUILLAUME: LegalOfficer = {
 
 export const ALAIN: LegalOfficer = {
     name: "Alain Barland",
-    address: A_THIRD_LEGAL_OFFICER,
+    address: A_THIRD_LEGAL_OFFICER.address,
     additionalDetails: "",
     userIdentity: {
         firstName: "Patrick",

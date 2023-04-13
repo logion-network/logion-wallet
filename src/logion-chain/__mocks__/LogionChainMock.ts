@@ -100,7 +100,7 @@ export let selectAddress = jest.fn();
 
 export const DEFAULT_USER_ACCOUNT: Account = {
     name: "name",
-    address: TEST_WALLET_USER,
+    accountId: TEST_WALLET_USER,
     isLegalOfficer: false,
     token: {
         value: "token",
@@ -110,7 +110,7 @@ export const DEFAULT_USER_ACCOUNT: Account = {
 
 export const DEFAULT_LEGAL_OFFICER_ACCOUNT: Account = {
     name: "name",
-    address: DEFAULT_LEGAL_OFFICER,
+    accountId: DEFAULT_LEGAL_OFFICER,
     isLegalOfficer: true,
     token: {
         value: "token",
@@ -185,7 +185,7 @@ export function useLogionChain() {
             authenticateAddress,
             signer,
             backendConfig: {
-                [DEFAULT_LEGAL_OFFICER]: {
+                [DEFAULT_LEGAL_OFFICER.address]: {
                     iDenfy: false,
                 }
             }

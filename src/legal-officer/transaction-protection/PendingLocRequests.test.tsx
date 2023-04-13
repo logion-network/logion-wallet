@@ -9,6 +9,7 @@ import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../../logion-c
 import { setPendingLocRequests } from "../__mocks__/LegalOfficerContextMock";
 
 import PendingLocRequests from './PendingLocRequests';
+import { mockValidPolkadotAccountId } from "../../__mocks__/@logion/node-api/Mocks";
 
 describe("PendingLocRequests", () => {
 
@@ -27,7 +28,7 @@ describe("PendingLocRequests", () => {
                 data: () => ({
                     id: new UUID(REQUEST_ID),
                     ownerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-                    requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+                    requesterAddress: mockValidPolkadotAccountId("5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"),
                     status: "REQUESTED"
                 } as LocData)
             } as PendingRequest

@@ -171,7 +171,7 @@ export function LocDetailsTabContent(props: ContentProps) {
                         let linkData: LinkData | undefined;
                         if(link) {
                             templateLinks.add(link.nature);
-                            linkData = getLinkData(accounts?.current?.address, locState.locsState(), link, detailsPath);
+                            linkData = getLinkData(accounts?.current?.accountId.address, locState.locsState(), link, detailsPath);
                         }
                         items.push(createLinkTemplateItem(loc.ownerAddress, linkTemplate, link, linkData));
                     }

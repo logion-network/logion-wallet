@@ -79,9 +79,9 @@ export class AccountTokens {
 
     addresses = [ TEST_WALLET_USER ];
 
-    get(address: string) {
+    get(account: any) {
         return ({
-            value: `some-token-value-for-${address}`,
+            value: `some-token-value-for-${account.address}`,
             expirationDateTime: DateTime.now().plus({hours: 1})
         });
     }

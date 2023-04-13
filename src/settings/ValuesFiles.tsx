@@ -20,7 +20,7 @@ export function ValuesFiles() {
     const [ newSettings, setNewSettings ] = useState<Record<string, string>>({});
     const [ uploading, setUploading ] = useState<Record<string, boolean>>({});
 
-    const legalOfficer = accounts?.current?.address;
+    const legalOfficer = accounts?.current?.accountId.address;
     const fileSelectedCallback = useCallback(async (file: File, fileId: LoFileId) => {
         setUploading({
             ...uploading,

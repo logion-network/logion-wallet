@@ -14,14 +14,14 @@ describe("Model", () => {
         const requestId = "0e16421a-2550-4be5-a6a8-1ab2239b7dc4";
         await rejectProtectionRequest(axios, {
             requestId,
-            legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
+            legalOfficerAddress: DEFAULT_LEGAL_OFFICER.address,
             rejectReason: "Because"
         });
 
         expect(axios.post).toBeCalledWith(
             `/api/protection-request/${requestId}/reject`,
             expect.objectContaining({
-                legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
+                legalOfficerAddress: DEFAULT_LEGAL_OFFICER.address,
                 rejectReason: "Because",
             })
         )

@@ -8,7 +8,7 @@ import { setContextMock } from '../logion-chain/__mocks__/LogionChainMock';
 test('renders', () => {
     setContextMock({
         injectedAccounts: [
-            mockAccount(DEFAULT_LEGAL_OFFICER, "Account name")
+            mockAccount(DEFAULT_LEGAL_OFFICER.address, "Account name")
         ]
     });
     const tree = shallowRender(<Main />);

@@ -51,7 +51,7 @@ export default function LocCreationSteps(props: Props) {
                 let signAndSubmit: SignAndSubmit;
                 if(requestToCreate!.requesterAddress && requestToCreate!.locType === 'Transaction') {
                     signAndSubmit = (setResult, setError) => signAndSend({
-                        signerId: accounts!.current!.address,
+                        signerId: accounts!.current!.accountId.address,
                         callback: setResult,
                         errorCallback: setError,
                         submittable: createPolkadotTransactionLoc({
@@ -62,7 +62,7 @@ export default function LocCreationSteps(props: Props) {
                     });
                 } else if(requestToCreate!.requesterAddress && requestToCreate!.locType === 'Identity') {
                     signAndSubmit = (setResult, setError) => signAndSend({
-                        signerId: accounts!.current!.address,
+                        signerId: accounts!.current!.accountId.address,
                         callback: setResult,
                         errorCallback: setError,
                         submittable: createPolkadotIdentityLoc({
@@ -73,7 +73,7 @@ export default function LocCreationSteps(props: Props) {
                     });
                 } else if(requestToCreate!.requesterIdentityLoc && requestToCreate!.locType === 'Transaction') {
                     signAndSubmit = (setResult, setError) => signAndSend({
-                        signerId: accounts!.current!.address,
+                        signerId: accounts!.current!.accountId.address,
                         callback: setResult,
                         errorCallback: setError,
                         submittable: createLogionTransactionLoc({
@@ -84,7 +84,7 @@ export default function LocCreationSteps(props: Props) {
                     });
                 } else if(!requestToCreate!.requesterAddress && !requestToCreate!.requesterIdentityLoc && requestToCreate!.locType === 'Identity') {
                     signAndSubmit = (setResult, setError) => signAndSend({
-                        signerId: accounts!.current!.address,
+                        signerId: accounts!.current!.accountId.address,
                         callback: setResult,
                         errorCallback: setError,
                         submittable: createLogionIdentityLoc({

@@ -17,7 +17,7 @@ import {
     ClosedCollectionLoc,
     OpenLoc, VoidedCollectionLoc, VoidedLoc
 } from "@logion/client";
-import { LocType } from "@logion/node-api";
+import { LocType, ValidAccountId } from "@logion/node-api";
 
 export let createTokenRequest = () => null;
 
@@ -43,7 +43,10 @@ export const DEFAULT_SHARED_STATE: SharedState = {
     networkState: {} as NetworkState<LegalOfficerEndpoint>,
     nodeApi: api,
     tokens: {} as AccountTokens,
-    currentAddress: TEST_WALLET_USER,
+    currentAddress: {
+        address: TEST_WALLET_USER,
+        type: "Polkadot"
+    } as unknown as ValidAccountId,
 }
 
 export let protectionState: ProtectionState | undefined = {} as NoProtection;

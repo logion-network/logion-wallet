@@ -176,7 +176,7 @@ export function LocContextProvider(props: Props) {
         for (let i = 0; i < loc.links.length; ++i) {
             const item = loc.links[i];
 
-            const linkData = getLinkData(accounts?.current?.address, locState.locsState(), item, props.detailsPath);
+            const linkData = getLinkData(accounts?.current?.accountId.address, locState.locsState(), item, props.detailsPath);
             if (linkData) {
                 const result = createLinkItem({
                     link: item,

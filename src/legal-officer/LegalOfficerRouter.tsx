@@ -58,11 +58,11 @@ export default function LegalOfficerRouter() {
     const { nodesDown, availableLegalOfficers, balanceState } = useCommonContext();
     const { missingSettings } = useLegalOfficerContext();
 
-    if(availableLegalOfficers === undefined || !(accounts?.current?.address)) {
+    if(availableLegalOfficers === undefined || !(accounts?.current?.accountId)) {
         return null;
     }
 
-    const currentLegalOfficerUnavailable = availableLegalOfficers.find(node => node.address === accounts?.current?.address) === undefined;
+    const currentLegalOfficerUnavailable = availableLegalOfficers.find(node => node.address === accounts?.current?.accountId.address) === undefined;
     if(nodesDown.length > 0 && currentLegalOfficerUnavailable) {
         return (
             <FullWidthPane
@@ -93,10 +93,10 @@ export default function LegalOfficerRouter() {
                 settingsPath={ SETTINGS_PATH }
                 balances={ balanceState?.balances || [] }
                 transactions={ balanceState?.transactions || [] }
-                address={ accounts.current.address }
+                address={ accounts.current.accountId.address }
             />} />
             <Route path={ TRANSACTIONS_RELATIVE_PATH } element={ <Transactions
-                    address={ accounts!.current!.address }
+                    address={ accounts!.current!.accountId.address }
                     backPath={ WALLET_PATH }
                     balances={ balanceState?.balances || [] }
                     transactions={ balanceState?.transactions || [] }

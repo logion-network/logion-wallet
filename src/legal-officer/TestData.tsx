@@ -8,8 +8,8 @@ export const PENDING_PROTECTION_REQUESTS: ProtectionRequest[] = [
     {
         id: "1",
         requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-        legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
-        otherLegalOfficerAddress: ANOTHER_LEGAL_OFFICER,
+        legalOfficerAddress: DEFAULT_LEGAL_OFFICER.address,
+        otherLegalOfficerAddress: ANOTHER_LEGAL_OFFICER.address,
         decision: {
             rejectReason: null,
             decisionOn: null,
@@ -38,8 +38,8 @@ export const PROTECTION_REQUESTS_HISTORY: ProtectionRequest[] = [
     {
         id: "1",
         requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-        legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
-        otherLegalOfficerAddress: ANOTHER_LEGAL_OFFICER,
+        legalOfficerAddress: DEFAULT_LEGAL_OFFICER.address,
+        otherLegalOfficerAddress: ANOTHER_LEGAL_OFFICER.address,
         decision: {
                 rejectReason: null,
                 decisionOn: toIsoString(DateTime.fromISO('2021-06-10T11:40:00.000', {zone: "utc"})),
@@ -69,8 +69,8 @@ export const RECOVERY_REQUESTS_HISTORY: ProtectionRequest[] = [
     {
         id: "1",
         requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-        legalOfficerAddress: DEFAULT_LEGAL_OFFICER,
-        otherLegalOfficerAddress: ANOTHER_LEGAL_OFFICER,
+        legalOfficerAddress: DEFAULT_LEGAL_OFFICER.address,
+        otherLegalOfficerAddress: ANOTHER_LEGAL_OFFICER.address,
         decision: {
             rejectReason: null,
             decisionOn: toIsoString(DateTime.fromISO('2021-06-10T11:40:00.000', {zone: "utc"})),

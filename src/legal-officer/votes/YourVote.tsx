@@ -18,8 +18,8 @@ export default function YourVote(props: Props) {
     const [ call, setCall ] = useState<Call>();
 
     const yourVoteResult = useMemo(() => {
-        if(accounts?.current?.address) {
-            const currentAddress = accounts?.current?.address;
+        if(accounts?.current?.accountId.address) {
+            const currentAddress = accounts?.current?.accountId.address;
             return props.vote.ballots[currentAddress];
         }
     }, [ props.vote, accounts ]);

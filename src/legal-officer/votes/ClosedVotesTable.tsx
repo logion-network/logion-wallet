@@ -74,7 +74,7 @@ export default function ClosedVotesTable(props: Props) {
 }
 
 function yourVoteIcon(vote: Vote, accounts: Accounts | null): Children {
-    const currentAddress = accounts?.current?.address;
+    const currentAddress = accounts?.current?.accountId.address;
     const result = vote.ballots[currentAddress || ""];
     if(result === "Yes") {
         return <Icon icon={{id:"ok"}}/>;

@@ -72,12 +72,12 @@ export default function AccountAddress(props: Props) {
                       placement="bottom"
                       delay={ 500 }
                       overlay={
-                        <Tooltip id={`tooltip-${props.account.address}`}>
-                          { props.account.address }
+                        <Tooltip id={`tooltip-${props.account.accountId.toKey()}`}>
+                          { props.account.accountId.address }
                         </Tooltip>
                       }
                     >
-                      <span>{ props.account.address }</span>
+                      <span>{ props.account.accountId.address }</span>
                     </OverlayTrigger>
                 </div>
             </div>

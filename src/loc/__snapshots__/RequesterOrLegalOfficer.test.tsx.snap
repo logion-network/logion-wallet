@@ -80,7 +80,7 @@ exports[`RequesterOrLegalOfficer renders polkadot requester for LO 1`] = `
         delay={500}
         overlay={
           <Tooltip
-            id="5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
+            id="Polkadot:5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY"
             placement="right"
           >
             5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY

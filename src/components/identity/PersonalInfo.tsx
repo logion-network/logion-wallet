@@ -17,7 +17,7 @@ export function PersonalInfo(props: { personalAndStatusInfo: PersonalAndStatusIn
     const padding = "/";
     return (
         <div className="PersonalInfo">
-            <p className="title">Identity data (not publicly available) submitted by the following account address: <strong>{ requesterAddress || padding }</strong></p>
+            <p className="title">Identity data (not publicly available) submitted by the following account address: <strong>{ requesterAddress?.address || padding }</strong></p>
             <Row>
                 <Col>
                     <LegalEntity

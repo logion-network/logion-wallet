@@ -113,9 +113,9 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
 
     useEffect(() => {
         if (getOfficer !== undefined
-            && accounts?.current?.address !== undefined
-            && (!legalOfficer || accounts.current.address !== legalOfficer.address)) {
-            const polkadotAddress = accounts.current.address;
+            && accounts?.current?.accountId !== undefined
+            && (!legalOfficer || accounts.current.accountId.address !== legalOfficer.address)) {
+            const polkadotAddress = accounts.current.accountId.address;
             const legalOfficer = getOfficer(polkadotAddress);
             setLegalOfficer(legalOfficer);
         }
@@ -174,7 +174,7 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
             && sofParams.locId !== locData.id.toDecimalString()
             && (tokensRecords !== undefined && tokensRecords !== null)
             && tokensRecordFileDeliveries) {
-            const requester = locData.requesterAddress ? locData.requesterAddress : locData.requesterLocId?.toDecimalString() || "";
+            const requester = locData.requesterAddress ? locData.requesterAddress.address : locData.requesterLocId?.toDecimalString() || "";
             setSofParams({
                 ...PLACEHOLDERS,
                 locId: locData.id.toDecimalString(),

@@ -18,19 +18,19 @@ jest.mock("../logion-chain");
 
 describe("LocCreationDialog", () => {
   
-    it("create Polkadot Identity LOC with user identity", async () => createsWithUserIdentity('Identity', TEST_WALLET_USER, undefined));
+    it("create Polkadot Identity LOC with user identity", async () => createsWithUserIdentity('Identity', TEST_WALLET_USER.address, undefined));
     it("create Logion Identity LOC with user identity", async () => createsWithUserIdentity('Identity', undefined, undefined));
-    it("create Polkadot Transaction LOC with user identity", async () => createsWithUserIdentity('Transaction', TEST_WALLET_USER, undefined));
+    it("create Polkadot Transaction LOC with user identity", async () => createsWithUserIdentity('Transaction', TEST_WALLET_USER.address, undefined));
     it("create Logion Transaction LOC with user identity", async () => createsWithUserIdentity('Transaction', undefined, "aed4c6e4-979e-48ad-be6e-4bd39fb94762"));
 
-    it("create Polkadot Identity LOC without user identity", async () => createsWithoutUserIdentity('Identity', TEST_WALLET_USER, undefined));
+    it("create Polkadot Identity LOC without user identity", async () => createsWithoutUserIdentity('Identity', TEST_WALLET_USER.address, undefined));
     it("create Logion Identity LOC without user identity", async () => createsWithoutUserIdentity('Identity', undefined, undefined));
-    it("create Polkadot Transaction LOC without user identity", async () => createsWithoutUserIdentity('Transaction', TEST_WALLET_USER, undefined));
+    it("create Polkadot Transaction LOC without user identity", async () => createsWithoutUserIdentity('Transaction', TEST_WALLET_USER.address, undefined));
     it("create Logion Transaction LOC without user identity", async () => createsWithoutUserIdentity('Transaction', undefined, "aed4c6e4-979e-48ad-be6e-4bd39fb94762"));
 
-    it("fails creating Polkadot Identity LOC with missing user identity", async () => failsWithoutUserIdentity('Identity', TEST_WALLET_USER, undefined));
+    it("fails creating Polkadot Identity LOC with missing user identity", async () => failsWithoutUserIdentity('Identity', TEST_WALLET_USER.address, undefined));
     it("fails creating Logion Identity LOC with missing user identity", async () => failsWithoutUserIdentity('Identity', undefined, undefined));
-    it("fails creating Polkadot Transaction LOC with missing user identity", async () => failsWithoutUserIdentity('Transaction', TEST_WALLET_USER, undefined));
+    it("fails creating Polkadot Transaction LOC with missing user identity", async () => failsWithoutUserIdentity('Transaction', TEST_WALLET_USER.address, undefined));
     it("fails creating Logion Transaction LOC with missing user identity", async () => failsWithoutUserIdentity('Transaction', undefined, "aed4c6e4-979e-48ad-be6e-4bd39fb94762"));
 })
 

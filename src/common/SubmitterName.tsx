@@ -36,7 +36,7 @@ export default function SubmitterName(props: Props) {
                 <div>
                     { format(identity, submitter) }
                     {
-                        submitter && submitter !== loc.requesterAddress &&
+                        submitter && submitter !== loc.requesterAddress?.address &&
                         <VTPBadge />
                     }
                 </div>
@@ -47,7 +47,7 @@ export default function SubmitterName(props: Props) {
 }
 
 function getIdentity(submitter: string | undefined, loc: LocData): Identity | undefined {
-    if(submitter === loc.requesterAddress) {
+    if(submitter === loc.requesterAddress?.address) {
         return loc.userIdentity;
     } else if(submitter) {
         return findVTP(loc, submitter);

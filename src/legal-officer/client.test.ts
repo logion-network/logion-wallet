@@ -4,6 +4,7 @@ import { AxiosInstance } from "axios";
 import { DEFAULT_LEGAL_OFFICER } from "src/common/TestData";
 import { ApiPromise } from "src/__mocks__/PolkadotApiMock";
 import { addLink, getVerifiedThirdPartySelections, requestVote, VerifiedThirdPartyWithSelect } from "./client";
+import { mockValidPolkadotAccountId } from "src/__mocks__/@logion/node-api/Mocks";
 
 describe("Legal Officer client", () => {
 
@@ -84,7 +85,7 @@ describe("Legal Officer client", () => {
         const locState = {
             data: () => ({
                 id: locId,
-                requesterAddress: REQUESTER.address,
+                requesterAddress: mockValidPolkadotAccountId(REQUESTER.address),
                 issuers: [
                     {
                         firstName: SELECTED.firstName,

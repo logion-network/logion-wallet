@@ -19,7 +19,7 @@ describe("YourVote", () => {
 
     it("renders result if voted yes", () => {
         const vote = buildVote({
-            [TEST_WALLET_USER]: "Yes",
+            [TEST_WALLET_USER.address]: "Yes",
         });
         const result = shallowRender(<YourVote vote={vote}/>);
         expect(result).toMatchSnapshot();
@@ -27,7 +27,7 @@ describe("YourVote", () => {
 
     it("renders result if voted no", () => {
         const vote = buildVote({
-            [TEST_WALLET_USER]: "No",
+            [TEST_WALLET_USER.address]: "No",
         });
         const result = shallowRender(<YourVote vote={vote}/>);
         expect(result).toMatchSnapshot();

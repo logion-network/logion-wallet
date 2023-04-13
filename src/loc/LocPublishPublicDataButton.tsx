@@ -42,7 +42,7 @@ export default function LocPublishPublicDataButton(props: Props) {
                 }
             }}
             feesEstimator={ () => client.public.fees.estimateWithoutStorage({
-                origin: client.currentAddress || "",
+                origin: client.currentAddress?.address || "",
                 submittable: addMetadata({
                     api: client.nodeApi,
                     locId: props.locId,

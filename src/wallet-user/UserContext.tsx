@@ -278,11 +278,11 @@ export function UserContextProvider(props: Props) {
 
     const refreshRequests = useCallback((clearBeforeRefresh: boolean) => {
         if(client !== null) {
-            const currentAddress = accounts!.current!.address;
-            const forceStateFetch = currentAddress !== contextValue.dataAddress;
+            const currentAddress = accounts!.current!.accountId;
+            const forceStateFetch = currentAddress.toKey() !== contextValue.dataAddress;
             dispatch({
                 type: "FETCH_IN_PROGRESS",
-                dataAddress: currentAddress,
+                dataAddress: currentAddress.toKey(),
                 clearBeforeRefresh
             });
 
@@ -312,7 +312,7 @@ export function UserContextProvider(props: Props) {
 
                 dispatch({
                     type: "SET_DATA",
-                    dataAddress: currentAddress,
+                    dataAddress: currentAddress.toKey(),
                     protectionState,
                     vaultState,
                     recoveredVaultState,
@@ -328,8 +328,8 @@ export function UserContextProvider(props: Props) {
                 && client!.isTokenValid(DateTime.now())
                 && accounts !== null
                 && accounts.current !== undefined
-                && contextValue.dataAddress !== accounts.current.address
-                && contextValue.fetchForAddress !== accounts.current.address
+                && contextValue.dataAddress !== accounts.current.accountId.toKey()
+                && contextValue.fetchForAddress !== accounts.current.accountId.toKey()
                 && nodesUp.length > 0) {
             refreshRequests(true);
         }

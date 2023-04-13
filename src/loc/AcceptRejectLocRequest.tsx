@@ -40,7 +40,7 @@ export default function AcceptRejectLocRequest(props: Props) {
     const handleClose = () => setRequestToReject(null);
 
     const rejectAndCloseModal = async () => {
-        await rejectLocRequest(axiosFactory(accounts!.current!.address)!, {
+        await rejectLocRequest(axiosFactory(accounts!.current!.accountId.address)!, {
             requestId: requestToReject!,
             rejectReason: reason!,
         });

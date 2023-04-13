@@ -63,7 +63,7 @@ const TOKEN_FOR_DOWNLOAD: Token = {
 
 const assetProps = {
     locId,
-    owner: DEFAULT_LEGAL_OFFICER,
+    owner: DEFAULT_LEGAL_OFFICER.address,
     item,
     file: claimedAsset,
 };
@@ -76,7 +76,7 @@ const claimedCollectionFile: ClaimedFile = {
 
 const collectionFileProps = {
     locId,
-    owner: DEFAULT_LEGAL_OFFICER,
+    owner: DEFAULT_LEGAL_OFFICER.address,
     item,
     file: claimedCollectionFile,
 };

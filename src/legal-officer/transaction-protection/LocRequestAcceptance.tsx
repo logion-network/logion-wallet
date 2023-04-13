@@ -64,18 +64,18 @@ export default function LocRequestAcceptance(props: Props) {
                 let signAndSubmit: SignAndSubmit;
                 if(props.requestToAccept!.requesterAddress && props.requestToAccept!.locType === 'Transaction') {
                     signAndSubmit = (setResult, setError) => signAndSend({
-                        signerId: accounts!.current!.address,
+                        signerId: accounts!.current!.accountId.address,
                         callback: setResult,
                         errorCallback: setError,
                         submittable: createPolkadotTransactionLoc({
                             api: api!,
                             locId: props.requestToAccept!.id,
-                            requester: props.requestToAccept!.requesterAddress!,
+                            requester: props.requestToAccept!.requesterAddress!.address,
                         })
                     });
                 } else if(props.requestToAccept!.requesterLocId && props.requestToAccept!.locType === 'Transaction') {
                     signAndSubmit = (setResult, setError) => signAndSend({
-                        signerId: accounts!.current!.address,
+                        signerId: accounts!.current!.accountId.address,
                         callback: setResult,
                         errorCallback: setError,
                         submittable: createLogionTransactionLoc({
@@ -98,13 +98,13 @@ export default function LocRequestAcceptance(props: Props) {
                     }
                     const canUpload = limits.canUpload;
                     signAndSubmit = (setResult, setError) => signAndSend({
-                        signerId: accounts!.current!.address,
+                        signerId: accounts!.current!.accountId.address,
                         callback: setResult,
                         errorCallback: setError,
                         submittable: createCollectionLoc({
                             api: api!,
                             locId: props.requestToAccept!.id,
-                            requester: props.requestToAccept!.requesterAddress!,
+                            requester: props.requestToAccept!.requesterAddress!.address,
                             lastBlock,
                             maxSize,
                             canUpload,
@@ -112,18 +112,18 @@ export default function LocRequestAcceptance(props: Props) {
                     });
                 } else if(props.requestToAccept!.requesterAddress && props.requestToAccept?.locType === 'Identity') {
                     signAndSubmit = (setResult, setError) => signAndSend({
-                        signerId: accounts!.current!.address,
+                        signerId: accounts!.current!.accountId.address,
                         callback: setResult,
                         errorCallback: setError,
                         submittable: createPolkadotIdentityLoc({
                             api: api!,
                             locId: props.requestToAccept!.id,
-                            requester: props.requestToAccept!.requesterAddress!,
+                            requester: props.requestToAccept!.requesterAddress!.address,
                         })
                     });
                 } else if(!props.requestToAccept!.requesterAddress && props.requestToAccept?.locType === 'Identity') {
                     signAndSubmit = (setResult, setError) => signAndSend({
-                        signerId: accounts!.current!.address,
+                        signerId: accounts!.current!.accountId.address,
                         callback: setResult,
                         errorCallback: setError,
                         submittable: createLogionIdentityLoc({

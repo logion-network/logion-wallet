@@ -132,7 +132,7 @@ export default function UserRouter() {
     const { balanceState } = useCommonContext();
     const { vaultState } = useUserContext();
 
-    if(!(accounts?.current?.address)) {
+    if(!(accounts?.current?.accountId)) {
         return null;
     }
 
@@ -147,11 +147,11 @@ export default function UserRouter() {
                     balances={ balanceState?.balances || [] }
                     transactions={ balanceState?.transactions || [] }
                     vaultAddress = { vaultState?.vaultAddress || undefined }
-                    address={ accounts.current.address }
+                    address={ accounts.current.accountId.address }
                 />
             } />
             <Route path={ TRANSACTIONS_RELATIVE_PATH } element={ <Transactions
-                    address={ accounts!.current?.address! }
+                    address={ accounts!.current?.accountId!.address }
                     backPath={ WALLET_PATH }
                     balances={ balanceState?.balances || [] }
                     transactions={ balanceState?.transactions || [] }
@@ -164,7 +164,7 @@ export default function UserRouter() {
                     settingsPath={ SETTINGS_PATH }
                     balances={ vaultState?.balances || null }
                     transactions={ vaultState?.transactions || null }
-                    address={ accounts.current.address }
+                    address={ accounts.current.accountId.address }
                 />
             } />
             <Route path={ VAULT_TRANSACTIONS_RELATIVE_PATH } element={ <Transactions

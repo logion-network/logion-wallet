@@ -249,9 +249,9 @@ export async function setVerifiedThirdParty(params: {
 
     let submittable: SubmittableExtrinsic;
     if(isVerifiedThirdParty) {
-        submittable = api.tx.logionLoc.nominateIssuer(data.requesterAddress, data.id.toDecimalString());
+        submittable = api.tx.logionLoc.nominateIssuer(data.requesterAddress.address, data.id.toDecimalString());
     } else {
-        submittable = api.tx.logionLoc.dismissIssuer(data.requesterAddress);
+        submittable = api.tx.logionLoc.dismissIssuer(data.requesterAddress.address);
     }
     await signer.signAndSend({
         signerId: data.ownerAddress,
@@ -275,7 +275,7 @@ export async function getVerifiedThirdPartySelections(params: { locState: LocWit
     const selectedParties = data.issuers;
 
     return allVerifiedThirdParties
-        .filter(vtp => vtp.address !== data.requesterAddress)
+        .filter(vtp => vtp.address !== data.requesterAddress?.address)
         .map(vtp => {
             const selected = selectedParties.find(selectedParty => selectedParty.address === vtp.address);
             if(selected && selected.firstName && selected.lastName) {
@@ -382,7 +382,7 @@ export async function getVotes(client: LogionClient): Promise<Vote[]> {
     if(!currentAddress) {
         throw new Error("Not authenticated");
     }
-    const axios = buildAxiosWithClient(client, client.currentAddress);
+    const axios = buildAxiosWithClient(client, client.currentAddress.address);
     const response = await axios.get(`/api/vote/${ currentAddress }`);
     const votes: BackendVote[] = response.data.votes;
     return votes.map(backendVote => ({
@@ -409,7 +409,7 @@ export async function vote(params: {
     const api = client.nodeApi;
     const submittable = api.tx.vote.vote(vote.voteId, myVote === "Yes");
     const result = await signer.signAndSend({
-        signerId: currentAddress,
+        signerId: currentAddress.address,
         submittable,
         callback
     });
@@ -418,7 +418,7 @@ export async function vote(params: {
         throw new Error("Unable to retrieve vote ID");
     }
     const ballots = vote.ballots;
-    ballots[currentAddress] = myVote;
+    ballots[currentAddress.address] = myVote;
     return {
         ...vote,
         ballots

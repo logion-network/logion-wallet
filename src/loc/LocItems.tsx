@@ -62,17 +62,17 @@ export function LocItems(props: LocItemsProps) {
             <ActionCell>
                 { locItem.type === 'Data' && <ButtonGroup>
                     { canPublish(props.viewer, loc!) && <LocPublishPublicDataButton locItem={ locItem } locId={ locId } /> }
-                    { canDelete(accounts?.current?.address, locItem, props.viewer, loc!) &&
+                    { canDelete(accounts?.current?.accountId.address, locItem, props.viewer, loc!) &&
                         <DeleteButton locItem={ locItem } action={ deleteMetadata } /> }
                 </ButtonGroup> }
                 { locItem.type === 'Linked LOC' && <ButtonGroup>
                     { canPublish(props.viewer, loc!) && <LocPublishLinkButton locItem={ locItem } locId={ locId } /> }
-                    { canDelete(accounts?.current?.address, locItem, props.viewer, loc!) &&
+                    { canDelete(accounts?.current?.accountId.address, locItem, props.viewer, loc!) &&
                         <DeleteButton locItem={ locItem } action={ deleteLinkCallback } /> }
                 </ButtonGroup> }
                 { locItem.type === 'Document' && <ButtonGroup>
                     { canPublish(props.viewer, loc!) && <LocPublishPrivateFileButton locItem={ locItem } locId={ locId } /> }
-                    { canDelete(accounts?.current?.address, locItem, props.viewer, loc!) &&
+                    { canDelete(accounts?.current?.accountId.address, locItem, props.viewer, loc!) &&
                         <DeleteButton locItem={ locItem } action={ deleteFile } /> }
                 </ButtonGroup> }
             </ActionCell>)
@@ -89,7 +89,7 @@ export function LocItems(props: LocItemsProps) {
     } else {
         let columns: Column<LocItem>[] = buildItemTableColumns({
             contributionMode: props.contributionMode,
-            currentAddress: accounts?.current?.address,
+            currentAddress: accounts?.current?.accountId.address,
             viewer: props.viewer,
             loc,
             locState,

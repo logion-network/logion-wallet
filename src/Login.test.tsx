@@ -13,7 +13,7 @@ jest.mock('./logion-chain');
 
 const AUTHENTICATED_ADDRESS: Account = {
     name: "name authenticated",
-    address: TEST_WALLET_USER,
+    accountId: TEST_WALLET_USER,
     isLegalOfficer: false,
     token: {
         value: "token",
@@ -23,7 +23,7 @@ const AUTHENTICATED_ADDRESS: Account = {
 
 const UNAUTHENTICATED_ADDRESS: Account = {
     name: "name unauthenticated",
-    address: DEFAULT_LEGAL_OFFICER,
+    accountId: DEFAULT_LEGAL_OFFICER,
     isLegalOfficer: true,
 };
 

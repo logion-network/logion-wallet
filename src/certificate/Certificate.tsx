@@ -320,7 +320,7 @@ export default function Certificate() {
                 <Row className="preamble-footer">
                     { loc.data.requesterAddress &&
                         <CertificateCell md={ 6 } label="Requester">
-                            { loc.data.requesterAddress }
+                            { loc.data.requesterAddress.address }
                         </CertificateCell>
                     }
                     { loc.data.requesterLocId &&

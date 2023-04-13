@@ -4,13 +4,16 @@ import { useCommonContext } from './CommonContext';
 
 import './Select.css';
 
-export type OptionType = { label: string; value: string };
+export interface OptionType<T> {
+    label: string;
+    value: T
+};
 
-export interface Props {
-    options: ReadonlyArray<OptionType>,
+export interface Props<T> {
+    options: ReadonlyArray<OptionType<T>>,
     dataTestId?: string,
-    value: string | null,
-    onChange: (value: string | null) => void,
+    value: T | null,
+    onChange: (value: T | null) => void,
     isInvalid?: boolean,
     disabled?: boolean,
     statusColor?: string,
@@ -18,7 +21,7 @@ export interface Props {
     placeholder?: string;
 }
 
-function buildStyles(colors: SelectColors, statusColor?: string, isInvalid?: boolean): StylesConfig<OptionType, false, GroupBase<OptionType>> {
+function buildStyles<T>(colors: SelectColors, statusColor?: string, isInvalid?: boolean): StylesConfig<OptionType<T>, false, GroupBase<OptionType<T>>> {
     return {
         option: (provided, state) => {
             let backgroundColor = undefined;
@@ -67,10 +70,10 @@ function controlBackgroundColor(colors: SelectColors, statusColor?: string, isIn
     }
 }
 
-export default function Select(props: Props) {
+export default function Select<T>(props: Props<T>) {
     const { colorTheme } = useCommonContext();
 
-    const onChange = (value: OnChangeValue<OptionType, false>, _: ActionMeta<OptionType>) => {
+    const onChange = (value: OnChangeValue<OptionType<T>, false>, _: ActionMeta<OptionType<T>>) => {
         props.onChange(value !== null ? value.value : null);
     };
 
@@ -84,7 +87,7 @@ export default function Select(props: Props) {
     }
     `;
 
-    function toOptionType(value: string | null): OptionType | null {
+    function toOptionType(value: T | null): OptionType<T> | null {
         if(value === null) {
             return null;
         } else {
@@ -92,7 +95,7 @@ export default function Select(props: Props) {
         }
     }
 
-    function findOptionTypeByValue(value: string): OptionType | null {
+    function findOptionTypeByValue(value: T): OptionType<T> | null {
         for(const option of props.options) {
             if(option.value === value) {
                 return option;
@@ -112,7 +115,7 @@ export default function Select(props: Props) {
                 options={ props.options }
                 onChange={ onChange }
                 value={ toOptionType(props.value) }
-                styles={ buildStyles(colorTheme.select, props.statusColor, props.isInvalid) }
+                styles={ buildStyles<T>(colorTheme.select, props.statusColor, props.isInvalid) }
                 isDisabled={ props.disabled }
                 name={ props.name }
                 placeholder={ props.placeholder }
