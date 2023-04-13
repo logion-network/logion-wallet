@@ -10,7 +10,7 @@ import { DEFAULT_LEGAL_OFFICER_ACCOUNT, setCurrentAddress } from '../logion-chai
 test('renders', () => {
     setContextMock({
         injectedAccounts: [
-            mockAccount(DEFAULT_LEGAL_OFFICER, "Account name")
+            mockAccount(DEFAULT_LEGAL_OFFICER.address, "Account name")
         ]
     });
     setCurrentAddress(DEFAULT_LEGAL_OFFICER_ACCOUNT);

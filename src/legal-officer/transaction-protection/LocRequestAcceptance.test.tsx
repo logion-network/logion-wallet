@@ -26,7 +26,7 @@ describe("LocRequestAcceptance", () => {
 
     const REQUEST = {
         id: new UUID(),
-        ownerAddress: DEFAULT_LEGAL_OFFICER_ACCOUNT.address,
+        ownerAddress: DEFAULT_LEGAL_OFFICER_ACCOUNT.accountId,
         requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
         description: "LOC description",
         status: "REQUESTED",
@@ -92,7 +92,7 @@ describe("LocRequestAcceptance", () => {
 
     const COLLECTION_LOC_REQUEST = {
         id: new UUID(),
-        ownerAddress: DEFAULT_LEGAL_OFFICER_ACCOUNT.address,
+        ownerAddress: DEFAULT_LEGAL_OFFICER_ACCOUNT.accountId,
         requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
         description: "LOC description",
         status: "REQUESTED",

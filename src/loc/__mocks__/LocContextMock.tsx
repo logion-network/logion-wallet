@@ -2,6 +2,7 @@ import { LocData, CollectionItem } from "@logion/client";
 import { UUID } from "@logion/node-api";
 
 import { LocItem } from "../LocItem";
+import { mockValidPolkadotAccountId } from "../../__mocks__/@logion/node-api/Mocks";
 
 let locState: any = {
     isLogionIdentity: () => false,
@@ -33,7 +34,7 @@ export function setLocId(id: UUID) {
 let loc: Partial<LocData> | null = {
     id: locId,
     locType: "Identity",
-    requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+    requesterAddress: mockValidPolkadotAccountId("5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"),
     userIdentity: {
         firstName: "John",
         lastName: "Doe",

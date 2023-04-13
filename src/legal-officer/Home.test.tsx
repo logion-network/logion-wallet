@@ -6,6 +6,7 @@ jest.mock('./LegalOfficerContext');
 import { LocData, OpenLoc, PendingRequest } from "@logion/client";
 import { BalanceState } from "@logion/client/dist/Balance.js";
 import { DEFAULT_COIN_BALANCE, DEFAULT_TRANSACTION } from "../common/TestData";
+import { mockValidPolkadotAccountId } from "../__mocks__/@logion/node-api/Mocks";
 import { setBalanceState, } from "../common/__mocks__/CommonContextMock";
 import {
     setOpenedLocRequests,
@@ -26,7 +27,7 @@ test("renders", () => {
             data: () => ({
                 id: new UUID("556f4128-4fc3-4fdc-a543-74e6230911c4"),
                 ownerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-                requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+                requesterAddress: mockValidPolkadotAccountId("5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"),
                 description: "LOC description",
                 status: "OPEN"
             } as LocData)
@@ -37,7 +38,7 @@ test("renders", () => {
             data: () => ({
             id: new UUID("556f4128-4fc3-4fdc-a543-74e6230911c4"),
             ownerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-            requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+            requesterAddress: mockValidPolkadotAccountId("5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"),
             description: "LOC description",
             status: "REQUESTED"
             } as LocData)

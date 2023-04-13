@@ -1,3 +1,4 @@
+import { ValidAccountId } from "@logion/node-api";
 import { useState, useCallback } from 'react';
 import { useNavigate, useLocation, Location } from 'react-router-dom';
 
@@ -15,16 +16,6 @@ export const LOGIN_PATH = "/login";
 
 export interface LocationState {
     referrer?: string;
-    selectedAddresses?: string[];
-}
-
-function getSelectedAddresses(location: Location): string[] {
-    const state = location.state as any;
-    if(state && state.selectedAddresses) {
-        return state.selectedAddresses;
-    } else {
-        return [];
-    }
 }
 
 function referrer(location: Location): string {
@@ -40,7 +31,7 @@ export default function Login() {
     const location = useLocation();
     const navigate = useNavigate();
     const { connectedNodeMetadata, accounts, authenticate } = useLogionChain();
-    const [ selectedAddresses, setSelectedAddresses ] = useState<string[]>(getSelectedAddresses(location));
+    const [ selectedAddresses, setSelectedAddresses ] = useState<ValidAccountId[]>([]);
 
     const startLogin = useCallback(async () => {
         await authenticate(selectedAddresses);
@@ -51,7 +42,7 @@ export default function Login() {
         return null;
     }
 
-    function selectAddress(address: string, selected: boolean) {
+    function selectAddress(address: ValidAccountId, selected: boolean) {
         let newSet;
         if(selected) {
             newSet = [ ...selectedAddresses ];
@@ -79,10 +70,10 @@ export default function Login() {
                             accounts.all
                             .filter(address => address.token === undefined)
                             .map(address => (
-                                <div className="account" key={ address.address }>
+                                <div className="account" key={ address.accountId.toKey() }>
                                     <Checkbox
-                                        checked={ selectedAddresses.includes(address.address) }
-                                        setChecked={ selected => selectAddress(address.address, selected) }
+                                        checked={ selectedAddresses.includes(address.accountId) }
+                                        setChecked={ selected => selectAddress(address.accountId, selected) }
                                     />
                                     <div
                                         className="icon"
@@ -93,7 +84,7 @@ export default function Login() {
                                         className="name-address"
                                     >
                                         <div className="name">{ address.name }</div>
-                                        <div className="address">{ address.address }</div>
+                                        <div className="address">{ address.accountId.address }</div>
                                     </div>
                                 </div>
                             ))

@@ -99,7 +99,7 @@ export default function CloseLocButton(props: Props) {
 
             const lost = props.protectionRequest!.addressToRecover!;
             const rescuer = props.protectionRequest!.requesterAddress;
-            const currentAddress = accounts!.current!.address;
+            const currentAddress = accounts!.current!.accountId.address;
 
             if (await alreadyVouched(lost, rescuer, currentAddress)) {
                 setCloseState({ status: CloseStatus.ACCEPTING });
@@ -127,7 +127,7 @@ export default function CloseLocButton(props: Props) {
         if (closeState.status === CloseStatus.ACCEPTING && loc) {
             setCloseState({ status: CloseStatus.NONE });
             (async function() {
-                const currentAddress = accounts!.current!.address;
+                const currentAddress = accounts!.current!.accountId.address;
                 await acceptProtectionRequest(axiosFactory!(currentAddress)!, {
                     requestId: props.protectionRequest!.id,
                     locId: loc.id,

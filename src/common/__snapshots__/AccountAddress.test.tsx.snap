@@ -55,7 +55,7 @@ exports[`renders 1`] = `
         delay={500}
         overlay={
           <Tooltip
-            id="tooltip-address1"
+            id="tooltip-Polkadot:address1"
             placement="right"
           >
             address1

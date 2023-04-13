@@ -11,7 +11,7 @@ export default function TransactionLocRequestDetails(props: LocRequestDetailsPro
             >
                 <Detail
                     label="Address"
-                    value={ props.request.requesterAddress || "" }
+                    value={ props.request.requesterAddress?.address || "" }
                 />
             </Col>
             <Col

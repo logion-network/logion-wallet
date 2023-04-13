@@ -39,11 +39,11 @@ export default function ContextualizedWallet() {
     }, [ refresh, refreshRequests, refreshLocs, refreshVotes ]);
 
     const currentLegalOfficerUnavailable = useMemo(
-        () => availableLegalOfficers?.find(node => node.address === accounts?.current?.address) === undefined,
+        () => availableLegalOfficers?.find(node => node.address === accounts?.current?.accountId.address) === undefined,
     [ availableLegalOfficers, accounts ]);
 
     const hasVoteFeature = useMemo(() => {
-        return backendConfig(accounts?.current?.address).features.vote;
+        return backendConfig(accounts?.current?.accountId.address).features.vote;
     }, [ accounts, backendConfig ]);
 
     if(accounts === null || availableLegalOfficers === undefined) {

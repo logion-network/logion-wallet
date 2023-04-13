@@ -1,7 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { Col, Row } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
-import { vouchRecovery, getActiveRecovery, UUID } from '@logion/node-api';
+import { vouchRecovery, getActiveRecovery, UUID, validPolkadotAccountId } from '@logion/node-api';
 
 import { useCommonContext } from "../common/CommonContext";
 import { useLegalOfficerContext } from "./LegalOfficerContext";
@@ -47,7 +47,7 @@ export default function RecoveryDetails() {
 
     useEffect(() => {
         if (recoveryInfo === null && axiosFactory !== undefined) {
-            const currentAddress = accounts!.current!.address;
+            const currentAddress = accounts!.current!.accountId.address;
             fetchRecoveryInfo(axiosFactory(currentAddress)!, requestId!)
                 .then(recoveryInfo => setRecoveryInfo(recoveryInfo));
         }
@@ -66,7 +66,7 @@ export default function RecoveryDetails() {
 
     const accept = useCallback(() => {
         (async function() {
-            const currentAddress = accounts!.current!.address;
+            const currentAddress = accounts!.current!.accountId.address;
             const lost = recoveryInfo!.accountToRecover!.requesterAddress;
             const rescuer = recoveryInfo!.recoveryAccount.requesterAddress;
             await acceptProtectionRequest(axiosFactory!(currentAddress)!, {
@@ -94,7 +94,7 @@ export default function RecoveryDetails() {
 
     const doReject = useCallback(() => {
         (async function() {
-            const currentAddress = accounts!.current!.address;
+            const currentAddress = accounts!.current!.accountId.address;
             await rejectProtectionRequest(axiosFactory!(currentAddress)!, {
                 legalOfficerAddress: currentAddress,
                 requestId: requestId!,
@@ -105,7 +105,7 @@ export default function RecoveryDetails() {
         })();
     }, [ axiosFactory, requestId, accounts, rejectReason, refreshRequests, navigate ]);
 
-    if (recoveryInfo === null) {
+    if (!api || recoveryInfo === null) {
         return null;
     }
 
@@ -218,7 +218,7 @@ export default function RecoveryDetails() {
                     expect={{
                         closed: true,
                         type: 'Identity',
-                        requester: recoveryInfo.recoveryAccount.requesterAddress
+                        requester: validPolkadotAccountId(api, recoveryInfo.recoveryAccount.requesterAddress),
                     }}
                     onChange={ setLocId }
                 />

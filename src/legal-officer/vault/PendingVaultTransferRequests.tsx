@@ -39,7 +39,7 @@ export default function PendingVaultTransferRequests() {
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
 
     const acceptRequestCallback = useCallback(async () => {
-        const signerId = accounts!.current!.address;
+        const signerId = accounts!.current!.accountId.address;
         const amount = new PrefixedNumber(requestToAccept!.amount, LGNT_SMALLEST_UNIT);
         const submittable = await approveVaultTransfer({
             signerId,

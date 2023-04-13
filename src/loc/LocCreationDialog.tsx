@@ -54,7 +54,7 @@ export default function LocCreationDialog(props: Props) {
             }
         }
         (async function () {
-            const currentAddress = accounts!.current!.address;
+            const currentAddress = accounts!.current!.accountId.address;
             const request: CreateLocRequest = {
                 ownerAddress: currentAddress,
                 requesterAddress: props.locRequest.requesterAddress ? props.locRequest.requesterAddress : undefined,

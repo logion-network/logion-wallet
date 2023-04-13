@@ -35,7 +35,7 @@ export default function LocPublishLinkButton(props: Props) {
                 }
             }}
             feesEstimator={ () => client.public.fees.estimateWithoutStorage({
-                origin: client.currentAddress || "",
+                origin: client.currentAddress?.address || "",
                 submittable: addLink({
                     api: client.nodeApi,
                     locId: props.locId,

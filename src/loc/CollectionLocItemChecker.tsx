@@ -180,7 +180,7 @@ function CollectionLocItemChecker(props: LocalProps) {
         }
     }, [ managedCheck, setManagedCheck, props.collectionItem, resetCheck ]);
 
-    if (accounts?.current?.address === undefined) {
+    if (accounts?.current?.accountId === undefined) {
         return null;
     }
 

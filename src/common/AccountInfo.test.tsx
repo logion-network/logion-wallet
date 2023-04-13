@@ -24,7 +24,7 @@ test("renders without comparison", () => {
     const tree = render(
         <AccountInfo
             label="some label"
-            address={ TEST_WALLET_USER }
+            address={ TEST_WALLET_USER.address }
             identity={ DEFAULT_IDENTITY }
             postalAddress={ DEFAULT_ADDRESS }
             colors={ COLOR_THEME.dashboard }
@@ -39,7 +39,7 @@ test("renders and compares with same data", () => {
     const tree = render(
         <AccountInfo
             label="some label"
-            address={ TEST_WALLET_USER }
+            address={ TEST_WALLET_USER.address }
             identity={ DEFAULT_IDENTITY }
             otherIdentity={ DEFAULT_IDENTITY }
             postalAddress={ DEFAULT_ADDRESS }
@@ -56,7 +56,7 @@ test("renders and compares with different data", () => {
     const tree = render(
         <AccountInfo
             label="some label"
-            address={ TEST_WALLET_USER }
+            address={ TEST_WALLET_USER.address }
             identity={ DEFAULT_IDENTITY }
             otherIdentity={ DIFFERENT_IDENTITY }
             postalAddress={ DEFAULT_ADDRESS }

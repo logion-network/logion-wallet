@@ -45,7 +45,7 @@ export default function LocPublishPrivateFileButton(props: Props) {
                 nature: props.locItem.nature || "",
                 submitter: props.locItem.submitter || "",
                 size: props.locItem.size!,
-                origin: client.currentAddress || "",
+                origin: client.currentAddress?.address || "",
             }) }
             itemType="Document"
         />

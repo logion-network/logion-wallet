@@ -23,7 +23,11 @@ exports[`AddressSwitcher renders 1`] = `
         <AccountAddress
           account={
             Object {
-              "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+              "accountId": Object {
+                "address": "5H4MvAsobfZ6bBCDyj5dsrWYLrA8HrRzaqa9p61UXtxMhSCY",
+                "toKey": [Function],
+                "type": "Polkadot",
+              },
               "isLegalOfficer": false,
               "name": "name authenticated",
               "token": Object {
@@ -53,7 +57,11 @@ exports[`AddressSwitcher renders 1`] = `
         <AccountAddress
           account={
             Object {
-              "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+              "accountId": Object {
+                "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+                "toKey": [Function],
+                "type": "Polkadot",
+              },
               "isLegalOfficer": true,
               "name": "name unauthenticated",
             }

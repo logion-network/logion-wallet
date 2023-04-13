@@ -18,7 +18,7 @@ const existingFileItem: LocItem = {
     nature: "ID",
     status: "DRAFT",
     newItem: false,
-    submitter: TEST_WALLET_USER,
+    submitter: TEST_WALLET_USER.address,
     type: "Document",
     value: "0x" + fileHash,
     timestamp: null,

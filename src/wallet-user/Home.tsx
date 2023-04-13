@@ -58,7 +58,7 @@ export function Content() {
         [ locsState ]
     );
 
-    if (!balanceState || !(accounts?.current?.address) || locsState === undefined) {
+    if (!balanceState || !(accounts?.current?.accountId) || locsState === undefined) {
         return <Loader />;
     }
 
@@ -96,12 +96,12 @@ export function Content() {
                                         },
                                         {
                                             header: "Transaction type",
-                                            render: transaction => <TransactionType address={ accounts.current!.address } transaction={ transaction } walletType="Wallet" />,
+                                            render: transaction => <TransactionType address={ accounts.current!.accountId.address } transaction={ transaction } walletType="Wallet" />,
                                         },
                                         {
                                             header: "Amount",
                                             render: transaction => <TransferAmountCell
-                                                amount={ transferBalance(accounts!.current!.address, transaction) } />,
+                                                amount={ transferBalance(accounts!.current!.accountId.address, transaction) } />,
                                             align: 'right',
                                             width: "120px",
                                         },

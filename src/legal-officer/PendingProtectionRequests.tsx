@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { useNavigate } from "react-router-dom";
-import { UUID } from '@logion/node-api';
+import { UUID, validPolkadotAccountId } from '@logion/node-api';
 import { ProtectionRequest } from '@logion/client/dist/RecoveryClient.js';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Form from 'react-bootstrap/Form';
@@ -40,7 +40,7 @@ export interface Props {
 }
 
 export default function PendingProtectionRequests(props: Props) {
-    const { accounts, axiosFactory } = useLogionChain();
+    const { api, accounts, axiosFactory } = useLogionChain();
     const { colorTheme } = useCommonContext();
     const { pendingProtectionRequests, refreshRequests, pendingRecoveryRequests } = useLegalOfficerContext();
     const [ rejectReason, setRejectReason ] = useState<string>("");
@@ -53,7 +53,7 @@ export default function PendingProtectionRequests(props: Props) {
     }, [ setReviewState ]);
 
     const rejectAndCloseModal = useCallback(() => {
-        const currentAddress = accounts!.current!.address;
+        const currentAddress = accounts!.current!.accountId.address;
         (async function() {
             const requestId = reviewState.request!.id;
             await rejectProtectionRequest(axiosFactory!(currentAddress)!, {
@@ -67,7 +67,7 @@ export default function PendingProtectionRequests(props: Props) {
     }, [ axiosFactory, reviewState, accounts, rejectReason, setReviewState, refreshRequests ]);
 
     const acceptAndCloseModal = useCallback(() => {
-        const currentAddress = accounts!.current!.address;
+        const currentAddress = accounts!.current!.accountId.address;
         (async function() {
             const requestId = reviewState.request!.id;
             await acceptProtectionRequest(axiosFactory!(currentAddress)!, {
@@ -79,7 +79,7 @@ export default function PendingProtectionRequests(props: Props) {
         })();
     }, [ axiosFactory, reviewState, accounts, setReviewState, refreshRequests, locId ]);
 
-    if (pendingProtectionRequests === null || pendingRecoveryRequests === null) {
+    if (!api || pendingProtectionRequests === null || pendingRecoveryRequests === null) {
         return null;
     }
 
@@ -324,7 +324,7 @@ export default function PendingProtectionRequests(props: Props) {
                         expect={{
                             closed: true,
                             type: 'Identity',
-                            requester: reviewState.request!.requesterAddress
+                            requester: validPolkadotAccountId(api, reviewState.request!.requesterAddress)
                         }}
                         onChange={ setLocId }
                     />

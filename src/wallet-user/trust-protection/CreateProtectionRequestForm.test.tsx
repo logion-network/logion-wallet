@@ -104,7 +104,7 @@ describe("CreateProtectionRequestForm", () => {
 
         render(<CreateProtectionRequestForm isRecovery={ true } />);
 
-        await userEvent.type(screen.getByLabelText("Address to Recover"), TEST_WALLET_USER2);
+        await userEvent.type(screen.getByLabelText("Address to Recover"), TEST_WALLET_USER2.address);
 
         await selectLegalOfficers();
         await fillInForm();

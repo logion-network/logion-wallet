@@ -94,9 +94,9 @@ export default function CertificateAndLimits(props: Props) {
 
                             { props.loc.locType === 'Collection' && props.viewer === 'LegalOfficer' && props.loc.status ==='OPEN' && <VTPSelectionButton/> }
                             { props.loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' && props.loc.status ==='OPEN' && <VTPSelectionButton/> }
-                            { props.loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' && props.loc.locType === 'Identity' && !isLogionIdentityLoc(props.loc) && props.loc.status ==='CLOSED' && !props.isReadOnly && <Nominate/> }
+                            { props.loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' && props.loc.locType === 'Identity' && !isLogionIdentityLoc({ ...props.loc, requesterAddress: props.loc.requesterAddress?.address }) && props.loc.status ==='CLOSED' && !props.isReadOnly && <Nominate/> }
 
-                            { props.loc.locType === 'Identity' && !isLogionIdentityLoc(props.loc) && props.viewer === 'LegalOfficer' && props.loc.status === "CLOSED" && hasVoteFeature && !props.loc.voteId && !props.isReadOnly && <RequestVoteButton/> }
+                            { props.loc.locType === 'Identity' && !isLogionIdentityLoc({ ...props.loc, requesterAddress: props.loc.requesterAddress?.address }) && props.viewer === 'LegalOfficer' && props.loc.status === "CLOSED" && hasVoteFeature && !props.loc.voteId && !props.isReadOnly && <RequestVoteButton/> }
 
                             { props.loc.locType === 'Collection' && props.viewer === 'LegalOfficer' && <ArchiveButton/> }
                             { props.loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' && !props.isReadOnly && <ArchiveButton/> }
@@ -145,7 +145,7 @@ export default function CertificateAndLimits(props: Props) {
                     <StaticLabelValue
                         label='Signature will be executed by the following public key'
                         value={
-                            <p>{ props.loc.requesterAddress }</p>
+                            <p>{ props.loc.requesterAddress?.address }</p>
                         }
                     />
 

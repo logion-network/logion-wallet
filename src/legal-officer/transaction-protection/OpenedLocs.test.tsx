@@ -7,6 +7,7 @@ import OpenedLocs from './OpenedLocs';
 import { setOpenedLocRequests, setOpenedIdentityLocsByType } from "../__mocks__/LegalOfficerContextMock";
 import { LocData, OpenLoc, UserIdentity } from "@logion/client";
 import { UUID } from "@logion/node-api";
+import { mockValidPolkadotAccountId } from "../../__mocks__/@logion/node-api/Mocks";
 
 describe("OpenedLocs", () => {
 
@@ -21,7 +22,7 @@ describe("OpenedLocs", () => {
                 data: () => ({
                     id: new UUID("556f4128-4fc3-4fdc-a543-74e6230911c4"),
                     ownerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-                    requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+                    requesterAddress: mockValidPolkadotAccountId("5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"),
                     description: "LOC description",
                     status: "OPEN"
                 } as LocData)

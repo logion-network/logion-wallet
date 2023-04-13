@@ -1,5 +1,6 @@
 import { DateTime } from 'luxon';
 import { AccountTokens, Token } from '@logion/client';
+import { LogionNodeApi, ValidAccountId } from "@logion/node-api";
 import {
     storeMulti,
     clearMulti,
@@ -10,7 +11,6 @@ import {
     clearSingle,
     loadSingle,
     newSingleJsonStorable,
-    newSingleStringStorable,
 } from "./GenericStorage";
 import { SofParams } from "../loc/statement/SofParams";
 
@@ -34,7 +34,7 @@ const token: MultiStorable<Token> = {
 export function storeTokens(tokens: AccountTokens) {
     clearTokens();
     for (const address of tokens.addresses) {
-        storeMulti(token, address, tokens.get(address))
+        storeMulti(token, address.toKey(), tokens.get(address))
     }
 }
 
@@ -42,23 +42,39 @@ export function clearTokens() {
     clearMulti(token)
 }
 
-export function loadTokens(): AccountTokens {
+export function loadTokens(api: LogionNodeApi): AccountTokens {
     const tokens: Record<string, Token> = loadMulti(token)
-    return new AccountTokens(tokens);
+    return new AccountTokens(api, tokens);
 }
 
-const currentAddress: SingleStorable<string> = newSingleStringStorable("currentAddress");
+class CurrentAddressStorable implements SingleStorable<ValidAccountId> {
+    key = "currentAddress";
 
-export function storeCurrentAddress(address: string) {
-    storeSingle(currentAddress, address)
+    constructor(api: LogionNodeApi) {
+        this.api = api;
+    }
+
+    private api: LogionNodeApi;
+
+    fromValue(value: string) {
+        return ValidAccountId.parseKey(this.api, value);
+    }
+
+    toValue(obj: ValidAccountId): string {
+        return obj.toKey();
+    }
 }
 
-export function clearCurrentAddress() {
-    clearSingle(currentAddress);
+export function storeCurrentAddress(api: LogionNodeApi, address: ValidAccountId) {
+    storeSingle(new CurrentAddressStorable(api), address)
 }
 
-export function loadCurrentAddress(): string | undefined {
-    return loadSingle(currentAddress)
+export function clearCurrentAddress(api: LogionNodeApi) {
+    clearSingle(new CurrentAddressStorable(api));
+}
+
+export function loadCurrentAddress(api: LogionNodeApi): ValidAccountId | undefined {
+    return loadSingle(new CurrentAddressStorable(api));
 }
 
 const sofParams: SingleStorable<SofParams> = newSingleJsonStorable<SofParams>("SofParams")

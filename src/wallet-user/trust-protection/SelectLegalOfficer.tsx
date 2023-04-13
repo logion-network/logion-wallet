@@ -15,15 +15,15 @@ import './SelectLegalOfficer.css';
 
 export type Mode = 'select' | 'view';
 
-export function buildOptions(legalOfficers: LegalOfficer[]): OptionType[] {
-    const options: OptionType[] = [];
+export function buildOptions(legalOfficers: LegalOfficer[]): OptionType<string>[] {
+    const options: OptionType<string>[] = [];
     legalOfficers.forEach(legalOfficer => {
         options.push(buildOption(legalOfficer));
     });
     return options;
 }
 
-function buildOption(legalOfficer: LegalOfficer): OptionType {
+function buildOption(legalOfficer: LegalOfficer): OptionType<string> {
     return {
         label: legalOfficer.name,
         value: legalOfficer.address,
@@ -49,7 +49,7 @@ export default function SelectLegalOfficer(props: Props) {
     const colors = props.colors !== undefined ? props.colors : colorTheme.frame;
     const feedback = props.feedback ? props.feedback : "Required and different from other legal officer";
     const { label } = props;
-    const legalOfficersOptions: OptionType[] = buildOptions(props.legalOfficers);
+    const legalOfficersOptions = buildOptions(props.legalOfficers);
     const legalOfficersByAddress: Record<string, LegalOfficer> = {};
     props.legalOfficers.forEach(legalOfficer => {
         legalOfficersByAddress[legalOfficer.address] = legalOfficer;

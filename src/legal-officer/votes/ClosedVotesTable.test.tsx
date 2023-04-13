@@ -23,8 +23,8 @@ describe("ClosedVotesTable", () => {
                 locId: new UUID("c2967074-fffa-4f7a-af87-1dd2d6b61c20"),
                 status: "APPROVED",
                 ballots: {
-                    [DEFAULT_LEGAL_OFFICER]: "Yes",
-                    [ANOTHER_LEGAL_OFFICER]: "Yes",
+                    [DEFAULT_LEGAL_OFFICER.address]: "Yes",
+                    [ANOTHER_LEGAL_OFFICER.address]: "Yes",
                 }
             }
         ];

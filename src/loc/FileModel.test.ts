@@ -31,7 +31,7 @@ describe("FileModel", () => {
             }),
         } as unknown as AxiosInstance;
 
-        const legalOfficer = DEFAULT_LEGAL_OFFICER;
+        const legalOfficer = DEFAULT_LEGAL_OFFICER.address;
         const fileId = "header-logo";
         const typedFile = await getLoFile({
             axios,
@@ -100,7 +100,7 @@ describe("FileModel", () => {
             put: jest.fn().mockResolvedValue(undefined),
         } as unknown as AxiosInstance;
 
-        const legalOfficer = DEFAULT_LEGAL_OFFICER;
+        const legalOfficer = DEFAULT_LEGAL_OFFICER.address;
         const fileId = "header-logo";
         const file = new File(["test"], "some-logo.jpeg");
         await addLoFile({

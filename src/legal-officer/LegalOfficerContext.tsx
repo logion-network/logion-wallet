@@ -353,7 +353,7 @@ export function LegalOfficerContextProvider(props: Props) {
     const isReadyLegalOfficer = useMemo(() => {
         return accounts !== null && accounts !== undefined
             && accounts.current !== null && accounts.current !== undefined
-            && client && client.allLegalOfficers.find(legalOfficer => legalOfficer.address === accounts.current?.address && legalOfficer.node) !== undefined
+            && client && client.allLegalOfficers.find(legalOfficer => legalOfficer.address === accounts.current?.accountId.address && legalOfficer.node) !== undefined
     }, [ accounts, client ]);
 
     useEffect(() => {
@@ -373,9 +373,9 @@ export function LegalOfficerContextProvider(props: Props) {
         if(accounts !== null && accounts.current !== undefined
             && client !== null && client.isTokenValid(now)
             && axiosFactory
-            && accounts.current.address !== contextValue.dataAddress) {
+            && accounts.current.accountId.address !== contextValue.dataAddress) {
 
-            const dataAddress = accounts.current.address;
+            const dataAddress = accounts.current.accountId.address;
             let axios: AxiosInstance | undefined;
             if(isReadyLegalOfficer) {
                 axios = axiosFactory(dataAddress);
@@ -423,7 +423,7 @@ export function LegalOfficerContextProvider(props: Props) {
                 });
 
                 const currentAccount = accounts.current;
-                const currentAddress = currentAccount.address;
+                const currentAddress = currentAccount.accountId.address;
                 const legalOfficer = contextValue.legalOfficer;
                 const locsState = await client.locsState(fetchAllLocsParams(legalOfficer));
 
@@ -458,7 +458,7 @@ export function LegalOfficerContextProvider(props: Props) {
             dispatch({
                 type: "REFRESH_SETTINGS_CALLED"
             });
-            const currentAddress = accounts.current.address;
+            const currentAddress = accounts.current.accountId.address;
             const onchainSettings = await getLegalOfficerData({ api, address: currentAddress });
             let legalOfficer: LegalOfficer | undefined = contextValue.legalOfficer;
             if(!legalOfficer) {
@@ -519,7 +519,7 @@ export function LegalOfficerContextProvider(props: Props) {
             dispatch({
                 type: "REFRESH_REQUESTS_CALLED"
             });
-            const currentAddress = accounts.current.address;
+            const currentAddress = accounts.current.accountId.address;
 
             (async function() {
                 const axios = axiosFactory(currentAddress);
@@ -586,7 +586,7 @@ export function LegalOfficerContextProvider(props: Props) {
                 type: "REFRESH_LEGAL_OFFICER_CALLED"
             });
 
-            const currentAddress = accounts.current.address;
+            const currentAddress = accounts.current.accountId.address;
 
             (async function() {
                 const onchainSettings = await getLegalOfficerData({ api, address: currentAddress });
@@ -626,7 +626,7 @@ export function LegalOfficerContextProvider(props: Props) {
                 type: "REFRESH_VOTES_CALLED"
             });
 
-            const currentAddress = accounts.current.address;
+            const currentAddress = accounts.current.accountId.address;
             const votes = await getVotes(client);
 
             dispatch({
@@ -669,7 +669,7 @@ export function LegalOfficerContextProvider(props: Props) {
             const newVotes = contextValue.votes.map(vote => vote.voteId === targetVote.voteId ? newVote : vote);
             dispatch({
                 type: "SET_VOTES",
-                dataAddress: client.currentAddress,
+                dataAddress: client.currentAddress?.address,
                 votes: newVotes,
             });
         }

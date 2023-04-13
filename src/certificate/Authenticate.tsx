@@ -2,6 +2,7 @@ import { BlockchainTypes, CrossmintEVMWalletAdapter } from "@crossmint/connect";
 import { Token, LogionClient, CollectionItem, TokenType, isTokenCompatibleWith } from "@logion/client";
 import { CrossmintSigner } from "@logion/crossmint";
 import { allMetamaskAccounts, enableMetaMask } from "@logion/extension";
+import { AnyAccountId } from "@logion/node-api";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Dropdown, Spinner } from "react-bootstrap";
 import Button from "../common/Button";
@@ -68,7 +69,7 @@ export default function Authenticate(props: Props) {
         const newItem = await client.public.findCollectionLocItemById({ locId, itemId: item.id});
         const isOwner = newItem && await newItem.isAuthenticatedTokenOwner();
         if (isOwner) {
-            setTokenForDownload(client.tokens.get(client.currentAddress || ""));
+            setTokenForDownload(client.tokens.get(client.currentAddress));
             setStatus('OWNER_OK');
         } else {
             setStatus('OWNER_KO');
@@ -117,7 +118,7 @@ export default function Authenticate(props: Props) {
     useEffect(() => {
         if (claimWithPolkadotState === ClaimWithPolkadotState.AUTHENTICATE) {
             setClaimWithPolkadotState(ClaimWithPolkadotState.AUTHENTICATING);
-            const currentAddress = logionChainContext.accounts!.current!.address;
+            const currentAddress = logionChainContext.accounts!.current!.accountId;
             logionChainContext.authenticate([ currentAddress ]);
         }
     }, [ logionChainContext, claimWithPolkadotState ]);
@@ -202,7 +203,7 @@ export default function Authenticate(props: Props) {
                                     id: "claimWithAddress",
                                     buttonText: "Claim with selected",
                                     buttonVariant: "primary",
-                                    disabled: !(logionChainContext.accounts?.current?.address),
+                                    disabled: !(logionChainContext.accounts?.current?.accountId),
                                     callback: tryClaimWithPolkadot,
                                 }
                             ] }
@@ -222,10 +223,10 @@ export default function Authenticate(props: Props) {
                                 <Select
                                     options={ logionChainContext.accounts?.all.map(account => ({
                                         label: account.name,
-                                        value: account.address,
+                                        value: account.accountId,
                                     })) || [] }
-                                    onChange={ value => logionChainContext.selectAddress!(value || "") }
-                                    value={ logionChainContext.accounts?.current?.address || null }
+                                    onChange={ value => logionChainContext.selectAddress!(value!) }
+                                    value={ logionChainContext.accounts?.current?.accountId || null }
                                 />
                             }
                         </Dialog>
@@ -307,7 +308,8 @@ async function authenticateWithCrossmint(context: LogionChainContextType): Promi
     console.log(`Detected Crossmint address ${ address }`);
 
     const signer = new CrossmintSigner(crossmint);
-    let authenticatedClient = await context.authenticateAddress(address, signer);
+    const account = new AnyAccountId(context.api!, address, "Ethereum").toValidAccountId();
+    let authenticatedClient = await context.authenticateAddress(account, signer);
     if (!authenticatedClient) {
         throw new Error("Unable to authenticate");
     }
@@ -329,7 +331,8 @@ async function authenticateWithMetamask(context: LogionChainContextType): Promis
 
     if (accounts.length > 0) {
         const metaMaskAddress = accounts[0].address;
-        const authenticatedClient = await context.authenticateAddress(metaMaskAddress);
+        const account = new AnyAccountId(context.api!, metaMaskAddress, "Ethereum").toValidAccountId();
+        const authenticatedClient = await context.authenticateAddress(account);
         if (!authenticatedClient) {
             throw new Error("Unable to authenticate");
         }

@@ -45,7 +45,7 @@ export default function LocTemplateItems(props: Props) {
         return null;
     }
 
-    const currentAddress = accounts?.current?.address;
+    const currentAddress = accounts?.current?.accountId.address;
     const columns = buildItemTableColumns({
         contributionMode: props.contributionMode,
         currentAddress,

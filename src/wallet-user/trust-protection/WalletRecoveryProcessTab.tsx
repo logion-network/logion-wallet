@@ -32,7 +32,7 @@ export default function WalletRecoveryProcessTab(props: Props) {
             await mutateRecoveredBalanceState(async (state: BalanceState) => {
                 return state.transfer({
                     signer: signer!,
-                    destination: accounts!.current!.address,
+                    destination: accounts!.current!.accountId.address,
                     amount,
                     callback,
                 });
@@ -151,7 +151,7 @@ export default function WalletRecoveryProcessTab(props: Props) {
                                     { amountToRecover.prefix.symbol }
                                     { recoveredCoinBalance?.coin.symbol }
                                     <br />from account { protectionState?.protectionParameters.recoveredAddress || "" }
-                                    <br />to account { accounts?.current?.address }.
+                                    <br />to account { accounts?.current?.accountId.address }.
                                 </p>
                             }
                             <ClientExtrinsicSubmitter

@@ -2,6 +2,7 @@ import { render } from '@testing-library/react';
 import { clickByName } from '../tests';
 import { UUID } from "@logion/node-api";
 import { DEFAULT_LEGAL_OFFICER } from "../common/TestData";
+import { mockValidPolkadotAccountId } from "../__mocks__/@logion/node-api/Mocks";
 import { setMetamaskEnabled } from '../__mocks__/PolkadotExtensionDappMock';
 import { setClientMock } from 'src/logion-chain/__mocks__/LogionChainMock';
 import { CollectionItem, UploadableItemFile, Token } from '@logion/client';
@@ -85,7 +86,7 @@ const setTokenForDownload = (token: Token | undefined) => {
 
 const assetProps = {
     locId,
-    owner: DEFAULT_LEGAL_OFFICER,
+    owner: DEFAULT_LEGAL_OFFICER.address,
     item,
     setTokenForDownload,
 };
@@ -121,7 +122,7 @@ function expectTokenSet(value: string) {
 
 function mockForCheckSuccess(address: string) {
     const clientMock = new LogionClient();
-    clientMock.currentAddress = address;
+    clientMock.currentAddress = mockValidPolkadotAccountId(address);
     const item = {
         isAuthenticatedTokenOwner: () => true,
     };

@@ -36,7 +36,7 @@ export default function ChainData() {
             setDone(undefined);
             flushSync(() => setSignAndSubmit(null)); // Reset
 
-            const legalOfficerAddress = accounts.current.address;
+            const legalOfficerAddress = accounts.current.accountId.address;
             const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
                 signerId: legalOfficerAddress,
                 submittable: updateLegalOfficerDataExtrinsic({

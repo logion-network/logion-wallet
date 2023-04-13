@@ -1,3 +1,4 @@
+import { ValidAccountId } from "@logion/node-api";
 import { useCallback, useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import AccountAddress from './AccountAddress';
@@ -12,7 +13,7 @@ export default function AddressSwitcher() {
     const { colorTheme } = useCommonContext();
     const [ confirm, setConfirm ] = useState<boolean>(false);
 
-    const authenticateCallback = useCallback(async (address: string) => {
+    const authenticateCallback = useCallback(async (address: ValidAccountId) => {
         await authenticate([ address ]);
         selectAddress!(address);
     }, [ authenticate, selectAddress ]);
@@ -47,16 +48,16 @@ export default function AddressSwitcher() {
                 >
                     {
                         accounts.all
-                            .filter(account => account.address !== accounts!.current!.address)
+                            .filter(account => account.accountId !== accounts!.current!.accountId)
                             .map(account => (
                             <Dropdown.Item
-                                key={ account.address }
-                                onClick={ () => account.token ? selectAddress(account.address) : undefined }
+                                key={ account.accountId.toKey() }
+                                onClick={ () => account.token ? selectAddress(account.accountId) : undefined }
                             >
                                 <AccountAddress
                                     account={ account }
                                     disabled={ account.token === undefined }
-                                    login={ () => authenticateCallback(account.address) }
+                                    login={ () => authenticateCallback(account.accountId) }
                                 />
                             </Dropdown.Item>
                         ))

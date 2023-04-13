@@ -118,7 +118,7 @@ export default function WalletGauge(props: Props) {
                                 buttonText: "Transfer",
                                 buttonVariant: 'polkadot',
                                 callback: transferCallback,
-                                disabled: signAndSubmit !== undefined || !client.isValidAddress(destination) || isNaN(Number(amount)) || Number(amount) === 0 || destination === accounts!.current!.address
+                                disabled: signAndSubmit !== undefined || !client.isValidAddress(destination) || isNaN(Number(amount)) || Number(amount) === 0 || destination === accounts!.current!.accountId.address
                             }
                         ] }
                         size="lg"
@@ -132,7 +132,7 @@ export default function WalletGauge(props: Props) {
                                         id="destination"
                                         label="Destination"
                                         control={ <Form.Control
-                                            isInvalid={ destination !== "" && (!client.isValidAddress(destination) || destination === accounts!.current!.address) }
+                                            isInvalid={ destination !== "" && (!client.isValidAddress(destination) || destination === accounts!.current!.accountId.address) }
                                             type="text"
                                             placeholder="The beneficiary's SS58 address"
                                             value={ destination }

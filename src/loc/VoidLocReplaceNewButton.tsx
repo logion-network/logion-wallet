@@ -45,11 +45,11 @@ export default function VoidLocReplaceNewButton() {
 
     const createNewLocRequest = useCallback(() => {
         (async function () {
-            const currentAddress = accounts!.current!.address;
+            const currentAddress = accounts!.current!.accountId;
             const request: CreateLocRequest = {
-                ownerAddress: currentAddress,
-                requesterAddress: locData!.requesterAddress ? locData!.requesterAddress : undefined,
-                requesterIdentityLoc: locData!.requesterLocId ? locData!.requesterLocId.toString() : undefined,
+                ownerAddress: currentAddress.address,
+                requesterAddress: locData?.requesterAddress ? locData.requesterAddress.address : undefined,
+                requesterIdentityLoc: locData?.requesterLocId ? locData.requesterLocId.toString() : undefined,
                 description: newLocDescription,
                 userIdentity: locData!.userIdentity,
                 locType: locData!.locType,

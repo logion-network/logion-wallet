@@ -11,7 +11,7 @@ describe("LocPublicDataDetails", () => {
             value: "Data value",
             timestamp: null,
             type: "Data",
-            submitter: TEST_WALLET_USER,
+            submitter: TEST_WALLET_USER.address,
             status: "DRAFT",
             nature: "File's nature",
             newItem: false,

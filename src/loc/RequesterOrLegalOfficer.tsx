@@ -33,17 +33,17 @@ export default function RequesterOrLegalOfficer(props: Props) {
                                 placement="top"
                                 delay={ 500 }
                                 overlay={
-                                    <Tooltip id={ loc.requesterAddress }>{ loc.requesterAddress }</Tooltip>
+                                    <Tooltip id={ loc.requesterAddress.toKey() }>{ loc.requesterAddress.address }</Tooltip>
                                 }
                             >
                                 <span><br /> <>
                                 {
                                     loc.identityLocId &&
-                                    <NewTabLink href={ identityLocDetailsPath(loc.identityLocId!.toString()) }>{ loc.requesterAddress }</NewTabLink>
+                                    <NewTabLink href={ identityLocDetailsPath(loc.identityLocId!.toString()) }>{ loc.requesterAddress.address }</NewTabLink>
                                 }
                                 {
                                     loc.identityLocId === undefined &&
-                                    loc.requesterAddress
+                                    loc.requesterAddress.address
                                 }</>
                                 </span>
                             </OverlayTrigger>

@@ -88,7 +88,7 @@ describe("RecoveryDetails", () => {
         await userEvent.click(confirmButton!);
 
         await waitFor(() => expect(rejectProtectionRequest).toBeCalledWith(axiosMock.object(), expect.objectContaining({
-            legalOfficerAddress: DEFAULT_LEGAL_OFFICER_ACCOUNT.address,
+            legalOfficerAddress: DEFAULT_LEGAL_OFFICER_ACCOUNT.accountId.address,
             requestId: protectionRequest.id,
         })));
         await waitFor(() => expect(refreshRequests).toBeCalled());

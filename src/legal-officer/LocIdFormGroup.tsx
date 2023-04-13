@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { Form } from 'react-bootstrap';
-import { getLegalOfficerCase, LocType, UUID } from '@logion/node-api';
+import { getLegalOfficerCase, LocType, UUID, ValidAccountId } from '@logion/node-api';
 
 import Alert from '../common/Alert';
 import { BackgroundAndForegroundColors } from '../common/ColorTheme';
@@ -14,7 +14,7 @@ export interface Props {
     expect: {
         closed: boolean,
         type: LocType,
-        requester: string,
+        requester: ValidAccountId,
     };
 }
 
@@ -40,7 +40,7 @@ export default function LocIdFormGroup(props: Props) {
                     setInvalidLocIdFeedback("Given LOC has not expected type");
                 } else if(loc.closed !== props.expect.closed) {
                     setInvalidLocIdFeedback("Given LOC is not in expected state");
-                } else if(loc.requesterAddress !== props.expect.requester) {
+                } else if(loc.requesterAddress?.toKey() !== props.expect.requester.toKey()) {
                     setInvalidLocIdFeedback("Given LOC has not expected requester");
                 } else {
                     setInvalidLocIdFeedback(undefined);

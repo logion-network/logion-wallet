@@ -181,10 +181,10 @@ export function CommonContextProvider(props: Props) {
                 && client.isTokenValid(now)) {
 
             const currentAccount = accounts.current;
-            const currentAddress = currentAccount.address;
+            const currentAddress = currentAccount.accountId;
             dispatch({
                 type: "FETCH_IN_PROGRESS",
-                dataAddress: currentAddress,
+                dataAddress: currentAddress.toKey(),
                 clearOnRefresh: clearOnRefresh !== undefined ? clearOnRefresh : true,
                 client,
             });
@@ -212,7 +212,7 @@ export function CommonContextProvider(props: Props) {
 
                 dispatch({
                     type: "SET_DATA",
-                    dataAddress: currentAddress,
+                    dataAddress: currentAddress.toKey(),
                     balanceState,
                     nodesUp,
                     nodesDown,
@@ -228,7 +228,7 @@ export function CommonContextProvider(props: Props) {
                 && client && client.isTokenValid(DateTime.now())
                 && accounts !== null
                 && accounts.current !== undefined
-                && ((contextValue.dataAddress !== accounts.current.address) || (contextValue.client !== client))) {
+                && ((contextValue.dataAddress !== accounts.current.accountId.toKey()) || (contextValue.client !== client))) {
             refreshRequests();
         }
     }, [ api, contextValue, refreshRequests, accounts, client ]);

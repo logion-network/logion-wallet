@@ -28,7 +28,11 @@ exports[`DashboardCertificate renders item 1`] = `
         ],
       },
       "locType": "Identity",
-      "requesterAddress": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+      "requesterAddress": Object {
+        "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "toKey": [Function],
+        "type": "Polkadot",
+      },
       "userIdentity": Object {
         "email": "john.doe@logion.network",
         "firstName": "John",
