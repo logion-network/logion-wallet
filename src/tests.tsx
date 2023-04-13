@@ -24,7 +24,8 @@ export function mockAccount(address: string, name: string) {
         address,
         meta: {
             name
-        }
+        },
+        type: "sr25519"
     };
 }
 

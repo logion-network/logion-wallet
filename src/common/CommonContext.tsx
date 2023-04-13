@@ -118,7 +118,7 @@ const reducer: Reducer<FullCommonContext, Action> = (state: FullCommonContext, a
                 const nodesDown = action.nodesDown !== undefined ? action.nodesDown : state.nodesDown;
                 return {
                     ...state,
-                    balanceState: action.balanceState!,
+                    balanceState: action.balanceState,
                     availableLegalOfficers: action.availableLegalOfficers!,
                     backendConfig: action.backendConfig!,
                     nodesUp,
@@ -190,7 +190,10 @@ export function CommonContextProvider(props: Props) {
             });
 
             (async function () {
-                const balanceState = await client.balanceState();
+                let balanceState: BalanceState | undefined;
+                if(accounts.current?.accountId.type === "Polkadot") {
+                    balanceState = await client.balanceState();
+                }
 
                 const multiClient = client.buildMultiSourceHttpClient();
                 const multiResponse = await multiClient.fetch<BackendConfig>(async axios => (await axios.get("/api/config")).data);

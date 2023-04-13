@@ -19,14 +19,18 @@ export default function AccountAddress(props: Props) {
     const { colorTheme } = useCommonContext();
 
     let style: CSSProperties = {};
-    const icon = colorTheme.accounts.legalOfficerIcon;
+    const backgroundIcon = colorTheme.accounts.legalOfficerIcon;
+    let foregroundIcon;
     if(props.account.isLegalOfficer) {
-        style['backgroundImage'] = `url("${process.env.PUBLIC_URL}/assets/${icon.id}.svg")`;
+        style['backgroundImage'] = `url("${process.env.PUBLIC_URL}/assets/${backgroundIcon.id}.svg")`;
         style['backgroundRepeat'] = 'no-repeat';
-        style['backgroundPositionX'] = '6px';
+        style['backgroundPositionX'] = '7px';
         style['backgroundPositionY'] = 'center';
+
+        foregroundIcon = "polkadot-account-white";
     } else {
         style['backgroundColor'] = colorTheme.accounts.iconBackground;
+        foregroundIcon = props.account.accountId.type === "Ethereum" ? "metamask" : "polkadot-account";
     }
 
     return (
@@ -35,7 +39,7 @@ export default function AccountAddress(props: Props) {
                 className="icon"
                 style={ style }
             >
-                { props.account.name.substring(0, 1).toUpperCase() }
+                <Icon icon={{ id: foregroundIcon }} width="40px" />
             </div>
             <div
                 className="text"
