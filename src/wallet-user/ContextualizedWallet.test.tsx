@@ -7,21 +7,23 @@ jest.mock('./UserContext');
 import ContextualizedWallet from './ContextualizedWallet';
 import { apiMock, setContextMock } from '../logion-chain/__mocks__/LogionChainMock';
 import { shallowRender, mockAccount } from '../tests';
-import { Account } from 'src/common/types/Accounts';
 import { LocsState } from "@logion/client";
+import { mockValidPolkadotAccountId } from "src/__mocks__/@logion/node-api/Mocks";
 
 describe("ContextualizedWallet", () => {
 
     setLocsState({} as LocsState)
 
-    const account = mockAccount("address", "Account name") as unknown as Account;
+    const accountId = mockValidPolkadotAccountId("address");
 
     test('Given disconnected and accounts then empty', () => {
         setContextMock({
             api: null,
-            accounts: [
-                account
-            ]
+            accounts: {
+                current: {
+                    accountId
+                }
+            }
         });
     
         const tree = shallowRender(<ContextualizedWallet />);
@@ -32,9 +34,11 @@ describe("ContextualizedWallet", () => {
     test('Given connected and account, then renders with router', () => {
         setContextMock({
             api: apiMock,
-            accounts: [
-                account
-            ]
+            accounts: {
+                current: {
+                    accountId
+                }
+            }
         });
 
         const tree = shallowRender(<ContextualizedWallet />);

@@ -383,7 +383,7 @@ export async function getVotes(client: LogionClient): Promise<Vote[]> {
         throw new Error("Not authenticated");
     }
     const axios = buildAxiosWithClient(client, client.currentAddress.address);
-    const response = await axios.get(`/api/vote/${ currentAddress }`);
+    const response = await axios.get(`/api/vote/${ currentAddress.address }`);
     const votes: BackendVote[] = response.data.votes;
     return votes.map(backendVote => ({
         ...backendVote,

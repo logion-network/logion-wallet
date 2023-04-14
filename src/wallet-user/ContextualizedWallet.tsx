@@ -33,8 +33,9 @@ export default function ContextualizedWallet() {
 
     const userContext = api !== null ? <UserRouter /> : null;
 
-    let menuTop = [
-        {
+    const menuTop = [];
+    if(accounts.current?.accountId.type === "Polkadot") {
+        menuTop.push({
             id: "home",
             text: "Home",
             to: HOME_PATH,
@@ -46,8 +47,8 @@ export default function ContextualizedWallet() {
                 background: colorTheme.topMenuItems.iconGradient,
             },
             onClick: refreshAll,
-        },
-        {
+        });
+        menuTop.push({
             id: "wallet",
             text: "Wallet",
             to: WALLET_PATH,
@@ -59,8 +60,8 @@ export default function ContextualizedWallet() {
                 background: colorTheme.topMenuItems.iconGradient,
             },
             onClick: refreshAll,
-        },
-        {
+        });
+        menuTop.push({
             id: "vault",
             text: "Vault",
             to: VAULT_PATH,
@@ -73,8 +74,8 @@ export default function ContextualizedWallet() {
             },
             onClick: refreshAll,
             disabled: !vaultState,
-        },
-        {
+        });
+        menuTop.push({
             id: "loc-collection",
             text: "Collections",
             to: locRequestsPath('Collection'),
@@ -86,8 +87,8 @@ export default function ContextualizedWallet() {
                 background: colorTheme.topMenuItems.iconGradient,
             },
             onClick: refreshAll,
-        },
-        {
+        });
+        menuTop.push({
             id: "loc-transaction",
             text: "Transactions",
             to: locRequestsPath('Transaction'),
@@ -99,21 +100,21 @@ export default function ContextualizedWallet() {
                 background: colorTheme.topMenuItems.iconGradient,
             },
             onClick: refreshAll,
-        },
-        {
-            id: "loc-identity",
-            text: "Identity",
-            to: locRequestsPath('Identity'),
-            exact: false,
+        });
+    };
+    menuTop.push({
+        id: "loc-identity",
+        text: "Identity",
+        to: locRequestsPath('Identity'),
+        exact: false,
+        icon: {
             icon: {
-                icon: {
-                    id: 'identity'
-                },
-                background: colorTheme.topMenuItems.iconGradient,
+                id: 'identity'
             },
-            onClick: refreshAll,
+            background: colorTheme.topMenuItems.iconGradient,
         },
-    ];
+        onClick: refreshAll,
+    });
 
     if (locsState && !locsState.discarded && locsState?.isVerifiedThirdParty) {
         menuTop.push({
@@ -131,53 +132,60 @@ export default function ContextualizedWallet() {
             }
         )
     }
+
+    const menuMiddle = [];
+    if(accounts.current?.accountId.type === "Polkadot") {
+        menuMiddle.push({
+            id: "protection",
+            text: "My Logion Protection",
+            to: TRUST_PROTECTION_PATH,
+            exact: true,
+            icon: {
+                icon: {
+                    id: 'shield',
+                    hasVariants: true,
+                },
+                height: 'auto',
+                width: 'auto',
+            },
+            onClick: refreshAll,
+        });
+    }
+
+    const menuBottom = [];
+    if(accounts.current?.accountId.type === "Polkadot") {
+        menuBottom.push({
+            id: "settings",
+            text: "Settings",
+            to: SETTINGS_PATH,
+            exact: true,
+            icon: {
+                icon: {
+                    id: 'settings'
+                },
+                background: colorTheme.bottomMenuItems.iconGradient,
+            },
+        });
+        menuBottom.push({
+            id: "recovery",
+            text: "Recovery",
+            to: RECOVERY_PATH,
+            exact: true,
+            icon: {
+                icon: {
+                    id: 'recovery'
+                },
+                background: colorTheme.recoveryItems.iconGradient,
+            },
+            onClick: refreshAll,
+        });
+    }
+
     return (
         <Dashboard
             menuTop={ menuTop }
-            menuMiddle={[
-                {
-                    id: "protection",
-                    text: "My Logion Protection",
-                    to: TRUST_PROTECTION_PATH,
-                    exact: true,
-                    icon: {
-                        icon: {
-                            id: 'shield',
-                            hasVariants: true,
-                        },
-                        height: 'auto',
-                        width: 'auto',
-                    },
-                    onClick: refreshAll,
-                }
-            ]}
-            menuBottom={[
-                {
-                    id: "settings",
-                    text: "Settings",
-                    to: SETTINGS_PATH,
-                    exact: true,
-                    icon: {
-                        icon: {
-                            id: 'settings'
-                        },
-                        background: colorTheme.bottomMenuItems.iconGradient,
-                    },
-                },
-                {
-                    id: "recovery",
-                    text: "Recovery",
-                    to: RECOVERY_PATH,
-                    exact: true,
-                    icon: {
-                        icon: {
-                            id: 'recovery'
-                        },
-                        background: colorTheme.recoveryItems.iconGradient,
-                    },
-                    onClick: refreshAll,
-                }
-            ]}
+            menuMiddle={ menuMiddle }
+            menuBottom={ menuBottom }
         >
             {userContext}
         </Dashboard>

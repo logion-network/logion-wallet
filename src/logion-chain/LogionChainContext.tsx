@@ -1,5 +1,5 @@
 import { AccountTokens, LegalOfficer, LegalOfficerClass, LogionClient, DefaultSignAndSendStrategy, Token, RawSigner } from '@logion/client';
-import { enableExtensions, ExtensionSigner, InjectedAccount, isExtensionAvailable } from '@logion/extension';
+import { allMetamaskAccounts, enableExtensions, enableMetaMask, ExtensionSigner, InjectedAccount, isExtensionAvailable } from '@logion/extension';
 import { buildApi, LogionNodeApi, ValidAccountId } from '@logion/node-api';
 import axios, { AxiosInstance } from 'axios';
 import React, { useReducer, useContext, Context, Reducer, useEffect, useCallback } from 'react';
@@ -293,6 +293,13 @@ async function consumeInjectedAccounts(state: LogionChainContextType, dispatch: 
         dispatch({type: 'START_INJECTED_ACCOUNTS_CONSUMPTION'});
     } else if(state.injectedAccountsConsumptionState === 'STARTING') {
         dispatch({type: 'INJECTED_ACCOUNTS_CONSUMPTION_STARTED'});
+
+        let metamaskAccounts: InjectedAccount[] = [];
+        const metaMaskEnabled = await enableMetaMask(config.APP_NAME);
+        if(metaMaskEnabled) {
+            metamaskAccounts = await allMetamaskAccounts();
+        }
+
         const register = await enableExtensions(config.APP_NAME);
         if(isExtensionAvailable()) {
             dispatch({
@@ -302,7 +309,7 @@ async function consumeInjectedAccounts(state: LogionChainContextType, dispatch: 
             register((accounts: InjectedAccount[]) => {
                 dispatch({
                     type: 'SET_INJECTED_ACCOUNTS',
-                    injectedAccounts: accounts
+                    injectedAccounts: metamaskAccounts.concat(accounts)
                 });
             });
         } else {
@@ -311,7 +318,7 @@ async function consumeInjectedAccounts(state: LogionChainContextType, dispatch: 
             });
             dispatch({
                 type: 'SET_INJECTED_ACCOUNTS',
-                injectedAccounts: []
+                injectedAccounts: metamaskAccounts
             });
         }
     }
@@ -509,7 +516,7 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
 async function buildLegalOfficersSet(client: LogionClient, accounts: InjectedAccount[]): Promise<Set<string>> {
     const legalOfficersSet = new Set<string>();
     for(const account of accounts) {
-        if(await client.isRegisteredLegalOfficer(account.address)) {
+        if(account.type !== "ethereum" && account.type !== "ecdsa" && await client.isRegisteredLegalOfficer(account.address)) {
             legalOfficersSet.add(account.address);
         }
     }

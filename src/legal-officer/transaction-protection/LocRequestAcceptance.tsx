@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import {
     createCollectionLoc,
     createPolkadotTransactionLoc,
+    createOtherIdentityLoc,
     createPolkadotIdentityLoc,
     createLogionTransactionLoc,
     createLogionIdentityLoc,
@@ -110,7 +111,7 @@ export default function LocRequestAcceptance(props: Props) {
                             canUpload,
                         })
                     });
-                } else if(props.requestToAccept!.requesterAddress && props.requestToAccept?.locType === 'Identity') {
+                } else if(props.requestToAccept!.requesterAddress && props.requestToAccept!.requesterAddress.type === "Polkadot" && props.requestToAccept!.locType === 'Identity') {
                     signAndSubmit = (setResult, setError) => signAndSend({
                         signerId: accounts!.current!.accountId.address,
                         callback: setResult,
@@ -119,6 +120,17 @@ export default function LocRequestAcceptance(props: Props) {
                             api: api!,
                             locId: props.requestToAccept!.id,
                             requester: props.requestToAccept!.requesterAddress!.address,
+                        })
+                    });
+                } else if(props.requestToAccept!.requesterAddress && props.requestToAccept!.requesterAddress.type === "Ethereum" && props.requestToAccept!.locType === 'Identity') {
+                    signAndSubmit = (setResult, setError) => signAndSend({
+                        signerId: accounts!.current!.accountId.address,
+                        callback: setResult,
+                        errorCallback: setError,
+                        submittable: createOtherIdentityLoc({
+                            api: api!,
+                            locId: props.requestToAccept!.id,
+                            requester: props.requestToAccept!.requesterAddress!.toOtherAccountId(),
                         })
                     });
                 } else if(!props.requestToAccept!.requesterAddress && props.requestToAccept?.locType === 'Identity') {

@@ -30,6 +30,7 @@ import IdenfyVerificationResult from './IdenfyVerificationResult';
 import { UserDocumentClaimHistory, UserTokensRecordDocumentClaimHistory } from 'src/loc/DocumentClaimHistory';
 import { UserTokensRecordPane } from 'src/loc/record/TokensRecordPane';
 import IdentityLocCreation from './IdentityLocCreation';
+import { Navigate } from 'react-router-dom';
 
 export const HOME_PATH = USER_PATH;
 
@@ -238,7 +239,7 @@ export default function UserRouter() {
                     contributionMode='Requester'
                 />
             } />
-            <Route path="/" element={ <Home /> } />
+            <Route path="/" element={ accounts.current.accountId.type === "Polkadot" ? <Home /> : <Navigate to={ locRequestsPath('Identity') } /> } />
             <Route path={ IDENTITY_REQUEST_RELATIVE_PATH } element={
                 <IdentityLocRequest backPath={ locRequestsPath('Identity') }/>
             } />

@@ -288,24 +288,26 @@ export function UserContextProvider(props: Props) {
 
             (async function () {
                 let protectionState = contextValue.protectionState;
-                if(protectionState === undefined || forceStateFetch) {
-                    protectionState = await client.protectionState();
-                } else if(contextValue.protectionState instanceof PendingProtection) {
-                    protectionState = await contextValue.protectionState.refresh();
-                }
-
                 let vaultState: VaultState | undefined;
-                if (protectionState instanceof ActiveProtection
-                        || protectionState instanceof PendingRecovery
-                        || protectionState instanceof ClaimedRecovery) {
-                    vaultState = await protectionState.vaultState();
-                }
-
                 let recoveredVaultState: VaultState | undefined;
                 let recoveredBalanceState: BalanceState | undefined;
-                if(protectionState instanceof ClaimedRecovery) {
-                    recoveredVaultState = await protectionState.recoveredVaultState();
-                    recoveredBalanceState = await protectionState.recoveredBalanceState();
+                if(currentAddress.type === "Polkadot") {
+                    if(protectionState === undefined || forceStateFetch) {
+                        protectionState = await client.protectionState();
+                    } else if(contextValue.protectionState instanceof PendingProtection) {
+                        protectionState = await contextValue.protectionState.refresh();
+                    }
+
+                    if (protectionState instanceof ActiveProtection
+                            || protectionState instanceof PendingRecovery
+                            || protectionState instanceof ClaimedRecovery) {
+                        vaultState = await protectionState.vaultState();
+                    }
+
+                    if(protectionState instanceof ClaimedRecovery) {
+                        recoveredVaultState = await protectionState.recoveredVaultState();
+                        recoveredBalanceState = await protectionState.recoveredBalanceState();
+                    }
                 }
 
                 const locsState = await client.locsState();

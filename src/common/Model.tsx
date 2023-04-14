@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { UserIdentity, LocData, LocRequest } from '@logion/client';
 import { ProtectionRequest, ProtectionRequestStatus } from '@logion/client/dist/RecoveryClient.js';
-import { LocType } from '@logion/node-api';
+import { AccountType, LocType } from '@logion/node-api';
 
 export type ProtectionRequestKind = 'RECOVERY' | 'PROTECTION_ONLY' | 'ANY';
 
@@ -23,9 +23,14 @@ export interface FetchTransactionsSpecification {
     address: string,
 }
 
+export interface RequesterAddress {
+    type: AccountType;
+    address: string;
+}
+
 export interface CreateLocRequest {
     ownerAddress: string;
-    requesterAddress?: string;
+    requesterAddress?: RequesterAddress;
     requesterIdentityLoc?: string;
     description: string;
     locType: LocType;
