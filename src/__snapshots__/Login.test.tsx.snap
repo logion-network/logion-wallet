@@ -33,7 +33,14 @@ exports[`Login renders 1`] = `
           <div
             className="icon"
           >
-            N
+            <Icon
+              icon={
+                Object {
+                  "id": "polkadot-account",
+                }
+              }
+              width="40px"
+            />
           </div>
           <div
             className="name-address"

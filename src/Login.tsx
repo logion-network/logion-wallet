@@ -11,6 +11,7 @@ import Checkbox from './components/toggle/Checkbox';
 import AbsoluteLogo from './AbsoluteLogo';
 
 import './Login.css';
+import Icon from "./common/Icon";
 
 export const LOGIN_PATH = "/login";
 
@@ -78,7 +79,7 @@ export default function Login() {
                                     <div
                                         className="icon"
                                     >
-                                        { address.name.substring(0, 1).toUpperCase() }
+                                        <Icon icon={{ id: address.accountId.type === "Ethereum" ? "metamask" : "polkadot-account" }} width="40px" />
                                     </div>
                                     <div
                                         className="name-address"
