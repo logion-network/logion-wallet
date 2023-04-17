@@ -5,6 +5,7 @@ import { UUID } from "@logion/node-api";
 import { LocItem } from "./LocItem";
 import { shallowRender } from "../tests";
 import LocPublishPrivateFileButton from "./LocPublishPrivateFileButton";
+import { mockValidPolkadotAccountId } from "src/__mocks__/@logion/node-api/Mocks";
 
 describe("LocPublishPrivateFileButton", () => {
 
@@ -13,7 +14,7 @@ describe("LocPublishPrivateFileButton", () => {
         name: "file-name",
         type: "Document",
         status: "DRAFT",
-        submitter: "file-submitter",
+        submitter: mockValidPolkadotAccountId("file-submitter"),
         value: "file-value",
         nature: "file-nature",
         timestamp: null,

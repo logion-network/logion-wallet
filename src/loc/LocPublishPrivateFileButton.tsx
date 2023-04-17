@@ -43,7 +43,7 @@ export default function LocPublishPrivateFileButton(props: Props) {
                 locId: props.locId,
                 hash: props.locItem.value || "",
                 nature: props.locItem.nature || "",
-                submitter: props.locItem.submitter || "",
+                submitter: props.locItem.submitter!,
                 size: props.locItem.size!,
                 origin: client.currentAddress?.address || "",
             }) }

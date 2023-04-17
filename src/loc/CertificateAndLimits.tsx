@@ -92,9 +92,9 @@ export default function CertificateAndLimits(props: Props) {
                             { props.loc.locType === 'Collection' && props.loc.closed && !props.loc.voidInfo && <TokensRecordButton contributionMode={props.contributionMode}/> }
                             { props.loc.locType === 'Collection' && props.loc.closed && !props.loc.voidInfo && <Button onClick={ () => setShowSettings(true) }><Icon icon={{id: "cog"}} height="22px"/> Get dev settings</Button> }
 
-                            { props.loc.locType === 'Collection' && props.viewer === 'LegalOfficer' && props.loc.status ==='OPEN' && <VTPSelectionButton/> }
+                            { props.loc.locType === 'Collection' && props.viewer === 'LegalOfficer' && <VTPSelectionButton/> }
                             { props.loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' && props.loc.status ==='OPEN' && <VTPSelectionButton/> }
-                            { props.loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' && props.loc.locType === 'Identity' && !isLogionIdentityLoc({ ...props.loc, requesterAddress: props.loc.requesterAddress?.address }) && props.loc.status ==='CLOSED' && !props.isReadOnly && <Nominate/> }
+                            { props.loc.locType === 'Identity' && props.viewer === 'LegalOfficer' && !isLogionIdentityLoc({ ...props.loc, requesterAddress: props.loc.requesterAddress?.address }) && props.loc.requesterAddress?.type === "Polkadot" && props.loc.status ==='CLOSED' && !props.isReadOnly && <Nominate/> }
 
                             { props.loc.locType === 'Identity' && !isLogionIdentityLoc({ ...props.loc, requesterAddress: props.loc.requesterAddress?.address }) && props.viewer === 'LegalOfficer' && props.loc.status === "CLOSED" && hasVoteFeature && !props.loc.voteId && !props.isReadOnly && <RequestVoteButton/> }
 

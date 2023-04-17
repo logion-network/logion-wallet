@@ -2,6 +2,7 @@ import React, { useContext, useReducer, Reducer, useEffect, useCallback, useStat
 import {
     UUID,
     LocType,
+    validPolkadotAccountId,
 } from "@logion/node-api";
 import {
     LocRequestState,
@@ -150,7 +151,7 @@ const enum NextRefresh {
 }
 
 export function LocContextProvider(props: Props) {
-    const { accounts, client } = useLogionChain();
+    const { api, accounts, client } = useLogionChain();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue(props.locState, props.backPath, props.detailsPath));
     const [ refreshing, setRefreshing ] = useState<boolean>(false);
     const [ refreshCounter, setRefreshCounter ] = useState<number>(0);
@@ -181,14 +182,14 @@ export function LocContextProvider(props: Props) {
                 const result = createLinkItem({
                     link: item,
                     otherLocDescription: linkData.linkedLoc.description || "- Confidential -",
-                    submitter: locOwner,
+                    submitter: validPolkadotAccountId(api!, locOwner),
                     linkDetailsPath: linkData.linkDetailsPath,
                 })
                 locItems.push(result.locItem)
             }
         }
         return locItems;
-    }, [ accounts, props ])
+    }, [ api, accounts, props ])
 
     const startRefresh = useCallback(() => {
         console.log("Start refreshing LOC");

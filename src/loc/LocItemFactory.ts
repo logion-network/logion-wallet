@@ -1,5 +1,5 @@
 import { MergedMetadataItem, MergedFile, MergedLink, Fees as ClientFees } from "@logion/client";
-import { UUID, Fees } from "@logion/node-api";
+import { UUID, Fees, ValidAccountId } from "@logion/node-api";
 import { LinkData, LocItem } from "./LocItem";
 import { LocTemplateDocumentOrLink, LocTemplateMetadataItem } from "./Template";
 
@@ -19,7 +19,7 @@ export function createFileItem(file: MergedFile): ItemAndRefreshFlag {
 
 export interface SimpleItem {
     name: string;
-    submitter: string;
+    submitter: ValidAccountId;
     addedOn?: string;
 }
 
@@ -96,7 +96,7 @@ export interface SimpleLink {
 export interface CreateLocLinkedLocItemParameters {
     link: SimpleLink,
     otherLocDescription: string,
-    submitter: string,
+    submitter: ValidAccountId,
     linkDetailsPath: string,
 }
 
@@ -206,7 +206,7 @@ export function createMetadataTemplateItem(templateItem: LocTemplateMetadataItem
 }
 
 export function createLinkTemplateItem(
-    ownerAddress: string,
+    ownerAddress: ValidAccountId,
     templateItem: LocTemplateDocumentOrLink,
     locItem?: MergedLink,
     linkData?: LinkData,

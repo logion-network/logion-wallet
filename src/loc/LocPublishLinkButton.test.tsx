@@ -5,6 +5,7 @@ import { UUID } from "@logion/node-api";
 import { LocItem } from "./LocItem";
 import { shallowRender } from "../tests";
 import LocPublishLinkButton from "./LocPublishLinkButton";
+import { mockValidPolkadotAccountId } from "src/__mocks__/@logion/node-api/Mocks";
 
 describe("LocPublishLinkButton", () => {
 
@@ -13,7 +14,7 @@ describe("LocPublishLinkButton", () => {
         name: "link-name",
         type: "Linked LOC",
         status: "DRAFT",
-        submitter: "link-submitter",
+        submitter: mockValidPolkadotAccountId("link-submitter"),
         value: "link-value",
         target: new UUID("94cec06d-dca4-4a62-83f4-a82c5425d94e"),
         nature: "link-nature",

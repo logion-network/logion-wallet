@@ -17,6 +17,7 @@ import { LocRequestState, EditableRequest, OpenLoc, ClosedLoc } from "src/__mock
 import { addLink, closeLoc, deleteLink, publishFile, publishLink, publishMetadata, voidLoc } from "../legal-officer/client";
 import { useLogionChain } from "src/logion-chain";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
+import { mockValidPolkadotAccountId } from "src/__mocks__/@logion/node-api/Mocks";
 
 jest.mock("../logion-chain/Signature");
 jest.mock("../logion-chain");
@@ -308,7 +309,7 @@ function givenDraftItems() {
     _locData.metadata.push({
         addedOn: "",
         name: "New data",
-        submitter: OPEN_IDENTITY_LOC.owner,
+        submitter: mockValidPolkadotAccountId(OPEN_IDENTITY_LOC.owner),
         value: "Some value",
         published: false,
     })
@@ -316,7 +317,7 @@ function givenDraftItems() {
         hash: "new-hash",
         addedOn: "",
         name: "New file",
-        submitter: OPEN_IDENTITY_LOC.owner,
+        submitter: mockValidPolkadotAccountId(OPEN_IDENTITY_LOC.owner),
         nature: "Some nature",
         published: false,
         restrictedDelivery: false,

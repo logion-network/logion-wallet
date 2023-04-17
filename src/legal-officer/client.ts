@@ -25,6 +25,7 @@ import {
     VoidInfo,
     asString,
     LogionNodeApi,
+    ValidAccountId,
 } from "@logion/node-api";
 import type { SubmittableExtrinsic } from '@polkadot/api/promise/types';
 import { AnyJson } from "@polkadot/types-codec/types/helpers.js";
@@ -118,7 +119,7 @@ export async function publishFile(params: {
     locState: EditableRequest,
     hash: string,
     nature: string,
-    submitter: string,
+    submitter: ValidAccountId,
     size: bigint,
     signer: Signer,
     callback: SignCallback,

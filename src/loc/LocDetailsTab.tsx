@@ -1,6 +1,5 @@
-import { LocData, LegalOfficer, LocRequestState, DraftRequest } from "@logion/client";
-import { ProtectionRequest } from "@logion/client/dist/RecoveryClient.js";
-import { LocType, UUID } from "@logion/node-api";
+import { LocData, LegalOfficer, LocRequestState, DraftRequest, ProtectionRequest } from "@logion/client";
+import { LocType, UUID, validPolkadotAccountId } from "@logion/node-api";
 import { Col, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ButtonGroup from "src/common/ButtonGroup";
 import { BackgroundAndForegroundColors, BLUE, POLKADOT, RED } from "src/common/ColorTheme";
@@ -137,10 +136,10 @@ export function LocDetailsTabContent(props: ContentProps) {
     const [ template, setTemplate ] = useState<LocTemplate>();
     const [ templateItems, setTemplateItems ] = useState<LocItem[]>([]);
     const [ customItems, setCustomItems ] = useState<LocItem[]>([]);
-    const { accounts } = useLogionChain();
+    const { api, accounts } = useLogionChain();
 
     useEffect(() => {
-        if(loc && locState) {
+        if(api && loc && locState) {
             const theTemplate = getTemplate(loc.locType, loc.template);
             if(theTemplate) {
                 setTemplate(theTemplate);
@@ -173,7 +172,7 @@ export function LocDetailsTabContent(props: ContentProps) {
                             templateLinks.add(link.nature);
                             linkData = getLinkData(accounts?.current?.accountId.address, locState.locsState(), link, detailsPath);
                         }
-                        items.push(createLinkTemplateItem(loc.ownerAddress, linkTemplate, link, linkData));
+                        items.push(createLinkTemplateItem(validPolkadotAccountId(api, loc.ownerAddress), linkTemplate, link, linkData));
                     }
                 }
 
@@ -195,7 +194,7 @@ export function LocDetailsTabContent(props: ContentProps) {
             setTemplateItems([]);
             setCustomItems(locItems);
         }
-    }, [ loc, template, locItems, accounts, detailsPath, locState ]);
+    }, [ api, loc, template, locItems, accounts, detailsPath, locState ]);
 
     const confirmCancel = useCallback(() => {
         setShowCancelDialog(true);

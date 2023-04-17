@@ -37,8 +37,8 @@ export default function LocPrivateFileDetails(props: Props) {
                         props.fileName !== undefined &&
                         <LocItemDetail label="File type">{ props.fileType }</LocItemDetail>
                     }
-                    <LocItemDetail label="Submitter ID" copyButtonText={ props.item.submitter }>
-                        { props.item.submitter || "-" }
+                    <LocItemDetail label="Submitter ID" copyButtonText={ props.item.submitter?.address }>
+                        { props.item.submitter?.address || "-" }
                     </LocItemDetail>
                     <LocItemDetail label="Document Hash" copyButtonText={ props.item.value }>{ props.item.value || "-" }</LocItemDetail>
                     {
