@@ -49,7 +49,7 @@ export default function LocPublishPublicDataButton(props: Props) {
                     item: {
                         name: props.locItem.name || "",
                         value: props.locItem.value || "",
-                        submitter: props.locItem.submitter || "",
+                        submitter: props.locItem.submitter!,
                     },
                 })
             }) }

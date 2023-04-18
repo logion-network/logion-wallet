@@ -1,5 +1,5 @@
 import { LocRequestState, LocData, LocsState, EditableRequest, MergedLink } from "@logion/client";
-import { UUID, LocType, Fees } from "@logion/node-api";
+import { UUID, LocType, Fees, ValidAccountId } from "@logion/node-api";
 import { useCallback } from "react";
 import { CallCallback } from "src/ClientExtrinsicSubmitter";
 import { POLKADOT } from "src/common/ColorTheme";
@@ -30,7 +30,7 @@ export interface LocItem {
     value: string | undefined,
     timestamp: string | null,
     type: LocItemType,
-    submitter: string | undefined,
+    submitter: ValidAccountId | undefined,
     status: LocItemStatus,
     nature?: string,
     target?: UUID,
@@ -122,7 +122,7 @@ export function buildItemTableColumns(args: {
         },
         {
             header: "Submitted by",
-            render: locItem => <SubmitterName loc={ loc } submitter={ locItem.submitter } />,
+            render: locItem => <SubmitterName loc={ loc } submitter={ locItem.submitter?.address } />,
         }
     ];
 
@@ -232,11 +232,11 @@ export function useDeleteLinkCallback(mutateLocState: (mutator: (current: LocReq
     }, [ mutateLocState ]);
 }
 
-export function canDelete(address: string | undefined, item: LocItem, viewer: Viewer, loc: LocData): boolean {
+export function canDelete(account: ValidAccountId | undefined, item: LocItem, viewer: Viewer, loc: LocData): boolean {
     if (item.type === "Linked LOC") {
         return viewer === "LegalOfficer";
     } else {
-        return (viewer === "User" && item.submitter === address && (loc.status === "DRAFT" || loc.status === "OPEN"))
+        return (viewer === "User" && item.submitter?.address === account?.address && item.submitter?.type === account?.type && (loc.status === "DRAFT" || loc.status === "OPEN"))
             || (viewer === "LegalOfficer" && loc.status === "OPEN");
     }
 }

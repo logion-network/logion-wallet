@@ -84,7 +84,7 @@ export default function LocTemplateItems(props: Props) {
                 }
             }
 
-            if(canDelete(currentAddress, item, viewer, loc)) {
+            if(canDelete(accounts?.current?.accountId, item, viewer, loc)) {
                 buttons.push(
                     <Button
                         key={++key}

@@ -4,6 +4,7 @@ import { mockSubmittableResult } from "src/logion-chain/__mocks__/SignatureMock"
 import { clickByName } from "../tests";
 import LocPublishButton from "./LocPublishButton";
 import { LocItem } from "./LocItem";
+import { mockValidPolkadotAccountId } from "src/__mocks__/@logion/node-api/Mocks";
 
 jest.mock("./LocContext");
 jest.unmock("@logion/client");
@@ -17,7 +18,7 @@ describe("LocPublishButton", () => {
             name: "data-name",
             type: "Data",
             status: "DRAFT",
-            submitter: "data-submitter",
+            submitter: mockValidPolkadotAccountId("data-submitter"),
             value: "data-value",
             nature: "data-nature",
             timestamp: null,

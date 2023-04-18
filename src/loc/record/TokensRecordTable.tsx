@@ -1,4 +1,5 @@
 import { LocData, TokensRecord } from "@logion/client";
+import { validPolkadotAccountId } from "@logion/node-api";
 import { useMemo, useState } from "react";
 import { useCommonContext, Viewer } from "src/common/CommonContext";
 import SubmitterName from "src/common/SubmitterName";
@@ -11,6 +12,7 @@ import { useLocContext } from "../LocContext";
 import LocPrivateFileDetails from "../LocPrivateFileDetails";
 import { ContributionMode } from "../types";
 import { tokensRecordDocumentClaimHistoryPath as requesterTokensRecordDocumentClaimHistoryPath, vtpTokensRecordDocumentClaimHistoryPath } from "src/wallet-user/UserRouter";
+import { useLogionChain } from "src/logion-chain";
 
 export interface Props {
     records: TokensRecord[];
@@ -22,12 +24,13 @@ export default function TokensRecordTable(props: Props) {
     const { viewer } = useCommonContext();
     const { loc } = useLocContext();
     const [ currentPageNumber, setCurrentPageNumber ] = useState(0);
+    const { api } = useLogionChain();
 
     const currentPage: Page<TokensRecord> = useMemo(() => {
         return getPage(records, currentPageNumber, 10);
     }, [ records, currentPageNumber ]);
 
-    if(!loc) {
+    if(!api || !loc) {
         return null;
     }
 
@@ -42,7 +45,7 @@ export default function TokensRecordTable(props: Props) {
                             name: record.files[0].name,
                             newItem: false,
                             status: "PUBLISHED",
-                            submitter: record.issuer,
+                            submitter: validPolkadotAccountId(api, record.issuer),
                             timestamp: record.addedOn,
                             type: "Document",
                             value: record.files[0].hash,

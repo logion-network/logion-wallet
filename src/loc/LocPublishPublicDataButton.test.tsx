@@ -5,6 +5,7 @@ import { UUID } from "@logion/node-api";
 import { LocItem } from "./LocItem";
 import { shallowRender } from "../tests";
 import LocPublishPublicDataButton from "./LocPublishPublicDataButton";
+import { mockValidPolkadotAccountId } from "src/__mocks__/@logion/node-api/Mocks";
 
 describe("LocPublishPublicDataButton", () => {
 
@@ -13,7 +14,7 @@ describe("LocPublishPublicDataButton", () => {
         name: "data-name",
         type: "Data",
         status: "DRAFT",
-        submitter: "data-submitter",
+        submitter: mockValidPolkadotAccountId("data-submitter"),
         value: "data-value",
         nature: "data-nature",
         timestamp: null,

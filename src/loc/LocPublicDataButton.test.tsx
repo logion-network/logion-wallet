@@ -15,7 +15,7 @@ const existingItem: LocItem = {
     name: "Name",
     status: "DRAFT",
     newItem: false,
-    submitter: TEST_WALLET_USER.address,
+    submitter: TEST_WALLET_USER,
     type: "Data",
     value,
     timestamp: null,
