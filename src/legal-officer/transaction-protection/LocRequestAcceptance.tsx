@@ -131,6 +131,7 @@ export default function LocRequestAcceptance(props: Props) {
                             api: api!,
                             locId: props.requestToAccept!.id,
                             requester: props.requestToAccept!.requesterAddress!.toOtherAccountId(),
+                            sponsorshipId: props.requestToAccept!.sponsorshipId!,
                         })
                     });
                 } else if(!props.requestToAccept!.requesterAddress && props.requestToAccept?.locType === 'Identity') {

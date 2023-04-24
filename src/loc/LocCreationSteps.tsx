@@ -80,6 +80,7 @@ export default function LocCreationSteps(props: Props) {
                             api: api!,
                             locId: new UUID(requestToCreate!.id),
                             requester: new AnyAccountId(api!, requestToCreate!.requesterAddress!.address, requestToCreate!.requesterAddress!.type).toValidAccountId().toOtherAccountId(),
+                            sponsorshipId: new UUID(requestToCreate!.sponsorshipId),
                         })
                     });
                 } else if(requestToCreate!.requesterIdentityLoc && requestToCreate!.locType === 'Transaction') {
