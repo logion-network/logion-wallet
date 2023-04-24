@@ -1,6 +1,6 @@
 import { LocData, LegalOfficer } from "@logion/client";
 import { LocType, UUID } from "@logion/node-api";
-import { Col, OverlayTrigger, Tooltip } from "react-bootstrap";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Viewer } from "src/common/CommonContext";
 import Ellipsis from "src/common/Ellipsis";
 import Icon from "src/common/Icon";
@@ -19,7 +19,7 @@ export default function RequesterOrLegalOfficer(props: Props) {
     const { loc, viewer, detailsPath, legalOfficer } = props;
 
     return (
-        <Col md={ 4 } className="closed-icon-container">
+        <div className="closed-icon-container">
             {
                 viewer === "LegalOfficer" &&
                 <LocItemDetail
@@ -92,6 +92,6 @@ export default function RequesterOrLegalOfficer(props: Props) {
                     <Icon icon={ { id: "void_shield" } } />
                 </div>
             }
-        </Col>
+        </div>
     );
 }

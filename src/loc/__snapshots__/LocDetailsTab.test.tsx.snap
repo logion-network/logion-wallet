@@ -271,39 +271,43 @@ exports[`LocDetailsTabContent renders closed data LOC for LO 1`] = `
         />
       </LocItemDetail>
     </Col>
-    <RequesterOrLegalOfficer
-      detailsPath={[Function]}
-      loc={
-        Object {
-          "closed": true,
-          "closedOn": "2022-09-28T08:49:00.000+02:00",
-          "createdOn": "2022-09-28T07:49:00.000+02:00",
-          "id": UUID {
-            "bytes": Uint8Array [
-              240,
-              175,
-              187,
-              187,
-              105,
-              109,
-              75,
-              119,
-              129,
-              112,
-              119,
-              229,
-              101,
-              136,
-              138,
-              14,
-            ],
-          },
-          "locType": "Transaction",
-          "status": "CLOSED",
+    <Col
+      md={4}
+    >
+      <RequesterOrLegalOfficer
+        detailsPath={[Function]}
+        loc={
+          Object {
+            "closed": true,
+            "closedOn": "2022-09-28T08:49:00.000+02:00",
+            "createdOn": "2022-09-28T07:49:00.000+02:00",
+            "id": UUID {
+              "bytes": Uint8Array [
+                240,
+                175,
+                187,
+                187,
+                105,
+                109,
+                75,
+                119,
+                129,
+                112,
+                119,
+                229,
+                101,
+                136,
+                138,
+                14,
+              ],
+            },
+            "locType": "Transaction",
+            "status": "CLOSED",
+          }
         }
-      }
-      viewer="LegalOfficer"
-    />
+        viewer="LegalOfficer"
+      />
+    </Col>
   </Row>
   <div
     className="separator"
@@ -479,39 +483,43 @@ exports[`LocDetailsTabContent renders closed data LOC for User 1`] = `
         />
       </LocItemDetail>
     </Col>
-    <RequesterOrLegalOfficer
-      detailsPath={[Function]}
-      loc={
-        Object {
-          "closed": true,
-          "closedOn": "2022-09-28T08:49:00.000+02:00",
-          "createdOn": "2022-09-28T07:49:00.000+02:00",
-          "id": UUID {
-            "bytes": Uint8Array [
-              240,
-              175,
-              187,
-              187,
-              105,
-              109,
-              75,
-              119,
-              129,
-              112,
-              119,
-              229,
-              101,
-              136,
-              138,
-              14,
-            ],
-          },
-          "locType": "Transaction",
-          "status": "CLOSED",
+    <Col
+      md={4}
+    >
+      <RequesterOrLegalOfficer
+        detailsPath={[Function]}
+        loc={
+          Object {
+            "closed": true,
+            "closedOn": "2022-09-28T08:49:00.000+02:00",
+            "createdOn": "2022-09-28T07:49:00.000+02:00",
+            "id": UUID {
+              "bytes": Uint8Array [
+                240,
+                175,
+                187,
+                187,
+                105,
+                109,
+                75,
+                119,
+                129,
+                112,
+                119,
+                229,
+                101,
+                136,
+                138,
+                14,
+              ],
+            },
+            "locType": "Transaction",
+            "status": "CLOSED",
+          }
         }
-      }
-      viewer="User"
-    />
+        viewer="User"
+      />
+    </Col>
   </Row>
   <div
     className="separator"
@@ -671,39 +679,43 @@ exports[`LocDetailsTabContent renders open data LOC for LO 1`] = `
         label="Description"
       />
     </Col>
-    <RequesterOrLegalOfficer
-      detailsPath={[Function]}
-      loc={
-        Object {
-          "closed": false,
-          "closedOn": undefined,
-          "createdOn": "2022-09-28T07:49:00.000+02:00",
-          "id": UUID {
-            "bytes": Uint8Array [
-              240,
-              175,
-              187,
-              187,
-              105,
-              109,
-              75,
-              119,
-              129,
-              112,
-              119,
-              229,
-              101,
-              136,
-              138,
-              14,
-            ],
-          },
-          "locType": "Transaction",
-          "status": "OPEN",
+    <Col
+      md={4}
+    >
+      <RequesterOrLegalOfficer
+        detailsPath={[Function]}
+        loc={
+          Object {
+            "closed": false,
+            "closedOn": undefined,
+            "createdOn": "2022-09-28T07:49:00.000+02:00",
+            "id": UUID {
+              "bytes": Uint8Array [
+                240,
+                175,
+                187,
+                187,
+                105,
+                109,
+                75,
+                119,
+                129,
+                112,
+                119,
+                229,
+                101,
+                136,
+                138,
+                14,
+              ],
+            },
+            "locType": "Transaction",
+            "status": "OPEN",
+          }
         }
-      }
-      viewer="LegalOfficer"
-    />
+        viewer="LegalOfficer"
+      />
+    </Col>
   </Row>
   <div
     className="separator"
@@ -886,39 +898,43 @@ exports[`LocDetailsTabContent renders open data LOC for User 1`] = `
         label="Description"
       />
     </Col>
-    <RequesterOrLegalOfficer
-      detailsPath={[Function]}
-      loc={
-        Object {
-          "closed": false,
-          "closedOn": undefined,
-          "createdOn": "2022-09-28T07:49:00.000+02:00",
-          "id": UUID {
-            "bytes": Uint8Array [
-              240,
-              175,
-              187,
-              187,
-              105,
-              109,
-              75,
-              119,
-              129,
-              112,
-              119,
-              229,
-              101,
-              136,
-              138,
-              14,
-            ],
-          },
-          "locType": "Transaction",
-          "status": "OPEN",
+    <Col
+      md={4}
+    >
+      <RequesterOrLegalOfficer
+        detailsPath={[Function]}
+        loc={
+          Object {
+            "closed": false,
+            "closedOn": undefined,
+            "createdOn": "2022-09-28T07:49:00.000+02:00",
+            "id": UUID {
+              "bytes": Uint8Array [
+                240,
+                175,
+                187,
+                187,
+                105,
+                109,
+                75,
+                119,
+                129,
+                112,
+                119,
+                229,
+                101,
+                136,
+                138,
+                14,
+              ],
+            },
+            "locType": "Transaction",
+            "status": "OPEN",
+          }
         }
-      }
-      viewer="User"
-    />
+        viewer="User"
+      />
+    </Col>
   </Row>
   <div
     className="separator"
@@ -1089,39 +1105,43 @@ exports[`LocDetailsTabContent renders open identity LOC for LO 1`] = `
         label="Description"
       />
     </Col>
-    <RequesterOrLegalOfficer
-      detailsPath={[Function]}
-      loc={
-        Object {
-          "closed": false,
-          "closedOn": undefined,
-          "createdOn": "2022-09-28T07:49:00.000+02:00",
-          "id": UUID {
-            "bytes": Uint8Array [
-              240,
-              175,
-              187,
-              187,
-              105,
-              109,
-              75,
-              119,
-              129,
-              112,
-              119,
-              229,
-              101,
-              136,
-              138,
-              14,
-            ],
-          },
-          "locType": "Identity",
-          "status": "OPEN",
+    <Col
+      md={4}
+    >
+      <RequesterOrLegalOfficer
+        detailsPath={[Function]}
+        loc={
+          Object {
+            "closed": false,
+            "closedOn": undefined,
+            "createdOn": "2022-09-28T07:49:00.000+02:00",
+            "id": UUID {
+              "bytes": Uint8Array [
+                240,
+                175,
+                187,
+                187,
+                105,
+                109,
+                75,
+                119,
+                129,
+                112,
+                119,
+                229,
+                101,
+                136,
+                138,
+                14,
+              ],
+            },
+            "locType": "Identity",
+            "status": "OPEN",
+          }
         }
-      }
-      viewer="LegalOfficer"
-    />
+        viewer="LegalOfficer"
+      />
+    </Col>
   </Row>
   <div
     className="separator"
@@ -1345,40 +1365,44 @@ exports[`LocDetailsTabContent renders void data LOC for LO 1`] = `
         label="Description"
       />
     </Col>
-    <RequesterOrLegalOfficer
-      detailsPath={[Function]}
-      loc={
-        Object {
-          "closed": false,
-          "closedOn": undefined,
-          "createdOn": "2022-09-28T07:49:00.000+02:00",
-          "id": UUID {
-            "bytes": Uint8Array [
-              240,
-              175,
-              187,
-              187,
-              105,
-              109,
-              75,
-              119,
-              129,
-              112,
-              119,
-              229,
-              101,
-              136,
-              138,
-              14,
-            ],
-          },
-          "locType": "Transaction",
-          "status": "OPEN",
-          "voidInfo": Object {},
+    <Col
+      md={4}
+    >
+      <RequesterOrLegalOfficer
+        detailsPath={[Function]}
+        loc={
+          Object {
+            "closed": false,
+            "closedOn": undefined,
+            "createdOn": "2022-09-28T07:49:00.000+02:00",
+            "id": UUID {
+              "bytes": Uint8Array [
+                240,
+                175,
+                187,
+                187,
+                105,
+                109,
+                75,
+                119,
+                129,
+                112,
+                119,
+                229,
+                101,
+                136,
+                138,
+                14,
+              ],
+            },
+            "locType": "Transaction",
+            "status": "OPEN",
+            "voidInfo": Object {},
+          }
         }
-      }
-      viewer="LegalOfficer"
-    />
+        viewer="LegalOfficer"
+      />
+    </Col>
   </Row>
   <div
     className="separator"
@@ -1544,40 +1568,44 @@ exports[`LocDetailsTabContent renders void data LOC for User 1`] = `
         label="Description"
       />
     </Col>
-    <RequesterOrLegalOfficer
-      detailsPath={[Function]}
-      loc={
-        Object {
-          "closed": false,
-          "closedOn": undefined,
-          "createdOn": "2022-09-28T07:49:00.000+02:00",
-          "id": UUID {
-            "bytes": Uint8Array [
-              240,
-              175,
-              187,
-              187,
-              105,
-              109,
-              75,
-              119,
-              129,
-              112,
-              119,
-              229,
-              101,
-              136,
-              138,
-              14,
-            ],
-          },
-          "locType": "Transaction",
-          "status": "OPEN",
-          "voidInfo": Object {},
+    <Col
+      md={4}
+    >
+      <RequesterOrLegalOfficer
+        detailsPath={[Function]}
+        loc={
+          Object {
+            "closed": false,
+            "closedOn": undefined,
+            "createdOn": "2022-09-28T07:49:00.000+02:00",
+            "id": UUID {
+              "bytes": Uint8Array [
+                240,
+                175,
+                187,
+                187,
+                105,
+                109,
+                75,
+                119,
+                129,
+                112,
+                119,
+                229,
+                101,
+                136,
+                138,
+                14,
+              ],
+            },
+            "locType": "Transaction",
+            "status": "OPEN",
+            "voidInfo": Object {},
+          }
         }
-      }
-      viewer="User"
-    />
+        viewer="User"
+      />
+    </Col>
   </Row>
   <div
     className="separator"

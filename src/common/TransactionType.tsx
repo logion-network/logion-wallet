@@ -41,6 +41,8 @@ const palletLogionLocMethods: Record<LogionLocMethod, string> = {
     dismissIssuer: "Issuer dismissed",
     nominateIssuer: "Issuer nominated",
     setIssuerSelection: "Issuer selected",
+    sponsor: "Sponsorship created",
+    withdrawSponsorship: "Sponsorship withdrawn",
 }
 
 const palletLogionVaultMethods: Record<Uncapitalize<PalletLogionVaultCall["type"]>, string> = {

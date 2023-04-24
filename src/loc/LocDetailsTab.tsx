@@ -269,6 +269,10 @@ export function LocDetailsTabContent(props: ContentProps) {
                     </div>
                 }
                 {
+                    viewer === "User" && loc.sponsorshipId &&
+                    <LocItemDetail label="Sponsorship ID" copyButtonText={ loc.sponsorshipId.toDecimalString() }>{ loc.sponsorshipId.toDecimalString() }</LocItemDetail>
+                }
+                {
                     loc.status === 'CLOSED' && (viewer !== "LegalOfficer" || !template) &&
                     <LocItemDetail label="Closing date" spinner={ loc.closedOn === undefined }>
                         <InlineDateTime dateTime={ loc.closedOn } />
@@ -276,12 +280,18 @@ export function LocDetailsTabContent(props: ContentProps) {
                 }
             </Col>
 
-            <RequesterOrLegalOfficer
-                loc={ loc }
-                viewer={ viewer }
-                detailsPath={ detailsPath }
-                legalOfficer={ legalOfficer }
-            />
+            <Col md={ 4 }>
+                <RequesterOrLegalOfficer
+                    loc={ loc }
+                    viewer={ viewer }
+                    detailsPath={ detailsPath }
+                    legalOfficer={ legalOfficer }
+                />
+                {
+                    viewer === "LegalOfficer" && loc.sponsorshipId &&
+                    <LocItemDetail label="Sponsorship ID" copyButtonText={ loc.sponsorshipId.toDecimalString() }>{ loc.sponsorshipId.toDecimalString() }</LocItemDetail>
+                }
+            </Col>
         </Row>
         <div className="separator" style={ { backgroundColor: locTabBorderColor } } />
         { loc.locType === "Identity" && <>

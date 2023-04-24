@@ -19,6 +19,7 @@ import IconTextRow from "src/common/IconTextRow";
 import Icon from "src/common/Icon";
 import { useSearchParams } from "react-router-dom";
 import { backendTemplate, CUSTOM_LOC_TEMPLATE_ID } from "src/loc/Template";
+import { UUID } from "@logion/node-api";
 
 export interface Props {
     backPath: string,
@@ -50,6 +51,8 @@ export default function IdentityLocRequest(props: Props) {
     }, [ locsState?.legalOfficersWithValidIdentityLoc, availableLegalOfficers ]);
     const templateId = useMemo(() => backendTemplate(search.get("templateId") || undefined), [ search ]);
     const companyIdentityLoc = useMemo(() => templateId === "company_identity", [ templateId ]);
+    const [ sponsorshipId, setSponsorshipId ] = useState<UUID>();
+    const [ invalidSponsorshipId, setInvalidSponsorshipId ] = useState<string>();
 
     const clear = useCallback(() => {
         reset();
@@ -90,12 +93,24 @@ export default function IdentityLocRequest(props: Props) {
                 company: (company || companyIdentityLoc) ? companyName : undefined,
                 draft: true,
                 template: templateId,
+                sponsorshipId,
             }) as DraftRequest;
             return draftRequest.locsState();
         })
         clear();
         navigate(locDetailsPath(draftRequest!.data().id, "Identity"));
-    }, [ mutateLocsState, legalOfficer, accounts, clear, navigate, company, companyName, companyIdentityLoc, templateId ])
+    }, [ mutateLocsState, legalOfficer, accounts, clear, navigate, company, companyName, companyIdentityLoc, templateId, sponsorshipId ])
+
+    const validateAndSetSponsorshipId = useCallback((sponsorshipId: string) => {
+        const uuid = UUID.fromAnyString(sponsorshipId);
+        if(uuid) {
+            setInvalidSponsorshipId(undefined);
+            setSponsorshipId(uuid);
+        } else {
+            setInvalidSponsorshipId("Invalid UUID");
+            setSponsorshipId(undefined);
+        }
+    }, []);
 
     return (
         <FullWidthPane
@@ -157,6 +172,27 @@ export default function IdentityLocRequest(props: Props) {
                                     />
                                 </div>
                             }
+                        </Frame>
+                    }
+
+                    {
+                        accounts?.current?.accountId.type !== "Polkadot" &&
+                        <Frame className="sponsorship-id">
+                            <FormGroup
+                                id="sponsorshipId"
+                                label="Provide your sponsorship ID"
+                                control={
+                                    <Form.Control
+                                        isInvalid={ invalidSponsorshipId !== undefined }
+                                        type="text"
+                                        data-testid="sponsorshipId"
+                                        value={ sponsorshipId?.toDecimalString() }
+                                        onChange={ e => validateAndSetSponsorshipId(e.target.value) }
+                                    />
+                                }
+                                feedback={ invalidSponsorshipId }
+                                colors={ colorTheme.frame }
+                            />
                         </Frame>
                     }
                 </Col>

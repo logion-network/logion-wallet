@@ -1,9 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`RequesterOrLegalOfficer renders LO in charge for User 1`] = `
-<Col
+<div
   className="closed-icon-container"
-  md={4}
 >
   <LocItemDetail
     label="Legal Officer in charge"
@@ -31,13 +30,12 @@ exports[`RequesterOrLegalOfficer renders LO in charge for User 1`] = `
       </span>
     </OverlayTrigger>
   </LocItemDetail>
-</Col>
+</div>
 `;
 
 exports[`RequesterOrLegalOfficer renders logion requester for LO 1`] = `
-<Col
+<div
   className="closed-icon-container"
-  md={4}
 >
   <LocItemDetail
     label="Requested by"
@@ -60,13 +58,12 @@ exports[`RequesterOrLegalOfficer renders logion requester for LO 1`] = `
       </NewTabLink>
     </span>
   </LocItemDetail>
-</Col>
+</div>
 `;
 
 exports[`RequesterOrLegalOfficer renders polkadot requester for LO 1`] = `
-<Col
+<div
   className="closed-icon-container"
-  md={4}
 >
   <LocItemDetail
     label="Requested by"
@@ -104,5 +101,5 @@ exports[`RequesterOrLegalOfficer renders polkadot requester for LO 1`] = `
       </OverlayTrigger>
     </React.Fragment>
   </LocItemDetail>
-</Col>
+</div>
 `;
