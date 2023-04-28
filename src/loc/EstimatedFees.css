@@ -3,6 +3,11 @@
     margin-right: auto;
 }
 
+.EstimatedFees td {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
 .EstimatedFees td:first-child {
     font-weight: bold;
     text-align: left;
@@ -10,5 +15,9 @@
 
 .EstimatedFees td:nth-child(2) {
     text-align: right;
-    width: 200px;
+    min-width: 100px;
+}
+
+.EstimatedFees td:nth-child(3) {
+    min-width: 150px;
 }

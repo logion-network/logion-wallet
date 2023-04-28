@@ -21,7 +21,7 @@ export default function LocPrivateFileDetails(props: Props) {
     const navigate = useNavigate();
     const fileSize = props.item.size === undefined || props.item.size === 0n ? "N/A" : props.item.size.toString();
 
-    const leftPaneWidth = documentClaimHistory !== undefined ? "50%" : "100%";
+    const leftPaneWidth = documentClaimHistory !== undefined ? "60%" : "100%";
     return (
         <>
             <Col className="LocItemDetails" style={{ width: leftPaneWidth }}>
@@ -60,7 +60,7 @@ export default function LocPrivateFileDetails(props: Props) {
             </Col>
             {
                 documentClaimHistory !== undefined &&
-                <Col className="LocItemDetails claim" style={{width: "50%"}}>
+                <Col className="LocItemDetails claim" style={{width: "40%"}}>
                     <div>
                         <Button
                             onClick={ () => navigate(documentClaimHistory) }

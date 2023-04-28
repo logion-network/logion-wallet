@@ -6,7 +6,7 @@ exports[`LocPrivateFileDetails renders 0-sized file 1`] = `
     className="LocItemDetails"
     style={
       Object {
-        "width": "50%",
+        "width": "60%",
       }
     }
   >
@@ -46,7 +46,7 @@ exports[`LocPrivateFileDetails renders 0-sized file 1`] = `
     className="LocItemDetails claim"
     style={
       Object {
-        "width": "50%",
+        "width": "40%",
       }
     }
   >
@@ -74,7 +74,7 @@ exports[`LocPrivateFileDetails renders 1`] = `
     className="LocItemDetails"
     style={
       Object {
-        "width": "50%",
+        "width": "60%",
       }
     }
   >
@@ -114,7 +114,7 @@ exports[`LocPrivateFileDetails renders 1`] = `
     className="LocItemDetails claim"
     style={
       Object {
-        "width": "50%",
+        "width": "40%",
       }
     }
   >
