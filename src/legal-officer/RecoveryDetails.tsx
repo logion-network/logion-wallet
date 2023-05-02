@@ -1,7 +1,7 @@
+import { UUID } from '@logion/node-api';
 import { useEffect, useState, useCallback } from "react";
 import { Col, Row } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
-import { vouchRecovery, getActiveRecovery, UUID, validPolkadotAccountId } from '@logion/node-api';
 
 import { useCommonContext } from "../common/CommonContext";
 import { useLegalOfficerContext } from "./LegalOfficerContext";
@@ -54,11 +54,10 @@ export default function RecoveryDetails() {
     }, [ axiosFactory, accounts, recoveryInfo, setRecoveryInfo, requestId ]);
 
     const alreadyVouched = useCallback(async (lost: string, rescuer: string, currentAddress: string) => {
-        const activeRecovery = await getActiveRecovery({
-            api: api!,
-            sourceAccount: lost,
-            destinationAccount: rescuer
-        });
+        const activeRecovery = await api?.queries.getActiveRecovery(
+            lost,
+            rescuer
+        );
 
         return !!(activeRecovery && activeRecovery.legalOfficers.find(lo => lo === currentAddress));
 
@@ -81,11 +80,10 @@ export default function RecoveryDetails() {
                     signerId: currentAddress,
                     callback,
                     errorCallback,
-                    submittable: vouchRecovery({
-                        api: api!,
+                    submittable: api!.polkadot.tx.recovery.vouchRecovery(
                         lost,
                         rescuer,
-                    })
+                    ),
                 });
                 setSignAndSubmit(() => signAndSubmit);
             }
@@ -109,6 +107,7 @@ export default function RecoveryDetails() {
         return null;
     }
 
+    console.log(locId?.toDecimalString())
     return (
         <FullWidthPane
             className="RecoveryDetails"
@@ -218,7 +217,7 @@ export default function RecoveryDetails() {
                     expect={{
                         closed: true,
                         type: 'Identity',
-                        requester: validPolkadotAccountId(api, recoveryInfo.recoveryAccount.requesterAddress),
+                        requester: api.queries.getValidAccountId(recoveryInfo.recoveryAccount.requesterAddress, "Polkadot"),
                     }}
                     onChange={ setLocId }
                 />

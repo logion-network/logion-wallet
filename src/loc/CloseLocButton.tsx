@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { ProtectionRequest } from "@logion/client/dist/RecoveryClient.js";
 import { OpenLoc } from "@logion/client";
-import { vouchRecovery, getActiveRecovery } from "@logion/node-api";
 import { Col, Row } from "react-bootstrap";
 
 import Button from "../common/Button";
@@ -82,11 +81,10 @@ export default function CloseLocButton(props: Props) {
     }, [ locItems, setDisabled ]);
 
     const alreadyVouched = useCallback(async (lost: string, rescuer: string, currentAddress: string) => {
-        const activeRecovery = await getActiveRecovery({
-            api: api!,
-            sourceAccount: lost,
-            destinationAccount: rescuer
-        });
+        const activeRecovery = await api!.queries.getActiveRecovery(
+            lost,
+            rescuer
+        );
 
         return !!(activeRecovery && activeRecovery.legalOfficers.find(lo => lo === currentAddress));
 
@@ -110,11 +108,10 @@ export default function CloseLocButton(props: Props) {
                     signerId: currentAddress,
                     callback,
                     errorCallback,
-                    submittable: vouchRecovery({
-                        api: api!,
+                    submittable: api!.polkadot.tx.recovery.vouchRecovery(
                         lost,
                         rescuer,
-                    })
+                    ),
                 });
                 setSignAndSubmitVouch(() => signAndSubmit);
             }

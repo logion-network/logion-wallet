@@ -6,7 +6,7 @@ jest.mock('./LegalOfficerContext');
 import { LocData, OpenLoc, PendingRequest } from "@logion/client";
 import { BalanceState } from "@logion/client/dist/Balance.js";
 import { DEFAULT_COIN_BALANCE, DEFAULT_TRANSACTION } from "../common/TestData";
-import { mockValidPolkadotAccountId } from "../__mocks__/@logion/node-api/Mocks";
+import { mockValidPolkadotAccountId } from 'src/__mocks__/LogionMock';
 import { setBalanceState, } from "../common/__mocks__/CommonContextMock";
 import {
     setOpenedLocRequests,

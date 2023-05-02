@@ -2,7 +2,7 @@ import { LocData, CollectionItem } from "@logion/client";
 import { UUID } from "@logion/node-api";
 
 import { LocItem } from "../LocItem";
-import { mockValidPolkadotAccountId } from "../../__mocks__/@logion/node-api/Mocks";
+import { mockValidPolkadotAccountId } from 'src/__mocks__/LogionMock';
 
 let locState: any = {
     isLogionIdentity: () => false,

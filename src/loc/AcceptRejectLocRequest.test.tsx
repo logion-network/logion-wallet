@@ -8,7 +8,7 @@ import { shallowRender } from "../tests";
 import AcceptRejectLocRequest from "./AcceptRejectLocRequest";
 import "./AcceptRejectLocRequest.tsx";
 import { setRejectLocRequest } from "./__mocks__/ModelMock";
-import { mockValidPolkadotAccountId } from "../__mocks__/@logion/node-api/Mocks";
+import { mockValidPolkadotAccountId } from 'src/__mocks__/LogionMock';
 
 jest.mock("../logion-chain");
 jest.mock('./Model');

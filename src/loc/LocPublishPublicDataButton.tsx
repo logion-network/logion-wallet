@@ -1,5 +1,5 @@
 import { EditableRequest } from "@logion/client";
-import { addMetadata, UUID } from "@logion/node-api";
+import { UUID } from "@logion/node-api";
 
 import { LocItem } from "./LocItem";
 import LocPublishButton from "./LocPublishButton";
@@ -43,15 +43,14 @@ export default function LocPublishPublicDataButton(props: Props) {
             }}
             feesEstimator={ () => client.public.fees.estimateWithoutStorage({
                 origin: client.currentAddress?.address || "",
-                submittable: addMetadata({
-                    api: client.nodeApi,
-                    locId: props.locId,
-                    item: {
+                submittable: client.logionApi.polkadot.tx.logionLoc.addMetadata(
+                    client.logionApi.adapters.toLocId(props.locId),
+                    client.logionApi.adapters.toPalletLogionLocMetadataItem({
                         name: props.locItem.name || "",
                         value: props.locItem.value || "",
                         submitter: props.locItem.submitter!,
-                    },
-                })
+                    }),
+                ),
             }) }
             itemType="Public Data"
         />

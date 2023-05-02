@@ -1,4 +1,4 @@
-import { ApiPromise } from '@polkadot/api';
+import { LogionNodeApiClass } from '@logion/node-api';
 
 import { twoLegalOfficers } from "../../common/TestData";
 import { TEST_WALLET_USER } from '../TestData';
@@ -18,6 +18,7 @@ import {
     OpenLoc, VoidedCollectionLoc, VoidedLoc
 } from "@logion/client";
 import { LocType, ValidAccountId } from "@logion/node-api";
+import { Mock } from 'moq.ts';
 
 export let createTokenRequest = () => null;
 
@@ -29,7 +30,7 @@ export let activateProtection = jest.fn().mockReturnValue(Promise.resolve());
 
 export let claimRecovery = jest.fn().mockReturnValue(Promise.resolve());
 
-export let api = new ApiPromise();
+export let api = new Mock<LogionNodeApiClass>();
 
 export const DEFAULT_SHARED_STATE: SharedState = {
     axiosFactory: {} as AxiosFactory,
@@ -41,7 +42,7 @@ export const DEFAULT_SHARED_STATE: SharedState = {
     legalOfficers: twoLegalOfficers,
     allLegalOfficers: twoLegalOfficers,
     networkState: {} as NetworkState<LegalOfficerEndpoint>,
-    nodeApi: api,
+    nodeApi: api.object(),
     tokens: {} as AccountTokens,
     currentAddress: {
         address: TEST_WALLET_USER,

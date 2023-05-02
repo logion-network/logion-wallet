@@ -1,5 +1,5 @@
 import { EditableRequest } from "@logion/client";
-import { addLink, UUID } from "@logion/node-api";
+import { UUID, Adapters } from "@logion/node-api";
 
 import { LocItem } from "./LocItem";
 import LocPublishButton from "./LocPublishButton";
@@ -36,12 +36,13 @@ export default function LocPublishLinkButton(props: Props) {
             }}
             feesEstimator={ () => client.public.fees.estimateWithoutStorage({
                 origin: client.currentAddress?.address || "",
-                submittable: addLink({
-                    api: client.nodeApi,
-                    locId: props.locId,
-                    nature: props.locItem.nature || "",
-                    target: props.locItem.target || new UUID(),
-                })
+                submittable: client.logionApi.polkadot.tx.logionLoc.addLink(
+                    client.logionApi.adapters.toLocId(props.locId),
+                    Adapters.toLocLink({
+                        nature: props.locItem.nature || "",
+                        target: props.locItem.target || new UUID(),
+                    }),
+                ),
             }) }
             itemType="Link"
         />

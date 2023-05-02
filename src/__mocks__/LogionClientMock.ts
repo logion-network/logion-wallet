@@ -2,6 +2,7 @@ import { DateTime } from "luxon";
 import { PATRICK } from "../common/TestData";
 import { TEST_WALLET_USER } from "../wallet-user/TestData";
 export { toIsoString, fromIsoString } from "@logion/client/dist/DateTimeUtil.js";
+import { api } from "./LogionMock";
 
 export const axiosMock = {
     post: jest.fn().mockReturnValue(undefined),
@@ -65,6 +66,8 @@ export class LogionClient {
         findCollectionLocItemById: () => { isAuthenticatedTokenOwner: () => true },
     };
     currentAddress = TEST_WALLET_USER;
+
+    logionApi = api.object();
 }
 
 export class AccountTokens {

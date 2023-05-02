@@ -48,7 +48,7 @@ export default function CertificateAndLimits(props: Props) {
     useEffect(() => {
         if(api !== null && props.loc.collectionLastBlockSubmission) {
             (async function() {
-                const chainTime = await (await ChainTime.now(api)).atBlock(props.loc.collectionLastBlockSubmission!);
+                const chainTime = await (await ChainTime.now(api.polkadot)).atBlock(props.loc.collectionLastBlockSubmission!);
                 setDateLimit(new Date(chainTime.currentTime).toISOString());
             })();
         }

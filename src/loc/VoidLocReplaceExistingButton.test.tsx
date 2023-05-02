@@ -4,8 +4,11 @@ import { setVoidLocMock } from "src/legal-officer/__mocks__/ClientMock";
 
 import { mockSubmittableResult } from "src/logion-chain/__mocks__/SignatureMock";
 import { clickByName, typeByLabel } from "src/tests";
-import { OPEN_IDENTITY_LOC_ID } from "src/__mocks__/@logion/node-api/dist/LogionLocMock";
+import { OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "src/__mocks__/@logion/node-api/dist/LogionLocMock";
 import VoidLocReplaceExistingButton from "./VoidLocReplaceExistingButton";
+import { setupQueriesGetLegalOfficerCase } from "src/test/Util";
+import { UUID } from "@logion/node-api";
+import { setupApiMock } from "src/__mocks__/LogionMock";
 
 jest.mock("../common/CommonContext");
 jest.mock("./LocContext");
@@ -24,6 +27,9 @@ describe("VoidLocReplaceExistingButton", () => {
             return params.locState;
         };
         setVoidLocMock(voidLocMock);
+        setupApiMock(api => {
+            setupQueriesGetLegalOfficerCase(api, UUID.fromDecimalStringOrThrow(OPEN_IDENTITY_LOC_ID), OPEN_IDENTITY_LOC);
+        });
         const dialog = await renderAndOpenDialog();
 
         const button = screen.getAllByRole("button", { name: "Void and replace by an EXISTING LOC" })[1];

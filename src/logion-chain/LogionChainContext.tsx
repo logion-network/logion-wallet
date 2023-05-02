@@ -1,6 +1,6 @@
 import { AccountTokens, LegalOfficer, LegalOfficerClass, LogionClient, DefaultSignAndSendStrategy, Token, RawSigner } from '@logion/client';
 import { allMetamaskAccounts, enableExtensions, enableMetaMask, ExtensionSigner, InjectedAccount, isExtensionAvailable } from '@logion/extension';
-import { buildApi, LogionNodeApi, ValidAccountId } from '@logion/node-api';
+import { buildApiClass, LogionNodeApiClass, ValidAccountId } from '@logion/node-api';
 import axios, { AxiosInstance } from 'axios';
 import React, { useReducer, useContext, Context, Reducer, useEffect, useCallback } from 'react';
 import { DateTime } from 'luxon';
@@ -18,7 +18,7 @@ export const SIGN_AND_SEND_STRATEGY = new DefaultSignAndSendStrategy();
 export type AxiosFactory = (legalOfficerAddress: string | undefined, token?: Token) => AxiosInstance;
 
 export interface LogionChainContextType {
-    api: LogionNodeApi | null,
+    api: LogionNodeApiClass | null,
     injectedAccountsConsumptionState: ConsumptionStatus
     injectedAccounts: InjectedAccount[] | null,
     edgeNodes: Node[],
@@ -86,7 +86,7 @@ type ActionType = 'SET_SELECT_ADDRESS'
 
 interface Action {
     type: ActionType,
-    api?: LogionNodeApi,
+    api?: LogionNodeApiClass,
     error?: string,
     injectedAccounts?: InjectedAccount[],
     connectedNodeMetadata?: NodeMetadata,
@@ -168,7 +168,7 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
             };
 
         case 'SELECT_ADDRESS': {
-            storeCurrentAddress(state.client!.nodeApi, action.newAddress!);
+            storeCurrentAddress(state.client!.logionApi, action.newAddress!);
             const client = state.client!.withCurrentAddress(action.newAddress!);
             return {
                 ...state,
@@ -237,13 +237,13 @@ const reducer: Reducer<FullLogionChainContextType, Action> = (state: FullLogionC
             } else {
                 storeTokens(client.tokens);
                 if(client.currentAddress && !(state.accounts?.current?.accountId)) {
-                    storeCurrentAddress(client.nodeApi, client.currentAddress);
+                    storeCurrentAddress(client.logionApi, client.currentAddress);
                 } else if(state.accounts?.current?.accountId && state.accounts.current.accountId !== client.currentAddress) {
                     const clientWithCurrentAddress = client.withCurrentAddress(state.accounts.current.accountId);
                     if(clientWithCurrentAddress.isTokenValid(DateTime.now())) {
                         client = clientWithCurrentAddress;
                     } else if(client.currentAddress) {
-                        storeCurrentAddress(client.nodeApi, client.currentAddress);
+                        storeCurrentAddress(client.logionApi, client.currentAddress);
                     }
                 }
                 return {
@@ -346,8 +346,8 @@ const LogionChainContextProvider = (props: LogionChainContextProviderProps): JSX
 
             (async function() {
                 const rpcEndpoints = getEndpoints();
-                const api = await buildApi(rpcEndpoints);
-                const peerId = await api.rpc.system.localPeerId();
+                const api = await buildApiClass(rpcEndpoints);
+                const peerId = await api.polkadot.rpc.system.localPeerId();
                 const logionClient = await LogionClient.create({
                     rpcEndpoints,
                     directoryEndpoint: config.directory

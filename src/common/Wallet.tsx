@@ -1,7 +1,7 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useNavigate } from 'react-router-dom';
-import { CoinBalance, prefixedLogBalance, SYMBOL } from '@logion/node-api';
+import { CoinBalance, Currency } from '@logion/node-api';
 
 import { useCommonContext } from './CommonContext';
 
@@ -18,6 +18,7 @@ import NetworkWarning from './NetworkWarning';
 import { useResponsiveContext } from './Responsive';
 import { buildTransactionType } from "./TransactionType";
 import { Transaction } from '@logion/client/dist/TransactionClient.js';
+import { toPrefixedLgnt } from './AmountCell';
 
 export type WalletType = "Wallet" | "Vault"
 
@@ -113,7 +114,7 @@ export function Content(props: Props & { type: WalletType }) {
                             },
                             {
                                 header: "Last transaction amount",
-                                render: balance => <Cell content={ balance.coin.id !== 'dot' && latestTransaction !== undefined ? prefixedLogBalance(transactionAmount(latestTransaction)).convertTo(balance.balance.prefix).coefficient.toFixedPrecision(2) : '-' } />,
+                                render: balance => <Cell content={ balance.coin.id !== 'dot' && latestTransaction !== undefined ? toPrefixedLgnt(transactionAmount(latestTransaction)).convertTo(balance.balance.prefix).coefficient.toFixedPrecision(2) : '-' } />,
                                 align: 'right',
                             },
                             {
@@ -138,7 +139,7 @@ export function Content(props: Props & { type: WalletType }) {
                             <div className="gauge-title">
                                 <Icon icon={ { id: gaugeCoin.iconId } } type={ gaugeCoin.iconType } height="72px"
                                       width="auto" />
-                                <span>Current { SYMBOL } balance</span>
+                                <span>Current { Currency.SYMBOL } balance</span>
                             </div>
                         }
                         className="gauge-container"

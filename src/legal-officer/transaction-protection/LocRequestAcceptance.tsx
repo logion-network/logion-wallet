@@ -1,13 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import {
-    createCollectionLoc,
-    createPolkadotTransactionLoc,
-    createOtherIdentityLoc,
-    createPolkadotIdentityLoc,
-    createLogionTransactionLoc,
-    createLogionIdentityLoc,
-    ChainTime
-} from '@logion/node-api';
+import { ChainTime } from '@logion/node-api';
 import { LocData } from '@logion/client';
 
 import { useLogionChain } from '../../logion-chain';
@@ -68,27 +60,25 @@ export default function LocRequestAcceptance(props: Props) {
                         signerId: accounts!.current!.accountId.address,
                         callback: setResult,
                         errorCallback: setError,
-                        submittable: createPolkadotTransactionLoc({
-                            api: api!,
-                            locId: props.requestToAccept!.id,
-                            requester: props.requestToAccept!.requesterAddress!.address,
-                        })
+                        submittable: api!.polkadot.tx.logionLoc.createPolkadotTransactionLoc(
+                            api!.adapters.toLocId(props.requestToAccept!.id),
+                            props.requestToAccept!.requesterAddress!.address,
+                        ),
                     });
                 } else if(props.requestToAccept!.requesterLocId && props.requestToAccept!.locType === 'Transaction') {
                     signAndSubmit = (setResult, setError) => signAndSend({
                         signerId: accounts!.current!.accountId.address,
                         callback: setResult,
                         errorCallback: setError,
-                        submittable: createLogionTransactionLoc({
-                            api: api!,
-                            locId: props.requestToAccept!.id,
-                            requesterLocId: props.requestToAccept!.requesterLocId!,
-                        })
+                        submittable: api!.polkadot.tx.logionLoc.createLogionTransactionLoc(
+                            api!.adapters.toLocId(props.requestToAccept!.id),
+                            api!.adapters.toNonCompactLocId(props.requestToAccept!.requesterLocId!),
+                        ),
                     });
                 } else if(props.requestToAccept?.locType === 'Collection') {
                     let lastBlock: string | undefined;
                     if(limits.hasDateLimit) {
-                        const now = await ChainTime.now(api!);
+                        const now = await ChainTime.now(api!.polkadot);
                         const atDateLimit = await now.atDate(limits.dateLimit!);
                         lastBlock = atDateLimit.currentBlock.toString();
                     }
@@ -102,47 +92,43 @@ export default function LocRequestAcceptance(props: Props) {
                         signerId: accounts!.current!.accountId.address,
                         callback: setResult,
                         errorCallback: setError,
-                        submittable: createCollectionLoc({
-                            api: api!,
-                            locId: props.requestToAccept!.id,
-                            requester: props.requestToAccept!.requesterAddress!.address,
-                            lastBlock,
-                            maxSize,
+                        submittable: api!.polkadot.tx.logionLoc.createCollectionLoc(
+                            api!.adapters.toLocId(props.requestToAccept!.id),
+                            props.requestToAccept!.requesterAddress!.address,
+                            lastBlock || null,
+                            maxSize || null,
                             canUpload,
-                        })
+                        ),
                     });
                 } else if(props.requestToAccept!.requesterAddress && props.requestToAccept!.requesterAddress.type === "Polkadot" && props.requestToAccept!.locType === 'Identity') {
                     signAndSubmit = (setResult, setError) => signAndSend({
                         signerId: accounts!.current!.accountId.address,
                         callback: setResult,
                         errorCallback: setError,
-                        submittable: createPolkadotIdentityLoc({
-                            api: api!,
-                            locId: props.requestToAccept!.id,
-                            requester: props.requestToAccept!.requesterAddress!.address,
-                        })
+                        submittable: api!.polkadot.tx.logionLoc.createPolkadotIdentityLoc(
+                            api!.adapters.toLocId(props.requestToAccept!.id),
+                            props.requestToAccept!.requesterAddress!.address,
+                        ),
                     });
                 } else if(props.requestToAccept!.requesterAddress && props.requestToAccept!.requesterAddress.type === "Ethereum" && props.requestToAccept!.locType === 'Identity') {
                     signAndSubmit = (setResult, setError) => signAndSend({
                         signerId: accounts!.current!.accountId.address,
                         callback: setResult,
                         errorCallback: setError,
-                        submittable: createOtherIdentityLoc({
-                            api: api!,
-                            locId: props.requestToAccept!.id,
-                            requester: props.requestToAccept!.requesterAddress!.toOtherAccountId(),
-                            sponsorshipId: props.requestToAccept!.sponsorshipId!,
-                        })
+                        submittable: api!.polkadot.tx.logionLoc.createOtherIdentityLoc(
+                            api!.adapters.toLocId(props.requestToAccept!.id),
+                            api!.adapters.toPalletLogionLocOtherAccountId(props.requestToAccept!.requesterAddress!.toOtherAccountId()),
+                            api!.adapters.toLocId(props.requestToAccept!.sponsorshipId!),
+                        ),
                     });
                 } else if(!props.requestToAccept!.requesterAddress && props.requestToAccept?.locType === 'Identity') {
                     signAndSubmit = (setResult, setError) => signAndSend({
                         signerId: accounts!.current!.accountId.address,
                         callback: setResult,
                         errorCallback: setError,
-                        submittable: createLogionIdentityLoc({
-                            api: api!,
-                            locId: props.requestToAccept!.id,
-                        })
+                        submittable: api!.polkadot.tx.logionLoc.createLogionIdentityLoc(
+                            api!.adapters.toLocId(props.requestToAccept!.id),
+                        )
                     });
                 } else {
                     setError(true);

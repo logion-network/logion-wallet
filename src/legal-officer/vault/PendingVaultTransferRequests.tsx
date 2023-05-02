@@ -1,11 +1,11 @@
 import { useCallback, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
-import { LGNT_SMALLEST_UNIT, prefixedLogBalance, SYMBOL, PrefixedNumber, approveVaultTransfer } from "@logion/node-api";
+import { Currency } from "@logion/node-api";
 import { VaultTransferRequest } from "@logion/client";
 
 import ExtrinsicSubmitter, { SignAndSubmit } from "../../ExtrinsicSubmitter";
 import { useLogionChain } from "../../logion-chain";
-import AmountCell from "../../common/AmountCell";
+import AmountCell, { toPrefixedLgnt } from "../../common/AmountCell";
 import { useCommonContext } from "../../common/CommonContext";
 import Dialog from "../../common/Dialog";
 import Icon from "../../common/Icon";
@@ -40,11 +40,14 @@ export default function PendingVaultTransferRequests() {
 
     const acceptRequestCallback = useCallback(async () => {
         const signerId = accounts!.current!.accountId.address;
-        const amount = new PrefixedNumber(requestToAccept!.amount, LGNT_SMALLEST_UNIT);
-        const submittable = await approveVaultTransfer({
+        const amount = Currency.toPrefixedNumberAmount(BigInt(requestToAccept!.amount));
+        const config = await api!.queries.getRecoveryConfig(requestToAccept!.origin);
+        if(!config) {
+            throw new Error("Cannot approve vault transfer for requester without recovery configured");
+        }
+        const vault = api!.vault(requestToAccept!.origin, config.legalOfficers);
+        const submittable = await vault.tx.approveVaultTransfer({
             signerId,
-            api: api!,
-            requester: requestToAccept!.origin,
             destination: requestToAccept!.destination,
             amount,
             block: BigInt(requestToAccept!.block),
@@ -102,12 +105,12 @@ export default function PendingVaultTransferRequests() {
                     },
                     {
                         header: "Type",
-                        render: () => <Cell content={`${SYMBOL}`} />,
+                        render: () => <Cell content={`${Currency.SYMBOL}`} />,
                         width: '80px',
                     },
                     {
                         header: "Amount",
-                        render: request => <AmountCell amount={ prefixedLogBalance(request.amount) } />,
+                        render: request => <AmountCell amount={ toPrefixedLgnt(request.amount) } />,
                         align: 'right',
                         width: width({
                             onSmallScreen: "100px",
@@ -199,7 +202,7 @@ export default function PendingVaultTransferRequests() {
                     <Col>
                         <StaticLabelValue
                             label="Amount"
-                            value={ requestToAccept ? <AmountFormat amount={ prefixedLogBalance(requestToAccept.amount) } /> : "" }
+                            value={ requestToAccept ? <AmountFormat amount={ toPrefixedLgnt(requestToAccept.amount) } /> : "" }
                         />
                     </Col>
                     <Col>

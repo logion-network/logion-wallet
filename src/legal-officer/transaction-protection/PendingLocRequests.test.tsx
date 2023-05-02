@@ -9,7 +9,7 @@ import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../../logion-c
 import { setPendingLocRequests } from "../__mocks__/LegalOfficerContextMock";
 
 import PendingLocRequests from './PendingLocRequests';
-import { mockValidPolkadotAccountId } from "../../__mocks__/@logion/node-api/Mocks";
+import { mockValidPolkadotAccountId } from 'src/__mocks__/LogionMock';
 
 describe("PendingLocRequests", () => {
 

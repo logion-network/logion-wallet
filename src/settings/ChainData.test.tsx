@@ -7,6 +7,9 @@ import { finalizeSubmission } from "src/logion-chain/__mocks__/SignatureMock";
 import { clickByName, typeByLabel } from "src/tests";
 
 import ChainData from "./ChainData";
+import { setupApiMock } from "src/__mocks__/LogionMock";
+import { SubmittableExtrinsic } from "@polkadot/api-base/types";
+import { It, Mock } from "moq.ts";
 
 jest.mock("src/legal-officer/LegalOfficerContext");
 jest.mock("src/logion-chain");
@@ -42,6 +45,10 @@ describe("ChainData", () => {
             }
         };
         setOnchainSettings(settings);
+        setupApiMock(api => {
+            const submittable = new Mock<SubmittableExtrinsic<"promise">>();
+            api.setup(instance => instance.polkadot.tx.loAuthorityList.updateLegalOfficer(It.IsAny(), It.IsAny())).returns(submittable.object());
+        });
         render(<ChainData/>);
         await waitFor(() => expect(screen.getByLabelText("Node Base URL")).toHaveValue(settings.hostData?.baseUrl));
 

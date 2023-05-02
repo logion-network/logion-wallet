@@ -2,9 +2,11 @@ import { EditableRequest, LogionClient, OpenLoc, VerifiedThirdParty, ClosedLoc, 
 import { UUID } from "@logion/node-api";
 import { AxiosInstance } from "axios";
 import { DEFAULT_LEGAL_OFFICER } from "src/common/TestData";
-import { ApiPromise } from "src/__mocks__/PolkadotApiMock";
+import { SubmittableExtrinsic } from "@polkadot/api-base/types";
 import { addLink, getVerifiedThirdPartySelections, requestVote, VerifiedThirdPartyWithSelect } from "./client";
-import { mockValidPolkadotAccountId } from "src/__mocks__/@logion/node-api/Mocks";
+import { api, mockValidPolkadotAccountId, setupApiMock } from "src/__mocks__/LogionMock";
+import { It, Mock } from "moq.ts";
+import { Compact, u128 } from "@polkadot/types-codec";
 
 describe("Legal Officer client", () => {
 
@@ -112,17 +114,14 @@ describe("Legal Officer client", () => {
     });
 
     it("requests a vote", async () => {
-        const submittable = {};
-        const nodeApi = {
-            tx: {
-                vote: {
-                    createVoteForAllLegalOfficers: jest.fn().mockResolvedValue(submittable),
-                }
-            }
-        } as unknown as ApiPromise;
-
+        setupApiMock(api => {
+            const submittable = new Mock<SubmittableExtrinsic<"promise">>;
+            api.setup(instance => instance.polkadot.tx.vote.createVoteForAllLegalOfficers(It.IsAny())).returns(submittable.object());
+            const locId = new Mock<Compact<u128>>();
+            api.setup(instance => instance.adapters.toLocId(It.IsAny())).returns(locId.object());
+        });
         const client = {
-            nodeApi,
+            logionApi: api.object(),
             legalOfficers: [],
             buildAxios: () => {},
         } as unknown as LogionClient;
@@ -162,7 +161,7 @@ describe("Legal Officer client", () => {
             callback,
         });
 
-        expect(nodeApi.tx.vote.createVoteForAllLegalOfficers).toBeCalledWith(locId.toDecimalString());
+        api.verify(instance => instance.polkadot.tx.vote.createVoteForAllLegalOfficers(It.IsAny()));
         expect(signer.signAndSend).toBeCalledWith(expect.objectContaining({
             signerId: DEFAULT_LEGAL_OFFICER,
         }));

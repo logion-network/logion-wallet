@@ -1,7 +1,7 @@
-import { prefixedLogBalance, SYMBOL } from "@logion/node-api";
+import { Currency } from "@logion/node-api";
 
 import { useUserContext } from "../wallet-user/UserContext";
-import AmountCell from "./AmountCell";
+import AmountCell, { toPrefixedLgnt } from "./AmountCell";
 import LegalOfficerName from "./LegalOfficerNameCell";
 import { useResponsiveContext } from "./Responsive";
 import Table, { Cell, DateTimeCell, EmptyTableMessage } from "./Table";
@@ -26,12 +26,12 @@ export default function HandledVaultTransferRequests() {
                     },
                     {
                         header: "Type",
-                        render: () => <Cell content={`${SYMBOL}`} />,
+                        render: () => <Cell content={`${Currency.SYMBOL}`} />,
                         width: '80px',
                     },
                     {
                         header: "Amount",
-                        render: request => <AmountCell amount={ prefixedLogBalance(request.amount) } />,
+                        render: request => <AmountCell amount={ toPrefixedLgnt(request.amount) } />,
                         align: 'right',
                         width: width({
                             onSmallScreen: "100px",

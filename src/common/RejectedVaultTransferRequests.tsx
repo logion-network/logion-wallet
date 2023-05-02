@@ -1,9 +1,9 @@
 import { useCallback, useState } from "react";
-import { prefixedLogBalance, SYMBOL } from "@logion/node-api";
+import { Currency } from "@logion/node-api";
 import { VaultState, VaultTransferRequest } from "@logion/client";
 
 import { useLogionChain } from "../logion-chain";
-import AmountCell from "./AmountCell";
+import AmountCell, { toPrefixedLgnt } from "./AmountCell";
 import Button from "./Button";
 import ButtonGroup from "./ButtonGroup";
 import Icon from "./Icon";
@@ -67,12 +67,12 @@ export default function RejectedVaultTransferRequests() {
                     },
                     {
                         header: "Type",
-                        render: () => <Cell content={`${SYMBOL}`} />,
+                        render: () => <Cell content={`${Currency.SYMBOL}`} />,
                         width: '70px',
                     },
                     {
                         header: "Amount",
-                        render: request => <AmountCell amount={ prefixedLogBalance(request.amount) } />,
+                        render: request => <AmountCell amount={ toPrefixedLgnt(request.amount) } />,
                         align: 'right',
                         width: width({
                             onSmallScreen: "100px",

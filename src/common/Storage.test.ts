@@ -5,7 +5,7 @@ import {
     clearTokens,
     loadTokens
 } from './Storage';
-import { mockSimpleApi } from "../__mocks__/@logion/node-api/Mocks";
+import { api } from 'src/__mocks__/LogionMock';
 
 jest.unmock('@logion/client');
 jest.unmock('@logion/node-api');
@@ -15,7 +15,7 @@ describe("Tokens storage", () => {
     it("stores tokens", () => {
         const expirationDateTime = "2021-09-09T11:28:00.000Z";
         const tokens = new AccountTokens(
-            mockSimpleApi(),
+            api.object(),
             {
                 "Polkadot:abc": {
                     value: "token-abc",
@@ -35,7 +35,7 @@ describe("Tokens storage", () => {
     it("clears tokens", () => {
         const expirationDateTime = "2021-09-09T11:28:00.000Z";
         const tokens = new AccountTokens(
-            mockSimpleApi(),
+            api.object(),
             {
                 "Polkadot:abc": {
                     value: "token-abc",
@@ -52,9 +52,8 @@ describe("Tokens storage", () => {
 
     it("loads tokens", () => {
         const expirationDateTime = "2021-09-09T11:28:00.000Z";
-        const api = mockSimpleApi();
         const tokens = new AccountTokens(
-            api,
+            api.object(),
             {
                 "Polkadot:abc": {
                     value: "token-abc",
@@ -64,16 +63,15 @@ describe("Tokens storage", () => {
         );
         storeTokens(tokens);
 
-        const loadedTokens = loadTokens(api);
+        const loadedTokens = loadTokens(api.object());
 
         expect(loadedTokens).toEqual(tokens);
     });
 
     it("loads only valid tokens", () => {
         const expirationDateTime = "2021-09-09T11:28:00.000Z";
-        const api = mockSimpleApi();
         const tokens = new AccountTokens(
-            api,
+            api.object(),
             {
                 "Polkadot:abc": {
                     value: "token-abc",
@@ -84,7 +82,7 @@ describe("Tokens storage", () => {
         storeTokens(tokens);
         window.localStorage.setItem("token.def", "invalid json");
 
-        const loadedTokens = loadTokens(api);
+        const loadedTokens = loadTokens(api.object());
 
         expect(loadedTokens).toEqual(tokens);
     });

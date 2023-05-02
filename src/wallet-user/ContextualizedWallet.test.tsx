@@ -6,9 +6,9 @@ jest.mock('./UserContext');
 
 import ContextualizedWallet from './ContextualizedWallet';
 import { apiMock, setContextMock } from '../logion-chain/__mocks__/LogionChainMock';
-import { shallowRender, mockAccount } from '../tests';
+import { shallowRender } from '../tests';
 import { LocsState } from "@logion/client";
-import { mockValidPolkadotAccountId } from "src/__mocks__/@logion/node-api/Mocks";
+import { mockValidPolkadotAccountId } from 'src/__mocks__/LogionMock';
 
 describe("ContextualizedWallet", () => {
 

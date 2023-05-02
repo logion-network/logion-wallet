@@ -5,6 +5,9 @@ import { UUID, LegalOfficerCase } from '@logion/node-api';
 import { LocData, OpenLoc as RealOpenLoc } from "@logion/client";
 import { LogionClient } from '@logion/client/dist/LogionClient.js';
 import { PublicApi, EditableRequest as RealEditableRequest, LocRequestState as RealLocRequestState } from "@logion/client";
+import { SubmittableExtrinsic } from "@polkadot/api-base/types";
+import { Compact, u128 } from "@polkadot/types-codec";
+import { PalletLogionLocFile, PalletLogionLocMetadataItem } from '@polkadot/types/lookup';
 
 import { resetDefaultMocks } from "../common/__mocks__/ModelMock";
 import { CLOSED_IDENTITY_LOC, CLOSED_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "../__mocks__/@logion/node-api/dist/LogionLocMock";
@@ -17,7 +20,8 @@ import { LocRequestState, EditableRequest, OpenLoc, ClosedLoc } from "src/__mock
 import { addLink, closeLoc, deleteLink, publishFile, publishLink, publishMetadata, voidLoc } from "../legal-officer/client";
 import { useLogionChain } from "src/logion-chain";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
-import { mockValidPolkadotAccountId } from "src/__mocks__/@logion/node-api/Mocks";
+import { mockValidPolkadotAccountId, setupApiMock, api } from 'src/__mocks__/LogionMock';
+import { It, Mock } from "moq.ts";
 
 jest.mock("../logion-chain/Signature");
 jest.mock("../logion-chain");
@@ -43,6 +47,12 @@ describe("LocContext", () => {
     it("closes", async () => {
         givenRequest(OPEN_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OpenLoc);
         resetDefaultMocks();
+        setupApiMock(api => {
+            const submittable = new Mock<SubmittableExtrinsic<"promise">>();
+            api.setup(instance => instance.polkadot.tx.logionLoc.close(It.IsAny())).returns(submittable.object());
+            const locId = new Mock<Compact<u128>>();
+            api.setup(instance => instance.adapters.toLocId(It.IsAny())).returns(locId.object());
+        });
         whenRenderingInContext(_locState, <Closer/>);
         await clickByName("Go");
         await waitFor(() => expect(screen.getByText("Submitting...")).toBeVisible());
@@ -66,6 +76,12 @@ describe("LocContext", () => {
     it("voids", async () => {
         givenRequest(CLOSED_IDENTITY_LOC_ID, CLOSED_IDENTITY_LOC, ClosedLoc);
         resetDefaultMocks();
+        setupApiMock(api => {
+            const submittable = new Mock<SubmittableExtrinsic<"promise">>();
+            api.setup(instance => instance.polkadot.tx.logionLoc.makeVoid(It.IsAny())).returns(submittable.object());
+            const locId = new Mock<Compact<u128>>();
+            api.setup(instance => instance.adapters.toLocId(It.IsAny())).returns(locId.object());
+        });
         whenRenderingInContext(_locState, <Voider/>);
         await clickByName("Go");
         await waitFor(() => expect(screen.getByText("Submitting...")).toBeVisible());
@@ -133,6 +149,7 @@ function givenRequest<T extends LocRequestState>(locId: string, loc: LegalOffice
         public: publicMock,
         legalOfficers: [],
         buildAxios: () => axiosMock,
+        logionApi: api.object(),
     } as unknown as LogionClient;
     locsState.client = client;
     setClientMock(client);
@@ -299,6 +316,22 @@ async function publishesItem(itemType: LocItemType, expectedResource: string) {
     givenRequest(OPEN_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OpenLoc, CLOSED_IDENTITY_LOC_ID, CLOSED_IDENTITY_LOC);
     givenDraftItems();
     resetDefaultMocks();
+    setupApiMock(api => {
+        const submittable = new Mock<SubmittableExtrinsic<"promise">>();
+        if(itemType === "Data") {
+            api.setup(instance => instance.polkadot.tx.logionLoc.addMetadata(It.IsAny(), It.IsAny())).returns(submittable.object());
+            const metadata = new Mock<PalletLogionLocMetadataItem>();
+            api.setup(instance => instance.adapters.toPalletLogionLocMetadataItem(It.IsAny())).returns(metadata.object());
+        } else if(itemType === "Document") {
+            api.setup(instance => instance.polkadot.tx.logionLoc.addFile(It.IsAny(), It.IsAny())).returns(submittable.object());
+            const locFile = new Mock<PalletLogionLocFile>();
+            api.setup(instance => instance.adapters.toLocFile(It.IsAny())).returns(locFile.object());
+        } else if(itemType === "Linked LOC") {
+            api.setup(instance => instance.polkadot.tx.logionLoc.addLink(It.IsAny(), It.IsAny())).returns(submittable.object());
+        }
+        const locId = new Mock<Compact<u128>>();
+        api.setup(instance => instance.adapters.toLocId(It.IsAny())).returns(locId.object());
+    });
     whenRenderingInContext(_locState, <ItemPublisher itemType={ itemType } />);
     await clickByName("Go");
     await waitFor(() => expect(screen.getByText("Submitting...")).toBeVisible());

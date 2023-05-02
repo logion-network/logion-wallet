@@ -1,4 +1,4 @@
-import { UUID, getLegalOfficerCase } from "@logion/node-api";
+import { UUID } from "@logion/node-api";
 import { EditableRequest } from "@logion/client";
 import { useCallback } from "react";
 import { useForm } from "react-hook-form";
@@ -32,7 +32,7 @@ export default function LocLinkExistingDialog(props: Props) {
             setError("locId", { type: "value", message: "Invalid LOC ID" })
             return
         }
-        const loc = await getLegalOfficerCase({ locId, api: api! })
+        const loc = await api!.queries.getLegalOfficerCase(locId);
         if (!loc) {
             setError("locId", { type: "value", message: "LOC not found on chain" })
             return

@@ -1,9 +1,9 @@
 import { useCallback, useState } from "react";
-import { prefixedLogBalance, SYMBOL } from "@logion/node-api";
+import { SYMBOL } from "@logion/node-api";
 import { VaultState, VaultTransferRequest } from "@logion/client";
 
 import { useLogionChain } from "../logion-chain";
-import AmountCell from "./AmountCell";
+import AmountCell, { toPrefixedLgnt } from "./AmountCell";
 import Clickable from "./Clickable";
 import Icon from "./Icon";
 
@@ -60,7 +60,7 @@ export default function PendingVaultTransferRequests() {
                     },
                     {
                         header: "Amount",
-                        render: request => <AmountCell amount={ prefixedLogBalance(request.amount) } />,
+                        render: request => <AmountCell amount={ toPrefixedLgnt(request.amount) } />,
                         align: 'right',
                         width: width({
                             onSmallScreen: "100px",

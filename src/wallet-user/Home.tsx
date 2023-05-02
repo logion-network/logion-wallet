@@ -1,6 +1,6 @@
 import { Col, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router';
-import { prefixedLogBalance, SYMBOL } from '@logion/node-api';
+import { Currency } from '@logion/node-api';
 
 import { useCommonContext } from "../common/CommonContext";
 import { FullWidthPane } from '../common/Dashboard';
@@ -9,7 +9,7 @@ import Frame from '../common/Frame';
 import Loader from '../common/Loader';
 import Table, { DateCell, EmptyTableMessage } from '../common/Table';
 import TransferAmountCell, { transferBalance } from '../common/TransferAmountCell';
-import AmountCell from '../common/AmountCell';
+import AmountCell, { toPrefixedLgnt } from '../common/AmountCell';
 import Reading from '../common/Reading';
 import Button from '../common/Button';
 import { TransactionStatusCell } from "../common/TransactionStatusCell";
@@ -108,7 +108,7 @@ export function Content() {
                                         {
                                             header: "Paid fees",
                                             render: transaction => <AmountCell
-                                                amount={ prefixedLogBalance(transaction.fees.total) } />,
+                                                amount={ toPrefixedLgnt(transaction.fees.total) } />,
                                             align: 'right',
                                             width: "120px",
                                         }
@@ -122,7 +122,7 @@ export function Content() {
                                     <Reading
                                         readingIntegerPart={ balanceState.balances[0].balance.coefficient.toInteger() }
                                         readingDecimalPart={ balanceState.balances[0].balance.coefficient.toFixedPrecisionDecimals(2) }
-                                        unit={ balanceState.balances[0].balance.prefix.symbol + SYMBOL }
+                                        unit={ balanceState.balances[0].balance.prefix.symbol + Currency.SYMBOL }
                                         level={ balanceState.balances[0].level }
                                     />
                                     <Button

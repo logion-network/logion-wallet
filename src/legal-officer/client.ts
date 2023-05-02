@@ -15,17 +15,12 @@ import {
     VerifiedIssuerIdentity,
 } from "@logion/client";
 import {
+    Adapters,
     UUID,
-    addLink as nodeApiAddLink,
-    addFile as nodeApiAddFile,
-    addMetadata as nodeApiAddMetadata,
     MetadataItem,
-    closeLoc as nodeApiCloseLoc,
-    voidLoc as nodeApiVoidLoc,
     VoidInfo,
-    asString,
-    LogionNodeApi,
     ValidAccountId,
+    LogionNodeApiClass,
 } from "@logion/node-api";
 import type { SubmittableExtrinsic } from '@polkadot/api/promise/types';
 import { AnyJson } from "@polkadot/types-codec/types/helpers.js";
@@ -52,12 +47,12 @@ function getCurrent<T extends LocRequestState>(locState: LocRequestState): T {
 }
 
 function inspectState(locState: LocRequestState): {
-    api: LogionNodeApi,
+    api: LogionNodeApiClass,
     data: LocData,
     axios: AxiosInstance,
 } {
     const client = locState.locsState().client;
-    const api = client.nodeApi;
+    const api = client.logionApi;
     const data = locState.data();
     const axios = buildAxios(locState);
     return { api, data, axios };
@@ -98,12 +93,10 @@ export async function publishLink(params: {
 
     const currentLocState = getCurrent(locState);
     const { data, axios, api } = inspectState(currentLocState);
-    const submittable = nodeApiAddLink({
-        locId: data.id,
-        api,
-        target,
-        nature,
-    });
+    const submittable = api.polkadot.tx.logionLoc.addLink(
+        api.adapters.toLocId(data.id),
+        Adapters.toLocLink({ target, nature }),
+    );
     await signer.signAndSend({
         signerId: data.ownerAddress,
         submittable,
@@ -129,14 +122,15 @@ export async function publishFile(params: {
     const currentLocState = getCurrent(locState);
     const { data, axios, api } = inspectState(currentLocState);
 
-    const submittable = nodeApiAddFile({
-        locId: data.id,
-        api,
-        hash,
-        nature,
-        submitter,
-        size,
-    });
+    const submittable = api.polkadot.tx.logionLoc.addFile(
+        api.adapters.toLocId(data.id),
+        api.adapters.toLocFile({
+            hash,
+            nature,
+            size,
+            submitter,
+        }),
+    );
     await signer.signAndSend({
         signerId: data.ownerAddress,
         submittable,
@@ -157,11 +151,10 @@ export async function publishMetadata(params: {
 
     const currentLocState = getCurrent(locState);
     const { data, axios, api } = inspectState(currentLocState);
-    const submittable = nodeApiAddMetadata({
-        locId: data.id,
-        api,
-        item,
-    });
+    const submittable = api.polkadot.tx.logionLoc.addMetadata(
+        api.adapters.toLocId(data.id),
+        api.adapters.toPalletLogionLocMetadataItem(item),
+    );
     await signer.signAndSend({
         signerId: data.ownerAddress,
         submittable,
@@ -184,11 +177,17 @@ export async function closeLoc(params: {
     const { data, axios, api } = inspectState(currentLocState);
 
     const seal = data.seal;
-    const submittable = nodeApiCloseLoc({
-        locId: data.id,
-        api,
-        seal,
-    });
+    let submittable;
+    if(seal) {
+        submittable = api.polkadot.tx.logionLoc.closeAndSeal(
+            api.adapters.toLocId(data.id),
+            seal,
+        );
+    } else {
+        submittable = api.polkadot.tx.logionLoc.close(
+            api.adapters.toLocId(data.id),
+        );
+    }
     const signerId = data.ownerAddress;
     await signer.signAndSend({
         signerId,
@@ -215,11 +214,17 @@ export async function voidLoc(params: {
 
     const currentLocState = getCurrent(locState);
     const { data, axios, api } = inspectState(currentLocState);
-    const submittable = nodeApiVoidLoc({
-        locId: data.id,
-        api,
-        voidInfo,
-    });
+    let submittable;
+    if(data.voidInfo?.replacer) {
+        submittable = api.polkadot.tx.logionLoc.makeVoidAndReplace(
+            api.adapters.toLocId(data.id),
+            api.adapters.toLocId(data.voidInfo.replacer),
+        );
+    } else {
+        submittable = api.polkadot.tx.logionLoc.makeVoid(
+            api.adapters.toLocId(data.id),
+        );
+    }
     await signer.signAndSend({
         signerId: data.ownerAddress,
         submittable,
@@ -250,9 +255,12 @@ export async function setVerifiedThirdParty(params: {
 
     let submittable: SubmittableExtrinsic;
     if(isVerifiedThirdParty) {
-        submittable = api.tx.logionLoc.nominateIssuer(data.requesterAddress.address, data.id.toDecimalString());
+        submittable = api.polkadot.tx.logionLoc.nominateIssuer(
+            data.requesterAddress.address,
+            api.adapters.toLocId(data.id)
+        );
     } else {
-        submittable = api.tx.logionLoc.dismissIssuer(data.requesterAddress.address);
+        submittable = api.polkadot.tx.logionLoc.dismissIssuer(data.requesterAddress.address);
     }
     await signer.signAndSend({
         signerId: data.ownerAddress,
@@ -318,7 +326,11 @@ async function setIssuerSelection(params: SelectPartiesParams & { selected: bool
     const { locState, issuer, signer, callback, selected } = params;
     const currentLocState = getCurrent(locState);
     const { data, api } = inspectState(currentLocState);
-    const submittable = api.tx.logionLoc.setIssuerSelection(data.id.toDecimalString(), issuer, selected);
+    const submittable = api.polkadot.tx.logionLoc.setIssuerSelection(
+        api.adapters.toLocId(data.id),
+        issuer,
+        selected
+    );
     await signer.signAndSend({
         signerId: data.ownerAddress,
         submittable,
@@ -342,7 +354,7 @@ export async function requestVote(params: {
 
     const currentLocState = getCurrent(locState);
     const { data, api } = inspectState(currentLocState);
-    const submittable = api.tx.vote.createVoteForAllLegalOfficers(data.id.toDecimalString());
+    const submittable = api.polkadot.tx.vote.createVoteForAllLegalOfficers(api.adapters.toLocId(data.id));
     const result = await signer.signAndSend({
         signerId: data.ownerAddress,
         submittable,
@@ -353,7 +365,7 @@ export async function requestVote(params: {
         throw new Error("Unable to retrieve vote ID");
     }
     const voteCreatedData = voteCreated.data as AnyJson[];
-    return asString(voteCreatedData[0]);
+    return Adapters.asString(voteCreatedData[0]);
 }
 
 interface BackendVote {
@@ -407,8 +419,11 @@ export async function vote(params: {
     if(!currentAddress) {
         throw Error("Not authenticated");
     }
-    const api = client.nodeApi;
-    const submittable = api.tx.vote.vote(vote.voteId, myVote === "Yes");
+    const api = client.logionApi;
+    const submittable = api.polkadot.tx.vote.vote(
+        vote.voteId,
+        myVote === "Yes"
+    );
     const result = await signer.signAndSend({
         signerId: currentAddress.address,
         submittable,

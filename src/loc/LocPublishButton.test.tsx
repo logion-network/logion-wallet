@@ -4,7 +4,7 @@ import { mockSubmittableResult } from "src/logion-chain/__mocks__/SignatureMock"
 import { clickByName } from "../tests";
 import LocPublishButton from "./LocPublishButton";
 import { LocItem } from "./LocItem";
-import { mockValidPolkadotAccountId } from "src/__mocks__/@logion/node-api/Mocks";
+import { mockValidPolkadotAccountId } from 'src/__mocks__/LogionMock';
 
 jest.mock("./LocContext");
 jest.unmock("@logion/client");

@@ -2,7 +2,7 @@ import { LegalOfficerCase } from '@logion/node-api';
 
 import { DEFAULT_LEGAL_OFFICER } from '../Mocks';
 import { TEST_WALLET_USER } from '../../../../wallet-user/TestData';
-import { mockValidPolkadotAccountId } from '../Mocks';
+import { mockValidPolkadotAccountId } from 'src/__mocks__/LogionMock';
 
 export function createLogionIdentityLoc(parameters: any) {
     return Promise.resolve();
@@ -44,16 +44,6 @@ export const CLOSED_IDENTITY_LOC: LegalOfficerCase = {
     metadata: [],
     links: [],
     collectionCanUpload: false,
-}
-
-export function getLegalOfficerCase(parameters: any) {
-    if(parameters.locId.toDecimalString() === CLOSED_IDENTITY_LOC_ID) {
-        return Promise.resolve(CLOSED_IDENTITY_LOC);
-    } else if(parameters.locId.toDecimalString() === OPEN_IDENTITY_LOC_ID) {
-        return Promise.resolve(OPEN_IDENTITY_LOC);
-    } else {
-        return Promise.resolve(undefined);
-    }
 }
 
 export const OPEN_IDENTITY_LOC_ID = "195914524858768213081425411950368569411";

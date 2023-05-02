@@ -1,7 +1,7 @@
+import { mockValidPolkadotAccountId } from 'src/__mocks__/LogionMock';
 import { shallowRender } from '../tests';
 
 import AccountAddress from './AccountAddress';
-import { mockValidPolkadotAccountId } from "../__mocks__/@logion/node-api/Mocks";
 
 test("renders", () => {
     const result = shallowRender(

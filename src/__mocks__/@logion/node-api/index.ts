@@ -8,23 +8,18 @@ export {
     getCoin,
     asString,
     getCollectionSize,
+    Currency,
+    Numbers,
+    Adapters,
 } from "@logion/node-api";
+
 export type {
     Coin,
     CoinBalance,
+    LogionNodeApiClass,
 } from "@logion/node-api";
 
-export function buildApi() {
-    return new ApiPromise();
-}
-
-export * from "./dist/Accounts";
-export * from "./dist/Balances";
-export * from "./dist/Codec";
-export * from "./dist/LogionLoc";
-export * from "./dist/Recovery";
-import { ApiPromise } from "src/__mocks__/PolkadotApiMock";
-import { mockValidPolkadotAccountId, mockValidAccountId } from "./Mocks";
+import { api, mockValidAccountId, mockValidPolkadotAccountId } from "src/__mocks__/LogionMock";
 
 export function validPolkadotAccountId(api: any, address: string) {
     return mockValidPolkadotAccountId(address);
@@ -43,4 +38,8 @@ export class AnyAccountId {
     toValidAccountId() {
         return mockValidAccountId(this.address, this.type);
     }
+}
+
+export function buildApiClass() {
+    return api.object();
 }

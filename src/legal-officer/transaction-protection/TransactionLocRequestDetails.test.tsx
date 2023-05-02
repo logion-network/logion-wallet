@@ -1,7 +1,7 @@
 import { LocData } from '@logion/client';
 import { shallowRender } from '../../tests';
 import TransactionLocRequestDetails from './TransactionLocRequestDetails';
-import { mockValidPolkadotAccountId } from 'src/__mocks__/@logion/node-api/Mocks';
+import { mockValidPolkadotAccountId } from 'src/__mocks__/LogionMock';
 
 test("renders", () => {
     const request = {
