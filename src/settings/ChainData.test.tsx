@@ -1,5 +1,6 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
-import { LegalOfficerData } from "src/legal-officer/LegalOfficerData";
+import { LegalOfficerData } from "@logion/node-api";
+import { PalletLoAuthorityListLegalOfficerData } from "@polkadot/types/lookup";
 
 import { setOnchainSettings } from "src/legal-officer/__mocks__/LegalOfficerContextMock";
 import { DEFAULT_LEGAL_OFFICER_ACCOUNT, setCurrentAddress } from "src/logion-chain/__mocks__/LogionChainMock";
@@ -46,6 +47,8 @@ describe("ChainData", () => {
         };
         setOnchainSettings(settings);
         setupApiMock(api => {
+            const data = new Mock<PalletLoAuthorityListLegalOfficerData>();
+            api.setup(instance => instance.adapters.toPalletLoAuthorityListLegalOfficerDataHost(It.IsAny())).returns(data.object());
             const submittable = new Mock<SubmittableExtrinsic<"promise">>();
             api.setup(instance => instance.polkadot.tx.loAuthorityList.updateLegalOfficer(It.IsAny(), It.IsAny())).returns(submittable.object());
         });

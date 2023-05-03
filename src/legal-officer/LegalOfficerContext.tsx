@@ -20,9 +20,8 @@ import { useCommonContext } from '../common/CommonContext';
 import { LIGHT_MODE } from './Types';
 import { useLogionChain } from '../logion-chain';
 import { VaultApi } from '../vault/VaultApi';
-import { LocType, IdentityLocType } from "@logion/node-api";
+import { LocType, IdentityLocType, LegalOfficerData } from "@logion/node-api";
 import { DateTime } from "luxon";
-import { getLegalOfficerData, LegalOfficerData } from './LegalOfficerData';
 import { fetchAllLocsParams } from 'src/loc/LegalOfficerLocContext';
 import { getVotes, Vote, VoteResult, vote as clientVote } from './client';
 
@@ -459,7 +458,7 @@ export function LegalOfficerContextProvider(props: Props) {
                 type: "REFRESH_SETTINGS_CALLED"
             });
             const currentAddress = accounts.current.accountId.address;
-            const onchainSettings = await getLegalOfficerData({ api, address: currentAddress });
+            const onchainSettings = await api.queries.getLegalOfficerData(currentAddress);
             let legalOfficer: LegalOfficer | undefined = contextValue.legalOfficer;
             if(!legalOfficer) {
                 legalOfficer = client?.allLegalOfficers.find(legalOfficer => legalOfficer.address === currentAddress);
@@ -589,7 +588,7 @@ export function LegalOfficerContextProvider(props: Props) {
             const currentAddress = accounts.current.accountId.address;
 
             (async function() {
-                const onchainSettings = await getLegalOfficerData({ api, address: currentAddress });
+                const onchainSettings = await api.queries.getLegalOfficerData(currentAddress);
                 const legalOfficer = (await client.directoryClient.getLegalOfficers()).find(legalOfficer => legalOfficer.address === currentAddress);
                 const missingSettings = getMissingSettings(legalOfficer, onchainSettings);
                 dispatch({
