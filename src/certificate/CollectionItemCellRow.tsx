@@ -39,6 +39,7 @@ export default function CollectionItemCellRow(props: Props) {
             <CertificateItemDetails
                 item={ props.item }
                 checkResult={ props.checkResult }
+                hideNonRestrictedDelivery={ true }
             />
 
             { files && files.length > 0 &&
