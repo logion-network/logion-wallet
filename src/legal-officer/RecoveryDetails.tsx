@@ -107,7 +107,6 @@ export default function RecoveryDetails() {
         return null;
     }
 
-    console.log(locId?.toDecimalString())
     return (
         <FullWidthPane
             className="RecoveryDetails"
