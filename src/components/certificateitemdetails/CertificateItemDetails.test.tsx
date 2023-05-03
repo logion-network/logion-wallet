@@ -11,6 +11,13 @@ describe("CertificateItemDetails", () => {
         renderAndTestSnapshot(item);
     });
 
+    it("renders item with undefined match, no token and hidden restricted delivery", () => {
+        const item = buildItem({
+            restrictedDelivery: false
+        });
+        renderAndTestSnapshot(item, undefined, true);
+    });
+
     it("renders item with undefined match, token and restricted delivery", () => {
         const item = buildItem({
             restrictedDelivery: true,
@@ -64,7 +71,11 @@ function buildItem(params: { restrictedDelivery: boolean, token?: ItemTokenWithR
     } as CollectionItem;
 }
 
-function renderAndTestSnapshot(item: CollectionItem, result?: CheckHashResult) {
-    const element = shallowRender(<CertificateItemDetails item={ item } checkResult={ result } />);
+function renderAndTestSnapshot(item: CollectionItem, result?: CheckHashResult, hideNonRestrictedDelivery?: boolean) {
+    const element = shallowRender(<CertificateItemDetails
+        item={ item }
+        checkResult={ result }
+        hideNonRestrictedDelivery={ hideNonRestrictedDelivery }
+    />);
     expect(element).toMatchSnapshot();
 }

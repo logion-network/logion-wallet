@@ -9,6 +9,7 @@ import "./CertificateItemDetails.css";
 export interface Props {
     item: CollectionItem;
     checkResult?: CheckHashResult;
+    hideNonRestrictedDelivery?: boolean;
 }
 
 export function CertificateItemDetails(props: Props) {
@@ -27,11 +28,14 @@ export function CertificateItemDetails(props: Props) {
                 <pre>{ description }</pre>
             </CertificateCell>
         </Row>
-        <Row>
-            <CertificateCell md={ 12 } label="Restricted delivery:">
-                { restrictedDelivery ? "Yes": "No" }
-            </CertificateCell>
-        </Row>
+        {
+            (restrictedDelivery || !props.hideNonRestrictedDelivery) &&
+            <Row>
+                <CertificateCell md={ 12 } label="Restricted delivery:">
+                    { restrictedDelivery ? "Yes": "No" }
+                </CertificateCell>
+            </Row>
+        }
         {
             token !== undefined &&
             <Row>

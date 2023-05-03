@@ -345,12 +345,10 @@ function walletTypeCompatibleWithItemType(wallet: WalletType, token?: TokenType)
     if (!token) {
         return false;
     }
-    if (isTokenCompatibleWith(token, 'ETHEREUM')) {
-        return [ "METAMASK", "CROSSMINT" ].includes(wallet);
-    } else if (isTokenCompatibleWith(token, 'POLKADOT')) {
-        return wallet === "POLKADOT";
-    } else {
-        return false;
+    if ([ "METAMASK", "CROSSMINT" ].includes(wallet)) {
+        return isTokenCompatibleWith(token, 'ETHEREUM');
+    } else { // wallet POLKADOT
+        return isTokenCompatibleWith(token, 'POLKADOT');
     }
 }
 

@@ -138,6 +138,48 @@ exports[`CertificateItemDetails renders item with positive match, token and rest
 </React.Fragment>
 `;
 
+exports[`CertificateItemDetails renders item with undefined match, no token and hidden restricted delivery 1`] = `
+<React.Fragment>
+  <Row>
+    <CertificateDateTimeCell
+      dateTime="2022-10-12T10:13:00.000Z"
+      label="Collection item timestamp:"
+      md={6}
+    />
+    <CertificateCell
+      label="Collection item identification:"
+      matched={false}
+      md={6}
+    >
+      some-id
+    </CertificateCell>
+  </Row>
+  <Row>
+    <CertificateCell
+      label="Collection item description:"
+      md={12}
+    >
+      <pre>
+        Some description
+      </pre>
+    </CertificateCell>
+  </Row>
+  <Row>
+    <TermsAndConditions
+      item={
+        Object {
+          "addedOn": "2022-10-12T10:13:00.000Z",
+          "description": "Some description",
+          "id": "some-id",
+          "restrictedDelivery": false,
+          "token": undefined,
+        }
+      }
+    />
+  </Row>
+</React.Fragment>
+`;
+
 exports[`CertificateItemDetails renders item with undefined match, no token and no restricted delivery 1`] = `
 <React.Fragment>
   <Row>

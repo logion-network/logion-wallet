@@ -410,3 +410,35 @@ Object {
   "unmount": [Function],
 }
 `;
+
+exports[`Authenticate with all wallet types renders all wallet type for token type 'owner' 1`] = `
+<div
+  className="Authenticate"
+>
+  <h3>
+    Token-gated certificate
+  </h3>
+  <p>
+    This certificate is bound to a token and provides token-restricted access to documents and assets for the token owner.
+  </p>
+  <p>
+    To get access, if you are the owner of the token recorded in this certificate, please authenticate yourself with the method you used to get your token by clicking on the button below.
+  </p>
+  <div
+    className="btn-group-container"
+  >
+    <ButtonGroup>
+      <ConnectAndClaim
+        claimAsset={[Function]}
+        compatibleWallets={
+          Array [
+            "CROSSMINT",
+            "METAMASK",
+            "POLKADOT",
+          ]
+        }
+      />
+    </ButtonGroup>
+  </div>
+</div>
+`;

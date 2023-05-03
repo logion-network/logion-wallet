@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { clickByName } from '../tests';
+import { clickByName, shallowRender } from '../tests';
 import { UUID } from "@logion/node-api";
 import { DEFAULT_LEGAL_OFFICER } from "../common/TestData";
 import { setMetamaskEnabled } from '../__mocks__/PolkadotExtensionDappMock';
@@ -78,6 +78,13 @@ const item = {
     }
 } as CollectionItem;
 
+const itemWithOwner = {
+    ...item,
+    token: {
+        type: "owner"
+    }
+} as CollectionItem;
+
 let tokenForDownload: Token | undefined = undefined;
 
 const setTokenForDownload = (token: Token | undefined) => {
@@ -105,6 +112,21 @@ const polkadotAssetProps: Props = {
     ...assetProps,
     walletType: "POLKADOT",
 };
+
+describe("Authenticate with all wallet types", () => {
+    const props = {
+        locId,
+        setTokenForDownload,
+        item: itemWithOwner,
+        walletType: null
+    };
+
+    it("renders all wallet type for token type 'owner'", () => {
+        const element = shallowRender(<Authenticate { ...props } />)
+        expect(element).toMatchSnapshot();
+    })
+
+})
 
 function testRender(props: Props) {
     const button = render(<Authenticate { ...props } />);
