@@ -2,7 +2,6 @@ import { BlockchainTypes, CrossmintEVMWalletAdapter } from "@crossmint/connect";
 import { Token, LogionClient, CollectionItem, TokenType, isTokenCompatibleWith } from "@logion/client";
 import { CrossmintSigner } from "@logion/crossmint";
 import { allMetamaskAccounts, enableMetaMask } from "@logion/extension";
-import { AnyAccountId } from "@logion/node-api";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Dropdown, Spinner } from "react-bootstrap";
 import Button from "../common/Button";
@@ -308,7 +307,7 @@ async function authenticateWithCrossmint(context: LogionChainContextType): Promi
     console.log(`Detected Crossmint address ${ address }`);
 
     const signer = new CrossmintSigner(crossmint);
-    const account = new AnyAccountId(context.api!, address, "Ethereum").toValidAccountId();
+    const account = context.api!.queries.getValidAccountId(address, "Ethereum");
     let authenticatedClient = await context.authenticateAddress(account, signer);
     if (!authenticatedClient) {
         throw new Error("Unable to authenticate");
@@ -331,7 +330,7 @@ async function authenticateWithMetamask(context: LogionChainContextType): Promis
 
     if (accounts.length > 0) {
         const metaMaskAddress = accounts[0].address;
-        const account = new AnyAccountId(context.api!, metaMaskAddress, "Ethereum").toValidAccountId();
+        const account = context.api!.queries.getValidAccountId(metaMaskAddress, "Ethereum");
         const authenticatedClient = await context.authenticateAddress(account);
         if (!authenticatedClient) {
             throw new Error("Unable to authenticate");

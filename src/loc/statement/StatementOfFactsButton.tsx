@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { Dropdown } from "react-bootstrap";
-import { UUID, LegalOfficerCase, getLegalOfficerCase } from "@logion/node-api";
+import { UUID, LegalOfficerCase } from "@logion/node-api";
 import { CollectionItem, LegalOfficer, ClosedCollectionLoc, TokensRecord } from "@logion/client";
 
 import { locDetailsPath, STATEMENT_OF_FACTS_PATH } from "../../legal-officer/LegalOfficerPaths";
@@ -66,7 +66,7 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                 setError("containingLocId", { type: "value", message: "Choose a different LOC to upload Statement of Facts" })
                 return
             }
-            const loc = await getLegalOfficerCase({ locId: containingLocId, api })
+            const loc = await api.queries.getLegalOfficerCase(containingLocId);
             if (!loc) {
                 setError("containingLocId", { type: "value", message: "LOC not found on chain" })
             } else if (loc.closed) {

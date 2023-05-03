@@ -2,7 +2,6 @@ import React, { useContext, useReducer, Reducer, useEffect, useCallback, useStat
 import {
     UUID,
     LocType,
-    validPolkadotAccountId,
 } from "@logion/node-api";
 import {
     LocRequestState,
@@ -182,7 +181,7 @@ export function LocContextProvider(props: Props) {
                 const result = createLinkItem({
                     link: item,
                     otherLocDescription: linkData.linkedLoc.description || "- Confidential -",
-                    submitter: validPolkadotAccountId(api!, locOwner),
+                    submitter: api!.queries.getValidAccountId(locOwner, "Polkadot"),
                     linkDetailsPath: linkData.linkDetailsPath,
                 })
                 locItems.push(result.locItem)

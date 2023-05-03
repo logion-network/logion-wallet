@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { Form } from 'react-bootstrap';
-import { getLegalOfficerCase, LocType, UUID, ValidAccountId } from '@logion/node-api';
+import { LocType, UUID, ValidAccountId } from '@logion/node-api';
 
 import Alert from '../common/Alert';
 import { BackgroundAndForegroundColors } from '../common/ColorTheme';
@@ -29,10 +29,7 @@ export default function LocIdFormGroup(props: Props) {
         if(uuid === undefined) {
             setInvalidLocIdFeedback("Given string is not a valid LOC ID");
         } else {
-            getLegalOfficerCase({
-                api: api!,
-                locId: uuid
-            })
+            api!.queries.getLegalOfficerCase(uuid)
             .then(loc => {
                 if(loc === undefined) {
                     setInvalidLocIdFeedback("No LOC with given ID");

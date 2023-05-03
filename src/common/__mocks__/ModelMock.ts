@@ -1,7 +1,7 @@
 import { LocRequest } from "@logion/client";
 import { ValidAccountId } from "@logion/node-api";
 import { CreateLocRequest } from "../Model";
-import { mockValidAccountId } from "src/__mocks__/@logion/node-api/Mocks";
+import { mockValidAccountId } from "src/__mocks__/LogionMock";
 
 export let fetchProtectionRequests = jest.fn();
 

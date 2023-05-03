@@ -9,7 +9,7 @@ import FormGroup from "src/common/FormGroup";
 import { useLegalOfficerContext } from "src/legal-officer/LegalOfficerContext";
 import { signAndSend } from "src/logion-chain/Signature";
 import { useLogionChain } from "src/logion-chain";
-import { updateLegalOfficerDataExtrinsic } from "src/legal-officer/LegalOfficerData";
+import { toPalletLoAuthorityListLegalOfficerDataHost } from "src/legal-officer/LegalOfficerData";
 
 import "./ChainData.css";
 import Table, { Cell, EmptyTableMessage } from "src/common/Table";
@@ -37,13 +37,10 @@ export default function ChainData() {
             flushSync(() => setSignAndSubmit(null)); // Reset
 
             const legalOfficerAddress = accounts.current.accountId.address;
+            const legalOfficerData = toPalletLoAuthorityListLegalOfficerDataHost(api, { nodeId, baseUrl });
             const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
                 signerId: legalOfficerAddress,
-                submittable: updateLegalOfficerDataExtrinsic({
-                    api,
-                    address: legalOfficerAddress,
-                    legalOfficerData: { nodeId, baseUrl },
-                }),
+                submittable: api.polkadot.tx.loAuthorityList.updateLegalOfficer(legalOfficerAddress, legalOfficerData),
                 callback: setResult,
                 errorCallback: setError,
             });

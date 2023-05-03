@@ -5,6 +5,8 @@ jest.mock("./Model");
 jest.mock("./LegalOfficerContext");
 jest.mock("../logion-chain");
 
+import { LegalOfficerCase } from "@logion/node-api";
+import { SubmittableExtrinsic } from "@polkadot/api-base/types";
 import { render, waitFor, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
@@ -16,7 +18,9 @@ import { PROTECTION_REQUESTS_HISTORY } from './TestData';
 import { axiosMock, setAddresses, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../logion-chain/__mocks__/LogionChainMock';
 import { setParams, navigate } from '../__mocks__/ReactRouterMock';
 import { refreshRequests } from './__mocks__/LegalOfficerContextMock';
-import { CLOSED_IDENTITY_LOC_ID, getLegalOfficerCase } from '../__mocks__/@logion/node-api/dist/LogionLocMock';
+import { CLOSED_IDENTITY_LOC_ID } from '../__mocks__/@logion/node-api/dist/LogionLocMock';
+import { It, Mock } from 'moq.ts';
+import { mockValidPolkadotAccountId, setupApiMock } from 'src/__mocks__/LogionMock';
 
 describe("RecoveryDetails", () => {
 
@@ -33,6 +37,17 @@ describe("RecoveryDetails", () => {
         };
         setFetchRecoveryInfo(jest.fn().mockResolvedValue(recoveryConfig));
         setParams({ requestId: protectionRequest.id });
+        setupApiMock(api => {
+            api.setup(instance => instance.queries.getActiveRecovery(It.IsAny(), It.IsAny())).returnsAsync(undefined);
+            const loc = new Mock<LegalOfficerCase>();
+            loc.setup(instance => instance.closed).returns(true);
+            loc.setup(instance => instance.locType).returns("Identity");
+            loc.setup(instance => instance.requesterAddress).returns(mockValidPolkadotAccountId(protectionRequest.requesterAddress));
+            api.setup(instance => instance.queries.getLegalOfficerCase(It.IsAny())).returnsAsync(loc.object());
+
+            const submittable = new Mock<SubmittableExtrinsic<"promise">>();
+            api.setup(instance => instance.polkadot.tx.recovery.vouchRecovery(It.IsAny(), It.IsAny())).returns(submittable.object());
+        });
 
         render(<RecoveryDetails />);
 
@@ -46,7 +61,6 @@ describe("RecoveryDetails", () => {
 
         let closedLocInput: HTMLElement;
         await waitFor(() => closedLocInput = screen.getByRole("textbox", {name: "Closed Identity LOC ID"}));
-        console.log(getLegalOfficerCase);
         await userEvent.type(closedLocInput!, CLOSED_IDENTITY_LOC_ID);
 
         let confirmButton: HTMLElement;

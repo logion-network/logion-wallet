@@ -1,6 +1,7 @@
+import type { ApiPromise } from "@polkadot/api";
 import { DateTime } from "luxon";
 import BN from 'bn.js'
-import { UUID } from "@logion/node-api";
+import { UUID, LogionNodeApiClass } from "@logion/node-api";
 
 import { mockCompact } from "../../__mocks__/PolkadotApiMock";
 import { LegalOfficer } from '@logion/client';
@@ -11,6 +12,7 @@ import { Mock } from 'moq.ts';
 import Accounts, { Account } from 'src/common/types/Accounts';
 import { LogionClient } from '@logion/client/dist/LogionClient.js';
 import { LogionClient as LogionClientMock } from '../../__mocks__/LogionClientMock';
+import { api } from "src/__mocks__/LogionMock";
 
 export const LogionChainContextProvider = (props: any) => null;
 
@@ -170,7 +172,7 @@ export function useLogionChain() {
     } else {
         return {
             injectedAccounts: null,
-            api: apiMock,
+            api: api.object(),
             connectedNodeMetadata: {
 
             },

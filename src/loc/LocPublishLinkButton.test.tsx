@@ -5,7 +5,7 @@ import { UUID } from "@logion/node-api";
 import { LocItem } from "./LocItem";
 import { shallowRender } from "../tests";
 import LocPublishLinkButton from "./LocPublishLinkButton";
-import { mockValidPolkadotAccountId } from "src/__mocks__/@logion/node-api/Mocks";
+import { mockValidPolkadotAccountId } from 'src/__mocks__/LogionMock';
 
 describe("LocPublishLinkButton", () => {
 

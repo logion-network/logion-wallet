@@ -7,7 +7,7 @@ import OpenedLocs from './OpenedLocs';
 import { setOpenedLocRequests, setOpenedIdentityLocsByType } from "../__mocks__/LegalOfficerContextMock";
 import { LocData, OpenLoc, UserIdentity } from "@logion/client";
 import { UUID } from "@logion/node-api";
-import { mockValidPolkadotAccountId } from "../../__mocks__/@logion/node-api/Mocks";
+import { mockValidPolkadotAccountId } from 'src/__mocks__/LogionMock';
 
 describe("OpenedLocs", () => {
 

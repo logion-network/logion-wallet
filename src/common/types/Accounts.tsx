@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon';
 import { InjectedAccount } from '@logion/extension';
 import { LogionClient, Token } from '@logion/client';
-import { AnyAccountId, LogionNodeApi, ValidAccountId } from '@logion/node-api';
+import { LogionNodeApiClass, ValidAccountId } from '@logion/node-api';
 
 export interface Account {
     readonly name: string,
@@ -22,7 +22,7 @@ export function buildAccounts(
     legalOfficers: Set<string>,
 ): Accounts {
     const all = injectedAccounts.map(injectedAccount => {
-        const accountId = toValidAccountId(authenticatedClient.nodeApi, injectedAccount);
+        const accountId = toValidAccountId(authenticatedClient.logionApi, injectedAccount);
         return {
             name: injectedAccount.meta.name!,
             accountId,
@@ -40,11 +40,11 @@ export function buildAccounts(
     }
 }
 
-export function toValidAccountId(api: LogionNodeApi, injectedAccount: InjectedAccount): ValidAccountId {
+export function toValidAccountId(api: LogionNodeApiClass, injectedAccount: InjectedAccount): ValidAccountId {
     if(injectedAccount.type === "ethereum") {
-        return new AnyAccountId(api, injectedAccount.address, "Ethereum").toValidAccountId();
+        return api.queries.getValidAccountId(injectedAccount.address, "Ethereum");
     } else {
-        return new AnyAccountId(api, injectedAccount.address, "Polkadot").toValidAccountId();
+        return api.queries.getValidAccountId(injectedAccount.address, "Polkadot");
     }
 }
 
@@ -60,7 +60,7 @@ function currentOrDefaultAddress(
     if(currentAddress !== undefined) {
         return currentAddress;
     } else if(loggedAddresses.length > 0) {
-        const injectedAccountsKeys = injectedAccounts.map(injectedAccount => toValidAccountId(authenticatedClient.nodeApi, injectedAccount).toKey());
+        const injectedAccountsKeys = injectedAccounts.map(injectedAccount => toValidAccountId(authenticatedClient.logionApi, injectedAccount).toKey());
         return loggedAddresses.find(account => injectedAccountsKeys.includes(account.toKey()));
     } else {
         return undefined;

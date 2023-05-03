@@ -1,6 +1,9 @@
 import { UUID } from "@logion/node-api";
 import { LocData } from "@logion/client";
 import { render as renderTesting, waitFor, screen } from "@testing-library/react";
+import { SubmittableExtrinsic } from "@polkadot/api-base/types";
+import { Compact, u128 } from "@polkadot/types-codec";
+import { PalletLogionLocMetadataItem } from "@polkadot/types/lookup";
 
 import { OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "../__mocks__/@logion/node-api/dist/LogionLocMock";
 import { clickByName, render } from "../tests";
@@ -15,6 +18,8 @@ import { DEFAULT_LEGAL_OFFICER } from "src/common/TestData";
 import { setLocRequest, setLocState } from "./__mocks__/LocContextMock";
 import { EditableRequest } from "src/__mocks__/LogionClientMock";
 import { deleteLink } from "src/legal-officer/__mocks__/ClientMock";
+import { It, Mock } from "moq.ts";
+import { setupApiMock } from "src/__mocks__/LogionMock";
 
 jest.mock("../common/CommonContext");
 jest.mock("../logion-chain");
@@ -196,6 +201,14 @@ function testRendersSingleDraftItem(component: React.ReactElement) {
 }
 
 async function testDeletesDraftMetadataItem(component: React.ReactElement) {
+    setupApiMock(api => {
+        const submittable = new Mock<SubmittableExtrinsic<"promise">>();
+        api.setup(instance => instance.polkadot.tx.logionLoc.addMetadata(It.IsAny(), It.IsAny())).returns(submittable.object());
+        const locId = new Mock<Compact<u128>>();
+        api.setup(instance => instance.adapters.toLocId(It.IsAny())).returns(locId.object());
+        const item = new Mock<PalletLogionLocMetadataItem>();
+        api.setup(instance => instance.adapters.toPalletLogionLocMetadataItem(It.IsAny())).returns(item.object());
+    });
     renderTesting(component);
     await clickByName(deleteButtonName);
     await waitFor(() => expect(_locState.deleteMetadata).toBeCalled());
@@ -277,6 +290,12 @@ function givenFileItem(request: LocData, status: LocItemStatus): LocItem[] {
 }
 
 async function testDeletesDraftLinkItem(component: React.ReactElement) {
+    setupApiMock(api => {
+        const submittable = new Mock<SubmittableExtrinsic<"promise">>();
+        api.setup(instance => instance.polkadot.tx.logionLoc.addLink(It.IsAny(), It.IsAny())).returns(submittable.object());
+        const locId = new Mock<Compact<u128>>();
+        api.setup(instance => instance.adapters.toLocId(It.IsAny())).returns(locId.object());
+    });
     renderTesting(component);
     await clickByName(deleteButtonName);
     await waitFor(() => expect(deleteLink).toBeCalled());

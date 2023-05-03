@@ -1,6 +1,8 @@
+import { LocType } from "@logion/node-api";
+import { SubmittableExtrinsic } from "@polkadot/api-base/types";
+import { Compact, u128 } from "@polkadot/types-codec";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { LocType } from "@logion/node-api";
 
 import { LocRequestFragment } from "../common/types/ModelTypes";
 import { finalizeSubmission } from "../logion-chain/__mocks__/SignatureMock";
@@ -9,6 +11,8 @@ import { TEST_WALLET_USER } from "../wallet-user/TestData";
 
 import LocCreationDialog from "./LocCreationDialog";
 import { setAuthenticatedUser } from "src/common/__mocks__/ModelMock";
+import { It, Mock } from "moq.ts";
+import { setupApiMock } from "src/__mocks__/LogionMock";
 
 jest.mock("../logion-chain/Signature");
 jest.mock("../common/CommonContext");
@@ -53,6 +57,20 @@ async function createsWithUserIdentity(locType: LocType, requesterAddress: strin
             phoneNumber: "+1234",
         }
     };
+    setupApiMock(api => {
+        const locId = new Mock<Compact<u128>>();
+        api.setup(instance => instance.adapters.toLocId(It.IsAny())).returns(locId.object());
+        if(locType === "Identity") {
+            const submittable = new Mock<SubmittableExtrinsic<"promise">>();
+            api.setup(instance => instance.polkadot.tx.logionLoc.createPolkadotIdentityLoc(It.IsAny(), It.IsAny())).returns(submittable.object());
+        } else if(locType === "Collection") {
+            const submittable = new Mock<SubmittableExtrinsic<"promise">>();
+            api.setup(instance => instance.polkadot.tx.logionLoc.createCollectionLoc(It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny())).returns(submittable.object());
+        } else if(locType === "Transaction") {
+            const submittable = new Mock<SubmittableExtrinsic<"promise">>();
+            api.setup(instance => instance.polkadot.tx.logionLoc.createPolkadotTransactionLoc(It.IsAny(), It.IsAny())).returns(submittable.object());
+        }
+    });
 
     render(<LocCreationDialog
         exit={ exit }

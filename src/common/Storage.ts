@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon';
 import { AccountTokens, Token } from '@logion/client';
-import { LogionNodeApi, ValidAccountId } from "@logion/node-api";
+import { LogionNodeApiClass, ValidAccountId } from "@logion/node-api";
 import {
     storeMulti,
     clearMulti,
@@ -42,7 +42,7 @@ export function clearTokens() {
     clearMulti(token)
 }
 
-export function loadTokens(api: LogionNodeApi): AccountTokens {
+export function loadTokens(api: LogionNodeApiClass): AccountTokens {
     const tokens: Record<string, Token> = loadMulti(token)
     return new AccountTokens(api, tokens);
 }
@@ -50,14 +50,14 @@ export function loadTokens(api: LogionNodeApi): AccountTokens {
 class CurrentAddressStorable implements SingleStorable<ValidAccountId> {
     key = "currentAddress";
 
-    constructor(api: LogionNodeApi) {
+    constructor(api: LogionNodeApiClass) {
         this.api = api;
     }
 
-    private api: LogionNodeApi;
+    private api: LogionNodeApiClass;
 
     fromValue(value: string) {
-        return ValidAccountId.parseKey(this.api, value);
+        return ValidAccountId.parseKey(this.api.polkadot, value);
     }
 
     toValue(obj: ValidAccountId): string {
@@ -65,15 +65,15 @@ class CurrentAddressStorable implements SingleStorable<ValidAccountId> {
     }
 }
 
-export function storeCurrentAddress(api: LogionNodeApi, address: ValidAccountId) {
+export function storeCurrentAddress(api: LogionNodeApiClass, address: ValidAccountId) {
     storeSingle(new CurrentAddressStorable(api), address)
 }
 
-export function clearCurrentAddress(api: LogionNodeApi) {
+export function clearCurrentAddress(api: LogionNodeApiClass) {
     clearSingle(new CurrentAddressStorable(api));
 }
 
-export function loadCurrentAddress(api: LogionNodeApi): ValidAccountId | undefined {
+export function loadCurrentAddress(api: LogionNodeApiClass): ValidAccountId | undefined {
     return loadSingle(new CurrentAddressStorable(api));
 }
 

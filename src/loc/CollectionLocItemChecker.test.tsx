@@ -18,10 +18,15 @@ import { setLocState } from "./__mocks__/UserLocContextMock";
 import { setLocState as setLoLocState, setLocRequest } from "./__mocks__/LocContextMock";
 import { CollectionItem } from "@logion/client";
 import { toItemId } from "./types";
+import { It } from "moq.ts";
+import { setupApiMock } from "src/__mocks__/LogionMock";
 
 describe("CollectionLocItemChecker", () => {
 
     it("renders", () => {
+        setupApiMock(api => {
+            api.setup(instance => instance.queries.getCollectionSize(It.IsAny())).returnsAsync(1);
+        });
         const result = render(<LOCollectionLocItemChecker collectionLoc={ locData } />);
         expect(result).toMatchSnapshot();
     })
@@ -47,6 +52,9 @@ describe("LOCollectionLocItemChecker", () => {
     it("shows positive match with item ID", async () => {
         setLoLocState(locState);
         setLocRequest(locData);
+        setupApiMock(api => {
+            api.setup(instance => instance.queries.getCollectionSize(It.IsAny())).returnsAsync(1);
+        });
         testWithItemId("test", LOCollectionLocItemChecker);
         await waitFor(() => expect(screen.getByText("positive")).toBeVisible());
     })

@@ -1,3 +1,5 @@
+import { SubmittableExtrinsic } from "@polkadot/api-base/types";
+import { Compact, u128 } from "@polkadot/types-codec";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { setVoidLocMock } from "src/legal-officer/__mocks__/ClientMock";
@@ -5,6 +7,8 @@ import { setVoidLocMock } from "src/legal-officer/__mocks__/ClientMock";
 import { finalizeSubmission, mockSubmittableResult } from "src/logion-chain/__mocks__/SignatureMock";
 import { clickByName, typeByLabel } from "src/tests";
 import VoidLocReplaceNewButton from "./VoidLocReplaceNewButton";
+import { It, Mock } from "moq.ts";
+import { setupApiMock } from "src/__mocks__/LogionMock";
 
 jest.mock("../common/CommonContext");
 jest.mock("../common/Model");
@@ -25,6 +29,12 @@ describe("VoidLocReplaceNewButton", () => {
             return params.locState;
         };
         setVoidLocMock(voidLocMock);
+        setupApiMock(api => {
+            const submittable = new Mock<SubmittableExtrinsic<"promise">>();
+            api.setup(instance => instance.polkadot.tx.logionLoc.createPolkadotIdentityLoc(It.IsAny(), It.IsAny())).returns(submittable.object());
+            const locId = new Mock<Compact<u128>>();
+            api.setup(instance => instance.adapters.toLocId(It.IsAny())).returns(locId.object());
+        });
         const dialog = await renderAndOpenDialog();
 
         const button = screen.getAllByRole("button", { name: "Void and replace by a NEW LOC" })[1];

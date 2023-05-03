@@ -1,5 +1,4 @@
 import { LocData, TokensRecord } from "@logion/client";
-import { validPolkadotAccountId } from "@logion/node-api";
 import { useMemo, useState } from "react";
 import { useCommonContext, Viewer } from "src/common/CommonContext";
 import SubmitterName from "src/common/SubmitterName";
@@ -45,7 +44,7 @@ export default function TokensRecordTable(props: Props) {
                             name: record.files[0].name,
                             newItem: false,
                             status: "PUBLISHED",
-                            submitter: validPolkadotAccountId(api, record.issuer),
+                            submitter: api.queries.getValidAccountId(record.issuer, "Polkadot"),
                             timestamp: record.addedOn,
                             type: "Document",
                             value: record.files[0].hash,

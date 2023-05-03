@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { Form } from "react-bootstrap";
-import { getLegalOfficerCase, UUID } from "@logion/node-api";
+import { UUID } from "@logion/node-api";
 
 import Button from "../common/Button";
 import { useCommonContext } from "../common/CommonContext";
@@ -30,7 +30,7 @@ export default function VoidLocReplaceExistingButton() {
             if(replacerLocId === locData?.id.toDecimalString()) {
                 setReplacerLocIdError("Cannot be replaced by itself");
             } else {
-            const replacerLoc = await getLegalOfficerCase({ locId, api: api! })
+            const replacerLoc = await api!.queries.getLegalOfficerCase(locId);
             if (!replacerLoc) {
                 setReplacerLocIdError("LOC not found on chain");
             } else if(replacerLoc.voidInfo !== undefined) {

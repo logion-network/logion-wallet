@@ -6,6 +6,8 @@ import { setClientMock } from "src/logion-chain/__mocks__/LogionChainMock";
 import { LocsState, LogionClient } from "@logion/client";
 import { buildLocRequest } from "./TestData";
 import { UUID } from "@logion/node-api";
+import { setupQueriesGetLegalOfficerCase } from "src/test/Util";
+import { setupApiMock, api } from "src/__mocks__/LogionMock";
 
 jest.mock("./LocContext");
 jest.mock("../logion-chain");
@@ -26,7 +28,11 @@ describe("LocLinkButton", () => {
                     data: () => buildLocRequest(UUID.fromDecimalStringOrThrow(OPEN_IDENTITY_LOC_ID), OPEN_IDENTITY_LOC),
                 }),
             }) as unknown as LocsState,
-        } as unknown as LogionClient)
+            logionApi: api.object(),
+        } as unknown as LogionClient);
+        setupApiMock(api => {
+            setupQueriesGetLegalOfficerCase(api, UUID.fromDecimalStringOrThrow(OPEN_IDENTITY_LOC_ID), OPEN_IDENTITY_LOC);
+        });
 
         render(<LocLinkButton text="Link to an existing LOC"/>);
         await clickByName(content => /Link to an existing LOC/i.test(content));

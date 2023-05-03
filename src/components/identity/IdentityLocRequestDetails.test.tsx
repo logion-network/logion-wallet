@@ -1,6 +1,6 @@
 import { shallowRender } from '../../tests';
 import { DEFAULT_IDENTITY, DEFAULT_ADDRESS } from "../../common/TestData";
-import { mockValidPolkadotAccountId } from "../../__mocks__/@logion/node-api/Mocks";
+import { mockValidPolkadotAccountId } from 'src/__mocks__/LogionMock';
 import IdentityLocRequestDetails from "./IdentityLocRequestDetails";
 import { PersonalInfoProps } from './type';
 

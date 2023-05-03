@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { LocRequest } from '@logion/client';
-import { UUID, createLogionIdentityLoc, createLogionTransactionLoc, createPolkadotIdentityLoc, createOtherIdentityLoc, createPolkadotTransactionLoc, AnyAccountId } from '@logion/node-api';
+import { UUID } from '@logion/node-api';
 
 import { useLogionChain } from '../logion-chain';
 import ExtrinsicSubmitter, { SignAndSubmit } from '../ExtrinsicSubmitter';
@@ -54,55 +54,50 @@ export default function LocCreationSteps(props: Props) {
                         signerId: accounts!.current!.accountId.address,
                         callback: setResult,
                         errorCallback: setError,
-                        submittable: createPolkadotTransactionLoc({
-                            api: api!,
-                            locId: new UUID(requestToCreate!.id),
-                            requester: requestToCreate!.requesterAddress!.address,
-                        })
+                        submittable: api!.polkadot.tx.logionLoc.createPolkadotTransactionLoc(
+                            api!.adapters.toLocId(new UUID(requestToCreate!.id)),
+                            requestToCreate!.requesterAddress!.address,
+                        ),
                     });
                 } else if(requestToCreate!.requesterAddress && requestToCreate!.requesterAddress.type === "Polkadot" && requestToCreate!.locType === 'Identity') {
                     signAndSubmit = (setResult, setError) => signAndSend({
                         signerId: accounts!.current!.accountId.address,
                         callback: setResult,
                         errorCallback: setError,
-                        submittable: createPolkadotIdentityLoc({
-                            api: api!,
-                            locId: new UUID(requestToCreate!.id),
-                            requester: requestToCreate!.requesterAddress!.address,
-                        })
+                        submittable: api!.polkadot.tx.logionLoc.createPolkadotIdentityLoc(
+                            api!.adapters.toLocId(new UUID(requestToCreate!.id)),
+                            requestToCreate!.requesterAddress!.address,
+                        ),
                     });
                 } else if(requestToCreate!.requesterAddress && requestToCreate!.requesterAddress.type === "Ethereum" && requestToCreate!.locType === 'Identity') {
                     signAndSubmit = (setResult, setError) => signAndSend({
                         signerId: accounts!.current!.accountId.address,
                         callback: setResult,
                         errorCallback: setError,
-                        submittable: createOtherIdentityLoc({
-                            api: api!,
-                            locId: new UUID(requestToCreate!.id),
-                            requester: new AnyAccountId(api!, requestToCreate!.requesterAddress!.address, requestToCreate!.requesterAddress!.type).toValidAccountId().toOtherAccountId(),
-                            sponsorshipId: new UUID(requestToCreate!.sponsorshipId),
-                        })
+                        submittable: api!.polkadot.tx.logionLoc.createOtherPolkadotIdentityLoc(
+                            api!.adapters.toLocId(new UUID(requestToCreate!.id)),
+                            api!.queries.getValidAccountId(requestToCreate!.requesterAddress!.address, requestToCreate!.requesterAddress!.type).toOtherAccountId(),
+                            api!.adapters.toSponsorshipId(new UUID(requestToCreate!.sponsorshipId)),
+                        ),
                     });
                 } else if(requestToCreate!.requesterIdentityLoc && requestToCreate!.locType === 'Transaction') {
                     signAndSubmit = (setResult, setError) => signAndSend({
                         signerId: accounts!.current!.accountId.address,
                         callback: setResult,
                         errorCallback: setError,
-                        submittable: createLogionTransactionLoc({
-                            api: api!,
-                            locId: new UUID(requestToCreate!.id),
-                            requesterLocId: UUID.fromAnyString(requestToCreate!.requesterIdentityLoc!)!,
-                        })
+                        submittable: api!.polkadot.tx.logionLoc.createLogionTransactionLoc(
+                            api!.adapters.toLocId(new UUID(requestToCreate!.id)),
+                            api!.adapters.toNonCompactLocId(UUID.fromAnyString(requestToCreate!.requesterIdentityLoc!)!),
+                        ),
                     });
                 } else if(!requestToCreate!.requesterAddress && !requestToCreate!.requesterIdentityLoc && requestToCreate!.locType === 'Identity') {
                     signAndSubmit = (setResult, setError) => signAndSend({
                         signerId: accounts!.current!.accountId.address,
                         callback: setResult,
                         errorCallback: setError,
-                        submittable: createLogionIdentityLoc({
-                            api: api!,
-                            locId: new UUID(requestToCreate!.id),
-                        })
+                        submittable: api!.polkadot.tx.logionLoc.createLogionIdentityLoc(
+                            api!.adapters.toLocId(new UUID(requestToCreate!.id)),
+                        ),
                     });
                 } else {
                     console.log(requestToCreate)

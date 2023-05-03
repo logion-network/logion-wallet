@@ -1,7 +1,3 @@
-jest.mock('@polkadot/api');
-jest.mock('@logion/extension');
-jest.mock('@logion/client');
-
 import { useLogionChain, LogionChainContextProvider } from './LogionChainContext';
 import { render, waitFor, RenderResult } from '@testing-library/react';
 

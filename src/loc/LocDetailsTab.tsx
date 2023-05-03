@@ -1,5 +1,5 @@
 import { LocData, LegalOfficer, LocRequestState, DraftRequest, ProtectionRequest } from "@logion/client";
-import { LocType, UUID, validPolkadotAccountId } from "@logion/node-api";
+import { LocType, UUID } from "@logion/node-api";
 import { Col, OverlayTrigger, Tooltip } from "react-bootstrap";
 import ButtonGroup from "src/common/ButtonGroup";
 import { BackgroundAndForegroundColors, BLUE, POLKADOT, RED } from "src/common/ColorTheme";
@@ -172,7 +172,7 @@ export function LocDetailsTabContent(props: ContentProps) {
                             templateLinks.add(link.nature);
                             linkData = getLinkData(accounts?.current?.accountId.address, locState.locsState(), link, detailsPath);
                         }
-                        items.push(createLinkTemplateItem(validPolkadotAccountId(api, loc.ownerAddress), linkTemplate, link, linkData));
+                        items.push(createLinkTemplateItem(api.queries.getValidAccountId(loc.ownerAddress, "Polkadot"), linkTemplate, link, linkData));
                     }
                 }
 

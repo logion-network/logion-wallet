@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { useNavigate } from "react-router-dom";
-import { UUID, validPolkadotAccountId } from '@logion/node-api';
+import { UUID } from '@logion/node-api';
 import { ProtectionRequest } from '@logion/client/dist/RecoveryClient.js';
 import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Form from 'react-bootstrap/Form';
@@ -324,7 +324,7 @@ export default function PendingProtectionRequests(props: Props) {
                         expect={{
                             closed: true,
                             type: 'Identity',
-                            requester: validPolkadotAccountId(api, reviewState.request!.requesterAddress)
+                            requester: api.queries.getValidAccountId(reviewState.request!.requesterAddress, "Polkadot"),
                         }}
                         onChange={ setLocId }
                     />

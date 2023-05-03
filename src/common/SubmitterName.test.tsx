@@ -1,7 +1,7 @@
 import { shallowRender } from "../tests";
 import SubmitterName from "./SubmitterName";
 import { DEFAULT_LEGAL_OFFICER, DEFAULT_IDENTITY } from "./TestData";
-import { mockValidPolkadotAccountId } from "../__mocks__/@logion/node-api/Mocks";
+import { mockValidPolkadotAccountId } from 'src/__mocks__/LogionMock';
 import { LocData } from "@logion/client";
 
 jest.mock('../logion-chain');

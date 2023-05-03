@@ -4,6 +4,8 @@ jest.mock('../../logion-chain');
 jest.mock('../../logion-chain/Signature');
 jest.mock('../../loc/Model');
 
+import { SubmittableExtrinsic } from "@polkadot/api-base/types";
+import { Compact, u128 } from "@polkadot/types-codec";
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { UUID } from '@logion/node-api';
@@ -16,6 +18,8 @@ import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT, axiosMock } from '../
 import { setAcceptLocRequest, acceptLocRequest } from '../../loc/__mocks__/ModelMock';
 
 import LocRequestAcceptance from './LocRequestAcceptance';
+import { It, Mock } from 'moq.ts';
+import { setupApiMock } from "src/__mocks__/LogionMock";
 
 describe("LocRequestAcceptance", () => {
 
@@ -39,6 +43,14 @@ describe("LocRequestAcceptance", () => {
 
     it("Click on accept and proceed accepts transaction LOC request", async () => {
         setCurrentAddress(DEFAULT_LEGAL_OFFICER_ACCOUNT);
+        setupApiMock(api => {
+            const submittable = new Mock<SubmittableExtrinsic<"promise">>();
+            api.setup(instance => instance.polkadot.tx.logionLoc.createPolkadotTransactionLoc(It.IsAny(), It.IsAny()))
+                .returns(submittable.object());
+            const locId = new Mock<Compact<u128>>();
+            api.setup(instance => instance.adapters.toLocId(It.IsAny()))
+                .returns(locId.object());
+        });
         render(<LocRequestAcceptance requestToAccept={REQUEST} clearRequestToAccept={jest.fn()} />);
 
         // Accept request
@@ -64,6 +76,14 @@ describe("LocRequestAcceptance", () => {
 
     it("Click on accept and proceed accepts collection LOC request", async () => {
         setCurrentAddress(DEFAULT_LEGAL_OFFICER_ACCOUNT);
+        setupApiMock(api => {
+            const submittable = new Mock<SubmittableExtrinsic<"promise">>();
+            api.setup(instance => instance.polkadot.tx.logionLoc.createCollectionLoc(It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny()))
+                .returns(submittable.object());
+            const locId = new Mock<Compact<u128>>();
+            api.setup(instance => instance.adapters.toLocId(It.IsAny()))
+                .returns(locId.object());
+        });
         render(<LocRequestAcceptance requestToAccept={COLLECTION_LOC_REQUEST} clearRequestToAccept={jest.fn()} />);
 
         // Accept request

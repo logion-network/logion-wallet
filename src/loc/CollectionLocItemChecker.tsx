@@ -2,7 +2,6 @@ import { AxiosInstance } from "axios";
 import { useState, useCallback, useEffect, useMemo } from "react";
 import { Form } from "react-bootstrap";
 import { ClosedCollectionLoc, CollectionItem, LocData } from "@logion/client";
-import { getCollectionSize } from "@logion/node-api";
 
 import { useLogionChain } from "../logion-chain";
 import PolkadotFrame from "../common/PolkadotFrame";
@@ -84,7 +83,7 @@ export function LOCollectionLocItemChecker(props: Props) {
             viewer="LegalOfficer"
             collectionLoc={ collectionLoc }
             collectionItem={ collectionItem }
-            collectionSizeFunction={ () => getCollectionSize({ api, locId: collectionLoc.id }) }
+            collectionSizeFunction={ () => api.queries.getCollectionSize(collectionLoc.id) }
             collectionItemFunction={ (actualId: string) => collection.getCollectionItem({ itemId: actualId }) }
             axiosFactory={ () => axios }
             collectionItems={ collectionItems }
