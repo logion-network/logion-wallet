@@ -10,7 +10,6 @@ import { Compact, u128 } from "@polkadot/types-codec";
 import { PalletLogionLocFile, PalletLogionLocMetadataItem } from '@polkadot/types/lookup';
 
 import { resetDefaultMocks } from "../common/__mocks__/ModelMock";
-import { CLOSED_IDENTITY_LOC, CLOSED_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "../__mocks__/@logion/node-api/dist/LogionLocMock";
 import { clickByName } from "../tests";
 import { LocContextProvider, useLocContext } from "./LocContext"
 import { LocItemType } from "./LocItem";
@@ -20,7 +19,7 @@ import { LocRequestState, EditableRequest, OpenLoc, ClosedLoc } from "src/__mock
 import { addLink, closeLoc, deleteLink, publishFile, publishLink, publishMetadata, voidLoc } from "../legal-officer/client";
 import { useLogionChain } from "src/logion-chain";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
-import { mockValidPolkadotAccountId, setupApiMock, api } from 'src/__mocks__/LogionMock';
+import { mockValidPolkadotAccountId, setupApiMock, api, CLOSED_IDENTITY_LOC, CLOSED_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from 'src/__mocks__/LogionMock';
 import { It, Mock } from "moq.ts";
 
 jest.mock("../logion-chain/Signature");

@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import { clickByName, shallowRender } from '../tests';
 import { UUID } from "@logion/node-api";
 import { DEFAULT_LEGAL_OFFICER } from "../common/TestData";
-import { setMetamaskEnabled } from '../__mocks__/PolkadotExtensionDappMock';
+import { setMetamaskEnabled } from '../__mocks__/LogionExtensionMock';
 import { setClientMock } from 'src/logion-chain/__mocks__/LogionChainMock';
 import { CollectionItem, UploadableItemFile, Token } from '@logion/client';
 import Authenticate, { Props } from "./Authenticate";

@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import { Spinner } from "react-bootstrap";
-import { CoinBalance, PrefixedNumber, NONE } from "@logion/node-api";
+import { CoinBalance, Numbers } from "@logion/node-api";
 import { BalanceState } from "@logion/client/dist/Balance.js";
 
 import Table, { Cell, EmptyTableMessage } from "../../common/Table";
@@ -27,7 +27,7 @@ export default function WalletRecoveryProcessTab(props: Props) {
     const [ signAndSubmit, setSignAndSubmit ] = useState<Call>();
     const [ signAndSubmitError, setSignAndSubmitError ] = useState<boolean>(false);
 
-    const recoverCoin = useCallback(async (amount: PrefixedNumber) => {
+    const recoverCoin = useCallback(async (amount: Numbers.PrefixedNumber) => {
         const signAndSubmit: Call = async (callback: CallCallback) => {
             await mutateRecoveredBalanceState(async (state: BalanceState) => {
                 return state.transfer({
@@ -47,7 +47,7 @@ export default function WalletRecoveryProcessTab(props: Props) {
         setSignAndSubmitError(false);
     }, [ setRecoveredCoinBalance, setSignAndSubmit, setSignAndSubmitError ])
 
-    const amountToRecover = recoveredCoinBalance?.available ? recoveredCoinBalance?.available : new PrefixedNumber("0", NONE)
+    const amountToRecover = recoveredCoinBalance?.available ? recoveredCoinBalance?.available : new Numbers.PrefixedNumber("0", Numbers.NONE)
 
     const coinBalances: CoinBalance[] = recoveredBalanceState ? recoveredBalanceState.balances.filter(balance => balance.available.toNumber() > 0) : [];
     return (

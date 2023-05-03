@@ -1,6 +1,6 @@
 import userEvent from '@testing-library/user-event';
 import { render, screen, waitFor, getByRole } from '@testing-library/react';
-import { PrefixedNumber, MILLI, CoinBalance } from "@logion/node-api";
+import { Numbers, CoinBalance } from "@logion/node-api";
 
 import { mutateRecoveredBalanceState, setProtectionState, setRecoveredBalanceState } from '../__mocks__/UserContextMock';
 
@@ -30,8 +30,8 @@ test("Recovered tokens can be transferred", async () => {
             iconType: 'png',
             symbol: 'DOT',
         },
-        balance: new PrefixedNumber("100", MILLI),
-        available: new PrefixedNumber("100", MILLI),
+        balance: new Numbers.PrefixedNumber("100", Numbers.MILLI),
+        available: new Numbers.PrefixedNumber("100", Numbers.MILLI),
         level: 1
     }
 

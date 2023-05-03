@@ -1,9 +1,4 @@
-import type { ApiPromise } from "@polkadot/api";
 import { DateTime } from "luxon";
-import BN from 'bn.js'
-import { UUID, LogionNodeApiClass } from "@logion/node-api";
-
-import { mockCompact } from "../../__mocks__/PolkadotApiMock";
 import { LegalOfficer } from '@logion/client';
 import { DEFAULT_LEGAL_OFFICER, legalOfficers } from 'src/common/TestData';
 import { TEST_WALLET_USER } from 'src/wallet-user/TestData';
@@ -15,78 +10,6 @@ import { LogionClient as LogionClientMock } from '../../__mocks__/LogionClientMo
 import { api } from "src/__mocks__/LogionMock";
 
 export const LogionChainContextProvider = (props: any) => null;
-
-const DEFAULT_BALANCE = new BN("42000000000000000000");
-
-const DEFAULT_RECOVERY_CONFIG = {
-    isSome: true,
-    unwrap: () => {}
-}
-
-const DEFAULT_ACTIVE_RECOVERY = {
-    isSome: true,
-    unwrap: () => {}
-}
-
-const DEFAULT_COLLECTION_ITEM = {
-    isSome: true,
-    unwrap: () => {
-        return {
-            description: {
-                toUtf8: () => {
-                    return "something"
-                }
-            }
-        }
-    }
-}
-
-const DEFAULT_COLLECTION_SIZE = {
-    isSome: true,
-    unwrap: () => {
-        return mockCompact(1)
-    }
-}
-
-export const apiMock = {
-    tx: {
-        assets: {
-            create: () => {}
-        },
-        recovery: {
-            asRecovered: () => {},
-        },
-        loAuthorityList: {
-            updateLegalOfficer: () => {},
-        }
-    },
-    query: {
-        assets: {
-            account: (assetId: any, account: any) => {
-                return Promise.resolve({
-                    balance: DEFAULT_BALANCE
-                });
-            }
-        },
-        recovery: {
-            recoverable: (accountId: any) => {
-                return Promise.resolve(DEFAULT_RECOVERY_CONFIG);
-            },
-            activeRecoveries: (source: string, dest: string) => {
-                return Promise.resolve(DEFAULT_ACTIVE_RECOVERY);
-            },
-        },
-        logionLoc: {
-            collectionSizeMap: (locId: UUID) => {
-                return Promise.resolve(DEFAULT_COLLECTION_SIZE)
-            },
-            collectionItemsMap: (locId: UUID, itemId: string) => {
-                return Promise.resolve(DEFAULT_COLLECTION_ITEM)
-            }
-        }
-    },
-    createType: () => {},
-};
 
 export let clientMock: LogionClient | LogionClientMock | null = new LogionClientMock();
 

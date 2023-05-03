@@ -1,7 +1,7 @@
 jest.mock("../logion-chain");
 
 import { shallowRender } from '../tests';
-import { getCoin, PrefixedNumber, MILLI } from '@logion/node-api';
+import { Queries, Numbers } from '@logion/node-api';
 
 import WalletGauge from './WalletGauge';
 
@@ -11,8 +11,8 @@ test("renders arc", () => {
 
 function testWalletGauge(type: 'arc' | 'linear') {
     const result = shallowRender(<WalletGauge
-        coin={ getCoin('lgnt') }
-        balance={ new PrefixedNumber("20.00", MILLI) }
+        coin={ Queries.getCoin('lgnt') }
+        balance={ new Numbers.PrefixedNumber("20.00", Numbers.MILLI) }
         level={ 0.5 }
         type={ type }
     />);

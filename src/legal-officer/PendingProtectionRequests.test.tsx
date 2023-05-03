@@ -13,10 +13,9 @@ import { setPendingProtectionRequests, setPendingRecoveryRequests } from './__mo
 import { setAcceptProtectionRequest, setRejectProtectionRequest } from '../loc/__mocks__/ModelMock';
 import { PENDING_PROTECTION_REQUESTS } from './TestData';
 import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT, axiosMock } from '../logion-chain/__mocks__/LogionChainMock';
-import { CLOSED_IDENTITY_LOC, CLOSED_IDENTITY_LOC_ID } from '../__mocks__/@logion/node-api/dist/LogionLocMock';
 import { setupQueriesGetLegalOfficerCase } from 'src/test/Util';
 import { UUID } from '@logion/node-api';
-import { setupApiMock } from 'src/__mocks__/LogionMock';
+import { setupApiMock, CLOSED_IDENTITY_LOC, CLOSED_IDENTITY_LOC_ID } from 'src/__mocks__/LogionMock';
 
 describe("PendingProtectionRequests", () => {
 

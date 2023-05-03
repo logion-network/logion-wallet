@@ -18,9 +18,8 @@ import { PROTECTION_REQUESTS_HISTORY } from './TestData';
 import { axiosMock, setAddresses, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../logion-chain/__mocks__/LogionChainMock';
 import { setParams, navigate } from '../__mocks__/ReactRouterMock';
 import { refreshRequests } from './__mocks__/LegalOfficerContextMock';
-import { CLOSED_IDENTITY_LOC_ID } from '../__mocks__/@logion/node-api/dist/LogionLocMock';
 import { It, Mock } from 'moq.ts';
-import { mockValidPolkadotAccountId, setupApiMock } from 'src/__mocks__/LogionMock';
+import { mockValidPolkadotAccountId, setupApiMock, CLOSED_IDENTITY_LOC_ID } from 'src/__mocks__/LogionMock';
 
 describe("RecoveryDetails", () => {
 

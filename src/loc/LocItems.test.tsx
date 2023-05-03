@@ -5,7 +5,6 @@ import { SubmittableExtrinsic } from "@polkadot/api-base/types";
 import { Compact, u128 } from "@polkadot/types-codec";
 import { PalletLogionLocMetadataItem } from "@polkadot/types/lookup";
 
-import { OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "../__mocks__/@logion/node-api/dist/LogionLocMock";
 import { clickByName, render } from "../tests";
 import { LocItems } from "./LocItems";
 import { buildLocRequest } from "./TestData";
@@ -19,7 +18,7 @@ import { setLocRequest, setLocState } from "./__mocks__/LocContextMock";
 import { EditableRequest } from "src/__mocks__/LogionClientMock";
 import { deleteLink } from "src/legal-officer/__mocks__/ClientMock";
 import { It, Mock } from "moq.ts";
-import { setupApiMock } from "src/__mocks__/LogionMock";
+import { setupApiMock, OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "src/__mocks__/LogionMock";
 
 jest.mock("../common/CommonContext");
 jest.mock("../logion-chain");
