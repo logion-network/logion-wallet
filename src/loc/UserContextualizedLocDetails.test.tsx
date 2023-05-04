@@ -1,5 +1,5 @@
 import { UUID } from "@logion/node-api";
-import { OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "../__mocks__/@logion/node-api/dist/LogionLocMock";
+import { OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "../__mocks__/LogionMock";
 import { shallowRender } from "../tests";
 
 import UserContextualizedLocDetails from "./UserContextualizedLocDetails"

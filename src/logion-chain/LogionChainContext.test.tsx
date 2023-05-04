@@ -1,14 +1,10 @@
 import { useLogionChain, LogionChainContextProvider } from './LogionChainContext';
 import { render, waitFor, RenderResult } from '@testing-library/react';
 
-import {
-    teardown as teardownApi,
-} from '../__mocks__/PolkadotApiMock';
-import { updateInjectedAccounts, teardown as teardownExtensionDapp } from '../__mocks__/PolkadotExtensionDappMock';
+import { updateInjectedAccounts, teardown as teardownExtensionDapp } from '../__mocks__/LogionExtensionMock';
 import { DEFAULT_USER_ACCOUNT } from './__mocks__/LogionChainMock';
 
 afterEach(() => {
-    teardownApi();
     teardownExtensionDapp();
 });
 

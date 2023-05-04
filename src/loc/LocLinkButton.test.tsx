@@ -1,13 +1,12 @@
 import LocLinkButton from "./LocLinkButton";
 import { clickByName, shallowRender, typeByLabel } from "../tests";
 import { render, screen, waitFor } from "@testing-library/react";
-import { OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "src/__mocks__/@logion/node-api/dist/LogionLocMock";
 import { setClientMock } from "src/logion-chain/__mocks__/LogionChainMock";
 import { LocsState, LogionClient } from "@logion/client";
 import { buildLocRequest } from "./TestData";
 import { UUID } from "@logion/node-api";
 import { setupQueriesGetLegalOfficerCase } from "src/test/Util";
-import { setupApiMock, api } from "src/__mocks__/LogionMock";
+import { setupApiMock, api, OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "src/__mocks__/LogionMock";
 
 jest.mock("./LocContext");
 jest.mock("../logion-chain");

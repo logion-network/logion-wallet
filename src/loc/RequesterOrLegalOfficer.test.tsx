@@ -4,8 +4,8 @@ import { PATRICK } from "src/common/TestData";
 
 import { shallowRender } from "src/tests"
 import { TEST_WALLET_USER } from "src/wallet-user/TestData";
-import { CLOSED_IDENTITY_LOC_ID } from "src/__mocks__/@logion/node-api/dist/LogionLocMock";
-import RequesterOrLegalOfficer from "./RequesterOrLegalOfficer"
+import { CLOSED_IDENTITY_LOC_ID } from "src/__mocks__/LogionMock";
+import RequesterOrLegalOfficer from "./RequesterOrLegalOfficer";
 
 describe("RequesterOrLegalOfficer", () => {
 

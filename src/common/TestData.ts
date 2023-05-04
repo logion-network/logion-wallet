@@ -1,11 +1,11 @@
 import { LegalOfficer, PostalAddress, UserIdentity } from '@logion/client';
 import { LegalOfficerClass } from "@logion/client/dist/Types.js";
 import { Transaction } from '@logion/client/dist/TransactionClient.js';
-import { Coin, CoinBalance, SYMBOL, PrefixedNumber, ATTO } from '@logion/node-api';
+import { Coin, CoinBalance, Currency, Numbers } from '@logion/node-api';
 
 import { ColorTheme, rgbaToHex } from './ColorTheme';
 
-import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER, A_THIRD_LEGAL_OFFICER } from "../__mocks__/@logion/node-api/Mocks";
+import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER, A_THIRD_LEGAL_OFFICER } from "../__mocks__/LogionMock";
 export { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER, A_THIRD_LEGAL_OFFICER };
 
 export const DEFAULT_IDENTITY: UserIdentity = {
@@ -126,13 +126,13 @@ export const DEFAULT_COIN: Coin = {
     iconId: 'lgnt',
     iconType: 'svg',
     name: "Logion",
-    symbol: SYMBOL
+    symbol: Currency.SYMBOL
 };
 
 export const DEFAULT_COIN_BALANCE: CoinBalance = {
     coin: DEFAULT_COIN,
-    balance: new PrefixedNumber("42", ATTO),
-    available: new PrefixedNumber("42", ATTO),
+    balance: new Numbers.PrefixedNumber("42", Numbers.ATTO),
+    available: new Numbers.PrefixedNumber("42", Numbers.ATTO),
     level: 0.1,
 };
 

@@ -2,7 +2,7 @@ import { UUID } from "@logion/node-api";
 import { render, screen, waitFor } from "@testing-library/react";
 
 import { shallowRender } from "../tests";
-import { OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "../__mocks__/@logion/node-api/dist/LogionLocMock";
+import { OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from 'src/__mocks__/LogionMock';
 import ContextualizedLocDetails from "./ContextualizedLocDetails"
 import { buildLocRequest } from "./TestData";
 import { setLocRequest, setLocId } from "./__mocks__/LocContextMock";

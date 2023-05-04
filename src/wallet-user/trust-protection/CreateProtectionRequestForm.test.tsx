@@ -11,7 +11,6 @@ import userEvent from "@testing-library/user-event";
 import { twoLegalOfficers } from "../../common/TestData";
 import { setCreateProtectionRequest } from "../__mocks__/UserContextMock";
 import { clickByName, shallowRender } from "../../tests";
-import { setActiveRecoveryInProgress } from "../../__mocks__/@logion/node-api/dist/RecoveryMock";
 import { resetSubmitting } from "../../logion-chain/__mocks__/SignatureMock";
 import { TEST_WALLET_USER2 } from "../TestData";
 
@@ -80,8 +79,6 @@ describe("CreateProtectionRequestForm", () => {
     });
 
     it("should call submit when form is correctly filled for recovery and recovery already in progress", async  () => {
-        setActiveRecoveryInProgress(true);
-
         render(<CreateProtectionRequestForm isRecovery={ true } />);
 
         await userEvent.type(screen.getByLabelText("Address to Recover"), 'toRecover');
@@ -99,7 +96,6 @@ describe("CreateProtectionRequestForm", () => {
     });
 
     it("should call submit when form is correctly filled for recovery and no recovery already in progress", async  () => {
-        setActiveRecoveryInProgress(false);
         resetSubmitting();
 
         render(<CreateProtectionRequestForm isRecovery={ true } />);
