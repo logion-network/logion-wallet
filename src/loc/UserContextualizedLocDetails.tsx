@@ -61,7 +61,7 @@ export default function UserContextualizedLocDetails(props: Props) {
                 />
             }
             {
-                hasIdenfyIntegration && loc.iDenfy?.status !== "APPROVED" && loc.locType === "Identity" &&
+                hasIdenfyIntegration && loc.status === "DRAFT" && loc.iDenfy?.status !== "APPROVED" && loc.locType === "Identity" &&
                 <IdenfyVerification/>
             }
             {
