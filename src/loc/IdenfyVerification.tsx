@@ -3,6 +3,13 @@ import Button from "src/common/Button";
 import Frame from "src/common/Frame";
 import { useLogionChain } from "src/logion-chain";
 import { useLocContext } from "./LocContext";
+import { resumeUrl } from "../wallet-user/IdenfyVerificationResult";
+
+interface IdenfyVerificationCreation {
+    successUrl: string;
+    errorUrl: string;
+    unverifiedUrl: string;
+}
 
 export default function IdenfyVerification() {
     const { client, getOfficer } = useLogionChain();
@@ -15,7 +22,12 @@ export default function IdenfyVerification() {
         } else {
             const legalOfficer = getOfficer!(loc?.ownerAddress);
             const axios = client?.buildAxios(legalOfficer!);
-            const response = await axios?.post(`/api/idenfy/verification-session/${ loc?.id.toString() }`);
+            const request: IdenfyVerificationCreation = {
+                successUrl: resumeUrl("success", loc!.id),
+                errorUrl: resumeUrl("error", loc!.id),
+                unverifiedUrl: resumeUrl("unverified", loc!.id),
+            };
+            const response = await axios?.post(`/api/idenfy/verification-session/${ loc?.id.toString() }`, request);
             redirect = response?.data.url;
         }
         window.location.href = redirect;
