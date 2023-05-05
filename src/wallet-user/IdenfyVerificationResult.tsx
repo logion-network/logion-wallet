@@ -8,6 +8,7 @@ import Frame from "src/common/Frame";
 import Icon from "src/common/Icon";
 import IconTextRow from "src/common/IconTextRow";
 import "./IdenfyVerificationResult.css";
+import { PARAM_RESULT, PARAM_LOC_ID } from "./UserRouter";
 
 export interface Props {
     detailsPath: (locId: UUID, type: LocType) => string;
@@ -19,7 +20,7 @@ export default function IdenfyVerificationResult(props: Props) {
     const navigate = useNavigate();
 
     const iconText = useMemo(() => {
-        const result = params.get("result");
+        const result = params.get(PARAM_RESULT);
         if(result === "success") {
             return {
                 iconId: "ok",
@@ -66,7 +67,7 @@ export default function IdenfyVerificationResult(props: Props) {
                     />
                 </div>
                 <Button
-                    onClick={() => navigate(props.detailsPath(new UUID(params.get("locId") || ""), "Identity")) }
+                    onClick={() => navigate(props.detailsPath(new UUID(params.get(PARAM_LOC_ID) || ""), "Identity")) }
                 >
                     Go back to Identity LOC
                 </Button>

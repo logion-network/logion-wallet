@@ -31,6 +31,7 @@ import { UserDocumentClaimHistory, UserTokensRecordDocumentClaimHistory } from '
 import { UserTokensRecordPane } from 'src/loc/record/TokensRecordPane';
 import IdentityLocCreation from './IdentityLocCreation';
 import { Navigate } from 'react-router-dom';
+import { getBaseUrl } from "../PublicPaths";
 
 export const HOME_PATH = USER_PATH;
 
@@ -86,6 +87,13 @@ export function locDetailsPath(locId: string | UUID, locType: LocType) {
         stringId = locId;
     }
     return dataLocDetailsPath(locType, stringId);
+}
+
+export const PARAM_RESULT = "result";
+export const PARAM_LOC_ID = "locId";
+
+export function resumeAfterIDenfyProcessUrl(result: 'success' | 'error' | 'unverified', locId: UUID): string {
+    return `${ getBaseUrl() }${ IDENFY_PATH }?${ PARAM_RESULT }=${ result }&${ PARAM_LOC_ID }=${ locId.toString() }`;
 }
 
 export const DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH = LOC_DETAILS_RELATIVE_PATH + "/claims/:hash";
