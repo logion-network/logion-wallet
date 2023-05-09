@@ -11,8 +11,8 @@
     "dependencies": {
         "@craco/craco": "^6.4.5",
         "@creativecommons/cc-assets": "^0.1.0",
-        "@logion/crossmint": "^0.1.15-1",
-        "@logion/extension": "^0.5.13-1",
+        "@logion/crossmint": "^0.1.15-2",
+        "@logion/extension": "^0.5.13-2",
         "@popperjs/core": "^2.11.6",
         "@types/qrcode": "^1.5.0",
         "assert": "^2.0.0",

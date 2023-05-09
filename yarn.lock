@@ -2976,42 +2976,42 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@logion/client@npm:^0.24.1-1":
-  version: 0.24.1-1
-  resolution: "@logion/client@npm:0.24.1-1"
+"@logion/client@npm:^0.25.0-1":
+  version: 0.25.0-2
+  resolution: "@logion/client@npm:0.25.0-2"
   dependencies:
-    "@logion/node-api": ^0.14.0-1
+    "@logion/node-api": ^0.14.0-4
     axios: ^0.27.2
     luxon: ^3.0.1
     mime-db: ^1.52.0
-  checksum: 9e5f9721c54252cca3113068515af6534b97ba734ed3c22d9e97dbda755aac7665877bf338ed79dbc70deeb79bbea5c3fbbef74ef398d9f4bb436676fc7fbbbb
+  checksum: ed7e17ccc75bfe7f297c2fdb4141d9d8ad7a820b6865b56e407a2c7254058df06fc1ef97f726d697ad856d510ee7747bceb45211f30a23c79f24c2acec453c87
   languageName: node
   linkType: hard
 
-"@logion/crossmint@npm:^0.1.15-1":
-  version: 0.1.15-1
-  resolution: "@logion/crossmint@npm:0.1.15-1"
+"@logion/crossmint@npm:^0.1.15-2":
+  version: 0.1.15-2
+  resolution: "@logion/crossmint@npm:0.1.15-2"
   dependencies:
     "@crossmint/connect": ^0.0.8
-    "@logion/client": ^0.24.1-1
-  checksum: 1298d3a38a737f65b2076b32a84fae97672a8cbd1bebdb05e672fe1c640ba23e6e430298ea8fff920ff5c5dafc5256f2012d30fa8b40f42a75776b7fd06898a5
+    "@logion/client": ^0.25.0-1
+  checksum: c958a85ed88c49fff551a732823ce9b16abec3bbc930db0e2232090192c2047087079efee37c4ff730af1d2cdf21aae5dce488628fa3affbed93f841e1894346
   languageName: node
   linkType: hard
 
-"@logion/extension@npm:^0.5.13-1":
-  version: 0.5.13-1
-  resolution: "@logion/extension@npm:0.5.13-1"
+"@logion/extension@npm:^0.5.13-2":
+  version: 0.5.13-2
+  resolution: "@logion/extension@npm:0.5.13-2"
   dependencies:
-    "@logion/client": ^0.24.1-1
+    "@logion/client": ^0.25.0-1
     "@polkadot/extension-compat-metamask": ^0.46.1
     "@polkadot/extension-dapp": ^0.46.1
-  checksum: 7b61fec26ba6a0447659e9c9df6eac28d0babfe65454c895a836e0b08bbaff848a28aca4b36481198137eaae49d533485a9c08f2b9cd360147f35a889c9b8a38
+  checksum: 7c090a7ef2f667f5b7fb89f77b4e2227373f9a01d3ef6f977bf44f38c08d327a6589562e37e4a539bede70dac458830518d0bc5a00b199d5daafb4157b6bae02
   languageName: node
   linkType: hard
 
-"@logion/node-api@npm:^0.14.0-1":
-  version: 0.14.0-1
-  resolution: "@logion/node-api@npm:0.14.0-1"
+"@logion/node-api@npm:^0.14.0-4":
+  version: 0.14.0-4
+  resolution: "@logion/node-api@npm:0.14.0-4"
   dependencies:
     "@polkadot/api": ^10.4.1
     "@polkadot/util": ^12.0.1
@@ -3019,7 +3019,7 @@ __metadata:
     "@types/uuid": ^8.3.4
     fast-sha256: ^1.3.0
     uuid: ^8.3.2
-  checksum: 1c78da821adb3ce3d34415123d88e000bdf88a3026e026fd93071e0950441819475ad2887b0a7e8cefd5aed7c550128b20a13bcab5a4a6497da2a54b1fc9247a
+  checksum: c60fa32f15f94eb4f9f8ff75aea5d84ecb634dac6eefd07409baa35cb0c332051182c8da44dd0a9ab5fa87e697c3a49293ef48f7658e13966b0905c6f04b0aa7
   languageName: node
   linkType: hard
 
@@ -12386,8 +12386,8 @@ __metadata:
     "@babel/preset-react": ^7.18.6
     "@craco/craco": ^6.4.5
     "@creativecommons/cc-assets": ^0.1.0
-    "@logion/crossmint": ^0.1.15-1
-    "@logion/extension": ^0.5.13-1
+    "@logion/crossmint": ^0.1.15-2
+    "@logion/extension": ^0.5.13-2
     "@popperjs/core": ^2.11.6
     "@testing-library/dom": ^8.17.1
     "@testing-library/jest-dom": ^5.16.5
