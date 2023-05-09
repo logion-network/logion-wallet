@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useReducer, Reducer, useCallback } from "react";
 import { DateTime } from 'luxon';
-import { LegalOfficerClass, BalanceState, LogionClient, Endpoint, MultiResponse } from "@logion/client";
+import { LegalOfficerClass, BalanceState, LogionClient, Endpoint } from "@logion/client";
 import { InjectedAccount } from "@logion/extension";
 
 import { useLogionChain } from '../logion-chain';
@@ -195,16 +195,20 @@ export function CommonContextProvider(props: Props) {
                     balanceState = await client.balanceState();
                 }
 
-                const multiClient = client.buildMultiSourceHttpClient();
-                const multiResponse = await multiClient.fetch<BackendConfig>(async axios => (await axios.get("/api/config")).data);
-                const backendConfigs = aggregateBackendConfig(multiResponse, client.legalOfficers);
-                client.updateNetworkState(multiClient);
+                const configPromises = await Promise.allSettled(client.legalOfficers.map(legalOfficer => legalOfficer.getConfig()));
+                const backendConfigs: Record<string, BackendConfig> = {};
+                for(let i = 0; i < configPromises.length; ++i) {
+                    const promiseResult = configPromises[i];
+                    if(promiseResult.status === 'fulfilled') {
+                        backendConfigs[client.legalOfficers[i].address] = promiseResult.value;
+                    }
+                }
 
                 const backendConfig = (legalOfficerAddress: string | undefined) => {
-                    if(legalOfficerAddress !== undefined && legalOfficerAddress in backendConfigs) {
-                        return backendConfigs[legalOfficerAddress];
-                    } else {
+                    if(!legalOfficerAddress || !(legalOfficerAddress in backendConfigs)) {
                         return DEFAULT_BACKEND_CONFIG;
+                    } else {
+                        return backendConfigs[legalOfficerAddress];
                     }
                 };
 
@@ -301,15 +305,4 @@ export function CommonContextProvider(props: Props) {
 
 export function useCommonContext(): CommonContext {
     return useContext(CommonContextObject);
-}
-
-function aggregateBackendConfig(response: MultiResponse<BackendConfig>, legalOfficers: LegalOfficerClass[]): Record<string, BackendConfig> {
-    const config: Record<string, BackendConfig> = {};
-    for(const url in response) {
-        const legalOfficersOnNode = legalOfficers.filter(legalOfficer => legalOfficer.node === url);
-        for(const legalOfficer of legalOfficersOnNode) {
-            config[legalOfficer.address] = response[url];
-        }
-    }
-    return config;
 }

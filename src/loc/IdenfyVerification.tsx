@@ -1,37 +1,33 @@
+import { DraftRequest } from "@logion/client";
 import { useCallback } from "react";
 import Button from "src/common/Button";
 import Frame from "src/common/Frame";
-import { useLogionChain } from "src/logion-chain";
 import { useLocContext } from "./LocContext";
 import { resumeAfterIDenfyProcessUrl } from "../wallet-user/UserRouter";
 
-interface IdenfyVerificationCreation {
-    successUrl: string;
-    errorUrl: string;
-    unverifiedUrl: string;
-}
-
 export default function IdenfyVerification() {
-    const { client, getOfficer } = useLogionChain();
-    const { loc } = useLocContext();
+    const { loc, mutateLocState } = useLocContext();
 
     const verifyIdentityCallback = useCallback(async () => {
-        let redirect: string;
-        if(loc?.iDenfy?.redirectUrl) {
-            redirect = loc.iDenfy.redirectUrl;
-        } else {
-            const legalOfficer = getOfficer!(loc?.ownerAddress);
-            const axios = client?.buildAxios(legalOfficer!);
-            const request: IdenfyVerificationCreation = {
-                successUrl: resumeAfterIDenfyProcessUrl("success", loc!.id),
-                errorUrl: resumeAfterIDenfyProcessUrl("error", loc!.id),
-                unverifiedUrl: resumeAfterIDenfyProcessUrl("unverified", loc!.id),
-            };
-            const response = await axios?.post(`/api/idenfy/verification-session/${ loc?.id.toString() }`, request);
-            redirect = response?.data.url;
-        }
-        window.location.href = redirect;
-    }, [ client, getOfficer, loc ]);
+        mutateLocState(async current => {
+            if(loc && current instanceof DraftRequest) {
+                if(current.isIDenfySessionInProgress()) {
+                    window.location.href = current.iDenfySessionUrl;
+                    return current;
+                } else {
+                    const newState = await current.startNewIDenfySession({
+                        successUrl: resumeAfterIDenfyProcessUrl("success", loc.id),
+                        errorUrl: resumeAfterIDenfyProcessUrl("error", loc.id),
+                        unverifiedUrl: resumeAfterIDenfyProcessUrl("unverified", loc.id),
+                    });
+                    window.location.href = newState.iDenfySessionUrl;
+                    return newState;
+                }
+            } else {
+                return current;
+            }
+        });
+    }, [ loc, mutateLocState ]);
 
     return (
         <Frame
