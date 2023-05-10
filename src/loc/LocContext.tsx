@@ -161,34 +161,36 @@ export function LocContextProvider(props: Props) {
         }
     }, [ contextValue.locState, props.locState ])
 
-    const toLocItems = useCallback((locState: LocRequestState) => {
+    const toLocItems = useCallback(async (locState: LocRequestState) => {
         const loc = locState.data();
         let locItems: LocItem[] = [];
-        loc.metadata.forEach(item => {
-            const result = createMetadataItem(item);
-            locItems.push(result.locItem);
-        });
-        loc.files.forEach(item => {
-            const result = createFileItem(item);
-            locItems.push(result.locItem);
-        });
-        const locOwner = loc!.ownerAddress;
-        for (let i = 0; i < loc.links.length; ++i) {
-            const item = loc.links[i];
+        if(client) {
+            loc.metadata.forEach(item => {
+                const result = createMetadataItem(item);
+                locItems.push(result.locItem);
+            });
+            loc.files.forEach(item => {
+                const result = createFileItem(item);
+                locItems.push(result.locItem);
+            });
+            const locOwner = loc!.ownerAddress;
+            for (let i = 0; i < loc.links.length; ++i) {
+                const item = loc.links[i];
 
-            const linkData = getLinkData(accounts?.current?.accountId.address, locState.locsState(), item, props.detailsPath);
-            if (linkData) {
-                const result = createLinkItem({
-                    link: item,
-                    otherLocDescription: linkData.linkedLoc.description || "- Confidential -",
-                    submitter: api!.queries.getValidAccountId(locOwner, "Polkadot"),
-                    linkDetailsPath: linkData.linkDetailsPath,
-                })
-                locItems.push(result.locItem)
+                const linkData = await getLinkData(accounts?.current?.accountId.address, locState.locsState(), item, props.detailsPath, client);
+                if (linkData) {
+                    const result = createLinkItem({
+                        link: item,
+                        otherLocDescription: linkData.linkedLoc.description || "- Confidential -",
+                        submitter: api!.queries.getValidAccountId(locOwner, "Polkadot"),
+                        linkDetailsPath: linkData.linkDetailsPath,
+                    })
+                    locItems.push(result.locItem)
+                }
             }
         }
         return locItems;
-    }, [ api, accounts, props ])
+    }, [ api, accounts, props, client ])
 
     const startRefresh = useCallback(() => {
         console.log("Start refreshing LOC");
@@ -196,7 +198,7 @@ export function LocContextProvider(props: Props) {
     }, []);
 
     const dispatchLocAndItems = useCallback(async (locState: LocRequestState, triggerRefresh: boolean) => {
-        const locItems = toLocItems(locState);
+        const locItems = await toLocItems(locState);
         const locData = locState.data();
         let supersededLoc = undefined;
         if(locData.replacerOf) {

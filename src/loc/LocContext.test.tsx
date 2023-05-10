@@ -112,12 +112,19 @@ function givenRequest<T extends LocRequestState>(locId: string, loc: LegalOffice
         } as unknown as OpenLoc;
     }
 
-    locsState.findById = (argLocId: UUID) => {
+    locsState.findByIdOrUndefined = (argLocId: UUID) => {
         if (argLocId.toDecimalString() === locId) {
             return _locState;
         } else if (linkedLocId && linkedLoc && argLocId.toDecimalString() === linkedLocId) {
             return _linkedLocState;
         } else {
+            return undefined;
+        }
+    }
+
+    locsState.findById = (argLocId: UUID) => {
+        const loc = locsState.findByIdOrUndefined(argLocId);
+        if(!loc) {
             throw new Error();
         }
     }
@@ -199,13 +206,13 @@ async function thenReaderDisplaysLocRequestAndItems() {
     await waitFor(() => expect(screen.getByText(UUID.fromDecimalString(CLOSED_IDENTITY_LOC_ID)!.toString())).toBeVisible());
     expect(screen.getByText(CLOSED_IDENTITY_LOC.owner)).toBeVisible();
     for(let i = 0; i < CLOSED_IDENTITY_LOC.files.length; ++i) {
-        expect(screen.getByText(`File ${i}`)).toBeVisible();
+        await waitFor(() => expect(screen.getByText(`File ${i}`)).toBeVisible());
     }
     for(let i = 0; i < CLOSED_IDENTITY_LOC.metadata.length; ++i) {
-        expect(screen.getByText(`Data ${i}`)).toBeVisible();
+        await waitFor(() => expect(screen.getByText(`Data ${i}`)).toBeVisible());
     }
     for(let i = 0; i < CLOSED_IDENTITY_LOC.links.length; ++i) {
-        expect(screen.getByText(`Link ${i}`)).toBeVisible();
+        await waitFor(() => expect(screen.getByText(`Link ${i}`)).toBeVisible());
     }
 }
 

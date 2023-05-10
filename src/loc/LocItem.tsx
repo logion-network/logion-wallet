@@ -1,4 +1,4 @@
-import { LocRequestState, LocData, LocsState, EditableRequest, MergedLink } from "@logion/client";
+import { LogionClient, LocRequestState, LocData, LocsState, EditableRequest, MergedLink, PublicLoc } from "@logion/client";
 import { UUID, LocType, Fees, ValidAccountId } from "@logion/node-api";
 import { useCallback } from "react";
 import { CallCallback } from "src/ClientExtrinsicSubmitter";
@@ -255,26 +255,36 @@ export interface LinkData {
     linkDetailsPath: string;
 }
 
-export function getLinkData(
+export async function getLinkData(
     address: string | undefined,
     locsState: LocsState,
     link: MergedLink,
     detailsPath: (id: UUID, locType: LocType) => string,
-): LinkData | undefined {
-    const linkedLocState = locsState.findById(link.id);
-    if (linkedLocState) {
-        const linkedLoc = linkedLocState.data();
-        let linkDetailsPath: string;
-        if (isGrantedAccess(address, linkedLoc)) {
-            linkDetailsPath = detailsPath(linkedLoc.id, linkedLoc.locType);
-        } else {
-            linkDetailsPath = fullCertificateUrl(linkedLoc.id);
+    client: LogionClient,
+): Promise<LinkData> {
+    let linkedLoc: LocData | undefined;
+    let linkedLocState: LocRequestState | PublicLoc | undefined = locsState.findByIdOrUndefined(link.id);
+    if (!linkedLocState) {
+        linkedLocState = await client.public.findLocById({ locId: link.id });
+        if(linkedLocState) {
+            linkedLoc = linkedLocState.data;
         }
-        return {
-            linkedLoc,
-            linkDetailsPath,
-        };
     } else {
-        return undefined;
+        linkedLoc = linkedLocState.data();
     }
+
+    if(!linkedLoc) {
+        throw new Error("Unable to locate linked LOC");
+    }
+
+    let linkDetailsPath: string;
+    if (isGrantedAccess(address, linkedLoc)) {
+        linkDetailsPath = detailsPath(linkedLoc.id, linkedLoc.locType);
+    } else {
+        linkDetailsPath = fullCertificateUrl(linkedLoc.id);
+    }
+    return {
+        linkedLoc,
+        linkDetailsPath,
+    };
 }
