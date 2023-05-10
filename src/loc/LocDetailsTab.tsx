@@ -136,54 +136,56 @@ export function LocDetailsTabContent(props: ContentProps) {
     const [ template, setTemplate ] = useState<LocTemplate>();
     const [ templateItems, setTemplateItems ] = useState<LocItem[]>([]);
     const [ customItems, setCustomItems ] = useState<LocItem[]>([]);
-    const { api, accounts } = useLogionChain();
+    const { api, accounts, client } = useLogionChain();
 
     useEffect(() => {
-        if(api && loc && locState) {
+        if(api && client && loc && locState) {
             const theTemplate = getTemplate(loc.locType, loc.template);
             if(theTemplate) {
                 setTemplate(theTemplate);
-                const items: LocItem[] = [];
+                (async function() {
+                    const items: LocItem[] = [];
 
-                const templateDocuments = new Set();
-                const templateItems = new Set();
-                const templateLinks = new Set();
-                if(loc.status !== "CLOSED") {
-                    for(const documentTemplate of theTemplate.documents) {
-                        const file = loc.files.find(item => item.nature === documentTemplate.publicDescription);
-                        if(file) {
-                            templateDocuments.add(file.nature);
+                    const templateDocuments = new Set();
+                    const templateItems = new Set();
+                    const templateLinks = new Set();
+                    if(loc.status !== "CLOSED") {
+                        for(const documentTemplate of theTemplate.documents) {
+                            const file = loc.files.find(item => item.nature === documentTemplate.publicDescription);
+                            if(file) {
+                                templateDocuments.add(file.nature);
+                            }
+                            items.push(createDocumentTemplateItem(documentTemplate, file));
                         }
-                        items.push(createDocumentTemplateItem(documentTemplate, file));
+
+                        for(const dataTemplate of theTemplate.metadata) {
+                            const data = loc.metadata.find(item => item.name === dataTemplate.name);
+                            if(data) {
+                                templateItems.add(data.name);
+                            }
+                            items.push(createMetadataTemplateItem(dataTemplate, data));
+                        }
+
+                        for(const linkTemplate of theTemplate.links) {
+                            const link = loc.links.find(item => item.nature === linkTemplate.publicDescription);
+                            let linkData: LinkData | undefined;
+                            if(link) {
+                                templateLinks.add(link.nature);
+                                linkData = await getLinkData(accounts?.current?.accountId.address, locState.locsState(), link, detailsPath, client);
+                            }
+                            items.push(createLinkTemplateItem(api.queries.getValidAccountId(loc.ownerAddress, "Polkadot"), linkTemplate, link, linkData));
+                        }
                     }
 
-                    for(const dataTemplate of theTemplate.metadata) {
-                        const data = loc.metadata.find(item => item.name === dataTemplate.name);
-                        if(data) {
-                            templateItems.add(data.name);
-                        }
-                        items.push(createMetadataTemplateItem(dataTemplate, data));
-                    }
+                    setTemplateItems(items);
 
-                    for(const linkTemplate of theTemplate.links) {
-                        const link = loc.links.find(item => item.nature === linkTemplate.publicDescription);
-                        let linkData: LinkData | undefined;
-                        if(link) {
-                            templateLinks.add(link.nature);
-                            linkData = getLinkData(accounts?.current?.accountId.address, locState.locsState(), link, detailsPath);
-                        }
-                        items.push(createLinkTemplateItem(api.queries.getValidAccountId(loc.ownerAddress, "Polkadot"), linkTemplate, link, linkData));
-                    }
-                }
-
-                setTemplateItems(items);
-
-                const customItems = locItems.filter(item =>
-                    (item.type === "Linked LOC" && !templateLinks.has(item.nature))
-                    || (item.type === "Data" && !templateItems.has(item.name))
-                    || (item.type === "Document" && !templateDocuments.has(item.nature))
-                );
-                setCustomItems(customItems);
+                    const customItems = locItems.filter(item =>
+                        (item.type === "Linked LOC" && !templateLinks.has(item.nature))
+                        || (item.type === "Data" && !templateItems.has(item.name))
+                        || (item.type === "Document" && !templateDocuments.has(item.nature))
+                    );
+                    setCustomItems(customItems);
+                })();
             } else {
                 setTemplate(undefined);
                 setTemplateItems([]);
@@ -194,7 +196,7 @@ export function LocDetailsTabContent(props: ContentProps) {
             setTemplateItems([]);
             setCustomItems(locItems);
         }
-    }, [ api, loc, template, locItems, accounts, detailsPath, locState ]);
+    }, [ api, loc, template, locItems, accounts, detailsPath, locState, client ]);
 
     const confirmCancel = useCallback(() => {
         setShowCancelDialog(true);
