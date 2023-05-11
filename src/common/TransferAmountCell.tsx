@@ -1,5 +1,5 @@
 import { Transaction } from "@logion/client/dist/TransactionClient.js";
-import { NONE, PrefixedNumber } from "@logion/node-api";
+import { Numbers } from "@logion/node-api";
 
 import { GREEN, RED } from "./ColorTheme";
 import Icon from "./Icon";
@@ -9,7 +9,7 @@ import './TransferAmountCell.css';
 import { toPrefixedLgnt } from "./AmountCell";
 
 export interface Props {
-    amount: PrefixedNumber | null,
+    amount: Numbers.PrefixedNumber | null,
 }
 
 export default function TransferAmountCell(props: Props) {
@@ -44,7 +44,7 @@ export default function TransferAmountCell(props: Props) {
     }
 }
 
-export function transferBalance(address: string, transaction: Transaction): PrefixedNumber {
+export function transferBalance(address: string, transaction: Transaction): Numbers.PrefixedNumber {
     const amount = toPrefixedLgnt(transaction.transferValue);
     if(transaction.from === address) {
         return amount.negate();
@@ -53,20 +53,20 @@ export function transferBalance(address: string, transaction: Transaction): Pref
     }
 }
 
-export function fees(address: string, transaction: Transaction): PrefixedNumber {
+export function fees(address: string, transaction: Transaction): Numbers.PrefixedNumber {
     const amount = toPrefixedLgnt(transaction.fees.total);
     if(transaction.from === address) {
         return amount;
     } else {
-        return new PrefixedNumber("0", NONE);
+        return new Numbers.PrefixedNumber("0", Numbers.NONE);
     }
 }
 
-export function deposit(address: string, transaction: Transaction): PrefixedNumber {
+export function deposit(address: string, transaction: Transaction): Numbers.PrefixedNumber {
     const amount = toPrefixedLgnt(transaction.reserved);
     if(transaction.from === address) {
         return amount;
     } else {
-        return new PrefixedNumber("0", NONE);
+        return new Numbers.PrefixedNumber("0", Numbers.NONE);
     }
 }

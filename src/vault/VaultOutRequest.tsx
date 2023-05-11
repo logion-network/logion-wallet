@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { Form } from "react-bootstrap";
 import { Controller, useForm } from "react-hook-form";
-import { SYMBOL, NONE, PrefixedNumber } from "@logion/node-api";
+import { Numbers, Currency } from "@logion/node-api";
 import { LegalOfficer, VaultState } from "@logion/client";
 
 import AmountControl, { Amount, validateAmount } from "../common/AmountControl";
@@ -45,7 +45,7 @@ export default function VaultOutRequest() {
             legalOfficer: "",
             amount: {
                 value: "",
-                unit: NONE
+                unit: Numbers.NONE
             },
             destination: ""
         }
@@ -56,7 +56,7 @@ export default function VaultOutRequest() {
             await mutateVaultState(async (state: VaultState) => {
                 return await state.createVaultTransferRequest({
                     legalOfficer: getOfficer!(formValues!.legalOfficer)!,
-                    amount: new PrefixedNumber(formValues.amount.value, formValues.amount.unit),
+                    amount: new Numbers.PrefixedNumber(formValues.amount.value, formValues.amount.unit),
                     destination: formValues.destination,
                     signer: signer!,
                     callback,
@@ -111,7 +111,7 @@ export default function VaultOutRequest() {
                 ]}
                 onSubmit={ handleSubmit(transferCallback) }
             >
-                <h2>Transfer { SYMBOL }s from your logion Vault</h2>
+                <h2>Transfer { Currency.SYMBOL }s from your logion Vault</h2>
 
                 { signAndSubmit === undefined &&
                 <>

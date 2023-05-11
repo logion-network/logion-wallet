@@ -1,6 +1,6 @@
-import { PrefixedNumber } from "@logion/node-api";
+import { Numbers } from "@logion/node-api";
 
-export default function AmountFormat(props: { amount?: PrefixedNumber | undefined, decimals?: number }) {
+export default function AmountFormat(props: { amount?: Numbers.PrefixedNumber | undefined, decimals?: number }) {
 
     if(props.amount) {
         return (

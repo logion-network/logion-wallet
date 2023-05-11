@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { CoinBalance, PrefixedNumber, NONE } from "@logion/node-api";
+import { CoinBalance, Numbers } from "@logion/node-api";
 import { LegalOfficerClass, ProtectionState, VaultState, VaultTransferRequest } from "@logion/client";
 
 import { useLogionChain } from "../../logion-chain";
@@ -74,9 +74,9 @@ export default function VaultRecoveryProcessTab() {
         setStatus(Status.IDLE);
     }, [ setRecoveredCoinBalance, setRequestSignAndSubmit, setCancelSignAndSubmit, setRequestFailed ])
 
-    const amountToRecover = useMemo<PrefixedNumber>(() => recoveredCoinBalance?.available ?
+    const amountToRecover = useMemo<Numbers.PrefixedNumber>(() => recoveredCoinBalance?.available ?
             recoveredCoinBalance?.available :
-            new PrefixedNumber("0", NONE),
+            new Numbers.PrefixedNumber("0", Numbers.NONE),
         [ recoveredCoinBalance ])
 
     const vaultRecoveryRequest = useMemo<VaultTransferRequest | null>(() => {
@@ -93,7 +93,7 @@ export default function VaultRecoveryProcessTab() {
     },
     [ recoveredVaultState ]);
 
-    const recoverCoin = useCallback(async (amount: PrefixedNumber) => {
+    const recoverCoin = useCallback(async (amount: Numbers.PrefixedNumber) => {
         const signAndSubmit: Call = async (callback: CallCallback) => {
             await mutateRecoveredVaultState(async (recoveredVaultState: VaultState) => {
                 return await recoveredVaultState.createVaultTransferRequest({

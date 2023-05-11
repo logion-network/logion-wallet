@@ -1,4 +1,4 @@
-import { Fees, LGNT_SMALLEST_UNIT, PrefixedNumber, NONE } from "@logion/node-api";
+import { Fees, Numbers, Currency } from "@logion/node-api";
 import AmountFormat from "src/common/AmountFormat";
 import { customClassName } from "src/common/types/Helpers";
 import "./EstimatedFees.css";
@@ -26,7 +26,7 @@ export default function EstimatedFees(props: Props) {
                         <td>Blockchain record</td>
                         <td>
                             <AmountFormat
-                                amount={ new PrefixedNumber(props.fees.inclusionFee.toString(), LGNT_SMALLEST_UNIT).convertTo(NONE) }
+                                amount={ Currency.toPrefixedNumberAmount(props.fees.inclusionFee).convertTo(Numbers.NONE) }
                                 decimals={4}
                             />
                         </td>
@@ -37,7 +37,7 @@ export default function EstimatedFees(props: Props) {
                             <td>File storage</td>
                             <td>
                                 <AmountFormat
-                                    amount={ new PrefixedNumber(props.fees.storageFee.toString(), LGNT_SMALLEST_UNIT).convertTo(NONE) }
+                                    amount={ Currency.toPrefixedNumberAmount(props.fees.storageFee).convertTo(Numbers.NONE) }
                                     decimals={4}
                                 />
                             </td>
@@ -48,7 +48,7 @@ export default function EstimatedFees(props: Props) {
                         <td>Total</td>
                         <td>
                             <AmountFormat
-                                amount={ new PrefixedNumber(props.fees.totalFee.toString(), LGNT_SMALLEST_UNIT).convertTo(NONE) }
+                                amount={ Currency.toPrefixedNumberAmount(props.fees.totalFee).convertTo(Numbers.NONE) }
                                 decimals={4}
                             />
                         </td>
