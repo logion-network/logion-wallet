@@ -1,7 +1,7 @@
 import { useState, useCallback } from 'react';
 import { Form, Spinner, InputGroup, DropdownButton, Dropdown } from 'react-bootstrap';
 import { BalanceState } from '@logion/client/dist/Balance.js';
-import { ATTO, FEMTO, MICRO, MILLI, NANO, NONE, PICO, PrefixedNumber, Coin, SYMBOL } from '@logion/node-api';
+import { Numbers, Coin, Currency } from '@logion/node-api';
 
 import { useLogionChain } from '../logion-chain';
 import ClientExtrinsicSubmitter, { Call, CallCallback } from '../ClientExtrinsicSubmitter';
@@ -19,7 +19,7 @@ import './WalletGauge.css';
 
 export interface Props {
     coin: Coin,
-    balance: PrefixedNumber,
+    balance: Numbers.PrefixedNumber,
     level: number,
     type: 'arc' | 'linear',
     vaultAddress?: string,
@@ -36,7 +36,7 @@ export default function WalletGauge(props: Props) {
     const { colorTheme, mutateBalanceState } = useCommonContext();
     const [ destination, setDestination ] = useState("");
     const [ amount, setAmount ] = useState("");
-    const [ unit, setUnit ] = useState(NONE);
+    const [ unit, setUnit ] = useState(Numbers.NONE);
     const [ signAndSubmit, setSignAndSubmit ] = useState<Call>();
     const [ transferDialogParams, setTransferDialogParams ] = useState<TransferDialogParams>({title: "", destination: true});
     const { vaultAddress, sendButton } = props;
@@ -46,7 +46,7 @@ export default function WalletGauge(props: Props) {
         const signAndSubmit: Call = async (callback: CallCallback) => {
             await mutateBalanceState(async (state: BalanceState) => {
                 return await state.transfer({
-                    amount: new PrefixedNumber(amount, unit),
+                    amount: new Numbers.PrefixedNumber(amount, unit),
                     destination,
                     callback,
                     signer: signer!
@@ -74,7 +74,7 @@ export default function WalletGauge(props: Props) {
                     <Gauge
                         readingIntegerPart={ props.balance.coefficient.toInteger() }
                         readingDecimalPart={ props.balance.coefficient.toFixedPrecisionDecimals(2) }
-                        unit={ props.balance.prefix.symbol + SYMBOL }
+                        unit={ props.balance.prefix.symbol + Currency.SYMBOL }
                         level={ props.level }
                         type={ props.type }
                     />
@@ -82,7 +82,7 @@ export default function WalletGauge(props: Props) {
                     <div className="actions">
                             <Button slim onClick={ () => {
                                 setTransferDialogParams({
-                                    title: `Transfer ${ SYMBOL }s`,
+                                    title: `Transfer ${ Currency.SYMBOL }s`,
                                     destination: true
                                 });
                                 startTransferringCallback();
@@ -93,7 +93,7 @@ export default function WalletGauge(props: Props) {
                             <Button slim onClick={ () => {
                                 setDestination(vaultAddress);
                                 setTransferDialogParams({
-                                    title: `Transfer ${ SYMBOL }s to your logion Vault`,
+                                    title: `Transfer ${ Currency.SYMBOL }s to your logion Vault`,
                                     destination: false
                                 });
                                 startTransferringCallback();
@@ -155,19 +155,19 @@ export default function WalletGauge(props: Props) {
                                                 onChange={ value => setAmount(value.target.value) }
                                             />
                                             <DropdownButton
-                                                title={ `${ unit.symbol }${ SYMBOL }` }
+                                                title={ `${ unit.symbol }${ Currency.SYMBOL }` }
                                                 id="input-group-dropdown-1"
                                             >{
                                                 [
-                                                    NONE,
-                                                    MILLI,
-                                                    MICRO,
-                                                    NANO,
-                                                    PICO,
-                                                    FEMTO,
-                                                    ATTO
+                                                    Numbers.NONE,
+                                                    Numbers.MILLI,
+                                                    Numbers.MICRO,
+                                                    Numbers.NANO,
+                                                    Numbers.PICO,
+                                                    Numbers.FEMTO,
+                                                    Numbers.ATTO
                                                 ].map(unit => <Dropdown.Item key={ unit.symbol }
-                                                                             onClick={ () => setUnit(unit) }>{ `${ unit.symbol }${ SYMBOL }` }</Dropdown.Item>)
+                                                                             onClick={ () => setUnit(unit) }>{ `${ unit.symbol }${ Currency.SYMBOL }` }</Dropdown.Item>)
                                             }</DropdownButton>
                                             <Form.Control.Feedback type="invalid">
                                                 Please enter a valid amount.

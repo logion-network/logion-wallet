@@ -1,10 +1,10 @@
 import { useCallback } from "react";
 import { Dropdown, DropdownButton, Form, InputGroup } from "react-bootstrap";
-import { SYMBOL, ATTO, FEMTO, MICRO, MILLI, NANO, NONE, PICO, UnitPrefix } from '@logion/node-api';
+import { Numbers, Currency } from '@logion/node-api';
 
 export interface Amount {
     value: string;
-    unit: UnitPrefix
+    unit: Numbers.UnitPrefix
 }
 
 export interface Props {
@@ -34,7 +34,7 @@ export default function AmountControl(props: Props) {
         }
     }, [ props ]);
 
-    const onChangeUnit = useCallback((unit: UnitPrefix) => {
+    const onChangeUnit = useCallback((unit: Numbers.UnitPrefix) => {
         if(props.value && props.onChange) {
             props.onChange({
                 value: props.value.value,
@@ -55,17 +55,17 @@ export default function AmountControl(props: Props) {
                 onChange={ event => onChangeValue(event.target.value) }
             />
             <DropdownButton
-                title={ `${ props.value?.unit.symbol || NONE.symbol }${ SYMBOL }` }
+                title={ `${ props.value?.unit.symbol || Numbers.NONE.symbol }${ Currency.SYMBOL }` }
             >{
                 [
-                    NONE,
-                    MILLI,
-                    MICRO,
-                    NANO,
-                    PICO,
-                    FEMTO,
-                    ATTO
-                ].map(unit => <Dropdown.Item key={ unit.symbol } onClick={ () => onChangeUnit(unit) }>{ `${ unit.symbol }${ SYMBOL }` }</Dropdown.Item>)
+                    Numbers.NONE,
+                    Numbers.MILLI,
+                    Numbers.MICRO,
+                    Numbers.NANO,
+                    Numbers.PICO,
+                    Numbers.FEMTO,
+                    Numbers.ATTO
+                ].map(unit => <Dropdown.Item key={ unit.symbol } onClick={ () => onChangeUnit(unit) }>{ `${ unit.symbol }${ Currency.SYMBOL }` }</Dropdown.Item>)
             }</DropdownButton>
         </InputGroup>
     );

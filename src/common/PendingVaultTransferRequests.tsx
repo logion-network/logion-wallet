@@ -1,5 +1,5 @@
 import { useCallback, useState } from "react";
-import { SYMBOL } from "@logion/node-api";
+import { Currency } from "@logion/node-api";
 import { VaultState, VaultTransferRequest } from "@logion/client";
 
 import { useLogionChain } from "../logion-chain";
@@ -55,7 +55,7 @@ export default function PendingVaultTransferRequests() {
                     },
                     {
                         header: "Type",
-                        render: () => <Cell content={`${SYMBOL}`} />,
+                        render: () => <Cell content={`${Currency.SYMBOL}`} />,
                         width: '80px',
                     },
                     {
