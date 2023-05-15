@@ -3,25 +3,25 @@ import { useCommonContext } from "../../common/CommonContext";
 import Frame from "../../common/Frame";
 import Tabs from "../../common/Tabs";
 import { useState } from "react";
-import VTPOpenedLocs from "./VTPOpenedLocs";
-import VTPClosedLocs from "./VTPClosedLocs";
-import VTPInfo from "./VTPInfo";
+import IssuerOpenedLocs from "./IssuerOpenedLocs";
+import IssuerClosedLocs from "./IssuerClosedLocs";
+import IssuerInfo from "./IssuerInfo";
 
-export default function VTPDashboard() {
+export default function IssuerDashboard() {
     const { colorTheme } = useCommonContext();
     const [ locTabKey, setLocTabKey ] = useState<string>('open');
     return (
         <FullWidthPane
-            className="VTPDashboard"
+            className="IssuerDashboard"
             mainTitle={ "Verified Issuer LOC Management" }
             titleIcon={ {
                 icon: {
-                    id: 'vtp-icon'
+                    id: 'issuer-icon'
                 },
                 background: colorTheme.topMenuItems.iconGradient,
             } }
         >
-            <VTPInfo/>
+            <IssuerInfo/>
             <Frame title="Verified Issuer LOC list">
                 <Tabs
                     activeKey={ locTabKey }
@@ -30,12 +30,12 @@ export default function VTPDashboard() {
                         {
                             key: "open",
                             title: "Open",
-                            render: () => <VTPOpenedLocs/>
+                            render: () => <IssuerOpenedLocs/>
                         },
                         {
                             key: "closed",
                             title: "Closed",
-                            render: () => <VTPClosedLocs/>
+                            render: () => <IssuerClosedLocs/>
                         },
                     ] }
                 />

@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`VTPDashboard renders 1`] = `
+exports[`IssuerDashboard renders 1`] = `
 <FullWidthPane
-  className="VTPDashboard"
+  className="IssuerDashboard"
   mainTitle="Verified Issuer LOC Management"
   titleIcon={
     Object {
@@ -11,12 +11,12 @@ exports[`VTPDashboard renders 1`] = `
         "to": "#6050dc",
       },
       "icon": Object {
-        "id": "vtp-icon",
+        "id": "issuer-icon",
       },
     }
   }
 >
-  <VTPInfo />
+  <IssuerInfo />
   <Frame
     title="Verified Issuer LOC list"
   >

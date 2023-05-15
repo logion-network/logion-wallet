@@ -1,36 +1,36 @@
 import { useLocContext } from "../LocContext";
 import { useState, useEffect } from "react";
-import { getVerifiedThirdPartySelections, VerifiedThirdPartyWithSelect } from "../../legal-officer/client";
+import { getVerifiedIssuerSelections, VerifiedIssuerWithSelect } from "../../legal-officer/client";
 import { OpenLoc, ClosedCollectionLoc } from "@logion/client";
 import Table, { EmptyTableMessage, Cell, ActionCell } from "../../common/Table";
 import ButtonGroup from "../../common/ButtonGroup";
 import Frame from "../../common/Frame";
-import './VTPSelectionFrame.css';
-import VTPSelectionCheckbox from "./VTPSelectionCheckbox";
+import './IssuerSelectionFrame.css';
+import IssuerSelectionCheckbox from "./IssuerSelectionCheckbox";
 import Button from "../../common/Button";
 import { identityLocDetailsPath } from "../../legal-officer/LegalOfficerPaths";
 import { useCommonContext } from "../../common/CommonContext";
 
-export default function VTPSelectionFrame() {
+export default function IssuerSelectionFrame() {
 
     const { locState } = useLocContext();
-    const [ vtpSelections, setVtpSelections ] = useState<VerifiedThirdPartyWithSelect[]>([]);
+    const [ issuerSelections, setIssuerSelections ] = useState<VerifiedIssuerWithSelect[]>([]);
     const { colorTheme } = useCommonContext();
 
     useEffect(() => {
         if (locState !== null && (locState instanceof OpenLoc || locState instanceof ClosedCollectionLoc)) {
-            getVerifiedThirdPartySelections({ locState })
-                .then(setVtpSelections)
+            getVerifiedIssuerSelections({ locState })
+                .then(setIssuerSelections)
         }
     }, [ locState ]);
 
     return (
         <Frame
-            className="VTPSelectionFrame"
+            className="IssuerSelectionFrame"
             title="Verified Issuer management for this LOC"
             titleIcon={ {
                 icon: {
-                    id: 'vtp-icon'
+                    id: 'issuer-icon'
                 },
                 background: colorTheme.topMenuItems.iconGradient,
             } }
@@ -39,21 +39,21 @@ export default function VTPSelectionFrame() {
                 columns={ [
                     {
                         header: "First Name",
-                        render: vtp => <Cell content={ vtp.firstName } />,
+                        render: issuer => <Cell content={ issuer.firstName } />,
                         align: 'left'
                     },
                     {
                         header: "Last Name",
-                        render: vtp => <Cell content={ vtp.lastName } />,
+                        render: issuer => <Cell content={ issuer.lastName } />,
                         align: 'left'
                     },
                     {
                         header: "Identity LOC",
-                        render: vtp =>
+                        render: issuer =>
                             <ActionCell>
                                 <ButtonGroup>
                                     <Button
-                                        onClick={ () => window.open(identityLocDetailsPath(vtp.identityLocId), "_blank") }>
+                                        onClick={ () => window.open(identityLocDetailsPath(issuer.identityLocId), "_blank") }>
                                         View
                                     </Button>
                                 </ButtonGroup>
@@ -61,16 +61,16 @@ export default function VTPSelectionFrame() {
                     },
                     {
                         header: "Selected ?",
-                        render: vtp =>
+                        render: issuer =>
                             <ActionCell>
                                 <ButtonGroup>
-                                    <VTPSelectionCheckbox vtpSelection={ vtp } />
+                                    <IssuerSelectionCheckbox issuerSelection={ issuer } />
                                 </ButtonGroup>
                             </ActionCell>
                     },
                 ] }
-                data={ vtpSelections }
-                renderEmpty={ () => <EmptyTableMessage>No Verified Third Parties</EmptyTableMessage> }
+                data={ issuerSelections }
+                renderEmpty={ () => <EmptyTableMessage>No Verified Issuers</EmptyTableMessage> }
             />
         </Frame>
     )

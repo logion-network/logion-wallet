@@ -1,14 +1,14 @@
 import { UUID, LocType } from "@logion/node-api";
 import { useParams } from "react-router";
 import { LegalOfficerLocContextProvider } from "../LegalOfficerLocContext";
-import VTPSelectionPane from "./VTPSelectionPane";
+import IssuerSelectionPane from "./IssuerSelectionPane";
 
 export interface Props {
     detailsPath: (locId: UUID, type: LocType) => string;
     backPath: (locId: UUID) => string;
 }
 
-export default function VTPSelection(props: Props) {
+export default function IssuerSelection(props: Props) {
 
     const locId: UUID = new UUID(useParams<"locId">().locId);
 
@@ -18,7 +18,7 @@ export default function VTPSelection(props: Props) {
             backPath={ props.backPath(locId) }
             detailsPath={ props.detailsPath }
         >
-            <VTPSelectionPane/>
+            <IssuerSelectionPane/>
         </LegalOfficerLocContextProvider>
     )
 }

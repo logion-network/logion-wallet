@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`VTPClosedLocs renders closed VTP LOCS 1`] = `
+exports[`IssuerClosedLocs renders closed verified issuer LOCS 1`] = `
 <div
-  className="VTPClosedLocs"
+  className="IssuerClosedLocs"
 >
   <div
     className="Table constrained-row-height"

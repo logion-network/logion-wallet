@@ -10,7 +10,7 @@ import { getTokensRecordFileSource } from "../FileModel";
 import { useLocContext } from "../LocContext";
 import LocPrivateFileDetails from "../LocPrivateFileDetails";
 import { ContributionMode } from "../types";
-import { tokensRecordDocumentClaimHistoryPath as requesterTokensRecordDocumentClaimHistoryPath, vtpTokensRecordDocumentClaimHistoryPath } from "src/wallet-user/UserRouter";
+import { tokensRecordDocumentClaimHistoryPath as requesterTokensRecordDocumentClaimHistoryPath, issuerTokensRecordDocumentClaimHistoryPath } from "src/wallet-user/UserRouter";
 import { useLogionChain } from "src/logion-chain";
 
 export interface Props {
@@ -103,8 +103,8 @@ function documentClaimHistory(viewer: Viewer, loc: LocData, record: TokensRecord
         return tokensRecordDocumentClaimHistoryPath(loc.id, record.id, record.files[0].hash);
     } else if(contributionMode === "Requester") {
         return requesterTokensRecordDocumentClaimHistoryPath(loc.id, record.id, record.files[0].hash);
-    } else if(contributionMode === "VTP") {
-        return vtpTokensRecordDocumentClaimHistoryPath(loc.id, record.id, record.files[0].hash);
+    } else if(contributionMode === "Issuer") {
+        return issuerTokensRecordDocumentClaimHistoryPath(loc.id, record.id, record.files[0].hash);
     } else {
         return "";
     }

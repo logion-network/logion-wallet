@@ -6,7 +6,7 @@ import Icon from "src/common/Icon";
 import { tokensRecordPath } from "src/legal-officer/LegalOfficerPaths";
 import { useLocContext } from "../LocContext";
 import { ContributionMode } from "../types";
-import { tokensRecordPath as requesterTokensRecordPath, vtpTokensRecordPath } from "src/wallet-user/UserRouter";
+import { tokensRecordPath as requesterTokensRecordPath, issuerTokensRecordPath } from "src/wallet-user/UserRouter";
 
 export default function TokensRecordButton(props: { contributionMode?: ContributionMode }) {
     const { viewer } = useCommonContext();
@@ -21,8 +21,8 @@ export default function TokensRecordButton(props: { contributionMode?: Contribut
             return tokensRecordPath(loc.id);
         } else if(props.contributionMode === "Requester") {
             return requesterTokensRecordPath(loc.id);
-        } else if(props.contributionMode === "VTP") {
-            return vtpTokensRecordPath(loc.id);
+        } else if(props.contributionMode === "Issuer") {
+            return issuerTokensRecordPath(loc.id);
         } else {
             return "";
         }

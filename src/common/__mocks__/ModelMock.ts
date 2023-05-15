@@ -26,7 +26,7 @@ export async function createLocRequest(axios: any, request: CreateLocRequest): P
         links: [],
         metadata: [],
         status: "OPEN",
-        verifiedThirdParty: false,
+        verifiedIssuer: false,
         selectedIssuers: [],
     });
 }

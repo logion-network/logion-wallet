@@ -20,8 +20,8 @@ import ArchiveButton from "./archive/ArchiveButton";
 import InlineDateTime from 'src/common/InlineDateTime';
 import { useCommonContext, Viewer } from 'src/common/CommonContext';
 import { isLogionIdentityLoc } from "../common/types/ModelTypes";
-import Nominate from "./vtp/Nominate";
-import VTPSelectionButton from "./vtp/VTPSelectionButton";
+import Nominate from "./issuer/Nominate";
+import IssuerSelectionButton from "./issuer/IssuerSelectionButton";
 import ButtonGroup from 'src/common/ButtonGroup';
 import RequestVoteButton from './RequestVoteButton';
 import TokensRecordButton from './record/TokensRecordButton';
@@ -92,8 +92,8 @@ export default function CertificateAndLimits(props: Props) {
                             { props.loc.locType === 'Collection' && props.loc.closed && !props.loc.voidInfo && <TokensRecordButton contributionMode={props.contributionMode}/> }
                             { props.loc.locType === 'Collection' && props.loc.closed && !props.loc.voidInfo && <Button onClick={ () => setShowSettings(true) }><Icon icon={{id: "cog"}} height="22px"/> Get dev settings</Button> }
 
-                            { props.loc.locType === 'Collection' && props.viewer === 'LegalOfficer' && <VTPSelectionButton/> }
-                            { props.loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' && props.loc.status ==='OPEN' && <VTPSelectionButton/> }
+                            { props.loc.locType === 'Collection' && props.viewer === 'LegalOfficer' && <IssuerSelectionButton/> }
+                            { props.loc.locType !== 'Collection' && props.viewer === 'LegalOfficer' && props.loc.status ==='OPEN' && <IssuerSelectionButton/> }
                             { props.loc.locType === 'Identity' && props.viewer === 'LegalOfficer' && !isLogionIdentityLoc({ ...props.loc, requesterAddress: props.loc.requesterAddress?.address }) && props.loc.requesterAddress?.type === "Polkadot" && props.loc.status ==='CLOSED' && !props.isReadOnly && <Nominate/> }
 
                             { props.loc.locType === 'Identity' && !isLogionIdentityLoc({ ...props.loc, requesterAddress: props.loc.requesterAddress?.address }) && props.viewer === 'LegalOfficer' && props.loc.status === "CLOSED" && hasVoteFeature && !props.loc.voteId && !props.isReadOnly && <RequestVoteButton/> }

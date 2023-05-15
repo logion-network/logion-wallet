@@ -12,7 +12,7 @@ import UserRouter, {
     WALLET_PATH,
     locRequestsPath,
     VAULT_PATH,
-    VTP_PATH,
+    ISSUER_PATH,
 } from "./UserRouter";
 import { useUserContext } from "./UserContext";
 import { useCommonContext } from '../common/CommonContext';
@@ -116,15 +116,15 @@ export default function ContextualizedWallet() {
         onClick: refreshAll,
     });
 
-    if (locsState && !locsState.discarded && locsState?.isVerifiedThirdParty) {
+    if (locsState && !locsState.discarded && locsState?.isVerifiedIssuer) {
         menuTop.push({
-                id: "vtp",
+                id: "issuer",
                 text: "Issuer LOC",
-                to: VTP_PATH,
+                to: ISSUER_PATH,
                 exact: false,
                 icon: {
                     icon: {
-                        id: 'vtp-icon'
+                        id: 'issuer-icon'
                     },
                     background: colorTheme.topMenuItems.iconGradient,
                 },

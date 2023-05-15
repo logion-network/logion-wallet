@@ -28,12 +28,12 @@ describe("LocDetails", () => {
         expect(result).toMatchSnapshot();
     })
 
-    it("renders for user as VTP", () => {
+    it("renders for user as verified issuer", () => {
         setParams({"locId": "aed4c6e4-979e-48ad-be6e-4bd39fb94762"})
         const result = shallowRender(<UserLocDetails
             backPath="/"
             detailsPath={() => "/details"}
-            contributionMode='VTP'
+            contributionMode='Issuer'
         />);
         expect(result).toMatchSnapshot();
     })

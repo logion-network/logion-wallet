@@ -1,7 +1,7 @@
 import { UUID } from "@logion/node-api";
 import { useParams } from "react-router-dom";
 import { locDetailsPath } from "src/legal-officer/LegalOfficerPaths";
-import { VTP_PATH, locDetailsPath as userLocDetailsPath } from "src/wallet-user/UserRouter";
+import { ISSUER_PATH, locDetailsPath as userLocDetailsPath } from "src/wallet-user/UserRouter";
 import { LegalOfficerLocContextProvider } from "../LegalOfficerLocContext";
 import { useLocContext } from "../LocContext";
 import LocPane from "../LocPane";
@@ -42,7 +42,7 @@ export function LegalOfficerTokensRecordPane() {
 
 export function UserTokensRecordPane(props: { contributionMode: ContributionMode }) {
     const locId = new UUID(useParams<"locId">().locId);
-    const backPath = props.contributionMode === "Requester" ? userLocDetailsPath(locId, "Collection") : VTP_PATH;
+    const backPath = props.contributionMode === "Requester" ? userLocDetailsPath(locId, "Collection") : ISSUER_PATH;
 
     return (
         <UserLocContextProvider

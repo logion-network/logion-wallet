@@ -180,18 +180,18 @@ exports[`renders 1`] = `
     path="/loc/identity-request"
   />
   <Route
-    element={<VTPDashboard />}
-    path="/vtp"
+    element={<IssuerDashboard />}
+    path="/verified-issuer"
   />
   <Route
     element={
       <UserLocDetails
-        backPath="/user/vtp"
-        contributionMode="VTP"
+        backPath="/user/verified-issuer"
+        contributionMode="Issuer"
         detailsPath={[Function]}
       />
     }
-    path="/vtp/:locId"
+    path="/verified-issuer/:locId"
   />
   <Route
     element={
@@ -216,10 +216,10 @@ exports[`renders 1`] = `
   <Route
     element={
       <UserTokensRecordPane
-        contributionMode="VTP"
+        contributionMode="Issuer"
       />
     }
-    path="/vtp/:locId/records"
+    path="/verified-issuer/:locId/records"
   />
   <Route
     element={
@@ -232,10 +232,10 @@ exports[`renders 1`] = `
   <Route
     element={
       <UserTokensRecordDocumentClaimHistory
-        contributionMode="VTP"
+        contributionMode="Issuer"
       />
     }
-    path="/vtp/:locId/records/:recordId/claims/:hash"
+    path="/verified-issuer/:locId/records/:recordId/claims/:hash"
   />
 </Routes>
 `;

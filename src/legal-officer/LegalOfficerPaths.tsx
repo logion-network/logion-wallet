@@ -63,9 +63,9 @@ export const VAULT_OUT_REQUESTS_PATH = LEGAL_OFFICER_PATH + VAULT_OUT_REQUESTS_R
 export const STATEMENT_OF_FACTS_RELATIVE_PATH = '/statement';
 export const STATEMENT_OF_FACTS_PATH = LEGAL_OFFICER_PATH + STATEMENT_OF_FACTS_RELATIVE_PATH;
 
-const LOC_SELECT_VTP_RELATIVE_PATH = LOC_REQUESTS_RELATIVE_PATH + '/:locId/vtp';
-export function locSelectVTPPath(locType: LocType) {
-    return LOC_SELECT_VTP_RELATIVE_PATH
+const LOC_SELECT_ISSUER_RELATIVE_PATH = LOC_REQUESTS_RELATIVE_PATH + '/:locId/verified-issuer';
+export function locSelectIssuerPath(locType: LocType) {
+    return LOC_SELECT_ISSUER_RELATIVE_PATH
         .replace(":locType", locType.toLowerCase())
 }
 
@@ -97,9 +97,9 @@ export function tokensRecordPath(locId: UUID) {
         .replace(":locId", locId.toString());
 }
 
-export const TOKENS_RECORD_VTP_RELATIVE_PATH = TOKENS_RECORD_RELATIVE_PATH + "/vtp";
-export function recordsSelectVTPPath(locId: UUID) {
-    return LEGAL_OFFICER_PATH + TOKENS_RECORD_VTP_RELATIVE_PATH
+export const TOKENS_RECORD_ISSUER_RELATIVE_PATH = TOKENS_RECORD_RELATIVE_PATH + "/verified-issuer";
+export function recordsSelectIssuerPath(locId: UUID) {
+    return LEGAL_OFFICER_PATH + TOKENS_RECORD_ISSUER_RELATIVE_PATH
         .replace(":locType", "Collection")
         .replace(":locId", locId.toString());
 }

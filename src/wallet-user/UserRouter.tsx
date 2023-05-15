@@ -25,7 +25,7 @@ import Vault from "./trust-protection/Vault";
 import { useLogionChain } from '../logion-chain';
 import LocCreation from "./transaction-protection/LocCreation";
 import IdentityLocRequest from "./trust-protection/IdentityLocRequest";
-import VTPDashboard from "./vtp/VTPDashboard";
+import IssuerDashboard from "./issuer/IssuerDashboard";
 import IdenfyVerificationResult from './IdenfyVerificationResult';
 import { UserDocumentClaimHistory, UserTokensRecordDocumentClaimHistory } from 'src/loc/DocumentClaimHistory';
 import { UserTokensRecordPane } from 'src/loc/record/TokensRecordPane';
@@ -47,14 +47,14 @@ export const VAULT_RELATIVE_PATH = '/vault';
 export const VAULT_PATH = USER_PATH + VAULT_RELATIVE_PATH;
 export const IDENTITY_REQUEST_RELATIVE_PATH = "/loc/identity-request";
 export const IDENTITY_REQUEST_PATH = USER_PATH + IDENTITY_REQUEST_RELATIVE_PATH;
-export const VTP_RELATIVE_PATH = '/vtp';
-export const VTP_PATH = USER_PATH + VTP_RELATIVE_PATH;
-export const VTP_DETAILS_RELATIVE_PATH = VTP_RELATIVE_PATH + '/:locId';
+export const ISSUER_RELATIVE_PATH = '/verified-issuer';
+export const ISSUER_PATH = USER_PATH + ISSUER_RELATIVE_PATH;
+export const ISSUER_DETAILS_RELATIVE_PATH = ISSUER_RELATIVE_PATH + '/:locId';
 export const IDENFY_RELATIVE_PATH = '/idenfy';
 export const IDENFY_PATH = USER_PATH + IDENFY_RELATIVE_PATH;
 
-export function vtpDetailsPath(locId: UUID | string) {
-    return USER_PATH + VTP_DETAILS_RELATIVE_PATH
+export function issuerDetailsPath(locId: UUID | string) {
+    return USER_PATH + ISSUER_DETAILS_RELATIVE_PATH
         .replace(":locId", locId.toString())
 }
 
@@ -111,9 +111,9 @@ export function tokensRecordPath(locId: UUID) {
         .replace(":locId", locId.toString());
 }
 
-export const VTP_TOKENS_RECORD_RELATIVE_PATH = VTP_DETAILS_RELATIVE_PATH + "/records";
-export function vtpTokensRecordPath(locId: UUID) {
-    return USER_PATH + VTP_TOKENS_RECORD_RELATIVE_PATH
+export const ISSUER_TOKENS_RECORD_RELATIVE_PATH = ISSUER_DETAILS_RELATIVE_PATH + "/records";
+export function issuerTokensRecordPath(locId: UUID) {
+    return USER_PATH + ISSUER_TOKENS_RECORD_RELATIVE_PATH
         .replace(":locType", "Collection")
         .replace(":locId", locId.toString());
 }
@@ -127,9 +127,9 @@ export function tokensRecordDocumentClaimHistoryPath(locId: UUID, recordId: stri
         .replace(":hash", hash);
 }
 
-export const VTP_TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH = VTP_DETAILS_RELATIVE_PATH + "/records/:recordId/claims/:hash";
-export function vtpTokensRecordDocumentClaimHistoryPath(locId: UUID, recordId: string, hash: string) {
-    return USER_PATH + VTP_TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH
+export const ISSUER_TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH = ISSUER_DETAILS_RELATIVE_PATH + "/records/:recordId/claims/:hash";
+export function issuerTokensRecordDocumentClaimHistoryPath(locId: UUID, recordId: string, hash: string) {
+    return USER_PATH + ISSUER_TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH
         .replace(":locType", "Collection")
         .replace(":locId", locId.toString())
         .replace(":recordId", recordId)
@@ -251,14 +251,14 @@ export default function UserRouter() {
             <Route path={ IDENTITY_REQUEST_RELATIVE_PATH } element={
                 <IdentityLocRequest backPath={ locRequestsPath('Identity') }/>
             } />
-            <Route path={ VTP_RELATIVE_PATH } element={
-                <VTPDashboard/>
+            <Route path={ ISSUER_RELATIVE_PATH } element={
+                <IssuerDashboard/>
             } />
-            <Route path={ VTP_DETAILS_RELATIVE_PATH } element={
+            <Route path={ ISSUER_DETAILS_RELATIVE_PATH } element={
                 <UserLocDetails
-                    backPath={ VTP_PATH }
-                    detailsPath={ (locId: UUID, type: LocType) => vtpDetailsPath(locId) }
-                    contributionMode='VTP'
+                    backPath={ ISSUER_PATH }
+                    detailsPath={ (locId: UUID, type: LocType) => issuerDetailsPath(locId) }
+                    contributionMode='Issuer'
                 />
             } />
             <Route path={ IDENFY_RELATIVE_PATH } element={
@@ -268,9 +268,9 @@ export default function UserRouter() {
             } />
             <Route path={ DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH } element={ <UserDocumentClaimHistory/> } />
             <Route path={ TOKENS_RECORD_RELATIVE_PATH } element={ <UserTokensRecordPane contributionMode='Requester'/> }/>
-            <Route path={ VTP_TOKENS_RECORD_RELATIVE_PATH } element={ <UserTokensRecordPane contributionMode='VTP'/> }/>
+            <Route path={ ISSUER_TOKENS_RECORD_RELATIVE_PATH } element={ <UserTokensRecordPane contributionMode='Issuer'/> }/>
             <Route path={ TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH } element={ <UserTokensRecordDocumentClaimHistory contributionMode='Requester'/> } />
-            <Route path={ VTP_TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH } element={ <UserTokensRecordDocumentClaimHistory contributionMode='VTP'/> } />
+            <Route path={ ISSUER_TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH } element={ <UserTokensRecordDocumentClaimHistory contributionMode='Issuer'/> } />
         </Routes>
     );
 }

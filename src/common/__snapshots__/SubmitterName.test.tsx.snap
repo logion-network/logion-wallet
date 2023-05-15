@@ -16,12 +16,12 @@ exports[`SubmitterName renders when submitter is Requester 1`] = `
 />
 `;
 
-exports[`SubmitterName renders when submitter is VTP 1`] = `
+exports[`SubmitterName renders when submitter is verified issuer 1`] = `
 <Cell
   content={
     <div>
       Scott Tiger
-      <VTPBadge />
+      <IssuerBadge />
     </div>
   }
 />

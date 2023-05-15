@@ -1,5 +1,5 @@
-import VTPSelectionFrame from "./VTPSelectionFrame";
-import { setVerifiedThirdPartySelections } from "../../legal-officer/__mocks__/ClientMock";
+import IssuerSelectionFrame from "./IssuerSelectionFrame";
+import { setVerifiedIssuerSelections } from "../../legal-officer/__mocks__/ClientMock";
 import { setLocState } from "../__mocks__/LocContextMock";
 import { waitFor, screen, render } from "@testing-library/react";
 import { OpenLoc } from "../../__mocks__/LogionClientMock";
@@ -7,16 +7,16 @@ import { OpenLoc } from "../../__mocks__/LogionClientMock";
 jest.mock("../../legal-officer/client");
 jest.mock("../LocContext");
 
-describe("VTPSelectionFrame", () => {
+describe("IssuerSelectionFrame", () => {
 
     it("renders empty", async () => {
-        render(<VTPSelectionFrame/>);
-        await waitFor(() => expect(screen.getByText(/No Verified Third Parties/)).toBeInTheDocument());
+        render(<IssuerSelectionFrame/>);
+        await waitFor(() => expect(screen.getByText(/No Verified Issuers/)).toBeInTheDocument());
     });
 
     it("renders 2 rows", async () => {
         setLocState(new OpenLoc());
-        setVerifiedThirdPartySelections([
+        setVerifiedIssuerSelections([
             {
                 firstName: "John",
                 lastName: "Doe",
@@ -32,7 +32,7 @@ describe("VTPSelectionFrame", () => {
                 selected: true,
             },
         ])
-        render(<VTPSelectionFrame/>);
+        render(<IssuerSelectionFrame/>);
         await waitFor(() => {
             expect(screen.getByText("John")).toBeInTheDocument()
             expect(screen.getByText("Doe")).toBeInTheDocument()

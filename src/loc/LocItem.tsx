@@ -172,7 +172,7 @@ function renderDetails(loc: LocData | undefined, locItem: LocItem, viewer: Viewe
 }
 
 function canViewFile(address: string | undefined, item: LocItem, contributionMode?: ContributionMode): boolean {
-    return (contributionMode !== 'VTP' || item.submitter === address) && isSet(item);
+    return (contributionMode !== 'Issuer' || item.submitter === address) && isSet(item);
 }
 
 function isSet(item: LocItem) {

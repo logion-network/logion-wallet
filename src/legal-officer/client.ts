@@ -6,7 +6,7 @@ import {
     OpenLoc,
     ClosedLoc,
     ClosedCollectionLoc,
-    VerifiedThirdParty,
+    VerifiedIssuer,
     VoidedLoc,
     VoidedCollectionLoc,
     LogionClient,
@@ -239,13 +239,13 @@ export async function voidLoc(params: {
     return await getCurrent(currentLocState).refresh() as VoidedLoc | VoidedCollectionLoc;
 }
 
-export async function setVerifiedThirdParty(params: {
+export async function setVerifiedIssuer(params: {
     locState: ClosedLoc,
-    isVerifiedThirdParty: boolean,
+    isVerifiedIssuer: boolean,
     signer: Signer,
     callback: SignCallback,
 }): Promise<ClosedLoc> {
-    const { locState, isVerifiedThirdParty, signer, callback } = params;
+    const { locState, isVerifiedIssuer, signer, callback } = params;
     const currentLocState = getCurrent(locState);
     const { data, api } = inspectState(currentLocState);
 
@@ -254,7 +254,7 @@ export async function setVerifiedThirdParty(params: {
     }
 
     let submittable: SubmittableExtrinsic;
-    if(isVerifiedThirdParty) {
+    if(isVerifiedIssuer) {
         submittable = api.polkadot.tx.logionLoc.nominateIssuer(
             data.requesterAddress.address,
             api.adapters.toLocId(data.id)
@@ -271,22 +271,22 @@ export async function setVerifiedThirdParty(params: {
     return await getCurrent(currentLocState).refresh() as ClosedLoc;
 }
 
-export type VerifiedThirdPartyWithSelect = VerifiedThirdParty & { selected: boolean };
+export type VerifiedIssuerWithSelect = VerifiedIssuer & { selected: boolean };
 
 export type LocWithSelectableIssuers = OpenLoc | ClosedCollectionLoc;
 
-export async function getVerifiedThirdPartySelections(params: { locState: LocWithSelectableIssuers } ): Promise<VerifiedThirdPartyWithSelect[]> {
+export async function getVerifiedIssuerSelections(params: { locState: LocWithSelectableIssuers } ): Promise<VerifiedIssuerWithSelect[]> {
     const { locState } = params
     const currentLocState = getCurrent(locState);
     const { data, axios } = inspectState(currentLocState);
 
-    const allVerifiedThirdParties: VerifiedIssuerIdentity[] = (await axios.get("/api/issuers-identity")).data.issuers;
+    const allVerifiedIssuers: VerifiedIssuerIdentity[] = (await axios.get("/api/issuers-identity")).data.issuers;
     const selectedParties = data.issuers;
 
-    return allVerifiedThirdParties
-        .filter(vtp => vtp.address !== data.requesterAddress?.address)
-        .map(vtp => {
-            const selected = selectedParties.find(selectedParty => selectedParty.address === vtp.address);
+    return allVerifiedIssuers
+        .filter(issuer => issuer.address !== data.requesterAddress?.address)
+        .map(issuer => {
+            const selected = selectedParties.find(selectedIssuer => selectedIssuer.address === issuer.address);
             if(selected && selected.firstName && selected.lastName) {
                 return {
                     firstName: selected.firstName,
@@ -297,32 +297,32 @@ export async function getVerifiedThirdPartySelections(params: { locState: LocWit
                 };
             } else {
                 return {
-                    firstName: vtp.identity.firstName,
-                    lastName: vtp.identity.lastName,
-                    identityLocId: vtp.identityLocId,
-                    address: vtp.address,
+                    firstName: issuer.identity.firstName,
+                    lastName: issuer.identity.lastName,
+                    identityLocId: issuer.identityLocId,
+                    address: issuer.address,
                     selected: selected !== undefined,
                 };
             }
         })
-        .sort((vtp1, vtp2) => vtp1.lastName.localeCompare(vtp2.lastName));
+        .sort((issuer1, issuer2) => issuer1.lastName.localeCompare(issuer2.lastName));
 }
 
-export interface SelectPartiesParams {
+export interface SelectIssuersParams {
     locState: LocWithSelectableIssuers;
     issuer: string;
     signer: Signer;
     callback: SignCallback;
 }
 
-export async function selectParties(params: SelectPartiesParams): Promise<void> {
+export async function selectParties(params: SelectIssuersParams): Promise<void> {
     return setIssuerSelection({
         ...params,
         selected: true,
     });
 }
 
-async function setIssuerSelection(params: SelectPartiesParams & { selected: boolean }): Promise<void> {
+async function setIssuerSelection(params: SelectIssuersParams & { selected: boolean }): Promise<void> {
     const { locState, issuer, signer, callback, selected } = params;
     const currentLocState = getCurrent(locState);
     const { data, api } = inspectState(currentLocState);
@@ -338,7 +338,7 @@ async function setIssuerSelection(params: SelectPartiesParams & { selected: bool
     });
 }
 
-export async function unselectParties(params: SelectPartiesParams): Promise<void> {
+export async function unselectIssuers(params: SelectIssuersParams): Promise<void> {
     return setIssuerSelection({
         ...params,
         selected: false,

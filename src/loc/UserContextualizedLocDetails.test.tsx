@@ -19,11 +19,11 @@ describe("UserContextualizedLocDetails", () => {
         expect(tree).toMatchSnapshot();
     })
 
-    it("renders for VTP", () => {
+    it("renders for verified issuer", () => {
         const uuid = UUID.fromDecimalString(OPEN_IDENTITY_LOC_ID)!;
         setLocId(uuid);
         setLoc(buildLocRequest(uuid, OPEN_IDENTITY_LOC));
-        const tree = shallowRender(<UserContextualizedLocDetails contributionMode="VTP" />);
+        const tree = shallowRender(<UserContextualizedLocDetails contributionMode="Issuer" />);
         expect(tree).toMatchSnapshot();
     })
 })

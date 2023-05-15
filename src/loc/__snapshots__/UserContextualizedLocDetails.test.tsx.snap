@@ -1,8 +1,8 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`UserContextualizedLocDetails renders for VTP 1`] = `
+exports[`UserContextualizedLocDetails renders for verified issuer 1`] = `
 <LocPane
-  contributionMode="VTP"
+  contributionMode="Issuer"
   loc={
     Object {
       "closed": false,
@@ -42,18 +42,18 @@ exports[`UserContextualizedLocDetails renders for VTP 1`] = `
       },
       "requesterLocId": undefined,
       "status": "OPEN",
-      "verifiedThirdParty": false,
+      "verifiedIssuer": false,
     }
   }
 >
-  <VTPInfo />
+  <IssuerInfo />
   <LocDetailsTab
     checkResult={
       Object {
         "result": "NONE",
       }
     }
-    contributionMode="VTP"
+    contributionMode="Issuer"
     legalOfficer={
       Object {
         "additionalDetails": "",
@@ -117,7 +117,7 @@ exports[`UserContextualizedLocDetails renders for VTP 1`] = `
         },
         "requesterLocId": undefined,
         "status": "OPEN",
-        "verifiedThirdParty": false,
+        "verifiedIssuer": false,
       }
     }
     locItems={Array []}
@@ -164,12 +164,12 @@ exports[`UserContextualizedLocDetails renders for VTP 1`] = `
           },
           "requesterLocId": undefined,
           "status": "OPEN",
-          "verifiedThirdParty": false,
+          "verifiedIssuer": false,
         }
       }
     />
     <CertificateAndLimits
-      contributionMode="VTP"
+      contributionMode="Issuer"
       isReadOnly={false}
       loc={
         Object {
@@ -210,7 +210,7 @@ exports[`UserContextualizedLocDetails renders for VTP 1`] = `
           },
           "requesterLocId": undefined,
           "status": "OPEN",
-          "verifiedThirdParty": false,
+          "verifiedIssuer": false,
         }
       }
       viewer="User"
@@ -255,7 +255,7 @@ exports[`UserContextualizedLocDetails renders for VTP 1`] = `
           },
           "requesterLocId": undefined,
           "status": "OPEN",
-          "verifiedThirdParty": false,
+          "verifiedIssuer": false,
         }
       }
     />
@@ -310,7 +310,7 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
       },
       "requesterLocId": undefined,
       "status": "OPEN",
-      "verifiedThirdParty": false,
+      "verifiedIssuer": false,
     }
   }
 >
@@ -384,7 +384,7 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
         },
         "requesterLocId": undefined,
         "status": "OPEN",
-        "verifiedThirdParty": false,
+        "verifiedIssuer": false,
       }
     }
     locItems={Array []}
@@ -431,7 +431,7 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
           },
           "requesterLocId": undefined,
           "status": "OPEN",
-          "verifiedThirdParty": false,
+          "verifiedIssuer": false,
         }
       }
     />
@@ -477,7 +477,7 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
           },
           "requesterLocId": undefined,
           "status": "OPEN",
-          "verifiedThirdParty": false,
+          "verifiedIssuer": false,
         }
       }
       viewer="User"
@@ -522,7 +522,7 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
           },
           "requesterLocId": undefined,
           "status": "OPEN",
-          "verifiedThirdParty": false,
+          "verifiedIssuer": false,
         }
       }
     />

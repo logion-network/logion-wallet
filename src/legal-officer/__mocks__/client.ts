@@ -2,7 +2,7 @@ import {
     closeLoc,
     deleteLink,
     voidLoc,
-    getVerifiedThirdPartySelections,
+    getVerifiedIssuerSelections,
     requestVote,
 } from "./ClientMock";
 
@@ -10,6 +10,6 @@ export {
     closeLoc,
     deleteLink,
     voidLoc,
-    getVerifiedThirdPartySelections,
+    getVerifiedIssuerSelections,
     requestVote,
 }

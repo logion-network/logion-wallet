@@ -6,7 +6,7 @@ import Dialog from "../../common/Dialog";
 import { useLocContext } from "../LocContext";
 import { useLogionChain } from "../../logion-chain";
 import { ClosedLoc } from "@logion/client";
-import { setVerifiedThirdParty } from "../../legal-officer/client";
+import { setVerifiedIssuer } from "../../legal-officer/client";
 import './Nominate.css';
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
 
@@ -18,15 +18,15 @@ export default function Nominate() {
     const [ status, setStatus ] = useState<Status>('Idle');
     const [ call, setCall ] = useState<Call>();
 
-    const isIssuer = useMemo(() => loc?.verifiedThirdParty || false, [ loc ]);
+    const isIssuer = useMemo(() => loc?.verifiedIssuer || false, [ loc ]);
 
-    const changeVtp = useCallback(async () => {
+    const changeIssuer = useCallback(async () => {
         setStatus('Confirming');
         const call = async (callback: CallCallback) => mutateLocState(async current => {
             if(signer && current instanceof ClosedLoc) {
-                return setVerifiedThirdParty({
+                return setVerifiedIssuer({
                     locState: current,
-                    isVerifiedThirdParty: !isIssuer,
+                    isVerifiedIssuer: !isIssuer,
                     signer,
                     callback,
                 });
@@ -45,7 +45,7 @@ export default function Nominate() {
     return (
         <>
             <Button id="NominateButton" onClick={ () => setStatus('Selected') }>
-                <Icon icon={ { id: "vtp" } }/>
+                <Icon icon={ { id: "issuer" } }/>
                 Verified Issuer
                 <Checkbox checked={ isIssuer } skin="Toggle white" />
             </Button>
@@ -62,7 +62,7 @@ export default function Nominate() {
                     },
                     {
                         id: "submit",
-                        callback: () => changeVtp(),
+                        callback: () => changeIssuer(),
                         buttonText: 'Confirm',
                         buttonVariant: 'polkadot',
                         disabled: status === 'Confirming' || status === 'Error'

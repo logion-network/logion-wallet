@@ -138,9 +138,9 @@ export function setDraftLocRequests(requests: any[]) {
     }
 }
 
-export function setOpenVerifiedThirdPartyLocs(transactions: any[], collections: any[]) {
+export function setOpenVerifiedIssuerLocs(transactions: any[], collections: any[]) {
     locsState = {
-        get openVerifiedThirdPartyLocs(): Record<LocType, OpenLoc[]> {
+        get openVerifiedIssuerLocs(): Record<LocType, OpenLoc[]> {
             return {
                 "Transaction": transactions,
                 "Collection": collections,
@@ -149,9 +149,9 @@ export function setOpenVerifiedThirdPartyLocs(transactions: any[], collections: 
         }
     }
 }
-export function setClosedVerifiedThirdPartyLocs(transactions: any[], collections: any[]) {
+export function setClosedVerifiedIssuerLocs(transactions: any[], collections: any[]) {
     locsState = {
-        get closedVerifiedThirdPartyLocs(): Record<LocType, ClosedLoc[]> {
+        get closedVerifiedIssuerLocs(): Record<LocType, ClosedLoc[]> {
             return {
                 "Transaction": transactions,
                 "Collection": collections,

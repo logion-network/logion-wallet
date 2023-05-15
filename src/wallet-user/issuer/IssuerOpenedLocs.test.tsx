@@ -1,14 +1,14 @@
-import { setClosedVerifiedThirdPartyLocs } from "../__mocks__/UserContextMock";
+import { setOpenVerifiedIssuerLocs } from "../__mocks__/UserContextMock";
 import { render } from "../../tests";
-import VTPClosedLocs from "./VTPClosedLocs";
+import IssuerOpenedLocs from "./IssuerOpenedLocs";
 
 jest.mock('../../common/CommonContext');
 jest.mock('../../wallet-user/UserContext');
 jest.mock('../../logion-chain');
 
-describe("VTPClosedLocs", () => {
-    it("renders closed VTP LOCS", async () => {
-        setClosedVerifiedThirdPartyLocs(
+describe("IssuerOpenedLocs", () => {
+    it("renders open issuer LOCS", async () => {
+        setOpenVerifiedIssuerLocs(
             [
                 {
                     data: () => {
@@ -17,7 +17,7 @@ describe("VTPClosedLocs", () => {
                             ownerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
                             requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
                             description: "TRANSACTION description",
-                            status: "CLOSED",
+                            status: "OPEN",
                             locType: "Transaction",
                             createdOn: "18/11/2022 17:17"
                         }
@@ -32,7 +32,7 @@ describe("VTPClosedLocs", () => {
                             ownerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
                             requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
                             description: "COLLECTION description",
-                            status: "CLOSED",
+                            status: "OPEN",
                             locType: "Collection",
                             createdOn: "18/11/2022 17:17"
                         }
@@ -40,7 +40,7 @@ describe("VTPClosedLocs", () => {
                 }
             ],
         );
-        const tree = render(<VTPClosedLocs />);
+        const tree = render(<IssuerOpenedLocs />);
         expect(tree).toMatchSnapshot();
     })
 })

@@ -10,7 +10,7 @@ import SupersedesDisclaimer from "./SupersedesDisclaimer";
 import { useLogionChain } from 'src/logion-chain';
 import DraftLocInstructions from './DraftLocInstructions';
 import { ContributionMode } from "./types";
-import VTPInfo from "../wallet-user/vtp/VTPInfo";
+import IssuerInfo from "../wallet-user/issuer/IssuerInfo";
 import { useCommonContext } from 'src/common/CommonContext';
 import { useMemo } from 'react';
 import IdenfyVerification from './IdenfyVerification';
@@ -65,8 +65,8 @@ export default function UserContextualizedLocDetails(props: Props) {
                 <IdenfyVerification/>
             }
             {
-                props.contributionMode === "VTP" &&
-                <VTPInfo/>
+                props.contributionMode === "Issuer" &&
+                <IssuerInfo/>
             }
             <LocDetailsTab
                 loc={ loc }
