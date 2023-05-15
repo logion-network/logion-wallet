@@ -1,14 +1,14 @@
 import { render, waitFor, screen } from "@testing-library/react";
-import VTPSelectionCheckbox from "./VTPSelectionCheckbox";
+import IssuerSelectionCheckbox from "./IssuerSelectionCheckbox";
 import { clickByName, expectNoDialogVisible } from "../../tests";
 import userEvent from "@testing-library/user-event";
-import { VerifiedThirdPartyWithSelect } from "../../legal-officer/client";
+import { VerifiedIssuerWithSelect } from "../../legal-officer/client";
 
 jest.mock("../LocContext");
 
-describe("VTPSelectionCheckbox", () => {
+describe("IssuerSelectionCheckbox", () => {
 
-    function vtpSelection(selected: boolean): VerifiedThirdPartyWithSelect {
+    function issuerSelection(selected: boolean): VerifiedIssuerWithSelect {
         return {
             firstName: "Scott",
             lastName: "Tiger",
@@ -19,7 +19,7 @@ describe("VTPSelectionCheckbox", () => {
     }
 
     it("shows no dialog at startup", () => {
-        render(<VTPSelectionCheckbox vtpSelection={ vtpSelection(true) } />)
+        render(<IssuerSelectionCheckbox issuerSelection={ issuerSelection(true) } />)
         expectNoDialogVisible();
     })
 
@@ -30,14 +30,14 @@ describe("VTPSelectionCheckbox", () => {
         await clickByName("Confirm")
     }
 
-    it("unselects a previously selected third party", async () => {
-        render(<VTPSelectionCheckbox vtpSelection={ vtpSelection(true) } />)
+    it("unselects a previously selected issuer", async () => {
+        render(<IssuerSelectionCheckbox issuerSelection={ issuerSelection(true) } />)
         await openDialogAndConfirm();
         expect(screen.getByText("Verified Issuer Dismissal")).toBeDefined();
     })
 
-    it("selects a previously unselected third party", async () => {
-        render(<VTPSelectionCheckbox vtpSelection={ vtpSelection(false) } />)
+    it("selects a previously unselected issuer", async () => {
+        render(<IssuerSelectionCheckbox issuerSelection={ issuerSelection(false) } />)
         await openDialogAndConfirm();
         expect(screen.getByText("Verified Issuer Selection")).toBeDefined();
     })

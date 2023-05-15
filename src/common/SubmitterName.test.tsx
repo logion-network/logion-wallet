@@ -9,13 +9,13 @@ jest.mock('../logion-chain');
 describe("SubmitterName", () => {
 
     const REQUESTER = mockValidPolkadotAccountId("5H17oaxYsRpV18tYjMMbozN84JAVgG6MH5pNWjisGYDtc9WR");
-    const VTP = "5DtGNqi7yp5TqRcPckYVZh5XqdaSKE9rsDur5xur4tkmBAhB";
+    const ISSUER = "5DtGNqi7yp5TqRcPckYVZh5XqdaSKE9rsDur5xur4tkmBAhB";
     const loc = {
         ownerAddress: DEFAULT_LEGAL_OFFICER.address,
         requesterAddress: REQUESTER,
         userIdentity: DEFAULT_IDENTITY,
         issuers: [ {
-            address: VTP,
+            address: ISSUER,
             firstName: "Scott",
             lastName: "Tiger",
         } ]
@@ -31,8 +31,8 @@ describe("SubmitterName", () => {
         expect(tree).toMatchSnapshot()
     })
 
-    it("renders when submitter is VTP", () => {
-        const tree = shallowRender(<SubmitterName loc={ loc } submitter={ VTP } />);
+    it("renders when submitter is verified issuer", () => {
+        const tree = shallowRender(<SubmitterName loc={ loc } submitter={ ISSUER } />);
         expect(tree).toMatchSnapshot()
     })
 })

@@ -1,9 +1,9 @@
-import { EditableRequest, LogionClient, OpenLoc, VerifiedThirdParty, ClosedLoc, Signer, SuccessfulSubmission, VerifiedIssuerIdentity } from "@logion/client";
+import { EditableRequest, LogionClient, OpenLoc, VerifiedIssuer, ClosedLoc, Signer, SuccessfulSubmission, VerifiedIssuerIdentity } from "@logion/client";
 import { UUID } from "@logion/node-api";
 import { AxiosInstance } from "axios";
 import { DEFAULT_LEGAL_OFFICER } from "src/common/TestData";
 import { SubmittableExtrinsic } from "@polkadot/api-base/types";
-import { addLink, getVerifiedThirdPartySelections, requestVote, VerifiedThirdPartyWithSelect } from "./client";
+import { addLink, getVerifiedIssuerSelections, requestVote, VerifiedIssuerWithSelect } from "./client";
 import { api, mockValidPolkadotAccountId, setupApiMock } from "src/__mocks__/LogionMock";
 import { It, Mock } from "moq.ts";
 import { Compact, u128 } from "@polkadot/types-codec";
@@ -49,9 +49,9 @@ describe("Legal Officer client", () => {
         )
     })
 
-    it("gets vtp selections ordered by last name", async () => {
+    it("gets issuer selections ordered by last name", async () => {
 
-        function verifiedThirdParty(index: number): VerifiedThirdParty {
+        function verifiedIssuer(index: number): VerifiedIssuer {
             return {
                 address: "addr" + index,
                 identityLocId: "id" + index,
@@ -60,10 +60,10 @@ describe("Legal Officer client", () => {
             }
         }
 
-        const REQUESTER = verifiedThirdParty(1);
-        const NOT_SELECTED = verifiedThirdParty(2);
-        const SELECTED = verifiedThirdParty(3);
-        const FORMERLY_SELECTED = verifiedThirdParty(4);
+        const REQUESTER = verifiedIssuer(1);
+        const NOT_SELECTED = verifiedIssuer(2);
+        const SELECTED = verifiedIssuer(3);
+        const FORMERLY_SELECTED = verifiedIssuer(4);
 
         const axios = {
             get: jest.fn().mockResolvedValue({
@@ -103,14 +103,14 @@ describe("Legal Officer client", () => {
             getCurrentState: () => locState,
         } as unknown as OpenLoc;
 
-        const verifiedThirdParties: VerifiedThirdPartyWithSelect[] = await getVerifiedThirdPartySelections({ locState });
+        const verifiedIssuers: VerifiedIssuerWithSelect[] = await getVerifiedIssuerSelections({ locState });
 
         expect(axios.get).toBeCalledWith("/api/issuers-identity");
 
-        expect(verifiedThirdParties.length).toEqual(3);
-        expect(verifiedThirdParties[0]).toEqual({ ...NOT_SELECTED, selected: false });
-        expect(verifiedThirdParties[1]).toEqual({ ...SELECTED, selected: true });
-        expect(verifiedThirdParties[2]).toEqual({ ...FORMERLY_SELECTED, selected: false });
+        expect(verifiedIssuers.length).toEqual(3);
+        expect(verifiedIssuers[0]).toEqual({ ...NOT_SELECTED, selected: false });
+        expect(verifiedIssuers[1]).toEqual({ ...SELECTED, selected: true });
+        expect(verifiedIssuers[2]).toEqual({ ...FORMERLY_SELECTED, selected: false });
     });
 
     it("requests a vote", async () => {
@@ -168,13 +168,13 @@ describe("Legal Officer client", () => {
     });
 });
 
-function toVerifiedIssuerIdentity(vtp: VerifiedThirdParty): VerifiedIssuerIdentity {
+function toVerifiedIssuerIdentity(issuer: VerifiedIssuer): VerifiedIssuerIdentity {
     return {
-        address: vtp.address,
-        identityLocId: vtp.identityLocId,
+        address: issuer.address,
+        identityLocId: issuer.identityLocId,
         identity: {
-            firstName: vtp.firstName,
-            lastName: vtp.lastName,
+            firstName: issuer.firstName,
+            lastName: issuer.lastName,
             email: "",
             phoneNumber: "",
         }

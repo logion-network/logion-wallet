@@ -63,7 +63,7 @@ exports[`Frame renders with title and icon 1`] = `
     <MenuIcon
       icon={
         Object {
-          "id": "vtp-icon",
+          "id": "issuer-icon",
         }
       }
     />

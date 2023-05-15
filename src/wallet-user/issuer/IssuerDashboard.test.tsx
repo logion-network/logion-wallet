@@ -1,12 +1,12 @@
 import { shallowRender } from "../../tests";
-import VTPDashboard from "./VTPDashboard";
+import IssuerDashboard from "./IssuerDashboard";
 
 jest.mock('../../common/CommonContext');
 
-describe("VTPDashboard", () =>  {
+describe("IssuerDashboard", () =>  {
 
     it("renders", () => {
-        const tree = shallowRender(<VTPDashboard/>);
+        const tree = shallowRender(<IssuerDashboard/>);
         expect(tree).toMatchSnapshot();
     })
 })

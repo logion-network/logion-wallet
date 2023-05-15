@@ -28,7 +28,7 @@ describe("Frame", () => {
 
     it("renders with title and icon", () => {
         const result = shallowRender(
-            <Frame title="Some title" titleIcon={ { icon: { id: "vtp-icon" } } }>
+            <Frame title="Some title" titleIcon={ { icon: { id: "issuer-icon" } } }>
                 { children }
             </Frame>
         );

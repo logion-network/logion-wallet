@@ -1,11 +1,11 @@
 import IconTextRow from "../../common/IconTextRow";
 import Icon from "../../common/Icon";
-import './VTPInfo.css';
+import './IssuerInfo.css';
 
-export default function VTPInfo() {
+export default function IssuerInfo() {
     return (
         <IconTextRow
-            className="VTPInfo"
+            className="IssuerInfo"
             icon={ <Icon icon={ { id: 'tip' } } width="45px" /> }
             text={
                 <p>

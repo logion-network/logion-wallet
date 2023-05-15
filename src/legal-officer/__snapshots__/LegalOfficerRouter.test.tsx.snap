@@ -126,30 +126,30 @@ exports[`renders 1`] = `
   />
   <Route
     element={
-      <VTPSelection
+      <IssuerSelection
         backPath={[Function]}
         detailsPath={[Function]}
       />
     }
-    path="/loc/transaction/:locId/vtp"
+    path="/loc/transaction/:locId/verified-issuer"
   />
   <Route
     element={
-      <VTPSelection
+      <IssuerSelection
         backPath={[Function]}
         detailsPath={[Function]}
       />
     }
-    path="/loc/collection/:locId/vtp"
+    path="/loc/collection/:locId/verified-issuer"
   />
   <Route
     element={
-      <VTPSelection
+      <IssuerSelection
         backPath={[Function]}
         detailsPath={[Function]}
       />
     }
-    path="/loc/identity/:locId/vtp"
+    path="/loc/identity/:locId/verified-issuer"
   />
   <Route
     element={<Votes />}
@@ -174,12 +174,12 @@ exports[`renders 1`] = `
   />
   <Route
     element={
-      <VTPSelection
+      <IssuerSelection
         backPath={[Function]}
         detailsPath={[Function]}
       />
     }
-    path="/loc/:locType/:locId/records/vtp"
+    path="/loc/:locType/:locId/records/verified-issuer"
   />
   <Route
     element={<LegalOfficerTokensRecordDocumentClaimHistory />}

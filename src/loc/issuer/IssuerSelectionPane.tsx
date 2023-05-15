@@ -1,8 +1,8 @@
 import LocPane from "../LocPane";
 import { useLocContext } from "../LocContext";
-import VTPSelectionFrame from "./VTPSelectionFrame";
+import IssuerSelectionFrame from "./IssuerSelectionFrame";
 
-export default function VTPSelectionPane() {
+export default function IssuerSelectionPane() {
 
     const { backPath, loc } = useLocContext();
     return (
@@ -10,7 +10,7 @@ export default function VTPSelectionPane() {
             loc={ loc }
             backPath={ backPath }
         >
-            <VTPSelectionFrame/>
+            <IssuerSelectionFrame/>
         </LocPane>
     )
 }

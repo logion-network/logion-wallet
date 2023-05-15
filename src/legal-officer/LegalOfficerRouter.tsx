@@ -13,14 +13,14 @@ import {
     locDetailsPath,
     locRequestsPath,
     VAULT_OUT_REQUESTS_RELATIVE_PATH,
-    locSelectVTPPath,
+    locSelectIssuerPath,
     VOTES_RELATIVE_PATH,
     VOTES_PATH,
     VOTE_LOC_RELATIVE_PATH,
     DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH,
     TOKENS_RECORD_RELATIVE_PATH,
     tokensRecordPath,
-    TOKENS_RECORD_VTP_RELATIVE_PATH,
+    TOKENS_RECORD_ISSUER_RELATIVE_PATH,
     TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH,
 } from './LegalOfficerPaths';
 
@@ -48,7 +48,7 @@ import {
 import VaultOutRequests from './vault/VaultOutRequests';
 import { useLogionChain } from '../logion-chain';
 import { useLegalOfficerContext } from './LegalOfficerContext';
-import VTPSelection from "../loc/vtp/VTPSelection";
+import IssuerSelection from "../loc/issuer/IssuerSelection";
 import Votes from './votes/Votes';
 import { GuardianDocumentClaimHistory, LegalOfficerTokensRecordDocumentClaimHistory } from 'src/loc/DocumentClaimHistory';
 import { LegalOfficerTokensRecordPane } from 'src/loc/record/TokensRecordPane';
@@ -148,20 +148,20 @@ export default function LegalOfficerRouter() {
                     detailsPath={ locDetailsPath }
                 />
             } />
-            <Route path={ locSelectVTPPath('Transaction') } element={
-                <VTPSelection
+            <Route path={ locSelectIssuerPath('Transaction') } element={
+                <IssuerSelection
                     detailsPath={ locDetailsPath }
                     backPath={ locId => locDetailsPath(locId, 'Transaction') }
                 />
             }/>
-            <Route path={ locSelectVTPPath('Collection') } element={
-                <VTPSelection
+            <Route path={ locSelectIssuerPath('Collection') } element={
+                <IssuerSelection
                     detailsPath={ locDetailsPath }
                     backPath={ locId => locDetailsPath(locId, 'Collection') }
                 />
             }/>
-            <Route path={ locSelectVTPPath('Identity') } element={
-                <VTPSelection
+            <Route path={ locSelectIssuerPath('Identity') } element={
+                <IssuerSelection
                     detailsPath={ locDetailsPath }
                     backPath={ locId => locDetailsPath(locId, 'Identity') }
                 />
@@ -175,8 +175,8 @@ export default function LegalOfficerRouter() {
             } />
             <Route path={ DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH } element={ <GuardianDocumentClaimHistory/> } />
             <Route path={ TOKENS_RECORD_RELATIVE_PATH } element={ <LegalOfficerTokensRecordPane/> }/>
-            <Route path={ TOKENS_RECORD_VTP_RELATIVE_PATH } element={
-                <VTPSelection
+            <Route path={ TOKENS_RECORD_ISSUER_RELATIVE_PATH } element={
+                <IssuerSelection
                     detailsPath={ locDetailsPath }
                     backPath={ locId => tokensRecordPath(locId) }
                 />

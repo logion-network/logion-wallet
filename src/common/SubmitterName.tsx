@@ -1,4 +1,4 @@
-import { LocData, VerifiedThirdParty } from "@logion/client";
+import { LocData, VerifiedIssuer } from "@logion/client";
 import { Cell } from "./Table";
 import LegalOfficerName from "./LegalOfficerNameCell";
 import Icon from "./Icon";
@@ -19,8 +19,8 @@ function format(identity: Identity | undefined, address: string | undefined): st
     return identity ? identity.firstName + " " + identity.lastName : address || "-";
 }
 
-function findVTP(loc: LocData, address: string): VerifiedThirdParty | undefined {
-    return loc.issuers.find(vtp => vtp.address === address);
+function findIssuer(loc: LocData, address: string): VerifiedIssuer | undefined {
+    return loc.issuers.find(issuer => issuer.address === address);
 }
 
 export default function SubmitterName(props: Props) {
@@ -37,7 +37,7 @@ export default function SubmitterName(props: Props) {
                     { format(identity, submitter) }
                     {
                         submitter && submitter !== loc.requesterAddress?.address &&
-                        <VTPBadge />
+                        <IssuerBadge />
                     }
                 </div>
             }
@@ -50,13 +50,13 @@ function getIdentity(submitter: string | undefined, loc: LocData): Identity | un
     if(submitter === loc.requesterAddress?.address) {
         return loc.userIdentity;
     } else if(submitter) {
-        return findVTP(loc, submitter);
+        return findIssuer(loc, submitter);
     } else {
         return undefined;
     }
 }
 
-function VTPBadge() {
+function IssuerBadge() {
     return (
         <OverlayTrigger
             placement="bottom-end"
@@ -69,7 +69,7 @@ function VTPBadge() {
         >
             <span>
                 &nbsp;
-                <Icon icon={ { id: "vtp-badge" } } />
+                <Icon icon={ { id: "issuer-badge" } } />
             </span>
         </OverlayTrigger>
     )

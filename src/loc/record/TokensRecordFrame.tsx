@@ -9,7 +9,7 @@ import Icon from "src/common/Icon";
 import IconTextRow from "src/common/IconTextRow";
 import { useLocContext } from "../LocContext";
 import { ContributionMode } from "../types";
-import VTPSelectionButton from "../vtp/VTPSelectionButton";
+import IssuerSelectionButton from "../issuer/IssuerSelectionButton";
 import AddTokensRecordButton from "./AddTokensRecordButton";
 import TokensRecordTable from "./TokensRecordTable";
 
@@ -58,7 +58,7 @@ export default function TokensRecordFrame(props: { contributionMode?: Contributi
                         align="left"
                     >
                         <AddTokensRecordButton records={records}/>
-                        { viewer === "LegalOfficer" && <VTPSelectionButton/> }
+                        { viewer === "LegalOfficer" && <IssuerSelectionButton/> }
                     </ButtonGroup>
                 </>
             }

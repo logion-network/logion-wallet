@@ -16,12 +16,12 @@ describe("Nominate", () => {
         expectNoDialogVisible();
     })
 
-    it("renders unchecked with nomination info when not verified third party", async () => {
+    it("renders unchecked with nomination info when not verified issuer", async () => {
         const locState = new ClosedLoc();
         locState.data = () => ({
             locType: "Identity",
             status: "CLOSED",
-            verifiedThirdParty: false
+            verifiedIssuer: false
         } as LocData);
         setLocState(locState);
         render(<Nominate />);
@@ -29,12 +29,12 @@ describe("Nominate", () => {
         expect(screen.getByText("Verified Issuer Nomination")).toBeDefined();
     })
 
-    it("renders checked with dismissal info when verified third party", async () => {
+    it("renders checked with dismissal info when verified issuer", async () => {
         const locState = new ClosedLoc();
         locState.data = () => ({
             locType: "Identity",
             status: "CLOSED",
-            verifiedThirdParty: true
+            verifiedIssuer: true
         } as LocData);
         setLocState(locState);
         render(<Nominate />);

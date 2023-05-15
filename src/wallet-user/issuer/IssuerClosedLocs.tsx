@@ -11,20 +11,20 @@ import UserIdentityNameCell from "../../common/UserIdentityNameCell";
 import { fullCertificateUrl } from "../../PublicPaths";
 import { LocData } from "@logion/client";
 import { useMemo } from "react";
-import { merge } from "./VTPUtils";
+import { merge } from "./IssuerUtils";
 import Icon from "src/common/Icon";
-import "./VTPClosedLocs.css";
+import "./IssuerClosedLocs.css";
 import { useNavigate } from "react-router-dom";
-import { vtpTokensRecordPath } from "../UserRouter";
+import { issuerTokensRecordPath } from "../UserRouter";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
-export default function VTPClosedLocs() {
+export default function IssuerClosedLocs() {
     const { locsState } = useUserContext()
     const { width } = useResponsiveContext();
     const navigate = useNavigate();
 
     const data: LocData[] = useMemo(
-        () => merge(locsState?.closedVerifiedThirdPartyLocs),
+        () => merge(locsState?.closedVerifiedIssuerLocs),
         [ locsState ]
     );
 
@@ -33,7 +33,7 @@ export default function VTPClosedLocs() {
     }
 
     return (
-        <div className="VTPClosedLocs">
+        <div className="IssuerClosedLocs">
             <Table
                 columns={ [
                     {
@@ -128,7 +128,7 @@ export default function VTPClosedLocs() {
                                             <div>
                                                 <Button
                                                     className="view-records"
-                                                    onClick={ () => navigate(vtpTokensRecordPath(locData.id)) }
+                                                    onClick={ () => navigate(issuerTokensRecordPath(locData.id)) }
                                                 >
                                                     <Icon icon={{id: "records_white"}}/>
                                                 </Button>

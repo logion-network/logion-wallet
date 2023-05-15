@@ -10,4 +10,4 @@ export function toItemId(maybeHex: string): string | undefined {
     }
 }
 
-export type ContributionMode = 'Requester' | 'VTP';
+export type ContributionMode = 'Requester' | 'Issuer';

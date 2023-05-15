@@ -7,20 +7,20 @@ import LegalOfficerName from '../../common/LegalOfficerNameCell';
 import ButtonGroup from "../../common/ButtonGroup";
 import Button from "../../common/Button";
 import Loader from '../../common/Loader';
-import { vtpDetailsPath } from '../UserRouter';
+import { issuerDetailsPath } from '../UserRouter';
 import { useResponsiveContext } from '../../common/Responsive';
 import UserIdentityNameCell from "../../common/UserIdentityNameCell";
 import { LocData } from "@logion/client";
 import { useMemo } from "react";
-import { merge } from "./VTPUtils";
+import { merge } from "./IssuerUtils";
 
-export default function VTPOpenedLocs() {
+export default function IssuerOpenedLocs() {
     const { locsState } = useUserContext()
     const navigate = useNavigate();
     const { width } = useResponsiveContext();
 
     const data: LocData[] = useMemo(
-        () => merge(locsState?.openVerifiedThirdPartyLocs),
+        () => merge(locsState?.openVerifiedIssuerLocs),
         [ locsState ]
     );
 
@@ -78,7 +78,7 @@ export default function VTPOpenedLocs() {
                         <ActionCell>
                             <ButtonGroup>
                                 <Button
-                                    onClick={ () => navigate(vtpDetailsPath(locData.id)) }>Contribute</Button>
+                                    onClick={ () => navigate(issuerDetailsPath(locData.id)) }>Contribute</Button>
                             </ButtonGroup>
                         </ActionCell>
                     ,

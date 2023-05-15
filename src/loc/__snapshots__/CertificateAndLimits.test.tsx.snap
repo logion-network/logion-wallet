@@ -186,7 +186,7 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for closed
             />
              Get dev settings
           </Button>
-          <VTPSelectionButton />
+          <IssuerSelectionButton />
           <ArchiveButton />
         </ButtonGroup>
       </div>
@@ -363,7 +363,7 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for open c
         <ButtonGroup
           align="center"
         >
-          <VTPSelectionButton />
+          <IssuerSelectionButton />
           <ArchiveButton />
         </ButtonGroup>
       </div>
@@ -434,7 +434,7 @@ exports[`CertificateAndLimits renders certificate, limits and buttons for void c
         <ButtonGroup
           align="center"
         >
-          <VTPSelectionButton />
+          <IssuerSelectionButton />
           <ArchiveButton />
         </ButtonGroup>
       </div>
