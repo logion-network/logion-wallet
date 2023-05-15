@@ -247,7 +247,7 @@ export function canAdd(viewer: Viewer, loc: LocData) {
 }
 
 export function canPublish(viewer: Viewer, loc: LocData) {
-    return viewer === 'LegalOfficer' && loc.status === "OPEN";
+    return viewer === 'LegalOfficer' && loc.status === "OPEN" && !loc.voidInfo;
 }
 
 export interface LinkData {
