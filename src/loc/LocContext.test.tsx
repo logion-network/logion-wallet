@@ -2,21 +2,19 @@ import { AxiosInstance } from "axios";
 import { useCallback, useState } from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import { UUID, LegalOfficerCase } from '@logion/node-api';
-import { LocData, OpenLoc as RealOpenLoc } from "@logion/client";
+import { LocData } from "@logion/client";
 import { LogionClient } from '@logion/client/dist/LogionClient.js';
 import { PublicApi, EditableRequest as RealEditableRequest, LocRequestState as RealLocRequestState } from "@logion/client";
 import { SubmittableExtrinsic } from "@polkadot/api-base/types";
 import { Compact, u128 } from "@polkadot/types-codec";
-import { PalletLogionLocFile, PalletLogionLocMetadataItem } from '@polkadot/types/lookup';
 
 import { resetDefaultMocks } from "../common/__mocks__/ModelMock";
 import { clickByName } from "../tests";
 import { LocContextProvider, useLocContext } from "./LocContext"
-import { LocItemType } from "./LocItem";
 import { buildLocRequest } from "./TestData";
 import { setClientMock } from "src/logion-chain/__mocks__/LogionChainMock";
 import { LocRequestState, EditableRequest, OpenLoc, ClosedLoc } from "src/__mocks__/LogionClientMock";
-import { addLink, closeLoc, deleteLink, publishFile, publishLink, publishMetadata, voidLoc } from "../legal-officer/client";
+import { addLink, deleteLink, publishLink, voidLoc } from "../legal-officer/client";
 import { useLogionChain } from "src/logion-chain";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
 import { mockValidPolkadotAccountId, setupApiMock, api, CLOSED_IDENTITY_LOC, CLOSED_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from 'src/__mocks__/LogionMock';
@@ -43,24 +41,7 @@ describe("LocContext", () => {
         await thenItemsAdded();
     })
 
-    it("closes", async () => {
-        givenRequest(OPEN_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OpenLoc);
-        resetDefaultMocks();
-        setupApiMock(api => {
-            const submittable = new Mock<SubmittableExtrinsic<"promise">>();
-            api.setup(instance => instance.polkadot.tx.logionLoc.close(It.IsAny())).returns(submittable.object());
-            const locId = new Mock<Compact<u128>>();
-            api.setup(instance => instance.adapters.toLocId(It.IsAny())).returns(locId.object());
-        });
-        whenRenderingInContext(_locState, <Closer/>);
-        await clickByName("Go");
-        await waitFor(() => expect(screen.getByText("Submitting...")).toBeVisible());
-        await thenClosed();
-    })
-
-    it("publishes metadata item", async () => publishesItem("Data", "/api/loc-request/9363c3d6-d107-421a-a44b-85c7fab0b843/metadata/New%20data/confirm"))
-    it("publishes file item", async () => publishesItem("Document", "/api/loc-request/9363c3d6-d107-421a-a44b-85c7fab0b843/files/new-hash/confirm"))
-    it("publishes link item", async () => publishesItem("Linked LOC", "/api/loc-request/9363c3d6-d107-421a-a44b-85c7fab0b843/links/4092e790-a6eb-4f10-8172-90b5dd254521/confirm"))
+    it("publishes link item", async () => publishesLink("/api/loc-request/9363c3d6-d107-421a-a44b-85c7fab0b843/links/4092e790-a6eb-4f10-8172-90b5dd254521/confirm"))
 
     it("deletes items", async () => {
         givenRequest(OPEN_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OpenLoc, CLOSED_IDENTITY_LOC_ID, CLOSED_IDENTITY_LOC);
@@ -153,8 +134,7 @@ function givenRequest<T extends LocRequestState>(locId: string, loc: LegalOffice
     const client = {
         locsState: () => Promise.resolve(locsState),
         public: publicMock,
-        legalOfficers: [],
-        buildAxios: () => axiosMock,
+        getLegalOfficer: () => ({ buildAxiosToNode: () => axiosMock }),
         logionApi: api.object(),
     } as unknown as LogionClient;
     locsState.client = client;
@@ -275,70 +255,17 @@ async function thenItemsAdded() {
     );
 }
 
-function Closer() {
-    const { signer } = useLogionChain();
-    const { loc: locData, mutateLocState } = useLocContext();
-    const [ call, setCall ] = useState<Call>();
-
-    const callback = useCallback(async () => {
-        const call: Call = async callback =>
-            mutateLocState(async current => {
-                if(signer && current instanceof OpenLoc) {
-                    return closeLoc({
-                        locState: current as unknown as RealOpenLoc,
-                        signer,
-                        callback,
-                    });
-                } else {
-                    return current;
-                }
-            });
-        setCall(() => call);
-    }, [ signer, mutateLocState ]);
-
-    if(!locData || !signer) {
-        return null;
-    }
-
-    return (
-        <div>
-            <button onClick={ callback }>Go</button>
-            <p>{ locData.closed ? "Closed" : "Open" }</p>
-            <ClientExtrinsicSubmitter
-                call={ call }
-                successMessage="Successfully closed"
-                onSuccess={ () => {} }
-                onError={ () => {} }
-            />
-        </div>
-    );
-}
-
-async function thenClosed() {
-    await waitFor(() => expect(axiosMock.post).toBeCalledWith(`/api/loc-request/9363c3d6-d107-421a-a44b-85c7fab0b843/close`));
-}
-
-async function publishesItem(itemType: LocItemType, expectedResource: string) {
+async function publishesLink(expectedResource: string) {
     givenRequest(OPEN_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OpenLoc, CLOSED_IDENTITY_LOC_ID, CLOSED_IDENTITY_LOC);
     givenDraftItems();
     resetDefaultMocks();
     setupApiMock(api => {
         const submittable = new Mock<SubmittableExtrinsic<"promise">>();
-        if(itemType === "Data") {
-            api.setup(instance => instance.polkadot.tx.logionLoc.addMetadata(It.IsAny(), It.IsAny())).returns(submittable.object());
-            const metadata = new Mock<PalletLogionLocMetadataItem>();
-            api.setup(instance => instance.adapters.toPalletLogionLocMetadataItem(It.IsAny())).returns(metadata.object());
-        } else if(itemType === "Document") {
-            api.setup(instance => instance.polkadot.tx.logionLoc.addFile(It.IsAny(), It.IsAny())).returns(submittable.object());
-            const locFile = new Mock<PalletLogionLocFile>();
-            api.setup(instance => instance.adapters.toLocFile(It.IsAny())).returns(locFile.object());
-        } else if(itemType === "Linked LOC") {
-            api.setup(instance => instance.polkadot.tx.logionLoc.addLink(It.IsAny(), It.IsAny())).returns(submittable.object());
-        }
+        api.setup(instance => instance.polkadot.tx.logionLoc.addLink(It.IsAny(), It.IsAny())).returns(submittable.object());
         const locId = new Mock<Compact<u128>>();
         api.setup(instance => instance.adapters.toLocId(It.IsAny())).returns(locId.object());
     });
-    whenRenderingInContext(_locState, <ItemPublisher itemType={ itemType } />);
+    whenRenderingInContext(_locState, <LinkPublisher/>);
     await clickByName("Go");
     await waitFor(() => expect(screen.getByText("Submitting...")).toBeVisible());
     await thenItemsPublished(expectedResource);
@@ -351,6 +278,7 @@ function givenDraftItems() {
         submitter: mockValidPolkadotAccountId(OPEN_IDENTITY_LOC.owner),
         value: "Some value",
         published: false,
+        status: "DRAFT",
     })
     _locData.files.push({
         hash: "new-hash",
@@ -362,6 +290,7 @@ function givenDraftItems() {
         restrictedDelivery: false,
         contentType: "text/plain",
         size: 42n,
+        status: "DRAFT",
     })
     _locData.links.push({
         addedOn: "",
@@ -372,60 +301,25 @@ function givenDraftItems() {
     })
 }
 
-export interface ItemPublisherProps {
-    itemType: LocItemType;
-}
-
-function ItemPublisher(props: ItemPublisherProps) {
+function LinkPublisher() {
     const { signer } = useLogionChain();
     const { locItems, mutateLocState } = useLocContext();
     const [ signAndSubmit, setSignAndSubmit ] = useState<Call>();
 
     const callback = useCallback(() => {
-        if(props.itemType === "Data") {
-            const item = locItems.find(item => item.name === "New data")!;
-            setSignAndSubmit(() => (callback: CallCallback) => mutateLocState(async current => publishMetadata({
-                locState: current as RealEditableRequest,
-                item: {
-                    name: item.name!,
-                    value: item.value!,
-                    submitter: item.submitter!,
-                },
-                signer: signer!,
-                callback,
-            })));
-        } else if(props.itemType === "Document") {
-            const file = locItems.find(item => item.name === "New file")!;
-            setSignAndSubmit(() => (callback: CallCallback) => mutateLocState(async current => publishFile({
-                locState: current as RealEditableRequest,
-                hash: file.value!,
-                nature: file.name!,
-                submitter: file.submitter!,
-                size: file.size!,
-                callback,
-                signer: signer!,
-            })));
-        } else if(props.itemType === "Linked LOC") {
-            const link = locItems.find(item => item.nature === "New link")!;
-            setSignAndSubmit(() => (callback: CallCallback) => mutateLocState(async current => publishLink({
-                locState: current as RealEditableRequest,
-                target: link.target!,
-                nature: link.name!,
-                callback,
-                signer: signer!,
-            })));
-        }
-    }, [ locItems, setSignAndSubmit, publishMetadata, publishFile, publishLink ]);
+        const link = locItems.find(item => item.nature === "New link")!;
+        setSignAndSubmit(() => (callback: CallCallback) => mutateLocState(async current => publishLink({
+            locState: current as RealEditableRequest,
+            target: link.target!,
+            nature: link.name!,
+            callback,
+            signer: signer!,
+        })));
+    }, [ locItems, setSignAndSubmit, publishLink ]);
 
     const hasExpectedItem = useCallback(() => {
-        if(props.itemType === "Data") {
-            return locItems.find(item => item.name === "New data") !== undefined;
-        } else if(props.itemType === "Document") {
-            return locItems.find(item => item.name === "New file") !== undefined;
-        } else if(props.itemType === "Linked LOC") {
-            return locItems.find(item => item.nature === "New link") !== undefined;
-        }
-    }, [ props.itemType, locItems ]);
+        return locItems.find(item => item.nature === "New link") !== undefined;
+    }, [ locItems ]);
 
     if(!hasExpectedItem()) {
         return null;

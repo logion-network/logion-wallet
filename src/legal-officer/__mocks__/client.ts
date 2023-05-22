@@ -1,5 +1,4 @@
 import {
-    closeLoc,
     deleteLink,
     voidLoc,
     getVerifiedIssuerSelections,
@@ -7,7 +6,6 @@ import {
 } from "./ClientMock";
 
 export {
-    closeLoc,
     deleteLink,
     voidLoc,
     getVerifiedIssuerSelections,

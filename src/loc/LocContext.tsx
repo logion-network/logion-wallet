@@ -12,9 +12,10 @@ import {
     FetchAllLocsParams,
     DraftRequest,
     LocsState,
+    ItemStatus,
 } from "@logion/client";
 import { useLogionChain } from "../logion-chain";
-import { LocItemStatus, LocItem, getLinkData } from "./LocItem";
+import { LocItem, getLinkData } from "./LocItem";
 import {
     createFileItem,
     createMetadataItem,
@@ -80,7 +81,7 @@ interface Action {
     supersededLoc?: PublicLoc,
     locItem?: LocItem,
     locItems?: LocItem[],
-    status?: LocItemStatus,
+    status?: ItemStatus,
     name?: string,
     timestamp?: string,
     refresh?: () => Promise<void>,

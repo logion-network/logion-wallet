@@ -1,9 +1,8 @@
-import { EditableRequest } from "@logion/client";
+import { OpenLoc } from "@logion/client";
 import { UUID } from "@logion/node-api";
 
 import { LocItem } from "./LocItem";
 import LocPublishButton from "./LocPublishButton";
-import { publishMetadata } from "src/legal-officer/client";
 import { useLogionChain } from "src/logion-chain";
 
 export interface Props {
@@ -22,18 +21,13 @@ export default function LocPublishPublicDataButton(props: Props) {
         <LocPublishButton
             locItem={ props.locItem }
             publishMutator={ async (current, callback) => {
-                if(current instanceof EditableRequest
+                if(current instanceof OpenLoc
                     && props.locItem.name
                     && props.locItem.value
                     && props.locItem.submitter) {
 
-                    return await publishMetadata({
-                        locState: current,
-                        item: {
-                            name: props.locItem.name,
-                            value: props.locItem.value,
-                            submitter: props.locItem.submitter,
-                        },
+                    return current.publishMetadata({
+                        name: props.locItem.name,
                         signer: signer!,
                         callback,
                     });

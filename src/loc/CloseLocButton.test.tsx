@@ -7,7 +7,6 @@ import { setLocItems, setLocState } from './__mocks__/LocContextMock';
 
 import CloseLocButton from './CloseLocButton';
 import { OpenLoc } from 'src/__mocks__/LogionClientMock';
-import { setCloseLocMock } from 'src/legal-officer/__mocks__/ClientMock';
 import { mockSubmittableResult } from 'src/logion-chain/__mocks__/SignatureMock';
 
 jest.mock("../logion-chain");
@@ -29,20 +28,19 @@ describe("CloseLocButton", () => {
                 template: false,
             }
         ]);
-        const locState = new OpenLoc();
-        locState.data = () => ({
-            locType: "Transaction",
-            status: "OPEN",
-        } as LocData);
-        setLocState(locState);
-
         let called = false;
         const closeLocMock = async (params: any) => {
             called = true;
             params.callback(mockSubmittableResult(true));
             return params.locState;
         };
-        setCloseLocMock(closeLocMock);
+        const locState = new OpenLoc();
+        locState.data = () => ({
+            locType: "Transaction",
+            status: "OPEN",
+        } as LocData);
+        locState.legalOfficer.close = closeLocMock;
+        setLocState(locState);
 
         render(<CloseLocButton />);
         await clickByName(/Close LOC/);
@@ -69,15 +67,14 @@ describe("CloseLocButton", () => {
             locType: "Transaction",
             status: "OPEN",
         } as LocData);
-        setLocState(locState);
-
         let called = false;
         const closeLocMock = async (params: any) => {
             called = true;
             params.callback(mockSubmittableResult(true));
             return params.locState;
         };
-        setCloseLocMock(closeLocMock);
+        locState.legalOfficer.close = closeLocMock;
+        setLocState(locState);
 
         render(<CloseLocButton />);
         await clickByName(/Close LOC/);
@@ -105,15 +102,14 @@ describe("CloseLocButton", () => {
             locType: "Transaction",
             status: "OPEN",
         } as LocData);
-        setLocState(locState);
-
         let called = false;
         const closeLocMock = async (params: any) => {
             called = true;
             params.callback(mockSubmittableResult(true));
             return params.locState;
         };
-        setCloseLocMock(closeLocMock);
+        locState.legalOfficer.close = closeLocMock;
+        setLocState(locState);
 
         render(<CloseLocButton />);
         await clickByName(/Close LOC/);
@@ -141,13 +137,12 @@ describe("CloseLocButton", () => {
             locType: "Transaction",
             status: "OPEN",
         } as LocData);
-        setLocState(locState);
-
         const closeLocMock = async (params: any) => {
             params.callback(mockSubmittableResult(false, "Failed", true));
             throw new Error();
         };
-        setCloseLocMock(closeLocMock);
+        locState.legalOfficer.close = closeLocMock;
+        setLocState(locState);
 
         render(<CloseLocButton />);
         await clickByName(/Close LOC/);

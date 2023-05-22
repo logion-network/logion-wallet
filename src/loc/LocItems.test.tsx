@@ -1,5 +1,5 @@
 import { UUID } from "@logion/node-api";
-import { LocData } from "@logion/client";
+import { ItemStatus, LocData } from "@logion/client";
 import { render as renderTesting, waitFor, screen } from "@testing-library/react";
 import { SubmittableExtrinsic } from "@polkadot/api-base/types";
 import { Compact, u128 } from "@polkadot/types-codec";
@@ -8,7 +8,7 @@ import { PalletLogionLocMetadataItem } from "@polkadot/types/lookup";
 import { clickByName, render } from "../tests";
 import { LocItems } from "./LocItems";
 import { buildLocRequest } from "./TestData";
-import { LocItem, LocItemStatus } from "./LocItem";
+import { LocItem } from "./LocItem";
 import React from "react";
 import { accounts, DEFAULT_LEGAL_OFFICER_ACCOUNT, setCurrentAddress } from "src/logion-chain/__mocks__/LogionChainMock";
 import { Account } from "src/common/types/Accounts";
@@ -233,13 +233,14 @@ function givenOpenLoc() {
 
 let _locState: EditableRequest;
 
-function givenMetadataItem(request: LocData, status: LocItemStatus): LocItem[] {
+function givenMetadataItem(request: LocData, status: ItemStatus): LocItem[] {
     request.metadata.push({
         name: "Name",
         addedOn: "2022-01-20T15:45:00.000",
         submitter: accounts!.current!.accountId,
         value: "Value",
         published: status === "PUBLISHED",
+        status,
     });
     return [{
         name: "Name",
@@ -264,7 +265,7 @@ async function testCannotDeleteNonDraftFileItem(component: React.ReactElement) {
     expect(screen.queryByRole("button", { name: deleteButtonName })).not.toBeInTheDocument();
 }
 
-function givenFileItem(request: LocData, status: LocItemStatus): LocItem[] {
+function givenFileItem(request: LocData, status: ItemStatus): LocItem[] {
     request.files.push({
         name: "Name",
         addedOn: "2022-01-20T15:45:00.000",
@@ -275,6 +276,7 @@ function givenFileItem(request: LocData, status: LocItemStatus): LocItem[] {
         restrictedDelivery: false,
         contentType: "text/plain",
         size: 42n,
+        status,
     });
     return [{
         name: "Name",
@@ -307,7 +309,7 @@ async function testCannotDeleteNonDraftLinkItem(component: React.ReactElement) {
     expect(screen.queryByRole("button", { name: deleteButtonName })).not.toBeInTheDocument();
 }
 
-function givenLinkItem(request: LocData, status: LocItemStatus): LocItem[] {
+function givenLinkItem(request: LocData, status: ItemStatus): LocItem[] {
     const targetId = new UUID();
     request.links.push({
         addedOn: "2022-01-20T15:45:00.000",

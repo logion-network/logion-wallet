@@ -1,4 +1,4 @@
-import { LogionClient, LocRequestState, LocData, LocsState, EditableRequest, MergedLink, PublicLoc } from "@logion/client";
+import { LogionClient, LocRequestState, LocData, LocsState, EditableRequest, MergedLink, PublicLoc, ItemStatus } from "@logion/client";
 import { UUID, LocType, Fees, ValidAccountId } from "@logion/node-api";
 import { useCallback } from "react";
 import { CallCallback } from "src/ClientExtrinsicSubmitter";
@@ -21,8 +21,6 @@ import LocPublicDataDetails from "./LocPublicDataDetails";
 import RestrictedDeliveryCell from "./RestricedDeliveryCell";
 import { ContributionMode } from "./types";
 
-export type LocItemStatus = 'DRAFT' | 'PUBLISHED'
-
 export type LocItemType = 'Data' | 'Document' | 'Linked LOC'
 
 export interface LocItem {
@@ -31,7 +29,7 @@ export interface LocItem {
     timestamp: string | null,
     type: LocItemType,
     submitter: ValidAccountId | undefined,
-    status: LocItemStatus,
+    status: ItemStatus,
     nature?: string,
     target?: UUID,
     newItem: boolean,
