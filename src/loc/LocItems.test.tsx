@@ -51,30 +51,10 @@ describe("LOLocItems", () => {
         />);
     });
 
-    it("deletes draft metadata item", async () => {
-        const loc = givenOpenLoc();
-        const items = givenMetadataItem(loc, "DRAFT");
-        await testDeletesDraftMetadataItem(<LocItems
-            viewer="LegalOfficer"
-            locItems={items}
-            isEmpty={false}
-        />);
-    });
-
     it("cannot delete non-draft metadata item", async () => {
         const loc = givenOpenLoc();
         const items = givenMetadataItem(loc, "PUBLISHED");
         await testCannotDeleteNonDraftMetadataItem(<LocItems
-            viewer="LegalOfficer"
-            locItems={items}
-            isEmpty={false}
-        />);
-    });
-
-    it("deletes draft file item", async () => {
-        const loc = givenOpenLoc();
-        const items = givenFileItem(loc, "DRAFT");
-        await testDeletesDraftFileItem(<LocItems
             viewer="LegalOfficer"
             locItems={items}
             isEmpty={false}

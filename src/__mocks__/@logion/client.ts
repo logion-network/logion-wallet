@@ -17,6 +17,7 @@ import {
     HashOrContent,
     ClosedLoc,
     ReadOnlyLocState,
+    PendingRequest,
 } from '../LogionClientMock';
 import { isTokenCompatibleWith } from "@logion/client/dist/Token.js";
 import { LegalOfficerClass } from "@logion/client/dist/Types.js";
@@ -39,6 +40,7 @@ export {
     ReadOnlyLocState,
     isTokenCompatibleWith,
     LegalOfficerClass,
+    PendingRequest,
 }
 
 export { MimeType } from "@logion/client/dist/Mime.js";

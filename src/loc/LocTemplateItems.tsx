@@ -8,7 +8,7 @@ import { useResponsiveContext } from "src/common/Responsive";
 import Table from "src/common/Table";
 import { useLogionChain } from "src/logion-chain";
 import { useLocContext } from "./LocContext";
-import { buildItemTableColumns, canAdd, canDelete, canPublish, LocItem, useDeleteFileCallback, useDeleteLinkCallback, useDeleteMetadataCallback } from "./LocItem";
+import { buildItemTableColumns, canAdd, canDelete, canPublish, LocItem, useDeleteFileCallback, useDeleteLinkCallback, useDeleteMetadataCallback, useRequestReviewCallback, useReviewCallback } from "./LocItem";
 import LocLinkButton from "./LocLinkButton";
 import { LocPrivateFileButton } from "./LocPrivateFileButton";
 import { LocPublicDataButton } from "./LocPublicDataButton";
@@ -16,6 +16,10 @@ import LocPublishLinkButton from "./LocPublishLinkButton";
 import LocPublishPrivateFileButton from "./LocPublishPrivateFileButton";
 import LocPublishPublicDataButton from "./LocPublishPublicDataButton";
 import { ContributionMode } from "./types";
+import StatusCell from "src/common/StatusCell";
+import { POLKADOT } from "src/common/ColorTheme";
+import Icon from "src/common/Icon";
+import AcknowledgeButton from "./AcknowledgeButton";
 
 export interface Props {
     contributionMode?: ContributionMode;
@@ -30,6 +34,8 @@ export default function LocTemplateItems(props: Props) {
     const deleteMetadata = useDeleteMetadataCallback(mutateLocState);
     const deleteFile = useDeleteFileCallback(mutateLocState);
     const deleteLink = useDeleteLinkCallback(mutateLocState);
+    const requestReview = useRequestReviewCallback(mutateLocState);
+    const review = useReviewCallback(mutateLocState);
 
     const deleteItem = useCallback((item: LocItem) => {
         if(item.type === "Data") {
@@ -74,7 +80,16 @@ export default function LocTemplateItems(props: Props) {
         }
 
         if(item.isSet) {
-            if(canPublish(viewer, loc)) {
+            if(viewer === "User" && item.status === "DRAFT" && loc.status === "OPEN") {
+                buttons.push(<Button key={++key} onClick={ () => requestReview(item) }>Request review</Button>);
+            }
+
+            if(viewer === "LegalOfficer" && item.status === "REVIEW_PENDING") {
+                buttons.push(<Button key={++key} variant="link" slim={true} onClick={ () => review(item, "ACCEPT") }><Icon icon={{ id: "ok" }} height="40px" /></Button>);
+                buttons.push(<Button key={++key} variant="link" slim={true} onClick={ () => review(item, "REJECT", "") }><Icon icon={{ id: "ko" }} height="40px" /></Button>);
+            }
+
+            if(canPublish(viewer, loc, item)) {
                 if(item.type === "Data") {
                     buttons.push(<LocPublishPublicDataButton key={++key} locItem={ item } locId={ locId } />);
                 } else if(item.type === "Document") {
@@ -93,6 +108,18 @@ export default function LocTemplateItems(props: Props) {
                         <InlineIconText icon={ { id: "clear", hasVariants: true } } height="19px" colorThemeType="dark" text="Clear"/>
                     </Button>
                 );
+            }
+
+            if(item.status === "PUBLISHED") {
+                if(viewer === "User") {
+                    buttons.push(<StatusCell icon={ { id: 'published' } } text="Published" color={ POLKADOT } />);
+                } else {
+                    buttons.push(<AcknowledgeButton key={++key} locItem={ item } locId={ locId } />);
+                }
+            }
+
+            if(item.status === "ACKNOWLEDGED") {
+                buttons.push(<StatusCell icon={ { id: 'published' } } text="Recorded" color={ POLKADOT } />);
             }
         } else if(canAdd(viewer, loc)) {
             if(item.type === "Data") {

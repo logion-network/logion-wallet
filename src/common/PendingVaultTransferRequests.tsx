@@ -23,7 +23,7 @@ export default function PendingVaultTransferRequests() {
     const [ call, setCall ] = useState<Call>();
 
     const cancelRequestCallback = useCallback(() => {
-        setCall(async (callback: CallCallback) => {
+        setCall(() => async (callback: CallCallback) => {
             await mutateVaultState(async (vaultState: VaultState) => {
                 return await vaultState.cancelVaultTransferRequest(
                     getOfficer!(requestToCancel!.legalOfficerAddress)!,

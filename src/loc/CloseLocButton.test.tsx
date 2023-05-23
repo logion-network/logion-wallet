@@ -49,12 +49,12 @@ describe("CloseLocButton", () => {
         expect(called).toBe(false);
     })
 
-    it("closes with all items published", async () => {
+    it("closes with all items recorded", async () => {
         setLocItems([
             {
                 name: "Test",
                 newItem: false,
-                status: 'PUBLISHED',
+                status: 'ACKNOWLEDGED',
                 submitter: DEFAULT_LEGAL_OFFICER,
                 timestamp: null,
                 type: 'Data',
@@ -89,7 +89,7 @@ describe("CloseLocButton", () => {
             {
                 name: "Test",
                 newItem: false,
-                status: 'PUBLISHED',
+                status: 'ACKNOWLEDGED',
                 submitter: DEFAULT_LEGAL_OFFICER,
                 timestamp: null,
                 type: 'Data',
@@ -124,7 +124,7 @@ describe("CloseLocButton", () => {
             {
                 name: "Test",
                 newItem: false,
-                status: 'PUBLISHED',
+                status: 'ACKNOWLEDGED',
                 submitter: DEFAULT_LEGAL_OFFICER,
                 timestamp: null,
                 type: 'Data',

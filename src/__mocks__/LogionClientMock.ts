@@ -120,6 +120,17 @@ export class DraftRequest extends EditableRequest {
 
 }
 
+export class PendingRequest extends LocRequestState {
+
+    legalOfficer: {
+        accept: any,
+        acceptCollection: any,
+    } = {
+        accept: jest.fn(),
+        acceptCollection: jest.fn(),
+    };
+}
+
 export class OpenLoc extends EditableRequest {
     data: any;
     locsState: any;

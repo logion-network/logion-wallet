@@ -1,14 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
-import { LocRequest } from '@logion/client';
-import { UUID } from '@logion/node-api';
+import { LocRequest, PendingRequest } from '@logion/client';
 
 import { useLogionChain } from '../logion-chain';
-import ExtrinsicSubmitter, { SignAndSubmit } from '../ExtrinsicSubmitter';
+import ClientExtrinsicSubmitter, { Call, CallCallback } from '../ClientExtrinsicSubmitter';
 import ProcessStep from '../legal-officer/ProcessStep';
-import { useLegalOfficerContext } from '../legal-officer/LegalOfficerContext';
 import Alert from '../common/Alert';
-import { signAndSend } from '../logion-chain/Signature';
-import { acceptLocRequest } from "./Model";
+import { useLocContext } from './LocContext';
 
 enum CreationStatus {
     NONE,
@@ -30,12 +27,10 @@ export interface Props {
 }
 
 export default function LocCreationSteps(props: Props) {
-    const { api, accounts } = useLogionChain();
-    const { axios } = useLegalOfficerContext();
-
+    const { signer } = useLogionChain();
+    const { mutateLocState } = useLocContext();
     const [ creationState, setCreationState ] = useState<CreationState>({ status: CreationStatus.LOC_CREATION_PENDING });
-
-    const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
+    const [ call, setCall ] = useState<Call>();
 
     const setStatus = useCallback((status: CreationStatus) => {
         setCreationState({ ...creationState, status });
@@ -47,81 +42,31 @@ export default function LocCreationSteps(props: Props) {
     useEffect(() => {
         if (creationState.status === CreationStatus.LOC_CREATION_PENDING) {
             setStatus(CreationStatus.CREATING_LOC);
-            const proceed = async () => {
-                let signAndSubmit: SignAndSubmit;
-                if(requestToCreate!.requesterAddress && requestToCreate!.locType === 'Transaction') {
-                    signAndSubmit = (setResult, setError) => signAndSend({
-                        signerId: accounts!.current!.accountId.address,
-                        callback: setResult,
-                        errorCallback: setError,
-                        submittable: api!.polkadot.tx.logionLoc.createPolkadotTransactionLoc(
-                            api!.adapters.toLocId(new UUID(requestToCreate!.id)),
-                            requestToCreate!.requesterAddress!.address,
-                        ),
-                    });
-                } else if(requestToCreate!.requesterAddress && requestToCreate!.requesterAddress.type === "Polkadot" && requestToCreate!.locType === 'Identity') {
-                    signAndSubmit = (setResult, setError) => signAndSend({
-                        signerId: accounts!.current!.accountId.address,
-                        callback: setResult,
-                        errorCallback: setError,
-                        submittable: api!.polkadot.tx.logionLoc.createPolkadotIdentityLoc(
-                            api!.adapters.toLocId(new UUID(requestToCreate!.id)),
-                            requestToCreate!.requesterAddress!.address,
-                        ),
-                    });
-                } else if(requestToCreate!.requesterAddress && requestToCreate!.requesterAddress.type === "Ethereum" && requestToCreate!.locType === 'Identity') {
-                    signAndSubmit = (setResult, setError) => signAndSend({
-                        signerId: accounts!.current!.accountId.address,
-                        callback: setResult,
-                        errorCallback: setError,
-                        submittable: api!.polkadot.tx.logionLoc.createOtherPolkadotIdentityLoc(
-                            api!.adapters.toLocId(new UUID(requestToCreate!.id)),
-                            api!.queries.getValidAccountId(requestToCreate!.requesterAddress!.address, requestToCreate!.requesterAddress!.type).toOtherAccountId(),
-                            api!.adapters.toSponsorshipId(new UUID(requestToCreate!.sponsorshipId)),
-                        ),
-                    });
-                } else if(requestToCreate!.requesterIdentityLoc && requestToCreate!.locType === 'Transaction') {
-                    signAndSubmit = (setResult, setError) => signAndSend({
-                        signerId: accounts!.current!.accountId.address,
-                        callback: setResult,
-                        errorCallback: setError,
-                        submittable: api!.polkadot.tx.logionLoc.createLogionTransactionLoc(
-                            api!.adapters.toLocId(new UUID(requestToCreate!.id)),
-                            api!.adapters.toNonCompactLocId(UUID.fromAnyString(requestToCreate!.requesterIdentityLoc!)!),
-                        ),
-                    });
-                } else if(!requestToCreate!.requesterAddress && !requestToCreate!.requesterIdentityLoc && requestToCreate!.locType === 'Identity') {
-                    signAndSubmit = (setResult, setError) => signAndSend({
-                        signerId: accounts!.current!.accountId.address,
-                        callback: setResult,
-                        errorCallback: setError,
-                        submittable: api!.polkadot.tx.logionLoc.createLogionIdentityLoc(
-                            api!.adapters.toLocId(new UUID(requestToCreate!.id)),
-                        ),
-                    });
-                } else {
-                    console.log(requestToCreate)
-                    throw new Error("Unexpected LOC request state");
-                }
-                setSignAndSubmit(() => signAndSubmit);
-            };
-            proceed();
+            const call = async (callback: CallCallback) =>
+                mutateLocState(async current => {
+                    if(signer && current instanceof PendingRequest) {
+                        return current.legalOfficer.accept({
+                            signer,
+                            callback,
+                        });
+                    } else {
+                        return current;
+                    }
+                });
+            setCall(() => call);
         }
     }, [
-        axios,
         creationState,
         setStatus,
-        setCreationState,
-        api,
-        requestToCreate,
-        accounts,
+        mutateLocState,
+        signer,
     ]);
 
     const clear = useCallback(() => {
         setStatus(CreationStatus.NONE);
-        setSignAndSubmit(null);
+        setCall(undefined);
         exit();
-    }, [ setStatus, setSignAndSubmit, exit ]);
+    }, [ setStatus, setCall, exit ]);
 
     const close = useCallback(() => {
         const success = creationState.status === CreationStatus.LOC_CREATED;
@@ -130,11 +75,6 @@ export default function LocCreationSteps(props: Props) {
             onSuccess();
         }
     }, [ creationState, clear, onSuccess ])
-
-    const accept = useCallback(async () => {
-        await acceptLocRequest(axios!, { requestId: requestToCreate!.id })
-        setStatus(CreationStatus.LOC_CREATED);
-    }, [ axios, requestToCreate, setStatus ])
 
     if (requestToCreate === null) {
         return null;
@@ -148,11 +88,10 @@ export default function LocCreationSteps(props: Props) {
                 nextSteps={[]}
                 hasSideEffect
             >
-                <ExtrinsicSubmitter
-                    id="metadata"
-                    signAndSubmit={ signAndSubmit }
+                <ClientExtrinsicSubmitter
+                    call={ call }
                     successMessage="LOC successfully created."
-                    onSuccess={ accept }
+                    onSuccess={ () => setStatus(CreationStatus.LOC_CREATED) }
                     onError={ () => setStatus(CreationStatus.LOC_CREATION_FAILED) }
                 />
             </ProcessStep>

@@ -70,7 +70,7 @@ export default function CloseLocButton(props: Props) {
     }, [ mutateLocState, closeState, setCloseState, signer ]);
 
     useEffect(() => {
-        if (locItems.findIndex(locItem => locItem.status === "DRAFT") < 0) {
+        if (locItems.findIndex(locItem => locItem.status !== "ACKNOWLEDGED") < 0) {
             setDisabled(false)
         } else {
             setDisabled(true)

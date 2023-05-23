@@ -1,18 +1,16 @@
 import { LocType } from "@logion/node-api";
-import { SubmittableExtrinsic } from "@polkadot/api-base/types";
-import { Compact, u128 } from "@polkadot/types-codec";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { LocRequestFragment } from "../common/types/ModelTypes";
-import { finalizeSubmission } from "../logion-chain/__mocks__/SignatureMock";
 import { clickByName, typeByLabel } from "../tests";
 import { TEST_WALLET_USER } from "../wallet-user/TestData";
 
 import LocCreationDialog from "./LocCreationDialog";
 import { setAuthenticatedUser } from "src/common/__mocks__/ModelMock";
-import { It, Mock } from "moq.ts";
-import { setupApiMock } from "src/__mocks__/LogionMock";
+import { setLocState } from "./__mocks__/LocContextMock";
+import { PendingRequest } from "src/__mocks__/LogionClientMock";
+import { mockSubmittableResult } from "src/logion-chain/__mocks__/SignatureMock";
 
 jest.mock("../logion-chain/Signature");
 jest.mock("../common/CommonContext");
@@ -20,6 +18,7 @@ jest.mock("../common/Model");
 jest.mock("./Model");
 jest.mock("../legal-officer/LegalOfficerContext");
 jest.mock("../logion-chain");
+jest.mock("./LocContext");
 
 describe("LocCreationDialog", () => {
 
@@ -57,20 +56,12 @@ async function createsWithUserIdentity(locType: LocType, requesterAddress: strin
             phoneNumber: "+1234",
         }
     };
-    setupApiMock(api => {
-        const locId = new Mock<Compact<u128>>();
-        api.setup(instance => instance.adapters.toLocId(It.IsAny())).returns(locId.object());
-        if(locType === "Identity") {
-            const submittable = new Mock<SubmittableExtrinsic<"promise">>();
-            api.setup(instance => instance.polkadot.tx.logionLoc.createPolkadotIdentityLoc(It.IsAny(), It.IsAny())).returns(submittable.object());
-        } else if(locType === "Collection") {
-            const submittable = new Mock<SubmittableExtrinsic<"promise">>();
-            api.setup(instance => instance.polkadot.tx.logionLoc.createCollectionLoc(It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny())).returns(submittable.object());
-        } else if(locType === "Transaction") {
-            const submittable = new Mock<SubmittableExtrinsic<"promise">>();
-            api.setup(instance => instance.polkadot.tx.logionLoc.createPolkadotTransactionLoc(It.IsAny(), It.IsAny())).returns(submittable.object());
-        }
-    });
+    const pendingLoc = new PendingRequest();
+    pendingLoc.legalOfficer.accept = async (params: any) => {
+        params.callback(mockSubmittableResult(true));
+        return params.locState;
+    };
+    setLocState(pendingLoc);
 
     render(<LocCreationDialog
         exit={ exit }
@@ -95,7 +86,6 @@ async function selectProjectType() {
 async function submitAndExpectSuccess(exit: jest.Mock<any, any>, onSuccess: jest.Mock<any, any>) {
     await clickByName("Submit");
     await waitFor(() => expect(screen.getByText("Submitting...")).toBeVisible());
-    finalizeSubmission();
 
     await waitFor(() => expect(screen.getByText("LOC successfully created.")).toBeVisible());
     await clickByName("OK");
@@ -112,6 +102,12 @@ async function createsWithoutUserIdentity(locType: LocType, requesterAddress: st
         requesterIdentityLoc,
         locType
     };
+    const pendingLoc = new PendingRequest();
+    pendingLoc.legalOfficer.accept = async (params: any) => {
+        params.callback(mockSubmittableResult(true));
+        return params.locState;
+    };
+    setLocState(pendingLoc);
 
     render(<LocCreationDialog
         exit={ exit }
