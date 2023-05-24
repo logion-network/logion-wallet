@@ -16,7 +16,7 @@ export interface NextStep {
 
 export interface Props {
     active: boolean,
-    title: string,
+    title?: string,
     children: Children,
     nextSteps?: NextStep[],
     hasSideEffect?: boolean,
@@ -54,7 +54,7 @@ export default function ProcessStep(props: Props) {
             actions={ nextSteps.map(nextStep => toAction(nextStep)) }
         >
             <>
-                <h2>{ props.title }</h2>
+                { props.title && <h2>{ props.title }</h2> }
                 { props.children }
             </>
         </Dialog>

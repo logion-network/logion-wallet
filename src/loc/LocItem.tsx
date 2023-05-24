@@ -19,6 +19,7 @@ import LocPublicDataDetails from "./LocPublicDataDetails";
 import RestrictedDeliveryCell from "./RestricedDeliveryCell";
 import { ContributionMode } from "./types";
 import ReviewStatusCell from "./ReviewStatusCell";
+import HelpTooltip from "src/components/helptooltip/HelpTooltip";
 
 export type LocItemType = 'Data' | 'Document' | 'Linked LOC'
 
@@ -38,6 +39,7 @@ export interface LocItem {
     size?: bigint,
     fees?: Fees,
     storageFeePaidBy?: string;
+    reviewedOn?: string;
 }
 
 export enum PublishStatus {
@@ -133,7 +135,7 @@ export function buildItemTableColumns(args: {
 
     columns = columns.concat([
         {
-            header: "Reviewed?",
+            header: <>Reviewed <HelpTooltip id="reviewed" help="You confirm that the content you submitted for review by the Legal Officer is good to be recorded by the logion infrastructure with regard to the LOC context and to the specific content that will be publicly available after the recording (eg: GDPR)."/></>,
             render: locItem => <ReviewStatusCell locItem={ locItem } />,
         },
         {
@@ -173,7 +175,7 @@ function isSet(item: LocItem) {
     return (!item.template || item.isSet === true);
 }
 
-function documentClaimHistory(viewer: Viewer, loc: LocData | null, hash: string) {
+export function documentClaimHistory(viewer: Viewer, loc: LocData | null, hash: string) {
     if(!loc) {
         return "";
     } else if(viewer === "LegalOfficer") {

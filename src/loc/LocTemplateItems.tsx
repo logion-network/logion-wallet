@@ -8,7 +8,7 @@ import { useResponsiveContext } from "src/common/Responsive";
 import Table from "src/common/Table";
 import { useLogionChain } from "src/logion-chain";
 import { useLocContext } from "./LocContext";
-import { buildItemTableColumns, canAdd, canDelete, canPublish, LocItem, useDeleteFileCallback, useDeleteLinkCallback, useDeleteMetadataCallback, useRequestReviewCallback, useReviewCallback } from "./LocItem";
+import { buildItemTableColumns, canAdd, canDelete, canPublish, LocItem, useDeleteFileCallback, useDeleteLinkCallback, useDeleteMetadataCallback, useRequestReviewCallback } from "./LocItem";
 import LocLinkButton from "./LocLinkButton";
 import { LocPrivateFileButton } from "./LocPrivateFileButton";
 import { LocPublicDataButton } from "./LocPublicDataButton";
@@ -18,8 +18,8 @@ import LocPublishPublicDataButton from "./LocPublishPublicDataButton";
 import { ContributionMode } from "./types";
 import StatusCell from "src/common/StatusCell";
 import { POLKADOT } from "src/common/ColorTheme";
-import Icon from "src/common/Icon";
 import AcknowledgeButton from "./AcknowledgeButton";
+import ReviewItemButtons from "./ReviewItemButtons";
 
 export interface Props {
     contributionMode?: ContributionMode;
@@ -35,7 +35,6 @@ export default function LocTemplateItems(props: Props) {
     const deleteFile = useDeleteFileCallback(mutateLocState);
     const deleteLink = useDeleteLinkCallback(mutateLocState);
     const requestReview = useRequestReviewCallback(mutateLocState);
-    const review = useReviewCallback(mutateLocState);
 
     const deleteItem = useCallback((item: LocItem) => {
         if(item.type === "Data") {
@@ -85,8 +84,7 @@ export default function LocTemplateItems(props: Props) {
             }
 
             if(viewer === "LegalOfficer" && item.status === "REVIEW_PENDING") {
-                buttons.push(<Button key={++key} variant="link" slim={true} onClick={ () => review(item, "ACCEPT") }><Icon icon={{ id: "ok" }} height="40px" /></Button>);
-                buttons.push(<Button key={++key} variant="link" slim={true} onClick={ () => review(item, "REJECT", "") }><Icon icon={{ id: "ko" }} height="40px" /></Button>);
+                buttons.push(<ReviewItemButtons key={++key} locItem={ item }/>);
             }
 
             if(canPublish(viewer, loc, item)) {
@@ -112,7 +110,14 @@ export default function LocTemplateItems(props: Props) {
 
             if(item.status === "PUBLISHED") {
                 if(viewer === "User") {
-                    buttons.push(<StatusCell icon={ { id: 'published' } } text="Published" color={ POLKADOT } />);
+                    buttons.push(<StatusCell
+                        key={++key}
+                        icon={ { id: 'published' } }
+                        text="Published"
+                        color={ POLKADOT }
+                        tooltip="This content is published but needs to be acknowledged by the Legal Officer in charge to be recorded as evidence and thus, visible on the logion public certificate. You will be notified when this action is executed by the Legal Officer."
+                        tooltipId={ `published-${item.type}-${item.name}` }
+                    />);
                 } else {
                     buttons.push(<AcknowledgeButton key={++key} locItem={ item } locId={ locId } />);
                 }

@@ -1,16 +1,18 @@
-import React from 'react';
 import * as Css from 'csstype';
 
 import { Icon as IconType } from './ColorTheme';
 import Icon from "./Icon";
 
 import './StatusCell.css';
+import InlineTooltip from 'src/components/inlinetooltip/InlineTooltip';
 
 export interface Props {
     color: string;
     text: string;
     icon?: IconType;
     textTransform?: Css.Property.TextTransform;
+    tooltip?: string;
+    tooltipId?: string;
 }
 
 export default function StatusCell(props: Props) {
@@ -22,7 +24,7 @@ export default function StatusCell(props: Props) {
         icon = null;
     }
     let status = <span style={{color: props.color, textTransform: props.textTransform}}>{ props.text }</span>;
-    return (
+    const cell = (
         <span
             className="StatusCell"
             style={{
@@ -32,4 +34,15 @@ export default function StatusCell(props: Props) {
             { icon } { status }
         </span>
     );
+    if(props.tooltip && props.tooltipId) {
+        return (
+            <InlineTooltip
+                id={ props.tooltipId }
+                inline={ cell }
+                text={ props.tooltip }
+            />
+        );
+    } else {
+        return cell;
+    }
 }

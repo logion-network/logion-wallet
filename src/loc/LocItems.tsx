@@ -15,10 +15,11 @@ import LocPublishPublicDataButton from "./LocPublishPublicDataButton";
 import './LocItems.css';
 import { Viewer, useCommonContext } from "src/common/CommonContext";
 import { useLocContext } from "./LocContext";
-import { buildItemTableColumns, LocItem, useDeleteMetadataCallback, useDeleteFileCallback, canDelete, canPublish, useDeleteLinkCallback, useRequestReviewCallback, useReviewCallback } from "./LocItem";
+import { buildItemTableColumns, LocItem, useDeleteMetadataCallback, useDeleteFileCallback, canDelete, canPublish, useDeleteLinkCallback, useRequestReviewCallback } from "./LocItem";
 import StatusCell from "src/common/StatusCell";
 import { POLKADOT } from "src/common/ColorTheme";
 import AcknowledgeButton from "./AcknowledgeButton";
+import ReviewItemButtons from "./ReviewItemButtons";
 
 export interface LocItemsProps {
     matchedHash?: string;
@@ -38,7 +39,6 @@ export function LocItems(props: LocItemsProps) {
     const deleteFile = useDeleteFileCallback(mutateLocState);
     const deleteLinkCallback = useDeleteLinkCallback(mutateLocState);
     const requestReview = useRequestReviewCallback(mutateLocState);
-    const review = useReviewCallback(mutateLocState);
     const { viewer } = useCommonContext();
 
     if(!loc || !locState) {
@@ -76,8 +76,7 @@ export function LocItems(props: LocItemsProps) {
         }
 
         if(viewer === "LegalOfficer" && locItem.status === "REVIEW_PENDING") {
-            buttons.push(<Button key={++key} variant="link" slim={true} onClick={ () => review(locItem, "ACCEPT") }><Icon icon={{ id: "ok" }} height="40px" /></Button>);
-            buttons.push(<Button key={++key} variant="link" slim={true} onClick={ () => review(locItem, "REJECT", "") }><Icon icon={{ id: "ko" }} height="40px" /></Button>);
+            buttons.push(<ReviewItemButtons key={++key} locItem={ locItem }/>);
         }
 
         if(locItem.type === 'Data') {
@@ -105,7 +104,14 @@ export function LocItems(props: LocItemsProps) {
 
         if(locItem.status === "PUBLISHED") {
             if(viewer === "User") {
-                buttons.push(<StatusCell key={++key} icon={ { id: 'published' } } text="Published" color={ POLKADOT } />);
+                buttons.push(<StatusCell
+                    key={++key}
+                    icon={ { id: 'published' } }
+                    text="Published"
+                    color={ POLKADOT }
+                    tooltip="This content is published but needs to be acknowledged by the Legal Officer in charge to be recorded as evidence and thus, visible on the logion public certificate. You will be notified when this action is executed by the Legal Officer."
+                    tooltipId={ `published-${locItem.type}-${locItem.name}` }
+                />);
             } else {
                 buttons.push(<AcknowledgeButton key={++key} locItem={ locItem } locId={ locId } />);
             }

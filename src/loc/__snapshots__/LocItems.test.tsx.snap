@@ -100,7 +100,18 @@ exports[`LOLocItems renders with single draft item 1`] = `
             }
           }
         >
-          Reviewed?
+          Reviewed 
+          <span
+            onBlur={[Function]}
+            onFocus={[Function]}
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
+          >
+            <img
+              alt="question"
+              src="/assets/question.svg"
+            />
+          </span>
         </div>
         <div
           className="Col"
@@ -486,7 +497,18 @@ exports[`UserLocItems renders with single draft item 1`] = `
             }
           }
         >
-          Reviewed?
+          Reviewed 
+          <span
+            onBlur={[Function]}
+            onFocus={[Function]}
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
+          >
+            <img
+              alt="question"
+              src="/assets/question.svg"
+            />
+          </span>
         </div>
         <div
           className="Col"
