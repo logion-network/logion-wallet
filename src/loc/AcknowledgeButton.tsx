@@ -40,15 +40,17 @@ export default function AcknowledgeButton(props: Props) {
                 if(props.locItem.type === "Document") {
                     fees = await client.logionApi.fees.estimateWithoutStorage({
                         origin: client.currentAddress?.address || "",
-                        submittable: client.logionApi.polkadot.tx.logionLoc.close( // TODO: replace by correct submittable
+                        submittable: client.logionApi.polkadot.tx.logionLoc.acknowledgeMetadata(
                             client.logionApi.adapters.toLocId(props.locId),
+                            props.locItem.name || "",
                         ),
                     });
                 } else if(props.locItem.type === "Data") {
                     fees = await client.logionApi.fees.estimateWithoutStorage({
                         origin: client.currentAddress?.address || "",
-                        submittable: client.logionApi.polkadot.tx.logionLoc.close( // TODO: replace by correct submittable
+                        submittable: client.logionApi.polkadot.tx.logionLoc.acknowledgeFile(
                             client.logionApi.adapters.toLocId(props.locId),
+                            props.locItem.value || "",
                         ),
                     });
                 } else {

@@ -43,6 +43,8 @@ const palletLogionLocMethods: Record<LogionLocMethod, string> = {
     setIssuerSelection: "Issuer selected",
     sponsor: "Sponsorship created",
     withdrawSponsorship: "Sponsorship withdrawn",
+    acknowledgeFile: "File acknowledged",
+    acknowledgeMetadata: "Public data acknowledged",
 }
 
 const palletLogionVaultMethods: Record<Uncapitalize<PalletLogionVaultCall["type"]>, string> = {
