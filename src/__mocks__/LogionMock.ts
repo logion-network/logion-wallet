@@ -48,6 +48,7 @@ export const CLOSED_IDENTITY_LOC: LegalOfficerCase = {
             nature: "some-nature",
             submitter: TEST_WALLET_USER,
             size: 42n,
+            acknowledged: true,
         }
     ],
     metadata: [],

@@ -1,25 +1,23 @@
 import { useState, useEffect, useCallback } from 'react';
 import { ChainTime } from '@logion/node-api';
-import { LocData } from '@logion/client';
+import { LocData, PendingRequest } from '@logion/client';
 
 import { useLogionChain } from '../../logion-chain';
 import { useCommonContext } from '../../common/CommonContext';
-import ExtrinsicSubmitter, { SignAndSubmit } from '../../ExtrinsicSubmitter';
+import ClientExtrinsicSubmitter, { Call } from '../../ClientExtrinsicSubmitter';
 
-import { acceptLocRequest } from '../../loc/Model';
 import ProcessStep from '../ProcessStep';
 
 import CollectionLocMessage from '../../loc/CollectionLocMessage';
 import CollectionLimitsForm, { CollectionLimits, DEFAULT_LIMITS } from '../../loc/CollectionLimitsForm';
-import { signAndSend } from '../../logion-chain/Signature';
 import { useLegalOfficerContext } from "../LegalOfficerContext";
+import { useLocContext } from 'src/loc/LocContext';
+import { CallCallback } from '../../ClientExtrinsicSubmitter';
 
 enum AcceptStatus {
     NONE,
     LOC_CREATION_PENDING,
     CREATING_LOC,
-    ACCEPTANCE_PENDING,
-    ACCEPTING,
     ACCEPTED,
     DONE
 }
@@ -34,13 +32,14 @@ export interface Props {
 }
 
 export default function LocRequestAcceptance(props: Props) {
-    const { accounts, axiosFactory, api } = useLogionChain();
+    const { api, signer } = useLogionChain();
     const { refresh, colorTheme } = useCommonContext();
-    const { refreshLocs } = useLegalOfficerContext()
+    const { refreshLocs } = useLegalOfficerContext();
+    const { mutateLocState } = useLocContext();
 
     const [ acceptState, setAcceptState ] = useState<AcceptState>({status: AcceptStatus.NONE});
 
-    const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
+    const [ call, setCall ] = useState<Call>();
     const [ error, setError ] = useState<boolean>(false);
 
     const [ limits, setLimits ] = useState<CollectionLimits>(DEFAULT_LIMITS);
@@ -53,111 +52,49 @@ export default function LocRequestAcceptance(props: Props) {
     useEffect(() => {
         if(acceptState.status === AcceptStatus.LOC_CREATION_PENDING) {
             setStatus(AcceptStatus.CREATING_LOC);
-            (async function() {
-                let signAndSubmit: SignAndSubmit;
-                if(props.requestToAccept!.requesterAddress && props.requestToAccept!.locType === 'Transaction') {
-                    signAndSubmit = (setResult, setError) => signAndSend({
-                        signerId: accounts!.current!.accountId.address,
-                        callback: setResult,
-                        errorCallback: setError,
-                        submittable: api!.polkadot.tx.logionLoc.createPolkadotTransactionLoc(
-                            api!.adapters.toLocId(props.requestToAccept!.id),
-                            props.requestToAccept!.requesterAddress!.address,
-                        ),
-                    });
-                } else if(props.requestToAccept!.requesterLocId && props.requestToAccept!.locType === 'Transaction') {
-                    signAndSubmit = (setResult, setError) => signAndSend({
-                        signerId: accounts!.current!.accountId.address,
-                        callback: setResult,
-                        errorCallback: setError,
-                        submittable: api!.polkadot.tx.logionLoc.createLogionTransactionLoc(
-                            api!.adapters.toLocId(props.requestToAccept!.id),
-                            api!.adapters.toNonCompactLocId(props.requestToAccept!.requesterLocId!),
-                        ),
-                    });
-                } else if(props.requestToAccept?.locType === 'Collection') {
-                    let lastBlock: string | undefined;
-                    if(limits.hasDateLimit) {
-                        const now = await ChainTime.now(api!.polkadot);
-                        const atDateLimit = await now.atDate(limits.dateLimit!);
-                        lastBlock = atDateLimit.currentBlock.toString();
-                    }
+            setCall(() => async (callback: CallCallback) =>
+                await mutateLocState(async current => {
+                    if(signer && current instanceof PendingRequest) {
+                        if(current.data().locType !== "Collection") {
+                            return current.legalOfficer.accept({
+                                signer,
+                                callback,
+                            });
+                        } else {
+                            let lastBlock: bigint | undefined;
+                            if(limits.hasDateLimit) {
+                                const now = await ChainTime.now(api!.polkadot);
+                                const atDateLimit = await now.atDate(limits.dateLimit!);
+                                lastBlock = atDateLimit.currentBlock;
+                            }
 
-                    let maxSize: string | undefined;
-                    if(limits.hasDataNumberLimit) {
-                        maxSize = limits.dataNumberLimit;
-                    }
-                    const canUpload = limits.canUpload;
-                    signAndSubmit = (setResult, setError) => signAndSend({
-                        signerId: accounts!.current!.accountId.address,
-                        callback: setResult,
-                        errorCallback: setError,
-                        submittable: api!.polkadot.tx.logionLoc.createCollectionLoc(
-                            api!.adapters.toLocId(props.requestToAccept!.id),
-                            props.requestToAccept!.requesterAddress!.address,
-                            lastBlock || null,
-                            maxSize || null,
-                            canUpload,
-                        ),
-                    });
-                } else if(props.requestToAccept!.requesterAddress && props.requestToAccept!.requesterAddress.type === "Polkadot" && props.requestToAccept!.locType === 'Identity') {
-                    signAndSubmit = (setResult, setError) => signAndSend({
-                        signerId: accounts!.current!.accountId.address,
-                        callback: setResult,
-                        errorCallback: setError,
-                        submittable: api!.polkadot.tx.logionLoc.createPolkadotIdentityLoc(
-                            api!.adapters.toLocId(props.requestToAccept!.id),
-                            props.requestToAccept!.requesterAddress!.address,
-                        ),
-                    });
-                } else if(props.requestToAccept!.requesterAddress && props.requestToAccept!.requesterAddress.type === "Ethereum" && props.requestToAccept!.locType === 'Identity') {
-                    signAndSubmit = (setResult, setError) => signAndSend({
-                        signerId: accounts!.current!.accountId.address,
-                        callback: setResult,
-                        errorCallback: setError,
-                        submittable: api!.polkadot.tx.logionLoc.createOtherIdentityLoc(
-                            api!.adapters.toLocId(props.requestToAccept!.id),
-                            api!.adapters.toPalletLogionLocOtherAccountId(props.requestToAccept!.requesterAddress!.toOtherAccountId()),
-                            api!.adapters.toLocId(props.requestToAccept!.sponsorshipId!),
-                        ),
-                    });
-                } else if(!props.requestToAccept!.requesterAddress && props.requestToAccept?.locType === 'Identity') {
-                    signAndSubmit = (setResult, setError) => signAndSend({
-                        signerId: accounts!.current!.accountId.address,
-                        callback: setResult,
-                        errorCallback: setError,
-                        submittable: api!.polkadot.tx.logionLoc.createLogionIdentityLoc(
-                            api!.adapters.toLocId(props.requestToAccept!.id),
-                        )
-                    });
-                } else {
-                    setError(true);
-                    throw new Error(`Unsupported LOC type ${props.requestToAccept?.locType} / ${props.requestToAccept?.requesterAddress} / ${props.requestToAccept?.requesterLocId}`);
-                }
+                            let maxSize: number | undefined;
+                            if(limits.hasDataNumberLimit) {
+                                maxSize = Number(limits.dataNumberLimit);
+                            }
 
-                setSignAndSubmit(() => signAndSubmit);
-            })();
+                            return current.legalOfficer.acceptCollection({
+                                collectionCanUpload: limits.canUpload,
+                                collectionLastBlockSubmission: lastBlock,
+                                collectionMaxSize: maxSize,
+                                signer,
+                                callback,
+                            });
+                        }
+                    } else {
+                        return current;
+                    }
+                })
+            );
         }
     }, [
         acceptState,
+        mutateLocState,
+        signer,
         setStatus,
-        setAcceptState,
         api,
-        props.requestToAccept,
-        accounts,
         limits,
     ]);
-
-    // Request acceptance (off-chain)
-    useEffect(() => {
-        if(acceptState.status === AcceptStatus.ACCEPTANCE_PENDING) {
-            setStatus(AcceptStatus.ACCEPTING);
-            (async function () {
-                await acceptLocRequest(axiosFactory!(props.requestToAccept!.ownerAddress)!, { requestId: props.requestToAccept!.id.toString() });
-                setStatus(AcceptStatus.ACCEPTED);
-            })();
-        }
-    }, [ axiosFactory, acceptState, props.requestToAccept, setStatus ]);
 
     const resetFields = useCallback(() => {
         setLimits(DEFAULT_LIMITS);
@@ -233,8 +170,6 @@ export default function LocRequestAcceptance(props: Props) {
             </ProcessStep>
             <ProcessStep
                 active={ acceptState.status === AcceptStatus.CREATING_LOC
-                        || acceptState.status === AcceptStatus.ACCEPTANCE_PENDING
-                        || acceptState.status === AcceptStatus.ACCEPTING
                         || acceptState.status === AcceptStatus.ACCEPTED }
                 title="Creating LOC"
                 nextSteps={[
@@ -247,11 +182,10 @@ export default function LocRequestAcceptance(props: Props) {
                     }
                 ]}
             >
-                <ExtrinsicSubmitter
-                    id="metadata"
-                    signAndSubmit={ signAndSubmit }
+                <ClientExtrinsicSubmitter
+                    call={ call }
                     successMessage="LOC successfully created."
-                    onSuccess={ () => setStatus(AcceptStatus.ACCEPTANCE_PENDING) }
+                    onSuccess={ () => setStatus(AcceptStatus.ACCEPTED) }
                     onError={ () => setError(true) }
                 />
             </ProcessStep>

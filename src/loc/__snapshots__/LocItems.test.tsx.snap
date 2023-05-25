@@ -85,11 +85,33 @@ exports[`LOLocItems renders with single draft item 1`] = `
           style={
             Object {
               "textAlign": "center",
-              "width": "calc(( 100% - 1010px ) / 1)",
+              "width": "calc(( 100% - 1010px ) / 2)",
             }
           }
         >
           Submitted by
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "textAlign": "center",
+              "width": "calc(( 100% - 1010px ) / 2)",
+            }
+          }
+        >
+          Reviewed 
+          <span
+            onBlur={[Function]}
+            onFocus={[Function]}
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
+          >
+            <img
+              alt="question"
+              src="/assets/question.svg"
+            />
+          </span>
         </div>
         <div
           className="Col"
@@ -200,7 +222,7 @@ exports[`LOLocItems renders with single draft item 1`] = `
                 "backgroundColor": "#152665",
                 "fontSize": undefined,
                 "textAlign": "center",
-                "width": "calc(( 100% - 1010px ) / 1)",
+                "width": "calc(( 100% - 1010px ) / 2)",
               }
             }
           >
@@ -218,53 +240,44 @@ exports[`LOLocItems renders with single draft item 1`] = `
                 "backgroundColor": "#152665",
                 "fontSize": undefined,
                 "textAlign": "center",
+                "width": "calc(( 100% - 1010px ) / 2)",
+              }
+            }
+          >
+            <div
+              className="regular-cell"
+              style={Object {}}
+            >
+              -
+            </div>
+          </div>
+          <div
+            className="Col"
+            style={
+              Object {
+                "backgroundColor": "#152665",
+                "fontSize": undefined,
+                "textAlign": "center",
                 "width": "400px",
               }
             }
           >
             <div
-              className="action-cell"
+              className="ButtonGroup"
             >
               <div
-                className="ButtonGroup"
+                className="btn-group"
+                role="group"
               >
-                <div
-                  className="btn-group"
-                  role="group"
+                <button
+                  className="Button btn btn-primary"
+                  disabled={false}
+                  onClick={[Function]}
+                  style={Object {}}
+                  type="button"
                 >
-                  <button
-                    className="Button btn btn-polkadot"
-                    disabled={false}
-                    onClick={[Function]}
-                    style={
-                      Object {
-                        "backgroundColor": "#e6007a",
-                        "color": "white",
-                      }
-                    }
-                    type="button"
-                  >
-                    <img
-                      alt="publish"
-                      height="20px"
-                      src="/assets/publish.svg"
-                    />
-                     Publish
-                  </button>
-                  <button
-                    className="Button btn btn-danger-flat"
-                    data-testid="remove-Data-Name"
-                    disabled={false}
-                    onClick={[Function]}
-                    style={Object {}}
-                    type="button"
-                  >
-                    <img
-                      alt="trash"
-                      src="/assets/trash.svg"
-                    />
-                  </button>
-                </div>
+                  Request review
+                </button>
               </div>
             </div>
           </div>
@@ -469,11 +482,33 @@ exports[`UserLocItems renders with single draft item 1`] = `
           style={
             Object {
               "textAlign": "center",
-              "width": "calc(( 100% - 1010px ) / 1)",
+              "width": "calc(( 100% - 1010px ) / 2)",
             }
           }
         >
           Submitted by
+        </div>
+        <div
+          className="Col"
+          style={
+            Object {
+              "textAlign": "center",
+              "width": "calc(( 100% - 1010px ) / 2)",
+            }
+          }
+        >
+          Reviewed 
+          <span
+            onBlur={[Function]}
+            onFocus={[Function]}
+            onMouseOut={[Function]}
+            onMouseOver={[Function]}
+          >
+            <img
+              alt="question"
+              src="/assets/question.svg"
+            />
+          </span>
         </div>
         <div
           className="Col"
@@ -584,7 +619,7 @@ exports[`UserLocItems renders with single draft item 1`] = `
                 "backgroundColor": "#152665",
                 "fontSize": undefined,
                 "textAlign": "center",
-                "width": "calc(( 100% - 1010px ) / 1)",
+                "width": "calc(( 100% - 1010px ) / 2)",
               }
             }
           >
@@ -604,34 +639,57 @@ exports[`UserLocItems renders with single draft item 1`] = `
                 "backgroundColor": "#152665",
                 "fontSize": undefined,
                 "textAlign": "center",
+                "width": "calc(( 100% - 1010px ) / 2)",
+              }
+            }
+          >
+            <div
+              className="regular-cell"
+              style={Object {}}
+            >
+              -
+            </div>
+          </div>
+          <div
+            className="Col"
+            style={
+              Object {
+                "backgroundColor": "#152665",
+                "fontSize": undefined,
+                "textAlign": "center",
                 "width": "400px",
               }
             }
           >
             <div
-              className="action-cell"
+              className="ButtonGroup"
             >
               <div
-                className="ButtonGroup"
+                className="btn-group"
+                role="group"
               >
-                <div
-                  className="btn-group"
-                  role="group"
+                <button
+                  className="Button btn btn-primary"
+                  disabled={false}
+                  onClick={[Function]}
+                  style={Object {}}
+                  type="button"
                 >
-                  <button
-                    className="Button btn btn-danger-flat"
-                    data-testid="remove-Data-Name"
-                    disabled={false}
-                    onClick={[Function]}
-                    style={Object {}}
-                    type="button"
-                  >
-                    <img
-                      alt="trash"
-                      src="/assets/trash.svg"
-                    />
-                  </button>
-                </div>
+                  Request review
+                </button>
+                <button
+                  className="Button btn btn-danger-flat"
+                  data-testid="remove-Data-Name"
+                  disabled={false}
+                  onClick={[Function]}
+                  style={Object {}}
+                  type="button"
+                >
+                  <img
+                    alt="trash"
+                    src="/assets/trash.svg"
+                  />
+                </button>
               </div>
             </div>
           </div>

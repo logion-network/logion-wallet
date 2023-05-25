@@ -3,16 +3,21 @@ import Button from "../common/Button";
 import { useState, useEffect } from "react";
 import ProcessStep from "../legal-officer/ProcessStep";
 import Alert from "../common/Alert";
-import { PublishProps, PublishState, PublishStatus } from "./LocItem";
+import { PublishProps, PublishState, PublishStatus, documentClaimHistory } from "./LocItem";
 import Icon from "../common/Icon";
 import { useLocContext } from "./LocContext";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
 import EstimatedFees from "./EstimatedFees";
+import LocPublicDataDetails from "./LocPublicDataDetails";
+import LocPrivateFileDetails from "./LocPrivateFileDetails";
+import LocLinkDetails from "./LocLinkDetails";
+import { useCommonContext } from "src/common/CommonContext";
 
 export default function LocPublishButton(props: PublishProps) {
+    const { viewer } = useCommonContext();
     const [ publishState, setPublishState ] = useState<PublishState>({ status: PublishStatus.NONE });
     const [ call, setCall ] = useState<Call>();
-    const { mutateLocState } = useLocContext();
+    const { mutateLocState, loc } = useLocContext();
     const [ fees, setFees ] = useState<Fees | undefined | null>();
 
     useEffect(() => {
@@ -44,7 +49,6 @@ export default function LocPublishButton(props: PublishProps) {
             </Button>
             <ProcessStep
                 active={ publishState.status === PublishStatus.START || publishState.status === PublishStatus.PUBLISH_PENDING }
-                title={ `Publish ${props.itemType} (1/2)` }
                 nextSteps={[
                     {
                         buttonText: 'Cancel',
@@ -62,10 +66,23 @@ export default function LocPublishButton(props: PublishProps) {
                     }
                 ]}
             >
-                <Alert variant="info">
-                    <p>Warning: after processing and blockchain publication, these data will be definitely and publicly
-                        available on the blockchain.</p>
-                </Alert>
+                <Icon icon={{id: "warning"}} height="50px"/><br/>
+                <span><strong>Warning</strong></span>
+
+                <p style={{ marginTop: "20px", marginBottom: "20px" }}>After processing and blockchain publication, these data will be definitely and publicly
+                    available on the blockchain.</p>
+
+                { props.locItem.type === 'Data' && <LocPublicDataDetails item={ props.locItem } /> }
+                {
+                    props.locItem.type === 'Document' &&
+                    <LocPrivateFileDetails
+                        item={ props.locItem }
+                        documentClaimHistory={ loc?.locType === "Collection" && props.locItem.value && !props.locItem.template ? documentClaimHistory(viewer, loc, props.locItem.value) : undefined }
+                        storageFeePaidByRequester={ loc?.requesterLocId === undefined }
+                    />
+                }
+                { props.locItem.type === 'Linked LOC' && <LocLinkDetails item={ props.locItem } /> }
+
                 <EstimatedFees
                     fees={ fees }
                     centered={ true }
@@ -73,7 +90,6 @@ export default function LocPublishButton(props: PublishProps) {
             </ProcessStep>
             <ProcessStep
                 active={ publishState.status === PublishStatus.PUBLISHING }
-                title={ `Publish ${props.itemType} (2/2)` }
                 hasSideEffect
             >
                 <ClientExtrinsicSubmitter
@@ -87,7 +103,6 @@ export default function LocPublishButton(props: PublishProps) {
             </ProcessStep>
             <ProcessStep
                 active={ publishState.status === PublishStatus.PUBLISHED || publishState.status === PublishStatus.ERROR }
-                title={ `Publish ${props.itemType} (2/2)` }
                 nextSteps={[
                     {
                         buttonText: 'OK',

@@ -2,7 +2,7 @@ import { UUID } from "@logion/node-api";
 import { AxiosInstance } from "axios";
 
 import { DEFAULT_LEGAL_OFFICER } from "src/common/TestData";
-import { acceptLocRequest, acceptProtectionRequest, rejectLocRequest, rejectProtectionRequest } from "./Model"
+import { acceptProtectionRequest, rejectProtectionRequest } from "./Model"
 
 describe("Model", () => {
 
@@ -24,8 +24,8 @@ describe("Model", () => {
                 legalOfficerAddress: DEFAULT_LEGAL_OFFICER.address,
                 rejectReason: "Because",
             })
-        )
-    })
+        );
+    });
 
     it("accepts protection request", async () => {
         const axios = {
@@ -44,41 +44,6 @@ describe("Model", () => {
             expect.objectContaining({
                 locId: identityLocId.toString(),
             })
-        )
-    })
-
-    it("rejects LOC request", async () => {
-        const axios = {
-            post: jest.fn().mockResolvedValue(undefined),
-        } as unknown as AxiosInstance;
-
-        const requestId = "0e16421a-2550-4be5-a6a8-1ab2239b7dc4";
-        await rejectLocRequest(axios, {
-            requestId,
-            rejectReason: "Because"
-        });
-
-        expect(axios.post).toBeCalledWith(
-            `/api/loc-request/${requestId}/reject`,
-            expect.objectContaining({
-                rejectReason: "Because",
-            })
-        )
-    })
-
-    it("accepts LOC request", async () => {
-        const axios = {
-            post: jest.fn().mockResolvedValue(undefined),
-        } as unknown as AxiosInstance;
-
-        const requestId = "0e16421a-2550-4be5-a6a8-1ab2239b7dc4";
-        await acceptLocRequest(axios, {
-            requestId,
-        });
-
-        expect(axios.post).toBeCalledWith(
-            `/api/loc-request/${requestId}/accept`,
-            expect.objectContaining({ })
-        )
-    })
-})
+        );
+    });
+});

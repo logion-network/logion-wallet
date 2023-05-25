@@ -1,12 +1,10 @@
-import { LogionClient, LocRequestState, LocData, LocsState, EditableRequest, MergedLink, PublicLoc } from "@logion/client";
+import { LogionClient, LocRequestState, LocData, LocsState, EditableRequest, MergedLink, PublicLoc, ItemStatus, ReviewResult } from "@logion/client";
 import { UUID, LocType, Fees, ValidAccountId } from "@logion/node-api";
 import { useCallback } from "react";
 import { CallCallback } from "src/ClientExtrinsicSubmitter";
-import { POLKADOT } from "src/common/ColorTheme";
 import { Viewer } from "src/common/CommonContext";
 import { isGrantedAccess } from "src/common/Model";
 import { Rules } from "src/common/Responsive";
-import StatusCell from "src/common/StatusCell";
 import SubmitterName from "src/common/SubmitterName";
 import { Cell, Column, DateTimeCell } from "src/common/Table";
 import { Child } from "src/common/types/Helpers";
@@ -20,8 +18,8 @@ import LocPrivateFileDetails from "./LocPrivateFileDetails";
 import LocPublicDataDetails from "./LocPublicDataDetails";
 import RestrictedDeliveryCell from "./RestricedDeliveryCell";
 import { ContributionMode } from "./types";
-
-export type LocItemStatus = 'DRAFT' | 'PUBLISHED'
+import ReviewStatusCell from "./ReviewStatusCell";
+import HelpTooltip from "src/components/helptooltip/HelpTooltip";
 
 export type LocItemType = 'Data' | 'Document' | 'Linked LOC'
 
@@ -31,7 +29,7 @@ export interface LocItem {
     timestamp: string | null,
     type: LocItemType,
     submitter: ValidAccountId | undefined,
-    status: LocItemStatus,
+    status: ItemStatus,
     nature?: string,
     target?: UUID,
     newItem: boolean,
@@ -41,6 +39,7 @@ export interface LocItem {
     size?: bigint,
     fees?: Fees,
     storageFeePaidBy?: string;
+    reviewedOn?: string;
 }
 
 export enum PublishStatus {
@@ -86,7 +85,7 @@ export function buildItemTableColumns(args: {
             header: "Public description",
             render: locItem => <Cell content={ locItem.nature || "-" } overflowing tooltipId={`${loc.id}-name-tooltip`}/>,
             renderDetails: locItem => renderDetails(loc, locItem, viewer),
-            detailsExpanded: locItem => locItem.newItem || (locItem.template && (viewer !== "LegalOfficer" || locItem.status !== "PUBLISHED")),
+            detailsExpanded: locItem => locItem.newItem || (locItem.template && (viewer !== "LegalOfficer" || (locItem.status !== "PUBLISHED" && locItem.status !== "ACKNOWLEDGED"))),
             hideExpand: locItem => locItem.template && viewer !== "LegalOfficer",
             align: "left",
             width: width({
@@ -109,13 +108,13 @@ export function buildItemTableColumns(args: {
             render: locItem => <Cell content={
                 <>
                     <span className="item-type">{ locItem.type }</span> {
-                    locItem.type === 'Document' && locItem.name && canViewFile(currentAddress, locItem, contributionMode) &&
-                    <ViewFileButton
-                        nodeOwner={ loc.ownerAddress }
-                        fileName={ locItem.name }
-                        downloader={ () => locState?.getFile(locItem.value || "") }
-                    />
-                }
+                        locItem.type === 'Document' && locItem.name && canViewFile(viewer, currentAddress, locItem, contributionMode) &&
+                        <ViewFileButton
+                            nodeOwner={ loc.ownerAddress }
+                            fileName={ locItem.name }
+                            downloader={ () => locState?.getFile(locItem.value || "") }
+                        />
+                    }
                 </> } />,
             width: "160px",
             align: "left"
@@ -136,15 +135,12 @@ export function buildItemTableColumns(args: {
 
     columns = columns.concat([
         {
+            header: <>Reviewed <HelpTooltip id="reviewed" help="You confirm that the content you submitted for review by the Legal Officer is good to be recorded by the logion infrastructure with regard to the LOC context and to the specific content that will be publicly available after the recording (eg: GDPR)."/></>,
+            render: locItem => <ReviewStatusCell locItem={ locItem } />,
+        },
+        {
             header: "",
-            render: locItem => {
-                if (locItem.status === 'DRAFT') {
-                    return renderActions(locItem, loc.id)
-                } else {
-                    return (
-                        <StatusCell icon={ { id: 'published' } } text="Published" color={ POLKADOT } />)
-                }
-            },
+            render: locItem => renderActions(locItem, loc.id),
             width: width({
                 onSmallScreen: viewer === "LegalOfficer" ? '345px' : '145px',
                 otherwise: '400px'
@@ -171,15 +167,15 @@ function renderDetails(loc: LocData | undefined, locItem: LocItem, viewer: Viewe
     )
 }
 
-function canViewFile(address: string | undefined, item: LocItem, contributionMode?: ContributionMode): boolean {
-    return (contributionMode !== 'Issuer' || item.submitter === address) && isSet(item);
+function canViewFile(viewer: Viewer, address: string | undefined, item: LocItem, contributionMode?: ContributionMode): boolean {
+    return (contributionMode !== 'Issuer' || item.submitter === address) && isSet(item) && (viewer === "User" || item.status !== "DRAFT");
 }
 
 function isSet(item: LocItem) {
     return (!item.template || item.isSet === true);
 }
 
-function documentClaimHistory(viewer: Viewer, loc: LocData | null, hash: string) {
+export function documentClaimHistory(viewer: Viewer, loc: LocData | null, hash: string) {
     if(!loc) {
         return "";
     } else if(viewer === "LegalOfficer") {
@@ -234,10 +230,11 @@ export function useDeleteLinkCallback(mutateLocState: (mutator: (current: LocReq
 
 export function canDelete(account: ValidAccountId | undefined, item: LocItem, viewer: Viewer, loc: LocData): boolean {
     if (item.type === "Linked LOC") {
-        return viewer === "LegalOfficer";
+        return viewer === "LegalOfficer" && item.status === "DRAFT";
     } else {
-        return (viewer === "User" && item.submitter?.address === account?.address && item.submitter?.type === account?.type && (loc.status === "DRAFT" || loc.status === "OPEN"))
-            || (viewer === "LegalOfficer" && loc.status === "OPEN");
+        return viewer === "User" && item.submitter?.address === account?.address && item.submitter?.type === account?.type
+            && (loc.status === "DRAFT" || loc.status === "OPEN")
+            && (item.status === "DRAFT" || item.status === "REVIEW_ACCEPTED" || item.status === "REVIEW_REJECTED");
     }
 }
 
@@ -246,8 +243,8 @@ export function canAdd(viewer: Viewer, loc: LocData) {
         || (viewer === "LegalOfficer" && (!loc.voidInfo && loc.status === "OPEN"));
 }
 
-export function canPublish(viewer: Viewer, loc: LocData) {
-    return viewer === 'LegalOfficer' && loc.status === "OPEN" && !loc.voidInfo;
+export function canPublish(viewer: Viewer, loc: LocData, item: LocItem) {
+    return viewer === "User" && loc.status === "OPEN" && !loc.voidInfo && item.status === "REVIEW_ACCEPTED";
 }
 
 export interface LinkData {
@@ -287,4 +284,48 @@ export async function getLinkData(
         linkedLoc,
         linkDetailsPath,
     };
+}
+
+export function useRequestReviewCallback(mutateLocState: (mutator: (current: LocRequestState) => Promise<LocRequestState | LocsState>) => Promise<void>) {
+    return useCallback(async (locItem: LocItem) => {
+        mutateLocState(async current => {
+            if(current instanceof EditableRequest) {
+                if(locItem.type === "Data") {
+                    return current.requestMetadataReview(locItem.name || "");
+                } else if(locItem.type === "Document") {
+                    return current.requestFileReview(locItem.value || "");
+                } else {
+                    return current;
+                }
+            } else {
+                return current;
+            }
+        });
+    }, [ mutateLocState ]);
+}
+
+export function useReviewCallback(mutateLocState: (mutator: (current: LocRequestState) => Promise<LocRequestState | LocsState>) => Promise<void>) {
+    return useCallback(async (locItem: LocItem, decision: ReviewResult, rejectReason?: string) => {
+        mutateLocState(async current => {
+            if(current instanceof EditableRequest) {
+                if(locItem.type === "Data") {
+                    return current.legalOfficer.reviewMetadata({
+                        name: locItem.name || "",
+                        decision,
+                        rejectReason
+                    });
+                } else if(locItem.type === "Document") {
+                    return current.legalOfficer.reviewFile({
+                        hash: locItem.value || "",
+                        decision,
+                        rejectReason
+                    });
+                } else {
+                    return current;
+                }
+            } else {
+                return current;
+            }
+        });
+    }, [ mutateLocState ]);
 }

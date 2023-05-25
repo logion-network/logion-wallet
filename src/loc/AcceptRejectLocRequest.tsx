@@ -1,4 +1,4 @@
-import { LocData } from "@logion/client";
+import { LocData, PendingRequest } from "@logion/client";
 import { useCallback, useState } from "react";
 import { Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -9,8 +9,6 @@ import Icon from "src/common/Icon";
 import PolkadotFrame from "src/common/PolkadotFrame";
 import ProcessStep from "src/legal-officer/ProcessStep";
 import LocRequestAcceptance from "src/legal-officer/transaction-protection/LocRequestAcceptance";
-import { rejectLocRequest } from "src/loc/Model";
-import { useLogionChain } from "src/logion-chain";
 import { useLocContext } from "./LocContext";
 
 import "./AcceptRejectLocRequest.css";
@@ -21,31 +19,28 @@ export interface Props {
 }
 
 export default function AcceptRejectLocRequest(props: Props) {
-    const { axiosFactory, accounts } = useLogionChain();
     const [ requestToReject, setRequestToReject ] = useState<string | null>(null);
     const [ reason, setReason ] = useState<string>("");
     const [ requestToAccept, setRequestToAccept ] = useState<LocData | null>(null);
-    const { refresh: refreshLoc } = useLocContext();
+    const { mutateLocState } = useLocContext();
     const navigate = useNavigate();
 
     const clearRequestToAccept = useCallback(() => {
-        refreshLoc();
         setRequestToAccept(null);
-    }, [ refreshLoc ]);
-
-    if (axiosFactory === undefined) {
-        return null;
-    }
+    }, []);
 
     const handleClose = () => setRequestToReject(null);
 
     const rejectAndCloseModal = async () => {
-        await rejectLocRequest(axiosFactory(accounts!.current!.accountId.address)!, {
-            requestId: requestToReject!,
-            rejectReason: reason!,
+        await mutateLocState(async current => {
+            if(current instanceof PendingRequest) {
+                const newState = current.legalOfficer.reject(reason);
+                navigate(props.rejectPath);
+                return newState;
+            } else {
+                return current;
+            }
         });
-        await refreshLoc();
-        navigate(props.rejectPath);
     };
 
     return (

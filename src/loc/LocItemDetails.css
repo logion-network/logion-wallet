@@ -7,6 +7,7 @@
 .LocItemDetails .frame .frame-title {
     color: #e6007a;
     margin-bottom: 20px;
+    text-align: left;
 }
 
 .LocItemDetails .linked-loc .label,.LocItemDetails .linked-loc .value {

@@ -1,9 +1,8 @@
-import { EditableRequest } from "@logion/client";
+import { OpenLoc } from "@logion/client";
 import { UUID } from "@logion/node-api";
 
 import { LocItem } from "./LocItem";
 import LocPublishButton from "./LocPublishButton";
-import { publishFile } from "src/legal-officer/client";
 import { useLogionChain } from "src/logion-chain";
 
 export interface Props {
@@ -22,16 +21,12 @@ export default function LocPublishPrivateFileButton(props: Props) {
         <LocPublishButton
             locItem={ props.locItem }
             publishMutator={ async (current, callback) => {
-                if(current instanceof EditableRequest
+                if(current instanceof OpenLoc
                     && props.locItem.value
                     && props.locItem.submitter) {
 
-                    return await publishFile({
-                        locState: current,
+                    return current.publishFile({
                         hash: props.locItem.value,
-                        nature: props.locItem.nature!,
-                        submitter: props.locItem.submitter,
-                        size: props.locItem.size!,
                         signer: signer!,
                         callback,
                     });

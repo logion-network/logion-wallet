@@ -120,6 +120,17 @@ export class DraftRequest extends EditableRequest {
 
 }
 
+export class PendingRequest extends LocRequestState {
+
+    legalOfficer: {
+        accept: any,
+        acceptCollection: any,
+    } = {
+        accept: jest.fn(),
+        acceptCollection: jest.fn(),
+    };
+}
+
 export class OpenLoc extends EditableRequest {
     data: any;
     locsState: any;
@@ -128,6 +139,11 @@ export class OpenLoc extends EditableRequest {
     addFile: jest.Mock<Promise<EditableRequest>> | undefined;
     deleteFile: jest.Mock<Promise<EditableRequest>> | undefined;
     requestSof: jest.Mock<Promise<EditableRequest>> | undefined;
+    legalOfficer: {
+        close: any
+    } = {
+        close: jest.fn(),
+    };
 }
 
 export class LocsState {

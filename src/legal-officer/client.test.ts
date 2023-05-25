@@ -16,8 +16,7 @@ describe("Legal Officer client", () => {
         } as unknown as AxiosInstance;
 
         const client = {
-            buildAxios: () => axios,
-            legalOfficers: [],
+            getLegalOfficer: () => ({ buildAxiosToNode: () => axios })
         } as unknown as LogionClient;
 
         const locId = new UUID("0e16421a-2550-4be5-a6a8-1ab2239b7dc4");
@@ -79,8 +78,7 @@ describe("Legal Officer client", () => {
         } as unknown as AxiosInstance;
 
         const client = {
-            buildAxios: () => axios,
-            legalOfficers: [],
+            getLegalOfficer: () => ({ buildAxiosToNode: () => axios })
         } as unknown as LogionClient;
 
         const locId = new UUID("0e16421a-2550-4be5-a6a8-1ab2239b7dc4");
@@ -122,8 +120,7 @@ describe("Legal Officer client", () => {
         });
         const client = {
             logionApi: api.object(),
-            legalOfficers: [],
-            buildAxios: () => {},
+            getLegalOfficer: () => ({ buildAxiosToNode: () => {} }),
         } as unknown as LogionClient;
 
         const locId = new UUID("0e16421a-2550-4be5-a6a8-1ab2239b7dc4");

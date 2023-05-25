@@ -10,16 +10,13 @@ import {
     VoidedLoc,
     VoidedCollectionLoc,
     LogionClient,
-    LegalOfficer,
     LocData,
     VerifiedIssuerIdentity,
 } from "@logion/client";
 import {
     Adapters,
     UUID,
-    MetadataItem,
     VoidInfo,
-    ValidAccountId,
     LogionNodeApiClass,
 } from "@logion/node-api";
 import type { SubmittableExtrinsic } from '@polkadot/api/promise/types';
@@ -71,15 +68,8 @@ export async function deleteLink(params: {
 
 function buildAxios(locState: LocRequestState) {
     const client = locState.locsState().client;
-    return buildAxiosWithClient(client, locState.data().ownerAddress);
-}
-
-function buildAxiosWithClient(client: LogionClient, legalOfficerAddress: string) {
-    return client.buildAxios(getLegalOfficer(client, legalOfficerAddress));
-}
-
-function getLegalOfficer(client: LogionClient, address: string): LegalOfficer {
-    return client.legalOfficers.find(legalOfficer => address === legalOfficer.address)!;
+    const legalOfficer = client.getLegalOfficer(locState.data().ownerAddress);
+    return legalOfficer.buildAxiosToNode();
 }
 
 export async function publishLink(params: {
@@ -106,98 +96,6 @@ export async function publishLink(params: {
     await axios.put(`/api/loc-request/${ data.id.toString() }/links/${ target.toString() }/confirm`);
 
     return await getCurrent(currentLocState).refresh() as EditableRequest;
-}
-
-export async function publishFile(params: {
-    locState: EditableRequest,
-    hash: string,
-    nature: string,
-    submitter: ValidAccountId,
-    size: bigint,
-    signer: Signer,
-    callback: SignCallback,
-}): Promise<EditableRequest> {
-    const { locState, hash, nature, submitter, size, signer, callback } = params;
-
-    const currentLocState = getCurrent(locState);
-    const { data, axios, api } = inspectState(currentLocState);
-
-    const submittable = api.polkadot.tx.logionLoc.addFile(
-        api.adapters.toLocId(data.id),
-        api.adapters.toLocFile({
-            hash,
-            nature,
-            size,
-            submitter,
-        }),
-    );
-    await signer.signAndSend({
-        signerId: data.ownerAddress,
-        submittable,
-        callback
-    });
-    await axios.put(`/api/loc-request/${ data.id.toString() }/files/${ hash }/confirm`);
-
-    return await getCurrent(currentLocState).refresh() as EditableRequest;
-}
-
-export async function publishMetadata(params: {
-    locState: EditableRequest,
-    item: MetadataItem,
-    signer: Signer,
-    callback: SignCallback,
-}): Promise<EditableRequest> {
-    const { locState, item, signer, callback } = params;
-
-    const currentLocState = getCurrent(locState);
-    const { data, axios, api } = inspectState(currentLocState);
-    const submittable = api.polkadot.tx.logionLoc.addMetadata(
-        api.adapters.toLocId(data.id),
-        api.adapters.toPalletLogionLocMetadataItem(item),
-    );
-    await signer.signAndSend({
-        signerId: data.ownerAddress,
-        submittable,
-        callback
-    });
-
-    await axios.put(`/api/loc-request/${ data.id.toString() }/metadata/${ encodeURIComponent(item.name) }/confirm`);
-
-    return await getCurrent(locState).refresh() as EditableRequest;
-}
-
-export async function closeLoc(params: {
-    locState: OpenLoc,
-    signer: Signer,
-    callback: SignCallback,
-}): Promise<ClosedLoc | ClosedCollectionLoc> {
-    const { locState, signer, callback } = params;
-
-    const currentLocState = getCurrent(locState);
-    const { data, axios, api } = inspectState(currentLocState);
-
-    const seal = data.seal;
-    let submittable;
-    if(seal) {
-        submittable = api.polkadot.tx.logionLoc.closeAndSeal(
-            api.adapters.toLocId(data.id),
-            seal,
-        );
-    } else {
-        submittable = api.polkadot.tx.logionLoc.close(
-            api.adapters.toLocId(data.id),
-        );
-    }
-    const signerId = data.ownerAddress;
-    await signer.signAndSend({
-        signerId,
-        submittable,
-        callback
-    });
-
-    await axios.post(`/api/loc-request/${ data.id.toString() }/close`);
-
-    return await getCurrent(currentLocState).refresh() as ClosedLoc | ClosedCollectionLoc;
 }
 
 export interface FullVoidInfo extends VoidInfo {
@@ -395,7 +293,7 @@ export async function getVotes(client: LogionClient): Promise<Vote[]> {
     if(!currentAddress) {
         throw new Error("Not authenticated");
     }
-    const axios = buildAxiosWithClient(client, client.currentAddress.address);
+    const axios = client.getLegalOfficer(currentAddress.address).buildAxiosToNode();
     const response = await axios.get(`/api/vote/${ currentAddress.address }`);
     const votes: BackendVote[] = response.data.votes;
     return votes.map(backendVote => ({

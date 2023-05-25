@@ -1,5 +1,5 @@
 import { UUID } from "@logion/node-api";
-import Table, { EmptyTableMessage, ActionCell, Column } from "../common/Table";
+import Table, { EmptyTableMessage, Column } from "../common/Table";
 import ButtonGroup from "../common/ButtonGroup";
 import Button from "../common/Button";
 import { Child } from "../common/types/Helpers";
@@ -13,9 +13,13 @@ import LocPublishPrivateFileButton from "./LocPublishPrivateFileButton";
 import LocPublishPublicDataButton from "./LocPublishPublicDataButton";
 
 import './LocItems.css';
-import { Viewer } from "src/common/CommonContext";
+import { Viewer, useCommonContext } from "src/common/CommonContext";
 import { useLocContext } from "./LocContext";
-import { buildItemTableColumns, LocItem, useDeleteMetadataCallback, useDeleteFileCallback, canDelete, canPublish, useDeleteLinkCallback } from "./LocItem";
+import { buildItemTableColumns, LocItem, useDeleteMetadataCallback, useDeleteFileCallback, canDelete, canPublish, useDeleteLinkCallback, useRequestReviewCallback } from "./LocItem";
+import StatusCell from "src/common/StatusCell";
+import { POLKADOT } from "src/common/ColorTheme";
+import AcknowledgeButton from "./AcknowledgeButton";
+import ReviewItemButtons from "./ReviewItemButtons";
 
 export interface LocItemsProps {
     matchedHash?: string;
@@ -34,6 +38,8 @@ export function LocItems(props: LocItemsProps) {
     const deleteMetadata = useDeleteMetadataCallback(mutateLocState);
     const deleteFile = useDeleteFileCallback(mutateLocState);
     const deleteLinkCallback = useDeleteLinkCallback(mutateLocState);
+    const requestReview = useRequestReviewCallback(mutateLocState);
+    const { viewer } = useCommonContext();
 
     if(!loc || !locState) {
         return null;
@@ -57,25 +63,69 @@ export function LocItems(props: LocItemsProps) {
         );
     }
 
-    function renderActions(locItem: LocItem, locId: UUID): Child {
+    function renderActions(locItem: LocItem, locId: UUID) {
+        if(!loc) {
+            return null;
+        }
+
+        const buttons: Child[] = [];
+        let key = 0;
+
+        if(viewer === "User" && locItem.status === "DRAFT" && loc.status === "OPEN") {
+            buttons.push(<Button key={++key} onClick={ () => requestReview(locItem) }>Request review</Button>);
+        }
+
+        if(viewer === "LegalOfficer" && locItem.status === "REVIEW_PENDING") {
+            buttons.push(<ReviewItemButtons key={++key} locItem={ locItem }/>);
+        }
+
+        if(locItem.type === 'Data') {
+            if(canPublish(props.viewer, loc!, locItem)) {
+                buttons.push(<LocPublishPublicDataButton key={++key} locItem={ locItem } locId={ locId } />);
+            }
+            if(canDelete(accounts?.current?.accountId, locItem, props.viewer, loc!)) {
+                buttons.push(<DeleteButton key={++key} locItem={ locItem } action={ deleteMetadata } />);
+            }
+        } else if(locItem.type === 'Linked LOC') {
+            if(canPublish(props.viewer, loc!, locItem)) {
+                buttons.push(<LocPublishLinkButton  key={++key}locItem={ locItem } locId={ locId } />);
+            }
+            if(canDelete(accounts?.current?.accountId, locItem, props.viewer, loc!)) {
+                buttons.push(<DeleteButton key={++key} locItem={ locItem } action={ deleteLinkCallback } />);
+            }
+        } else if(locItem.type === 'Document') {
+            if(canPublish(props.viewer, loc!, locItem)) {
+                buttons.push(<LocPublishPrivateFileButton key={++key} locItem={ locItem } locId={ locId } />);
+            }
+            if(canDelete(accounts?.current?.accountId, locItem, props.viewer, loc!)) {
+                buttons.push(<DeleteButton key={++key} locItem={ locItem } action={ deleteFile } />);
+            }
+        }
+
+        if(locItem.status === "PUBLISHED") {
+            if(viewer === "User") {
+                buttons.push(<StatusCell
+                    key={++key}
+                    icon={ { id: 'published' } }
+                    text="Published"
+                    color={ POLKADOT }
+                    tooltip="This content is published but needs to be acknowledged by the Legal Officer in charge to be recorded as evidence and thus, visible on the logion public certificate. You will be notified when this action is executed by the Legal Officer."
+                    tooltipId={ `published-${locItem.type}-${locItem.name}` }
+                />);
+            } else {
+                buttons.push(<AcknowledgeButton key={++key} locItem={ locItem } locId={ locId } />);
+            }
+        }
+
+        if(locItem.status === "ACKNOWLEDGED") {
+            buttons.push(<StatusCell key={++key} icon={ { id: 'published' } } text="Recorded" color={ POLKADOT } />);
+        }
+
         return (
-            <ActionCell>
-                { locItem.type === 'Data' && <ButtonGroup>
-                    { canPublish(props.viewer, loc!) && <LocPublishPublicDataButton locItem={ locItem } locId={ locId } /> }
-                    { canDelete(accounts?.current?.accountId, locItem, props.viewer, loc!) &&
-                        <DeleteButton locItem={ locItem } action={ deleteMetadata } /> }
-                </ButtonGroup> }
-                { locItem.type === 'Linked LOC' && <ButtonGroup>
-                    { canPublish(props.viewer, loc!) && <LocPublishLinkButton locItem={ locItem } locId={ locId } /> }
-                    { canDelete(accounts?.current?.accountId, locItem, props.viewer, loc!) &&
-                        <DeleteButton locItem={ locItem } action={ deleteLinkCallback } /> }
-                </ButtonGroup> }
-                { locItem.type === 'Document' && <ButtonGroup>
-                    { canPublish(props.viewer, loc!) && <LocPublishPrivateFileButton locItem={ locItem } locId={ locId } /> }
-                    { canDelete(accounts?.current?.accountId, locItem, props.viewer, loc!) &&
-                        <DeleteButton locItem={ locItem } action={ deleteFile } /> }
-                </ButtonGroup> }
-            </ActionCell>)
+            <ButtonGroup>
+                { buttons }
+            </ButtonGroup>
+        );
     }
 
     if (props.isEmpty && !loc.closed) {

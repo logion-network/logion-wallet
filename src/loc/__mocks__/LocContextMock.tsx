@@ -43,7 +43,7 @@ let loc: Partial<LocData> | null = {
     }
 };
 
-export function setLocRequest(request: LocData | null) {
+export function setLocRequest(request: Partial<LocData> | null) {
     loc = request;
 }
 

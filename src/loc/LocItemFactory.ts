@@ -12,7 +12,7 @@ export function createFileItem(file: MergedFile): ItemAndRefreshFlag {
     if (file.published) {
         return createPublishedFileLocItem(file)
     } else {
-        const locItem = createDraftFileLocItem(file, false);
+        const locItem = createDraftFileLocItem(file, file);
         return { locItem, refreshNeeded: false };
     }
 }
@@ -31,11 +31,11 @@ export interface FileItem extends SimpleItem {
     storageFeePaidBy?: string;
 }
 
-function createPublishedFileLocItem(parameters: FileItem): ItemAndRefreshFlag {
-    return publish(createDraftFileLocItem(parameters, false), parameters.addedOn || null, parameters.fees, parameters.storageFeePaidBy)
+function createPublishedFileLocItem(parameters: MergedFile): ItemAndRefreshFlag {
+    return publish(createDraftFileLocItem(parameters, parameters), parameters.addedOn || null, parameters.fees, parameters.storageFeePaidBy)
 }
 
-export function createDraftFileLocItem(parameters: FileItem, newItem: boolean): LocItem {
+export function createDraftFileLocItem(parameters: FileItem, locItem?: MergedFile): LocItem {
     return {
         name: parameters.name,
         value: parameters.hash,
@@ -43,10 +43,11 @@ export function createDraftFileLocItem(parameters: FileItem, newItem: boolean): 
         submitter: parameters.submitter,
         timestamp: parameters.addedOn || null,
         type: 'Document',
-        status: 'DRAFT',
-        newItem,
+        status: locItem?.status || "DRAFT",
+        newItem: locItem === undefined,
         template: false,
         size: parameters.size,
+        reviewedOn: locItem?.reviewedOn,
     };
 }
 
@@ -58,7 +59,7 @@ export function createMetadataItem(dataItem: MergedMetadataItem): ItemAndRefresh
     if (dataItem.published) {
         return createPublishedMetadataLocItem(dataItem);
     } else {
-        const locItem = createDraftMetadataLocItem(dataItem, false);
+        const locItem = createDraftMetadataLocItem(dataItem, dataItem);
         return { locItem, refreshNeeded: false };
     }
 }
@@ -68,10 +69,10 @@ export interface CreateLocMetadataItemParameters {
 }
 
 function createPublishedMetadataLocItem(parameters: MergedMetadataItem): ItemAndRefreshFlag {
-    return publish(createDraftMetadataLocItem(parameters, false), parameters.addedOn || null, parameters.fees)
+    return publish(createDraftMetadataLocItem(parameters, parameters), parameters.addedOn || null, parameters.fees)
 }
 
-export function createDraftMetadataLocItem(metadataItem: MetadataItem, newItem: boolean): LocItem {
+export function createDraftMetadataLocItem(metadataItem: MetadataItem, locItem?: MergedMetadataItem): LocItem {
     return {
         name: metadataItem.name,
         nature: metadataItem.name,
@@ -79,9 +80,10 @@ export function createDraftMetadataLocItem(metadataItem: MetadataItem, newItem: 
         submitter: metadataItem.submitter,
         timestamp: metadataItem.addedOn || null,
         type: 'Data',
-        status: 'DRAFT',
-        newItem,
+        status: locItem?.status || "DRAFT",
+        newItem: locItem === undefined,
         template: false,
+        reviewedOn: locItem?.reviewedOn,
     }
 }
 
@@ -141,7 +143,6 @@ export function createDraftLinkedLocItem(parameters: CreateLocLinkedLocItemParam
 function publish(locItem: LocItem, timestamp: string | null, fees?: ClientFees, storageFeePaidBy?: string): ItemAndRefreshFlag {
     const publishedLocItem: LocItem = {
         ...locItem,
-        status: 'PUBLISHED',
         timestamp,
         fees: toFeesClass(fees),
         storageFeePaidBy,
@@ -165,7 +166,7 @@ export function createDocumentTemplateItem(templateItem: LocTemplateDocumentOrLi
         name: locItem?.name,
         value: locItem?.hash,
         newItem: false,
-        status: locItem && locItem.published ? "PUBLISHED" : "DRAFT",
+        status: locItem?.status || "DRAFT",
         submitter: locItem?.submitter,
         timestamp: locItem?.addedOn || null,
         type: "Document",
@@ -175,6 +176,7 @@ export function createDocumentTemplateItem(templateItem: LocTemplateDocumentOrLi
         size: locItem?.size,
         fees: toFeesClass(locItem?.fees),
         storageFeePaidBy: locItem?.storageFeePaidBy,
+        reviewedOn: locItem?.reviewedOn,
     }
 }
 
@@ -195,13 +197,14 @@ export function createMetadataTemplateItem(templateItem: LocTemplateMetadataItem
         nature: templateItem.name,
         value: locItem?.value,
         newItem: false,
-        status: locItem && locItem.published ? "PUBLISHED" : "DRAFT",
+        status: locItem?.status || "DRAFT",
         submitter: locItem?.submitter,
         timestamp: locItem?.addedOn || null,
         type: "Data",
         template: true,
         isSet: locItem !== undefined,
         fees: toFeesClass(locItem?.fees),
+        reviewedOn: locItem?.reviewedOn,
     }
 }
 

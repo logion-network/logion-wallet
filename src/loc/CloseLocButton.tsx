@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
-import { ProtectionRequest } from "@logion/client/dist/RecoveryClient.js";
-import { OpenLoc } from "@logion/client";
+import { ProtectionRequest, OpenLoc } from "@logion/client";
 import { Col, Row } from "react-bootstrap";
 
 import Button from "../common/Button";
@@ -19,7 +18,6 @@ import StaticLabelValue from "../common/StaticLabelValue";
 import { useLogionChain } from "../logion-chain";
 import { signAndSend } from "../logion-chain/Signature";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
-import { closeLoc } from "src/legal-officer/client";
 
 import './CloseLocButton.css';
 
@@ -59,8 +57,7 @@ export default function CloseLocButton(props: Props) {
             const call: Call = async (callback: CallCallback) =>
                 mutateLocState(async current => {
                     if(signer && current instanceof OpenLoc) {
-                        return closeLoc({
-                            locState: current,
+                        return current.legalOfficer.close({
                             signer,
                             callback,
                         });
@@ -73,7 +70,7 @@ export default function CloseLocButton(props: Props) {
     }, [ mutateLocState, closeState, setCloseState, signer ]);
 
     useEffect(() => {
-        if (locItems.findIndex(locItem => locItem.status === "DRAFT") < 0) {
+        if (locItems.findIndex(locItem => locItem.status !== "ACKNOWLEDGED") < 0) {
             setDisabled(false)
         } else {
             setDisabled(true)

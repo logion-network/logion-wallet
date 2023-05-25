@@ -54,8 +54,7 @@ function renderGivenFile(restrictedDelivery: boolean) {
     const put = jest.fn();
     const axios = { put };
     const client = {
-        legalOfficers: [],
-        buildAxios: () => axios,
+        getLegalOfficer: () => ({ buildAxiosToNode: () => axios }),
     };
     setLocState({
         locsState: () => ({ client }),

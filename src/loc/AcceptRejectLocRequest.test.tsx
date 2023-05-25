@@ -7,7 +7,6 @@ import { axiosMock, setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../
 import { shallowRender } from "../tests";
 import AcceptRejectLocRequest from "./AcceptRejectLocRequest";
 import "./AcceptRejectLocRequest.tsx";
-import { setRejectLocRequest } from "./__mocks__/ModelMock";
 import { mockValidPolkadotAccountId } from 'src/__mocks__/LogionMock';
 
 jest.mock("../logion-chain");
@@ -31,9 +30,6 @@ describe("AcceptRejectLocRequest", () => {
     });
 
     it("Click on reject and confirm rejects request", async () => {
-        const rejectCallback = jest.fn();
-        setRejectLocRequest(rejectCallback);
-
         render(<AcceptRejectLocRequest loc={{
             id: new UUID(REQUEST_ID),
             ownerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
@@ -49,15 +45,6 @@ describe("AcceptRejectLocRequest", () => {
 
         const confirmButton = screen.getByRole("button", {name: "Proceed"});
         await userEvent.click(confirmButton);
-
-        expect(rejectCallback).toBeCalledWith(
-            axiosMock.object(),
-            expect.objectContaining({
-                requestId: REQUEST_ID,
-                rejectReason: reasonText
-
-            })
-        );
         await waitFor(() => expect(screen.queryByTestId(`modal-reject-${REQUEST_ID}`)).not.toBeInTheDocument());
     });
 
