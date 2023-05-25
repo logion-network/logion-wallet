@@ -5,7 +5,6 @@ import './LocItemDetails.css'
 import { LocItem } from "./LocItem";
 import NewTabLink from "../common/NewTabLink";
 import CopyPasteButton from "../common/CopyPasteButton";
-import EstimatedFees from "./EstimatedFees";
 import LocItemEstimatedFees from "./LocItemEstimatedFees";
 
 export interface Props {
