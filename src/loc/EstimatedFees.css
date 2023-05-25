@@ -19,5 +19,6 @@
 }
 
 .EstimatedFees td:nth-child(3) {
+    text-align: left;
     min-width: 150px;
 }

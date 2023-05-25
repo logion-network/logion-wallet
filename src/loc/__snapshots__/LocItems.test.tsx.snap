@@ -278,6 +278,38 @@ exports[`LOLocItems renders with single draft item 1`] = `
                 >
                   Request review
                 </button>
+                <button
+                  className="Button btn btn-polkadot"
+                  disabled={false}
+                  onClick={[Function]}
+                  style={
+                    Object {
+                      "backgroundColor": "#e6007a",
+                      "color": "white",
+                    }
+                  }
+                  type="button"
+                >
+                  <img
+                    alt="publish"
+                    height="20px"
+                    src="/assets/publish.svg"
+                  />
+                   Publish
+                </button>
+                <button
+                  className="Button btn btn-danger-flat"
+                  data-testid="remove-Data-Name"
+                  disabled={false}
+                  onClick={[Function]}
+                  style={Object {}}
+                  type="button"
+                >
+                  <img
+                    alt="trash"
+                    src="/assets/trash.svg"
+                  />
+                </button>
               </div>
             </div>
           </div>

@@ -3,7 +3,7 @@ import { ItemStatus, LocData } from "@logion/client";
 import { render as renderTesting, waitFor, screen } from "@testing-library/react";
 import { SubmittableExtrinsic } from "@polkadot/api-base/types";
 import { Compact, u128 } from "@polkadot/types-codec";
-import { PalletLogionLocMetadataItem } from "@polkadot/types/lookup";
+import { PalletLogionLocMetadataItemParams } from "@polkadot/types/lookup";
 
 import { clickByName, render } from "../tests";
 import { LocItems } from "./LocItems";
@@ -51,20 +51,20 @@ describe("LOLocItems", () => {
         />);
     });
 
-    it("cannot delete non-draft metadata item", async () => {
+    it("cannot delete non-draft metadata item", () => {
         const loc = givenOpenLoc();
         const items = givenMetadataItem(loc, "PUBLISHED");
-        await testCannotDeleteNonDraftMetadataItem(<LocItems
+        testCannotDeleteNonDraftMetadataItem(<LocItems
             viewer="LegalOfficer"
             locItems={items}
             isEmpty={false}
         />);
     });
 
-    it("cannot delete non-draft file item", async () => {
+    it("cannot delete non-draft file item", () => {
         const loc = givenOpenLoc();
         const items = givenFileItem(loc, "PUBLISHED");
-        await testCannotDeleteNonDraftFileItem(<LocItems
+        testCannotDeleteNonDraftFileItem(<LocItems
             viewer="LegalOfficer"
             locItems={items}
             isEmpty={false}
@@ -81,10 +81,10 @@ describe("LOLocItems", () => {
         />);
     });
 
-    it("cannot delete non-draft link item", async () => {
+    it("cannot delete non-draft link item", () => {
         const loc = givenOpenLoc();
         const items = givenLinkItem(loc, "PUBLISHED");
-        await testCannotDeleteNonDraftLinkItem(<LocItems
+        testCannotDeleteNonDraftLinkItem(<LocItems
             viewer="LegalOfficer"
             locItems={items}
             isEmpty={false}
@@ -128,10 +128,10 @@ describe("UserLocItems", () => {
         />);
     });
 
-    it("cannot delete non-draft metadata item", async () => {
+    it("cannot delete non-draft metadata item", () => {
         const loc = givenOpenLoc();
         const items = givenMetadataItem(loc, "PUBLISHED");
-        await testCannotDeleteNonDraftMetadataItem(<LocItems
+        testCannotDeleteNonDraftMetadataItem(<LocItems
             viewer="User"
             locItems={items}
             isEmpty={false}
@@ -148,10 +148,10 @@ describe("UserLocItems", () => {
         />);
     });
 
-    it("cannot delete non-draft file item", async () => {
+    it("cannot delete non-draft file item", () => {
         const loc = givenOpenLoc();
         const items = givenFileItem(loc, "PUBLISHED");
-        await testCannotDeleteNonDraftFileItem(<LocItems
+        testCannotDeleteNonDraftFileItem(<LocItems
             viewer="User"
             locItems={items}
             isEmpty={false}
@@ -185,7 +185,7 @@ async function testDeletesDraftMetadataItem(component: React.ReactElement) {
         api.setup(instance => instance.polkadot.tx.logionLoc.addMetadata(It.IsAny(), It.IsAny())).returns(submittable.object());
         const locId = new Mock<Compact<u128>>();
         api.setup(instance => instance.adapters.toLocId(It.IsAny())).returns(locId.object());
-        const item = new Mock<PalletLogionLocMetadataItem>();
+        const item = new Mock<PalletLogionLocMetadataItemParams>();
         api.setup(instance => instance.adapters.toPalletLogionLocMetadataItem(It.IsAny())).returns(item.object());
     });
     renderTesting(component);
@@ -195,7 +195,15 @@ async function testDeletesDraftMetadataItem(component: React.ReactElement) {
 
 const deleteButtonName = (content: string) => /trash/.test(content);
 
-async function testCannotDeleteNonDraftMetadataItem(component: React.ReactElement) {
+function testCannotDeleteNonDraftMetadataItem(component: React.ReactElement) {
+    setupApiMock(api => {
+        const submittable = new Mock<SubmittableExtrinsic<"promise">>();
+        api.setup(instance => instance.polkadot.tx.logionLoc.addMetadata(It.IsAny(), It.IsAny())).returns(submittable.object());
+        const locId = new Mock<Compact<u128>>();
+        api.setup(instance => instance.adapters.toLocId(It.IsAny())).returns(locId.object());
+        const item = new Mock<PalletLogionLocMetadataItemParams>();
+        api.setup(instance => instance.adapters.toPalletLogionLocMetadataItem(It.IsAny())).returns(item.object());
+    });
     renderTesting(component);
     expect(screen.queryByRole("button", { name: deleteButtonName })).not.toBeInTheDocument();
 }
@@ -240,7 +248,7 @@ async function testDeletesDraftFileItem(component: React.ReactElement) {
     await waitFor(() => expect(_locState.deleteFile).toBeCalled());
 }
 
-async function testCannotDeleteNonDraftFileItem(component: React.ReactElement) {
+function testCannotDeleteNonDraftFileItem(component: React.ReactElement) {
     renderTesting(component);
     expect(screen.queryByRole("button", { name: deleteButtonName })).not.toBeInTheDocument();
 }
@@ -282,7 +290,7 @@ async function testDeletesDraftLinkItem(component: React.ReactElement) {
     await waitFor(() => expect(deleteLink).toBeCalled());
 }
 
-async function testCannotDeleteNonDraftLinkItem(component: React.ReactElement) {
+function testCannotDeleteNonDraftLinkItem(component: React.ReactElement) {
     const request = givenOpenLoc();
     givenLinkItem(request, "PUBLISHED");
     renderTesting(component);

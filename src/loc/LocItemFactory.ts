@@ -48,6 +48,7 @@ export function createDraftFileLocItem(parameters: FileItem, locItem?: MergedFil
         template: false,
         size: parameters.size,
         reviewedOn: locItem?.reviewedOn,
+        rejectReason: locItem?.rejectReason,
     };
 }
 
@@ -84,6 +85,7 @@ export function createDraftMetadataLocItem(metadataItem: MetadataItem, locItem?:
         newItem: locItem === undefined,
         template: false,
         reviewedOn: locItem?.reviewedOn,
+        rejectReason: locItem?.rejectReason,
     }
 }
 
@@ -177,6 +179,7 @@ export function createDocumentTemplateItem(templateItem: LocTemplateDocumentOrLi
         fees: toFeesClass(locItem?.fees),
         storageFeePaidBy: locItem?.storageFeePaidBy,
         reviewedOn: locItem?.reviewedOn,
+        rejectReason: locItem?.rejectReason,
     }
 }
 
@@ -205,6 +208,7 @@ export function createMetadataTemplateItem(templateItem: LocTemplateMetadataItem
         isSet: locItem !== undefined,
         fees: toFeesClass(locItem?.fees),
         reviewedOn: locItem?.reviewedOn,
+        rejectReason: locItem?.rejectReason,
     }
 }
 

@@ -40,6 +40,7 @@ export interface LocItem {
     fees?: Fees,
     storageFeePaidBy?: string;
     reviewedOn?: string;
+    rejectReason?: string;
 }
 
 export enum PublishStatus {
@@ -159,7 +160,7 @@ function renderDetails(loc: LocData | undefined, locItem: LocItem, viewer: Viewe
                 <LocPrivateFileDetails
                     item={ locItem }
                     documentClaimHistory={ loc?.locType === "Collection" && locItem.value && !locItem.template ? documentClaimHistory(viewer, loc, locItem.value) : undefined }
-                    storageFeePaidByRequester={ loc?.requesterLocId === undefined }
+                    otherFeesPaidByRequester={ loc?.requesterLocId === undefined }
                 />
             }
             { locItem.type === 'Linked LOC' && <LocLinkDetails item={ locItem } /> }
@@ -232,7 +233,7 @@ export function canDelete(account: ValidAccountId | undefined, item: LocItem, vi
     if (item.type === "Linked LOC") {
         return viewer === "LegalOfficer" && item.status === "DRAFT";
     } else {
-        return viewer === "User" && item.submitter?.address === account?.address && item.submitter?.type === account?.type
+        return item.submitter?.address === account?.address && item.submitter?.type === account?.type
             && (loc.status === "DRAFT" || loc.status === "OPEN")
             && (item.status === "DRAFT" || item.status === "REVIEW_ACCEPTED" || item.status === "REVIEW_REJECTED");
     }
@@ -243,8 +244,10 @@ export function canAdd(viewer: Viewer, loc: LocData) {
         || (viewer === "LegalOfficer" && (!loc.voidInfo && loc.status === "OPEN"));
 }
 
-export function canPublish(viewer: Viewer, loc: LocData, item: LocItem) {
-    return viewer === "User" && loc.status === "OPEN" && !loc.voidInfo && item.status === "REVIEW_ACCEPTED";
+export function canPublish(viewer: Viewer, account: ValidAccountId | undefined, loc: LocData, item: LocItem) {
+    return item.submitter?.address === account?.address && item.submitter?.type === account?.type
+        && loc.status === "OPEN" && !loc.voidInfo
+        && (item.status === "REVIEW_ACCEPTED" || viewer === "LegalOfficer");
 }
 
 export interface LinkData {

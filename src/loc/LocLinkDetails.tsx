@@ -5,7 +5,7 @@ import './LocItemDetails.css'
 import { LocItem } from "./LocItem";
 import NewTabLink from "../common/NewTabLink";
 import CopyPasteButton from "../common/CopyPasteButton";
-import EstimatedFees from "./EstimatedFees";
+import LocItemEstimatedFees from "./LocItemEstimatedFees";
 
 export interface Props {
     item: LocItem;
@@ -29,8 +29,9 @@ export default function LocLinkDetails(props: Props) {
                     <>
                         <div className="separator"></div>
                         <LocItemDetail label="Paid fees (LGNT)">
-                            <EstimatedFees
+                            <LocItemEstimatedFees
                                 fees={ props.item.fees }
+                                locItem={ props.item }
                                 centered={ false }
                                 hideTitle={ true }
                             />

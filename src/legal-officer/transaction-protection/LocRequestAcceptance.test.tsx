@@ -7,7 +7,7 @@ jest.mock("../../loc/LocContext");
 
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { UUID } from '@logion/node-api';
+import { UUID, Fees } from '@logion/node-api';
 import { LocData } from '@logion/client';
 
 import { shallowRender, typeByLabel } from '../../tests';
@@ -17,6 +17,8 @@ import LocRequestAcceptance from './LocRequestAcceptance';
 import { PendingRequest } from "src/__mocks__/LogionClientMock";
 import { mockSubmittableResult } from "src/logion-chain/__mocks__/SignatureMock";
 import { setLocState } from "src/loc/__mocks__/LocContextMock";
+import { mockSubmittable, setupApiMock } from 'src/__mocks__/LogionMock';
+import { It, Mock } from 'moq.ts';
 
 describe("LocRequestAcceptance", () => {
 
@@ -34,6 +36,14 @@ describe("LocRequestAcceptance", () => {
         };
         pendingLoc.data = () => ({ locType: "Transaction" });
         setLocState(pendingLoc);
+
+        setupApiMock(api => {
+            const submittable = mockSubmittable();
+            api.setup(instance => instance.polkadot.tx.logionLoc.createPolkadotTransactionLoc(It.IsAny(), It.IsAny())).returns(submittable.object());
+            const fees = new Mock<Fees>();
+            api.setup(instance => instance.fees.estimateCreateLoc(It.IsAny())).returnsAsync(fees.object());
+        });
+
         render(<LocRequestAcceptance requestToAccept={REQUEST} clearRequestToAccept={jest.fn()} />);
 
         // Accept request
@@ -57,6 +67,14 @@ describe("LocRequestAcceptance", () => {
         };
         pendingLoc.data = () => ({ locType: "Collection" });
         setLocState(pendingLoc);
+
+        setupApiMock(api => {
+            const submittable = mockSubmittable();
+            api.setup(instance => instance.polkadot.tx.logionLoc.createCollectionLoc(It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny())).returns(submittable.object());
+            const fees = new Mock<Fees>();
+            api.setup(instance => instance.fees.estimateCreateLoc(It.IsAny())).returnsAsync(fees.object());
+        });
+
         render(<LocRequestAcceptance requestToAccept={COLLECTION_LOC_REQUEST} clearRequestToAccept={jest.fn()} />);
 
         // Accept request

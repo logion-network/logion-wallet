@@ -8,6 +8,7 @@
     color: #e6007a;
     margin-bottom: 20px;
     text-align: left;
+    font-weight: bold;
 }
 
 .LocItemDetails .linked-loc .label,.LocItemDetails .linked-loc .value {

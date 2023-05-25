@@ -7,11 +7,11 @@ import { PublishProps, PublishState, PublishStatus, documentClaimHistory } from 
 import Icon from "../common/Icon";
 import { useLocContext } from "./LocContext";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
-import EstimatedFees from "./EstimatedFees";
 import LocPublicDataDetails from "./LocPublicDataDetails";
 import LocPrivateFileDetails from "./LocPrivateFileDetails";
 import LocLinkDetails from "./LocLinkDetails";
 import { useCommonContext } from "src/common/CommonContext";
+import LocItemEstimatedFees from "./LocItemEstimatedFees";
 
 export default function LocPublishButton(props: PublishProps) {
     const { viewer } = useCommonContext();
@@ -78,13 +78,14 @@ export default function LocPublishButton(props: PublishProps) {
                     <LocPrivateFileDetails
                         item={ props.locItem }
                         documentClaimHistory={ loc?.locType === "Collection" && props.locItem.value && !props.locItem.template ? documentClaimHistory(viewer, loc, props.locItem.value) : undefined }
-                        storageFeePaidByRequester={ loc?.requesterLocId === undefined }
+                        otherFeesPaidByRequester={ loc?.requesterLocId === undefined && loc?.sponsorshipId === undefined }
                     />
                 }
                 { props.locItem.type === 'Linked LOC' && <LocLinkDetails item={ props.locItem } /> }
 
-                <EstimatedFees
+                <LocItemEstimatedFees
                     fees={ fees }
+                    locItem={ props.locItem }
                     centered={ true }
                 />
             </ProcessStep>

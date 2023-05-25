@@ -3,7 +3,7 @@ import LocItemDetail from "./LocItemDetail";
 
 import './LocItemDetails.css'
 import { LocItem } from "./LocItem";
-import EstimatedFees from "./EstimatedFees";
+import LocItemEstimatedFees from "./LocItemEstimatedFees";
 
 export interface Props {
     item: LocItem
@@ -14,6 +14,13 @@ export default function LocPublicDataDetails(props: Props) {
     return (
         <Col className="LocItemDetails" style={{ width: "100%" }}>
             <div className="frame">
+                {
+                    props.item.rejectReason &&
+                    <>
+                        <LocItemDetail label="Rejection reason">{ props.item.rejectReason || "-" }</LocItemDetail>
+                        <div className="separator"></div>
+                    </>
+                }
                 <div className="frame-title">{ props.item.status === "DRAFT" ? "Data to be published" : "Published data" }</div>
                 <LocItemDetail label="Public name">{ props.item.name || "-" }</LocItemDetail>
                 <LocItemDetail label="Submitter ID" copyButtonText={ props.item.submitter?.address }>
@@ -25,8 +32,9 @@ export default function LocPublicDataDetails(props: Props) {
                     <>
                         <div className="separator"></div>
                         <LocItemDetail label="Paid fees (LGNT)">
-                            <EstimatedFees
+                            <LocItemEstimatedFees
                                 fees={ props.item.fees }
+                                locItem={ props.item }
                                 centered={ false }
                                 hideTitle={ true }
                             />

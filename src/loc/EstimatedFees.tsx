@@ -1,17 +1,25 @@
+import { LocData } from "@logion/client";
 import { Fees, Numbers, Currency } from "@logion/node-api";
 import AmountFormat from "src/common/AmountFormat";
 import { customClassName } from "src/common/types/Helpers";
 import "./EstimatedFees.css";
+import { useMemo } from "react";
+import { LocItem } from "./LocItem";
 
 export interface Props {
     fees: Fees | undefined | null;
     hideTitle?: boolean;
     centered?: boolean;
     inclusionFeePaidBy?: string;
-    storageFeePaidBy?: string;
+    otherFeesPaidBy?: string;
 }
 
 export default function EstimatedFees(props: Props) {
+
+    const showPaidBy = useMemo(() => {
+        return props.otherFeesPaidBy !== undefined || props.inclusionFeePaidBy !== undefined;
+    }, [ props.otherFeesPaidBy, props.inclusionFeePaidBy ]);
+
     if(!props.fees) {
         return null;
     }
@@ -30,7 +38,7 @@ export default function EstimatedFees(props: Props) {
                                 decimals={4}
                             />
                         </td>
-                        { (props.storageFeePaidBy !== undefined || props.inclusionFeePaidBy !== undefined) && <td>{ props.inclusionFeePaidBy || "" }</td> }
+                        { showPaidBy && <td>{ props.inclusionFeePaidBy || "" }</td> }
                     </tr>
                     { props.fees.storageFee !== undefined && 
                         <tr>
@@ -41,7 +49,19 @@ export default function EstimatedFees(props: Props) {
                                     decimals={4}
                                 />
                             </td>
-                            { (props.storageFeePaidBy !== undefined || props.inclusionFeePaidBy !== undefined) && <td>{ props.storageFeePaidBy || "" }</td> }
+                            { showPaidBy && <td>{ props.otherFeesPaidBy || "" }</td> }
+                        </tr>
+                    }
+                    { props.fees.legalFee !== undefined && 
+                        <tr>
+                            <td>Legal fee</td>
+                            <td>
+                                <AmountFormat
+                                    amount={ Currency.toPrefixedNumberAmount(props.fees.legalFee).convertTo(Numbers.NONE) }
+                                    decimals={4}
+                                />
+                            </td>
+                            { showPaidBy && <td>{ props.otherFeesPaidBy || "" }</td> }
                         </tr>
                     }
                     <tr>
@@ -52,10 +72,30 @@ export default function EstimatedFees(props: Props) {
                                 decimals={4}
                             />
                         </td>
-                        { (props.storageFeePaidBy !== undefined || props.inclusionFeePaidBy !== undefined) && <td></td> }
+                        { showPaidBy && <td></td> }
                     </tr>
                 </tbody>
             </table>
         </div>
     );
 }
+
+export function getOtherFeesPaidBy(loc: LocData) {
+    if(loc.requesterLocId === undefined && loc.sponsorshipId === undefined) {
+        return PAID_BY_REQUESTER;
+    } else if(loc.sponsorshipId) {
+        return PAID_BY_SPONSOR;
+    } else {
+        return PAID_BY_LEGAL_OFFICER;
+    }
+}
+
+export const PAID_BY_REQUESTER = "paid by requester";
+export const PAID_BY_SPONSOR = "paid by sponsor";
+export const PAID_BY_LEGAL_OFFICER = "paid by legal officer";
+
+export function geInclusionFeePaidBy(loc: LocData, item: LocItem) {
+    return item.submitter?.type === "Polkadot" && item.submitter?.address === loc.ownerAddress ? PAID_BY_LEGAL_OFFICER : PAID_BY_SUBMITTER;
+}
+
+export const PAID_BY_SUBMITTER = "paid by submitter";

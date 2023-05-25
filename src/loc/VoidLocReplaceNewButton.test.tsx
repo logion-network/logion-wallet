@@ -1,5 +1,3 @@
-import { SubmittableExtrinsic } from "@polkadot/api-base/types";
-import { Compact, u128 } from "@polkadot/types-codec";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { setVoidLocMock } from "src/legal-officer/__mocks__/ClientMock";
@@ -7,8 +5,6 @@ import { setVoidLocMock } from "src/legal-officer/__mocks__/ClientMock";
 import { mockSubmittableResult } from "src/logion-chain/__mocks__/SignatureMock";
 import { clickByName, typeByLabel } from "src/tests";
 import VoidLocReplaceNewButton from "./VoidLocReplaceNewButton";
-import { It, Mock } from "moq.ts";
-import { setupApiMock } from "src/__mocks__/LogionMock";
 import { PendingRequest } from "src/__mocks__/LogionClientMock";
 import { setLocState } from "./__mocks__/LocContextMock";
 
