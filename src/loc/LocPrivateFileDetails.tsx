@@ -6,14 +6,14 @@ import LocItemDetail from "./LocItemDetail";
 
 import './LocItemDetails.css'
 import { LocItem } from "./LocItem";
-import EstimatedFees from "./EstimatedFees";
+import LocItemEstimatedFees from "./LocItemEstimatedFees";
 
 export interface Props {
     item: LocItem;
     documentClaimHistory?: string;
     fileName?: string;
     fileType?: string;
-    storageFeePaidByRequester: boolean;
+    otherFeesPaidByRequester: boolean;
 }
 
 export default function LocPrivateFileDetails(props: Props) {
@@ -46,12 +46,11 @@ export default function LocPrivateFileDetails(props: Props) {
                         <>
                             <div className="separator"></div>
                             <LocItemDetail label="Paid fees (LGNT)">
-                                <EstimatedFees
+                                <LocItemEstimatedFees
                                     fees={ props.item.fees }
+                                    locItem={ props.item }
                                     centered={ false }
                                     hideTitle={ true }
-                                    inclusionFeePaidBy="paid by Legal Officer"
-                                    storageFeePaidBy={ props.storageFeePaidByRequester ? "paid by requester" : "paid by Legal Officer" }
                                 />
                             </LocItemDetail>
                         </>

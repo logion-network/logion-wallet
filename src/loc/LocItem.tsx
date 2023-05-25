@@ -159,7 +159,7 @@ function renderDetails(loc: LocData | undefined, locItem: LocItem, viewer: Viewe
                 <LocPrivateFileDetails
                     item={ locItem }
                     documentClaimHistory={ loc?.locType === "Collection" && locItem.value && !locItem.template ? documentClaimHistory(viewer, loc, locItem.value) : undefined }
-                    storageFeePaidByRequester={ loc?.requesterLocId === undefined }
+                    otherFeesPaidByRequester={ loc?.requesterLocId === undefined }
                 />
             }
             { locItem.type === 'Linked LOC' && <LocLinkDetails item={ locItem } /> }
