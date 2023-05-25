@@ -87,7 +87,7 @@ export default function LocTemplateItems(props: Props) {
                 buttons.push(<ReviewItemButtons key={++key} locItem={ item }/>);
             }
 
-            if(canPublish(viewer, loc, item)) {
+            if(canPublish(viewer, accounts?.current?.accountId, loc, item)) {
                 if(item.type === "Data") {
                     buttons.push(<LocPublishPublicDataButton key={++key} locItem={ item } locId={ locId } />);
                 } else if(item.type === "Document") {

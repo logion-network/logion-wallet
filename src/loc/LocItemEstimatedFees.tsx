@@ -1,5 +1,5 @@
 import { Fees } from "@logion/node-api";
-import EstimatedFees from "./EstimatedFees";
+import EstimatedFees, { geInclusionFeePaidBy, getOtherFeesPaidBy } from "./EstimatedFees";
 import { LocItem } from "./LocItem";
 import { useLocContext } from "./LocContext";
 
@@ -13,13 +13,17 @@ export interface Props {
 export default function LocItemEstimatedFees(props: Props) {
     const { loc } = useLocContext();
 
+    if(!loc) {
+        return null;
+    }
+
     return (
         <EstimatedFees
             fees={ props.fees }
             centered={ props.centered }
             hideTitle={ props.hideTitle }
-            inclusionFeePaidBy={ props.locItem.submitter === loc?.ownerAddress ? "paid by Legal Officer" : "paid by submitter" }
-            otherFeesPaidBy={ loc?.requesterLocId === undefined && loc?.sponsorshipId === undefined ? "paid by requester" : "paid by Legal Officer" }
+            inclusionFeePaidBy={ geInclusionFeePaidBy(loc, props.locItem) }
+            otherFeesPaidBy={ getOtherFeesPaidBy(loc) }
         />
     );
 }

@@ -1,13 +1,14 @@
 import { LocData } from "@logion/client";
-import { UUID } from "@logion/node-api";
+import { UUID, Fees } from "@logion/node-api";
 import { getByText, render, screen, waitFor } from "@testing-library/react";
 import userEvent from '@testing-library/user-event';
 
-import { axiosMock, setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../logion-chain/__mocks__/LogionChainMock';
+import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../logion-chain/__mocks__/LogionChainMock';
 import { shallowRender } from "../tests";
 import AcceptRejectLocRequest from "./AcceptRejectLocRequest";
 import "./AcceptRejectLocRequest.tsx";
-import { mockValidPolkadotAccountId } from 'src/__mocks__/LogionMock';
+import { mockSubmittable, mockValidPolkadotAccountId, setupApiMock } from 'src/__mocks__/LogionMock';
+import { It, Mock } from "moq.ts";
 
 jest.mock("../logion-chain");
 jest.mock('./Model');
@@ -19,7 +20,7 @@ describe("AcceptRejectLocRequest", () => {
         setCurrentAddress(DEFAULT_LEGAL_OFFICER_ACCOUNT);
     });
 
-    it("Renders pending requests", () => {
+    it("renders pending requests", () => {
         const tree = shallowRender(<AcceptRejectLocRequest loc={{
             id: new UUID(REQUEST_ID),
             ownerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
@@ -48,7 +49,13 @@ describe("AcceptRejectLocRequest", () => {
         await waitFor(() => expect(screen.queryByTestId(`modal-reject-${REQUEST_ID}`)).not.toBeInTheDocument());
     });
 
-    it("Click on accept opens acceptance process", async () => {
+    it("opens acceptance process when click on accept", async () => {
+        setupApiMock(api => {
+            const submittable = mockSubmittable();
+            api.setup(instance => instance.polkadot.tx.logionLoc.createPolkadotTransactionLoc(It.IsAny(), It.IsAny())).returns(submittable.object());
+            const fees = new Mock<Fees>();
+            api.setup(instance => instance.fees.estimateCreateLoc(It.IsAny())).returnsAsync(fees.object());
+        });
         const tree = render(<AcceptRejectLocRequest loc={{
             id: new UUID(REQUEST_ID),
             legalOfficerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",

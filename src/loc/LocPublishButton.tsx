@@ -86,6 +86,7 @@ export default function LocPublishButton(props: PublishProps) {
                 <LocItemEstimatedFees
                     fees={ fees }
                     locItem={ props.locItem }
+                    centered={ true }
                 />
             </ProcessStep>
             <ProcessStep

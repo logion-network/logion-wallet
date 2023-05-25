@@ -1,6 +1,7 @@
 import { AccountType, ValidAccountId, LogionNodeApiClass, LegalOfficerCase } from "@logion/node-api";
 import { It, Mock } from "moq.ts";
-import type { Text } from '@polkadot/types-codec';
+import type { Text, Compact, u128 } from '@polkadot/types-codec';
+import type { SubmittableExtrinsic } from '@polkadot/api/promise/types';
 import { TEST_WALLET_USER } from "src/wallet-user/TestData";
 
 export const DEFAULT_LEGAL_OFFICER = mockValidPolkadotAccountId("5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY"); // Alice
@@ -29,8 +30,15 @@ api.setup(instance => instance.polkadot.rpc.system.localPeerId()).returnsAsync(l
 
 api.setup(instance => instance.polkadot.createType(It.IsAny())).returnsAsync({});
 
+const locId = new Mock<Compact<u128>>();
+api.setup(instance => instance.adapters.toLocId(It.IsAny())).returns(locId.object());
+
 export function setupApiMock(setupFunction: (api: Mock<LogionNodeApiClass>) => void) {
     setupFunction(api);
+}
+
+export function mockSubmittable(): Mock<SubmittableExtrinsic> {
+    return new Mock<SubmittableExtrinsic>();
 }
 
 export const CLOSED_IDENTITY_LOC_ID = "85833363768713528858922097642089825569";
