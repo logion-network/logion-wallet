@@ -91,6 +91,7 @@ export default function LocPublishButton(props: PublishProps) {
             </ProcessStep>
             <ProcessStep
                 active={ publishState.status === PublishStatus.PUBLISHING }
+                title={ `Publish ${props.itemType} (1/2)` }
                 hasSideEffect
             >
                 <ClientExtrinsicSubmitter
@@ -104,6 +105,7 @@ export default function LocPublishButton(props: PublishProps) {
             </ProcessStep>
             <ProcessStep
                 active={ publishState.status === PublishStatus.PUBLISHED || publishState.status === PublishStatus.ERROR }
+                title={ `Publish ${props.itemType} (2/2)` }
                 nextSteps={[
                     {
                         buttonText: 'OK',

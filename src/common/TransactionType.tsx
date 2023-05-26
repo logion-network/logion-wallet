@@ -100,10 +100,20 @@ export default function TransactionType(props: Props) {
 }
 
 export function buildTransactionType(props: Props): string {
+    let baseType;
     if(props.walletType === "Wallet") {
-        return enrichTransactionType(props.transaction, props.address, props.vaultAddress);
+        baseType = enrichTransactionType(props.transaction, props.address, props.vaultAddress);
     } else {
-        return transactionType(props.transaction, props.address);
+        baseType = transactionType(props.transaction, props.address);
+    }
+    if(props.transaction.type === "EXTRINSIC" || props.transaction.type === "VAULT_OUT") {
+        return baseType;
+    } else if(props.transaction.type === "LEGAL_FEE") {
+        return `${ baseType } (legal fee)`;
+    } else if(props.transaction.type === "STORAGE_FEE") {
+        return `${ baseType } (storage fee)`;
+    } else {
+        return `${ baseType } (fees)`;
     }
 }
 
@@ -121,18 +131,18 @@ export function transactionType(transaction: Transaction, address: string): stri
         return palletMethods[transaction.method]
     } else {
         if (transaction.pallet === "balances") {
-                if (transaction.method.startsWith("transfer")) {
-                    if (transaction.from === address) {
-                        return "Sent";
-                    } else {
-                        return "Received";
-                    }
+            if (transaction.method.startsWith("transfer")) {
+                if (transaction.from === address) {
+                    return "Sent";
                 } else {
-                    return other(transaction);
+                    return "Received";
                 }
             } else {
                 return other(transaction);
             }
+        } else {
+            return other(transaction);
+        }
     }
 }
 
