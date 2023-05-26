@@ -7,7 +7,8 @@ describe("TransactionType", () => {
     it("has the right type for a logion pallet/method", () => {
         const transaction = {
             pallet: "logionLoc",
-            method: "addCollectionItem"
+            method: "addCollectionItem",
+            type: "EXTRINSIC",
         } as Transaction;
         const result = shallowRender(<TransactionType transaction={ transaction } walletType="Wallet" address="" />);
         expect(result).toMatchSnapshot();
@@ -16,7 +17,8 @@ describe("TransactionType", () => {
     it("generates a default type pallet/method", () => {
         const transaction = {
             pallet: "unknownPallet",
-            method: "unknownMethod"
+            method: "unknownMethod",
+            type: "EXTRINSIC",
         } as Transaction;
         const result = shallowRender(<TransactionType transaction={ transaction } walletType="Wallet" address="" />);
         expect(result).toMatchSnapshot();

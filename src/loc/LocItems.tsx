@@ -75,7 +75,7 @@ export function LocItems(props: LocItemsProps) {
             buttons.push(<Button key={++key} onClick={ () => requestReview(locItem) }>Request review</Button>);
         }
 
-        if(viewer === "LegalOfficer" && locItem.status === "REVIEW_PENDING") {
+        if(viewer === "LegalOfficer" && locItem.status === "REVIEW_PENDING" && loc.status === "OPEN") {
             buttons.push(<ReviewItemButtons key={++key} locItem={ locItem }/>);
         }
 
