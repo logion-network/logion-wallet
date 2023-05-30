@@ -250,6 +250,14 @@ export function canPublish(viewer: Viewer, account: ValidAccountId | undefined, 
         && (item.status === "REVIEW_ACCEPTED" || viewer === "LegalOfficer");
 }
 
+export function canRequestReview(viewer: Viewer, loc: LocData, item: LocItem) {
+    return viewer === "User" && item.status === "DRAFT" && loc.status === "OPEN";
+}
+
+export function canReview(viewer: Viewer, loc: LocData, item: LocItem) {
+    return viewer === "LegalOfficer" && item.status === "REVIEW_PENDING" && loc.status === "OPEN";
+}
+
 export interface LinkData {
     linkedLoc: LocData;
     linkDetailsPath: string;

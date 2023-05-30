@@ -8,7 +8,7 @@ import { useResponsiveContext } from "src/common/Responsive";
 import Table from "src/common/Table";
 import { useLogionChain } from "src/logion-chain";
 import { useLocContext } from "./LocContext";
-import { buildItemTableColumns, canAdd, canDelete, canPublish, LocItem, useDeleteFileCallback, useDeleteLinkCallback, useDeleteMetadataCallback, useRequestReviewCallback } from "./LocItem";
+import { buildItemTableColumns, canAdd, canDelete, canPublish, canRequestReview, canReview, LocItem, useDeleteFileCallback, useDeleteLinkCallback, useDeleteMetadataCallback, useRequestReviewCallback } from "./LocItem";
 import LocLinkButton from "./LocLinkButton";
 import { LocPrivateFileButton } from "./LocPrivateFileButton";
 import { LocPublicDataButton } from "./LocPublicDataButton";
@@ -79,11 +79,11 @@ export default function LocTemplateItems(props: Props) {
         }
 
         if(item.isSet) {
-            if(viewer === "User" && item.status === "DRAFT" && loc.status === "OPEN") {
+            if(canRequestReview(viewer, loc, item)) {
                 buttons.push(<Button key={++key} onClick={ () => requestReview(item) }>Request review</Button>);
             }
 
-            if(viewer === "LegalOfficer" && item.status === "REVIEW_PENDING") {
+            if(canReview(viewer, loc, item)) {
                 buttons.push(<ReviewItemButtons key={++key} locItem={ item }/>);
             }
 
