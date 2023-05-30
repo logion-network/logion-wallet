@@ -214,6 +214,12 @@ export default function LocRequestAcceptance(props: Props) {
                         onChange={ value => setLimits(value) }
                         colors={ colorTheme.dialog }
                     />
+                    <EstimatedFees
+                        fees={ fees }
+                        centered={ true }
+                        inclusionFeePaidBy={ PAID_BY_LEGAL_OFFICER }
+                        otherFeesPaidBy={ getOtherFeesPaidBy(props.requestToAccept) }
+                    />
                     </>
                 }
             </ProcessStep>

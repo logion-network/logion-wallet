@@ -15,7 +15,7 @@ import LocPublishPublicDataButton from "./LocPublishPublicDataButton";
 import './LocItems.css';
 import { Viewer, useCommonContext } from "src/common/CommonContext";
 import { useLocContext } from "./LocContext";
-import { buildItemTableColumns, LocItem, useDeleteMetadataCallback, useDeleteFileCallback, canDelete, canPublish, useDeleteLinkCallback, useRequestReviewCallback } from "./LocItem";
+import { buildItemTableColumns, LocItem, useDeleteMetadataCallback, useDeleteFileCallback, canDelete, canPublish, useDeleteLinkCallback, useRequestReviewCallback, canReview, canRequestReview } from "./LocItem";
 import StatusCell from "src/common/StatusCell";
 import { POLKADOT } from "src/common/ColorTheme";
 import AcknowledgeButton from "./AcknowledgeButton";
@@ -71,11 +71,11 @@ export function LocItems(props: LocItemsProps) {
         const buttons: Child[] = [];
         let key = 0;
 
-        if(viewer === "User" && locItem.status === "DRAFT" && loc.status === "OPEN") {
+        if(canRequestReview(viewer, loc, locItem)) {
             buttons.push(<Button key={++key} onClick={ () => requestReview(locItem) }>Request review</Button>);
         }
 
-        if(viewer === "LegalOfficer" && locItem.status === "REVIEW_PENDING" && loc.status === "OPEN") {
+        if(canReview(viewer, loc, locItem)) {
             buttons.push(<ReviewItemButtons key={++key} locItem={ locItem }/>);
         }
 
