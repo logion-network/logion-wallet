@@ -1,3 +1,4 @@
+import { LogionClient } from "@logion/client";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { setVoidLocMock } from "src/legal-officer/__mocks__/ClientMock";
@@ -6,7 +7,8 @@ import { mockSubmittableResult } from "src/logion-chain/__mocks__/SignatureMock"
 import { clickByName, typeByLabel } from "src/tests";
 import VoidLocReplaceNewButton from "./VoidLocReplaceNewButton";
 import { PendingRequest } from "src/__mocks__/LogionClientMock";
-import { setLocState } from "./__mocks__/LocContextMock";
+import { setClientMock } from "src/logion-chain/__mocks__/LogionChainMock";
+import { mockLegalOfficerLocRequest } from "./TestData";
 
 jest.mock("../common/CommonContext");
 jest.mock("../common/Model");
@@ -28,12 +30,9 @@ describe("VoidLocReplaceNewButton", () => {
             return params.locState;
         };
         setVoidLocMock(voidLocMock);
-        const pendingLoc = new PendingRequest();
-        pendingLoc.legalOfficer.accept = async (params: any) => {
-            params.callback(mockSubmittableResult(true));
-            return params.locState;
-        };
-        setLocState(pendingLoc);
+
+        mockLegalOfficerLocRequest();
+
         const dialog = await renderAndOpenDialog();
 
         const button = screen.getAllByRole("button", { name: "Void and replace by a NEW LOC" })[1];

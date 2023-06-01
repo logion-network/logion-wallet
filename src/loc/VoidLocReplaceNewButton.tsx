@@ -127,7 +127,7 @@ export default function VoidLocReplaceNewButton() {
                         requestToCreate={ newLocRequest }
                         exit={ () => { setNewLocRequest(null); } }
                         onSuccess={ () => {
-                            const voidInfo = {
+                            const voidInfo: FullVoidInfo = {
                                 reason,
                                 replacer: new UUID(newLocRequest.id)
                             };

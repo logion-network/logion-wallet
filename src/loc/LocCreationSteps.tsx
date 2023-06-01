@@ -1,11 +1,14 @@
 import { useState, useEffect, useCallback } from 'react';
 import { LocRequest, PendingRequest } from '@logion/client';
+import { UUID } from "@logion/node-api";
 
 import { useLogionChain } from '../logion-chain';
 import ClientExtrinsicSubmitter, { Call, CallCallback } from '../ClientExtrinsicSubmitter';
 import ProcessStep from '../legal-officer/ProcessStep';
 import Alert from '../common/Alert';
 import { useLocContext } from './LocContext';
+import { useLegalOfficerContext } from 'src/legal-officer/LegalOfficerContext';
+import { fetchAllLocsParams } from './LegalOfficerLocContext';
 
 enum CreationStatus {
     NONE,
@@ -27,33 +30,41 @@ export interface Props {
 }
 
 export default function LocCreationSteps(props: Props) {
-    const { signer } = useLogionChain();
+    const { signer, client } = useLogionChain();
     const { mutateLocState } = useLocContext();
     const [ creationState, setCreationState ] = useState<CreationState>({ status: CreationStatus.LOC_CREATION_PENDING });
     const [ call, setCall ] = useState<Call>();
+    const { refreshLocs, legalOfficer } = useLegalOfficerContext();
 
     const setStatus = useCallback((status: CreationStatus) => {
         setCreationState({ ...creationState, status });
     }, [ creationState, setCreationState ]);
 
-    const { exit, onSuccess, requestToCreate } = props;
+    const { exit, onSuccess, requestToCreate: locToCreate } = props;
 
     // LOC creation
     useEffect(() => {
-        if (creationState.status === CreationStatus.LOC_CREATION_PENDING) {
+        if (legalOfficer && locToCreate && client && creationState.status === CreationStatus.LOC_CREATION_PENDING) {
             setStatus(CreationStatus.CREATING_LOC);
-            const call = async (callback: CallCallback) =>
-                mutateLocState(async current => {
-                    if(signer && current instanceof PendingRequest) {
-                        return current.legalOfficer.accept({
-                            signer,
-                            callback,
-                        });
-                    } else {
-                        return current;
-                    }
-                });
-            setCall(() => call);
+            (async function() {
+                const locs = await client.locsState(fetchAllLocsParams(legalOfficer));
+                const pending = locs.findById(new UUID(locToCreate.id)) as PendingRequest;
+                const call = async (callback: CallCallback) =>
+                    mutateLocState(async current => {
+                        if(signer) {
+                            const loc = await pending.legalOfficer.accept({
+                                signer,
+                                callback,
+                            });
+                            const locs = loc.locsState();
+                            refreshLocs(locs);
+                            return locs;
+                        } else {
+                            return current;
+                        }
+                    });
+                setCall(() => call);
+            })();
         }
     }, [
         creationState,
@@ -76,7 +87,7 @@ export default function LocCreationSteps(props: Props) {
         }
     }, [ creationState, clear, onSuccess ])
 
-    if (requestToCreate === null) {
+    if (locToCreate === null) {
         return null;
     }
 

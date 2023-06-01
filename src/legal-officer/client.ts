@@ -113,10 +113,10 @@ export async function voidLoc(params: {
     const currentLocState = getCurrent(locState);
     const { data, axios, api } = inspectState(currentLocState);
     let submittable;
-    if(data.voidInfo?.replacer) {
+    if(voidInfo.replacer) {
         submittable = api.polkadot.tx.logionLoc.makeVoidAndReplace(
             api.adapters.toLocId(data.id),
-            api.adapters.toLocId(data.voidInfo.replacer),
+            api.adapters.toLocId(voidInfo.replacer),
         );
     } else {
         submittable = api.polkadot.tx.logionLoc.makeVoid(

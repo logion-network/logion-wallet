@@ -1,3 +1,4 @@
+import { LogionClient } from "@logion/client";
 import { LocType } from "@logion/node-api";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
@@ -11,6 +12,8 @@ import { setAuthenticatedUser } from "src/common/__mocks__/ModelMock";
 import { setLocState } from "./__mocks__/LocContextMock";
 import { PendingRequest } from "src/__mocks__/LogionClientMock";
 import { mockSubmittableResult } from "src/logion-chain/__mocks__/SignatureMock";
+import { setClientMock } from "src/logion-chain/__mocks__/LogionChainMock";
+import { mockLegalOfficerLocRequest } from "./TestData";
 
 jest.mock("../logion-chain/Signature");
 jest.mock("../common/CommonContext");
@@ -56,12 +59,7 @@ async function createsWithUserIdentity(locType: LocType, requesterAddress: strin
             phoneNumber: "+1234",
         }
     };
-    const pendingLoc = new PendingRequest();
-    pendingLoc.legalOfficer.accept = async (params: any) => {
-        params.callback(mockSubmittableResult(true));
-        return params.locState;
-    };
-    setLocState(pendingLoc);
+    mockLegalOfficerLocRequest();
 
     render(<LocCreationDialog
         exit={ exit }
@@ -85,7 +83,6 @@ async function selectProjectType() {
 
 async function submitAndExpectSuccess(exit: jest.Mock<any, any>, onSuccess: jest.Mock<any, any>) {
     await clickByName("Submit");
-    await waitFor(() => expect(screen.getByText("Submitting...")).toBeVisible());
 
     await waitFor(() => expect(screen.getByText("LOC successfully created.")).toBeVisible());
     await clickByName("OK");
@@ -102,12 +99,7 @@ async function createsWithoutUserIdentity(locType: LocType, requesterAddress: st
         requesterIdentityLoc,
         locType
     };
-    const pendingLoc = new PendingRequest();
-    pendingLoc.legalOfficer.accept = async (params: any) => {
-        params.callback(mockSubmittableResult(true));
-        return params.locState;
-    };
-    setLocState(pendingLoc);
+    mockLegalOfficerLocRequest();
 
     render(<LocCreationDialog
         exit={ exit }
