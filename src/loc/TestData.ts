@@ -1,5 +1,8 @@
 import { LegalOfficerCase, UUID } from "@logion/node-api";
-import { LocData } from "@logion/client";
+import { LocData, LogionClient } from "@logion/client";
+import { PendingRequest } from "src/__mocks__/LogionClientMock";
+import { mockSubmittableResult } from "src/logion-chain/__mocks__/SignatureMock";
+import { setClientMock } from "src/logion-chain/__mocks__/LogionChainMock";
 
 export function buildLocRequest(locId: UUID, loc: LegalOfficerCase): LocData {
     return {
@@ -40,4 +43,21 @@ export function buildLocRequest(locId: UUID, loc: LegalOfficerCase): LocData {
         verifiedIssuer: false,
         issuers: [],
     };
+}
+
+export function mockLegalOfficerLocRequest(): PendingRequest {
+    const pendingLoc = new PendingRequest();
+    pendingLoc.legalOfficer.accept = async (params: any) => {
+        params.callback(mockSubmittableResult(true));
+        return pendingLoc;
+    };
+    const locsState = {
+        findById: () => pendingLoc,
+    };
+    const client = {
+        locsState: () => Promise.resolve(locsState),
+    };
+    pendingLoc.locsState = () => locsState;
+    setClientMock(client as unknown as LogionClient);
+    return pendingLoc;
 }
