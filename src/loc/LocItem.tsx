@@ -235,7 +235,7 @@ export function canDelete(account: ValidAccountId | undefined, item: LocItem, vi
     } else {
         return item.submitter?.address === account?.address && item.submitter?.type === account?.type
             && (loc.status === "DRAFT" || loc.status === "OPEN")
-            && (item.status === "DRAFT" || item.status === "REVIEW_ACCEPTED" || item.status === "REVIEW_REJECTED");
+            && (item.status === "DRAFT" || (item.status === "REVIEW_ACCEPTED" && item.submitter?.type === "Polkadot") || item.status === "REVIEW_REJECTED");
     }
 }
 
@@ -244,10 +244,10 @@ export function canAdd(viewer: Viewer, loc: LocData) {
         || (viewer === "LegalOfficer" && (!loc.voidInfo && loc.status === "OPEN"));
 }
 
-export function canPublish(account: ValidAccountId | undefined, loc: LocData, item: LocItem) {
+export function canPublish(viewer: Viewer, account: ValidAccountId | undefined, loc: LocData, item: LocItem) {
     return item.status === "REVIEW_ACCEPTED"
         && loc.status === "OPEN" && !loc.voidInfo
-        && (item.submitter?.address === account?.address && item.submitter?.type === account?.type);
+        && ((item.submitter?.type === "Polkadot" && item.submitter?.address === account?.address) || (item.submitter?.type !== "Polkadot" && viewer === "LegalOfficer"));
 }
 
 export function canRequestReview(viewer: Viewer, loc: LocData, item: LocItem) {
