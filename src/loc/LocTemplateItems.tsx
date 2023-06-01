@@ -87,7 +87,7 @@ export default function LocTemplateItems(props: Props) {
                 buttons.push(<ReviewItemButtons key={++key} locItem={ item }/>);
             }
 
-            if(canPublish(viewer, accounts?.current?.accountId, loc, item)) {
+            if(canPublish(accounts?.current?.accountId, loc, item)) {
                 if(item.type === "Data") {
                     buttons.push(<LocPublishPublicDataButton key={++key} locItem={ item } locId={ locId } />);
                 } else if(item.type === "Document") {
@@ -108,7 +108,7 @@ export default function LocTemplateItems(props: Props) {
                 );
             }
 
-            if(item.status === "PUBLISHED") {
+            if(item.status === "PUBLISHED" && item.type !== "Linked LOC") {
                 if(viewer === "User") {
                     buttons.push(<StatusCell
                         key={++key}

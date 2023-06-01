@@ -244,10 +244,10 @@ export function canAdd(viewer: Viewer, loc: LocData) {
         || (viewer === "LegalOfficer" && (!loc.voidInfo && loc.status === "OPEN"));
 }
 
-export function canPublish(viewer: Viewer, account: ValidAccountId | undefined, loc: LocData, item: LocItem) {
+export function canPublish(account: ValidAccountId | undefined, loc: LocData, item: LocItem) {
     return item.status === "REVIEW_ACCEPTED"
         && loc.status === "OPEN" && !loc.voidInfo
-        && ((item.submitter?.address === account?.address && item.submitter?.type === account?.type ) || viewer === "LegalOfficer");
+        && (item.submitter?.address === account?.address && item.submitter?.type === account?.type);
 }
 
 export function canRequestReview(viewer: Viewer, loc: LocData, item: LocItem) {

@@ -80,21 +80,21 @@ export function LocItems(props: LocItemsProps) {
         }
 
         if(locItem.type === 'Data') {
-            if(canPublish(props.viewer, accounts?.current?.accountId, loc!, locItem)) {
+            if(canPublish(accounts?.current?.accountId, loc!, locItem)) {
                 buttons.push(<LocPublishPublicDataButton key={++key} locItem={ locItem } locId={ locId } />);
             }
             if(canDelete(accounts?.current?.accountId, locItem, props.viewer, loc!)) {
                 buttons.push(<DeleteButton key={++key} locItem={ locItem } action={ deleteMetadata } />);
             }
         } else if(locItem.type === 'Linked LOC') {
-            if(canPublish(props.viewer, accounts?.current?.accountId, loc!, locItem)) {
+            if(canPublish(accounts?.current?.accountId, loc!, locItem)) {
                 buttons.push(<LocPublishLinkButton  key={++key}locItem={ locItem } locId={ locId } />);
             }
             if(canDelete(accounts?.current?.accountId, locItem, props.viewer, loc!)) {
                 buttons.push(<DeleteButton key={++key} locItem={ locItem } action={ deleteLinkCallback } />);
             }
         } else if(locItem.type === 'Document') {
-            if(canPublish(props.viewer, accounts?.current?.accountId, loc!, locItem)) {
+            if(canPublish(accounts?.current?.accountId, loc!, locItem)) {
                 buttons.push(<LocPublishPrivateFileButton key={++key} locItem={ locItem } locId={ locId } />);
             }
             if(canDelete(accounts?.current?.accountId, locItem, props.viewer, loc!)) {
@@ -102,7 +102,7 @@ export function LocItems(props: LocItemsProps) {
             }
         }
 
-        if(locItem.status === "PUBLISHED") {
+        if(locItem.status === "PUBLISHED" && locItem.type !== "Linked LOC") {
             if(viewer === "User") {
                 buttons.push(<StatusCell
                     key={++key}
