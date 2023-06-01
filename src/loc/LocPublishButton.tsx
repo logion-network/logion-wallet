@@ -3,18 +3,16 @@ import Button from "../common/Button";
 import { useState, useEffect } from "react";
 import ProcessStep from "../legal-officer/ProcessStep";
 import Alert from "../common/Alert";
-import { PublishProps, PublishState, PublishStatus, documentClaimHistory } from "./LocItem";
+import { PublishProps, PublishState, PublishStatus } from "./LocItem";
 import Icon from "../common/Icon";
 import { useLocContext } from "./LocContext";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
 import LocPublicDataDetails from "./LocPublicDataDetails";
 import LocPrivateFileDetails from "./LocPrivateFileDetails";
 import LocLinkDetails from "./LocLinkDetails";
-import { useCommonContext } from "src/common/CommonContext";
 import LocItemEstimatedFees from "./LocItemEstimatedFees";
 
 export default function LocPublishButton(props: PublishProps) {
-    const { viewer } = useCommonContext();
     const [ publishState, setPublishState ] = useState<PublishState>({ status: PublishStatus.NONE });
     const [ call, setCall ] = useState<Call>();
     const { mutateLocState, loc } = useLocContext();
@@ -77,7 +75,6 @@ export default function LocPublishButton(props: PublishProps) {
                     props.locItem.type === 'Document' &&
                     <LocPrivateFileDetails
                         item={ props.locItem }
-                        documentClaimHistory={ loc?.locType === "Collection" && props.locItem.value && !props.locItem.template ? documentClaimHistory(viewer, loc, props.locItem.value) : undefined }
                         otherFeesPaidByRequester={ loc?.requesterLocId === undefined && loc?.sponsorshipId === undefined }
                     />
                 }

@@ -108,7 +108,7 @@ export default function LocTemplateItems(props: Props) {
                 );
             }
 
-            if(item.status === "PUBLISHED") {
+            if(item.status === "PUBLISHED" && item.type !== "Linked LOC") {
                 if(viewer === "User") {
                     buttons.push(<StatusCell
                         key={++key}

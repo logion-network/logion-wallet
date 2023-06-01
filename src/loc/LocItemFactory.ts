@@ -222,7 +222,7 @@ export function createLinkTemplateItem(
         name: linkData?.linkedLoc.description,
         value: locItem?.id.toDecimalString(),
         newItem: false,
-        status: locItem && locItem.published ? "PUBLISHED" : "DRAFT",
+        status: locItem && locItem.published ? "ACKNOWLEDGED" : "DRAFT",
         submitter: locItem ? ownerAddress : undefined,
         timestamp: locItem?.addedOn || null,
         type: "Linked LOC",

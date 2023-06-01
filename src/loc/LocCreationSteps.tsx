@@ -67,6 +67,10 @@ export default function LocCreationSteps(props: Props) {
             })();
         }
     }, [
+        client,
+        legalOfficer,
+        locToCreate,
+        refreshLocs,
         creationState,
         setStatus,
         mutateLocState,
