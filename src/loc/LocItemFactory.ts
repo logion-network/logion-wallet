@@ -160,7 +160,9 @@ interface Timestamp {
 }
 
 function createPublishedLinkedLocItem(parameters: CreateLocLinkedLocItemParameters & Timestamp): ItemAndRefreshFlag {
-    return publish(createDraftLinkedLocItem(parameters, false), parameters.timestamp, parameters.link.fees);
+    const publishedItem = publish(createDraftLinkedLocItem(parameters, false), parameters.timestamp, parameters.link.fees);
+    publishedItem.locItem.status = "ACKNOWLEDGED";
+    return publishedItem;
 }
 
 export function createDocumentTemplateItem(templateItem: LocTemplateDocumentOrLink, locItem?: MergedFile): LocItem {
