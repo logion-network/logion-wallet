@@ -343,11 +343,11 @@ function getNotSubmitted(items: Item[]): number {
 }
 
 function shouldUpload(locState: LocRequestState | null, existingItem: UploadableCollectionItem | undefined): boolean {
-    const mustUpload = uploadExpected(locState);
-    return mustUpload && (existingItem === undefined || (existingItem.files.length > 0 && !existingItem.files[0].uploaded));
+    return collectionAcceptsUpload(locState)
+        && (existingItem !== undefined && existingItem.files.length > 0 && !existingItem.files[0].uploaded);
 }
 
-function uploadExpected(locState: LocRequestState | null): boolean {
+function collectionAcceptsUpload(locState: LocRequestState | null): boolean {
     const collection = locState as ClosedCollectionLoc;
     return collection.data().collectionCanUpload !== undefined && collection.data().collectionCanUpload === true;
 }
