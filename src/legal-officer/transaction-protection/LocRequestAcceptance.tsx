@@ -118,7 +118,7 @@ export default function LocRequestAcceptance(props: Props) {
                             });
                         } else {
                             const apiLimits = await toApiLimits(client.logionApi, limits);
-                            return current.legalOfficer.acceptCollection({
+                            return current.legalOfficer.accept({
                                 ...apiLimits,
                                 signer,
                                 callback,

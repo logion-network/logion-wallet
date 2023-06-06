@@ -40,8 +40,9 @@ exports[`LegalOfficerLocContextProvider renders 1`] = `
         "statuses": Array [
           "CLOSED",
           "OPEN",
-          "REJECTED",
-          "REQUESTED",
+          "REVIEW_REJECTED",
+          "REVIEW_PENDING",
+          "REVIEW_ACCEPTED",
         ],
       },
     }

@@ -25,7 +25,7 @@ describe("AcceptRejectLocRequest", () => {
             id: new UUID(REQUEST_ID),
             ownerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
             requesterAddress: mockValidPolkadotAccountId("5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"),
-            status: "REQUESTED"
+            status: "REVIEW_PENDING"
         } as LocData} rejectPath="/" />);
         expect(tree).toMatchSnapshot();
     });
@@ -35,7 +35,7 @@ describe("AcceptRejectLocRequest", () => {
             id: new UUID(REQUEST_ID),
             ownerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
             requesterAddress: mockValidPolkadotAccountId("5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"),
-            status: "REQUESTED"
+            status: "REVIEW_PENDING"
         } as LocData} rejectPath="/" />);
         const rejectButton = screen.getByTestId(`reject-${REQUEST_ID}`);
         await userEvent.click(rejectButton);

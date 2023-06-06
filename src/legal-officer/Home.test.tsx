@@ -40,7 +40,7 @@ test("renders", () => {
             ownerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
             requesterAddress: mockValidPolkadotAccountId("5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"),
             description: "LOC description",
-            status: "REQUESTED"
+            status: "REVIEW_PENDING"
             } as LocData)
         } as PendingRequest
     ]);

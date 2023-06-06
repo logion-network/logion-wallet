@@ -3,14 +3,14 @@ import LocStatusCell from './LocStatusCell';
 
 it("renders REQUESTED", () => {
     const tree = shallowRender(<LocStatusCell
-        status="REQUESTED"
+        status="REVIEW_PENDING"
     />);
     expect(tree).toMatchSnapshot();
 });
 
 it("renders REJECTED", () => {
     const tree = shallowRender(<LocStatusCell
-        status="REJECTED"
+        status="REVIEW_REJECTED"
     />);
     expect(tree).toMatchSnapshot();
 });
