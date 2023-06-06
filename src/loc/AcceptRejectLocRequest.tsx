@@ -7,7 +7,7 @@ import Button from "src/common/Button";
 import ButtonGroup from "src/common/ButtonGroup";
 import Icon from "src/common/Icon";
 import PolkadotFrame from "src/common/PolkadotFrame";
-import ProcessStep from "src/legal-officer/ProcessStep";
+import ProcessStep from "../common/ProcessStep";
 import LocRequestAcceptance from "src/legal-officer/transaction-protection/LocRequestAcceptance";
 import { useLocContext } from "./LocContext";
 
@@ -15,7 +15,7 @@ import "./AcceptRejectLocRequest.css";
 
 export interface Props {
     loc: LocData;
-    rejectPath: string;
+    noLocCreationPath: string;
 }
 
 export default function AcceptRejectLocRequest(props: Props) {
@@ -25,9 +25,12 @@ export default function AcceptRejectLocRequest(props: Props) {
     const { mutateLocState } = useLocContext();
     const navigate = useNavigate();
 
-    const clearRequestToAccept = useCallback(() => {
+    const clearRequestToAccept = useCallback((onlyAccepted: boolean) => {
         setRequestToAccept(null);
-    }, []);
+        if (onlyAccepted) {
+            navigate(props.noLocCreationPath);
+        }
+    }, [ navigate, props.noLocCreationPath ]);
 
     const handleClose = () => setRequestToReject(null);
 
@@ -35,7 +38,7 @@ export default function AcceptRejectLocRequest(props: Props) {
         await mutateLocState(async current => {
             if(current instanceof PendingRequest) {
                 const newState = current.legalOfficer.reject(reason);
-                navigate(props.rejectPath);
+                navigate(props.noLocCreationPath);
                 return newState;
             } else {
                 return current;
@@ -43,14 +46,16 @@ export default function AcceptRejectLocRequest(props: Props) {
         });
     };
 
+    const question = props.loc.requesterAddress?.type === "Polkadot" ?
+        `Do you accept this request ?` :
+        `Do you accept this request and create the related ${ props.loc.locType } LOC?`;
+
     return (
         <PolkadotFrame
             className="AcceptRejectLocRequest"
         >
             <div className="text-action-container">
-                <div className="question">
-                    Do you accept this request and create the related { props.loc.locType } LOC?
-                </div>
+                <div className="question">{ question }</div>
                 <div>
                     <ButtonGroup>
                         <Button

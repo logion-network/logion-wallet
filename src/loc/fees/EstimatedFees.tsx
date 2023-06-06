@@ -1,10 +1,10 @@
 import { LocData } from "@logion/client";
 import { Fees, Numbers, Currency } from "@logion/node-api";
-import AmountFormat from "src/common/AmountFormat";
-import { customClassName } from "src/common/types/Helpers";
-import "./EstimatedFees.css";
+import AmountFormat from "../../common/AmountFormat";
+import { customClassName } from "../../common/types/Helpers";
+import "../EstimatedFees.css";
 import { useMemo } from "react";
-import { LocItem } from "./LocItem";
+import { LocItem } from "../LocItem";
 
 export interface Props {
     fees: Fees | undefined | null;

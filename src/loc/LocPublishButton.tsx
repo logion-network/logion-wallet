@@ -1,7 +1,7 @@
 import { Fees } from "@logion/node-api";
 import Button from "../common/Button";
 import { useState, useEffect } from "react";
-import ProcessStep from "../legal-officer/ProcessStep";
+import ProcessStep from "../common/ProcessStep";
 import Alert from "../common/Alert";
 import { PublishProps, PublishState, PublishStatus } from "./LocItem";
 import Icon from "../common/Icon";

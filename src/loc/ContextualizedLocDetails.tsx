@@ -105,7 +105,7 @@ export default function ContextualizedLocDetails() {
                 loc.status === "REVIEW_PENDING" &&
                 <AcceptRejectLocRequest
                     loc={ loc }
-                    rejectPath={ locRequestsPath('Identity') }
+                    noLocCreationPath={ locRequestsPath(loc.locType) }
                 />
             }
             { loc.locType === 'Collection' && loc.closed &&

@@ -1,27 +1,22 @@
 import { useState, useEffect, useCallback } from 'react';
-import { ChainTime, Fees, LogionNodeApiClass } from '@logion/node-api';
+import { Fees } from '@logion/node-api';
 import { LocData, PendingRequest } from '@logion/client';
-import type { SubmittableExtrinsic } from '@polkadot/api/promise/types';
-
 import { useLogionChain } from '../../logion-chain';
 import { useCommonContext } from '../../common/CommonContext';
 import ClientExtrinsicSubmitter, { Call } from '../../ClientExtrinsicSubmitter';
-
-import ProcessStep from '../ProcessStep';
-
-import CollectionLocMessage from '../../loc/CollectionLocMessage';
-import CollectionLimitsForm, { CollectionLimits, DEFAULT_LIMITS } from '../../loc/CollectionLimitsForm';
+import ProcessStep from '../../common/ProcessStep';
 import { useLegalOfficerContext } from "../LegalOfficerContext";
 import { useLocContext } from 'src/loc/LocContext';
 import { CallCallback } from '../../ClientExtrinsicSubmitter';
-import EstimatedFees, { PAID_BY_LEGAL_OFFICER, getOtherFeesPaidBy } from 'src/loc/EstimatedFees';
+import EstimatedFees, { PAID_BY_LEGAL_OFFICER, getOtherFeesPaidBy } from '../../loc/fees/EstimatedFees';
+import { AcceptedRequest } from "@logion/client/dist/Loc";
+import { FeeEstimator } from "../../loc/fees/FeeEstimator";
 
 enum AcceptStatus {
     NONE,
     LOC_CREATION_PENDING,
     CREATING_LOC,
     ACCEPTED,
-    DONE
 }
 
 interface AcceptState {
@@ -30,18 +25,17 @@ interface AcceptState {
 
 export interface Props {
     requestToAccept: LocData | null,
-    clearRequestToAccept: () => void,
+    clearRequestToAccept: (onlyAccepted: boolean) => void,
 }
 
 export default function LocRequestAcceptance(props: Props) {
     const { signer, client } = useLogionChain();
-    const { refresh, colorTheme } = useCommonContext();
+    const { refresh } = useCommonContext();
     const { refreshLocs } = useLegalOfficerContext();
     const { mutateLocState } = useLocContext();
     const [ acceptState, setAcceptState ] = useState<AcceptState>({status: AcceptStatus.NONE});
     const [ call, setCall ] = useState<Call>();
     const [ error, setError ] = useState<boolean>(false);
-    const [ limits, setLimits ] = useState<CollectionLimits>(DEFAULT_LIMITS);
     const [ fees, setFees ] = useState<Fees | undefined | null>();
 
     const setStatus = useCallback((status: AcceptStatus) => {
@@ -51,79 +45,42 @@ export default function LocRequestAcceptance(props: Props) {
     useEffect(() => {
         if(fees === undefined && props.requestToAccept && client) {
             const request = props.requestToAccept;
-            const locId = client.logionApi.adapters.toLocId(request.id);
-            const requesterAddress = request.requesterAddress?.address || "";
             setFees(null);
+            const estimator = new FeeEstimator(client);
             (async function() {
-                let submittable: SubmittableExtrinsic;
-                if(request.locType === "Collection") {
-                    const apiLimits = await toApiLimits(client.logionApi, limits);
-                    submittable = client.logionApi.polkadot.tx.logionLoc.createCollectionLoc(
-                        locId,
-                        requesterAddress,
-                        apiLimits.collectionLastBlockSubmission || null,
-                        apiLimits.collectionMaxSize || null,
-                        apiLimits.collectionCanUpload,
-                    );
-                } else if(request.locType === "Identity") {
-                    if(request.requesterAddress) {
-                        submittable = client.logionApi.polkadot.tx.logionLoc.createPolkadotIdentityLoc(
-                            locId,
-                            requesterAddress,
-                        );
-                    } else {
-                        submittable = client.logionApi.polkadot.tx.logionLoc.createLogionIdentityLoc(
-                            locId,
-                        );
-                    }
-                } else if(request.locType === "Transaction") {
-                    if(request.requesterAddress) {
-                        submittable = client.logionApi.polkadot.tx.logionLoc.createPolkadotTransactionLoc(
-                            locId,
-                            requesterAddress,
-                        );
-                    } else if(request.requesterLocId) {
-                        submittable = client.logionApi.polkadot.tx.logionLoc.createLogionTransactionLoc(
-                            locId,
-                            client.logionApi.adapters.toNonCompactLocId(request.requesterLocId),
-                        );
-                    } else {
-                        throw new Error("Transaction LOC without requester");
-                    }
-                } else {
-                    throw new Error("Unsupported LOC type");
-                }
-
-                let fees = await client.logionApi.fees.estimateCreateLoc({
-                    origin: client.currentAddress?.address || "",
-                    locType: request.locType,
-                    submittable,
-                });
+                let fees = await estimator.estimateCreateLoc(request);
                 setFees(fees);
             })();
         }
-    }, [ fees, client, props.requestToAccept, limits ]);
+    }, [ fees, client, props.requestToAccept ]);
 
-    // LOC creation
+    const close = useCallback((onlyAccepted: boolean) => {
+        console.log("close()")
+        setStatus(AcceptStatus.NONE);
+        props.clearRequestToAccept(onlyAccepted);
+    }, [ setStatus, props ]);
+
+    const closeAndRefresh = useCallback((onlyAccepted: boolean) => {
+        close(onlyAccepted);
+        refresh(false);
+        refreshLocs();
+    }, [ refresh, close, refreshLocs ]);
+
+    // LOC Acceptance
     useEffect(() => {
         if(acceptState.status === AcceptStatus.LOC_CREATION_PENDING) {
             setStatus(AcceptStatus.CREATING_LOC);
             setCall(() => async (callback: CallCallback) =>
                 await mutateLocState(async current => {
                     if(client && signer && current instanceof PendingRequest) {
-                        if(current.data().locType !== "Collection") {
-                            return current.legalOfficer.accept({
-                                signer,
-                                callback,
-                            });
-                        } else {
-                            const apiLimits = await toApiLimits(client.logionApi, limits);
-                            return current.legalOfficer.accept({
-                                ...apiLimits,
-                                signer,
-                                callback,
-                            });
+                        const accepted = await current.legalOfficer.accept({
+                            signer,
+                            callback,
+                        });
+                        if (accepted instanceof AcceptedRequest) {
+                            closeAndRefresh(true);
                         }
+                        return accepted;
                     } else {
                         return current;
                     }
@@ -135,25 +92,9 @@ export default function LocRequestAcceptance(props: Props) {
         mutateLocState,
         signer,
         setStatus,
-        limits,
         client,
+        closeAndRefresh,
     ]);
-
-    const resetFields = useCallback(() => {
-        setLimits(DEFAULT_LIMITS);
-    }, [ setLimits ]);
-
-    const close = useCallback(() => {
-        setStatus(AcceptStatus.NONE);
-        resetFields();
-        props.clearRequestToAccept();
-    }, [ setStatus, props, resetFields ]);
-
-    const closeAndRefresh = useCallback(() => {
-        close();
-        refresh(false);
-        refreshLocs();
-    }, [ refresh, close, refreshLocs ]);
 
     if(props.requestToAccept === null) {
         return null;
@@ -181,13 +122,13 @@ export default function LocRequestAcceptance(props: Props) {
                         buttonText: 'Cancel',
                         buttonVariant: 'secondary-polkadot',
                         mayProceed: true,
-                        callback: close,
+                        callback: () => close(false),
                     },
                     {
                         id: 'proceed',
                         buttonText: 'Proceed',
                         buttonVariant: 'polkadot',
-                        mayProceed: acceptState.status === AcceptStatus.NONE && (props.requestToAccept.locType !== 'Collection' || limits.areValid()),
+                        mayProceed: acceptState.status === AcceptStatus.NONE,
                         callback: () => setStatus(AcceptStatus.LOC_CREATION_PENDING),
                     }
                 ]}
@@ -195,8 +136,7 @@ export default function LocRequestAcceptance(props: Props) {
                 {
                     props.requestToAccept.locType !== 'Collection' &&
                     <>
-                    <p>You are about to create the LOC and accept the request</p>
-                    <p>The LOC's creation will require your signature and may take several seconds.</p>
+                    <p>You are about to accept the LOC request</p>
                     <EstimatedFees
                         fees={ fees }
                         centered={ true }
@@ -208,12 +148,6 @@ export default function LocRequestAcceptance(props: Props) {
                 {
                     props.requestToAccept.locType === 'Collection' &&
                     <>
-                    <CollectionLocMessage/>
-                    <CollectionLimitsForm
-                        value={ limits }
-                        onChange={ value => setLimits(value) }
-                        colors={ colorTheme.dialog }
-                    />
                     <EstimatedFees
                         fees={ fees }
                         centered={ true }
@@ -233,7 +167,7 @@ export default function LocRequestAcceptance(props: Props) {
                         buttonText: 'Close',
                         buttonVariant: 'primary',
                         mayProceed: acceptState.status === AcceptStatus.ACCEPTED || error,
-                        callback: closeAndRefresh,
+                        callback: () => closeAndRefresh(false),
                     }
                 ]}
             >
@@ -246,24 +180,4 @@ export default function LocRequestAcceptance(props: Props) {
             </ProcessStep>
         </div>
     );
-}
-
-async function toApiLimits(api: LogionNodeApiClass, limits: CollectionLimits) {
-    let lastBlock: bigint | undefined;
-    if(limits.hasDateLimit) {
-        const now = await ChainTime.now(api!.polkadot);
-        const atDateLimit = await now.atDate(limits.dateLimit!);
-        lastBlock = atDateLimit.currentBlock;
-    }
-
-    let maxSize: number | undefined;
-    if(limits.hasDataNumberLimit) {
-        maxSize = Number(limits.dataNumberLimit);
-    }
-
-    return {
-        collectionCanUpload: limits.canUpload,
-        collectionLastBlockSubmission: lastBlock,
-        collectionMaxSize: maxSize,
-    }
 }
