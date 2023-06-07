@@ -2,7 +2,7 @@ import { act, render, screen, waitFor } from "@testing-library/react";
 import { LegalOfficerData } from "@logion/node-api";
 import { PalletLoAuthorityListLegalOfficerData } from "@polkadot/types/lookup";
 
-import { setOnchainSettings } from "src/legal-officer/__mocks__/LegalOfficerContextMock";
+import { setOnchainSettings, refreshOnchainSettings } from "src/legal-officer/__mocks__/LegalOfficerContextMock";
 import { DEFAULT_LEGAL_OFFICER_ACCOUNT, setCurrentAddress } from "src/logion-chain/__mocks__/LogionChainMock";
 import { finalizeSubmission } from "src/logion-chain/__mocks__/SignatureMock";
 import { clickByName, typeByLabel } from "src/tests";
@@ -28,6 +28,10 @@ describe("ChainData", () => {
             }
         };
         setOnchainSettings(settings);
+        setupApiMock(api => {
+            api.setup(instance => instance.queries.getAvailableRegions()).returns([ "Europe" ]);
+            api.setup(instance => instance.queries.getDefaultRegion()).returns("Europe");
+        });
 
         render(<ChainData/>);
 
@@ -43,10 +47,14 @@ describe("ChainData", () => {
             hostData: {
                 nodeId: "12D3KooWBmAwcd4PJNJvfV89HwE48nwkRmAgo8Vy3uQEyNNHBox2",
                 baseUrl: "https://node.logion.network",
+                region: "Europe",
             }
         };
         setOnchainSettings(settings);
         setupApiMock(api => {
+            api.setup(instance => instance.queries.getAvailableRegions()).returns([ "Europe" ]);
+            api.setup(instance => instance.queries.getDefaultRegion()).returns("Europe");
+
             const data = new Mock<PalletLoAuthorityListLegalOfficerData>();
             api.setup(instance => instance.adapters.toPalletLoAuthorityListLegalOfficerDataHost(It.IsAny())).returns(data.object());
             const submittable = new Mock<SubmittableExtrinsic<"promise">>();
@@ -59,7 +67,6 @@ describe("ChainData", () => {
         await act(() => clickByName("Publish to blockchain"));
         act(() => finalizeSubmission());
 
-        await waitFor(() => expect(screen.getByText("Submission successful.")).toBeVisible());
-        expect(screen.getByRole("button", {name: "Publish to blockchain"})).not.toBeDisabled();
+        expect(refreshOnchainSettings).toBeCalled();
     })
 });

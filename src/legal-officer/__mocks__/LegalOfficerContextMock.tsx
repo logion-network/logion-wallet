@@ -128,7 +128,7 @@ let legalOfficer = PATRICK;
 
 let refreshLegalOfficer = jest.fn();
 
-let refreshOnchainSettings = jest.fn();
+export let refreshOnchainSettings = jest.fn();
 
 let locsState: LocsState = {
     findById: () => { throw new Error("not found") },

@@ -54,6 +54,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                 "line2": "Rue Beckers 17",
                 "postalCode": "1040",
               },
+              "region": "Europe",
               "token": undefined,
               "userIdentity": Object {
                 "email": "patrick@logion.network",
@@ -84,6 +85,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                   "line2": "Rue Beckers 17",
                   "postalCode": "1040",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "patrick@logion.network",
@@ -110,6 +112,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                   "line2": "14, place Jules Ferry",
                   "postalCode": "69006",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "g.grain@adrastee-lyon.fr",
@@ -136,6 +139,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                   "line2": "7 rue Jean Francois Champollion Parc Comitec",
                   "postalCode": "18000",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "alain.barland@auxilia-conseils.com",
@@ -166,6 +170,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                 "line2": "14, place Jules Ferry",
                 "postalCode": "69006",
               },
+              "region": "Europe",
               "token": undefined,
               "userIdentity": Object {
                 "email": "g.grain@adrastee-lyon.fr",
@@ -202,6 +207,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                 "line2": "14, place Jules Ferry",
                 "postalCode": "69006",
               },
+              "region": "Europe",
               "token": undefined,
               "userIdentity": Object {
                 "email": "g.grain@adrastee-lyon.fr",
@@ -232,6 +238,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                   "line2": "Rue Beckers 17",
                   "postalCode": "1040",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "patrick@logion.network",
@@ -258,6 +265,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                   "line2": "14, place Jules Ferry",
                   "postalCode": "69006",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "g.grain@adrastee-lyon.fr",
@@ -284,6 +292,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                   "line2": "7 rue Jean Francois Champollion Parc Comitec",
                   "postalCode": "18000",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "alain.barland@auxilia-conseils.com",
@@ -314,6 +323,7 @@ exports[`ProtectionRecoveryRequest activated protection request 1`] = `
                 "line2": "Rue Beckers 17",
                 "postalCode": "1040",
               },
+              "region": "Europe",
               "token": undefined,
               "userIdentity": Object {
                 "email": "patrick@logion.network",
@@ -449,6 +459,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                 "line2": "Rue Beckers 17",
                 "postalCode": "1040",
               },
+              "region": "Europe",
               "token": undefined,
               "userIdentity": Object {
                 "email": "patrick@logion.network",
@@ -479,6 +490,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                   "line2": "Rue Beckers 17",
                   "postalCode": "1040",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "patrick@logion.network",
@@ -505,6 +517,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                   "line2": "14, place Jules Ferry",
                   "postalCode": "69006",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "g.grain@adrastee-lyon.fr",
@@ -531,6 +544,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                   "line2": "7 rue Jean Francois Champollion Parc Comitec",
                   "postalCode": "18000",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "alain.barland@auxilia-conseils.com",
@@ -561,6 +575,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                 "line2": "14, place Jules Ferry",
                 "postalCode": "69006",
               },
+              "region": "Europe",
               "token": undefined,
               "userIdentity": Object {
                 "email": "g.grain@adrastee-lyon.fr",
@@ -597,6 +612,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                 "line2": "14, place Jules Ferry",
                 "postalCode": "69006",
               },
+              "region": "Europe",
               "token": undefined,
               "userIdentity": Object {
                 "email": "g.grain@adrastee-lyon.fr",
@@ -627,6 +643,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                   "line2": "Rue Beckers 17",
                   "postalCode": "1040",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "patrick@logion.network",
@@ -653,6 +670,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                   "line2": "14, place Jules Ferry",
                   "postalCode": "69006",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "g.grain@adrastee-lyon.fr",
@@ -679,6 +697,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                   "line2": "7 rue Jean Francois Champollion Parc Comitec",
                   "postalCode": "18000",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "alain.barland@auxilia-conseils.com",
@@ -709,6 +728,7 @@ exports[`ProtectionRecoveryRequest activated recovery request 1`] = `
                 "line2": "Rue Beckers 17",
                 "postalCode": "1040",
               },
+              "region": "Europe",
               "token": undefined,
               "userIdentity": Object {
                 "email": "patrick@logion.network",
@@ -831,6 +851,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                 "line2": "Rue Beckers 17",
                 "postalCode": "1040",
               },
+              "region": "Europe",
               "token": undefined,
               "userIdentity": Object {
                 "email": "patrick@logion.network",
@@ -861,6 +882,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                   "line2": "Rue Beckers 17",
                   "postalCode": "1040",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "patrick@logion.network",
@@ -887,6 +909,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                   "line2": "14, place Jules Ferry",
                   "postalCode": "69006",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "g.grain@adrastee-lyon.fr",
@@ -913,6 +936,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                   "line2": "7 rue Jean Francois Champollion Parc Comitec",
                   "postalCode": "18000",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "alain.barland@auxilia-conseils.com",
@@ -943,6 +967,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                 "line2": "14, place Jules Ferry",
                 "postalCode": "69006",
               },
+              "region": "Europe",
               "token": undefined,
               "userIdentity": Object {
                 "email": "g.grain@adrastee-lyon.fr",
@@ -979,6 +1004,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                 "line2": "14, place Jules Ferry",
                 "postalCode": "69006",
               },
+              "region": "Europe",
               "token": undefined,
               "userIdentity": Object {
                 "email": "g.grain@adrastee-lyon.fr",
@@ -1009,6 +1035,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                   "line2": "Rue Beckers 17",
                   "postalCode": "1040",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "patrick@logion.network",
@@ -1035,6 +1062,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                   "line2": "14, place Jules Ferry",
                   "postalCode": "69006",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "g.grain@adrastee-lyon.fr",
@@ -1061,6 +1089,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                   "line2": "7 rue Jean Francois Champollion Parc Comitec",
                   "postalCode": "18000",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "alain.barland@auxilia-conseils.com",
@@ -1091,6 +1120,7 @@ exports[`ProtectionRecoveryRequest pending protection request 1`] = `
                 "line2": "Rue Beckers 17",
                 "postalCode": "1040",
               },
+              "region": "Europe",
               "token": undefined,
               "userIdentity": Object {
                 "email": "patrick@logion.network",
@@ -1226,6 +1256,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                 "line2": "Rue Beckers 17",
                 "postalCode": "1040",
               },
+              "region": "Europe",
               "token": undefined,
               "userIdentity": Object {
                 "email": "patrick@logion.network",
@@ -1256,6 +1287,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                   "line2": "Rue Beckers 17",
                   "postalCode": "1040",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "patrick@logion.network",
@@ -1282,6 +1314,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                   "line2": "14, place Jules Ferry",
                   "postalCode": "69006",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "g.grain@adrastee-lyon.fr",
@@ -1308,6 +1341,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                   "line2": "7 rue Jean Francois Champollion Parc Comitec",
                   "postalCode": "18000",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "alain.barland@auxilia-conseils.com",
@@ -1338,6 +1372,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                 "line2": "14, place Jules Ferry",
                 "postalCode": "69006",
               },
+              "region": "Europe",
               "token": undefined,
               "userIdentity": Object {
                 "email": "g.grain@adrastee-lyon.fr",
@@ -1374,6 +1409,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                 "line2": "14, place Jules Ferry",
                 "postalCode": "69006",
               },
+              "region": "Europe",
               "token": undefined,
               "userIdentity": Object {
                 "email": "g.grain@adrastee-lyon.fr",
@@ -1404,6 +1440,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                   "line2": "Rue Beckers 17",
                   "postalCode": "1040",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "patrick@logion.network",
@@ -1430,6 +1467,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                   "line2": "14, place Jules Ferry",
                   "postalCode": "69006",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "g.grain@adrastee-lyon.fr",
@@ -1456,6 +1494,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                   "line2": "7 rue Jean Francois Champollion Parc Comitec",
                   "postalCode": "18000",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "alain.barland@auxilia-conseils.com",
@@ -1486,6 +1525,7 @@ exports[`ProtectionRecoveryRequest pending recovery request 1`] = `
                 "line2": "Rue Beckers 17",
                 "postalCode": "1040",
               },
+              "region": "Europe",
               "token": undefined,
               "userIdentity": Object {
                 "email": "patrick@logion.network",
@@ -1611,6 +1651,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                 "line2": "Rue Beckers 17",
                 "postalCode": "1040",
               },
+              "region": "Europe",
               "token": undefined,
               "userIdentity": Object {
                 "email": "patrick@logion.network",
@@ -1641,6 +1682,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                   "line2": "Rue Beckers 17",
                   "postalCode": "1040",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "patrick@logion.network",
@@ -1667,6 +1709,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                   "line2": "14, place Jules Ferry",
                   "postalCode": "69006",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "g.grain@adrastee-lyon.fr",
@@ -1693,6 +1736,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                   "line2": "7 rue Jean Francois Champollion Parc Comitec",
                   "postalCode": "18000",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "alain.barland@auxilia-conseils.com",
@@ -1723,6 +1767,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                 "line2": "14, place Jules Ferry",
                 "postalCode": "69006",
               },
+              "region": "Europe",
               "token": undefined,
               "userIdentity": Object {
                 "email": "g.grain@adrastee-lyon.fr",
@@ -1759,6 +1804,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                 "line2": "14, place Jules Ferry",
                 "postalCode": "69006",
               },
+              "region": "Europe",
               "token": undefined,
               "userIdentity": Object {
                 "email": "g.grain@adrastee-lyon.fr",
@@ -1789,6 +1835,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                   "line2": "Rue Beckers 17",
                   "postalCode": "1040",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "patrick@logion.network",
@@ -1815,6 +1862,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                   "line2": "14, place Jules Ferry",
                   "postalCode": "69006",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "g.grain@adrastee-lyon.fr",
@@ -1841,6 +1889,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                   "line2": "7 rue Jean Francois Champollion Parc Comitec",
                   "postalCode": "18000",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "alain.barland@auxilia-conseils.com",
@@ -1871,6 +1920,7 @@ exports[`ProtectionRecoveryRequest protection request 1`] = `
                 "line2": "Rue Beckers 17",
                 "postalCode": "1040",
               },
+              "region": "Europe",
               "token": undefined,
               "userIdentity": Object {
                 "email": "patrick@logion.network",
@@ -1998,6 +2048,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                 "line2": "Rue Beckers 17",
                 "postalCode": "1040",
               },
+              "region": "Europe",
               "token": undefined,
               "userIdentity": Object {
                 "email": "patrick@logion.network",
@@ -2028,6 +2079,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                   "line2": "Rue Beckers 17",
                   "postalCode": "1040",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "patrick@logion.network",
@@ -2054,6 +2106,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                   "line2": "14, place Jules Ferry",
                   "postalCode": "69006",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "g.grain@adrastee-lyon.fr",
@@ -2080,6 +2133,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                   "line2": "7 rue Jean Francois Champollion Parc Comitec",
                   "postalCode": "18000",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "alain.barland@auxilia-conseils.com",
@@ -2110,6 +2164,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                 "line2": "14, place Jules Ferry",
                 "postalCode": "69006",
               },
+              "region": "Europe",
               "token": undefined,
               "userIdentity": Object {
                 "email": "g.grain@adrastee-lyon.fr",
@@ -2146,6 +2201,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                 "line2": "14, place Jules Ferry",
                 "postalCode": "69006",
               },
+              "region": "Europe",
               "token": undefined,
               "userIdentity": Object {
                 "email": "g.grain@adrastee-lyon.fr",
@@ -2176,6 +2232,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                   "line2": "Rue Beckers 17",
                   "postalCode": "1040",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "patrick@logion.network",
@@ -2202,6 +2259,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                   "line2": "14, place Jules Ferry",
                   "postalCode": "69006",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "g.grain@adrastee-lyon.fr",
@@ -2228,6 +2286,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                   "line2": "7 rue Jean Francois Champollion Parc Comitec",
                   "postalCode": "18000",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "alain.barland@auxilia-conseils.com",
@@ -2258,6 +2317,7 @@ exports[`ProtectionRecoveryRequest recovery request 1`] = `
                 "line2": "Rue Beckers 17",
                 "postalCode": "1040",
               },
+              "region": "Europe",
               "token": undefined,
               "userIdentity": Object {
                 "email": "patrick@logion.network",

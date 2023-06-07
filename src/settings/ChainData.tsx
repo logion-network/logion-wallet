@@ -1,3 +1,4 @@
+import { Region } from "@logion/node-api";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Col, Form, Row } from "react-bootstrap";
 import { flushSync } from "react-dom";
@@ -13,6 +14,7 @@ import { useLogionChain } from "src/logion-chain";
 import "./ChainData.css";
 import Table, { Cell, EmptyTableMessage } from "src/common/Table";
 import StaticLabelValue from "src/common/StaticLabelValue";
+import Select from "src/common/Select";
 
 export default function ChainData() {
     const { colorTheme } = useCommonContext();
@@ -20,23 +22,27 @@ export default function ChainData() {
     const { api, accounts, getOfficer } = useLogionChain();
     const [ baseUrl, setBaseUrl ] = useState("");
     const [ nodeId, setNodeId ] = useState("");
+    const [ region, setRegion ] = useState<Region>();
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
     const [ done, setDone ] = useState<"success" | "failure">();
 
+    const availableRegions = useMemo(() => api?.queries.getAvailableRegions(), [ api ]);
+
     useEffect(() => {
-        if(onchainSettings) {
+        if(api && onchainSettings) {
             setBaseUrl(onchainSettings.hostData?.baseUrl || "");
             setNodeId(onchainSettings.hostData?.nodeId || "");
+            setRegion(onchainSettings.hostData?.region || api.queries.getDefaultRegion());
         }
-    }, [ onchainSettings ]);
+    }, [ api, onchainSettings ]);
 
     const publish = useCallback(() => {
-        if(accounts && api && accounts.current) {
+        if(accounts && api && accounts.current && region) {
             setDone(undefined);
             flushSync(() => setSignAndSubmit(null)); // Reset
 
             const legalOfficerAddress = accounts.current.accountId.address;
-            const legalOfficerData = api.adapters.toPalletLoAuthorityListLegalOfficerDataHost({ nodeId, baseUrl });
+            const legalOfficerData = api.adapters.toPalletLoAuthorityListLegalOfficerDataHost({ nodeId, baseUrl, region });
             const signAndSubmit: SignAndSubmit = (setResult, setError) => signAndSend({
                 signerId: legalOfficerAddress,
                 submittable: api.polkadot.tx.loAuthorityList.updateLegalOfficer(legalOfficerAddress, legalOfficerData),
@@ -45,10 +51,11 @@ export default function ChainData() {
             });
             setSignAndSubmit(() => signAndSubmit);
         }
-    }, [ accounts, api, baseUrl, nodeId ]);
+    }, [ accounts, api, baseUrl, nodeId, region ]);
 
     const onSuccess = useCallback(() => {
         setDone("success");
+        setSignAndSubmit(null);
         refreshOnchainSettings();
     }, [ refreshOnchainSettings ]);
 
@@ -58,8 +65,9 @@ export default function ChainData() {
 
     const isNoChange = useMemo(() => {
         return baseUrl === (onchainSettings?.hostData?.baseUrl || "")
-            && nodeId === (onchainSettings?.hostData?.nodeId || "");
-    }, [ baseUrl, nodeId, onchainSettings ]);
+            && nodeId === (onchainSettings?.hostData?.nodeId || "")
+            && region === (onchainSettings?.hostData?.region || "");
+    }, [ baseUrl, nodeId, region, onchainSettings ]);
 
     return (
         <div className="ChainData">
@@ -111,6 +119,32 @@ export default function ChainData() {
                             /> }
                             colors={ colorTheme.frame }
                             feedback={ nodeId ? undefined : "The node ID must be set" }
+                        />
+                    }
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    {
+                        onchainSettings?.isHost === false &&
+                        <StaticLabelValue
+                            label="Region"
+                            value={ region || "" }
+                        />
+                    }
+                    {
+                        onchainSettings?.isHost === true &&
+                        <FormGroup
+                            id="region"
+                            label="Region"
+                            control={ <Select
+                                options={ availableRegions?.map(region => ({ label: region, value: region })) || [] }
+                                value={ region || null }
+                                onChange={ region => setRegion(region || undefined) }
+                                disabled={ onchainSettings.hostData?.region !== undefined }
+                            /> }
+                            colors={ colorTheme.frame }
+                            feedback={ region ? undefined : "The region must be set" }
                         />
                     }
                 </Col>

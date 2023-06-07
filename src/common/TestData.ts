@@ -187,6 +187,7 @@ export const PATRICK: LegalOfficer = {
     node: "http://logion.patrick.com",
     logoUrl: "",
     nodeId: "",
+    region: "Europe",
 };
 
 export const GUILLAUME: LegalOfficer = {
@@ -210,6 +211,7 @@ export const GUILLAUME: LegalOfficer = {
     node: "http://logion.guillaume.com",
     logoUrl: "",
     nodeId: "",
+    region: "Europe",
 };
 
 export const ALAIN: LegalOfficer = {
@@ -233,6 +235,7 @@ export const ALAIN: LegalOfficer = {
     node: "http://logion.alain.com",
     logoUrl: "",
     nodeId: "",
+    region: "Europe",
 };
 
 export const legalOfficers: LegalOfficer[] = [

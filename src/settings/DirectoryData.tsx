@@ -393,5 +393,6 @@ function toLegalOfficer(formValues: FormValues): LegalOfficer {
             phoneNumber: formValues.phoneNumber,
         },
         nodeId: "",
+        region: "Europe",
     }
 }
