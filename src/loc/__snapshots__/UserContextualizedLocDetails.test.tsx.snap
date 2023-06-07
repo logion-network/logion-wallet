@@ -1,273 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`UserContextualizedLocDetails renders for verified issuer 1`] = `
-<LocPane
-  contributionMode="Issuer"
-  loc={
-    Object {
-      "closed": false,
-      "createdOn": "",
-      "decisionOn": "",
-      "description": "Description",
-      "files": Array [],
-      "id": UUID {
-        "bytes": Array [
-          147,
-          99,
-          195,
-          214,
-          209,
-          7,
-          66,
-          26,
-          164,
-          75,
-          133,
-          199,
-          250,
-          176,
-          184,
-          67,
-        ],
-      },
-      "issuers": Array [],
-      "links": Array [],
-      "locType": "Identity",
-      "metadata": Array [],
-      "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-      "requesterAddress": Object {
-        "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-        "toKey": [Function],
-        "type": "Polkadot",
-      },
-      "requesterLocId": undefined,
-      "status": "OPEN",
-      "verifiedIssuer": false,
-    }
-  }
->
-  <IssuerInfo />
-  <LocDetailsTab
-    checkResult={
-      Object {
-        "result": "NONE",
-      }
-    }
-    contributionMode="Issuer"
-    legalOfficer={
-      Object {
-        "additionalDetails": "",
-        "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-        "logoUrl": "",
-        "name": "Patrick Gielen",
-        "node": "http://logion.patrick.com",
-        "nodeId": "",
-        "postalAddress": Object {
-          "city": "Etterbeek",
-          "company": "MODERO",
-          "country": "Belgique",
-          "line1": "Huissier de Justice Etterbeek",
-          "line2": "Rue Beckers 17",
-          "postalCode": "1040",
-        },
-        "userIdentity": Object {
-          "email": "patrick@logion.network",
-          "firstName": "Patrick",
-          "lastName": "Gielen",
-          "phoneNumber": "+32 498 237 107",
-        },
-      }
-    }
-    loc={
-      Object {
-        "closed": false,
-        "createdOn": "",
-        "decisionOn": "",
-        "description": "Description",
-        "files": Array [],
-        "id": UUID {
-          "bytes": Array [
-            147,
-            99,
-            195,
-            214,
-            209,
-            7,
-            66,
-            26,
-            164,
-            75,
-            133,
-            199,
-            250,
-            176,
-            184,
-            67,
-          ],
-        },
-        "issuers": Array [],
-        "links": Array [],
-        "locType": "Identity",
-        "metadata": Array [],
-        "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-        "requesterAddress": Object {
-          "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-          "toKey": [Function],
-          "type": "Polkadot",
-        },
-        "requesterLocId": undefined,
-        "status": "OPEN",
-        "verifiedIssuer": false,
-      }
-    }
-    locItems={Array []}
-    viewer="User"
-  />
-  <React.Fragment>
-    <VoidDisclaimer
-      loc={
-        Object {
-          "closed": false,
-          "createdOn": "",
-          "decisionOn": "",
-          "description": "Description",
-          "files": Array [],
-          "id": UUID {
-            "bytes": Array [
-              147,
-              99,
-              195,
-              214,
-              209,
-              7,
-              66,
-              26,
-              164,
-              75,
-              133,
-              199,
-              250,
-              176,
-              184,
-              67,
-            ],
-          },
-          "issuers": Array [],
-          "links": Array [],
-          "locType": "Identity",
-          "metadata": Array [],
-          "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-          "requesterAddress": Object {
-            "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-            "toKey": [Function],
-            "type": "Polkadot",
-          },
-          "requesterLocId": undefined,
-          "status": "OPEN",
-          "verifiedIssuer": false,
-        }
-      }
-    />
-    <CertificateAndLimits
-      contributionMode="Issuer"
-      isReadOnly={false}
-      loc={
-        Object {
-          "closed": false,
-          "createdOn": "",
-          "decisionOn": "",
-          "description": "Description",
-          "files": Array [],
-          "id": UUID {
-            "bytes": Array [
-              147,
-              99,
-              195,
-              214,
-              209,
-              7,
-              66,
-              26,
-              164,
-              75,
-              133,
-              199,
-              250,
-              176,
-              184,
-              67,
-            ],
-          },
-          "issuers": Array [],
-          "links": Array [],
-          "locType": "Identity",
-          "metadata": Array [],
-          "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-          "requesterAddress": Object {
-            "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-            "toKey": [Function],
-            "type": "Polkadot",
-          },
-          "requesterLocId": undefined,
-          "status": "OPEN",
-          "verifiedIssuer": false,
-        }
-      }
-      viewer="User"
-    />
-    <SupersedesDisclaimer
-      loc={
-        Object {
-          "closed": false,
-          "createdOn": "",
-          "decisionOn": "",
-          "description": "Description",
-          "files": Array [],
-          "id": UUID {
-            "bytes": Array [
-              147,
-              99,
-              195,
-              214,
-              209,
-              7,
-              66,
-              26,
-              164,
-              75,
-              133,
-              199,
-              250,
-              176,
-              184,
-              67,
-            ],
-          },
-          "issuers": Array [],
-          "links": Array [],
-          "locType": "Identity",
-          "metadata": Array [],
-          "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-          "requesterAddress": Object {
-            "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-            "toKey": [Function],
-            "type": "Polkadot",
-          },
-          "requesterLocId": undefined,
-          "status": "OPEN",
-          "verifiedIssuer": false,
-        }
-      }
-    />
-    <CheckFileFrame
-      checkResult="NONE"
-      checkedItem="confidential document"
-      context="Identity LOC"
-    />
-  </React.Fragment>
-</LocPane>
-`;
-
 exports[`UserContextualizedLocDetails renders for requester 1`] = `
 <LocPane
   contributionMode="Requester"
@@ -337,6 +69,7 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
           "line2": "Rue Beckers 17",
           "postalCode": "1040",
         },
+        "region": "Europe",
         "userIdentity": Object {
           "email": "patrick@logion.network",
           "firstName": "Patrick",
@@ -437,6 +170,275 @@ exports[`UserContextualizedLocDetails renders for requester 1`] = `
     />
     <CertificateAndLimits
       contributionMode="Requester"
+      isReadOnly={false}
+      loc={
+        Object {
+          "closed": false,
+          "createdOn": "",
+          "decisionOn": "",
+          "description": "Description",
+          "files": Array [],
+          "id": UUID {
+            "bytes": Array [
+              147,
+              99,
+              195,
+              214,
+              209,
+              7,
+              66,
+              26,
+              164,
+              75,
+              133,
+              199,
+              250,
+              176,
+              184,
+              67,
+            ],
+          },
+          "issuers": Array [],
+          "links": Array [],
+          "locType": "Identity",
+          "metadata": Array [],
+          "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+          "requesterAddress": Object {
+            "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "requesterLocId": undefined,
+          "status": "OPEN",
+          "verifiedIssuer": false,
+        }
+      }
+      viewer="User"
+    />
+    <SupersedesDisclaimer
+      loc={
+        Object {
+          "closed": false,
+          "createdOn": "",
+          "decisionOn": "",
+          "description": "Description",
+          "files": Array [],
+          "id": UUID {
+            "bytes": Array [
+              147,
+              99,
+              195,
+              214,
+              209,
+              7,
+              66,
+              26,
+              164,
+              75,
+              133,
+              199,
+              250,
+              176,
+              184,
+              67,
+            ],
+          },
+          "issuers": Array [],
+          "links": Array [],
+          "locType": "Identity",
+          "metadata": Array [],
+          "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+          "requesterAddress": Object {
+            "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "requesterLocId": undefined,
+          "status": "OPEN",
+          "verifiedIssuer": false,
+        }
+      }
+    />
+    <CheckFileFrame
+      checkResult="NONE"
+      checkedItem="confidential document"
+      context="Identity LOC"
+    />
+  </React.Fragment>
+</LocPane>
+`;
+
+exports[`UserContextualizedLocDetails renders for verified issuer 1`] = `
+<LocPane
+  contributionMode="Issuer"
+  loc={
+    Object {
+      "closed": false,
+      "createdOn": "",
+      "decisionOn": "",
+      "description": "Description",
+      "files": Array [],
+      "id": UUID {
+        "bytes": Array [
+          147,
+          99,
+          195,
+          214,
+          209,
+          7,
+          66,
+          26,
+          164,
+          75,
+          133,
+          199,
+          250,
+          176,
+          184,
+          67,
+        ],
+      },
+      "issuers": Array [],
+      "links": Array [],
+      "locType": "Identity",
+      "metadata": Array [],
+      "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+      "requesterAddress": Object {
+        "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+        "toKey": [Function],
+        "type": "Polkadot",
+      },
+      "requesterLocId": undefined,
+      "status": "OPEN",
+      "verifiedIssuer": false,
+    }
+  }
+>
+  <IssuerInfo />
+  <LocDetailsTab
+    checkResult={
+      Object {
+        "result": "NONE",
+      }
+    }
+    contributionMode="Issuer"
+    legalOfficer={
+      Object {
+        "additionalDetails": "",
+        "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "logoUrl": "",
+        "name": "Patrick Gielen",
+        "node": "http://logion.patrick.com",
+        "nodeId": "",
+        "postalAddress": Object {
+          "city": "Etterbeek",
+          "company": "MODERO",
+          "country": "Belgique",
+          "line1": "Huissier de Justice Etterbeek",
+          "line2": "Rue Beckers 17",
+          "postalCode": "1040",
+        },
+        "region": "Europe",
+        "userIdentity": Object {
+          "email": "patrick@logion.network",
+          "firstName": "Patrick",
+          "lastName": "Gielen",
+          "phoneNumber": "+32 498 237 107",
+        },
+      }
+    }
+    loc={
+      Object {
+        "closed": false,
+        "createdOn": "",
+        "decisionOn": "",
+        "description": "Description",
+        "files": Array [],
+        "id": UUID {
+          "bytes": Array [
+            147,
+            99,
+            195,
+            214,
+            209,
+            7,
+            66,
+            26,
+            164,
+            75,
+            133,
+            199,
+            250,
+            176,
+            184,
+            67,
+          ],
+        },
+        "issuers": Array [],
+        "links": Array [],
+        "locType": "Identity",
+        "metadata": Array [],
+        "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+        "requesterAddress": Object {
+          "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+          "toKey": [Function],
+          "type": "Polkadot",
+        },
+        "requesterLocId": undefined,
+        "status": "OPEN",
+        "verifiedIssuer": false,
+      }
+    }
+    locItems={Array []}
+    viewer="User"
+  />
+  <React.Fragment>
+    <VoidDisclaimer
+      loc={
+        Object {
+          "closed": false,
+          "createdOn": "",
+          "decisionOn": "",
+          "description": "Description",
+          "files": Array [],
+          "id": UUID {
+            "bytes": Array [
+              147,
+              99,
+              195,
+              214,
+              209,
+              7,
+              66,
+              26,
+              164,
+              75,
+              133,
+              199,
+              250,
+              176,
+              184,
+              67,
+            ],
+          },
+          "issuers": Array [],
+          "links": Array [],
+          "locType": "Identity",
+          "metadata": Array [],
+          "ownerAddress": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+          "requesterAddress": Object {
+            "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+            "toKey": [Function],
+            "type": "Polkadot",
+          },
+          "requesterLocId": undefined,
+          "status": "OPEN",
+          "verifiedIssuer": false,
+        }
+      }
+    />
+    <CertificateAndLimits
+      contributionMode="Issuer"
       isReadOnly={false}
       loc={
         Object {

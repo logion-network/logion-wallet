@@ -49,6 +49,7 @@ exports[`renders 1`] = `
                   "line2": "Rue Beckers 17",
                   "postalCode": "1040",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "patrick@logion.network",
@@ -75,6 +76,7 @@ exports[`renders 1`] = `
                   "line2": "14, place Jules Ferry",
                   "postalCode": "69006",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "g.grain@adrastee-lyon.fr",
@@ -101,6 +103,7 @@ exports[`renders 1`] = `
                   "line2": "7 rue Jean Francois Champollion Parc Comitec",
                   "postalCode": "18000",
                 },
+                "region": "Europe",
                 "token": undefined,
                 "userIdentity": Object {
                   "email": "alain.barland@auxilia-conseils.com",

@@ -39,6 +39,7 @@ export interface MissingSettings {
     directory: boolean;
     nodeId: boolean;
     baseUrl: boolean;
+    region: boolean;
 }
 
 export interface LegalOfficerContext {
@@ -708,11 +709,12 @@ async function updateSetting(axios: AxiosInstance, legalOfficer: string, id: str
 function getMissingSettings(legalOfficer: LegalOfficer | undefined, onchainSettings: LegalOfficerData): MissingSettings | undefined {
     let missingSettings: MissingSettings | undefined;
 
-    if(!onchainSettings.hostData?.baseUrl || !onchainSettings.hostData?.nodeId || legalOfficer === undefined) {
+    if(!onchainSettings.hostData?.baseUrl || !onchainSettings.hostData?.nodeId || !onchainSettings.hostData?.region || legalOfficer === undefined) {
         missingSettings = {
             directory: legalOfficer === undefined,
             baseUrl: onchainSettings.hostData?.baseUrl === undefined,
             nodeId: onchainSettings.hostData?.nodeId === undefined,
+            region: onchainSettings.hostData?.region === undefined,
         };
     }
 
