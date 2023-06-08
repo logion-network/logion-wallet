@@ -16,7 +16,6 @@ import { useMemo } from 'react';
 import IdenfyVerification from './IdenfyVerification';
 import { ReadOnlyLocState } from '@logion/client';
 import OpenOrCancel from "./OpenOrCancel";
-import { locRequestsPath } from "../legal-officer/LegalOfficerPaths";
 
 export interface Props {
     contributionMode: ContributionMode;
@@ -84,7 +83,7 @@ export default function UserContextualizedLocDetails(props: Props) {
                 loc.status === "REVIEW_ACCEPTED" &&
                 <OpenOrCancel
                     loc={ loc }
-                    noLocCreationPath={ locRequestsPath(loc.locType) }
+                    noLocCreationPath={ backPath }
                 />
             }
             {

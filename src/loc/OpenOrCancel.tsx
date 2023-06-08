@@ -5,9 +5,6 @@ import Button from "../common/Button";
 import Icon from "../common/Icon";
 import { useState, useCallback } from "react";
 import "./OpenOrCancel.css";
-import { useLocContext } from "./LocContext";
-import ProcessStep from "../common/ProcessStep";
-import { AcceptedRequest } from "@logion/client/dist/Loc";
 import { useNavigate } from "react-router-dom";
 import OpenLoc from "./OpenLoc";
 
@@ -18,31 +15,13 @@ export interface Props {
 
 export default function OpenOrCancel(props: Props) {
 
-    const [ requestToCancel, setRequestToCancel ] = useState<string | null>(null);
     const [ requestToOpen, setRequestToOpen ] = useState<LocData | null>(null);
-    const { mutateLocState } = useLocContext();
     const navigate = useNavigate();
 
     const clearRequestToOpen = useCallback(() => {
         setRequestToOpen(null);
         navigate(props.noLocCreationPath);
     }, [ navigate, props.noLocCreationPath ]);
-
-    const handleClose = () => setRequestToCancel(null);
-
-    const cancelAndCloseModal = async () => {
-        await mutateLocState(async current => {
-            if (current instanceof AcceptedRequest) {
-                // TODO uncomment when available
-                // const newState = current.cancel();
-                const newState = current;
-                navigate(props.noLocCreationPath);
-                return newState;
-            } else {
-                return current;
-            }
-        });
-    };
 
     return (
         <PolkadotFrame className="OpenOrCancel">
@@ -51,7 +30,7 @@ export default function OpenOrCancel(props: Props) {
                 <div>
                     <ButtonGroup>
                         <Button
-                            onClick={ () => setRequestToCancel(props.loc.id.toString()) }
+                            onClick={ () => navigate(props.noLocCreationPath) }
                             data-testid={ `reject-${ props.loc.id }` }
                             variant="none"
                         >
@@ -68,32 +47,6 @@ export default function OpenOrCancel(props: Props) {
                 </div>
             </div>
 
-            {
-                requestToCancel !== null &&
-                <ProcessStep
-                    active={ true }
-                    title={ `Delete LOC request` }
-                    nextSteps={ [
-                        {
-                            id: 'cancel',
-                            buttonText: 'Cancel',
-                            buttonVariant: 'secondary',
-                            mayProceed: true,
-                            callback: handleClose,
-                        },
-                        {
-                            id: 'delete',
-                            buttonText: 'Proceed',
-                            buttonVariant: 'primary',
-                            mayProceed: true,
-                            callback: cancelAndCloseModal,
-                        }
-                    ] }
-                >
-                    <p>Are you sure you want to delete this LOC request ?</p>
-                </ProcessStep>
-
-            }
             <OpenLoc
                 requestToOpen={ requestToOpen }
                 clearRequestToOpen={ clearRequestToOpen }
