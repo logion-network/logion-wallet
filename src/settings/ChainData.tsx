@@ -14,7 +14,6 @@ import { useLogionChain } from "src/logion-chain";
 import "./ChainData.css";
 import Table, { Cell, EmptyTableMessage } from "src/common/Table";
 import StaticLabelValue from "src/common/StaticLabelValue";
-import Select from "src/common/Select";
 
 export default function ChainData() {
     const { colorTheme } = useCommonContext();
@@ -25,8 +24,6 @@ export default function ChainData() {
     const [ region, setRegion ] = useState<Region>();
     const [ signAndSubmit, setSignAndSubmit ] = useState<SignAndSubmit>(null);
     const [ done, setDone ] = useState<"success" | "failure">();
-
-    const availableRegions = useMemo(() => api?.queries.getAvailableRegions(), [ api ]);
 
     useEffect(() => {
         if(api && onchainSettings) {
@@ -123,32 +120,6 @@ export default function ChainData() {
                     }
                 </Col>
             </Row>
-            <Row>
-                <Col>
-                    {
-                        onchainSettings?.isHost === false &&
-                        <StaticLabelValue
-                            label="Region"
-                            value={ region || "" }
-                        />
-                    }
-                    {
-                        onchainSettings?.isHost === true &&
-                        <FormGroup
-                            id="region"
-                            label="Region"
-                            control={ <Select
-                                options={ availableRegions?.map(region => ({ label: region, value: region })) || [] }
-                                value={ region || null }
-                                onChange={ region => setRegion(region || undefined) }
-                                disabled={ onchainSettings.hostData?.region !== undefined }
-                            /> }
-                            colors={ colorTheme.frame }
-                            feedback={ region ? undefined : "The region must be set" }
-                        />
-                    }
-                </Col>
-            </Row>
             {
                 onchainSettings?.isHost === false &&
                 <Row>
@@ -180,7 +151,7 @@ export default function ChainData() {
                 </div>
                 <Row>
                     <Col>
-                        <div className="title">Guests</div>
+                        <div className="guests-title">Guests</div>
                         <Table
                             columns={[
                                 {
@@ -199,6 +170,14 @@ export default function ChainData() {
                 </Row>
                 </>
             }
+            <Row>
+                <Col>
+                    <StaticLabelValue
+                        label="Region"
+                        value={ region || "" }
+                    />
+                </Col>
+            </Row>
         </div>
     );
 }
