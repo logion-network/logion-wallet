@@ -245,7 +245,7 @@ export function canAdd(viewer: Viewer, loc: LocData) {
 }
 
 export function canPublish(viewer: Viewer, account: ValidAccountId | undefined, loc: LocData, item: LocItem) {
-    return item.status === "REVIEW_ACCEPTED"
+    return (item.status === "REVIEW_ACCEPTED" || (item.status === "DRAFT" && item.type === "Linked LOC" && viewer === "LegalOfficer"))
         && loc.status === "OPEN" && !loc.voidInfo
         && ((item.submitter?.type === "Polkadot" && item.submitter?.address === account?.address) || (item.submitter?.type !== "Polkadot" && viewer === "LegalOfficer"));
 }
