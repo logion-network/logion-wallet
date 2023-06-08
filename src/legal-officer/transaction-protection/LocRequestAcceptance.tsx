@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { Fees } from '@logion/node-api';
-import { LocData, PendingRequest } from '@logion/client';
+import { LocData, PendingRequest, AcceptedRequest } from '@logion/client';
 import { useLogionChain } from '../../logion-chain';
 import { useCommonContext } from '../../common/CommonContext';
 import ClientExtrinsicSubmitter, { Call } from '../../ClientExtrinsicSubmitter';
@@ -9,7 +9,6 @@ import { useLegalOfficerContext } from "../LegalOfficerContext";
 import { useLocContext } from 'src/loc/LocContext';
 import { CallCallback } from '../../ClientExtrinsicSubmitter';
 import EstimatedFees, { PAID_BY_LEGAL_OFFICER, getOtherFeesPaidBy } from '../../loc/fees/EstimatedFees';
-import { AcceptedRequest } from "@logion/client/dist/Loc";
 import { FeeEstimator } from "../../loc/fees/FeeEstimator";
 
 enum AcceptStatus {
@@ -55,7 +54,6 @@ export default function LocRequestAcceptance(props: Props) {
     }, [ fees, client, props.requestToAccept ]);
 
     const close = useCallback((onlyAccepted: boolean) => {
-        console.log("close()")
         setStatus(AcceptStatus.NONE);
         props.clearRequestToAccept(onlyAccepted);
     }, [ setStatus, props ]);

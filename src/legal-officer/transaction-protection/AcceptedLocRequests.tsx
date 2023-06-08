@@ -4,8 +4,6 @@ import LocStatusCell from '../../common/LocStatusCell';
 import UserIdentityNameCell from '../../common/UserIdentityNameCell';
 import LocRequestDetails from './LocRequestDetails';
 import { useLegalOfficerContext } from "../LegalOfficerContext";
-import { useResponsiveContext } from "../../common/Responsive";
-import { useNavigate } from 'react-router-dom';
 import { useMemo } from "react";
 import { Spinner } from "react-bootstrap";
 
@@ -16,8 +14,6 @@ export interface Props {
 export default function AcceptedLocRequests(props: Props) {
     const { acceptedLocRequests } = useLegalOfficerContext();
     const { locType } = props;
-    const { width } = useResponsiveContext();
-    const navigate = useNavigate();
 
     const data = useMemo(
         () => acceptedLocRequests ? acceptedLocRequests[locType].map(loc => loc.data()) : [],

@@ -12,6 +12,7 @@ import {
     VoidedCollectionLoc,
     LocsState,
     SignCallback,
+    AcceptedRequest,
 } from '@logion/client';
 import { ProtectionRequest } from '@logion/client/dist/RecoveryClient.js';
 
@@ -24,7 +25,6 @@ import { LocType, IdentityLocType, LegalOfficerData } from "@logion/node-api";
 import { DateTime } from "luxon";
 import { fetchAllLocsParams } from 'src/loc/LegalOfficerLocContext';
 import { getVotes, Vote, VoteResult, vote as clientVote } from './client';
-import { AcceptedRequest } from "@logion/client/dist/Loc";
 
 export const SETTINGS_KEYS = [ 'oath' ];
 
