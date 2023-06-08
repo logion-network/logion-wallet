@@ -1,9 +1,9 @@
 import { ButtonVariant } from 'react-bootstrap/types';
 
-import Dialog from '../common/Dialog';
-import { Action } from '../common/Button';
-import { Choice } from '../common/MultiChoiceButton';
-import { Children } from '../common/types/Helpers';
+import Dialog from './Dialog';
+import { Action } from './Button';
+import { Choice } from './MultiChoiceButton';
+import { Children } from './types/Helpers';
 
 export interface NextStep {
     id: string,

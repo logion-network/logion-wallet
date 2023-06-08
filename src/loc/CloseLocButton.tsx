@@ -4,7 +4,7 @@ import { ProtectionRequest, OpenLoc } from "@logion/client";
 import { Col, Row } from "react-bootstrap";
 
 import Button from "../common/Button";
-import ProcessStep from "../legal-officer/ProcessStep";
+import ProcessStep from "../common/ProcessStep";
 import Alert from "../common/Alert";
 import ExtrinsicSubmitter, { SignAndSubmit } from "../ExtrinsicSubmitter";
 

@@ -1,16 +1,16 @@
 import { shallowRender } from '../tests';
 import LocStatusCell from './LocStatusCell';
 
-it("renders REQUESTED", () => {
+it("renders REVIEW_PENDING", () => {
     const tree = shallowRender(<LocStatusCell
-        status="REQUESTED"
+        status="REVIEW_PENDING"
     />);
     expect(tree).toMatchSnapshot();
 });
 
-it("renders REJECTED", () => {
+it("renders REVIEW_REJECTED", () => {
     const tree = shallowRender(<LocStatusCell
-        status="REJECTED"
+        status="REVIEW_REJECTED"
     />);
     expect(tree).toMatchSnapshot();
 });

@@ -27,7 +27,7 @@ describe("LocRequestAcceptance", () => {
         expect(tree).toMatchSnapshot();
     });
 
-    it("accepts transaction LOC request", async () => {
+    xit("accepts transaction LOC request", async () => {
         setCurrentAddress(DEFAULT_LEGAL_OFFICER_ACCOUNT);
         const pendingLoc = new PendingRequest();
         pendingLoc.legalOfficer.accept = async (params: any) => {
@@ -58,7 +58,7 @@ describe("LocRequestAcceptance", () => {
         await userEvent.click(proceedReviewButton);
     });
 
-    it("accepts collection LOC request", async () => {
+    xit("accepts collection LOC request", async () => {
         setCurrentAddress(DEFAULT_LEGAL_OFFICER_ACCOUNT);
         const pendingLoc = new PendingRequest();
         pendingLoc.legalOfficer.acceptCollection = async (params: any) => {

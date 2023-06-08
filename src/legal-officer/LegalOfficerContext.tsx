@@ -12,6 +12,7 @@ import {
     VoidedCollectionLoc,
     LocsState,
     SignCallback,
+    AcceptedRequest,
 } from '@logion/client';
 import { ProtectionRequest } from '@logion/client/dist/RecoveryClient.js';
 
@@ -39,6 +40,7 @@ export interface MissingSettings {
     directory: boolean;
     nodeId: boolean;
     baseUrl: boolean;
+    region: boolean;
 }
 
 export interface LegalOfficerContext {
@@ -57,6 +59,7 @@ export interface LegalOfficerContext {
     updateSetting: (id: SettingId, value: string) => Promise<void>;
     missingSettings?: MissingSettings;
     pendingLocRequests: Record<LocType, PendingRequest[]> | null;
+    acceptedLocRequests: Record<LocType, AcceptedRequest[]> | null;
     rejectedLocRequests: Record<LocType, RejectedRequest[]> | null;
     openedLocRequests: Record<LocType, OpenLoc[]> | null;
     closedLocRequests: Record<LocType, (ClosedLoc | ClosedCollectionLoc)[]> | null;
@@ -96,6 +99,7 @@ function initialContextValue(): FullLegalOfficerContext {
         recoveryRequestsHistory: null,
         updateSetting: () => Promise.reject(),
         pendingLocRequests: null,
+        acceptedLocRequests: null,
         rejectedLocRequests: null,
         openedLocRequests: null,
         closedLocRequests: null,
@@ -167,6 +171,7 @@ interface Action {
     id?: string;
     value?: string;
     pendingLocRequests?: Record<LocType, PendingRequest[]> | null;
+    acceptedLocRequests?: Record<LocType, AcceptedRequest[]> | null;
     rejectedLocRequests?: Record<LocType, RejectedRequest[]> | null;
     openedLocRequests?: Record<LocType, OpenLoc[]> | null;
     closedLocRequests?: Record<LocType, (ClosedLoc | ClosedCollectionLoc)[]> | null;
@@ -211,6 +216,7 @@ const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOffic
                     ...state,
                     locsState: action.locsState!,
                     pendingLocRequests: action.pendingLocRequests!,
+                    acceptedLocRequests: action.acceptedLocRequests!,
                     rejectedLocRequests: action.rejectedLocRequests!,
                     openedLocRequests: action.openedLocRequests!,
                     closedLocRequests: action.closedLocRequests!,
@@ -708,11 +714,12 @@ async function updateSetting(axios: AxiosInstance, legalOfficer: string, id: str
 function getMissingSettings(legalOfficer: LegalOfficer | undefined, onchainSettings: LegalOfficerData): MissingSettings | undefined {
     let missingSettings: MissingSettings | undefined;
 
-    if(!onchainSettings.hostData?.baseUrl || !onchainSettings.hostData?.nodeId || legalOfficer === undefined) {
+    if(!onchainSettings.hostData?.baseUrl || !onchainSettings.hostData?.nodeId || !onchainSettings.hostData?.region || legalOfficer === undefined) {
         missingSettings = {
             directory: legalOfficer === undefined,
             baseUrl: onchainSettings.hostData?.baseUrl === undefined,
             nodeId: onchainSettings.hostData?.nodeId === undefined,
+            region: onchainSettings.hostData?.region === undefined,
         };
     }
 
@@ -721,6 +728,7 @@ function getMissingSettings(legalOfficer: LegalOfficer | undefined, onchainSetti
 
 function mapLocsState(locsState: LocsState) {
     const pendingLocRequests: Record<LocType, PendingRequest[]> = locsState.pendingRequests;
+    const acceptedLocRequests: Record<LocType, AcceptedRequest[]> = locsState.acceptedRequests;
     const rejectedLocRequests: Record<LocType, RejectedRequest[]> = locsState.rejectedRequests;
     const openedLocRequests: Record<LocType, OpenLoc[]> = locsState.openLocs;
     const closedLocRequests: Record<LocType, (ClosedLoc | ClosedCollectionLoc)[]> = locsState.closedLocs;
@@ -745,6 +753,7 @@ function mapLocsState(locsState: LocsState) {
     return {
         locsState,
         pendingLocRequests,
+        acceptedLocRequests,
         openedLocRequests,
         closedLocRequests,
         rejectedLocRequests,

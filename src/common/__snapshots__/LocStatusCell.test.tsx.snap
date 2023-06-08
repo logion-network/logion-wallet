@@ -7,19 +7,7 @@ exports[`renders OPEN 1`] = `
 />
 `;
 
-exports[`renders REJECTED 1`] = `
-<StatusCell
-  color="#e11a25"
-  icon={
-    Object {
-      "id": "rejected",
-    }
-  }
-  text="Rejected"
-/>
-`;
-
-exports[`renders REQUESTED 1`] = `
+exports[`renders REVIEW_PENDING 1`] = `
 <StatusCell
   color="#ff9b3f"
   icon={
@@ -28,5 +16,17 @@ exports[`renders REQUESTED 1`] = `
     }
   }
   text="Pending"
+/>
+`;
+
+exports[`renders REVIEW_REJECTED 1`] = `
+<StatusCell
+  color="#e11a25"
+  icon={
+    Object {
+      "id": "rejected",
+    }
+  }
+  text="Rejected"
 />
 `;

@@ -60,6 +60,9 @@ export default function Officer(props: Props) {
                 { props.officer && <LegalOfficerPostalAddressInfo address={ props.officer.postalAddress } /> }
                 { props.officer && <LegalOfficerAdditionalDetails additionalDetails={ props.officer.additionalDetails } /> }
             </Row>
+            <Row className="region">
+                <span>Region: { props.officer?.region }</span>
+            </Row>
         </div>
     );
 }

@@ -94,7 +94,7 @@ export default function ContextualizedLocDetails() {
                 detailsPath={ detailsPath }
             />
             {
-                loc.status !== "REQUESTED" &&
+                loc.status !== "REVIEW_PENDING" &&
                 <CertificateAndLimits
                     loc={ loc }
                     viewer="LegalOfficer"
@@ -102,10 +102,10 @@ export default function ContextualizedLocDetails() {
                 />
             }
             {
-                loc.status === "REQUESTED" &&
+                loc.status === "REVIEW_PENDING" &&
                 <AcceptRejectLocRequest
                     loc={ loc }
-                    rejectPath={ locRequestsPath('Identity') }
+                    noLocCreationPath={ locRequestsPath(loc.locType) }
                 />
             }
             { loc.locType === 'Collection' && loc.closed &&
@@ -126,7 +126,7 @@ export default function ContextualizedLocDetails() {
                 checkedItem="confidential document"
             />
             {
-                loc.status !== "REQUESTED" && !isReadOnly &&
+                (loc.status === "OPEN" || loc.status === "CLOSED") && !isReadOnly &&
                 <VoidFrame
                     loc={ loc }
                 />

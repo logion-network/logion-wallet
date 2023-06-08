@@ -15,6 +15,7 @@ import { useCommonContext } from 'src/common/CommonContext';
 import { useMemo } from 'react';
 import IdenfyVerification from './IdenfyVerification';
 import { ReadOnlyLocState } from '@logion/client';
+import OpenOrCancel from "./OpenOrCancel";
 
 export interface Props {
     contributionMode: ContributionMode;
@@ -79,7 +80,14 @@ export default function UserContextualizedLocDetails(props: Props) {
                 contributionMode={ props.contributionMode }
             />
             {
-                loc.status !== "DRAFT" &&
+                loc.status === "REVIEW_ACCEPTED" &&
+                <OpenOrCancel
+                    loc={ loc }
+                    noLocCreationPath={ backPath }
+                />
+            }
+            {
+                (loc.status === "OPEN" || loc.status === "CLOSED") &&
                 <>
                 <VoidDisclaimer
                     loc={ loc }

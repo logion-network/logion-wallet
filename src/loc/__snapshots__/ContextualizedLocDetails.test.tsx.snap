@@ -595,43 +595,5 @@ exports[`ContextualizedLocDetails renders empty 1`] = `
     checkedItem="confidential document"
     context="Identity LOC"
   />
-  <VoidFrame
-    loc={
-      Object {
-        "id": UUID {
-          "bytes": Uint8Array [
-            174,
-            212,
-            198,
-            228,
-            151,
-            158,
-            72,
-            173,
-            190,
-            110,
-            75,
-            211,
-            159,
-            185,
-            71,
-            98,
-          ],
-        },
-        "locType": "Identity",
-        "requesterAddress": Object {
-          "address": "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-          "toKey": [Function],
-          "type": "Polkadot",
-        },
-        "userIdentity": Object {
-          "email": "john.doe@logion.network",
-          "firstName": "John",
-          "lastName": "Doe",
-          "phoneNumber": "+1234",
-        },
-      }
-    }
-  />
 </LocPane>
 `;

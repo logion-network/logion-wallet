@@ -5,6 +5,13 @@ import { BackgroundAndForegroundColors } from '../common/ColorTheme';
 import DatePicker from '../common/DatePicker';
 
 import './CollectionLimitsForm.css'
+import { LogionNodeApiClass, ChainTime } from "@logion/node-api";
+
+export interface ApiLimits {
+    collectionCanUpload: boolean,
+    collectionLastBlockSubmission: bigint | undefined,
+    collectionMaxSize: number | undefined,
+}
 
 export class CollectionLimits {
 
@@ -30,6 +37,26 @@ export class CollectionLimits {
 
     areValid(): boolean {
         return (this.hasDateLimit && (this.dateLimit ? true : false)) || (this.hasDataNumberLimit && (this.dataNumberLimit ? true : false));
+    }
+
+    async toApiLimits(api: LogionNodeApiClass): Promise<ApiLimits> {
+        let lastBlock: bigint | undefined;
+        if(this.hasDateLimit) {
+            const now = await ChainTime.now(api!.polkadot);
+            const atDateLimit = await now.atDate(this.dateLimit!);
+            lastBlock = atDateLimit.currentBlock;
+        }
+
+        let maxSize: number | undefined;
+        if(this.hasDataNumberLimit) {
+            maxSize = Number(this.dataNumberLimit);
+        }
+
+        return {
+            collectionCanUpload: this.canUpload,
+            collectionLastBlockSubmission: lastBlock,
+            collectionMaxSize: maxSize,
+        }
     }
 }
 

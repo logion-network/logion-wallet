@@ -22,6 +22,7 @@ exports[`LegalOfficerLocContextProvider renders 1`] = `
             "line2": "Rue Beckers 17",
             "postalCode": "1040",
           },
+          "region": "Europe",
           "userIdentity": Object {
             "email": "patrick@logion.network",
             "firstName": "Patrick",
@@ -40,8 +41,9 @@ exports[`LegalOfficerLocContextProvider renders 1`] = `
         "statuses": Array [
           "CLOSED",
           "OPEN",
-          "REJECTED",
-          "REQUESTED",
+          "REVIEW_REJECTED",
+          "REVIEW_PENDING",
+          "REVIEW_ACCEPTED",
         ],
       },
     }

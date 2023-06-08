@@ -1,5 +1,5 @@
 import { Fees } from "@logion/node-api";
-import EstimatedFees, { geInclusionFeePaidBy, getOtherFeesPaidBy } from "./EstimatedFees";
+import EstimatedFees, { geInclusionFeePaidBy, getOtherFeesPaidBy } from "./fees/EstimatedFees";
 import { LocItem } from "./LocItem";
 import { useLocContext } from "./LocContext";
 

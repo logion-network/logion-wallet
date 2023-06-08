@@ -69,7 +69,7 @@ exports[`PendingLocRequests renders pending requests 1`] = `
             "toKey": [Function],
             "type": "Polkadot",
           },
-          "status": "REQUESTED",
+          "status": "REVIEW_PENDING",
         },
       ]
     }

@@ -21,10 +21,10 @@ export function fetchAllLocsParams(legalOfficer: LegalOfficer): FetchAllLocsPara
         spec: {
             ownerAddress: legalOfficer.address,
             locTypes: [ "Collection", "Identity", "Transaction" ],
-            statuses: [ "CLOSED", "OPEN", "REJECTED", "REQUESTED" ]
+            statuses: [ "CLOSED", "OPEN", "REVIEW_REJECTED", "REVIEW_PENDING", "REVIEW_ACCEPTED" ]
         },
     };
-};
+}
 
 export function LegalOfficerLocContextProvider(props: Props) {
     const { refreshLocs, legalOfficer, locsState } = useLegalOfficerContext();

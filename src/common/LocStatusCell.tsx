@@ -16,14 +16,17 @@ export default function LocStatusCell(props: Props) {
         color = RED;
         icon = { id: "void" };
         text = "VOID";
-    } else if(props.status === "REQUESTED") {
+    } else if(props.status === "REVIEW_PENDING") {
         color = ORANGE;
         icon = { id: "pending" };
         text = "Pending";
+    } else if(props.status === "REVIEW_ACCEPTED") {
+        color = ORANGE;
+        text = "Accepted";
     } else if(props.status === "OPEN") {
         color = ORANGE;
         text = "Open";
-    } else if(props.status === "REJECTED") {
+    } else if(props.status === "REVIEW_REJECTED") {
         color = RED;
         icon = { id: "rejected" };
         text = "Rejected";

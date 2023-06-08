@@ -11,7 +11,7 @@ import { useCommonContext } from '../common/CommonContext';
 
 import { useLegalOfficerContext } from './LegalOfficerContext';
 import { acceptProtectionRequest, rejectProtectionRequest } from '../loc/Model';
-import ProcessStep from './ProcessStep';
+import ProcessStep from '../common/ProcessStep';
 import ProtectionRequestStatus from './ProtectionRequestStatus';
 import ProtectionRequestDetails from './ProtectionRequestDetails';
 import { recoveryDetailsPath, identityLocDetailsPath } from "./LegalOfficerPaths";

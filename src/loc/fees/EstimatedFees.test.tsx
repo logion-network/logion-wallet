@@ -1,5 +1,5 @@
 import { Fees } from "@logion/node-api";
-import { shallowRender } from "src/tests";
+import { shallowRender } from "../../tests";
 import EstimatedFees from "./EstimatedFees";
 
 jest.unmock("@logion/client");
