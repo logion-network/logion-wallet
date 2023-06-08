@@ -18,6 +18,7 @@ import { useNavigate } from 'react-router-dom';
 import { identityLocDetailsPath } from '../LegalOfficerPaths';
 import PendingLocRequests from "./PendingLocRequests";
 import RejectedLocRequests from "./RejectedLocRequests";
+import AcceptedLocRequests from "./AcceptedLocRequests";
 
 export default function IdentityProtection() {
     const { colorTheme } = useCommonContext();
@@ -80,6 +81,11 @@ export default function IdentityProtection() {
                                     key: "pending",
                                     title: "Pending",
                                     render: () => <PendingLocRequests locType="Identity" />
+                                },
+                                {
+                                    key: "accepted",
+                                    title: "Accepted",
+                                    render: () => <AcceptedLocRequests locType="Identity" />
                                 },
                                 {
                                     key: "rejected",

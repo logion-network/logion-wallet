@@ -6,7 +6,7 @@ import Icon from "src/common/Icon";
 import { LocItem } from "./LocItem";
 import Dialog from "src/common/Dialog";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
-import EstimatedFees from "./EstimatedFees";
+import EstimatedFees from "./fees/EstimatedFees";
 import { useLocContext } from "./LocContext";
 import Alert from "src/common/Alert";
 import { useLogionChain } from "src/logion-chain";

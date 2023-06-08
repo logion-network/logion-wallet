@@ -13,6 +13,7 @@ import RejectedLocRequests from './RejectedLocRequests';
 import OpenedLocs from './OpenedLocs';
 import ClosedLocs from './ClosedLocs';
 import VoidLocs from './VoidLocs';
+import AcceptedLocRequests from "./AcceptedLocRequests";
 
 export interface Props {
     locType: LocType,
@@ -79,6 +80,11 @@ export default function TransactionProtection(props: Props) {
                                     key: "pending",
                                     title: "Pending",
                                     render: () => <PendingLocRequests locType={ locType } />
+                                },
+                                {
+                                    key: "accepted",
+                                    title: "Accepted",
+                                    render: () => <AcceptedLocRequests locType={ locType } />
                                 },
                                 {
                                     key: "rejected",

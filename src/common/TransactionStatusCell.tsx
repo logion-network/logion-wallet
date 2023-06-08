@@ -6,7 +6,7 @@ import Detail from "./Detail";
 import './TransactionStatusCell.css';
 import { Row, Col } from "./Grid";
 import Alert from "./Alert";
-import EstimatedFees from "src/loc/EstimatedFees";
+import EstimatedFees from "../loc/fees/EstimatedFees";
 
 export interface StatusCellProps {
     transaction: Transaction

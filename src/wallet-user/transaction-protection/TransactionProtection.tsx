@@ -20,6 +20,7 @@ import VoidLocs from './VoidLocs';
 import './TransactionProtection.css';
 import { Children } from "../../common/types/Helpers";
 import DraftLocs from './DraftLocs';
+import AcceptedLocs from "./AcceptedLocs";
 
 export interface Props {
     locType: LocType,
@@ -103,6 +104,11 @@ export default function TransactionProtection(props: Props) {
                                     key: "pending",
                                     title: "Pending",
                                     render: () => <RequestedLocs locType={ locType } />
+                                },
+                                {
+                                    key: "accepted",
+                                    title: "Accepted",
+                                    render: () => <AcceptedLocs locType={ locType } />
                                 },
                                 {
                                     key: "rejected",

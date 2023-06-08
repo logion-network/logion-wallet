@@ -4,7 +4,7 @@ import { UUID } from "@logion/node-api";
 
 import { useLogionChain } from '../logion-chain';
 import ClientExtrinsicSubmitter, { Call, CallCallback } from '../ClientExtrinsicSubmitter';
-import ProcessStep from '../legal-officer/ProcessStep';
+import ProcessStep from '../common/ProcessStep';
 import Alert from '../common/Alert';
 import { useLocContext } from './LocContext';
 import { useLegalOfficerContext } from 'src/legal-officer/LegalOfficerContext';

@@ -9,3 +9,7 @@
     margin-left: auto;
     margin-right: auto;
 }
+
+.CollectionLimitsForm .DatePicker input {
+    color: #3b6cf4;
+}

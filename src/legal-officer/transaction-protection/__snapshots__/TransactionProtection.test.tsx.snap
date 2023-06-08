@@ -63,6 +63,11 @@ exports[`renders 1`] = `
                 "title": "Pending",
               },
               Object {
+                "key": "accepted",
+                "render": [Function],
+                "title": "Accepted",
+              },
+              Object {
                 "key": "rejected",
                 "render": [Function],
                 "title": "Rejected",

@@ -10,8 +10,7 @@ exports[`AcceptRejectLocRequest renders pending requests 1`] = `
     <div
       className="question"
     >
-      Do you accept this request and create the related 
-       LOC?
+      Do you accept this request ?
     </div>
     <div>
       <ButtonGroup>

@@ -26,7 +26,7 @@ describe("AcceptRejectLocRequest", () => {
             ownerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
             requesterAddress: mockValidPolkadotAccountId("5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"),
             status: "REVIEW_PENDING"
-        } as LocData} rejectPath="/" />);
+        } as LocData} noLocCreationPath="/" />);
         expect(tree).toMatchSnapshot();
     });
 
@@ -36,7 +36,7 @@ describe("AcceptRejectLocRequest", () => {
             ownerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
             requesterAddress: mockValidPolkadotAccountId("5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"),
             status: "REVIEW_PENDING"
-        } as LocData} rejectPath="/" />);
+        } as LocData} noLocCreationPath="/" />);
         const rejectButton = screen.getByTestId(`reject-${REQUEST_ID}`);
         await userEvent.click(rejectButton);
 
@@ -64,7 +64,7 @@ describe("AcceptRejectLocRequest", () => {
             bars: 1,
             status: "PENDING",
             locType: "Transaction"
-        } as unknown as LocData} rejectPath="/" />);
+        } as unknown as LocData} noLocCreationPath="/" />);
 
         const acceptButton = tree.getByTestId(`accept-${REQUEST_ID}`);
         await userEvent.click(acceptButton);
