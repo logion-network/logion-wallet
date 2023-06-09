@@ -111,7 +111,7 @@ export default function AcceptedLocs(props: Props) {
                                 <Button
                                     onClick={ () => navigate(locDetailsPath(locData.id, locData.locType)) }
                                 >
-                                    Open
+                                    View
                                 </Button>
                             </ButtonGroup>
                         ),

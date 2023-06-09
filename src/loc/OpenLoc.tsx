@@ -12,40 +12,35 @@ import { CallCallback } from '../ClientExtrinsicSubmitter';
 import EstimatedFees, { getOtherFeesPaidBy, PAID_BY_REQUESTER } from './fees/EstimatedFees';
 import { AcceptedRequest } from "@logion/client/dist/Loc";
 import { FeeEstimator } from "./fees/FeeEstimator";
+import Button from 'src/common/Button';
+import PolkadotFrame from 'src/common/PolkadotFrame';
+import "./OpenLoc.css";
 
 enum OpenStatus {
     NONE,
+    CREATE_LOC,
     LOC_CREATION_PENDING,
     CREATING_LOC,
     OPENED,
 }
 
-interface AcceptState {
-    status: OpenStatus;
-}
-
 export interface Props {
-    requestToOpen: LocData | null,
-    clearRequestToOpen: () => void,
+    loc: LocData;
 }
 
 export default function OpenLoc(props: Props) {
     const { signer, client } = useLogionChain();
     const { refresh, colorTheme } = useCommonContext();
     const { mutateLocState } = useLocContext();
-    const [ acceptState, setAcceptState ] = useState<AcceptState>({status: OpenStatus.NONE});
+    const [ acceptState, setAcceptState ] = useState<OpenStatus>(OpenStatus.NONE);
     const [ call, setCall ] = useState<Call>();
     const [ error, setError ] = useState<boolean>(false);
     const [ limits, setLimits ] = useState<CollectionLimits>(DEFAULT_LIMITS);
     const [ fees, setFees ] = useState<Fees | undefined | null>();
 
-    const setStatus = useCallback((status: OpenStatus) => {
-        setAcceptState({...acceptState, status});
-    }, [ acceptState, setAcceptState ]);
-
     useEffect(() => {
-        if(fees === undefined && props.requestToOpen && client) {
-            const request = props.requestToOpen;
+        if(fees === undefined && client) {
+            const request = props.loc;
             setFees(null);
             const estimator = new FeeEstimator(client);
             (async function() {
@@ -53,12 +48,12 @@ export default function OpenLoc(props: Props) {
                 setFees(fees);
             })();
         }
-    }, [ fees, client, props.requestToOpen, limits ]);
+    }, [ fees, client, props.loc, limits ]);
 
     // LOC creation
     useEffect(() => {
-        if(acceptState.status === OpenStatus.LOC_CREATION_PENDING) {
-            setStatus(OpenStatus.CREATING_LOC);
+        if(acceptState === OpenStatus.LOC_CREATION_PENDING) {
+            setAcceptState(OpenStatus.CREATING_LOC);
             setCall(() => async (callback: CallCallback) =>
                 await mutateLocState(async current => {
                     if(client && signer && current instanceof AcceptedRequest) {
@@ -85,7 +80,6 @@ export default function OpenLoc(props: Props) {
         acceptState,
         mutateLocState,
         signer,
-        setStatus,
         limits,
         client,
     ]);
@@ -95,35 +89,46 @@ export default function OpenLoc(props: Props) {
     }, [ setLimits ]);
 
     const close = useCallback(() => {
-        setStatus(OpenStatus.NONE);
+        setAcceptState(OpenStatus.NONE);
         resetFields();
-        props.clearRequestToOpen();
-    }, [ setStatus, props, resetFields ]);
+    }, [ resetFields ]);
 
     const closeAndRefresh = useCallback(() => {
         close();
         refresh(false);
     }, [ refresh, close ]);
 
-    if(props.requestToOpen === null) {
-        return null;
-    }
-
     let title;
-    if(props.requestToOpen.locType === 'Transaction') {
+    if(props.loc.locType === 'Transaction') {
         title = "Opening Transaction Protection Request";
-    } else if(props.requestToOpen.locType === 'Collection') {
+    } else if(props.loc.locType === 'Collection') {
         title = "Opening Collection Protection Request";
-    } else if(props.requestToOpen.locType === 'Identity') {
+    } else if(props.loc.locType === 'Identity') {
         title = "Opening Identity Case Request";
     } else {
-        throw new Error(`Unsupported LOC type ${props.requestToOpen.locType}`);
+        throw new Error(`Unsupported LOC type ${props.loc.locType}`);
     }
 
     return (
-        <div>
+        <PolkadotFrame
+            className="OpenLoc"
+        >
+            <div className="content">
+                <div className="text-container">
+                    Do you want to create this LOC?
+                </div>
+                <div className="button-container">
+                    <Button
+                        onClick={ () => setAcceptState(OpenStatus.CREATE_LOC) }
+                        data-testid={ `accept-${ props.loc.id }` }
+                        variant="polkadot"
+                    >
+                        Create LOC
+                    </Button>
+                </div>
+            </div>
             <ProcessStep
-                active={ acceptState.status === OpenStatus.NONE }
+                active={ acceptState === OpenStatus.CREATE_LOC }
                 title={ title }
                 nextSteps={[
                     {
@@ -137,13 +142,13 @@ export default function OpenLoc(props: Props) {
                         id: 'proceed',
                         buttonText: 'Proceed',
                         buttonVariant: 'polkadot',
-                        mayProceed: acceptState.status === OpenStatus.NONE && (props.requestToOpen.locType !== 'Collection' || limits.areValid()),
-                        callback: () => setStatus(OpenStatus.LOC_CREATION_PENDING),
+                        mayProceed: acceptState === OpenStatus.CREATE_LOC && (props.loc.locType !== 'Collection' || limits.areValid()),
+                        callback: () => setAcceptState(OpenStatus.LOC_CREATION_PENDING),
                     }
                 ]}
             >
                 {
-                    props.requestToOpen.locType !== 'Collection' &&
+                    props.loc.locType !== 'Collection' &&
                     <>
                         <p>You are about to create the LOC</p>
                         <p>The LOC's creation will require your signature and may take several seconds.</p>
@@ -151,12 +156,12 @@ export default function OpenLoc(props: Props) {
                             fees={ fees }
                             centered={ true }
                             inclusionFeePaidBy={ PAID_BY_REQUESTER }
-                            otherFeesPaidBy={ getOtherFeesPaidBy(props.requestToOpen) }
+                            otherFeesPaidBy={ getOtherFeesPaidBy(props.loc) }
                         />
                     </>
                 }
                 {
-                    props.requestToOpen.locType === 'Collection' &&
+                    props.loc.locType === 'Collection' &&
                     <>
                         <CollectionLocMessage/>
                         <CollectionLimitsForm
@@ -168,21 +173,21 @@ export default function OpenLoc(props: Props) {
                             fees={ fees }
                             centered={ true }
                             inclusionFeePaidBy={ PAID_BY_REQUESTER }
-                            otherFeesPaidBy={ getOtherFeesPaidBy(props.requestToOpen) }
+                            otherFeesPaidBy={ getOtherFeesPaidBy(props.loc) }
                         />
                     </>
                 }
             </ProcessStep>
             <ProcessStep
-                active={ acceptState.status === OpenStatus.CREATING_LOC
-                    || acceptState.status === OpenStatus.OPENED }
+                active={ acceptState === OpenStatus.CREATING_LOC
+                    || acceptState === OpenStatus.OPENED }
                 title="Creating LOC"
                 nextSteps={[
                     {
                         id: 'close',
                         buttonText: 'Close',
                         buttonVariant: 'primary',
-                        mayProceed: acceptState.status === OpenStatus.OPENED || error,
+                        mayProceed: acceptState === OpenStatus.OPENED || error,
                         callback: closeAndRefresh,
                     }
                 ]}
@@ -190,10 +195,10 @@ export default function OpenLoc(props: Props) {
                 <ClientExtrinsicSubmitter
                     call={ call }
                     successMessage="LOC successfully created."
-                    onSuccess={ () => setStatus(OpenStatus.OPENED) }
+                    onSuccess={ () => setAcceptState(OpenStatus.OPENED) }
                     onError={ () => setError(true) }
                 />
             </ProcessStep>
-        </div>
+        </PolkadotFrame>
     );
 }

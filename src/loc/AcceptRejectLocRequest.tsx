@@ -1,5 +1,5 @@
 import { LocData, PendingRequest } from "@logion/client";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 
@@ -12,6 +12,7 @@ import LocRequestAcceptance from "src/legal-officer/transaction-protection/LocRe
 import { useLocContext } from "./LocContext";
 
 import "./AcceptRejectLocRequest.css";
+import LocRequestAcceptanceAndCreation from "src/legal-officer/transaction-protection/LocRequestAcceptanceAndCreation";
 
 export interface Props {
     loc: LocData;
@@ -46,9 +47,15 @@ export default function AcceptRejectLocRequest(props: Props) {
         });
     };
 
-    const question = props.loc.requesterAddress?.type === "Polkadot" ?
+    const isAccept = useMemo(() =>
+        props.loc.requesterAddress?.type === "Polkadot"
+    , [ props.loc ]);
+
+    const question = useMemo(() =>
+        isAccept ?
         `Do you accept this request ?` :
-        `Do you accept this request and create the related ${ props.loc.locType } LOC?`;
+        `Do you accept this request and create the related ${ props.loc.locType } LOC?`
+    , [ isAccept, props.loc ]);
 
     return (
         <PolkadotFrame
@@ -111,10 +118,20 @@ export default function AcceptRejectLocRequest(props: Props) {
                 </ProcessStep>
             }
 
-            <LocRequestAcceptance
-                requestToAccept={ requestToAccept }
-                clearRequestToAccept={ clearRequestToAccept }
-            />
+            {
+                isAccept &&
+                <LocRequestAcceptance
+                    requestToAccept={ requestToAccept }
+                    clearRequestToAccept={ () => clearRequestToAccept(true) }
+                />
+            }
+            {
+                !isAccept &&
+                <LocRequestAcceptanceAndCreation
+                    requestToAccept={ requestToAccept }
+                    clearRequestToAccept={ () => clearRequestToAccept(false) }
+                />
+            }
         </PolkadotFrame>
     );
 }
