@@ -100,11 +100,11 @@ export default function OpenLoc(props: Props) {
 
     let title;
     if(props.loc.locType === 'Transaction') {
-        title = "Opening Transaction Protection Request";
+        title = "Transaction Legal Officer Case (LOC) creation";
     } else if(props.loc.locType === 'Collection') {
-        title = "Opening Collection Protection Request";
+        title = "Collection Legal Officier Case (LOC) creation";
     } else if(props.loc.locType === 'Identity') {
-        title = "Opening Identity Case Request";
+        title = "Identity Legal Officier Case (LOC) creation";
     } else {
         throw new Error(`Unsupported LOC type ${props.loc.locType}`);
     }
@@ -150,7 +150,7 @@ export default function OpenLoc(props: Props) {
                 {
                     props.loc.locType !== 'Collection' &&
                     <>
-                        <p>You are about to create the LOC</p>
+                        <p>You are about to create the LOC on the Logion blockchain.</p>
                         <p>The LOC's creation will require your signature and may take several seconds.</p>
                         <EstimatedFees
                             fees={ fees }
@@ -164,6 +164,7 @@ export default function OpenLoc(props: Props) {
                     props.loc.locType === 'Collection' &&
                     <>
                         <CollectionLocMessage/>
+                        <p>The LOC's creation will require your signature and may take several seconds.</p>
                         <CollectionLimitsForm
                             value={ limits }
                             onChange={ value => setLimits(value) }
