@@ -162,8 +162,8 @@ export default function UserRouter() {
             <Route path={ TRANSACTIONS_RELATIVE_PATH } element={ <Transactions
                     address={ accounts!.current?.accountId!.address }
                     backPath={ WALLET_PATH }
-                    balances={ balanceState?.balances || [] }
-                    transactions={ balanceState?.transactions || [] }
+                    balances={ balanceState?.balances || null }
+                    transactions={ balanceState?.transactions || null }
                     type="Wallet"
                     vaultAddress={ vaultState?.vaultAddress || undefined }
                 />
