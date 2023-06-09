@@ -1,0 +1,13 @@
+.OpenLoc {
+    margin-top: 40px;
+}
+
+.OpenLoc .content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.OpenLoc .content .text-container {
+    font-size: 1.2rem;
+    padding-top: 7px;
+}
