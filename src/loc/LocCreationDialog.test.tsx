@@ -141,6 +141,7 @@ async function submitAndExpectFailure(exit: jest.Mock<any, any>, onSuccess: jest
 }
 
 function mockLegalOfficerCreateLoc(requesterLocId?: UUID) {
+    const locsState: any = {};
     const openLoc = {
         locId: new UUID("556f4128-4fc3-4fdc-a543-74e6230911c4"),
         data: () => ({
@@ -148,17 +149,17 @@ function mockLegalOfficerCreateLoc(requesterLocId?: UUID) {
             requesterLocId,
             description: "LOC description",
             status: "OPEN"
-        } as LocData)
-    } as OpenLoc
+        } as LocData),
+        locsState,
+    } as OpenLoc;
+    locsState.findById = () => openLoc;
 
-    const locsState = {
-        legalOfficer: {
-            createLoc: async function (params: OpenLocParams & BlockchainSubmissionParams): Promise<OpenLoc> {
-                params.callback!(mockSubmittableResult(true));
-                return openLoc;
-            }
+    locsState.legalOfficer = {
+        createLoc: async function (params: OpenLocParams & BlockchainSubmissionParams): Promise<OpenLoc> {
+            params.callback!(mockSubmittableResult(true));
+            return openLoc;
         }
-    } as LocsState;
+    };
     openLoc.locsState = () => locsState;
     setLocsState(locsState);
     const client = {

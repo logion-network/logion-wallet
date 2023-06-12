@@ -6,6 +6,7 @@ import ClientExtrinsicSubmitter, { Call, CallCallback } from '../ClientExtrinsic
 import ProcessStep from '../common/ProcessStep';
 import Alert from '../common/Alert';
 import { useLegalOfficerContext } from 'src/legal-officer/LegalOfficerContext';
+import { useLocContext } from './LocContext';
 
 enum CreationStatus {
     NONE,
@@ -26,10 +27,11 @@ export interface Props {
 }
 
 export default function LocCreationSteps(props: Props) {
-    const { signer, client } = useLogionChain();
+    const { signer } = useLogionChain();
     const [ creationState, setCreationState ] = useState<CreationState>({ status: CreationStatus.LOC_CREATION_PENDING });
     const [ call, setCall ] = useState<Call>();
-    const { refreshLocs, legalOfficer, mutateLocsState } = useLegalOfficerContext();
+    const { mutateLocsState } = useLegalOfficerContext();
+    const { loc: currentLoc, mutateLocState: locMutateLocState } = useLocContext();
     const [ locId, setLocId ] = useState<UUID>();
 
     const setStatus = useCallback((status: CreationStatus) => {
@@ -40,7 +42,7 @@ export default function LocCreationSteps(props: Props) {
 
     // LOC creation
     useEffect(() => {
-        if (legalOfficer && locToCreate && client && creationState.status === CreationStatus.LOC_CREATION_PENDING) {
+        if (currentLoc && locToCreate && creationState.status === CreationStatus.LOC_CREATION_PENDING) {
             setStatus(CreationStatus.CREATING_LOC);
             setCall(() => async (callback: CallCallback) => {
                 await mutateLocsState(async current => {
@@ -52,6 +54,8 @@ export default function LocCreationSteps(props: Props) {
                             callback,
                         });
                         setLocId(loc.locId);
+                        const locs = loc.locsState();
+                        await locMutateLocState(async () => locs.findById(currentLoc.id));
                         return loc.locsState();
                     } else {
                         return current;
@@ -59,13 +63,12 @@ export default function LocCreationSteps(props: Props) {
                 })});
         }
     }, [
-        client,
-        legalOfficer,
+        currentLoc,
         locToCreate,
-        refreshLocs,
         creationState,
         setStatus,
         mutateLocsState,
+        locMutateLocState,
         signer,
         setCall,
     ]);

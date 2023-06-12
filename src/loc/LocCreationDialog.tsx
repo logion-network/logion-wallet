@@ -7,7 +7,6 @@ import Dialog from '../common/Dialog';
 import LocCreationForm, { FormValues } from "./LocCreationForm";
 import { isLogionIdentityLoc, LocRequestFragment } from "../common/types/ModelTypes";
 import LocCreationSteps from "./LocCreationSteps";
-import { useLegalOfficerContext } from '../legal-officer/LegalOfficerContext';
 import Alert from '../common/Alert';
 import { autoSelectTemplate, backendTemplate } from "./Template";
 import LocTemplateChooser from "./LocTemplateChooser";
@@ -29,7 +28,6 @@ export interface Props {
 
 export default function LocCreationDialog(props: Props) {
     const { colorTheme } = useCommonContext();
-    const { refreshLocs } = useLegalOfficerContext();
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>({
         defaultValues: {
             description: props.defaultDescription || ""
@@ -75,7 +73,6 @@ export default function LocCreationDialog(props: Props) {
     }, [ reset, setNewLocRequest, setLinkNature, props.locRequest.locType ]);
 
     const onSuccess = useCallback(async (locId: UUID) => {
-        await refreshLocs();
         if(newLocRequest) {
             props.onSuccess({
                 ...newLocRequest,
@@ -83,7 +80,7 @@ export default function LocCreationDialog(props: Props) {
             }, linkNature);
             clear();
         }
-    }, [ refreshLocs, clear, props, newLocRequest, linkNature ]);
+    }, [ clear, props, newLocRequest, linkNature ]);
 
     const onCancel = useCallback(() => {
         clear();
