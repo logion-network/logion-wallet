@@ -5,7 +5,6 @@ import Icon from "src/common/Icon";
 import IconTextRow from "src/common/IconTextRow";
 import VoidLocButton from "./VoidLocButton";
 import VoidLocReplaceExistingButton from "./VoidLocReplaceExistingButton";
-import VoidLocReplaceNewButton from "./VoidLocReplaceNewButton";
 
 import "./VoidFrame.css";
 
@@ -61,7 +60,6 @@ export default function VoidFrame(props: Props) {
                             className="void-buttons-container"
                         >
                             <VoidLocButton />
-                            { loc.locType !== 'Collection' && <VoidLocReplaceNewButton /> }
                             { loc.locType !== 'Collection' && <VoidLocReplaceExistingButton /> }
                         </ButtonGroup>
                     </>

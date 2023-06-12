@@ -1,5 +1,4 @@
-import { LogionClient } from "@logion/client";
-import { LocType } from "@logion/node-api";
+import { LocType, UUID } from "@logion/node-api";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
@@ -9,11 +8,10 @@ import { TEST_WALLET_USER } from "../wallet-user/TestData";
 
 import LocCreationDialog from "./LocCreationDialog";
 import { setAuthenticatedUser } from "src/common/__mocks__/ModelMock";
-import { setLocState } from "./__mocks__/LocContextMock";
-import { PendingRequest } from "src/__mocks__/LogionClientMock";
-import { mockSubmittableResult } from "src/logion-chain/__mocks__/SignatureMock";
-import { setClientMock } from "src/logion-chain/__mocks__/LogionChainMock";
-import { mockLegalOfficerLocRequest } from "./TestData";
+import { LocData, OpenLoc, OpenLocParams, BlockchainSubmissionParams, LocsState, LogionClient } from "@logion/client";
+import { mockSubmittableResult } from "../logion-chain/__mocks__/SignatureMock";
+import { setLocsState } from "../legal-officer/__mocks__/LegalOfficerContextMock";
+import { setClientMock } from "../logion-chain/__mocks__/LogionChainMock";
 
 jest.mock("../logion-chain/Signature");
 jest.mock("../common/CommonContext");
@@ -29,28 +27,18 @@ describe("LocCreationDialog", () => {
         setAuthenticatedUser(TEST_WALLET_USER);
     });
   
-    it("create Polkadot Identity LOC with user identity", async () => createsWithUserIdentity('Identity', TEST_WALLET_USER.address, undefined));
-    it("create Logion Identity LOC with user identity", async () => createsWithUserIdentity('Identity', undefined, undefined));
-    it("create Polkadot Transaction LOC with user identity", async () => createsWithUserIdentity('Transaction', TEST_WALLET_USER.address, undefined));
-    it("create Logion Transaction LOC with user identity", async () => createsWithUserIdentity('Transaction', undefined, "aed4c6e4-979e-48ad-be6e-4bd39fb94762"));
+    it("create Logion Identity LOC with user identity", async () => createsWithUserIdentity('Identity', undefined));
+    it("create Logion Transaction LOC without user identity", async () => createsWithoutUserIdentity('Transaction', "aed4c6e4-979e-48ad-be6e-4bd39fb94762"));
 
-    it("create Polkadot Identity LOC without user identity", async () => createsWithoutUserIdentity('Identity', TEST_WALLET_USER.address, undefined));
-    it("create Logion Identity LOC without user identity", async () => createsWithoutUserIdentity('Identity', undefined, undefined));
-    it("create Polkadot Transaction LOC without user identity", async () => createsWithoutUserIdentity('Transaction', TEST_WALLET_USER.address, undefined));
-    it("create Logion Transaction LOC without user identity", async () => createsWithoutUserIdentity('Transaction', undefined, "aed4c6e4-979e-48ad-be6e-4bd39fb94762"));
-
-    it("fails creating Polkadot Identity LOC with missing user identity", async () => failsWithoutUserIdentity('Identity', TEST_WALLET_USER.address, undefined));
-    it("fails creating Logion Identity LOC with missing user identity", async () => failsWithoutUserIdentity('Identity', undefined, undefined));
-    it("fails creating Polkadot Transaction LOC with missing user identity", async () => failsWithoutUserIdentity('Transaction', TEST_WALLET_USER.address, undefined));
-    it("fails creating Logion Transaction LOC with missing user identity", async () => failsWithoutUserIdentity('Transaction', undefined, "aed4c6e4-979e-48ad-be6e-4bd39fb94762"));
+    it("fails creating Logion Identity LOC with missing user identity", async () => failsWithoutUserIdentity('Identity', undefined));
+    it("fails creating Logion Transaction LOC with missing user identity", async () => failsWithoutUserIdentity('Transaction', "aed4c6e4-979e-48ad-be6e-4bd39fb94762"));
 })
 
-async function createsWithUserIdentity(locType: LocType, requesterAddress: string | undefined, requesterIdentityLoc: string | undefined) {
+async function createsWithUserIdentity(locType: LocType, requesterIdentityLoc: string | undefined) {
     const exit = jest.fn();
     const onSuccess = jest.fn();
     const requestFragment: LocRequestFragment = {
-        requesterAddress,
-        requesterIdentityLoc,
+        requesterLocId: requesterIdentityLoc ? new UUID(requesterIdentityLoc) : undefined,
         locType,
         userIdentity: {
             firstName: "John",
@@ -59,7 +47,7 @@ async function createsWithUserIdentity(locType: LocType, requesterAddress: strin
             phoneNumber: "+1234",
         }
     };
-    mockLegalOfficerLocRequest();
+    mockLegalOfficerCreateLoc(requestFragment.requesterLocId || undefined);
 
     render(<LocCreationDialog
         exit={ exit }
@@ -91,15 +79,14 @@ async function submitAndExpectSuccess(exit: jest.Mock<any, any>, onSuccess: jest
     expect(onSuccess).toBeCalled();
 }
 
-async function createsWithoutUserIdentity(locType: LocType, requesterAddress: string | undefined, requesterIdentityLoc: string | undefined) {
+async function createsWithoutUserIdentity(locType: LocType, requesterIdentityLoc: string | undefined) {
     const exit = jest.fn();
     const onSuccess = jest.fn();
     const requestFragment: LocRequestFragment = {
-        requesterAddress,
-        requesterIdentityLoc,
+        requesterLocId: requesterIdentityLoc ? new UUID(requesterIdentityLoc) : undefined,
         locType
     };
-    mockLegalOfficerLocRequest();
+    mockLegalOfficerCreateLoc(requestFragment.requesterLocId || undefined);
 
     render(<LocCreationDialog
         exit={ exit }
@@ -123,12 +110,11 @@ async function fillInUserIdentityForm() {
     await typeByLabel("Phone", "+1234");
 }
 
-async function failsWithoutUserIdentity(locType: LocType, requesterAddress: string | undefined, requesterIdentityLoc: string | undefined) {
+async function failsWithoutUserIdentity(locType: LocType, requesterIdentityLoc: string | undefined) {
     const exit = jest.fn();
     const onSuccess = jest.fn();
     const requestFragment: LocRequestFragment = {
-        requesterAddress,
-        requesterIdentityLoc,
+        requesterLocId: requesterIdentityLoc ? new UUID(requesterIdentityLoc) : undefined,
         locType,
     };
 
@@ -152,4 +138,31 @@ async function submitAndExpectFailure(exit: jest.Mock<any, any>, onSuccess: jest
 
     expect(exit).not.toBeCalled();
     expect(onSuccess).not.toBeCalled();
+}
+
+function mockLegalOfficerCreateLoc(requesterLocId?: UUID) {
+    const openLoc = {
+        locId: new UUID("556f4128-4fc3-4fdc-a543-74e6230911c4"),
+        data: () => ({
+            ownerAddress: "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
+            requesterLocId,
+            description: "LOC description",
+            status: "OPEN"
+        } as LocData)
+    } as OpenLoc
+
+    const locsState = {
+        legalOfficer: {
+            createLoc: async function (params: OpenLocParams & BlockchainSubmissionParams): Promise<OpenLoc> {
+                params.callback!(mockSubmittableResult(true));
+                return openLoc;
+            }
+        }
+    } as LocsState;
+    openLoc.locsState = () => locsState;
+    setLocsState(locsState);
+    const client = {
+        locsState: () => Promise.resolve(locsState),
+    };
+    setClientMock(client as unknown as LogionClient);
 }

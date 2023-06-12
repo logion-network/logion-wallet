@@ -1,17 +1,14 @@
-import { LocRequest } from "@logion/client";
+import { OpenLocParams } from "@logion/client";
 import { UUID, LocType } from "@logion/node-api";
 import { useCallback, useState } from 'react';
 import { useForm } from 'react-hook-form';
-
 import { useCommonContext } from '../common/CommonContext';
-import { CreateLocRequest, createLocRequest } from '../common/Model';
 import Dialog from '../common/Dialog';
 import LocCreationForm, { FormValues } from "./LocCreationForm";
 import { isLogionIdentityLoc, LocRequestFragment } from "../common/types/ModelTypes";
 import LocCreationSteps from "./LocCreationSteps";
 import { useLegalOfficerContext } from '../legal-officer/LegalOfficerContext';
 import Alert from '../common/Alert';
-import { useLogionChain } from '../logion-chain';
 import { autoSelectTemplate, backendTemplate } from "./Template";
 import LocTemplateChooser from "./LocTemplateChooser";
 
@@ -31,15 +28,14 @@ export interface Props {
 }
 
 export default function LocCreationDialog(props: Props) {
-    const { accounts } = useLogionChain();
     const { colorTheme } = useCommonContext();
-    const { axios, refreshLocs } = useLegalOfficerContext();
+    const { refreshLocs } = useLegalOfficerContext();
     const { control, handleSubmit, formState: { errors }, reset } = useForm<FormValues>({
         defaultValues: {
             description: props.defaultDescription || ""
         }
     });
-    const [ newLocRequest, setNewLocRequest ] = useState<LocRequest | null>(null);
+    const [ newLocRequest, setNewLocRequest ] = useState<OpenLocParams | null>(null);
     const [ linkNature, setLinkNature ] = useState<string | undefined>();
     const [ selectedTemplateId, setSelectedTemplateId ] = useState<string | undefined>();
 
@@ -54,21 +50,22 @@ export default function LocCreationDialog(props: Props) {
             }
         }
         (async function () {
-            const currentAddress = accounts!.current!.accountId.address;
-            const request: CreateLocRequest = {
-                ownerAddress: currentAddress,
-                requesterIdentityLoc: props.locRequest.requesterIdentityLoc ? props.locRequest.requesterIdentityLoc : undefined,
-                locType: props.locRequest.locType,
+            const locType = props.locRequest.locType === "Identity" ?
+                "Identity" :
+                "Transaction";
+            const request: OpenLocParams = {
+                requesterLocId: props.locRequest.requesterLocId || undefined,
+                locType,
                 description: formValues.description,
                 userIdentity: userIdentity,
                 template: backendTemplate(selectedTemplateId),
             }
-            setNewLocRequest(await createLocRequest(axios!, request));
+            setNewLocRequest(request);
             if(props.hasLinkNature) {
                 setLinkNature(formValues.linkNature);
             }
         })();
-    }, [ axios, accounts, props.locRequest, props.hasLinkNature, selectedTemplateId ]);
+    }, [ props.locRequest, props.hasLinkNature, selectedTemplateId ]);
 
     const clear = useCallback(() => {
         reset();
@@ -77,12 +74,12 @@ export default function LocCreationDialog(props: Props) {
         setSelectedTemplateId(autoSelectTemplate(props.locRequest.locType));
     }, [ reset, setNewLocRequest, setLinkNature, props.locRequest.locType ]);
 
-    const onSuccess = useCallback(async () => {
+    const onSuccess = useCallback(async (locId: UUID) => {
         await refreshLocs();
         if(newLocRequest) {
             props.onSuccess({
                 ...newLocRequest,
-                id: new UUID(newLocRequest.id),
+                id: locId,
             }, linkNature);
             clear();
         }

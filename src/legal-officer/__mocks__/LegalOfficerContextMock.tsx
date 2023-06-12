@@ -157,6 +157,10 @@ export function setVotes(value: Vote[]) {
     votes = value;
 }
 
+async function mutateLocsState(mutator: (current: LocsState) => Promise<LocsState>): Promise<void> {
+    await mutator(locsState)
+}
+
 export function useLegalOfficerContext() {
     return {
         pendingTokenizationRequests,
@@ -185,5 +189,6 @@ export function useLegalOfficerContext() {
         locsState,
         votes,
         vote,
+        mutateLocsState,
     };
 }

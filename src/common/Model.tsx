@@ -1,7 +1,6 @@
 import { AxiosInstance } from 'axios';
-import { UserIdentity, LocData, LocRequest } from '@logion/client';
+import { LocData } from '@logion/client';
 import { ProtectionRequest, ProtectionRequestStatus } from '@logion/client/dist/RecoveryClient.js';
-import { AccountType, LocType } from '@logion/node-api';
 
 export type ProtectionRequestKind = 'RECOVERY' | 'PROTECTION_ONLY' | 'ANY';
 
@@ -17,33 +16,6 @@ export async function fetchProtectionRequests(
     specification: FetchProtectionRequestSpecification): Promise<ProtectionRequest[]> {
     const response = await axios.put("/api/protection-request", specification);
     return response.data.requests;
-}
-
-export interface FetchTransactionsSpecification {
-    address: string,
-}
-
-export interface RequesterAddress {
-    type: AccountType;
-    address: string;
-}
-
-export interface CreateLocRequest {
-    ownerAddress: string;
-    requesterAddress?: RequesterAddress;
-    requesterIdentityLoc?: string;
-    description: string;
-    locType: LocType;
-    userIdentity?: UserIdentity;
-    template?: string;
-}
-
-export async function createLocRequest(
-    axios: AxiosInstance,
-    request: CreateLocRequest,
-): Promise<LocRequest> {
-    const response = await axios.post(`/api/loc-request`, request);
-    return response.data;
 }
 
 export function isGrantedAccess(address: string | undefined, loc: LocData): boolean {
