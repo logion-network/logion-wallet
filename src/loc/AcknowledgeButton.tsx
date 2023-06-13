@@ -37,7 +37,7 @@ export default function AcknowledgeButton(props: Props) {
             setFees(null);
             (async function() {
                 let fees: Fees;
-                if(props.locItem.type === "Document") {
+                if(props.locItem.type === "Data") {
                     fees = await client.logionApi.fees.estimateWithoutStorage({
                         origin: client.currentAddress?.address || "",
                         submittable: client.logionApi.polkadot.tx.logionLoc.acknowledgeMetadata(
@@ -45,7 +45,7 @@ export default function AcknowledgeButton(props: Props) {
                             props.locItem.name || "",
                         ),
                     });
-                } else if(props.locItem.type === "Data") {
+                } else if(props.locItem.type === "Document") {
                     fees = await client.logionApi.fees.estimateWithoutStorage({
                         origin: client.currentAddress?.address || "",
                         submittable: client.logionApi.polkadot.tx.logionLoc.acknowledgeFile(
