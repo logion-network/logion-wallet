@@ -112,7 +112,7 @@ export default function LegalOfficerInstructions(props: Props) {
                     exit={ () => setCreateLoc(false) }
                     onSuccess={ request => navigate(detailsPath(request.id, 'Transaction')) }
                     locRequest={ {
-                        requesterIdentityLoc: loc.id.toString(),
+                        requesterLocId: loc.id,
                         locType: 'Transaction',
                         userIdentity: loc.userIdentity,
                     } }

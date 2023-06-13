@@ -79,7 +79,6 @@ exports[`VoidFrame renders for non-void non-collection LOC 1`] = `
           className="void-buttons-container"
         >
           <VoidLocButton />
-          <VoidLocReplaceNewButton />
           <VoidLocReplaceExistingButton />
         </ButtonGroup>
       </React.Fragment>

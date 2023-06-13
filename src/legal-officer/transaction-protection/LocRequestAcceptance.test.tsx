@@ -5,20 +5,16 @@ jest.mock('../../logion-chain/Signature');
 jest.mock('../../loc/Model');
 jest.mock("../../loc/LocContext");
 
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { UUID, Fees } from '@logion/node-api';
+import { UUID, LocType, ValidAccountId } from '@logion/node-api';
 import { LocData } from '@logion/client';
-
-import { shallowRender, typeByLabel } from '../../tests';
+import { shallowRender } from '../../tests';
 import { setCurrentAddress, DEFAULT_LEGAL_OFFICER_ACCOUNT } from '../../logion-chain/__mocks__/LogionChainMock';
-
 import LocRequestAcceptance from './LocRequestAcceptance';
 import { PendingRequest } from "src/__mocks__/LogionClientMock";
 import { mockSubmittableResult } from "src/logion-chain/__mocks__/SignatureMock";
 import { setLocState } from "src/loc/__mocks__/LocContextMock";
-import { mockSubmittable, setupApiMock } from 'src/__mocks__/LogionMock';
-import { It, Mock } from 'moq.ts';
 
 describe("LocRequestAcceptance", () => {
 
@@ -27,38 +23,15 @@ describe("LocRequestAcceptance", () => {
         expect(tree).toMatchSnapshot();
     });
 
-    xit("accepts transaction LOC request", async () => {
-        setCurrentAddress(DEFAULT_LEGAL_OFFICER_ACCOUNT);
-        const pendingLoc = new PendingRequest();
-        pendingLoc.legalOfficer.accept = async (params: any) => {
-            params.callback(mockSubmittableResult(true));
-            return params.locState;
-        };
-        pendingLoc.data = () => ({ locType: "Transaction" });
-        setLocState(pendingLoc);
-
-        setupApiMock(api => {
-            const submittable = mockSubmittable();
-            api.setup(instance => instance.polkadot.tx.logionLoc.createPolkadotTransactionLoc(It.IsAny(), It.IsAny())).returns(submittable.object());
-            const fees = new Mock<Fees>();
-            api.setup(instance => instance.fees.estimateCreateLoc(It.IsAny())).returnsAsync(fees.object());
-        });
-
-        render(<LocRequestAcceptance requestToAccept={REQUEST} clearRequestToAccept={jest.fn()} />);
-
-        // Accept request
-        const acceptButton = screen.getByRole('button', {name: 'Proceed'});
-        await userEvent.click(acceptButton);
-
-        // Create LOC
-        await waitFor(() => screen.getByRole("dialog"));
-        await waitFor(() => screen.getByText(/LOC successfully created/));
-
-        const proceedReviewButton = screen.getByRole('button', {name: 'Close'});
-        await userEvent.click(proceedReviewButton);
+    it("accepts transaction LOC request", async () => {
+        await accepts("Transaction");
     });
 
-    xit("accepts collection LOC request", async () => {
+    it("accepts collection LOC request", async () => {
+        await accepts("Collection");
+    });
+
+    async function accepts(locType: LocType){
         setCurrentAddress(DEFAULT_LEGAL_OFFICER_ACCOUNT);
         const pendingLoc = new PendingRequest();
         pendingLoc.legalOfficer.acceptCollection = async (params: any) => {
@@ -68,53 +41,29 @@ describe("LocRequestAcceptance", () => {
         pendingLoc.data = () => ({ locType: "Collection" });
         setLocState(pendingLoc);
 
-        setupApiMock(api => {
-            const submittable = mockSubmittable();
-            api.setup(instance => instance.polkadot.tx.logionLoc.createCollectionLoc(It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny())).returns(submittable.object());
-            const fees = new Mock<Fees>();
-            api.setup(instance => instance.fees.estimateCreateLoc(It.IsAny())).returnsAsync(fees.object());
-        });
-
-        render(<LocRequestAcceptance requestToAccept={COLLECTION_LOC_REQUEST} clearRequestToAccept={jest.fn()} />);
+        const requestToAccept = createRequestToAccept(locType);
+        render(<LocRequestAcceptance requestToAccept={ requestToAccept } clearRequestToAccept={jest.fn()} />);
 
         // Accept request
-        const checkBoxes = await screen.findAllByRole("checkbox");
-        await userEvent.click(checkBoxes[1]);
-        await typeByLabel("Data number limit", "200");
-        const acceptButton = screen.getByRole('button', {name: 'Proceed'});
+        const acceptButton = screen.getByRole('button', {name: 'Accept'});
         await userEvent.click(acceptButton);
-
-        // Create LOC
-        await waitFor(() => screen.getByRole("dialog"));
-        await waitFor(() => screen.getByText(/LOC successfully created/));
-
-        const proceedReviewButton = screen.getByRole('button', {name: 'Close'});
-        await userEvent.click(proceedReviewButton);
-    });
+    }
 });
 
-const REQUEST = {
-    id: new UUID(),
-    ownerAddress: DEFAULT_LEGAL_OFFICER_ACCOUNT.accountId,
-    requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-    description: "LOC description",
-    status: "REQUESTED",
-    createdOn: "2021-09-20T15:52:00.000",
-    files: [],
-    links: [],
-    locType: 'Transaction',
-    metadata: []
-} as unknown as LocData;
-
-const COLLECTION_LOC_REQUEST = {
-    id: new UUID(),
-    ownerAddress: DEFAULT_LEGAL_OFFICER_ACCOUNT.accountId,
-    requesterAddress: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
-    description: "LOC description",
-    status: "REQUESTED",
-    createdOn: "2021-09-20T15:52:00.000",
-    files: [],
-    links: [],
-    locType: 'Collection',
-    metadata: []
-} as unknown as LocData;
+function createRequestToAccept(locType: LocType): LocData {
+    return {
+        id: new UUID(),
+        ownerAddress: DEFAULT_LEGAL_OFFICER_ACCOUNT.accountId.address,
+        requesterAddress: {
+            address: "5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW",
+            type: "Polkadot"
+        } as ValidAccountId,
+        description: "LOC description",
+        status: "REVIEW_PENDING",
+        createdOn: "2021-09-20T15:52:00.000",
+        files: [],
+        links: [],
+        locType,
+        metadata: []
+    } as unknown as LocData
+}

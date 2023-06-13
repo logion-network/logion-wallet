@@ -76,6 +76,7 @@ export interface LegalOfficerContext {
     votes: Vote[];
     refreshVotes: () => Promise<void>;
     vote: (params: { targetVote: Vote, myVote: VoteResult, callback: SignCallback }) => Promise<void>;
+    mutateLocsState: (mutator: (current: LocsState) => Promise<LocsState>) => Promise<void>;
 }
 
 interface FullLegalOfficerContext extends LegalOfficerContext {
@@ -120,6 +121,7 @@ function initialContextValue(): FullLegalOfficerContext {
         votes: [],
         refreshVotes: DEFAULT_NOOP,
         vote: DEFAULT_NOOP,
+        mutateLocsState: DEFAULT_NOOP,
     };
 }
 
@@ -146,6 +148,7 @@ type ActionType =
     | 'REFRESH_VOTES_CALLED'
     | 'SET_VOTES'
     | 'SET_VOTE'
+    | 'SET_MUTATE_LOC_STATE'
 ;
 
 interface Action {
@@ -188,7 +191,7 @@ interface Action {
     votes?: Vote[];
     refreshVotes?: () => Promise<void>;
     vote?: (params: { targetVote: Vote, myVote: VoteResult, callback: SignCallback }) => Promise<void>;
-}
+    mutateLocsState?: (mutator: (current: LocsState) => Promise<LocsState>) => Promise<void>}
 
 const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOfficerContext, action: Action): FullLegalOfficerContext => {
     switch (action.type) {
@@ -339,6 +342,11 @@ const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOffic
             return {
                 ...state,
                 vote: action.vote!,
+            }
+        case 'SET_MUTATE_LOC_STATE':
+            return {
+                ...state,
+                mutateLocsState: action.mutateLocsState!,
             }
         default:
             /* istanbul ignore next */
@@ -688,6 +696,20 @@ export function LegalOfficerContextProvider(props: Props) {
             });
         }
     }, [ contextValue.vote, voteCallback ]);
+
+    const mutateLocsStateCallback = useCallback(async (mutator: (current: LocsState) => Promise<LocsState>): Promise<void> => {
+        const result = await mutator(contextValue.locsState!);
+        refreshLocs(result);
+    }, [ contextValue.locsState, refreshLocs ]);
+
+    useEffect(() => {
+        if (contextValue.mutateLocsState !== mutateLocsStateCallback) {
+            dispatch({
+                type: "SET_MUTATE_LOC_STATE",
+                mutateLocsState: mutateLocsStateCallback,
+            });
+        }
+    }, [ mutateLocsStateCallback, contextValue.mutateLocsState ]);
 
     // ------------------ Component -------------------------------
 

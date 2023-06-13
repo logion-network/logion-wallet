@@ -1,14 +1,12 @@
 import { useState, useEffect, useCallback } from 'react';
-import { LocRequest, PendingRequest } from '@logion/client';
+import { OpenLocParams } from '@logion/client';
 import { UUID } from "@logion/node-api";
-
 import { useLogionChain } from '../logion-chain';
 import ClientExtrinsicSubmitter, { Call, CallCallback } from '../ClientExtrinsicSubmitter';
 import ProcessStep from '../common/ProcessStep';
 import Alert from '../common/Alert';
-import { useLocContext } from './LocContext';
 import { useLegalOfficerContext } from 'src/legal-officer/LegalOfficerContext';
-import { fetchAllLocsParams } from './LegalOfficerLocContext';
+import { useLocContext } from './LocContext';
 
 enum CreationStatus {
     NONE,
@@ -16,7 +14,6 @@ enum CreationStatus {
     CREATING_LOC,
     LOC_CREATED,
     LOC_CREATION_FAILED,
-    DONE
 }
 
 interface CreationState {
@@ -24,17 +21,18 @@ interface CreationState {
 }
 
 export interface Props {
-    requestToCreate: LocRequest | null,
+    requestToCreate: OpenLocParams | null,
     exit: () => void,
-    onSuccess: () => void,
+    onSuccess: (id: UUID) => void,
 }
 
 export default function LocCreationSteps(props: Props) {
-    const { signer, client } = useLogionChain();
-    const { mutateLocState } = useLocContext();
+    const { signer } = useLogionChain();
     const [ creationState, setCreationState ] = useState<CreationState>({ status: CreationStatus.LOC_CREATION_PENDING });
     const [ call, setCall ] = useState<Call>();
-    const { refreshLocs, legalOfficer } = useLegalOfficerContext();
+    const { mutateLocsState } = useLegalOfficerContext();
+    const { loc: currentLoc, mutateLocState: locMutateLocState } = useLocContext();
+    const [ locId, setLocId ] = useState<UUID>();
 
     const setStatus = useCallback((status: CreationStatus) => {
         setCreationState({ ...creationState, status });
@@ -44,37 +42,38 @@ export default function LocCreationSteps(props: Props) {
 
     // LOC creation
     useEffect(() => {
-        if (legalOfficer && locToCreate && client && creationState.status === CreationStatus.LOC_CREATION_PENDING) {
+        if (locToCreate && creationState.status === CreationStatus.LOC_CREATION_PENDING) {
             setStatus(CreationStatus.CREATING_LOC);
-            (async function() {
-                const locs = await client.locsState(fetchAllLocsParams(legalOfficer));
-                const pending = locs.findById(new UUID(locToCreate.id)) as PendingRequest;
-                const call = async (callback: CallCallback) =>
-                    mutateLocState(async current => {
-                        if(signer) {
-                            const loc = await pending.legalOfficer.accept({
-                                signer,
-                                callback,
-                            });
-                            const locs = loc.locsState();
-                            refreshLocs(locs);
-                            return locs;
-                        } else {
-                            return current;
+            setCall(() => async (callback: CallCallback) => {
+                await mutateLocsState(async current => {
+                    if (signer) {
+                        const loc = await current.legalOfficer.createLoc({
+                            ...locToCreate,
+                            locType: locToCreate.locType,
+                            signer,
+                            callback,
+                        });
+                        setLocId(loc.locId);
+                        const locs = loc.locsState();
+                        if(currentLoc) {
+                            await locMutateLocState(async () => locs.findById(currentLoc.id));
                         }
-                    });
-                setCall(() => call);
-            })();
+                        return loc.locsState();
+                    } else {
+                        return current;
+                    }
+                })
+            });
         }
     }, [
-        client,
-        legalOfficer,
+        currentLoc,
         locToCreate,
-        refreshLocs,
         creationState,
         setStatus,
-        mutateLocState,
+        mutateLocsState,
+        locMutateLocState,
         signer,
+        setCall,
     ]);
 
     const clear = useCallback(() => {
@@ -86,10 +85,10 @@ export default function LocCreationSteps(props: Props) {
     const close = useCallback(() => {
         const success = creationState.status === CreationStatus.LOC_CREATED;
         clear();
-        if(success) {
-            onSuccess();
+        if(success && locId) {
+            onSuccess(locId);
         }
-    }, [ creationState, clear, onSuccess ])
+    }, [ creationState, clear, onSuccess, locId ])
 
     if (locToCreate === null) {
         return null;

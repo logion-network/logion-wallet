@@ -96,7 +96,26 @@ exports[`LegalOfficerInstructions renders for logion identity 1`] = `
     locRequest={
       Object {
         "locType": "Transaction",
-        "requesterIdentityLoc": "274c1273-5d0e-4c81-bce4-a15518affd35",
+        "requesterLocId": UUID {
+          "bytes": Uint8Array [
+            39,
+            76,
+            18,
+            115,
+            93,
+            14,
+            76,
+            129,
+            188,
+            228,
+            161,
+            85,
+            24,
+            175,
+            253,
+            53,
+          ],
+        },
         "userIdentity": Object {
           "firstName": "John",
           "lastName": "Doe",
