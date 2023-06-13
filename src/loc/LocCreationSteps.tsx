@@ -42,7 +42,7 @@ export default function LocCreationSteps(props: Props) {
 
     // LOC creation
     useEffect(() => {
-        if (currentLoc && locToCreate && creationState.status === CreationStatus.LOC_CREATION_PENDING) {
+        if (locToCreate && creationState.status === CreationStatus.LOC_CREATION_PENDING) {
             setStatus(CreationStatus.CREATING_LOC);
             setCall(() => async (callback: CallCallback) => {
                 await mutateLocsState(async current => {
@@ -55,12 +55,15 @@ export default function LocCreationSteps(props: Props) {
                         });
                         setLocId(loc.locId);
                         const locs = loc.locsState();
-                        await locMutateLocState(async () => locs.findById(currentLoc.id));
+                        if(currentLoc) {
+                            await locMutateLocState(async () => locs.findById(currentLoc.id));
+                        }
                         return loc.locsState();
                     } else {
                         return current;
                     }
-                })});
+                })
+            });
         }
     }, [
         currentLoc,
