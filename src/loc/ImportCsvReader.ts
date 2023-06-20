@@ -1,4 +1,5 @@
 import csv from "csv-parser";
+import { Hash } from "@logion/client";
 
 const fileReaderStream = require("filereader-stream");
 
@@ -14,7 +15,7 @@ export interface CsvItemWithFile extends CsvItemWithoutFile {
     fileName: string;
     fileContentType: string;
     fileSize: string;
-    fileHash: string;
+    fileHash: Hash;
 }
 
 interface CsvItemToken {
@@ -122,7 +123,7 @@ export async function readItemsCsv(file: File): Promise<ReadItemsCsvResult> {
                         itemWithFile.fileName = dataWithFile['FILE NAME'];
                         itemWithFile.fileContentType = dataWithFile['FILE CONTENT TYPE'];
                         itemWithFile.fileSize = dataWithFile['FILE SIZE'];
-                        itemWithFile.fileHash = dataWithFile['FILE HASH'];
+                        itemWithFile.fileHash = dataWithFile['FILE HASH'] as Hash;
                     }
 
                     if(rowType === CsvRowType.WithFileAndToken || rowType === CsvRowType.WithToken) {

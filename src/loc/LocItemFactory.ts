@@ -1,4 +1,4 @@
-import { MergedMetadataItem, MergedFile, MergedLink, Fees as ClientFees } from "@logion/client";
+import { MergedMetadataItem, MergedFile, MergedLink, Fees as ClientFees, Hash } from "@logion/client";
 import { UUID, Fees, ValidAccountId } from "@logion/node-api";
 import { LinkData, LocItem } from "./LocItem";
 import { LocTemplateDocumentOrLink, LocTemplateMetadataItem } from "./Template";
@@ -25,7 +25,7 @@ export interface SimpleItem {
 
 export interface FileItem extends SimpleItem {
     nature: string;
-    hash: string;
+    hash: Hash;
     size: bigint;
     fees?: ClientFees;
     storageFeePaidBy?: string;
@@ -37,6 +37,7 @@ function createPublishedFileLocItem(parameters: MergedFile): ItemAndRefreshFlag 
 
 export function createDraftFileLocItem(parameters: FileItem, locItem?: MergedFile): LocItem {
     return {
+        hash: parameters.hash,
         name: parameters.name,
         value: parameters.hash,
         nature: parameters.nature,
@@ -53,6 +54,7 @@ export function createDraftFileLocItem(parameters: FileItem, locItem?: MergedFil
 }
 
 export interface MetadataItem extends SimpleItem {
+    nameHash: Hash;
     value: string;
 }
 
@@ -75,6 +77,7 @@ function createPublishedMetadataLocItem(parameters: MergedMetadataItem): ItemAnd
 
 export function createDraftMetadataLocItem(metadataItem: MetadataItem, locItem?: MergedMetadataItem): LocItem {
     return {
+        hash: metadataItem.nameHash,
         name: metadataItem.name,
         nature: metadataItem.name,
         value: metadataItem.value,
@@ -90,7 +93,7 @@ export function createDraftMetadataLocItem(metadataItem: MetadataItem, locItem?:
 }
 
 export interface SimpleLink {
-    id: UUID;
+    target: string;
     nature: string;
     addedOn?: string;
     published: boolean;
@@ -127,14 +130,15 @@ export function createLinkItem(parameters: CreateLocLinkedLocItemParameters): It
 
 export function createDraftLinkedLocItem(parameters: CreateLocLinkedLocItemParameters, newItem: boolean): LocItem {
     const { link, otherLocDescription, submitter, linkDetailsPath } = parameters;
+    const target = new UUID(link.target);
     return {
         name: otherLocDescription,
-        value: link.id.toDecimalString(),
+        value: target.toDecimalString(),
         submitter,
         timestamp: parameters.link.addedOn || null,
         type: 'Linked LOC',
         status: 'DRAFT',
-        target: link.id,
+        target,
         nature: link.nature,
         linkDetailsPath,
         newItem,
@@ -167,6 +171,7 @@ function createPublishedLinkedLocItem(parameters: CreateLocLinkedLocItemParamete
 
 export function createDocumentTemplateItem(templateItem: LocTemplateDocumentOrLink, locItem?: MergedFile): LocItem {
     return {
+        hash: locItem?.hash,
         name: locItem?.name,
         value: locItem?.hash,
         newItem: false,
@@ -198,6 +203,7 @@ function toFeesClass(fees: ClientFees | undefined): Fees | undefined {
 
 export function createMetadataTemplateItem(templateItem: LocTemplateMetadataItem, locItem?: MergedMetadataItem): LocItem {
     return {
+        hash: locItem?.nameHash,
         name: templateItem.name,
         nature: templateItem.name,
         value: locItem?.value,
@@ -222,7 +228,7 @@ export function createLinkTemplateItem(
 ): LocItem {
     return {
         name: linkData?.linkedLoc.description,
-        value: locItem?.id.toDecimalString(),
+        value: new UUID(locItem?.target).toDecimalString(),
         newItem: false,
         status: locItem && locItem.published ? "ACKNOWLEDGED" : "DRAFT",
         submitter: locItem ? ownerAddress : undefined,

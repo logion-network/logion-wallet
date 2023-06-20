@@ -1,5 +1,5 @@
 import { LegalOfficerCase, UUID } from "@logion/node-api";
-import { LocData } from "@logion/client";
+import { LocData, hashString } from "@logion/client";
 
 export function buildLocRequest(locId: UUID, loc: LegalOfficerCase): LocData {
     return {
@@ -25,6 +25,7 @@ export function buildLocRequest(locId: UUID, loc: LegalOfficerCase): LocData {
         metadata: loc.metadata.map((locFile, index) => ({
             ...locFile,
             name: `Data ${index}`,
+            nameHash: hashString(`Data ${index}`),
             addedOn: "",
             published: false,
             status: "DRAFT",

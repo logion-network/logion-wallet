@@ -12,6 +12,7 @@ import {
     LogionClient,
     LocData,
     VerifiedIssuerIdentity,
+    hashString
 } from "@logion/client";
 import {
     Adapters,
@@ -85,7 +86,7 @@ export async function publishLink(params: {
     const { data, axios, api } = inspectState(currentLocState);
     const submittable = api.polkadot.tx.logionLoc.addLink(
         api.adapters.toLocId(data.id),
-        Adapters.toLocLink({ target, nature }),
+        Adapters.toLocLink({ target, nature: hashString(nature) }),
     );
     await signer.signAndSend({
         signerId: data.ownerAddress,
