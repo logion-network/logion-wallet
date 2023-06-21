@@ -21,6 +21,7 @@ export interface CsvItemWithFile extends CsvItemWithoutFile {
 interface CsvItemToken {
     tokenType: string;
     tokenId: string;
+    tokenIssuance: string;
 }
 
 export interface CsvItemWithFileAndToken extends CsvItemWithFile, CsvItemToken {
@@ -35,7 +36,7 @@ export type CsvItem = CsvItemWithoutFile | CsvItemWithFile | CsvItemWithFileAndT
 
 const COLUMNS_WITHOUT_FILE = ['ID', 'DESCRIPTION', 'TERMS_AND_CONDITIONS TYPE', 'TERMS_AND_CONDITIONS PARAMETERS'] as const;
 const COLUMNS_WITH_FILE = [ ...COLUMNS_WITHOUT_FILE, 'FILE NAME', 'FILE CONTENT TYPE', 'FILE SIZE', 'FILE HASH'] as const;
-const TOKEN_COLUMNS = ['TOKEN TYPE', 'TOKEN ID'] as const;
+const TOKEN_COLUMNS = ['TOKEN TYPE', 'TOKEN ID', 'TOKEN ISSUANCE'] as const;
 const COLUMNS_WITH_FILE_AND_TOKEN = [ ...COLUMNS_WITH_FILE, 'RESTRICTED', ...TOKEN_COLUMNS] as const;
 const COLUMNS_WITH_TOKEN = [ ...COLUMNS_WITHOUT_FILE, ...TOKEN_COLUMNS] as const;
 
@@ -131,6 +132,7 @@ export async function readItemsCsv(file: File): Promise<ReadItemsCsvResult> {
                         const itemWithToken = item as CsvItemWithToken;
                         itemWithToken.tokenType = dataWithToken['TOKEN TYPE'];
                         itemWithToken.tokenId = dataWithToken['TOKEN ID'];
+                        itemWithToken.tokenIssuance = dataWithToken['TOKEN ISSUANCE'];
                     }
 
                     if(rowType === CsvRowType.WithFileAndToken) {

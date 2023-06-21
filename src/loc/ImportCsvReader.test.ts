@@ -26,14 +26,14 @@ programming_music.jpg,Programming Music,programming_music.jpg,image/jpeg,90718,0
 lucas_games_characters.jpg,LucasArts Games Characters,lucas_games_characters.jpg,image/jpeg,91880,0x546b3a31d340681f4c80d84ab317bbd85870e340d3c2feb24d0aceddf6f2fd3,TYPE4,PARAM4
 `], "items.csv");
 
-const CSV_WITH_FILE_AND_TOKEN = new File([`ID,DESCRIPTION,FILE NAME,FILE CONTENT TYPE,FILE SIZE,FILE HASH,TERMS_AND_CONDITIONS TYPE,TERMS_AND_CONDITIONS PARAMETERS,RESTRICTED,TOKEN TYPE,TOKEN ID
-programming_music.jpg,Programming Music,programming_music.jpg,image/jpeg,90718,0xa025ca5f086f3b6df1ca96c235c4daff57083bbd4c9320a3013e787849f9fffa,TYPE3,PARAM3,Y,owner,0x900edc98db53508e6742723988b872dd08cd09c2
-lucas_games_characters.jpg,LucasArts Games Characters,lucas_games_characters.jpg,image/jpeg,91880,0x546b3a31d340681f4c80d84ab317bbd85870e340d3c2feb24d0aceddf6f2fd3,TYPE4,PARAM4,Y,owner,0x900edc98db53508e6742723988b872dd08cd09c2
+const CSV_WITH_FILE_AND_TOKEN = new File([`ID,DESCRIPTION,FILE NAME,FILE CONTENT TYPE,FILE SIZE,FILE HASH,TERMS_AND_CONDITIONS TYPE,TERMS_AND_CONDITIONS PARAMETERS,RESTRICTED,TOKEN TYPE,TOKEN ID,TOKEN ISSUANCE
+programming_music.jpg,Programming Music,programming_music.jpg,image/jpeg,90718,0xa025ca5f086f3b6df1ca96c235c4daff57083bbd4c9320a3013e787849f9fffa,TYPE3,PARAM3,Y,owner,0x900edc98db53508e6742723988b872dd08cd09c2,1
+lucas_games_characters.jpg,LucasArts Games Characters,lucas_games_characters.jpg,image/jpeg,91880,0x546b3a31d340681f4c80d84ab317bbd85870e340d3c2feb24d0aceddf6f2fd3,TYPE4,PARAM4,Y,owner,0x900edc98db53508e6742723988b872dd08cd09c2,1
 `], "items.csv");
 
-const CSV_WITH_TOKEN = new File([`ID,DESCRIPTION,TERMS_AND_CONDITIONS TYPE,TERMS_AND_CONDITIONS PARAMETERS,TOKEN TYPE,TOKEN ID
-programming_music.jpg,Programming Music,TYPE3,PARAM3,owner,0x900edc98db53508e6742723988b872dd08cd09c2
-lucas_games_characters.jpg,LucasArts Games Characters,TYPE4,PARAM4,owner,0x900edc98db53508e6742723988b872dd08cd09c2
+const CSV_WITH_TOKEN = new File([`ID,DESCRIPTION,TERMS_AND_CONDITIONS TYPE,TERMS_AND_CONDITIONS PARAMETERS,TOKEN TYPE,TOKEN ID,TOKEN ISSUANCE
+programming_music.jpg,Programming Music,TYPE3,PARAM3,owner,0x900edc98db53508e6742723988b872dd08cd09c2,1
+lucas_games_characters.jpg,LucasArts Games Characters,TYPE4,PARAM4,owner,0x900edc98db53508e6742723988b872dd08cd09c2,1
 `], "items.csv");
 
 describe("ImportCsvReader", () => {

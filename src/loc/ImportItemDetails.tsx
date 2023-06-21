@@ -16,6 +16,7 @@ export interface Item {
     files: ItemFileWithContent[];
     restrictedDelivery: boolean;
     token?: ItemTokenWithRestrictedType;
+    tokenIssuance?: string;
     error?: string;
     errorType?: ErrorType;
     submitted: boolean;
@@ -68,6 +69,7 @@ export default function ImportItemDetails(props: { item: Item }) {
                     <ul>
                         <li>Type: { props.item.token.type }</li>
                         <li>ID: { props.item.token.id }</li>
+                        <li>Issuance: { props.item.tokenIssuance || "0" }</li>
                     </ul>
                 </div>
             }

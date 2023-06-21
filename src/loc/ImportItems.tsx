@@ -397,14 +397,16 @@ function toItems(csvItems: CsvItem[]): Item[] {
                 restrictedDelivery = csvItem.restrictedDelivery;
             }
 
-            let token: ItemTokenWithRestrictedType | undefined = undefined;
+            let token: ItemTokenWithRestrictedType | undefined;
+            let tokenIssuance: string | undefined;
             if("tokenType" in csvItem) {
-                if(csvItem.tokenType && csvItem.tokenId) {
+                if(csvItem.tokenType && csvItem.tokenId && csvItem.tokenIssuance) {
                     if(isTokenType(csvItem.tokenType)) {
                         token = {
                             type: csvItem.tokenType,
                             id: csvItem.tokenId,
-                        }
+                            issuance: BigInt(csvItem.tokenIssuance),
+                        };
                     } else {
                         error = `Unsupported token type ${csvItem.tokenType}`;
                         errorType = "validation";
@@ -427,6 +429,7 @@ function toItems(csvItems: CsvItem[]): Item[] {
                 files,
                 restrictedDelivery,
                 token,
+                tokenIssuance,
                 submitted: false,
                 failed: false,
                 success: false,

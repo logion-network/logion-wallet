@@ -24,6 +24,7 @@ describe("CertificateItemDetails", () => {
             token: {
                 type: "owner",
                 id: "0x900edc98db53508e6742723988b872dd08cd09c2",
+                issuance: 1n,
             },
         });
         renderAndTestSnapshot(item);
@@ -35,6 +36,7 @@ describe("CertificateItemDetails", () => {
             token: {
                 type: "owner",
                 id: "0x900edc98db53508e6742723988b872dd08cd09c2",
+                issuance: 1n,
             },
         });
         const result: CheckHashResult = {
@@ -49,6 +51,7 @@ describe("CertificateItemDetails", () => {
             token: {
                 type: "owner",
                 id: "0x900edc98db53508e6742723988b872dd08cd09c2",
+                issuance: 1n,
             },
         });
         const result: CheckHashResult = {
