@@ -51,6 +51,15 @@ exports[`CertificateItemDetails renders item with negative match, token and rest
     </CertificateCell>
   </Row>
   <Row>
+    <CertificateCell
+      label="Underlying Token Issuance:"
+    >
+      <pre>
+        1
+      </pre>
+    </CertificateCell>
+  </Row>
+  <Row>
     <TermsAndConditions
       item={
         Object {
@@ -60,6 +69,7 @@ exports[`CertificateItemDetails renders item with negative match, token and rest
           "restrictedDelivery": true,
           "token": Object {
             "id": "0x900edc98db53508e6742723988b872dd08cd09c2",
+            "issuance": 1n,
             "type": "owner",
           },
         }
@@ -120,6 +130,15 @@ exports[`CertificateItemDetails renders item with positive match, token and rest
     </CertificateCell>
   </Row>
   <Row>
+    <CertificateCell
+      label="Underlying Token Issuance:"
+    >
+      <pre>
+        1
+      </pre>
+    </CertificateCell>
+  </Row>
+  <Row>
     <TermsAndConditions
       item={
         Object {
@@ -129,6 +148,7 @@ exports[`CertificateItemDetails renders item with positive match, token and rest
           "restrictedDelivery": true,
           "token": Object {
             "id": "0x900edc98db53508e6742723988b872dd08cd09c2",
+            "issuance": 1n,
             "type": "owner",
           },
         }
@@ -281,6 +301,15 @@ exports[`CertificateItemDetails renders item with undefined match, token and res
     </CertificateCell>
   </Row>
   <Row>
+    <CertificateCell
+      label="Underlying Token Issuance:"
+    >
+      <pre>
+        1
+      </pre>
+    </CertificateCell>
+  </Row>
+  <Row>
     <TermsAndConditions
       item={
         Object {
@@ -290,6 +319,7 @@ exports[`CertificateItemDetails renders item with undefined match, token and res
           "restrictedDelivery": true,
           "token": Object {
             "id": "0x900edc98db53508e6742723988b872dd08cd09c2",
+            "issuance": 1n,
             "type": "owner",
           },
         }

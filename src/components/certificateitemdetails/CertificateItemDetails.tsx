@@ -47,6 +47,14 @@ export function CertificateItemDetails(props: Props) {
                 </CertificateCell>
             </Row>
         }
+        {
+            token !== undefined &&
+            <Row>
+                <CertificateCell label="Underlying Token Issuance:">
+                    <pre>{ token.issuance.toString() }</pre>
+                </CertificateCell>
+            </Row>
+        }
         <Row>
             <TermsAndConditions item={ props.item } />
         </Row>
