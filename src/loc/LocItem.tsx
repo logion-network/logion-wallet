@@ -1,4 +1,15 @@
-import { LogionClient, LocRequestState, LocData, LocsState, EditableRequest, MergedLink, PublicLoc, ItemStatus, ReviewResult } from "@logion/client";
+import {
+    LogionClient,
+    LocRequestState,
+    LocData,
+    LocsState,
+    EditableRequest,
+    MergedLink,
+    PublicLoc,
+    ItemStatus,
+    ReviewResult,
+    Hash
+} from "@logion/client";
 import { UUID, LocType, Fees, ValidAccountId } from "@logion/node-api";
 import { useCallback } from "react";
 import { CallCallback } from "src/ClientExtrinsicSubmitter";
@@ -24,6 +35,7 @@ import HelpTooltip from "src/components/helptooltip/HelpTooltip";
 export type LocItemType = 'Data' | 'Document' | 'Linked LOC'
 
 export interface LocItem {
+    hash?: Hash,
     name: string | undefined,
     value: string | undefined,
     timestamp: string | null,
@@ -191,7 +203,7 @@ export function useDeleteMetadataCallback(mutateLocState: (mutator: (current: Lo
         await mutateLocState(async current => {
             if(current instanceof EditableRequest) {
                 return current.deleteMetadata({
-                    name: item.name || "",
+                    nameHash: item.hash!,
                 });
             } else {
                 return current;
@@ -271,9 +283,10 @@ export async function getLinkData(
     client: LogionClient,
 ): Promise<LinkData> {
     let linkedLoc: LocData | undefined;
-    let linkedLocState: LocRequestState | PublicLoc | undefined = locsState.findByIdOrUndefined(link.id);
+    const targetId = new UUID(link.target);
+    let linkedLocState: LocRequestState | PublicLoc | undefined = locsState.findByIdOrUndefined(targetId);
     if (!linkedLocState) {
-        linkedLocState = await client.public.findLocById({ locId: link.id });
+        linkedLocState = await client.public.findLocById({ locId: targetId });
         if(linkedLocState) {
             linkedLoc = linkedLocState.data;
         }
@@ -302,9 +315,9 @@ export function useRequestReviewCallback(mutateLocState: (mutator: (current: Loc
         mutateLocState(async current => {
             if(current instanceof EditableRequest) {
                 if(locItem.type === "Data") {
-                    return current.requestMetadataReview(locItem.name || "");
+                    return current.requestMetadataReview(locItem.hash!);
                 } else if(locItem.type === "Document") {
-                    return current.requestFileReview(locItem.value || "");
+                    return current.requestFileReview(locItem.hash!);
                 } else {
                     return current;
                 }
@@ -321,13 +334,13 @@ export function useReviewCallback(mutateLocState: (mutator: (current: LocRequest
             if(current instanceof EditableRequest) {
                 if(locItem.type === "Data") {
                     return current.legalOfficer.reviewMetadata({
-                        name: locItem.name || "",
+                        nameHash: locItem.hash!,
                         decision,
                         rejectReason
                     });
                 } else if(locItem.type === "Document") {
                     return current.legalOfficer.reviewFile({
-                        hash: locItem.value || "",
+                        hash: locItem.hash!,
                         decision,
                         rejectReason
                     });

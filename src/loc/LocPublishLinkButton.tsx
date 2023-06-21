@@ -1,4 +1,4 @@
-import { EditableRequest } from "@logion/client";
+import { EditableRequest, hashString } from "@logion/client";
 import { UUID, Adapters } from "@logion/node-api";
 
 import { LocItem } from "./LocItem";
@@ -39,7 +39,7 @@ export default function LocPublishLinkButton(props: Props) {
                 submittable: client.logionApi.polkadot.tx.logionLoc.addLink(
                     client.logionApi.adapters.toLocId(props.locId),
                     Adapters.toLocLink({
-                        nature: props.locItem.nature || "",
+                        nature: hashString(props.locItem.nature || ""),
                         target: props.locItem.target || new UUID(),
                     }),
                 ),

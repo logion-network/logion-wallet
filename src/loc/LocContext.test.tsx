@@ -2,7 +2,7 @@ import { AxiosInstance } from "axios";
 import { useCallback, useState } from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import { UUID, LegalOfficerCase } from '@logion/node-api';
-import { LocData } from "@logion/client";
+import { LocData, hashString } from "@logion/client";
 import { LogionClient } from '@logion/client/dist/LogionClient.js';
 import { PublicApi, EditableRequest as RealEditableRequest, LocRequestState as RealLocRequestState } from "@logion/client";
 import { SubmittableExtrinsic } from "@polkadot/api-base/types";
@@ -272,16 +272,18 @@ async function publishesLink(expectedResource: string) {
 }
 
 function givenDraftItems() {
+    const metadataName = "New data";
     _locData.metadata.push({
         addedOn: "",
-        name: "New data",
+        name: metadataName,
+        nameHash: hashString(metadataName),
         submitter: mockValidPolkadotAccountId(OPEN_IDENTITY_LOC.owner),
         value: "Some value",
         published: false,
         status: "DRAFT",
     })
     _locData.files.push({
-        hash: "new-hash",
+        hash: hashString("new-hash"),
         addedOn: "",
         name: "New file",
         submitter: mockValidPolkadotAccountId(OPEN_IDENTITY_LOC.owner),
@@ -294,7 +296,6 @@ function givenDraftItems() {
     })
     _locData.links.push({
         addedOn: "",
-        id: _linkedLocData.id,
         nature: "New link",
         target: _linkedLocData.id.toString(),
         published: false,
@@ -357,14 +358,14 @@ function ItemDeleter() {
             if(current instanceof EditableRequest) {
                 let next: RealEditableRequest;
                 next = current.deleteFile!({
-                    hash: "new-hash",
+                    hash: hashString("new-hash"),
                 }) as unknown as RealEditableRequest;
                 next = deleteLink({
                     locState: current as unknown as RealEditableRequest,
                     target: locItems.find(item => item.nature === "New link")!.target!,
                 }) as unknown as RealEditableRequest;
                 next = current.deleteMetadata!({
-                    hash: "New data",
+                    nameHash: hashString("New data"),
                 }) as unknown as RealEditableRequest;
                 return next;
             } else {

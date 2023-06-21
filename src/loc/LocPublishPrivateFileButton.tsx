@@ -1,4 +1,4 @@
-import { OpenLoc } from "@logion/client";
+import { OpenLoc, hashString } from "@logion/client";
 import { UUID } from "@logion/node-api";
 
 import { LocItem } from "./LocItem";
@@ -26,7 +26,7 @@ export default function LocPublishPrivateFileButton(props: Props) {
                     && props.locItem.submitter) {
 
                     return current.publishFile({
-                        hash: props.locItem.value,
+                        hash: props.locItem.hash!,
                         signer: signer!,
                         callback,
                     });
@@ -36,8 +36,8 @@ export default function LocPublishPrivateFileButton(props: Props) {
             }}
             feesEstimator={ () => client.public.fees.estimateAddFile({
                 locId: props.locId,
-                hash: props.locItem.value || "",
-                nature: props.locItem.nature || "",
+                hash: props.locItem.hash!,
+                nature: hashString(props.locItem.nature || ""),
                 submitter: props.locItem.submitter!,
                 size: props.locItem.size!,
                 origin: client.currentAddress?.address || "",

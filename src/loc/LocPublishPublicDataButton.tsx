@@ -1,4 +1,4 @@
-import { OpenLoc } from "@logion/client";
+import { OpenLoc, hashString } from "@logion/client";
 import { UUID } from "@logion/node-api";
 
 import { LocItem } from "./LocItem";
@@ -27,7 +27,7 @@ export default function LocPublishPublicDataButton(props: Props) {
                     && props.locItem.submitter) {
 
                     return current.publishMetadata({
-                        name: props.locItem.name,
+                        nameHash: props.locItem.hash!,
                         signer: signer!,
                         callback,
                     });
@@ -40,8 +40,8 @@ export default function LocPublishPublicDataButton(props: Props) {
                 submittable: client.logionApi.polkadot.tx.logionLoc.addMetadata(
                     client.logionApi.adapters.toLocId(props.locId),
                     client.logionApi.adapters.toPalletLogionLocMetadataItem({
-                        name: props.locItem.name || "",
-                        value: props.locItem.value || "",
+                        name: props.locItem.hash!,
+                        value: hashString(props.locItem.value || ""),
                         submitter: props.locItem.submitter!,
                     }),
                 ),

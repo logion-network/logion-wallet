@@ -43,8 +43,6 @@ export function mockSubmittable(): Mock<SubmittableExtrinsic> {
 
 export const CLOSED_IDENTITY_LOC_ID = "85833363768713528858922097642089825569";
 
-export const UNPREFIXED_FILE_HASH = "42";
-
 export const CLOSED_IDENTITY_LOC: LegalOfficerCase = {
     owner: DEFAULT_LEGAL_OFFICER.address,
     requesterAddress: mockValidPolkadotAccountId("5Ew3MyB15VprZrjQVkpQFj8okmc9xLDSEdNhqMMS5cXsqxoW"),
@@ -52,8 +50,8 @@ export const CLOSED_IDENTITY_LOC: LegalOfficerCase = {
     closed: true,
     files: [
         {
-            hash: "0x" + UNPREFIXED_FILE_HASH,
-            nature: "some-nature",
+            hash: "0xf35e4bcbc1b0ce85af90914e04350cce472a2f01f00c0f7f8bc5c7ba04da2bf2",
+            nature: "0x636af5586476273b2b9d9fc318e0d1f124f4e9591b7218da4e4e27f6b071cc94",
             submitter: TEST_WALLET_USER,
             size: 42n,
             acknowledged: true,
