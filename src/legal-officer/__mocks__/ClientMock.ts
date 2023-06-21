@@ -1,14 +1,6 @@
 import { OpenLoc, VerifiedIssuer } from "@logion/client";
 import { VerifiedIssuerWithSelect } from "../client";
 
-export let deleteLink = jest.fn().mockResolvedValue(undefined);
-
-export let voidLoc = jest.fn().mockResolvedValue(undefined);
-
-export function setVoidLocMock(mock: any) {
-    voidLoc = mock;
-}
-
 let issuerSelections: VerifiedIssuerWithSelect[] = [];
 
 export async function getVerifiedIssuerSelections(params: { locState: OpenLoc } ): Promise<VerifiedIssuer[]> {

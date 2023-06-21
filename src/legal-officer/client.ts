@@ -1,5 +1,4 @@
 import {
-    EditableRequest,
     Signer,
     SignCallback,
     LocRequestState,
@@ -7,34 +6,18 @@ import {
     ClosedLoc,
     ClosedCollectionLoc,
     VerifiedIssuer,
-    VoidedLoc,
-    VoidedCollectionLoc,
     LogionClient,
     LocData,
     VerifiedIssuerIdentity,
-    hashString
 } from "@logion/client";
 import {
     Adapters,
     UUID,
-    VoidInfo,
     LogionNodeApiClass,
 } from "@logion/node-api";
 import type { SubmittableExtrinsic } from '@polkadot/api/promise/types';
 import { AnyJson } from "@polkadot/types-codec/types/helpers.js";
 import { AxiosInstance } from "axios";
-
-export async function addLink(params: {
-    locState: EditableRequest,
-    target: UUID,
-    nature: string,
-}): Promise<EditableRequest> {
-    const { locState, target, nature } = params;
-    const currentLocState = getCurrent(locState);
-    const { axios, data } = inspectState(currentLocState);
-    await axios.post(`/api/loc-request/${ data.id.toString() }/links`, { target: target.toString(), nature })
-    return await getCurrent(currentLocState).refresh() as EditableRequest;
-}
 
 function getCurrent<T extends LocRequestState>(locState: LocRequestState): T {
     const currentLocState = locState.getCurrentState() as T;
@@ -56,86 +39,10 @@ function inspectState(locState: LocRequestState): {
     return { api, data, axios };
 }
 
-export async function deleteLink(params: {
-    locState: EditableRequest,
-    target: UUID,
-}): Promise<EditableRequest> {
-    const { locState, target } = params;
-    const currentLocState = getCurrent(locState);
-    const { data, axios } = inspectState(currentLocState);
-    await axios.delete(`/api/loc-request/${ data.id.toString() }/links/${target}`);
-    return await getCurrent(currentLocState).refresh() as EditableRequest;
-}
-
 function buildAxios(locState: LocRequestState) {
     const client = locState.locsState().client;
     const legalOfficer = client.getLegalOfficer(locState.data().ownerAddress);
     return legalOfficer.buildAxiosToNode();
-}
-
-export async function publishLink(params: {
-    locState: EditableRequest,
-    target: UUID,
-    nature: string,
-    signer: Signer,
-    callback: SignCallback,
-}): Promise<EditableRequest> {
-    const { locState, target, nature, signer, callback } = params;
-
-    const currentLocState = getCurrent(locState);
-    const { data, axios, api } = inspectState(currentLocState);
-    const submittable = api.polkadot.tx.logionLoc.addLink(
-        api.adapters.toLocId(data.id),
-        Adapters.toLocLink({ target, nature: hashString(nature) }),
-    );
-    await signer.signAndSend({
-        signerId: data.ownerAddress,
-        submittable,
-        callback
-    });
-
-    await axios.put(`/api/loc-request/${ data.id.toString() }/links/${ target.toString() }/confirm`);
-
-    return await getCurrent(currentLocState).refresh() as EditableRequest;
-}
-
-export interface FullVoidInfo extends VoidInfo {
-    reason: string;
-}
-
-export async function voidLoc(params: {
-    locState: LocRequestState,
-    voidInfo: FullVoidInfo,
-    signer: Signer,
-    callback: SignCallback,
-}): Promise<VoidedLoc | VoidedCollectionLoc> {
-    const { locState, voidInfo, signer, callback } = params;
-
-    const currentLocState = getCurrent(locState);
-    const { data, axios, api } = inspectState(currentLocState);
-    let submittable;
-    if(voidInfo.replacer) {
-        submittable = api.polkadot.tx.logionLoc.makeVoidAndReplace(
-            api.adapters.toLocId(data.id),
-            api.adapters.toLocId(voidInfo.replacer),
-        );
-    } else {
-        submittable = api.polkadot.tx.logionLoc.makeVoid(
-            api.adapters.toLocId(data.id),
-        );
-    }
-    await signer.signAndSend({
-        signerId: data.ownerAddress,
-        submittable,
-        callback
-    });
-
-    const reason = voidInfo.reason;
-    await axios.post(`/api/loc-request/${ data.id.toString() }/void`, {
-        reason
-    });
-
-    return await getCurrent(currentLocState).refresh() as VoidedLoc | VoidedCollectionLoc;
 }
 
 export async function setVerifiedIssuer(params: {

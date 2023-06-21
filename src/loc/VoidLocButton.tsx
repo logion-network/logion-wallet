@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import { Form } from "react-bootstrap";
+import { OpenLoc, ClosedLoc, ClosedCollectionLoc } from "@logion/client";
 
 import Button from "../common/Button";
 import { useCommonContext } from "../common/CommonContext";
@@ -9,7 +10,6 @@ import Icon from "../common/Icon";
 import { useLocContext } from "./LocContext";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
 import { useLogionChain } from "src/logion-chain";
-import { voidLoc } from "src/legal-officer/client";
 
 export default function VoidLocButton() {
     const { colorTheme } = useCommonContext();
@@ -22,12 +22,9 @@ export default function VoidLocButton() {
 
     const voidLocCallback = useCallback((callback: CallCallback) => {
         return mutateLocState(async current => {
-            if(signer) {
-                return voidLoc({
-                    locState: current,
-                    voidInfo: {
-                        reason,
-                    },
+            if(signer && (current instanceof OpenLoc || current instanceof ClosedLoc || current instanceof ClosedCollectionLoc)) {
+                return current.legalOfficer.voidLoc({
+                    reason,
                     signer,
                     callback,
                 });

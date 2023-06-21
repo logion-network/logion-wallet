@@ -364,7 +364,7 @@ export function useLocContext() {
 }
 
 function allItemsOK(items: LocItem[]): boolean {
-    return items.find(item => item.status === "PUBLISHED" && item.timestamp === null) === undefined;
+    return items.find(item => (item.status === "PUBLISHED" || item.status === "ACKNOWLEDGED") && item.timestamp === null) === undefined;
 }
 
 function requestOK(locRequest: LocData): boolean {
@@ -374,7 +374,7 @@ function requestOK(locRequest: LocData): boolean {
 
 function refreshNeeded(locData: LocData, items: LocItem[]): boolean {
     for(const item of items) {
-        if(!item.timestamp && item.status === "PUBLISHED") {
+        if(!item.timestamp && (item.status === "PUBLISHED" || item.status === "ACKNOWLEDGED")) {
             return true;
         }
     }

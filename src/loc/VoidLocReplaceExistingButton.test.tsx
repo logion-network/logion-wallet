@@ -1,13 +1,15 @@
+import { LocData } from "@logion/client";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { setVoidLocMock } from "src/legal-officer/__mocks__/ClientMock";
 
-import { mockSubmittableResult } from "src/logion-chain/__mocks__/SignatureMock";
 import { clickByName, typeByLabel } from "src/tests";
 import VoidLocReplaceExistingButton from "./VoidLocReplaceExistingButton";
 import { setupQueriesGetLegalOfficerCase } from "src/test/Util";
 import { UUID } from "@logion/node-api";
 import { setupApiMock, OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "src/__mocks__/LogionMock";
+import { mockSubmittableResult } from "src/logion-chain/__mocks__/SignatureMock";
+import { OpenLoc } from "src/__mocks__/LogionClientMock";
+import { setLocState } from "./__mocks__/LocContextMock";
 
 jest.mock("../common/CommonContext");
 jest.mock("./LocContext");
@@ -25,7 +27,13 @@ describe("VoidLocReplaceExistingButton", () => {
             params.callback(mockSubmittableResult(true));
             return params.locState;
         };
-        setVoidLocMock(voidLocMock);
+        const locState = new OpenLoc();
+        locState.data = () => ({
+            locType: "Identity",
+            status: "OPEN",
+        } as LocData);
+        locState.legalOfficer.voidLoc = voidLocMock;
+        setLocState(locState);
         setupApiMock(api => {
             setupQueriesGetLegalOfficerCase(api, UUID.fromDecimalStringOrThrow(OPEN_IDENTITY_LOC_ID), OPEN_IDENTITY_LOC);
         });
@@ -42,11 +50,6 @@ describe("VoidLocReplaceExistingButton", () => {
 
     it("does not void LOC on cancel", async () => {
         let called = false;
-        const voidLocMock = async (params: any) => {
-            called = true;
-            return params.locState;
-        };
-        setVoidLocMock(voidLocMock);
         const dialog = await renderAndOpenDialog();
 
         await clickByName("Cancel");

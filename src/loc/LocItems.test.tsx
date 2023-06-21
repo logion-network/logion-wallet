@@ -16,7 +16,6 @@ import { DateTime } from "luxon";
 import { DEFAULT_LEGAL_OFFICER } from "src/common/TestData";
 import { setLocRequest, setLocState } from "./__mocks__/LocContextMock";
 import { EditableRequest } from "src/__mocks__/LogionClientMock";
-import { deleteLink } from "src/legal-officer/__mocks__/ClientMock";
 import { It, Mock } from "moq.ts";
 import { setupApiMock, OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "src/__mocks__/LogionMock";
 
@@ -215,6 +214,7 @@ function givenOpenLoc() {
     _locState = new EditableRequest();
     _locState.deleteFile = jest.fn().mockResolvedValue(_locState);
     _locState.deleteMetadata = jest.fn().mockResolvedValue(_locState);
+    _locState.legalOfficer.deleteLink = jest.fn().mockResolvedValue(_locState);
     setLocState(_locState);
     return request;
 }
@@ -288,7 +288,7 @@ async function testDeletesDraftLinkItem(component: React.ReactElement) {
     });
     renderTesting(component);
     await clickByName(deleteButtonName);
-    await waitFor(() => expect(deleteLink).toBeCalled());
+    await waitFor(() => expect(_locState.legalOfficer.deleteLink).toBeCalled());
 }
 
 function testCannotDeleteNonDraftLinkItem(component: React.ReactElement) {

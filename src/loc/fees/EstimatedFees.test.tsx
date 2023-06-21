@@ -8,13 +8,16 @@ jest.unmock("@logion/node-api");
 describe("EstimatedFees", () => {
 
     it("renders fees without storage", () => {
-        const fees = new Fees(42n);
+        const fees = new Fees({ inclusionFee: 42n });
         const element = shallowRender(<EstimatedFees fees={ fees } />);
         expect(element).toMatchSnapshot();
     });
 
     it("renders fees with storage", () => {
-        const fees = new Fees(42n, 32n);
+        const fees = new Fees({
+            inclusionFee: 42n,
+            storageFee: 32n
+        });
         const element = shallowRender(<EstimatedFees fees={ fees } />);
         expect(element).toMatchSnapshot();
     });
