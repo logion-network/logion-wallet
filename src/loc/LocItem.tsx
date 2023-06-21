@@ -8,7 +8,7 @@ import {
     PublicLoc,
     ItemStatus,
     ReviewResult,
-    hashString, Hash
+    Hash
 } from "@logion/client";
 import { UUID, LocType, Fees, ValidAccountId } from "@logion/node-api";
 import { useCallback } from "react";
@@ -203,7 +203,7 @@ export function useDeleteMetadataCallback(mutateLocState: (mutator: (current: Lo
         await mutateLocState(async current => {
             if(current instanceof EditableRequest) {
                 return current.deleteMetadata({
-                    nameHash: hashString(item.name || ""),
+                    nameHash: item.hash!,
                 });
             } else {
                 return current;
@@ -315,9 +315,9 @@ export function useRequestReviewCallback(mutateLocState: (mutator: (current: Loc
         mutateLocState(async current => {
             if(current instanceof EditableRequest) {
                 if(locItem.type === "Data") {
-                    return current.requestMetadataReview(hashString(locItem.name || ""));
+                    return current.requestMetadataReview(locItem.hash!);
                 } else if(locItem.type === "Document") {
-                    return current.requestFileReview(locItem.value || "");
+                    return current.requestFileReview(locItem.hash!);
                 } else {
                     return current;
                 }

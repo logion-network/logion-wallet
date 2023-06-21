@@ -1,4 +1,4 @@
-import { OpenLoc, Hash, hashString } from "@logion/client";
+import { OpenLoc } from "@logion/client";
 import { Fees, UUID } from "@logion/node-api";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import Button, { Action } from "src/common/Button";
@@ -76,13 +76,13 @@ export default function AcknowledgeButton(props: Props) {
                 if(signer && current instanceof OpenLoc) {
                     if(props.locItem.type === "Document") {
                         return current.legalOfficer.acknowledgeFile({
-                            hash: (props.locItem.value || "") as Hash,
+                            hash: props.locItem.hash!,
                             signer,
                             callback,
                         });
                     } else if(props.locItem.type === "Data") {
                         return current.legalOfficer.acknowledgeMetadata({
-                            nameHash: hashString(props.locItem.name || ""),
+                            nameHash: props.locItem.hash!,
                             signer,
                             callback,
                         });
