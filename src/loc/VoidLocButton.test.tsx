@@ -1,10 +1,12 @@
+import { LocData } from "@logion/client";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { setVoidLocMock } from "src/legal-officer/__mocks__/ClientMock";
 
-import { mockSubmittableResult } from "src/logion-chain/__mocks__/SignatureMock";
 import { clickByName, typeByLabel } from "src/tests";
 import VoidLocButton from "./VoidLocButton";
+import { mockSubmittableResult } from "src/logion-chain/__mocks__/SignatureMock";
+import { OpenLoc } from "src/__mocks__/LogionClientMock";
+import { setLocState } from "./__mocks__/LocContextMock";
 
 jest.mock("../common/CommonContext");
 jest.mock("./LocContext");
@@ -22,7 +24,13 @@ describe("VoidLocButton", () => {
             params.callback(mockSubmittableResult(true));
             return params.locState;
         };
-        setVoidLocMock(voidLocMock);
+        const locState = new OpenLoc();
+        locState.data = () => ({
+            locType: "Transaction",
+            status: "OPEN",
+        } as LocData);
+        locState.legalOfficer.voidLoc = voidLocMock;
+        setLocState(locState);
         const dialog = await renderAndOpenDialog();
 
         const button = screen.getAllByRole("button", { name: "Void LOC" })[1];
@@ -35,11 +43,6 @@ describe("VoidLocButton", () => {
 
     it("does not void LOC on cancel", async () => {
         let called = false;
-        const voidLocMock = async (params: any) => {
-            called = true;
-            return params.locState;
-        };
-        setVoidLocMock(voidLocMock);
         const dialog = await renderAndOpenDialog();
 
         await clickByName("Cancel");

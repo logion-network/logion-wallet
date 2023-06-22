@@ -7,7 +7,6 @@ import { useLogionChain } from "../logion-chain";
 import Dialog from "../common/Dialog";
 import LocLinkExistingForm, { FormValues } from "./LocLinkExistingForm";
 import { useLocContext } from "./LocContext";
-import { addLink } from "src/legal-officer/client";
 
 export interface Props {
     show: boolean;
@@ -45,10 +44,8 @@ export default function LocLinkExistingDialog(props: Props) {
 
         await mutateLocState(async current => {
             if(client && current instanceof EditableRequest) {
-                const locData = current.locsState().findById(locId).data();
-                return await addLink({
-                    locState: current,
-                    target: locData.id,
+                return current.legalOfficer.addLink({
+                    target: locId,
                     nature: props.nature ? props.nature : formValues.linkNature,
                 });
             } else {

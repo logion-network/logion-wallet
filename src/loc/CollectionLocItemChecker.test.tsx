@@ -36,13 +36,13 @@ describe("UserCollectionLocItemChecker", () => {
 
     it("shows positive match with item ID", async () => {
         setLocState(locState);
-        testWithItemId("test", UserCollectionLocItemChecker);
+        await testWithItemId("test", UserCollectionLocItemChecker);
         await waitFor(() => expect(screen.getByText("positive")).toBeVisible());
     })
 
     it("shows negative match with wrong item ID", async () => {
         setLocState(locState);
-        testWithItemId("test2", UserCollectionLocItemChecker);
+        await testWithItemId("test2", UserCollectionLocItemChecker);
         await waitFor(() => expect(screen.getByText("negative")).toBeVisible());
     })
 })
@@ -55,14 +55,14 @@ describe("LOCollectionLocItemChecker", () => {
         setupApiMock(api => {
             api.setup(instance => instance.queries.getCollectionSize(It.IsAny())).returnsAsync(1);
         });
-        testWithItemId("test", LOCollectionLocItemChecker);
+        await testWithItemId("test", LOCollectionLocItemChecker);
         await waitFor(() => expect(screen.getByText("positive")).toBeVisible());
     })
 
     it("shows negative match with wrong item ID", async () => {
         setLoLocState(locState);
         setLocRequest(locData);
-        testWithItemId("test2", LOCollectionLocItemChecker);
+        await testWithItemId("test2", LOCollectionLocItemChecker);
         await waitFor(() => expect(screen.getByText("negative")).toBeVisible());
     })
 })

@@ -190,12 +190,12 @@ export function createDocumentTemplateItem(templateItem: LocTemplateDocumentOrLi
     }
 }
 
-function toFeesClass(fees: ClientFees | undefined): Fees | undefined {
+export function toFeesClass(fees: ClientFees | undefined): Fees | undefined {
     if(fees) {
-        return new Fees(
-            BigInt(fees.inclusion),
-            fees.storage ? BigInt(fees.storage) : undefined,
-        );
+        return new Fees({
+            inclusionFee: BigInt(fees.inclusion),
+            storageFee: fees.storage ? BigInt(fees.storage) : undefined,
+        });
     } else {
         return undefined;
     }

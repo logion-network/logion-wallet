@@ -114,6 +114,13 @@ export class EditableRequest extends LocRequestState {
     deleteMetadata: jest.Mock<Promise<EditableRequest>> | undefined;
     addFile: jest.Mock<Promise<EditableRequest>> | undefined;
     deleteFile: jest.Mock<Promise<EditableRequest>> | undefined;
+    legalOfficer: {
+        addLink: any,
+        deleteLink: any,
+    } = {
+        addLink: jest.fn(),
+        deleteLink: jest.fn(),
+    };
 }
 
 export class DraftRequest extends EditableRequest {
@@ -140,9 +147,15 @@ export class OpenLoc extends EditableRequest {
     deleteFile: jest.Mock<Promise<EditableRequest>> | undefined;
     requestSof: jest.Mock<Promise<EditableRequest>> | undefined;
     legalOfficer: {
-        close: any
+        addLink: any,
+        deleteLink: any,
+        close: any,
+        voidLoc: any,
     } = {
+        addLink: jest.fn(),
+        deleteLink: jest.fn(),
         close: jest.fn(),
+        voidLoc: jest.fn(),
     };
 }
 

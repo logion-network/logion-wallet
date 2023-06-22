@@ -14,9 +14,8 @@ import { LocContextProvider, useLocContext } from "./LocContext"
 import { buildLocRequest } from "./TestData";
 import { setClientMock } from "src/logion-chain/__mocks__/LogionChainMock";
 import { LocRequestState, EditableRequest, OpenLoc, ClosedLoc } from "src/__mocks__/LogionClientMock";
-import { addLink, deleteLink, publishLink, voidLoc } from "../legal-officer/client";
 import { useLogionChain } from "src/logion-chain";
-import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
+import ClientExtrinsicSubmitter, { Call } from "src/ClientExtrinsicSubmitter";
 import { mockValidPolkadotAccountId, setupApiMock, api, CLOSED_IDENTITY_LOC, CLOSED_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from 'src/__mocks__/LogionMock';
 import { It, Mock } from "moq.ts";
 
@@ -41,8 +40,6 @@ describe("LocContext", () => {
         await thenItemsAdded();
     })
 
-    it("publishes link item", async () => publishesLink("/api/loc-request/9363c3d6-d107-421a-a44b-85c7fab0b843/links/4092e790-a6eb-4f10-8172-90b5dd254521/confirm"))
-
     it("deletes items", async () => {
         givenRequest(OPEN_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OpenLoc, CLOSED_IDENTITY_LOC_ID, CLOSED_IDENTITY_LOC);
         givenDraftItems();
@@ -54,14 +51,8 @@ describe("LocContext", () => {
     })
 
     it("voids", async () => {
-        givenRequest(CLOSED_IDENTITY_LOC_ID, CLOSED_IDENTITY_LOC, ClosedLoc);
+        givenRequest(OPEN_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OpenLoc);
         resetDefaultMocks();
-        setupApiMock(api => {
-            const submittable = new Mock<SubmittableExtrinsic<"promise">>();
-            api.setup(instance => instance.polkadot.tx.logionLoc.makeVoid(It.IsAny())).returns(submittable.object());
-            const locId = new Mock<Compact<u128>>();
-            api.setup(instance => instance.adapters.toLocId(It.IsAny())).returns(locId.object());
-        });
         whenRenderingInContext(_locState, <Voider/>);
         await clickByName("Go");
         await waitFor(() => expect(screen.getByText("Submitting...")).toBeVisible());
@@ -212,11 +203,10 @@ function ItemAdder() {
                     name: "New file",
                     nature: "Some nature",
                 }) as unknown as RealEditableRequest;
-                next = await addLink({
-                    locState: current as unknown as RealEditableRequest,
+                next = await current.legalOfficer.addLink({
                     target: _linkedLocData.id,
                     nature: "Some nature"
-                });
+                }) as unknown as RealEditableRequest;
                 return next as unknown as RealLocRequestState;
             } else {
                 return current as unknown as RealLocRequestState;
@@ -246,29 +236,7 @@ function ItemAdder() {
 async function thenItemsAdded() {
     await waitFor(() => expect((_locState as OpenLoc).addMetadata).toBeCalled());
     expect((_locState as OpenLoc).addFile).toBeCalled();
-    expect(axiosMock.post).toBeCalledWith(
-        `/api/loc-request/${ _locData.id.toString() }/links`,
-        expect.objectContaining({
-            "nature": "Some nature",
-            "target": _linkedLocData.id.toString(),
-        })
-    );
-}
-
-async function publishesLink(expectedResource: string) {
-    givenRequest(OPEN_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OpenLoc, CLOSED_IDENTITY_LOC_ID, CLOSED_IDENTITY_LOC);
-    givenDraftItems();
-    resetDefaultMocks();
-    setupApiMock(api => {
-        const submittable = new Mock<SubmittableExtrinsic<"promise">>();
-        api.setup(instance => instance.polkadot.tx.logionLoc.addLink(It.IsAny(), It.IsAny())).returns(submittable.object());
-        const locId = new Mock<Compact<u128>>();
-        api.setup(instance => instance.adapters.toLocId(It.IsAny())).returns(locId.object());
-    });
-    whenRenderingInContext(_locState, <LinkPublisher/>);
-    await clickByName("Go");
-    await waitFor(() => expect(screen.getByText("Submitting...")).toBeVisible());
-    await thenItemsPublished(expectedResource);
+    expect((_locState as OpenLoc).legalOfficer.addLink).toBeCalled();
 }
 
 function givenDraftItems() {
@@ -302,54 +270,6 @@ function givenDraftItems() {
     })
 }
 
-function LinkPublisher() {
-    const { signer } = useLogionChain();
-    const { locItems, mutateLocState } = useLocContext();
-    const [ signAndSubmit, setSignAndSubmit ] = useState<Call>();
-
-    const callback = useCallback(() => {
-        const link = locItems.find(item => item.nature === "New link")!;
-        setSignAndSubmit(() => (callback: CallCallback) => mutateLocState(async current => publishLink({
-            locState: current as RealEditableRequest,
-            target: link.target!,
-            nature: link.name!,
-            callback,
-            signer: signer!,
-        })));
-    }, [ locItems, setSignAndSubmit, publishLink ]);
-
-    const hasExpectedItem = useCallback(() => {
-        return locItems.find(item => item.nature === "New link") !== undefined;
-    }, [ locItems ]);
-
-    if(!hasExpectedItem()) {
-        return null;
-    }
-
-    return (
-        <div>
-            <button onClick={ callback }>Go</button>
-            <ul>
-                {
-                    locItems.filter(item => item.status === "PUBLISHED").map((item, index) => <li key={ index }>
-                        <p>{ item.name }</p>
-                    </li>)
-                }
-            </ul>
-            <ClientExtrinsicSubmitter
-                call={ signAndSubmit }
-                successMessage="Successfully published"
-                onSuccess={ () => {} }
-                onError={ () => {} }
-            />
-        </div>
-    );
-}
-
-async function thenItemsPublished(expectedResource: string) {
-    await waitFor(() => expect(axiosMock.put).toBeCalledWith(expectedResource));
-}
-
 function ItemDeleter() {
     const { locItems, mutateLocState } = useLocContext();
 
@@ -360,7 +280,7 @@ function ItemDeleter() {
                 next = current.deleteFile!({
                     hash: hashString("new-hash"),
                 }) as unknown as RealEditableRequest;
-                next = deleteLink({
+                next = current.legalOfficer.deleteLink!({
                     locState: current as unknown as RealEditableRequest,
                     target: locItems.find(item => item.nature === "New link")!.target!,
                 }) as unknown as RealEditableRequest;
@@ -391,7 +311,7 @@ function ItemDeleter() {
 async function thenItemsDeleted() {
     await waitFor(() => expect((_locState as OpenLoc).deleteMetadata).toBeCalled());
     expect((_locState as OpenLoc).deleteFile).toBeCalled();
-    expect(axiosMock.delete).toBeCalledWith("/api/loc-request/9363c3d6-d107-421a-a44b-85c7fab0b843/links/4092e790-a6eb-4f10-8172-90b5dd254521");
+    expect((_locState as OpenLoc).legalOfficer.deleteLink).toBeCalled();
 }
 
 function Voider() {
@@ -402,8 +322,8 @@ function Voider() {
     const callback = useCallback(() => {
         const call: Call = async callback =>
             mutateLocState(async current => {
-                if(signer) {
-                    return voidLoc({
+                if(signer && current instanceof OpenLoc) {
+                    return current.legalOfficer.voidLoc({
                         locState: current,
                         voidInfo: {
                             reason: "Some reason"
@@ -437,10 +357,5 @@ function Voider() {
 }
 
 async function thenVoided() {
-    await waitFor(() => expect(axiosMock.post).toBeCalledWith(
-        `/api/loc-request/4092e790-a6eb-4f10-8172-90b5dd254521/void`,
-        expect.objectContaining({
-            reason: "Some reason",
-        })
-    ));
+    expect((_locState as OpenLoc).legalOfficer.voidLoc).toBeCalled();
 }

@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import { Form } from "react-bootstrap";
+import { OpenLoc, ClosedLoc, ClosedCollectionLoc } from "@logion/client";
 import { UUID } from "@logion/node-api";
 
 import Button from "../common/Button";
@@ -10,7 +11,6 @@ import Icon from "../common/Icon";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
 import { useLocContext } from "./LocContext";
 import { useLogionChain } from "../logion-chain";
-import { FullVoidInfo, voidLoc } from "src/legal-officer/client";
 
 export default function VoidLocReplaceExistingButton() {
     const { colorTheme } = useCommonContext();
@@ -39,15 +39,11 @@ export default function VoidLocReplaceExistingButton() {
                 setReplacerLocIdError(`Cannot be replaced by a LOC of type: ${replacerLoc.locType}`);
             } else {
                 setReplacerLocIdError(undefined);
-                const voidInfo: FullVoidInfo = {
-                    reason,
-                    replacer: locId
-                };
                 setCall(() => (callback: CallCallback) => mutateLocState(async current => {
-                    if(signer) {
-                        return voidLoc({
-                            locState: current,
-                            voidInfo,
+                    if(signer && (current instanceof OpenLoc || current instanceof ClosedLoc || current instanceof ClosedCollectionLoc)) {
+                        return current.legalOfficer.voidLoc({
+                            reason,
+                            replacer: locId,
                             signer,
                             callback,
                         });

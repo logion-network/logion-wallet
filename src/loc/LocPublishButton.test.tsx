@@ -34,7 +34,7 @@ describe("LocPublishButton", () => {
                 confirm();
                 return current;
             }}
-            feesEstimator={ async () => new Fees(42n) }
+            feesEstimator={ async () => new Fees({ inclusionFee: 42n }) }
         />);
 
         // When publishing

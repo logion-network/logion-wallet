@@ -20,7 +20,6 @@ import SubmitterName from "src/common/SubmitterName";
 import { Cell, Column, DateTimeCell } from "src/common/Table";
 import { Child } from "src/common/types/Helpers";
 import ViewFileButton from "src/common/ViewFileButton";
-import { deleteLink } from "src/legal-officer/client";
 import { documentClaimHistoryPath } from "src/legal-officer/LegalOfficerPaths";
 import { fullCertificateUrl } from "src/PublicPaths";
 import { documentClaimHistoryPath as userDocumentClaimHistoryPath } from "src/wallet-user/UserRouter";
@@ -230,8 +229,7 @@ export function useDeleteLinkCallback(mutateLocState: (mutator: (current: LocReq
     return useCallback(async (item: LocItem) => {
         await mutateLocState(async current => {
             if(current instanceof EditableRequest) {
-                return deleteLink({
-                    locState: current,
+                return current.legalOfficer.deleteLink({
                     target: item.target!,
                 });
             } else {

@@ -3,7 +3,6 @@ import { UUID, Adapters } from "@logion/node-api";
 
 import { LocItem } from "./LocItem";
 import LocPublishButton from "./LocPublishButton";
-import { publishLink } from "src/legal-officer/client";
 import { useLogionChain } from "src/logion-chain";
 
 export interface Props {
@@ -23,10 +22,8 @@ export default function LocPublishLinkButton(props: Props) {
             locItem={ props.locItem }
             publishMutator={ async (current, callback) => {
                 if(current instanceof EditableRequest) {
-                    return await publishLink({
-                        locState: current,
+                    return current.legalOfficer.publishLink({
                         target: props.locItem.target!,
-                        nature: props.locItem.nature!,
                         signer: signer!,
                         callback,
                     });
