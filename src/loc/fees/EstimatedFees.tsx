@@ -64,6 +64,18 @@ export default function EstimatedFees(props: Props) {
                             { showPaidBy && <td>{ props.otherFeesPaidBy || "" }</td> }
                         </tr>
                     }
+                    { props.fees.certificateFee !== undefined && 
+                        <tr>
+                            <td>Certificate fee</td>
+                            <td>
+                                <AmountFormat
+                                    amount={ Currency.toPrefixedNumberAmount(props.fees.certificateFee).convertTo(Numbers.NONE) }
+                                    decimals={4}
+                                />
+                            </td>
+                            { showPaidBy && <td>{ props.otherFeesPaidBy || "" }</td> }
+                        </tr>
+                    }
                     <tr>
                         <td>Total</td>
                         <td>

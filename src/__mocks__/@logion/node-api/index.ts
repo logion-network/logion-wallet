@@ -5,6 +5,7 @@ export {
     Adapters,
     Queries,
     LogionNodeApiClass,
+    Fees,
 } from "@logion/node-api";
 
 export type {
