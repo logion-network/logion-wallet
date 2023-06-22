@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import Nominate from "./Nominate";
-import { expectNoDialogVisible, shallowRender, clickByName } from "../../tests";
+import { expectNoDialogVisible, clickByName } from "../../tests";
 import { ClosedLoc } from "../../__mocks__/LogionClientMock";
 import { LocData } from "@logion/client";
 import { setLocState } from "../__mocks__/LocContextMock";

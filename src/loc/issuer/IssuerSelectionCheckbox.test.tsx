@@ -2,7 +2,7 @@ import { render, waitFor, screen } from "@testing-library/react";
 import IssuerSelectionCheckbox from "./IssuerSelectionCheckbox";
 import { clickByName, expectNoDialogVisible } from "../../tests";
 import userEvent from "@testing-library/user-event";
-import { VerifiedIssuerWithSelect } from "../../legal-officer/client";
+import { VerifiedIssuerWithSelect } from "@logion/client";
 
 jest.mock("../LocContext");
 

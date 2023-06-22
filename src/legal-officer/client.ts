@@ -2,20 +2,16 @@ import {
     Signer,
     SignCallback,
     LocRequestState,
-    OpenLoc,
     ClosedLoc,
     ClosedCollectionLoc,
-    VerifiedIssuer,
     LogionClient,
     LocData,
-    VerifiedIssuerIdentity,
 } from "@logion/client";
 import {
     Adapters,
     UUID,
     LogionNodeApiClass,
 } from "@logion/node-api";
-import type { SubmittableExtrinsic } from '@polkadot/api/promise/types';
 import { AnyJson } from "@polkadot/types-codec/types/helpers.js";
 import { AxiosInstance } from "axios";
 
@@ -43,112 +39,6 @@ function buildAxios(locState: LocRequestState) {
     const client = locState.locsState().client;
     const legalOfficer = client.getLegalOfficer(locState.data().ownerAddress);
     return legalOfficer.buildAxiosToNode();
-}
-
-export async function setVerifiedIssuer(params: {
-    locState: ClosedLoc,
-    isVerifiedIssuer: boolean,
-    signer: Signer,
-    callback: SignCallback,
-}): Promise<ClosedLoc> {
-    const { locState, isVerifiedIssuer, signer, callback } = params;
-    const currentLocState = getCurrent(locState);
-    const { data, api } = inspectState(currentLocState);
-
-    if(!data.requesterAddress) {
-        throw new Error("Identity LOC has no Polkadot requester");
-    }
-
-    let submittable: SubmittableExtrinsic;
-    if(isVerifiedIssuer) {
-        submittable = api.polkadot.tx.logionLoc.nominateIssuer(
-            data.requesterAddress.address,
-            api.adapters.toLocId(data.id)
-        );
-    } else {
-        submittable = api.polkadot.tx.logionLoc.dismissIssuer(data.requesterAddress.address);
-    }
-    await signer.signAndSend({
-        signerId: data.ownerAddress,
-        submittable,
-        callback
-    });
-
-    return await getCurrent(currentLocState).refresh() as ClosedLoc;
-}
-
-export type VerifiedIssuerWithSelect = VerifiedIssuer & { selected: boolean };
-
-export type LocWithSelectableIssuers = OpenLoc | ClosedCollectionLoc;
-
-export async function getVerifiedIssuerSelections(params: { locState: LocWithSelectableIssuers } ): Promise<VerifiedIssuerWithSelect[]> {
-    const { locState } = params
-    const currentLocState = getCurrent(locState);
-    const { data, axios } = inspectState(currentLocState);
-
-    const allVerifiedIssuers: VerifiedIssuerIdentity[] = (await axios.get("/api/issuers-identity")).data.issuers;
-    const selectedParties = data.issuers;
-
-    return allVerifiedIssuers
-        .filter(issuer => issuer.address !== data.requesterAddress?.address)
-        .map(issuer => {
-            const selected = selectedParties.find(selectedIssuer => selectedIssuer.address === issuer.address);
-            if(selected && selected.firstName && selected.lastName) {
-                return {
-                    firstName: selected.firstName,
-                    lastName: selected.lastName,
-                    identityLocId: selected.identityLocId,
-                    address: selected.address,
-                    selected: true,
-                };
-            } else {
-                return {
-                    firstName: issuer.identity.firstName,
-                    lastName: issuer.identity.lastName,
-                    identityLocId: issuer.identityLocId,
-                    address: issuer.address,
-                    selected: selected !== undefined,
-                };
-            }
-        })
-        .sort((issuer1, issuer2) => issuer1.lastName.localeCompare(issuer2.lastName));
-}
-
-export interface SelectIssuersParams {
-    locState: LocWithSelectableIssuers;
-    issuer: string;
-    signer: Signer;
-    callback: SignCallback;
-}
-
-export async function selectParties(params: SelectIssuersParams): Promise<void> {
-    return setIssuerSelection({
-        ...params,
-        selected: true,
-    });
-}
-
-async function setIssuerSelection(params: SelectIssuersParams & { selected: boolean }): Promise<void> {
-    const { locState, issuer, signer, callback, selected } = params;
-    const currentLocState = getCurrent(locState);
-    const { data, api } = inspectState(currentLocState);
-    const submittable = api.polkadot.tx.logionLoc.setIssuerSelection(
-        api.adapters.toLocId(data.id),
-        issuer,
-        selected
-    );
-    await signer.signAndSend({
-        signerId: data.ownerAddress,
-        submittable,
-        callback
-    });
-}
-
-export async function unselectIssuers(params: SelectIssuersParams): Promise<void> {
-    return setIssuerSelection({
-        ...params,
-        selected: false,
-    });
 }
 
 export async function requestVote(params: {

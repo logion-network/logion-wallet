@@ -3,6 +3,7 @@ import { PATRICK } from "../common/TestData";
 import { TEST_WALLET_USER } from "../wallet-user/TestData";
 export { toIsoString, fromIsoString } from "@logion/client/dist/DateTimeUtil.js";
 import { api } from "./LogionMock";
+import { VerifiedIssuerWithSelect } from "@logion/client/dist/Loc";
 
 export const axiosMock = {
     post: jest.fn().mockReturnValue(undefined),
@@ -151,13 +152,21 @@ export class OpenLoc extends EditableRequest {
         deleteLink: any,
         close: any,
         voidLoc: any,
+        getVerifiedIssuers: () => Promise<VerifiedIssuerWithSelect[]>,
     } = {
         addLink: jest.fn(),
         deleteLink: jest.fn(),
         close: jest.fn(),
         voidLoc: jest.fn(),
+        getVerifiedIssuers: () => Promise.resolve(issuers),
     };
 }
+
+export function setVerifiedIssuers(array: VerifiedIssuerWithSelect[]) {
+    issuers = array;
+}
+
+let issuers: VerifiedIssuerWithSelect[] = [];
 
 export class LocsState {
 }

@@ -1,7 +1,6 @@
 import { useLocContext } from "../LocContext";
 import { useState, useEffect } from "react";
-import { getVerifiedIssuerSelections, VerifiedIssuerWithSelect } from "../../legal-officer/client";
-import { OpenLoc, ClosedCollectionLoc } from "@logion/client";
+import { OpenLoc, ClosedCollectionLoc, VerifiedIssuerWithSelect } from "@logion/client";
 import Table, { EmptyTableMessage, Cell, ActionCell } from "../../common/Table";
 import ButtonGroup from "../../common/ButtonGroup";
 import Frame from "../../common/Frame";
@@ -19,8 +18,10 @@ export default function IssuerSelectionFrame() {
 
     useEffect(() => {
         if (locState !== null && (locState instanceof OpenLoc || locState instanceof ClosedCollectionLoc)) {
-            getVerifiedIssuerSelections({ locState })
-                .then(setIssuerSelections)
+            (async function() {
+                const issuers = await locState.legalOfficer.getVerifiedIssuers();
+                setIssuerSelections(issuers);
+            })();
         }
     }, [ locState ]);
 
