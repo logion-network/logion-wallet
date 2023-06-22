@@ -1,4 +1,4 @@
-import { EditableRequest, hashString } from "@logion/client";
+import { OpenLoc, hashString } from "@logion/client";
 import { UUID, Adapters } from "@logion/node-api";
 
 import { LocItem } from "./LocItem";
@@ -21,7 +21,7 @@ export default function LocPublishLinkButton(props: Props) {
         <LocPublishButton
             locItem={ props.locItem }
             publishMutator={ async (current, callback) => {
-                if(current instanceof EditableRequest) {
+                if(current instanceof OpenLoc) {
                     return current.legalOfficer.publishLink({
                         target: props.locItem.target!,
                         signer: signer!,

@@ -1,7 +1,8 @@
-import { Fees } from "@logion/node-api";
+import { Adapters, Fees, TermsAndConditionsElement as ChainTermsAndConditionsElement } from "@logion/node-api";
 import { SubmittableExtrinsic } from "@polkadot/api/promise/types";
-import { LocData, LogionClient } from "@logion/client";
+import { LocData, LogionClient, TermsAndConditionsElement } from "@logion/client";
 import { CollectionLimits, DEFAULT_LIMITS } from "../CollectionLimitsForm";
+import { Item } from "../ImportItemDetails";
 
 export class FeeEstimator {
 
@@ -59,6 +60,63 @@ export class FeeEstimator {
             origin: client.currentAddress?.address || "",
             locType: request.locType,
             submittable,
+        });
+    }
+
+    async estimateAddItem(loc: LocData, item: Item) {
+        const termsAndConditions: ChainTermsAndConditionsElement[] = [];
+
+        const addTC = (tc: TermsAndConditionsElement) => {
+            termsAndConditions.push({
+                tcType: tc.type,
+                tcLocId: tc.tcLocId,
+                details: tc.details,
+            })
+        };
+
+        if(item.logionClassification) {
+            addTC(item.logionClassification);
+        } else if (item.creativeCommons) {
+            addTC(item.creativeCommons);
+        }
+
+        if(item.specificLicense) {
+            addTC(item.specificLicense);
+        }
+
+        const submittable = this.client.logionApi.polkadot.tx.logionLoc.addCollectionItem(
+            this.client.logionApi.adapters.toLocId(loc.id),
+            item.id,
+            item.description,
+            item.files.map(file => ({
+                name: file.name,
+                contentType: file.contentType.mimeType,
+                size: file.size,
+                hash: file.hashOrContent.contentHash,
+            })).map(Adapters.toCollectionItemFile),
+            Adapters.toCollectionItemToken(item.token),
+            item.restrictedDelivery,
+            termsAndConditions.map(Adapters.toTermsAndConditionsElement),
+            item.token?.issuance || 0,
+        );
+
+        const origin = loc.requesterAddress?.address;
+        if(!origin) {
+            throw new Error("Bad origin");
+        }
+        const inclusionFee = (await this.client.logionApi.fees.estimateWithoutStorage({
+            origin,
+            submittable
+        })).inclusionFee;
+        const certificateFee = await this.client.logionApi.fees.estimateCertificateFee({ tokenIssuance: item.token?.issuance || 0n });
+        const storageFee = await this.client.logionApi.fees.estimateStorageFee({
+            numOfEntries: BigInt(item.files.length),
+            totSize: item.files.map(file => file.size).reduce((prev, cur) => prev + cur, 0n),
+        });
+        return new Fees({
+            inclusionFee,
+            certificateFee,
+            storageFee,
         });
     }
 }

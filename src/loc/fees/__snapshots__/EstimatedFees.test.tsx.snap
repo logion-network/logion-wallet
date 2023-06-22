@@ -1,5 +1,195 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`EstimatedFees renders fees with certificate 1`] = `
+<div
+  className="EstimatedFees"
+>
+  <h3>
+    Estimated fees (LGNT)
+  </h3>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          Blockchain record
+        </td>
+        <td>
+          <AmountFormat
+            amount={
+              PrefixedNumber {
+                "_prefix": Object {
+                  "symbol": "",
+                  "tenExponent": 0,
+                },
+                "_scientificNumber": ScientificNumber {
+                  "_normalized": NormalizedNumber {
+                    "_decimalPart": "000000000000000042",
+                    "_integerPart": "",
+                    "_negative": false,
+                    "_normalized": ".000000000000000042",
+                  },
+                  "_tenExponent": 0,
+                },
+              }
+            }
+            decimals={4}
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Certificate fee
+        </td>
+        <td>
+          <AmountFormat
+            amount={
+              PrefixedNumber {
+                "_prefix": Object {
+                  "symbol": "",
+                  "tenExponent": 0,
+                },
+                "_scientificNumber": ScientificNumber {
+                  "_normalized": NormalizedNumber {
+                    "_decimalPart": "000000000000000022",
+                    "_integerPart": "",
+                    "_negative": false,
+                    "_normalized": ".000000000000000022",
+                  },
+                  "_tenExponent": 0,
+                },
+              }
+            }
+            decimals={4}
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Total
+        </td>
+        <td>
+          <AmountFormat
+            amount={
+              PrefixedNumber {
+                "_prefix": Object {
+                  "symbol": "",
+                  "tenExponent": 0,
+                },
+                "_scientificNumber": ScientificNumber {
+                  "_normalized": NormalizedNumber {
+                    "_decimalPart": "000000000000000064",
+                    "_integerPart": "",
+                    "_negative": false,
+                    "_normalized": ".000000000000000064",
+                  },
+                  "_tenExponent": 0,
+                },
+              }
+            }
+            decimals={4}
+          />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
+
+exports[`EstimatedFees renders fees with legal 1`] = `
+<div
+  className="EstimatedFees"
+>
+  <h3>
+    Estimated fees (LGNT)
+  </h3>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          Blockchain record
+        </td>
+        <td>
+          <AmountFormat
+            amount={
+              PrefixedNumber {
+                "_prefix": Object {
+                  "symbol": "",
+                  "tenExponent": 0,
+                },
+                "_scientificNumber": ScientificNumber {
+                  "_normalized": NormalizedNumber {
+                    "_decimalPart": "000000000000000042",
+                    "_integerPart": "",
+                    "_negative": false,
+                    "_normalized": ".000000000000000042",
+                  },
+                  "_tenExponent": 0,
+                },
+              }
+            }
+            decimals={4}
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Legal fee
+        </td>
+        <td>
+          <AmountFormat
+            amount={
+              PrefixedNumber {
+                "_prefix": Object {
+                  "symbol": "",
+                  "tenExponent": 0,
+                },
+                "_scientificNumber": ScientificNumber {
+                  "_normalized": NormalizedNumber {
+                    "_decimalPart": "000000000000000022",
+                    "_integerPart": "",
+                    "_negative": false,
+                    "_normalized": ".000000000000000022",
+                  },
+                  "_tenExponent": 0,
+                },
+              }
+            }
+            decimals={4}
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Total
+        </td>
+        <td>
+          <AmountFormat
+            amount={
+              PrefixedNumber {
+                "_prefix": Object {
+                  "symbol": "",
+                  "tenExponent": 0,
+                },
+                "_scientificNumber": ScientificNumber {
+                  "_normalized": NormalizedNumber {
+                    "_decimalPart": "000000000000000064",
+                    "_integerPart": "",
+                    "_negative": false,
+                    "_normalized": ".000000000000000064",
+                  },
+                  "_tenExponent": 0,
+                },
+              }
+            }
+            decimals={4}
+          />
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
+
 exports[`EstimatedFees renders fees with storage 1`] = `
 <div
   className="EstimatedFees"
@@ -89,6 +279,108 @@ exports[`EstimatedFees renders fees with storage 1`] = `
             decimals={4}
           />
         </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
+
+exports[`EstimatedFees renders fees with storage and paid by 1`] = `
+<div
+  className="EstimatedFees"
+>
+  <h3>
+    Estimated fees (LGNT)
+  </h3>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          Blockchain record
+        </td>
+        <td>
+          <AmountFormat
+            amount={
+              PrefixedNumber {
+                "_prefix": Object {
+                  "symbol": "",
+                  "tenExponent": 0,
+                },
+                "_scientificNumber": ScientificNumber {
+                  "_normalized": NormalizedNumber {
+                    "_decimalPart": "000000000000000042",
+                    "_integerPart": "",
+                    "_negative": false,
+                    "_normalized": ".000000000000000042",
+                  },
+                  "_tenExponent": 0,
+                },
+              }
+            }
+            decimals={4}
+          />
+        </td>
+        <td>
+          paid by the Legal Officer
+        </td>
+      </tr>
+      <tr>
+        <td>
+          File storage
+        </td>
+        <td>
+          <AmountFormat
+            amount={
+              PrefixedNumber {
+                "_prefix": Object {
+                  "symbol": "",
+                  "tenExponent": 0,
+                },
+                "_scientificNumber": ScientificNumber {
+                  "_normalized": NormalizedNumber {
+                    "_decimalPart": "000000000000000032",
+                    "_integerPart": "",
+                    "_negative": false,
+                    "_normalized": ".000000000000000032",
+                  },
+                  "_tenExponent": 0,
+                },
+              }
+            }
+            decimals={4}
+          />
+        </td>
+        <td>
+          paid by the requester
+        </td>
+      </tr>
+      <tr>
+        <td>
+          Total
+        </td>
+        <td>
+          <AmountFormat
+            amount={
+              PrefixedNumber {
+                "_prefix": Object {
+                  "symbol": "",
+                  "tenExponent": 0,
+                },
+                "_scientificNumber": ScientificNumber {
+                  "_normalized": NormalizedNumber {
+                    "_decimalPart": "000000000000000074",
+                    "_integerPart": "",
+                    "_negative": false,
+                    "_normalized": ".000000000000000074",
+                  },
+                  "_tenExponent": 0,
+                },
+              }
+            }
+            decimals={4}
+          />
+        </td>
+        <td />
       </tr>
     </tbody>
   </table>

@@ -11,7 +11,8 @@ import {
     CreativeCommons,
     LocRequestState,
 } from "@logion/client";
-import { useCallback, useState } from "react";
+import { Fees } from '@logion/node-api';
+import { useCallback, useMemo, useState } from "react";
 import { OverlayTrigger, Spinner, Tooltip } from "react-bootstrap";
 
 import Dialog from "../common/Dialog";
@@ -32,12 +33,14 @@ import { CsvItem, readItemsCsv } from "./ImportCsvReader";
 import Alert from "src/common/Alert";
 import { UUID } from "@logion/node-api";
 import config from "../config";
+import { FeeEstimator } from "./fees/FeeEstimator";
+import EstimatedFees from "./fees/EstimatedFees";
 
 type Submitters = Record<string, Call>;
 
 export default function ImportItems() {
     const { width } = useResponsiveContext();
-    const { signer } = useLogionChain();
+    const { signer, client } = useLogionChain();
     const { colorTheme } = useCommonContext();
     const { refresh, locState } = useUserLocContext();
 
@@ -48,6 +51,8 @@ export default function ImportItems() {
     const [ currentItem, setCurrentItem ] = useState(0);
     const [ isBatchImport, setIsBatchImport ] = useState(false);
     const [ uploading, setUploading ] = useState(false);
+    const [ fees, setFees ] = useState<Fees | null>(null);
+    const [ itemToSubmit, setItemToSubmit ] = useState<Item>();
 
     const readCsvFile = useCallback(async (file: File) => {
         const collection = locState as ClosedCollectionLoc;
@@ -75,27 +80,48 @@ export default function ImportItems() {
         setShowImportItems(true);
     }, [ setSubmitters, locState ]);
 
+    const feesEstimator = useMemo(() => 
+        client ? new FeeEstimator(client) : null
+    , [ client ]);
+
     const submitItem = useCallback(async (item: Item) => {
-        const collection = locState as ClosedCollectionLoc;
-        item.submitted = true;
-        const signAndSubmit: Call = async (callback: CallCallback) => {
-            await collection.addCollectionItem({
-                signer: signer!,
-                itemId: item.id,
-                itemDescription: item.description,
-                itemFiles: item.files,
-                restrictedDelivery: item.restrictedDelivery,
-                itemToken: item.token,
-                logionClassification: item.logionClassification,
-                specificLicenses: item.specificLicense ? [ item.specificLicense ] : undefined,
-                creativeCommons: item.creativeCommons,
-                callback,
-            })
+        if(feesEstimator && locState) {
+            setItemToSubmit(item);
+            (async function() {
+                let fees = await feesEstimator.estimateAddItem(locState.data(), item);
+                setFees(fees);
+            })();
         }
-        const newSubmitters = { ...submitters };
-        newSubmitters[item.id] = signAndSubmit;
-        setSubmitters(newSubmitters);
-    }, [ submitters, signer, locState ]);
+    }, [ feesEstimator, locState ]);
+
+    const doSubmitItem = useCallback(async () => {
+        if(itemToSubmit) {
+            setFees(null);
+
+            const collection = locState as ClosedCollectionLoc;
+            const item = itemToSubmit;
+            setItemToSubmit(undefined);
+
+            item.submitted = true;
+            const signAndSubmit: Call = async (callback: CallCallback) => {
+                await collection.addCollectionItem({
+                    signer: signer!,
+                    itemId: item.id,
+                    itemDescription: item.description,
+                    itemFiles: item.files,
+                    restrictedDelivery: item.restrictedDelivery,
+                    itemToken: item.token,
+                    logionClassification: item.logionClassification,
+                    specificLicenses: item.specificLicense ? [ item.specificLicense ] : undefined,
+                    creativeCommons: item.creativeCommons,
+                    callback,
+                })
+            }
+            const newSubmitters = { ...submitters };
+            newSubmitters[item.id] = signAndSubmit;
+            setSubmitters(newSubmitters);
+        }
+    }, [ submitters, signer, locState, itemToSubmit ]);
 
     const submitNext = useCallback(async (submittedItem: Item, failed: boolean) => {
         if(failed) {
@@ -113,6 +139,12 @@ export default function ImportItems() {
             }
         }
     }, [ isBatchImport, currentItem, items, setCurrentItem, submitItem, setIsBatchImport ]);
+
+    const cancelSubmission = useCallback(() => {
+        setIsBatchImport(false);
+        setFees(null);
+        setItemToSubmit(undefined);
+    }, []);
 
     const close = useCallback(() => {
         setShowImportItems(false);
@@ -314,6 +346,32 @@ export default function ImportItems() {
                         { csvReadError }
                     </Alert>
                 }
+            </Dialog>
+            <Dialog
+                className="ImportItems"
+                actions={[
+                    {
+                        id: "cancel",
+                        buttonText: "Cancel",
+                        callback: cancelSubmission,
+                        buttonVariant: "secondary",
+                    },
+                    {
+                        id: "proceed",
+                        buttonText: "Proceed",
+                        callback: doSubmitItem,
+                        buttonVariant: "polkadot",
+                    }
+                ]}
+                show={ fees !== null }
+                size="lg"
+            >
+                <h3>Collection Item Creation Fees</h3>
+                <EstimatedFees
+                    fees={ fees }
+                    centered={ true }
+                    hideTitle={ true }
+                />
             </Dialog>
         </div>
     );
