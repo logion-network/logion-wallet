@@ -15,7 +15,6 @@ import {
     UUID,
     LogionNodeApiClass,
 } from "@logion/node-api";
-import type { SubmittableExtrinsic } from '@polkadot/api/promise/types';
 import { AnyJson } from "@polkadot/types-codec/types/helpers.js";
 import { AxiosInstance } from "axios";
 
@@ -43,38 +42,6 @@ function buildAxios(locState: LocRequestState) {
     const client = locState.locsState().client;
     const legalOfficer = client.getLegalOfficer(locState.data().ownerAddress);
     return legalOfficer.buildAxiosToNode();
-}
-
-export async function setVerifiedIssuer(params: {
-    locState: ClosedLoc,
-    isVerifiedIssuer: boolean,
-    signer: Signer,
-    callback: SignCallback,
-}): Promise<ClosedLoc> {
-    const { locState, isVerifiedIssuer, signer, callback } = params;
-    const currentLocState = getCurrent(locState);
-    const { data, api } = inspectState(currentLocState);
-
-    if(!data.requesterAddress) {
-        throw new Error("Identity LOC has no Polkadot requester");
-    }
-
-    let submittable: SubmittableExtrinsic;
-    if(isVerifiedIssuer) {
-        submittable = api.polkadot.tx.logionLoc.nominateIssuer(
-            data.requesterAddress.address,
-            api.adapters.toLocId(data.id)
-        );
-    } else {
-        submittable = api.polkadot.tx.logionLoc.dismissIssuer(data.requesterAddress.address);
-    }
-    await signer.signAndSend({
-        signerId: data.ownerAddress,
-        submittable,
-        callback
-    });
-
-    return await getCurrent(currentLocState).refresh() as ClosedLoc;
 }
 
 export type VerifiedIssuerWithSelect = VerifiedIssuer & { selected: boolean };

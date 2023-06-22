@@ -6,7 +6,6 @@ import Dialog from "../../common/Dialog";
 import { useLocContext } from "../LocContext";
 import { useLogionChain } from "../../logion-chain";
 import { ClosedLoc } from "@logion/client";
-import { setVerifiedIssuer } from "../../legal-officer/client";
 import './Nominate.css';
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
 
@@ -24,12 +23,17 @@ export default function Nominate() {
         setStatus('Confirming');
         const call = async (callback: CallCallback) => mutateLocState(async current => {
             if(signer && current instanceof ClosedLoc) {
-                return setVerifiedIssuer({
-                    locState: current,
-                    isVerifiedIssuer: !isIssuer,
-                    signer,
-                    callback,
-                });
+                if(isIssuer) {
+                    return current.legalOfficer.dismissIssuer({
+                        signer,
+                        callback,
+                    });
+                } else {
+                    return current.legalOfficer.nominateIssuer({
+                        signer,
+                        callback,
+                    });   
+                }
             } else {
                 return current;
             }

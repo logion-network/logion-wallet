@@ -1,8 +1,7 @@
 import IssuerSelectionFrame from "./IssuerSelectionFrame";
-import { setVerifiedIssuerSelections } from "../../legal-officer/__mocks__/ClientMock";
 import { setLocState } from "../__mocks__/LocContextMock";
 import { waitFor, screen, render } from "@testing-library/react";
-import { OpenLoc } from "../../__mocks__/LogionClientMock";
+import { OpenLoc, setVerifiedIssuers } from "../../__mocks__/LogionClientMock";
 
 jest.mock("../../legal-officer/client");
 jest.mock("../LocContext");
@@ -15,8 +14,8 @@ describe("IssuerSelectionFrame", () => {
     });
 
     it("renders 2 rows", async () => {
-        setLocState(new OpenLoc());
-        setVerifiedIssuerSelections([
+        const openLoc = new OpenLoc();
+        setVerifiedIssuers([
             {
                 firstName: "John",
                 lastName: "Doe",
@@ -31,7 +30,9 @@ describe("IssuerSelectionFrame", () => {
                 address: "address-456",
                 selected: true,
             },
-        ])
+        ]);
+        setLocState(openLoc);
+
         render(<IssuerSelectionFrame/>);
         await waitFor(() => {
             expect(screen.getByText("John")).toBeInTheDocument()
