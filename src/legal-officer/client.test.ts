@@ -1,77 +1,13 @@
-import { EditableRequest, LogionClient, OpenLoc, VerifiedIssuer, ClosedLoc, Signer, SuccessfulSubmission, VerifiedIssuerIdentity } from "@logion/client";
+import { LogionClient, VerifiedIssuer, ClosedLoc, Signer, SuccessfulSubmission, VerifiedIssuerIdentity } from "@logion/client";
 import { UUID } from "@logion/node-api";
-import { AxiosInstance } from "axios";
 import { DEFAULT_LEGAL_OFFICER } from "src/common/TestData";
 import { SubmittableExtrinsic } from "@polkadot/api-base/types";
-import { getVerifiedIssuerSelections, requestVote, VerifiedIssuerWithSelect } from "./client";
-import { api, mockValidPolkadotAccountId, setupApiMock } from "src/__mocks__/LogionMock";
+import { requestVote } from "./client";
+import { api, setupApiMock } from "src/__mocks__/LogionMock";
 import { It, Mock } from "moq.ts";
 import { Compact, u128 } from "@polkadot/types-codec";
 
 describe("Legal Officer client", () => {
-
-    it("gets issuer selections ordered by last name", async () => {
-
-        function verifiedIssuer(index: number): VerifiedIssuer {
-            return {
-                address: "addr" + index,
-                identityLocId: "id" + index,
-                firstName: "Scott" + index,
-                lastName: "Tiger" + index,
-            }
-        }
-
-        const REQUESTER = verifiedIssuer(1);
-        const NOT_SELECTED = verifiedIssuer(2);
-        const SELECTED = verifiedIssuer(3);
-        const FORMERLY_SELECTED = verifiedIssuer(4);
-
-        const axios = {
-            get: jest.fn().mockResolvedValue({
-                data: {
-                    issuers: [
-                        toVerifiedIssuerIdentity(FORMERLY_SELECTED),
-                        toVerifiedIssuerIdentity(REQUESTER),
-                        toVerifiedIssuerIdentity(SELECTED),
-                        toVerifiedIssuerIdentity(NOT_SELECTED),
-                    ]
-                }
-            }),
-        } as unknown as AxiosInstance;
-
-        const client = {
-            getLegalOfficer: () => ({ buildAxiosToNode: () => axios })
-        } as unknown as LogionClient;
-
-        const locId = new UUID("0e16421a-2550-4be5-a6a8-1ab2239b7dc4");
-        const locState = {
-            data: () => ({
-                id: locId,
-                requesterAddress: mockValidPolkadotAccountId(REQUESTER.address),
-                issuers: [
-                    {
-                        firstName: SELECTED.firstName,
-                        lastName: SELECTED.lastName,
-                        identityLocId: SELECTED.identityLocId,
-                        address: SELECTED.address,
-                    }
-                ],
-            }),
-            locsState: () => ({
-                client,
-            }),
-            getCurrentState: () => locState,
-        } as unknown as OpenLoc;
-
-        const verifiedIssuers: VerifiedIssuerWithSelect[] = await getVerifiedIssuerSelections({ locState });
-
-        expect(axios.get).toBeCalledWith("/api/issuers-identity");
-
-        expect(verifiedIssuers.length).toEqual(3);
-        expect(verifiedIssuers[0]).toEqual({ ...NOT_SELECTED, selected: false });
-        expect(verifiedIssuers[1]).toEqual({ ...SELECTED, selected: true });
-        expect(verifiedIssuers[2]).toEqual({ ...FORMERLY_SELECTED, selected: false });
-    });
 
     it("requests a vote", async () => {
         setupApiMock(api => {
@@ -126,16 +62,3 @@ describe("Legal Officer client", () => {
         }));
     });
 });
-
-function toVerifiedIssuerIdentity(issuer: VerifiedIssuer): VerifiedIssuerIdentity {
-    return {
-        address: issuer.address,
-        identityLocId: issuer.identityLocId,
-        identity: {
-            firstName: issuer.firstName,
-            lastName: issuer.lastName,
-            email: "",
-            phoneNumber: "",
-        }
-    };
-}
