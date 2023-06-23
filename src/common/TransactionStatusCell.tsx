@@ -1,4 +1,4 @@
-import { Transaction } from "@logion/client";
+import { Transaction, toFeesClass } from "@logion/client";
 
 import Icon from "./Icon";
 import Detail from "./Detail";
@@ -6,7 +6,6 @@ import './TransactionStatusCell.css';
 import { Row, Col } from "./Grid";
 import Alert from "./Alert";
 import EstimatedFees from "../loc/fees/EstimatedFees";
-import { toFeesClass } from "src/loc/LocItemFactory";
 
 export interface StatusCellProps {
     transaction: Transaction

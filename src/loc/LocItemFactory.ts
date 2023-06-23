@@ -1,5 +1,5 @@
-import { MergedMetadataItem, MergedFile, MergedLink, Fees as ClientFees, Hash } from "@logion/client";
-import { UUID, Fees, ValidAccountId } from "@logion/node-api";
+import { MergedMetadataItem, MergedFile, MergedLink, Fees as ClientFees, Hash, toFeesClass } from "@logion/client";
+import { UUID, ValidAccountId } from "@logion/node-api";
 import { LinkData, LocItem } from "./LocItem";
 import { LocTemplateDocumentOrLink, LocTemplateMetadataItem } from "./Template";
 
@@ -187,17 +187,6 @@ export function createDocumentTemplateItem(templateItem: LocTemplateDocumentOrLi
         storageFeePaidBy: locItem?.storageFeePaidBy,
         reviewedOn: locItem?.reviewedOn,
         rejectReason: locItem?.rejectReason,
-    }
-}
-
-export function toFeesClass(fees: ClientFees | undefined): Fees | undefined {
-    if(fees) {
-        return new Fees({
-            inclusionFee: BigInt(fees.inclusion),
-            storageFee: fees.storage ? BigInt(fees.storage) : undefined,
-        });
-    } else {
-        return undefined;
     }
 }
 
