@@ -1,10 +1,10 @@
+import { PendingVote, Vote, VoteResult } from "@logion/client";
 import { useCallback, useMemo, useState } from "react";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
 import Button from "src/common/Button";
 import ButtonGroup from "src/common/ButtonGroup";
 import Icon from "src/common/Icon";
 import { useLogionChain } from "src/logion-chain";
-import { Vote, VoteResult } from "../client";
 import { useLegalOfficerContext } from "../LegalOfficerContext";
 import "./YourVote.css";
 
@@ -13,24 +13,33 @@ export interface Props {
 }
 
 export default function YourVote(props: Props) {
-    const { accounts } = useLogionChain();
-    const { vote } = useLegalOfficerContext();
+    const { accounts, signer } = useLogionChain();
+    const { mutateVotes } = useLegalOfficerContext();
     const [ call, setCall ] = useState<Call>();
 
     const yourVoteResult = useMemo(() => {
         if(accounts?.current?.accountId.address) {
             const currentAddress = accounts?.current?.accountId.address;
-            return props.vote.ballots[currentAddress];
+            return props.vote.data.ballots[currentAddress];
         }
     }, [ props.vote, accounts ]);
 
     const voteCallback = useCallback(async (myVote: VoteResult, callback: CallCallback) => {
-        await vote({
-            targetVote: props.vote,
-            myVote,
-            callback,
-        })
-    }, [ vote, props.vote ]);
+        await mutateVotes(async current => {
+            const vote = current.findByIdOrThrow(props.vote.data.voteId);
+            if(signer && vote.data.status === "PENDING") {
+                const pendingVote = vote as PendingVote;
+                const updatedVote = await pendingVote.castVote({
+                    result: myVote,
+                    signer,
+                    callback,
+                });
+                return updatedVote.votes;
+            } else {
+                return current;
+            }
+        });
+    }, [ mutateVotes, props.vote, signer ]);
 
     const voteYesCallback = useCallback(async (callback: CallCallback) => {
         await voteCallback("Yes", callback);

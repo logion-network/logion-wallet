@@ -3,13 +3,11 @@ import { useCommonContext } from "src/common/CommonContext";
 import { FullWidthPane } from "src/common/Dashboard";
 import Frame from "src/common/Frame";
 import Tabs from "src/common/Tabs";
-import { useLegalOfficerContext } from "../LegalOfficerContext";
 import ClosedVotesTable from "./ClosedVotesTable";
 import PendingVotesTable from "./PendingVotesTable";
 
 export default function Votes() {
     const { colorTheme } = useCommonContext();
-    const { votes } = useLegalOfficerContext();
     const [ currentTab, setCurrentTab ] = useState("pending");
 
     return (
@@ -32,12 +30,12 @@ export default function Votes() {
                             {
                                 key: "pending",
                                 title: "Pending",
-                                render: () => <PendingVotesTable votes={votes}/>
+                                render: () => <PendingVotesTable/>
                             },
                             {
                                 key: "closed",
                                 title: "Closed (results)",
-                                render: () => <ClosedVotesTable votes={votes}/>
+                                render: () => <ClosedVotesTable/>
                             }
                         ]
                     }

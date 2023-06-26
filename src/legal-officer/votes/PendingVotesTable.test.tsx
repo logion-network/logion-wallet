@@ -1,14 +1,15 @@
 import { UUID } from "@logion/node-api";
 import { render } from "src/tests";
-import { Vote } from "../client";
 import PendingVotesTable from "./PendingVotesTable";
+import { setVotes } from "../__mocks__/LegalOfficerContextMock";
+import { mockVotes } from "./Mocks";
 
 jest.mock("../LegalOfficerContext");
 
 describe("PendingVotesTable", () => {
 
     it("renders", () => {
-        const votes: Vote[] = [
+        const votes = mockVotes([
             {
                 voteId: "1",
                 createdOn: "",
@@ -22,9 +23,10 @@ describe("PendingVotesTable", () => {
                 locId: new UUID("c2967074-fffa-4f7a-af87-1dd2d6b61c20"),
                 status: "APPROVED",
                 ballots: {}
-            }
-        ];
-        const result = render(<PendingVotesTable votes={votes}/>);
+            },
+        ]);
+        setVotes(votes);
+        const result = render(<PendingVotesTable/>);
         expect(result).toMatchSnapshot();
     });
 });
