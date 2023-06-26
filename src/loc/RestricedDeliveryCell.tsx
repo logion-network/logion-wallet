@@ -1,9 +1,9 @@
+import { OpenLoc, ClosedCollectionLoc } from "@logion/client";
 import { useCallback, useMemo, useState } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import Dialog from "src/common/Dialog";
 import { Cell } from "src/common/Table";
 import Checkbox from "src/components/toggle/Checkbox";
-import { setCollectionFileRestrictedDelivery } from "src/legal-officer/client";
 import { useLocContext } from "./LocContext";
 import "./RestrictedDeliveryCell.css";
 
@@ -28,11 +28,16 @@ export default function RestrictedDeliveryCell(props: Props) {
     const setRestrictedDeliveryCallback = useCallback(async (restrictedDelivery: boolean) => {
         setDisabled(true);
         try {
-            return await mutateLocState(async current => setCollectionFileRestrictedDelivery({
-                locState: current,
-                hash: props.hash,
-                restrictedDelivery,
-            }));
+            return await mutateLocState(async current => {
+                if(current instanceof OpenLoc || current instanceof ClosedCollectionLoc) {
+                    return current.legalOfficer.setCollectionFileRestrictedDelivery({
+                        hash: props.hash,
+                        restrictedDelivery,
+                    });
+                } else {
+                    return current;
+                }
+            });
         } finally {
             setDisabled(false);
         }

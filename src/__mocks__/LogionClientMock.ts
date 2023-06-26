@@ -158,12 +158,14 @@ export class OpenLoc extends EditableRequest {
         close: any,
         voidLoc: any,
         getVerifiedIssuers: () => Promise<VerifiedIssuerWithSelect[]>,
+        setCollectionFileRestrictedDelivery: (params: any) => Promise<OpenLoc>,
     } = {
         addLink: jest.fn(),
         deleteLink: jest.fn(),
         close: jest.fn(),
         voidLoc: jest.fn(),
         getVerifiedIssuers: () => Promise.resolve(issuers),
+        setCollectionFileRestrictedDelivery: () => Promise.resolve(this),
     };
 }
 

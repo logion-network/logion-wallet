@@ -3,7 +3,6 @@ import { setLocState } from "../__mocks__/LocContextMock";
 import { waitFor, screen, render } from "@testing-library/react";
 import { OpenLoc, setVerifiedIssuers } from "../../__mocks__/LogionClientMock";
 
-jest.mock("../../legal-officer/client");
 jest.mock("../LocContext");
 
 describe("IssuerSelectionFrame", () => {

@@ -11,7 +11,6 @@ import { setLocState } from "./__mocks__/LocContextMock";
 jest.mock("../common/CommonContext");
 jest.mock("./LocContext");
 jest.mock("../legal-officer/LegalOfficerContext");
-jest.mock("../legal-officer/client");
 jest.mock("../logion-chain");
 jest.mock("../logion-chain/Signature");
 
