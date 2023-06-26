@@ -97,7 +97,6 @@ export class FeeEstimator {
             Adapters.toCollectionItemToken(item.token),
             item.restrictedDelivery,
             termsAndConditions.map(Adapters.toTermsAndConditionsElement),
-            item.token?.issuance || 0,
         );
 
         const origin = loc.requesterAddress?.address;

@@ -53,7 +53,7 @@ describe("ImportItems", () => {
 async function uploadCsv(): Promise<any> {
     const clientMock = new Mock<LogionClient>;
     const submittable = new Mock<SubmittableExtrinsic>();
-    clientMock.setup(instance => instance.logionApi.polkadot.tx.logionLoc.addCollectionItem(It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny())).returns(submittable.object());
+    clientMock.setup(instance => instance.logionApi.polkadot.tx.logionLoc.addCollectionItem(It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny())).returns(submittable.object());
     const locId = new Mock<Compact<u128>>();
     clientMock.setup(instance => instance.logionApi.adapters.toLocId(It.IsAny())).returns(locId.object());
     clientMock.setup(instance => instance.logionApi.fees.estimateWithoutStorage(It.IsAny())).returnsAsync(new Fees({ inclusionFee: 42n }));
