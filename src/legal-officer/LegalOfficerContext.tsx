@@ -11,10 +11,10 @@ import {
     VoidedLoc,
     VoidedCollectionLoc,
     LocsState,
-    SignCallback,
     AcceptedRequest,
+    Votes,
+    ProtectionRequest,
 } from '@logion/client';
-import { ProtectionRequest } from '@logion/client/dist/RecoveryClient.js';
 
 import { fetchProtectionRequests } from '../common/Model';
 import { useCommonContext } from '../common/CommonContext';
@@ -24,7 +24,6 @@ import { VaultApi } from '../vault/VaultApi';
 import { LocType, IdentityLocType, LegalOfficerData } from "@logion/node-api";
 import { DateTime } from "luxon";
 import { fetchAllLocsParams } from 'src/loc/LegalOfficerLocContext';
-import { getVotes, Vote, VoteResult, vote as clientVote } from './client';
 
 export const SETTINGS_KEYS = [ 'oath' ];
 
@@ -73,9 +72,9 @@ export interface LegalOfficerContext {
     legalOfficer?: LegalOfficer;
     refreshLegalOfficer: () => void;
     reconnected: boolean;
-    votes: Vote[];
+    votes: Votes | null;
     refreshVotes: () => Promise<void>;
-    vote: (params: { targetVote: Vote, myVote: VoteResult, callback: SignCallback }) => Promise<void>;
+    mutateVotes: (mutator: (current: Votes) => Promise<Votes>) => Promise<void>;
     mutateLocsState: (mutator: (current: LocsState) => Promise<LocsState>) => Promise<void>;
 }
 
@@ -118,9 +117,9 @@ function initialContextValue(): FullLegalOfficerContext {
         callRefreshVotes: false,
         refreshLegalOfficer: DEFAULT_NOOP,
         reconnected: false,
-        votes: [],
+        votes: null,
         refreshVotes: DEFAULT_NOOP,
-        vote: DEFAULT_NOOP,
+        mutateVotes: DEFAULT_NOOP,
         mutateLocsState: DEFAULT_NOOP,
     };
 }
@@ -149,6 +148,7 @@ type ActionType =
     | 'SET_VOTES'
     | 'SET_VOTE'
     | 'SET_MUTATE_LOC_STATE'
+    | 'SET_MUTATE_VOTES'
 ;
 
 interface Action {
@@ -188,10 +188,11 @@ interface Action {
     refreshOnchainSettings?: () => void;
     refreshLegalOfficer?: () => void;
     legalOfficer?: LegalOfficer;
-    votes?: Vote[];
+    votes?: Votes;
     refreshVotes?: () => Promise<void>;
-    vote?: (params: { targetVote: Vote, myVote: VoteResult, callback: SignCallback }) => Promise<void>;
-    mutateLocsState?: (mutator: (current: LocsState) => Promise<LocsState>) => Promise<void>}
+    mutateVotes?: (mutator: (current: Votes) => Promise<Votes>) => Promise<void>;
+    mutateLocsState?: (mutator: (current: LocsState) => Promise<LocsState>) => Promise<void>;
+}
 
 const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOfficerContext, action: Action): FullLegalOfficerContext => {
     switch (action.type) {
@@ -341,12 +342,17 @@ const reducer: Reducer<FullLegalOfficerContext, Action> = (state: FullLegalOffic
         case 'SET_VOTE':
             return {
                 ...state,
-                vote: action.vote!,
+                mutateVotes: action.mutateVotes!,
             }
         case 'SET_MUTATE_LOC_STATE':
             return {
                 ...state,
                 mutateLocsState: action.mutateLocsState!,
+            }
+        case 'SET_MUTATE_VOTES':
+            return {
+                ...state,
+                mutateVotes: action.mutateVotes!,
             }
         default:
             /* istanbul ignore next */
@@ -359,7 +365,7 @@ export interface Props {
 }
 
 export function LegalOfficerContextProvider(props: Props) {
-    const { api, accounts, axiosFactory, client, reconnect, signer } = useLogionChain();
+    const { api, accounts, axiosFactory, client, reconnect } = useLogionChain();
     const { colorTheme, setColorTheme, viewer, setViewer } = useCommonContext();
     const [ contextValue, dispatch ] = useReducer(reducer, initialContextValue());
 
@@ -632,23 +638,31 @@ export function LegalOfficerContextProvider(props: Props) {
 
     // ------------------ Votes -------------------------------
 
-    const refreshVotes = useCallback(async () => {
-        const now = DateTime.now();
-        if(accounts && accounts.current && client && client.isTokenValid(now)) {
-            dispatch({
-                type: "REFRESH_VOTES_CALLED"
-            });
-
-            const currentAddress = accounts.current.accountId.address;
-            const votes = await getVotes(client);
-
+    const refreshVotes = useCallback(async (newVotes?: Votes) => {
+        if(newVotes) {
             dispatch({
                 type: "SET_VOTES",
-                dataAddress: currentAddress,
-                votes,
+                dataAddress: contextValue.dataAddress!,
+                votes: newVotes,
             });
+        } else {
+            const now = DateTime.now();
+            if(accounts && accounts.current && client && client.isTokenValid(now)) {
+                dispatch({
+                    type: "REFRESH_VOTES_CALLED"
+                });
+
+                const currentAddress = accounts.current.accountId.address;
+                const votes = await client.voter.getVotes();
+
+                dispatch({
+                    type: "SET_VOTES",
+                    dataAddress: currentAddress,
+                    votes,
+                });
+            }
         }
-    }, [ accounts, client ]);
+    }, [ accounts, client, contextValue.dataAddress ]);
 
     useEffect(() => {
         if(contextValue.refreshVotes !== refreshVotes) {
@@ -665,37 +679,19 @@ export function LegalOfficerContextProvider(props: Props) {
         }
     }, [ contextValue.callRefreshVotes, refreshVotes ]);
 
-    const voteCallback = useCallback(async (params: {
-        targetVote: Vote,
-        myVote: VoteResult,
-        callback: SignCallback
-    }) => {
-        const { targetVote, myVote, callback } = params;
-        if(client && signer) {
-            const newVote = await clientVote({
-                vote: targetVote,
-                myVote,
-                client,
-                signer,
-                callback,
-            });
-            const newVotes = contextValue.votes.map(vote => vote.voteId === targetVote.voteId ? newVote : vote);
-            dispatch({
-                type: "SET_VOTES",
-                dataAddress: client.currentAddress?.address,
-                votes: newVotes,
-            });
-        }
-    }, [ client, signer, contextValue.votes ]);
+    const mutateVotesCallback = useCallback(async (mutator: (current: Votes) => Promise<Votes>): Promise<void> => {
+        const result = await mutator(contextValue.votes!);
+        refreshVotes(result);
+    }, [ contextValue.votes, refreshVotes ]);
 
     useEffect(() => {
-        if(contextValue.vote !== voteCallback) {
+        if (contextValue.mutateVotes !== mutateVotesCallback) {
             dispatch({
-                type: 'SET_VOTE',
-                vote: voteCallback,
+                type: "SET_MUTATE_VOTES",
+                mutateVotes: mutateVotesCallback,
             });
         }
-    }, [ contextValue.vote, voteCallback ]);
+    }, [ mutateVotesCallback, contextValue.mutateVotes ]);
 
     const mutateLocsStateCallback = useCallback(async (mutator: (current: LocsState) => Promise<LocsState>): Promise<void> => {
         const result = await mutator(contextValue.locsState!);

@@ -1,15 +1,16 @@
 import { UUID } from "@logion/node-api";
 import { DEFAULT_LEGAL_OFFICER, ANOTHER_LEGAL_OFFICER } from "src/common/TestData";
 import { render } from "src/tests";
-import { Vote } from "../client";
 import ClosedVotesTable from "./ClosedVotesTable";
+import { mockVotes } from "./Mocks";
+import { setVotes } from "../__mocks__/LegalOfficerContextMock";
 
 jest.mock("../LegalOfficerContext");
 
 describe("ClosedVotesTable", () => {
 
     it("renders", () => {
-        const votes: Vote[] = [
+        const votes = mockVotes([
             {
                 voteId: "1",
                 createdOn: "",
@@ -27,8 +28,9 @@ describe("ClosedVotesTable", () => {
                     [ANOTHER_LEGAL_OFFICER.address]: "Yes",
                 }
             }
-        ];
-        const result = render(<ClosedVotesTable votes={votes}/>);
+        ]);
+        setVotes(votes);
+        const result = render(<ClosedVotesTable/>);
         expect(result).toMatchSnapshot();
     });
 });

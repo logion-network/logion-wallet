@@ -108,6 +108,11 @@ export class ClosedCollectionLoc extends LocRequestState {
 
 export class ClosedLoc extends LocRequestState {
 
+    legalOfficer: {
+        requestVote: any,
+    } = {
+        requestVote: jest.fn(),
+    };
 }
 
 export class EditableRequest extends LocRequestState {

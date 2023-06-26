@@ -1,40 +1,41 @@
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import Table, { Cell, DateTimeCell, EmptyTableMessage } from "src/common/Table";
-import { Vote } from "../client";
 import { voteLocPath } from "../LegalOfficerPaths";
 import YourVote from "./YourVote";
+import { useLegalOfficerContext } from "../LegalOfficerContext";
 
-export interface Props {
-    votes: Vote[];
-}
-
-export default function PendingVotesTable(props: Props) {
+export default function PendingVotesTable() {
+    const { votes } = useLegalOfficerContext();
 
     const pendingVotes = useMemo(() => {
-        return props.votes.filter(vote => vote.status === "PENDING");
-    }, [ props.votes ]);
+        if(votes) {
+            return votes.votes.filter(vote => vote.data.status === "PENDING");
+        } else {
+            return [];
+        }
+    }, [ votes ]);
 
     return (
         <Table
             columns={[
                 {
                     header: "ID",
-                    render: vote => <Cell content={ vote.voteId }/>,
+                    render: vote => <Cell content={ vote.data.voteId }/>,
                     width: "150px",
                 },
                 {
                     header: "Creation date",
-                    render: vote => <DateTimeCell dateTime={ vote.createdOn }/>,
+                    render: vote => <DateTimeCell dateTime={ vote.data.createdOn }/>,
                     width: "150px",
                 },
                 {
                     header: "LOC",
                     render: vote => <Cell content={
                         <Link
-                            to={ voteLocPath(vote.locId) }
+                            to={ voteLocPath(vote.data.locId) }
                         >
-                            { vote.locId.toDecimalString() }
+                            { vote.data.locId.toDecimalString() }
                         </Link>
                     } overflowing/>
                 },
@@ -43,7 +44,7 @@ export default function PendingVotesTable(props: Props) {
                     render: vote => <Cell
                         content="Non-Collator Logion Legal Officer nomination vote"
                         overflowing
-                        tooltipId={`${vote.voteId}-loc-id-tt`}
+                        tooltipId={`${vote.data.voteId}-loc-id-tt`}
                     />,
                 },
                 {

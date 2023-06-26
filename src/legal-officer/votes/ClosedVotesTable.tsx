@@ -1,3 +1,4 @@
+import { Vote } from "@logion/client";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
 import Icon from "src/common/Icon";
@@ -5,41 +6,42 @@ import Table, { Cell, DateTimeCell, EmptyTableMessage } from "src/common/Table";
 import Accounts from "src/common/types/Accounts";
 import { Child, Children } from "src/common/types/Helpers";
 import { useLogionChain } from "src/logion-chain";
-import { Vote } from "../client";
 import { voteLocPath } from "../LegalOfficerPaths";
 import VoteDetails from "./VoteDetails";
+import { useLegalOfficerContext } from "../LegalOfficerContext";
 
-export interface Props {
-    votes: Vote[];
-}
-
-export default function ClosedVotesTable(props: Props) {
+export default function ClosedVotesTable() {
     const { accounts } = useLogionChain();
+    const { votes } = useLegalOfficerContext();
 
     const closedVotes = useMemo(() => {
-        return props.votes.filter(vote => vote.status !== "PENDING");
-    }, [ props.votes ]);
+        if(votes) {
+            return votes.votes.filter(vote => vote.data.status !== "PENDING");
+        } else {
+            return [];
+        }
+    }, [ votes ]);
 
     return (
         <Table
             columns={[
                 {
                     header: "ID",
-                    render: vote => <Cell content={ vote.voteId }/>,
+                    render: vote => <Cell content={ vote.data.voteId }/>,
                     width: "150px",
                 },
                 {
                     header: "Creation date",
-                    render: vote => <DateTimeCell dateTime={ vote.createdOn }/>,
+                    render: vote => <DateTimeCell dateTime={ vote.data.createdOn }/>,
                     width: "150px",
                 },
                 {
                     header: "LOC",
                     render: vote => <Cell content={
                         <Link
-                            to={ voteLocPath(vote.locId) }
+                            to={ voteLocPath(vote.data.locId) }
                         >
-                            { vote.locId.toDecimalString() }
+                            { vote.data.locId.toDecimalString() }
                         </Link>
                     } overflowing/>
                 },
@@ -53,7 +55,7 @@ export default function ClosedVotesTable(props: Props) {
                     render: vote => <Cell
                         content="Non-Collator Logion Legal Officer nomination vote"
                         overflowing
-                        tooltipId={`${vote.voteId}-loc-id-tt`}
+                        tooltipId={`${vote.data.voteId}-loc-id-tt`}
                     />,
                 },
                 {
@@ -75,7 +77,7 @@ export default function ClosedVotesTable(props: Props) {
 
 function yourVoteIcon(vote: Vote, accounts: Accounts | null): Children {
     const currentAddress = accounts?.current?.accountId.address;
-    const result = vote.ballots[currentAddress || ""];
+    const result = vote.data.ballots[currentAddress || ""];
     if(result === "Yes") {
         return <Icon icon={{id:"ok"}}/>;
     } else {
@@ -84,7 +86,7 @@ function yourVoteIcon(vote: Vote, accounts: Accounts | null): Children {
 }
 
 function voteResultIcon(vote: Vote): Child {
-    if(vote.status === "APPROVED") {
+    if(vote.data.status === "APPROVED") {
         return <Icon icon={{id:"ok"}} height="40px"/>;
     } else {
         return <Icon icon={{id:"ko"}} height="40px"/>;

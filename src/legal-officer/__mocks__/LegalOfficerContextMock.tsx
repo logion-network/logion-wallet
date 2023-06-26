@@ -1,9 +1,8 @@
-import { ClosedCollectionLoc, ClosedLoc, OpenLoc, PendingRequest, RejectedRequest, VoidedLoc, LocsState, SignCallback } from "@logion/client";
+import { ClosedCollectionLoc, ClosedLoc, OpenLoc, PendingRequest, RejectedRequest, VoidedLoc, LocsState, SignCallback, Votes, Vote, VoteResult } from "@logion/client";
 import { LocType, IdentityLocType, LegalOfficerData } from "@logion/node-api";
 import { ISubmittableResult } from '@polkadot/types/types';
 import { AxiosInstance } from "axios";
 import { COLOR_THEME, PATRICK } from "src/common/TestData";
-import { Vote, VoteResult } from "../client";
 
 export let pendingTokenizationRequests: any[] | null = null;
 
@@ -151,14 +150,18 @@ async function vote(params: {
     return params.targetVote;
 }
 
-let votes: Vote[] = [];
+let votes: Votes;
 
-export function setVotes(value: Vote[]) {
+export function setVotes(value: Votes) {
     votes = value;
 }
 
 async function mutateLocsState(mutator: (current: LocsState) => Promise<LocsState>): Promise<void> {
-    await mutator(locsState)
+    await mutator(locsState);
+}
+
+async function mutateVotes(mutator: (current: Votes) => Promise<Votes>): Promise<void> {
+    votes = await mutator(votes);
 }
 
 export function useLegalOfficerContext() {
@@ -188,7 +191,7 @@ export function useLegalOfficerContext() {
         refreshOnchainSettings,
         locsState,
         votes,
-        vote,
         mutateLocsState,
+        mutateVotes,
     };
 }

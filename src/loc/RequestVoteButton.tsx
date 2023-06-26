@@ -1,11 +1,10 @@
-import { ClosedCollectionLoc, ClosedLoc } from "@logion/client";
+import { ClosedLoc } from "@logion/client";
 import { useCallback, useState } from "react";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "src/ClientExtrinsicSubmitter";
 import Button from "src/common/Button";
 import Dialog from "src/common/Dialog";
 import Icon from "src/common/Icon";
 import Select from "src/common/Select";
-import { requestVote } from "src/legal-officer/client";
 import { useLogionChain } from "src/logion-chain";
 import { useLocContext } from "./LocContext";
 
@@ -19,9 +18,8 @@ export default function RequestVoteButton() {
     const [ submissionFailed, setSubmissionFailed ] = useState<boolean>(false);
 
     const requestVoteCallback = useCallback(async (callback: CallCallback) => {
-        if(signer && (locState instanceof ClosedLoc || locState instanceof ClosedCollectionLoc)) {
-            const requestedVoteId = await requestVote({
-                locState,
+        if(signer && (locState instanceof ClosedLoc)) {
+            const requestedVoteId = await locState.legalOfficer.requestVote({
                 callback,
                 signer,
             });
