@@ -22,7 +22,6 @@ import { setupApiMock, OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from "src/__moc
 jest.mock("../common/CommonContext");
 jest.mock("../logion-chain");
 jest.mock("./LocContext");
-jest.mock("../legal-officer/client");
 
 describe("LOLocItems", () => {
 

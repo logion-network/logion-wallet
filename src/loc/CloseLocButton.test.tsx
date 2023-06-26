@@ -11,7 +11,6 @@ import { mockSubmittableResult } from 'src/logion-chain/__mocks__/SignatureMock'
 
 jest.mock("../logion-chain");
 jest.mock("./LocContext");
-jest.mock("../legal-officer/client");
 
 describe("CloseLocButton", () => {
 

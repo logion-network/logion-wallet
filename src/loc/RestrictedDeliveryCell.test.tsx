@@ -5,15 +5,20 @@ import userEvent from "@testing-library/user-event";
 import { DEFAULT_ADDRESS } from "src/common/TestData";
 import { clickByName, shallowRender } from "src/tests"
 import RestrictedDeliveryCell from "./RestricedDeliveryCell"
-import { setLocRequest, setLocState } from "./__mocks__/LocContextMock";
+import { setLocState } from "./__mocks__/LocContextMock";
+import { OpenLoc } from "src/__mocks__/LogionClientMock";
 
 jest.mock("./LocContext");
 
 describe("RestrictedDeliveryCell", () => {
 
+    beforeEach(() => {
+        openLoc = new OpenLoc();
+        openLoc.legalOfficer.setCollectionFileRestrictedDelivery = setCollectionFileRestrictedDelivery;
+    });
+
     it("renders", () => {
-        const hash = "some-hash";
-        setLocRequest({
+        openLoc.data = () => ({
             files: [{
                 hash,
                 name: "File name",
@@ -23,6 +28,7 @@ describe("RestrictedDeliveryCell", () => {
                 submitter: DEFAULT_ADDRESS,
             }]
         } as unknown as LocData);
+        setLocState(openLoc);
         const result = shallowRender(<RestrictedDeliveryCell hash={hash}/>);
         expect(result).toMatchSnapshot();
     });
@@ -36,10 +42,21 @@ describe("RestrictedDeliveryCell", () => {
 
 const hash = "some-hash";
 
-const expectedEndpoint = "/api/collection/b0944596-264d-4ebe-89e7-ab5562cbeff8/files/some-hash";
+let openLoc: OpenLoc;
+
+function setCollectionFileRestrictedDelivery(params: any) {
+    const hash = params.hash;
+    const file = openLoc.data().files.find((file: any) => file.hash === hash);
+    if(file) {
+        file.restrictedDelivery = params.restrictedDelivery;
+    } else {
+        throw new Error();
+    }
+    return params.locState;
+}
 
 function renderGivenFile(restrictedDelivery: boolean) {
-    const locData = {
+    const data = {
         id: new UUID("b0944596-264d-4ebe-89e7-ab5562cbeff8"),
         files: [{
             hash,
@@ -50,39 +67,27 @@ function renderGivenFile(restrictedDelivery: boolean) {
             submitter: DEFAULT_ADDRESS,
         }]
     } as unknown as LocData;
-    setLocRequest(locData);
-    const put = jest.fn();
-    const axios = { put };
-    const client = {
-        getLegalOfficer: () => ({ buildAxiosToNode: () => axios }),
-    };
-    setLocState({
-        locsState: () => ({ client }),
-        data: () => locData,
-        refresh: () => {},
-    });
+    openLoc.data = () => data;
+    setLocState(openLoc);
     render(<RestrictedDeliveryCell hash={hash}/>);
-    return put;
 }
 
 async function testConfirm(restrictedDelivery: boolean) {
-    const put = renderGivenFile(restrictedDelivery);
+    renderGivenFile(!restrictedDelivery);
 
     const checkbox = screen.getByRole("checkbox");
     await userEvent.click(checkbox);
     await clickByName("Confirm");
 
-    expect(put).toBeCalledWith(expectedEndpoint, expect.objectContaining({
-        restrictedDelivery: !restrictedDelivery,
-    }));
+    expect(openLoc.data().files[0].restrictedDelivery).toBe(restrictedDelivery);
 }
 
 async function testDoesNothing(restrictedDelivery: boolean) {
-    const put = renderGivenFile(restrictedDelivery);
+    renderGivenFile(!restrictedDelivery);
 
     const checkbox = screen.getByRole("checkbox");
     await userEvent.click(checkbox);
     await clickByName("Cancel");
 
-    expect(put).not.toBeCalled();
+    expect(openLoc.data().files[0].restrictedDelivery).toBe(!restrictedDelivery);
 }

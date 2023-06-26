@@ -7,7 +7,6 @@ import { setLocState } from "../__mocks__/LocContextMock";
 
 jest.mock("../../logion-chain");
 jest.mock("../LocContext");
-jest.mock("../../legal-officer/client");
 
 describe("Nominate", () => {
 

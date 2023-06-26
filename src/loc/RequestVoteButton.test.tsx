@@ -6,7 +6,6 @@ import { ClosedLoc } from "src/__mocks__/@logion/client";
 import { setLocState } from "./__mocks__/LocContextMock";
 
 jest.mock("./LocContext");
-jest.mock("../legal-officer/client");
 jest.mock("../logion-chain");
 
 describe("RequestVoteButton", () => {
