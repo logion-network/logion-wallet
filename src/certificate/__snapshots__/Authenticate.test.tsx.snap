@@ -432,9 +432,26 @@ exports[`Authenticate with all wallet types renders all wallet type for token ty
         claimAsset={[Function]}
         compatibleWallets={
           Array [
-            "CROSSMINT",
-            "METAMASK",
-            "POLKADOT",
+            Wallet {
+              "iconType": "svg",
+              "name": "Metamask",
+              "type": "METAMASK",
+            },
+            Wallet {
+              "iconType": "png",
+              "name": "Crossmint",
+              "type": "CROSSMINT",
+            },
+            Wallet {
+              "iconType": "svg",
+              "name": "Polkadot",
+              "type": "POLKADOT",
+            },
+            Wallet {
+              "iconType": "png",
+              "name": "MultiversX DeFi Wallet",
+              "type": "MULTIVERSX_DEFI_WALLET",
+            },
           ]
         }
       />
