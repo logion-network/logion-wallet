@@ -1,5 +1,5 @@
 import { BlockchainTypes, CrossmintEVMWalletAdapter } from "@crossmint/connect";
-import { Token, LogionClient, CollectionItem, TokenType, isTokenCompatibleWith } from "@logion/client";
+import { Token, LogionClient, CollectionItem } from "@logion/client";
 import { CrossmintSigner } from "@logion/crossmint";
 import { allMetamaskAccounts, enableMetaMask } from "@logion/extension";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -15,31 +15,9 @@ import Alert from "src/common/Alert";
 import { UUID } from "@logion/node-api";
 import ButtonGroup from 'src/common/ButtonGroup';
 import Clickable from "src/common/Clickable";
+import { MultiversxSigner } from "@logion/multiversx";
+import Wallet from "src/components/wallet/Wallet";
 import './Authenticate.css';
-
-type WalletType = "METAMASK" | "CROSSMINT" | "POLKADOT";
-
-const ALL_WALLET_TYPES: WalletType[] = [ "CROSSMINT", "METAMASK", "POLKADOT" ];
-
-const WALLET_NAMES: Record<WalletType, string> = {
-    METAMASK: "Metamask",
-    CROSSMINT: "Crossmint",
-    POLKADOT: "Polkadot",
-};
-
-const ICON_TYPES: Record<WalletType, "svg" | "png"> = {
-    METAMASK: "svg",
-    CROSSMINT: "png",
-    POLKADOT: "svg",
-};
-
-function toWalletType(type: string | null | undefined): WalletType | undefined {
-    if (type === "CROSSMINT" || type === "METAMASK" || type === "POLKADOT") {
-        return type;
-    } else {
-        return undefined;
-    }
-}
 
 export interface Props {
     locId: UUID,
@@ -76,13 +54,13 @@ export default function Authenticate(props: Props) {
         }
     }, [ item, locId, setTokenForDownload ]);
 
-    const claimAsset = useCallback(async (walletType: WalletType) => {
+    const claimAsset = useCallback(async (wallet: Wallet) => {
         setTokenForDownload(undefined);
-        if (walletType !== "POLKADOT") {
+        if (wallet.type !== "POLKADOT") {
             setError(undefined);
             setStatus('CHECKING')
             try {
-                const client = await getClient(walletType, logionChainContext);
+                const client = await getClient(wallet, logionChainContext);
                 await checkOwnership(client);
             } catch (error) {
                 setStatus('OWNER_KO');
@@ -136,10 +114,10 @@ export default function Authenticate(props: Props) {
     }, [ setTokenForDownload ])
 
     const compatibleWallets = useMemo(() => {
-        return ALL_WALLET_TYPES.filter(walletType => item === undefined || walletTypeCompatibleWithItemType(walletType, item.token?.type));
+        return Wallet.all.filter(wallet => item === undefined || wallet.isCompatibleWithItemType(item.token?.type));
     }, [ item ]);
 
-    const walletType: WalletType | undefined = toWalletType(props.walletType);
+    const wallet: Wallet | undefined = Wallet.findByType(props.walletType);
 
     return (
         <div className="Authenticate">
@@ -168,8 +146,8 @@ export default function Authenticate(props: Props) {
                 <ButtonGroup>
                     {
                         status === 'IDLE' &&
-                        <ConnectAndClaim walletType={ walletType } compatibleWallets={ compatibleWallets }
-                                        claimAsset={ claimAsset } />
+                        <ConnectAndClaim wallet={ wallet } compatibleWallets={ compatibleWallets }
+                                         claimAsset={ claimAsset } />
                     }
                     {
                         status === 'CHECKING' &&
@@ -237,24 +215,24 @@ export default function Authenticate(props: Props) {
 }
 
 interface ConnectAndClaimProperties {
-    walletType: WalletType | undefined,
-    compatibleWallets: WalletType[],
-    claimAsset: (walletType: WalletType) => Promise<void>
+    wallet: Wallet | undefined,
+    compatibleWallets: Wallet[],
+    claimAsset: (wallet: Wallet) => Promise<void>
 }
 
 function ConnectAndClaim(props: ConnectAndClaimProperties) {
-    const { walletType, compatibleWallets, claimAsset } = props;
+    const { wallet, compatibleWallets, claimAsset } = props;
     return (<>
         {
-            walletType &&
+            wallet &&
             <Button
-                onClick={ () => claimAsset(walletType) }
+                onClick={ () => claimAsset(wallet) }
             >
                 <Icon icon={ { id: "claim" } } /> { buttonText() }
             </Button>
         }
         {
-            (!walletType && compatibleWallets.length === 1) &&
+            (!wallet && compatibleWallets.length === 1) &&
             <Button
                 onClick={ () => claimAsset(compatibleWallets[0]) }
             >
@@ -262,19 +240,19 @@ function ConnectAndClaim(props: ConnectAndClaimProperties) {
             </Button>
         }
         {
-            (!walletType && compatibleWallets.length > 1) &&
+            (!wallet && compatibleWallets.length > 1) &&
             <Dropdown>
                 <Dropdown.Toggle className="Button" id="Authenticate-dropdown-toggle"><Icon
                     icon={ { id: "claim" } } /> <span
                     className="claim-asset-btn-text">{ buttonText() }</span></Dropdown.Toggle>
                 <Dropdown.Menu>
                     {
-                        compatibleWallets.map(walletType => (
-                            <Dropdown.Item key={ walletType } onClick={ () => claimAsset(walletType) }
-                                           className={ walletType.toLowerCase() }>
-                                <Icon icon={ { id: walletType.toLowerCase() } } height="40px"
-                                      type={ ICON_TYPES[walletType] } /> <span
-                                className="wallet-name">with { WALLET_NAMES[walletType] }</span>
+                        compatibleWallets.map(wallet => (
+                            <Dropdown.Item key={ wallet.type } onClick={ () => claimAsset(wallet) }
+                                           className={ wallet.iconId }>
+                                <Icon icon={ { id: wallet.iconId } } height="40px"
+                                      type={ wallet.iconType } /> <span
+                                className="wallet-name">with { wallet.name }</span>
                             </Dropdown.Item>
                         ))
                     }
@@ -284,13 +262,15 @@ function ConnectAndClaim(props: ConnectAndClaimProperties) {
     </>)
 }
 
-async function getClient(walletType: WalletType, context: LogionChainContextType): Promise<LogionClient> {
-    if (walletType === "CROSSMINT") {
+async function getClient(wallet: Wallet, context: LogionChainContextType): Promise<LogionClient> {
+    if (wallet.type === "CROSSMINT") {
         return authenticateWithCrossmint(context);
-    } else if (walletType === "METAMASK") {
+    } else if (wallet.type === "METAMASK") {
         return authenticateWithMetamask(context);
+    } else if (wallet.type === "MULTIVERSX_DEFI_WALLET") {
+        return authenticateWithMultiversxExtension(context);
     } else {
-        throw new Error(`Unsupported wallet type ${ walletType }`);
+        throw new Error(`Unsupported wallet type ${ wallet.type }`);
     }
 }
 
@@ -341,15 +321,16 @@ async function authenticateWithMetamask(context: LogionChainContextType): Promis
     }
 }
 
-function walletTypeCompatibleWithItemType(wallet: WalletType, token?: TokenType): boolean {
-    if (!token) {
-        return false;
+async function authenticateWithMultiversxExtension(context: LogionChainContextType): Promise<LogionClient> {
+    const signer = new MultiversxSigner();
+    const address = await signer.login();
+    const account = context.api!.queries.getValidAccountId(address, "Bech32");
+
+    const authenticatedClient = await context.authenticateAddress(account, signer);
+    if (!authenticatedClient) {
+        throw new Error("Unable to authenticate");
     }
-    if ([ "METAMASK", "CROSSMINT" ].includes(wallet)) {
-        return isTokenCompatibleWith(token, 'ETHEREUM');
-    } else { // wallet POLKADOT
-        return isTokenCompatibleWith(token, 'POLKADOT');
-    }
+    return authenticatedClient;
 }
 
 function buttonText() {
