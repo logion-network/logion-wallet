@@ -15,7 +15,6 @@ type SaveStatus = 'SUCCESS' | 'ERROR' | 'NONE' | 'INVALID';
 interface FormValues {
     address: string;
     additionalDetails: string;
-    logoUrl: string;
     firstName: string;
     lastName: string;
     email: string;
@@ -38,7 +37,6 @@ export default function DirectoryData() {
     useEffect(() => {
         if(legalOfficer?.address !== getValues().address && (legalOfficer || missingSettings?.directory)) {
             setValue("address", legalOfficer?.address || "");
-            setValue("logoUrl", legalOfficer?.logoUrl || "");
             setValue("additionalDetails", legalOfficer?.additionalDetails || "");
 
             setValue("firstName", legalOfficer?.userIdentity.firstName || "");
@@ -375,7 +373,6 @@ function toLegalOfficer(formValues: FormValues): LegalOfficer {
     return {
         address: formValues.address,
         additionalDetails: formValues.additionalDetails,
-        logoUrl: formValues.logoUrl,
         name: "",
         node: "",
         postalAddress: {

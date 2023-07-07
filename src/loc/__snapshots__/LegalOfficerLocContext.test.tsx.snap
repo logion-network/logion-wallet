@@ -10,7 +10,6 @@ exports[`LegalOfficerLocContextProvider renders 1`] = `
         Object {
           "additionalDetails": "",
           "address": "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY",
-          "logoUrl": "",
           "name": "Patrick Gielen",
           "node": "http://logion.patrick.com",
           "nodeId": "",
