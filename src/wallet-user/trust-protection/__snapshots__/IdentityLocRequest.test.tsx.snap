@@ -32,7 +32,6 @@ exports[`IdentityLocRequest renders 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
-                "logoUrl": "",
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
                 "nodeId": "",
@@ -59,7 +58,6 @@ exports[`IdentityLocRequest renders 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
-                "logoUrl": "",
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
                 "nodeId": "",

@@ -185,7 +185,6 @@ export const PATRICK: LegalOfficer = {
         country: "Belgique"
     },
     node: "http://logion.patrick.com",
-    logoUrl: "",
     nodeId: "",
     region: "Europe",
 };
@@ -209,7 +208,6 @@ export const GUILLAUME: LegalOfficer = {
         country: "France"
     },
     node: "http://logion.guillaume.com",
-    logoUrl: "",
     nodeId: "",
     region: "Europe",
 };
@@ -233,7 +231,6 @@ export const ALAIN: LegalOfficer = {
         country: "France"
     },
     node: "http://logion.alain.com",
-    logoUrl: "",
     nodeId: "",
     region: "Europe",
 };

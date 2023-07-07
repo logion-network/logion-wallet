@@ -37,7 +37,6 @@ exports[`renders 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
-                "logoUrl": "",
                 "name": "Patrick Gielen",
                 "node": "http://logion.patrick.com",
                 "nodeId": "",
@@ -64,7 +63,6 @@ exports[`renders 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
-                "logoUrl": "",
                 "name": "Guillaume Grain",
                 "node": "http://logion.guillaume.com",
                 "nodeId": "",
@@ -91,7 +89,6 @@ exports[`renders 1`] = `
                 "axiosFactory": Object {
                   "buildAxiosInstance": [MockFunction],
                 },
-                "logoUrl": "",
                 "name": "Alain Barland",
                 "node": "http://logion.alain.com",
                 "nodeId": "",
