@@ -9,7 +9,6 @@ import {
     LogionClassification,
     SpecificLicense,
     CreativeCommons,
-    LocRequestState,
 } from "@logion/client";
 import { Fees } from '@logion/node-api';
 import { useCallback, useMemo, useState } from "react";
@@ -56,11 +55,12 @@ export default function ImportItems() {
 
     const readCsvFile = useCallback(async (file: File) => {
         const collection = locState as ClosedCollectionLoc;
+        const acceptsUpload = collectionAcceptsUpload(collection);
         setSubmitters({});
 
         const result = await readItemsCsv(file);
         if("items" in result) {
-            const rows = toItems(result.items);
+            const rows = toItems(result.items, acceptsUpload);
 
             for(const item of rows) {
                 if(!item.error) {
@@ -69,7 +69,7 @@ export default function ImportItems() {
                     });
                     item.submitted = existingItem !== undefined;
                     item.success = existingItem !== undefined;
-                    item.upload = shouldUpload(locState, existingItem);
+                    item.upload = shouldUpload(acceptsUpload, existingItem, item.upload);
                 }
             }
 
@@ -149,6 +149,7 @@ export default function ImportItems() {
     const close = useCallback(() => {
         setShowImportItems(false);
         setIsBatchImport(false);
+        setItems([]);
         refresh();
     }, [ setShowImportItems, setIsBatchImport, refresh ]);
 
@@ -400,17 +401,19 @@ function getNotSubmitted(items: Item[]): number {
     return count;
 }
 
-function shouldUpload(locState: LocRequestState | null, existingItem: UploadableCollectionItem | undefined): boolean {
-    return collectionAcceptsUpload(locState)
-        && (existingItem !== undefined && existingItem.files.length > 0 && !existingItem.files[0].uploaded);
+function shouldUpload(collectionAcceptsUpload: boolean, existingItem: UploadableCollectionItem | undefined, initialValue: boolean): boolean {
+    return collectionAcceptsUpload
+        && (
+            (existingItem === undefined && initialValue)
+            || (existingItem !== undefined && existingItem.files.length > 0 && !existingItem.files[0].uploaded)
+        );
 }
 
-function collectionAcceptsUpload(locState: LocRequestState | null): boolean {
-    const collection = locState as ClosedCollectionLoc;
+function collectionAcceptsUpload(collection: ClosedCollectionLoc): boolean {
     return collection.data().collectionCanUpload !== undefined && collection.data().collectionCanUpload === true;
 }
 
-function toItems(csvItems: CsvItem[]): Item[] {
+function toItems(csvItems: CsvItem[], collectionAcceptsUpload: boolean): Item[] {
     return csvItems.map(csvItem => {
         const givenId = csvItem.id;
         const id = toItemId(givenId);
@@ -491,7 +494,7 @@ function toItems(csvItems: CsvItem[]): Item[] {
                 submitted: false,
                 failed: false,
                 success: false,
-                upload: false,
+                upload: collectionAcceptsUpload && files.length > 0,
                 logionClassification: tcValidationResult.logionClassification,
                 specificLicense: tcValidationResult.specificLicense,
                 creativeCommons: tcValidationResult.creativeCommons,
