@@ -1,4 +1,4 @@
-import { CheckCertifiedCopyResult, CheckResultType, LocData, TokensRecord, ClosedCollectionLoc, TypedFile, LocRequestState } from "@logion/client";
+import { CheckCertifiedCopyResult, CheckResultType, LocData, TokensRecord, ClosedCollectionLoc, TypedFile, LocRequestState, Hash, HashString } from "@logion/client";
 import { UUID } from "@logion/node-api";
 import { AxiosInstance } from "axios";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -143,7 +143,9 @@ function CollectionDocumentClaimHistory(props: { hash: string }) {
             getFileDeliveries={ (axios, loc) => getCollectionFileDeliveries(axios, { locId: loc.id.toString(), hash }) }
             getFile={ loc => loc.getFile(hash)}
             file={ (loc) => loc.files.filter(file => file.hash === hash).map(file => ({
-                ...file,
+                hash: file.hash,
+                name: HashString.fromValue(file.name),
+                contentType: HashString.fromValue(file.contentType),
                 size: BigInt(file.size),
             }))[0]}
         />
@@ -185,12 +187,12 @@ export function LegalOfficerTokensRecordDocumentClaimHistory() {
             backPath={ tokensRecordPath(locId) }
             detailsPath={ locDetailsPath }
         >
-            <TokensRecordDocumentClaimHistory recordId={recordId} hash={hash}/>
+            <TokensRecordDocumentClaimHistory recordId={recordId as Hash} hash={hash as Hash}/>
         </LegalOfficerLocContextProvider>
     )
 }
 
-function TokensRecordDocumentClaimHistory(props: { recordId: string, hash: string, contributionMode?: ContributionMode }) {
+function TokensRecordDocumentClaimHistory(props: { recordId: Hash, hash: Hash, contributionMode?: ContributionMode }) {
     const { recordId, hash } = props;
     const [ record, setRecord ] = useState<TokensRecord>();
     const { locState } = useLocContext();
@@ -235,7 +237,7 @@ async function getTokensRecordFileDeliveries(axios: AxiosInstance, parameters: {
     }
 }
 
-function getRecordFile(record: TokensRecord | undefined, hash: string): DeliveredFile {
+function getRecordFile(record: TokensRecord | undefined, hash: Hash): DeliveredFile {
     if(!record) {
         return emptyDeliveredFile(hash);
     } else {
@@ -246,9 +248,9 @@ function getRecordFile(record: TokensRecord | undefined, hash: string): Delivere
 
 function emptyDeliveredFile(hash: string): DeliveredFile {
     return {
-        contentType: "",
+        contentType: HashString.fromValue(""),
         hash,
-        name: "",
+        name: HashString.fromValue(""),
         size: 0n,
     };
 };
@@ -264,7 +266,7 @@ export function UserTokensRecordDocumentClaimHistory(props: { contributionMode: 
             backPath={ userTokensRecordPath(props.contributionMode, locId) }
             detailsPath={ userLocDetailsPath }
         >
-            <TokensRecordDocumentClaimHistory recordId={recordId} hash={hash} contributionMode={props.contributionMode}/>
+            <TokensRecordDocumentClaimHistory recordId={recordId as Hash} hash={hash as Hash} contributionMode={props.contributionMode}/>
         </UserLocContextProvider>
     )
 }

@@ -16,7 +16,7 @@ import {
     CheckCertifiedCopyResult,
     TokensRecord,
 } from "@logion/client";
-import { UUID } from "@logion/node-api";
+import { UUID, Hash } from "@logion/node-api";
 
 import { useLogionChain } from "../logion-chain";
 import Button from "../common/Button";
@@ -62,7 +62,7 @@ export default function Certificate() {
     const [ tokenForDownload, setTokenForDownload ] = useState<Token | undefined>(undefined);
     const [ tokensRecords, setTokensRecords ] = useState<TokensRecord[] | null>(null);
 
-    const checkHash = useCallback(async (hash: string) => {
+    const checkHash = useCallback(async (hash: Hash) => {
         if (loc) {
             const result = await loc.checkHash(hash, collectionItem?.id);
             setCheckResult(result);
@@ -91,7 +91,7 @@ export default function Certificate() {
                             if (collectionItemIdParam) {
                                 const collectionItem = await client.public.findCollectionLocItemById({
                                     locId,
-                                    itemId: collectionItemIdParam
+                                    itemId: collectionItemIdParam as Hash, // TODO check
                                 });
                                 setCollectionItem(collectionItem);
                             }

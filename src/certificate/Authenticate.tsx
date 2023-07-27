@@ -43,7 +43,7 @@ export default function Authenticate(props: Props) {
     const [ status, setStatus ] = useState<Status>('IDLE');
 
     const checkOwnership = useCallback(async (client: LogionClient) => {
-        const newItem = await client.public.findCollectionLocItemById({ locId, itemId: item.id});
+        const newItem = await client.public.findCollectionLocItemById({ locId, itemId: item.id });
         const isOwner = newItem && await newItem.isAuthenticatedTokenOwner();
         if (isOwner) {
             setTokenForDownload(client.tokens.get(client.currentAddress));
@@ -114,7 +114,12 @@ export default function Authenticate(props: Props) {
     }, [ setTokenForDownload ])
 
     const compatibleWallets = useMemo(() => {
-        return Wallet.all.filter(wallet => item === undefined || wallet.isCompatibleWithItemType(item.token?.type));
+        if(item.token?.isValidItemTokenWithRestrictedType()) {
+            const token = item.token.toItemTokenWithRestrictedType();
+            return Wallet.all.filter(wallet => item === undefined || wallet.isCompatibleWithItemType(token.type));
+        } else {
+            return [];
+        }
     }, [ item ]);
 
     const wallet: Wallet | undefined = Wallet.findByType(props.walletType);

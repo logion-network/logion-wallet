@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
+import { Hash } from "@logion/node-api";
 import FileSelectorButton from "src/common/FileSelectorButton";
 import { sha256Hex } from "src/common/hash";
 import { Children } from "src/common/types/Helpers";
 
 export interface DocumentHash {
     file: File;
-    hash: string;
+    hash: Hash;
 }
 
 export interface Props {
@@ -31,10 +32,10 @@ export default function FileHasher(props: Props) {
             && (hash === null || hash.file !== file)) {
             setHashing(true);
             (async function() {
-                const hash = "0x" + await sha256Hex(file);
+                const hash = await sha256Hex(file);
                 const documentHash = {
                     file,
-                    hash: hash
+                    hash: `0x${ hash }` as Hash,
                 };
                 setHash(documentHash);
                 setHashing(false);

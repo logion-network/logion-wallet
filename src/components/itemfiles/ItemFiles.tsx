@@ -1,4 +1,4 @@
-import { CheckCertifiedCopyResult, LocData, CheckHashResult, TypedFile } from "@logion/client";
+import { CheckCertifiedCopyResult, LocData, CheckHashResult, TypedFile, HashString } from "@logion/client";
 import { useCallback, useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 
@@ -13,8 +13,8 @@ import "./ItemFiles.css";
 import ViewFileButton from "src/common/ViewFileButton";
 
 export interface DeliveredFile {
-    name: string;
-    contentType: string;
+    name: HashString;
+    contentType: HashString;
     hash: string;
     size: bigint;
 }
@@ -82,12 +82,12 @@ export default function ItemFiles(props: Props) {
                 columns={[
                     {
                         header: "Name",
-                        render: file => <Cell content={ file.name } />,
+                        render: file => <Cell content={ file.name.validValue() } />,
                         align: "left",
                     },
                     {
                         header: "Type",
-                        render: file => <Cell content={ file.contentType } />,
+                        render: file => <Cell content={ file.contentType.validValue() } />,
                         align: "left",
                     },
                     {
@@ -100,7 +100,7 @@ export default function ItemFiles(props: Props) {
                         render: file => <Cell content={
                             <ViewFileButton
                                 nodeOwner={ props.collectionLoc.ownerAddress }
-                                fileName={ file.name }
+                                fileName={ file.name.validValue() }
                                 downloader={ () => props.downloader(file.hash) }
                             />
                         } />,

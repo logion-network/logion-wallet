@@ -38,33 +38,37 @@ export default function TokensRecordTable(props: Props) {
             columns={[
                 {
                     header: "Name",
-                    render: record => <Cell content={record.files[0].name} tooltipId={`record-${record.id}-filename`} overflowing/>,
+                    render: record => <Cell
+                        content={ record.files[0].name.validValue() }
+                        tooltipId={`record-${record.id}-filename`}
+                        overflowing
+                    />,
                     renderDetails: record => <LocPrivateFileDetails
                         item={{
-                            name: record.files[0].name,
+                            name: record.files[0].name.validValue(),
                             newItem: false,
                             status: "PUBLISHED",
                             submitter: api.queries.getValidAccountId(record.issuer, "Polkadot"),
                             timestamp: record.addedOn,
                             type: "Document",
                             value: record.files[0].hash,
-                            nature: record.description,
+                            nature: record.description.validValue(),
                             template: false,
                             size: record.files[0].size,
                         }}
                         documentClaimHistory={ documentClaimHistory(viewer, loc, record, props.contributionMode) }
-                        fileName={record.files[0].name}
-                        fileType={record.files[0].contentType}
+                        fileName={record.files[0].name.validValue()}
+                        fileType={record.files[0].contentType.validValue()}
                         otherFeesPaidByRequester={ false }
                     />,
                 },
                 {
                     header: "Timestamp",
-                    render: record => <DateTimeCell dateTime={record.addedOn}/>
+                    render: record => <DateTimeCell dateTime={ record.addedOn }/>
                 },
                 {
                     header: "Type",
-                    render: record => <Cell content={record.files[0].contentType}/>
+                    render: record => <Cell content={ record.files[0].contentType.validValue() }/>
                 },
                 {
                     header: "Size (bytes)",
@@ -79,7 +83,7 @@ export default function TokensRecordTable(props: Props) {
                     render: record => <Cell content={
                         <ViewFileButton
                             nodeOwner={ loc.ownerAddress }
-                            fileName={ record.files[0].name }
+                            fileName={ record.files[0].name.validValue() }
                             downloader={ (axios) => getTokensRecordFileSource(axios, {
                                 locId: loc.id.toString(),
                                 recordId: record.id,

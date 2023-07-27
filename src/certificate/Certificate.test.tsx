@@ -1,4 +1,4 @@
-import { LogionClient, PublicLoc, LocData, CollectionItem } from '@logion/client';
+import { LogionClient, PublicLoc, LocData, CollectionItem, HashString } from '@logion/client';
 import { UUID } from '@logion/node-api';
 import { render, screen, waitFor } from "@testing-library/react";
 import { act } from 'react-test-renderer';
@@ -106,6 +106,7 @@ function mockCollectionItem(locId: UUID, itemId: string, restrictedDelivery: boo
         id: itemId,
         restrictedDelivery,
         specificLicenses: [],
+        description: HashString.fromValue(""),
     } as unknown as CollectionItem;
 }
 

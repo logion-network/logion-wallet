@@ -2,6 +2,7 @@ import { AxiosInstance } from "axios";
 import { useState, useCallback, useEffect, useMemo } from "react";
 import { Form } from "react-bootstrap";
 import { ClosedCollectionLoc, CollectionItem, LocData } from "@logion/client";
+import { Hash } from "@logion/node-api";
 
 import { useLogionChain } from "../logion-chain";
 import PolkadotFrame from "../common/PolkadotFrame";
@@ -45,7 +46,7 @@ export function UserCollectionLocItemChecker(props: Props) {
     const { client } = useLogionChain();
     const collection: ClosedCollectionLoc = locState as ClosedCollectionLoc;
 
-    async function collectionItemFunction(actualId: string): Promise<CollectionItem | undefined> {
+    async function collectionItemFunction(actualId: Hash): Promise<CollectionItem | undefined> {
         const result = await collection.checkHash(actualId)
         return result.collectionItem;
     }
@@ -84,7 +85,7 @@ export function LOCollectionLocItemChecker(props: Props) {
             collectionLoc={ collectionLoc }
             collectionItem={ collectionItem }
             collectionSizeFunction={ () => api.queries.getCollectionSize(collectionLoc.id) }
-            collectionItemFunction={ (actualId: string) => collection.getCollectionItem({ itemId: actualId }) }
+            collectionItemFunction={ (actualId: Hash) => collection.getCollectionItem({ itemId: actualId }) }
             axiosFactory={ () => axios }
             collectionItems={ collectionItems }
         />)
@@ -93,7 +94,7 @@ export function LOCollectionLocItemChecker(props: Props) {
 interface LocalProps extends Props {
     viewer: Viewer;
     collectionSizeFunction: () => Promise<number | undefined>
-    collectionItemFunction: (actualId: string) => Promise<CollectionItem | undefined>
+    collectionItemFunction: (actualId: Hash) => Promise<CollectionItem | undefined>
     axiosFactory: () => AxiosInstance
     collectionItems: CollectionItem[]
 }

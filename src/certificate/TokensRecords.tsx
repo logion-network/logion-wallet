@@ -50,7 +50,7 @@ function TokensRecordCell(props: TokensRecordCellProps) {
     const { tokensRecord } = props;
     return (
         <div className="TokensRecordCell">
-            <TRCell label="Description">{ tokensRecord.description }</TRCell>
+            <TRCell label="Description">{ tokensRecord.description.validValue() }</TRCell>
             <TRCell label="Timestamp">
                 <InlineDateTime dateTime={ tokensRecord.addedOn } />
             </TRCell>
@@ -72,8 +72,8 @@ function TokensRecordFileCell(props: TokensRecordFileCellProps) {
     return (
         <Row className={className}>
             <Col md={ 8 }>
-                <strong>{ tokensRecordFile.name }</strong>
-                <TRCell label="File type">{ tokensRecordFile.contentType }</TRCell>
+                <strong>{ tokensRecordFile.name.validValue() }</strong>
+                <TRCell label="File type">{ tokensRecordFile.contentType.validValue() }</TRCell>
                 <TRCell label="File size">{ tokensRecordFile.size.toString() } (bytes)</TRCell>
                 <TRCell label="Hash">{ tokensRecordFile.hash }</TRCell>
             </Col>
@@ -85,7 +85,7 @@ function TokensRecordFileCell(props: TokensRecordFileCellProps) {
                     record={ tokensRecord }
                     file={ {
                         hash: tokensRecordFile.hash,
-                        name: tokensRecordFile.name,
+                        name: tokensRecordFile.name.validValue(),
                         type: "TokensRecord",
                     } }
                     tokenForDownload={ tokenForDownload }
