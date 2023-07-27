@@ -194,11 +194,16 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                 collectionItem: (props.item ? {
                     id: props.item.id,
                     addedOn: props.item.addedOn,
-                    description: props.item.description,
+                    description: props.item.description.validValue(),
                     restrictedDelivery: props.item.restrictedDelivery,
-                    token: props.item.token,
+                    token: props.item.token ? {
+                        type: props.item.token.type.validValue(),
+                        id: props.item.token.id.validValue(),
+                    } : undefined,
                     files: props.item.files.map(file => ({
-                        ...file,
+                        hash: file.hash,
+                        name: file.name.validValue(),
+                        contentType: file.contentType.validValue(),
                         size: file.size.toString(),
                         deliveries: toSofDeliveries(file, deliveries),
                     })),
@@ -234,11 +239,13 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                 oathText: settings!['oath'] || "-",
                 tokensRecords: tokensRecords.map(record => ({
                     id: record.id,
-                    description: record.description,
+                    description: record.description.validValue(),
                     issuer: record.issuer,
                     addedOn: record.addedOn,
                     files: record.files.map(file => ({
-                        ...file,
+                        hash: file.hash,
+                        name: file.name.validValue(),
+                        contentType: file.contentType.validValue(),
                         size: file.size.toString(),
                         deliveries: toSofDeliveries(file, tokensRecordFileDeliveries[record.id]),
                     })),

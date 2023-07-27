@@ -56,10 +56,16 @@ exports[`ItemFiles renders with delivery  1`] = `
     data={
       Array [
         Object {
-          "contentType": "image/jpeg",
+          "contentType": HashString {
+            "hash": "0xfd824fcedd245e55871c74cb48ebbad02dab9bc4b9370433b609d6022ece7a73",
+            "value": "image/jpeg",
+          },
           "detailsExpanded": false,
           "hash": "0xa025ca5f086f3b6df1ca96c235c4daff57083bbd4c9320a3013e787849f9fffa",
-          "name": "programming_music.jpg",
+          "name": HashString {
+            "hash": "0x5369f02241b5aebc7c62fe76eeb3c9560bb753384219a4f30f2d556041e14cb4",
+            "value": "programming_music.jpg",
+          },
           "size": 90718n,
           "uploaded": true,
         },
@@ -127,10 +133,16 @@ exports[`ItemFiles renders with empty deliveries 1`] = `
     data={
       Array [
         Object {
-          "contentType": "image/jpeg",
+          "contentType": HashString {
+            "hash": "0xfd824fcedd245e55871c74cb48ebbad02dab9bc4b9370433b609d6022ece7a73",
+            "value": "image/jpeg",
+          },
           "detailsExpanded": false,
           "hash": "0xa025ca5f086f3b6df1ca96c235c4daff57083bbd4c9320a3013e787849f9fffa",
-          "name": "programming_music.jpg",
+          "name": HashString {
+            "hash": "0x5369f02241b5aebc7c62fe76eeb3c9560bb753384219a4f30f2d556041e14cb4",
+            "value": "programming_music.jpg",
+          },
           "size": 90718n,
           "uploaded": true,
         },
@@ -198,10 +210,16 @@ exports[`ItemFiles renders with undefined deliveries 1`] = `
     data={
       Array [
         Object {
-          "contentType": "image/jpeg",
+          "contentType": HashString {
+            "hash": "0xfd824fcedd245e55871c74cb48ebbad02dab9bc4b9370433b609d6022ece7a73",
+            "value": "image/jpeg",
+          },
           "detailsExpanded": false,
           "hash": "0xa025ca5f086f3b6df1ca96c235c4daff57083bbd4c9320a3013e787849f9fffa",
-          "name": "programming_music.jpg",
+          "name": HashString {
+            "hash": "0x5369f02241b5aebc7c62fe76eeb3c9560bb753384219a4f30f2d556041e14cb4",
+            "value": "programming_music.jpg",
+          },
           "size": 90718n,
           "uploaded": true,
         },

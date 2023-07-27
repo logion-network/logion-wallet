@@ -1,4 +1,5 @@
 import { useCallback, useState } from "react";
+import { Hash } from "@logion/node-api";
 
 import Icon from "../../common/Icon";
 import IconTextRow from "../../common/IconTextRow";
@@ -13,7 +14,7 @@ import Frame from "src/common/Frame";
 export type CheckResult = 'NONE' | 'POSITIVE' | 'NEGATIVE';
 
 export interface Props {
-    checkHash: (hash: string) => void;
+    checkHash: (hash: Hash) => void;
     checkResult: CheckResult;
     colorTheme?: ColorTheme;
     context: string;

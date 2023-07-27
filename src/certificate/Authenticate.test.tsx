@@ -1,10 +1,11 @@
 import { render } from '@testing-library/react';
 import { clickByName, shallowRender } from '../tests';
 import { UUID } from "@logion/node-api";
+import { HashString, ClientToken } from "@logion/client";
 import { DEFAULT_LEGAL_OFFICER } from "../common/TestData";
 import { setMetamaskEnabled } from '../__mocks__/LogionExtensionMock';
 import { setClientMock } from 'src/logion-chain/__mocks__/LogionChainMock';
-import { CollectionItem, UploadableItemFile, Token } from '@logion/client';
+import { CollectionItem, UploadableItemFile, Token, ItemTokenWithRestrictedType } from '@logion/client';
 import Authenticate, { Props } from "./Authenticate";
 import { LogionClient } from 'src/__mocks__/LogionClientMock';
 import { mockValidPolkadotAccountId } from 'src/__mocks__/LogionMock';
@@ -62,27 +63,44 @@ const locId = UUID.fromDecimalStringOrThrow("47931143565261666716783459922004958
 const itemFile: UploadableItemFile = {
     hash: "0x546b3a31d340681f4c80d84ab317bbd85870e340d3c2feb24d0aceddf6f2fd31",
     size: BigInt(123456),
-    name: "ArtWork.png",
-    contentType: "image/png",
+    name: HashString.fromValue("ArtWork.png"),
+    contentType: HashString.fromValue("image/png"),
     uploaded: true,
+};
+
+const ethereumToken: ItemTokenWithRestrictedType = {
+    type: "ethereum_erc1155",
+    id: "",
+    issuance: 1n,
 };
 
 const item = {
     id: "0x2dbc8ea2fabb49e6344b6990a9831d12469c44e72723979e3b2531fb4d8bd3f6",
     addedOn: "2022-01-20T15:45:00.000",
-    description: "Some magnificent art work",
+    description: HashString.fromValue("Some magnificent art work"),
     files: [ itemFile ],
     restrictedDelivery: true,
-    token: {
-        type: "ethereum_erc1155"
-    }
-} as CollectionItem;
+    token: mockClientToken(ethereumToken),
+} as unknown as CollectionItem;
+
+const ownerToken: ItemTokenWithRestrictedType = {
+    type: "owner",
+    id: "5FniDvPw22DMW1TLee9N8zBjzwKXaKB2DcvZZCQU5tjmv1kb",
+    issuance: 1n,
+};
+
+function mockClientToken(ethereumToken: ItemTokenWithRestrictedType): ClientToken {
+    return {
+        isValidItemTokenWithRestrictedType: () => true,
+        toItemTokenWithRestrictedType: () => ethereumToken,
+        type: HashString.fromValue(ethereumToken.type),
+        id: HashString.fromValue(ethereumToken.id),
+    } as ClientToken;
+}
 
 const itemWithOwner = {
     ...item,
-    token: {
-        type: "owner"
-    }
+    token: mockClientToken(ownerToken),
 } as CollectionItem;
 
 let tokenForDownload: Token | undefined = undefined;

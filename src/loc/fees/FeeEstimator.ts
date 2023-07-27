@@ -1,4 +1,4 @@
-import { Adapters, Fees, TermsAndConditionsElement as ChainTermsAndConditionsElement } from "@logion/node-api";
+import { Adapters, Fees, hashString } from "@logion/node-api";
 import { SubmittableExtrinsic } from "@polkadot/api/promise/types";
 import { LocData, LogionClient, TermsAndConditionsElement } from "@logion/client";
 import { CollectionLimits, DEFAULT_LIMITS } from "../CollectionLimitsForm";
@@ -64,39 +64,38 @@ export class FeeEstimator {
     }
 
     async estimateAddItem(loc: LocData, item: Item) {
-        const termsAndConditions: ChainTermsAndConditionsElement[] = [];
-
-        const addTC = (tc: TermsAndConditionsElement) => {
-            termsAndConditions.push({
-                tcType: tc.type,
-                tcLocId: tc.tcLocId,
-                details: tc.details,
-            })
-        };
-
+        const termsAndConditions: TermsAndConditionsElement[] = [];
         if(item.logionClassification) {
-            addTC(item.logionClassification);
+            termsAndConditions.push(item.logionClassification);
         } else if (item.creativeCommons) {
-            addTC(item.creativeCommons);
+            termsAndConditions.push(item.creativeCommons);
         }
 
         if(item.specificLicense) {
-            addTC(item.specificLicense);
+            termsAndConditions.push(item.specificLicense);
         }
 
         const submittable = this.client.logionApi.polkadot.tx.logionLoc.addCollectionItem(
             this.client.logionApi.adapters.toLocId(loc.id),
             item.id,
-            item.description,
+            hashString(item.description),
             item.files.map(file => ({
-                name: file.name,
-                contentType: file.contentType.mimeType,
+                name: hashString(file.name),
+                contentType: hashString(file.contentType.mimeType),
                 size: file.size,
                 hash: file.hashOrContent.contentHash,
             })).map(Adapters.toCollectionItemFile),
-            Adapters.toCollectionItemToken(item.token),
+            Adapters.toCollectionItemToken(item.token ? {
+                id: hashString(item.token.id),
+                type: hashString(item.token.type),
+                issuance: item.token.issuance,
+            } : undefined),
             item.restrictedDelivery,
-            termsAndConditions.map(Adapters.toTermsAndConditionsElement),
+            termsAndConditions.map(element => Adapters.toTermsAndConditionsElement({
+                tcType: hashString(element.type),
+                tcLocId: element.tcLocId,
+                details: hashString(element.details),
+            })),
         );
 
         const origin = loc.requesterAddress?.address;

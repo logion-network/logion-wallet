@@ -124,7 +124,7 @@ export async function readItemsCsv(file: File): Promise<ReadItemsCsvResult> {
                         itemWithFile.fileName = dataWithFile['FILE NAME'];
                         itemWithFile.fileContentType = dataWithFile['FILE CONTENT TYPE'];
                         itemWithFile.fileSize = dataWithFile['FILE SIZE'];
-                        itemWithFile.fileHash = dataWithFile['FILE HASH'] as Hash;
+                        itemWithFile.fileHash = dataWithFile['FILE HASH'] as Hash; // TODO check
                     }
 
                     if(rowType === CsvRowType.WithFileAndToken || rowType === CsvRowType.WithToken) {

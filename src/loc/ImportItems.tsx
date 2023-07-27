@@ -9,6 +9,7 @@ import {
     LogionClassification,
     SpecificLicense,
     CreativeCommons,
+    Hash,
 } from "@logion/client";
 import { Fees } from '@logion/node-api';
 import { useCallback, useMemo, useState } from "react";
@@ -64,9 +65,7 @@ export default function ImportItems() {
 
             for(const item of rows) {
                 if(!item.error) {
-                    const existingItem = await collection.getCollectionItem({
-                        itemId: item.id
-                    });
+                    const existingItem = await collection.getCollectionItem({ itemId: item.id as Hash });
                     item.submitted = existingItem !== undefined;
                     item.success = existingItem !== undefined;
                     item.upload = shouldUpload(acceptsUpload, existingItem, item.upload);
@@ -106,7 +105,7 @@ export default function ImportItems() {
             const signAndSubmit: Call = async (callback: CallCallback) => {
                 await collection.addCollectionItem({
                     signer: signer!,
-                    itemId: item.id,
+                    itemId: item.id as Hash,
                     itemDescription: item.description,
                     itemFiles: item.files,
                     restrictedDelivery: item.restrictedDelivery,

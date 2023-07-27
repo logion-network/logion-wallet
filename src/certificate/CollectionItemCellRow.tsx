@@ -50,7 +50,7 @@ export default function CollectionItemCellRow(props: Props) {
                                 <li className={ props.checkResult?.collectionItemFile?.hash === file.hash ? "matched" : ""}>
                                     <Row>
                                         <Col md={ 8 }>
-                                            { file.name } ({ file.contentType }, { file.size.toString() } bytes)
+                                            { file.name.validValue() } ({ file.contentType.validValue() }, { file.size.toString() } bytes)
                                         </Col>
                                         <Col md={ 3 }>
                                             {
@@ -61,7 +61,7 @@ export default function CollectionItemCellRow(props: Props) {
                                                     item={ item }
                                                     file={{
                                                         hash: file.hash,
-                                                        name: file.name,
+                                                        name: file.name.validValue(),
                                                         type: "Item",
                                                     }}
                                                     tokenForDownload={ tokenForDownload }

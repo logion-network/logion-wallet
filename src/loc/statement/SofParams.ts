@@ -1,4 +1,3 @@
-import { ItemToken } from "@logion/node-api";
 import { SpecificLicense } from "@logion/client";
 
 export interface PublicItem {
@@ -51,13 +50,18 @@ export interface SofCollectionItem {
     description: string;
     addedOn: string;
     files: SofDeliverableFile[];
-    token?: ItemToken;
+    token?: SofItemToken;
     restrictedDelivery: boolean;
     logionClassification?: SofLogionClassification;
     litcUrl: string;
     litcLocUrl: string;
     specificLicenses?: SpecificLicense[];
     creativeCommons?: SofCreativeCommons;
+}
+
+export interface SofItemToken {
+    type: string;
+    id: string;
 }
 
 export interface SofCreativeCommons {

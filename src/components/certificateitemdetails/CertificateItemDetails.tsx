@@ -25,7 +25,7 @@ export function CertificateItemDetails(props: Props) {
         </Row>
         <Row>
             <CertificateCell md={ 12 } label="Collection item description:">
-                <pre>{ description }</pre>
+                <pre>{ description.validValue() }</pre>
             </CertificateCell>
         </Row>
         {
@@ -40,10 +40,10 @@ export function CertificateItemDetails(props: Props) {
             token !== undefined &&
             <Row>
                 <CertificateCell md={ 4 } label="Underlying Token Type:">
-                    { token.type }
+                    { token.type.validValue() }
                 </CertificateCell>
                 <CertificateCell md={ 8 } label="Underlying Token ID:">
-                    <pre>{ token.id }</pre>
+                    <pre>{ token.id.validValue() }</pre>
                 </CertificateCell>
             </Row>
         }

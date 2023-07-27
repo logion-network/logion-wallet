@@ -6,6 +6,7 @@ export {
     Queries,
     LogionNodeApiClass,
     Fees,
+    hashString,
 } from "@logion/node-api";
 
 export type {
