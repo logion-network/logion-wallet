@@ -2,6 +2,7 @@ import React, { useContext, useReducer, Reducer, useEffect, useCallback, useStat
 import {
     UUID,
     LocType,
+    Hash,
 } from "@logion/node-api";
 import {
     LocRequestState,
@@ -31,7 +32,7 @@ export interface LocContext {
     backPath: string
     detailsPath: (locId: UUID, type: LocType) => string
     refresh: () => Promise<void>
-    checkHash: (hash: string) => void
+    checkHash: (hash: Hash) => void
     checkResult: DocumentCheckResult
     collectionItem?: CollectionItem
     collectionItems: CollectionItem[]
@@ -87,11 +88,11 @@ interface Action {
     refresh?: () => Promise<void>,
     locState?: LocRequestState,
     locData?: LocData,
-    checkHash?: (hash: string) => void,
+    checkHash?: (hash: Hash) => void,
     collectionItem?: CollectionItem,
     checkResult?: DocumentCheckResult,
     requestSof?: () => Promise<void>,
-    requestSofOnCollection?: (collectionItemId: string) => Promise<void>,
+    requestSofOnCollection?: (collectionItemId: Hash) => Promise<void>,
     collectionItems?: CollectionItem[],
     mutateLocState?: (mutator: (current: LocRequestState) => Promise<LocRequestState | LocsState>) => Promise<void>,
 }
@@ -301,7 +302,7 @@ export function LocContextProvider(props: Props) {
         }
     }, [ contextValue.refresh, refreshFunction ]);
 
-    const checkHashFunction = useCallback(async (hash: string) => {
+    const checkHashFunction = useCallback(async (hash: Hash) => {
         const result = await contextValue.locState?.checkHash(hash);
 
         if (result?.collectionItem || result?.file || result?.metadataItem) {

@@ -1,5 +1,5 @@
-import { LegalOfficerCase, UUID } from "@logion/node-api";
-import { LocData, hashString } from "@logion/client";
+import { LegalOfficerCase, UUID, Hash } from "@logion/node-api";
+import { LocData } from "@logion/client";
 
 export function buildLocRequest(locId: UUID, loc: LegalOfficerCase): LocData {
     return {
@@ -14,6 +14,7 @@ export function buildLocRequest(locId: UUID, loc: LegalOfficerCase): LocData {
         status: loc.closed ? "CLOSED" : "OPEN",
         files: loc.files.map((locFile, index) => ({
             ...locFile,
+            nature: `Nature ${index}`,
             name: `File ${index}`,
             addedOn: "",
             published: false,
@@ -25,7 +26,8 @@ export function buildLocRequest(locId: UUID, loc: LegalOfficerCase): LocData {
         metadata: loc.metadata.map((locFile, index) => ({
             ...locFile,
             name: `Data ${index}`,
-            nameHash: hashString(`Data ${index}`),
+            value: `Value ${index}`,
+            nameHash: Hash.of(`Data ${index}`),
             addedOn: "",
             published: false,
             status: "DRAFT",
@@ -33,6 +35,7 @@ export function buildLocRequest(locId: UUID, loc: LegalOfficerCase): LocData {
         links: loc.links.map((locFile, index) => ({
             ...locFile,
             name: `Link ${index}`,
+            nature: `Nature ${index}`,
             addedOn: "",
             target: locFile.id.toString(),
             published: false,

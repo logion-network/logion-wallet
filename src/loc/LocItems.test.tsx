@@ -1,5 +1,5 @@
-import { UUID } from "@logion/node-api";
-import { ItemStatus, LocData, hashString } from "@logion/client";
+import { UUID, Hash } from "@logion/node-api";
+import { ItemStatus, LocData } from "@logion/client";
 import { render as renderTesting, waitFor, screen } from "@testing-library/react";
 import { SubmittableExtrinsic } from "@polkadot/api-base/types";
 import { Compact, u128 } from "@polkadot/types-codec";
@@ -223,7 +223,7 @@ let _locState: EditableRequest;
 function givenMetadataItem(request: LocData, status: ItemStatus): LocItem[] {
     request.metadata.push({
         name: "Name",
-        nameHash: hashString("Name"),
+        nameHash: Hash.of("Name"),
         addedOn: "2022-01-20T15:45:00.000",
         submitter: accounts!.current!.accountId,
         value: "Value",
@@ -259,7 +259,7 @@ function givenFileItem(request: LocData, status: ItemStatus): LocItem[] {
         addedOn: "2022-01-20T15:45:00.000",
         submitter: accounts!.current!.accountId,
         nature: "Some nature",
-        hash: "0xfb45e95061306e90fd154272ba3b4d67bb6d295feeccdc3a34572995f08e268a",
+        hash: Hash.fromHex("0xfb45e95061306e90fd154272ba3b4d67bb6d295feeccdc3a34572995f08e268a"),
         published: status === "PUBLISHED",
         restrictedDelivery: false,
         contentType: "text/plain",

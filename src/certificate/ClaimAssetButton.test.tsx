@@ -1,6 +1,6 @@
 import { render, waitFor, screen } from '@testing-library/react';
 import ClaimAssetButton, { ClaimedFile, Props } from "./ClaimAssetButton";
-import { UUID } from "@logion/node-api";
+import { UUID, Hash } from "@logion/node-api";
 import { DEFAULT_LEGAL_OFFICER } from "../common/TestData";
 import { CollectionItem, UploadableItemFile, Token, HashString } from '@logion/client';
 import { DateTime } from "luxon";
@@ -32,7 +32,7 @@ describe("ClaimAssetButton", () => {
 const locId = UUID.fromDecimalStringOrThrow("47931143565261666716783459922004958297");
 
 const itemFile: UploadableItemFile = {
-    hash: "0x546b3a31d340681f4c80d84ab317bbd85870e340d3c2feb24d0aceddf6f2fd31",
+    hash: Hash.fromHex("0x546b3a31d340681f4c80d84ab317bbd85870e340d3c2feb24d0aceddf6f2fd31"),
     size: BigInt(123456),
     name: HashString.fromValue("ArtWork.png"),
     contentType: HashString.fromValue("image/png"),
@@ -46,7 +46,7 @@ const claimedAsset: ClaimedFile = {
 };
 
 const item = {
-    id: "0x2dbc8ea2fabb49e6344b6990a9831d12469c44e72723979e3b2531fb4d8bd3f6",
+    id: Hash.fromHex("0x2dbc8ea2fabb49e6344b6990a9831d12469c44e72723979e3b2531fb4d8bd3f6"),
     addedOn: "2022-01-20T15:45:00.000",
     description: HashString.fromValue("Some magnificent art work"),
     files: [ itemFile ],

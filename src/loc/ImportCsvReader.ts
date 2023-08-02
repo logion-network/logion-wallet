@@ -1,10 +1,12 @@
 import csv from "csv-parser";
-import { Hash } from "@logion/client";
+import { Hash } from "@logion/node-api";
+import { toItemId } from "./types";
 
 const fileReaderStream = require("filereader-stream");
 
 export interface CsvItemWithoutFile {
-    id: string;
+    id?: Hash;
+    displayId: string;
     description: string;
     validationError?: string;
     termsAndConditionsType: string;
@@ -101,17 +103,24 @@ export async function readItemsCsv(file: File): Promise<ReadItemsCsvResult> {
                     }
                 }
                 if(!isEmpty(data)) {
-                    const id = data['ID'];
+                    const displayId = data['ID'];
                     const description = data['DESCRIPTION'];
+
                     let validationError: string | undefined = undefined;
-                    if(id in ids) {
+                    if(displayId in ids) {
                         validationError = "Duplicate ID";
                     }
                     const termsAndConditionsType = data['TERMS_AND_CONDITIONS TYPE'];
                     const termsAndConditionsParameters = data['TERMS_AND_CONDITIONS PARAMETERS'];
 
+                    const id = toItemId(displayId);
+                    if(!id) {
+                        validationError = "Invalid ID";
+                    }
+
                     const item: CsvItem = {
                         id,
+                        displayId,
                         description,
                         termsAndConditionsType,
                         termsAndConditionsParameters,
@@ -124,7 +133,11 @@ export async function readItemsCsv(file: File): Promise<ReadItemsCsvResult> {
                         itemWithFile.fileName = dataWithFile['FILE NAME'];
                         itemWithFile.fileContentType = dataWithFile['FILE CONTENT TYPE'];
                         itemWithFile.fileSize = dataWithFile['FILE SIZE'];
-                        itemWithFile.fileHash = dataWithFile['FILE HASH'] as Hash; // TODO check
+                        if(Hash.isValidHexHash(dataWithFile['FILE HASH'])) {
+                            itemWithFile.fileHash = Hash.fromHex(dataWithFile['FILE HASH']);
+                        } else {
+                            item.validationError = "Invalid file hash";
+                        }
                     }
 
                     if(rowType === CsvRowType.WithFileAndToken || rowType === CsvRowType.WithToken) {
@@ -143,7 +156,7 @@ export async function readItemsCsv(file: File): Promise<ReadItemsCsvResult> {
 
                     rows.push(item);
 
-                    ids[id] = null;
+                    ids[displayId] = null;
                 }
             })
             .on("error", (error: any) => reject(error))

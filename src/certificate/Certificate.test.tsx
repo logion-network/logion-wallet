@@ -1,5 +1,5 @@
 import { LogionClient, PublicLoc, LocData, CollectionItem, HashString } from '@logion/client';
-import { UUID } from '@logion/node-api';
+import { UUID, Hash } from '@logion/node-api';
 import { render, screen, waitFor } from "@testing-library/react";
 import { act } from 'react-test-renderer';
 
@@ -88,19 +88,19 @@ function renderWithItem(restrictedDelivery: boolean) {
     const locId = UUID.fromDecimalStringOrThrow("95306891657235687884416897796814545554");
     const loc = mockPublicLoc(locId);
 
-    const itemId = "0x5369f02241b5aebc7c62fe76eeb3c9560bb753384219a4f30f2d556041e14cb4";
+    const itemId = Hash.fromHex("0x5369f02241b5aebc7c62fe76eeb3c9560bb753384219a4f30f2d556041e14cb4");
     const item = mockCollectionItem(locId, itemId, restrictedDelivery);
 
     const client = mockClient(loc, item);
     setClientMock(client);
 
-    setParams({ locId: locId.toString(), collectionItemId: itemId });
+    setParams({ locId: locId.toString(), collectionItemId: itemId.toHex() });
     setSearchParams(mockEmptySearchParams());
 
     render(<Certificate/>);
 }
 
-function mockCollectionItem(locId: UUID, itemId: string, restrictedDelivery: boolean): CollectionItem {
+function mockCollectionItem(locId: UUID, itemId: Hash, restrictedDelivery: boolean): CollectionItem {
     return {
         locId,
         id: itemId,
@@ -124,9 +124,9 @@ function mockClient(loc: PublicLoc, item?: CollectionItem): LogionClient {
     } as unknown as LogionClient;
 
     if(item) {
-        client.public.findCollectionLocItemById = (args: { locId: UUID, itemId: string }) => {
+        client.public.findCollectionLocItemById = (args: { locId: UUID, itemId: Hash }) => {
             if(args.locId.toString() === loc.data.id.toString()
-                && args.itemId === item.id) {
+                && args.itemId.equalTo(item.id)) {
                 return Promise.resolve(item);
             } else {
                 return Promise.reject();

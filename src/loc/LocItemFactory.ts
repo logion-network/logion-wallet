@@ -1,5 +1,5 @@
-import { MergedMetadataItem, MergedFile, MergedLink, Fees as ClientFees, Hash, toFeesClass } from "@logion/client";
-import { UUID, ValidAccountId } from "@logion/node-api";
+import { MergedMetadataItem, MergedFile, MergedLink, Fees as ClientFees, toFeesClass } from "@logion/client";
+import { UUID, ValidAccountId, Hash } from "@logion/node-api";
 import { LinkData, LocItem } from "./LocItem";
 import { LocTemplateDocumentOrLink, LocTemplateMetadataItem } from "./Template";
 
@@ -39,7 +39,7 @@ export function createDraftFileLocItem(parameters: FileItem, locItem?: MergedFil
     return {
         hash: parameters.hash,
         name: parameters.name,
-        value: parameters.hash,
+        value: parameters.hash.toHex(),
         nature: parameters.nature,
         submitter: parameters.submitter,
         timestamp: parameters.addedOn || null,
@@ -173,7 +173,7 @@ export function createDocumentTemplateItem(templateItem: LocTemplateDocumentOrLi
     return {
         hash: locItem?.hash,
         name: locItem?.name,
-        value: locItem?.hash,
+        value: locItem?.hash.toHex(),
         newItem: false,
         status: locItem?.status || "DRAFT",
         submitter: locItem?.submitter,

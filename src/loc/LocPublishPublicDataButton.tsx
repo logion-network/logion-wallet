@@ -1,5 +1,5 @@
-import { OpenLoc, hashString } from "@logion/client";
-import { UUID } from "@logion/node-api";
+import { OpenLoc } from "@logion/client";
+import { UUID, Hash } from "@logion/node-api";
 
 import { LocItem } from "./LocItem";
 import LocPublishButton from "./LocPublishButton";
@@ -41,7 +41,7 @@ export default function LocPublishPublicDataButton(props: Props) {
                     client.logionApi.adapters.toLocId(props.locId),
                     client.logionApi.adapters.toPalletLogionLocMetadataItem({
                         name: props.locItem.hash!,
-                        value: hashString(props.locItem.value || ""),
+                        value: Hash.of(props.locItem.value || ""),
                         submitter: props.locItem.submitter!,
                     }),
                 ),

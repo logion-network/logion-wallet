@@ -1,5 +1,5 @@
 import { Token, CollectionItem, TokensRecord, TypedFile } from "@logion/client";
-import { UUID } from "@logion/node-api";
+import { UUID, Hash } from "@logion/node-api";
 import { AxiosInstance } from "axios";
 import { useState, useEffect } from "react";
 import ViewFileButton from "../common/ViewFileButton";
@@ -18,7 +18,7 @@ export type ClaimedFileType = "Collection" | "Item" | "TokensRecord";
 
 export interface ClaimedFile {
     name: string;
-    hash: string;
+    hash: Hash;
     type: ClaimedFileType;
 }
 

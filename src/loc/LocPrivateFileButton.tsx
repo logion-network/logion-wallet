@@ -11,6 +11,7 @@ import Icon from "../common/Icon";
 import { Row } from "../common/Grid";
 import { useLocContext } from "./LocContext";
 import { EditableRequest, HashOrContent } from "@logion/client";
+import { Hash } from "@logion/node-api";
 
 type Status = 'Idle' | 'UploadDialog' | 'Hashing' | 'Uploading';
 
@@ -26,7 +27,7 @@ export function LocPrivateFileButton(props: Props) {
     const { control, handleSubmit, formState: { errors }, reset, setValue } = useForm<FormValues>();
     const [ file, setFile ] = useState<File | null>(null);
     const [ existingItem, setExistingItem ] = useState<LocItem | null>(null);
-    const [ duplicateHash, setDuplicateHash ] = useState<string | null>(null);
+    const [ duplicateHash, setDuplicateHash ] = useState<Hash | null>(null);
     const [ uploadError, setUploadError ] = useState<string>(" ")
 
     const submit = useCallback(async (formValues: FormValues) => {
@@ -35,7 +36,7 @@ export function LocPrivateFileButton(props: Props) {
             setStatus('Hashing')
             const content = await HashOrContent.fromContentFinalized(file);
             const hash = content.contentHash;
-            const existingItem = locItems.find(item => item.type === "Document" && item.value === hash);
+            const existingItem = locItems.find(item => item.type === "Document" && item.value === hash.toHex());
             if (existingItem !== undefined) {
                 setStatus('Idle');
                 setExistingItem(existingItem);
@@ -135,7 +136,7 @@ export function LocPrivateFileButton(props: Props) {
                 ] }
             >
                 <p>A document with hash</p>
-                <p>{ duplicateHash }</p>
+                <p>{ duplicateHash?.toHex() }</p>
                 <p>already exists in this LOC:</p>
                 <p>{ existingItem?.name }</p>
             </Dialog>

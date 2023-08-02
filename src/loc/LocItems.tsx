@@ -1,4 +1,4 @@
-import { UUID } from "@logion/node-api";
+import { UUID, Hash } from "@logion/node-api";
 import Table, { EmptyTableMessage, Column } from "../common/Table";
 import ButtonGroup from "../common/ButtonGroup";
 import Button from "../common/Button";
@@ -22,7 +22,7 @@ import AcknowledgeButton from "./AcknowledgeButton";
 import ReviewItemButtons from "./ReviewItemButtons";
 
 export interface LocItemsProps {
-    matchedHash?: string;
+    matchedHash?: Hash;
     viewer: Viewer;
     contributionMode?: ContributionMode;
     locItems: LocItem[];
@@ -152,7 +152,7 @@ export function LocItems(props: LocItemsProps) {
                     data={ locItems }
                     columns={ columns }
                     renderEmpty={ () => <EmptyTableMessage>No custom public data nor private documents</EmptyTableMessage> }
-                    rowStyle={ item => (item.type === "Document" && item.value === props.matchedHash) ? "matched" : "" }
+                    rowStyle={ item => (item.type === "Document" && item.value === props.matchedHash?.toHex()) ? "matched" : "" }
                     hideHeader={ props.hideHeader }
                 />
             </div>

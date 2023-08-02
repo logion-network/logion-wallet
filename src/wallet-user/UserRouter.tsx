@@ -1,5 +1,5 @@
 import { Routes, Route } from 'react-router-dom';
-import { UUID, LocType } from '@logion/node-api';
+import { UUID, LocType, Hash } from '@logion/node-api';
 
 import {
     USER_PATH,
@@ -97,11 +97,11 @@ export function resumeAfterIDenfyProcessUrl(result: 'success' | 'error' | 'unver
 }
 
 export const DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH = LOC_DETAILS_RELATIVE_PATH + "/claims/:hash";
-export function documentClaimHistoryPath(locId: UUID, hash: string) {
+export function documentClaimHistoryPath(locId: UUID, hash: Hash) {
     return USER_PATH + DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH
         .replace(":locType", "Collection")
         .replace(":locId", locId.toString())
-        .replace(":hash", hash);
+        .replace(":hash", hash.toHex());
 }
 
 export const TOKENS_RECORD_RELATIVE_PATH = LOC_DETAILS_RELATIVE_PATH + "/records";
@@ -119,21 +119,21 @@ export function issuerTokensRecordPath(locId: UUID) {
 }
 
 export const TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH = LOC_DETAILS_RELATIVE_PATH + "/records/:recordId/claims/:hash";
-export function tokensRecordDocumentClaimHistoryPath(locId: UUID, recordId: string, hash: string) {
+export function tokensRecordDocumentClaimHistoryPath(locId: UUID, recordId: Hash, hash: Hash) {
     return USER_PATH + TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH
         .replace(":locType", "Collection")
         .replace(":locId", locId.toString())
-        .replace(":recordId", recordId)
-        .replace(":hash", hash);
+        .replace(":recordId", recordId.toHex())
+        .replace(":hash", hash.toHex());
 }
 
 export const ISSUER_TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH = ISSUER_DETAILS_RELATIVE_PATH + "/records/:recordId/claims/:hash";
-export function issuerTokensRecordDocumentClaimHistoryPath(locId: UUID, recordId: string, hash: string) {
+export function issuerTokensRecordDocumentClaimHistoryPath(locId: UUID, recordId: Hash, hash: Hash) {
     return USER_PATH + ISSUER_TOKENS_RECORD_DOCUMENT_CLAIM_HISTORY_RELATIVE_PATH
         .replace(":locType", "Collection")
         .replace(":locId", locId.toString())
-        .replace(":recordId", recordId)
-        .replace(":hash", hash);
+        .replace(":recordId", recordId.toHex())
+        .replace(":hash", hash.toHex());
 }
 
 export default function UserRouter() {

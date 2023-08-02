@@ -1,5 +1,5 @@
 import { LocData } from "@logion/client";
-import { UUID } from "@logion/node-api";
+import { UUID, Hash } from "@logion/node-api";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { DEFAULT_ADDRESS } from "src/common/TestData";
@@ -40,7 +40,7 @@ describe("RestrictedDeliveryCell", () => {
     it("does nothing on cancelled cancellation", () => testDoesNothing(true));
 });
 
-const hash = "some-hash";
+const hash = Hash.of("some-hash");
 
 let openLoc: OpenLoc;
 

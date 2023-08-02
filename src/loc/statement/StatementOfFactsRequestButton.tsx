@@ -1,4 +1,5 @@
 import { ClosedLoc, OpenLoc, ClosedCollectionLoc } from "@logion/client";
+import { Hash } from "@logion/node-api";
 import { useState, useCallback } from "react";
 
 import Button from "../../common/Button";
@@ -8,7 +9,7 @@ import { locRequestsPath } from "../../wallet-user/UserRouter";
 
 type Status = 'Idle' | 'Confirming' | 'Requesting' | 'Requested';
 
-export default function StatementOfFactsRequestButton(props: { itemId?: string }) {
+export default function StatementOfFactsRequestButton(props: { itemId?: Hash }) {
     const { itemId } = props;
     const { mutateLocState } = useUserLocContext();
     const [ status, setStatus ] = useState<Status>('Idle')

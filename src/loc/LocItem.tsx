@@ -8,9 +8,8 @@ import {
     PublicLoc,
     ItemStatus,
     ReviewResult,
-    Hash
 } from "@logion/client";
-import { UUID, LocType, Fees, ValidAccountId } from "@logion/node-api";
+import { UUID, LocType, Fees, ValidAccountId, Hash } from "@logion/node-api";
 import { useCallback } from "react";
 import { CallCallback } from "src/ClientExtrinsicSubmitter";
 import { Viewer } from "src/common/CommonContext";
@@ -120,11 +119,13 @@ export function buildItemTableColumns(args: {
             render: locItem => <Cell content={
                 <>
                     <span className="item-type">{ locItem.type }</span> {
-                        locItem.type === 'Document' && locItem.name && canViewFile(viewer, currentAddress, locItem, contributionMode) &&
+                        locItem.type === 'Document' && locItem.name &&
+                        canViewFile(viewer, currentAddress, locItem, contributionMode) &&
+                        Hash.isValidHexHash(locItem.value || "") &&
                         <ViewFileButton
                             nodeOwner={ loc.ownerAddress }
                             fileName={ locItem.name }
-                            downloader={ () => locState?.getFile(locItem.value || "") }
+                            downloader={ () => locState?.getFile(Hash.fromHex(locItem.value || "")) }
                         />
                     }
                 </> } />,
@@ -140,7 +141,7 @@ export function buildItemTableColumns(args: {
     if(loc.locType === "Collection" && viewer === "LegalOfficer") {
         columns.push({
             header: "Restricted Delivery?",
-            render: locItem => locItem.type === "Document" && locItem.value ? <RestrictedDeliveryCell hash={ locItem.value }/> : null,
+            render: locItem => locItem.type === "Document" && locItem.value ? <RestrictedDeliveryCell hash={ Hash.fromHex(locItem.value) }/> : null,
             width: "130px",
         });
     }
@@ -170,7 +171,7 @@ function renderDetails(loc: LocData | undefined, locItem: LocItem, viewer: Viewe
                 locItem.type === 'Document' &&
                 <LocPrivateFileDetails
                     item={ locItem }
-                    documentClaimHistory={ loc?.locType === "Collection" && locItem.value && !locItem.template ? documentClaimHistory(viewer, loc, locItem.value) : undefined }
+                    documentClaimHistory={ loc?.locType === "Collection" && locItem.value && !locItem.template ? documentClaimHistory(viewer, loc, Hash.fromHex(locItem.value)) : undefined }
                     otherFeesPaidByRequester={ loc?.requesterLocId === undefined }
                 />
             }
@@ -187,7 +188,7 @@ function isSet(item: LocItem) {
     return (!item.template || item.isSet === true);
 }
 
-export function documentClaimHistory(viewer: Viewer, loc: LocData | null, hash: string) {
+export function documentClaimHistory(viewer: Viewer, loc: LocData | null, hash: Hash) {
     if(!loc) {
         return "";
     } else if(viewer === "LegalOfficer") {
@@ -216,7 +217,7 @@ export function useDeleteFileCallback(mutateLocState: (mutator: (current: LocReq
         await mutateLocState(async current => {
             if(current instanceof EditableRequest) {
                 return current.deleteFile({
-                    hash: item.value || "",
+                    hash: Hash.fromHex(item.value || ""),
                 });
             } else {
                 return current;

@@ -1,4 +1,5 @@
 import { LocRequestState } from "@logion/client";
+import { Hash } from "@logion/node-api";
 import Button from "../../common/Button";
 import "./ArchiveButton.css";
 import { useState } from "react";
@@ -28,7 +29,7 @@ function documentToTypedFileInfo(locItem: LocItem, locState: LocRequestState): T
     }
     return {
         fileName: name,
-        downloader: () => locState.getFile(value),
+        downloader: () => locState.getFile(Hash.fromHex(value)),
         type: "Document file"
     }
 }

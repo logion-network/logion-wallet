@@ -1,4 +1,5 @@
 import { CheckCertifiedCopyResult, CheckResultType } from "@logion/client";
+import { Hash } from "@logion/node-api";
 import { useCallback, useState } from "react";
 
 import Icon from "src/common/Icon";
@@ -13,7 +14,7 @@ import InlineDateTime from "src/common/InlineDateTime";
 import Frame from "src/common/Frame";
 
 export interface Props {
-    checkCertifiedCopy: (hash: string) => Promise<CheckCertifiedCopyResult>;
+    checkCertifiedCopy: (hash: Hash) => Promise<CheckCertifiedCopyResult>;
     detailedError: boolean;
     colorTheme?: ColorTheme;
     onChecked?: (result: CheckCertifiedCopyResult) => void;

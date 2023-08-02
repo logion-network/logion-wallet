@@ -1,4 +1,5 @@
 import { CheckCertifiedCopyResult, CheckHashResult } from "@logion/client";
+import { Hash } from "@logion/node-api";
 import { useEffect, useMemo, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
 
@@ -23,7 +24,7 @@ export default function DashboardCertificate() {
         loc,
         collectionItems,
     } = useLocContext();
-    const collectionItem = useMemo(() => collectionItems.find(item => item.id === itemId), [ itemId, collectionItems ]);
+    const collectionItem = useMemo(() => collectionItems.find(item => item.id.toHex() === itemId), [ itemId, collectionItems ]);
     const [ deliveries, setDeliveries ] = useState<ItemDeliveriesResponse>();
     const { axiosFactory } = useLogionChain();
     const { colorTheme } = useCommonContext();
@@ -33,13 +34,19 @@ export default function DashboardCertificate() {
     useEffect(() => {
         if(loc && itemId && deliveries === undefined) {
             (async function() {
-                const deliveries = await getAllDeliveries(axiosFactory!(loc?.ownerAddress), { locId: loc.id.toString(), collectionItemId: itemId });
+                const deliveries = await getAllDeliveries(
+                    axiosFactory!(loc?.ownerAddress),
+                    {
+                        locId: loc.id.toString(),
+                        collectionItemId: Hash.fromHex(itemId)
+                    }
+                );
                 setDeliveries(deliveries);
             })();
         }
     }, [ collectionItem, axiosFactory, itemId, loc, deliveries ]);
 
-    const checkHash = useCallback((hash: string) => {
+    const checkHash = useCallback((hash: Hash) => {
         if (collectionItem) {
             const result = collectionItem.checkHash(hash);
             setCheckHashResult(result);
@@ -76,7 +83,7 @@ export default function DashboardCertificate() {
                             deliveries={ deliveries }
                             checkCertifiedCopyResultResult={ checkCertifiedCopyResult }
                             checkHashResult={ checkHashResult }
-                            downloader={ (hash: string) => collectionItem.getFile(hash) }
+                            downloader={ (hash: Hash) => collectionItem.getFile(hash) }
                             icon="polkadot_check_asset"
                             title="List of Collection Item's file(s)"
                         />

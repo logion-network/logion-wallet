@@ -91,7 +91,7 @@ export default function Certificate() {
                             if (collectionItemIdParam) {
                                 const collectionItem = await client.public.findCollectionLocItemById({
                                     locId,
-                                    itemId: collectionItemIdParam as Hash, // TODO check
+                                    itemId: Hash.fromHex(collectionItemIdParam),
                                 });
                                 setCollectionItem(collectionItem);
                             }
@@ -183,7 +183,7 @@ export default function Certificate() {
         return collectionItem !== undefined && collectionItem !== null && collectionItem.restrictedDelivery;
     }
 
-    async function checkCertifiedCopy(hash: string): Promise<CheckCertifiedCopyResult> {
+    async function checkCertifiedCopy(hash: Hash): Promise<CheckCertifiedCopyResult> {
         setCheckResult(undefined);
         if (isItemFileDelivery(collectionItem)) {
             const result = await collectionItem!.checkCertifiedCopy(hash);
@@ -450,10 +450,10 @@ function FileCellRow(props: { loc: LocData, files: MergedFile[], checkResult: Ch
     return (
         <Row>
             { props.files.map(
-                file => <CertificateCell key={ file.hash } md={ 6 } label={ <ItemCellTitle
+                file => <CertificateCell key={ file.hash.toHex() } md={ 6 } label={ <ItemCellTitle
                     text={ <span>Document Hash <span className="file-nature">({ file.nature })</span></span> }
                     timestamp={ file.addedOn } /> } matched={ props.checkResult?.file?.hash === file.hash }>
-                    <p>{ file.hash }</p>
+                    <p>{ file.hash.toHex() }</p>
                     {
                         file.restrictedDelivery && props.item &&
                         <div className="collection-claim-container">

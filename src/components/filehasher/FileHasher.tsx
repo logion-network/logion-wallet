@@ -35,7 +35,7 @@ export default function FileHasher(props: Props) {
                 const hash = await sha256Hex(file);
                 const documentHash = {
                     file,
-                    hash: `0x${ hash }` as Hash,
+                    hash,
                 };
                 setHash(documentHash);
                 setHashing(false);

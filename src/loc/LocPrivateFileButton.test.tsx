@@ -6,13 +6,14 @@ import { EditableRequest, setExpectedFileHash } from "src/__mocks__/LogionClient
 import { LocPrivateFileButton } from "./LocPrivateFileButton";
 import { LocItem } from "./LocItem";
 import { setLocItems, setLocState } from "./__mocks__/LocContextMock";
+import { Hash } from "@logion/node-api";
 
 jest.mock("../common/hash");
 jest.mock("./LocContext");
 jest.mock("./UserLocContext");
 
 const file = new File(['test'], "id.jpg");
-const fileHash = "9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08";
+const fileHash = Hash.fromHex("0x9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08");
 const existingFileItem: LocItem = {
     name: "John Doe's ID",
     nature: "ID",
@@ -20,7 +21,7 @@ const existingFileItem: LocItem = {
     newItem: false,
     submitter: TEST_WALLET_USER,
     type: "Document",
-    value: "0x" + fileHash,
+    value: fileHash.toHex(),
     timestamp: null,
     template: false,
 };
@@ -44,7 +45,7 @@ describe("LocPrivateFileButton", () => {
     it("does not upload file if already exists", async () => {
         const { addFile } = mockEditableRequest();
         setLocItems([ existingFileItem ]);
-        setExpectedFileHash("0x" + fileHash);
+        setExpectedFileHash(fileHash);
         await testDoesNotNothingIfFileExists(<LocPrivateFileButton text="Add a confidential document"/>, addFile);
     });
 });

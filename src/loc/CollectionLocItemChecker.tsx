@@ -109,7 +109,7 @@ function CollectionLocItemChecker(props: LocalProps) {
     const [ collectionSize, setCollectionSize ] = useState<number | undefined | null>(null);
     const [ itemId, setItemId ] = useState<string>("");
     const [ item, setItem ] = useState<CollectionItem>();
-    const [ managedCheck, setManagedCheck ] = useState<{ itemId: string, active: boolean }>();
+    const [ managedCheck, setManagedCheck ] = useState<{ itemId: Hash, active: boolean }>();
     const [ currentPageNumber, setCurrentPageNumber ] = useState(0);
     const { width } = useResponsiveContext();
 
@@ -172,7 +172,7 @@ function CollectionLocItemChecker(props: LocalProps) {
                 itemId: props.collectionItem.id,
                 active: true
             });
-            setItemId(props.collectionItem.id);
+            setItemId(props.collectionItem.id.toHex());
             setItem(props.collectionItem);
             setState('POSITIVE');
         } else if (!props.collectionItem && managedCheck) {
@@ -187,7 +187,7 @@ function CollectionLocItemChecker(props: LocalProps) {
     const columns: Column<CollectionItem>[] = [
         {
             header: "Collection Item ID",
-            render: item => <CellWithCopyPaste content={ item.id } />,
+            render: item => <CellWithCopyPaste content={ item.id.toHex() } />,
             align: "left",
         },
         {

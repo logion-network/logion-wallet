@@ -1,12 +1,12 @@
-import { Hash, hashString } from "@logion/node-api";
+import { Hash } from "@logion/node-api";
 
 export function toItemId(maybeHex: string): Hash | undefined {
-    if(maybeHex.startsWith("0x") && maybeHex.length === 66) {
-        return maybeHex as Hash;
-    } else if(maybeHex.startsWith("0x") && maybeHex.length !== 66) {
+    if(Hash.isValidHexHash(maybeHex)) {
+        return Hash.fromHex(maybeHex);
+    } else if(maybeHex.startsWith("0x")) {
         return undefined;
     } else {
-        return hashString(maybeHex);
+        return Hash.of(maybeHex);
     }
 }
 

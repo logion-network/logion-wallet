@@ -1,4 +1,4 @@
-import { Adapters, Fees, hashString } from "@logion/node-api";
+import { Fees, Hash } from "@logion/node-api";
 import { SubmittableExtrinsic } from "@polkadot/api/promise/types";
 import { LocData, LogionClient, TermsAndConditionsElement } from "@logion/client";
 import { CollectionLimits, DEFAULT_LIMITS } from "../CollectionLimitsForm";
@@ -77,24 +77,24 @@ export class FeeEstimator {
 
         const submittable = this.client.logionApi.polkadot.tx.logionLoc.addCollectionItem(
             this.client.logionApi.adapters.toLocId(loc.id),
-            item.id,
-            hashString(item.description),
+            this.client.logionApi.adapters.toH256(item.id!),
+            this.client.logionApi.adapters.toH256(Hash.of(item.description)),
             item.files.map(file => ({
-                name: hashString(file.name),
-                contentType: hashString(file.contentType.mimeType),
+                name: Hash.of(file.name),
+                contentType: Hash.of(file.contentType.mimeType),
                 size: file.size,
                 hash: file.hashOrContent.contentHash,
-            })).map(Adapters.toCollectionItemFile),
-            Adapters.toCollectionItemToken(item.token ? {
-                id: hashString(item.token.id),
-                type: hashString(item.token.type),
+            })).map(file => this.client.logionApi.adapters.toCollectionItemFile(file)),
+            this.client.logionApi.adapters.toCollectionItemToken(item.token ? {
+                id: Hash.of(item.token.id),
+                type: Hash.of(item.token.type),
                 issuance: item.token.issuance,
             } : undefined),
             item.restrictedDelivery,
-            termsAndConditions.map(element => Adapters.toTermsAndConditionsElement({
-                tcType: hashString(element.type),
+            termsAndConditions.map(element => this.client.logionApi.adapters.toTermsAndConditionsElement({
+                tcType: Hash.of(element.type),
                 tcLocId: element.tcLocId,
-                details: hashString(element.details),
+                details: Hash.of(element.details),
             })),
         );
 
