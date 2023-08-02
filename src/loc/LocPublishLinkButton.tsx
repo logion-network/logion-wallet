@@ -1,5 +1,5 @@
-import { OpenLoc, hashString } from "@logion/client";
-import { UUID, Adapters } from "@logion/node-api";
+import { OpenLoc } from "@logion/client";
+import { UUID, Adapters, Hash } from "@logion/node-api";
 
 import { LocItem } from "./LocItem";
 import LocPublishButton from "./LocPublishButton";
@@ -36,7 +36,7 @@ export default function LocPublishLinkButton(props: Props) {
                 submittable: client.logionApi.polkadot.tx.logionLoc.addLink(
                     client.logionApi.adapters.toLocId(props.locId),
                     Adapters.toLocLink({
-                        nature: hashString(props.locItem.nature || ""),
+                        nature: Hash.of(props.locItem.nature || ""),
                         target: props.locItem.target || new UUID(),
                     }),
                 ),

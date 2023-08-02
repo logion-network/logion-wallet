@@ -1,4 +1,5 @@
-import { CheckCertifiedCopyResult, CollectionItem, ItemDeliveryMatch, CheckResultType } from "@logion/client";
+import { CheckCertifiedCopyResult, ItemDeliveryMatch, CheckResultType } from "@logion/client";
+import { Hash } from "@logion/node-api";
 import { render, waitFor } from "@testing-library/react";
 import { setExpectedHash } from "src/common/__mocks__/HashMock";
 import { uploadByTestId } from "src/tests";
@@ -29,15 +30,15 @@ const matchNotFoundResult: CheckCertifiedCopyResult = {
 describe("CheckDeliveredButton", () => {
 
     it("finds match", async () => {
-        await testFindsMatch(copyHash, matchFoundResult);
+        await testFindsMatch(Hash.fromHex(`0x${ copyHash }`), matchFoundResult);
     });
 
     it("fails finding match", async () => {
-        await testFindsMatch(otherHash, matchNotFoundResult);
+        await testFindsMatch(Hash.fromHex(`0x${ otherHash }`), matchNotFoundResult);
     });
 });
 
-async function testFindsMatch(hash: string, expectedResult: CheckCertifiedCopyResult) {
+async function testFindsMatch(hash: Hash, expectedResult: CheckCertifiedCopyResult) {
     const { onChecking, onChecked } = given(hash);
 
     render(<CheckDeliveredButton
@@ -54,15 +55,15 @@ async function testFindsMatch(hash: string, expectedResult: CheckCertifiedCopyRe
     expect(onChecked).toBeCalledTimes(1);
 }
 
-function given(fileHash: string): { onChecking: () => void, onChecked: (result: CheckCertifiedCopyResult) => void } {
+function given(fileHash: Hash): { onChecking: () => void, onChecked: (result: CheckCertifiedCopyResult) => void } {
     setExpectedHash(fileHash);
     const onChecking = jest.fn();
     const onChecked = jest.fn();
     return { onChecking, onChecked };
 }
 
-function checkCertifiedCopy(hash: string) {
-    if(hash === `0x${ copyHash }`) {
+function checkCertifiedCopy(hash: Hash) {
+    if(hash.toHex() === `0x${ copyHash }`) {
         return Promise.resolve(matchFoundResult);
     } else {
         return Promise.resolve(matchNotFoundResult);

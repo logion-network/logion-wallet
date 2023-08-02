@@ -75,7 +75,7 @@ function TokensRecordFileCell(props: TokensRecordFileCellProps) {
                 <strong>{ tokensRecordFile.name.validValue() }</strong>
                 <TRCell label="File type">{ tokensRecordFile.contentType.validValue() }</TRCell>
                 <TRCell label="File size">{ tokensRecordFile.size.toString() } (bytes)</TRCell>
-                <TRCell label="Hash">{ tokensRecordFile.hash }</TRCell>
+                <TRCell label="Hash">{ tokensRecordFile.hash.toHex() }</TRCell>
             </Col>
             <Col>
                 <ClaimAssetButton

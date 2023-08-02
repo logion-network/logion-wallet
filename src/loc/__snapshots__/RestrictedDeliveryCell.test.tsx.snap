@@ -11,7 +11,7 @@ exports[`RestrictedDeliveryCell renders 1`] = `
         delay={500}
         overlay={
           <Tooltip
-            id="RestrictedDeliveryCell-tooltip-some-hash"
+            id="RestrictedDeliveryCell-tooltip-0xc6d674edf921101f1204f7752390cb2a8d7fe0eb00f065d8477dbcc29a9f366b"
             placement="right"
           >
             When the restricted delivery is activated, Collection-related NFT owners will be able to download a copy of the document.

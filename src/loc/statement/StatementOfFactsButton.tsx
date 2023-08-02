@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { Dropdown } from "react-bootstrap";
-import { UUID, LegalOfficerCase } from "@logion/node-api";
+import { UUID, LegalOfficerCase, Hash } from "@logion/node-api";
 import { CollectionItem, LegalOfficer, ClosedCollectionLoc, TokensRecord } from "@logion/client";
 
 import { locDetailsPath, STATEMENT_OF_FACTS_PATH } from "../../legal-officer/LegalOfficerPaths";
@@ -154,7 +154,7 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                 setTokensRecords(records);
                 const deliveries: Record<string, ItemDeliveriesResponse> = {};
                 for (const record of records) {
-                    deliveries[record.id] = await getTokensRecordDeliveries(axiosFactory!(locData.ownerAddress), {
+                    deliveries[record.id.toHex()] = await getTokensRecordDeliveries(axiosFactory!(locData.ownerAddress), {
                         locId: locData.id.toString(),
                         recordId: record.id,
                     })
@@ -187,12 +187,12 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                 privateItems: locData.files.map(item => ({
                     publicDescription: item.nature,
                     privateDescription: item.name,
-                    hash: item.hash,
+                    hash: item.hash.toHex(),
                     timestamp: item.addedOn || "",
                     deliveries: toSofDeliveries(item, collectionDeliveries),
                 })),
                 collectionItem: (props.item ? {
-                    id: props.item.id,
+                    id: props.item.id.toHex(),
                     addedOn: props.item.addedOn,
                     description: props.item.description.validValue(),
                     restrictedDelivery: props.item.restrictedDelivery,
@@ -201,7 +201,7 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                         id: props.item.token.id.validValue(),
                     } : undefined,
                     files: props.item.files.map(file => ({
-                        hash: file.hash,
+                        hash: file.hash.toHex(),
                         name: file.name.validValue(),
                         contentType: file.contentType.validValue(),
                         size: file.size.toString(),
@@ -238,16 +238,16 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
                 sealUrl: loFileUrl(legalOfficer, 'seal', accounts.current.token),
                 oathText: settings!['oath'] || "-",
                 tokensRecords: tokensRecords.map(record => ({
-                    id: record.id,
+                    id: record.id.toHex(),
                     description: record.description.validValue(),
                     issuer: record.issuer,
                     addedOn: record.addedOn,
                     files: record.files.map(file => ({
-                        hash: file.hash,
+                        hash: file.hash.toHex(),
                         name: file.name.validValue(),
                         contentType: file.contentType.validValue(),
                         size: file.size.toString(),
-                        deliveries: toSofDeliveries(file, tokensRecordFileDeliveries[record.id]),
+                        deliveries: toSofDeliveries(file, tokensRecordFileDeliveries[record.id.toHex()]),
                     })),
                 }))
             });
@@ -354,9 +354,9 @@ export default function StatementOfFactsButton(props: { item?: CollectionItem })
     );
 }
 
-function toSofDeliveries(file: { hash: string }, deliveries: ItemDeliveriesResponse): SofFileDelivery[] {
+function toSofDeliveries(file: { hash: Hash }, deliveries: ItemDeliveriesResponse): SofFileDelivery[] {
     const hash = file.hash;
-    const fileDeliveries = deliveries[hash];
+    const fileDeliveries = deliveries[hash.toHex()];
     if(!fileDeliveries) {
         return [];
     } else {

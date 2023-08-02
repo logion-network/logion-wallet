@@ -6,12 +6,14 @@ import {
     TermsAndConditionsElement,
     CreativeCommons,
 } from "@logion/client";
+import { Hash } from "@logion/node-api";
 import './ImportItemDetails.css';
 
 export type ErrorType = 'validation' | 'chain' | 'upload';
 
 export interface Item {
-    id: string;
+    id?: Hash;
+    displayId: string;
     description: string;
     files: ItemFileWithContent[];
     restrictedDelivery: boolean;
@@ -54,7 +56,7 @@ export default function ImportItemDetails(props: { item: Item }) {
                         <ul>
                             <li>Name: { props.item.files[0].name }</li>
                             <li>Content type: { props.item.files[0].contentType.mimeType }</li>
-                            <li>Hash: { props.item.files[0].hashOrContent.contentHash }</li>
+                            <li>Hash: { props.item.files[0].hashOrContent.contentHash.toHex() }</li>
                             <li>Size: { props.item.files[0].size.toString() } bytes</li>
                         </ul>
                     </div>

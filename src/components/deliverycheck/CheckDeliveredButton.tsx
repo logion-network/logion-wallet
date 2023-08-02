@@ -1,4 +1,5 @@
 import { CheckCertifiedCopyResult, CheckResultType } from "@logion/client";
+import { Hash } from "@logion/node-api";
 import { useCallback, useEffect, useState } from "react";
 
 import FileHasher, { DocumentHash } from "../filehasher/FileHasher";
@@ -22,7 +23,7 @@ export function checkResultTypeColor(type: CheckResultType): string {
 }
 
 export interface Props {
-    checkCertifiedCopy: (hash: string) => Promise<CheckCertifiedCopyResult>;
+    checkCertifiedCopy: (hash: Hash) => Promise<CheckCertifiedCopyResult>;
     onChecked: (result: CheckCertifiedCopyResult) => void;
     onChecking: () => void;
     buttonText: string;

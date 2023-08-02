@@ -1,6 +1,7 @@
 import shajs from "sha.js";
+import { Hash } from "@logion/node-api";
 
-export async function sha256Hex(file: File): Promise<string> {
+export async function sha256Hex(file: File): Promise<Hash> {
     const unknownStream: any = file.stream();
     const reader: ReadableStreamDefaultReader = unknownStream.getReader();
     const hasher = shajs('sha256');
@@ -9,5 +10,5 @@ export async function sha256Hex(file: File): Promise<string> {
         hasher.update(chunk.value!);
         chunk = await reader.read();
     }
-    return hasher.digest("hex");
+    return Hash.fromHex(`0x${ hasher.digest("hex") }`);
 }

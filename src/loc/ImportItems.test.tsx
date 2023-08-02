@@ -4,6 +4,7 @@ import { clickByName } from '../tests';
 import ImportItems from './ImportItems';
 import { setLocState, refresh } from "./__mocks__/UserLocContextMock";
 import { CollectionItem, Fees } from "@logion/node-api";
+import { H256 } from "@logion/node-api/dist/types/interfaces";
 import { LogionClient, AddCollectionItemParams } from "@logion/client";
 import { mockSubmittableResult } from "../logion-chain/__mocks__/SignatureMock";
 import { setClientMock } from 'src/logion-chain/__mocks__/LogionChainMock';
@@ -56,6 +57,10 @@ async function uploadCsv(): Promise<any> {
     clientMock.setup(instance => instance.logionApi.polkadot.tx.logionLoc.addCollectionItem(It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny(), It.IsAny())).returns(submittable.object());
     const locId = new Mock<Compact<u128>>();
     clientMock.setup(instance => instance.logionApi.adapters.toLocId(It.IsAny())).returns(locId.object());
+    const hash = new Mock<H256>();
+    clientMock.setup(instance => instance.logionApi.adapters.toH256(It.IsAny())).returns(hash.object());
+    clientMock.setup(instance => instance.logionApi.adapters.toCollectionItemFile(It.IsAny())).returns({} as any);
+    clientMock.setup(instance => instance.logionApi.adapters.toCollectionItemToken(It.IsAny())).returns({} as any);
     clientMock.setup(instance => instance.logionApi.fees.estimateWithoutStorage(It.IsAny())).returnsAsync(new Fees({ inclusionFee: 42n }));
     clientMock.setup(instance => instance.logionApi.fees.estimateCertificateFee(It.IsAny())).returnsAsync(32n);
     clientMock.setup(instance => instance.logionApi.fees.estimateStorageFee(It.IsAny())).returnsAsync(22n);

@@ -1,4 +1,5 @@
 import { Token, HashOrContent } from "@logion/client";
+import { Hash } from "@logion/node-api"
 import { AxiosInstance } from "axios";
 import { DEFAULT_LEGAL_OFFICER, PATRICK } from "src/common/TestData";
 import {
@@ -33,7 +34,7 @@ describe("FileModel", () => {
 
         const legalOfficer = DEFAULT_LEGAL_OFFICER.address;
         const fileId = "header-logo";
-        const typedFile = await getLoFile({
+        await getLoFile({
             axios,
             legalOfficer,
             fileId,
@@ -57,16 +58,16 @@ describe("FileModel", () => {
         } as unknown as AxiosInstance;
 
         const locId = "0e16421a-2550-4be5-a6a8-1ab2239b7dc4";
-        const collectionItemId = "0xf35e4bcbc1b0ce85af90914e04350cce472a2f01f00c0f7f8bc5c7ba04da2bf2";
-        const hash = "0x7d79c63f350826b018d2981259eddcdb224d9a974199750d5f5f833635c65d6c";
-        const typedFile = await getCollectionItemFile(axios, {
+        const collectionItemId = Hash.fromHex("0xf35e4bcbc1b0ce85af90914e04350cce472a2f01f00c0f7f8bc5c7ba04da2bf2");
+        const hash = Hash.fromHex("0x7d79c63f350826b018d2981259eddcdb224d9a974199750d5f5f833635c65d6c");
+        await getCollectionItemFile(axios, {
             locId,
             collectionItemId,
             hash,
         });
 
         expect(axios.get).toBeCalledWith(
-            `/api/collection/${ locId }/${ collectionItemId }/files/${ hash }`,
+            `/api/collection/${ locId }/${ collectionItemId.toHex() }/files/${ hash.toHex() }`,
             expect.objectContaining({
                 responseType: "blob"
             })
@@ -83,7 +84,7 @@ describe("FileModel", () => {
         } as unknown as AxiosInstance;
 
         const locId = "0e16421a-2550-4be5-a6a8-1ab2239b7dc4";
-        const typedFile = await getJsonLoc(axios, {
+        await getJsonLoc(axios, {
             locId,
         });
 
@@ -126,13 +127,13 @@ describe("FileModel", () => {
         } as unknown as AxiosInstance;
 
         const locId = "0e16421a-2550-4be5-a6a8-1ab2239b7dc4";
-        const collectionItemId = "0xf35e4bcbc1b0ce85af90914e04350cce472a2f01f00c0f7f8bc5c7ba04da2bf2";
+        const collectionItemId = Hash.fromHex("0xf35e4bcbc1b0ce85af90914e04350cce472a2f01f00c0f7f8bc5c7ba04da2bf2");
         const deliveries = await getLatestDeliveries(axios, {
             locId,
             collectionItemId,
         });
 
-        expect(axios.get).toBeCalledWith(`/api/collection/${ locId }/${ collectionItemId }/latest-deliveries`);
+        expect(axios.get).toBeCalledWith(`/api/collection/${ locId }/${ collectionItemId.toHex() }/latest-deliveries`);
         expect(deliveries).toBe(expectedData);
     })
 
@@ -145,13 +146,13 @@ describe("FileModel", () => {
         } as unknown as AxiosInstance;
 
         const locId = "0e16421a-2550-4be5-a6a8-1ab2239b7dc4";
-        const collectionItemId = "0xf35e4bcbc1b0ce85af90914e04350cce472a2f01f00c0f7f8bc5c7ba04da2bf2";
+        const collectionItemId = Hash.fromHex("0xf35e4bcbc1b0ce85af90914e04350cce472a2f01f00c0f7f8bc5c7ba04da2bf2");
         const deliveries = await getAllDeliveries(axios, {
             locId,
             collectionItemId,
         });
 
-        expect(axios.get).toBeCalledWith(`/api/collection/${ locId }/${ collectionItemId }/all-deliveries`);
+        expect(axios.get).toBeCalledWith(`/api/collection/${ locId }/${ collectionItemId.toHex() }/all-deliveries`);
         expect(deliveries).toBe(expectedData);
     })
 })

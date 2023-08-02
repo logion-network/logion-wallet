@@ -23,7 +23,7 @@ export interface Props {
 
 export interface DocumentCheckResult {
     result: CheckResult;
-    hash?: string;
+    hash?: Hash;
 }
 
 export default function CheckFileFrame(props: Props) {
@@ -74,7 +74,7 @@ export default function CheckFileFrame(props: Props) {
                                     hash && props.checkResult === "POSITIVE" &&
                                     <>
                                         <p><strong>Check result: <span style={{color: GREEN}}>positive</span></strong></p>
-                                        <p>The document you uploaded has the following "hash":<br/><strong>{hash.hash}</strong><br/>
+                                        <p>The document you uploaded has the following "hash":<br/><strong>{hash.hash.toHex()}</strong><br/>
                                         and is referenced in the above LOC at the line <strong>with a green border</strong>.</p>
                                         <Icon icon={{id: "ok"}} />
                                     </>
@@ -83,7 +83,7 @@ export default function CheckFileFrame(props: Props) {
                                     hash && props.checkResult === "NEGATIVE" &&
                                     <>
                                         <p><strong>Check result: <span style={{color: RED}}>negative</span></strong></p>
-                                        <p>The document you uploaded has the following "hash":<br/><strong>{hash.hash}</strong><br/>
+                                        <p>The document you uploaded has the following "hash":<br/><strong>{hash.hash.toHex()}</strong><br/>
                                         and <strong>has NO match in the above LOC</strong>. Please be careful and execute a deeper due diligence.</p>
                                         <Icon icon={{id: "ko"}} />
                                     </>

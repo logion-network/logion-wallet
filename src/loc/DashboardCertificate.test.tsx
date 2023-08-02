@@ -3,6 +3,7 @@ import { shallowRender } from "src/tests";
 import { setParams } from "src/__mocks__/ReactRouterMock";
 import DashboardCertificate from "./DashboardCertificate";
 import { setCollectionItems } from "./__mocks__/LocContextMock";
+import { Hash } from "@logion/node-api";
 
 jest.mock("./LocContext");
 
@@ -14,8 +15,8 @@ describe("DashboardCertificate", () => {
     });
 
     it("renders item", () => {
-        const itemId = "some-id";
-        setParams({ itemId });
+        const itemId = Hash.of("some-id");
+        setParams({ itemId: itemId.toHex() });
         setCollectionItems([
             {
                 id: itemId,

@@ -51,7 +51,7 @@ export default function TokensRecordTable(props: Props) {
                             submitter: api.queries.getValidAccountId(record.issuer, "Polkadot"),
                             timestamp: record.addedOn,
                             type: "Document",
-                            value: record.files[0].hash,
+                            value: record.files[0].hash.toHex(),
                             nature: record.description.validValue(),
                             template: false,
                             size: record.files[0].size,

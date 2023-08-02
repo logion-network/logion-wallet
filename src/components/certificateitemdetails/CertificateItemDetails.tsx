@@ -5,6 +5,7 @@ import CertificateDateTimeCell from "src/certificate/CertificateDateTimeCell";
 import TermsAndConditions from "src/certificate/TermsAndConditions";
 
 import "./CertificateItemDetails.css";
+import InlineHashString from "../inlinehashstring/InlineHashString";
 
 export interface Props {
     item: CollectionItem;
@@ -20,12 +21,12 @@ export function CertificateItemDetails(props: Props) {
         <Row>
             <CertificateDateTimeCell md={ 6 } label="Collection item timestamp:" dateTime={ addedOn } />
             <CertificateCell md={ 6 } label="Collection item identification:" matched={ props.checkResult?.collectionItem?.id === id } >
-                { id }
+                { id.toHex() }
             </CertificateCell>
         </Row>
         <Row>
             <CertificateCell md={ 12 } label="Collection item description:">
-                <pre>{ description.validValue() }</pre>
+                <pre><InlineHashString value={ description }/></pre>
             </CertificateCell>
         </Row>
         {

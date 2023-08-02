@@ -2,7 +2,7 @@ import { AxiosInstance } from "axios";
 import { CheckResultType } from "@logion/client/dist/Deliveries.js";
 import { DefaultSignAndSendStrategy } from "@logion/client/dist/Signer.js";
 import { MimeType } from "@logion/client/dist/Mime.js";
-import { hashString, HashString } from "@logion/client/dist/Hash.js";
+import { HashString } from "@logion/client/dist/Hash.js";
 import {
     LogionClient,
     AccountTokens,
@@ -42,7 +42,6 @@ export {
     isTokenCompatibleWith,
     LegalOfficerClass,
     PendingRequest,
-    hashString,
     HashString,
 }
 

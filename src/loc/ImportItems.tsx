@@ -9,9 +9,8 @@ import {
     LogionClassification,
     SpecificLicense,
     CreativeCommons,
-    Hash,
 } from "@logion/client";
-import { Fees } from '@logion/node-api';
+import { Fees, Hash } from '@logion/node-api';
 import { useCallback, useMemo, useState } from "react";
 import { OverlayTrigger, Spinner, Tooltip } from "react-bootstrap";
 
@@ -27,7 +26,6 @@ import { useUserLocContext } from "./UserLocContext";
 import ImportItemDetails, { ErrorType, Item } from "./ImportItemDetails";
 
 import './ImportItems.css';
-import { toItemId } from "./types";
 import ClientExtrinsicSubmitter, { Call, CallCallback } from "../ClientExtrinsicSubmitter";
 import { CsvItem, readItemsCsv } from "./ImportCsvReader";
 import Alert from "src/common/Alert";
@@ -105,7 +103,7 @@ export default function ImportItems() {
             const signAndSubmit: Call = async (callback: CallCallback) => {
                 await collection.addCollectionItem({
                     signer: signer!,
-                    itemId: item.id as Hash,
+                    itemId: item.id!,
                     itemDescription: item.description,
                     itemFiles: item.files,
                     restrictedDelivery: item.restrictedDelivery,
@@ -117,7 +115,7 @@ export default function ImportItems() {
                 })
             }
             const newSubmitters = { ...submitters };
-            newSubmitters[item.id] = signAndSubmit;
+            newSubmitters[item.id!.toHex()] = signAndSubmit;
             setSubmitters(newSubmitters);
         }
     }, [ submitters, signer, locState, itemToSubmit ]);
@@ -166,7 +164,7 @@ export default function ImportItems() {
         const collection = locState as ClosedCollectionLoc;
         try {
             await collection.uploadCollectionItemFile({
-                itemId: item.id,
+                itemId: item.id!,
                 itemFile: new ItemFileWithContent({
                     name: item.files[0].name,
                     contentType: item.files[0].contentType,
@@ -238,7 +236,7 @@ export default function ImportItems() {
                         columns={[
                             {
                                 header: "ID",
-                                render: item => <Cell content={ item.id } />,
+                                render: item => <Cell content={ item.id?.toHex() || item.displayId } />,
                                 align: "left",
                                 width: width({
                                     onSmallScreen: "540px",
@@ -266,10 +264,10 @@ export default function ImportItems() {
                                             </Button>
                                         }
                                         {
-                                            (item.submitted && !item.success && submitters[item.id] !== undefined && submitters[item.id] !== null) &&
+                                            (item.submitted && !item.success && submitters[item.id?.toHex() || ""] !== undefined && submitters[item.id?.toHex() || ""] !== null) &&
                                             <Cell content={
                                                 <ClientExtrinsicSubmitter
-                                                    call={ submitters[item.id] || null }
+                                                    call={ submitters[item.id?.toHex() || ""] || null }
                                                     onError={ () => submitNext(item, true) }
                                                     onSuccess={ () => submitNext(item, false) }
                                                     slim
@@ -414,14 +412,14 @@ function collectionAcceptsUpload(collection: ClosedCollectionLoc): boolean {
 
 function toItems(csvItems: CsvItem[], collectionAcceptsUpload: boolean): Item[] {
     return csvItems.map(csvItem => {
-        const givenId = csvItem.id;
-        const id = toItemId(givenId);
-        const displayId = id !== undefined ? id : givenId;
+        const id = csvItem.id;
+        const displayId = csvItem.displayId;
         const description = csvItem.description;
 
         if(csvItem.validationError) {
             return {
-                id: displayId,
+                id,
+                displayId,
                 error: csvItem.validationError,
                 errorType: "validation",
                 description,
@@ -435,10 +433,6 @@ function toItems(csvItems: CsvItem[], collectionAcceptsUpload: boolean): Item[] 
         } else {
             let error: string | undefined = undefined;
             let errorType: ErrorType | undefined = undefined;
-            if(id === undefined) {
-                error = "Invalid ID";
-                errorType = "validation";
-            }
 
             let files: ItemFileWithContent[] = [];
             if("fileName" in csvItem) {
@@ -482,7 +476,8 @@ function toItems(csvItems: CsvItem[], collectionAcceptsUpload: boolean): Item[] 
             }
 
             return {
-                id: displayId,
+                id,
+                displayId,
                 error,
                 errorType,
                 description,

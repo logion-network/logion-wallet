@@ -1,3 +1,4 @@
+import { Hash } from "@logion/node-api";
 import { render } from "@testing-library/react";
 import StatementOfFactsRequestButton from "./StatementOfFactsRequestButton";
 import { clickByName } from "../../tests";
@@ -26,7 +27,7 @@ describe("StatementOfFactsRequestButton", () => {
         locState.requestSof = jest.fn().mockResolvedValue(locState);
         locState.locsState = () => {};
         setLocState(locState);
-        const itemId = "ITEM_ABC";
+        const itemId = Hash.of("ITEM_ABC");
         render(<StatementOfFactsRequestButton itemId={ itemId } />);
         await clickByName("Request a Statement of Facts");
         await clickByName("Confirm");

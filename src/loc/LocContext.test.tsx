@@ -1,12 +1,10 @@
 import { AxiosInstance } from "axios";
 import { useCallback, useState } from "react";
 import { render, screen, waitFor } from "@testing-library/react";
-import { UUID, LegalOfficerCase } from '@logion/node-api';
-import { LocData, hashString } from "@logion/client";
+import { UUID, LegalOfficerCase, Hash } from '@logion/node-api';
+import { LocData } from "@logion/client";
 import { LogionClient } from '@logion/client/dist/LogionClient.js';
 import { PublicApi, EditableRequest as RealEditableRequest, LocRequestState as RealLocRequestState } from "@logion/client";
-import { SubmittableExtrinsic } from "@polkadot/api-base/types";
-import { Compact, u128 } from "@polkadot/types-codec";
 
 import { resetDefaultMocks } from "../common/__mocks__/ModelMock";
 import { clickByName } from "../tests";
@@ -16,8 +14,7 @@ import { setClientMock } from "src/logion-chain/__mocks__/LogionChainMock";
 import { LocRequestState, EditableRequest, OpenLoc, ClosedLoc } from "src/__mocks__/LogionClientMock";
 import { useLogionChain } from "src/logion-chain";
 import ClientExtrinsicSubmitter, { Call } from "src/ClientExtrinsicSubmitter";
-import { mockValidPolkadotAccountId, setupApiMock, api, CLOSED_IDENTITY_LOC, CLOSED_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from 'src/__mocks__/LogionMock';
-import { It, Mock } from "moq.ts";
+import { mockValidPolkadotAccountId, api, CLOSED_IDENTITY_LOC, CLOSED_IDENTITY_LOC_ID, OPEN_IDENTITY_LOC, OPEN_IDENTITY_LOC_ID } from 'src/__mocks__/LogionMock';
 
 jest.mock("../logion-chain/Signature");
 jest.mock("../logion-chain");
@@ -244,14 +241,14 @@ function givenDraftItems() {
     _locData.metadata.push({
         addedOn: "",
         name: metadataName,
-        nameHash: hashString(metadataName),
+        nameHash: Hash.of(metadataName),
         submitter: mockValidPolkadotAccountId(OPEN_IDENTITY_LOC.owner),
         value: "Some value",
         published: false,
         status: "DRAFT",
     })
     _locData.files.push({
-        hash: hashString("new-hash"),
+        hash: Hash.of("new-hash"),
         addedOn: "",
         name: "New file",
         submitter: mockValidPolkadotAccountId(OPEN_IDENTITY_LOC.owner),
@@ -278,14 +275,14 @@ function ItemDeleter() {
             if(current instanceof EditableRequest) {
                 let next: RealEditableRequest;
                 next = current.deleteFile!({
-                    hash: hashString("new-hash"),
+                    hash: Hash.of("new-hash"),
                 }) as unknown as RealEditableRequest;
                 next = current.legalOfficer.deleteLink!({
                     locState: current as unknown as RealEditableRequest,
                     target: locItems.find(item => item.nature === "New link")!.target!,
                 }) as unknown as RealEditableRequest;
                 next = current.deleteMetadata!({
-                    nameHash: hashString("New data"),
+                    nameHash: Hash.of("New data"),
                 }) as unknown as RealEditableRequest;
                 return next;
             } else {

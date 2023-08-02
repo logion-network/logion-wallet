@@ -1,4 +1,5 @@
-import { CheckHashResult, CollectionItem, ItemTokenWithRestrictedType, hashString, HashString } from "@logion/client";
+import { CheckHashResult, CollectionItem, ItemTokenWithRestrictedType, HashString } from "@logion/client";
+import { Hash } from "@logion/node-api";
 import { shallowRender } from "src/tests";
 import { CertificateItemDetails } from "./CertificateItemDetails";
 
@@ -66,7 +67,7 @@ describe("CertificateItemDetails", () => {
 function buildItem(params: { restrictedDelivery: boolean, token?: ItemTokenWithRestrictedType }): CollectionItem {
     const { restrictedDelivery, token } = params;
     return {
-        id: hashString("some-id"),
+        id: Hash.of("some-id"),
         description: HashString.fromValue("Some description"),
         addedOn: "2022-10-12T10:13:00.000Z",
         restrictedDelivery,

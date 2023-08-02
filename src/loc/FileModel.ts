@@ -1,5 +1,6 @@
 import { AxiosInstance } from "axios";
 import { LegalOfficer, Token, HashOrContent, downloadFile, TypedFile } from "@logion/client";
+import { Hash } from "@logion/node-api";
 
 export const LO_FILE_IDS = [ 'oath-logo', 'header-logo', 'seal' ];
 
@@ -20,11 +21,11 @@ interface HasLocId {
 }
 
 export interface GetFileParameters extends HasLocId {
-    hash: string
+    hash: Hash
 }
 
 interface HasCollectionItem {
-    collectionItemId: string,
+    collectionItemId: Hash,
 }
 
 export interface GetCollectionItemFileParameters extends GetFileParameters, HasCollectionItem {}
@@ -46,7 +47,7 @@ export async function getCollectionItemFile(
     parameters: GetCollectionItemFileParameters
 ): Promise<TypedFile> {
     const { locId, collectionItemId, hash } = parameters
-    return downloadFile(axios, `/api/collection/${ locId }/${ collectionItemId }/files/${ hash }`);
+    return downloadFile(axios, `/api/collection/${ locId }/${ collectionItemId.toHex() }/files/${ hash.toHex() }`);
 }
 
 export async function getJsonLoc(
@@ -69,7 +70,7 @@ export async function addLoFile(
     await parameters.file.finalize();
     const formData = new FormData();
     formData.append('file', parameters.file.content as File, parameters.fileId);
-    formData.append('hash', parameters.file.contentHash);
+    formData.append('hash', parameters.file.contentHash.toHex());
     await parameters.axios.put(
         `/api/lo-file/${ parameters.legalOfficer }/${ parameters.fileId }`,
         formData,
@@ -91,11 +92,11 @@ export async function getLatestDeliveries(
     axios: AxiosInstance,
     parameters: {
         locId: string,
-        collectionItemId: string,
+        collectionItemId: Hash,
     }
 ): Promise<ItemDeliveriesResponse> {
     const { locId, collectionItemId } = parameters
-    const response = await axios.get(`/api/collection/${ locId }/${ collectionItemId }/latest-deliveries`);
+    const response = await axios.get(`/api/collection/${ locId }/${ collectionItemId.toHex() }/latest-deliveries`);
     return response.data;
 }
 
@@ -103,11 +104,11 @@ export async function getAllDeliveries(
     axios: AxiosInstance,
     parameters: {
         locId: string,
-        collectionItemId: string,
+        collectionItemId: Hash,
     }
 ): Promise<ItemDeliveriesResponse> {
     const { locId, collectionItemId } = parameters
-    const response = await axios.get(`/api/collection/${ locId }/${ collectionItemId }/all-deliveries`);
+    const response = await axios.get(`/api/collection/${ locId }/${ collectionItemId.toHex() }/all-deliveries`);
     return response.data;
 }
 
@@ -116,7 +117,7 @@ export async function getCollectionFile(
     parameters: GetCollectionItemFileParameters
 ): Promise<TypedFile> {
     const { locId, collectionItemId, hash } = parameters
-    return downloadFile(axios, `/api/collection/${ locId }/files/${ hash }/${ collectionItemId }`);
+    return downloadFile(axios, `/api/collection/${ locId }/files/${ hash.toHex() }/${ collectionItemId.toHex() }`);
 }
 
 export interface CollectionFileDeliveriesResponse {
@@ -127,11 +128,11 @@ export async function getAllCollectionFileDeliveries(
     axios: AxiosInstance,
     parameters: {
         locId: string,
-        hash: string,
+        hash: Hash,
     }
 ): Promise<CollectionFileDeliveriesResponse> {
     const { locId, hash } = parameters
-    const response = await axios.get(`/api/collection/${ locId }/file-deliveries/${hash}`);
+    const response = await axios.get(`/api/collection/${ locId }/file-deliveries/${ hash.toHex() }`);
     return response.data;
 }
 
@@ -151,7 +152,7 @@ export async function getAllCollectionDeliveries(
 }
 
 export interface GetTokensRecordFileSourceParameters extends GetFileParameters {
-    recordId: string;
+    recordId: Hash;
 }
 
 export async function getTokensRecordFileSource(
@@ -159,23 +160,23 @@ export async function getTokensRecordFileSource(
     parameters: GetTokensRecordFileSourceParameters
 ): Promise<TypedFile> {
     const { locId, recordId, hash } = parameters
-    return downloadFile(axios, `/api/records/${ locId }/${ recordId }/files-sources/${ hash }`);
+    return downloadFile(axios, `/api/records/${ locId }/${ recordId.toHex() }/files-sources/${ hash.toHex() }`);
 }
 
 export async function getTokensRecordDeliveries(
     axios: AxiosInstance,
     parameters: {
         locId: string,
-        recordId: string,
+        recordId: Hash,
     }
 ): Promise<ItemDeliveriesResponse> {
     const { locId, recordId } = parameters
-    const response = await axios.get(`/api/records/${ locId }/${ recordId }/deliveries`);
+    const response = await axios.get(`/api/records/${ locId }/${ recordId.toHex() }/deliveries`);
     return response.data;
 }
 
 export interface GetTokensRecordFileParameters extends GetCollectionItemFileParameters {
-    recordId: string,
+    recordId: Hash,
 }
 
 export async function getTokensRecordFile(
@@ -183,5 +184,5 @@ export async function getTokensRecordFile(
     parameters: GetTokensRecordFileParameters
 ): Promise<TypedFile> {
     const { locId, recordId, hash, collectionItemId } = parameters
-    return downloadFile(axios, `/api/records/${ locId }/${ recordId }/files/${ hash }/${ collectionItemId }`);
+    return downloadFile(axios, `/api/records/${ locId }/${ recordId.toHex() }/files/${ hash.toHex() }/${ collectionItemId.toHex() }`);
 }

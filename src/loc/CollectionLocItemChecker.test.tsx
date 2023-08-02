@@ -9,7 +9,7 @@ jest.mock("src/legal-officer/LegalOfficerContext");
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { LocData } from "@logion/client";
-import { UUID } from "@logion/node-api";
+import { UUID, Hash } from "@logion/node-api";
 
 import { LOCollectionLocItemChecker, UserCollectionLocItemChecker, Props } from "./CollectionLocItemChecker";
 import { DEFAULT_LEGAL_OFFICER } from "src/common/TestData";
@@ -70,20 +70,21 @@ describe("LOCollectionLocItemChecker", () => {
 const locId = new UUID("d97c99fd-9bcc-4f92-b9ea-b6be93abbbcd");
 const itemId = toItemId("test")!;
 const item = {
+    id: itemId,
     files: [],
     termsAndConditions: [],
 } as unknown as CollectionItem;
 const locState = {
     size: () => Promise.resolve(1),
-    checkHash: (checkHashItemId: string) => {
-        if(checkHashItemId === itemId) {
+    checkHash: (checkHashItemId: Hash) => {
+        if(checkHashItemId.equalTo(itemId)) {
             return Promise.resolve({ collectionItem: item });
         } else {
             return Promise.resolve({});
         }
     },
-    getCollectionItem: (args: { itemId: string }) => {
-        if(args.itemId === itemId) {
+    getCollectionItem: (args: { itemId: Hash }) => {
+        if(args.itemId.equalTo(itemId)) {
             return Promise.resolve(item);
         } else {
             return Promise.resolve();

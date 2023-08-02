@@ -1,4 +1,5 @@
 import { OpenLoc, ClosedCollectionLoc } from "@logion/client";
+import { Hash } from "@logion/node-api";
 import { useCallback, useMemo, useState } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import Dialog from "src/common/Dialog";
@@ -8,7 +9,7 @@ import { useLocContext } from "./LocContext";
 import "./RestrictedDeliveryCell.css";
 
 export interface Props {
-    hash: string;
+    hash: Hash;
 }
 
 export default function RestrictedDeliveryCell(props: Props) {
@@ -44,7 +45,7 @@ export default function RestrictedDeliveryCell(props: Props) {
     }, [ mutateLocState, props.hash ]);
 
     const checked = useMemo(() => {
-        const file = loc?.files.find(file => file.hash === props.hash);
+        const file = loc?.files.find(file => file.hash.equalTo(props.hash));
         return file?.restrictedDelivery || false;
     }, [ props.hash, loc ]);
 
@@ -55,7 +56,7 @@ export default function RestrictedDeliveryCell(props: Props) {
                     placement="bottom"
                     delay={500}
                     overlay={
-                        <Tooltip id={ `RestrictedDeliveryCell-tooltip-${props.hash}` }>
+                        <Tooltip id={ `RestrictedDeliveryCell-tooltip-${props.hash.toHex()}` }>
                             When the restricted delivery is activated, Collection-related NFT owners will be able to download a copy of the document.
                         </Tooltip>
                     }

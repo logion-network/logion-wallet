@@ -1,4 +1,5 @@
-import { AccountType, ValidAccountId, LogionNodeApiClass, LegalOfficerCase } from "@logion/node-api";
+import { AccountType, ValidAccountId, LogionNodeApiClass, LegalOfficerCase, Hash } from "@logion/node-api";
+import { H256 } from "@logion/node-api/dist/types/interfaces";
 import { It, Mock } from "moq.ts";
 import type { Text, Compact, u128 } from '@polkadot/types-codec';
 import type { SubmittableExtrinsic } from '@polkadot/api/promise/types';
@@ -33,6 +34,9 @@ api.setup(instance => instance.polkadot.createType(It.IsAny())).returnsAsync({})
 const locId = new Mock<Compact<u128>>();
 api.setup(instance => instance.adapters.toLocId(It.IsAny())).returns(locId.object());
 
+const hash = new Mock<H256>();
+api.setup(instance => instance.adapters.toH256(It.IsAny())).returns(hash.object());
+
 export function setupApiMock(setupFunction: (api: Mock<LogionNodeApiClass>) => void) {
     setupFunction(api);
 }
@@ -50,8 +54,8 @@ export const CLOSED_IDENTITY_LOC: LegalOfficerCase = {
     closed: true,
     files: [
         {
-            hash: "0xf35e4bcbc1b0ce85af90914e04350cce472a2f01f00c0f7f8bc5c7ba04da2bf2",
-            nature: "0x636af5586476273b2b9d9fc318e0d1f124f4e9591b7218da4e4e27f6b071cc94",
+            hash: Hash.fromHex("0xf35e4bcbc1b0ce85af90914e04350cce472a2f01f00c0f7f8bc5c7ba04da2bf2"),
+            nature: Hash.fromHex("0x636af5586476273b2b9d9fc318e0d1f124f4e9591b7218da4e4e27f6b071cc94"),
             submitter: TEST_WALLET_USER,
             size: 42n,
             acknowledged: true,

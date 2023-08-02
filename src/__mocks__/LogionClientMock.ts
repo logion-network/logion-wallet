@@ -4,6 +4,7 @@ import { TEST_WALLET_USER } from "../wallet-user/TestData";
 export { toIsoString, fromIsoString } from "@logion/client/dist/DateTimeUtil.js";
 import { api } from "./LogionMock";
 import { VerifiedIssuerWithSelect } from "@logion/client/dist/Loc";
+import { Hash } from "@logion/node-api";
 
 export const axiosMock = {
     post: jest.fn().mockReturnValue(undefined),
@@ -178,9 +179,9 @@ let issuers: VerifiedIssuerWithSelect[] = [];
 export class LocsState {
 }
 
-let expectedFileHash = "";
+let expectedFileHash = Hash.of("");
 
-export function setExpectedFileHash(hash: string) {
+export function setExpectedFileHash(hash: Hash) {
     expectedFileHash = hash;
 }
 
@@ -200,7 +201,7 @@ export class HashOrContent {
 
     private file: File;
 
-    get contentHash(): string {
+    get contentHash(): Hash {
         return expectedFileHash;
     }
 

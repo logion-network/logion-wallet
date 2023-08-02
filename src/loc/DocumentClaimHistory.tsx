@@ -1,5 +1,5 @@
-import { CheckCertifiedCopyResult, CheckResultType, LocData, TokensRecord, ClosedCollectionLoc, TypedFile, LocRequestState, Hash, HashString } from "@logion/client";
-import { UUID } from "@logion/node-api";
+import { CheckCertifiedCopyResult, CheckResultType, LocData, TokensRecord, ClosedCollectionLoc, TypedFile, LocRequestState, HashString } from "@logion/client";
+import { UUID, Hash } from "@logion/node-api";
 import { AxiosInstance } from "axios";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -19,7 +19,7 @@ import "./DocumentClaimHistory.css";
 import { ContributionMode } from "./types";
 
 export interface Props {
-    hash: string;
+    hash: Hash;
     icon: string;
     title: string;
     file: (loc: LocData) => DeliveredFile;
@@ -45,11 +45,11 @@ export default function DocumentClaimHistory(props: Props) {
         }
     }, [ props, hash, axiosFactory, loc, deliveries ]);
 
-    const checkCertifiedCopy = useCallback(async (fileHash: string): Promise<CheckCertifiedCopyResult> => {
+    const checkCertifiedCopy = useCallback(async (fileHash: Hash): Promise<CheckCertifiedCopyResult> => {
         if(deliveries) {
             for(let i = 0; i < deliveries.length; ++i) {
                 const delivery = deliveries[i];
-                if(delivery.copyHash === fileHash) {
+                if(delivery.copyHash === fileHash.toHex()) {
                     return {
                         latest: i === 0 ? CheckResultType.POSITIVE : CheckResultType.NEGATIVE,
                         logionOrigin: CheckResultType.POSITIVE,
@@ -94,7 +94,7 @@ export default function DocumentClaimHistory(props: Props) {
             <Frame>
                 <ItemFiles
                     collectionLoc={loc}
-                    deliveries={{ [hash]: (deliveries || []) }}
+                    deliveries={{ [hash.toHex()]: (deliveries || []) }}
                     checkCertifiedCopyResultResult={ checkCertifiedCopyResult }
                     files={ files }
                     downloader={ hash => locState.getFile(hash)}
@@ -128,12 +128,12 @@ export function GuardianDocumentClaimHistory() {
             backPath={ locDetailsPath(locId, "Collection") }
             detailsPath={ locDetailsPath }
         >
-            <CollectionDocumentClaimHistory hash={hash}/>
+            <CollectionDocumentClaimHistory hash={ Hash.fromHex(hash) }/>
         </LegalOfficerLocContextProvider>
     )
 }
 
-function CollectionDocumentClaimHistory(props: { hash: string }) {
+function CollectionDocumentClaimHistory(props: { hash: Hash }) {
     const { hash } = props;
     return (
         <DocumentClaimHistory
@@ -154,7 +154,7 @@ function CollectionDocumentClaimHistory(props: { hash: string }) {
 
 async function getCollectionFileDeliveries(axios: AxiosInstance, parameters: {
     locId: string,
-    hash: string,
+    hash: Hash,
 }): Promise<CheckLatestDeliveryResponse[]> {
     const { locId, hash } = parameters;
     const deliveries = await getAllCollectionFileDeliveries(axios, { locId, hash });
@@ -171,7 +171,7 @@ export function UserDocumentClaimHistory() {
             backPath={ userLocDetailsPath(locId, "Collection") }
             detailsPath={ userLocDetailsPath }
         >
-            <CollectionDocumentClaimHistory hash={hash}/>
+            <CollectionDocumentClaimHistory hash={ Hash.fromHex(hash) }/>
         </UserLocContextProvider>
     )
 }
@@ -187,7 +187,7 @@ export function LegalOfficerTokensRecordDocumentClaimHistory() {
             backPath={ tokensRecordPath(locId) }
             detailsPath={ locDetailsPath }
         >
-            <TokensRecordDocumentClaimHistory recordId={recordId as Hash} hash={hash as Hash}/>
+            <TokensRecordDocumentClaimHistory recordId={ Hash.fromHex(recordId) } hash={ Hash.fromHex(hash) }/>
         </LegalOfficerLocContextProvider>
     )
 }
@@ -225,13 +225,13 @@ function TokensRecordDocumentClaimHistory(props: { recordId: Hash, hash: Hash, c
 
 async function getTokensRecordFileDeliveries(axios: AxiosInstance, parameters: {
     locId: string,
-    recordId: string,
-    hash: string,
+    recordId: Hash,
+    hash: Hash,
 }): Promise<CheckLatestDeliveryResponse[]> {
     const { locId, recordId, hash } = parameters;
     const allDeliveries = await getTokensRecordDeliveries(axios, { locId, recordId });
-    if(hash in allDeliveries) {
-        return allDeliveries[hash];
+    if(hash.toHex() in allDeliveries) {
+        return allDeliveries[hash.toHex()];
     } else {
         return [];
     }
@@ -246,7 +246,7 @@ function getRecordFile(record: TokensRecord | undefined, hash: Hash): DeliveredF
     }
 }
 
-function emptyDeliveredFile(hash: string): DeliveredFile {
+function emptyDeliveredFile(hash: Hash): DeliveredFile {
     return {
         contentType: HashString.fromValue(""),
         hash,
@@ -266,7 +266,7 @@ export function UserTokensRecordDocumentClaimHistory(props: { contributionMode: 
             backPath={ userTokensRecordPath(props.contributionMode, locId) }
             detailsPath={ userLocDetailsPath }
         >
-            <TokensRecordDocumentClaimHistory recordId={recordId as Hash} hash={hash as Hash} contributionMode={props.contributionMode}/>
+            <TokensRecordDocumentClaimHistory recordId={ Hash.fromHex(recordId) } hash={ Hash.fromHex(hash) } contributionMode={props.contributionMode}/>
         </UserLocContextProvider>
     )
 }

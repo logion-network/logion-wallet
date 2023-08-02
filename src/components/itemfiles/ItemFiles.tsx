@@ -1,4 +1,5 @@
 import { CheckCertifiedCopyResult, LocData, CheckHashResult, TypedFile, HashString } from "@logion/client";
+import { Hash } from "@logion/node-api";
 import { useCallback, useEffect, useState } from "react";
 import { Row, Col } from "react-bootstrap";
 
@@ -15,7 +16,7 @@ import ViewFileButton from "src/common/ViewFileButton";
 export interface DeliveredFile {
     name: HashString;
     contentType: HashString;
-    hash: string;
+    hash: Hash;
     size: bigint;
 }
 
@@ -25,7 +26,7 @@ export interface Props {
     deliveries?: ItemDeliveriesResponse;
     checkCertifiedCopyResultResult?: CheckCertifiedCopyResult;
     checkHashResult?: CheckHashResult;
-    downloader: (hash: string) => Promise<TypedFile>;
+    downloader: (hash: Hash) => Promise<TypedFile>;
     defaultExpanded?: boolean;
     icon: string;
     title: string;
@@ -43,7 +44,7 @@ export default function ItemFiles(props: Props) {
     let renderDetails: ((file: FileWithMatch) => Child) | undefined;
     if(props.deliveries !== undefined) {
         const deliveries = props.deliveries;
-        renderDetails = (file) => <ItemFileDetails deliveries={ deliveries[file.hash] || [] } checkResult={ checkCertifiedCopyResultResult } />;
+        renderDetails = (file) => <ItemFileDetails deliveries={ deliveries[file.hash.toHex()] || [] } checkResult={ checkCertifiedCopyResultResult } />;
     }
 
     const onChecked = useCallback((result: CheckCertifiedCopyResult) => {
@@ -108,7 +109,7 @@ export default function ItemFiles(props: Props) {
                     },
                     {
                         header: "Hash",
-                        render: file => <CellWithCopyPaste content={ file.hash } />,
+                        render: file => <CellWithCopyPaste content={ file.hash.toHex() } />,
                         width: "250px",
                         align: "left",
                     },
@@ -131,7 +132,7 @@ export default function ItemFiles(props: Props) {
 
 function numberOfClaims(file: DeliveredFile, deliveries?: ItemDeliveriesResponse): { value: string, hideExpand: boolean } {
     if (deliveries !== undefined) {
-        const fileDeliveries = deliveries[file.hash];
+        const fileDeliveries = deliveries[file.hash.toHex()];
         if (fileDeliveries) {
             const length = fileDeliveries.length;
             return { value: length.toString(), hideExpand: length === 0 };

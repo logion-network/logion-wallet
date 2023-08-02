@@ -1,4 +1,4 @@
-import { LocType, UUID } from "@logion/node-api";
+import { LocType, UUID, Hash } from "@logion/node-api";
 import { Viewer } from "./common/CommonContext";
 
 export const LEGAL_OFFICER_PATH = "/legal-officer";
@@ -22,10 +22,10 @@ export function relativeDashboardCertificateRelativePath(locType: LocType) {
         .replace(":locType", locType.toLowerCase())
 }
 
-export function dashboardCertificateRelativePath(locType: LocType, locId: UUID, itemId: string, viewer: Viewer): string {
+export function dashboardCertificateRelativePath(locType: LocType, locId: UUID, itemId: Hash, viewer: Viewer): string {
     const relativePath = relativeDashboardCertificateRelativePath(locType)
         .replace(":locId", locId.toString())
-        .replace(":itemId", itemId);
+        .replace(":itemId", itemId.toHex());
     if(viewer === "LegalOfficer") {
         return LEGAL_OFFICER_PATH + relativePath;
     } else {

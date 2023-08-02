@@ -70,7 +70,7 @@ export default function CollectionItemCellRow(props: Props) {
                                         </Col>
                                     </Row>
                                     <Row>
-                                        <Col md={ 7 }>{ file.hash }</Col>
+                                        <Col md={ 7 }>{ file.hash.toHex() }</Col>
                                     </Row>
                                 </li>
                             )) }
