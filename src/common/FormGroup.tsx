@@ -12,6 +12,7 @@ export interface Props {
     colors: BackgroundAndForegroundColors,
     noFeedback?: boolean,
     className?: string,
+    help?: string,
 }
 
 export default function FormGroup(props: Props) {
@@ -42,6 +43,12 @@ export default function FormGroup(props: Props) {
                     <Form.Label>{ props.label }</Form.Label>
                 }
                 { props.control }
+                {
+                    props.help &&
+                    <Form.Text id={ `${props.id}Help` } muted>
+                        { props.help }
+                    </Form.Text>
+                }
                 {
                     (props.noFeedback === undefined || !props.noFeedback) &&
                     <Form.Control.Feedback

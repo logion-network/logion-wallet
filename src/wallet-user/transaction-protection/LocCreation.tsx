@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
-import { LocType } from "@logion/node-api";
+import { LocType, Numbers, Currency } from "@logion/node-api";
 
 import { useCommonContext } from '../../common/CommonContext';
 import { LocsState, LegalOfficerClass, DraftRequest } from "@logion/client";
@@ -36,6 +36,10 @@ export default function LocCreation(props: Props) {
         defaultValues: {
             description: "",
             legalOfficer: "",
+            valueFee: {
+                unit: Numbers.NONE,
+                value: "0",
+            }
         }
     });
     const [ selectedLegalOfficer, setSelectedLegalOfficer ] = useState<LegalOfficerClass | undefined>();
@@ -63,13 +67,44 @@ export default function LocCreation(props: Props) {
     const submit = useCallback(async (formValues: FormValues) => {
         let draftRequest: DraftRequest;
         await mutateLocsState(async (locsState: LocsState) => {
-            draftRequest = await locsState!.requestLoc({
-                legalOfficer: selectedLegalOfficer!,
-                description: formValues.description,
-                locType,
-                draft: true,
-                template: backendTemplate(selectedTemplateId),
-            }) as DraftRequest;
+            if(locType === "Transaction") {
+                draftRequest = await locsState!.requestTransactionLoc({
+                    legalOfficer: selectedLegalOfficer!,
+                    description: formValues.description,
+                    draft: true,
+                    template: backendTemplate(selectedTemplateId),
+                }) as DraftRequest;
+            } else if(locType === "Identity") {
+                draftRequest = await locsState!.requestIdentityLoc({
+                    legalOfficer: selectedLegalOfficer!,
+                    description: formValues.description,
+                    draft: true,
+                    template: backendTemplate(selectedTemplateId),
+                    userIdentity: {
+                        email: "",
+                        firstName: "",
+                        lastName: "",
+                        phoneNumber: "",
+                    },
+                    userPostalAddress: {
+                        line1: "",
+                        line2: "",
+                        postalCode: "",
+                        city: "",
+                        country: "",
+                    }
+                }) as DraftRequest;
+            } else if(locType === "Collection") {
+                draftRequest = await locsState!.requestCollectionLoc({
+                    legalOfficer: selectedLegalOfficer!,
+                    description: formValues.description,
+                    draft: true,
+                    template: backendTemplate(selectedTemplateId),
+                    valueFee: Currency.toCanonicalAmount(new Numbers.PrefixedNumber(formValues.valueFee.value, formValues.valueFee.unit)),
+                }) as DraftRequest;
+            } else {
+                throw new Error("Unsupported LOC type");
+            }
             return draftRequest.locsState();
         });
         clear();
@@ -144,6 +179,7 @@ export default function LocCreation(props: Props) {
                         errors={ errors }
                         colors={ colorTheme.dialog }
                         legalOfficer={ selectedLegalOfficer?.address || null }
+                        showValueFee={ props.locType === "Collection" }
                     />
                     <ButtonGroup>
                         <Button onClick={ cancelAction.callback } variant={ cancelAction.buttonVariant }>{ cancelAction.buttonText }</Button>

@@ -75,7 +75,7 @@ describe("LocCreation", () => {
         } as DraftRequest;
         const locsState = {
             legalOfficersWithValidIdentityLoc: [ PATRICK, GUILLAUME ],
-            requestLoc: () => Promise.resolve(draftRequest),
+            requestTransactionLoc: () => Promise.resolve(draftRequest),
         } as unknown as LocsState;
         setLocsState(locsState);
         setMutateLocsState(async (mutator: (current: LocsState) => Promise<LocsState>): Promise<void> => {
