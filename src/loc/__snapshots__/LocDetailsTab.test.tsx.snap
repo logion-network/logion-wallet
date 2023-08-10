@@ -1143,15 +1143,15 @@ exports[`LocDetailsTabContent renders open identity LOC for LO 1`] = `
       />
     </Col>
   </Row>
-  <div
-    className="separator"
-    style={
-      Object {
-        "backgroundColor": "black",
-      }
-    }
-  />
   <React.Fragment>
+    <div
+      className="separator"
+      style={
+        Object {
+          "backgroundColor": "black",
+        }
+      }
+    />
     <PersonalInfo
       personalAndStatusInfo={
         Object {
@@ -1183,15 +1183,15 @@ exports[`LocDetailsTabContent renders open identity LOC for LO 1`] = `
         }
       }
     />
-    <div
-      className="separator"
-      style={
-        Object {
-          "backgroundColor": "black",
-        }
-      }
-    />
   </React.Fragment>
+  <div
+    className="separator"
+    style={
+      Object {
+        "backgroundColor": "black",
+      }
+    }
+  />
   <LocItems
     hideHeader={false}
     isEmpty={true}

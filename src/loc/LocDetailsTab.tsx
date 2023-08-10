@@ -30,6 +30,7 @@ import LocTemplateItems from "./LocTemplateItems";
 import { canAdd, getLinkData, LinkData, LocItem } from "./LocItem";
 import { createDocumentTemplateItem, createLinkTemplateItem, createMetadataTemplateItem } from "./LocItemFactory";
 import { useLogionChain } from "src/logion-chain";
+import { CollectionInfo } from "src/components/identity/CollectionInfo";
 
 export interface Props {
     loc: LocData;
@@ -295,11 +296,21 @@ export function LocDetailsTabContent(props: ContentProps) {
                 }
             </Col>
         </Row>
-        <div className="separator" style={ { backgroundColor: locTabBorderColor } } />
-        { loc.locType === "Identity" && <>
-            <PersonalInfo personalAndStatusInfo={ loc } />
+        {
+            loc.locType === "Identity" &&
+            <>
             <div className="separator" style={ { backgroundColor: locTabBorderColor } } />
-        </> }
+            <PersonalInfo personalAndStatusInfo={ loc } />
+            </>
+        }
+        {
+            loc.locType === "Collection" &&
+            <>
+            <div className="separator" style={ { backgroundColor: locTabBorderColor } } />
+            <CollectionInfo collection={ loc } />
+            </>
+        }
+        <div className="separator" style={ { backgroundColor: locTabBorderColor } } />
         {
             templateItems.length > 0 &&
             <>

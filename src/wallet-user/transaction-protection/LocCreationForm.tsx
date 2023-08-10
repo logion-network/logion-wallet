@@ -7,10 +7,12 @@ import Select from '../../common/Select';
 
 import { buildOptions } from '../trust-protection/SelectLegalOfficer';
 import { useUserContext } from "../UserContext";
+import AmountControl, { Amount, validateAmount } from 'src/common/AmountControl';
 
 export interface FormValues {
     description: string;
     legalOfficer: string;
+    valueFee: Amount;
 }
 
 export interface Props {
@@ -18,6 +20,7 @@ export interface Props {
     errors: FieldErrors<FormValues>;
     colors: BackgroundAndForegroundColors;
     legalOfficer: string | null;
+    showValueFee: boolean;
 }
 
 export default function LocCreationForm(props: Props) {
@@ -92,6 +95,40 @@ export default function LocCreationForm(props: Props) {
                 feedback={ props.errors.legalOfficer?.message }
                 colors={ props.colors }
             />
+
+            {
+                props.showValueFee &&
+                <FormGroup
+                    id="valueFee"
+                    label="Value fee"
+                    control={
+                        <Controller
+                            name="valueFee"
+                            control={ props.control }
+                            rules={{
+                                validate: validateAmount
+                            }}
+                            render={ ({ field }) => (
+                                <AmountControl
+                                    //@ts-ignore
+                                    isInvalid={ !!props.errors.valueFee?.message }
+                                    value={ field.value }
+                                    onChange={ field.onChange }
+                                    placeholder="The amount to transfer"
+                                />
+                            )}
+                        />
+                    }
+                    //@ts-ignore
+                    feedback={ props.errors.amount?.message }
+                    colors={ props.colors }
+                    help={
+                        `The value fee is calculated in function of the value of the asset being protected by
+ this collection LOC. The details of the fee calculation must be attached to the LOC so that the Logion Legal Officer
+ can review them, otherwise your request may be rejected.`
+                    }
+                />
+            }
         </>
     )
 }

@@ -26,6 +26,7 @@ export class FeeEstimator {
                 apiLimits.collectionLastBlockSubmission || null,
                 apiLimits.collectionMaxSize || null,
                 apiLimits.collectionCanUpload,
+                request.valueFee || 0n,
             );
         } else if(request.locType === "Identity") {
             if(request.requesterAddress) {
@@ -60,6 +61,7 @@ export class FeeEstimator {
             origin: client.currentAddress?.address || "",
             locType: request.locType,
             submittable,
+            valueFee: request.valueFee,
         });
     }
 
