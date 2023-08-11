@@ -22,7 +22,10 @@ export default function LocLinkDetails(props: Props) {
                 </LocItemDetail>
                 <LocItemDetail label="Linked LOC" className="linked-loc">
                     <NewTabLink href={ props.item.linkDetailsPath } iconId="loc-link">{ props.item.value }</NewTabLink>
-                    <CopyPasteButton value={ props.item.value } className="medium"/>
+                    {
+                        props.item.value !== undefined &&
+                        <CopyPasteButton value={ props.item.value } className="medium"/>
+                    }
                 </LocItemDetail>
                 {
                     props.item.fees &&

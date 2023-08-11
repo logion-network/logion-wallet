@@ -217,7 +217,7 @@ export function createLinkTemplateItem(
 ): LocItem {
     return {
         name: linkData?.linkedLoc.description,
-        value: new UUID(locItem?.target).toDecimalString(),
+        value: locItem?.target ? new UUID(locItem?.target).toDecimalString() : undefined,
         newItem: false,
         status: locItem && locItem.published ? "ACKNOWLEDGED" : "DRAFT",
         submitter: locItem ? ownerAddress : undefined,
