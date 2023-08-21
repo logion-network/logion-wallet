@@ -11,7 +11,7 @@ import {
     CreativeCommons,
 } from "@logion/client";
 import { Fees, Hash } from '@logion/node-api';
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import { OverlayTrigger, Spinner, Tooltip } from "react-bootstrap";
 
 import Dialog from "../common/Dialog";
@@ -31,14 +31,13 @@ import { CsvItem, readItemsCsv } from "./ImportCsvReader";
 import Alert from "src/common/Alert";
 import { UUID } from "@logion/node-api";
 import config from "../config";
-import { FeeEstimator } from "./fees/FeeEstimator";
 import EstimatedFees from "./fees/EstimatedFees";
 
 type Submitters = Record<string, Call>;
 
 export default function ImportItems() {
     const { width } = useResponsiveContext();
-    const { signer, client } = useLogionChain();
+    const { signer } = useLogionChain();
     const { colorTheme } = useCommonContext();
     const { refresh, locState } = useUserLocContext();
 
@@ -77,19 +76,23 @@ export default function ImportItems() {
         setShowImportItems(true);
     }, [ setSubmitters, locState ]);
 
-    const feesEstimator = useMemo(() => 
-        client ? new FeeEstimator(client) : null
-    , [ client ]);
-
     const submitItem = useCallback(async (item: Item) => {
-        if(feesEstimator && locState) {
+        if (locState) {
             setItemToSubmit(item);
-            (async function() {
-                let fees = await feesEstimator.estimateAddItem(locState.data(), item);
-                setFees(fees);
-            })();
+            const collection = locState as ClosedCollectionLoc;
+            const fees = await collection.estimateFeesAddCollectionItem({
+                itemId: item.id!,
+                itemDescription: item.description,
+                itemFiles: item.files,
+                restrictedDelivery: item.restrictedDelivery,
+                itemToken: item.token,
+                logionClassification: item.logionClassification,
+                specificLicenses: item.specificLicense ? [ item.specificLicense ] : undefined,
+                creativeCommons: item.creativeCommons,
+            })
+            setFees(fees);
         }
-    }, [ feesEstimator, locState ]);
+    }, [ locState ]);
 
     const doSubmitItem = useCallback(async () => {
         if(itemToSubmit) {

@@ -11,7 +11,6 @@ import { useLocContext } from 'src/loc/LocContext';
 import { CallCallback } from '../ClientExtrinsicSubmitter';
 import EstimatedFees, { getOtherFeesPaidBy, PAID_BY_REQUESTER } from './fees/EstimatedFees';
 import { AcceptedRequest } from "@logion/client/dist/Loc";
-import { FeeEstimator } from "./fees/FeeEstimator";
 import Button from 'src/common/Button';
 import PolkadotFrame from 'src/common/PolkadotFrame';
 import "./OpenLoc.css";
@@ -31,7 +30,7 @@ export interface Props {
 export default function OpenLoc(props: Props) {
     const { signer, client } = useLogionChain();
     const { refresh, colorTheme } = useCommonContext();
-    const { mutateLocState } = useLocContext();
+    const { mutateLocState, locState } = useLocContext();
     const [ acceptState, setAcceptState ] = useState<OpenStatus>(OpenStatus.NONE);
     const [ call, setCall ] = useState<Call>();
     const [ error, setError ] = useState<boolean>(false);
@@ -40,15 +39,19 @@ export default function OpenLoc(props: Props) {
 
     useEffect(() => {
         if(fees === undefined && client) {
-            const request = props.loc;
             setFees(null);
-            const estimator = new FeeEstimator(client);
             (async function() {
-                let fees = await estimator.estimateCreateLoc(request, limits);
-                setFees(fees);
+                if (locState instanceof AcceptedRequest) {
+                    if (locState.data().locType === "Collection") {
+                        const apiLimits = await limits.toApiLimits(client.logionApi)
+                        setFees(await locState.estimateFeesOpenCollection(apiLimits));
+                    } else {
+                        setFees(await locState.estimateFeesOpen());
+                    }
+                }
             })();
         }
-    }, [ fees, client, props.loc, limits ]);
+    }, [ fees, client, props.loc, limits, locState ]);
 
     // LOC creation
     useEffect(() => {

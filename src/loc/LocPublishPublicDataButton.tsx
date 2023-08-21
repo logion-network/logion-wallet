@@ -4,6 +4,8 @@ import { UUID, Hash } from "@logion/node-api";
 import { LocItem } from "./LocItem";
 import LocPublishButton from "./LocPublishButton";
 import { useLogionChain } from "src/logion-chain";
+import { useLocContext } from "./LocContext";
+import { useCallback } from "react";
 
 export interface Props {
     locId: UUID;
@@ -12,6 +14,14 @@ export interface Props {
 
 export default function LocPublishPublicDataButton(props: Props) {
     const { signer, client } = useLogionChain();
+    const { locState } = useLocContext();
+    const estimateFees = useCallback((nameHash: Hash | undefined) => {
+        if (nameHash && locState instanceof OpenLoc) {
+            return locState.estimateFeesPublishMetadata({ nameHash });
+        } else {
+            throw Error("Invalid type");
+        }
+    }, [ locState ])
 
     if(!client) {
         return null;
@@ -35,17 +45,7 @@ export default function LocPublishPublicDataButton(props: Props) {
                     return current;
                 }
             }}
-            feesEstimator={ () => client.public.fees.estimateWithoutStorage({
-                origin: client.currentAddress?.address || "",
-                submittable: client.logionApi.polkadot.tx.logionLoc.addMetadata(
-                    client.logionApi.adapters.toLocId(props.locId),
-                    client.logionApi.adapters.toPalletLogionLocMetadataItem({
-                        name: props.locItem.hash!,
-                        value: Hash.of(props.locItem.value || ""),
-                        submitter: props.locItem.submitter!,
-                    }),
-                ),
-            }) }
+            feesEstimator={ () => estimateFees(props.locItem.hash) }
             itemType="Public Data"
         />
     )
