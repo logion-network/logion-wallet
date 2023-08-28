@@ -4,6 +4,8 @@ import { UUID, Hash } from "@logion/node-api";
 import { LocItem } from "./LocItem";
 import LocPublishButton from "./LocPublishButton";
 import { useLogionChain } from "src/logion-chain";
+import { useLocContext } from "./LocContext";
+import { useCallback } from "react";
 
 export interface Props {
     locId: UUID;
@@ -12,6 +14,14 @@ export interface Props {
 
 export default function LocPublishPrivateFileButton(props: Props) {
     const { signer, client } = useLogionChain();
+    const { locState } = useLocContext();
+    const estimateFees = useCallback((hash: Hash | undefined) => {
+        if (hash && locState instanceof OpenLoc) {
+            return locState.estimateFeesPublishFile({ hash });
+        } else {
+            throw Error("Invalid type");
+        }
+    }, [ locState ])
 
     if(!client) {
         return null;
@@ -34,14 +44,7 @@ export default function LocPublishPrivateFileButton(props: Props) {
                     return current;
                 }
             }}
-            feesEstimator={ () => client.public.fees.estimateAddFile({
-                locId: props.locId,
-                hash: props.locItem.hash!,
-                nature: Hash.of(props.locItem.nature || ""),
-                submitter: props.locItem.submitter!,
-                size: props.locItem.size!,
-                origin: client.currentAddress?.address || "",
-            }) }
+            feesEstimator={ () => estimateFees(props.locItem.hash) }
             itemType="Document"
         />
     )

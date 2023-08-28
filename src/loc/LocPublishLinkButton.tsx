@@ -1,9 +1,11 @@
 import { OpenLoc } from "@logion/client";
-import { UUID, Adapters, Hash } from "@logion/node-api";
+import { UUID } from "@logion/node-api";
 
 import { LocItem } from "./LocItem";
 import LocPublishButton from "./LocPublishButton";
 import { useLogionChain } from "src/logion-chain";
+import { useLocContext } from "./LocContext";
+import { useCallback } from "react";
 
 export interface Props {
     locId: UUID;
@@ -12,6 +14,14 @@ export interface Props {
 
 export default function LocPublishLinkButton(props: Props) {
     const { signer, client } = useLogionChain();
+    const { locState } = useLocContext();
+    const estimateFees = useCallback((target: UUID | undefined) => {
+        if (target && locState instanceof OpenLoc) {
+            return locState.legalOfficer.estimateFeesPublishLink({ target });
+        } else {
+            throw Error("Invalid type");
+        }
+    }, [ locState ])
 
     if(!client) {
         return null;
@@ -31,16 +41,7 @@ export default function LocPublishLinkButton(props: Props) {
                     return current;
                 }
             }}
-            feesEstimator={ () => client.public.fees.estimateWithoutStorage({
-                origin: client.currentAddress?.address || "",
-                submittable: client.logionApi.polkadot.tx.logionLoc.addLink(
-                    client.logionApi.adapters.toLocId(props.locId),
-                    Adapters.toLocLink({
-                        nature: Hash.of(props.locItem.nature || ""),
-                        target: props.locItem.target || new UUID(),
-                    }),
-                ),
-            }) }
+            feesEstimator={ () => estimateFees(props.locItem.target) }
             itemType="Link"
         />
     )

@@ -29,37 +29,29 @@ export default function AcknowledgeButton(props: Props) {
     const [ state, setState ] = useState(State.INIT);
     const [ fees, setFees ] = useState<Fees | undefined | null>();
     const [ call, setCall ] = useState<Call>();
-    const { mutateLocState } = useLocContext();
-    const { client, signer } = useLogionChain();
+    const { mutateLocState, locState } = useLocContext();
+    const { signer } = useLogionChain();
 
     useEffect(() => {
-        if(fees === undefined && client) {
+        if(fees === undefined) {
             setFees(null);
             (async function() {
                 let fees: Fees;
-                if(props.locItem.type === "Data") {
-                    fees = await client.logionApi.fees.estimateWithoutStorage({
-                        origin: client.currentAddress?.address || "",
-                        submittable: client.logionApi.polkadot.tx.logionLoc.acknowledgeMetadata(
-                            client.logionApi.adapters.toLocId(props.locId),
-                            props.locItem.name || "",
-                        ),
-                    });
-                } else if(props.locItem.type === "Document") {
-                    fees = await client.logionApi.fees.estimateWithoutStorage({
-                        origin: client.currentAddress?.address || "",
-                        submittable: client.logionApi.polkadot.tx.logionLoc.acknowledgeFile(
-                            client.logionApi.adapters.toLocId(props.locId),
-                            props.locItem.value || "",
-                        ),
-                    });
+                if(props.locItem.type === "Data" && locState instanceof OpenLoc) {
+                    fees = await locState.legalOfficer.estimateFeesAcknowledgeMetadata({
+                        nameHash: props.locItem.hash!,
+                    })
+                } else if(props.locItem.type === "Document" && locState instanceof OpenLoc) {
+                    fees = await locState.legalOfficer.estimateFeesAcknowledgeFile({
+                        hash: props.locItem.hash!,
+                    })
                 } else {
                     throw new Error("Unexpected type");
                 }
                 setFees(fees);
             })();
         }
-    }, [ fees, client, props.locItem, props.locId ]);
+    }, [ fees, props.locItem, props.locId, locState ]);
 
     const preview = useCallback(() => {
         setState(State.PREVIEW);

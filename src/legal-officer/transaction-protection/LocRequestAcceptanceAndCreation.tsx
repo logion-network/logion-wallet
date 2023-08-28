@@ -9,7 +9,6 @@ import { useLegalOfficerContext } from "../LegalOfficerContext";
 import { useLocContext } from 'src/loc/LocContext';
 import { CallCallback } from '../../ClientExtrinsicSubmitter';
 import EstimatedFees, { PAID_BY_LEGAL_OFFICER, getOtherFeesPaidBy } from '../../loc/fees/EstimatedFees';
-import { FeeEstimator } from "../../loc/fees/FeeEstimator";
 
 enum AcceptStatus {
     NONE,
@@ -28,10 +27,10 @@ export interface Props {
 }
 
 export default function LocRequestAcceptanceAndCreation(props: Props) {
-    const { signer, client } = useLogionChain();
+    const { signer } = useLogionChain();
     const { refresh } = useCommonContext();
     const { refreshLocs } = useLegalOfficerContext();
-    const { mutateLocState } = useLocContext();
+    const { mutateLocState, locState } = useLocContext();
     const [ acceptState, setAcceptState ] = useState<AcceptState>({status: AcceptStatus.NONE});
     const [ call, setCall ] = useState<Call>();
     const [ error, setError ] = useState<boolean>(false);
@@ -42,16 +41,16 @@ export default function LocRequestAcceptanceAndCreation(props: Props) {
     }, [ acceptState, setAcceptState ]);
 
     useEffect(() => {
-        if(fees === undefined && props.requestToAccept && client) {
-            const request = props.requestToAccept;
+        if(fees === undefined && props.requestToAccept && locState instanceof PendingRequest) {
             setFees(null);
-            const estimator = new FeeEstimator(client);
             (async function() {
-                let fees = await estimator.estimateCreateLoc(request);
-                setFees(fees);
+                const fees = await locState.legalOfficer.estimateFeesAccept();
+                if (fees) {
+                    setFees(fees);
+                }
             })();
         }
-    }, [ fees, client, props.requestToAccept ]);
+    }, [ fees, props.requestToAccept, locState ]);
 
     const close = useCallback(() => {
         setStatus(AcceptStatus.NONE);
@@ -70,7 +69,7 @@ export default function LocRequestAcceptanceAndCreation(props: Props) {
             setStatus(AcceptStatus.CREATING_LOC);
             setCall(() => async (callback: CallCallback) =>
                 await mutateLocState(async current => {
-                    if(client && signer && current instanceof PendingRequest) {
+                    if(signer && current instanceof PendingRequest) {
                         const accepted = await current.legalOfficer.accept({
                             signer,
                             callback,
@@ -90,7 +89,6 @@ export default function LocRequestAcceptanceAndCreation(props: Props) {
         mutateLocState,
         signer,
         setStatus,
-        client,
         closeAndRefresh,
     ]);
 

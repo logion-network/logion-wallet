@@ -5,7 +5,7 @@ import ImportItems from './ImportItems';
 import { setLocState, refresh } from "./__mocks__/UserLocContextMock";
 import { CollectionItem, Fees } from "@logion/node-api";
 import { H256 } from "@logion/node-api/dist/types/interfaces";
-import { LogionClient, AddCollectionItemParams } from "@logion/client";
+import { LogionClient, AddCollectionItemParams, EstimateFeesAddCollectionItemParams } from "@logion/client";
 import { mockSubmittableResult } from "../logion-chain/__mocks__/SignatureMock";
 import { setClientMock } from 'src/logion-chain/__mocks__/LogionChainMock';
 import { It, Mock } from 'moq.ts';
@@ -61,14 +61,20 @@ async function uploadCsv(): Promise<any> {
     clientMock.setup(instance => instance.logionApi.adapters.toH256(It.IsAny())).returns(hash.object());
     clientMock.setup(instance => instance.logionApi.adapters.toCollectionItemFile(It.IsAny())).returns({} as any);
     clientMock.setup(instance => instance.logionApi.adapters.toCollectionItemToken(It.IsAny())).returns({} as any);
-    clientMock.setup(instance => instance.logionApi.fees.estimateWithoutStorage(It.IsAny())).returnsAsync(new Fees({ inclusionFee: 42n }));
-    clientMock.setup(instance => instance.logionApi.fees.estimateCertificateFee(It.IsAny())).returnsAsync(32n);
-    clientMock.setup(instance => instance.logionApi.fees.estimateStorageFee(It.IsAny())).returnsAsync(22n);
     setClientMock(clientMock.object());
 
     const collection = {
         addCollectionItem: jest.fn((params: AddCollectionItemParams) => {
             params.callback!(mockSubmittableResult(true, "finalized"))
+        }),
+        estimateFeesAddCollectionItem: jest.fn((params: EstimateFeesAddCollectionItemParams) => {
+            return Promise.resolve(
+                new Fees({
+                    inclusionFee: 42n,
+                    certificateFee: 32n,
+                    storageFee: 22n,
+                })
+            )
         }),
         getCollectionItem(_parameters: { itemId: string }): Promise<CollectionItem | undefined> {
             return Promise.resolve(undefined);

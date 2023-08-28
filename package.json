@@ -11,9 +11,9 @@
     "dependencies": {
         "@craco/craco": "^6.4.5",
         "@creativecommons/cc-assets": "^0.1.0",
-        "@logion/crossmint": "^0.1.22",
-        "@logion/extension": "^0.5.20",
-        "@logion/multiversx": "^0.1.3",
+        "@logion/crossmint": "^0.1.23-1",
+        "@logion/extension": "^0.5.21-1",
+        "@logion/multiversx": "^0.1.4-1",
         "@multiversx/sdk-extension-provider": "^2.0.7",
         "@popperjs/core": "^2.11.6",
         "@types/qrcode": "^1.5.0",
